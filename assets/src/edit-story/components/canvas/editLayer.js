@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import { memo, useEffect, useRef } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
@@ -38,21 +43,15 @@ const LayerWithGrayout = styled(Layer)`
     grayout ? theme.colors.grayout : 'transparent'};
 `;
 
-const EditPageArea = withOverlay(styled(PageArea).attrs({
-  className: 'container web-stories-content',
-})`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`);
+const EditPageArea = withOverlay(PageArea);
 
 function EditLayer() {
-  const {
-    state: { currentPage },
-  } = useStory();
-  const {
-    state: { editingElement: editingElementId },
-  } = useCanvas();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+  const { editingElementId } = useCanvas((state) => ({
+    editingElementId: state.state.editingElement,
+  }));
 
   const editingElement =
     editingElementId &&
@@ -71,9 +70,9 @@ function EditLayerForElement({ element }) {
   const pageAreaRef = useRef(null);
   const { editModeGrayout } = getDefinitionForType(element.type);
 
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const focusCanvas = useFocusCanvas();
 
@@ -90,6 +89,7 @@ function EditLayerForElement({ element }) {
   return (
     <LayerWithGrayout
       ref={ref}
+      aria-label={__('Edit layer', 'web-stories')}
       data-testid="editLayer"
       grayout={editModeGrayout}
       zIndex={Z_INDEX.EDIT}
@@ -99,7 +99,7 @@ function EditLayerForElement({ element }) {
         }
       }}
     >
-      <EditPageArea ref={pageAreaRef} showOverflow={editModeGrayout}>
+      <EditPageArea ref={pageAreaRef} showOverflow>
         <EditElement element={element} />
       </EditPageArea>
     </LayerWithGrayout>

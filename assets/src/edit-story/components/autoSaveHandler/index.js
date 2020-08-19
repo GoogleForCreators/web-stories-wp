@@ -22,37 +22,51 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig, useHistory, useStory } from '../../app';
+import { useConfig, useHistory, useLocalMedia, useStory } from '../../app';
 
 function AutoSaveHandler() {
   const { autoSaveInterval } = useConfig();
   const {
     state: { hasNewChanges },
   } = useHistory();
-  const {
-    state: {
-      story: { status },
-    },
-    actions: { saveStory },
-  } = useStory();
+  const { status, saveStory } = useStory(
+    ({
+      state: {
+        story: { status },
+      },
+      actions: { saveStory },
+    }) => ({
+      status,
+      saveStory,
+    })
+  );
+  const { isUploading } = useLocalMedia((state) => ({
+    isUploading: state.state.isUploading,
+  }));
 
   const isDraft = 'draft' === status;
 
   useEffect(() => {
     // @todo The isDraft check is temporary to ensure only draft gets auto-saved,
     // until the logic for other statuses has been decided.
-    if (!isDraft || !hasNewChanges || !autoSaveInterval) {
+    if (!isDraft || !hasNewChanges || !autoSaveInterval || isUploading) {
       return undefined;
     }
     let timeout = setTimeout(() => {
       saveStory();
-      timeout = null;
     }, autoSaveInterval * 1000);
 
     return () => {
-      timeout && clearTimeout(timeout);
+      clearTimeout(timeout);
     };
-  }, [autoSaveInterval, isDraft, saveStory, status, hasNewChanges]);
+  }, [
+    autoSaveInterval,
+    isDraft,
+    saveStory,
+    status,
+    hasNewChanges,
+    isUploading,
+  ]);
 
   return null;
 }

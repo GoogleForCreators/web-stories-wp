@@ -31,3 +31,69 @@ export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
   // no other apparent way to execute interpolate `mediaWithScale` dynamically.
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
+
+const getOrientation = (obj) => {
+  if (obj.width / obj.height > 1) {
+    return Orientation.LANDSCAPE;
+  } else if (obj.width / obj.height < 1) {
+    return Orientation.PORTRAIT;
+  }
+  return Orientation.SQUARE;
+};
+
+const Orientation = {
+  PORTRAIT: 'portrait',
+  LANDSCAPE: 'landscape',
+  SQUARE: 'square',
+};
+
+/**
+ * Returns a valid srcSet attribute value for the given media resource.
+ *
+ * @param {import('../../app/media/utils/createResource.js').Resource} resource The resource.
+ * @return {?string} The srcSet value, or null if the resource has no `sizes`
+ * attribute.
+ */
+export function calculateSrcSet(resource) {
+  if (!resource.sizes) {
+    return null;
+  }
+
+  return (
+    Object.values(resource.sizes)
+      .sort((s1, s2) => s2.width - s1.width)
+      .filter((s) => getOrientation(s) === getOrientation(resource))
+      // Remove duplicates. Given it's already ordered in descending width order, we can be
+      // more efficient and just check the last item in each reduction.
+      .reduce(
+        (unique, s) =>
+          unique.length && unique[unique.length - 1].width == s.width
+            ? unique
+            : [...unique, s],
+        []
+      )
+      .map((s) => `${s.source_url} ${s.width}w`)
+      .join(',')
+  );
+}
+
+/**
+ * Choose the source URL of the smallest available size image / video wider than
+ * minWidth, according to the device pixel ratio.
+ *
+ * @param {number} minWidth The minimum width of the thumbnail to return.
+ * @param {import('../../app/media/utils/createResource.js').Resource} resource The resource.
+ * @return {string} Source URL of the smallest available size media.
+ */
+export function getSmallestUrlForWidth(minWidth, resource) {
+  if (resource.sizes) {
+    const smallestMedia = Object.values(resource.sizes)
+      .sort((s1, s2) => s1.width - s2.width)
+      .filter((s) => getOrientation(s) === getOrientation(resource))
+      .find((s) => s.width >= minWidth * window.devicePixelRatio);
+    if (smallestMedia) {
+      return smallestMedia.source_url;
+    }
+  }
+  return resource.src;
+}

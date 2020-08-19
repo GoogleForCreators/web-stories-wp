@@ -6,9 +6,17 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
-  autoload_files:
+  bootstrapFiles:
     - tests/phpstan/bootstrap.php
     - includes/namespace.php
+  dynamicConstantNames:
+    - WEBSTORIES_DEV_MODE
+    - WPCOM_IS_VIP_ENV
+    - IS_WPCOM
+    - WP_CLI
+    - GOOGLESITEKIT_VERSION
   ignoreErrors:
     # Uses func_get_args()
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
+    # False positive for wp_unslash()
+    - '#^Cannot cast array<string>\|string to string.$#'

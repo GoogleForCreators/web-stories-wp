@@ -35,7 +35,7 @@ import { getSelectionForAll } from './util';
  * @param {string} html  HTML string to parse into content
  * @return {Object} New editor state with selection
  */
-function getSelectAllStateFromHTML(html) {
+export function getSelectAllStateFromHTML(html) {
   const contentState = customImport(html);
   const initialState = EditorState.createWithContent(contentState);
   const selection = getSelectionForAll(initialState.getCurrentContent());

@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
+import { fillerDateSettingsObject } from '../../../../../dataUtils/dateSettings';
+import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
 
 import {
   STORY_SORT_OPTIONS,
@@ -34,6 +35,7 @@ const fakeStories = [
     pages: [{ id: '10' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 2,
@@ -42,6 +44,7 @@ const fakeStories = [
     pages: [{ id: '20' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
   {
     id: 3,
@@ -50,12 +53,13 @@ const fakeStories = [
     pages: [{ id: '30' }],
     centerTargetAction: () => {},
     bottomTargetAction: () => {},
+    editStoryLink: () => {},
   },
 ];
 
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithThemeAndFlagsProvider(
       <StoriesView
         filterValue="all"
         sort={{
@@ -68,15 +72,17 @@ describe('My Stories <StoriesView />', function () {
           trashStory: jest.fn,
           updateStory: jest.fn,
         }}
+        dateSettings={fillerDateSettingsObject}
         stories={fakeStories}
         users={{}}
         view={{
           style: VIEW_STYLE.GRID,
           pageSize: { width: 210, height: 316 },
         }}
-      />
+      />,
+      { enableInProgressStoryActions: false }
     );
 
-    expect(getAllByTestId('grid-item')).toHaveLength(fakeStories.length);
+    expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 });

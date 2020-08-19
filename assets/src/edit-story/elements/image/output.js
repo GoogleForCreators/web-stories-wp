@@ -19,17 +19,28 @@
  */
 import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
+import { calculateSrcSet } from '../media/util';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
 function ImageOutput({ element, box }) {
   const { resource } = element;
+
   const props = {
     layout: 'fill',
     src: resource.src,
     alt: element.alt !== undefined ? element.alt : resource.alt,
   };
+
+  const srcSet = calculateSrcSet(element.resource);
+  if (srcSet) {
+    props.srcSet = srcSet;
+  }
+
   return (
     <MediaOutput box={box} element={element}>
       <amp-img {...props} />

@@ -20,6 +20,19 @@
 import { identity, useContextSelector } from '../../utils/context';
 import Context from './context';
 
+/**
+ * @typedef {import('./typedefs').MediaContext} MediaContext
+ */
+
+/**
+ * Context value consumer to select a fragment of the enire media context value
+ * (local and media3p) that's provided from {@link MediaProvider}.
+ *
+ * @param {function(MediaContext):Object?} selector Returns a fragment of the
+ * media context value that the caller is interested in. If no selector is
+ * provided then the entire context is selected.
+ * @return {Object} The selected context value fragment.
+ */
 function useMedia(selector) {
   return useContextSelector(Context, selector ?? identity);
 }

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
@@ -38,6 +38,7 @@ describe('reshapeTemplateObject', () => {
     ],
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     pages: [{ id: 0, elements: [] }],
+    version: 17,
   };
 
   it('should reshape object to match snapshot', () => {
@@ -48,7 +49,7 @@ describe('reshapeTemplateObject', () => {
   it('should reshape template object with Moment date', () => {
     const reshapedObject = reshapeTemplateObject(true)(templateData);
     expect(reshapedObject.modified).toMatchObject(
-      moment('2020-04-21T07:00:00.000Z')
+      moment.parseZone('2020-04-21T07:00:00.000Z')
     );
   });
 

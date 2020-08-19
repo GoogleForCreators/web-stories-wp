@@ -15,23 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { rgba } from 'polished';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-import { rgba } from 'polished';
-/**
  * Internal dependencies
  */
-import { ReactComponent as Locked } from '../../../icons/lock.svg';
-
-/**
- * Internal dependencies
- */
+import { Lock as Locked } from '../../../icons';
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
 import { useStory } from '../../../app';
@@ -56,7 +53,7 @@ const LayerButton = styled.button.attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     `
-    background: ${rgba(theme.colors.action, 0.14)};
+    background: ${rgba(theme.colors.accent.primary, 0.14)};
   `}
 
   &:active {
@@ -76,7 +73,7 @@ const LayerIconWrapper = styled.div`
     height: 28px;
     width: 28px;
     opacity: 0.5;
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
@@ -86,7 +83,7 @@ const LayerDescription = styled.div`
   align-items: center;
   margin-left: 0;
   text-align: left;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 const LockedIcon = styled(Locked)`
@@ -108,9 +105,9 @@ const LayerContentContainer = styled.div`
 function Layer({ layer }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(layer.type);
   const { isSelected, handleClick } = useLayerSelection(layer);
-  const {
-    state: { currentPage },
-  } = useStory();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
   const isBackground = currentPage.elements[0].id === layer.id;
   const showPreview = !isBackground || layer.type !== 'shape';
 

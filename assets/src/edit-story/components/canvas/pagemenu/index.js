@@ -17,8 +17,9 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useCallback } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -28,15 +29,20 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory, useHistory, useConfig } from '../../../app';
 import { createPage, duplicatePage } from '../../../elements';
-import { ReactComponent as Delete } from '../../../icons/delete_icon.svg';
-import { ReactComponent as Duplicate } from '../../../icons/duplicate_icon.svg';
-import { ReactComponent as LeftArrow } from '../../../icons/undo_icon.svg';
-import { ReactComponent as RightArrow } from '../../../icons/redo_icon.svg';
-import { ReactComponent as Add } from '../../../icons/add_page.svg';
-import { ReactComponent as Layout } from '../../../icons/layout_helper.svg';
-import { ReactComponent as Text } from '../../../icons/text_helper.svg';
+import {
+  Delete,
+  Duplicate,
+  UndoAlt as LeftArrow,
+  RedoAlt as RightArrow,
+  Add,
+  PlayCircular,
+  StopCircular,
+  LayoutHelper,
+  Text,
+} from '../../../icons';
 import WithTooltip from '../../tooltip';
 import useCanvas from '../useCanvas';
 
@@ -49,7 +55,7 @@ const Wrapper = styled.div`
 `;
 
 const Box = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -59,7 +65,7 @@ const Box = styled.div`
 `;
 
 const PageCount = styled.div`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: 62px;
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
@@ -69,11 +75,12 @@ const PageCount = styled.div`
 const Options = styled.div`
   display: flex;
   align-items: center;
+  width: 100%;
   color: ${({ theme }) => theme.colors.fg.v2};
 `;
 
 const Divider = styled.span`
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   opacity: 0.3;
   height: ${HEIGHT}px;
   width: 1px;
@@ -89,14 +96,14 @@ const Icon = styled.button`
   border: 0;
   padding: 0;
   display: block;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 
   ${({ disabled }) =>
     disabled &&
-    `
-	opacity: .3;
-	pointer-events: none;
-	`}
+    css`
+      opacity: 0.3;
+      pointer-events: none;
+    `}
 
   svg {
     width: 28px;
@@ -111,13 +118,34 @@ function PageMenu() {
     actions: { undo, redo },
   } = useHistory();
   const {
-    state: { currentPageNumber, currentPage },
-    actions: { deleteCurrentPage, addPage },
-  } = useStory();
-  const {
-    state: { pageSize },
-  } = useCanvas();
+    currentPageNumber,
+    currentPage,
+    deleteCurrentPage,
+    addPage,
+    animationState,
+    updateAnimationState,
+    hasAnimations,
+  } = useStory(
+    ({
+      state: { currentPageNumber, currentPage, animationState },
+      actions: { deleteCurrentPage, addPage, updateAnimationState },
+    }) => {
+      return {
+        currentPageNumber,
+        currentPage,
+        deleteCurrentPage,
+        addPage,
+        animationState,
+        updateAnimationState,
+        hasAnimations: currentPage?.animations?.length > 0,
+      };
+    }
+  );
+  const { pageSize } = useCanvas((state) => ({
+    pageSize: state.state.pageSize,
+  }));
   const { isRTL } = useConfig();
+  const { showTextMagicAndHelperMode, enableAnimation } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -135,6 +163,17 @@ function PageMenu() {
   const handleUndo = useCallback(() => undo(), [undo]);
 
   const handleRedo = useCallback(() => redo(), [redo]);
+
+  const toggleAnimationState = useCallback(
+    () =>
+      updateAnimationState({
+        animationState:
+          animationState === STORY_ANIMATION_STATE.PLAYING
+            ? STORY_ANIMATION_STATE.RESET
+            : STORY_ANIMATION_STATE.PLAYING,
+      }),
+    [animationState, updateAnimationState]
+  );
 
   if (!currentPage) {
     return null;
@@ -168,7 +207,7 @@ function PageMenu() {
           <WithTooltip title={__('Duplicate page', 'web-stories')}>
             <Icon
               onClick={handleDuplicatePage}
-              aria-label={__('Dupliccate Page', 'web-stories')}
+              aria-label={__('Duplicate Page', 'web-stories')}
             >
               <Duplicate />
             </Icon>
@@ -204,16 +243,47 @@ function PageMenu() {
               {isRTL ? <LeftArrow /> : <RightArrow />}
             </Icon>
           </WithTooltip>
+          <Space />
+          {enableAnimation &&
+            (animationState === STORY_ANIMATION_STATE.PLAYING ? (
+              <WithTooltip
+                style={{ marginLeft: 'auto' }}
+                title={__('Stop', 'web-stories')}
+              >
+                <Icon
+                  onClick={toggleAnimationState}
+                  disabled={!hasAnimations}
+                  aria-label={__('Stop Page Animations', 'web-stories')}
+                >
+                  <StopCircular />
+                </Icon>
+              </WithTooltip>
+            ) : (
+              <WithTooltip
+                style={{ marginLeft: 'auto' }}
+                title={__('Play', 'web-stories')}
+              >
+                <Icon
+                  onClick={toggleAnimationState}
+                  disabled={!hasAnimations}
+                  aria-label={__('Play Page Animations', 'web-stories')}
+                >
+                  <PlayCircular />
+                </Icon>
+              </WithTooltip>
+            ))}
         </Options>
-        <Options>
-          <Icon disabled>
-            <Layout />
-          </Icon>
-          <Space isDouble />
-          <Icon disabled>
-            <Text />
-          </Icon>
-        </Options>
+        {showTextMagicAndHelperMode && (
+          <Options>
+            <Icon disabled>
+              <LayoutHelper />
+            </Icon>
+            <Space isDouble />
+            <Icon disabled>
+              <Text />
+            </Icon>
+          </Options>
+        )}
       </Box>
     </Wrapper>
   );

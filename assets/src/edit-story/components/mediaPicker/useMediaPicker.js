@@ -27,9 +27,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useMedia from '../../app/media/useMedia';
+import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
 import { useSnackbar } from '../../app/snackbar';
+import { useAPI } from '../../app/api';
 
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
@@ -39,9 +40,12 @@ export default function useMediaPicker({
   type = '',
   multiple = false,
 }) {
+  const { uploadVideoPoster } = useLocalMedia((state) => ({
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
   const {
-    actions: { uploadVideoPoster },
-  } = useMedia();
+    actions: { updateMedia },
+  } = useAPI();
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -57,6 +61,7 @@ export default function useMediaPicker({
   useEffect(() => {
     try {
       wp.Uploader.prototype.success = ({ attributes }) => {
+        updateMedia(attributes.id, { media_source: 'editor' });
         if (attributes.type === 'video') {
           uploadVideoPoster(attributes.id, attributes.url);
         }
@@ -64,7 +69,7 @@ export default function useMediaPicker({
     } catch (e) {
       // Silence.
     }
-  }, [uploadVideoPoster]);
+  }, [uploadVideoPoster, updateMedia]);
 
   const openMediaPicker = (evt) => {
     // If a user does not have the rights to upload to the media library, do not show the media picker.

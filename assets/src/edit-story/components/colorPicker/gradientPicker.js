@@ -24,12 +24,15 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
 import { ColorStopPropType } from '../../types';
-import { ReactComponent as Reverse } from '../../icons/gradient_reverser.svg';
-import { ReactComponent as Rotate } from '../../icons/gradient_rotator.svg';
+import {
+  GradientReverser as Reverse,
+  GradientRotator as Rotate,
+} from '../../icons';
 import GradientLine from './gradientLine';
 
 const Wrapper = styled.div`

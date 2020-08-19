@@ -21,15 +21,9 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import createSolid from '../../../utils/createSolid';
 import MULTIPLE_VALUE from '../multipleValue';
 
-export const transparentStyle = {
-  backgroundImage:
-    'conic-gradient(#fff 0.25turn, #d3d4d4 0turn 0.5turn, #fff 0turn .75turn, #d3d4d4 0turn 1turn)',
-  backgroundSize: '66.67% 66.67%',
-};
-
 function getPreviewStyle(pattern) {
   if (!pattern || pattern === MULTIPLE_VALUE) {
-    return transparentStyle;
+    return {};
   }
   const isSolidPattern = pattern.type === 'solid' || !pattern.type;
   if (!isSolidPattern) {
@@ -40,9 +34,9 @@ function getPreviewStyle(pattern) {
   const {
     color: { r, g, b, a },
   } = pattern;
-  // If opacity is 0, create as transparent:
+  // If opacity is 0, no extra styling needed:
   if (a === 0) {
-    return transparentStyle;
+    return {};
   }
 
   // Otherwise create color, but with full opacity

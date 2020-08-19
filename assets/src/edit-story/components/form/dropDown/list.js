@@ -40,7 +40,7 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
 `;
 
 const List = styled.ul.attrs({ role: 'listbox' })`
@@ -50,9 +50,9 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  background-color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.fg.white};
   background-clip: padding-box;
-  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.v0, 0.175)};
+  box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.black, 0.175)};
 `;
 
 const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
@@ -79,9 +79,9 @@ const availableKeysForSearch = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
 function DropDownList({
   handleCurrentValue,
   value,
-  ariaLabel,
   options,
   toggleOptions,
+  ...rest
 }) {
   const listContainerRef = useRef();
   const listRef = useRef();
@@ -100,10 +100,15 @@ function DropDownList({
   );
 
   useEffect(() => {
+    // If the menu has more than a couple options it will shift into view
+    // which will immediately dismiss the menu making it unusable.
+    if (options.length > 4) {
+      return undefined;
+    }
     // Hide dropdown menu on scroll.
     document.addEventListener('scroll', toggleOptions, true);
     return () => document.removeEventListener('scroll', toggleOptions, true);
-  }, [toggleOptions]);
+  }, [toggleOptions, options]);
 
   const handleMoveFocus = useCallback(
     (offset) => {
@@ -162,6 +167,8 @@ function DropDownList({
     handleUpDown,
     [handleUpDown]
   );
+  // Empty handler to be consistent with up/down.
+  useKeyDownEffect(listContainerRef, ['left', 'right'], () => {}, []);
   useKeyDownEffect(
     listContainerRef,
     { key: availableKeysForSearch, shift: true },
@@ -191,10 +198,10 @@ function DropDownList({
   return (
     <ListContainer ref={listContainerRef}>
       <List
+        {...rest}
         aria-multiselectable={false}
         aria-required={false}
         aria-activedescendant={value || ''}
-        aria-labelledby={ariaLabel}
         ref={listRef}
       >
         {options.map(({ name, value: optValue }) => (
@@ -215,8 +222,7 @@ function DropDownList({
 DropDownList.propTypes = {
   toggleOptions: PropTypes.func.isRequired,
   handleCurrentValue: PropTypes.func.isRequired,
-  value: PropTypes.string,
-  ariaLabel: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
 };
 

@@ -1,0 +1,425 @@
+[
+  {
+    "name": "ABeeZee",
+    "value": "ABeeZee",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ]
+  },
+  {
+    "name": "Abel",
+    "value": "Abel",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Abhaya Libre",
+    "value": "Abhaya Libre",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 500, 600, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800]
+    ]
+  },
+  {
+    "name": "Alfa Slab One",
+    "value": "Alfa Slab One",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Alice",
+    "value": "Alice",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Alike",
+    "value": "Alike",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Alike Angular",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Allan",
+    "value": "Allan",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ]
+  },
+  {
+    "name": "Allerta",
+    "value": "Allerta",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Allerta Stencil",
+    "value": "Allerta Stencil",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Allura",
+    "value": "Allura",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Almarai",
+    "value": "Almarai",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [300, 400, 700, 800],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 700],
+      [0, 800]
+    ]
+  },
+  {
+    "name": "Almendra",
+    "value": "Almendra",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Almendra Display",
+    "value": "Almendra Display",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Almendra SC",
+    "value": "Almendra SC",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Gelasio",
+    "value": "Gelasio",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 500, 600, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 500],
+      [1, 500],
+      [0, 600],
+      [1, 600],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Gentium Basic",
+    "value": "Gentium Basic",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Gentium Book Basic",
+    "value": "Gentium Book Basic",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Geo",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400]
+    ]
+  },
+  {
+    "name": "Gochi Hand",
+    "value": "Gochi Hand",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Gorditas",
+    "value": "Gorditas",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ]
+  },
+  {
+    "name": "Gugi",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Gupter",
+    "value": "Gupter",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 500, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 500],
+      [0, 700]
+    ]
+  },
+  {
+    "name": "Gurajada",
+    "value": "Gurajada",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Habibi",
+    "value": "Habibi",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Halant",
+    "value": "Halant",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ]
+  },
+  {
+    "name": "Hammersmith One",
+    "value": "Hammersmith One",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Hanalei",
+    "value": "Hanalei",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Hanalei Fill",
+    "value": "Hanalei Fill",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Handlee",
+    "value": "Handlee",
+    "fallbacks": ["cursive"],
+    "service": "fonts.google.com",
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]]
+  },
+  {
+    "name": "Roboto",
+    "value": "Roboto",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [100, 300, 400, 500, 700, 900],
+    "styles": ["italic", "regular"],
+    "variants": [
+      [0, 100],
+      [1, 100],
+      [0, 300],
+      [1, 300],
+      [0, 400],
+      [1, 400],
+      [0, 500],
+      [1, 500],
+      [0, 700],
+      [1, 700],
+      [0, 900],
+      [1, 900]
+    ]
+  },
+  {
+    "name": "Roboto Condensed",
+    "value": "Roboto Condensed",
+    "fallbacks": ["sans-serif"],
+    "service": "fonts.google.com",
+    "weights": [300, 400, 700],
+    "styles": ["italic", "regular"],
+    "variants": [
+      [0, 300],
+      [1, 300],
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Roboto Mono",
+    "fallbacks": ["monospace"],
+    "service": "fonts.google.com",
+    "weights": [100, 300, 400, 500, 700],
+    "styles": ["italic", "regular"],
+    "variants": [
+      [0, 100],
+      [1, 100],
+      [0, 300],
+      [1, 300],
+      [0, 400],
+      [1, 400],
+      [0, 500],
+      [1, 500],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Source Serif Pro",
+    "value": "Source Serif Pro",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [400, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 400],
+      [0, 600],
+      [0, 700]
+    ]
+  },
+  {
+    "name": "Space Mono",
+    "value": "Space Mono",
+    "fallbacks": ["monospace"],
+    "service": "fonts.google.com",
+    "weights": [400, 700],
+    "styles": ["regular", "italic"],
+    "variants": [
+      [0, 400],
+      [1, 400],
+      [0, 700],
+      [1, 700]
+    ]
+  },
+  {
+    "name": "Yrsa",
+    "value": "Yrsa",
+    "fallbacks": ["serif"],
+    "service": "fonts.google.com",
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ]
+  }
+]

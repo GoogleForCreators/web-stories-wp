@@ -15,41 +15,42 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import { useFeature } from 'flagged';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-
-import styled from 'styled-components';
-import { useCallback, useRef, useLayoutEffect } from 'react';
-
-/**
  * Internal dependencies
  */
-import { resolveRoute, useRouteHistory } from '../../app/router';
+import { BEZIER } from '../../../animation';
+import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
-import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { resolveRoute, useRouteHistory } from '../../app/router';
 import {
-  BEZIER,
   BUTTON_TYPES,
   primaryPaths,
   secondaryPaths,
   Z_INDEX,
+  APP_ROUTES,
 } from '../../constants';
-
+import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  NavLink,
-  Rule,
   NavButton,
+  NavLink,
   NavList,
   NavListItem,
+  Rule,
   WebStoriesHeading,
 } from './navigationComponents';
 
@@ -99,9 +100,17 @@ export const LeftRailContainer = styled.nav.attrs({
 
 export function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    capabilities: { canManageSettings } = {},
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+
+  const enableInProgressViews = useFeature('enableInProgressViews');
+  const enableSettingsViews =
+    useFeature('enableSettingsView') && canManageSettings;
 
   const {
     state: { sideBarVisible },
@@ -121,6 +130,26 @@ export function LeftRail() {
     [toggleSideBar, leftRailRef, upperContentRef]
   );
 
+  const enabledPaths = useMemo(() => {
+    if (enableInProgressViews) {
+      return primaryPaths;
+    }
+    return primaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews]);
+
+  const enabledSecondaryPaths = useMemo(() => {
+    let copyOfSecondaryPaths = enableSettingsViews
+      ? [...secondaryPaths]
+      : secondaryPaths.filter(
+          (path) => !path.value.includes(APP_ROUTES.EDITOR_SETTINGS)
+        );
+
+    if (enableInProgressViews) {
+      return copyOfSecondaryPaths;
+    }
+    return copyOfSecondaryPaths.filter((path) => !path.inProgress);
+  }, [enableInProgressViews, enableSettingsViews]);
+
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
       toggleSideBar();
@@ -134,6 +163,10 @@ export function LeftRail() {
       leftRailRef.current.focus();
     }
   }, [sideBarVisible]);
+
+  const onCreateNewStoryClick = useCallback(async () => {
+    await trackEvent('dashboard', 'create_new_story');
+  }, []);
 
   return (
     <LeftRailContainer
@@ -151,13 +184,18 @@ export function LeftRail() {
           </WebStoriesHeading>
         </Content>
         <Content>
-          <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
+          <NavButton
+            type={BUTTON_TYPES.CTA}
+            href={newStoryURL}
+            isLink
+            onClick={onCreateNewStoryClick}
+          >
             {__('Create New Story', 'web-stories')}
           </NavButton>
         </Content>
         <Content>
           <NavList>
-            {primaryPaths.map((path) => (
+            {enabledPaths.map((path) => (
               <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}
@@ -172,7 +210,7 @@ export function LeftRail() {
         <Rule />
         <Content>
           <NavList>
-            {secondaryPaths.map((path) => (
+            {enabledSecondaryPaths.map((path) => (
               <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}

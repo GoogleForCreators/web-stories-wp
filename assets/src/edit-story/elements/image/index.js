@@ -28,7 +28,6 @@ export { default as TextContent } from './textContent';
 export { default as LayerContent } from './layer';
 export { default as LayerIcon } from './icon';
 export {
-  canFill,
   canFlip,
   isMaskable,
   isMedia,

@@ -18,32 +18,25 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import moment from 'moment';
-import { actions } from '@storybook/addon-actions';
+import moment from 'moment-timezone';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
-import { text } from '@storybook/addon-knobs';
+import { STORY_STATUS } from '../../../constants';
+import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import {
   CardGrid,
   CardGridItem,
-  CardItemMenu,
   CardPreviewContainer,
   CardTitle,
 } from '../../';
-import { DetailRow } from '../../../app/views/shared/storyGridView';
-import { STORY_STATUS } from '../../../constants';
 
 export default {
   title: 'Dashboard/Components/CardGridItem',
   component: CardGridItem,
 };
-
-const Container = styled.div`
-  width: 250px;
-`;
 
 const Card = styled.div`
   display: flex;
@@ -55,7 +48,7 @@ const Card = styled.div`
 
 export const _default = () => {
   return (
-    <CardGrid pageSize={{ width: 210, height: 316 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -66,7 +59,7 @@ export const _default = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 210, height: 316 }}
+          pageSize={STORYBOOK_PAGE_SIZE}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
@@ -74,7 +67,7 @@ export const _default = () => {
         <CardTitle
           title="How to be a leader in the apocalpyse"
           author="Rick Grimes"
-          displayDate={moment('04-04-2020', 'MM-DD-YYYY')}
+          displayDate={moment('04-04-2020').format('MM-DD-YYYY')}
           status={STORY_STATUS.DRAFT}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
@@ -86,7 +79,7 @@ export const _default = () => {
 
 export const _publishedStory = () => {
   return (
-    <CardGrid pageSize={{ width: 210, height: 316 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
           bottomAction={{
@@ -97,7 +90,7 @@ export const _publishedStory = () => {
             targetAction: '',
             label: 'Preview',
           }}
-          pageSize={{ width: 210, height: 316 }}
+          pageSize={STORYBOOK_PAGE_SIZE}
           story={{}}
         >
           <Card>{text('Sample Story Content', 'Sample Story')}</Card>
@@ -105,57 +98,12 @@ export const _publishedStory = () => {
         <CardTitle
           title="The 6 fingered man"
           author="Inigo Moñtoya"
-          displayDate={moment('04-19-2020', 'MM-DD-YYYY')}
-          status={STORY_STATUS.PUBLISHED}
+          displayDate={moment('04-19-2020').format('MM-DD-YYYY')}
+          status={STORY_STATUS.PUBLISH}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
         />
       </CardGridItem>
     </CardGrid>
-  );
-};
-
-export const _contextMenu = () => {
-  const [contextMenuId, setContextMenuId] = useState(-1);
-  return (
-    <Container>
-      <CardGrid pageSize={{ width: 210, height: 316 }}>
-        <CardGridItem>
-          <CardPreviewContainer
-            bottomAction={{
-              targetAction: 'https://www.google.com',
-              label: 'Open in Editor',
-            }}
-            centerAction={{
-              targetAction: '',
-              label: 'Preview',
-            }}
-            pageSize={{ width: 210, height: 316 }}
-            story={{}}
-          >
-            <Card>{text('Sample Story Content', 'Sample Story')}</Card>
-          </CardPreviewContainer>
-          <DetailRow>
-            <CardTitle
-              title="Story Title"
-              author="storybook author"
-              status={STORY_STATUS.DRAFT}
-              displayDate={moment('05-02-2020', 'MM-DD-YYYY')}
-              onEditCancel={() => {}}
-              onEditComplete={() => {}}
-            />
-            <CardItemMenu
-              onMoreButtonSelected={setContextMenuId}
-              contextMenuId={contextMenuId}
-              onMenuItemSelected={(item, story) => {
-                actions('onClick ', item.label, story.id);
-                setContextMenuId(-1);
-              }}
-              story={{ id: 1, status: 'publish', title: 'Sample Story' }}
-            />
-          </DetailRow>
-        </CardGridItem>
-      </CardGrid>
-    </Container>
   );
 };

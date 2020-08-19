@@ -19,6 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
+import { useFeatures } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -27,6 +33,9 @@ import { useAPI } from '../../app/api';
 import useResizeEffect from '../../utils/useResizeEffect';
 import { useStory } from '../../app/story';
 import Context from './context';
+import DesignInspector from './design';
+import DocumentInspector from './document';
+import PrepublishInspector from './prepublish';
 
 const DESIGN = 'design';
 const DOCUMENT = 'document';
@@ -36,12 +45,15 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAllUsers },
   } = useAPI();
-  const {
-    state: { selectedElementIds, currentPage },
-  } = useStory();
+  const { selectedElementIds, currentPage } = useStory((state) => ({
+    selectedElementIds: state.state.selectedElementIds,
+    currentPage: state.state.currentPage,
+  }));
+  const { showPrePublishTab } = useFeatures();
   const inspectorRef = useRef(null);
 
-  const [tab, setTab] = useState(DESIGN);
+  const initialTab = DESIGN;
+  const [tab, setTab] = useState(initialTab);
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
@@ -96,6 +108,7 @@ function InspectorProvider({ children }) {
   const state = {
     state: {
       tab,
+      initialTab,
       users,
       inspectorContentHeight,
       isUsersLoading,
@@ -109,11 +122,27 @@ function InspectorProvider({ children }) {
       setInspectorContentNode,
     },
     data: {
-      tabs: {
-        DESIGN,
-        DOCUMENT,
-        PREPUBLISH,
-      },
+      tabs: [
+        {
+          id: DESIGN,
+          title: __('Design', 'web-stories'),
+          Pane: DesignInspector,
+        },
+        {
+          id: DOCUMENT,
+          title: __('Document', 'web-stories'),
+          Pane: DocumentInspector,
+        },
+        ...(showPrePublishTab
+          ? [
+              {
+                id: PREPUBLISH,
+                title: __('Prepublish', 'web-stories'),
+                Pane: PrepublishInspector,
+              },
+            ]
+          : []),
+      ],
     },
   };
 

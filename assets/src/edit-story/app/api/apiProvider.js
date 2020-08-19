@@ -30,7 +30,7 @@ import apiFetch from '@wordpress/api-fetch';
  */
 import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
-import { useConfig } from '../';
+import { useConfig } from '../config';
 import Context from './context';
 
 function APIProvider({ children }) {
@@ -105,22 +105,6 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const deleteStoryById = useCallback(
-    /**
-     * Fire REST API call to delete story.
-     *
-     * @param {number}   storyId Story post id.
-     * @return {Promise} Return apiFetch promise.
-     */
-    (storyId) => {
-      return apiFetch({
-        path: `${stories}/${storyId}`,
-        method: 'DELETE',
-      });
-    },
-    [stories]
-  );
-
   const getMedia = useCallback(
     ({ mediaType, searchTerm, pagingNum }) => {
       let apiPath = media;
@@ -129,6 +113,7 @@ function APIProvider({ children }) {
         context: 'edit',
         per_page: perPage,
         page: pagingNum,
+        _web_stories_envelope: true,
       });
 
       if (mediaType) {
@@ -139,12 +124,9 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath, parse: false }).then(
-        async (response) => {
-          const jsonArray = await response.json();
-          return { data: jsonArray, headers: response.headers };
-        }
-      );
+      return apiFetch({ path: apiPath }).then((response) => {
+        return { data: response.body, headers: response.headers };
+      });
     },
     [media]
   );
@@ -249,7 +231,6 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      deleteStoryById,
       getAllFonts,
       getAllUsers,
       uploadMedia,

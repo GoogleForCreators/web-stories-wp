@@ -31,11 +31,12 @@ import { useSelect, useDispatch } from '@wordpress/data';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../tracking';
 import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
-import { icon } from './index.js';
+import { name, icon } from './';
 import './edit.css';
 
 const MIN_SIZE = 20;
@@ -63,11 +64,12 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   useEffect(() => {
     setLocalURL(outerURL);
+    trackEvent('block-editor', name, 'url_embedded', outerURL);
   }, [outerURL]);
 
   useEffect(() => {
-    if (ref.current && global.ampStoryPlayer) {
-      const player = new global.ampStoryPlayer(global, ref.current);
+    if (ref.current && global.AmpStoryPlayer) {
+      const player = new global.AmpStoryPlayer(global, ref.current);
       player.load();
     }
   }, [showLoadingIndicator, showPlaceholder]);

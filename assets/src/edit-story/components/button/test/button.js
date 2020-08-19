@@ -37,20 +37,22 @@ import { renderWithTheme } from '../../../testUtils';
 describe('Button', () => {
   describe('Primary', () => {
     it('should render <Primary /> button', () => {
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Primary>{"I'm a Primary button"}</Primary>
       );
-      expect(getByText("I'm a Primary button")).toBeDefined();
+      expect(
+        getByRole('button', { name: "I'm a Primary button" })
+      ).toBeDefined();
     });
 
     it('should simulate a click on <Primary /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Primary onClick={onClickMock}>{"I'm a Primary button"}</Primary>
       );
 
-      const button = getByText("I'm a Primary button");
+      const button = getByRole('button', { name: "I'm a Primary button" });
 
       fireEvent.click(button);
 
@@ -60,13 +62,13 @@ describe('Button', () => {
     it('should simulate a click on disabled <Primary /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Primary onClick={() => invokedMock()} isDisabled>
           {"I'm a Primary button"}
         </Primary>
       );
 
-      const button = getByText("I'm a Primary button");
+      const button = getByRole('button', { name: "I'm a Primary button" });
 
       fireEvent.click(button);
 
@@ -76,20 +78,22 @@ describe('Button', () => {
 
   describe('Secondary', () => {
     it('should render <Secondary /> button', () => {
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Secondary>{"I'm a Secondary button"}</Secondary>
       );
-      expect(getByText("I'm a Secondary button")).toBeDefined();
+      expect(
+        getByRole('button', { name: "I'm a Secondary button" })
+      ).toBeDefined();
     });
 
     it('should simulate a click on <Secondary /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Secondary onClick={onClickMock}>{"I'm a Secondary button"}</Secondary>
       );
 
-      const button = getByText("I'm a Secondary button");
+      const button = getByRole('button', { name: "I'm a Secondary button" });
 
       fireEvent.click(button);
 
@@ -99,13 +103,13 @@ describe('Button', () => {
     it('should simulate a click on disabled <Secondary /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Secondary onClick={() => invokedMock()} isDisabled>
           {"I'm a Secondary button"}
         </Secondary>
       );
 
-      const button = getByText("I'm a Secondary button");
+      const button = getByRole('button', { name: "I'm a Secondary button" });
 
       fireEvent.click(button);
 
@@ -115,20 +119,22 @@ describe('Button', () => {
 
   describe('Outline', () => {
     it('should render <Outline /> button', () => {
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Outline>{"I'm an Outline button"}</Outline>
       );
-      expect(getByText("I'm an Outline button")).toBeDefined();
+      expect(
+        getByRole('button', { name: "I'm an Outline button" })
+      ).toBeDefined();
     });
 
     it('should simulate a click on <Outline /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Outline onClick={onClickMock}>{"I'm an Outline button"}</Outline>
       );
 
-      const button = getByText("I'm an Outline button");
+      const button = getByRole('button', { name: "I'm an Outline button" });
 
       fireEvent.click(button);
 
@@ -138,13 +144,13 @@ describe('Button', () => {
     it('should simulate a click on disabled <Outline /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getByText } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Outline onClick={() => invokedMock()} isDisabled>
           {"I'm an Outline button"}
         </Outline>
       );
 
-      const button = getByText("I'm an Outline button");
+      const button = getByRole('button', { name: "I'm an Outline button" });
 
       fireEvent.click(button);
 
@@ -161,11 +167,11 @@ describe('Button', () => {
     it('should simulate a click on <Undo /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Undo onClick={onClickMock} data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Undo onClick={onClickMock} aria-label="Undo" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Undo' });
 
       fireEvent.click(button);
 
@@ -175,11 +181,11 @@ describe('Button', () => {
     it('should simulate a click on disabled <Undo /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Undo onClick={() => invokedMock()} isDisabled data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Undo onClick={() => invokedMock()} isDisabled aria-label="Undo" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Undo' });
 
       fireEvent.click(button);
 
@@ -196,11 +202,11 @@ describe('Button', () => {
     it('should simulate a click on <Redo /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Redo onClick={onClickMock} data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Redo onClick={onClickMock} aria-label="Redo" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Redo' });
 
       fireEvent.click(button);
 
@@ -210,11 +216,11 @@ describe('Button', () => {
     it('should simulate a click on disabled <Redo /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Redo onClick={() => invokedMock()} isDisabled data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Redo onClick={() => invokedMock()} isDisabled aria-label="Redo" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Redo' });
 
       fireEvent.click(button);
 
@@ -231,11 +237,11 @@ describe('Button', () => {
     it('should simulate a click on <GridView /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <GridView onClick={onClickMock} data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <GridView onClick={onClickMock} aria-label="Grid" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Grid' });
 
       fireEvent.click(button);
 
@@ -245,15 +251,11 @@ describe('Button', () => {
     it('should simulate a click on disabled <GridView /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <GridView
-          onClick={() => invokedMock()}
-          isDisabled
-          data-testid="testing"
-        />
+      const { getByRole } = renderWithTheme(
+        <GridView onClick={() => invokedMock()} isDisabled aria-label="Grid" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Grid' });
 
       fireEvent.click(button);
 
@@ -270,11 +272,11 @@ describe('Button', () => {
     it('should simulate a click on <Close /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Close onClick={onClickMock} data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Close onClick={onClickMock} aria-label="Close" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Close' });
 
       fireEvent.click(button);
 
@@ -284,11 +286,11 @@ describe('Button', () => {
     it('should simulate a click on disabled <Close /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Close onClick={() => invokedMock()} isDisabled data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Close onClick={() => invokedMock()} isDisabled aria-label="Close" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Close' });
 
       fireEvent.click(button);
 
@@ -305,11 +307,11 @@ describe('Button', () => {
     it('should simulate a click on <Eyedropper /> button', () => {
       const onClickMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
-        <Eyedropper onClick={onClickMock} data-testid="testing" />
+      const { getByRole } = renderWithTheme(
+        <Eyedropper onClick={onClickMock} aria-label="Eye-dropper" />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Eye-dropper' });
 
       fireEvent.click(button);
 
@@ -319,15 +321,15 @@ describe('Button', () => {
     it('should simulate a click on disabled <Eyedropper /> button', () => {
       const invokedMock = jest.fn();
 
-      const { getAllByTestId } = renderWithTheme(
+      const { getByRole } = renderWithTheme(
         <Eyedropper
           onClick={() => invokedMock()}
           isDisabled
-          data-testid="testing"
+          aria-label="Eye-dropper"
         />
       );
 
-      const button = getAllByTestId('testing')[0];
+      const button = getByRole('button', { name: 'Eye-dropper' });
 
       fireEvent.click(button);
 

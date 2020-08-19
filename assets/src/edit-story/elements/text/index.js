@@ -48,6 +48,8 @@ export const defaultAttributes = {
 
 export const hasEditMode = true;
 
+export const hasEditModeMoveable = true;
+
 export const isMedia = false;
 
 export const canFlip = false;
@@ -58,6 +60,8 @@ export const resizeRules = {
   vertical: false,
   horizontal: true,
   diagonal: true,
+  minWidth: 20,
+  minHeight: 0, // Enforced by min font size
 };
 
 export const panels = [

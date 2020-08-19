@@ -16,48 +16,118 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-
+import { useEffect } from 'react';
+import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import DisplayElement from '../../edit-story/components/canvas/displayElement';
+import {
+  StoryAnimation,
+  useStoryAnimationContext,
+  STORY_ANIMATION_STATE,
+} from '../../animation';
 import StoryPropTypes from '../../edit-story/types';
-import { STORY_PAGE_STATE } from '../constants';
-import StoryAnimation, { useStoryAnimationContext } from './storyAnimation';
+import generatePatternStyles from '../../edit-story/utils/generatePatternStyles';
+import { PageSizePropType } from '../types';
+import PagePreviewElements from './previewPageElements';
 
-function PreviewPageController({ page, animationState }) {
+/*
+ * A quick note about how height works with the 9:16 aspect ratio (FULLBLEED_RATIO)
+ * The unitProvider that sizes page previews still needs the 2:3 ratio,
+ * this is passed in here as pageSize.height. It is the true height of the story
+ * That said, we also need a height for the 9:16 that acts as the container for the story
+ * to allow for fullBleed overflow.
+ * So, you'll notice that containerHeight is getting used to wrap the PreviewSafeZone height
+ * to make sure that the overflow has the proper size.
+ * Reference edit-story/components/canvas/layout for more details
+ *
+ */
+
+const FullBleedPreviewWrapper = styled.div`
+  height: ${({ pageSize }) => `${pageSize.containerHeight}px`};
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  ${({ background }) => generatePatternStyles(background)};
+`;
+
+const PreviewSafeZone = styled.div`
+  width: 100%;
+  height: ${({ pageSize }) => `${pageSize.height}px`};
+  overflow: visible;
+  position: absolute;
+  margin: 0;
+`;
+
+function PreviewPageController({
+  page,
+  animationState,
+  subscribeGlobalTime,
+  pageSize,
+}) {
   const {
-    actions: { playWAAPIAnimations },
+    actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
 
   useEffect(() => {
-    if ('animate' === animationState) {
-      playWAAPIAnimations();
+    switch (animationState) {
+      case STORY_ANIMATION_STATE.PLAYING:
+        WAAPIAnimationMethods.play();
+        return () => {};
+      case STORY_ANIMATION_STATE.RESET:
+        WAAPIAnimationMethods.reset();
+        return () => {};
+      case STORY_ANIMATION_STATE.SCRUBBING:
+        WAAPIAnimationMethods.pause();
+        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
+      case STORY_ANIMATION_STATE.PAUSED:
+        WAAPIAnimationMethods.pause();
+        return () => {};
+      default:
+        return () => {};
     }
-  }, [animationState, playWAAPIAnimations]);
+  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
 
-  return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement
-      key={id}
-      page={page}
-      element={{ id, ...rest }}
-      isAnimatable
-    />
-  ));
+  /**
+   * Reset everything on unmount;
+   */
+  useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
+
+  return (
+    <FullBleedPreviewWrapper
+      pageSize={pageSize}
+      background={page.backgroundColor}
+    >
+      <PreviewSafeZone pageSize={pageSize}>
+        <PagePreviewElements page={page} />
+      </PreviewSafeZone>
+    </FullBleedPreviewWrapper>
+  );
 }
 
-function PreviewPage({ page, animationState = 'idle', onAnimationComplete }) {
+function PreviewPage({
+  page,
+  pageSize,
+  animationState = STORY_ANIMATION_STATE.RESET,
+  onAnimationComplete,
+  subscribeGlobalTime,
+}) {
   return (
     <StoryAnimation.Provider
       animations={page.animations}
+      elements={page.elements}
       onWAAPIFinish={onAnimationComplete}
     >
       <PreviewPageController
         page={page}
+        pageSize={pageSize}
         animationState={animationState}
         onAnimationComplete={onAnimationComplete}
+        subscribeGlobalTime={subscribeGlobalTime}
       />
     </StoryAnimation.Provider>
   );
@@ -65,8 +135,17 @@ function PreviewPage({ page, animationState = 'idle', onAnimationComplete }) {
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
-  animationState: PropTypes.oneOf(Object.values(STORY_PAGE_STATE)),
+  pageSize: PageSizePropType.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
   onAnimationComplete: PropTypes.func,
+  subscribeGlobalTime: PropTypes.func,
+};
+
+PreviewPageController.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+  pageSize: PageSizePropType.isRequired,
+  animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
+  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

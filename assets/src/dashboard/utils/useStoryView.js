@@ -19,14 +19,18 @@
  */
 import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
+import { PageSizePropType } from '../types';
 import { clamp, usePagePreviewSize } from './index';
 
 export default function useStoryView({ filters, totalPages }) {
+  const enableStoryPreviews = useFeature('enableStoryPreviews');
+
   const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
@@ -35,6 +39,7 @@ export default function useStoryView({ filters, totalPages }) {
   const [sortDirection, setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
+  const [activePreview, _setActivePreview] = useState();
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -86,6 +91,15 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
+  const setActivePreview = useCallback(
+    (_, story) => {
+      if (enableStoryPreviews) {
+        _setActivePreview(story);
+      }
+    },
+    [enableStoryPreviews]
+  );
+
   const requestNextPage = useCallback(() => setPageClamped(page + 1), [
     page,
     setPageClamped,
@@ -93,6 +107,10 @@ export default function useStoryView({ filters, totalPages }) {
 
   return useMemo(
     () => ({
+      activePreview: {
+        value: activePreview,
+        set: setActivePreview,
+      },
       view: {
         style: viewStyle,
         toggleStyle: toggleViewStyle,
@@ -119,6 +137,8 @@ export default function useStoryView({ filters, totalPages }) {
       },
     }),
     [
+      activePreview,
+      setActivePreview,
       viewStyle,
       toggleViewStyle,
       pageSize,
@@ -138,10 +158,7 @@ export default function useStoryView({ filters, totalPages }) {
 export const ViewPropTypes = PropTypes.shape({
   style: PropTypes.oneOf(Object.values(VIEW_STYLE)),
   toggleStyle: PropTypes.func,
-  pageSize: PropTypes.shape({
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }),
+  pageSize: PageSizePropType,
 });
 
 export const FilterPropTypes = PropTypes.shape({

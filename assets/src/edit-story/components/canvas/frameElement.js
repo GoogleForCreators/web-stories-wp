@@ -18,14 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory, useDropTargets } from '../../app';
+import { useStory, useTransform } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -33,7 +33,7 @@ import {
 } from '../../elements/shared';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
-import WithLink from '../link/frame';
+import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
 import useCanvas from './useCanvas';
 
@@ -53,6 +53,7 @@ const Wrapper = styled.div`
 		outline: ${({ theme, hasMask }) =>
       hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
 	}
+  
 `;
 
 const EmptyFrame = styled.div`
@@ -63,50 +64,75 @@ const EmptyFrame = styled.div`
 
 function FrameElement({ element }) {
   const { id, type } = element;
-  const { Frame, isMaskable } = getDefinitionForType(type);
+  const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const [hovering, setHovering] = useState(false);
+  const {
+    state: { isAnythingTransforming },
+  } = useTransform();
 
-  const {
-    actions: { setNodeForElement, handleSelectElement },
-  } = useCanvas();
-  const {
-    state: { selectedElementIds, currentPage },
-  } = useStory();
-  const {
-    actions: { getBox },
-  } = useUnits();
-  const {
-    state: { activeDropTargetId },
-  } = useDropTargets();
+  const onPointerEnter = () => setHovering(true);
+  const onPointerLeave = () => setHovering(false);
+
+  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
+    (state) => ({
+      setNodeForElement: state.actions.setNodeForElement,
+      handleSelectElement: state.actions.handleSelectElement,
+      isEditing: state.state.isEditing,
+    })
+  );
+  const { selectedElementIds, currentPage, isAnimating } = useStory(
+    (state) => ({
+      selectedElementIds: state.state.selectedElementIds,
+      currentPage: state.state.currentPage,
+    })
+  );
+  const { getBox } = useUnits((state) => ({
+    getBox: state.actions.getBox,
+  }));
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const isSelected = selectedElementIds.includes(id);
+  const isSingleElement = selectedElementIds.length === 1;
   const box = getBox(element);
   const isBackground = currentPage?.elements[0].id === id;
+
+  const [isTransforming, setIsTransforming] = useState(false);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
     if (transform?.dropTargets?.hover !== undefined) {
       target.style.opacity = transform.dropTargets.hover ? 0 : 1;
     }
+    setIsTransforming(transform !== null);
   });
 
   return (
     <WithLink
       element={element}
-      active={selectedElementIds.length === 1 && isSelected}
-      dragging={Boolean(activeDropTargetId)}
+      active={!isSelected && hovering && !isAnythingTransforming}
       anchorRef={elementRef}
     >
+      {Controls && (
+        <Controls
+          isTransforming={isTransforming}
+          isSelected={isSelected}
+          isSingleElement={isSingleElement}
+          isEditing={isEditing}
+          box={box}
+          elementRef={elementRef}
+          element={element}
+        />
+      )}
       <Wrapper
         ref={elementRef}
         data-element-id={id}
         {...box}
         onMouseDown={(evt) => {
           if (isSelected) {
-            elementRef.current.focus();
+            elementRef.current.focus({ preventScroll: true });
           } else {
             handleSelectElement(id, evt);
           }
@@ -119,9 +145,12 @@ function FrameElement({ element }) {
             handleSelectElement(id, evt);
           }
         }}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
+        isAnimating={isAnimating}
         data-testid="frameElement"
       >
         <WithMask element={element} fill={true}>

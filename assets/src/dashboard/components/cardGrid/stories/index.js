@@ -18,15 +18,16 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import CardGrid from '../';
-import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
 import { STORY_STATUS } from '../../../constants';
+import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
+import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
+import CardGrid from '../';
 
 export default {
   title: 'Dashboard/Components/CardGrid',
@@ -52,7 +53,7 @@ const StorybookGridItem = (
         targetAction: '',
         label: 'Preview',
       }}
-      pageSize={{ width: 210, height: 316 }}
+      pageSize={STORYBOOK_PAGE_SIZE}
     >
       <Card>{text('Sample Story Content', 'Sample Story')}</Card>
     </CardPreviewContainer>
@@ -71,7 +72,7 @@ const itemArray = new Array(12).fill(StorybookGridItem);
 
 export const _default = () => {
   return (
-    <CardGrid pageSize={{ width: 210, height: 316 }}>
+    <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       {itemArray.map((gridItem, index) => (
         <div key={index}>{gridItem}</div>
       ))}

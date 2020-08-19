@@ -33,14 +33,13 @@ import Context from './context';
 function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
-
   const [pageSize, setPageSize] = useState({
     width: PAGE_WIDTH,
     height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
-  const [framesLayer, setFramesLayer] = useState(null);
+  const [showSafeZone, setShowSafeZone] = useState(true);
 
   const {
     nodesById,
@@ -49,13 +48,28 @@ function CanvasProvider({ children }) {
     setEditingElementWithState,
     setEditingElementWithoutState,
     clearEditing,
+    getNodeForElement,
     setNodeForElement,
   } = useEditingElement();
 
   const {
-    state: { currentPage, selectedElementIds },
-    actions: { toggleElementInSelection, setSelectedElementsById },
-  } = useStory();
+    currentPage,
+    selectedElementIds,
+    toggleElementInSelection,
+    setSelectedElementsById,
+  } = useStory(
+    ({
+      state: { currentPage, selectedElementIds },
+      actions: { toggleElementInSelection, setSelectedElementsById },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        toggleElementInSelection,
+        setSelectedElementsById,
+      };
+    }
+  );
 
   const handleSelectElement = useCallback(
     (elId, evt) => {
@@ -75,7 +89,7 @@ function CanvasProvider({ children }) {
       } else {
         setSelectedElementsById({ elementIds: [elId] });
       }
-      evt.currentTarget.focus();
+      evt.currentTarget.focus({ preventScroll: true });
       if (currentPage?.elements[0].id !== elId) {
         evt.stopPropagation();
       }
@@ -105,7 +119,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const newSelectedElementIds = currentPage.elements
-        .filter(({ isFill, isBackground }) => !isFill && !isBackground)
+        .filter(({ isBackground }) => !isBackground)
         .filter(({ x, y, width, height }) => {
           return (
             x <= lx + lw && lx <= x + width && y <= ly + lh && ly <= y + height
@@ -141,18 +155,18 @@ function CanvasProvider({ children }) {
       state: {
         pageContainer,
         fullbleedContainer,
-        framesLayer,
         nodesById,
         editingElement,
         editingElementState,
         isEditing: Boolean(editingElement),
         lastSelectionEvent,
+        showSafeZone,
         pageSize,
       },
       actions: {
         setPageContainer,
-        setFramesLayer,
         setFullbleedContainer,
+        getNodeForElement,
         setNodeForElement,
         setEditingElement: setEditingElementWithoutState,
         setEditingElementWithState,
@@ -160,20 +174,21 @@ function CanvasProvider({ children }) {
         handleSelectElement,
         selectIntersection,
         setPageSize,
+        setShowSafeZone,
       },
     }),
     [
       pageContainer,
-      framesLayer,
       fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
       lastSelectionEvent,
       pageSize,
+      showSafeZone,
       setPageContainer,
-      setFramesLayer,
       setFullbleedContainer,
+      getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
       setEditingElementWithState,
@@ -181,6 +196,7 @@ function CanvasProvider({ children }) {
       handleSelectElement,
       selectIntersection,
       setPageSize,
+      setShowSafeZone,
     ]
   );
   return (

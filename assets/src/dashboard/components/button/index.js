@@ -31,6 +31,7 @@ const StyledButton = styled.button`
 
   font-weight: ${({ theme }) => theme.typography.weight.bold};
   align-items: center;
+  justify-content: center;
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   border: ${({ theme }) => theme.borders.transparent};
@@ -40,10 +41,12 @@ const StyledButton = styled.button`
   opacity: 0.75;
   padding: 4px 12px;
   text-decoration: none;
+  text-align: center;
 
   &:focus,
   &:active,
   &:hover {
+    box-shadow: none;
     opacity: 1;
     outline: none;
     color: ${({ theme }) => theme.colors.white};
@@ -61,6 +64,32 @@ const StyledButton = styled.button`
 
 const PrimaryButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
+`;
+
+export const DefaultButton = styled(StyledButton)`
+  ${TypographyPresets.Medium};
+  ${({ theme }) => `
+    min-width: 50px;
+    padding: 4px 14px;
+    background: transparent;
+    color: ${theme.colors.bluePrimary};
+    border: ${theme.borders.transparent};
+    border-radius: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 24px;
+    opacity: 1;
+
+    &:focus,
+    &:active,
+    &:hover {
+      color: ${theme.colors.bluePrimary};
+      border-color: ${theme.colors.blueLight};
+      background-color: ${theme.colors.blueLight};
+    }
+
+    transition: background-color 0.6s ease 0s;
+  `}
 `;
 
 // TODO: address CTA active styling
@@ -107,6 +136,7 @@ const Button = ({
     [BUTTON_TYPES.PRIMARY]: PrimaryButton,
     [BUTTON_TYPES.SECONDARY]: SecondaryButton,
     [BUTTON_TYPES.CTA]: CtaButton,
+    [BUTTON_TYPES.DEFAULT]: DefaultButton,
   };
 
   const StyledButtonByType = ButtonOptions[type];
@@ -115,6 +145,7 @@ const Button = ({
     <StyledButtonByType
       as={isLink ? 'a' : 'button'}
       disabled={isDisabled}
+      onClick={(e) => e.stopPropagation()} // this is here so that links stacked on containers that have click handlers don't bubble. if an onClick is present as a prop it'll override this with ...rest
       {...rest}
     >
       <StyledChildren isSecondary={type === BUTTON_TYPES.SECONDARY}>

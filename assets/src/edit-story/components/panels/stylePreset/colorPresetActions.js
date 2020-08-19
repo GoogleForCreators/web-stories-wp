@@ -42,7 +42,7 @@ const ActionsWrapper = styled.div`
 const AddColorPreset = styled.button`
   background: transparent;
   border: none;
-  color: ${({ theme }) => rgba(theme.colors.fg.v7, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.accent.primary, 0.84)};
   cursor: pointer;
   padding: 12px 0px;
   line-height: 18px;
@@ -50,15 +50,17 @@ const AddColorPreset = styled.button`
 `;
 
 function ColorPresetActions({ color }) {
-  const {
-    state: {
-      selectedElements,
-      story: { stylePresets },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { selectedElements, stylePresets, updateStory } = useStory(
+    ({
+      state: {
+        selectedElements,
+        story: { stylePresets },
+      },
+      actions: { updateStory },
+    }) => ({ selectedElements, stylePresets, updateStory })
+  );
 
-  const { fillColors, textColors } = stylePresets;
+  const { colors } = stylePresets;
 
   const linkRef = useRef();
 
@@ -80,15 +82,13 @@ function ColorPresetActions({ color }) {
           properties: {
             stylePresets: {
               ...stylePresets,
-              ...(isText
-                ? { textColors: [...textColors, toAdd] }
-                : { fillColors: [...fillColors, toAdd] }),
+              colors: [...colors, toAdd],
             },
           },
         });
       }
     },
-    [stylePresets, fillColors, isText, textColors, updateStory]
+    [stylePresets, isText, colors, updateStory]
   );
 
   useKeyDownEffect(

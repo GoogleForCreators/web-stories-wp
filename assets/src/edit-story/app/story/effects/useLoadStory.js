@@ -80,15 +80,11 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           storyData?.pages?.length > 0 ? storyData.pages : [createPage()];
 
         // Initialize color presets, if missing.
-        if (!stylePresets.fillColors) {
-          stylePresets.fillColors = [];
+        if (!stylePresets.colors) {
+          stylePresets.colors = [];
         }
-        if (!stylePresets.textColors) {
-          stylePresets.textColors = [];
-        }
-        if (!stylePresets.textStyles) {
-          stylePresets.textStyles = [];
-        }
+        // @todo Add this back once UX ready post-beta, currently always empty.
+        stylePresets.textStyles = [];
 
         // Set story-global variables.
         const story = {

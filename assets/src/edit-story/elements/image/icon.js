@@ -22,11 +22,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Icon } from '../../icons/media.svg';
+import { Media } from '../../icons';
 
 function ImageIcon() {
   const alt = __('Image element', 'web-stories');
-  return <Icon aria-label={alt} />;
+  return <Media aria-label={alt} />;
 }
 
 export default ImageIcon;

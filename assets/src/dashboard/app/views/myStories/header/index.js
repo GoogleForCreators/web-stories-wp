@@ -15,19 +15,24 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useMemo, memo, useCallback } from 'react';
+import PropTypes from 'prop-types';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
-/**
  * Internal dependencies
  */
-import { Layout, ToggleButtonGroup } from '../../../../components';
+import {
+  Layout,
+  ToggleButtonGroup,
+  useLayoutContext,
+} from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
@@ -59,6 +64,10 @@ function Header({
   view,
   wpListURL,
 }) {
+  const {
+    actions: { scrollToTop },
+  } = useLayoutContext();
+
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
@@ -79,7 +88,10 @@ function Header({
         <ToggleButtonGroup
           buttons={STORY_STATUSES.map((storyStatus) => {
             return {
-              handleClick: () => filter.set(storyStatus.value),
+              handleClick: () => {
+                filter.set(storyStatus.value);
+                scrollToTop();
+              },
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
               disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
@@ -93,7 +105,15 @@ function Header({
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, totalStoriesByStatus]);
+  }, [filter, scrollToTop, totalStoriesByStatus]);
+
+  const onSortChange = useCallback(
+    (newSort) => {
+      sort.set(newSort);
+      scrollToTop();
+    },
+    [scrollToTop, sort]
+  );
 
   return (
     <Layout.Squishable>
@@ -108,12 +128,13 @@ function Header({
       </PageHeading>
       <BodyViewOptions
         showGridToggle
+        showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
+        handleSortChange={onSortChange}
         wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
@@ -134,4 +155,4 @@ Header.propTypes = {
   wpListURL: PropTypes.string,
 };
 
-export default Header;
+export default memo(Header);

@@ -18,32 +18,25 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
 /**
  * Internal dependencies
  */
+import { StoryAnimation } from '../../animation';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
-import { generateOverlayStyles, OverlayType } from '../utils/backgroundOverlay';
+import generatePatternStyles from '../utils/generatePatternStyles';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundOverlay } = page;
+  const { id, animations, elements, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
-    backgroundImage: `linear-gradient(45deg, #999999 25%, transparent 25%),
-      linear-gradient(-45deg, #999999 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, #999999 75%),
-      linear-gradient(-45deg, transparent 75%, #999999 75%)`,
-    backgroundSize: '20px 20px',
-    backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px',
+    ...generatePatternStyles(backgroundColor),
   };
-  const backgroundOverlayStyles = generateOverlayStyles(backgroundOverlay);
-  const backgroundElements = elements.filter((element) => element.isBackground);
-  const regularElements = elements.filter((element) => !element.isBackground);
+  const [backgroundElement, ...regularElements] = elements;
   const longestMediaElement = getLongestMediaElement(elements);
 
   const autoAdvanceAfter = longestMediaElement?.id
@@ -55,32 +48,37 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      {backgroundElements.length > 0 && (
-        <amp-story-grid-layer template="vertical">
-          <div className="page-background-area" style={backgroundStyles}>
-            {backgroundElements.map((element) => (
-              <OutputElement key={'el-' + element.id} element={element} />
-            ))}
+      <StoryAnimation.Provider animations={animations} elements={elements}>
+        <StoryAnimation.AMPAnimations />
+
+        {backgroundElement && (
+          <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+            <div className="page-fullbleed-area" style={backgroundStyles}>
+              <div className="page-safe-area">
+                <OutputElement element={backgroundElement} />
+                {backgroundElement.backgroundOverlay && (
+                  <div
+                    className="page-background-overlay-area"
+                    style={generatePatternStyles(
+                      backgroundElement.backgroundOverlay
+                    )}
+                  />
+                )}
+              </div>
+            </div>
+          </amp-story-grid-layer>
+        )}
+
+        <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+          <div className="page-fullbleed-area">
+            <div className="page-safe-area">
+              {regularElements.map((element) => (
+                <OutputElement key={'el-' + element.id} element={element} />
+              ))}
+            </div>
           </div>
         </amp-story-grid-layer>
-      )}
-
-      {backgroundOverlay && backgroundOverlay !== OverlayType.NONE && (
-        <amp-story-grid-layer template="vertical">
-          <div
-            className="page-background-overlay-area"
-            style={{ ...backgroundOverlayStyles }}
-          />
-        </amp-story-grid-layer>
-      )}
-
-      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
-        <div className="page-safe-area">
-          {regularElements.map((element) => (
-            <OutputElement key={'el-' + element.id} element={element} />
-          ))}
-        </div>
-      </amp-story-grid-layer>
+      </StoryAnimation.Provider>
     </amp-story-page>
   );
 }

@@ -30,7 +30,6 @@ import useSaveStory from './actions/useSaveStory';
 import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
-import useDeleteStory from './actions/useDeleteStory';
 import useAutoSave from './actions/useAutoSave';
 
 function StoryProvider({ storyId, children }) {
@@ -39,7 +38,14 @@ function StoryProvider({ storyId, children }) {
     api,
     internal: { restore },
   } = useStoryReducer();
-  const { pages, current, selection, story, capabilities } = reducerState;
+  const {
+    pages,
+    current,
+    selection,
+    story,
+    animationState,
+    capabilities,
+  } = reducerState;
 
   // Generate current page info.
   const {
@@ -96,7 +102,7 @@ function StoryProvider({ storyId, children }) {
   // (and it will have side-effects because saving can update url and status,
   //  thus the need for `updateStory`)
   const { updateStory } = api;
-  const { saveStory, isSaving } = useSaveStory({
+  const { saveStory, isSaving, isFreshlyPublished } = useSaveStory({
     storyId,
     pages,
     story,
@@ -108,7 +114,6 @@ function StoryProvider({ storyId, children }) {
     pages,
     story,
   });
-  const { deleteStory } = useDeleteStory({ storyId });
 
   const state = {
     state: {
@@ -121,16 +126,17 @@ function StoryProvider({ storyId, children }) {
       selectedElements,
       hasSelection,
       story,
+      animationState,
       capabilities,
       meta: {
         isSaving: isSaving || isAutoSaving,
+        isFreshlyPublished,
       },
     },
     actions: {
       ...api,
       autoSave,
       saveStory,
-      deleteStory,
     },
     internal: { reducerState, restore },
   };

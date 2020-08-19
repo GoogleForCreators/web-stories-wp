@@ -63,18 +63,14 @@ const MarginedElement = styled.span`
   position: relative;
   display: inline-block;
   top: 0;
-  margin: ${({ horizontalPadding, horizontalBuffer }) =>
-    `0 ${horizontalPadding + horizontalBuffer}px`};
-  left: ${({ horizontalPadding, horizontalBuffer }) =>
-    `-${horizontalPadding + horizontalBuffer}px`};
+  margin: ${({ horizontalPadding }) => `0 ${horizontalPadding}px`};
+  left: ${({ horizontalPadding }) => `-${horizontalPadding}px`};
 `;
 
 const Span = styled.span`
   ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
 
-  border-radius: 3px;
-  box-decoration-break: clone;
   position: relative;
 `;
 
@@ -96,13 +92,13 @@ const FillElement = styled.p`
 
 function TextDisplay({
   element: { id, content, backgroundColor, backgroundTextMode, ...rest },
-  box: { width },
 }) {
   const ref = useRef(null);
 
-  const {
-    actions: { dataToEditorY, dataToEditorX },
-  } = useUnits();
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
 
   const { font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
@@ -120,7 +116,6 @@ function TextDisplay({
       ? {}
       : { backgroundColor }),
     ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    horizontalBuffer: 0.02 * width,
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };

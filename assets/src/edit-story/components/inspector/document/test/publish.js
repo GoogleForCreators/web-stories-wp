@@ -48,7 +48,9 @@ function setupPanel(
   };
 
   const config = { capabilities };
+  const loadUsers = jest.fn();
   const inspectorContextValue = {
+    actions: { loadUsers },
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
@@ -90,8 +92,8 @@ describe('PublishPanel', () => {
   });
 
   it('should display Author field if authors available', () => {
-    const { getByText } = setupPanel();
-    const element = getByText('Author');
+    const { getByRole } = setupPanel();
+    const element = getByRole('button', { name: 'Author' });
     expect(element).toBeDefined();
   });
 
@@ -104,20 +106,20 @@ describe('PublishPanel', () => {
   });
 
   it('should open Date picker when clicking on date', () => {
-    const { getByText } = setupPanel();
-    const element = getByText('01/01/2020');
+    const { getByRole } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
-    const calendar = getByText('January 2020');
+    const calendar = getByRole('button', { name: 'January 2020' });
     expect(calendar).toBeDefined();
   });
 
   it('should update the story when choosing a date from the calendar', () => {
-    const { getByText, getByLabelText, updateStory } = setupPanel();
-    const element = getByText('01/01/2020');
+    const { getByRole, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
-    const firstOfJanuary = getByLabelText('January 1, 2020');
+    const firstOfJanuary = getByRole('button', { name: 'January 1, 2020' });
     expect(firstOfJanuary).toBeDefined();
 
     fireEvent.click(firstOfJanuary);
@@ -130,13 +132,13 @@ describe('PublishPanel', () => {
   });
 
   it('should update the story when choosing time', () => {
-    const { getByText, getByLabelText, updateStory } = setupPanel();
-    const element = getByText('01/01/2020');
+    const { getByRole, getByLabelText, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
     const hours = getByLabelText('Hours');
     const minutes = getByLabelText('Minutes');
-    const am = getByText('AM');
+    const am = getByRole('button', { name: 'AM' });
 
     expect(minutes).toBeDefined();
     expect(hours).toBeDefined();
@@ -166,8 +168,8 @@ describe('PublishPanel', () => {
   });
 
   it('should not update the date with incorrect times', () => {
-    const { getByText, getByLabelText, updateStory } = setupPanel();
-    const element = getByText('01/01/2020');
+    const { getByRole, getByLabelText, updateStory } = setupPanel();
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
     const hours = getByLabelText('Hours');
@@ -183,18 +185,18 @@ describe('PublishPanel', () => {
   });
 
   it('should open the calendar via keyboard events', () => {
-    const { getByText, queryByLabelText } = setupPanel();
+    const { getByRole, queryByLabelText } = setupPanel();
 
     let dateInCalendar = queryByLabelText('January 1, 2020');
     expect(dateInCalendar).toBeNull();
 
-    const element = getByText('01/01/2020');
+    const element = getByRole('button', { name: 'Edit: Story publish time' });
     fireEvent.keyDown(element, {
       key: 'Enter',
       which: 13,
     });
 
-    dateInCalendar = queryByLabelText('January 1, 2020');
+    dateInCalendar = getByRole('button', { name: 'January 1, 2020' });
     expect(dateInCalendar).toBeDefined();
   });
 });

@@ -13,9 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
+export { ReactComponent as ArrowAlphaAscending } from './arrowAlphaAscending.svg';
+export { ReactComponent as ArrowAlphaDescending } from './arrowAlphaDescending.svg';
+export { ReactComponent as ArrowDownward } from './arrowDownward.svg';
 export { ReactComponent as BookmarkFill } from './bookmarkFill.svg';
 export { ReactComponent as BookmarkOutline } from './bookmarkOutline.svg';
 export { ReactComponent as Checkmark } from './checkmark.svg';
@@ -32,3 +36,4 @@ export { ReactComponent as ChevronLeft } from './chevronLeft.svg';
 export { ReactComponent as PlayArrow } from './playArrow.svg';
 export { ReactComponent as RightArrow } from './rightArrow.svg';
 export { ReactComponent as Search } from './search.svg';
+export { ReactComponent as UploadIcon } from './upload.svg';

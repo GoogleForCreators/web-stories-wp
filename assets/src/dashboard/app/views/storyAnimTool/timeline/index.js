@@ -17,29 +17,34 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
-import { StoryPropType } from '../../../../types';
-import { ANIMATION_TYPES, FIELD_TYPES } from '../../../../animations/constants';
-import { AnimationProps } from '../../../../animations/parts';
 import {
-  Container,
+  GetAnimationProps,
+  ANIMATION_TYPES,
+  FIELD_TYPES,
+} from '../../../../../animation';
+import { StoryPropType } from '../../../../types';
+import { clamp } from '../../../../utils';
+import {
   AnimationList,
+  AnimationPanel,
+  CancelButton,
+  Container,
   DeleteButton,
   DeleteIcon,
-  LabelButton,
-  CancelButton,
-  AnimationPanel,
   FormField,
+  LabelButton,
+  ScrubBar,
+  ScrubBarContainer,
   TimelineAnimation,
-  TimelineLabel,
-  TimelineBarContainer,
   TimelineBar,
+  TimelineBarContainer,
+  TimelineLabel,
 } from './components';
 
 function handleInputFocus(e) {
@@ -60,6 +65,17 @@ function renderFormField(name, type, value, options, onChange) {
         value && (
           <input name={name} readOnly type={FIELD_TYPES.HIDDEN} value={value} />
         )
+      );
+
+    case FIELD_TYPES.CHECKBOX:
+      return (
+        <input
+          name={name}
+          readOnly
+          type={FIELD_TYPES.CHECKBOX}
+          onChange={onChange}
+          defaultChecked={value}
+        />
       );
 
     case FIELD_TYPES.DROPDOWN:
@@ -98,6 +114,7 @@ function renderFormField(name, type, value, options, onChange) {
 }
 
 const animationTypes = Object.values(ANIMATION_TYPES);
+const scrubBarWidth = 10;
 
 function Timeline({
   story,
@@ -109,11 +126,15 @@ function Timeline({
   onAnimationSelect,
   onAnimationDelete,
   onToggleTargetSelect,
+  emitGlobalTime,
+  canScrub,
 }) {
+  const scrubContainerRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
   const [formFields, setFormFields] = useState({});
 
   const { type: selectedAnimationType, props: animationProps } = useMemo(
-    () => AnimationProps(formFields.type || animationTypes[0]),
+    () => GetAnimationProps(formFields.type || animationTypes[0]),
     [formFields.type]
   );
 
@@ -145,6 +166,28 @@ function Timeline({
       ),
     [animations]
   );
+
+  useEffect(() => {
+    if (!(canScrub && isDragging && scrubContainerRef.current)) {
+      return () => {};
+    }
+    const containerBoundingBox = scrubContainerRef.current.getBoundingClientRect();
+    const handleMouseMove = (e) => {
+      const delta = clamp(e.clientX - containerBoundingBox.left, [
+        0,
+        containerBoundingBox.width - scrubBarWidth,
+      ]);
+      emitGlobalTime((delta / containerBoundingBox.width) * totalDuration);
+      scrubContainerRef.current.style.setProperty('--scrub-offset', delta);
+    };
+    const handleMouseUp = () => setIsDragging(false);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging, emitGlobalTime, totalDuration, canScrub]);
 
   const handleAnimationSubmit = useCallback(
     (e) => {
@@ -183,7 +226,10 @@ function Timeline({
 
       onAddOrUpdateAnimation(
         Object.keys(animation)
-          .filter((name) => typeof animation[name] !== 'undefined')
+          .filter(
+            (name) =>
+              typeof animation[name] !== 'undefined' && animation[name] !== ''
+          )
           .reduce(
             (acc, name) => ({
               ...acc,
@@ -204,14 +250,17 @@ function Timeline({
     ]
   );
 
-  const handleOnChange = useCallback((e) => {
-    const { name, value } = e.target;
+  const createHandleOnChange = useCallback(
+    (isCheckbox = false) => (e) => {
+      const { name, value, checked } = e.target;
 
-    setFormFields((prevFormFields) => ({
-      ...prevFormFields,
-      [name]: value,
-    }));
-  }, []);
+      setFormFields((prevFormFields) => ({
+        ...prevFormFields,
+        [name]: isCheckbox ? checked : value,
+      }));
+    },
+    []
+  );
 
   const handleToggleTargetSelect = useCallback(
     (e) => {
@@ -295,12 +344,20 @@ function Timeline({
               </TimelineBarContainer>
             </TimelineAnimation>
           ))}
+          <ScrubBarContainer ref={scrubContainerRef}>
+            <ScrubBar
+              opacity={canScrub ? 1 : 0}
+              width={scrubBarWidth}
+              onMouseDown={() => setIsDragging(true)}
+              isDragging={isDragging}
+            />
+          </ScrubBarContainer>
         </AnimationList>
         <AnimationPanel>
           {Object.keys(formFields).length > 0 && (
             <form onSubmit={handleAnimationSubmit}>
               {Object.keys(animationProps).map((name) => (
-                <FormField key={name}>
+                <FormField key={formFields.id + name}>
                   {animationProps[name].type !== FIELD_TYPES.HIDDEN && (
                     <label title={animationProps[name].tooltip}>
                       {animationProps[name].label || name}
@@ -311,7 +368,9 @@ function Timeline({
                     animationProps[name].type,
                     formFields[name],
                     animationProps[name].values,
-                    handleOnChange
+                    createHandleOnChange(
+                      animationProps[name].type === FIELD_TYPES.CHECKBOX
+                    )
                   )}
                 </FormField>
               ))}
@@ -353,6 +412,8 @@ Timeline.propTypes = {
   onAnimationSelect: PropTypes.func.isRequired,
   onAnimationDelete: PropTypes.func.isRequired,
   onToggleTargetSelect: PropTypes.func.isRequired,
+  emitGlobalTime: PropTypes.func,
+  canScrub: PropTypes.bool,
 };
 
 export default Timeline;

@@ -17,33 +17,69 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
+import { getDefinitionForType } from '../../elements';
+import useAddPastedElements from './useAddPastedElements';
+import useCanvas from './useCanvas';
 
 const MOVE_COARSE_STEP = 10;
 
 /**
- * @param {{current: Node}} ref
+ * @param {{current: Node}} ref Reference.
  */
 function useCanvasKeys(ref) {
+  const addPastedElements = useAddPastedElements();
+
   const {
-    actions: {
-      addElements,
-      arrangeSelection,
-      clearSelection,
-      deleteSelectedElements,
-      updateSelectedElements,
-    },
-    state: { selectedElements },
-  } = useStory();
+    selectedElementIds,
+    selectedElements,
+    arrangeSelection,
+    clearSelection,
+    deleteSelectedElements,
+    updateSelectedElements,
+    setSelectedElementsById,
+    currentPage,
+  } = useStory(
+    ({
+      state: { selectedElementIds, selectedElements, currentPage },
+      actions: {
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+        setSelectedElementsById,
+      },
+    }) => {
+      return {
+        currentPage,
+        selectedElementIds,
+        selectedElements,
+        arrangeSelection,
+        clearSelection,
+        deleteSelectedElements,
+        updateSelectedElements,
+        setSelectedElementsById,
+      };
+    }
+  );
+
+  const { getNodeForElement, setEditingElement } = useCanvas(
+    ({ actions: { getNodeForElement, setEditingElement } }) => ({
+      getNodeForElement,
+      setEditingElement,
+    })
+  );
+  const selectedElementIdsRef = useRef(null);
+  selectedElementIdsRef.current = selectedElementIds;
 
   // Return focus back to the canvas when another section loses the focus.
   useEffect(() => {
@@ -54,31 +90,49 @@ function useCanvasKeys(ref) {
 
     const doc = container.ownerDocument;
 
-    const handler = (evt) => {
-      if (!container.contains(evt.target)) {
-        // Make sure that no other component is trying to get the focus
-        // at this time.
-        setTimeout(() => {
-          if (doc.activeElement === doc.body) {
-            container.focus();
+    const handler = () => {
+      // Make sure that no other component is trying to get the focus
+      // at this time. We have to check all "focusout" events here because
+      // after DOM removal, the "focusout" events are all over the place.
+      setTimeout(() => {
+        if (doc.activeElement === doc.body) {
+          // For a single selection, select the frame of this element.
+          // If none or multiple selection, select the container.
+          const currentSelectedIds = selectedElementIdsRef.current;
+          const selectedFrame =
+            currentSelectedIds?.length === 1
+              ? getNodeForElement(currentSelectedIds[0])
+              : null;
+          if (selectedFrame) {
+            selectedFrame.focus({ preventScroll: true });
+          } else {
+            container.focus({ preventScroll: true });
           }
-        }, 300);
-      }
+        }
+      }, 300);
     };
     doc.addEventListener('focusout', handler, true);
     return () => {
       doc.removeEventListener('focusout', handler, true);
     };
-  }, [ref]);
+  }, [ref, getNodeForElement]);
 
-  useKeyDownEffect(ref, 'delete', () => deleteSelectedElements(), [
+  useGlobalKeyDownEffect('delete', () => deleteSelectedElements(), [
     deleteSelectedElements,
   ]);
-  useKeyDownEffect(ref, 'esc', () => clearSelection(), [clearSelection]);
+  useGlobalKeyDownEffect('esc', () => clearSelection(), [clearSelection]);
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+a'] },
+    () => {
+      const elementIds = currentPage.elements.map(({ id }) => id);
+      setSelectedElementsById({ elementIds });
+    },
+    [currentPage, setSelectedElementsById]
+  );
 
   // Position (x/y) key handler.
-  useKeyDownEffect(
-    ref,
+  useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
       const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
@@ -95,28 +149,60 @@ function useCanvasKeys(ref) {
   );
 
   // Layer up/down.
-  useKeyDownEffect(
-    ref,
-    { key: ['mod+up', 'mod+down'], shift: true },
-    ({ key, shiftKey }) =>
-      arrangeSelection({ position: getLayerDirection(key, shiftKey) }),
+  useGlobalKeyDownEffect(
+    { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
+    (evt) => {
+      const { key, shiftKey } = evt;
+
+      // Cancel the default behavior of the event: it's very jarring to run
+      // into mod+left/right triggering the browser's back/forward navigation.
+      evt.preventDefault();
+
+      const layerDir = getLayerDirection(key, shiftKey);
+      if (layerDir) {
+        arrangeSelection({ position: layerDir });
+      }
+    },
     [arrangeSelection]
+  );
+
+  // Edit mode
+  useGlobalKeyDownEffect(
+    'enter',
+    () => {
+      if (selectedElements.length !== 1) {
+        return;
+      }
+
+      const { type, id } = selectedElements[0];
+      const { hasEditMode } = getDefinitionForType(type);
+      // Only handle Enter key for editable elements
+      if (!hasEditMode) {
+        return;
+      }
+
+      setEditingElement(id);
+    },
+    [selectedElements, setEditingElement]
   );
 
   const cloneHandler = useCallback(() => {
     if (selectedElements.length === 0) {
       return;
     }
-    const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
-      return {
-        ...getPastedCoordinates(x, y),
-        id: uuidv4(),
-        basedOn: id,
-        ...rest,
-      };
-    });
-    addElements({ elements: clonedElements });
-  }, [addElements, selectedElements]);
+    const clonedElements = selectedElements
+      // Filter out the background element (never makes sense to clone that)
+      .filter(({ isBackground }) => !isBackground)
+      .map(({ id, x, y, ...rest }) => {
+        return {
+          ...getPastedCoordinates(x, y),
+          id: uuidv4(),
+          basedOn: id,
+          ...rest,
+        };
+      });
+    addPastedElements(clonedElements);
+  }, [addPastedElements, selectedElements]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 }

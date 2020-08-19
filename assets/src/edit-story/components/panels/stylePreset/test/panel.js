@@ -25,15 +25,22 @@ import { fireEvent } from '@testing-library/react';
 import StylePresetPanel from '../index';
 import StoryContext from '../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { getShapePresets, getTextPresets } from '../utils';
+import {
+  getShapePresets,
+  getTextPresets,
+  getPagePreset,
+  presetHasOpacity,
+} from '../utils';
 import { renderWithTheme } from '../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+import createSolid from '../../../../utils/createSolid';
 
 jest.mock('../utils');
 
 function setupPanel(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
   const updateElementsById = jest.fn();
+  const updateCurrentPageProperties = jest.fn();
 
   const textElement = {
     id: '1',
@@ -41,19 +48,28 @@ function setupPanel(extraStylePresets, extraStateProps) {
   };
   const storyContextValue = {
     state: {
+      currentPage: {
+        elements: [
+          {
+            id: 'bg',
+          },
+        ],
+      },
       selectedElementIds: ['1'],
       selectedElements: [textElement],
       ...extraStateProps,
       story: {
         stylePresets: {
-          ...{ fillColors: [], textColors: [], textStyles: [] },
+          ...{ colors: [] },
           ...extraStylePresets,
         },
       },
     },
-    actions: { updateStory, updateElementsById },
+    actions: { updateStory, updateElementsById, updateCurrentPageProperties },
   };
   const {
+    getAllByRole,
+    getByRole,
     getByText,
     queryByLabelText,
     getByLabelText,
@@ -65,6 +81,8 @@ function setupPanel(extraStylePresets, extraStateProps) {
     </StoryContext.Provider>
   );
   return {
+    getAllByRole,
+    getByRole,
     getByText,
     queryByText,
     getByLabelText,
@@ -72,11 +90,13 @@ function setupPanel(extraStylePresets, extraStateProps) {
     queryAllByLabelText,
     updateStory,
     updateElementsById,
+    updateCurrentPageProperties,
   };
 }
 
 describe('Panels/StylePreset', () => {
   const EDIT_BUTTON_LABEL = 'Edit presets';
+  const APPLY_PRESET = 'Apply color preset';
   const TEST_COLOR = {
     color: {
       r: 1,
@@ -91,14 +111,14 @@ describe('Panels/StylePreset', () => {
       b: 2,
     },
   };
-  const STYLE_PRESET = {
+  const BACKGROUND_PROPS = {
     backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
     backgroundColor: TEST_COLOR,
   };
 
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
-    const element = getByText('Presets');
+    const element = getByText('Saved Colors');
     expect(element).toBeDefined();
   });
 
@@ -116,7 +136,7 @@ describe('Panels/StylePreset', () => {
       ],
     };
     const { queryByText } = setupPanel(null, extraStateProps);
-    expect(queryByText('Presets')).toBeNull();
+    expect(queryByText('Saved Colors')).toBeNull();
   });
 
   describe('Panels/StylePreset/Header', () => {
@@ -131,7 +151,7 @@ describe('Panels/StylePreset', () => {
 
     it('should have functional Edit button if relevant presets exist', () => {
       const extraStylePresets = {
-        textColors: [TEST_COLOR],
+        colors: [TEST_COLOR],
       };
       const { getByLabelText, queryByLabelText } = setupPanel(
         extraStylePresets
@@ -149,13 +169,13 @@ describe('Panels/StylePreset', () => {
       expect(newEditButton).toBeDefined();
     });
 
-    it('should add a text color preset if other text styles are default or missing', () => {
+    it('should add a text color preset', () => {
       const extraStateProps = {
         selectedElements: [
           {
             id: '1',
             type: 'text',
-            content: '<span style="color: rgba(2, 2, 2)">Content</span>',
+            content: '<span style="color: rgb(2, 2, 2)">Content</span>',
             backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
             font: TEXT_ELEMENT_DEFAULT_FONT,
           },
@@ -168,7 +188,7 @@ describe('Panels/StylePreset', () => {
 
       getTextPresets.mockImplementation(() => {
         return {
-          textColors: [TEST_COLOR_2],
+          colors: [TEST_COLOR_2],
         };
       });
 
@@ -179,22 +199,20 @@ describe('Panels/StylePreset', () => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           stylePresets: {
-            textColors: [TEST_COLOR_2],
-            fillColors: [],
-            textStyles: [],
+            colors: [TEST_COLOR_2],
           },
         },
       });
     });
 
-    it('should add style preset from a Text with correct values', () => {
+    it('should add color preset from a Text with correct values when multiple styles have changed', () => {
       const extraStateProps = {
         selectedElements: [
           {
             id: '1',
             type: 'text',
-            content: '<span style="color: rgba(2, 2, 2)">Content</span>',
-            ...STYLE_PRESET,
+            content: '<span style="color: rgba(2, 2, 2, 1)">Content</span>',
+            ...BACKGROUND_PROPS,
           },
         ],
       };
@@ -205,7 +223,7 @@ describe('Panels/StylePreset', () => {
 
       getTextPresets.mockImplementation(() => {
         return {
-          textStyles: [{ color: TEST_COLOR_2, ...STYLE_PRESET }],
+          colors: [TEST_COLOR_2],
         };
       });
 
@@ -216,9 +234,7 @@ describe('Panels/StylePreset', () => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           stylePresets: {
-            textColors: [],
-            fillColors: [],
-            textStyles: [{ color: TEST_COLOR_2, ...STYLE_PRESET }],
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -241,7 +257,7 @@ describe('Panels/StylePreset', () => {
 
       getShapePresets.mockImplementation(() => {
         return {
-          fillColors: [TEST_COLOR_2],
+          colors: [TEST_COLOR_2],
         };
       });
 
@@ -252,9 +268,39 @@ describe('Panels/StylePreset', () => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           stylePresets: {
-            textColors: [],
-            fillColors: [TEST_COLOR_2],
-            textStyles: [],
+            colors: [TEST_COLOR_2],
+          },
+        },
+      });
+    });
+
+    it('should allow adding preset from the background', () => {
+      const extraStateProps = {
+        selectedElements: [
+          {
+            id: 'bg',
+          },
+        ],
+      };
+      const { updateStory, queryByLabelText } = setupPanel(
+        null,
+        extraStateProps
+      );
+
+      getPagePreset.mockImplementation(() => {
+        return {
+          colors: [TEST_COLOR_2],
+        };
+      });
+
+      const addButton = queryByLabelText('Add preset');
+      fireEvent.click(addButton);
+
+      expect(updateStory).toHaveBeenCalledTimes(1);
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          stylePresets: {
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -262,42 +308,9 @@ describe('Panels/StylePreset', () => {
   });
 
   describe('Panels/StylePreset/Colors', () => {
-    it('should display correct label for Text colors', () => {
-      const extraStylePresets = {
-        textColors: [TEST_COLOR],
-      };
-      const { getByText } = setupPanel(extraStylePresets);
-      const groupLabel = getByText('Text colors');
-      expect(groupLabel).toBeDefined();
-    });
-
-    it('should display correct label for Colors', () => {
-      const extraStylePresets = {
-        fillColors: [TEST_COLOR],
-      };
-      const extraStateProps = {
-        selectedElements: [
-          {
-            id: '1',
-            type: 'shape',
-          },
-        ],
-      };
-      const { getByText, queryByText } = setupPanel(
-        extraStylePresets,
-        extraStateProps
-      );
-      const groupLabel = getByText('Colors');
-      expect(groupLabel).toBeDefined();
-
-      const textColorGroupLabel = queryByText('Text colors');
-      expect(textColorGroupLabel).toBeNull();
-    });
-
     it('should allow deleting the relevant color preset', () => {
       const extraStylePresets = {
-        textColors: [TEST_COLOR, TEST_COLOR_2],
-        fillColors: [TEST_COLOR],
+        colors: [TEST_COLOR, TEST_COLOR_2],
       };
       const { getByLabelText, queryAllByLabelText, updateStory } = setupPanel(
         extraStylePresets
@@ -313,9 +326,7 @@ describe('Panels/StylePreset', () => {
       expect(updateStory).toHaveBeenCalledWith({
         properties: {
           stylePresets: {
-            fillColors: [TEST_COLOR],
-            textColors: [TEST_COLOR_2],
-            textStyles: [],
+            colors: [TEST_COLOR_2],
           },
         },
       });
@@ -323,7 +334,7 @@ describe('Panels/StylePreset', () => {
 
     it('should allow applying color presets for shapes', () => {
       const extraStylePresets = {
-        fillColors: [TEST_COLOR],
+        colors: [TEST_COLOR],
       };
       const extraStateProps = {
         selectedElements: [
@@ -333,12 +344,12 @@ describe('Panels/StylePreset', () => {
           },
         ],
       };
-      const { getByLabelText, updateElementsById } = setupPanel(
+      const { getByRole, updateElementsById } = setupPanel(
         extraStylePresets,
         extraStateProps
       );
 
-      const applyPreset = getByLabelText('Apply color preset');
+      const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 
       fireEvent.click(applyPreset);
@@ -353,13 +364,11 @@ describe('Panels/StylePreset', () => {
 
     it('should allow applying color presets for text', () => {
       const extraStylePresets = {
-        textColors: [TEST_COLOR],
+        colors: [TEST_COLOR],
       };
-      const { getByLabelText, updateElementsById } = setupPanel(
-        extraStylePresets
-      );
+      const { getByRole, updateElementsById } = setupPanel(extraStylePresets);
 
-      const applyPreset = getByLabelText('Apply color preset');
+      const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 
       fireEvent.click(applyPreset);
@@ -377,6 +386,67 @@ describe('Panels/StylePreset', () => {
         content: '<span style="color: #010101">Hello World</span>',
       };
       expect(updatedContent).toStrictEqual(expectedContent);
+    });
+
+    it('should not apply colors with opacity as Page background', () => {
+      const extraStylePresets = {
+        colors: [createSolid(1, 1, 1, 0.5), createSolid(1, 1, 1, 0)],
+      };
+      const extraStateProps = {
+        selectedElements: [
+          {
+            id: 'bg',
+          },
+        ],
+      };
+      presetHasOpacity.mockImplementation((color) => {
+        return Boolean(color.color?.a !== undefined && color.color.a < 1);
+      });
+      const { getAllByRole, updateCurrentPageProperties } = setupPanel(
+        extraStylePresets,
+        extraStateProps
+      );
+
+      const applyPresetButtons = getAllByRole('button', { name: APPLY_PRESET });
+      const applyPreset1 = applyPresetButtons[0];
+      expect(applyPreset1).toBeDefined();
+
+      fireEvent.click(applyPreset1);
+      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(0);
+
+      const applyPreset2 = applyPresetButtons[1];
+      expect(applyPreset2).toBeDefined();
+
+      fireEvent.click(applyPreset2);
+      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(0);
+    });
+
+    it('should allow applying color preset for Page background', () => {
+      const extraStylePresets = {
+        colors: [TEST_COLOR],
+      };
+      const extraStateProps = {
+        selectedElements: [
+          {
+            id: 'bg',
+          },
+        ],
+      };
+      const { getByRole, updateCurrentPageProperties } = setupPanel(
+        extraStylePresets,
+        extraStateProps
+      );
+
+      const applyPreset = getByRole('button', { name: APPLY_PRESET });
+      expect(applyPreset).toBeDefined();
+
+      fireEvent.click(applyPreset);
+      expect(updateCurrentPageProperties).toHaveBeenCalledTimes(1);
+      expect(updateCurrentPageProperties).toHaveBeenCalledWith({
+        properties: {
+          backgroundColor: TEST_COLOR,
+        },
+      });
     });
   });
 });

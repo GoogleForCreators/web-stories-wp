@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 
 export const STORY_WIDTH = 275;
 
@@ -40,13 +40,15 @@ export const ActiveCard = styled.div(
     height: ${height}px;
     overflow: hidden;
 
-    ${Object.values(selectedElementIds).map(
-      (elementId) => `
-        [data-element-id='${elementId}'] {
-          border: 2px solid ${theme.colors.bluePrimary};
-        }
-      `
-    )}
+    ${Object.values(selectedElementIds)
+      .map(
+        (elementId) => `
+          [data-element-id='${elementId}'] {
+            border: 2px solid ${theme.colors.bluePrimary};
+          }
+        `
+      )
+      .join(' ')}
   `
 );
 
@@ -61,7 +63,7 @@ export const Container = styled.div`
 
 export const ElementsContainer = styled.div`
   min-width: 300px;
-  height: ${STORY_WIDTH / PAGE_RATIO}px;
+  height: ${STORY_WIDTH / FULLBLEED_RATIO}px;
   overflow: scroll;
 `;
 

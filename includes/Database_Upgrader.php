@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 /**
  * Class Database_Upgrader
  *
@@ -55,14 +53,24 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	public function init() {
-		$version  = get_option( self::OPTION, '0.0.0' );
 		$routines = [
 			'1.0.0' => 'upgrade_1',
 			'2.0.0' => 'v_2_replace_conic_style_presets',
+			'2.0.1' => 'v_2_add_term',
+			'2.0.2' => 'remove_broken_text_styles',
+			'2.0.3' => 'unify_color_presets',
+			'2.0.4' => 'update_publisher_logos',
+			'3.0.0' => 'add_stories_caps',
+			'3.0.1' => 'rewrite_flush',
 		];
 
+		$version = get_option( self::OPTION, '0.0.0' );
+
+		if ( version_compare( WEBSTORIES_DB_VERSION, $version, '=' ) ) {
+			return;
+		}
+
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
-		// @todo This should only update if there were actual updates. Otherwise, the `self::PREVIOUS_OPTION` will always be overwritten.
 		$this->finish_up( $version );
 	}
 
@@ -96,7 +104,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function v_2_replace_conic_style_presets() {
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! is_array( $style_presets ) ) {
 			return;
@@ -138,7 +146,111 @@ class Database_Upgrader {
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
 		];
-		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Add the editor term, to make sure it exists.
+	 *
+	 * @return void
+	 */
+	protected function v_2_add_term() {
+		wp_insert_term( 'editor', Media::STORY_MEDIA_TAXONOMY );
+	}
+
+	/**
+	 * Removes broken text styles (with color.r|g|b structure).
+	 *
+	 * @return void
+	 */
+	protected function remove_broken_text_styles() {
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
+		// Nothing to do if style presets don't exist.
+		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+			return;
+		}
+
+		$text_styles = [];
+		if ( ! empty( $style_presets['textStyles'] ) ) {
+			foreach ( $style_presets['textStyles'] as $preset ) {
+				if ( isset( $preset['color']['r'] ) ) {
+					continue;
+				}
+				$text_styles[] = $preset;
+			}
+		}
+
+		$updated_style_presets = [
+			'fillColors' => $style_presets['fillColors'],
+			'textColors' => $style_presets['textColors'],
+			'textStyles' => $text_styles,
+		];
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Migration for version 2.0.3.
+	 * Color presets: Removes fillColor and textColor and unifies to one color.
+	 *
+	 * @return void
+	 */
+	protected function unify_color_presets() {
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
+		// Nothing to do if style presets don't exist.
+		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+			return;
+		}
+
+		// If either of these is not an array, something is incorrect.
+		if ( ! is_array( $style_presets['fillColors'] ) || ! is_array( $style_presets['textColors'] ) ) {
+			return;
+		}
+
+		$colors = array_merge( $style_presets['fillColors'], $style_presets['textColors'] );
+
+		// Use only one array of colors for now.
+		$updated_style_presets = [
+			'colors' => $colors,
+		];
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Split publisher logos into two options.
+	 *
+	 * @return void
+	 */
+	protected function update_publisher_logos() {
+		$publisher_logo_id       = 0;
+		$publisher_logo_settings = (array) get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		if ( ! empty( $publisher_logo_settings['active'] ) ) {
+			$publisher_logo_id = $publisher_logo_settings['active'];
+		}
+
+		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id, false );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ), false );
+	}
+
+	/**
+	 * Adds story capabilities to default user roles.
+	 *
+	 * @return void
+	 */
+	protected function add_stories_caps() {
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->add_caps_to_roles();
+	}
+
+	/**
+	 * Flush rewrites.
+	 *
+	 * @return void
+	 */
+	protected function rewrite_flush() {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+		}
 	}
 
 	/**

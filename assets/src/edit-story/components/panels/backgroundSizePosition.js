@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -38,9 +39,9 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
   // Background can only have one selected element.
   const flip = selectedElements[0]?.flip || DEFAULT_FLIP;
 
-  const {
-    actions: { setBackgroundElement },
-  } = useStory();
+  const { setBackgroundElement } = useStory((state) => ({
+    setBackgroundElement: state.actions.setBackgroundElement,
+  }));
 
   const removeAsBackground = useCallback(() => {
     pushUpdate(
@@ -61,7 +62,7 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
     >
       <Row expand={false}>
         <Button onClick={removeAsBackground} fullWidth>
-          {__('Remove as Background', 'web-stories')}
+          {__('Detach from background', 'web-stories')}
         </Button>
       </Row>
       <Row expand={false}>

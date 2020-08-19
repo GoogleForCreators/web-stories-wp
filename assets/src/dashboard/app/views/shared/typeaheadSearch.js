@@ -32,19 +32,25 @@ export default function TypeaheadSearch({
 }) {
   const typeaheadMenuOptions = useMemo(() => {
     // todo add different option sets, value and label won't always be the same
-    return stories.map((story) => {
-      return {
-        label: story.title,
-        value: story.title,
-      };
-    });
+    return stories.reduce((acc, story) => {
+      if (!story.title || story.title.trim().length <= 0) {
+        return acc;
+      }
+      return [
+        ...acc,
+        {
+          label: story.title,
+          value: story.title,
+        },
+      ];
+    }, []);
   }, [stories]);
 
   return (
     <TypeaheadInput
       inputId="typeahead-search"
       items={typeaheadMenuOptions}
-      onChange={(val) => handleChange(val.trim())}
+      onChange={handleChange}
       value={currentValue}
       placeholder={placeholder}
       ariaLabel={placeholder}

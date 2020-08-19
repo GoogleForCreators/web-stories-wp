@@ -23,7 +23,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
-import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
+import {
+  STORY_STATUS,
+  TEMPLATES_GALLERY_STATUS,
+  ALERT_SEVERITY,
+} from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
   ...Object.values(STORY_STATUS),
@@ -37,6 +41,8 @@ export const StoryPropType = PropTypes.shape({
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.object,
 });
+
+export const TemplatePropType = StoryPropType;
 
 export const TagPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -61,6 +67,7 @@ export const UserPropType = PropTypes.shape({
 });
 
 export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
   .isRequired;
@@ -73,6 +80,11 @@ export const StoryActionsPropType = PropTypes.shape({
   updateStory: PropTypes.func,
 });
 
+export const TemplateActionsPropType = PropTypes.shape({
+  createStoryFromTemplate: PropTypes.func,
+  handlePreviewTemplate: PropTypes.func,
+});
+
 export const TotalStoriesByStatusPropType = PropTypes.shape({
   all: PropTypes.number,
   draft: PropTypes.number,
@@ -82,4 +94,45 @@ export const TotalStoriesByStatusPropType = PropTypes.shape({
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,
   height: PropTypes.number,
+  containerHeight: PropTypes.number,
+});
+
+export const StoryMenuPropType = PropTypes.shape({
+  handleMenuToggle: PropTypes.func.isRequired,
+  contextMenuId: PropTypes.number.isRequired,
+  handleMenuItemSelected: PropTypes.func.isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string,
+      value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+    })
+  ),
+});
+
+export const RenameStoryPropType = PropTypes.shape({
+  handleOnRenameStory: PropTypes.func,
+  id: PropTypes.number,
+  handleCancelRename: PropTypes.func,
+});
+
+export const AlertSeveritiesPropType = PropTypes.oneOf(
+  Object.values(ALERT_SEVERITY)
+);
+
+export const ToastMessagePropType = PropTypes.shape({
+  message: PropTypes.shape({
+    title: PropTypes.string,
+    body: PropTypes.string.isRequired,
+  }),
+  severity: AlertSeveritiesPropType,
+  id: PropTypes.number.isRequired,
+});
+
+export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
+
+export const DateSettingsPropType = PropTypes.shape({
+  dateFormat: PropTypes.string,
+  timeFormat: PropTypes.string,
+  gmtOffset: PropTypes.number,
+  timezone: PropTypes.string,
 });

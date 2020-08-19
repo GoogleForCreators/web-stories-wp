@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -28,9 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, TextInput, HelperText, Button, RadioGroup } from '../../form';
+import { Row, TextInput, HelperText, RadioGroup } from '../../form';
 import { useStory } from '../../../app/story';
-import useInspector from '../useInspector';
 import { SimplePanel } from '../../panels/panel';
 import { useConfig } from '../../../app/config';
 
@@ -39,27 +38,21 @@ const BoxedTextInput = styled(TextInput)`
   border-radius: 4px;
   flex-grow: 1;
   &:focus {
-    background-color: ${({ theme }) => theme.colors.fg.v1};
+    background-color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
 function StatusPanel() {
-  const {
-    actions: { loadUsers },
-  } = useInspector();
-
-  const {
-    state: {
-      story: { status, password },
-    },
-    actions: { updateStory, deleteStory },
-  } = useStory();
+  const { status = '', password, updateStory } = useStory(
+    ({
+      state: {
+        story: { status, password },
+      },
+      actions: { updateStory },
+    }) => ({ status, password, updateStory })
+  );
 
   const { capabilities } = useConfig();
-
-  useEffect(() => {
-    loadUsers();
-  });
 
   const visibilityOptions = [
     {
@@ -124,14 +117,6 @@ function StatusPanel() {
     [password, status, updateStory]
   );
 
-  const handleRemoveStory = useCallback(
-    (evt) => {
-      deleteStory();
-      evt.preventDefault();
-    },
-    [deleteStory]
-  );
-
   const getStatusValue = (value) => {
     // Always display protected visibility, independent of the status.
     if (password && password.length) {
@@ -170,9 +155,6 @@ function StatusPanel() {
           </>
         )}
       </>
-      <Button onClick={handleRemoveStory} fullWidth>
-        {__('Move to trash', 'web-stories')}
-      </Button>
     </SimplePanel>
   );
 }

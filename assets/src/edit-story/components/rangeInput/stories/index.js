@@ -28,7 +28,9 @@ export default {
   title: 'Stories Editor/Components/RangeInput',
   component: RangeInput,
   parameters: {
-    backgrounds: [{ name: 'dark background', value: '#000', default: true }],
+    backgrounds: {
+      default: 'Dark',
+    },
   },
 };
 
@@ -36,7 +38,16 @@ export const _default = () => {
   const thumbSize = number('Thumb size', 16);
   const min = number('Min value', 0);
   const max = number('Max value', 100);
-  const step = number('Step', 10);
+  const majorStep = number('Major step', 10);
+  const minorStep = number('Minor step', 1);
 
-  return <RangeInput thumbSize={thumbSize} min={min} max={max} step={step} />;
+  return (
+    <RangeInput
+      thumbSize={thumbSize}
+      min={min}
+      max={max}
+      majorStep={majorStep}
+      minorStep={minorStep}
+    />
+  );
 };

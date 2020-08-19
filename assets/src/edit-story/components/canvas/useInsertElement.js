@@ -25,19 +25,23 @@ import { useCallback } from 'react';
 import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
-import { useMedia, useStory } from '../../app';
+import { useLocalMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import useFocusCanvas from './useFocusCanvas';
 
 const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
+  const { addElement } = useStory((state) => ({
+    addElement: state.actions.addElement,
+  }));
+  const { uploadVideoPoster } = useLocalMedia((state) => ({
+    uploadVideoPoster: state.actions.uploadVideoPoster,
+  }));
   const {
-    actions: { addElement },
-  } = useStory();
-  const {
-    actions: { uploadVideoPoster },
-  } = useMedia();
+    actions: { registerUsage },
+  } = useMedia3pApi();
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -56,6 +60,23 @@ function useInsertElement() {
     [uploadVideoPoster]
   );
 
+  /**
+   * If the resource has a register usage url then the fact that it's been
+   * inserted needs to be registered as per API provider policies.
+   *
+   * @param {Object} resource The resource to attempt to register usage.
+   */
+  const handleRegisterUsage = useCallback(
+    (resource) => {
+      if (!resource.local && resource?.attribution?.registerUsageUrl) {
+        registerUsage({
+          registerUsageUrl: resource.attribution.registerUsageUrl,
+        });
+      }
+    },
+    [registerUsage]
+  );
+
   const focusCanvas = useFocusCanvas();
 
   /**
@@ -69,20 +90,21 @@ function useInsertElement() {
       addElement({ element });
       if (resource) {
         backfillResource(resource);
+        handleRegisterUsage(resource);
       }
       // Auto-play on insert.
       if (type === 'video') {
         setTimeout(() => {
           const videoEl = document.getElementById(`video-${id}`);
           if (videoEl) {
-            videoEl.play();
+            videoEl.play().catch(() => {});
           }
-        }, 0);
+        });
       }
       focusCanvas();
       return element;
     },
-    [addElement, backfillResource, focusCanvas]
+    [addElement, backfillResource, focusCanvas, handleRegisterUsage]
   );
 
   return insertElement;
@@ -94,7 +116,7 @@ function useInsertElement() {
  * @param {number} props.width The element's width.
  * @param {number} props.height The element's height.
  * @param {?Object} props.mask The element's mask.
- * @return {!Object} The element properties.
+ * @return {Object} The element properties.
  */
 function getElementProperties(
   type,
@@ -109,7 +131,6 @@ function getElementProperties(
     scale = 100,
     focalX = 50,
     focalY = 50,
-    isFill = false,
     ...rest
   }
 ) {
@@ -191,7 +212,6 @@ function getElementProperties(
     scale,
     focalX,
     focalY,
-    isFill,
     ...(isMaskable
       ? {
           mask: mask || DEFAULT_MASK,
@@ -203,7 +223,7 @@ function getElementProperties(
 /**
  * @param {string} type Element type.
  * @param {!Object} props The element's properties.
- * @return {!Object} The new element.
+ * @return {Object} The new element.
  */
 function createElementForCanvas(type, props) {
   return createNewElement(type, getElementProperties(type, props));

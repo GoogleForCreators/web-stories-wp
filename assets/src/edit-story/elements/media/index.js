@@ -22,11 +22,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
 import { PanelTypes } from '../../components/panels';
 
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
-export { default as EditPanMovable } from './editPanMovable';
+export { default as EditPanMoveable } from './editPanMoveable';
 export { default as ScalePanel } from './scalePanel';
 
 export const CropBox = styled.div`
@@ -51,10 +52,7 @@ export const CropBox = styled.div`
 export const MEDIA_MASK_OPACITY = 0.4;
 
 export const MEDIA_DEFAULT_ATTRIBUTES = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-  isFill: false,
+  ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
   resource: {
     alt: '',
   },
@@ -66,8 +64,6 @@ export const isMedia = true;
 
 export const canFlip = true;
 
-export const canFill = true;
-
 export const isMaskable = true;
 
 export const editModeGrayout = true;
@@ -76,6 +72,8 @@ export const resizeRules = {
   vertical: true,
   horizontal: true,
   diagonal: true,
+  minWidth: 20,
+  minHeight: 20,
 };
 
 export const MEDIA_PANELS = [

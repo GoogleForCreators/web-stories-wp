@@ -20,9 +20,13 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
-const Button = styled.button.attrs(({ type }) => ({ type: type || 'button' }))`
-  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+// Class should contain "mousetrap" to enable keyboard shortcuts on buttons.
+const Button = styled.button.attrs(({ type }) => ({
+  type: type || 'button',
+  className: 'mousetrap',
+}))`
+  background: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
   border: none;
   border-radius: 4px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
@@ -43,7 +47,7 @@ const Button = styled.button.attrs(({ type }) => ({ type: type || 'button' }))`
     `}
 
   &:hover {
-    background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.2)};
+    background: ${({ theme }) => rgba(theme.colors.fg.white, 0.2)};
   }
 `;
 

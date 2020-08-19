@@ -31,18 +31,25 @@ import { __ } from '@wordpress/i18n';
  */
 import { useDebouncedCallback } from 'use-debounce';
 import { Media, Row, Button } from '../../form';
-import { createLink, getLinkFromElement } from '../../link';
+import { createLink, getLinkFromElement } from '../../elementLink';
 import { useAPI } from '../../../app/api';
-import { useSnackbar } from '../../../app/snackbar';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
 import { Note, ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
+import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
-import { ReactComponent as Close } from '../../../icons/close_icon.svg';
+import { Close } from '../../../icons';
+
+const MIN_MAX = {
+  URL: {
+    MIN: 2,
+    MAX: 2048, // Based on sitemaps url limits (safe side)
+  },
+};
 
 const IconText = styled.span`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -66,10 +73,16 @@ const CloseIcon = styled(Close)`
   margin-right: 4px;
 `;
 
+const Error = styled.span`
+  font-size: 12px;
+  line-height: 16px;
+  color: ${({ theme }) => theme.colors.warning};
+`;
+
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const {
-    actions: { clearEditing },
-  } = useCanvas();
+  const { clearEditing } = useCanvas((state) => ({
+    clearEditing: state.actions.clearEditing,
+  }));
 
   const selectedElement = selectedElements[0];
   const defaultLink = useMemo(
@@ -86,14 +99,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const {
     actions: { getLinkMetadata },
   } = useAPI();
-  const { showSnackbar } = useSnackbar();
 
   const updateLinkFromMetadataApi = useBatchingCallback(
     ({ url, title, icon }) =>
       pushUpdateForObject(
         'link',
         (prev) => ({
-          url,
           desc: title ? title : prev.desc,
           icon: icon ? toAbsoluteUrl(url, icon) : prev.icon,
         }),
@@ -103,21 +114,18 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [pushUpdateForObject, defaultLink]
   );
 
-  const [populateMetadata] = useDebouncedCallback((url) => {
-    const urlWithProtocol = withProtocol(url);
-    if (!isValidUrl(urlWithProtocol)) {
-      return;
-    }
+  const [isInvalidUrl, setIsInvalidUrl] = useState(
+    !isValidUrl(withProtocol(link.url || ''))
+  );
 
+  const [populateMetadata] = useDebouncedCallback((url) => {
     setFetchingMetadata(true);
-    getLinkMetadata(urlWithProtocol)
+    getLinkMetadata(url)
       .then(({ title, image }) => {
-        updateLinkFromMetadataApi({ url: urlWithProtocol, title, icon: image });
+        updateLinkFromMetadataApi({ url, title, icon: image });
       })
       .catch(() => {
-        showSnackbar({
-          message: __('This is an invalid link.', 'web-stories'),
-        });
+        setIsInvalidUrl(true);
       })
       .finally(() => {
         setFetchingMetadata(false);
@@ -129,7 +137,13 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       clearEditing();
 
       if (properties.url) {
-        populateMetadata(properties.url);
+        const urlWithProtocol = withProtocol(properties.url);
+        const valid = isValidUrl(urlWithProtocol);
+        setIsInvalidUrl(!valid);
+
+        if (valid) {
+          populateMetadata(urlWithProtocol);
+        }
       }
       return pushUpdateForObject(
         'link',
@@ -152,6 +166,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
+  const hasSomeLinkContent =
+    Boolean(link.url) && inRange(link.url.length, MIN_MAX.URL);
+
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <Row>
@@ -164,12 +181,30 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           onChange={(value) =>
             handleChange({ url: value }, !value /* submit */)
           }
+          onBlur={(atts = {}) => {
+            const { onClear } = atts;
+            // If the onBlur is not clearing the field, add protocol.
+            if (link.url?.length > 0 && !onClear) {
+              const urlWithProtocol = withProtocol(link.url);
+              if (urlWithProtocol !== link.url) {
+                handleChange({ url: urlWithProtocol }, true /* submit */);
+              }
+            }
+          }}
           value={link.url || ''}
           clear
+          aria-label={__('Edit: Element link', 'web-stories')}
+          minLength={MIN_MAX.URL.MIN}
+          maxLength={MIN_MAX.URL.MAX}
         />
       </Row>
+      {Boolean(link.url) && isInvalidUrl && (
+        <Row>
+          <Error>{__('Invalid web address.', 'web-stories')}</Error>
+        </Row>
+      )}
 
-      {Boolean(link.url) && (
+      {hasSomeLinkContent && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
             placeholder={__('Optional description', 'web-stories')}
@@ -177,15 +212,17 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               handleChange({ desc: value }, !value /* submit */)
             }
             value={link.desc || ''}
+            aria-label={__('Edit: Link description', 'web-stories')}
           />
         </Row>
       )}
-      {Boolean(link.url) && (
+      {Boolean(link.url) && !isInvalidUrl && (
         <Row spaceBetween={false}>
           <Media
             value={link.icon || ''}
             onChange={handleChangeIcon}
             title={__('Select as link icon', 'web-stories')}
+            ariaLabel={__('Edit link icon', 'web-stories')}
             buttonInsertText={__('Select as link icon', 'web-stories')}
             type={'image'}
             size={64}

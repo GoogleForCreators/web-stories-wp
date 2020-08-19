@@ -22,4 +22,5 @@ export {
 } from './pageHeading';
 export { default as StoryGridView } from './storyGridView';
 export { default as StoryListView } from './storyListView';
+export { default as TemplateGridView } from './templateGridView';
 export { default as TypeaheadSearch } from './typeaheadSearch';

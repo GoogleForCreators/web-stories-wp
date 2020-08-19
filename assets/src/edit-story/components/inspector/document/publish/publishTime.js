@@ -33,20 +33,20 @@ import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
 import { useConfig } from '../../../../app/config';
 import { useStory } from '../../../../app/story';
-import { ReactComponent as ToggleIcon } from '../../../../icons/dropdown.svg';
+import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
 import { getReadableDate, getReadableTime, is12Hour } from './utils';
 
 const StyledButton = styled.button`
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   display: flex;
   flex-direction: row;
-  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   flex: 1;
   padding: 2px;
   border-radius: 4px;
@@ -64,11 +64,11 @@ const FieldLabel = styled(Label)`
 `;
 
 const Date = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
 `;
 
 const Time = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.4)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.4)};
   display: inline-block;
 `;
 
@@ -78,12 +78,17 @@ const StyledToggleIcon = styled(ToggleIcon)`
 `;
 
 function PublishTime() {
-  const {
-    state: {
-      story: { date },
-    },
-    actions: { updateStory },
-  } = useStory();
+  const { date, updateStory } = useStory(
+    ({
+      state: {
+        story: { date },
+      },
+      actions: { updateStory },
+    }) => ({
+      date,
+      updateStory,
+    })
+  );
   const { timeFormat } = useConfig();
   const use12HourFormat = is12Hour(timeFormat);
 
@@ -111,6 +116,7 @@ function PublishTime() {
     },
     [showDatePicker, updateStory]
   );
+
   return (
     <>
       <Row>
@@ -119,6 +125,7 @@ function PublishTime() {
           aria-pressed={showDatePicker}
           aria-haspopup={true}
           aria-expanded={showDatePicker}
+          aria-label={__('Edit: Story publish time', 'web-stories')}
           onClick={(e) => {
             e.preventDefault();
             if (!showDatePicker) {
@@ -139,15 +146,18 @@ function PublishTime() {
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         placement={'bottom-end'}
-        maxHeight={350}
-      >
-        <DateTime
-          value={date}
-          onChange={handleDateChange}
-          is12Hour={use12HourFormat}
-          forwardedRef={dateTimeNode}
-        />
-      </Popup>
+        renderContents={({ propagateDimensionChange }) => (
+          <DateTime
+            value={date}
+            onChange={(value, close = false) => {
+              handleDateChange(value, close);
+            }}
+            onViewChange={() => propagateDimensionChange()}
+            is12Hour={use12HourFormat}
+            forwardedRef={dateTimeNode}
+          />
+        )}
+      />
     </>
   );
 }

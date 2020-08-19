@@ -87,10 +87,15 @@ export function dataToEditorY(y, pageHeight) {
  *
  * @param {number} x The value to be converted.
  * @param {number} pageWidth The basis value for the page's width in the "editor" space.
+ * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
  * @return {number} The value in the "data" space.
  */
-export function editorToDataX(x, pageWidth) {
-  return dataPixels((x * PAGE_WIDTH) / pageWidth);
+export function editorToDataX(x, pageWidth, withRounding = true) {
+  const v = (x * PAGE_WIDTH) / pageWidth;
+  if (withRounding === false) {
+    return v;
+  }
+  return dataPixels(v);
 }
 
 /**
@@ -99,17 +104,22 @@ export function editorToDataX(x, pageWidth) {
  *
  * @param {number} y The value to be converted.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
+ * @param {boolean} [withRounding=true] Whether the dataPixels rounding should occur.
  * @return {number} The value in the "data" space.
  */
-export function editorToDataY(y, pageHeight) {
-  return dataPixels((y * PAGE_HEIGHT) / pageHeight);
+export function editorToDataY(y, pageHeight, withRounding = true) {
+  const v = (y * PAGE_HEIGHT) / pageHeight;
+  if (withRounding === false) {
+    return v;
+  }
+  return dataPixels(v);
 }
 
 /**
  * Converts the element's position, width, and rotation) to the "box" in the
  * "editor" coordinate space.
  *
- * @param {{x:number, y:number, width:number, height:number, rotationAngle:number, isFill:boolean}} element The
+ * @param {{x:number, y:number, width:number, height:number, rotationAngle:number}} element The
  * element's position, width, and rotation. See `StoryPropTypes.element`.
  * @param {number} pageWidth The basis value for the page's width in the "editor" space.
  * @param {number} pageHeight The basis value for the page's height in the "editor" space.
@@ -117,16 +127,15 @@ export function editorToDataY(y, pageHeight) {
  * "box" in the editor space.
  */
 export function getBox(
-  { x, y, width, height, rotationAngle, isFill, isBackground },
+  { x, y, width, height, rotationAngle, isBackground },
   pageWidth,
   pageHeight
 ) {
-  const displayFull = isFill || isBackground;
   return {
-    x: dataToEditorX(displayFull ? 0 : x, pageWidth),
-    y: dataToEditorY(displayFull ? -DANGER_ZONE_HEIGHT : y, pageHeight),
-    width: dataToEditorX(displayFull ? PAGE_WIDTH : width, pageWidth),
-    height: dataToEditorY(displayFull ? FULLBLEED_HEIGHT : height, pageHeight),
-    rotationAngle: displayFull ? 0 : rotationAngle,
+    x: dataToEditorX(isBackground ? 0 : x, pageWidth),
+    y: dataToEditorY(isBackground ? -DANGER_ZONE_HEIGHT : y, pageHeight),
+    width: dataToEditorX(isBackground ? PAGE_WIDTH : width, pageWidth),
+    height: dataToEditorY(isBackground ? FULLBLEED_HEIGHT : height, pageHeight),
+    rotationAngle: isBackground ? 0 : rotationAngle,
   };
 }

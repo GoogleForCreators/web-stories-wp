@@ -14,4 +14,8 @@
  * limitations under the License.
  */
 
-export { createNewStory } from './create-new-story';
+export { default as createNewStory } from './createNewStory';
+export { default as previewStory } from './previewStory';
+export { default as visitDashboard } from './visitDashboard';
+export { default as addRequestInterception } from './addRequestInterception';
+export { default as withExperimentalFeatures } from './experimentalFeatures';

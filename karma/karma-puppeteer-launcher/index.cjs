@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-const fs = require('fs').promises;
-const path = require('path');
+/**
+ * External dependencies
+ */
 const puppeteer = require('puppeteer');
+
+/**
+ * Internal dependencies
+ */
+const MouseWithDnd = require('./mouseWithDnd.cjs');
+const extractAndSaveSnapshot = require('./snapshot.cjs');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
   baseBrowserDecorator(this);
@@ -30,6 +37,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       slowMo: 0,
       dumpio: true,
       headless: false,
+      devtools: false,
       defaultViewport: null,
       snapshots: false,
     };
@@ -44,6 +52,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       slowMo: puppeteerOptions.slowMo,
       dumpio: puppeteerOptions.dumpio,
       headless: puppeteerOptions.headless,
+      devtools: puppeteerOptions.devtools,
       defaultViewport: puppeteerOptions.defaultViewport,
     });
 
@@ -92,46 +101,7 @@ async function exposeFunctions(page, config) {
         // Do nothing unless snapshots are enabled.
         return;
       }
-
-      if (!testName) {
-        testName = '_';
-      }
-      testName = testName.trim();
-      if (!snapshotName) {
-        snapshotName = 'default';
-      }
-      snapshotName = snapshotName.trim();
-
-      const snapshot = await extractSnapshot(frame, testName, snapshotName);
-
-      const dir = path.resolve(
-        process.cwd(),
-        '.test_artifacts',
-        'karma_snapshots'
-      );
-      try {
-        await fs.mkdir(dir, { recursive: true });
-      } catch (e) {
-        // Ignore. Let the file write fail instead.
-      }
-
-      // TODO: make "safe file name" rules better.
-      const maxFileName = 240;
-      let fileName = `${
-        testName.length + snapshotName.length < maxFileName
-          ? testName
-          : testName.substring(
-              0,
-              Math.max(maxFileName - snapshotName.length, 0)
-            )
-      }__${
-        snapshotName.length < maxFileName
-          ? snapshotName
-          : snapshotName.substring(0, maxFileName)
-      }`;
-      fileName = fileName.replace(/[^a-z0-9]/gi, '_');
-      const filePath = path.resolve(dir, fileName + '.html');
-      await fs.writeFile(filePath, snapshot);
+      await extractAndSaveSnapshot(frame, testName, snapshotName);
     }
   );
 
@@ -166,6 +136,9 @@ async function exposeFunctions(page, config) {
   // mouse.
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
   await exposeMouseFunctions(page);
+
+  // clipboard.
+  await exposeClipboard(page);
 }
 
 function exposeFunction(page, name, func) {
@@ -206,7 +179,14 @@ async function exposeKeyboardFunctions(page) {
 
 async function exposeMouseFunctions(page) {
   // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#class-mouse
-  const { mouse } = page;
+  const mouseForFrame = new Map();
+
+  function getMouse(frame) {
+    if (!mouseForFrame.has(frame)) {
+      mouseForFrame.set(frame, new MouseWithDnd(page, frame));
+    }
+    return mouseForFrame.get(frame);
+  }
 
   function exposeMouseFunction(name, func) {
     return exposeFunction(page, `mouse_${name}`, func);
@@ -214,6 +194,7 @@ async function exposeMouseFunctions(page) {
 
   // Mouse sequence of "down", "up", "move", and "click".
   await exposeMouseFunction('seq', (frame, seq) => {
+    const mouse = getMouse(frame);
     return seq.reduce((promise, item) => {
       const { type, x, y, options } = item;
       const acceptsXY = type === 'move' || type === 'click';
@@ -225,42 +206,69 @@ async function exposeMouseFunctions(page) {
   });
 }
 
+async function exposeClipboard(page) {
+  await page
+    .browserContext()
+    .overridePermissions('http://localhost:9876', [
+      'clipboard-read',
+      'clipboard-write',
+    ]);
+
+  function exposeClipboardFunction(name, func) {
+    return exposeFunction(page, `clipboard_${name}`, func);
+  }
+
+  // @todo: Drop the local clipboardData once `navigator.clipboard.read()`
+  // supports text/html. It will be a lot better since it will also support
+  // native clipboard. OTOH, there's something good in not running tests on
+  // a real clipboard. E.g. a test cannot accidentally copy/print a secret
+  // value.
+  // See the https://crbug.com/931839 for "text/html" support.
+  let clipboardData;
+
+  // @todo: Implement `cut` and `set()`.
+
+  // Copy.
+  await exposeClipboardFunction('copy', async (frame) => {
+    clipboardData = await frame.evaluateHandle(() => {
+      // @todo: do `document.execCommand('copy')` inside an input or
+      // a contenteditable.
+      const target = document.activeElement;
+      const data = new DataTransfer();
+      const event = new ClipboardEvent('copy', {
+        bubbles: true,
+        cancelable: true,
+        clipboardData: data,
+      });
+      target.dispatchEvent(event);
+      return data;
+    });
+  });
+
+  // Paste.
+  await exposeClipboardFunction('paste', async (frame) => {
+    if (!clipboardData) {
+      throw new Error('clipboard is empty');
+    }
+    await frame.evaluate((data) => {
+      // @todo: do `document.execCommand('paste')` inside an input or
+      // a contenteditable.
+      const target = document.activeElement;
+      const event = new ClipboardEvent('paste', {
+        bubbles: true,
+        cancelable: true,
+        clipboardData: data,
+      });
+      target.dispatchEvent(event);
+    }, clipboardData);
+  });
+}
+
 function getContextFrame(page) {
   return (
     page.frames().find((frame) => frame.name() === 'context') ||
     page.mainFrame()
   );
-}
-
-async function extractSnapshot(frame, testName, snapshotName) {
-  const { head, body } = await frame.evaluate(() => {
-    // TODO: more careful head selection.
-    return {
-      head: document.head.innerHTML,
-      body: document.body.innerHTML,
-    };
-  });
-
-  return `<!DOCTYPE html>
-    <html>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-      <title>${testName}: ${snapshotName}</title>
-      <style>
-        body {
-          margin: 0;
-          width: 100vw;
-          height: 100vh;
-        }
-      </style>
-      ${head}
-    </head>
-    <body>
-      ${body}
-    </body>
-    </html>
-  `;
 }
 
 puppeteerBrowser.$inject = ['baseBrowserDecorator', 'config.puppeteerLauncher'];

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -29,14 +29,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Numeric, Row, DropDown } from '../../form';
-import { PAGE_HEIGHT } from '../../../constants';
+import { Numeric, Row, DropDown, usePresubmitHandler } from '../../form';
+import FontPicker from '../../fontPicker';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
+import clamp from '../../../utils/clamp';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
+
+const MIN_MAX = {
+  FONT_SIZE: {
+    MIN: 8,
+    MAX: 800,
+  },
+};
 
 const Space = styled.div`
   flex: 0 0 10px;
@@ -60,55 +68,98 @@ function FontControls({ selectedElements, pushUpdate }) {
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const {
-    state: { fonts },
-    actions: { maybeEnqueueFontStyle, getFontByName },
-  } = useFont();
+    fonts,
+    addRecentFont,
+    maybeEnqueueFontStyle,
+    getFontByName,
+  } = useFont(
+    ({
+      actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
+      state: { fonts },
+    }) => ({
+      addRecentFont,
+      maybeEnqueueFontStyle,
+      getFontByName,
+      fonts,
+    })
+  );
   const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
     getFontByName,
     fontFamily,
   ]);
   const fontStyle = isItalic ? 'italic' : 'normal';
 
+  const handleFontPickerChange = useCallback(
+    async (value) => {
+      const fontObj = fonts.find((item) => item.value === value);
+      const newFont = {
+        family: value,
+        ...objectPick(fontObj, [
+          'service',
+          'fallbacks',
+          'weights',
+          'styles',
+          'variants',
+        ]),
+      };
+      await maybeEnqueueFontStyle(
+        selectedElements.map(({ content }) => {
+          return {
+            font: newFont,
+            fontStyle,
+            fontWeight,
+            content: stripHTML(content),
+          };
+        })
+      );
+      addRecentFont(fontObj);
+      pushUpdate({ font: newFont }, true);
+    },
+    [
+      addRecentFont,
+      fontStyle,
+      fontWeight,
+      fonts,
+      maybeEnqueueFontStyle,
+      pushUpdate,
+      selectedElements,
+    ]
+  );
+
+  const handleFontWeightPickerChange = useCallback(
+    async (value) => {
+      await maybeEnqueueFontStyle(
+        selectedElements.map(({ font, content }) => {
+          return {
+            font,
+            fontStyle,
+            fontWeight: parseInt(value),
+            content: stripHTML(content),
+          };
+        })
+      );
+      handleSelectFontWeight(value);
+    },
+    [fontStyle, handleSelectFontWeight, maybeEnqueueFontStyle, selectedElements]
+  );
+
+  usePresubmitHandler(
+    ({ fontSize: newFontSize }) => ({
+      fontSize: clamp(newFontSize, MIN_MAX.FONT_SIZE),
+    }),
+    []
+  );
+
   return (
     <>
       {fonts && (
         <Row>
-          <DropDown
+          <FontPicker
             data-testid="font"
-            ariaLabel={__('Font family', 'web-stories')}
+            aria-label={__('Font family', 'web-stories')}
             options={fonts}
             value={fontFamily}
-            onChange={async (value) => {
-              const fontObj = fonts.find((item) => item.value === value);
-              const newFont = {
-                family: value,
-                ...objectPick(fontObj, [
-                  'service',
-                  'fallbacks',
-                  'weights',
-                  'styles',
-                  'variants',
-                ]),
-              };
-
-              await maybeEnqueueFontStyle(
-                selectedElements.map(({ content }) => {
-                  return {
-                    font: newFont,
-                    fontStyle,
-                    fontWeight,
-                    content: stripHTML(content),
-                  };
-                })
-              );
-
-              pushUpdate(
-                {
-                  font: newFont,
-                },
-                true
-              );
-            }}
+            onChange={handleFontPickerChange}
           />
         </Row>
       )}
@@ -117,35 +168,23 @@ function FontControls({ selectedElements, pushUpdate }) {
           <>
             <DropDown
               data-testid="font.weight"
-              ariaLabel={__('Font weight', 'web-stories')}
+              aria-label={__('Font weight', 'web-stories')}
               placeholder={__('(multiple)', 'web-stories')}
               options={fontWeights}
               value={fontWeight}
-              onChange={async (value) => {
-                await maybeEnqueueFontStyle(
-                  selectedElements.map(({ font, content }) => {
-                    return {
-                      font,
-                      fontStyle,
-                      fontWeight: parseInt(value),
-                      content: stripHTML(content),
-                    };
-                  })
-                );
-                handleSelectFontWeight(value);
-              }}
+              onChange={handleFontWeightPickerChange}
             />
             <Space />
           </>
         )}
         <BoxedNumeric
-          data-testid="font.size"
-          ariaLabel={__('Font size', 'web-stories')}
+          aria-label={__('Font size', 'web-stories')}
           value={fontSize}
-          max={PAGE_HEIGHT}
           flexBasis={58}
           textCenter
           onChange={(value) => pushUpdate({ fontSize: value })}
+          min={MIN_MAX.FONT_SIZE.MIN}
+          max={MIN_MAX.FONT_SIZE.MAX}
         />
       </Row>
     </>

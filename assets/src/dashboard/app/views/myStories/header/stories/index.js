@@ -29,11 +29,11 @@ import {
   VIEW_STYLE,
   STORY_STATUS,
 } from '../../../../../constants';
-import formattedStoriesArray from '../../../../../storybookUtils/formattedStoriesArray';
+import formattedStoriesArray from '../../../../../dataUtils/formattedStoriesArray';
 import { Layout } from '../../../../../components';
 
 export default {
-  title: 'Dashboard/Components/myStories/Header',
+  title: 'Dashboard/Views/MyStories/Header',
   component: Header,
 };
 

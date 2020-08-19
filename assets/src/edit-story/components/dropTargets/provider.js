@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -26,6 +26,7 @@ import { useState, useCallback } from 'react';
 import { useStory } from '../../app';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
+import { getDefinitionForType } from '../../elements';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
@@ -41,21 +42,36 @@ function DropTargetsProvider({ children }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    actions: { combineElements },
-    state: { currentPage },
-  } = useStory();
+  const { currentPage, combineElements } = useStory(
+    ({ state: { currentPage }, actions: { combineElements } }) => ({
+      currentPage,
+      combineElements,
+    })
+  );
+
+  const elements = useMemo(() => currentPage?.elements || [], [
+    currentPage?.elements,
+  ]);
+
+  const sortedDropTargetIds = useMemo(
+    () =>
+      elements
+        .filter(({ id }) => id in dropTargets)
+        .map(({ id }) => id)
+        .reverse(), // Sort by z-index
+    [dropTargets, elements]
+  );
 
   const getDropTargetFromCursor = useCallback(
     (x, y, ignoreId = null) => {
       const underCursor = document.elementsFromPoint(x, y);
       return (
-        Object.keys(dropTargets).find(
+        sortedDropTargetIds.find(
           (id) => underCursor.includes(dropTargets[id]) && id !== ignoreId
         ) || null
       );
     },
-    [dropTargets]
+    [sortedDropTargetIds, dropTargets]
   );
 
   /**
@@ -82,11 +98,27 @@ function DropTargetsProvider({ children }) {
         return;
       }
 
+      const newElement = getElementProperties(resource.type, {
+        resource,
+      });
+
+      const existingElement = elements.find(({ id }) => id === selfId);
+
+      // Get these attributes from the existing element (if exists and is non-null)
+      // or get defaults from a new element of the same type
+      const scale = existingElement?.scale ?? newElement.scale;
+      const focalX = existingElement?.focalX ?? newElement.focalX;
+      const focalY = existingElement?.focalY ?? newElement.focalY;
+      const flip = existingElement?.flip ?? newElement.flip;
+
       const dropTargetId = getDropTargetFromCursor(x, y, selfId);
 
       if (dropTargetId && dropTargetId !== activeDropTargetId) {
         pushTransform(dropTargetId, {
-          dropTargets: { active: true, replacement: resource },
+          dropTargets: {
+            active: true,
+            replacement: { resource, scale, focalX, focalY, flip },
+          },
         });
         if (selfId) {
           pushTransform(selfId, {
@@ -101,7 +133,7 @@ function DropTargetsProvider({ children }) {
         }
       }
       setActiveDropTargetId(dropTargetId);
-      (currentPage?.elements || [])
+      elements
         .filter(({ id }) => id !== dropTargetId)
         .forEach((el) =>
           pushTransform(el.id, {
@@ -109,12 +141,7 @@ function DropTargetsProvider({ children }) {
           })
         );
     },
-    [
-      activeDropTargetId,
-      currentPage?.elements,
-      getDropTargetFromCursor,
-      pushTransform,
-    ]
+    [activeDropTargetId, elements, getDropTargetFromCursor, pushTransform]
   );
 
   /**
@@ -127,6 +154,9 @@ function DropTargetsProvider({ children }) {
       }
 
       if (!activeDropTargetId || activeDropTargetId === selfId) {
+        Object.keys(dropTargets)
+          .filter((id) => id !== selfId)
+          .map((id) => pushTransform(id, null));
         return;
       }
 
@@ -147,7 +177,7 @@ function DropTargetsProvider({ children }) {
       combineElements(combineArgs);
 
       // Reset styles on visisble elements
-      (currentPage?.elements || [])
+      elements
         .filter(({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId)
         .forEach((el) => {
           pushTransform(el.id, {
@@ -156,17 +186,17 @@ function DropTargetsProvider({ children }) {
               replacement: null,
             },
           });
+          pushTransform(el.id, null);
         });
 
       setActiveDropTargetId(null);
+
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      if (onDropHandler) {
+        onDropHandler(activeDropTargetId);
+      }
     },
-    [
-      activeDropTargetId,
-      combineElements,
-      currentPage?.elements,
-      dropTargets,
-      pushTransform,
-    ]
+    [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
   const state = {

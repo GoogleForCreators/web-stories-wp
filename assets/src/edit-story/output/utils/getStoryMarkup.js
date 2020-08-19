@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from 'react-dom/server';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -30,10 +31,13 @@ import OutputStory from '../story';
  * @param {import('../../../types').Story} story Story object.
  * @param {Array<Object>} pages List of pages.
  * @param {Object} metadata Metadata.
+ * @param {Object} featureFlags Boolean flags to enable/disable features
  * @return {string} Story markup.
  */
-export default function getStoryMarkup(story, pages, metadata) {
+export default function getStoryMarkup(story, pages, metadata, featureFlags) {
   return renderToStaticMarkup(
-    <OutputStory story={story} pages={pages} metadata={metadata} />
+    <FlagsProvider features={featureFlags}>
+      <OutputStory story={story} pages={pages} metadata={metadata} />
+    </FlagsProvider>
   );
 }

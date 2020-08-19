@@ -19,7 +19,7 @@
  */
 import generatePatternStylesMock from '../../../../utils/generatePatternStyles';
 import createSolid from '../../../../utils/createSolid';
-import getPreviewStyle, { transparentStyle } from '../getPreviewStyle';
+import getPreviewStyle from '../getPreviewStyle';
 
 jest.mock('../../../../utils/generatePatternStyles', () => jest.fn());
 
@@ -34,7 +34,7 @@ describe('getPreviewStyle', () => {
   it('should return transparent for no pattern', () => {
     const pattern = null;
     const result = getPreviewStyle(pattern);
-    expect(result).toStrictEqual(transparentStyle);
+    expect(result).toStrictEqual({});
     expect(generatePatternStylesMock).not.toHaveBeenCalled();
   });
 
@@ -56,7 +56,7 @@ describe('getPreviewStyle', () => {
   it('should return transparent for transparent solid', () => {
     const pattern = createSolid(255, 0, 255, 0);
     const result = getPreviewStyle(pattern);
-    expect(result).toStrictEqual(transparentStyle);
+    expect(result).toStrictEqual({});
     expect(generatePatternStylesMock).not.toHaveBeenCalled();
   });
 

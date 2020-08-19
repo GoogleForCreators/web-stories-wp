@@ -29,8 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as DefaultImageSvg } from '../../icons/default_image.svg';
-import { ReactComponent as EditPencilSvg } from '../../icons/edit_pencil.svg';
+import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -39,7 +38,7 @@ const Container = styled.div`
   min-width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   height: ${({ size }) => (size ? `${size}px` : '148px')};
   min-height: ${({ size }) => (size ? `${size}px` : '148px')};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.5)};
   border: none;
   position: relative;
   cursor: pointer;
@@ -47,14 +46,14 @@ const Container = styled.div`
   ${({ circle }) => circle && 'border-radius: 50%;'}
 `;
 
-const DefaultImage = styled(DefaultImageSvg)`
+const DefaultImage = styled(DefaultImageIcon)`
   width: 100%;
   height: 100%;
   display: block;
   padding: ${({ size }) => (size ? size * 0.2 : 18)}px;
 `;
 
-const EditIcon = styled(EditPencilSvg)`
+const EditIcon = styled(EditPencil)`
   width: 100%;
   height: 100%;
   display: block;
@@ -65,10 +64,10 @@ const EditBtn = styled.button`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ theme }) => theme.colors.bg.v0};
+  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.colors.bg.panel};
   left: ${({ circle }) => (circle ? 0 : 4)}px;
   bottom: ${({ circle }) => (circle ? 0 : 4)}px;
   flex-direction: column;
@@ -99,7 +98,7 @@ const LoadingDots = styled.div`
 
   &:after {
     pointer-events: none;
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
     content: '.';
     font-weight: bold;
     animation: dots 1s steps(5, end) infinite;
@@ -117,13 +116,13 @@ const LoadingDots = styled.div`
       text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
     }
     60% {
-      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.v1},
+      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.white},
         12px 0 0 transparent;
     }
     80%,
     100% {
-      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.v1},
-        12px 0 0 ${({ theme }) => theme.colors.fg.v1};
+      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.white},
+        12px 0 0 ${({ theme }) => theme.colors.fg.white};
     }
   }
 `;
@@ -166,7 +165,7 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={title}>
+      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={ariaLabel}>
         <EditIcon />
       </EditBtn>
     </Container>
@@ -196,11 +195,11 @@ MediaInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   circle: false,
-  ariaLabel: __('Standard input', 'web-stories'),
   size: null,
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
+  ariaLabel: __('Choose an image', 'web-stories'),
 };
 
 export default MediaInput;

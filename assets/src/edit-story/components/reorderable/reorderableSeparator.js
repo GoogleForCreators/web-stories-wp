@@ -39,7 +39,7 @@ const Wrapper = styled.div`
 const Line = styled.div`
   height: 4px;
   margin: 0 0 -4px;
-  background: ${({ theme }) => theme.colors.action};
+  background: ${({ theme }) => theme.colors.accent.primary};
   width: 100%;
 `;
 
@@ -58,9 +58,6 @@ function ReorderableSeparator({ position, children = <Line />, ...props }) {
   }, [setCurrentSeparator, isReordering, position]);
 
   return (
-    // Disable reason: This one does not need keyboard interactivity
-    //  - there are better ways to reorder using keyboard.
-    // eslint-disable-next-line jsx-a11y/mouse-events-have-key-events
     <Wrapper
       onMouseOver={handlePointerEnter}
       ref={separatorRef}

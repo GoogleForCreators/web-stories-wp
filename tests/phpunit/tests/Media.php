@@ -19,9 +19,25 @@ namespace Google\Web_Stories\Tests;
 
 use WP_REST_Request;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Media
+ */
 class Media extends \WP_UnitTestCase {
 	/**
-	 * Test rest_api_init()
+	 * @covers ::init
+	 */
+	public function test_init() {
+		$media = new \Google\Web_Stories\Media();
+		$media->init();
+
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_LANDSCAPE_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::POSTER_SQUARE_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::STORY_THUMBNAIL_IMAGE_SIZE ) );
+		$this->assertTrue( has_image_size( \Google\Web_Stories\Media::PUBLISHER_LOGO_IMAGE_SIZE ) );
+	}
+	/**
+	 * @covers ::rest_api_init
 	 */
 	public function test_rest_api_init() {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
@@ -43,16 +59,98 @@ class Media extends \WP_UnitTestCase {
 		);
 
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		wp_set_object_terms( $video_attachment_id, 'editor', \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
 
-		$request  = new WP_REST_Request( 'GET', sprintf( '/wp/v2/media/%d', $video_attachment_id ) );
+		$request  = new WP_REST_Request( 'GET', sprintf( '/web-stories/v1/media/%d', $video_attachment_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 
 		$this->assertArrayHasKey( 'featured_media', $data );
+		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
 		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
+		$this->assertEquals( 'editor', $data['media_source'] );
 	}
 
+	/**
+	 * @covers ::wp_prepare_attachment_for_js
+	 */
+	public function test_wp_prepare_attachment_for_js() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+
+		$media = new \Google\Web_Stories\Media();
+		$image = $media->wp_prepare_attachment_for_js( [ 'type' => 'image' ], get_post( $video_attachment_id ) );
+		$video = $media->wp_prepare_attachment_for_js( [ 'type' => 'video' ], get_post( $video_attachment_id ) );
+
+		$this->assertEqualSets( [ 'type' => 'image' ], $image );
+		$this->assertArrayHasKey( 'featured_media', $video );
+		$this->assertArrayHasKey( 'featured_media_src', $video );
+	}
+
+	/**
+	 * @covers ::get_thumbnail_data
+	 */
+	public function test_get_thumbnail_data() {
+		$attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		$media  = new \Google\Web_Stories\Media();
+		$result = $media->get_thumbnail_data( $attachment_id );
+		$this->assertCount( 4, $result );
+		$this->assertArrayHasKey( 'src', $result );
+		$this->assertArrayHasKey( 'width', $result );
+		$this->assertArrayHasKey( 'height', $result );
+		$this->assertArrayHasKey( 'generated', $result );
+		$this->assertFalse( $result['generated'] );
+	}
+
+	/**
+	 * @covers ::get_thumbnail_data
+	 */
+	public function test_get_thumbnail_data_generated() {
+		$attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		add_post_meta( $attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
+
+		$media  = new \Google\Web_Stories\Media();
+		$result = $media->get_thumbnail_data( $attachment_id );
+		$this->assertTrue( $result['generated'] );
+	}
+
+	/**
+	 * @covers ::delete_video_poster
+	 */
 	public function test_delete_video_poster() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -76,10 +174,14 @@ class Media extends \WP_UnitTestCase {
 		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
 		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
 
-		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$media = new \Google\Web_Stories\Media();
+		$media->delete_video_poster( $video_attachment_id );
 		$this->assertNull( get_post( $poster_attachment_id ) );
 	}
 
+	/**
+	 * @covers ::delete_video_poster
+	 */
 	public function test_delete_video_poster_no_generated_poster() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
@@ -100,10 +202,14 @@ class Media extends \WP_UnitTestCase {
 		);
 		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
 
-		\Google\Web_Stories\Media::delete_video_poster( $video_attachment_id );
+		$media = new \Google\Web_Stories\Media();
+		$media->delete_video_poster( $video_attachment_id );
 		$this->assertNotNull( get_post( $poster_attachment_id ) );
 	}
 
+	/**
+	 * @covers ::delete_video_poster
+	 */
 	public function test_delete_video_poster_when_attachment_is_deleted() {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[

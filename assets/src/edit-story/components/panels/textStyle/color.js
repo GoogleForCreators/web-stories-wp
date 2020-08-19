@@ -24,15 +24,13 @@ import { useRef } from 'react';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
-import { ReactComponent as NoneIcon } from '../../../icons/fill_none_icon.svg';
-import { ReactComponent as FilledIcon } from '../../../icons/fill_filled_icon.svg';
-import { ReactComponent as HighlightedIcon } from '../../../icons/fill_highlighted_icon.svg';
+import { FillNone, FillFilled, FillHighlighted } from '../../../icons/';
 import { Color, Label, Row, ToggleButton } from '../../form';
 import { useKeyDownEffect } from '../../keyboard';
 import { useCommonColorValue, getCommonValue } from '../utils';
@@ -65,17 +63,17 @@ const BUTTONS = [
   {
     mode: BACKGROUND_TEXT_MODE.NONE,
     label: __('None', 'web-stories'),
-    Icon: NoneIcon,
+    Icon: FillNone,
   },
   {
     mode: BACKGROUND_TEXT_MODE.FILL,
     label: __('Fill', 'web-stories'),
-    Icon: FilledIcon,
+    Icon: FillFilled,
   },
   {
     mode: BACKGROUND_TEXT_MODE.HIGHLIGHT,
     label: __('Highlight', 'web-stories'),
-    Icon: HighlightedIcon,
+    Icon: FillHighlighted,
   },
 ];
 
@@ -114,12 +112,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
   return (
     <>
       <Row>
-        <Label>{__('Text', 'web-stories')}</Label>
+        <Label id="text-color-label">{__('Text', 'web-stories')}</Label>
         <Color
           data-testid="text.color"
           value={color}
           onChange={handleSetColor}
           colorPickerActions={getColorPickerActions}
+          label={__('Text color', 'web-stories')}
+          labelId="text-color-label"
         />
       </Row>
       <FillRow ref={fillRow}>
@@ -130,6 +130,11 @@ function ColorControls({ selectedElements, pushUpdate }) {
             icon={<Icon />}
             value={backgroundTextMode === mode}
             label={label}
+            aria-label={sprintf(
+              /* translators: %s: Text background mode. */
+              __('Set text background mode: %s', 'web-stories'),
+              label
+            )}
             onChange={(value) =>
               value &&
               pushUpdate(
@@ -145,7 +150,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
       </FillRow>
       {backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE && (
         <Row>
-          <Label>{__('Textbox', 'web-stories')}</Label>
+          <Label id="background-color-label">
+            {__('Textbox', 'web-stories')}
+          </Label>
           <Color
             data-testid="text.backgroundColor"
             hasGradient
@@ -159,6 +166,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
               )
             }
             label={__('Background color', 'web-stories')}
+            labelId="background-color-label"
           />
         </Row>
       )}

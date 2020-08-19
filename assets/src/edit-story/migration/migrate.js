@@ -37,6 +37,11 @@ import isFullBleedDeprecate from './migrations/v0016_isFullbleedDeprecate';
 import inlineTextProperties from './migrations/v0017_inlineTextProperties';
 import defaultBackgroundElement from './migrations/v0018_defaultBackgroundElement';
 import conicToLinear from './migrations/v0019_conicToLinear';
+import isFillDeprecate from './migrations/v0020_isFillDeprecate';
+import backgroundColorToPage from './migrations/v0021_backgroundColorToPage';
+import dataPixelTo412 from './migrations/v0022_dataPixelTo412';
+import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
+import blobsToSingleBlob from './migrations/v0024_blobsToSingleBlob';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -58,6 +63,11 @@ const MIGRATIONS = {
   17: [inlineTextProperties],
   18: [defaultBackgroundElement],
   19: [conicToLinear],
+  20: [isFillDeprecate],
+  21: [backgroundColorToPage],
+  22: [dataPixelTo412],
+  23: [convertOverlayPattern],
+  24: [blobsToSingleBlob],
 };
 
 export const DATA_VERSION = Math.max.apply(

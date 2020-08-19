@@ -17,21 +17,30 @@
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { useStory } from '../../app';
 import useCanvas from '../canvas/useCanvas';
-import SingleSelectionMovable from './singleSelectionMovable';
-import MultiSelectionMovable from './multiSelectionMovable';
+import SingleSelectionMoveable from './singleSelectionMoveable';
+import MultiSelectionMoveable from './multiSelectionMoveable';
 
 function Selection() {
-  const {
-    state: { selectedElements },
-  } = useStory();
-  const {
-    state: { editingElement, lastSelectionEvent, nodesById },
-  } = useCanvas();
+  const { selectedElements, isAnimating } = useStory((state) => ({
+    selectedElements: state.state.selectedElements,
+    isAnimating: [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.SCRUBBING,
+    ].includes(state.state.animationState),
+  }));
+  const { editingElement, lastSelectionEvent, nodesById } = useCanvas(
+    ({ state: { editingElement, lastSelectionEvent, nodesById } }) => ({
+      editingElement,
+      lastSelectionEvent,
+      nodesById,
+    })
+  );
 
   // Do not show selection for in editing mode.
-  if (editingElement) {
+  if (editingElement || isAnimating) {
     return null;
   }
 
@@ -49,7 +58,7 @@ function Selection() {
       return null;
     }
     return (
-      <SingleSelectionMovable
+      <SingleSelectionMoveable
         selectedElement={selectedElement}
         targetEl={target}
         pushEvent={lastSelectionEvent}
@@ -58,7 +67,7 @@ function Selection() {
   }
 
   // Multi-selection.
-  return <MultiSelectionMovable selectedElements={selectedElements} />;
+  return <MultiSelectionMoveable selectedElements={selectedElements} />;
 }
 
 export default Selection;

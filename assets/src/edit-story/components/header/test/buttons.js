@@ -17,17 +17,23 @@
 /**
  * External dependencies
  */
-import { fireEvent, getByRole } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
+import MediaContext from '../../../app/media/context';
 import Buttons from '../buttons';
 import { renderWithTheme } from '../../../testUtils';
 
-function setupButtons(extraStoryProps, extraMetaProps) {
+function setupButtons(
+  extraStoryProps,
+  extraMetaProps,
+  extraMediaProps,
+  extraConfigProps
+) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
 
@@ -44,17 +50,25 @@ function setupButtons(extraStoryProps, extraMetaProps) {
     capabilities: {
       hasPublishAction: true,
     },
+    ...extraConfigProps,
   };
-  const { getByText, container } = renderWithTheme(
+  const mediaContextValue = {
+    local: {
+      state: { ...extraMediaProps },
+    },
+  };
+
+  const { getByRole } = renderWithTheme(
     <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
-        <Buttons />
+        <MediaContext.Provider value={mediaContextValue}>
+          <Buttons />
+        </MediaContext.Provider>
       </StoryContext.Provider>
     </ConfigContext.Provider>
   );
   return {
-    container,
-    getByText,
+    getByRole,
     autoSave,
     saveStory,
   };
@@ -73,14 +87,14 @@ describe('buttons', () => {
   };
 
   it('should display Publish button when in draft mode', () => {
-    const { getByText } = setupButtons();
-    const publishButton = getByText('Publish');
+    const { getByRole } = setupButtons();
+    const publishButton = getByRole('button', { name: 'Publish' });
     expect(publishButton).toBeDefined();
   });
 
   it('should update window location when publishing', () => {
-    const { getByText, saveStory } = setupButtons();
-    const publishButton = getByText('Publish');
+    const { getByRole, saveStory } = setupButtons();
+    const publishButton = getByRole('button', { name: 'Publish' });
 
     fireEvent.click(publishButton);
     expect(saveStory).toHaveBeenCalledTimes(1);
@@ -88,8 +102,8 @@ describe('buttons', () => {
   });
 
   it('should display Switch to draft button when published', () => {
-    const { getByText, saveStory } = setupButtons({ status: 'publish' });
-    const draftButton = getByText('Switch to Draft');
+    const { getByRole, saveStory } = setupButtons({ status: 'publish' });
+    const draftButton = getByRole('button', { name: 'Switch to Draft' });
 
     expect(draftButton).toBeDefined();
     fireEvent.click(draftButton);
@@ -97,11 +111,11 @@ describe('buttons', () => {
   });
 
   it('should display Schedule button when future date is set', () => {
-    const { getByText, saveStory } = setupButtons({
+    const { getByRole, saveStory } = setupButtons({
       status: 'draft',
       date: FUTURE_DATE,
     });
-    const scheduleButton = getByText('Schedule');
+    const scheduleButton = getByRole('button', { name: 'Schedule' });
 
     expect(scheduleButton).toBeDefined();
     fireEvent.click(scheduleButton);
@@ -109,25 +123,45 @@ describe('buttons', () => {
   });
 
   it('should display Schedule button with future status', () => {
-    const { getByText } = setupButtons({
+    const { getByRole } = setupButtons({
       status: 'future',
       date: FUTURE_DATE,
     });
-    const scheduleButton = getByText('Schedule');
+    const scheduleButton = getByRole('button', { name: 'Schedule' });
 
     expect(scheduleButton).toBeDefined();
   });
 
   it('should display loading indicator while the story is updating', () => {
-    const { container } = setupButtons({}, { isSaving: true });
-    expect(getByRole(container, 'progressbar')).toBeInTheDocument();
+    const { getByRole } = setupButtons({}, { isSaving: true });
+    expect(getByRole('progressbar')).toBeInTheDocument();
+    expect(getByRole('button', { name: 'Save draft' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Preview' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Publish' })).toBeDisabled();
+  });
+
+  it('should disable buttons while upload is in progress', () => {
+    const { getByRole } = setupButtons({}, {}, { isUploading: true });
+    expect(getByRole('button', { name: 'Save draft' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Preview' })).toBeDisabled();
+    expect(getByRole('button', { name: 'Publish' })).toBeDisabled();
+  });
+
+  it('should disable publish button when user lacks permission', () => {
+    const { getByRole } = setupButtons(
+      {},
+      {},
+      {},
+      { capabilities: { hasPublishAction: false } }
+    );
+    expect(getByRole('button', { name: 'Publish' })).toBeDisabled();
   });
 
   it('should open draft preview when clicking on Preview via about:blank', () => {
-    const { getByText, saveStory } = setupButtons({
+    const { getByRole, saveStory } = setupButtons({
       link: 'https://example.com',
     });
-    const previewButton = getByText('Preview');
+    const previewButton = getByRole('button', { name: 'Preview' });
 
     expect(previewButton).toBeDefined();
 
@@ -163,11 +197,11 @@ describe('buttons', () => {
   });
 
   it('should open preview for a published story when clicking on Preview via about:blank', () => {
-    const { getByText, autoSave } = setupButtons({
+    const { getByRole, autoSave } = setupButtons({
       link: 'https://example.com',
       status: 'publish',
     });
-    const previewButton = getByText('Preview');
+    const previewButton = getByRole('button', { name: 'Preview' });
     autoSave.mockImplementation(() => ({
       then(callback) {
         callback();

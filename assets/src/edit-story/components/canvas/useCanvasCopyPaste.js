@@ -30,14 +30,26 @@ import {
   processPastedElements,
   processPastedNodeList,
 } from '../../utils/copyPaste';
+import useBatchingCallback from '../../utils/useBatchingCallback';
 import useInsertElement from './useInsertElement';
+import useAddPastedElements from './useAddPastedElements';
 import useUploadWithPreview from './useUploadWithPreview';
 
 function useCanvasGlobalKeys() {
-  const {
-    state: { currentPage, selectedElements },
-    actions: { addElements, deleteSelectedElements },
-  } = useStory();
+  const addPastedElements = useAddPastedElements();
+
+  const { currentPage, selectedElements, deleteSelectedElements } = useStory(
+    ({
+      state: { currentPage, selectedElements },
+      actions: { deleteSelectedElements },
+    }) => {
+      return {
+        currentPage,
+        selectedElements,
+        deleteSelectedElements,
+      };
+    }
+  );
 
   const uploadWithPreview = useUploadWithPreview();
 
@@ -50,26 +62,22 @@ function useCanvasGlobalKeys() {
         return;
       }
 
-      addElementsToClipboard(selectedElements, evt);
+      addElementsToClipboard(currentPage, selectedElements, evt);
 
       if (eventType === 'cut') {
         deleteSelectedElements();
       }
       evt.preventDefault();
     },
-    [deleteSelectedElements, selectedElements]
+    [currentPage, deleteSelectedElements, selectedElements]
   );
 
-  const elementPasteHandler = useCallback(
+  const elementPasteHandler = useBatchingCallback(
     (content) => {
       const elements = processPastedElements(content, currentPage);
-      const foundElements = elements.length > 0;
-      if (foundElements) {
-        addElements({ elements });
-      }
-      return foundElements;
+      return addPastedElements(elements);
     },
-    [addElements, currentPage]
+    [addPastedElements, currentPage]
   );
 
   const rawPasteHandler = useCallback(
@@ -99,7 +107,10 @@ function useCanvasGlobalKeys() {
         if (content) {
           const template = document.createElement('template');
           // Remove meta tag.
-          template.innerHTML = content.replace(/<meta[^>]+>/g, '');
+          template.innerHTML = content
+            .replace(/<meta[^>]+>/g, '')
+            .replace(/<\/?html>/g, '')
+            .replace(/<\/?body>/g, '');
           let addedElements = elementPasteHandler(template.content);
           if (!addedElements) {
             addedElements = rawPasteHandler(template.content);

@@ -23,10 +23,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Info } from '../../../icons/info.svg';
+import { Info } from '../../../icons';
 
 const NoteContainer = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: 12px;
   line-height: 16px;

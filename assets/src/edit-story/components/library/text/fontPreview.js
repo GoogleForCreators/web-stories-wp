@@ -27,14 +27,14 @@ import { useEffect } from 'react';
  */
 import { useFont } from '../../../app';
 import { ALLOWED_EDITOR_PAGE_WIDTHS, PAGE_WIDTH } from '../../../constants';
-import { FontPropType } from '../../../types';
+import StoryPropTypes from '../../../types';
 import stripHTML from '../../../utils/stripHTML';
 
 const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
 const Preview = styled.button`
   position: relative;
-  background: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  background: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   padding: 6px;
   margin-bottom: 12px;
   border-radius: 4px;
@@ -51,10 +51,11 @@ const Text = styled.span`
   font-size: ${({ fontSize }) => fontSize * PREVIEW_EM_SCALE}px;
   font-weight: ${({ fontWeight }) => fontWeight};
   font-family: ${({ fontFamily }) => fontFamily};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
 `;
 
-function FontPreview({ title, font, fontSize, fontWeight, content, onClick }) {
+function FontPreview({ title, element, onClick }) {
+  const { font, fontSize, fontWeight, content } = element;
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -83,12 +84,9 @@ function FontPreview({ title, font, fontSize, fontWeight, content, onClick }) {
 }
 
 FontPreview.propTypes = {
-  title: PropTypes.string,
-  font: FontPropType,
-  fontSize: PropTypes.number,
-  fontWeight: PropTypes.number,
-  content: PropTypes.string,
-  onClick: PropTypes.func,
+  title: PropTypes.string.isRequired,
+  element: StoryPropTypes.textContent.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default FontPreview;

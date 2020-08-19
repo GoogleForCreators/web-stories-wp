@@ -24,9 +24,16 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
+import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../keyboard';
 import MULTIPLE_VALUE from './multipleValue';
 
-const CheckBoxInput = styled.input.attrs({ type: 'checkbox' })`
+// Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
+const CheckBoxInput = styled.input.attrs({
+  type: 'checkbox',
+  className: 'mousetrap',
+})`
   position: absolute;
   opacity: 0;
   height: 0;
@@ -49,7 +56,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.span`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.54)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -66,17 +73,22 @@ const ContainerLabel = styled.label`
   user-select: none;
   justify-content: center;
   align-items: center;
+
   border-radius: 4px;
+  border: 1px solid transparent;
+  ${KEYBOARD_USER_SELECTOR} &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 
   ${({ value, theme }) =>
-    value && `background-color: ${rgba(theme.colors.fg.v1, 0.1)};`}
+    value && `background-color: ${rgba(theme.colors.fg.white, 0.1)};`}
 
   ${({ disabled }) =>
     disabled &&
     `
-		pointer-events: none;
-		opacity: .2;
-	`}
+    pointer-events: none;
+    opacity: .2;
+  `}
 
   svg {
     color: ${({ theme }) => theme.colors.mg.v2};
@@ -97,6 +109,15 @@ function ToggleButton({
   className,
   ...rest
 }) {
+  const toggle = () => onChange(!value);
+
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const inputRef = useRef();
+  useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
+
   value = value === MULTIPLE_VALUE ? '' : value;
   return (
     <Container className={className}>
@@ -107,8 +128,9 @@ function ToggleButton({
         iconHeight={iconHeight}
       >
         <CheckBoxInput
+          ref={inputRef}
           checked={value}
-          onChange={() => onChange(!value)}
+          onChange={toggle}
           disabled={disabled}
           {...rest}
         />

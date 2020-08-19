@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import VideoAccessibility from '../videoAccessibility';
+import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
 import { renderPanel } from './_utils';
 
 jest.mock('../../mediaPicker', () => ({
@@ -33,25 +33,60 @@ jest.mock('../../mediaPicker', () => ({
 }));
 
 describe('Panels/VideoAccessibility', () => {
+  const defaultElement = {
+    resource: { posterId: 0, title: '', poster: '', alt: '' },
+  };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);
   }
 
   it('should render <VideoAccessibility /> panel', () => {
-    const { getByLabelText } = renderVideoAccessibility([
-      { resource: { posterId: 0, poster: '' } },
-    ]);
-    const element = getByLabelText('Select as video poster');
+    const { getByRole } = renderVideoAccessibility([defaultElement]);
+    const element = getByRole('button', { name: 'Edit: Video poster' });
     expect(element).toBeDefined();
   });
 
   it('should simulate a click on <VideoAccessibility />', () => {
-    const { getByLabelText, pushUpdate } = renderVideoAccessibility([
-      { resource: { posterId: 0, poster: '' } },
+    const { getByRole, pushUpdate } = renderVideoAccessibility([
+      defaultElement,
     ]);
-    const element = getByLabelText('Select as video poster');
+    const element = getByRole('button', { name: 'Edit: Video poster' });
     fireEvent.click(element);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
+  });
+
+  it('should trim "alt" to maximum allowed length if exceeding', () => {
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const input = getByPlaceholderText('Assistive text');
+
+    const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
+
+    fireEvent.change(input, { target: { value: bigText } });
+    const submits = submit({
+      resource: { posterId: 0, poster: '', alt: bigText },
+    });
+    expect(submits[defaultElement.id].resource.alt).toHaveLength(
+      MIN_MAX.ALT_TEXT.MAX
+    );
+  });
+
+  it('should trim "title" to maximum allowed length if exceeding', () => {
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const input = getByPlaceholderText('Title');
+
+    const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
+
+    fireEvent.change(input, { target: { value: bigText } });
+    const submits = submit({
+      resource: { posterId: 0, poster: '', title: bigText },
+    });
+    expect(submits[defaultElement.id].resource.title).toHaveLength(
+      MIN_MAX.TITLE.MAX
+    );
   });
 });

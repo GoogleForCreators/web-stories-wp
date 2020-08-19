@@ -18,16 +18,24 @@
  * Internal dependencies
  */
 import storyReducer, { ACTION_TYPES } from '../stories';
+import { STORY_STATUS } from '../../../constants';
 
 describe('storyReducer', () => {
   const initialState = {
-    isError: false,
+    error: {},
     isLoading: false,
     stories: {},
     storiesOrderById: [],
     totalStoriesByStatus: {},
     totalPages: null,
+    previewMarkup: '',
   };
+
+  const MOCK_ERROR_ID = Date.now();
+
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => MOCK_ERROR_ID);
+  });
 
   it(`should update stories state when ${ACTION_TYPES.TRASH_STORY} is called`, () => {
     const result = storyReducer(
@@ -42,8 +50,8 @@ describe('storyReducer', () => {
         },
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -58,7 +66,7 @@ describe('storyReducer', () => {
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: false,
+      error: {},
       storiesOrderById: [94, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
@@ -67,10 +75,38 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 43,
-        draft: 40,
-        publish: 3,
+        [STORY_STATUS.DRAFT]: 40,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 3,
       },
       totalPages: 4,
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.TRASH_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.TRASH_STORY_FAILURE,
+        payload: {
+          message: {
+            body: 'my trash story failure message',
+            title: 'Unable to Delete Story',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          body: 'my trash story failure message',
+          title: 'Unable to Delete Story',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -87,8 +123,8 @@ describe('storyReducer', () => {
         },
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -100,7 +136,7 @@ describe('storyReducer', () => {
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: false,
+      error: {},
       storiesOrderById: [95, 94, 65, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
@@ -111,10 +147,38 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 45,
-        draft: 41,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 41,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 4,
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.DUPLICATE_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.DUPLICATE_STORY_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Duplciate Story',
+            body: 'my duplicate story failure message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Duplciate Story',
+          body: 'my duplicate story failure message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -124,15 +188,43 @@ describe('storyReducer', () => {
       payload: {
         page: 1,
         stories: [
-          { id: 94, status: 'draft', title: 'my test story 1' },
-          { id: 65, status: 'publish', title: 'my test story 2' },
-          { id: 78, status: 'draft', title: 'my test story 3' },
-          { id: 12, status: 'draft', title: 'my test story 4' },
+          {
+            id: 94,
+            status: 'draft',
+            title: { raw: 'my test story 1' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 65,
+            status: 'publish',
+            title: { raw: 'my test story 2' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 78,
+            status: 'draft',
+            title: { raw: 'my test story 3' },
+            story_data: {
+              pages: [{}],
+            },
+          },
+          {
+            id: 12,
+            status: 'draft',
+            title: { raw: 'my test story 4' },
+            story_data: {
+              pages: [{}],
+            },
+          },
         ],
         totalStoriesByStatus: {
           all: 44,
-          draft: 40,
-          publish: 4,
+          [STORY_STATUS.DRAFT]: 40,
+          [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
         },
         totalPages: 4,
       },
@@ -140,7 +232,7 @@ describe('storyReducer', () => {
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: false,
+      error: {},
       storiesOrderById: [94, 65, 78, 12],
       stories: {
         94: { id: 94, status: 'draft', title: 'my test story 1' },
@@ -150,8 +242,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 44,
-        draft: 40,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 40,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 4,
       allPagesFetched: false,
@@ -166,15 +258,43 @@ describe('storyReducer', () => {
         payload: {
           page: 2,
           stories: [
-            { id: 94, status: 'draft', title: 'my test story 1' },
-            { id: 65, status: 'publish', title: 'my test story 2' },
-            { id: 78, status: 'draft', title: 'my test story 3' },
-            { id: 12, status: 'draft', title: 'my test story 4' },
+            {
+              id: 94,
+              status: 'draft',
+              title: { raw: 'my test story 1' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 65,
+              status: 'publish',
+              title: { raw: 'my test story 2' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 78,
+              status: 'draft',
+              title: { raw: 'my test story 3' },
+              story_data: {
+                pages: [{}],
+              },
+            },
+            {
+              id: 12,
+              status: 'draft',
+              title: { raw: 'my test story 4' },
+              story_data: {
+                pages: [{}],
+              },
+            },
           ],
           totalStoriesByStatus: {
             all: 18,
-            draft: 14,
-            publish: 4,
+            [STORY_STATUS.DRAFT]: 14,
+            [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
           },
           totalPages: 2,
         },
@@ -192,8 +312,8 @@ describe('storyReducer', () => {
       },
       totalStoriesByStatus: {
         all: 18,
-        draft: 14,
-        publish: 4,
+        [STORY_STATUS.DRAFT]: 14,
+        [STORY_STATUS.PUBLISHED_AND_FUTURE]: 4,
       },
       totalPages: 2,
       allPagesFetched: true,
@@ -215,18 +335,88 @@ describe('storyReducer', () => {
     });
   });
 
-  it(`should update isError when ${ACTION_TYPES.FETCH_STORIES_FAILURE} is called`, () => {
+  it(`should update isLoading when ${ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE} is called`, () => {
     const result = storyReducer(
       { ...initialState },
       {
-        type: ACTION_TYPES.FETCH_STORIES_FAILURE,
+        type: ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE,
         payload: true,
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: true,
+      isLoading: true,
+    });
+  });
+
+  it(`should update error to empty object when ${ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_SUCCESS,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {},
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.FETCH_STORIES_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.FETCH_STORIES_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Load Stories',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Load Stories',
+          body: 'my error message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'my_error_code',
+      },
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Create Story From Template',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Create Story From Template',
+          body: 'my error message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'my_error_code',
+      },
     });
   });
 
@@ -255,6 +445,107 @@ describe('storyReducer', () => {
         78: { id: 78, status: 'draft', title: 'my test story 3' },
         12: { id: 12, status: 'draft', title: 'my test story 4' },
       },
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.UPDATE_STORY_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.UPDATE_STORY_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Update Story',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Update Story',
+          body: 'my error message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'my_error_code',
+      },
+    });
+  });
+
+  it(`should update isLoading when ${ACTION_TYPES.CREATING_STORY_PREVIEW} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATING_STORY_PREVIEW,
+        payload: true,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      isLoading: true,
+    });
+  });
+
+  it(`should update error to empty object and set previewMarkup when ${ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
+        payload: 'markup to render preview',
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {},
+      previewMarkup: 'markup to render preview',
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Create Story Preview From Template',
+            body: 'my error message',
+          },
+          code: 'my_error_code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Create Story Preview From Template',
+          body: 'my error message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'my_error_code',
+      },
+    });
+  });
+
+  it(`should update previewMarkup to empty string when ${ACTION_TYPES.CLEAR_STORY_PREVIEW} is called`, () => {
+    const result = storyReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CLEAR_STORY_PREVIEW,
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      previewMarkup: '',
     });
   });
 });

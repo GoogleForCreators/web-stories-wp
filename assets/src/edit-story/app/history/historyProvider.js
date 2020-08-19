@@ -76,8 +76,8 @@ function HistoryProvider({ children, size }) {
     },
   };
 
-  useGlobalKeyDownEffect('undo', () => undo(), [undo]);
-  useGlobalKeyDownEffect('redo', () => redo(), [redo]);
+  useGlobalKeyDownEffect({ key: 'undo', dialog: true }, () => undo(), [undo]);
+  useGlobalKeyDownEffect({ key: 'redo', dialog: true }, () => redo(), [redo]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

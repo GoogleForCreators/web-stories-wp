@@ -28,6 +28,9 @@ import {
   setBrowserViewport,
 } from '@wordpress/e2e-test-utils';
 
+// Extend Jest matchers.
+import 'jest-extended';
+
 /**
  * Environment variables
  */
@@ -59,11 +62,14 @@ jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 500 });
 
+/**
+ * Set up browser.
+ */
 async function setupBrowser() {
-  // 15inch screen.
+  // Same as jest-puppeteer.config.cjs and percy.config.yml
   await setBrowserViewport({
-    width: 1680,
-    height: 948,
+    width: 1600,
+    height: 1000,
   });
 }
 
@@ -99,9 +105,22 @@ function observeConsoleLogging() {
 
     let text = message.text();
 
+    // As of WordPress 5.3.2 in Chrome 79, navigating to the block editor
+    // (Posts > Add New) will display a console warning about
+    // non - unique IDs.
+    // See: https://core.trac.wordpress.org/ticket/23165
+    if (text.includes('elements with non-unique id #_wpnonce')) {
+      return;
+    }
+
     // styled-components warns about dynamically created components.
     // @todo Fix issues.
     if (text.includes(' has been created dynamically.')) {
+      return;
+    }
+
+    // WordPress still bundles jQuery Migrate, which logs to the console.
+    if (text.includes('JQMIGRATE')) {
       return;
     }
 
@@ -121,6 +140,11 @@ function observeConsoleLogging() {
 
     // Firefox warns about this issue on the login screen.
     if (text.includes('wp-includes/js/zxcvbn.min.js')) {
+      return;
+    }
+
+    // Another Firefox warning.
+    if (text.includes('Layout was forced before the page was fully loaded')) {
       return;
     }
 

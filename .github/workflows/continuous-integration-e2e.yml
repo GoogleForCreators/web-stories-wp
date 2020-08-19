@@ -3,7 +3,7 @@ name: E2E Tests
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -13,13 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: ['chrome', 'firefox']
+        # TODO: add back Firefox once support is more mature.
+        browser: ['chrome']
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # See https://github.com/puppeteer/puppeteer/blob/master/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
+      # See https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
       - name: Install libgbm1
         run: sudo apt-get install libgbm1
 
@@ -68,15 +69,13 @@ jobs:
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      - name: Install Puppeteer with correct browser
-        run: npm install puppeteer
-        env:
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Build plugin
-        run: DISABLE_PREVENT=true npm run build:js
+        run: npm run build:js
+        env:
+          # TODO: remove eventually
+          DISABLE_PREVENT: true
 
       - name: Start Docker environment
         run: npm run env:start
@@ -84,11 +83,13 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Run E2E tests
-        run: npm run test:e2e
+        run: npm run test:e2e:percy
         env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
 
       - name: Stop Docker environment
         run: npm run env:stop
+        if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true

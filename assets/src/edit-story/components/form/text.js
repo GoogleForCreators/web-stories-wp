@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +30,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Close } from '../../icons/close_icon.svg';
+import { CloseAlt as Close } from '../../icons';
+import { useKeyDownEffect } from '../keyboard';
 import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 
@@ -43,7 +45,7 @@ const StyledInput = styled(Input)`
 `;
 
 const Container = styled.div`
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
@@ -52,24 +54,29 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
   flex-basis: ${({ flexBasis }) => flexBasis}px;
   position: relative;
 
   ${({ disabled }) => disabled && `opacity: 0.3`};
+
+  border-radius: 4px;
+  border: 1px solid transparent;
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
 const ClearBtn = styled.button`
   position: absolute;
   right: 8px;
   appearance: none;
-  background: ${({ theme }) => rgba(theme.colors.fg.v0, 0.54)};
-  width: 16px;
-  height: 16px;
+  background-color: ${({ theme, showBackground }) =>
+    showBackground ? rgba(theme.colors.fg.black, 0.54) : `transparent`};
   border: none;
-  padding: 0px;
+  padding: 4px;
   border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
@@ -80,22 +87,55 @@ const CloseIcon = styled(Close)`
   height: 12px;
 `;
 
+function Clear({ onClear, showClearIconBackground, children }) {
+  const ref = useRef();
+  useKeyDownEffect(ref, ['enter'], onClear, [onClear]);
+
+  return (
+    <ClearBtn
+      ref={ref}
+      onClick={onClear}
+      showBackground={showClearIconBackground}
+    >
+      {children}
+    </ClearBtn>
+  );
+}
+
+Clear.propTypes = {
+  onClear: PropTypes.func,
+  showClearIconBackground: PropTypes.bool,
+  children: PropTypes.node,
+};
+
 function TextInput({
   className,
   onBlur,
   onChange,
+  onKeyDown,
   label,
   value,
   flexBasis,
-  ariaLabel,
   disabled,
   clear,
+  clearIcon,
+  showClearIconBackground,
   placeholder,
   ...rest
 }) {
+  const inputRef = useRef();
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
   placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
+
+  const onClear = useCallback(() => {
+    onChange('');
+    if (onBlur) {
+      onBlur({ onClear: true });
+    }
+    // Return focus to text input as otherwise focus will revert to current selection
+    inputRef.current?.focus();
+  }, [onChange, onBlur]);
 
   return (
     <Container
@@ -103,14 +143,17 @@ function TextInput({
       flexBasis={flexBasis}
       disabled={disabled}
     >
+      {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
+        type="text"
+        ref={inputRef}
         placeholder={placeholder}
         label={label}
         value={value}
-        aria-label={ariaLabel}
         disabled={disabled}
         {...rest}
         onChange={(evt) => onChange(evt.target.value, evt)}
+        onKeyDown={onKeyDown}
         onBlur={(evt) => {
           if (evt.target.form) {
             evt.target.form.dispatchEvent(
@@ -123,21 +166,14 @@ function TextInput({
         }}
       />
       {Boolean(value) && clear && (
-        <ClearBtn
-          onClick={(evt) => {
-            onChange('');
-            if (evt.target.form) {
-              evt.target.form.dispatchEvent(
-                new window.Event('submit', { cancelable: true })
-              );
-            }
-            if (onBlur) {
-              onBlur();
-            }
-          }}
+        <Clear
+          onClear={onClear}
+          showClearIconBackground={showClearIconBackground}
         >
-          <CloseIcon />
-        </ClearBtn>
+          {clearIcon ?? (
+            <CloseIcon aria-label={__('Clear input', 'web-stories')} />
+          )}
+        </Clear>
       )}
     </Container>
   );
@@ -148,12 +184,14 @@ TextInput.propTypes = {
   label: PropTypes.string,
   value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func,
   onBlur: PropTypes.func,
   disabled: PropTypes.bool,
   flexBasis: PropTypes.number,
   textCenter: PropTypes.bool,
   clear: PropTypes.bool,
-  ariaLabel: PropTypes.string,
+  clearIcon: PropTypes.any,
+  showClearIconBackground: PropTypes.bool,
   placeholder: PropTypes.string,
 };
 
@@ -163,7 +201,7 @@ TextInput.defaultProps = {
   flexBasis: 100,
   textCenter: false,
   clear: false,
-  ariaLabel: __('Standard input', 'web-stories'),
+  showClearIconBackground: true,
   placeholder: null,
 };
 

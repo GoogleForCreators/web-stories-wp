@@ -21,6 +21,11 @@ import styled from 'styled-components';
 import { memo, useRef } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import EditLayer from './editLayer';
@@ -32,8 +37,10 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 
-const Background = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+const Background = styled.section.attrs({
+  'aria-label': __('Canvas', 'web-stories'),
+})`
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
   width: 100%;
   height: 100%;
   position: relative;

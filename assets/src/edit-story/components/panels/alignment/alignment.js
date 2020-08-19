@@ -33,19 +33,21 @@ import { __ } from '@wordpress/i18n';
 import WithTooltip from '../../tooltip';
 import { useConfig } from '../../../app';
 import { useKeyDownEffect } from '../../keyboard';
-import { ReactComponent as AlignBottom } from '../../../icons/align_bottom.svg';
-import { ReactComponent as AlignTop } from '../../../icons/align_top.svg';
-import { ReactComponent as AlignCenter } from '../../../icons/align_center.svg';
-import { ReactComponent as AlignMiddle } from '../../../icons/align_middle.svg';
-import { ReactComponent as AlignLeft } from '../../../icons/align_left.svg';
-import { ReactComponent as AlignRight } from '../../../icons/align_right.svg';
-import { ReactComponent as HorizontalDistribute } from '../../../icons/horizontal_distribute.svg';
-import { ReactComponent as VerticalDistribute } from '../../../icons/vertical_distribute.svg';
-import getCommonValue from '../utils/getCommonValue';
+import {
+  AlignBottom,
+  AlignTop,
+  AlignMiddle,
+  AlignLeft,
+  AlignRight,
+  AlignCenter,
+  DistributeHorizontal,
+  DistributeVertical,
+} from '../../../icons';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
 } from '../utils/getBoundRect';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
+import { Panel } from '../panel';
 import useAlignment from './useAlignment';
 
 const ElementRow = styled.div`
@@ -59,7 +61,9 @@ const ElementRow = styled.div`
   overflow: overlay;
 `;
 
-const IconButton = styled.button`
+const IconButton = styled.button.attrs({
+  type: 'button',
+})`
   display: flex;
   width: 28px;
   height: 28px;
@@ -72,7 +76,7 @@ const IconButton = styled.button`
   border-radius: 4px;
 
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   }
 
   &:disabled {
@@ -88,7 +92,7 @@ const IconButton = styled.button`
 `;
 
 const SeparateBorder = styled.div`
-  border-left: 1px dashed ${({ theme }) => rgba(theme.colors.bg.v0, 0.3)};
+  border-left: 1px dashed ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
   height: 12px;
   margin-left: 4px;
   margin-right: 4px;
@@ -114,12 +118,30 @@ const PAGE_RECT = {
   height: PAGE_HEIGHT,
 };
 
+function Icon({ onClick, children, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
+  return (
+    <IconButton ref={ref} onClick={onClick} {...rest}>
+      {children}
+    </IconButton>
+  );
+}
+
+Icon.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
   // Set boundRect with pageSize when there is only element selected
   const boundRect =
     selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
-  const isFill = getCommonValue(selectedElements, 'isFill');
 
   const updatedSelectedElementsWithFrame = useMemo(
     () =>
@@ -170,8 +192,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [updatedSelectedElementsWithFrame, setUpdatedSelectedElementsWithFrame]
   );
 
-  const isDistributionEnabled = !isFill && selectedElements.length > 2;
-  const isAlignEnabled = !isFill;
+  const isDistributionEnabled = selectedElements.length > 2;
 
   const ref = useRef();
   const [currentButton, setCurrentButton] = useState(null);
@@ -219,97 +240,97 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <ElementRow ref={ref}>
-      <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
-        <IconButton
-          disabled={!isDistributionEnabled}
-          onClick={() => handleHorizontalDistribution(boundRect, pushUpdate)}
-          aria-label={__('Horizontal Distribution', 'web-stories')}
-          id={alignmentButtonIds[0]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[0])}
-        >
-          <HorizontalDistribute />
-        </IconButton>
-      </WithTooltip>
-      <WithTooltip title={__('Distribute vertically', 'web-stories')}>
-        <IconButton
-          disabled={!isDistributionEnabled}
-          onClick={() => handleVerticalDistribution(boundRect, pushUpdate)}
-          aria-label={__('Vertical Distribution', 'web-stories')}
-          id={alignmentButtonIds[1]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[1])}
-        >
-          <VerticalDistribute />
-        </IconButton>
-      </WithTooltip>
-      <SeparateBorder />
-      <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
-        <IconButton
-          disabled={!isAlignEnabled}
-          onClick={() => handleAlign('left', boundRect, pushUpdate)}
-          aria-label={__('Justify Left', 'web-stories')}
-          id={alignmentButtonIds[2]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[2])}
-        >
-          <AlignLeft />
-        </IconButton>
-      </WithTooltip>
-      <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
-        <IconButton
-          disabled={!isAlignEnabled}
-          onClick={() => handleAlignCenter(boundRect, pushUpdate)}
-          aria-label={__('Justify Center', 'web-stories')}
-          id={alignmentButtonIds[3]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[3])}
-        >
-          <AlignCenter />
-        </IconButton>
-      </WithTooltip>
-      <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
-        <IconButton
-          disabled={!isAlignEnabled}
-          onClick={() => handleAlign('right', boundRect, pushUpdate)}
-          aria-label={__('Justify Right', 'web-stories')}
-          id={alignmentButtonIds[4]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[4])}
-        >
-          <AlignRight />
-        </IconButton>
-      </WithTooltip>
-      <WithTooltip title={__('Align top', 'web-stories')}>
-        <IconButton
-          disabled={!isAlignEnabled}
-          onClick={() => handleAlign('top', boundRect, pushUpdate)}
-          aria-label={__('Justify Top', 'web-stories')}
-          id={alignmentButtonIds[5]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[5])}
-        >
-          <AlignTop />
-        </IconButton>
-      </WithTooltip>
-      <WithTooltip title={__('Align vertical center', 'web-stories')}>
-        <IconButton
-          disabled={!isAlignEnabled}
-          onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
-          aria-label={__('Justify Middle', 'web-stories')}
-          id={alignmentButtonIds[6]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[6])}
-        >
-          <AlignMiddle />
-        </IconButton>
-      </WithTooltip>
-      <WithTooltip title={__('Align bottom', 'web-stories')}>
-        <IconButton
-          disabled={!isAlignEnabled}
-          onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
-          aria-label={__('Justify Bottom', 'web-stories')}
-          id={alignmentButtonIds[7]}
-          onFocus={() => setCurrentButton(alignmentButtonIds[7])}
-        >
-          <AlignBottom />
-        </IconButton>
-      </WithTooltip>
-    </ElementRow>
+    <Panel
+      name="alignment"
+      canCollapse={false}
+      ariaLabel={__('Alignment', 'web-stories')}
+    >
+      <ElementRow ref={ref}>
+        <WithTooltip title={__('Distribute horizontally', 'web-stories')}>
+          <Icon
+            disabled={!isDistributionEnabled}
+            onClick={() => handleHorizontalDistribution(boundRect, pushUpdate)}
+            aria-label={__('Horizontal Distribution', 'web-stories')}
+            id={alignmentButtonIds[0]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[0])}
+          >
+            <DistributeHorizontal />
+          </Icon>
+        </WithTooltip>
+        <WithTooltip title={__('Distribute vertically', 'web-stories')}>
+          <Icon
+            disabled={!isDistributionEnabled}
+            onClick={() => handleVerticalDistribution(boundRect, pushUpdate)}
+            aria-label={__('Vertical Distribution', 'web-stories')}
+            id={alignmentButtonIds[1]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[1])}
+          >
+            <DistributeVertical />
+          </Icon>
+        </WithTooltip>
+        <SeparateBorder />
+        <WithTooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
+          <Icon
+            onClick={() => handleAlign('left', boundRect, pushUpdate)}
+            aria-label={__('Justify Left', 'web-stories')}
+            id={alignmentButtonIds[2]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[2])}
+          >
+            <AlignLeft />
+          </Icon>
+        </WithTooltip>
+        <WithTooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
+          <Icon
+            onClick={() => handleAlignCenter(boundRect, pushUpdate)}
+            aria-label={__('Justify Center', 'web-stories')}
+            id={alignmentButtonIds[3]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[3])}
+          >
+            <AlignCenter />
+          </Icon>
+        </WithTooltip>
+        <WithTooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
+          <Icon
+            onClick={() => handleAlign('right', boundRect, pushUpdate)}
+            aria-label={__('Justify Right', 'web-stories')}
+            id={alignmentButtonIds[4]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[4])}
+          >
+            <AlignRight />
+          </Icon>
+        </WithTooltip>
+        <WithTooltip title={__('Align top', 'web-stories')}>
+          <Icon
+            onClick={() => handleAlign('top', boundRect, pushUpdate)}
+            aria-label={__('Justify Top', 'web-stories')}
+            id={alignmentButtonIds[5]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[5])}
+          >
+            <AlignTop />
+          </Icon>
+        </WithTooltip>
+        <WithTooltip title={__('Align vertical center', 'web-stories')}>
+          <Icon
+            onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
+            aria-label={__('Justify Middle', 'web-stories')}
+            id={alignmentButtonIds[6]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[6])}
+          >
+            <AlignMiddle />
+          </Icon>
+        </WithTooltip>
+        <WithTooltip title={__('Align bottom', 'web-stories')}>
+          <Icon
+            onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
+            aria-label={__('Justify Bottom', 'web-stories')}
+            id={alignmentButtonIds[7]}
+            onFocus={() => setCurrentButton(alignmentButtonIds[7])}
+          >
+            <AlignBottom />
+          </Icon>
+        </WithTooltip>
+      </ElementRow>
+    </Panel>
   );
 }
 

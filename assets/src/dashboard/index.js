@@ -19,12 +19,17 @@
  */
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
+import Modal from 'react-modal';
+import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
  */
+import { initializeTracking } from '../tracking';
 import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
+
+__webpack_public_path__ = global.webStoriesDashboardSettings.publicPath;
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -35,6 +40,11 @@ import './style.css'; // This way the general dashboard styles are loaded before
  */
 const initialize = (id, config, flags) => {
   const appElement = document.getElementById(id);
+
+  // see http://reactcommunity.org/react-modal/accessibility/
+  Modal.setAppElement(appElement);
+
+  initializeTracking('Dashboard');
 
   render(
     <FlagsProvider features={flags}>
