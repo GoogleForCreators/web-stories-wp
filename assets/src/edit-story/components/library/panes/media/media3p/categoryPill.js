@@ -18,8 +18,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useCallback, useRef } from 'react';
+/**
+ * Internal dependencies
+ */
+import useRovingTabIndex from '../common/useRovingTabIndex';
+import { useKeyDownEffect } from '../../../../keyboard';
 
-const PillContainer = styled.span`
+const PillContainer = styled.button`
   cursor: pointer;
   font-family: ${({ theme }) => theme.fonts.body2.family};
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -51,20 +57,48 @@ PillContainer.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-const CategoryPill = (props) => (
-  <PillContainer
-    isSelected={props.isSelected}
-    onClick={props.onClick}
-    role="tab"
-    aria-selected={props.isSelected}
-    data-testid="mediaCategory"
-  >
-    {props.title}
-  </PillContainer>
-);
+const CategoryPill = ({
+  index,
+  title,
+  isSelected,
+  isExpanded,
+  setIsExpanded,
+  onClick,
+}) => {
+  const ref = useRef();
+
+  // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
+  // conflicting 'down' arrow handlers.
+  useRovingTabIndex({ ref }, [isExpanded]);
+
+  const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);
+  useKeyDownEffect(ref, !isExpanded ? 'down' : [], expand, [
+    isExpanded,
+    expand,
+  ]);
+
+  return (
+    <PillContainer
+      ref={ref}
+      // The first or selected category will be in focus for roving
+      // (arrow-based) navigation initially.
+      tabIndex={index === 0 || isSelected ? 0 : -1}
+      isSelected={isSelected}
+      onClick={onClick}
+      role="tab"
+      aria-selected={isSelected}
+      data-testid="mediaCategory"
+    >
+      {title}
+    </PillContainer>
+  );
+};
 
 CategoryPill.propTypes = {
+  index: PropTypes.number,
   isSelected: PropTypes.bool,
+  isExpanded: PropTypes.bool,
+  setIsExpanded: PropTypes.func,
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };

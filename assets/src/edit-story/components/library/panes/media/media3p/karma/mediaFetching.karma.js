@@ -194,10 +194,13 @@ describe('Media3pPane fetching', () => {
   let media3pTab;
   let unsplashSection;
   let coverrSection;
+  let media3pPane;
 
   beforeEach(async () => {
     fixture = new Fixture();
     fixture.setFlags({ media3pTab: true, showCoverrTab: true });
+
+    jasmine.clock().install();
 
     await fixture.render();
 
@@ -206,6 +209,12 @@ describe('Media3pPane fetching', () => {
       '#provider-bottom-wrapper-unsplash'
     );
     coverrSection = fixture.querySelector('#provider-bottom-wrapper-coverr');
+    media3pPane = fixture.querySelector('#library-pane-media3p');
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+    fixture.restore();
   });
 
   function mockListMedia() {
@@ -248,6 +257,7 @@ describe('Media3pPane fetching', () => {
           `Not ready: ${mediaElements?.length} != ${expectedCount}`
         );
       }
+      jasmine.clock().tick(10);
     });
     expect(mediaElements.length).toBe(expectedCount);
   }
@@ -286,6 +296,40 @@ describe('Media3pPane fetching', () => {
     await fixture.snapshot();
   });
 
+  it('should arrow navigate between category pills', async () => {
+    mockListMedia();
+    mockListCategories();
+    await fixture.events.click(media3pTab);
+
+    await fixture.events.focus(
+      fixture.querySelectorAll('[data-testid="mediaCategory"]')[0]
+    );
+    expect(document.activeElement.textContent).toBe('Sustainability');
+
+    await fixture.events.keyboard.press('ArrowRight');
+    expect(document.activeElement.textContent).toBe('Wallpapers');
+
+    await fixture.events.keyboard.press('tab');
+    expect(document.activeElement).toBe(
+      fixture.screen.getByTestId('category-expand-button')
+    );
+  });
+
+  it('should expand category section on arrow down', async () => {
+    mockListMedia();
+    mockListCategories();
+    await fixture.events.click(media3pTab);
+
+    await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
+    expect(document.activeElement.textContent).toBe('Sustainability');
+
+    await fixture.events.keyboard.press('ArrowDown');
+    const expandButton = fixture.screen.getByTestId('category-expand-button');
+    expect(expandButton.getAttribute('aria-expanded')).toBe('true');
+  });
+
   it('should fetch 2nd page', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
@@ -299,6 +343,7 @@ describe('Media3pPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
+    jasmine.clock().tick(500);
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
   });
 
@@ -327,6 +372,7 @@ describe('Media3pPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
+    jasmine.clock().tick(500);
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
 
     const mediaCategories = unsplashSection.querySelectorAll(
@@ -339,184 +385,261 @@ describe('Media3pPane fetching', () => {
     });
   });
 
-  it('should handle pressing right when focused', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
+  describe('Gallery navigation', () => {
+    it('should handle pressing right when focused', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
 
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
 
-    await fixture.events.focus(mediaElements.item(0));
+      await fixture.events.focus(mediaElements.item(0));
 
-    await fixture.events.keyboard.press('ArrowRight');
+      await fixture.events.keyboard.press('ArrowRight');
 
-    expect(document.activeElement).toBe(mediaElements.item(1));
-  });
-
-  it('should handle pressing right when at the end of a row', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
-
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
-
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
-
-    await fixture.events.focus(mediaElements.item(1));
-
-    await fixture.events.keyboard.press('ArrowRight');
-
-    expect(document.activeElement).toBe(mediaElements.item(2));
-  });
-
-  it('should handle pressing right when the last element is focused', async () => {
-    // Only mock 1 page.
-    spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
-      if (!pageToken) {
-        return { media: mediaPage(1, 'unsplash'), nextPageToken: undefined };
-      }
-      throw new Error(`Unexpected pageToken: ${pageToken}`);
+      expect(document.activeElement).toBe(mediaElements.item(1));
     });
 
-    await fixture.events.click(media3pTab);
+    it('should handle pressing right when at the end of a row', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
 
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
 
-    await fixture.events.focus(mediaElements.item(mediaElements.length - 1));
+      await fixture.events.focus(mediaElements.item(1));
 
-    await fixture.events.keyboard.press('ArrowRight');
+      await fixture.events.keyboard.press('ArrowRight');
 
-    expect(document.activeElement).toBe(
-      mediaElements.item(mediaElements.length - 1)
-    );
+      expect(document.activeElement).toBe(mediaElements.item(2));
+    });
+
+    it('should handle pressing right when the last element is focused', async () => {
+      // Only mock 1 page.
+      spyOn(apiFetcher, 'listMedia').and.callFake(({ pageToken }) => {
+        if (!pageToken) {
+          return { media: mediaPage(1, 'unsplash'), nextPageToken: undefined };
+        }
+        throw new Error(`Unexpected pageToken: ${pageToken}`);
+      });
+
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(mediaElements.length - 1));
+
+      await fixture.events.keyboard.press('ArrowRight');
+
+      expect(document.activeElement).toBe(
+        mediaElements.item(mediaElements.length - 1)
+      );
+    });
+
+    it('should handle pressing left when focused', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(1));
+
+      await fixture.events.keyboard.press('ArrowLeft');
+
+      expect(document.activeElement).toBe(mediaElements.item(0));
+    });
+
+    it('should handle pressing left at the beginning of a row', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(2));
+
+      await fixture.events.keyboard.press('ArrowLeft');
+
+      expect(document.activeElement).toBe(mediaElements.item(1));
+    });
+
+    it('should handle pressing left when the first element is focused', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(0));
+
+      await fixture.events.keyboard.press('ArrowLeft');
+
+      expect(document.activeElement).toBe(mediaElements.item(0));
+    });
+
+    it('should handle pressing down', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(1));
+
+      await fixture.events.keyboard.press('ArrowDown');
+
+      expect(document.activeElement).toBe(mediaElements.item(3));
+    });
+
+    it('should handle pressing up', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(3));
+
+      await fixture.events.keyboard.press('ArrowUp');
+
+      expect(document.activeElement).toBe(mediaElements.item(1));
+    });
+
+    it('should handle pressing Home', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(6));
+
+      await fixture.events.keyboard.press('Home');
+
+      expect(document.activeElement).toBe(mediaElements.item(0));
+    });
+
+    it('should handle pressing End', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
+
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+
+      let mediaElements = unsplashSection.querySelectorAll(
+        '[data-testid=mediaElement]'
+      );
+
+      await fixture.events.focus(mediaElements.item(6));
+
+      await fixture.events.keyboard.press('End');
+
+      expect(document.activeElement).toBe(
+        mediaElements.item(mediaElements.length - 1)
+      );
+    });
   });
 
-  it('should handle pressing left when focused', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
+  describe('Provider navigation', () => {
+    it('should handle pressing Right', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
 
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
+      let providerTabs = media3pPane.querySelectorAll(
+        '[data-testid=providerTab]'
+      );
 
-    await fixture.events.focus(mediaElements.item(1));
+      await fixture.events.focus(providerTabs.item(0));
 
-    await fixture.events.keyboard.press('ArrowLeft');
+      await fixture.events.keyboard.press('ArrowRight');
 
-    expect(document.activeElement).toBe(mediaElements.item(0));
-  });
+      expect(document.activeElement).toBe(providerTabs.item(1));
+      await expectMediaElements(coverrSection, MEDIA_PER_PAGE);
+    });
 
-  it('should handle pressing left at the beginning of a row', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
+    it('should handle pressing Right when no more providers', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
 
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
+      let providerTabs = media3pPane.querySelectorAll(
+        '[data-testid=providerTab]'
+      );
 
-    await fixture.events.focus(mediaElements.item(2));
+      await fixture.events.focus(providerTabs.item(providerTabs.length - 1));
 
-    await fixture.events.keyboard.press('ArrowLeft');
+      await fixture.events.keyboard.press('ArrowRight');
 
-    expect(document.activeElement).toBe(mediaElements.item(1));
-  });
+      expect(document.activeElement).toBe(
+        providerTabs.item(providerTabs.length - 1)
+      );
+    });
 
-  it('should handle pressing left when the first element is focused', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
+    it('should handle pressing Left', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
 
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
+      let providerTabs = media3pPane.querySelectorAll(
+        '[data-testid=providerTab]'
+      );
 
-    await fixture.events.focus(mediaElements.item(0));
+      await fixture.events.focus(providerTabs.item(providerTabs.length - 1));
 
-    await fixture.events.keyboard.press('ArrowLeft');
+      await fixture.events.keyboard.press('ArrowLeft');
 
-    expect(document.activeElement).toBe(mediaElements.item(0));
-  });
+      expect(document.activeElement).toBe(
+        providerTabs.item(providerTabs.length - 2)
+      );
+    });
 
-  it('should handle pressing down', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
+    it('should handle pressing Left when at the beginning', async () => {
+      mockListMedia();
+      await fixture.events.click(media3pTab);
 
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
+      let providerTabs = media3pPane.querySelectorAll(
+        '[data-testid=providerTab]'
+      );
 
-    await fixture.events.focus(mediaElements.item(1));
+      await fixture.events.focus(providerTabs.item(0));
 
-    await fixture.events.keyboard.press('ArrowDown');
+      await fixture.events.keyboard.press('ArrowLeft');
 
-    expect(document.activeElement).toBe(mediaElements.item(3));
-  });
-
-  it('should handle pressing up', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
-
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
-
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
-
-    await fixture.events.focus(mediaElements.item(3));
-
-    await fixture.events.keyboard.press('ArrowUp');
-
-    expect(document.activeElement).toBe(mediaElements.item(1));
-  });
-
-  it('should handle pressing Home', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
-
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
-
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
-
-    await fixture.events.focus(mediaElements.item(6));
-
-    await fixture.events.keyboard.press('Home');
-
-    expect(document.activeElement).toBe(mediaElements.item(0));
-  });
-
-  it('should handle pressing End', async () => {
-    mockListMedia();
-    await fixture.events.click(media3pTab);
-
-    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
-
-    let mediaElements = unsplashSection.querySelectorAll(
-      '[data-testid=mediaElement]'
-    );
-
-    await fixture.events.focus(mediaElements.item(6));
-
-    await fixture.events.keyboard.press('End');
-
-    expect(document.activeElement).toBe(
-      mediaElements.item(mediaElements.length - 1)
-    );
+      expect(document.activeElement).toBe(providerTabs.item(0));
+    });
   });
 });

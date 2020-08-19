@@ -22,10 +22,12 @@ import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
+
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */

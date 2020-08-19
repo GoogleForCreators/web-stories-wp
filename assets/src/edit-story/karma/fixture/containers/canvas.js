@@ -30,7 +30,7 @@ export class Canvas extends Container {
 
   get displayLayer() {
     return this._get(
-      this.getByRole('region', { name: 'Display' }),
+      this.getByRole('region', { name: 'Display layer' }),
       'displayLayer',
       DisplayLayer
     );
@@ -38,7 +38,7 @@ export class Canvas extends Container {
 
   get framesLayer() {
     return this._get(
-      this.getByRole('region', { name: 'Frames' }),
+      this.getByRole('region', { name: 'Frames layer' }),
       'framesLayer',
       FramesLayer
     );
@@ -49,6 +49,14 @@ export class Canvas extends Container {
       this.getByRole('region', { name: 'Edit layer' }),
       'editLayer',
       EditLayer
+    );
+  }
+
+  get fullbleed() {
+    return this._get(
+      this.getAllByRole('region', { name: 'Fullbleed area' })[0],
+      'fullbleed',
+      Fullbleed
     );
   }
 }
@@ -126,6 +134,27 @@ class FramesLayer extends Container {
       Frame
     );
   }
+
+  controls(elementId) {
+    return this._get(
+      this.node.querySelector(`[data-controls-id="${elementId}"]`),
+      `controls[${elementId}]`,
+      Controls
+    );
+  }
+}
+
+/**
+ * Contains fullbleed.
+ */
+class Fullbleed extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get container() {
+    return this.node;
+  }
 }
 
 /**
@@ -151,5 +180,22 @@ class Frame extends Container {
 
   get textContentHTML() {
     return this.node.querySelector('p')?.innerHTML;
+  }
+}
+
+/**
+ * An element's controls.
+ */
+class Controls extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get play() {
+    return this.getByRole('button', { name: 'Click to play' });
+  }
+
+  get pause() {
+    return this.getByRole('button', { name: 'Click to pause' });
   }
 }

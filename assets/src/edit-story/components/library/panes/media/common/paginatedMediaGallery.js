@@ -91,7 +91,15 @@ function PaginatedMediaGallery({
 
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
-    if (!node || !hasMore || !isMediaLoaded || isMediaLoading) {
+    if (
+      !node ||
+      // This condition happens when the component is hidden, and causes the
+      // calculation below to load a new page in error.
+      node.clientHeight === 0 ||
+      !hasMore ||
+      !isMediaLoaded ||
+      isMediaLoading
+    ) {
       return;
     }
 
@@ -116,7 +124,7 @@ function PaginatedMediaGallery({
     refContainer.current?.scrollTo(0, 0);
   }, [searchTerm, selectedCategoryId]);
 
-  // After scrolls or resize, see if we need the load the next page.
+  // After scroll or resize, see if we need the load the next page.
   const [handleScrollOrResize] = useDebouncedCallback(
     loadNextPageIfNeeded,
     500,

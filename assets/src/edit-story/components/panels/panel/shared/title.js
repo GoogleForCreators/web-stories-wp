@@ -20,10 +20,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
 import { rgba } from 'polished';
 
 /**

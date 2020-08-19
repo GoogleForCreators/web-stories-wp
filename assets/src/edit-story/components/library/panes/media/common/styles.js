@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
@@ -39,7 +41,7 @@ export const MediaGalleryContainer = styled.div`
   margin-top: 1em;
   position: relative;
   width: 100%;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 100px;
 `;
 

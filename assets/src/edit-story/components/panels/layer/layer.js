@@ -15,23 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { rgba } from 'polished';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-import { rgba } from 'polished';
-/**
  * Internal dependencies
  */
 import { Lock as Locked } from '../../../icons';
-
-/**
- * Internal dependencies
- */
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
 import { useStory } from '../../../app';

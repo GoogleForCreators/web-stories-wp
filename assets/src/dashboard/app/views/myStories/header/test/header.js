@@ -18,10 +18,10 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
-
 import {
   STORY_SORT_OPTIONS,
   VIEW_STYLE,
