@@ -19,23 +19,32 @@
  */
 import moment from 'moment-timezone';
 
-/**
- * Internal dependencies
- */
-import { getMoment } from './getMoment';
+/** @typedef {import('moment').Moment} Moment */
 
 /**
- * Get a date object of the time right now in any timezone.
+ * Get a date object in any timezone.
  *
  * Regardless of timezone or offset we want to have the same starting point of time.
  * We need to specify moment to be created in UTC rather than browser timezone.
  *
  * Any moment created with moment.utc() will be in UTC mode, and any moment created with moment() will not.
  *
+ * @param {Date|Moment} date Date object.
  * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
  *
- * @return {Date} Date object formatted to timezone specified in param, UTC by default
+ * @return {Moment} Moment object in specified timezone.
  */
-export function getDateObjectWithTimezone(dateSettings = {}) {
-  return getMoment(moment.utc(), dateSettings).format();
+export function getMoment(date, dateSettings = {}) {
+  const { timezone, gmtOffset } = dateSettings;
+  const parsedDate = moment.isMoment(date) ? date : moment.parseZone(date);
+
+  if (timezone) {
+    return parsedDate.tz(timezone);
+  }
+
+  if (gmtOffset) {
+    return parsedDate.utcOffset(gmtOffset);
+  }
+
+  return parsedDate;
 }

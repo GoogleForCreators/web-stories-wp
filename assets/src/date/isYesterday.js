@@ -20,6 +20,11 @@
 import moment from 'moment-timezone';
 
 /**
+ * Internal dependencies
+ */
+import { getMoment } from './getMoment';
+
+/**
  * Checks if date is yesterday
  *
  * @param {Date} date Uses moment to find if date passed in is the same as "yesterday".
@@ -28,7 +33,7 @@ import moment from 'moment-timezone';
  * @return {boolean} If date matches yesterday it will be true
  */
 export function isYesterday(date) {
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
+  const displayDate = getMoment(date);
   const yesterday = moment().subtract(1, 'days').startOf('day');
 
   return displayDate.isSame(yesterday, 'd');

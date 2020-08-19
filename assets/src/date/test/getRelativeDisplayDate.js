@@ -24,10 +24,11 @@ import MockDate from 'mockdate';
  * Internal dependencies
  */
 import { getRelativeDisplayDate } from '../';
+import { getMoment } from '../getMoment';
 
 describe('date/getRelativeDisplayDate', () => {
   beforeEach(() => {
-    MockDate.set(moment.parseZone('2020-07-15T22:47:26'));
+    MockDate.set(moment.parseZone('2020-07-15T22:47:26+00:00').format());
   });
 
   it('should return 2 minutes ago in America/New_York using moment', () => {

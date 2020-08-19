@@ -593,6 +593,7 @@ class Story_Post_Type {
 				'isRTL'            => is_rtl(),
 				'dateFormat'       => get_option( 'date_format' ),
 				'timeFormat'       => get_option( 'time_format' ),
+				'gmtOffset'        => get_option( 'gmt_offset' ),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,

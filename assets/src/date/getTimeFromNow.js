@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
  */
 import { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
+import { getMoment } from './getMoment';
 
 /**
  * Get the time passed from or time until a date to the time now in any timezone.
@@ -34,7 +31,6 @@ import { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
  * @return {string} Displayable relative date string
  */
 export function getTimeFromNow(date, dateSettings) {
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
-
+  const displayDate = getMoment(date);
   return displayDate.from(getDateObjectWithTimezone(dateSettings));
 }

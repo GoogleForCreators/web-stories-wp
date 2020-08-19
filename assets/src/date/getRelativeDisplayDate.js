@@ -20,15 +20,16 @@
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import moment from 'moment-timezone';
-import DateFormatter from 'php-date-formatter';
-
-/**
  * Internal dependencies
  */
-import { DEFAULT_DATE_SETTINGS, getTimeFromNow, isToday, isYesterday } from '.';
+import { getMoment } from './getMoment';
+import {
+  DEFAULT_DATE_SETTINGS,
+  formatDate,
+  getTimeFromNow,
+  isToday,
+  isYesterday,
+} from '.';
 
 /**
  * Formats a date to display relative to time passed since date using moment's parseZone function to keep fixed timezone.
@@ -54,7 +55,7 @@ export function getRelativeDisplayDate(
     return '';
   }
 
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
+  const displayDate = getMoment(date);
 
   if (isToday(displayDate)) {
     return getTimeFromNow(displayDate, dateSettings);
@@ -62,7 +63,5 @@ export function getRelativeDisplayDate(
     return __('yesterday', 'web-stories');
   }
 
-  const fmt = new DateFormatter();
-
-  return fmt.formatDate(date.toDate(), dateSettings.dateFormat);
+  return formatDate(displayDate, dateSettings);
 }

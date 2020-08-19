@@ -35,3 +35,5 @@ export { isYesterday } from './isYesterday';
 export { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
 export { getTimeFromNow } from './getTimeFromNow';
 export { getRelativeDisplayDate } from './getRelativeDisplayDate';
+export { formatDate } from './formatDate';
+export { formatTime } from './formatTime';

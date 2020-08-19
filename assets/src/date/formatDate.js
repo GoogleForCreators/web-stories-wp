@@ -17,24 +17,31 @@
 /**
  * External dependencies
  */
-import moment from 'moment-timezone';
+import DateFormatter from 'php-date-formatter';
 
 /**
  * Internal dependencies
  */
 import { getMoment } from './getMoment';
+import { DEFAULT_DATE_SETTINGS } from './';
 
 /**
- * Checks if date is today's date.
+ * Formats a date by dateSettings.dateFormat (no time).
  *
- * @param {Date} date Uses moment to find if date passed in is the same as "today".
- * If date is not an instance of moment when passed in it will create a moment from it.
+ * @param {Date} date Date to format.
+ * @param {import('./').DateSettings} dateSettings Date settings.
  *
- * @return {boolean} If date matches today it will be true
+ * @return {string} Displayable relative date string
  */
-export function isToday(date) {
-  const displayDate = getMoment(date);
-  const today = moment().startOf('day');
+export function formatDate(date, dateSettings = DEFAULT_DATE_SETTINGS) {
+  if (!date) {
+    return '';
+  }
 
-  return displayDate.isSame(today, 'd');
+  const { dateFormat } = dateSettings;
+  const displayDate = getMoment(date, dateSettings);
+
+  const fmt = new DateFormatter();
+
+  return fmt.formatDate(displayDate.toDate(), dateFormat);
 }

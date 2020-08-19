@@ -20,13 +20,12 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 
 /**
  * Internal dependencies
@@ -39,6 +38,7 @@ import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
 import { useConfig } from '../../../../../app';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
+import { formatDate } from '../../../../../../date/formatDate';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -145,7 +145,7 @@ function MediaEditDialog({ resource, onClose }) {
     poster,
     mimeType,
   } = resource;
-  const { dateFormat = 'Y-m-d' } = useConfig();
+  const { dateFormat, gmtOffset, timezone } = useConfig();
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -205,7 +205,7 @@ function MediaEditDialog({ resource, onClose }) {
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
-                format(dateFormat, parsedDate)
+                formatDate(creationDate, { dateFormat, gmtOffset, timezone })
               )}
             </MediaDateText>
           )}
