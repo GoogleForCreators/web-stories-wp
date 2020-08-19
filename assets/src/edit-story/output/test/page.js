@@ -567,6 +567,23 @@ describe('Page output', () => {
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
+    it('should produce valid AMP output with Page Attachment', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: true,
+        pageAttachment: {
+          url: 'http://example.com',
+          ctaText: 'Click me!',
+        },
+      };
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
     describe('AMP validation', () => {
       it('should produce valid output with media elements', async () => {
         const props = {
