@@ -32,6 +32,7 @@ import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useMedia3pApi } from '../../../../../app/media/media3p/api';
 import getThumbnailUrl from '../../../../../elements/media/util';
+import resourceList from '../../../../../utils/resourceList'
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 
@@ -186,9 +187,13 @@ const MediaElement = ({
     mediaElement?.current?.getBoundingClientRect();
 
   const dropTargetsBindings = useMemo(
-    () => ({
+    () => (thumbnailURL) => ({
       draggable: 'true',
       onDragStart: (e) => {
+        resourceList[resource.id] = {
+          url: thumbnailURL,
+          type: 'cached',
+        };
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
@@ -375,7 +380,7 @@ function getInnerElement(
         loading={'lazy'}
         onClick={onClick(thumbnailURL)}
         onLoad={makeImageVisible}
-        {...dropTargetsBindings}
+        {...dropTargetsBindings(thumbnailURL)}
       />
     );
   } else if (type === 'video') {
@@ -394,7 +399,7 @@ function getInnerElement(
           onClick={onClick(poster)}
           // crossorigin='anonymous' is required to play videos from other domains.
           crossOrigin="anonymous"
-          {...dropTargetsBindings}
+          {...dropTargetsBindings(poster)}
         >
           <source src={src} type={mimeType} />
         </Video>
