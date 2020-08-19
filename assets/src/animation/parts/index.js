@@ -152,6 +152,7 @@ export function GetAnimationEffectProps(type) {
     type,
     props: {
       // This order is important.
+      // We want custom props to appear above default props
       ...(customProps[type] || {}),
       ...basicAnimationProps,
     },

@@ -23,6 +23,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../../../animation/constants';
+import { GeneralAnimationPropTypes } from '../../../../animation/outputs/types';
+import { AnimationFormPropTypes } from '../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../form';
 
 function EffectInput({ effectProps, effectConfig, field, onChange }) {
@@ -56,10 +58,10 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
 }
 
 EffectInput.propTypes = {
-  effectProps: PropTypes.object,
-  effectConfig: PropTypes.object,
-  field: PropTypes.string,
-  onChange: PropTypes.func,
+  effectProps: AnimationFormPropTypes.isRequired,
+  effectConfig: PropTypes.shape(GeneralAnimationPropTypes).isRequired,
+  field: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default EffectInput;

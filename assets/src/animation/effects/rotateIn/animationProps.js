@@ -20,9 +20,21 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import { FIELD_TYPES, DIRECTION } from '../../constants';
+import { AnimationInputPropTypes } from '../types';
+
+export const RotateInEffectInputPropTypes = {
+  rotateInDir: PropTypes.shape(AnimationInputPropTypes),
+  stopAngle: PropTypes.shape(AnimationInputPropTypes),
+  numberOfRotations: PropTypes.shape(AnimationInputPropTypes),
+};
 
 export default {
   rotateInDir: {

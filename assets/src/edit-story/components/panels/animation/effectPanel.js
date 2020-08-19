@@ -24,8 +24,10 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ANIMATION_EFFECTS } from '../../../../animation/constants';
-import { AnimationProps } from '../../../../animation/parts/types';
-import { GetAnimationEffectProps } from '../../../../animation/parts';
+import {
+  GetAnimationEffectProps,
+  AnimationProps,
+} from '../../../../animation/parts';
 import { Row } from '../../form';
 import { Panel, PanelTitle, PanelContent } from '../panel';
 import EffectInput from './effectInput';

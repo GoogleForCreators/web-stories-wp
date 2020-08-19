@@ -17,15 +17,12 @@
 /**
  * WordPress dependencies
  */
-/**
- * External dependencies
- */
-import { useCallback, useMemo } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
  * External dependencies
  */
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**

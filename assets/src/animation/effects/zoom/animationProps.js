@@ -20,9 +20,20 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import { FIELD_TYPES } from '../../constants';
+import { AnimationInputPropTypes } from '../types';
+
+export const ZoomEffectInputPropTypes = {
+  zoomFrom: PropTypes.shape(AnimationInputPropTypes),
+  zoomTo: PropTypes.shape(AnimationInputPropTypes),
+};
 
 export default {
   zoomFrom: {
