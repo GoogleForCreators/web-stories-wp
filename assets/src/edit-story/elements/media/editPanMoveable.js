@@ -27,9 +27,8 @@ import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
 import { useKeyDownEffect } from '../../components/keyboard';
+import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import getFocalFromOffset from './getFocalFromOffset';
-
-const MOVE_COARSE_STEP = 10;
 
 function EditPanMoveable({
   setProperties,
@@ -69,19 +68,15 @@ function EditPanMoveable({
     { current: croppedMedia },
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
-      const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
-      const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
-      const delta = shiftKey ? 1 : MOVE_COARSE_STEP;
-      let tx = delta * dirX;
-      let ty = delta * dirY;
+      let { dx, dy } = getKeyboardMovement(key, shiftKey);
       if (flip?.vertical) {
-        ty = -ty;
+        dy = -dy;
       }
       if (flip?.horizontal) {
-        tx = -tx;
+        dx = -dx;
       }
-      const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - tx);
-      const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - ty);
+      const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - dx);
+      const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - dy);
       setProperties({
         focalX: flip?.horizontal ? 100 - panFocalX : panFocalX,
         focalY: flip?.vertical ? 100 - panFocalY : panFocalY,
@@ -157,16 +152,6 @@ function EditPanMoveable({
       }
     />
   );
-}
-
-function getArrowDir(key, pos, neg) {
-  if (key === pos) {
-    return 1;
-  }
-  if (key === neg) {
-    return -1;
-  }
-  return 0;
 }
 
 EditPanMoveable.propTypes = {

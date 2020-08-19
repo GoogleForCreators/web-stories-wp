@@ -27,11 +27,10 @@ import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
+import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import { getDefinitionForType } from '../../elements';
 import useAddPastedElements from './useAddPastedElements';
 import useCanvas from './useCanvas';
-
-const MOVE_COARSE_STEP = 10;
 
 /**
  * @param {{current: Node}} ref Reference.
@@ -135,13 +134,11 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
-      const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
-      const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
-      const delta = shiftKey ? 1 : MOVE_COARSE_STEP;
+      const { dx, dy } = getKeyboardMovement(key, shiftKey);
       updateSelectedElements({
         properties: ({ x, y }) => ({
-          x: x + delta * dirX,
-          y: y + delta * dirY,
+          x: x + dx,
+          y: y + dy,
         }),
       });
     },
@@ -205,16 +202,6 @@ function useCanvasKeys(ref) {
   }, [addPastedElements, selectedElements]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
-}
-
-function getArrowDir(key, pos, neg) {
-  if (key === pos) {
-    return 1;
-  }
-  if (key === neg) {
-    return -1;
-  }
-  return 0;
 }
 
 function getLayerDirection(key, shift) {
