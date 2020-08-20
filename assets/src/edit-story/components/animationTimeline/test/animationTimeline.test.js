@@ -50,7 +50,7 @@ describe('<AnimationTimeline />', function () {
     );
   });
 
-  it('should update the offset when a timing bar is adjusted to the right', function () {
+  it('should update the duration when the end timing bar is adjusted to the right', function () {
     const updaterFn = jest.fn();
     const { getByTestId } = renderWithTheme(
       <AnimationTimeline
@@ -80,7 +80,7 @@ describe('<AnimationTimeline />', function () {
     );
   });
 
-  it('should update the offset when a timing bar is adjusted to the left', function () {
+  it('should update the duration when the end timing bar is adjusted to the left', function () {
     const updaterFn = jest.fn();
     const { getByTestId } = renderWithTheme(
       <AnimationTimeline
@@ -107,6 +107,126 @@ describe('<AnimationTimeline />', function () {
     expect(updaterFn).toHaveBeenCalledWith(
       { duration: 500, id: 0, label: 'Animation 0', offset: 0 },
       { duration: 400, offset: 0 }
+    );
+  });
+
+  it('should update the offset and duration when the start timing bar is adjusted to the left', function () {
+    const updaterFn = jest.fn();
+    const { getByTestId } = renderWithTheme(
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={updaterFn}
+      />
+    );
+
+    const startHandle = getByTestId('start-animation-handle-Animation 1');
+    startHandle.focus();
+
+    act(() => {
+      fireEvent.keyDown(startHandle, {
+        key: 'ArrowLeft',
+        which: 37,
+      });
+    });
+
+    /**
+     * Starting duration was 500ms with a 100ms, one left key press moves -100ms,
+     * so the new duration should be 600ms with an offset of 0s.
+     */
+    expect(updaterFn).toHaveBeenCalledWith(
+      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
+      { duration: 600, offset: 0 }
+    );
+  });
+
+  it('should update the offset and duration when the start timing bar is adjusted to the right', function () {
+    const updaterFn = jest.fn();
+    const { getByTestId } = renderWithTheme(
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={updaterFn}
+      />
+    );
+
+    const startHandle = getByTestId('start-animation-handle-Animation 1');
+    startHandle.focus();
+
+    act(() => {
+      fireEvent.keyDown(startHandle, {
+        key: 'ArrowRight',
+        which: 39,
+      });
+    });
+
+    /**
+     * Starting duration was 500ms with a 100ms, one right key press moves 100ms,
+     * so the new duration should be 400ms with an offset of 200ms.
+     */
+    expect(updaterFn).toHaveBeenCalledWith(
+      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
+      { duration: 400, offset: 200 }
+    );
+  });
+
+  it('should update the offset when the location timing bar is adjusted to the right', function () {
+    const updaterFn = jest.fn();
+    const { getByTestId } = renderWithTheme(
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={updaterFn}
+      />
+    );
+
+    const startHandle = getByTestId('location-animation-handle-Animation 1');
+    startHandle.focus();
+
+    act(() => {
+      fireEvent.keyDown(startHandle, {
+        key: 'ArrowRight',
+        which: 39,
+      });
+    });
+
+    /**
+     * Starting duration was 500ms with a 100ms, one right key press moves 100ms,
+     * so the new duration should be 500ms with an offset of 200ms.
+     */
+    expect(updaterFn).toHaveBeenCalledWith(
+      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
+      { duration: 500, offset: 200 }
+    );
+  });
+
+  it('should update the offset when the location timing bar is adjusted to the left', function () {
+    const updaterFn = jest.fn();
+    const { getByTestId } = renderWithTheme(
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={updaterFn}
+      />
+    );
+
+    const startHandle = getByTestId('location-animation-handle-Animation 1');
+    startHandle.focus();
+
+    act(() => {
+      fireEvent.keyDown(startHandle, {
+        key: 'ArrowLeft',
+        which: 37,
+      });
+    });
+
+    /**
+     * Starting duration was 500ms with a 100ms, one right key press moves 100ms,
+     * so the new duration should be 500ms with an offset of 0s.
+     */
+    expect(updaterFn).toHaveBeenCalledWith(
+      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
+      { duration: 500, offset: 0 }
     );
   });
 });
