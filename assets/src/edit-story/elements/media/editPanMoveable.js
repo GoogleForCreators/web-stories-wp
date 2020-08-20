@@ -65,7 +65,7 @@ function EditPanMoveable({
   });
 
   useKeyDownEffect(
-    { current: croppedMedia },
+    croppedMedia,
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
       let { dx, dy } = getKeyboardMovement(key, shiftKey);
