@@ -281,6 +281,13 @@
         opacity: 1;
     }
 
+    section.teaser .download-last-updated {
+        font-size: 16px;
+        margin-top: 3em;
+        color: #000000;
+        opacity: 0.54;
+    }
+
     section.teaser a span.gradient {
         background: linear-gradient(112deg, #1A73E8, #622C71, #1A73E8);
         display: block;
@@ -429,7 +436,7 @@
         padding-right: 24.9vw;
         padding-left: 17.2vw;
     }
-    
+
     section.get-started .left {
         flex: 1 1 66.6%;
         padding-right: 9.2vw;
@@ -470,7 +477,7 @@
         font-size: 13px;
         line-height: 20px;
         opacity: 0.54;
-        text-transform: uppercase;   
+        text-transform: uppercase;
     }
 
     section.get-started h3 {
@@ -570,7 +577,7 @@
     /*
     * Reponsiveness (TODO: check with Sam)
     */
-    
+
     @media (min-width: 1956px) {
         section.teaser .right {
             margin-right: 2vw;
@@ -716,7 +723,7 @@
     <title>Web Stories for WordPress - Download the Beta</title>
 </head>
 <body>
-    
+
     <header>
         <div class="google"><amp-img width="120" height="48" layout="responsive" src="./assets/google.svg" alt="Google"></div>
         <h1>Web Stories for WordPress</h1>
@@ -725,7 +732,7 @@
             <li><a href="#get-started">Get Started</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="https://github.com/google/web-stories-wp">GitHub</a></li>
-            <li><a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-beta.1/web-stories.zip" class="download">Download Beta</a></li>
+            <li><a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-beta.2/web-stories.zip" class="download">Download Beta</a></li>
         </ul>
     </header>
 
@@ -734,7 +741,8 @@
             <h2>Stories Editor</h2>
             <h3><span>Get</span> <span>Ready</span> <span>to</span> <span>Tell</span> <span>Stories</span> <span>on</span> <span>WordPress</span></h3>
             <p>We're not quite ready for prime time yet, but if you like to live dangerously, we invite you to try our first public beta.</p>
-            <div class="download-wrapper"><a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-beta.1/web-stories.zip" class="download"><span class="gradient"></span><span class="text">Download the Beta</span></a></div>
+            <div class="download-wrapper"><a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-beta.2/web-stories.zip" class="download"><span class="gradient"></span><span class="text">Download Beta 2</span></a></div>
+            <p class="download-last-updated">Last updated: August 20, 2020</p>
         </div>
         <div class="right">
         </div>
@@ -761,7 +769,7 @@
             ]
           }
         </script>
-    </amp-animation>    
+    </amp-animation>
     <section class="about-video">
         <amp-position-observer
             intersection-ratios="0.4"
@@ -821,7 +829,7 @@
             {
                 "index": 0,
                 "delay": "calc(var(--delay) * (length() - index() - 1) * 1)"
-            } 
+            }
         ]
       }
     </script>
@@ -867,7 +875,7 @@
         <dl>
             <dt>Where can I learn more about Web Stories?</dt>
             <dd><a href="https://amp.dev/about/stories/">Web Stories</a> are tappable, engaging visual stories brought to the web. They’re powered by AMP technology, so learn more about them on <a href="https://amp.dev/about/stories/">amp.dev</a>.</dd>
-        
+
             <dt>How do I install the Stories for WordPress plugin?</dt>
             <dd>
                 As soon as we’re graduating from beta, the plugin will be available on WordPress.org. While we’re in beta, the plugin has to be downloaded as zip. After that:
@@ -880,7 +888,7 @@
                     <li>When installation is complete, you’ll see “Plugin installed successfully.” Click the Activate Plugin button at the bottom of the page.</li>
                 </ol>
             </dd>
-        
+
             <dt>I found a bug or missing feature! How do I report it?</dt>
             <dd>Awesome! That’s exactly what the beta is for. Please submit feedback using this <a href="https://docs.google.com/forms/d/1xo5J7hdvPGDpEENZtlF3G4-mo3Q0E-S7oRvSyOjZ_I4/viewform">feedback form</a> or <a href="https://github.com/google/web-stories-wp/issues">file a bug or feature request on Github</a>. Your help is greatly appreciated.</dd>
 
