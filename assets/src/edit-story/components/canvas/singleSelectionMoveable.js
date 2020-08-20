@@ -35,6 +35,8 @@ import useBatchingCallback from '../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCombinedRefs from '../../utils/useCombinedRefs';
 import useCanvas from './useCanvas';
+import getSnappingProps from './utils/getSnappingProps';
+import useSingleSelectionDrag from './utils/useSingleSelectionDrag';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -100,7 +102,6 @@ function SingleSelectionMoveable({
   } = useTransform();
   const {
     state: { activeDropTargetId, draggingResource },
-    actions: { handleDrag, handleDrop, setDraggingResource, isDropSource },
   } = useDropTargets();
 
   const otherNodes = Object.values(
@@ -146,7 +147,7 @@ function SingleSelectionMoveable({
   const throttleRotation = useGlobalIsKeyPressed('shift');
 
   const box = getBox(selectedElement);
-  const frame = useMemo(
+  let frame = useMemo(
     () => ({
       translate: [0, 0],
       rotate: box.rotationAngle,
@@ -156,7 +157,9 @@ function SingleSelectionMoveable({
     [box.rotationAngle]
   );
 
-  const setTransformStyle = (target) => {
+  const setTransformStyle = (target, newFrame = frame) => {
+    // Get the changes coming from each action type.
+    frame.translate = newFrame.translate;
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
@@ -192,15 +195,6 @@ function SingleSelectionMoveable({
     [frame, pushTransform, setIsResizingFromCorner, selectedElement.id]
   );
 
-  const resetDragging = useBatchingCallback(
-    (target) => {
-      setIsDragging(false);
-      setDraggingResource(null);
-      resetMoveable(target);
-    },
-    [setIsDragging, setDraggingResource, resetMoveable]
-  );
-
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type
   );
@@ -214,8 +208,6 @@ function SingleSelectionMoveable({
   // Removes element if it's outside of canvas.
   const handleElementOutOfCanvas = (target) => {
     if (isTargetOutOfContainer(target, fullbleedContainer)) {
-      setIsDragging(false);
-      setDraggingResource(null);
       deleteSelectedElements();
       return true;
     }
@@ -235,6 +227,23 @@ function SingleSelectionMoveable({
     'visually-hide-handles': visuallyHideHandles,
     'type-text': selectedElement.type === 'text',
   });
+  const _dragProps = useSingleSelectionDrag({
+    handleElementOutOfCanvas,
+    setIsDragging,
+    resetMoveable,
+    selectedElement,
+    updateSelectedElements,
+    setTransformStyle,
+    frame,
+  });
+  // No dragging in edit mode.
+  const dragProps = isEditMode
+    ? {
+        onDrag: () => false,
+        onDragEnd: () => false,
+        onDragStart: () => false,
+      }
+    : _dragProps;
 
   return (
     <Moveable
@@ -246,60 +255,7 @@ function SingleSelectionMoveable({
       draggable={actionsEnabled}
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
-      onDrag={({ target, beforeTranslate, clientX, clientY }) => {
-        if (isEditMode) {
-          return false;
-        }
-        setIsDragging(true);
-        if (isDropSource(selectedElement.type)) {
-          setDraggingResource(selectedElement.resource);
-        }
-        frame.translate = beforeTranslate;
-        setTransformStyle(target);
-        if (isDropSource(selectedElement.type)) {
-          handleDrag(
-            selectedElement.resource,
-            clientX,
-            clientY,
-            selectedElement.id
-          );
-        }
-        return undefined;
-      }}
-      throttleDrag={0}
-      onDragStart={({ set }) => {
-        if (isEditMode) {
-          return false;
-        }
-        set(frame.translate);
-        return undefined;
-      }}
-      onDragEnd={({ target }) => {
-        if (isEditMode) {
-          return false;
-        }
-        if (handleElementOutOfCanvas(target)) {
-          return undefined;
-        }
-        // When dragging finishes, set the new properties based on the original + what moved meanwhile.
-        const [deltaX, deltaY] = frame.translate;
-        if (
-          deltaX !== 0 ||
-          deltaY !== 0 ||
-          isDropSource(selectedElement.type)
-        ) {
-          const properties = {
-            x: selectedElement.x + editorToDataX(deltaX),
-            y: selectedElement.y + editorToDataY(deltaY),
-          };
-          updateSelectedElements({ properties });
-          if (isDropSource(selectedElement.type)) {
-            handleDrop(selectedElement.resource, selectedElement.id);
-          }
-        }
-        resetDragging(target);
-        return undefined;
-      }}
+      {...dragProps}
       onResizeStart={({ setOrigin, dragStart, direction }) => {
         setOrigin(['%', '%']);
         if (dragStart) {
@@ -411,17 +367,12 @@ function SingleSelectionMoveable({
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      snappable={canSnap}
-      snapCenter={canSnap}
-      horizontalGuidelines={
-        canSnap && actionsEnabled ? [0, canvasHeight / 2, canvasHeight] : []
-      }
-      verticalGuidelines={
-        canSnap && actionsEnabled ? [0, canvasWidth / 2, canvasWidth] : []
-      }
-      elementGuidelines={canSnap && actionsEnabled ? otherNodes : []}
-      snapGap={canSnap}
-      isDisplaySnapDigit={false}
+      {...getSnappingProps({
+        canvasWidth,
+        canvasHeight,
+        otherNodes,
+        canSnap: canSnap && actionsEnabled,
+      })}
     />
   );
 }

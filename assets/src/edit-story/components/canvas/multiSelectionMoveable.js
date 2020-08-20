@@ -33,6 +33,7 @@ import { useGlobalIsKeyPressed } from '../keyboard';
 import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCanvas from './useCanvas';
+import getSnappingProps from './utils/getSnappingProps';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
@@ -307,8 +308,8 @@ function MultiSelectionMoveable({ selectedElements }) {
             updates = updateForResizeEvent(
               element,
               direction,
-              editorToDataX(newWidth),
-              editorToDataY(newHeight)
+              editorToDataX(newWidth, false),
+              editorToDataY(newHeight, false)
             );
           }
           if (updates && updates.height) {
@@ -327,16 +328,7 @@ function MultiSelectionMoveable({ selectedElements }) {
         onGroupEventEnd({ targets, isResize: true });
       }}
       renderDirections={CORNER_HANDLES}
-      snappable={canSnap}
-      snapElement={canSnap}
-      snapHorizontal={canSnap}
-      snapVertical={canSnap}
-      snapCenter={canSnap}
-      horizontalGuidelines={canSnap ? [0, canvasHeight / 2, canvasHeight] : []}
-      verticalGuidelines={canSnap ? [0, canvasWidth / 2, canvasWidth] : []}
-      elementGuidelines={otherNodes}
-      snapGap={canSnap}
-      isDisplaySnapDigit={false}
+      {...getSnappingProps({ canSnap, canvasHeight, canvasWidth, otherNodes })}
     />
   );
 }
