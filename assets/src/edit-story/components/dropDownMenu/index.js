@@ -32,14 +32,19 @@ import { __ } from '@wordpress/i18n';
 import { More } from '../button';
 import DropDownList from '../form/dropDown/list';
 import Popup from '../popup';
+import { useKeyDownEffect } from '../keyboard';
 
 const MoreButton = styled(More)`
   position: absolute;
   top: 8px;
   right: 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
   background: ${({ theme }) => theme.colors.bg.panel};
   color: ${({ theme }) => theme.colors.fg.white};
   border-radius: 100%;
+  border: 0;
 `;
 
 const DropDownContainer = styled.div`
@@ -57,18 +62,32 @@ function DropDownMenu({ options, onOption }) {
     [onOption]
   );
 
+  const handleClose = useCallback(() => {
+    setIsOpen(false);
+    ref.current.focus();
+  }, []);
+
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for some elements.
+  useKeyDownEffect(ref, ['enter', 'down', 'up'], handleOpen, [handleOpen]);
+
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <>
       <MoreButton
         ref={ref}
-        width="28"
-        height="28"
-        onClick={() => setIsOpen(true)}
-        aria-label={__('More', 'web-stories')}
+        onClick={handleOpen}
         aria-pressed={isOpen}
         aria-haspopup={true}
         aria-expanded={isOpen}
+        width="28"
+        height="28"
+        aria-label={__('More', 'web-stories')}
       />
       <Popup placement="bottom-end" anchor={ref} isOpen={isOpen} width={160}>
         <DropDownContainer>
@@ -76,7 +95,7 @@ function DropDownMenu({ options, onOption }) {
             handleCurrentValue={handleOption}
             options={options}
             value={options[0].value}
-            toggleOptions={() => setIsOpen(false)}
+            toggleOptions={handleClose}
           />
         </DropDownContainer>
       </Popup>

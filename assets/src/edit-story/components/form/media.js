@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback } from 'react';
+import { useCallback, useState, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -46,6 +46,10 @@ const Container = styled.div`
   cursor: pointer;
 
   ${({ circle }) => circle && 'border-radius: 50%;'}
+
+  :focus {
+    outline: -webkit-focus-ring-color auto 1px;
+  }
 `;
 
 const DefaultImage = styled(DefaultImageIcon)`
@@ -175,13 +179,25 @@ function MediaInput({
     [onChange, openMediaPicker]
   );
 
+  const ref = useRef();
+  const [isHovering, setIsHovering] = useState(false);
+  const resettableProps = {
+    tabIndex: 0,
+    onFocus: () => setIsHovering(true),
+    onBlur: (evt) => setIsHovering(ref.current.contains(evt.relatedTarget)),
+    onPointerEnter: () => setIsHovering(true),
+    onPointerLeave: () => setIsHovering(false),
+  };
+
   return (
     <Container
+      ref={ref}
       className={`${className}`}
       disabled={disabled}
       circle={circle}
       size={size}
       {...rest}
+      {...(canReset && resettableProps)}
     >
       {value && !isMultiple ? (
         <Img src={value} circle={circle} />
@@ -189,9 +205,10 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      {canReset ? (
+      {canReset && isHovering && (
         <DropDownMenu options={dropdownOptions} onOption={onOption} />
-      ) : (
+      )}
+      {!canReset && (
         <EditBtn
           onClick={openMediaPicker}
           circle={circle}
