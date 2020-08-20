@@ -75,6 +75,7 @@ describe('useCanvasKeys', function () {
       >
         <CanvasContext.Provider
           value={{
+            state: { isEditing: false },
             actions: { setEditingElement },
           }}
         >
