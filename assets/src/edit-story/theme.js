@@ -206,7 +206,7 @@ const theme = {
       lineHeight: '24px',
     },
     mediaError: {
-      font: 'Roboto',
+      family: 'Roboto',
       style: 'italic',
       weight: 'normal',
       size: '16px',
