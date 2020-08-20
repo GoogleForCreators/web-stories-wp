@@ -18,6 +18,7 @@
  * External dependencies
  */
 import React from 'react';
+import { act, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -49,13 +50,63 @@ describe('<AnimationTimeline />', function () {
     );
   });
 
-  it('should update the offset when a timing bar is adjusted to the right', async function () {
-    const { queryAllByTestId } = renderWithTheme(
+  it('should update the offset when a timing bar is adjusted to the right', function () {
+    const updaterFn = jest.fn();
+    const { getByTestId } = renderWithTheme(
       <AnimationTimeline
         animations={Object.values(animations)}
         duration={6000}
-        onUpdateAnimation={() => {}}
+        onUpdateAnimation={updaterFn}
       />
+    );
+
+    const endHandle = getByTestId('end-animation-handle-Animation 0');
+    endHandle.focus();
+
+    act(() => {
+      fireEvent.keyDown(endHandle, {
+        key: 'ArrowRight',
+        which: 39,
+      });
+    });
+
+    /**
+     * Starting duration was 500ms, one right key press moves 100ms,
+     * so the new duration should be 600ms.
+     */
+    expect(updaterFn).toHaveBeenCalledWith(
+      { duration: 500, id: 0, label: 'Animation 0', offset: 0 },
+      { duration: 600, offset: 0 }
+    );
+  });
+
+  it('should update the offset when a timing bar is adjusted to the left', function () {
+    const updaterFn = jest.fn();
+    const { getByTestId } = renderWithTheme(
+      <AnimationTimeline
+        animations={Object.values(animations)}
+        duration={6000}
+        onUpdateAnimation={updaterFn}
+      />
+    );
+
+    const endHandle = getByTestId('end-animation-handle-Animation 0');
+    endHandle.focus();
+
+    act(() => {
+      fireEvent.keyDown(endHandle, {
+        key: 'ArrowLeft',
+        which: 37,
+      });
+    });
+
+    /**
+     * Starting duration was 500ms, one left key press moves -100ms,
+     * so the new duration should be 400ms.
+     */
+    expect(updaterFn).toHaveBeenCalledWith(
+      { duration: 500, id: 0, label: 'Animation 0', offset: 0 },
+      { duration: 400, offset: 0 }
     );
   });
 });

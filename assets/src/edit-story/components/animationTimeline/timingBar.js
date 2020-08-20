@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import Moveable from 'react-moveable';
@@ -82,12 +82,13 @@ export default function TimingBar({
   label,
   onUpdateAnimation,
 }) {
-  const [leftRef, setLeftRef] = useState();
-  const [middleRef, setMiddleRef] = useState();
-  const [rightRef, setRightRef] = useState();
+  const leftRef = useRef();
+  const middleRef = useRef();
+  const rightRef = useRef();
   const dragStart = useRef(0);
   const startingDuration = useRef(0);
   const startingOffset = useRef(0);
+  const [mountMovable, setMountMovable] = useState(false);
 
   const [internalDuration, setDuration] = useState(duration);
   const [internalOffset, setOffset] = useState(offset);
@@ -100,6 +101,10 @@ export default function TimingBar({
     },
     [duration, offset]
   );
+
+  useEffect(() => {
+    setMountMovable(true);
+  }, []);
 
   const handleDragEnd = useCallback(() => {
     onUpdateAnimation({ duration: internalDuration, offset: internalOffset });
@@ -147,30 +152,38 @@ export default function TimingBar({
     leftRef,
     { key: ['left', 'right'] },
     ({ key }) => {
+      let updatedDuration;
+      let updatedOffset;
       switch (key) {
         case 'ArrowRight':
-          setOffset(
-            Math.min(
-              internalOffset + KEY_OFFSET_MS,
-              internalDuration + internalOffset - MIN_ANIMATION_MS
-            )
+          updatedOffset = Math.min(
+            internalOffset + KEY_OFFSET_MS,
+            internalDuration + internalOffset - MIN_ANIMATION_MS
           );
-          setDuration(
-            Math.max(internalDuration - KEY_OFFSET_MS, MIN_ANIMATION_MS)
+          updatedDuration = Math.max(
+            internalDuration - KEY_OFFSET_MS,
+            MIN_ANIMATION_MS
           );
+          setOffset(updatedOffset);
+          setDuration(updatedDuration);
           break;
         case 'ArrowLeft':
-          setOffset(Math.max(internalOffset - KEY_OFFSET_MS, 0));
+          updatedOffset = Math.max(internalOffset - KEY_OFFSET_MS, 0);
+          setOffset(updatedOffset);
           if (internalOffset === 0) {
             break;
           }
-          setDuration(internalDuration + KEY_OFFSET_MS);
+          updatedDuration = internalDuration + KEY_OFFSET_MS;
+          setDuration(updatedDuration);
           break;
         default:
           break;
       }
 
-      handleDragEnd();
+      onUpdateAnimation({
+        duration: updatedDuration || internalDuration,
+        offset: updatedOffset,
+      });
     },
     [
       leftRef,
@@ -180,6 +193,7 @@ export default function TimingBar({
       offset,
       internalOffset,
       duration,
+      onUpdateAnimation,
     ]
   );
 
@@ -187,47 +201,62 @@ export default function TimingBar({
     rightRef,
     { key: ['left', 'right'] },
     ({ key }) => {
+      let updatedDuration;
       switch (key) {
         case 'ArrowRight':
-          setDuration(
-            Math.min(internalDuration + KEY_OFFSET_MS, maxDuration - offset)
+          updatedDuration = Math.min(
+            internalDuration + KEY_OFFSET_MS,
+            maxDuration - offset
           );
+          setDuration(updatedDuration);
           break;
         case 'ArrowLeft':
-          setDuration(
-            Math.max(internalDuration - KEY_OFFSET_MS, MIN_ANIMATION_MS)
+          updatedDuration = Math.max(
+            internalDuration - KEY_OFFSET_MS,
+            MIN_ANIMATION_MS
           );
+          setDuration(updatedDuration);
           break;
         default:
           break;
       }
 
-      handleDragEnd();
+      onUpdateAnimation({ duration: updatedDuration, offset: internalOffset });
     },
-    [rightRef, handleDragEnd, internalDuration, maxDuration, duration, offset]
+    [
+      rightRef,
+      handleDragEnd,
+      internalDuration,
+      maxDuration,
+      duration,
+      offset,
+      internalOffset,
+      onUpdateAnimation,
+    ]
   );
 
   useKeyDownEffect(
     middleRef,
     { key: ['left', 'right'] },
     ({ key }) => {
+      let updatedOffset;
       switch (key) {
         case 'ArrowRight':
-          setOffset(
-            Math.min(
-              internalOffset + KEY_OFFSET_MS,
-              maxDuration - internalDuration
-            )
+          updatedOffset = Math.min(
+            internalOffset + KEY_OFFSET_MS,
+            maxDuration - internalDuration
           );
+          setOffset(updatedOffset);
           break;
         case 'ArrowLeft':
-          setOffset(Math.max(internalOffset - KEY_OFFSET_MS, 0));
+          updatedOffset = Math.max(internalOffset - KEY_OFFSET_MS, 0);
+          setOffset(updatedOffset);
           break;
         default:
           break;
       }
 
-      handleDragEnd();
+      onUpdateAnimation({ duration: internalDuration, offset: updatedOffset });
     },
     [
       middleRef,
@@ -237,6 +266,7 @@ export default function TimingBar({
       duration,
       offset,
       internalOffset,
+      onUpdateAnimation,
     ]
   );
 
@@ -247,33 +277,39 @@ export default function TimingBar({
         left: (internalOffset / MS_DIVISOR) * MARK_OFFSET,
       }}
     >
-      <Handle ref={setLeftRef}>
-        <Moveable
-          target={leftRef}
-          onDragStart={handleDragStart}
-          onDrag={handleDragLeft}
-          onDragEnd={handleDragEnd}
-          {...commonMovableProps}
-        />
+      <Handle ref={leftRef} data-testid={`start-animation-handle-${label}`}>
+        {mountMovable && (
+          <Moveable
+            target={leftRef.current}
+            onDragStart={handleDragStart}
+            onDrag={handleDragLeft}
+            onDragEnd={handleDragEnd}
+            {...commonMovableProps}
+          />
+        )}
       </Handle>
-      <Label ref={setMiddleRef}>
+      <Label ref={middleRef} data-testid={`location-animation-handle-${label}`}>
         {label}
-        <Moveable
-          target={middleRef}
-          onDragStart={handleDragStart}
-          onDrag={handleDragMiddle}
-          onDragEnd={handleDragEnd}
-          {...commonMovableProps}
-        />
+        {mountMovable && (
+          <Moveable
+            target={middleRef.current}
+            onDragStart={handleDragStart}
+            onDrag={handleDragMiddle}
+            onDragEnd={handleDragEnd}
+            {...commonMovableProps}
+          />
+        )}
       </Label>
-      <Handle ref={setRightRef}>
-        <Moveable
-          target={rightRef}
-          onDragStart={handleDragStart}
-          onDrag={handleDragRight}
-          onDragEnd={handleDragEnd}
-          {...commonMovableProps}
-        />
+      <Handle ref={rightRef} data-testid={`end-animation-handle-${label}`}>
+        {mountMovable && (
+          <Moveable
+            target={rightRef.current}
+            onDragStart={handleDragStart}
+            onDrag={handleDragRight}
+            onDragEnd={handleDragEnd}
+            {...commonMovableProps}
+          />
+        )}
       </Handle>
     </Bar>
   );

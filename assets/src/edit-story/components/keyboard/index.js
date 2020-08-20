@@ -69,9 +69,6 @@ function useKeyEffectInternal(
   const batchingCallback = useBatchingCallback(callback, deps || []);
   useEffect(
     () => {
-      if (!refOrNode) {
-        return undefined;
-      }
       const node =
         typeof refOrNode.current !== 'undefined'
           ? refOrNode.current
