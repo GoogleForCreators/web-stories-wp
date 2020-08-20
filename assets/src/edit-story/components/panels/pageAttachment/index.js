@@ -101,9 +101,12 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
-  const [debouncedCtaUpdate] = useDebouncedCallback((value) => {
-    updatePageAttachment({ ctaText: value });
-  }, 300);
+  const [debouncedCTAUpdate, cancelCTAUpdate] = useDebouncedCallback(
+    (value) => {
+      updatePageAttachment({ ctaText: value });
+    },
+    300
+  );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
     !isValidUrl(withProtocol(url || ''))
@@ -144,12 +147,17 @@ function PageAttachmentPanel() {
             onChange={(value) => {
               // This allows smooth input value change without any lag.
               _setCtaText(value);
-              debouncedCtaUpdate(value);
+              debouncedCTAUpdate(value);
             }}
             onBlur={(atts = {}) => {
               const { onClear } = atts;
               if (onClear) {
                 updatePageAttachment({ ctaText: defaultCTA });
+              } else {
+                cancelCTAUpdate();
+                updatePageAttachment({
+                  ctaText: _ctaText ? _ctaText : defaultCTA,
+                });
               }
             }}
             value={_ctaText}
