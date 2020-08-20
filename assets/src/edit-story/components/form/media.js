@@ -184,6 +184,8 @@ function MediaInput({
   const [isFocused, setIsFocused] = useState(false);
   const resettableProps = {
     tabIndex: 0,
+    role: 'section',
+    'aria-label': ariaLabel,
     onFocus: () => setIsFocused(true),
     onBlur: (evt) => setIsFocused(ref.current.contains(evt.relatedTarget)),
     onPointerEnter: () => setIsHovering(true),
