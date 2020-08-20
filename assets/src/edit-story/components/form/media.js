@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
+import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
@@ -141,6 +143,7 @@ function MediaInput({
   circle,
   size,
   loading,
+  canReset,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -150,6 +153,27 @@ function MediaInput({
     onSelect: onChange,
     type,
   });
+
+  const dropdownOptions = [
+    { name: __('Edit', 'web-stories'), value: 'edit' },
+    { name: __('Reset', 'web-stories'), value: 'reset' },
+  ];
+
+  const onOption = useCallback(
+    (opt) => {
+      switch (opt) {
+        case 'edit':
+          openMediaPicker();
+          break;
+        case 'reset':
+          onChange(null);
+          break;
+        default:
+          break;
+      }
+    },
+    [onChange, openMediaPicker]
+  );
 
   return (
     <Container
@@ -165,9 +189,17 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={ariaLabel}>
-        <EditIcon />
-      </EditBtn>
+      {canReset ? (
+        <DropDownMenu options={dropdownOptions} onOption={onOption} />
+      ) : (
+        <EditBtn
+          onClick={openMediaPicker}
+          circle={circle}
+          aria-label={ariaLabel}
+        >
+          <EditIcon />
+        </EditBtn>
+      )}
     </Container>
   );
 }
@@ -186,6 +218,7 @@ MediaInput.propTypes = {
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
   loading: PropTypes.bool,
+  canReset: PropTypes.bool,
 };
 
 MediaInput.defaultProps = {
@@ -200,6 +233,7 @@ MediaInput.defaultProps = {
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
   ariaLabel: __('Choose an image', 'web-stories'),
+  canReset: false,
 };
 
 export default MediaInput;

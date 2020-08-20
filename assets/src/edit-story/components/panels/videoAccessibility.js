@@ -90,6 +90,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           buttonInsertText={__('Set as video poster', 'web-stories')}
           type={'image'}
           ariaLabel={__('Edit: Video poster', 'web-stories')}
+          canReset
         />
       </Row>
       <Row>
