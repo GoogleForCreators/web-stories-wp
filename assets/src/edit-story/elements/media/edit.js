@@ -21,6 +21,11 @@ import styled, { css } from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { elementFillContent, elementWithFlip } from '../shared';
@@ -133,7 +138,7 @@ function MediaEdit({ element, box }) {
     ref: setCroppedMedia,
     draggable: false,
     src: resource.src,
-    alt: resource.alt,
+    alt: __('Drag to move media element', 'web-stories'),
     opacity: opacity / 100,
     tabIndex: 0,
     ...mediaProps,
