@@ -50,7 +50,7 @@ describe('MediaDisplay', () => {
         width: 1000,
         height: 800,
         sizes: {
-          mid: {
+          medium: {
             source_url: 'https://example.com/image1-mid',
             width: 500,
             height: 400,
@@ -106,7 +106,8 @@ describe('MediaDisplay', () => {
     expect(img.srcset).toBe(
       'https://example.com/image1 1000w,https://example.com/image1-mid 500w'
     );
-    expect(img.src).toBe('https://example.com/image1');
+    // Take optimized image loading into account, will use medium size at start
+    expect(img.src).toBe(imageElement.resource.sizes.medium.source_url);
   });
 
   it('should render img with scale and focal point', () => {
