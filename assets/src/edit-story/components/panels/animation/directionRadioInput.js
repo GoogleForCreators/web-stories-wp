@@ -125,13 +125,11 @@ const Label = styled.label`
 
   ${DirectionIndicator} {
     stroke: ${({ theme }) => theme.colors.fg.v9};
-    /* stroke: #6c6c6c; */
     stroke-width: 1px;
   }
 
   input:checked ~ ${DirectionIndicator} {
-    stroke: #dd8162;
-    /* stroke: #dd8162; */
+    stroke: ${({ theme }) => theme.colors.activeDirection};
     stroke-width: 2px;
   }
 

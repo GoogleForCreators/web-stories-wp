@@ -131,6 +131,7 @@ const theme = {
       primary: '#1A73E8',
       secondary: '#8AB4F8',
     },
+    activeDirection: '#dd8162',
     // action: '#1A73E8', <=> replaced by accent.primary
     danger: '#FF0000',
     warning: '#EA4335',
