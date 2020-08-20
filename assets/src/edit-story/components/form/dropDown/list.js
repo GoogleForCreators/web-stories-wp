@@ -200,17 +200,10 @@ function DropDownList({
 
   return (
     <ListContainer ref={listContainerRef}>
-      <List
-        {...rest}
-        aria-multiselectable={false}
-        aria-required={false}
-        aria-activedescendant={value || ''}
-        ref={listRef}
-      >
+      <List {...rest} aria-activedescendant={value || ''} ref={listRef}>
         {options.map(({ name, value: optValue }) => (
           <Item
             id={`dropDown-${optValue}`}
-            aria-selected={value === optValue}
             key={optValue}
             onClick={(evt) => handleItemClick(optValue, evt)}
           >
