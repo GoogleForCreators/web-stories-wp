@@ -37,3 +37,4 @@ export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffe
 // TODO use these shared utils to structure image resources mirroring editor
 export { default as getTypeFromMime } from '../../edit-story/app/media/utils/getTypeFromMime';
 export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';
+export * from '../../edit-story/utils/context';
