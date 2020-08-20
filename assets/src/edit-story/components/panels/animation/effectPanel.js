@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
  */
 import { ANIMATION_EFFECTS } from '../../../../animation/constants';
 import {
-  GetAnimationEffectProps,
+  getAnimationEffectProps,
   AnimationProps,
 } from '../../../../animation/parts';
 import { Row, Button } from '../../form';
@@ -48,16 +48,19 @@ function EffectPanel({
   onChange,
   onRemove,
 }) {
-  const { props } = GetAnimationEffectProps(type);
+  const { props } = getAnimationEffectProps(type);
 
   const handleInputChange = useCallback(
-    (updates) => {
-      onChange({
-        id,
-        type,
-        ...config,
-        ...updates,
-      });
+    (updates, submitArg) => {
+      onChange(
+        {
+          id,
+          type,
+          ...config,
+          ...updates,
+        },
+        submitArg
+      );
     },
     [id, type, config, onChange]
   );
@@ -77,7 +80,9 @@ function EffectPanel({
         effectProps={props}
         effectConfig={config}
         field={field}
-        onChange={(value) => handleInputChange({ [field]: value })}
+        onChange={(value, submitArg) =>
+          handleInputChange({ [field]: value }, submitArg)
+        }
       />
     </Row>
   ));

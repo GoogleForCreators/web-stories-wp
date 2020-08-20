@@ -33,7 +33,7 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
       return (
         <DropDown
           value={effectConfig[field] || effectProps[field].defaultValue}
-          onChange={onChange}
+          onChange={(value) => onChange(value, true)}
           options={effectProps[field].values.map((v) => ({
             value: v,
             name: v,

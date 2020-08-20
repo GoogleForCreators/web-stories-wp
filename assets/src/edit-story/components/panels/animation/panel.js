@@ -24,11 +24,13 @@ import { __ } from '@wordpress/i18n';
  */
 import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
 import { ANIMATION_EFFECTS } from '../../../../animation/constants';
+import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row, DropDown } from '../../form';
 import { SimplePanel } from '../panel';
@@ -40,21 +42,44 @@ const ANIMATION_OPTIONS = [
   ...Object.values(ANIMATION_EFFECTS),
 ];
 
+const ANIMATION_PROPERTY = 'animation';
+
 function AnimationPanel({
   selectedElements,
   selectedElementAnimations,
   pushUpdateForObject,
 }) {
   const handlePanelChange = useCallback(
-    (animation) => {
-      pushUpdateForObject('animation', animation, null, false);
+    (animation, submitArg = false) => {
+      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
     },
     [pushUpdateForObject]
   );
 
   const handleRemoveEffect = useCallback(
     (animation) => {
-      pushUpdateForObject('animation', animation, null, true);
+      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, true);
+    },
+    [pushUpdateForObject]
+  );
+
+  const handleAddEffect = useCallback(
+    (type) => {
+      if (!type) {
+        return;
+      }
+
+      const defaults = getAnimationEffectDefaults(type);
+      pushUpdateForObject(
+        ANIMATION_PROPERTY,
+        {
+          id: uuidv4(),
+          type,
+          ...defaults,
+        },
+        null,
+        true
+      );
     },
     [pushUpdateForObject]
   );
@@ -83,7 +108,7 @@ function AnimationPanel({
       <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
         <DropDown
           value={ANIMATION_OPTIONS[0].value}
-          onChange={() => {}}
+          onChange={handleAddEffect}
           options={ANIMATION_OPTIONS}
         />
       </SimplePanel>

@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
+import getDefaultFieldValue from '../utils/getDefaultFieldValue';
 import { EffectDrop } from '../effects/drop';
 import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
@@ -107,7 +108,7 @@ export function AnimationPart(type, args) {
   return generator(args);
 }
 
-export function GetAnimationProps(type) {
+export function getAnimationProps(type) {
   const customProps = {
     [ANIMATION_TYPES.BLINK_ON]: blinkOnProps,
     [ANIMATION_TYPES.FADE]: fadeProps,
@@ -138,7 +139,7 @@ export function GetAnimationProps(type) {
   };
 }
 
-export function GetAnimationEffectProps(type) {
+export function getAnimationEffectProps(type) {
   const customProps = {
     [ANIMATION_EFFECTS.FLY_IN.value]: flyInProps,
     [ANIMATION_EFFECTS.PAN.value]: panProps,
@@ -157,6 +158,20 @@ export function GetAnimationEffectProps(type) {
       ...basicAnimationProps,
     },
   };
+}
+
+export function getAnimationEffectDefaults(type) {
+  const { props: effectProps } = getAnimationEffectProps(type);
+
+  return Object.keys(effectProps).reduce(
+    (acc, key) => ({
+      ...acc,
+      [key]:
+        effectProps[key].defaultValue ??
+        getDefaultFieldValue(effectProps[key].type),
+    }),
+    {}
+  );
 }
 
 export * from './types';
