@@ -13,11 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { useState } from 'react';
+import classnames from 'classnames';
+
 /**
  * Internal dependencies
  */
 import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
+
+const EMPTY_HANDLES = [];
+const VERTICAL_HANDLES = ['n', 's'];
+const HORIZONTAL_HANDLES = ['e', 'w'];
+const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
+
+function getRenderDirections({ vertical, horizontal, diagonal }) {
+  return [
+    ...(vertical ? VERTICAL_HANDLES : EMPTY_HANDLES),
+    ...(horizontal ? HORIZONTAL_HANDLES : EMPTY_HANDLES),
+    ...(diagonal ? DIAGONAL_HANDLES : EMPTY_HANDLES),
+  ];
+}
 
 function useSingleSelectionResize({
   handleElementOutOfCanvas,
@@ -25,11 +45,10 @@ function useSingleSelectionResize({
   selectedElement,
   setTransformStyle,
   frame,
-  isResizingFromCorner,
-  setIsResizingFromCorner,
   isEditMode,
   pushTransform,
   updateSelectedElements,
+  classNames,
 }) {
   const {
     editorToDataX,
@@ -50,6 +69,7 @@ function useSingleSelectionResize({
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type
   );
+  const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
   const minWidth = dataToEditorX(resizeRules.minWidth);
   const minHeight = dataToEditorY(resizeRules.minHeight);
@@ -137,13 +157,23 @@ function useSingleSelectionResize({
       }
       updateSelectedElements({ properties });
     }
+    setIsResizingFromCorner(true);
     resetMoveable(target);
   };
+
+  const visuallyHideHandles =
+    selectedElement.width <= resizeRules.minWidth ||
+    selectedElement.height <= resizeRules.minHeight;
 
   return {
     onResize,
     onResizeStart,
     onResizeEnd,
+    keepRatio: isResizingFromCorner,
+    renderDirections: getRenderDirections(resizeRules),
+    className: classnames(classNames, {
+      'visually-hide-handles': visuallyHideHandles,
+    }),
   };
 }
 

@@ -29,7 +29,6 @@ import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
-import { getDefinitionForType } from '../../../elements';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
@@ -38,11 +37,6 @@ import useSnapping from '../utils/useSnapping';
 import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
-
-const EMPTY_HANDLES = [];
-const VERTICAL_HANDLES = ['n', 's'];
-const HORIZONTAL_HANDLES = ['e', 'w'];
-const DIAGONAL_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function SingleSelectionMoveable({
   selectedElement,
@@ -53,7 +47,6 @@ function SingleSelectionMoveable({
 }) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
   const { updateSelectedElements, deleteSelectedElements } = useStory(
     (state) => ({
@@ -158,15 +151,12 @@ function SingleSelectionMoveable({
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
-      setIsResizingFromCorner(true);
       if (moveable.current) {
         moveable.current.updateRect();
       }
     },
-    [frame, pushTransform, setIsResizingFromCorner, selectedElement.id]
+    [frame, pushTransform, selectedElement.id]
   );
-
-  const { resizeRules = {} } = getDefinitionForType(selectedElement.type);
 
   const canSnap =
     !isEditMode && (!isDragging || (isDragging && !activeDropTargetId));
@@ -181,13 +171,8 @@ function SingleSelectionMoveable({
     return false;
   };
 
-  const visuallyHideHandles =
-    selectedElement.width <= resizeRules.minWidth ||
-    selectedElement.height <= resizeRules.minHeight;
-
   const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
-    'visually-hide-handles': visuallyHideHandles,
     'type-text': selectedElement.type === 'text',
   });
   const _dragProps = useDrag({
@@ -214,11 +199,10 @@ function SingleSelectionMoveable({
     selectedElement,
     setTransformStyle,
     frame,
-    isResizingFromCorner,
-    setIsResizingFromCorner,
     isEditMode,
     pushTransform,
     updateSelectedElements,
+    classNames,
   });
 
   const rotateProps = useRotate({
@@ -247,22 +231,12 @@ function SingleSelectionMoveable({
       {...rotateProps}
       origin={false}
       pinchable={true}
-      keepRatio={isResizingFromCorner}
-      renderDirections={getRenderDirections(resizeRules)}
       {...useSnapping({
         otherNodes,
         canSnap: canSnap && actionsEnabled,
       })}
     />
   );
-}
-
-function getRenderDirections({ vertical, horizontal, diagonal }) {
-  return [
-    ...(vertical ? VERTICAL_HANDLES : EMPTY_HANDLES),
-    ...(horizontal ? HORIZONTAL_HANDLES : EMPTY_HANDLES),
-    ...(diagonal ? DIAGONAL_HANDLES : EMPTY_HANDLES),
-  ];
 }
 
 SingleSelectionMoveable.propTypes = {
