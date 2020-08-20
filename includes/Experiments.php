@@ -239,6 +239,7 @@ class Experiments {
 				'label'       => __( 'Settings Views', 'web-stories' ),
 				'description' => __( 'Enable settings view in dashboard', 'web-stories' ),
 				'group'       => 'dashboard',
+				'default'     => true,
 			],
 			/**
 			 * Author: @brittanyirl
