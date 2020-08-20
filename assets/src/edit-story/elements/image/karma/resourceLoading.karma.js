@@ -40,7 +40,7 @@ describe('Image resource loading integration', () => {
     await fixture.events.mouse.clickOn(image[0], 10, 10);
     expect(resourceList[2].type).toEqual('cached');
 
-    await fixture.events.sleep(); // Wait a bit for fullsize timeout
+    await fixture.events.sleep(100); // Wait a bit for fullsize timeout
 
     expect(resourceList[2].type).toEqual('fullsize');
     const frames = fixture.screen.getAllByTestId('frameElement');
