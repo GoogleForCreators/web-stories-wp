@@ -41,6 +41,6 @@ jobs:
       - name: Percy for Storybook
         uses: percy/storybook-action@v0.1.5
         with:
-          flags: '--config=percy.config.yml'
+          percy-flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_STORYBOOK }}
