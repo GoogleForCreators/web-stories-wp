@@ -271,7 +271,7 @@
         bottom: -79%;
         left: 15%;
         opacity: 0;
-        transition: 0.3s ease-out;
+        transition: 0.5s ease-out;
         padding-left: 34px;
         padding-top: 9px;
         background-size: 14%;
@@ -283,9 +283,13 @@
 
     section.teaser .download-last-updated {
         font-size: 16px;
-        margin-top: 3em;
         color: #000000;
         opacity: 0.54;
+        transition: 0.25s ease-out;
+    }
+
+    section.teaser .download-wrapper:hover + .download-last-updated {
+        opacity: 0;
     }
 
     section.teaser a span.gradient {
@@ -743,6 +747,7 @@
             <p>We're not quite ready for prime time yet, but if you like to live dangerously, we invite you to try our first public beta.</p>
             <div class="download-wrapper"><a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-beta.2/web-stories.zip" class="download"><span class="gradient"></span><span class="text">Download Beta 2</span></a></div>
             <p class="download-last-updated">Last updated: August 20, 2020</p>
+
         </div>
         <div class="right">
         </div>
