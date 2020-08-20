@@ -169,9 +169,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
-    expect(getComputedStyle(queryByText('Trending')).visibility).not.toBe(
-      'hidden'
-    );
+    expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
   });
 
   it('should render <Media3pPane /> with the "Trending" text', () => {
@@ -179,9 +177,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
-    expect(getComputedStyle(queryByText('Trending')).visibility).not.toBe(
-      'hidden'
-    );
+    expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
   });
 
   it('should render <Media3pPane /> with the category display name when selected', () => {
