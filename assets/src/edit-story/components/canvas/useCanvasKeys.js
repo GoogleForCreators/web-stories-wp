@@ -71,8 +71,12 @@ function useCanvasKeys(ref) {
     }
   );
 
-  const { getNodeForElement, setEditingElement } = useCanvas(
-    ({ actions: { getNodeForElement, setEditingElement } }) => ({
+  const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
+    ({
+      state: { isEditing },
+      actions: { getNodeForElement, setEditingElement },
+    }) => ({
+      isEditing,
       getNodeForElement,
       setEditingElement,
     })
@@ -134,6 +138,9 @@ function useCanvasKeys(ref) {
   useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
+      if (isEditing) {
+        return;
+      }
       const { dx, dy } = getKeyboardMovement(key, shiftKey);
       updateSelectedElements({
         properties: ({ x, y }) => ({
@@ -142,7 +149,7 @@ function useCanvasKeys(ref) {
         }),
       });
     },
-    [updateSelectedElements]
+    [updateSelectedElements, isEditing]
   );
 
   // Layer up/down.
