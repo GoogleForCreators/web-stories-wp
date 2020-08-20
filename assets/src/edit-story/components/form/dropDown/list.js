@@ -43,7 +43,7 @@ const ListContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.white};
 `;
 
-const List = styled.ul.attrs({ role: 'listbox' })`
+const List = styled.ul.attrs({ role: 'menu' })`
   width: 100%;
   padding: 5px 0;
   margin: 0;
@@ -55,7 +55,7 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.black, 0.175)};
 `;
 
-const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
+const Item = styled.li.attrs({ tabIndex: '0', role: 'menuitem' })`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 16px;
   margin: 0;

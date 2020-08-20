@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -52,6 +53,7 @@ const DropDownContainer = styled.div`
 `;
 
 function DropDownMenu({ options, onOption }) {
+  const dropDownId = useRef(`dropdown-${uuidv4()}`);
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const handleOption = useCallback(
@@ -78,14 +80,20 @@ function DropDownMenu({ options, onOption }) {
       <MoreButton
         ref={ref}
         onClick={handleOpen}
-        aria-pressed={isOpen}
-        aria-haspopup={true}
+        aria-haspopup="menu"
         aria-expanded={isOpen}
+        aria-controls={dropDownId.current}
         width="28"
         height="28"
         aria-label={__('More', 'web-stories')}
       />
-      <Popup placement="bottom-end" anchor={ref} isOpen={isOpen} width={160}>
+      <Popup
+        placement="bottom-end"
+        anchor={ref}
+        isOpen={isOpen}
+        width={160}
+        id={dropDownId.current}
+      >
         <DropDownContainer>
           <DropDownList
             handleCurrentValue={handleOption}
