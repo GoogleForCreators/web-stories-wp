@@ -110,6 +110,14 @@ function StoriesView({
           setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
+          global.navigator.clipboard.writeText(story.link);
+          break;
+
+        case STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK:
+          window.open(story.link, '_blank');
+          break;
+
         default:
           break;
       }
