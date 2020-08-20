@@ -265,11 +265,15 @@ function MultiSelectionMoveable({ selectedElements }) {
         }
         onGroupEventStart({ events, isDrag: true });
       }}
-      onDragGroupEnd={({ targets, inputEvent }) => {
+      onDragGroupEnd={({ targets, inputEvent, isDrag }) => {
+        if (!isDrag) {
+          return false;
+        }
         setIsDragging(false);
         if (!clickHandled(inputEvent)) {
           onGroupEventEnd({ targets });
         }
+        return undefined;
       }}
       onRotateGroupStart={({ events }) => {
         onGroupEventStart({ events, isRotate: true });
