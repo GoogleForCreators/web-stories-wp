@@ -385,6 +385,30 @@ describe('Media3pPane fetching', () => {
     });
   });
 
+  it('should have a delay before autoplaying videos', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    const coverrTab = fixture.querySelector('#provider-tab-coverr');
+
+    await fixture.events.click(coverrTab);
+    await expectMediaElements(coverrSection, MEDIA_PER_PAGE);
+
+    let mediaElements = coverrSection.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    const firstMediaElement = mediaElements.item(0);
+    await fixture.events.focus(firstMediaElement);
+    const video = firstMediaElement.querySelector('video');
+
+    expect(video.paused).toBe(true);
+
+    jasmine.clock().tick(700);
+
+    expect(video.paused).toBe(false);
+  });
+
   describe('Gallery navigation', () => {
     it('should handle pressing right when focused', async () => {
       mockListMedia();

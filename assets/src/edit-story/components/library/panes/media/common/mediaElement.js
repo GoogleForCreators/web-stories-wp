@@ -34,6 +34,8 @@ import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
 
+const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
+
 const styledTiles = css`
   width: 100%;
   cursor: pointer;
@@ -206,6 +208,10 @@ const MediaElement = ({
     setActive(false);
   }, []);
 
+  const [hoverTimer, setHoverTimer] = useState(null);
+  const activeRef = useRef(active);
+  activeRef.current = active;
+
   useEffect(() => {
     if (type === 'video') {
       if (isMenuOpen) {
@@ -216,16 +222,25 @@ const MediaElement = ({
       } else {
         if (active) {
           setShowVideoDetail(false);
-          if (mediaElement.current) {
+          if (mediaElement.current && hoverTimer == null) {
+            const timer = setTimeout(() => {
+              if (activeRef.current) {
+                const playPromise = mediaElement.current.play();
+                if (playPromise) {
+                  // All supported browsers return promise but unit test runner does not.
+                  playPromise.catch(() => {});
+                }
+              }
+            }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
+            setHoverTimer(timer);
             // Pointer still in the media element, continue the video.
-            const playPromise = mediaElement.current.play();
-            if (playPromise) {
-              // All supported browsers return promise but unit test runner does not.
-              playPromise.catch(() => {});
-            }
           }
         } else {
           setShowVideoDetail(true);
+          if (hoverTimer != null) {
+            clearTimeout(hoverTimer);
+            setHoverTimer(null);
+          }
           if (mediaElement.current) {
             // Stop video and reset position.
             mediaElement.current.pause();
@@ -234,7 +249,13 @@ const MediaElement = ({
         }
       }
     }
-  }, [isMenuOpen, active, type]);
+    return () => {
+      if (hoverTimer != null) {
+        clearTimeout(hoverTimer);
+        setHoverTimer(null);
+      }
+    };
+  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = () => {
     onInsert(resource, width, height);
