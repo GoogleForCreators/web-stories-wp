@@ -83,26 +83,52 @@ describe('Image Editor', () => {
         ]);
 
         await fixture.snapshot('Image moved');
+
+        // Then click reset button
+        const reset = fixture.editor.canvas.editLayer.sizeReset;
+        await fixture.events.click(reset);
+
+        await fixture.snapshot('Image reset');
       });
 
       it('should allow image to be scaled and moved using keyboard', async () => {
-        // First move size slider 3 steps right
+        // Validate that image has focus
         const slider = fixture.editor.canvas.editLayer.sizeSlider;
-        await fixture.events.click(slider);
+        const reset = fixture.editor.canvas.editLayer.sizeReset;
+        const image = fixture.editor.canvas.editLayer.media;
+        expect(image).toHaveFocus();
+
+        // Press tab to move focus to slider
+        await fixture.events.keyboard.press('tab');
+        expect(slider).toHaveFocus();
+
+        // First move size slider 3 steps right
         await fixture.events.keyboard.press('right');
         await fixture.events.keyboard.press('right');
         await fixture.events.keyboard.press('right');
 
         await fixture.snapshot('Image scaled up');
 
+        // Press shift-tab to move focus back to image
+        await fixture.events.keyboard.shortcut('shift+tab');
+        expect(image).toHaveFocus();
+
         // Then move image 3 steps left
-        const image = fixture.editor.canvas.editLayer.media;
-        await fixture.events.click(image);
         await fixture.events.keyboard.press('left');
         await fixture.events.keyboard.press('left');
         await fixture.events.keyboard.press('left');
 
         await fixture.snapshot('Image moved');
+
+        // Press tab twice to move focus to reset
+        await fixture.events.keyboard.press('tab');
+        await fixture.events.keyboard.press('tab');
+        expect(reset).toHaveFocus();
+
+        // Then press enter to activate reset button
+        await fixture.events.keyboard.press('Enter');
+
+        await fixture.snapshot('Image reset');
       });
     });
   });

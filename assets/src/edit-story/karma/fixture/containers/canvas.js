@@ -170,7 +170,7 @@ class EditLayer extends Container {
   }
 
   get media() {
-    return this.getByRole('img', { name: /move/ });
+    return this.getByRole('img', { name: /move/i });
   }
 
   get sizeSlider() {
@@ -178,7 +178,7 @@ class EditLayer extends Container {
   }
 
   get sizeReset() {
-    return this.getByRole('button', { name: /reset/ });
+    return this.getByRole('button', { name: /reset/i });
   }
 }
 
