@@ -55,9 +55,9 @@ function DropDownMenu({ options, onOption }) {
   const ref = useRef();
   const [isOpen, setIsOpen] = useState(false);
   const handleOption = useCallback(
-    (val) => {
+    (...args) => {
       setIsOpen(false);
-      onOption(val);
+      onOption(...args);
     },
     [onOption]
   );
@@ -71,12 +71,8 @@ function DropDownMenu({ options, onOption }) {
     setIsOpen(true);
   }, []);
 
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for some elements.
   useKeyDownEffect(ref, ['enter', 'down', 'up'], handleOpen, [handleOpen]);
 
-  // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <>
       <MoreButton

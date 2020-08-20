@@ -164,10 +164,10 @@ function MediaInput({
   ];
 
   const onOption = useCallback(
-    (opt) => {
+    (opt, evt) => {
       switch (opt) {
         case 'edit':
-          openMediaPicker();
+          openMediaPicker(evt);
           break;
         case 'reset':
           onChange(null);
@@ -181,13 +181,16 @@ function MediaInput({
 
   const ref = useRef();
   const [isHovering, setIsHovering] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const resettableProps = {
     tabIndex: 0,
-    onFocus: () => setIsHovering(true),
-    onBlur: (evt) => setIsHovering(ref.current.contains(evt.relatedTarget)),
+    onFocus: () => setIsFocused(true),
+    onBlur: (evt) => setIsFocused(ref.current.contains(evt.relatedTarget)),
     onPointerEnter: () => setIsHovering(true),
     onPointerLeave: () => setIsHovering(false),
   };
+
+  const isMenuVisible = isHovering || isFocused;
 
   return (
     <Container
@@ -205,7 +208,7 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      {canReset && isHovering && (
+      {canReset && isMenuVisible && (
         <DropDownMenu options={dropdownOptions} onOption={onOption} />
       )}
       {!canReset && (

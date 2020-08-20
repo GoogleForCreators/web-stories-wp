@@ -152,9 +152,12 @@ function DropDownList({
     [clearSearchValue, searchValue, options]
   );
 
-  const handleEnter = useCallback(() => {
-    handleCurrentValue(focusedValue);
-  }, [focusedValue, handleCurrentValue]);
+  const handleEnter = useCallback(
+    (evt) => {
+      handleCurrentValue(focusedValue, evt);
+    },
+    [focusedValue, handleCurrentValue]
+  );
 
   useFocusOut(listContainerRef, toggleOptions);
 
@@ -191,8 +194,8 @@ function DropDownList({
     }
   }, [focusedValue, options, focusedIndex, listRef]);
 
-  const handleItemClick = (option) => {
-    handleCurrentValue(option);
+  const handleItemClick = (option, evt) => {
+    handleCurrentValue(option, evt);
   };
 
   return (
@@ -209,7 +212,7 @@ function DropDownList({
             id={`dropDown-${optValue}`}
             aria-selected={value === optValue}
             key={optValue}
-            onClick={() => handleItemClick(optValue)}
+            onClick={(evt) => handleItemClick(optValue, evt)}
           >
             {name}
           </Item>

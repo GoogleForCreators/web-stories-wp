@@ -55,14 +55,13 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
   const handleChangePoster = useCallback(
-    (image) => {
+    (image) =>
       pushUpdate(
         {
-          poster: image.sizes?.medium?.url || image.url,
+          poster: image?.sizes?.medium?.url || image?.url,
         },
         true
-      );
-    },
+      ),
     [pushUpdate]
   );
 
