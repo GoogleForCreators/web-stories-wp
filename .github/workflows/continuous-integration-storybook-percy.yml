@@ -39,7 +39,7 @@ jobs:
           CI: true
 
       - name: Percy for Storybook
-        uses: percy/snapshot-action@v0.1.1
+        uses: percy/storybook-action@v0.1.5
         with:
           flags: '--config=percy.config.yml'
         env:
