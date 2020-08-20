@@ -15,30 +15,20 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import { FIELD_TYPES } from '../constants';
 
-export const WhooshInEffectInputPropTypes = {
-  whooshInDir: PropTypes.shape(AnimationInputPropTypes),
+const getDefaultFieldValue = (fieldType) => {
+  switch (fieldType) {
+    case FIELD_TYPES.CHECKBOX:
+      return false;
+    case FIELD_TYPES.NUMBER:
+    case FIELD_TYPES.FLOAT:
+      return 0;
+    default:
+      return '';
+  }
 };
 
-export default {
-  whooshInDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
-    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
-    defaultValue: DIRECTION.LEFT_TO_RIGHT,
-  },
-};
+export default getDefaultFieldValue;

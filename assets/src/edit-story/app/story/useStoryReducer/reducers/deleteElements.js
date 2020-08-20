@@ -81,9 +81,16 @@ function deleteElements(state, { elementIds }) {
     newElements = [oldPage.defaultBackgroundElement, ...newElements];
   }
 
+  // Remove animations associated with elements
+  const oldAnimations = oldPage.animations || [];
+  const newAnimations = oldAnimations.filter((anim) =>
+    anim.targets.some((elementId) => !validDeletionIds.includes(elementId))
+  );
+
   const newPage = {
     ...oldPage,
     elements: newElements,
+    ...(oldAnimations.length > 0 ? { animations: newAnimations } : {}),
   };
 
   const newPages = [

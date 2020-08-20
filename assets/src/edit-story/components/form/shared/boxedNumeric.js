@@ -15,35 +15,18 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import Numeric from '../numeric';
 
-export const FlyInEffectInputPropTypes = {
-  flyInDir: PropTypes.shape(AnimationInputPropTypes),
-};
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
 
-export default {
-  flyInDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
-    values: [
-      DIRECTION.TOP_TO_BOTTOM,
-      DIRECTION.BOTTOM_TO_TOP,
-      DIRECTION.LEFT_TO_RIGHT,
-      DIRECTION.RIGHT_TO_LEFT,
-    ],
-    defaultValue: DIRECTION.BOTTOM_TO_TOP,
-  },
-};
+export default BoxedNumeric;

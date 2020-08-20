@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -27,23 +22,17 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
-import { AnimationInputPropTypes } from '../types';
+import { FIELD_TYPES } from '../constants';
 
-export const FlyInEffectInputPropTypes = {
-  flyInDir: PropTypes.shape(AnimationInputPropTypes),
-};
-
-export default {
-  flyInDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
-    values: [
-      DIRECTION.TOP_TO_BOTTOM,
-      DIRECTION.BOTTOM_TO_TOP,
-      DIRECTION.LEFT_TO_RIGHT,
-      DIRECTION.RIGHT_TO_LEFT,
-    ],
-    defaultValue: DIRECTION.BOTTOM_TO_TOP,
-  },
+export const AnimationInputPropTypes = {
+  type: PropTypes.oneOf([...Object.values(FIELD_TYPES)]).isRequired,
+  label: PropTypes.string,
+  tooltip: PropTypes.string,
+  unit: PropTypes.string,
+  values: PropTypes.array,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
 };
