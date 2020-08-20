@@ -36,11 +36,13 @@ import CategoryPill from './categoryPill';
 const CategorySection = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.v3};
   ${({ hasCategories }) => (hasCategories ? '' : 'min-height: 104px;')}
+  ${({ hasCategories }) =>
+    hasCategories ? '' : 'max-height: 104px;'}
   padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  flex: 0 1 auto;
+  flex: 1 0 auto;
 `;
 
 // This hides the category pills unless expanded
