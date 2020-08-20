@@ -29,11 +29,12 @@ import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
-import { useGlobalIsKeyPressed } from '../../keyboard';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
 import useDrag from './useDrag';
+import useResize from './useResize';
+import useRotate from './useRotate';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
@@ -50,10 +51,9 @@ function MultiSelectionMoveable({ selectedElements }) {
       nodesById,
     })
   );
-  const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
+  const { editorToDataX, editorToDataY } = useUnits((state) => ({
     editorToDataX: state.actions.editorToDataX,
     editorToDataY: state.actions.editorToDataY,
-    dataToEditorY: state.actions.dataToEditorY,
   }));
 
   const {
@@ -67,9 +67,6 @@ function MultiSelectionMoveable({ selectedElements }) {
       moveable.current.updateRect();
     }
   }, [selectedElements, moveable, nodesById]);
-
-  // ⇧ key rotates the element 30 degrees at a time
-  const throttleRotation = useGlobalIsKeyPressed('shift');
 
   // Create targets list including nodes and also necessary attributes.
   const targetList = selectedElements.map((element) => ({
@@ -192,6 +189,12 @@ function MultiSelectionMoveable({ selectedElements }) {
     onGroupEventStart,
     onGroupEventEnd,
   });
+  const resizeProps = useResize({
+    onGroupEventEnd,
+    targetList,
+    setTransformStyle,
+  });
+  const rotateProps = useRotate();
 
   // Not all targets have been defined yet.
   if (targetList.some(({ node }) => node === undefined)) {
@@ -207,63 +210,10 @@ function MultiSelectionMoveable({ selectedElements }) {
       draggable={true}
       resizable={true}
       rotatable={true}
-      {...dragProps}
-      onRotateGroupStart={({ events }) => {
-        onGroupEventStart({ events, isRotate: true });
-      }}
-      onRotateGroup={({ events }) => {
-        events.forEach(({ target, beforeRotate, drag }, i) => {
-          const sFrame = frames[i];
-          const { element } = targetList[i];
-          sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
-          sFrame.translate = drag.beforeTranslate;
-          setTransformStyle(element.id, target, sFrame);
-        });
-      }}
-      onRotateGroupEnd={({ targets }) => {
-        onGroupEventEnd({ targets, isRotate: true });
-      }}
-      throttleRotate={throttleRotation ? 30 : 0}
-      onResizeGroupStart={({ events }) => {
-        events.forEach((ev, i) => {
-          const frame = frames[i];
-          ev.setOrigin(['%', '%']);
-          if (ev.dragStart) {
-            ev.dragStart.set(frame.translate);
-          }
-        });
-      }}
-      onResizeGroup={({ events }) => {
-        events.forEach(({ target, direction, width, height, drag }, i) => {
-          const sFrame = frames[i];
-          const { element, updateForResizeEvent } = targetList[i];
-          let newHeight = height;
-          const newWidth = width;
-          let updates = null;
-          if (updateForResizeEvent) {
-            updates = updateForResizeEvent(
-              element,
-              direction,
-              editorToDataX(newWidth, false),
-              editorToDataY(newHeight, false)
-            );
-          }
-          if (updates && updates.height) {
-            newHeight = dataToEditorY(updates.height);
-          }
-          target.style.width = `${newWidth}px`;
-          target.style.height = `${newHeight}px`;
-          sFrame.direction = direction;
-          sFrame.resize = [newWidth, newHeight];
-          sFrame.translate = drag.beforeTranslate;
-          sFrame.updates = updates;
-          setTransformStyle(element.id, target, sFrame);
-        });
-      }}
-      onResizeGroupEnd={({ targets }) => {
-        onGroupEventEnd({ targets, isResize: true });
-      }}
       renderDirections={CORNER_HANDLES}
+      {...dragProps}
+      {...rotateProps}
+      {...resizeProps}
       {...snapProps}
     />
   );
