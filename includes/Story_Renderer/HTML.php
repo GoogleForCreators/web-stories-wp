@@ -68,11 +68,13 @@ class HTML {
 	public function render() {
 		$markup = '<!DOCTYPE html>' . $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
+		$markup = $this->remove_noscript_amp_boilerplate( $markup );
 
 		$this->document = $this->load_html( $markup );
 
 		// Run all further transformations on the DOMDocument.
 
+		$this->add_noscript_amp_boilerplate();
 		$this->transform_html_start_tag();
 		$this->insert_analytics_configuration();
 
@@ -189,6 +191,49 @@ class HTML {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Remove <noscript> AMP boilerplate fragment from the existing markup.
+	 *
+	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
+	 * That's why we temporarily remove this fragment and re-add it later.
+	 *
+	 * @see https://github.com/ampproject/amp-wp/pull/5097
+	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @param string $content Story markup.
+	 *
+	 * @return string Filtered content.
+	 */
+	protected function remove_noscript_amp_boilerplate( $content ) {
+		return str_replace( '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>', '', $content );
+	}
+
+	/**
+	 * Re-add <noscript> AMP boilerplate using DOMDocument.
+	 *
+	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
+	 * That's why we temporarily remove this fragment and re-add it later.
+	 *
+	 * @see https://github.com/ampproject/amp-wp/pull/5097
+	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @return void
+	 */
+	protected function add_noscript_amp_boilerplate() {
+		$fragment = $this->document->createDocumentFragment();
+		$fragment->appendXml(
+			'<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>'
+		);
+
+		$head = $this->get_element_by_tag_name( 'head' );
+
+		if ( ! $head ) {
+			return;
+		}
+
+		$head->appendChild( $this->document->importNode( $fragment, true ) );
 	}
 
 	/**
