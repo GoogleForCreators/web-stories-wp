@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useCallback } from 'react';
@@ -28,7 +33,7 @@ import {
   GetAnimationEffectProps,
   AnimationProps,
 } from '../../../../animation/parts';
-import { Row } from '../../form';
+import { Row, Button } from '../../form';
 import { Panel, PanelTitle, PanelContent } from '../panel';
 import EffectInput from './effectInput';
 
@@ -38,7 +43,11 @@ function getEffectName(type) {
   );
 }
 
-function EffectPanel({ animation: { id, type, ...config }, onChange }) {
+function EffectPanel({
+  animation: { id, type, ...config },
+  onChange,
+  onRemove,
+}) {
   const { props } = GetAnimationEffectProps(type);
 
   const handleInputChange = useCallback(
@@ -53,6 +62,15 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
     [id, type, config, onChange]
   );
 
+  const handleRemoveClick = useCallback(() => {
+    onRemove({
+      id,
+      type,
+      ...config,
+      delete: true,
+    });
+  }, [id, type, config, onRemove]);
+
   const content = Object.keys(props).map((field) => (
     <Row key={field} expand>
       <EffectInput
@@ -66,7 +84,15 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
 
   return (
     <Panel key={id} name={type}>
-      <PanelTitle>{getEffectName(type)}</PanelTitle>
+      <PanelTitle
+        secondaryAction={
+          <Button onClick={handleRemoveClick}>
+            {__('Delete', 'web-stories')}
+          </Button>
+        }
+      >
+        {getEffectName(type)}
+      </PanelTitle>
       <PanelContent>{content}</PanelContent>
     </Panel>
   );
@@ -75,6 +101,7 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
 EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
 };
 
 export default EffectPanel;

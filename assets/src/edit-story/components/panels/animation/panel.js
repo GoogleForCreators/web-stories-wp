@@ -52,15 +52,24 @@ function AnimationPanel({
     [pushUpdateForObject]
   );
 
+  const handleRemoveEffect = useCallback(
+    (animation) => {
+      pushUpdateForObject('animation', animation, null, true);
+    },
+    [pushUpdateForObject]
+  );
+
   const updatedAnimations = useMemo(() => {
     // Combining local element updates with the
     // page level applied updates
     const updated = selectedElements
       .map((element) => element.animation)
       .filter(Boolean);
-    return selectedElementAnimations.map((anim) => ({
-      ...(updated.find((a) => a.id === anim.id) || anim),
-    }));
+    return selectedElementAnimations
+      .map((anim) => ({
+        ...(updated.find((a) => a.id === anim.id) || anim),
+      }))
+      .filter((a) => !a.delete);
   }, [selectedElements, selectedElementAnimations]);
 
   return selectedElements.length > 1 ? (
@@ -83,6 +92,7 @@ function AnimationPanel({
           key={animation.id}
           animation={animation}
           onChange={handlePanelChange}
+          onRemove={handleRemoveEffect}
         />
       ))}
     </>
