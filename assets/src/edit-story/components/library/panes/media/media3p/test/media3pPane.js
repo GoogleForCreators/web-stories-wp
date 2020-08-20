@@ -151,7 +151,7 @@ describe('Media3pPane', () => {
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
     expect(queryByText('No media found')).toBeDefined();
-    expect(getComputedStyle(queryByText('Trending')).visibility).toBe('hidden');
+    expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
   });
 
   it('should render <Media3pPane /> with no "Trending" text while media is being loaded', () => {
@@ -160,7 +160,7 @@ describe('Media3pPane', () => {
     useMediaResult.media3p.PROVIDER_1.state.media = [];
     const { queryByText } = renderWithTheme(<Media3pPane isActive={true} />);
 
-    expect(getComputedStyle(queryByText('Trending')).visibility).toBe('hidden');
+    expect(getComputedStyle(queryByText('Trending')).display).toBe('none');
   });
 
   it('should render <Media3pPane /> with the "Trending" text while a new page is being loaded', () => {
@@ -189,8 +189,8 @@ describe('Media3pPane', () => {
 
     expect(queryByTestId('media-subheading')).toBeDefined();
     expect(
-      getComputedStyle(queryByTestId('media-subheading')).visibility
-    ).not.toBe('hidden');
+      getComputedStyle(queryByTestId('media-subheading')).display
+    ).not.toBe('none');
     expect(queryByTestId('media-subheading')).toHaveTextContent(
       'Tiny dogs for provider 1'
     );
