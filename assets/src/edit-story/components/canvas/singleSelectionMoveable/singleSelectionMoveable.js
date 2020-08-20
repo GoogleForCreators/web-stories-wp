@@ -24,20 +24,20 @@ import classnames from 'classnames';
 /**
  * Internal dependencies
  */
-import { useStory, useDropTargets } from '../../app';
-import Moveable from '../moveable';
-import objectWithout from '../../utils/objectWithout';
-import { useTransform } from '../transform';
-import { useUnits } from '../../units';
-import { getDefinitionForType } from '../../elements';
-import { useGlobalIsKeyPressed } from '../keyboard';
-import useBatchingCallback from '../../utils/useBatchingCallback';
-import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
-import useCombinedRefs from '../../utils/useCombinedRefs';
-import useCanvas from './useCanvas';
-import getSnappingProps from './utils/getSnappingProps';
-import useSingleSelectionDrag from './utils/useSingleSelectionDrag';
-import useSingleSelectionResize from './utils/useSingleSelectionResize';
+import { useStory, useDropTargets } from '../../../app';
+import Moveable from '../../moveable';
+import objectWithout from '../../../utils/objectWithout';
+import { useTransform } from '../../transform';
+import { useUnits } from '../../../units';
+import { getDefinitionForType } from '../../../elements';
+import { useGlobalIsKeyPressed } from '../../keyboard';
+import useBatchingCallback from '../../../utils/useBatchingCallback';
+import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
+import useCombinedRefs from '../../../utils/useCombinedRefs';
+import useCanvas from '../useCanvas';
+import getSnappingProps from '../utils/getSnappingProps';
+import useSingleSelectionDrag from './useDrag';
+import useSingleSelectionResize from './useResize';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
