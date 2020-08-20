@@ -30,14 +30,14 @@ import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import { getDefinitionForType } from '../../../elements';
-import { useGlobalIsKeyPressed } from '../../keyboard';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
 import useCanvas from '../useCanvas';
-import getSnappingProps from '../utils/getSnappingProps';
-import useSingleSelectionDrag from './useDrag';
-import useSingleSelectionResize from './useResize';
+import useSnapping from '../utils/useSnapping';
+import useDrag from './useDrag';
+import useResize from './useResize';
+import useRotate from './useRotate';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -61,19 +61,11 @@ function SingleSelectionMoveable({
       deleteSelectedElements: state.actions.deleteSelectedElements,
     })
   );
-  const {
-    canvasWidth,
-    canvasHeight,
-    nodesById,
-    fullbleedContainer,
-  } = useCanvas(
-    ({
-      state: {
-        pageSize: { width: canvasWidth, height: canvasHeight },
-        nodesById,
-        fullbleedContainer,
-      },
-    }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
+  const { nodesById, fullbleedContainer } = useCanvas(
+    ({ state: { nodesById, fullbleedContainer } }) => ({
+      nodesById,
+      fullbleedContainer,
+    })
   );
   const { getBox } = useUnits(({ actions: { getBox } }) => ({
     getBox,
@@ -121,12 +113,6 @@ function SingleSelectionMoveable({
     moveable.current.updateRect();
   });
 
-  // ⌘ key disables snapping
-  const snapDisabled = useGlobalIsKeyPressed('meta');
-
-  // ⇧ key rotates the element 30 degrees at a time
-  const throttleRotation = useGlobalIsKeyPressed('shift');
-
   const box = getBox(selectedElement);
   let frame = useMemo(
     () => ({
@@ -144,6 +130,7 @@ function SingleSelectionMoveable({
     frame.direction = newFrame.direction;
     frame.resize = newFrame.resize;
     frame.updates = newFrame.updates;
+    frame.rotate = newFrame.rotate;
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
@@ -182,9 +169,7 @@ function SingleSelectionMoveable({
   const { resizeRules = {} } = getDefinitionForType(selectedElement.type);
 
   const canSnap =
-    !snapDisabled &&
-    !isEditMode &&
-    (!isDragging || (isDragging && !activeDropTargetId));
+    !isEditMode && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = isDragging || Boolean(draggingResource);
 
   // Removes element if it's outside of canvas.
@@ -205,7 +190,7 @@ function SingleSelectionMoveable({
     'visually-hide-handles': visuallyHideHandles,
     'type-text': selectedElement.type === 'text',
   });
-  const _dragProps = useSingleSelectionDrag({
+  const _dragProps = useDrag({
     handleElementOutOfCanvas,
     setIsDragging,
     resetMoveable,
@@ -223,7 +208,7 @@ function SingleSelectionMoveable({
       }
     : _dragProps;
 
-  const resizeProps = useSingleSelectionResize({
+  const resizeProps = useResize({
     handleElementOutOfCanvas,
     resetMoveable,
     selectedElement,
@@ -233,6 +218,17 @@ function SingleSelectionMoveable({
     setIsResizingFromCorner,
     isEditMode,
     pushTransform,
+    updateSelectedElements,
+  });
+
+  const rotateProps = useRotate({
+    handleElementOutOfCanvas,
+    selectedElement,
+    isEditMode,
+    pushTransform,
+    frame,
+    setTransformStyle,
+    resetMoveable,
     updateSelectedElements,
   });
 
@@ -248,33 +244,12 @@ function SingleSelectionMoveable({
       rotatable={actionsEnabled && !hideHandles}
       {...dragProps}
       {...resizeProps}
-      onRotateStart={({ set }) => {
-        if (isEditMode) {
-          // In edit mode, we need to signal right away that the action started.
-          pushTransform(selectedElement.id, frame);
-        }
-        set(frame.rotate);
-      }}
-      onRotate={({ target, beforeRotate }) => {
-        frame.rotate = ((beforeRotate % 360) + 360) % 360;
-        setTransformStyle(target);
-      }}
-      onRotateEnd={({ target }) => {
-        if (handleElementOutOfCanvas(target)) {
-          return;
-        }
-        const properties = { rotationAngle: Math.round(frame.rotate) };
-        updateSelectedElements({ properties });
-        resetMoveable(target);
-      }}
-      throttleRotate={throttleRotation ? 30 : 0}
+      {...rotateProps}
       origin={false}
       pinchable={true}
       keepRatio={isResizingFromCorner}
       renderDirections={getRenderDirections(resizeRules)}
-      {...getSnappingProps({
-        canvasWidth,
-        canvasHeight,
+      {...useSnapping({
         otherNodes,
         canSnap: canSnap && actionsEnabled,
       })}

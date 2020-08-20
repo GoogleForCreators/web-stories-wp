@@ -33,7 +33,7 @@ import { useGlobalIsKeyPressed } from '../keyboard';
 import isMouseUpAClick from '../../utils/isMouseUpAClick';
 import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
 import useCanvas from './useCanvas';
-import getSnappingProps from './utils/getSnappingProps';
+import useSnapping from './utils/useSnapping';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
@@ -46,23 +46,11 @@ function MultiSelectionMoveable({ selectedElements }) {
     updateElementsById: state.actions.updateElementsById,
     deleteElementsById: state.actions.deleteElementsById,
   }));
-  const {
-    canvasWidth,
-    canvasHeight,
-    nodesById,
-    handleSelectElement,
-    fullbleedContainer,
-  } = useCanvas(
+  const { nodesById, handleSelectElement, fullbleedContainer } = useCanvas(
     ({
-      state: {
-        pageSize: { width: canvasWidth, height: canvasHeight },
-        nodesById,
-        fullbleedContainer,
-      },
+      state: { nodesById, fullbleedContainer },
       actions: { handleSelectElement },
     }) => ({
-      canvasWidth,
-      canvasHeight,
       fullbleedContainer,
       nodesById,
       handleSelectElement,
@@ -91,9 +79,6 @@ function MultiSelectionMoveable({ selectedElements }) {
     }
   }, [selectedElements, moveable, nodesById]);
 
-  // ⌘ key disables snapping
-  const canSnap = !useGlobalIsKeyPressed('meta');
-
   // ⇧ key rotates the element 30 degrees at a time
   const throttleRotation = useGlobalIsKeyPressed('shift');
 
@@ -104,16 +89,19 @@ function MultiSelectionMoveable({ selectedElements }) {
     updateForResizeEvent: getDefinitionForType(element.type)
       .updateForResizeEvent,
   }));
-  // Not all targets have been defined yet.
-  if (targetList.some(({ node }) => node === undefined)) {
-    return null;
-  }
+
   const otherNodes = Object.values(
     objectWithout(
       nodesById,
       selectedElements.map((element) => element.id)
     )
   );
+  const snapProps = useSnapping({ canSnap: true, otherNodes });
+
+  // Not all targets have been defined yet.
+  if (targetList.some(({ node }) => node === undefined)) {
+    return null;
+  }
 
   /**
    * Set style to the element.
@@ -328,7 +316,7 @@ function MultiSelectionMoveable({ selectedElements }) {
         onGroupEventEnd({ targets, isResize: true });
       }}
       renderDirections={CORNER_HANDLES}
-      {...getSnappingProps({ canSnap, canvasHeight, canvasWidth, otherNodes })}
+      {...snapProps}
     />
   );
 }

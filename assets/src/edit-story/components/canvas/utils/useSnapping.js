@@ -14,7 +14,24 @@
  * limitations under the License.
  */
 
-function getSnappingProps({ canSnap, canvasHeight, canvasWidth, otherNodes }) {
+/**
+ * Internal dependencies
+ */
+import { useGlobalIsKeyPressed } from '../../keyboard';
+import useCanvas from '../useCanvas';
+
+function useSnapping({ canSnap, otherNodes }) {
+  const { canvasWidth, canvasHeight } = useCanvas(
+    ({
+      state: {
+        pageSize: { width: canvasWidth, height: canvasHeight },
+      },
+    }) => ({ canvasWidth, canvasHeight })
+  );
+
+  // ⌘ key disables snapping
+  const snapDisabled = useGlobalIsKeyPressed('meta');
+  canSnap = canSnap && !snapDisabled;
   return {
     snappable: canSnap,
     snapHorizontal: canSnap,
@@ -28,4 +45,4 @@ function getSnappingProps({ canSnap, canvasHeight, canvasWidth, otherNodes }) {
   };
 }
 
-export default getSnappingProps;
+export default useSnapping;
