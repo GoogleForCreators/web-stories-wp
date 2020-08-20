@@ -41,6 +41,6 @@ jobs:
       - name: Percy for Storybook
         uses: percy/snapshot-action@v0.1.1
         with:
-          percy-flags: '--config=percy.config.yml'
+          flags: '--config=percy.config.yml'
         env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_STORYBOOK }}
