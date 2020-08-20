@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useFeature } from 'flagged';
 
 /**
@@ -26,15 +26,19 @@ import { useFeature } from 'flagged';
 import { ApiContext } from '../../api/apiProvider';
 import { Toaster, useToastContext } from '../../../components/toaster';
 import { ALERT_SEVERITY } from '../../../constants';
+import { useContextSelector } from '../../../utils';
 
 function ToasterView() {
-  const {
-    state: {
-      stories: { error: storyError },
-      templates: { error: templateError },
-      settings: { error: settingsError },
-    },
-  } = useContext(ApiContext);
+  const { storyError, templateError, settingsError } = useContextSelector(
+    ApiContext,
+    ({
+      state: {
+        stories: { error: storyError },
+        templates: { error: templateError },
+        settings: { error: settingsError },
+      },
+    }) => ({ storyError, templateError, settingsError })
+  );
 
   const {
     actions: { removeToast, addToast },

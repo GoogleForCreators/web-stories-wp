@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
 import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
-import { useStoryView } from '../../../utils';
+import { useStoryView, useContextSelector } from '../../../utils';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import { PreviewStoryView } from '..';
@@ -33,22 +33,51 @@ import Header from './header';
 
 function MyStories() {
   const {
-    actions: {
-      storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-      templateApi: { createTemplateFromStory },
-    },
-    state: {
-      stories: {
-        allPagesFetched,
-        isLoading,
-        stories,
-        storiesOrderById,
-        totalPages,
-        totalStoriesByStatus,
+    duplicateStory,
+    fetchStories,
+    trashStory,
+    updateStory,
+    createTemplateFromStory,
+    allPagesFetched,
+    isLoading,
+    stories,
+    storiesOrderById,
+    totalPages,
+    totalStoriesByStatus,
+    users,
+  } = useContextSelector(
+    ApiContext,
+    ({
+      actions: {
+        storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
+        templateApi: { createTemplateFromStory },
       },
+      state: {
+        stories: {
+          allPagesFetched,
+          isLoading,
+          stories,
+          storiesOrderById,
+          totalPages,
+          totalStoriesByStatus,
+        },
+        users,
+      },
+    }) => ({
+      duplicateStory,
+      fetchStories,
+      trashStory,
+      updateStory,
+      createTemplateFromStory,
+      allPagesFetched,
+      isLoading,
+      stories,
+      storiesOrderById,
+      totalPages,
+      totalStoriesByStatus,
       users,
-    },
-  } = useContext(ApiContext);
+    })
+  );
 
   const { filter, page, activePreview, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,

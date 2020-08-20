@@ -22,9 +22,9 @@ import { within } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
 import { ApiContext } from '../../../api/apiProvider';
+import { useContext } from '../../../../utils';
 
 describe('Settings View', () => {
   let fixture;

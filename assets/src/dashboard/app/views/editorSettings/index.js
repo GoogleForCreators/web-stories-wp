@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,18 +28,26 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ApiContext } from '../../api/apiProvider';
+import { useContextSelector } from '../../../utils';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
   const {
-    actions: {
-      settingsApi: { fetchSettings, updateSettings },
-    },
-    state: {
-      settings: { googleAnalyticsId },
-    },
-  } = useContext(ApiContext);
+    fetchSettings,
+    updateSettings,
+    googleAnalyticsId,
+  } = useContextSelector(
+    ApiContext,
+    ({
+      actions: {
+        settingsApi: { fetchSettings, updateSettings },
+      },
+      state: {
+        settings: { googleAnalyticsId },
+      },
+    }) => ({ fetchSettings, updateSettings, googleAnalyticsId })
+  );
 
   useEffect(() => {
     fetchSettings();

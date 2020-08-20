@@ -18,12 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
+import { createContext } from '../../utils';
 import dataAdapter from './wpAdapter';
 import useFontApi from './useFontApi';
 import useStoryApi from './useStoryApi';

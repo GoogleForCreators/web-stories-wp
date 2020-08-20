@@ -18,13 +18,12 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { useContext } from 'react';
 
 /**
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { getRelativeDisplayDate } from '../../../../utils';
+import { getRelativeDisplayDate, useContext } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,

@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
 import { within } from '@testing-library/react';
 import qs from 'query-string';
 
@@ -30,6 +29,7 @@ import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../constants';
+import { useContext } from '../../../../utils';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -26,6 +25,7 @@ import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
 import { ApiContext } from '../../../api/apiProvider';
+import { useContext } from '../../../../utils';
 
 describe('Grid view', () => {
   let fixture;

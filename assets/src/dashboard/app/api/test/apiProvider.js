@@ -23,9 +23,9 @@ import moment from 'moment-timezone';
  * Internal dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useContext } from 'react';
 import ApiProvider, { ApiContext } from '../apiProvider';
 import { ConfigProvider } from '../../config';
+import { useContextSelector } from '../../../utils';
 
 jest.mock('../wpAdapter', () => ({
   get: () =>
@@ -72,7 +72,7 @@ jest.mock('../wpAdapter', () => ({
 
 describe('ApiProvider', () => {
   it('should return a story in state data when the API request is fired', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useContextSelector(ApiContext), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider
@@ -128,7 +128,7 @@ describe('ApiProvider', () => {
   });
 
   it('should return an updated story in state data when the API request is fired', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useContextSelector(ApiContext), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider
@@ -199,7 +199,7 @@ describe('ApiProvider', () => {
   });
 
   it('should return a duplicated story in state data when the duplicate method is called.', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useContextSelector(ApiContext), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider
@@ -319,7 +319,7 @@ describe('ApiProvider', () => {
   });
 
   it('should delete a story when the trash story method is called.', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useContextSelector(ApiContext), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider

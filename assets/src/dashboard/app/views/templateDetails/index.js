@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
 
 /**
@@ -40,7 +40,12 @@ import {
   PaginationButton,
   Pill,
 } from '../../../components';
-import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
+import {
+  clamp,
+  usePagePreviewSize,
+  useTemplateView,
+  useContextSelector,
+} from '../../../utils/';
 import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
@@ -78,18 +83,37 @@ function TemplateDetails() {
   } = useRouteHistory();
 
   const {
-    state: {
-      templates: { templates, templatesOrderById, totalPages },
-    },
-    actions: {
-      storyApi: { createStoryFromTemplate },
-      templateApi: {
-        fetchMyTemplateById,
-        fetchExternalTemplateById,
-        fetchRelatedTemplates,
+    templates,
+    templatesOrderById,
+    totalPages,
+    createStoryFromTemplate,
+    fetchMyTemplateById,
+    fetchExternalTemplateById,
+    fetchRelatedTemplates,
+  } = useContextSelector(
+    ApiContext,
+    ({
+      state: {
+        templates: { templates, templatesOrderById, totalPages },
       },
-    },
-  } = useContext(ApiContext);
+      actions: {
+        storyApi: { createStoryFromTemplate },
+        templateApi: {
+          fetchMyTemplateById,
+          fetchExternalTemplateById,
+          fetchRelatedTemplates,
+        },
+      },
+    }) => ({
+      templates,
+      templatesOrderById,
+      totalPages,
+      createStoryFromTemplate,
+      fetchMyTemplateById,
+      fetchExternalTemplateById,
+      fetchRelatedTemplates,
+    })
+  );
 
   const { activePreview } = useTemplateView({ totalPages });
 
