@@ -165,7 +165,7 @@ const RadioGroup = styled.div`
 export const DirectionRadioInput = ({
   directions = [],
   onChange,
-  defaultValue,
+  defaultChecked,
 }) => {
   return (
     <Fieldset>
@@ -187,7 +187,7 @@ export const DirectionRadioInput = ({
               name="direction"
               value={direction}
               onChange={onChange}
-              defaultChecked={defaultValue === direction}
+              defaultChecked={defaultChecked === direction}
             />
             <DirectionIndicator direction={direction} />
           </Label>
@@ -198,7 +198,7 @@ export const DirectionRadioInput = ({
 };
 
 DirectionRadioInput.propTypes = {
-  defaultValue: PropTypes.oneOf(Object.values(DIRECTION)),
+  defaultChecked: PropTypes.oneOf(Object.values(DIRECTION)),
   directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(DIRECTION))),
   onChange: PropTypes.func,
 };
