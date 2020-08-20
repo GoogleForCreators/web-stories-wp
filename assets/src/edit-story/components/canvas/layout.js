@@ -22,6 +22,11 @@ import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import {
@@ -221,7 +226,12 @@ const PageArea = forwardRef(function PageArea(
   ref
 ) {
   return (
-    <PageAreaFullbleedContainer ref={fullbleedRef} data-testid="fullbleed">
+    <PageAreaFullbleedContainer
+      ref={fullbleedRef}
+      data-testid="fullbleed"
+      aria-label={__('Fullbleed area', 'web-stories')}
+      role="region"
+    >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
         <PageAreaSafeZone
           ref={ref}

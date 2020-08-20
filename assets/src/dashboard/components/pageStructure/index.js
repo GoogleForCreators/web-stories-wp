@@ -15,15 +15,17 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
+import { useFeature } from 'flagged';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-/**
- * External dependencies
- */
-import { useFeature } from 'flagged';
-import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
-import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
