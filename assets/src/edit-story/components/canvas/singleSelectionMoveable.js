@@ -37,6 +37,7 @@ import useCombinedRefs from '../../utils/useCombinedRefs';
 import useCanvas from './useCanvas';
 import getSnappingProps from './utils/getSnappingProps';
 import useSingleSelectionDrag from './utils/useSingleSelectionDrag';
+import useSingleSelectionResize from './utils/useSingleSelectionResize';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -74,29 +75,9 @@ function SingleSelectionMoveable({
       },
     }) => ({ canvasWidth, canvasHeight, nodesById, fullbleedContainer })
   );
-  const {
+  const { getBox } = useUnits(({ actions: { getBox } }) => ({
     getBox,
-    editorToDataX,
-    editorToDataY,
-    dataToEditorY,
-    dataToEditorX,
-  } = useUnits(
-    ({
-      actions: {
-        getBox,
-        editorToDataX,
-        editorToDataY,
-        dataToEditorY,
-        dataToEditorX,
-      },
-    }) => ({
-      getBox,
-      editorToDataX,
-      editorToDataY,
-      dataToEditorY,
-      dataToEditorX,
-    })
-  );
+  }));
   const {
     actions: { pushTransform },
   } = useTransform();
@@ -160,6 +141,9 @@ function SingleSelectionMoveable({
   const setTransformStyle = (target, newFrame = frame) => {
     // Get the changes coming from each action type.
     frame.translate = newFrame.translate;
+    frame.direction = newFrame.direction;
+    frame.resize = newFrame.resize;
+    frame.updates = newFrame.updates;
     target.style.transform = `translate(${frame.translate[0]}px, ${frame.translate[1]}px) rotate(${frame.rotate}deg)`;
     if (frame.resize[0]) {
       target.style.width = `${frame.resize[0]}px`;
@@ -195,9 +179,7 @@ function SingleSelectionMoveable({
     [frame, pushTransform, setIsResizingFromCorner, selectedElement.id]
   );
 
-  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
-    selectedElement.type
-  );
+  const { resizeRules = {} } = getDefinitionForType(selectedElement.type);
 
   const canSnap =
     !snapDisabled &&
@@ -213,10 +195,6 @@ function SingleSelectionMoveable({
     }
     return false;
   };
-
-  const minWidth = dataToEditorX(resizeRules.minWidth);
-  const minHeight = dataToEditorY(resizeRules.minHeight);
-  const aspectRatio = selectedElement.width / selectedElement.height;
 
   const visuallyHideHandles =
     selectedElement.width <= resizeRules.minWidth ||
@@ -245,6 +223,19 @@ function SingleSelectionMoveable({
       }
     : _dragProps;
 
+  const resizeProps = useSingleSelectionResize({
+    handleElementOutOfCanvas,
+    resetMoveable,
+    selectedElement,
+    setTransformStyle,
+    frame,
+    isResizingFromCorner,
+    setIsResizingFromCorner,
+    isEditMode,
+    pushTransform,
+    updateSelectedElements,
+  });
+
   return (
     <Moveable
       className={classNames}
@@ -256,93 +247,7 @@ function SingleSelectionMoveable({
       resizable={actionsEnabled && !hideHandles}
       rotatable={actionsEnabled && !hideHandles}
       {...dragProps}
-      onResizeStart={({ setOrigin, dragStart, direction }) => {
-        setOrigin(['%', '%']);
-        if (dragStart) {
-          dragStart.set(frame.translate);
-        }
-        // Lock ratio for diagonal directions (nw, ne, sw, se). Both
-        // `direction[]` values for diagonals are either 1 or -1. Non-diagonal
-        // directions have 0s.
-        const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
-        if (isResizingFromCorner !== newResizingMode) {
-          setIsResizingFromCorner(newResizingMode);
-        }
-        if (isEditMode) {
-          // In edit mode, we need to signal right away that the action started.
-          pushTransform(selectedElement.id, frame);
-        }
-      }}
-      onResize={({ target, direction, width, height, drag }) => {
-        let newWidth = width;
-        let newHeight = height;
-        let updates = null;
-
-        if (isResizingFromCorner) {
-          if (newWidth < minWidth) {
-            newWidth = minWidth;
-            newHeight = newWidth / aspectRatio;
-          }
-          if (newHeight < minHeight) {
-            newHeight = minHeight;
-            newWidth = minHeight * aspectRatio;
-          }
-        } else {
-          newHeight = Math.max(newHeight, minHeight);
-          newWidth = Math.max(newWidth, minWidth);
-        }
-
-        if (updateForResizeEvent) {
-          updates = updateForResizeEvent(
-            selectedElement,
-            direction,
-            editorToDataX(newWidth, false),
-            editorToDataY(newHeight, false)
-          );
-        }
-        if (updates && updates.height) {
-          newHeight = dataToEditorY(updates.height);
-        }
-
-        target.style.width = `${newWidth}px`;
-        target.style.height = `${newHeight}px`;
-        frame.direction = direction;
-        frame.resize = [newWidth, newHeight];
-        frame.translate = drag.beforeTranslate;
-        frame.updates = updates;
-        setTransformStyle(target);
-      }}
-      onResizeEnd={({ target }) => {
-        if (handleElementOutOfCanvas(target)) {
-          return;
-        }
-        const [editorWidth, editorHeight] = frame.resize;
-        if (editorWidth !== 0 && editorHeight !== 0) {
-          const { direction } = frame;
-          const [deltaX, deltaY] = frame.translate;
-          const newWidth = editorToDataX(editorWidth);
-          const newHeight = editorToDataY(editorHeight);
-          const properties = {
-            width: newWidth,
-            height: newHeight,
-            x: selectedElement.x + editorToDataX(deltaX),
-            y: selectedElement.y + editorToDataY(deltaY),
-          };
-          if (updateForResizeEvent) {
-            Object.assign(
-              properties,
-              updateForResizeEvent(
-                selectedElement,
-                direction,
-                newWidth,
-                newHeight
-              )
-            );
-          }
-          updateSelectedElements({ properties });
-        }
-        resetMoveable(target);
-      }}
+      {...resizeProps}
       onRotateStart={({ set }) => {
         if (isEditMode) {
           // In edit mode, we need to signal right away that the action started.

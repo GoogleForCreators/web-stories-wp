@@ -49,49 +49,56 @@ function useSingleSelectionDrag({
     },
     [setIsDragging, setDraggingResource, resetMoveable]
   );
+
+  const onDrag = ({ target, beforeTranslate, clientX, clientY }) => {
+    if (isDropSource(selectedElement.type)) {
+      setDraggingResource(selectedElement.resource);
+    }
+    frame.translate = beforeTranslate;
+    setTransformStyle(target, frame);
+    if (isDropSource(selectedElement.type)) {
+      handleDrag(
+        selectedElement.resource,
+        clientX,
+        clientY,
+        selectedElement.id
+      );
+    }
+    return undefined;
+  };
+
+  const onDragStart = ({ set }) => {
+    set(frame.translate);
+    return undefined;
+  };
+
+  const onDragEnd = ({ target }) => {
+    if (handleElementOutOfCanvas(target)) {
+      setIsDragging(false);
+      setDraggingResource(null);
+      return undefined;
+    }
+    // When dragging finishes, set the new properties based on the original + what moved meanwhile.
+    const [deltaX, deltaY] = frame.translate;
+    if (deltaX !== 0 || deltaY !== 0 || isDropSource(selectedElement.type)) {
+      const properties = {
+        x: selectedElement.x + editorToDataX(deltaX),
+        y: selectedElement.y + editorToDataY(deltaY),
+      };
+      updateSelectedElements({ properties });
+      if (isDropSource(selectedElement.type)) {
+        handleDrop(selectedElement.resource, selectedElement.id);
+      }
+    }
+    resetDragging(target);
+    return undefined;
+  };
+
   return {
-    onDrag: ({ target, beforeTranslate, clientX, clientY }) => {
-      if (isDropSource(selectedElement.type)) {
-        setDraggingResource(selectedElement.resource);
-      }
-      frame.translate = beforeTranslate;
-      setTransformStyle(target, frame);
-      if (isDropSource(selectedElement.type)) {
-        handleDrag(
-          selectedElement.resource,
-          clientX,
-          clientY,
-          selectedElement.id
-        );
-      }
-      return undefined;
-    },
+    onDrag,
     throttleDrag: 0,
-    onDragStart: ({ set }) => {
-      set(frame.translate);
-      return undefined;
-    },
-    onDragEnd: ({ target }) => {
-      if (handleElementOutOfCanvas(target)) {
-        setIsDragging(false);
-        setDraggingResource(null);
-        return undefined;
-      }
-      // When dragging finishes, set the new properties based on the original + what moved meanwhile.
-      const [deltaX, deltaY] = frame.translate;
-      if (deltaX !== 0 || deltaY !== 0 || isDropSource(selectedElement.type)) {
-        const properties = {
-          x: selectedElement.x + editorToDataX(deltaX),
-          y: selectedElement.y + editorToDataY(deltaY),
-        };
-        updateSelectedElements({ properties });
-        if (isDropSource(selectedElement.type)) {
-          handleDrop(selectedElement.resource, selectedElement.id);
-        }
-      }
-      resetDragging(target);
-      return undefined;
-    },
+    onDragStart,
+    onDragEnd,
   };
 }
 
