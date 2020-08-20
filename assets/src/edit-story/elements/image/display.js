@@ -77,7 +77,7 @@ function ImageDisplay({ element, box }) {
         };
         setSrc(resource.src);
         setSrcType('fullsize');
-      }, 0);
+      });
     }
 
     return () => clearTimeout(timeout);
