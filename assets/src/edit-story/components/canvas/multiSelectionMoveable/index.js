@@ -18,42 +18,36 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
-import Moveable from '../moveable';
-import { useStory, useDropTargets } from '../../app';
-import objectWithout from '../../utils/objectWithout';
-import { useTransform } from '../transform';
-import { useUnits } from '../../units';
-import { getDefinitionForType } from '../../elements';
-import { useGlobalIsKeyPressed } from '../keyboard';
-import isMouseUpAClick from '../../utils/isMouseUpAClick';
-import isTargetOutOfContainer from '../../utils/isTargetOutOfContainer';
-import useCanvas from './useCanvas';
-import useSnapping from './utils/useSnapping';
+import Moveable from '../../moveable';
+import { useStory } from '../../../app';
+import objectWithout from '../../../utils/objectWithout';
+import { useTransform } from '../../transform';
+import { useUnits } from '../../../units';
+import { getDefinitionForType } from '../../../elements';
+import { useGlobalIsKeyPressed } from '../../keyboard';
+import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
+import useCanvas from '../useCanvas';
+import useSnapping from '../utils/useSnapping';
+import useDrag from './useDrag';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
 function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
 
-  const eventTracker = useRef({});
-
   const { updateElementsById, deleteElementsById } = useStory((state) => ({
     updateElementsById: state.actions.updateElementsById,
     deleteElementsById: state.actions.deleteElementsById,
   }));
-  const { nodesById, handleSelectElement, fullbleedContainer } = useCanvas(
-    ({
-      state: { nodesById, fullbleedContainer },
-      actions: { handleSelectElement },
-    }) => ({
+  const { nodesById, fullbleedContainer } = useCanvas(
+    ({ state: { nodesById, fullbleedContainer } }) => ({
       fullbleedContainer,
       nodesById,
-      handleSelectElement,
     })
   );
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
@@ -65,11 +59,6 @@ function MultiSelectionMoveable({ selectedElements }) {
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    state: { draggingResource },
-  } = useDropTargets();
-
-  const [isDragging, setIsDragging] = useState(false);
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -96,12 +85,6 @@ function MultiSelectionMoveable({ selectedElements }) {
       selectedElements.map((element) => element.id)
     )
   );
-  const snapProps = useSnapping({ canSnap: true, otherNodes });
-
-  // Not all targets have been defined yet.
-  if (targetList.some(({ node }) => node === undefined)) {
-    return null;
-  }
 
   /**
    * Set style to the element.
@@ -201,65 +184,30 @@ function MultiSelectionMoveable({ selectedElements }) {
     resetMoveable();
   };
 
-  const startEventTracking = (evt) => {
-    const { timeStamp, clientX, clientY } = evt;
-    eventTracker.current = {
-      timeStamp,
-      clientX,
-      clientY,
-    };
-  };
+  const snapProps = useSnapping({ canSnap: true, otherNodes });
+  const dragProps = useDrag({
+    targetList,
+    frames,
+    setTransformStyle,
+    onGroupEventStart,
+    onGroupEventEnd,
+  });
 
-  // Let's check if we consider this a drag or a click, In case of a click handle click instead.
-  // We are doing this here in Moveable selection since it takes over the mouseup event
-  // and it can be captured here and not in the frame element.
-  // @todo Add integration test for this!
-  const clickHandled = (inputEvent) => {
-    if (isMouseUpAClick(inputEvent, eventTracker.current)) {
-      const clickedElement = Object.keys(nodesById).find((id) =>
-        nodesById[id].contains(inputEvent.target)
-      );
-      if (clickedElement) {
-        handleSelectElement(clickedElement, inputEvent);
-      }
-      // Click was handled.
-      return true;
-    }
-    // No click was found/handled.
-    return false;
-  };
+  // Not all targets have been defined yet.
+  if (targetList.some(({ node }) => node === undefined)) {
+    return null;
+  }
 
-  const hideHandles = isDragging || Boolean(draggingResource);
   return (
     <Moveable
-      className={`default-moveable ${hideHandles ? 'hide-handles' : ''}`}
+      className={'default-moveable'}
       ref={moveable}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
       draggable={true}
-      resizable={!hideHandles}
-      rotatable={!hideHandles}
-      onDragGroup={({ events }) => {
-        events.forEach(({ target, beforeTranslate }, i) => {
-          const sFrame = frames[i];
-          const { element } = targetList[i];
-          sFrame.translate = beforeTranslate;
-          setTransformStyle(element.id, target, sFrame);
-        });
-      }}
-      onDragGroupStart={({ events, inputEvent }) => {
-        startEventTracking(inputEvent);
-        if (!isDragging) {
-          setIsDragging(true);
-        }
-        onGroupEventStart({ events, isDrag: true });
-      }}
-      onDragGroupEnd={({ targets, inputEvent }) => {
-        setIsDragging(false);
-        if (!clickHandled(inputEvent)) {
-          onGroupEventEnd({ targets });
-        }
-      }}
+      resizable={true}
+      rotatable={true}
+      {...dragProps}
       onRotateGroupStart={({ events }) => {
         onGroupEventStart({ events, isRotate: true });
       }}
