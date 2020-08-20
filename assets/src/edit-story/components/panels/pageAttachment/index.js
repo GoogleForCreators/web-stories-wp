@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback, useState, useEffect } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -100,6 +101,10 @@ function PageAttachmentPanel() {
     [updateCurrentPageProperties, pageAttachment]
   );
 
+  const [debouncedCtaUpdate] = useDebouncedCallback((value) => {
+    updatePageAttachment({ ctaText: value });
+  }, 300);
+
   const [isInvalidUrl, setIsInvalidUrl] = useState(
     !isValidUrl(withProtocol(url || ''))
   );
@@ -136,16 +141,15 @@ function PageAttachmentPanel() {
       {Boolean(url) && !isInvalidUrl && (
         <Row>
           <ExpandedTextInput
-            onChange={(value) => _setCtaText(value)}
+            onChange={(value) => {
+              // This allows smooth input value change without any lag.
+              _setCtaText(value);
+              debouncedCtaUpdate(value);
+            }}
             onBlur={(atts = {}) => {
               const { onClear } = atts;
               if (onClear) {
                 updatePageAttachment({ ctaText: defaultCTA });
-                _setCtaText(defaultCTA);
-              } else {
-                updatePageAttachment({
-                  ctaText: _ctaText ? _ctaText : defaultCTA,
-                });
               }
             }}
             value={_ctaText}

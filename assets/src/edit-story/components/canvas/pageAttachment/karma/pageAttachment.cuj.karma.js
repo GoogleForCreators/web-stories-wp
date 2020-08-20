@@ -92,7 +92,8 @@ describe('Page Attachment', () => {
     );
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(text);
-    await input.dispatchEvent(new window.Event('blur'));
+    // Wait until the debounced update has taken effect.
+    await wait(300);
   };
 
   describe('CUJ: Creator can Add a Page Attachment: Add Page Attachment', () => {
@@ -158,3 +159,9 @@ describe('Page Attachment', () => {
     });
   });
 });
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
