@@ -46,8 +46,8 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
         updates = updateForResizeEvent(
           element,
           direction,
-          editorToDataX(newWidth, false),
-          editorToDataY(newHeight, false)
+          editorToDataX(newWidth),
+          editorToDataY(newHeight)
         );
       }
       if (updates && updates.height) {
