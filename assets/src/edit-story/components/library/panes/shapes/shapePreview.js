@@ -34,23 +34,21 @@ const PREVIEW_SIZE = 36;
 
 const ShapePreviewContainer = styled.button`
   background: transparent;
-  border: 1px solid ${({ theme }) => theme.colors.fg.gray16};
+  border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
   border-radius: 4px;
   position: relative;
-  margin: 0.8em 0.5em;
-  flex: 0 0 25%;
+  margin: 12px 10px;
+  flex: 0 0 64px;
+  height: 67px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
   svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    padding: 16px;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
   }
 `;
 
