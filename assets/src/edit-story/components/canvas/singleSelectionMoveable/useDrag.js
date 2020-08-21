@@ -78,7 +78,10 @@ function useSingleSelectionDrag({
     return undefined;
   };
 
-  const onDragEnd = ({ target }) => {
+  const onDragEnd = ({ target, isDrag }) => {
+    if (!isDrag) {
+      return false;
+    }
     if (handleElementOutOfCanvas(target)) {
       setIsDragging(false);
       setDraggingResource(null);

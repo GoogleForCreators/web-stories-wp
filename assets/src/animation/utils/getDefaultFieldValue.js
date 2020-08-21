@@ -14,6 +14,21 @@
  * limitations under the License.
  */
 
-export { default as reshapeStoryObject } from './stories';
-export { default as reshapeStoryPreview } from './storyPreview';
-export { default as reshapePublisherLogo } from './publisherLogo';
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES } from '../constants';
+
+const getDefaultFieldValue = (fieldType) => {
+  switch (fieldType) {
+    case FIELD_TYPES.CHECKBOX:
+      return false;
+    case FIELD_TYPES.NUMBER:
+    case FIELD_TYPES.FLOAT:
+      return 0;
+    default:
+      return '';
+  }
+};
+
+export default getDefaultFieldValue;
