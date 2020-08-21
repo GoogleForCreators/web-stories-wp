@@ -100,6 +100,7 @@ function DropDownMenu({ options, onOption }) {
             options={options}
             value={options[0].value}
             toggleOptions={handleClose}
+            hasMenuRole
           />
         </DropDownContainer>
       </Popup>
