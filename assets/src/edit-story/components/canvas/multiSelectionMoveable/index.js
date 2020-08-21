@@ -193,8 +193,15 @@ function MultiSelectionMoveable({ selectedElements }) {
     onGroupEventEnd,
     targetList,
     setTransformStyle,
+    frames,
   });
-  const rotateProps = useRotate();
+  const rotateProps = useRotate({
+    onGroupEventStart,
+    setTransformStyle,
+    onGroupEventEnd,
+    targetList,
+    frames,
+  });
 
   // Not all targets have been defined yet.
   if (targetList.some(({ node }) => node === undefined)) {

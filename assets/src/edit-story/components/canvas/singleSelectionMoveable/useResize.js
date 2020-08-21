@@ -24,8 +24,9 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useUnits } from '../../../units';
+import { useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
-import getResizedFrame from '../utils/getResizedFrame';
+import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -41,16 +42,20 @@ function getRenderDirections({ vertical, horizontal, diagonal }) {
 }
 
 function useSingleSelectionResize({
-  handleElementOutOfCanvas,
   resetMoveable,
   selectedElement,
   setTransformStyle,
   frame,
   isEditMode,
   pushTransform,
-  updateSelectedElements,
   classNames,
 }) {
+  const { updateSelectedElements } = useStory((state) => ({
+    updateSelectedElements: state.actions.updateSelectedElements,
+  }));
+
+  const { handleElementOutOfCanvas } = useElementOutOfCanvas();
+
   const {
     editorToDataX,
     editorToDataY,
@@ -79,6 +84,7 @@ function useSingleSelectionResize({
   const onResize = ({ target, direction, width, height, drag }) => {
     let newWidth = width;
     let newHeight = height;
+    let updates = null;
 
     if (isResizingFromCorner) {
       if (newWidth < minWidth) {
@@ -94,21 +100,25 @@ function useSingleSelectionResize({
       newWidth = Math.max(newWidth, minWidth);
     }
 
-    const resizedFrame = getResizedFrame({
-      target,
-      height: newHeight,
-      width: newWidth,
-      drag,
-      direction,
-      element: selectedElement,
-      editorToDataX,
-      editorToDataY,
-      dataToEditorY,
-    });
-    setTransformStyle(target, {
-      ...frame,
-      ...resizedFrame,
-    });
+    if (updateForResizeEvent) {
+      updates = updateForResizeEvent(
+        selectedElement,
+        direction,
+        editorToDataX(newWidth, false),
+        editorToDataY(newHeight, false)
+      );
+    }
+    if (updates && updates.height) {
+      newHeight = dataToEditorY(updates.height);
+    }
+
+    target.style.width = `${newWidth}px`;
+    target.style.height = `${newHeight}px`;
+    frame.direction = direction;
+    frame.resize = [newWidth, newHeight];
+    frame.translate = drag.beforeTranslate;
+    frame.updates = updates;
+    setTransformStyle(target, frame);
   };
 
   const onResizeStart = ({ setOrigin, dragStart, direction }) => {

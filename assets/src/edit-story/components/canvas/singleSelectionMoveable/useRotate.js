@@ -18,19 +18,24 @@
  * Internal dependencies
  */
 import { useGlobalIsKeyPressed } from '../../keyboard';
+import { useStory } from '../../../app';
+import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 
 function useSingleSelectionRotate({
-  handleElementOutOfCanvas,
   selectedElement,
   isEditMode,
   pushTransform,
   frame,
   setTransformStyle,
   resetMoveable,
-  updateSelectedElements,
 }) {
+  const { updateSelectedElements } = useStory((state) => ({
+    updateSelectedElements: state.actions.updateSelectedElements,
+  }));
   // ⇧ key rotates the element 30 degrees at a time
   const throttleRotation = useGlobalIsKeyPressed('shift');
+
+  const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 
   const onRotateStart = ({ set }) => {
     if (isEditMode) {

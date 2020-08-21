@@ -20,19 +20,25 @@
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useDropTargets } from '../../dropTargets';
 import { useUnits } from '../../../units';
+import { useStory } from '../../../app';
+import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 
 function useSingleSelectionDrag({
-  handleElementOutOfCanvas,
   setIsDragging,
   resetMoveable,
   selectedElement,
-  updateSelectedElements,
   setTransformStyle,
   frame,
 }) {
   const {
     actions: { handleDrag, handleDrop, setDraggingResource, isDropSource },
   } = useDropTargets();
+
+  const { handleElementOutOfCanvas } = useElementOutOfCanvas();
+
+  const { updateSelectedElements } = useStory((state) => ({
+    updateSelectedElements: state.actions.updateSelectedElements,
+  }));
 
   const { editorToDataX, editorToDataY } = useUnits(
     ({ actions: { editorToDataX, editorToDataY } }) => ({

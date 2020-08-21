@@ -24,6 +24,7 @@ function useRotate({
   setTransformStyle,
   onGroupEventEnd,
   targetList,
+  frames,
 }) {
   // ⇧ key rotates the element 30 degrees at a time
   const throttleRotation = useGlobalIsKeyPressed('shift');

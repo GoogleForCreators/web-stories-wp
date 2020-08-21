@@ -24,13 +24,12 @@ import classnames from 'classnames';
 /**
  * Internal dependencies
  */
-import { useStory, useDropTargets } from '../../../app';
+import { useDropTargets } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
-import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useCombinedRefs from '../../../utils/useCombinedRefs';
 import useCanvas from '../useCanvas';
 import useSnapping from '../utils/useSnapping';
@@ -48,18 +47,9 @@ function SingleSelectionMoveable({
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const { updateSelectedElements, deleteSelectedElements } = useStory(
-    (state) => ({
-      updateSelectedElements: state.actions.updateSelectedElements,
-      deleteSelectedElements: state.actions.deleteSelectedElements,
-    })
-  );
-  const { nodesById, fullbleedContainer } = useCanvas(
-    ({ state: { nodesById, fullbleedContainer } }) => ({
-      nodesById,
-      fullbleedContainer,
-    })
-  );
+  const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
+    nodesById,
+  }));
   const { getBox } = useUnits(({ actions: { getBox } }) => ({
     getBox,
   }));
@@ -162,25 +152,14 @@ function SingleSelectionMoveable({
     !isEditMode && (!isDragging || (isDragging && !activeDropTargetId));
   const hideHandles = isDragging || Boolean(draggingResource);
 
-  // Removes element if it's outside of canvas.
-  const handleElementOutOfCanvas = (target) => {
-    if (isTargetOutOfContainer(target, fullbleedContainer)) {
-      deleteSelectedElements();
-      return true;
-    }
-    return false;
-  };
-
   const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
     'type-text': selectedElement.type === 'text',
   });
   const _dragProps = useDrag({
-    handleElementOutOfCanvas,
     setIsDragging,
     resetMoveable,
     selectedElement,
-    updateSelectedElements,
     setTransformStyle,
     frame,
   });
@@ -194,26 +173,22 @@ function SingleSelectionMoveable({
     : _dragProps;
 
   const resizeProps = useResize({
-    handleElementOutOfCanvas,
     resetMoveable,
     selectedElement,
     setTransformStyle,
     frame,
     isEditMode,
     pushTransform,
-    updateSelectedElements,
     classNames,
   });
 
   const rotateProps = useRotate({
-    handleElementOutOfCanvas,
     selectedElement,
     isEditMode,
     pushTransform,
     frame,
     setTransformStyle,
     resetMoveable,
-    updateSelectedElements,
   });
 
   return (
