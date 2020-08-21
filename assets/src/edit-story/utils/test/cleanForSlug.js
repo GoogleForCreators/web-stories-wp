@@ -32,14 +32,14 @@ describe('cleanForSlug', () => {
     expect(cleanForSlug(null)).toBe('');
   });
 
-  it('should trim leading whitespace', () => {
-    const result = cleanForSlug(' Hello World ');
+  it('should trim leading and ending whitespace and dashes', () => {
+    const result = cleanForSlug('- Hello-World- ');
     expect(result).toStrictEqual('hello-world');
   });
 
-  it('should trim leading and ending dashes', () => {
-    const result = cleanForSlug('-Hello-World-');
-    expect(result).toStrictEqual('hello-world');
+  it('should not trim leading and ending whitespace and dashes if disabled', () => {
+    const result = cleanForSlug('- Hello-World- ', true);
+    expect(result).toStrictEqual('--hello-world--');
   });
 
   it('should remove diacritics', () => {
