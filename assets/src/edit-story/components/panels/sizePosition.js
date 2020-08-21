@@ -77,6 +77,12 @@ const StyledToggle = styled(Toggle)`
   margin: 0 10px;
 `;
 
+const Spacer = styled.span`
+  display: block;
+  width: 50px;
+  flex-shrink: 0;
+`;
+
 function isNum(v) {
   return typeof v === 'number' && !isNaN(v);
 }
@@ -269,6 +275,7 @@ function SizePositionPanel({
           onChange={(value) => pushUpdate({ x: value })}
           aria-label={__('X position', 'web-stories')}
         />
+        <Spacer />
         <BoxedNumeric
           suffix={_x('Y', 'Position on Y axis', 'web-stories')}
           value={y}
