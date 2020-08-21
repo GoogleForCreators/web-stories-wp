@@ -33,6 +33,10 @@ const Svg = styled.svg`
   width: 10px;
   fill: none;
   transform-origin: 50% 50%;
+`;
+
+const Icon = styled.div`
+  padding: 4px;
   transform: rotate(
     ${({ direction }) => {
       switch (direction) {
@@ -49,13 +53,9 @@ const Svg = styled.svg`
   );
 `;
 
-const Icon = styled.div`
-  padding: 4px;
-`;
-
 const Direction = ({ className, direction }) => (
-  <Icon className={className}>
-    <Svg viewBox="0 0 10 11" direction={direction}>
+  <Icon className={className} direction={direction}>
+    <Svg viewBox="0 0 10 11">
       <path d="M5 11L5 1M5 1L9 5M5 1L1 5" />
     </Svg>
   </Icon>
@@ -134,7 +134,7 @@ const Label = styled.label`
   }
 
   input:focus ~ ${DirectionIndicator} {
-    outline: 5px auto -webkit-focus-ring-color;
+    outline: 2px auto ${({ theme }) => theme.colors.accent.primary};
   }
 `;
 
@@ -145,9 +145,6 @@ const hidden = css`
   cursor: pointer;
 `;
 const HiddenLegend = styled.legend`
-  ${hidden}
-`;
-const HiddenCaption = styled.span`
   ${hidden}
 `;
 const HiddenInput = styled.input`
@@ -162,6 +159,11 @@ const RadioGroup = styled.div`
   left: 0;
 `;
 
+const camelToPascal = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
+
+const pascalToSentance = (string) => string.replace(/([a-z])([A-Z])/g, '$1 $2');
+
 export const DirectionRadioInput = ({
   directions = [],
   onChange,
@@ -173,14 +175,16 @@ export const DirectionRadioInput = ({
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
       <RadioGroup>
         {directions.map((direction) => (
-          <Label key={direction} htmlFor={direction} direction={direction}>
-            <HiddenCaption>
-              {sprintf(
-                /* translators: %s: story title. */
-                __('%s Direction', 'web-stories'),
-                direction.replace(/([a-z])([A-Z])/g, '$1 $2')
-              )}
-            </HiddenCaption>
+          <Label
+            key={direction}
+            aria-label={sprintf(
+              /* translators: %s: which direction. */
+              __('%s Direction', 'web-stories'),
+              pascalToSentance(camelToPascal(direction))
+            )}
+            htmlFor={direction}
+            direction={direction}
+          >
             <HiddenInput
               id={direction}
               type="radio"

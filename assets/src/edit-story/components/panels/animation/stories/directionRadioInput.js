@@ -38,7 +38,7 @@ export const _default = () => {
     <Panel>
       <DirectionRadioInput
         directions={Object.values(DIRECTION)}
-        defaultValue={DIRECTION.TOP_TO_BOTTOM}
+        defaultChecked={DIRECTION.TOP_TO_BOTTOM}
       />
     </Panel>
   );
