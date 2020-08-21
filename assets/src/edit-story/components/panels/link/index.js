@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { useDebouncedCallback } from 'use-debounce';
 import { Media, Row, Button } from '../../form';
-import { createLink, getLinkFromElement } from '../../elementLink';
+import { createLink } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
@@ -40,6 +40,7 @@ import useBatchingCallback from '../../../utils/useBatchingCallback';
 import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
+import { useCommonObjectValue } from '../utils';
 
 const MIN_MAX = {
   URL: {
@@ -84,15 +85,12 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     clearEditing: state.actions.clearEditing,
   }));
 
-  const selectedElement = selectedElements[0];
   const defaultLink = useMemo(
     () => createLink({ url: '', icon: null, desc: null }),
     []
   );
-  const link = useMemo(
-    () => getLinkFromElement(selectedElement) || defaultLink,
-    [selectedElement, defaultLink]
-  );
+
+  const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
 
