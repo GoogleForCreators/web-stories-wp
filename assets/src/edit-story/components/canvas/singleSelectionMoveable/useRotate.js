@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
-import {useGlobalIsKeyPressed} from "../../keyboard";
+/**
+ * Internal dependencies
+ */
+import { useGlobalIsKeyPressed } from '../../keyboard';
 
 function useSingleSelectionRotate({
   handleElementOutOfCanvas,
@@ -26,7 +29,6 @@ function useSingleSelectionRotate({
   resetMoveable,
   updateSelectedElements,
 }) {
-
   // ⇧ key rotates the element 30 degrees at a time
   const throttleRotation = useGlobalIsKeyPressed('shift');
 

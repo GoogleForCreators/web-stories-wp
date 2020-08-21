@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { useUnits } from '../../../units';
+import getResizedFrame from '../utils/getResizedFrame';
 
 function useResize({ onGroupEventEnd, targetList, setTransformStyle }) {
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({
@@ -38,28 +39,22 @@ function useResize({ onGroupEventEnd, targetList, setTransformStyle }) {
   const onResizeGroup = ({ events }) => {
     events.forEach(({ target, direction, width, height, drag }, i) => {
       const sFrame = frames[i];
-      const { element, updateForResizeEvent } = targetList[i];
-      let newHeight = height;
-      const newWidth = width;
-      let updates = null;
-      if (updateForResizeEvent) {
-        updates = updateForResizeEvent(
-          element,
-          direction,
-          editorToDataX(newWidth, false),
-          editorToDataY(newHeight, false)
-        );
-      }
-      if (updates && updates.height) {
-        newHeight = dataToEditorY(updates.height);
-      }
-      target.style.width = `${newWidth}px`;
-      target.style.height = `${newHeight}px`;
-      sFrame.direction = direction;
-      sFrame.resize = [newWidth, newHeight];
-      sFrame.translate = drag.beforeTranslate;
-      sFrame.updates = updates;
-      setTransformStyle(element.id, target, sFrame);
+      const { element } = targetList[i];
+      const frame = getResizedFrame({
+        target,
+        height,
+        width,
+        drag,
+        direction,
+        element,
+        editorToDataX,
+        editorToDataY,
+        dataToEditorY,
+      });
+      setTransformStyle(element.id, target, {
+        ...sFrame,
+        ...frame,
+      });
     });
   };
   const onResizeGroupEnd = ({ targets }) => {
