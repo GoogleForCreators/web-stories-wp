@@ -24,7 +24,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import {
-  GetAnimationProps,
+  getAnimationProps,
   ANIMATION_TYPES,
   FIELD_TYPES,
 } from '../../../../../animation';
@@ -134,7 +134,7 @@ function Timeline({
   const [formFields, setFormFields] = useState({});
 
   const { type: selectedAnimationType, props: animationProps } = useMemo(
-    () => GetAnimationProps(formFields.type || animationTypes[0]),
+    () => getAnimationProps(formFields.type || animationTypes[0]),
     [formFields.type]
   );
 
