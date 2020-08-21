@@ -215,6 +215,48 @@ beforeAll(() => {
       },
     }),
   });
+
+  // Virtual cursor.
+  withCleanupAll(() => {
+    const el = document.createElement('div');
+    el.id = '__karma__cursor';
+    el.className = 'i__karma__snapshot__hide';
+    el.style.cssText = `
+      width: 0px;
+      height: 0px;
+      border-left: 10px solid red;
+      border-bottom: 10px solid transparent;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      z-index: 2147483647;
+      pointer-events: none;
+    `;
+    document.body.appendChild(el);
+
+    let clientX = -9999;
+    let clientY = -9999;
+    let scheduled = false;
+
+    const move = (evt) => {
+      clientX = evt.clientX;
+      clientY = evt.clientY;
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(() => {
+          scheduled = false;
+          el.style.transform = `translate(${clientX}px, ${clientY}px)`;
+        });
+      }
+    };
+
+    document.addEventListener('mousemove', move, true);
+    document.addEventListener('drag', move, true);
+    return () => {
+      document.removeEventListener('mousemove', move, true);
+      document.removeEventListener('drag', move, true);
+    };
+  });
 });
 
 afterAll(() => {

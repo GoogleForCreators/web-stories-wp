@@ -30,10 +30,11 @@ import { useDropTargets } from '../../../../../app';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
-import { useMedia3pApi } from '../../../../../app/media/media3p/api';
-import getThumbnailUrl from '../../../../../elements/media/util';
+import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
+
+const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
 const styledTiles = css`
   width: 100%;
@@ -166,22 +167,6 @@ const MediaElement = ({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
-  const {
-    actions: { registerUsage },
-  } = useMedia3pApi();
-
-  const handleRegisterUsage = useCallback(() => {
-    if (
-      providerType !== 'local' &&
-      resource.attribution &&
-      resource.attribution.registerUsageUrl
-    ) {
-      registerUsage({
-        registerUsageUrl: resource.attribution.registerUsageUrl,
-      });
-    }
-  }, [providerType, resource, registerUsage]);
-
   const measureMediaElement = () =>
     mediaElement?.current?.getBoundingClientRect();
 
@@ -208,11 +193,10 @@ const MediaElement = ({
       onDragEnd: (e) => {
         e.preventDefault();
         setDraggingResource(null);
-        handleRegisterUsage();
         handleDrop(resource);
       },
     }),
-    [setDraggingResource, resource, handleDrag, handleDrop, handleRegisterUsage]
+    [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
   const makeActive = useCallback(() => setActive(true), []);
@@ -224,6 +208,10 @@ const MediaElement = ({
     setActive(false);
   }, []);
 
+  const [hoverTimer, setHoverTimer] = useState(null);
+  const activeRef = useRef(active);
+  activeRef.current = active;
+
   useEffect(() => {
     if (type === 'video') {
       if (isMenuOpen) {
@@ -234,16 +222,25 @@ const MediaElement = ({
       } else {
         if (active) {
           setShowVideoDetail(false);
-          if (mediaElement.current) {
+          if (mediaElement.current && hoverTimer == null) {
+            const timer = setTimeout(() => {
+              if (activeRef.current) {
+                const playPromise = mediaElement.current.play();
+                if (playPromise) {
+                  // All supported browsers return promise but unit test runner does not.
+                  playPromise.catch(() => {});
+                }
+              }
+            }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
+            setHoverTimer(timer);
             // Pointer still in the media element, continue the video.
-            const playPromise = mediaElement.current.play();
-            if (playPromise) {
-              // All supported browsers return promise but unit test runner does not.
-              playPromise.catch(() => {});
-            }
           }
         } else {
           setShowVideoDetail(true);
+          if (hoverTimer != null) {
+            clearTimeout(hoverTimer);
+            setHoverTimer(null);
+          }
           if (mediaElement.current) {
             // Stop video and reset position.
             mediaElement.current.pause();
@@ -252,10 +249,15 @@ const MediaElement = ({
         }
       }
     }
-  }, [isMenuOpen, active, type]);
+    return () => {
+      if (hoverTimer != null) {
+        clearTimeout(hoverTimer);
+        setHoverTimer(null);
+      }
+    };
+  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = () => {
-    handleRegisterUsage();
     onInsert(resource, width, height);
   };
 
@@ -365,7 +367,7 @@ function getInnerElement(
     return (
       <Image
         key={src}
-        src={getThumbnailUrl(width, resource)}
+        src={getSmallestUrlForWidth(width, resource)}
         ref={ref}
         width={width}
         height={height}
@@ -395,7 +397,10 @@ function getInnerElement(
           crossOrigin="anonymous"
           {...dropTargetsBindings}
         >
-          <source src={src} type={mimeType} />
+          <source
+            src={getSmallestUrlForWidth(width, resource)}
+            type={mimeType}
+          />
         </Video>
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}

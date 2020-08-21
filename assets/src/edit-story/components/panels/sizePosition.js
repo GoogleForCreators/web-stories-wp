@@ -30,9 +30,9 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
+  BoxedNumeric,
   Button,
   Row,
-  Numeric,
   Toggle,
   usePresubmitHandler,
   MULTIPLE_VALUE,
@@ -63,11 +63,6 @@ const MIN_MAX = {
     MAX: 1000,
   },
 };
-
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
 
 const StyledToggle = styled(Toggle)`
   margin: 0 10px;

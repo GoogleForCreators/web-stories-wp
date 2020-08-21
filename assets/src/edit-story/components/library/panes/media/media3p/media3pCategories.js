@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -31,13 +31,19 @@ import CategoryPill from './categoryPill';
 // Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
-  min-height: 94px;
-  padding: 16px 32px 30px 32px;
+  padding: 30px 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex: 1 0 auto;
   position: relative;
+
+  ${({ hasCategories }) =>
+    !hasCategories &&
+    css`
+      min-height: 104px;
+      max-height: 104px;
+    `}
 `;
 
 // This hides the category pills unless expanded
@@ -89,6 +95,8 @@ const Media3pCategories = ({
         <CategoryPill
           index={i}
           isSelected={selected}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
           key={e.id}
           title={e.displayName}
           onClick={() => {

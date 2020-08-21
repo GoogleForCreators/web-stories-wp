@@ -33,6 +33,7 @@ function ToasterView() {
       stories: { error: storyError },
       templates: { error: templateError },
       settings: { error: settingsError },
+      media: { error: mediaError },
     },
   } = useContext(ApiContext);
 
@@ -72,6 +73,16 @@ function ToasterView() {
       });
     }
   }, [settingsError, addToast, enableSettingsView]);
+
+  useEffect(() => {
+    if (mediaError?.id) {
+      addToast({
+        message: mediaError.message,
+        severity: ALERT_SEVERITY.ERROR,
+        id: mediaError.id,
+      });
+    }
+  }, [mediaError, addToast]);
 
   return (
     <Toaster

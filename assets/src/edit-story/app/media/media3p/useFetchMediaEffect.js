@@ -22,9 +22,6 @@ import { useEffect, useRef } from 'react';
 /**
  * Internal dependencies
  */
-/**
- * WordPress dependencies
- */
 import { useSnackbar } from '../../snackbar';
 import { useMedia3pApi } from './api';
 import { PROVIDERS } from './providerConfiguration';

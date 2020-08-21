@@ -195,7 +195,8 @@
     "window": true,
     "document": true,
     "wp": "readonly",
-    "process": "readonly"
+    "process": "readonly",
+    "__webpack_public_path__": true
   },
   "settings": {
     "jsdoc": {

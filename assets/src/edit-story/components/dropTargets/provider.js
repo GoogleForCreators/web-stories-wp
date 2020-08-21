@@ -49,7 +49,10 @@ function DropTargetsProvider({ children }) {
     })
   );
 
-  const elements = currentPage?.elements || [];
+  const elements = useMemo(() => currentPage?.elements || [], [
+    currentPage?.elements,
+  ]);
+
   const sortedDropTargetIds = useMemo(
     () =>
       elements
@@ -183,6 +186,7 @@ function DropTargetsProvider({ children }) {
               replacement: null,
             },
           });
+          pushTransform(el.id, null);
         });
 
       setActiveDropTargetId(null);

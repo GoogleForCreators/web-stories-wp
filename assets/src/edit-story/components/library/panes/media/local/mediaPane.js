@@ -24,6 +24,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
+
 import { __ } from '@wordpress/i18n';
 
 /**

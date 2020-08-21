@@ -53,5 +53,5 @@ jobs:
         # phpstan requires PHP 7.1+. Ignore version conflicts.
         run: |
           composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
-          vendor/bin/phpstan analyse --memory-limit=256M --error-format=checkstyle | cs2pr
+          vendor/bin/phpstan analyse --memory-limit=512M --error-format=checkstyle | cs2pr
         if: always()

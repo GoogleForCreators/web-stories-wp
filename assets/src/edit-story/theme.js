@@ -210,6 +210,14 @@ const theme = {
       size: '13px',
       lineHeight: '24px',
     },
+    mediaError: {
+      family: 'Roboto',
+      style: 'italic',
+      weight: 'normal',
+      size: '16px',
+      lineHeight: '24px',
+      textAlign: 'center',
+    },
   },
 };
 

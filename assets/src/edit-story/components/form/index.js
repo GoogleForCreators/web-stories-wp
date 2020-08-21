@@ -21,6 +21,7 @@ export { default as Input } from './input';
 export { default as Label } from './label';
 export { default as Media } from './media';
 export { default as Numeric } from './numeric';
+export { default as BoxedNumeric } from './shared/boxedNumeric';
 export { default as Row } from './row';
 export { default as Spacer } from './spacer';
 export { default as Switch } from './switch';

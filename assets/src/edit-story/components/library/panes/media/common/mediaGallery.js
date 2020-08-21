@@ -19,6 +19,7 @@
  */
 import React, { useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -46,6 +47,7 @@ function MediaGallery({ resources, onInsert, providerType }) {
   const imageRenderer = useCallback(
     ({ index, photo }) => (
       <MediaElement
+        key={index}
         index={index}
         margin={PHOTO_MARGIN + 'px'}
         resource={resources[index]}

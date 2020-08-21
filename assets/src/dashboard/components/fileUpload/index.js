@@ -15,16 +15,17 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -73,6 +74,26 @@ const UploadLabelAsCta = styled(DefaultButton).attrs({
   }
 `;
 
+const LoadingIndicator = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.white};
+  opacity: ${({ isLoading }) => (isLoading ? 0.6 : 0)};
+  z-index: ${({ isLoading }) => (isLoading ? '100' : '0')};
+
+  transition: opacity ease-in-out 300ms;
+
+  p {
+    ${TypographyPresets.Small};
+    font-style: italic;
+  }
+`;
+
 function disableDefaults(e) {
   e.preventDefault();
   e.stopPropagation();
@@ -82,6 +103,7 @@ const FileUpload = ({
   id,
   label,
   onSubmit,
+  isLoading,
   isMultiple,
   ariaLabel,
   instructionalText = __('You can also drag your file here', 'web-stories'),
@@ -152,6 +174,9 @@ const FileUpload = ({
       onDragOver={disableDefaults}
       data-testid="file-upload-drop-area"
     >
+      <LoadingIndicator isLoading={isLoading}>
+        <p>{__('Loading…', 'web-stories')}</p>
+      </LoadingIndicator>
       <UploadHelperText>{instructionalText}</UploadHelperText>
 
       <UploadLabelAsCta htmlFor={id} aria-label={ariaLabel}>
@@ -163,6 +188,9 @@ const FileUpload = ({
           data-testid={'upload-file-input'}
           accept={acceptableFormats.join(',')}
           multiple={isMultiple}
+          disabled={isLoading}
+          aria-live="polite"
+          aria-busy={isLoading}
         />
       </UploadLabelAsCta>
     </UploadFormArea>
@@ -173,6 +201,7 @@ FileUpload.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   isMultiple: PropTypes.bool,
   ariaLabel: PropTypes.string,
   acceptableFormats: PropTypes.arrayOf(PropTypes.string),
