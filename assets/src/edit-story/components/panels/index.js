@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
+import AnimationPanel from './animation';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
 import ImageAccessibilityPanel from './imageAccessibility';
@@ -34,6 +35,7 @@ import VideoOptionsPanel from './videoOptions';
 import StylePresetPanel from './stylePreset';
 export { default as LayerPanel } from './layer';
 
+const ANIMATION = 'animation';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const STYLE_PRESETS = 'stylePresets';
@@ -65,6 +67,7 @@ export const PanelTypes = {
   VIDEO_OPTIONS,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
+  ANIMATION,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -73,7 +76,9 @@ function intersect(a, b) {
   return a.filter((v) => b.includes(v));
 }
 
-export function getPanels(elements) {
+export function getPanels(elements, options = {}) {
+  const { enableAnimation } = options;
+
   if (elements.length === 0) {
     return [{ type: NO_SELECTION, Panel: NoSelectionPanel }];
   }
@@ -118,6 +123,8 @@ export function getPanels(elements) {
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {
       switch (type) {
+        case ANIMATION:
+          return enableAnimation ? { type, Panel: AnimationPanel } : null;
         case BACKGROUND_SIZE_POSITION:
           // Only display when isBackground.
           return null;

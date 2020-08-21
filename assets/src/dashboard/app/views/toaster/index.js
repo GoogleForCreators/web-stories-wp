@@ -28,14 +28,15 @@ import { ALERT_SEVERITY } from '../../../constants';
 import useApi from '../../api/useApi';
 
 function ToasterView() {
-  const { storyError, templateError, settingsError } = useApi(
+  const { storyError, templateError, settingsError, mediaError } = useApi(
     ({
       state: {
         stories: { error: storyError },
         templates: { error: templateError },
         settings: { error: settingsError },
+        media: { error: mediaError },
       },
-    }) => ({ storyError, templateError, settingsError })
+    }) => ({ storyError, templateError, settingsError, mediaError })
   );
 
   const {
@@ -74,6 +75,16 @@ function ToasterView() {
       });
     }
   }, [settingsError, addToast, enableSettingsView]);
+
+  useEffect(() => {
+    if (mediaError?.id) {
+      addToast({
+        message: mediaError.message,
+        severity: ALERT_SEVERITY.ERROR,
+        id: mediaError.id,
+      });
+    }
+  }, [mediaError, addToast]);
 
   return (
     <Toaster

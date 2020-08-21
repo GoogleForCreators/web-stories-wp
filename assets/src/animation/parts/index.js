@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
+import getDefaultFieldValue from '../utils/getDefaultFieldValue';
 import { EffectDrop } from '../effects/drop';
 import { EffectFadeIn } from '../effects/fadeIn';
 import { EffectFlyIn } from '../effects/flyIn';
@@ -35,7 +36,9 @@ import { EffectRotateIn } from '../effects/rotateIn';
 import flyInProps from '../effects/flyIn/animationProps';
 import panProps from '../effects/pan/animationProps';
 import pulseProps from '../effects/pulse/animationProps';
+import rotateInProps from '../effects/rotateIn/animationProps';
 import whooshInProps from '../effects/whooshIn/animationProps';
+import zoomEffectProps from '../effects/zoom/animationProps';
 
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
@@ -47,7 +50,9 @@ import { AnimationPulse } from './pulse';
 import { AnimationSpin } from './spin';
 import { AnimationZoom } from './zoom';
 
-import defaultAnimationProps from './defaultAnimationProps';
+import defaultAnimationProps, {
+  basicAnimationProps,
+} from './defaultAnimationProps';
 import blinkOnProps from './blinkOn/animationProps';
 import fadeProps from './fade/animationProps';
 import flipProps from './flip/animationProps';
@@ -86,15 +91,15 @@ export function AnimationPart(type, args) {
       [ANIMATION_TYPES.PULSE]: AnimationPulse,
       [ANIMATION_TYPES.SPIN]: AnimationSpin,
       [ANIMATION_TYPES.ZOOM]: AnimationZoom,
-      [ANIMATION_EFFECTS.FADE_IN]: EffectFadeIn,
-      [ANIMATION_EFFECTS.FLY_IN]: EffectFlyIn,
-      [ANIMATION_EFFECTS.PAN]: EffectPan,
-      [ANIMATION_EFFECTS.PULSE]: EffectPulse,
-      [ANIMATION_EFFECTS.TWIRL_IN]: EffectTwirlIn,
-      [ANIMATION_EFFECTS.WHOOSH_IN]: EffectWhooshIn,
-      [ANIMATION_EFFECTS.ZOOM]: EffectZoom,
-      [ANIMATION_EFFECTS.DROP]: EffectDrop,
-      [ANIMATION_EFFECTS.ROTATE_IN]: EffectRotateIn,
+      [ANIMATION_EFFECTS.FADE_IN.value]: EffectFadeIn,
+      [ANIMATION_EFFECTS.FLY_IN.value]: EffectFlyIn,
+      [ANIMATION_EFFECTS.PAN.value]: EffectPan,
+      [ANIMATION_EFFECTS.PULSE.value]: EffectPulse,
+      [ANIMATION_EFFECTS.TWIRL_IN.value]: EffectTwirlIn,
+      [ANIMATION_EFFECTS.WHOOSH_IN.value]: EffectWhooshIn,
+      [ANIMATION_EFFECTS.ZOOM.value]: EffectZoom,
+      [ANIMATION_EFFECTS.DROP.value]: EffectDrop,
+      [ANIMATION_EFFECTS.ROTATE_IN.value]: EffectRotateIn,
     }[type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
@@ -103,7 +108,7 @@ export function AnimationPart(type, args) {
   return generator(args);
 }
 
-export function GetAnimationProps(type) {
+export function getAnimationProps(type) {
   const customProps = {
     [ANIMATION_TYPES.BLINK_ON]: blinkOnProps,
     [ANIMATION_TYPES.FADE]: fadeProps,
@@ -112,10 +117,12 @@ export function GetAnimationProps(type) {
     [ANIMATION_TYPES.MOVE]: moveProps,
     [ANIMATION_TYPES.SPIN]: spinProps,
     [ANIMATION_TYPES.ZOOM]: zoomProps,
-    [ANIMATION_EFFECTS.FLY_IN]: flyInProps,
-    [ANIMATION_EFFECTS.PAN]: panProps,
-    [ANIMATION_EFFECTS.PULSE]: pulseProps,
-    [ANIMATION_EFFECTS.WHOOSH_IN]: whooshInProps,
+    [ANIMATION_EFFECTS.FLY_IN.value]: flyInProps,
+    [ANIMATION_EFFECTS.PAN.value]: panProps,
+    [ANIMATION_EFFECTS.PULSE.value]: pulseProps,
+    [ANIMATION_EFFECTS.ROTATE_IN.value]: rotateInProps,
+    [ANIMATION_EFFECTS.WHOOSH_IN.value]: whooshInProps,
+    [ANIMATION_EFFECTS.ZOOM.value]: zoomProps,
   };
 
   const { type: animationType, ...remaining } = defaultAnimationProps;
@@ -130,6 +137,41 @@ export function GetAnimationProps(type) {
       ...remaining,
     },
   };
+}
+
+export function getAnimationEffectProps(type) {
+  const customProps = {
+    [ANIMATION_EFFECTS.FLY_IN.value]: flyInProps,
+    [ANIMATION_EFFECTS.PAN.value]: panProps,
+    [ANIMATION_EFFECTS.PULSE.value]: pulseProps,
+    [ANIMATION_EFFECTS.ROTATE_IN.value]: rotateInProps,
+    [ANIMATION_EFFECTS.WHOOSH_IN.value]: whooshInProps,
+    [ANIMATION_EFFECTS.ZOOM.value]: zoomEffectProps,
+  };
+
+  return {
+    type,
+    props: {
+      // This order is important.
+      // We want custom props to appear above default props
+      ...(customProps[type] || {}),
+      ...basicAnimationProps,
+    },
+  };
+}
+
+export function getAnimationEffectDefaults(type) {
+  const { props: effectProps } = getAnimationEffectProps(type);
+
+  return Object.keys(effectProps).reduce(
+    (acc, key) => ({
+      ...acc,
+      [key]:
+        effectProps[key].defaultValue ??
+        getDefaultFieldValue(effectProps[key].type),
+    }),
+    {}
+  );
 }
 
 export * from './types';

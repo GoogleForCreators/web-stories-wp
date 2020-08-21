@@ -53,7 +53,7 @@ const LayerButton = styled.button.attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     `
-    background: ${rgba(theme.colors.accent.primary, 0.14)};
+    background: ${rgba(theme.colors.bg.divider, 0.04)};
   `}
 
   &:active {
