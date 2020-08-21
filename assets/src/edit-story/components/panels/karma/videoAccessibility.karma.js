@@ -63,9 +63,11 @@ describe('Video Accessibility Panel', () => {
 
       // Expect menu button to exist
       expect(vaPanel.posterMenuButton).toBeTruthy();
+      await fixture.snapshot('Menu button visible');
 
       // Open the menu
       await fixture.events.click(vaPanel.posterMenuButton);
+      await fixture.snapshot('Menu open');
 
       // And click on edit
       await fixture.events.click(vaPanel.posterMenuEdit);
@@ -91,11 +93,13 @@ describe('Video Accessibility Panel', () => {
 
       // Expect menu button to exist
       expect(vaPanel.posterMenuButton).toBeTruthy();
+      await fixture.snapshot('Menu button visible');
 
       // Tab to the menu button and focus it
       await fixture.events.keyboard.press('tab');
       expect(vaPanel.posterMenuButton).toHaveFocus();
       await fixture.events.keyboard.press('Enter');
+      await fixture.snapshot('Menu open');
 
       // And click on edit
       expect(vaPanel.posterMenuEdit).toHaveFocus();
