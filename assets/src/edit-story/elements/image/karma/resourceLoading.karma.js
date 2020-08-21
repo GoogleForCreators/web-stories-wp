@@ -35,7 +35,6 @@ describe('Image resource loading integration', () => {
 
   it('should use cached thumbnail then switch to fullsize', async () => {
     const image = fixture.screen.getAllByLabelText('curiosity');
-    expect(resourceList[2]).toEqual(undefined);
     await fixture.events.mouse.clickOn(image[0], 10, 10);
 
     // We don't check for immediately cached value here because we would have to set a timeout of about 100ms in image/display in order to catch it here
