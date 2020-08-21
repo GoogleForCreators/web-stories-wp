@@ -28,10 +28,9 @@ import { rgba } from 'polished';
 import { ArrowDown } from '../../../../button';
 import CategoryPill from './categoryPill';
 
-// Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
-  padding: 30px 20px 10px;
+  padding: 16px 12px 30px 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -55,6 +54,7 @@ const CategoryPillContainer = styled.div`
 
 const CategoryPillInnerContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 `;
 
@@ -64,7 +64,7 @@ const CategoryPillInnerContainer = styled.div`
 const ExpandButton = styled(ArrowDown)`
   display: flex;
   position: absolute;
-  bottom: -12px;
+  bottom: -16px;
   background: ${({ theme }) => theme.colors.fg.gray16};
   max-height: none;
   width: 32px;

@@ -18,29 +18,31 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useCallback, useRef } from 'react';
+
 /**
  * Internal dependencies
  */
-import { useCallback, useRef } from 'react';
 import { useKeyDownEffect } from '../../../../keyboard';
 import { useConfig } from '../../../../../app/config';
+import { narrowPill } from './pill';
 
 const Tab = styled.span`
+  ${narrowPill};
+  padding: 6px 16px;
+  height: 32px;
   display: inline-block;
-  border-radius: 100px;
   background-color: ${({ active, theme }) =>
     active ? theme.colors.fg.primary : 'transparent'};
-  font-size: 16px;
-  margin-right: 16px;
   text-align: center;
   opacity: 0.86;
   cursor: pointer;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: 6px 16px;
   color: ${({ active, theme }) =>
-    active ? theme.colors.bg.workspace : theme.colors.bg.divider};
-  &:last-child: {
+    active ? theme.colors.fg.gray8 : theme.colors.fg.primary};
+
+  &:last-child {
     margin-right: 0;
   }
 `;
