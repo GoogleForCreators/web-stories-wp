@@ -54,7 +54,7 @@ const ProviderTabSection = styled.div`
 const MediaSubheading = styled.div`
   margin-top: 24px;
   padding: 0 24px;
-  visibility: ${(props) => (props.shouldDisplay ? 'inherit' : 'hidden')};
+  ${(props) => props.shouldDisplay || 'display: none;'}
 `;
 
 const PaneBottom = styled.div`
