@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
-export { default as reshapeStoryObject } from './stories';
-export { default as reshapeStoryPreview } from './storyPreview';
-export { default as reshapePublisherLogo } from './publisherLogo';
+export default function reshapePublisherLogo({ id, source_url, title }) {
+  return {
+    id,
+    src: source_url,
+    title: title?.rendered || '',
+  };
+}

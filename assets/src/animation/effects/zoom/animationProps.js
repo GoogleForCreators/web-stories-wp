@@ -27,23 +27,25 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, DIRECTION } from '../../constants';
+import { FIELD_TYPES } from '../../constants';
 import { AnimationInputPropTypes } from '../types';
 
-export const FlyInEffectInputPropTypes = {
-  flyInDir: PropTypes.shape(AnimationInputPropTypes),
+export const ZoomEffectInputPropTypes = {
+  zoomFrom: PropTypes.shape(AnimationInputPropTypes),
+  zoomTo: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  flyInDir: {
-    label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
-    values: [
-      DIRECTION.TOP_TO_BOTTOM,
-      DIRECTION.BOTTOM_TO_TOP,
-      DIRECTION.LEFT_TO_RIGHT,
-      DIRECTION.RIGHT_TO_LEFT,
-    ],
-    defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  zoomFrom: {
+    label: __('From', 'web-stories'),
+    tooltip: __('Valid values range from 0 to 1', 'web-stories'),
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 0,
+  },
+  zoomTo: {
+    label: __('To', 'web-stories'),
+    tooltip: __('Valid values range from 0 to 1', 'web-stories'),
+    type: FIELD_TYPES.FLOAT,
+    defaultValue: 1,
   },
 };

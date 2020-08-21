@@ -14,6 +14,19 @@
  * limitations under the License.
  */
 
-export { default as reshapeStoryObject } from './stories';
-export { default as reshapeStoryPreview } from './storyPreview';
-export { default as reshapePublisherLogo } from './publisherLogo';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import Numeric from '../numeric';
+
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+export default BoxedNumeric;

@@ -14,6 +14,25 @@
  * limitations under the License.
  */
 
-export { default as reshapeStoryObject } from './stories';
-export { default as reshapeStoryPreview } from './storyPreview';
-export { default as reshapePublisherLogo } from './publisherLogo';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES } from '../constants';
+
+export const AnimationInputPropTypes = {
+  type: PropTypes.oneOf([...Object.values(FIELD_TYPES)]).isRequired,
+  label: PropTypes.string,
+  tooltip: PropTypes.string,
+  unit: PropTypes.string,
+  values: PropTypes.array,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
+};
