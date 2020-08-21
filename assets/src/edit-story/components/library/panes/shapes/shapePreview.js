@@ -34,13 +34,26 @@ const PREVIEW_SIZE = 36;
 
 const ShapePreviewContainer = styled.button`
   background: transparent;
-  border: 0;
+  border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
+  border-radius: 4px;
   position: relative;
-  padding: 0.8em 0.5em;
-  flex: 0 0 25%;
+  margin: 12px 10px;
+  flex: 0 0 64px;
+  height: 67px;
   display: flex;
   justify-content: center;
+  align-items: center;
   cursor: pointer;
+
+  svg {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+  }
+`;
+
+const ShapePreviewSizer = styled.div`
+  padding-top: 100%;
 `;
 
 const Path = styled.path`
@@ -108,6 +121,7 @@ function ShapePreview({ mask, isPreview }) {
       }}
       onDragStart={onDragStart}
     >
+      <ShapePreviewSizer />
       {svg}
     </ShapePreviewContainer>
   );

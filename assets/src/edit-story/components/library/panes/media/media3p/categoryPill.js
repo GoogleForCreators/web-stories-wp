@@ -24,33 +24,19 @@ import { useCallback, useRef } from 'react';
  */
 import useRovingTabIndex from '../common/useRovingTabIndex';
 import { useKeyDownEffect } from '../../../../keyboard';
+import { pill } from './pill';
 
 const PillContainer = styled.button`
+  ${pill};
   cursor: pointer;
+  margin-bottom: 12px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: ${({ theme }) => theme.colors.fg.white};
-  background-color: rgba(
-    255,
-    255,
-    255,
-    ${(props) => (props.isSelected ? 0.1 : 0.0)}
-  );
-  margin: 4px;
-  padding: 6px 12px;
-  border-radius: 2px;
-  font-size: ${({ theme }) => theme.fonts.body2.size};
-  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  border-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.accent.primary : theme.colors.fg.gray24};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.fg.primary};
   user-select: none;
   background-clip: padding-box;
-  :hover {
-    background-color: rgba(
-      255,
-      255,
-      255,
-      ${(props) => (props.isSelected ? 0.1 : 0.05)}
-    );
-  }
 `;
 
 PillContainer.propTypes = {

@@ -36,7 +36,7 @@ import { useKeyDownEffect } from '../keyboard';
 const SwitchContainer = styled.div`
   appearance: none;
   position: relative;
-  background: ${({ theme }) => theme.colors.bg.v3};
+  background: ${({ theme }) => rgba(theme.colors.bg.divider, 0.04)};
   border-radius: 100px;
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
   font-family: ${({ theme }) => theme.fonts.body2.family};
@@ -84,6 +84,8 @@ const Label = styled.label`
   text-overflow: ellipsis;
   flex: 1;
   padding: 0px 6px;
+  color: ${({ hasOffset, theme }) =>
+    hasOffset ? theme.colors.bg.workspace : theme.colors.bg.divider};
 
   ${({ disabled }) =>
     disabled &&
@@ -106,7 +108,7 @@ const SwitchSpan = styled.span`
   width: calc(50% - 3px);
   height: 28px;
   border-radius: 100px;
-  background-color: ${({ theme }) => theme.colors.bg.v10};
+  background-color: ${({ theme }) => theme.colors.fg.primary};
   transition: left 0.15s ease-out;
 
   ${({ hasOffset }) => hasOffset && `left: calc(50% + 2px);`}
@@ -131,7 +133,7 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
 
   return (
     <SwitchContainer ref={ref}>
-      <Label disabled={disabled}>
+      <Label disabled={disabled} hasOffset={Boolean(value)}>
         {onLabel}
         <RadioButton
           disabled={disabled}
@@ -140,7 +142,7 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
           value="on"
         />
       </Label>
-      <Label disabled={disabled}>
+      <Label disabled={disabled} hasOffset={!value}>
         {offLabel}
         <RadioButton
           disabled={disabled}
