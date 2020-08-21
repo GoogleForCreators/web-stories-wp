@@ -42,7 +42,7 @@ describe('Panels/VideoAccessibility', () => {
 
   it('should render <VideoAccessibility /> panel', () => {
     const { getByRole } = renderVideoAccessibility([defaultElement]);
-    const imageHolder = getByRole('section', { name: /video poster/i });
+    const imageHolder = getByRole('region', { name: /video poster/i });
     expect(imageHolder).toBeDefined();
   });
 
@@ -50,7 +50,7 @@ describe('Panels/VideoAccessibility', () => {
     const { getByRole, pushUpdate } = renderVideoAccessibility([
       defaultElement,
     ]);
-    const imageHolder = getByRole('section', { name: /video poster/i });
+    const imageHolder = getByRole('region', { name: /video poster/i });
     imageHolder.focus();
     expect(imageHolder).toHaveFocus();
     const menuToggle = getByRole('button', { name: 'More' });

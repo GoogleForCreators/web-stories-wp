@@ -101,6 +101,7 @@ function DropDownMenu({ options, onOption }) {
             value={options[0].value}
             toggleOptions={handleClose}
             hasMenuRole
+            aria-label={__('More', 'web-stories')}
           />
         </DropDownContainer>
       </Popup>

@@ -35,7 +35,7 @@ import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
-const Container = styled.div`
+const Container = styled.section`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   min-width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   height: ${({ size }) => (size ? `${size}px` : '148px')};
@@ -184,7 +184,6 @@ function MediaInput({
   const [isFocused, setIsFocused] = useState(false);
   const resettableProps = {
     tabIndex: 0,
-    role: 'section',
     'aria-label': ariaLabel,
     onFocus: () => setIsFocused(true),
     onBlur: (evt) => setIsFocused(ref.current.contains(evt.relatedTarget)),
