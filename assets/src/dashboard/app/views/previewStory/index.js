@@ -34,8 +34,8 @@ import { WPBODY_ID, BUTTON_TYPES } from '../../../constants';
 import dashboardTheme from '../../../theme';
 import { Close as CloseIcon } from '../../../icons';
 import { StoryPropType } from '../../../types';
-import { useResizeEffect, useContextSelector } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
+import { useResizeEffect } from '../../../utils';
+import useApi from '../../api/useApi';
 
 const CLOSE_BUTTON_SIZE = {
   HEIGHT: 30,
@@ -91,8 +91,7 @@ const PreviewStory = ({ story, handleClose }) => {
     error,
     createStoryPreview,
     clearStoryPreview,
-  } = useContextSelector(
-    ApiContext,
+  } = useApi(
     ({
       state: {
         stories: { previewMarkup, isLoading, error },

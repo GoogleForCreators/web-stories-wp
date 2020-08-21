@@ -23,14 +23,12 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../../api/apiProvider';
 import { Toaster, useToastContext } from '../../../components/toaster';
 import { ALERT_SEVERITY } from '../../../constants';
-import { useContextSelector } from '../../../utils';
+import useApi from '../../api/useApi';
 
 function ToasterView() {
-  const { storyError, templateError, settingsError } = useContextSelector(
-    ApiContext,
+  const { storyError, templateError, settingsError } = useApi(
     ({
       state: {
         stories: { error: storyError },

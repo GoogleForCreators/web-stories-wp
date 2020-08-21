@@ -24,10 +24,10 @@ import { useEffect, useMemo, useCallback } from 'react';
  */
 import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
-import { useStoryView, useContextSelector } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
+import { useStoryView } from '../../../utils';
 import { useConfig } from '../../config';
 import { PreviewStoryView } from '..';
+import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
 
@@ -45,8 +45,7 @@ function MyStories() {
     totalPages,
     totalStoriesByStatus,
     users,
-  } = useContextSelector(
-    ApiContext,
+  } = useApi(
     ({
       actions: {
         storyApi: { duplicateStory, fetchStories, trashStory, updateStory },

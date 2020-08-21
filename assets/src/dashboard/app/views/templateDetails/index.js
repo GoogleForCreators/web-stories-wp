@@ -40,19 +40,14 @@ import {
   PaginationButton,
   Pill,
 } from '../../../components';
-import {
-  clamp,
-  usePagePreviewSize,
-  useTemplateView,
-  useContextSelector,
-} from '../../../utils/';
-import { ApiContext } from '../../api/apiProvider';
+import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
 import { PreviewStoryView } from '..';
+import useApi from '../../api/useApi';
 import {
   ByLine,
   Column,
@@ -90,8 +85,7 @@ function TemplateDetails() {
     fetchMyTemplateById,
     fetchExternalTemplateById,
     fetchRelatedTemplates,
-  } = useContextSelector(
-    ApiContext,
+  } = useApi(
     ({
       state: {
         templates: { templates, templatesOrderById, totalPages },

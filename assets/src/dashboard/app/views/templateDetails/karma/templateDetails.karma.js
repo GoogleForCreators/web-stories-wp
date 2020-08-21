@@ -23,13 +23,12 @@ import qs from 'query-string';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { ApiContext } from '../../../api/apiProvider';
 import {
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../constants';
-import { useContext } from '../../../../utils';
+import useApi from '../../../api/useApi';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;
@@ -80,7 +79,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   async function getTemplatesState() {
     const {
       state: { templates },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
     return templates;
   }
 

@@ -23,8 +23,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { ApiContext } from '../../../api/apiProvider';
-import { useContext } from '../../../../utils';
+import useApi from '../../../api/useApi';
 
 describe('Settings View', () => {
   let fixture;
@@ -52,7 +51,7 @@ describe('Settings View', () => {
   async function getSettingsState() {
     const {
       state: { settings },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return settings;
   }

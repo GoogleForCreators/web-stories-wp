@@ -50,8 +50,7 @@ import useStoryView, {
 import { StoriesPropType } from '../../../types';
 import FontProvider from '../../font/fontProvider';
 import { BodyViewOptions, PageHeading } from '../shared';
-import { ApiContext } from '../../api/apiProvider';
-import { useContextSelector } from '../../../utils';
+import useApi from '../../api/useApi';
 import SavedTemplatesGridView from './savedTemplatesGridView';
 
 function Header({ filter, search, sort, stories, view }) {
@@ -115,12 +114,7 @@ function Content({ stories, view, page }) {
 }
 
 function SavedTemplates() {
-  const {
-    fetchMyTemplates,
-    savedTemplates,
-    savedTemplatesOrderById,
-  } = useContextSelector(
-    ApiContext,
+  const { fetchMyTemplates, savedTemplates, savedTemplatesOrderById } = useApi(
     ({
       actions: {
         templateApi: { fetchMyTemplates },

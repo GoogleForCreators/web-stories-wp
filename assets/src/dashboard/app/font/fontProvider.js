@@ -23,15 +23,13 @@ import { useCallback, useEffect, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../api/apiProvider';
 import Context from '../../../edit-story/app/font/context';
 import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFiles';
-import { useContextSelector } from '../../utils';
+import useApi from '../api/useApi';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
-  const { getAllFonts } = useContextSelector(
-    ApiContext,
+  const { getAllFonts } = useApi(
     ({
       actions: {
         fontApi: { getAllFonts },

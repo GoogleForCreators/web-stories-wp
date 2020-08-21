@@ -27,18 +27,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../../api/apiProvider';
-import { useContextSelector } from '../../../utils';
+import useApi from '../../api/useApi';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Header, Heading, Main } from './components';
 
 function EditorSettings() {
-  const {
-    fetchSettings,
-    updateSettings,
-    googleAnalyticsId,
-  } = useContextSelector(
-    ApiContext,
+  const { fetchSettings, updateSettings, googleAnalyticsId } = useApi(
     ({
       actions: {
         settingsApi: { fetchSettings, updateSettings },

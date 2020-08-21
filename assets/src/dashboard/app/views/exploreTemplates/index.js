@@ -23,10 +23,10 @@ import { useCallback, useMemo, useEffect } from 'react';
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
-import { useTemplateView, useContextSelector } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
+import { useTemplateView } from '../../../utils';
 import { PreviewStoryView } from '../';
 
+import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
 
@@ -40,8 +40,7 @@ function ExploreTemplates() {
     totalTemplates,
     createStoryFromTemplate,
     fetchExternalTemplates,
-  } = useContextSelector(
-    ApiContext,
+  } = useApi(
     ({
       state: {
         templates: {

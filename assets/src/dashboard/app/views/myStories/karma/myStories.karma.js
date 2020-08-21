@@ -23,7 +23,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { getRelativeDisplayDate, useContext } from '../../../../utils';
+import { getRelativeDisplayDate } from '../../../../utils';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
@@ -35,8 +35,8 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
-import { ApiContext } from '../../../api/apiProvider';
 import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
+import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
   let fixture;
@@ -53,7 +53,7 @@ describe('Grid view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -479,7 +479,7 @@ describe('List view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -487,7 +487,7 @@ describe('List view', () => {
   async function getUsers() {
     const {
       state: { users },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return users;
   }
