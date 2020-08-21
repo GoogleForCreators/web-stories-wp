@@ -162,7 +162,7 @@ const RadioGroup = styled.div`
 const camelToPascal = (string) =>
   string.charAt(0).toUpperCase() + string.slice(1);
 
-const pascalToSentance = (string) => string.replace(/([a-z])([A-Z])/g, '$1 $2');
+const pascalToSentence = (string) => string.replace(/([a-z])([A-Z])/g, '$1 $2');
 
 export const DirectionRadioInput = ({
   directions = [],
@@ -178,9 +178,9 @@ export const DirectionRadioInput = ({
           <Label
             key={direction}
             aria-label={sprintf(
-              /* translators: %s: which direction. */
+              /* translators: %s: Direction, for example 'top' or 'left'. */
               __('%s Direction', 'web-stories'),
-              pascalToSentance(camelToPascal(direction))
+              pascalToSentence(camelToPascal(direction))
             )}
             htmlFor={direction}
             direction={direction}
