@@ -274,6 +274,7 @@ function SizePositionPanel({
           max={MIN_MAX.X.MAX}
           onChange={(value) => pushUpdate({ x: value })}
           aria-label={__('X position', 'web-stories')}
+          canBeNegative
         />
         <Spacer />
         <BoxedNumeric
@@ -283,6 +284,7 @@ function SizePositionPanel({
           max={MIN_MAX.Y.MAX}
           onChange={(value) => pushUpdate({ y: value })}
           aria-label={__('Y position', 'web-stories')}
+          canBeNegative
         />
       </Row>
       {/** Width/height & lock ratio */}
