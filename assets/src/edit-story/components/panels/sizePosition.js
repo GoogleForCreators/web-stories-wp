@@ -38,6 +38,7 @@ import {
   MULTIPLE_VALUE,
 } from '../form';
 import { dataPixels } from '../../units';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { Lock as Locked, Unlock as Unlocked } from '../../icons';
 
 import useStory from '../../app/story/useStory';
@@ -62,6 +63,14 @@ const MIN_MAX = {
     MIN: 1,
     MAX: 1000,
   },
+  X: {
+    MIN: 0,
+    MAX: PAGE_WIDTH,
+  },
+  Y: {
+    MIN: 0,
+    MAX: PAGE_HEIGHT,
+  },
 };
 
 const StyledToggle = styled(Toggle)`
@@ -78,6 +87,8 @@ function SizePositionPanel({
   pushUpdate,
   pushUpdateForObject,
 }) {
+  const x = getCommonValue(selectedElements, 'x');
+  const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
@@ -175,6 +186,16 @@ function SizePositionPanel({
     };
   }, []);
 
+  usePresubmitHandler(
+    ({ x: newX, y: newY, width: newWidth, height: newHeight }) => {
+      return {
+        x: clamp(newX, { ...MIN_MAX.X, MIN: MIN_MAX.X.MIN - newWidth }),
+        y: clamp(newY, { ...MIN_MAX.Y, MIN: MIN_MAX.Y.MIN - newHeight }),
+      };
+    },
+    []
+  );
+
   const setDimensionMinMax = useCallback(
     (value, ratio, minmax) => {
       if (lockAspectRatio && value >= minmax.MAX) {
@@ -238,6 +259,25 @@ function SizePositionPanel({
           </Button>
         </Row>
       )}
+      {/** X/Y */}
+      <Row expand>
+        <BoxedNumeric
+          suffix={_x('X', 'Position on X axis', 'web-stories')}
+          value={x}
+          min={MIN_MAX.X.MIN - width}
+          max={MIN_MAX.X.MAX}
+          onChange={(value) => pushUpdate({ x: value })}
+          aria-label={__('X position', 'web-stories')}
+        />
+        <BoxedNumeric
+          suffix={_x('Y', 'Position on Y axis', 'web-stories')}
+          value={y}
+          min={MIN_MAX.Y.MIN - height}
+          max={MIN_MAX.Y.MAX}
+          onChange={(value) => pushUpdate({ y: value })}
+          aria-label={__('Y position', 'web-stories')}
+        />
+      </Row>
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric
