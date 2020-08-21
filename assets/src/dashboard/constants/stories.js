@@ -45,6 +45,7 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in new tab', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK,
+    renderItemAs: 'a',
   },
   {
     label: __('Copy Story URL', 'web-stories'),

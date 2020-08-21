@@ -105,6 +105,8 @@ export const StoryMenuPropType = PropTypes.shape({
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+      renderItemAs: PropTypes.string,
+      url: PropTypes.string,
     })
   ),
 });

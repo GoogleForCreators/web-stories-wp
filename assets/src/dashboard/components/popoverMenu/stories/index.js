@@ -32,6 +32,12 @@ const demoItems = [
   { value: false, label: 'invalid option' },
   { value: 'bar', label: 'three' },
   {
+    value: 'link',
+    label: 'i am a link!',
+    renderItemAs: 'a',
+    url: 'https://www.google.com/',
+  },
+  {
     value: 'edge_case',
     label: 'i am a very very very very very very very long label',
   },
