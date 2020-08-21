@@ -23,6 +23,11 @@ import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button';
@@ -149,6 +154,7 @@ const Media3pCategories = ({
             isExpanded={isExpanded}
             aria-controls="category-pill-container"
             aria-expanded={isExpanded}
+            aria-label={__('Expand', 'web-stories')}
           />
         </>
       ) : null}
