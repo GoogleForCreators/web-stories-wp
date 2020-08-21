@@ -66,6 +66,35 @@ describe('SlugPanel', () => {
     expect(url).toBeDefined();
   });
 
+  it('should allow trailing spaces while typing but not onblur', async () => {
+    const { getByRole, updateStory } = setupPanel();
+    const input = getByRole('textbox', { name: 'Edit: URL slug' });
+
+    fireEvent.change(input, {
+      target: { value: 'name with spaces ' },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          slug: 'name-with-spaces-',
+        },
+      })
+    );
+
+    fireEvent.blur(input, {
+      target: { value: 'name with spaces ' },
+    });
+
+    await waitFor(() =>
+      expect(updateStory).toHaveBeenCalledWith({
+        properties: {
+          slug: 'name-with-spaces',
+        },
+      })
+    );
+  });
+
   it('should respect the link limit', async () => {
     const { getByRole, updateStory } = setupPanel();
     const input = getByRole('textbox', { name: 'Edit: URL slug' });
