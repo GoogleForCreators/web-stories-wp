@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { useGlobalIsKeyPressed } from '../../keyboard';
+import normalizeRotationDegrees from '../utils/normalizeRotationDegrees';
 
 function useRotate({
   onGroupEventStart,
@@ -36,7 +37,7 @@ function useRotate({
     events.forEach(({ target, beforeRotate, drag }, i) => {
       const sFrame = frames[i];
       const { element } = targetList[i];
-      sFrame.rotate = ((beforeRotate % 360) + 360) % 360;
+      sFrame.rotate = normalizeRotationDegrees(beforeRotate);
       sFrame.translate = drag.beforeTranslate;
       setTransformStyle(element.id, target, sFrame);
     });

@@ -20,6 +20,7 @@
 import { useGlobalIsKeyPressed } from '../../keyboard';
 import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
+import normalizeRotationDegrees from '../utils/normalizeRotationDegrees';
 
 function useSingleSelectionRotate({
   selectedElement,
@@ -45,7 +46,7 @@ function useSingleSelectionRotate({
     set(frame.rotate);
   };
   const onRotate = ({ target, beforeRotate }) => {
-    frame.rotate = ((beforeRotate % 360) + 360) % 360;
+    frame.rotate = normalizeRotationDegrees(beforeRotate);
     setTransformStyle(target, frame);
   };
   const onRotateEnd = ({ target }) => {
