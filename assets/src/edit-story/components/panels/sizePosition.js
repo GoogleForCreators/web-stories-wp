@@ -70,7 +70,7 @@ const MIN_MAX = {
   },
   Y: {
     MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
-    MAX: PAGE_HEIGHT - 1,
+    MAX: PAGE_HEIGHT + Math.floor(DANGER_ZONE_HEIGHT) - 1,
   },
 };
 
