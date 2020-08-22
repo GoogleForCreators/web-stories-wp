@@ -62,11 +62,11 @@ function SlugPanel() {
   );
 
   const updateSlug = useCallback(
-    (value, allowTrailing) => {
+    (value, isEditing) => {
       const newSlug = value.slice(0, MIN_MAX.PERMALINK.MAX);
 
       updateStory({
-        properties: { slug: cleanForSlug(newSlug, allowTrailing) },
+        properties: { slug: cleanForSlug(newSlug, isEditing) },
       });
     },
     [updateStory]
