@@ -67,6 +67,7 @@ class HTML {
 	 */
 	public function render() {
 		$markup = '<!DOCTYPE html>' . $this->story->get_markup();
+		$markup = mb_convert_encoding( $markup, 'HTML-ENTITIES', 'UTF-8' );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->remove_noscript_amp_boilerplate( $markup );
 
