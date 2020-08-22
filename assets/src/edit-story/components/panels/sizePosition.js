@@ -44,6 +44,7 @@ import { Lock as Locked, Unlock as Unlocked } from '../../icons';
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import clamp from '../../utils/clamp';
+import { DANGER_ZONE_HEIGHT } from '../../units/dimensions';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
@@ -64,12 +65,12 @@ const MIN_MAX = {
     MAX: 1000,
   },
   X: {
-    MIN: 0,
-    MAX: PAGE_WIDTH,
+    MIN: 1,
+    MAX: PAGE_WIDTH - 1,
   },
   Y: {
-    MIN: 0,
-    MAX: PAGE_HEIGHT,
+    MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
+    MAX: PAGE_HEIGHT - 1,
   },
 };
 
