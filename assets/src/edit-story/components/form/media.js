@@ -43,7 +43,6 @@ const Container = styled.section`
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.5)};
   border: none;
   position: relative;
-  cursor: pointer;
 
   ${({ circle }) => circle && 'border-radius: 50%;'}
 
