@@ -35,11 +35,13 @@ import { useKeyDownEffect } from '../keyboard';
 import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 
+const INPUT_PADDING = 6;
+
 const StyledInput = styled(Input)`
   width: ${({ width }) => (width ? width + 'px' : '100%')};
   border: none;
-  padding-right: ${({ suffix }) => (suffix ? 6 : 0)}px;
-  padding-left: ${({ label }) => (label ? 6 : 0)}px;
+  padding-right: ${({ suffix }) => (suffix ? INPUT_PADDING : 0)}px;
+  padding-left: ${({ label }) => (label ? INPUT_PADDING : 0)}px;
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   ${({ textCenter }) => textCenter && `text-align: center`};
 `;
@@ -67,23 +69,20 @@ const Container = styled.div`
 `;
 
 const ClearBtn = styled.button`
-  position: absolute;
-  right: 8px;
+  display: flex;
+  padding: 0;
+  padding-left: ${INPUT_PADDING}px;
+  margin: 0;
+  background: transparent;
   appearance: none;
-  background-color: ${({ theme, showBackground }) =>
-    showBackground ? rgba(theme.colors.fg.black, 0.54) : `transparent`};
   border: none;
-  padding: 4px;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
 `;
 
 const CloseIcon = styled(Close)`
-  width: 12px;
-  height: 12px;
+  color: ${({ theme }) => theme.colors.whiteout};
+  width: 14px;
+  height: 14px;
 `;
 
 function Clear({ onClear, showClearIconBackground, children }) {
