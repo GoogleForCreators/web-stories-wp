@@ -21,7 +21,6 @@ import { Fixture } from '../../../../karma';
 import useInsertElement from '../../../canvas/useInsertElement';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
-import { MULTIPLE_VALUE } from '../../../form';
 
 describe('Link Panel', () => {
   let fixture;
@@ -264,7 +263,7 @@ describe('Link Panel', () => {
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
-      expect(linkPanel.address.value).toBe(MULTIPLE_VALUE);
+      expect(linkPanel.address.value).toBe('');
 
       await fixture.events.keyboard.type('http://google.com');
 
