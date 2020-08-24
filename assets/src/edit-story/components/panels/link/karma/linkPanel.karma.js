@@ -37,6 +37,17 @@ describe('Link Panel', () => {
     fixture.restore();
   });
 
+  const moveElementToBottom = async (frame) => {
+    const safezoneHeight = safezone.getBoundingClientRect().height;
+    const frameHeight = frame.getBoundingClientRect().height;
+    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+      moveRel(frame, 10, 10),
+      down(),
+      moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+      up(),
+    ]);
+  };
+
   const setPageAttachmentLink = async (link) => {
     const input = fixture.screen.getByLabelText('Edit: Page Attachment link');
     await fixture.events.click(input, { clickCount: 3 });
@@ -136,14 +147,16 @@ describe('Link Panel', () => {
   });
 
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
-    it('should not allow adding link in Page Attachment area', async () => {
+    beforeEach(async () => {
       // Select Page.
       safezone = fixture.querySelector('[data-testid="safezone"]');
       await clickOnTarget(safezone);
 
       // Add Page Attachment
       await setPageAttachmentLink('http://pageattachment.com');
+    });
 
+    it('should not allow adding link in Page Attachment area', async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       const element = await fixture.act(() =>
         insertElement('shape', {
@@ -156,19 +169,55 @@ describe('Link Panel', () => {
         })
       );
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-      const safezoneHeight = safezone.getBoundingClientRect().height;
-      const frameHeight = frame.getBoundingClientRect().height;
-      await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-        moveRel(frame, 10, 10),
-        down(),
-        moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
-        up(),
-      ]);
+      await moveElementToBottom(frame);
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
+
+      const warning = fixture.screen.getByText(
+        'Link can not reside below the dashed line when a page attachment is present'
+      );
+      expect(warning).toBeDefined();
+    });
+
+    it('should not allow adding link to multi-selection in Page Attachment area', async () => {
+      safezone = fixture.querySelector('[data-testid="safezone"]');
+      // Add two elements.
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      // First one with link.
+      const element1 = await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Hello World!',
+          x: 40,
+          y: 100,
+          width: 250,
+        })
+      );
+      const frame = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+      await fixture.act(() =>
+        insertElement('shape', {
+          backgroundColor: createSolidFromString('#ff00ff'),
+          mask: { type: 'rectangle' },
+          x: 40,
+          y: 0,
+          width: 50,
+          height: 50,
+        })
+      );
+      // Select both elements.
+      await clickOnTarget(frame, 'Shift');
+
+      await moveElementToBottom(frame);
+
+      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(linkPanel.address);
+
+      await fixture.snapshot(
+        'Warning & dashed line visible with multi-selection'
+      );
 
       const warning = fixture.screen.getByText(
         'Link can not reside below the dashed line when a page attachment is present'
