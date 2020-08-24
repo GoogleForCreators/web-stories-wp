@@ -54,6 +54,7 @@ MenuContainer.propTypes = {
 export const MenuItem = styled.li`
   ${TypographyPresets.Small};
   ${({ theme, isDisabled, isHovering }) => `
+    margin-bottom: 0; /* override common js */
     padding: 5px 25px;
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
     color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
@@ -82,6 +83,7 @@ const Separator = styled.li`
   height: 1px;
   background: ${({ theme }) => theme.colors.gray50};
   width: 100%;
+  margin: 6px 0;
 `;
 
 const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
