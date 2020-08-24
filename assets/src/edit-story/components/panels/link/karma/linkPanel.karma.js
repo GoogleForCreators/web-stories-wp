@@ -18,10 +18,15 @@
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
+import useInsertElement from '../../../canvas/useInsertElement';
+import createSolidFromString from '../../../../utils/createSolidFromString';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+import { MULTIPLE_VALUE } from '../../../form';
 
-describe('Link Panel', () => {
+fdescribe('Link Panel', () => {
   let fixture;
   let linkPanel;
+  let safezone;
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -75,6 +80,40 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
+    fit('should not allow adding link in Page Attachment area', async () => {
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const element = await fixture.act(() =>
+        insertElement('shape', {
+          backgroundColor: createSolidFromString('#ff00ff'),
+          mask: { type: 'rectangle' },
+          x: 10,
+          y: 10,
+          width: 50,
+          height: 50,
+        })
+      );
+      const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+      safezone = fixture.querySelector('[data-testid="safezone"]');
+      const safezoneHeight = safezone.getBoundingClientRect().height;
+      const frameHeight = frame.getBoundingClientRect().height;
+      await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+        moveRel(frame, 10, 10),
+        down(),
+        moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+        up(),
+      ]);
+
+      await fixture.events.click(linkPanel.address);
+
+      await fixture.snapshot('Page Attachment warning & dashed line visible');
+
+      const warning = fixture.screen.getByText(
+        'Link can not reside below the dashed line when a page attachment is present'
+      );
+      expect(warning).toBeDefined();
+      console.log(warning);
+    });
+
     // Disable reason: tests not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should invoke API when looking up link');
@@ -110,6 +149,73 @@ describe('Link Panel', () => {
     // Disable reason: tests not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should not be able to apply a link to a background media element');
+  });
+
+  describe('CUJ: Creator Can Add A Link: Apply a link to multi-selection', () => {
+    let frame1;
+    let frame2;
+
+    async function clickOnTarget(target, key = false) {
+      const { x, y, width, height } = target.getBoundingClientRect();
+      if (key) {
+        await fixture.events.keyboard.down(key);
+      }
+      await fixture.events.mouse.click(x + width / 2, y + height / 2);
+      if (key) {
+        await fixture.events.keyboard.up(key);
+      }
+    }
+
+    beforeEach(async () => {
+      safezone = fixture.querySelector('[data-testid="safezone"]');
+      // Add two elements.
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      // First one with link.
+      const element1 = await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Hello World!',
+          x: 40,
+          y: 0,
+          width: 250,
+          link: {
+            url: 'https://example.com',
+          },
+        })
+      );
+      frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+      const element2 = await fixture.act(() =>
+        insertElement('text', {
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          content: 'Hello again!',
+          x: 40,
+          y: 100,
+          width: 250,
+        })
+      );
+      frame2 = fixture.editor.canvas.framesLayer.frame(element2.id).node;
+
+      // Select both elements.
+      await clickOnTarget(frame1, 'Shift');
+    });
+
+    it('should allow changing link for two elements at the same time', async () => {
+      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(linkPanel.address);
+
+      expect(linkPanel.address.value).toBe(MULTIPLE_VALUE);
+
+      await fixture.events.keyboard.type('http://google.com');
+
+      await linkPanel.address.dispatchEvent(new window.Event('blur'));
+
+      // Click the elements separately to verify having the new link set.
+      await clickOnTarget(frame1);
+      expect(linkPanel.address.value).toBe('http://google.com');
+
+      await clickOnTarget(frame2);
+      expect(linkPanel.address.value).toBe('http://google.com');
+    });
   });
 
   describe('CUJ: Creator Can Add A Link: Remove applied link', () => {

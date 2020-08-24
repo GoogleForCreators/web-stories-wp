@@ -41,6 +41,7 @@ import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
 import { useCommonObjectValue } from '../utils';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
+import { useStory } from '../../../app/story';
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.white};
@@ -84,9 +85,14 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     displayLinkGuidelines: state.state.displayLinkGuidelines,
   }));
 
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+
   const { getElementsInAttachmentArea } = useElementsWithLinks();
   const hasElementsInAttachmentArea =
-    getElementsInAttachmentArea(selectedElements).length > 0;
+    getElementsInAttachmentArea(selectedElements).length > 0 &&
+    currentPage?.pageAttachment?.url?.length > 0;
 
   const defaultLink = useMemo(
     () => createLink({ url: '', icon: null, desc: null }),
