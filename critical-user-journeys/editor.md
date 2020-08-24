@@ -21,6 +21,10 @@
 |                                                 | Set text color                                   | 🏆 **100.00%** *(5 / 5)*    |
 |                                                 | Use font picker                                  | 🏆 **100.00%** *(13 / 13)*  |
 |                                                 | *[total]*                                        | 🏔️ **94.29%** *(33 / 35)*  |
+| Creator can Add a Page Attachment               | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
+|                                                 | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
+|                                                 | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
+|                                                 | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 | Creator can Add and Write Text                  | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                 | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Select an individual word to edit                | 🏆 **100.00%** *(7 / 7)*    |
@@ -31,4 +35,4 @@
 |                                                 | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
-| *\[total\]*                                     | *\[total\]*                                      | 🛴 **63.56%** *(150 / 236)* |
+| *\[total\]*                                     | *\[total\]*                                      | 🛴 **64.75%** *(158 / 244)* |
