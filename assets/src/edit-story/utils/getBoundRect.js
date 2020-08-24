@@ -17,13 +17,12 @@
 /**
  * Internal dependencies
  */
-import { dataPixels } from '../../../units/dimensions';
+import { dataPixels } from '../units';
 
 /**
- * Get the outer frame values for all objects in `list`, 
-returns { startX, startY, endX, endY, width, height };
- 
-Example usage:
+ * Get the outer frame values for all objects in `list`,
+ * returns { startX, startY, endX, endY, width, height };
+ * Example usage:
 ```
 getBoundRect( [ { x: 10, y: 10, width: 100, height: 50 }, { x: 30, y: 20, width: 100, height: 50 } ] );
 // returns { startX: 10, startY: 10, endX: 130, endY: 70, width: 120, height: 60 };
@@ -70,22 +69,13 @@ export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
   if (!angle || angle === 0) {
     return { x, y, width, height };
   }
-  /// variables
-  const centerX = x + width * 0.5;
-  const centerY = y + height * 0.5;
-  const radian = (angle * Math.PI) / 180;
-  /// get corner coordinates
-  const topLeftPoint = getCorner(centerX, centerY, x, y, radian);
-  const topRightPoint = getCorner(centerX, centerY, x + width, y, radian);
-  const bottomRightPoint = getCorner(
-    centerX,
-    centerY,
-    x + width,
-    y + height,
-    radian
-  );
-  const bottomLeftPoint = getCorner(centerX, centerY, x, y + height, radian);
 
+  const {
+    topLeftPoint,
+    topRightPoint,
+    bottomRightPoint,
+    bottomLeftPoint,
+  } = getCorners(angle, x, y, width, height);
   /// get bounding box
   const boundTopLeftX = Math.min(
     topLeftPoint.x,
@@ -117,6 +107,30 @@ export function calcRotatedObjectPositionAndSize(angle, x, y, width, height) {
     y: boundTopLeftY,
     width: boundBottomRightX - boundTopLeftX,
     height: boundBottomRightY - boundTopLeftY,
+  };
+}
+
+export function getCorners(angle, x, y, width, height) {
+  /// variables
+  const centerX = x + width * 0.5;
+  const centerY = y + height * 0.5;
+  const radian = (angle * Math.PI) / 180;
+  /// get corner coordinates
+  const topLeftPoint = getCorner(centerX, centerY, x, y, radian);
+  const topRightPoint = getCorner(centerX, centerY, x + width, y, radian);
+  const bottomRightPoint = getCorner(
+    centerX,
+    centerY,
+    x + width,
+    y + height,
+    radian
+  );
+  const bottomLeftPoint = getCorner(centerX, centerY, x, y + height, radian);
+  return {
+    topLeftPoint,
+    topRightPoint,
+    bottomRightPoint,
+    bottomLeftPoint,
   };
 }
 

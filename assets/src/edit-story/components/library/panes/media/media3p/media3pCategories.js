@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -29,20 +30,24 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ArrowDown } from '../../../../button/index';
+import { ArrowDown } from '../../../../button';
 import CategoryPill from './categoryPill';
 
-// Pills have a margin of 4, so the l/r padding is 24-4=20.
 const CategorySection = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v3};
-  ${({ hasCategories }) => (hasCategories ? '' : 'min-height: 104px;')}
-  ${({ hasCategories }) =>
-    hasCategories ? '' : 'max-height: 104px;'}
-  padding: 30px 20px 10px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
+  padding: 16px 12px 30px 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex: 1 0 auto;
+  position: relative;
+
+  ${({ hasCategories }) =>
+    !hasCategories &&
+    css`
+      min-height: 104px;
+      max-height: 104px;
+    `}
 `;
 
 // This hides the category pills unless expanded
@@ -54,20 +59,27 @@ const CategoryPillContainer = styled.div`
 
 const CategoryPillInnerContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 `;
 
 // Flips the button upside down when expanded;
 // Important: the visibily is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
-const ExpandButton = styled(ArrowDown).attrs(({ isExpanded }) => ({
-  'aria-label': isExpanded
-    ? __('Collapse Categories', 'web-stories')
-    : __('Expand Categories', 'web-stories'),
-}))`
-  ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
+const ExpandButton = styled(ArrowDown)`
+  display: flex;
+  position: absolute;
+  bottom: -16px;
+  background: ${({ theme }) => theme.colors.fg.gray16};
+  max-height: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
+  visibility: ${({ visible }) => (visible ? 'inherit' : 'hidden')};
   align-self: center;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Media3pCategories = ({
@@ -142,6 +154,7 @@ const Media3pCategories = ({
             isExpanded={isExpanded}
             aria-controls="category-pill-container"
             aria-expanded={isExpanded}
+            aria-label={__('Expand', 'web-stories')}
           />
         </>
       ) : null}
