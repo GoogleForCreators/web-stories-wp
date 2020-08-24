@@ -84,7 +84,7 @@ const ColorWrapper = styled.div`
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
 
   &:focus-within {
-    border-color: ${({ theme }) => theme.colors.fg.v1};
+    border-color: ${({ theme }) => theme.colors.fg.white};
     border-width: 3px;
   }
 `;

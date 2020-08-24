@@ -36,7 +36,7 @@ import MULTIPLE_VALUE from './multipleValue';
 import { Input } from '.';
 
 const StyledInput = styled(Input)`
-  width: 100%;
+  width: ${({ width }) => (width ? width + 'px' : '100%')};
   border: none;
   padding-right: ${({ suffix }) => (suffix ? 6 : 0)}px;
   padding-left: ${({ label }) => (label ? 6 : 0)}px;
@@ -52,10 +52,9 @@ const Container = styled.div`
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  font-style: italic;
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
-  flex-basis: ${({ flexBasis }) => flexBasis}px;
   position: relative;
 
   ${({ disabled }) => disabled && `opacity: 0.3`};
@@ -123,6 +122,7 @@ function TextInput({
   placeholder,
   ...rest
 }) {
+  const { suffix } = rest;
   const inputRef = useRef();
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
@@ -142,6 +142,7 @@ function TextInput({
       className={`${className}`}
       flexBasis={flexBasis}
       disabled={disabled}
+      suffix={suffix}
     >
       {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
@@ -165,6 +166,7 @@ function TextInput({
           }
         }}
       />
+      {suffix}
       {Boolean(value) && clear && (
         <Clear
           onClear={onClear}
