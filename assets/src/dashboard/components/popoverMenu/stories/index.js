@@ -34,7 +34,6 @@ const demoItems = [
   {
     value: 'link',
     label: 'i am a link!',
-    renderItemAs: 'a',
     url: 'https://www.google.com/',
   },
   {

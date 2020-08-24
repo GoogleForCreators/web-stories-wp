@@ -25,7 +25,6 @@ export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
   selected: PropTypes.bool,
   separator: PropTypes.bool,
   disabled: PropTypes.bool,
-  renderItemAs: PropTypes.string,
   url: PropTypes.string,
 });
 

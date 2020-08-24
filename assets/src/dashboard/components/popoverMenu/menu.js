@@ -140,15 +140,14 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
   const renderMenuItem = useCallback(
     (item, index) => {
       const itemIsDisabled = !item.value && item.value !== 0;
-      const MenuItemPropsAsLink =
-        item.renderItemAs === 'a'
-          ? {
-              target: '_blank',
-              rel: 'noreferrer',
-              href: item.url,
-              as: item.renderItemAs,
-            }
-          : {};
+      const MenuItemPropsAsLink = item.url
+        ? {
+            target: '_blank',
+            rel: 'noreferrer',
+            href: item.url,
+            as: 'a',
+          }
+        : {};
 
       return (
         <MenuItem
