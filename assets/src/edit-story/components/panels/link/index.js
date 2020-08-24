@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row, Button, LinkInput } from '../../form';
+import { Media, Row, Button, LinkInput, MULTIPLE_VALUE } from '../../form';
 import { createLink } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
@@ -85,7 +85,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   }));
 
   const { getElementsInAttachmentArea } = useElementsWithLinks();
-  console.log(getElementsInAttachmentArea(selectedElements));
   const hasElementsInAttachmentArea =
     getElementsInAttachmentArea(selectedElements).length > 0;
 
@@ -139,6 +138,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       clearEditing();
 
       if (properties.url) {
+        // Don't submit any changes in case of multiple value.
+        if (MULTIPLE_VALUE === properties.url) {
+          return false;
+        }
         const urlWithProtocol = withProtocol(properties.url);
         const valid = isValidUrl(urlWithProtocol);
         setIsInvalidUrl(!valid);
@@ -183,7 +186,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           setDisplayLinkGuidelines(false);
         }}
         onFocus={() => {
-          if (hasElementsInAttachmentArea && !hasLinkSet) {
+          // Display the guidelines if there's no link / if it's multiple value.
+          if (
+            hasElementsInAttachmentArea &&
+            (!hasLinkSet || link.url === MULTIPLE_VALUE)
+          ) {
             setDisplayLinkGuidelines(true);
           }
         }}
