@@ -23,7 +23,7 @@ import createSolidFromString from '../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 import { MULTIPLE_VALUE } from '../../../form';
 
-fdescribe('Link Panel', () => {
+describe('Link Panel', () => {
   let fixture;
   let linkPanel;
   let safezone;
@@ -36,6 +36,24 @@ fdescribe('Link Panel', () => {
   afterEach(() => {
     fixture.restore();
   });
+
+  const setPageAttachmentLink = async (link) => {
+    const input = fixture.screen.getByLabelText('Edit: Page Attachment link');
+    await fixture.events.click(input, { clickCount: 3 });
+    await fixture.events.keyboard.type(link);
+    await input.dispatchEvent(new window.Event('blur'));
+  };
+
+  async function clickOnTarget(target, key = false) {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    if (key) {
+      await fixture.events.keyboard.down(key);
+    }
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+    if (key) {
+      await fixture.events.keyboard.up(key);
+    }
+  }
 
   describe('CUJ: Creator Can Add A Link: Apply a link to any element', () => {
     beforeEach(async () => {
@@ -80,40 +98,6 @@ fdescribe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    fit('should not allow adding link in Page Attachment area', async () => {
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-      const element = await fixture.act(() =>
-        insertElement('shape', {
-          backgroundColor: createSolidFromString('#ff00ff'),
-          mask: { type: 'rectangle' },
-          x: 10,
-          y: 10,
-          width: 50,
-          height: 50,
-        })
-      );
-      const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-      safezone = fixture.querySelector('[data-testid="safezone"]');
-      const safezoneHeight = safezone.getBoundingClientRect().height;
-      const frameHeight = frame.getBoundingClientRect().height;
-      await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-        moveRel(frame, 10, 10),
-        down(),
-        moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
-        up(),
-      ]);
-
-      await fixture.events.click(linkPanel.address);
-
-      await fixture.snapshot('Page Attachment warning & dashed line visible');
-
-      const warning = fixture.screen.getByText(
-        'Link can not reside below the dashed line when a page attachment is present'
-      );
-      expect(warning).toBeDefined();
-      console.log(warning);
-    });
-
     // Disable reason: tests not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should invoke API when looking up link');
@@ -151,20 +135,51 @@ fdescribe('Link Panel', () => {
     xit('should not be able to apply a link to a background media element');
   });
 
+  describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
+    it('should not allow adding link in Page Attachment area', async () => {
+      // Select Page.
+      safezone = fixture.querySelector('[data-testid="safezone"]');
+      await clickOnTarget(safezone);
+
+      // Add Page Attachment
+      await setPageAttachmentLink('http://pageattachment.com');
+
+      const insertElement = await fixture.renderHook(() => useInsertElement());
+      const element = await fixture.act(() =>
+        insertElement('shape', {
+          backgroundColor: createSolidFromString('#ff00ff'),
+          mask: { type: 'rectangle' },
+          x: 10,
+          y: 10,
+          width: 50,
+          height: 50,
+        })
+      );
+      const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
+      const safezoneHeight = safezone.getBoundingClientRect().height;
+      const frameHeight = frame.getBoundingClientRect().height;
+      await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+        moveRel(frame, 10, 10),
+        down(),
+        moveBy(0, safezoneHeight - frameHeight, { steps: 10 }),
+        up(),
+      ]);
+
+      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(linkPanel.address);
+
+      await fixture.snapshot('Page Attachment warning & dashed line visible');
+
+      const warning = fixture.screen.getByText(
+        'Link can not reside below the dashed line when a page attachment is present'
+      );
+      expect(warning).toBeDefined();
+    });
+  });
+
   describe('CUJ: Creator Can Add A Link: Apply a link to multi-selection', () => {
     let frame1;
     let frame2;
-
-    async function clickOnTarget(target, key = false) {
-      const { x, y, width, height } = target.getBoundingClientRect();
-      if (key) {
-        await fixture.events.keyboard.down(key);
-      }
-      await fixture.events.mouse.click(x + width / 2, y + height / 2);
-      if (key) {
-        await fixture.events.keyboard.up(key);
-      }
-    }
 
     beforeEach(async () => {
       safezone = fixture.querySelector('[data-testid="safezone"]');
