@@ -183,10 +183,7 @@ describe('Link Panel', () => {
     });
 
     it('should not allow adding link to multi-selection in Page Attachment area', async () => {
-      safezone = fixture.querySelector('[data-testid="safezone"]');
-      // Add two elements.
       const insertElement = await fixture.renderHook(() => useInsertElement());
-      // First one with link.
       const element1 = await fixture.act(() =>
         insertElement('text', {
           font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -207,7 +204,7 @@ describe('Link Panel', () => {
           height: 50,
         })
       );
-      // Select both elements.
+      // Select the first element as well.
       await clickOnTarget(frame, 'Shift');
 
       await moveElementToBottom(frame);
