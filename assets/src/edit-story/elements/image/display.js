@@ -43,6 +43,7 @@ function ImageDisplay({ element, box }) {
   let initialSrcType = 'smallest';
   let initialSrc =
     resource.sizes?.['web-stories-thumbnail']?.source_url ||
+    resource.sizes?.web_stories_thumbnail?.source_url ||
     resource.sizes?.medium?.source_url;
 
   if (resourceList[resource.id]?.type === 'cached') {
