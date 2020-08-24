@@ -95,7 +95,7 @@ describe('RouterProvider', () => {
       const { actions } = useRouteHistory();
       return (
         <button onClick={() => actions.push('/second-route/sub-entity')}>
-          {'Visit Second Page'}
+          {'Visit Sub Entity on Second Page'}
         </button>
       );
     };
