@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -131,7 +131,7 @@ function WithTooltip({
       x:
         placement.startsWith('left') || placement.startsWith('right')
           ? SPACING
-          : tooltipRef.current?.getBoundingClientRect().width,
+          : 0,
       y:
         placement.startsWith('top') || placement.startsWith('bottom')
           ? SPACING
@@ -140,24 +140,18 @@ function WithTooltip({
     [placement]
   );
 
-  useEffect(() => {
-    const id = setTimeout(() => {
-      const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
-      const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
-      if (!shown || !tooltipElBoundingBox || !anchorElBoundingBox) {
-        return;
-      }
-      const delta =
-        getBoundingBoxCenter(anchorElBoundingBox) -
-        getBoundingBoxCenter(tooltipElBoundingBox);
+  const postionArrow = useCallback(() => {
+    const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
+    const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
+    if (!tooltipElBoundingBox || !anchorElBoundingBox) {
+      return;
+    }
+    const delta =
+      getBoundingBoxCenter(anchorElBoundingBox) -
+      getBoundingBoxCenter(tooltipElBoundingBox);
 
-      setArrowDelta(delta);
-    }, 0);
-
-    return () => {
-      clearTimeout(id);
-    };
-  }, [shown]);
+    setArrowDelta(delta);
+  }, []);
 
   return (
     <>
@@ -188,12 +182,13 @@ function WithTooltip({
         placement={placement}
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
+        onPositionUpdate={postionArrow}
       >
         <Tooltip
           ref={tooltipRef}
           arrow={arrow}
           placement={placement}
-          shown={shown && !isNaN(arrowDelta)}
+          shown={shown}
         >
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           <TooltipArrow placement={placement} translateX={arrowDelta} />

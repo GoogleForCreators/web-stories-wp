@@ -57,9 +57,9 @@ export function getTransforms(placement) {
   if (!xTransforms && !yTransforms) {
     return '';
   }
-  return `transform: ${
-    xTransforms ? `translateX(${xTransforms * 100}%)` : ``
-  } ${yTransforms ? `translateY(${yTransforms * 100}%)` : ``};`;
+  return `translate(${(xTransforms || 0) * 100}%, ${
+    (yTransforms || 0) * 100
+  }%)`;
 }
 
 export function getXOffset(
@@ -147,7 +147,7 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
-  const maxOffsetY = bodyRect.height - height - spacingV;
+  const maxOffsetY = bodyRect.height + bodyRect.y - height;
   // Clamp values
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),

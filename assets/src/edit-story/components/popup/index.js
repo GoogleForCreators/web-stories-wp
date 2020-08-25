@@ -19,16 +19,11 @@
  */
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-import {
-  useLayoutEffect,
-  useCallback,
-  useState,
-  useRef,
-  useEffect,
-} from 'react';
+import { useLayoutEffect, useCallback, useState, useRef } from 'react';
 /**
  * Internal dependencies
  */
+import useResizeEffect from '../../utils/useResizeEffect';
 import { SCROLLBAR_WIDTH } from '../../constants';
 import { getTransforms, getOffset } from './utils';
 
@@ -56,26 +51,27 @@ export const Placement = {
 };
 
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight }) => ({
+  ({ x, y, width, height, fillWidth, fillHeight, placement }) => ({
     style: {
-      left: '0px',
-      transform: `translateX(${x}px)`,
-      top: `${y}px`,
+      transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
     },
   })
 )`
+  left: 0px;
+  top: 0px;
   position: fixed;
   z-index: 2;
+  background-color: tomato;
 
   /*
    * Custom gray scrollbars for Chromium & Firefox.
    */
   * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-      ${({ theme }) => theme.colors.bg.v12};
+    scrollbar-color: ${({ theme }) =>
+      `${theme.colors.bg.v10} ${theme.colors.bg.v12}`};
   }
 
   *::-webkit-scrollbar {
@@ -96,10 +92,6 @@ const Container = styled.div.attrs(
   }
 `;
 
-const Content = styled.div`
-  ${({ placement }) => getTransforms(placement)}
-`;
-
 function Popup({
   anchor,
   dock,
@@ -110,6 +102,7 @@ function Popup({
   isOpen,
   fillWidth = false,
   fillHeight = false,
+  onPositionUpdate = () => {},
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -134,20 +127,18 @@ function Popup({
 
   useLayoutEffect(() => {
     setMounted(true);
-    positionPopup();
-
-    // Adjust the position when scrolling or resizing.
-    window.addEventListener('resize', positionPopup);
+    // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
-      window.removeEventListener('resize', positionPopup);
       document.removeEventListener('scroll', positionPopup, true);
     };
   }, [positionPopup]);
 
-  useEffect(() => {
-    positionPopup();
-  }, [placement, spacing, anchor, dock, popup, isOpen, positionPopup]);
+  useLayoutEffect(positionPopup, [positionPopup, isOpen]);
+
+  useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
+
+  useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
   return popupState && isOpen
     ? createPortal(
@@ -156,12 +147,11 @@ function Popup({
           {...popupState.offset}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
+          placement={placement}
         >
-          <Content placement={placement}>
-            {renderContents
-              ? renderContents({ propagateDimensionChange: positionPopup })
-              : children}
-          </Content>
+          {renderContents
+            ? renderContents({ propagateDimensionChange: positionPopup })
+            : children}
         </Container>,
         document.body
       )
