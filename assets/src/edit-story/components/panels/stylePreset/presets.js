@@ -138,7 +138,6 @@ function Presets({
         (isText && presetHasGradient(color)));
     let tooltip = null;
     if (disabled) {
-      // However, due to bug with Tooltips/Popup, the text flows out of the screen.
       tooltip = isBackground
         ? __('Page background colors can not have an opacity.', 'web-stories')
         : __('Gradient not allowed for Text', 'web-stories');
