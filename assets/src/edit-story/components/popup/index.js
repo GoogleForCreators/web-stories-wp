@@ -63,7 +63,6 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
-  background-color: tomato;
 
   /*
    * Custom gray scrollbars for Chromium & Firefox.
