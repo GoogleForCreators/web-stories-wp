@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -36,8 +35,8 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
-import { ApiContext } from '../../../api/apiProvider';
 import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
+import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
   let fixture;
@@ -54,7 +53,7 @@ describe('Grid view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -480,7 +479,7 @@ describe('List view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -488,7 +487,7 @@ describe('List view', () => {
   async function getUsers() {
     const {
       state: { users },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return users;
   }
