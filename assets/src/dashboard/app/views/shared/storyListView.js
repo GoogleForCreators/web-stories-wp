@@ -162,6 +162,15 @@ export default function StoryListView({
     },
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
+
+  const onKeyDownSort = useCallback(
+    ({ key }, sortBy) => {
+      if (key === 'Enter') {
+        onSortTitleSelected(sortBy);
+      }
+    },
+    [onSortTitleSelected]
+  );
   return (
     <ListView data-testid="story-list-view">
       <Table>
@@ -169,11 +178,13 @@ export default function StoryListView({
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+              onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
             </TablePreviewHeaderCell>
             <TableTitleHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+              onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
               <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
@@ -188,6 +199,9 @@ export default function StoryListView({
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
+                }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
               >
                 {__('Author', 'web-stories')}
@@ -207,30 +221,36 @@ export default function StoryListView({
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.DATE_CREATED)
                 }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
+                }
               >
                 {__('Date Created', 'web-stories')}
-                <ArrowIconWithTitle
-                  active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                  asc={sortDirection === SORT_DIRECTION.ASC}
-                >
-                  <ArrowIconSvg />
-                </ArrowIconWithTitle>
               </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg />
+              </ArrowIconWithTitle>
             </TableDateHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
+                }
               >
                 {__('Last Modified', 'web-stories')}
-                <ArrowIconWithTitle
-                  active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.ASC}
-                >
-                  <ArrowIconSvg />
-                </ArrowIconWithTitle>
               </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg />
+              </ArrowIconWithTitle>
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
