@@ -53,4 +53,5 @@ export const panels = [
   PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,
+  PanelTypes.ANIMATION,
 ];
