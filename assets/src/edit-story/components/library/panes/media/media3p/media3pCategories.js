@@ -136,6 +136,8 @@ const Media3pCategories = ({
         CATEGORY_BOTTOM_MARGIN
       }px`;
     }
+    // Safari has some strange issues with flex-shrink that require setting
+    // min-height as well.
     categorySectionRef.current.style.height = height;
     categorySectionRef.current.style.minHeight = height;
   }, [categorySectionRef, innerContainerRef, isExpanded]);
