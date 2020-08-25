@@ -22,7 +22,7 @@ import { Placement } from '.';
 export function getXTransforms(placement) {
   // left & right
   if (placement.startsWith('left')) {
-    return `-100%`;
+    return -1;
   } else if (placement.startsWith('right')) {
     return null;
   }
@@ -30,9 +30,9 @@ export function getXTransforms(placement) {
   if (placement.endsWith('-start')) {
     return null;
   } else if (placement.endsWith('-end')) {
-    return `-100%`;
+    return -1;
   }
-  return `-50%`;
+  return -0.5;
 }
 
 export function getYTransforms(placement) {
@@ -41,10 +41,10 @@ export function getYTransforms(placement) {
     placement === Placement.RIGHT_END ||
     placement === Placement.LEFT_END
   ) {
-    return `-100%`;
+    return -1;
   }
   if (placement === Placement.RIGHT || placement === Placement.LEFT) {
-    return `-50%`;
+    return -0.5;
   }
   return null;
 }
@@ -57,9 +57,9 @@ export function getTransforms(placement) {
   if (!xTransforms && !yTransforms) {
     return '';
   }
-  return `transform: ${xTransforms ? `translateX(${xTransforms})` : ``} ${
-    yTransforms ? `translateY(${yTransforms})` : ``
-  };`;
+  return `transform: ${
+    xTransforms ? `translateX(${xTransforms * 100}%)` : ``
+  } ${yTransforms ? `translateY(${yTransforms * 100}%)` : ``};`;
 }
 
 export function getXOffset(
@@ -133,7 +133,7 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
     popupRect.width = Math.max(popupRect.width, popup.current?.scrollWidth);
   }
 
-  const { height = 0 } = popupRect || {};
+  const { height = 0, width = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
 
   // Horizontal
@@ -144,7 +144,7 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
     dockRect,
     bodyRect
   );
-  const maxOffsetX = bodyRect.width - spacingH;
+  const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
   const maxOffsetY = bodyRect.height - height - spacingV;

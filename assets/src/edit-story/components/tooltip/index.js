@@ -49,8 +49,7 @@ const Tooltip = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  white-space: nowrap;
-  will-change: transform;
+  max-width: 180px;
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
@@ -120,12 +119,14 @@ function WithTooltip({
 }) {
   const [shown, setShown] = useState(false);
   const ref = useRef(null);
+  const tooltipRef = useRef(null);
+
   const spacing = useMemo(
     () => ({
       x:
         placement.startsWith('left') || placement.startsWith('right')
           ? SPACING
-          : 0,
+          : tooltipRef.current?.getBoundingClientRect().width,
       y:
         placement.startsWith('top') || placement.startsWith('bottom')
           ? SPACING
@@ -164,7 +165,12 @@ function WithTooltip({
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
       >
-        <Tooltip arrow={arrow} placement={placement} shown={shown}>
+        <Tooltip
+          ref={tooltipRef}
+          arrow={arrow}
+          placement={placement}
+          shown={shown}
+        >
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           <TooltipArrow placement={placement} />
         </Tooltip>

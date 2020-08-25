@@ -58,7 +58,8 @@ export const Placement = {
 const Container = styled.div.attrs(
   ({ x, y, width, height, fillWidth, fillHeight }) => ({
     style: {
-      left: `${x}px`,
+      left: '0px',
+      transform: `translateX(${x}px)`,
       top: `${y}px`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
@@ -67,7 +68,6 @@ const Container = styled.div.attrs(
 )`
   position: fixed;
   z-index: 2;
-  ${({ placement }) => getTransforms(placement)}
 
   /*
    * Custom gray scrollbars for Chromium & Firefox.
@@ -96,6 +96,10 @@ const Container = styled.div.attrs(
   }
 `;
 
+const Content = styled.div`
+  ${({ placement }) => getTransforms(placement)}
+`;
+
 function Popup({
   anchor,
   dock,
@@ -121,7 +125,6 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
-
       setPopupState({
         offset: getOffset(placement, spacing, anchor, dock, popup),
       });
@@ -153,11 +156,12 @@ function Popup({
           {...popupState.offset}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
-          placement={placement}
         >
-          {renderContents
-            ? renderContents({ propagateDimensionChange: positionPopup })
-            : children}
+          <Content placement={placement}>
+            {renderContents
+              ? renderContents({ propagateDimensionChange: positionPopup })
+              : children}
+          </Content>
         </Container>,
         document.body
       )
