@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -32,16 +33,55 @@ import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
+import { dataFontEm } from '../../../../units';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 
 const SectionContent = styled.p``;
+
+// The format is:
+// { presetToBeAddedName: [list of previous preset names that need to be considered]
+// If the previous preset is not in the list of names, no special rules.
+// If the preset being added is not in the rules at all -- no special rules.
+// @todo Text staggering to be done as part of https://github.com/google/web-stories-wp/issues/1206
+const POSITIONING_RULES = {
+  'heading-2': ['heading-1'],
+  'heading-3': ['heading-1', 'heading-2'],
+  paragraph: ['heading-1', 'heading-2', 'heading-3'],
+};
+
+const POSITION_MARGIN = dataFontEm(1);
 
 function TextPane(props) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
+
+  const lastPreset = useRef(null);
+
+  const getTopPosition = (name, element) => {
+    const { y } = element;
+    // If we don't have any special rules, just add the default.
+    if (
+      !POSITIONING_RULES[name] ||
+      !lastPreset.current ||
+      !POSITIONING_RULES[name].includes(lastPreset.current.name)
+    ) {
+      return y;
+    }
+    // Use the positioning of the previous preset + add the previous preset's
+    // approximate height + lineHeight if more than 1 + position margin.
+    const lineHeightDelta = lastPreset.current.lineHeight - 1;
+    const addedLineHeight =
+      lineHeightDelta > 0 ? dataFontEm(lineHeightDelta) : 0;
+    return (
+      lastPreset.current.y +
+      lastPreset.current.fontSize +
+      addedLineHeight +
+      POSITION_MARGIN
+    );
+  };
 
   return (
     <Pane id={paneId} {...props}>
@@ -57,17 +97,35 @@ function TextPane(props) {
       <Section
         title={__('Presets', 'web-stories')}
         titleTools={
-          <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
+          <MainButton
+            onClick={() => {
+              lastPreset.current = null;
+              insertElement('text', DEFAULT_PRESET);
+            }}
+          >
             {__('Add new text', 'web-stories')}
           </MainButton>
         }
       >
-        {PRESETS.map(({ title, element }, i) => (
+        {PRESETS.map(({ title, name, element }, i) => (
           <FontPreview
             key={i}
             title={title}
             element={element}
-            onClick={() => insertElement('text', element)}
+            onClick={() => {
+              const y = getTopPosition(name, element);
+              const { fontSize, lineHeight } = element;
+              lastPreset.current = {
+                name,
+                y,
+                fontSize,
+                lineHeight,
+              };
+              insertElement('text', {
+                ...element,
+                y,
+              });
+            }}
           />
         ))}
       </Section>
