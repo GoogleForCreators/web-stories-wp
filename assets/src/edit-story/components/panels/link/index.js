@@ -147,7 +147,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       if (properties.url) {
         // Don't submit any changes in case of multiple value.
         if (MULTIPLE_VALUE === properties.url) {
-          return false;
+          return undefined;
         }
         const urlWithProtocol = withProtocol(properties.url);
         const valid = isValidUrl(urlWithProtocol);
@@ -186,14 +186,8 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   useEffect(() => {
     if (isLinkFocused) {
       // Display the guidelines if there's no link / if it's multiple value.
-      if (
-        hasElementsInAttachmentArea &&
-        (!hasLinkSet || link.url === MULTIPLE_VALUE)
-      ) {
-        setDisplayLinkGuidelines(true);
-      } else {
-        setDisplayLinkGuidelines(false);
-      }
+      const hasLink = hasLinkSet && link.url !== MULTIPLE_VALUE;
+      setDisplayLinkGuidelines(hasElementsInAttachmentArea && !hasLink);
     }
   }, [
     selectedElements,
