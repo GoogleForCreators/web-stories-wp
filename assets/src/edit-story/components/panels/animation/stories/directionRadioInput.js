@@ -14,8 +14,32 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+/**
  * Internal dependencies
  */
-import { createContext } from '../../utils';
+import { DIRECTION } from '../../../../../animation';
+import { DirectionRadioInput } from '../directionRadioInput';
 
-export default createContext({ api: {} });
+export default {
+  title: 'Animations/Direction Radio Input',
+  component: DirectionRadioInput,
+};
+
+const Panel = styled.div`
+  padding: 20px;
+  background-color: #1c1c1c;
+`;
+
+export const _default = () => {
+  return (
+    <Panel>
+      <DirectionRadioInput
+        directions={Object.values(DIRECTION)}
+        defaultChecked={DIRECTION.TOP_TO_BOTTOM}
+      />
+    </Panel>
+  );
+};

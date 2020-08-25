@@ -84,6 +84,8 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.white};
+  font-family: ${({ theme }) => theme.fonts.description.family};
+  font-size: ${({ theme }) => theme.fonts.description.size};
 `;
 
 const LockedIcon = styled(Locked)`
