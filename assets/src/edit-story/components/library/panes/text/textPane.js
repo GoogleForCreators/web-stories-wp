@@ -34,6 +34,7 @@ import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import { dataFontEm } from '../../../../units';
+import { useHistory } from '../../../../app/history';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 
@@ -56,6 +57,10 @@ function TextPane(props) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+  const {
+    state: { versionNumber },
+  } = useHistory();
+
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
   const lastPreset = useRef(null);
@@ -68,6 +73,12 @@ function TextPane(props) {
       !lastPreset.current ||
       !POSITIONING_RULES[name].includes(lastPreset.current.name)
     ) {
+      return y;
+    }
+    // If the difference between the new and the previous version number is not 1,
+    // the preset wasn't clicked right after the previous.
+    if (versionNumber - lastPreset.current.versionNumber !== 1) {
+      lastPreset.current = null;
       return y;
     }
     // Use the positioning of the previous preset + add the previous preset's
@@ -115,16 +126,17 @@ function TextPane(props) {
             onClick={() => {
               const y = getTopPosition(name, element);
               const { fontSize, lineHeight } = element;
+              insertElement('text', {
+                ...element,
+                y,
+              });
               lastPreset.current = {
                 name,
                 y,
                 fontSize,
                 lineHeight,
+                versionNumber,
               };
-              insertElement('text', {
-                ...element,
-                y,
-              });
             }}
           />
         ))}
