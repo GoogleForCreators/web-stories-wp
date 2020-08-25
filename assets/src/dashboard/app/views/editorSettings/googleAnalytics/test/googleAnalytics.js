@@ -31,7 +31,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     const { getByRole, getByText } = renderWithTheme(
       <GoogleAnalyticsSettings
         googleAnalyticsId={''}
-        handleUpdateSettings={mockUpdate}
+        handleUpdate={mockUpdate}
       />
     );
 
@@ -46,7 +46,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     const { getByRole } = renderWithTheme(
       <GoogleAnalyticsSettings
         googleAnalyticsId={''}
-        handleUpdateSettings={mockUpdate}
+        handleUpdate={mockUpdate}
       />
     );
 

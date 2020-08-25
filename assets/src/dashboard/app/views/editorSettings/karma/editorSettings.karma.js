@@ -96,7 +96,7 @@ describe('Settings View', () => {
 
     const input = within(settingsView).getByRole('textbox');
 
-    await fixture.events.hover(input);
+    expect(input).toBeTruthy();
 
     await fixture.events.click(input);
 
@@ -113,5 +113,54 @@ describe('Settings View', () => {
 
     const errorMessage = await fixture.screen.getByText('Invalid ID format');
     expect(errorMessage).toBeTruthy();
+  });
+
+  it('should remove a publisher logo on click', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo/
+    );
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
+
+    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
+      /^remove-publisher-logo/
+    )[0];
+
+    expect(RemovePublisherLogoButton).toBeTruthy();
+
+    await fixture.events.click(RemovePublisherLogoButton);
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo/);
+
+    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
+  });
+
+  it('should remove a publisher logo on keydown enter', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo/
+    );
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
+
+    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
+      /^remove-publisher-logo/
+    )[0];
+
+    expect(RemovePublisherLogoButton).toBeTruthy();
+
+    await fixture.events.focus(RemovePublisherLogoButton);
+    await fixture.events.keyboard.press('Enter');
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo/);
+
+    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
   });
 });
