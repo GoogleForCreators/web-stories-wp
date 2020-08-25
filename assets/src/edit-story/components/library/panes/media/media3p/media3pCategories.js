@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -32,29 +32,29 @@ import { __ } from '@wordpress/i18n';
  */
 import { ArrowDown } from '../../../../button';
 import CategoryPill from './categoryPill';
+import { PILL_HEIGHT } from './pill';
+
+const CATEGORY_TOP_MARGIN = 16;
+const CATEGORY_BOTTOM_MARGIN = 30;
+const CATEGORY_COLLAPSED_FULL_HEIGHT =
+  PILL_HEIGHT + CATEGORY_TOP_MARGIN + CATEGORY_BOTTOM_MARGIN;
 
 const CategorySection = styled.div`
+  height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
+  min-height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
-  padding: 16px 12px 30px 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  flex: 1 0 auto;
+  flex: 0 1 auto;
   position: relative;
-
-  ${({ hasCategories }) =>
-    !hasCategories &&
-    css`
-      min-height: 104px;
-      max-height: 104px;
-    `}
+  transition: height 0.2s, min-height 0.2s;
 `;
 
 // This hides the category pills unless expanded
 const CategoryPillContainer = styled.div`
-  height: 36px;
   overflow: hidden;
-  transition: height 0.2s;
+  margin: ${CATEGORY_TOP_MARGIN}px 12px ${CATEGORY_BOTTOM_MARGIN}px 24px;
 `;
 
 const CategoryPillInnerContainer = styled.div`
@@ -117,29 +117,40 @@ const Media3pCategories = ({
     });
   }
 
-  const containerRef = useRef();
+  const categorySectionRef = useRef();
   const innerContainerRef = useRef();
 
   // We calculate the actual height of the categories list, and set its explicit
   // height if it's expanded, in order to have a CSS height transition.
   useLayoutEffect(() => {
-    if (!containerRef.current || !innerContainerRef.current) {
+    if (!categorySectionRef.current || !innerContainerRef.current) {
       return;
     }
+    let height;
     if (!isExpanded) {
-      containerRef.current.style.height = '36px';
+      height = `${CATEGORY_COLLAPSED_FULL_HEIGHT}px`;
     } else {
-      containerRef.current.style.height = `${innerContainerRef.current.offsetHeight}px`;
+      height = `${
+        innerContainerRef.current.offsetHeight +
+        CATEGORY_TOP_MARGIN +
+        CATEGORY_BOTTOM_MARGIN
+      }px`;
     }
-  }, [containerRef, innerContainerRef, isExpanded]);
+    // Safari has some strange issues with flex-shrink that require setting
+    // min-height as well.
+    categorySectionRef.current.style.height = height;
+    categorySectionRef.current.style.minHeight = height;
+  }, [categorySectionRef, innerContainerRef, isExpanded]);
 
   return (
-    <CategorySection hasCategories={Boolean(categories.length)}>
+    <CategorySection
+      ref={categorySectionRef}
+      hasCategories={Boolean(categories.length)}
+    >
       {categories.length ? (
         <>
           <CategoryPillContainer
             id="category-pill-container"
-            ref={containerRef}
             isExpanded={isExpanded}
             role="tablist"
           >
