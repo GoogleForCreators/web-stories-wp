@@ -40,10 +40,10 @@ import {
 import { dataPixels } from '../../units';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { Lock as Locked, Unlock as Unlocked } from '../../icons';
-
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import clamp from '../../utils/clamp';
+import { calcRotatedObjectPositionAndSize } from '../../utils/getBoundRect';
 import { DANGER_ZONE_HEIGHT } from '../../units/dimensions';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
@@ -128,6 +128,14 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
+  const actualDimensions = useMemo(
+    () => calcRotatedObjectPositionAndSize(rotationAngle, x, y, width, height),
+    [rotationAngle, x, y, width, height]
+  );
+
+  const xOffset = x - actualDimensions.x;
+  const yOffset = y - actualDimensions.y;
+
   const getUpdateObject = (nWidth, nHeight) =>
     rawLockAspectRatio === MULTIPLE_VALUE
       ? {
@@ -194,10 +202,19 @@ function SizePositionPanel({
   }, []);
 
   usePresubmitHandler(
-    ({ x: newX, y: newY, width: newWidth, height: newHeight }) => {
+    ({ rotationAngle: na, x: nx, y: ny, width: nw, height: nh }) => {
+      const newDims = calcRotatedObjectPositionAndSize(na, nx, ny, nw, nh);
+      const newXOffset = nx - newDims.x;
+      const newYOffset = ny - newDims.y;
       return {
-        x: clamp(newX, { ...MIN_MAX.X, MIN: MIN_MAX.X.MIN - newWidth }),
-        y: clamp(newY, { ...MIN_MAX.Y, MIN: MIN_MAX.Y.MIN - newHeight }),
+        x: clamp(nx, {
+          MIN: MIN_MAX.X.MIN + newXOffset - newDims.width,
+          MAX: MIN_MAX.X.MAX + newXOffset,
+        }),
+        y: clamp(ny, {
+          MIN: MIN_MAX.Y.MIN + newYOffset - newDims.height,
+          MAX: MIN_MAX.Y.MAX + newYOffset,
+        }),
       };
     },
     []
@@ -271,8 +288,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('X', 'Position on X axis', 'web-stories')}
           value={x}
-          min={MIN_MAX.X.MIN - width}
-          max={MIN_MAX.X.MAX}
+          min={MIN_MAX.X.MIN + xOffset - actualDimensions.width}
+          max={MIN_MAX.X.MAX + xOffset}
           onChange={(value) => pushUpdate({ x: value })}
           aria-label={__('X position', 'web-stories')}
           canBeNegative
@@ -281,8 +298,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('Y', 'Position on Y axis', 'web-stories')}
           value={y}
-          min={MIN_MAX.Y.MIN - height}
-          max={MIN_MAX.Y.MAX}
+          min={MIN_MAX.Y.MIN + yOffset - actualDimensions.height}
+          max={MIN_MAX.Y.MAX + yOffset}
           onChange={(value) => pushUpdate({ y: value })}
           aria-label={__('Y position', 'web-stories')}
           canBeNegative
