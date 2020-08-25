@@ -18,11 +18,13 @@
  */
 import { css } from 'styled-components';
 
+export const PILL_HEIGHT = 36;
+
 export const pill = css`
   border: 1px solid transparent;
   margin-right: 12px;
   padding: 7px 16px 8px;
-  height: 36px;
+  height: ${PILL_HEIGHT}px;
   border-radius: 18px;
   font-size: 14px;
   line-height: 20px;
