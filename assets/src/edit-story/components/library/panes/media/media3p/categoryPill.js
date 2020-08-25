@@ -71,16 +71,16 @@ const CategoryPill = ({
   return (
     <PillContainer
       ref={ref}
+      className="categoryPill"
+      data-testid="mediaCategory"
+      data-category-id={categoryId}
+      role="tab"
+      aria-selected={isSelected}
       // The first or selected category will be in focus for roving
       // (arrow-based) navigation initially.
       tabIndex={index === 0 || isSelected ? 0 : -1}
       isSelected={isSelected}
       onClick={onClick}
-      role="tab"
-      aria-selected={isSelected}
-      data-testid="mediaCategory"
-      className="categoryPill"
-      data-category-id={categoryId}
     >
       {title}
     </PillContainer>
