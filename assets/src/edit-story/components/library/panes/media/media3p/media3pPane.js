@@ -47,14 +47,15 @@ import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
-  margin-top: 30px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   padding: 0 24px;
 `;
 
 const MediaSubheading = styled.div`
   margin-top: 24px;
   padding: 0 24px;
-  visibility: ${(props) => (props.shouldDisplay ? 'inherit' : 'hidden')};
+  ${(props) => props.shouldDisplay || 'display: none;'}
 `;
 
 const PaneBottom = styled.div`

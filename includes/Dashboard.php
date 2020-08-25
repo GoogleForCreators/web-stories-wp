@@ -249,17 +249,17 @@ class Dashboard {
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
-				'isRTL'        => is_rtl(),
-				'dateFormat'   => get_option( 'date_format' ),
-				'timeFormat'   => get_option( 'time_format' ),
-				'gmtOffset'    => get_option( 'gmt_offset' ),
-				'timezone'     => get_option( 'timezone_string' ),
-				'newStoryURL'  => $new_story_url,
-				'editStoryURL' => $edit_story_url,
-				'wpListURL'    => $classic_wp_list_url,
-				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'version'      => WEBSTORIES_VERSION,
-				'api'          => [
+				'isRTL'              => is_rtl(),
+				'dateFormat'         => get_option( 'date_format' ),
+				'timeFormat'         => get_option( 'time_format' ),
+				'gmtOffset'          => get_option( 'gmt_offset' ),
+				'timezone'           => get_option( 'timezone_string' ),
+				'newStoryURL'        => $new_story_url,
+				'editStoryURL'       => $edit_story_url,
+				'wpListURL'          => $classic_wp_list_url,
+				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'version'            => WEBSTORIES_VERSION,
+				'api'                => [
 					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'     => '/web-stories/v1/media',
 					'users'     => '/wp/v2/users',
@@ -267,8 +267,9 @@ class Dashboard {
 					'templates' => '/web-stories/v1/web-story-template',
 					'settings'  => '/wp/v2/settings',
 				],
-				'maxUpload'    => $max_upload_size,
-				'capabilities' => [
+				'maxUpload'          => $max_upload_size,
+				'maxUploadFormatted' => size_format( $max_upload_size ),
+				'capabilities'       => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],

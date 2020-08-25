@@ -24,6 +24,7 @@ import { screen } from '@testing-library/react';
  */
 import ConfigContext from '../../../app/config/context';
 import LinkPanel from '../link';
+import StoryContext from '../../../app/story/context';
 import { renderPanel } from './_utils';
 
 jest.mock('../../../elements');
@@ -35,9 +36,17 @@ function renderLinkPanel(selectedElements) {
     },
   };
 
+  const storyContextValue = {
+    state: {
+      currentPage: { elements: [] },
+    },
+  };
+
   const wrapper = (params) => (
     <ConfigContext.Provider value={configValue}>
-      {params.children}
+      <StoryContext.Provider value={storyContextValue}>
+        {params.children}
+      </StoryContext.Provider>
     </ConfigContext.Provider>
   );
 

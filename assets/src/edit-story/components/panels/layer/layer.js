@@ -53,7 +53,7 @@ const LayerButton = styled.button.attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     `
-    background: ${rgba(theme.colors.accent.primary, 0.14)};
+    background: ${rgba(theme.colors.bg.divider, 0.04)};
   `}
 
   &:active {
@@ -84,6 +84,8 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.white};
+  font-family: ${({ theme }) => theme.fonts.description.family};
+  font-size: ${({ theme }) => theme.fonts.description.size};
 `;
 
 const LockedIcon = styled(Locked)`

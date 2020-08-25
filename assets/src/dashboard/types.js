@@ -66,7 +66,7 @@ export const UserPropType = PropTypes.shape({
   avatar_urls: PropTypes.object,
 });
 
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)

@@ -38,7 +38,7 @@ const SectionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: -0.2em -1em 0.5em -1em;
+  margin: -12px;
 `;
 
 function ShapesPane(props) {
