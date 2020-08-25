@@ -61,6 +61,8 @@ const CategoryPillInnerContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  position: relative;
+  transition: transform 0.2s;
 `;
 
 // Flips the button upside down when expanded;
@@ -91,10 +93,7 @@ const Media3pCategories = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   function renderCategories() {
-    return (selectedCategoryId
-      ? [categories.find((e) => e.id === selectedCategoryId)]
-      : categories
-    ).map((e, i) => {
+    return categories.map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
@@ -103,6 +102,7 @@ const Media3pCategories = ({
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
           key={e.id}
+          categoryId={e.id}
           title={e.displayName}
           onClick={() => {
             if (selected) {
@@ -120,6 +120,9 @@ const Media3pCategories = ({
   const containerRef = useRef();
   const innerContainerRef = useRef();
 
+  const [focusedRowOffset, setFocusedRowOffset] = useState(0);
+
+  // Handles expand and contract animation.
   // We calculate the actual height of the categories list, and set its explicit
   // height if it's expanded, in order to have a CSS height transition.
   useLayoutEffect(() => {
@@ -130,8 +133,52 @@ const Media3pCategories = ({
       containerRef.current.style.height = '36px';
     } else {
       containerRef.current.style.height = `${innerContainerRef.current.offsetHeight}px`;
+      setFocusedRowOffset(0);
     }
   }, [containerRef, innerContainerRef, isExpanded]);
+
+  // Handles setting which row will be seen, by manipulating translateY.
+  useLayoutEffect(() => {
+    if (!innerContainerRef.current) {
+      return;
+    }
+    const categoryPills = Array.from(
+      innerContainerRef.current.querySelectorAll('.categoryPill')
+    );
+    const selectedCategoryPill = selectedCategoryId
+      ? categoryPills.find((p) => p.dataset.categoryId == selectedCategoryId)
+      : null;
+    const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
+
+    if (selectedCategoryPillOffsetTop) {
+      setFocusedRowOffset(selectedCategoryPillOffsetTop);
+    }
+  }, [innerContainerRef, isExpanded, selectedCategoryId]);
+
+  // Handles fading category rows in and out depending on the selected category.
+  useLayoutEffect(() => {
+    if (!innerContainerRef.current) {
+      return;
+    }
+    const categoryPills = Array.from(
+      innerContainerRef.current.querySelectorAll('.categoryPill')
+    );
+    const selectedCategoryPill = selectedCategoryId
+      ? categoryPills.find((p) => p.dataset.categoryId == selectedCategoryId)
+      : null;
+    const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
+
+    for (let categoryPill of categoryPills) {
+      const isSameRow =
+        selectedCategoryPill &&
+        categoryPill.offsetTop == selectedCategoryPillOffsetTop;
+      if (selectedCategoryPill && !isSameRow) {
+        categoryPill.classList.add('invisible');
+      } else {
+        categoryPill.classList.remove('invisible');
+      }
+    }
+  }, [innerContainerRef, isExpanded, selectedCategoryId]);
 
   return (
     <CategorySection hasCategories={Boolean(categories.length)}>
@@ -143,7 +190,10 @@ const Media3pCategories = ({
             isExpanded={isExpanded}
             role="tablist"
           >
-            <CategoryPillInnerContainer ref={innerContainerRef}>
+            <CategoryPillInnerContainer
+              ref={innerContainerRef}
+              style={{ transform: `translateY(-${focusedRowOffset}px` }}
+            >
               {renderCategories()}
             </CategoryPillInnerContainer>
           </CategoryPillContainer>

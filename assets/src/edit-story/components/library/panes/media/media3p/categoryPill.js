@@ -37,6 +37,10 @@ const PillContainer = styled.button`
   color: ${({ theme }) => theme.colors.fg.primary};
   user-select: none;
   background-clip: padding-box;
+  transition: opacity 0.2s;
+  &.invisible {
+    opacity: 0;
+  }
 `;
 
 PillContainer.propTypes = {
@@ -45,6 +49,7 @@ PillContainer.propTypes = {
 
 const CategoryPill = ({
   index,
+  categoryId,
   title,
   isSelected,
   isExpanded,
@@ -74,6 +79,8 @@ const CategoryPill = ({
       role="tab"
       aria-selected={isSelected}
       data-testid="mediaCategory"
+      className="categoryPill"
+      data-category-id={categoryId}
     >
       {title}
     </PillContainer>
@@ -82,6 +89,7 @@ const CategoryPill = ({
 
 CategoryPill.propTypes = {
   index: PropTypes.number,
+  categoryId: PropTypes.string,
   isSelected: PropTypes.bool,
   isExpanded: PropTypes.bool,
   setIsExpanded: PropTypes.func,
