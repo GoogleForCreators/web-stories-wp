@@ -100,7 +100,7 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.ZOOM.value]: EffectZoom,
       [ANIMATION_EFFECTS.DROP.value]: EffectDrop,
       [ANIMATION_EFFECTS.ROTATE_IN.value]: EffectRotateIn,
-    }[type] || throughput;
+    }[type?.value || type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
   args.easingPreset = undefined;

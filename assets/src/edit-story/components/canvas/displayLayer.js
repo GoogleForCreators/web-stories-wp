@@ -36,6 +36,7 @@ import { useStory } from '../../app';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 import useCanvas from './useCanvas';
+import PageAttachment from './pageAttachment';
 
 function DisplayPage({
   page,
@@ -139,6 +140,11 @@ function DisplayLayer() {
           ref={setPageContainer}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
+          overlay={
+            currentPage && (
+              <PageAttachment pageAttachment={currentPage.pageAttachment} />
+            )
+          }
         >
           <DisplayPage
             page={currentPage}
