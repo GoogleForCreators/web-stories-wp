@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -102,6 +102,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
+  const [isLinkFocused, setIsLinkFocused] = useState(false);
 
   const {
     actions: { getLinkMetadata },
@@ -180,6 +181,29 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const hasLinkSet = Boolean(link.url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
 
+  // If we're focusing on the link input and any of the relevant values changes,
+  // Check if we need to hide/display the guidelines.
+  useEffect(() => {
+    if (isLinkFocused) {
+      // Display the guidelines if there's no link / if it's multiple value.
+      if (
+        hasElementsInAttachmentArea &&
+        (!hasLinkSet || link.url === MULTIPLE_VALUE)
+      ) {
+        setDisplayLinkGuidelines(true);
+      } else {
+        setDisplayLinkGuidelines(false);
+      }
+    }
+  }, [
+    selectedElements,
+    isLinkFocused,
+    hasElementsInAttachmentArea,
+    hasLinkSet,
+    setDisplayLinkGuidelines,
+    link.url,
+  ]);
+
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <LinkInput
@@ -190,15 +214,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         }
         onBlur={() => {
           setDisplayLinkGuidelines(false);
+          setIsLinkFocused(false);
         }}
         onFocus={() => {
-          // Display the guidelines if there's no link / if it's multiple value.
-          if (
-            hasElementsInAttachmentArea &&
-            (!hasLinkSet || link.url === MULTIPLE_VALUE)
-          ) {
-            setDisplayLinkGuidelines(true);
-          }
+          setIsLinkFocused(true);
         }}
         value={link.url || ''}
         clear
