@@ -147,7 +147,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       if (properties.url) {
         // Don't submit any changes in case of multiple value.
         if (MULTIPLE_VALUE === properties.url) {
-          return undefined;
+          return;
         }
         const urlWithProtocol = withProtocol(properties.url);
         const valid = isValidUrl(urlWithProtocol);
@@ -157,7 +157,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           populateMetadata(urlWithProtocol);
         }
       }
-      return pushUpdateForObject(
+      pushUpdateForObject(
         'link',
         properties.url !== ''
           ? {
