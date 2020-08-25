@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 export const BEZIER = {
   linear: 'linear',
   inQuad: 'cubic-bezier(0.55, 0.085, 0.68, 0.53)',
@@ -52,22 +57,28 @@ export const ANIMATION_TYPES = {
 };
 
 export const ANIMATION_EFFECTS = {
-  DROP: 'effect-drop',
-  FADE_IN: 'effect-fade-in',
-  FLY_IN: 'effect-fly-in',
-  PAN: 'effect-pan',
-  PULSE: 'effect-pulse',
-  TWIRL_IN: 'effect-twirl-in',
-  WHOOSH_IN: 'effect-whoosh-in',
-  ZOOM: 'effect-zoom',
-  ROTATE_IN: 'effect-rotate-in',
+  DROP: { value: 'effect-drop', name: __('Drop', 'web-stories') },
+  FADE_IN: { value: 'effect-fade-in', name: __('Fade In', 'web-stories') },
+  FLY_IN: { value: 'effect-fly-in', name: __('Fly In', 'web-stories') },
+  PAN: { value: 'effect-pan', name: __('Pan', 'web-stories') },
+  PULSE: { value: 'effect-pulse', name: __('Pulse', 'web-stories') },
+  TWIRL_IN: { value: 'effect-twirl-in', name: __('Twirl In', 'web-stories') },
+  WHOOSH_IN: {
+    value: 'effect-whoosh-in',
+    name: __('Whoosh In', 'web-stories'),
+  },
+  ZOOM: { value: 'effect-zoom', name: __('Zoom', 'web-stories') },
+  ROTATE_IN: {
+    value: 'effect-rotate-in',
+    name: __('Rotate In', 'web-stories'),
+  },
 };
 
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
+  RIGHT_TO_LEFT: 'rightToLeft',
   BOTTOM_TO_TOP: 'bottomToTop',
   LEFT_TO_RIGHT: 'leftToRight',
-  RIGHT_TO_LEFT: 'rightToLeft',
 };
 
 export const ROTATION = {

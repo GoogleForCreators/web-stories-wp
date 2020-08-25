@@ -14,16 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import EditorSettingsView from '../';
-
-export default {
-  title: 'Dashboard/Views/EditorSettings/View',
-  component: EditorSettingsView,
-};
-
-export const _default = () => {
-  return <EditorSettingsView />;
-};
+export { default } from './panel';

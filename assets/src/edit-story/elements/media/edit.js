@@ -110,6 +110,9 @@ function MediaEdit({ element, box }) {
     [id, updateElementById]
   );
 
+  const isImage = 'image' === type;
+  const isVideo = 'video' === type;
+
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
@@ -137,8 +140,11 @@ function MediaEdit({ element, box }) {
     ...mediaProps,
   };
 
-  const isImage = 'image' === type;
-  const isVideo = 'video' === type;
+  const srcSet = calculateSrcSet(element.resource);
+  if (isImage && srcSet) {
+    cropMediaProps.srcSet = srcSet;
+  }
+
   return (
     <Element>
       {isImage && (
