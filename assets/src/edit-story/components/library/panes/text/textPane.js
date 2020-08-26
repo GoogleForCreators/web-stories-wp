@@ -35,12 +35,15 @@ import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import { dataFontEm } from '../../../../units';
 import { useHistory } from '../../../../app/history';
+import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
+import { PAGE_HEIGHT } from '../../../../constants';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 
 const SectionContent = styled.p``;
 
 const POSITION_MARGIN = dataFontEm(1);
+const TYPE = 'text';
 
 function TextPane(props) {
   const { insertElement } = useLibrary((state) => ({
@@ -54,7 +57,7 @@ function TextPane(props) {
 
   const lastPreset = useRef(null);
 
-  const getTopPosition = useCallback(
+  const getPosition = useCallback(
     (element) => {
       const { y } = element;
       // If the difference between the new and the previous version number is not 1,
@@ -66,26 +69,45 @@ function TextPane(props) {
         return y;
       }
       const {
-        element: { height, y: lastY },
+        element: { height: lastHeight, y: lastY },
       } = lastPreset.current;
-      return lastY + height + POSITION_MARGIN;
+      let positionedY = lastY + lastHeight + POSITION_MARGIN;
+      // Let's get the width/height of the element about to be inserted.
+      const { width, height } = getInsertedElementSize(
+        TYPE,
+        element.width,
+        element.height,
+        {
+          ...element,
+          y: positionedY,
+        }
+      );
+      // If the element is going out of page, use the default position.
+      if (positionedY + height >= PAGE_HEIGHT) {
+        positionedY = y;
+      }
+      return {
+        width,
+        height,
+        y: positionedY,
+      };
     },
     [versionNumber]
   );
 
   const handleClickPreset = useCallback(
     (element) => {
-      const y = getTopPosition(element);
-      const addedElement = insertElement('text', {
+      const atts = getPosition(element);
+      const addedElement = insertElement(TYPE, {
         ...element,
-        y,
+        ...atts,
       });
       lastPreset.current = {
         versionNumber,
         element: addedElement,
       };
     },
-    [getTopPosition, versionNumber, insertElement]
+    [getPosition, versionNumber, insertElement]
   );
 
   return (
@@ -102,7 +124,7 @@ function TextPane(props) {
       <Section
         title={__('Presets', 'web-stories')}
         titleTools={
-          <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
+          <MainButton onClick={() => insertElement(TYPE, DEFAULT_PRESET)}>
             {__('Add new text', 'web-stories')}
           </MainButton>
         }
