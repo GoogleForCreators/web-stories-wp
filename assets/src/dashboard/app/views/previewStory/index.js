@@ -215,7 +215,7 @@ const PreviewStory = ({ story, handleClose }) => {
             dimensions={modalDimensions}
             id={PREVIEW_CONTAINER_ID}
             data-testid="preview-iframe"
-            onKeyDown={(e) => handleIframeFocus(e)}
+            onKeyDown={handleIframeFocus}
             tabIndex={0}
           />
         )}
