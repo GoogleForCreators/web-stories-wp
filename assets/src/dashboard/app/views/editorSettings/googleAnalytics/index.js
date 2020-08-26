@@ -15,15 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useState, useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
-/**
- * External dependencies
- */
-import { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -52,28 +52,28 @@ export const TEXT = {
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
 };
 
-function GoogleAnalyticsSettings({
-  googleAnalyticsId = '',
-  handleUpdateSettings,
-}) {
+function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
 
-  const handleCancelUpdateId = useCallback(() => {
+  useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
+
+  const handleCancelUpdateId = useCallback(() => {
+    setAnalyticsId(googleAnalyticsId);
+  }, [googleAnalyticsId, setAnalyticsId]);
 
   const handleUpdateId = useCallback(
     (value) => {
       if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
         setInputError('');
-        return handleUpdateSettings({ newGoogleAnalyticsId: value });
+        return handleUpdate(value);
       }
       return setInputError(TEXT.INPUT_ERROR);
     },
-    [handleUpdateSettings, setInputError]
+    [handleUpdate, setInputError]
   );
-
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading htmlFor="gaTrackingID">
@@ -88,6 +88,7 @@ function GoogleAnalyticsSettings({
           onEditComplete={handleUpdateId}
           placeholder={TEXT.PLACEHOLDER}
           error={inputError}
+          noAutoFocus={true}
         />
         <TextInputHelperText>
           {TEXT.CONTEXT}
@@ -100,7 +101,7 @@ function GoogleAnalyticsSettings({
   );
 }
 GoogleAnalyticsSettings.propTypes = {
-  handleUpdateSettings: PropTypes.func,
+  handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
 };
 

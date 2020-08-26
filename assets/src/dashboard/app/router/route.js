@@ -18,13 +18,11 @@
  * External dependencies
  */
 
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
-
 /**
  * Internal dependencies
  */
-import { RouterContext } from './routerProvider';
+import useRouteHistory from './useRouteHistory';
 
 export function parentRoute() {
   const potentialParent = window.location.hash
@@ -91,7 +89,7 @@ export function matchPath(currentPath, path, exact = false) {
 }
 
 function Route({ component, path, exact }) {
-  const { state } = useContext(RouterContext);
+  const { state } = useRouteHistory();
   const match = matchPath(state.currentPath, path, exact);
   if (!match) {
     return null;

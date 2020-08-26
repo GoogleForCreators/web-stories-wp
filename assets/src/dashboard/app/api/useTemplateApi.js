@@ -15,16 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import moment from 'moment-timezone';
 import queryString from 'query-string';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -207,13 +207,13 @@ const useTemplateApi = (dataAdapter, config) => {
   }, []);
 
   const fetchExternalTemplates = useCallback(
-    (filters) => {
+    async (filters) => {
       dispatch({
         type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
         payload: true,
       });
 
-      const reshapedTemplates = getAllTemplates({ assetsURL }).map(
+      const reshapedTemplates = (await getAllTemplates({ assetsURL })).map(
         reshapeTemplateObject(false)
       );
       dispatch({

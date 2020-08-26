@@ -18,31 +18,98 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useCallback, useRef } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useKeyDownEffect } from '../../../../keyboard';
+import { useConfig } from '../../../../../app/config';
+import { narrowPill } from './pill';
 
 const Tab = styled.span`
+  ${narrowPill};
+  padding: 6px 16px;
+  height: 32px;
+  display: inline-block;
+  background-color: ${({ active, theme }) =>
+    active ? theme.colors.fg.primary : 'transparent'};
+  text-align: center;
+  opacity: 0.86;
   cursor: pointer;
-  font-size: 16px;
-  margin-right: 16px;
-  border-bottom: ${({ theme, active }) =>
-    active ? `solid 4px ${theme.colors.accent.primary};` : 'none'};
-  &:last-child: {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${({ active, theme }) =>
+    active ? theme.colors.fg.gray8 : theme.colors.fg.primary};
+
+  &:last-child {
     margin-right: 0;
   }
 `;
 
-function ProviderTab(props) {
+function ProviderTab({
+  id,
+  index,
+  name,
+  providerType,
+  active,
+  setSelectedProvider,
+}) {
+  const { isRTL } = useConfig();
+  const ref = useRef();
+
+  const onKeyDown = useCallback(
+    ({ key }) => {
+      if (!ref.current) {
+        return;
+      }
+      ref.current.tabIndex = -1;
+      const siblingSelector =
+        (key === 'ArrowRight' && !isRTL) || (key === 'ArrowLeft' && isRTL)
+          ? 'nextSibling'
+          : 'previousSibling';
+      const sibling = ref.current[siblingSelector];
+      if (sibling) {
+        sibling.tabIndex = 0;
+        sibling.focus();
+        const newProvider = sibling.dataset.providerType;
+        setSelectedProvider({ provider: newProvider });
+      }
+    },
+    [ref, isRTL, setSelectedProvider]
+  );
+
+  useKeyDownEffect(
+    ref,
+    {
+      key: ['left', 'right'],
+    },
+    onKeyDown,
+    [ref, onKeyDown]
+  );
+
   return (
-    <Tab onClick={props.onClick} active={props.active} id={props.id}>
-      {props.name}
+    <Tab
+      ref={ref}
+      tabIndex={index == 0 ? 0 : -1}
+      data-testid={'providerTab'}
+      onClick={() => setSelectedProvider({ provider: providerType })}
+      data-provider-type={providerType}
+      active={active}
+      id={id}
+    >
+      {name}
     </Tab>
   );
 }
 
 ProviderTab.propTypes = {
   id: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  providerType: PropTypes.string.isRequired,
   active: PropTypes.bool.isRequired,
+  setSelectedProvider: PropTypes.func.isRequired,
 };
 
 export default ProviderTab;

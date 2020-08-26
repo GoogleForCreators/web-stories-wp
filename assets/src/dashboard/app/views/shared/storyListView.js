@@ -134,6 +134,9 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
+const titleFormatted = (rawTitle) => {
+  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+};
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
@@ -255,7 +258,7 @@ export default function StoryListView({
                     />
                   ) : (
                     <>
-                      <Paragraph2>{story.title}</Paragraph2>
+                      <Paragraph2>{titleFormatted(story.title)}</Paragraph2>
                       <StoryMenu
                         onMoreButtonSelected={storyMenu.handleMenuToggle}
                         contextMenuId={storyMenu.contextMenuId}

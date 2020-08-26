@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -40,33 +45,53 @@ describe('Autoplay video', () => {
 
   it('should autoplay on insert and on drop', async () => {
     // TODO: Switch to role selector after they are merged
-    const videoFilter = fixture.screen.getByText('Video', {
-      exact: true,
-      selector: 'button',
-    });
+    const allFilter = fixture.screen.getByText('All');
+    await fixture.events.mouse.clickOn(allFilter);
+    const videoFilter = fixture.screen.getByText('Video');
     await fixture.events.mouse.clickOn(videoFilter);
     const video = fixture.screen.getAllByLabelText('ranger9', {
       selector: 'video',
     });
     await fixture.events.mouse.clickOn(video[0]);
-    const frames = fixture.screen.getAllByTestId('frameElement');
-    const videoFrame = frames[1];
+
+    const videoFrame = fixture.editor.canvas.framesLayer.frames[1].node;
     const videoId = videoFrame.dataset.elementId;
-    const video1El = fixture.querySelector(`#video-${videoId}`);
+
+    const video1El = fixture.editor.canvas.displayLayer
+      .display(videoId)
+      .node.querySelector('video');
     expect(video1El.paused).toBe(false);
 
-    const safezone = fixture.screen.getAllByTestId('safezone')[0];
+    const fullbleed = fixture.editor.canvas.fullbleed.container;
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(videoFrame, '10%', '10%', { steps: 12 }),
+      moveRel(videoFrame, '10%', '10%'),
       down(),
-      moveRel(safezone, 10, 10, { steps: 12 }),
+      moveRel(fullbleed, 10, 10),
       up(),
     ]);
-    // should not play during the drag
+    // Should not play during the drag
     expect(video1El.paused).toBe(true);
     await fixture.events.mouse.up();
     const backgroundId = await getBackgroundElementId(fixture);
-    const backgroundElVideo = fixture.querySelector(`#video-${backgroundId}`);
+    const backgroundElVideo = fixture.editor.canvas.displayLayer
+      .display(backgroundId)
+      .node.querySelector('video');
+    expect(backgroundElVideo.paused).toBe(false);
+
+    // Bug #2618 coverage
+    await fixture.events.mouse.seq(({ moveRel }) => [
+      moveRel(fullbleed, '10%', '10%'),
+    ]);
+    await waitFor(
+      () => fixture.editor.canvas.framesLayer.controls(backgroundId).pause
+    );
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.controls(backgroundId).pause
+    );
+    expect(backgroundElVideo.paused).toBe(true);
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.controls(backgroundId).play
+    );
     expect(backgroundElVideo.paused).toBe(false);
   });
 });

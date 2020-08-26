@@ -45,7 +45,7 @@ import {
 } from '../../../icons';
 import getBoundRect, {
   calcRotatedObjectPositionAndSize,
-} from '../utils/getBoundRect';
+} from '../../../utils/getBoundRect';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
 import { Panel } from '../panel';
 import useAlignment from './useAlignment';

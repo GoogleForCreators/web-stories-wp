@@ -124,6 +124,7 @@ function DropDownMenu({
                   options={options}
                   value={options[0].value}
                   toggleOptions={onMenuCancelled}
+                  hasMenuRole
                 />
               </DropDownContainer>
             </Popup>

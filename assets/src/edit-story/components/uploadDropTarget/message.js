@@ -15,16 +15,16 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { memo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies

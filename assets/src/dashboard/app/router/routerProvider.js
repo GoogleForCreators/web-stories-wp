@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createContext, useRef, useMemo, useEffect, useState } from 'react';
+import { useRef, useMemo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { parse, stringify } from 'query-string';
 import { createHashHistory } from 'history';
@@ -26,6 +26,7 @@ import { createHashHistory } from 'history';
  * Internal dependencies
  */
 import { trackScreenView } from '../../../tracking';
+import { createContext } from '../../utils';
 
 export const RouterContext = createContext({ state: {}, actions: {} });
 

@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
@@ -39,7 +41,7 @@ export const MediaGalleryContainer = styled.div`
   margin-top: 1em;
   position: relative;
   width: 100%;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
   min-height: 100px;
 `;
 
@@ -69,8 +71,14 @@ export const MediaGalleryLoadingPill = styled.div`
 
 export const MediaGalleryMessage = styled.div`
   color: ${({ theme }) => theme.colors.fg.white};
-  font-size: 16px;
   padding: 1em;
+  font-family: ${({ theme }) => theme.fonts.mediaError.family};
+  font-style: ${({ theme }) => theme.fonts.mediaError.style};
+  line-height: ${({ theme }) => theme.fonts.mediaError.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.mediaError.weight};
+  font-size: ${({ theme }) => theme.fonts.mediaError.size};
+  text-align: ${({ theme }) => theme.fonts.mediaError.textAlign};
+  opacity: 0.54;
 `;
 
 export const StyledPane = styled(Pane)`

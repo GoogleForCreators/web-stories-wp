@@ -44,6 +44,12 @@ const Search = styled(TextInput)`
   flex-grow: 1;
   border-radius: 4px;
   padding: 8px 16px 8px 16px;
+  border: 1px solid ${({ theme }) => theme.colors.outline};
+  background-color: transparent;
+
+  input {
+    text-align: center;
+  }
 `;
 
 const CloseIcon = styled(Close)`

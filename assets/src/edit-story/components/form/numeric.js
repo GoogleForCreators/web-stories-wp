@@ -22,13 +22,16 @@ import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
+
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
+import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
@@ -58,7 +61,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
-  flex-basis: ${({ flexBasis }) => flexBasis}px;
+  flex-basis: ${({ flexBasis }) => defaultUnit(flexBasis, 'px')};
   border: 1px solid;
   border-color: ${({ theme, focused }) =>
     focused ? theme.colors.whiteout : 'transparent'};
@@ -204,7 +207,7 @@ Numeric.propTypes = {
   suffix: PropTypes.any,
   disabled: PropTypes.bool,
   symbol: PropTypes.string,
-  flexBasis: PropTypes.number,
+  flexBasis: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   textCenter: PropTypes.bool,
   float: PropTypes.bool,
   min: PropTypes.number,

@@ -22,9 +22,8 @@ import { within } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useContext } from 'react';
 import Fixture from '../../../../karma/fixture';
-import { ApiContext } from '../../../api/apiProvider';
+import useApi from '../../../api/useApi';
 
 describe('Settings View', () => {
   let fixture;
@@ -52,7 +51,7 @@ describe('Settings View', () => {
   async function getSettingsState() {
     const {
       state: { settings },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return settings;
   }
@@ -96,7 +95,7 @@ describe('Settings View', () => {
 
     const input = within(settingsView).getByRole('textbox');
 
-    await fixture.events.hover(input);
+    expect(input).toBeTruthy();
 
     await fixture.events.click(input);
 
@@ -113,5 +112,54 @@ describe('Settings View', () => {
 
     const errorMessage = await fixture.screen.getByText('Invalid ID format');
     expect(errorMessage).toBeTruthy();
+  });
+
+  it('should remove a publisher logo on click', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo/
+    );
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
+
+    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
+      /^remove-publisher-logo/
+    )[0];
+
+    expect(RemovePublisherLogoButton).toBeTruthy();
+
+    await fixture.events.click(RemovePublisherLogoButton);
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo/);
+
+    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
+  });
+
+  it('should remove a publisher logo on keydown enter', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^publisher-logo/
+    );
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
+
+    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
+      /^remove-publisher-logo/
+    )[0];
+
+    expect(RemovePublisherLogoButton).toBeTruthy();
+
+    await fixture.events.focus(RemovePublisherLogoButton);
+    await fixture.events.keyboard.press('Enter');
+
+    const UpdatedPublisherLogos = within(
+      await fixture.screen.getByTestId('editor-settings')
+    ).queryAllByTestId(/^publisher-logo/);
+
+    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
   });
 });

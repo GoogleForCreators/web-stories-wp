@@ -30,10 +30,11 @@ import { useDropTargets } from '../../../../../app';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
-import { useMedia3pApi } from '../../../../../app/media/media3p/api';
-import getThumbnailUrl from '../../../../../elements/media/util';
+import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
+
+const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
 const styledTiles = css`
   width: 100%;
@@ -52,12 +53,20 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Container = styled.div`
+const Container = styled.div.attrs((props) => ({
+  style: {
+    width: props.width + 'px',
+    height: props.height + 'px',
+    margin: props.margin,
+  },
+}))``;
+
+const InnerContainer = styled.div`
   position: relative;
   display: flex;
   margin-bottom: 10px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
-  body${KEYBOARD_USER_SELECTOR} &:focus {
+  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
 `;
@@ -120,6 +129,7 @@ const HiddenPosterImage = styled.img`
  * @param {Object} param.resource Resource object
  * @param {number} param.width Width that element is inserted into editor.
  * @param {number} param.height Height that element is inserted into editor.
+ * @param {string?} param.margin The margin in around the element
  * @param {Function} param.onInsert Insertion callback.
  * @param {string} param.providerType Which provider the element is from.
  * @return {null|*} Element or null if does not map to video/image.
@@ -129,6 +139,7 @@ const MediaElement = ({
   resource,
   width: requestedWidth,
   height: requestedHeight,
+  margin,
   onInsert,
   providerType,
 }) => {
@@ -156,22 +167,6 @@ const MediaElement = ({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
-  const {
-    actions: { registerUsage },
-  } = useMedia3pApi();
-
-  const handleRegisterUsage = useCallback(() => {
-    if (
-      providerType !== 'local' &&
-      resource.attribution &&
-      resource.attribution.registerUsageUrl
-    ) {
-      registerUsage({
-        registerUsageUrl: resource.attribution.registerUsageUrl,
-      });
-    }
-  }, [providerType, resource, registerUsage]);
-
   const measureMediaElement = () =>
     mediaElement?.current?.getBoundingClientRect();
 
@@ -198,11 +193,10 @@ const MediaElement = ({
       onDragEnd: (e) => {
         e.preventDefault();
         setDraggingResource(null);
-        handleRegisterUsage();
         handleDrop(resource);
       },
     }),
-    [setDraggingResource, resource, handleDrag, handleDrop, handleRegisterUsage]
+    [setDraggingResource, resource, handleDrag, handleDrop]
   );
 
   const makeActive = useCallback(() => setActive(true), []);
@@ -214,6 +208,10 @@ const MediaElement = ({
     setActive(false);
   }, []);
 
+  const [hoverTimer, setHoverTimer] = useState(null);
+  const activeRef = useRef(active);
+  activeRef.current = active;
+
   useEffect(() => {
     if (type === 'video') {
       if (isMenuOpen) {
@@ -224,16 +222,25 @@ const MediaElement = ({
       } else {
         if (active) {
           setShowVideoDetail(false);
-          if (mediaElement.current) {
+          if (mediaElement.current && hoverTimer == null) {
+            const timer = setTimeout(() => {
+              if (activeRef.current) {
+                const playPromise = mediaElement.current.play();
+                if (playPromise) {
+                  // All supported browsers return promise but unit test runner does not.
+                  playPromise.catch(() => {});
+                }
+              }
+            }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
+            setHoverTimer(timer);
             // Pointer still in the media element, continue the video.
-            const playPromise = mediaElement.current.play();
-            if (playPromise) {
-              // All supported browsers return promise but unit test runner does not.
-              playPromise.catch(() => {});
-            }
           }
         } else {
           setShowVideoDetail(true);
+          if (hoverTimer != null) {
+            clearTimeout(hoverTimer);
+            setHoverTimer(null);
+          }
           if (mediaElement.current) {
             // Stop video and reset position.
             mediaElement.current.pause();
@@ -242,10 +249,15 @@ const MediaElement = ({
         }
       }
     }
-  }, [isMenuOpen, active, type]);
+    return () => {
+      if (hoverTimer != null) {
+        clearTimeout(hoverTimer);
+        setHoverTimer(null);
+      }
+    };
+  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = () => {
-    handleRegisterUsage();
     onInsert(resource, width, height);
   };
 
@@ -297,34 +309,39 @@ const MediaElement = ({
       data-testid="mediaElement"
       data-id={resourceId}
       className={'mediaElement'}
+      width={width}
+      height={height}
+      margin={margin}
       onPointerEnter={makeActive}
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      {innerElement}
-      {attribution}
-      {local && (
-        <CSSTransition
-          in
-          appear={true}
-          timeout={0}
-          className="uploading-indicator"
-        >
-          <UploadingIndicator />
-        </CSSTransition>
-      )}
-      {providerType === 'local' && (
-        <DropDownMenu
-          resource={resource}
-          display={active}
-          isMenuOpen={isMenuOpen}
-          onMenuOpen={onMenuOpen}
-          onMenuCancelled={onMenuCancelled}
-          onMenuSelected={onMenuSelected}
-        />
-      )}
+      <InnerContainer>
+        {innerElement}
+        {attribution}
+        {local && (
+          <CSSTransition
+            in
+            appear={true}
+            timeout={0}
+            className="uploading-indicator"
+          >
+            <UploadingIndicator />
+          </CSSTransition>
+        )}
+        {providerType === 'local' && (
+          <DropDownMenu
+            resource={resource}
+            display={active}
+            isMenuOpen={isMenuOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
+          />
+        )}
+      </InnerContainer>
     </Container>
   );
 };
@@ -350,7 +367,7 @@ function getInnerElement(
     return (
       <Image
         key={src}
-        src={getThumbnailUrl(width, resource)}
+        src={getSmallestUrlForWidth(width, resource)}
         ref={ref}
         width={width}
         height={height}
@@ -380,7 +397,10 @@ function getInnerElement(
           crossOrigin="anonymous"
           {...dropTargetsBindings}
         >
-          <source src={src} type={mimeType} />
+          <source
+            src={getSmallestUrlForWidth(width, resource)}
+            type={mimeType}
+          />
         </Video>
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
@@ -397,6 +417,7 @@ MediaElement.propTypes = {
   resource: PropTypes.object,
   width: PropTypes.number,
   height: PropTypes.number,
+  margin: PropTypes.string,
   onInsert: PropTypes.func,
   providerType: PropTypes.string,
 };

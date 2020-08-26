@@ -58,6 +58,7 @@ function useUploadWithPreview() {
       const blobUrl = element.resource.src;
       const keysToUpdate = objectPick(resource, [
         'src',
+        'sizes',
         'width',
         'height',
         'length',

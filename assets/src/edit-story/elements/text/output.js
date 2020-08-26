@@ -45,7 +45,13 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
  * @return {*} Rendered component.
  */
 export function TextOutputWithUnits({
-  element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
+  element: {
+    content: rawContent,
+    backgroundColor,
+    backgroundTextMode,
+    padding,
+    ...rest
+  },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
@@ -137,6 +143,8 @@ export function TextOutputWithUnits({
     ...textStyle,
     background: 'none',
   };
+
+  const content = rawContent.replace(/\n$/, '\n\n');
 
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.

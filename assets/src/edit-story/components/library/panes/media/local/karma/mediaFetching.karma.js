@@ -29,15 +29,20 @@ import { ROOT_MARGIN } from '../mediaPane';
 describe('MediaPane fetching', () => {
   let fixture;
   let localPane;
+  let nonMediaTab;
 
   beforeEach(async () => {
+    jasmine.clock().install();
+
     fixture = new Fixture();
     await fixture.render();
 
     localPane = fixture.querySelector('#library-pane-media');
+    nonMediaTab = fixture.querySelector('#library-tab-shapes');
   });
 
   afterEach(() => {
+    jasmine.clock().uninstall();
     fixture.restore();
   });
 
@@ -50,6 +55,7 @@ describe('MediaPane fetching', () => {
           `Not ready: ${mediaElements?.length} != ${expectedCount}`
         );
       }
+      jasmine.clock().tick(10);
     });
     expect(mediaElements.length).toBe(expectedCount);
   }
@@ -65,7 +71,22 @@ describe('MediaPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
+    jasmine.clock().tick(500);
 
     await expectMediaElements(MEDIA_PER_PAGE * 2);
+  });
+
+  it('should not load results on resize if tab is hidden', async () => {
+    localPane.querySelector('[data-testid="media-gallery-container"]');
+    await expectMediaElements(MEDIA_PER_PAGE);
+
+    await fixture.events.click(nonMediaTab);
+
+    // Simulate a browser window resize, and complete the event debounce cycle.
+    window.dispatchEvent(new Event('resize'));
+    jasmine.clock().tick(500);
+
+    // Expect no additional results to be loaded.
+    await expectMediaElements(MEDIA_PER_PAGE);
   });
 });

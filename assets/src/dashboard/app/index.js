@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -48,7 +48,7 @@ import {
   ToastProvider,
 } from '../components';
 import ApiProvider from './api/apiProvider';
-import { Route, RouterProvider, RouterContext, matchPath } from './router';
+import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
 import { ConfigProvider, useConfig } from './config';
 import {
   EditorSettingsView,
@@ -63,7 +63,7 @@ import {
 const AppContent = () => {
   const {
     state: { currentPath },
-  } = useContext(RouterContext);
+  } = useRouteHistory();
 
   const { capabilities: { canManageSettings } = {} } = useConfig();
   const enableSettingsView =

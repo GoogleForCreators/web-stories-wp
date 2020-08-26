@@ -26,6 +26,10 @@ import moment from 'moment-timezone';
 import { useMemo, useState } from 'react';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
+import {
+  publisherLogoIds as fillerPublisherLogoIds,
+  rawPublisherLogos,
+} from '../dataUtils/formattedPublisherLogos';
 import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
@@ -34,6 +38,7 @@ import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
 export default function ApiProviderFixture({ children }) {
+  const [media, setMediaState] = useState(getMediaState());
   const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
@@ -47,6 +52,15 @@ export default function ApiProviderFixture({ children }) {
         setSettingsState((currentState) =>
           updateSettings(updates, currentState)
         ),
+    }),
+    []
+  );
+
+  const mediaApi = useMemo(
+    () => ({
+      uploadMedia: jasmine.createSpy('uploadMedia'),
+      fetchMediaById: (newIds) =>
+        setMediaState((currentState) => fetchMediaById(newIds, currentState)),
     }),
     []
   );
@@ -83,7 +97,8 @@ export default function ApiProviderFixture({ children }) {
         fetchExternalTemplateById(id, templates),
       fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
       fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
-      fetchRelatedTemplates: () => fetchRelatedTemplates(templates),
+      fetchRelatedTemplates: (currentTemplateId) =>
+        fetchRelatedTemplates(currentTemplateId, templates),
       fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
     [templates]
@@ -114,12 +129,14 @@ export default function ApiProviderFixture({ children }) {
   const value = useMemo(
     () => ({
       state: {
+        media,
         settings,
         stories,
         templates,
         users,
       },
       actions: {
+        mediaApi,
         settingsApi,
         storyApi,
         templateApi,
@@ -128,10 +145,12 @@ export default function ApiProviderFixture({ children }) {
       },
     }),
     [
+      media,
       settings,
       stories,
       templates,
       users,
+      mediaApi,
       settingsApi,
       storyApi,
       templateApi,
@@ -148,28 +167,64 @@ ApiProviderFixture.propTypes = {
   children: PropTypes.node,
 };
 
+function getMediaState() {
+  return {
+    error: {},
+    isLoading: false,
+    newlyCreatedMediaIds: [],
+    mediaById: rawPublisherLogos,
+  };
+}
+
+function fetchMediaById(newIds, currentState) {
+  const mediaState = { ...(currentState || getMediaState()) };
+  // TODO handle adding Ids
+  return mediaState;
+}
+
 function getSettingsState() {
   return {
     error: {},
     googleAnalyticsId: '',
-    publisherLogos: [],
+    publisherLogoIds: [],
   };
 }
 
 function fetchSettings(currentState) {
   const settingsState = { ...currentState } || getSettingsState();
   settingsState.googleAnalyticsId = 'UA-000000-2';
-
+  settingsState.publisherLogoIds = fillerPublisherLogoIds.slice(0, 2);
   return settingsState;
 }
 
 function updateSettings(updates, currentState) {
-  const { googleAnalyticsId } = updates;
-
-  return {
-    ...currentState,
+  const {
     googleAnalyticsId,
-  };
+    publisherLogoIds,
+    publisherLogoIdToRemove,
+  } = updates;
+  if (googleAnalyticsId !== undefined) {
+    return {
+      ...currentState,
+      googleAnalyticsId,
+    };
+  } else if (publisherLogoIds) {
+    return {
+      ...currentState,
+      publisherLogoIds: [
+        ...new Set([...currentState.publisherLogoIds, ...publisherLogoIds]),
+      ],
+    };
+  } else if (publisherLogoIdToRemove) {
+    return {
+      ...currentState,
+      publisherLogoIds: currentState.publisherLogoIds.filter(
+        (logoId) => logoId !== publisherLogoIdToRemove
+      ),
+    };
+  }
+
+  return currentState;
 }
 
 function getStoriesState() {
@@ -364,17 +419,14 @@ function fetchExternalTemplateById(id, currentState) {
   return Promise.resolve(currentState.templates?.[id] ?? {});
 }
 
-function fetchRelatedTemplates(currentState) {
-  if (!currentState.templates) {
+function fetchRelatedTemplates(currentTemplateId, currentState) {
+  if (!currentState.templates || !currentTemplateId) {
     return [];
   }
-  // this will return anywhere between 1 and 5 "related" templates
-  const randomStartingIndex = Math.floor(
-    Math.random() * currentState.templatesOrderById.length
-  );
-  return [...currentState.templatesOrderById]
-    .splice(randomStartingIndex, 5)
-    .map((id) => {
-      return currentState.templates[id];
-    });
+
+  return currentState.templatesOrderById
+    .filter((id) => id !== currentTemplateId) // Filter out the current/active template
+    .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
+    .map((id) => currentState.templates[id]) // Map the ids to templates
+    .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
 }

@@ -16,3 +16,4 @@
 
 export { default as reshapeStoryObject } from './stories';
 export { default as reshapeStoryPreview } from './storyPreview';
+export { default as reshapePublisherLogo } from './publisherLogo';

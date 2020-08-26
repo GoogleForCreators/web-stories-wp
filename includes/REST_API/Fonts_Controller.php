@@ -98,10 +98,10 @@ class Fonts_Controller extends WP_REST_Controller {
 			$formatted_fonts[] = $this->prepare_response_for_collection( $data );
 		}
 
-		$response = rest_ensure_response( $formatted_fonts );
+		$response = new WP_REST_Response( $formatted_fonts );
 
-		$response->header( 'X-WP-Total', (int) $total_fonts );
-		$response->header( 'X-WP-TotalPages', (int) $max_pages );
+		$response->header( 'X-WP-Total', (string) $total_fonts );
+		$response->header( 'X-WP-TotalPages', (string) $max_pages );
 
 		return $response;
 	}
