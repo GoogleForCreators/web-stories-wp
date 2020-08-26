@@ -49,7 +49,7 @@ export class Library extends Container {
 
   get text() {
     return this._get(
-      this.getByRole('tab', { name: /Text library/ }),
+      this.getByRole('tabpanel', { name: /Text library/ }),
       'text',
       Text
     );
