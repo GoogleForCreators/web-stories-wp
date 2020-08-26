@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -65,6 +65,10 @@ const IframeContainer = styled.div`
   height: ${({ dimensions }) =>
     `${dimensions.height - CLOSE_BUTTON_SIZE.HEIGHT}px`};
   min-height: 90vh;
+
+  &:focus {
+    border: ${({ theme }) => theme.borders.bluePrimary};
+  }
 `;
 
 const HelperText = styled.p`
@@ -109,6 +113,7 @@ const PreviewStory = ({ story, handleClose }) => {
   );
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
+  const iframeContainerRef = useRef();
 
   const [modalDimensions, setModalDimensions] = useState({
     width: containerRef.current?.offsetWidth || window.innerWidth,
@@ -122,6 +127,8 @@ const PreviewStory = ({ story, handleClose }) => {
       let iframe = document.createElement('iframe');
       iframeContainer.appendChild(iframe);
       iframe.setAttribute('style', 'height:100%;width:100%;border:none;');
+      iframe.setAttribute('title', __('AMP preview', 'web-stories'));
+      iframe.setAttribute('tabindex', 0);
       iframe.contentWindow.document.open();
       iframe.contentWindow.document.write(previewMarkup);
       iframe.contentWindow.document.close();
@@ -158,6 +165,17 @@ const PreviewStory = ({ story, handleClose }) => {
     [setModalDimensions]
   );
 
+  const handleIframeFocus = useCallback(({ key, shiftKey }) => {
+    if (key.toLowerCase() !== 'tab') {
+      return false;
+    }
+    if (!shiftKey && iframeContainerRef?.current) {
+      // Force focus within the iframe to circumnavigate browser settings
+      return iframeContainerRef?.current.firstChild.contentWindow.document.body.focus();
+    }
+    return containerRef.current.focus();
+  }, []);
+
   return (
     <Modal
       contentLabel={
@@ -186,16 +204,19 @@ const PreviewStory = ({ story, handleClose }) => {
       <>
         <CloseButton
           onClick={handleClose}
-          aria-label={__('close', 'web-stories')}
+          aria-label={__('close preview', 'web-stories')}
         >
           <CloseIcon aria-hidden={true} />
         </CloseButton>
 
         {!previewError && (
           <IframeContainer
+            ref={iframeContainerRef}
             dimensions={modalDimensions}
             id={PREVIEW_CONTAINER_ID}
             data-testid="preview-iframe"
+            onKeyDown={(e) => handleIframeFocus(e)}
+            tabIndex={0}
           />
         )}
 
