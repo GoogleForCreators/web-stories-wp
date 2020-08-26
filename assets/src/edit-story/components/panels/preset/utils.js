@@ -24,6 +24,8 @@ import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
+import createSolid from '../../../utils/createSolid';
+import objectPick from '../../../utils/objectPick';
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = stylePresets.colors;
@@ -72,6 +74,23 @@ export function getTextPresets(elements, stylePresets) {
       .filter(
         (color) => color && !findMatchingColor(color, stylePresets, true)
       ),
+    textStyles: elements
+      .map((text) => {
+        const extractedColor = getHTMLInfo(text.content).color;
+        const color =
+          extractedColor === MULTIPLE_VALUE
+            ? createSolid(0, 0, 0)
+            : extractedColor;
+        return {
+          color,
+          ...objectPick(text, [
+            'backgroundColor',
+            'backgroundTextMode',
+            'font',
+          ]),
+        };
+      })
+      .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
   };
 }
 

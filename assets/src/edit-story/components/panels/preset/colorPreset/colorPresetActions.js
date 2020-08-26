@@ -29,10 +29,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app/story';
-import { PatternPropType } from '../../../types';
-import { useKeyDownEffect } from '../../keyboard';
-import { findMatchingColor } from './utils';
+import { useStory } from '../../../../app/story';
+import { PatternPropType } from '../../../../types';
+import { useKeyDownEffect } from '../../../keyboard';
+import { findMatchingColor } from '../utils';
 
 const ActionsWrapper = styled.div`
   text-align: center;

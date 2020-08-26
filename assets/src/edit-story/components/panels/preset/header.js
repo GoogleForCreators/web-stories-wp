@@ -103,8 +103,8 @@ function PresetsHeader({
   stylePresets,
   canCollapse,
 }) {
-  const { colors } = stylePresets;
-  const hasPresets = colors.length > 0;
+  const { colors, textStyles } = stylePresets;
+  const hasPresets = colors.length > 0 || textStyles.length > 0;
 
   const getActions = () => {
     return (

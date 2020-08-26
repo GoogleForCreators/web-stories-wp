@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import ColorPresetActions from '../preset/colorPreset/colorPresetActions';
+import PresetPanel from '../presetPanel';
 
-function getColorPickerActions(color) {
-  return <ColorPresetActions color={color} />;
+function ColorPresetPanel() {
+  return <PresetPanel />;
 }
 
-export default getColorPickerActions;
+export default ColorPresetPanel;

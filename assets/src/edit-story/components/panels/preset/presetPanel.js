@@ -31,7 +31,7 @@ import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 
-function StylePresetPanel() {
+function PresetPanel() {
   const {
     currentPage,
     selectedElementIds,
@@ -62,7 +62,7 @@ function StylePresetPanel() {
     }
   );
 
-  const { colors } = stylePresets;
+  const { colors, textStyles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
   const areAllType = (elType) => {
@@ -81,13 +81,13 @@ function StylePresetPanel() {
       updateStory({
         properties: {
           stylePresets: {
-            ...stylePresets,
+            textStyles: textStyles.filter((style) => style !== toDelete),
             colors: colors.filter((color) => color !== toDelete),
           },
         },
       });
     },
-    [colors, stylePresets, updateStory]
+    [colors, textStyles, updateStory]
   );
 
   const handleAddColorPreset = useCallback(
@@ -236,4 +236,4 @@ function StylePresetPanel() {
   );
 }
 
-export default StylePresetPanel;
+export default PresetPanel;
