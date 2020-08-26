@@ -40,17 +40,6 @@ import { PRESETS, DEFAULT_PRESET } from './textPresets';
 
 const SectionContent = styled.p``;
 
-// The format is:
-// { presetToBeAddedName: [list of previous preset names that need to be considered]
-// If the previous preset is not in the list of names, no special rules.
-// If the preset being added is not in the rules at all -- no special rules.
-// @todo Text staggering to be done as part of https://github.com/google/web-stories-wp/issues/1206
-const POSITIONING_RULES = {
-  'heading-2': ['heading-1'],
-  'heading-3': ['heading-1', 'heading-2'],
-  paragraph: ['heading-1', 'heading-2', 'heading-3'],
-};
-
 const POSITION_MARGIN = dataFontEm(1);
 
 function TextPane(props) {
@@ -67,31 +56,18 @@ function TextPane(props) {
 
   const getTopPosition = (name, element) => {
     const { y } = element;
-    // If we don't have any special rules, just add the default.
+    // If the difference between the new and the previous version number is not 1,
+    // the preset wasn't clicked right after the previous.
     if (
-      !POSITIONING_RULES[name] ||
       !lastPreset.current ||
-      !POSITIONING_RULES[name].includes(lastPreset.current.name)
+      versionNumber - lastPreset.current.versionNumber !== 1
     ) {
       return y;
     }
-    // If the difference between the new and the previous version number is not 1,
-    // the preset wasn't clicked right after the previous.
-    if (versionNumber - lastPreset.current.versionNumber !== 1) {
-      lastPreset.current = null;
-      return y;
-    }
-    // Use the positioning of the previous preset + add the previous preset's
-    // approximate height + lineHeight if more than 1 + position margin.
-    const lineHeightDelta = lastPreset.current.lineHeight - 1;
-    const addedLineHeight =
-      lineHeightDelta > 0 ? dataFontEm(lineHeightDelta) : 0;
-    return (
-      lastPreset.current.y +
-      lastPreset.current.fontSize +
-      addedLineHeight +
-      POSITION_MARGIN
-    );
+    const {
+      element: { height, y: lastY },
+    } = lastPreset.current;
+    return lastY + height + POSITION_MARGIN;
   };
 
   return (
@@ -118,24 +94,20 @@ function TextPane(props) {
           </MainButton>
         }
       >
-        {PRESETS.map(({ title, name, element }, i) => (
+        {PRESETS.map(({ title, element }, i) => (
           <FontPreview
             key={i}
             title={title}
             element={element}
             onClick={() => {
               const y = getTopPosition(name, element);
-              const { fontSize, lineHeight } = element;
-              insertElement('text', {
+              const addedElement = insertElement('text', {
                 ...element,
                 y,
               });
               lastPreset.current = {
-                name,
-                y,
-                fontSize,
-                lineHeight,
                 versionNumber,
+                element: addedElement,
               };
             }}
           />
