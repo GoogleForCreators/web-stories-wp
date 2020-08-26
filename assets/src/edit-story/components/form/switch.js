@@ -124,12 +124,10 @@ function Switch({ value, disabled, onChange, onLabel, offLabel }) {
     [onChange]
   );
   const ref = useRef();
-  useKeyDownEffect(
-    ref,
-    ['space', 'enter', 'left', 'right'],
-    () => handleChange(!value),
-    [handleChange, value]
-  );
+  useKeyDownEffect(ref, ['left', 'right'], () => handleChange(!value), [
+    handleChange,
+    value,
+  ]);
 
   return (
     <SwitchContainer ref={ref}>

@@ -25,7 +25,6 @@ import { Fragment, useRef, forwardRef, useImperativeHandle } from 'react';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
-import { useKeyDownEffect } from '../keyboard';
 import WithTooltip from '../tooltip';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
@@ -102,12 +101,6 @@ function Toggle(
   const inputRef = useRef();
   useImperativeHandle(ref, () => inputRef.current);
   const toggle = () => onChange(!value);
-
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
 
   return (
     <Wrapper>
