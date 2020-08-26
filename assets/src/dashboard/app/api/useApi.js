@@ -17,17 +17,9 @@
 /**
  * Internal dependencies
  */
-import { useContextSelector, identity } from '../../utils';
-import { ToasterContext } from './provider';
+import { identity, useContextSelector } from '../../utils';
+import { ApiContext } from './apiProvider';
 
-const useToasterContext = (selector = identity) => {
-  const context = useContextSelector(ToasterContext, selector);
-  if (!context) {
-    throw new Error(
-      'useToasterContext() must be used within a <Toast.Provider />'
-    );
-  }
-  return context;
-};
-
-export default useToasterContext;
+export default function useApi(selector = identity) {
+  return useContextSelector(ApiContext, selector);
+}

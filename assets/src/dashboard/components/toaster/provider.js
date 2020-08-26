@@ -16,8 +16,13 @@
 /**
  * External dependencies
  */
-import { createContext, useMemo, useCallback, useState } from 'react';
+import { useMemo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../utils';
 
 export const ToasterContext = createContext(null);
 

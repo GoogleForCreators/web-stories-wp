@@ -15,19 +15,14 @@
  */
 
 /**
- * Internal dependencies
+ * Converts degrees above 360 or below 0 to an equivalent between 0 and 360.
+ * Note that using just degrees % 360 would leave in negative degrees.
+ *
+ * @param {number} degrees Initial rotation angle.
+ * @return {number} Degrees between 0 and 360.
  */
-import { useContextSelector, identity } from '../../utils';
-import { ToasterContext } from './provider';
+function normalizeRotationDegrees(degrees) {
+  return ((degrees % 360) + 360) % 360;
+}
 
-const useToasterContext = (selector = identity) => {
-  const context = useContextSelector(ToasterContext, selector);
-  if (!context) {
-    throw new Error(
-      'useToasterContext() must be used within a <Toast.Provider />'
-    );
-  }
-  return context;
-};
-
-export default useToasterContext;
+export default normalizeRotationDegrees;
