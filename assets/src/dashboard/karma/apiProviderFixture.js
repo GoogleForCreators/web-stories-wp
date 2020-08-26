@@ -97,7 +97,8 @@ export default function ApiProviderFixture({ children }) {
         fetchExternalTemplateById(id, templates),
       fetchMyTemplates: jasmine.createSpy('fetchMyTemplates'),
       fetchMyTemplateById: (id) => fetchExternalTemplateById(id, templates),
-      fetchRelatedTemplates: () => fetchRelatedTemplates(templates),
+      fetchRelatedTemplates: (currentTemplateId) =>
+        fetchRelatedTemplates(currentTemplateId, templates),
       fetchSavedTemplates: jasmine.createSpy('fetchSavedTemplates'),
     }),
     [templates]
@@ -418,17 +419,14 @@ function fetchExternalTemplateById(id, currentState) {
   return Promise.resolve(currentState.templates?.[id] ?? {});
 }
 
-function fetchRelatedTemplates(currentState) {
-  if (!currentState.templates) {
+function fetchRelatedTemplates(currentTemplateId, currentState) {
+  if (!currentState.templates || !currentTemplateId) {
     return [];
   }
-  // this will return anywhere between 1 and 5 "related" templates
-  const randomStartingIndex = Math.floor(
-    Math.random() * currentState.templatesOrderById.length
-  );
-  return [...currentState.templatesOrderById]
-    .splice(randomStartingIndex, 5)
-    .map((id) => {
-      return currentState.templates[id];
-    });
+
+  return currentState.templatesOrderById
+    .filter((id) => id !== currentTemplateId) // Filter out the current/active template
+    .sort(() => 0.5 - Math.random()) // Randomly sort the array of ids
+    .map((id) => currentState.templates[id]) // Map the ids to templates
+    .slice(0, Math.floor(Math.random() * 5) + 1); // Return between 1 and 5 templates
 }
