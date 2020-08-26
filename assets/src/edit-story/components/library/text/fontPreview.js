@@ -40,6 +40,7 @@ const Preview = styled.button`
   width: 100%;
   border: none;
   cursor: pointer;
+  text-align: left;
 `;
 
 const Text = styled.span`

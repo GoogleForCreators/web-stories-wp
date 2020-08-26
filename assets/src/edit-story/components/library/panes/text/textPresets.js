@@ -50,10 +50,10 @@ const PRESETS = [
         'Heading 1',
         'web-stories'
       )}</span>`,
-      fontSize: dataFontEm(2),
-      lineHeight: 1.5,
+      fontSize: dataFontEm(2.7),
+      lineHeight: 1.1,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(2.7)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
@@ -61,14 +61,14 @@ const PRESETS = [
   {
     title: __('Heading 2', 'web-stories'),
     element: {
-      content: `<span style="font-weight: 600">${__(
+      content: `<span style="font-weight: 700">${__(
         'Heading 2',
         'web-stories'
       )}</span>`,
-      fontSize: dataFontEm(1.5),
-      lineHeight: 1.5,
+      fontSize: dataFontEm(2),
+      lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(2)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
@@ -76,14 +76,14 @@ const PRESETS = [
   {
     title: __('Heading 3', 'web-stories'),
     element: {
-      content: `<span style="font-weight: 500">${__(
+      content: `<span style="font-weight: 700">${__(
         'Heading 3',
         'web-stories'
       )}</span>`,
-      fontSize: dataFontEm(1),
-      lineHeight: 1,
+      fontSize: dataFontEm(1.6),
+      lineHeight: 1.3,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(1.6)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
@@ -95,10 +95,10 @@ const PRESETS = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'web-stories'
       ),
-      fontSize: dataFontEm(1.2),
+      fontSize: dataFontEm(1.3),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(1.3)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
@@ -110,7 +110,7 @@ const PRESETS = [
       fontSize: dataFontEm(1),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
@@ -119,10 +119,10 @@ const PRESETS = [
     title: __('OVERLINE', 'web-stories'),
     element: {
       content: __('OVERLINE', 'web-stories'),
-      fontSize: dataFontEm(1),
+      fontSize: dataFontEm(0.9),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(0.9)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
