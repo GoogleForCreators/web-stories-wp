@@ -28,15 +28,18 @@ export function generateParagraphTextStyle(
   { font, fontSize, lineHeight, padding, textAlign },
   dataToStyleX,
   dataToStyleY,
-  dataToFontSizeY = dataToStyleY
+  dataToFontSizeY = dataToStyleY,
+  element
 ) {
+  const { marginOffset } = calcFontMetrics(element);
   return {
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
     wordBreak: 'break-word',
-    margin: 0,
+    margin: `${-marginOffset / 2}px 0 ${-marginOffset / 2}px 0`,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
+    font,
     lineHeight,
     textAlign,
     padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
@@ -77,3 +80,24 @@ export const getHighlightLineheight = function (
     ${2 * Math.abs(verticalPadding)}${unit}
   )`;
 };
+
+export function calcFontMetrics(element) {
+  let marginOffset, contentAreaPx, lineBoxPx;
+  if (element.font.metrics) {
+    const {
+      fontSize,
+      lineHeight,
+      font: {
+        metrics: { upm, asc, des },
+      },
+    } = element;
+    contentAreaPx = ((asc - des) / upm) * fontSize;
+    lineBoxPx = lineHeight * fontSize;
+    marginOffset = lineBoxPx - contentAreaPx;
+  }
+  return {
+    marginOffset,
+    contentAreaPx,
+    lineBoxPx,
+  };
+}

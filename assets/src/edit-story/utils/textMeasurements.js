@@ -34,11 +34,11 @@ const MEASURER_STYLES = {
   left: '-9999px',
   zIndex: -1,
   overflowWrap: 'break-word',
-  ...(false && {
+  ...(true && {
     // For debugging purposes - this will show the output render on screen
     background: 'red',
     visibility: 'visible',
-    top: '99px',
+    top: '399px',
     left: '99px',
     zIndex: 10000,
   }),
@@ -55,7 +55,7 @@ const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
 export function calculateTextHeight(element, width) {
   const measurer = getOrCreateMeasurer(element);
   setStyles(measurer, { width: `${width}px`, height: null });
-  return measurer.offsetHeight;
+  return measurer.parentNode.offsetHeight;
 }
 
 export function calculateFitTextFontSize(element, width, height) {

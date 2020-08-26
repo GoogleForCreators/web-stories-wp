@@ -29,7 +29,11 @@ import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { generateParagraphTextStyle, getHighlightLineheight } from './util';
+import {
+  generateParagraphTextStyle,
+  getHighlightLineheight,
+  calcFontMetrics,
+} from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
@@ -45,13 +49,7 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
  * @return {*} Rendered component.
  */
 export function TextOutputWithUnits({
-  element: {
-    content: rawContent,
-    backgroundColor,
-    backgroundTextMode,
-    padding,
-    ...rest
-  },
+  element,
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
@@ -59,6 +57,13 @@ export function TextOutputWithUnits({
   dataToPaddingY,
   className,
 }) {
+  const {
+    content: rawContent,
+    backgroundColor,
+    backgroundTextMode,
+    padding,
+    ...rest
+  } = element;
   if (!dataToFontSizeY) {
     dataToFontSizeY = dataToStyleY;
   }
@@ -83,7 +88,8 @@ export function TextOutputWithUnits({
       rest,
       dataToStyleX,
       dataToStyleY,
-      dataToFontSizeY
+      dataToFontSizeY,
+      element
     ),
     ...bgColor,
     color: '#000000',
@@ -115,12 +121,16 @@ export function TextOutputWithUnits({
     top: 0,
   };
 
-  const marginStyle = {
-    display: 'inline-block',
-    position: 'relative',
-    margin: `0 ${paddingStyles.horizontal}`,
-    left: `-${paddingStyles.horizontal}`,
-    top: '0',
+  const marginStyle = (el) => {
+    const { marginOffset } = calcFontMetrics(el);
+    return {
+      display: 'block',
+      position: 'relative',
+      // margin: `0 ${paddingStyles.horizontal}`,
+      left: `-${paddingStyles.horizontal}`,
+      top: '0',
+      margin: `${-marginOffset / 2}px 0 ${-marginOffset / 2}px 0`,
+    };
   };
 
   const textStyle = {
@@ -157,7 +167,7 @@ export function TextOutputWithUnits({
     return (
       <>
         <p className={className} style={highlightStyle}>
-          <span style={marginStyle}>
+          <span style={marginStyle(element)}>
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
@@ -167,7 +177,7 @@ export function TextOutputWithUnits({
           </span>
         </p>
         <p className={className} style={highlightCloneStyle} aria-hidden="true">
-          <span style={marginStyle}>
+          <span style={marginStyle(element)}>
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
@@ -179,7 +189,6 @@ export function TextOutputWithUnits({
       </>
     );
   }
-
   return (
     <p
       className={className}

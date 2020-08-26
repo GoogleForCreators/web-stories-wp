@@ -48,13 +48,18 @@ import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
-import { generateParagraphTextStyle, getHighlightLineheight } from './util';
+import {
+  calcFontMetrics,
+  generateParagraphTextStyle,
+  getHighlightLineheight,
+} from './util';
 
 // Wrapper bounds the text editor within the element bounds. The resize
 // logic updates the height of this element to show the new height based
 // on the content and properties.
 const Wrapper = styled.div`
   ${elementFillContent}
+  ${({ backgroundColor }) => backgroundColor && elementWithBackgroundColor}
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -63,7 +68,6 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-  ${elementWithBackgroundColor}
 
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
@@ -123,8 +127,15 @@ function TextEdit({
   );
 
   const textProps = {
-    ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
+    ...generateParagraphTextStyle(
+      rest,
+      dataToEditorX,
+      dataToEditorY,
+      undefined,
+      element
+    ),
     font,
+    element,
     backgroundColor,
     opacity,
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
@@ -224,7 +235,8 @@ function TextEdit({
   const handleResize = useCallback(() => {
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
-    editorHeightRef.current = textBox.offsetHeight;
+    const { marginOffset } = calcFontMetrics(element);
+    editorHeightRef.current = textBox.offsetHeight - marginOffset;
     wrapper.style.height = `${editorHeightRef.current}px`;
     if (editWrapper) {
       const [dx, dy] = calcRotatedResizeOffset(
@@ -239,7 +251,7 @@ function TextEdit({
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [editWrapper, onResize]);
+  }, [editWrapper, element, onResize]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {
@@ -290,9 +302,16 @@ function TextEdit({
   } = useRichText();
 
   const editorContent = editorState && getContentFromState(editorState);
+  const wrapperBackgroundColor =
+    backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor;
 
   return (
-    <Wrapper ref={wrapperRef} onClick={onClick} data-testid="textEditor">
+    <Wrapper
+      ref={wrapperRef}
+      onClick={onClick}
+      data-testid="textEditor"
+      backgroundColor={wrapperBackgroundColor}
+    >
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
         <TextBox ref={highlightRef} {...textProps}>
           <Highlight
