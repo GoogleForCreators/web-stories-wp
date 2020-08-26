@@ -168,7 +168,7 @@ function useCanvasKeys(ref) {
 
   // Edit mode
   useGlobalKeyDownEffect(
-    'enter',
+    { key: 'enter', clickable: false },
     () => {
       if (selectedElements.length !== 1) {
         return;
