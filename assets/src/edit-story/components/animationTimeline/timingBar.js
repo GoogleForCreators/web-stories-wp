@@ -78,7 +78,7 @@ const commonMovableProps = {
 export default function TimingBar({
   duration,
   maxDuration,
-  offset,
+  delay,
   label,
   onUpdateAnimation,
 }) {
@@ -87,19 +87,19 @@ export default function TimingBar({
   const rightRef = useRef();
   const dragStart = useRef(0);
   const startingDuration = useRef(0);
-  const startingOffset = useRef(0);
+  const startingDelay = useRef(0);
   const [mountMovable, setMountMovable] = useState(false);
 
   const [internalDuration, setDuration] = useState(duration);
-  const [internalOffset, setOffset] = useState(offset);
+  const [internalDelay, setDelay] = useState(delay);
 
   const handleDragStart = useCallback(
     ({ clientX }) => {
       dragStart.current = clientX;
       startingDuration.current = duration;
-      startingOffset.current = offset;
+      startingDelay.current = delay;
     },
-    [duration, offset]
+    [duration, delay]
   );
 
   useEffect(() => {
@@ -107,30 +107,30 @@ export default function TimingBar({
   }, []);
 
   const handleDragEnd = useCallback(() => {
-    onUpdateAnimation({ duration: internalDuration, offset: internalOffset });
-  }, [internalDuration, internalOffset, onUpdateAnimation]);
+    onUpdateAnimation({ duration: internalDuration, delay: internalDelay });
+  }, [internalDuration, internalDelay, onUpdateAnimation]);
 
   const handleDragLeft = useCallback(({ clientX }) => {
     const movedMilliseconds = Math.max(
       ((clientX - dragStart.current) / MARK_OFFSET) * MS_DIVISOR,
-      -startingOffset.current
+      -startingDelay.current
     );
-    setOffset(Math.max(0, movedMilliseconds + startingOffset.current));
+    setDelay(Math.max(0, movedMilliseconds + startingDelay.current));
     setDuration(startingDuration.current - movedMilliseconds);
   }, []);
 
   const handleDragMiddle = useCallback(
     ({ clientX }) => {
       const stop =
-        maxDuration - (startingOffset.current + startingDuration.current);
+        maxDuration - (startingDelay.current + startingDuration.current);
       const movedMilliseconds = Math.min(
         Math.max(
           ((clientX - dragStart.current) / MARK_OFFSET) * MS_DIVISOR,
-          -startingOffset.current
+          -startingDelay.current
         ),
         stop
       );
-      setOffset(movedMilliseconds + startingOffset.current);
+      setDelay(movedMilliseconds + startingDelay.current);
     },
     [maxDuration]
   );
@@ -138,7 +138,7 @@ export default function TimingBar({
   const handleDragRight = useCallback(
     ({ clientX }) => {
       const stop =
-        maxDuration - (startingOffset.current + startingDuration.current);
+        maxDuration - (startingDelay.current + startingDuration.current);
       const movedMilliseconds = Math.min(
         ((clientX - dragStart.current) / MARK_OFFSET) * MS_DIVISOR,
         stop
@@ -153,24 +153,24 @@ export default function TimingBar({
     { key: ['left', 'right'] },
     ({ key }) => {
       let updatedDuration;
-      let updatedOffset;
+      let updatedDelay;
       switch (key) {
         case 'ArrowRight':
-          updatedOffset = Math.min(
-            internalOffset + KEY_OFFSET_MS,
-            internalDuration + internalOffset - MIN_ANIMATION_MS
+          updatedDelay = Math.min(
+            internalDelay + KEY_OFFSET_MS,
+            internalDuration + internalDelay - MIN_ANIMATION_MS
           );
           updatedDuration = Math.max(
             internalDuration - KEY_OFFSET_MS,
             MIN_ANIMATION_MS
           );
-          setOffset(updatedOffset);
+          setDelay(updatedDelay);
           setDuration(updatedDuration);
           break;
         case 'ArrowLeft':
-          updatedOffset = Math.max(internalOffset - KEY_OFFSET_MS, 0);
-          setOffset(updatedOffset);
-          if (internalOffset === 0) {
+          updatedDelay = Math.max(internalDelay - KEY_OFFSET_MS, 0);
+          setDelay(updatedDelay);
+          if (internalDelay === 0) {
             break;
           }
           updatedDuration = internalDuration + KEY_OFFSET_MS;
@@ -182,7 +182,7 @@ export default function TimingBar({
 
       onUpdateAnimation({
         duration: updatedDuration || internalDuration,
-        offset: updatedOffset,
+        delay: updatedDelay,
       });
     },
     [
@@ -190,8 +190,8 @@ export default function TimingBar({
       handleDragEnd,
       internalDuration,
       maxDuration,
-      offset,
-      internalOffset,
+      delay,
+      internalDelay,
       duration,
       onUpdateAnimation,
     ]
@@ -206,7 +206,7 @@ export default function TimingBar({
         case 'ArrowRight':
           updatedDuration = Math.min(
             internalDuration + KEY_OFFSET_MS,
-            maxDuration - offset
+            maxDuration - delay
           );
           setDuration(updatedDuration);
           break;
@@ -221,7 +221,7 @@ export default function TimingBar({
           break;
       }
 
-      onUpdateAnimation({ duration: updatedDuration, offset: internalOffset });
+      onUpdateAnimation({ duration: updatedDuration, delay: internalDelay });
     },
     [
       rightRef,
@@ -229,8 +229,8 @@ export default function TimingBar({
       internalDuration,
       maxDuration,
       duration,
-      offset,
-      internalOffset,
+      delay,
+      internalDelay,
       onUpdateAnimation,
     ]
   );
@@ -239,24 +239,24 @@ export default function TimingBar({
     middleRef,
     { key: ['left', 'right'] },
     ({ key }) => {
-      let updatedOffset;
+      let updatedDelay;
       switch (key) {
         case 'ArrowRight':
-          updatedOffset = Math.min(
-            internalOffset + KEY_OFFSET_MS,
+          updatedDelay = Math.min(
+            internalDelay + KEY_OFFSET_MS,
             maxDuration - internalDuration
           );
-          setOffset(updatedOffset);
+          setDelay(updatedDelay);
           break;
         case 'ArrowLeft':
-          updatedOffset = Math.max(internalOffset - KEY_OFFSET_MS, 0);
-          setOffset(updatedOffset);
+          updatedDelay = Math.max(internalDelay - KEY_OFFSET_MS, 0);
+          setDelay(updatedDelay);
           break;
         default:
           break;
       }
 
-      onUpdateAnimation({ duration: internalDuration, offset: updatedOffset });
+      onUpdateAnimation({ duration: internalDuration, delay: updatedDelay });
     },
     [
       middleRef,
@@ -264,8 +264,8 @@ export default function TimingBar({
       internalDuration,
       maxDuration,
       duration,
-      offset,
-      internalOffset,
+      delay,
+      internalDelay,
       onUpdateAnimation,
     ]
   );
@@ -274,7 +274,7 @@ export default function TimingBar({
     <Bar
       style={{
         width: (internalDuration / MS_DIVISOR) * MARK_OFFSET,
-        left: (internalOffset / MS_DIVISOR) * MARK_OFFSET,
+        left: (internalDelay / MS_DIVISOR) * MARK_OFFSET,
       }}
     >
       <Handle ref={leftRef} data-testid={`start-animation-handle-${label}`}>
@@ -318,7 +318,7 @@ export default function TimingBar({
 TimingBar.propTypes = {
   duration: propTypes.number.isRequired,
   maxDuration: propTypes.number.isRequired,
-  offset: propTypes.number.isRequired,
+  delay: propTypes.number.isRequired,
   label: propTypes.string.isRequired,
   onUpdateAnimation: propTypes.func.isRequired,
 };

@@ -30,7 +30,7 @@ const animations = Array.from(Array(10).keys()).reduce((acc, id) => {
   acc[id] = {
     id,
     duration: 500,
-    offset: id % 2 ? 100 : 0,
+    delay: id % 2 ? 100 : 0,
     label: `Animation ${id}`,
   };
   return acc;
@@ -75,8 +75,8 @@ describe('<AnimationTimeline />', function () {
      * so the new duration should be 600ms.
      */
     expect(updaterFn).toHaveBeenCalledWith(
-      { duration: 500, id: 0, label: 'Animation 0', offset: 0 },
-      { duration: 600, offset: 0 }
+      { duration: 500, id: 0, label: 'Animation 0', delay: 0 },
+      { duration: 600, delay: 0 }
     );
   });
 
@@ -105,12 +105,12 @@ describe('<AnimationTimeline />', function () {
      * so the new duration should be 400ms.
      */
     expect(updaterFn).toHaveBeenCalledWith(
-      { duration: 500, id: 0, label: 'Animation 0', offset: 0 },
-      { duration: 400, offset: 0 }
+      { duration: 500, id: 0, label: 'Animation 0', delay: 0 },
+      { duration: 400, delay: 0 }
     );
   });
 
-  it('should update the offset and duration when the start timing bar is adjusted to the left', function () {
+  it('should update the delay and duration when the start timing bar is adjusted to the left', function () {
     const updaterFn = jest.fn();
     const { getByTestId } = renderWithTheme(
       <AnimationTimeline
@@ -132,15 +132,15 @@ describe('<AnimationTimeline />', function () {
 
     /**
      * Starting duration was 500ms with a 100ms, one left key press moves -100ms,
-     * so the new duration should be 600ms with an offset of 0s.
+     * so the new duration should be 600ms with an delay of 0s.
      */
     expect(updaterFn).toHaveBeenCalledWith(
-      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
-      { duration: 600, offset: 0 }
+      { duration: 500, id: 1, label: 'Animation 1', delay: 100 },
+      { duration: 600, delay: 0 }
     );
   });
 
-  it('should update the offset and duration when the start timing bar is adjusted to the right', function () {
+  it('should update the delay and duration when the start timing bar is adjusted to the right', function () {
     const updaterFn = jest.fn();
     const { getByTestId } = renderWithTheme(
       <AnimationTimeline
@@ -162,15 +162,15 @@ describe('<AnimationTimeline />', function () {
 
     /**
      * Starting duration was 500ms with a 100ms, one right key press moves 100ms,
-     * so the new duration should be 400ms with an offset of 200ms.
+     * so the new duration should be 400ms with an delay of 200ms.
      */
     expect(updaterFn).toHaveBeenCalledWith(
-      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
-      { duration: 400, offset: 200 }
+      { duration: 500, id: 1, label: 'Animation 1', delay: 100 },
+      { duration: 400, delay: 200 }
     );
   });
 
-  it('should update the offset when the location timing bar is adjusted to the right', function () {
+  it('should update the delay when the location timing bar is adjusted to the right', function () {
     const updaterFn = jest.fn();
     const { getByTestId } = renderWithTheme(
       <AnimationTimeline
@@ -192,15 +192,15 @@ describe('<AnimationTimeline />', function () {
 
     /**
      * Starting duration was 500ms with a 100ms, one right key press moves 100ms,
-     * so the new duration should be 500ms with an offset of 200ms.
+     * so the new duration should be 500ms with an delay of 200ms.
      */
     expect(updaterFn).toHaveBeenCalledWith(
-      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
-      { duration: 500, offset: 200 }
+      { duration: 500, id: 1, label: 'Animation 1', delay: 100 },
+      { duration: 500, delay: 200 }
     );
   });
 
-  it('should update the offset when the location timing bar is adjusted to the left', function () {
+  it('should update the delay when the location timing bar is adjusted to the left', function () {
     const updaterFn = jest.fn();
     const { getByTestId } = renderWithTheme(
       <AnimationTimeline
@@ -222,11 +222,11 @@ describe('<AnimationTimeline />', function () {
 
     /**
      * Starting duration was 500ms with a 100ms, one right key press moves 100ms,
-     * so the new duration should be 500ms with an offset of 0s.
+     * so the new duration should be 500ms with an delay of 0s.
      */
     expect(updaterFn).toHaveBeenCalledWith(
-      { duration: 500, id: 1, label: 'Animation 1', offset: 100 },
-      { duration: 500, offset: 0 }
+      { duration: 500, id: 1, label: 'Animation 1', delay: 100 },
+      { duration: 500, delay: 0 }
     );
   });
 });
