@@ -52,7 +52,7 @@ const Tooltip = styled.div`
   align-items: center;
   text-align: center;
   flex-direction: row;
-  max-width: 12em;
+  max-width: 13em;
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};

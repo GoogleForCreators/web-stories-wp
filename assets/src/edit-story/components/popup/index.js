@@ -126,14 +126,16 @@ function Popup({
 
   useLayoutEffect(() => {
     setMounted(true);
+    if (!isOpen) {
+      return () => {};
+    }
+    positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
       document.removeEventListener('scroll', positionPopup, true);
     };
-  }, [positionPopup]);
-
-  useLayoutEffect(positionPopup, [positionPopup, isOpen]);
+  }, [isOpen, positionPopup]);
 
   useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
 
