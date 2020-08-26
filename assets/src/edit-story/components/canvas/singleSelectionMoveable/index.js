@@ -191,6 +191,11 @@ function SingleSelectionMoveable({
     resetMoveable,
   });
 
+  const snapProps = useSnapping({
+    otherNodes,
+    canSnap: canSnap && actionsEnabled,
+  });
+
   return (
     <Moveable
       className={classNames}
@@ -204,12 +209,9 @@ function SingleSelectionMoveable({
       {...dragProps}
       {...resizeProps}
       {...rotateProps}
+      {...snapProps}
       origin={false}
       pinchable={true}
-      {...useSnapping({
-        otherNodes,
-        canSnap: canSnap && actionsEnabled,
-      })}
     />
   );
 }
