@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -54,21 +54,39 @@ function TextPane(props) {
 
   const lastPreset = useRef(null);
 
-  const getTopPosition = (name, element) => {
-    const { y } = element;
-    // If the difference between the new and the previous version number is not 1,
-    // the preset wasn't clicked right after the previous.
-    if (
-      !lastPreset.current ||
-      versionNumber - lastPreset.current.versionNumber !== 1
-    ) {
-      return y;
-    }
-    const {
-      element: { height, y: lastY },
-    } = lastPreset.current;
-    return lastY + height + POSITION_MARGIN;
-  };
+  const getTopPosition = useCallback(
+    (element) => {
+      const { y } = element;
+      // If the difference between the new and the previous version number is not 1,
+      // the preset wasn't clicked right after the previous.
+      if (
+        !lastPreset.current ||
+        versionNumber - lastPreset.current.versionNumber !== 1
+      ) {
+        return y;
+      }
+      const {
+        element: { height, y: lastY },
+      } = lastPreset.current;
+      return lastY + height + POSITION_MARGIN;
+    },
+    [versionNumber]
+  );
+
+  const handleClickPreset = useCallback(
+    (element) => {
+      const y = getTopPosition(element);
+      const addedElement = insertElement('text', {
+        ...element,
+        y,
+      });
+      lastPreset.current = {
+        versionNumber,
+        element: addedElement,
+      };
+    },
+    [getTopPosition, versionNumber, insertElement]
+  );
 
   return (
     <Pane id={paneId} {...props}>
@@ -84,12 +102,7 @@ function TextPane(props) {
       <Section
         title={__('Presets', 'web-stories')}
         titleTools={
-          <MainButton
-            onClick={() => {
-              lastPreset.current = null;
-              insertElement('text', DEFAULT_PRESET);
-            }}
-          >
+          <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
             {__('Add new text', 'web-stories')}
           </MainButton>
         }
@@ -99,17 +112,7 @@ function TextPane(props) {
             key={i}
             title={title}
             element={element}
-            onClick={() => {
-              const y = getTopPosition(name, element);
-              const addedElement = insertElement('text', {
-                ...element,
-                y,
-              });
-              lastPreset.current = {
-                versionNumber,
-                element: addedElement,
-              };
-            }}
+            onClick={() => handleClickPreset(element)}
           />
         ))}
       </Section>
