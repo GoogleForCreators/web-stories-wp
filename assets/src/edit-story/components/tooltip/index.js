@@ -36,20 +36,23 @@ const Wrapper = styled.div`
 `;
 
 const Tooltip = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.black};
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 12px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  ${({ theme }) => css`
+    background-color: ${theme.colors.bg.black};
+    color: ${theme.colors.fg.white};
+    font-family: ${theme.fonts.tab.family};
+    font-size: ${theme.fonts.tab.size};
+    line-height: ${theme.fonts.tab.lineHeight};
+    letter-spacing: ${theme.fonts.tab.letterSpacing};
+    box-shadow: 0px 6px 10px ${rgba(theme.colors.bg.black, 0.1)};
+  `}
   padding: ${PADDING}px ${PADDING * 2}px;
   border-radius: 6px;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   flex-direction: row;
-  max-width: 180px;
+  max-width: 12em;
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};

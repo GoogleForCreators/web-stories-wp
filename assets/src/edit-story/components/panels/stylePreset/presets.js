@@ -139,7 +139,7 @@ function Presets({
     let tooltip = null;
     if (disabled) {
       tooltip = isBackground
-        ? __('Page background colors can not have an opacity.', 'web-stories')
+        ? __('Page background colors cannot have an opacity.', 'web-stories')
         : __('Gradient not allowed for Text', 'web-stories');
     }
     return (
