@@ -13,4 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default null;
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import PresetPanel from '../presetPanel';
+
+function StylePresetPanel() {
+  return (
+    <PresetPanel presetType="style" title={__('Saved styles', 'web-stories')} />
+  );
+}
+export default StylePresetPanel;

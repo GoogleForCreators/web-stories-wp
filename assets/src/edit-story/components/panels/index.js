@@ -33,7 +33,7 @@ import VideoAccessibilityPanel from './videoAccessibility';
 import NoSelectionPanel from './noSelection';
 import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
-//import StylePresetPanel from './preset/stylePreset';
+import StylePresetPanel from './preset/stylePreset';
 import ColorPresetPanel from './preset/colorPreset';
 export { default as LayerPanel } from './layer';
 
@@ -140,8 +140,7 @@ export function getPanels(elements, options = {}) {
         case COLOR_PRESETS:
           return { type, Panel: ColorPresetPanel };
         case STYLE_PRESETS:
-          return null;
-          //return { type, Panel: StylePresetPanel };
+          return { type, Panel: StylePresetPanel };
         case LAYER_STYLE:
           return { type, Panel: LayerStylePanel };
         case BACKGROUND_OVERLAY:

@@ -26,12 +26,19 @@ import { useStory } from '../../../app/story';
 import { Panel } from '../panel';
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import { COLOR_PRESETS_PER_ROW } from '../../../constants';
-import { getPagePreset, getShapePresets, getTextPresets } from './utils';
+import {
+  getPagePreset,
+  getShapePresets,
+  getTextPresets,
+  areAllType,
+} from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
 
-function PresetPanel() {
+function PresetPanel({ presetType = 'color', title, itemRenderer }) {
+  const isStyle = 'style' === presetType;
+  const isColor = 'color' === presetType;
   const {
     currentPage,
     selectedElementIds,
@@ -65,15 +72,8 @@ function PresetPanel() {
   const { colors, textStyles } = stylePresets;
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const areAllType = (elType) => {
-    return (
-      selectedElements.length > 0 &&
-      selectedElements.every(({ type }) => elType === type)
-    );
-  };
-
-  const isText = areAllType('text');
-  const isShape = areAllType('shape');
+  const isText = areAllType('text', selectedElements);
+  const isShape = areAllType('shape', selectedElements);
   const isBackground = selectedElements[0].id === currentPage.elements[0].id;
 
   const handleDeletePreset = useCallback(
@@ -90,7 +90,7 @@ function PresetPanel() {
     [colors, textStyles, updateStory]
   );
 
-  const handleAddColorPreset = useCallback(
+  const handleAddPreset = useCallback(
     (evt) => {
       evt.stopPropagation();
       let addedPresets = {
@@ -99,7 +99,7 @@ function PresetPanel() {
       if (isText) {
         addedPresets = {
           ...addedPresets,
-          ...getTextPresets(selectedElements, stylePresets),
+          ...getTextPresets(selectedElements, stylePresets, presetType),
         };
       } else if (isBackground) {
         addedPresets = {
@@ -112,11 +112,14 @@ function PresetPanel() {
           ...getShapePresets(selectedElements, stylePresets),
         };
       }
-      if (addedPresets.colors?.length > 0) {
+      if (
+        addedPresets.colors?.length > 0 ||
+        addedPresets.textStyles?.length > 0
+      ) {
         updateStory({
           properties: {
             stylePresets: {
-              ...stylePresets,
+              textStyles: [...textStyles, addedPresets.textStyles],
               colors: [...colors, ...addedPresets.colors],
             },
           },
@@ -128,6 +131,8 @@ function PresetPanel() {
       isBackground,
       colors,
       isText,
+      presetType,
+      textStyles,
       selectedElements,
       updateStory,
       stylePresets,
@@ -210,6 +215,10 @@ function PresetPanel() {
   const resizeable = hasPresets;
   const canCollapse = !isEditMode && hasPresets;
 
+  if (!isStyle && !isColor) {
+    return null;
+  }
+
   return (
     <Panel
       name="stylepreset"
@@ -218,18 +227,18 @@ function PresetPanel() {
       canCollapse={canCollapse}
     >
       <PresetsHeader
-        handleAddColorPreset={handleAddColorPreset}
-        stylePresets={stylePresets}
+        handleAddPreset={handleAddPreset}
+        presets={isColor ? colors : textStyles}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         canCollapse={canCollapse}
+        title={title}
       />
       <Presets
         isEditMode={isEditMode}
-        stylePresets={stylePresets}
+        presets={isColor ? colors : textStyles}
         handleOnClick={handlePresetClick}
-        isBackground={isBackground}
-        isText={isText}
+        itemRenderer={itemRenderer}
       />
       {resizeable && <Resize position="bottom" />}
     </Panel>

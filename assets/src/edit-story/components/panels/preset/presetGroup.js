@@ -45,7 +45,7 @@ const ButtonWrapper = styled.div`
   margin: auto;
 `;
 
-function PresetGroup({ presets, itemRenderer, type }) {
+function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
 
@@ -98,7 +98,7 @@ function PresetGroup({ presets, itemRenderer, type }) {
     <Group ref={groupRef}>
       {presets.map((preset, i) => (
         <ButtonWrapper key={i}>
-          {itemRenderer(preset, i, activeIndex)}
+          {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
         </ButtonWrapper>
       ))}
     </Group>

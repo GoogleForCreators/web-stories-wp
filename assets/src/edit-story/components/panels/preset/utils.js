@@ -65,32 +65,38 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-export function getTextPresets(elements, stylePresets) {
+export function getTextPresets(elements, stylePresets, type) {
   // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
   return {
-    colors: elements
-      .map(({ content }) => getHTMLInfo(content).color)
-      .filter((color) => color !== MULTIPLE_VALUE)
-      .filter(
-        (color) => color && !findMatchingColor(color, stylePresets, true)
-      ),
-    textStyles: elements
-      .map((text) => {
-        const extractedColor = getHTMLInfo(text.content).color;
-        const color =
-          extractedColor === MULTIPLE_VALUE
-            ? createSolid(0, 0, 0)
-            : extractedColor;
-        return {
-          color,
-          ...objectPick(text, [
-            'backgroundColor',
-            'backgroundTextMode',
-            'font',
-          ]),
-        };
-      })
-      .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
+    colors:
+      'style' === type
+        ? []
+        : elements
+            .map(({ content }) => getHTMLInfo(content).color)
+            .filter((color) => color !== MULTIPLE_VALUE)
+            .filter(
+              (color) => color && !findMatchingColor(color, stylePresets, true)
+            ),
+    textStyles:
+      'color' === type
+        ? []
+        : elements
+            .map((text) => {
+              const extractedColor = getHTMLInfo(text.content).color;
+              const color =
+                extractedColor === MULTIPLE_VALUE
+                  ? createSolid(0, 0, 0)
+                  : extractedColor;
+              return {
+                color,
+                ...objectPick(text, [
+                  'backgroundColor',
+                  'backgroundTextMode',
+                  'font',
+                ]),
+              };
+            })
+            .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
   };
 }
 
@@ -136,3 +142,10 @@ export function presetHasOpacity(preset) {
 export function presetHasGradient({ type }) {
   return Boolean(type) && 'solid' !== type;
 }
+
+export const areAllType = (elType, selectedElements) => {
+  return (
+    selectedElements.length > 0 &&
+    selectedElements.every(({ type }) => elType === type)
+  );
+};

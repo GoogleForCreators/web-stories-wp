@@ -31,7 +31,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Add, EditPencil } from '../../../icons';
-import { StylePresetPropType } from '../../../types';
 import { useKeyDownEffect } from '../../keyboard';
 import { PanelTitle } from '../panel';
 
@@ -48,7 +47,7 @@ const buttonCSS = css`
   justify-content: center;
 `;
 
-const AddColorPresetButton = styled.button`
+const AddPresetButton = styled.button`
   ${buttonCSS}
   svg {
     width: 26px;
@@ -97,14 +96,14 @@ Button.propTypes = {
 };
 
 function PresetsHeader({
-  handleAddColorPreset,
+  title,
+  handleAddPreset,
   isEditMode,
   setIsEditMode,
-  stylePresets,
+  presets,
   canCollapse,
 }) {
-  const { colors, textStyles } = stylePresets;
-  const hasPresets = colors.length > 0 || textStyles.length > 0;
+  const hasPresets = presets.length > 0;
 
   const getActions = () => {
     return (
@@ -128,8 +127,8 @@ function PresetsHeader({
         )}
         {!isEditMode && (
           <Button
-            Icon={AddColorPresetButton}
-            onClick={handleAddColorPreset}
+            Icon={AddPresetButton}
+            onClick={handleAddPreset}
             aria-label={__('Add preset', 'web-stories')}
           >
             <Add />
@@ -142,15 +141,15 @@ function PresetsHeader({
   // Todo: Rename label to 'Presets' post-beta.
   return (
     <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
-      {__('Saved Colors', 'web-stories')}
+      {title}
     </PanelTitle>
   );
 }
 
 PresetsHeader.propTypes = {
-  stylePresets: StylePresetPropType.isRequired,
+  presets: PropTypes.array.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  handleAddColorPreset: PropTypes.func.isRequired,
+  handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
   canCollapse: PropTypes.bool.isRequired,
 };
