@@ -64,7 +64,7 @@ const Container = styled.div`
   border-radius: 4px;
   border: 1px solid transparent;
   &:focus-within {
-    border-color: ${({ theme }) => theme.colors.whiteout};
+    border-color: ${({ theme }) => theme.colors.whiteout} !important;
   }
 `;
 
