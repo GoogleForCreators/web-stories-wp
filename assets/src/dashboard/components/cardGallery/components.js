@@ -18,6 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
+
+/**
+ * Internal dependencies
+ */
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 export const GalleryContainer = styled.div`
   ${({ maxWidth }) => `
@@ -60,6 +66,12 @@ export const MiniCardButton = styled.button(
       isSelected ? theme.borders.bluePrimary : theme.borders.transparent
     };
     border-width: 2px; 
+
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      border-radius: 0;
+      border-color: ${rgba(theme.colors.bluePrimary, 0.5)};
+      outline: none;
+    }
   `
 );
 
@@ -68,7 +80,7 @@ export const MiniCard = styled.div(
     position: relative;
     width: ${width}px;
     cursor: pointer;
-    border: ${theme.storyPreview.border};
+    border: ${theme.borders.gray75};
   `
 );
 
@@ -78,6 +90,8 @@ export const ActiveCard = styled.div(
     box-sizing: border-box;
     width: ${width}px;
     border: ${theme.storyPreview.border};
+    height: ${containerHeight}px;
+    border: ${theme.borders.gray75};
     box-shadow: ${theme.storyPreview.shadow};
   `
 );
