@@ -36,17 +36,17 @@ export const _default = () => {
       acc[id] = {
         id,
         duration: 500,
-        offset: id % 2 ? 100 : 0,
+        delay: id % 2 ? 100 : 0,
         label: `Animation ${id}`,
       };
       return acc;
     }, {})
   );
 
-  const handleUpdateAnimation = useCallback(({ id }, { duration, offset }) => {
+  const handleUpdateAnimation = useCallback(({ id }, { duration, delay }) => {
     setAnimations((a) => {
       a[id].duration = duration;
-      a[id].offset = offset;
+      a[id].delay = delay;
       return { ...a };
     });
   }, []);
