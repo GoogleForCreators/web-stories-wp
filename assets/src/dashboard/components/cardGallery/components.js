@@ -100,7 +100,6 @@ export const MiniCard = styled.div(
 );
 MiniCard.propTypes = {
   width: PropTypes.number.isRequired,
-  containerHeight: PropTypes.number.isRequired,
 };
 
 export const ActiveCard = styled.div(
@@ -108,13 +107,10 @@ export const ActiveCard = styled.div(
     position: relative;
     box-sizing: border-box;
     width: ${width}px;
-    border: ${theme.storyPreview.border};
-    height: ${containerHeight}px;
     border: ${theme.borders.gray75};
     box-shadow: ${theme.storyPreview.shadow};
   `
 );
 ActiveCard.propTypes = {
   width: PropTypes.number.isRequired,
-  containerHeight: PropTypes.number.isRequired,
 };
