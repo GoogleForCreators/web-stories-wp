@@ -38,6 +38,7 @@ import escapeHTML from '../../utils/escapeHTML';
 import { useGlobalKeyDownEffect } from '../keyboard';
 import PreviewErrorDialog from './previewErrorDialog';
 import PostPublishDialog from './postPublishDialog';
+import TitleMissingDialog from './titleMissingDialog';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -167,24 +168,26 @@ function PreviewButton() {
 }
 
 function Publish() {
-  const { isSaving, date, storyId, saveStory } = useStory(
+  const { isSaving, date, storyId, saveStory, title } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { date, storyId },
+        story: { date, storyId, title },
       },
       actions: { saveStory },
-    }) => ({ isSaving, date, storyId, saveStory })
+    }) => ({ isSaving, date, storyId, saveStory, title })
   );
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
+  const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
 
-  const handlePublish = useCallback(() => {
+  const publish = useCallback(() => {
+    setShowDialog(false);
     if (hasFutureDate) {
       trackEvent('editor', 'schedule_story');
     } else {
@@ -195,17 +198,38 @@ function Publish() {
     refreshPostEditURL();
   }, [refreshPostEditURL, saveStory, hasFutureDate]);
 
+  const handlePublish = useCallback(() => {
+    if (!title) {
+      setShowDialog(true);
+      return;
+    }
+
+    publish();
+  }, [title, publish]);
+
+  const fixTitle = useCallback(() => {
+    setShowDialog(false);
+    // TODO fix title input
+  }, []);
+
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
 
   return (
-    <Primary
-      onClick={handlePublish}
-      isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
-    >
-      {text}
-    </Primary>
+    <>
+      <Primary
+        onClick={handlePublish}
+        isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
+      >
+        {text}
+      </Primary>
+      <TitleMissingDialog
+        open={Boolean(showDialog)}
+        onIgnore={publish}
+        onFix={fixTitle}
+      />
+    </>
   );
 }
 
