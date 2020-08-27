@@ -217,7 +217,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
           <ActiveCard
             {...metrics.activeCardSize}
             aria-label={sprintf(
-              /* translators: %s: page number. */
+              /* translators: %s: active preview page number */
               __('Active Page Preview - Page %s', 'web-stories'),
               activePageIndex + 1
             )}

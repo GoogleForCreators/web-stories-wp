@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -33,6 +33,9 @@ export const GalleryContainer = styled.div`
     max-width: ${maxWidth}px;
   `}
 `;
+GalleryContainer.propTypes = {
+  maxWidth: PropTypes.number.isRequired,
+};
 
 export const MiniCardsContainer = styled.div`
   ${({ rowHeight, gap }) => `
@@ -43,6 +46,10 @@ export const MiniCardsContainer = styled.div`
 
   `}
 `;
+MiniCardsContainer.propTypes = {
+  rowHeight: PropTypes.number.isRequired,
+  gap: PropTypes.number.isRequired,
+};
 
 export const ItemContainer = styled.div`
   ${({ width }) => `
@@ -51,6 +58,9 @@ export const ItemContainer = styled.div`
     width: ${width ? `${width}px` : '100%'};
   `}
 `;
+ItemContainer.propTypes = {
+  width: PropTypes.number.isRequired,
+};
 
 export const MiniCardButton = styled.button(
   ({ width, height, theme, isSelected }) => `
@@ -74,6 +84,11 @@ export const MiniCardButton = styled.button(
     }
   `
 );
+MiniCardButton.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  isSelected: PropTypes.bool,
+};
 
 export const MiniCard = styled.div(
   ({ width, theme }) => `
@@ -83,6 +98,10 @@ export const MiniCard = styled.div(
     border: ${theme.borders.gray75};
   `
 );
+MiniCard.propTypes = {
+  width: PropTypes.number.isRequired,
+  containerHeight: PropTypes.number.isRequired,
+};
 
 export const ActiveCard = styled.div(
   ({ width, theme }) => `
@@ -95,3 +114,7 @@ export const ActiveCard = styled.div(
     box-shadow: ${theme.storyPreview.shadow};
   `
 );
+ActiveCard.propTypes = {
+  width: PropTypes.number.isRequired,
+  containerHeight: PropTypes.number.isRequired,
+};
