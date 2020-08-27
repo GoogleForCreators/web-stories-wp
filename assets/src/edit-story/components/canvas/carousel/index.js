@@ -475,7 +475,7 @@ function Carousel() {
               <SafeZoneToggle
                 icon={<SafeZone />}
                 value={showSafeZone}
-                onChange={() => setShowSafeZone((current) => !current)}
+                onChange={setShowSafeZone}
                 iconHeight={24}
                 iconWidth={24}
                 aria-label={
