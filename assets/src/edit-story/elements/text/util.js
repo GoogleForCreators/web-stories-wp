@@ -17,11 +17,22 @@
 /**
  * Generates paragraph text style for a text element.
  *
+ * @param font.font
+ * @param {Object} font
+ * @param {number} fontSize
+ * @param {number} lineHeight
+ * @param {number} padding
+ * @param {string} textAlign
+ * @param font.fontSize
+ * @param font.lineHeight
+ * @param font.padding
+ * @param font.textAlign
  * @param {Object<*>} element Text element properties.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
  * y-unit CSS.
+ * @param {Function} dataToPaddingY dataToPaddingY function.
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
@@ -29,14 +40,15 @@ export function generateParagraphTextStyle(
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY = dataToStyleY,
-  element
+  element,
+  dataToPaddingY = dataToStyleY
 ) {
   const { marginOffset } = calcFontMetrics(element);
   return {
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
     wordBreak: 'break-word',
-    margin: `${dataToStyleY(-marginOffset / 2)} 0`,
+    margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
     font,

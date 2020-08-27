@@ -89,7 +89,8 @@ export function TextOutputWithUnits({
       dataToStyleX,
       dataToStyleY,
       dataToFontSizeY,
-      element
+      element,
+      dataToPaddingY
     ),
     ...bgColor,
     color: '#000000',
