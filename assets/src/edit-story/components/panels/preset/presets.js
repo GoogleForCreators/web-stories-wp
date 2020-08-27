@@ -23,10 +23,9 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { PanelContent } from '../panel';
-import { StylePresetPropType } from '../../../types';
 import PresetGroup from './presetGroup';
 
-function Presets({ presets, handleOnClick, itemRenderer, isEditMode }) {
+function Presets({ presets, handleOnClick, itemRenderer, isEditMode, type }) {
   const hasPresets = presets.length > 0;
 
   return (
@@ -35,7 +34,7 @@ function Presets({ presets, handleOnClick, itemRenderer, isEditMode }) {
         <PresetGroup
           itemRenderer={itemRenderer}
           presets={presets}
-          type={'color'}
+          type={type}
           isEditMode={isEditMode}
           handleClick={handleOnClick}
         />
@@ -45,7 +44,9 @@ function Presets({ presets, handleOnClick, itemRenderer, isEditMode }) {
 }
 
 Presets.propTypes = {
-  presets: StylePresetPropType.isRequired,
+  presets: PropTypes.array.isRequired,
+  itemRenderer: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
 };

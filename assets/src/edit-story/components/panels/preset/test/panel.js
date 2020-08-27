@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StylePresetPanel from '../index';
+import StylePresetPanel from '../stylePreset';
 import StoryContext from '../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import {

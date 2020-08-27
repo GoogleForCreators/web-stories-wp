@@ -29,12 +29,57 @@ import { __ } from '@wordpress/i18n';
  */
 import PresetPanel from '../presetPanel';
 import { Remove } from '../../../../icons';
+import generatePatternStyles from '../../../../utils/generatePatternStyles';
+import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { useStory } from '../../../../app/story';
+import stripHTML from '../../../../utils/stripHTML';
+import { generatePresetStyle } from '../utils';
+
+const REMOVE_ICON_SIZE = 18;
 
 const Preset = styled.button`
-  width: 50%;
+  display: inline-block;
+  border-color: transparent;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  border-width: 0;
+  border-radius: 4px;
+  padding: 0 3px;
+  height: 100%;
+  width: 100%;
+  ${({ styles }) => styles}
+  svg {
+    width: ${REMOVE_ICON_SIZE}px;
+    height: ${REMOVE_ICON_SIZE}px;
+    position: absolute;
+    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+  }
+`;
+
+const HighLight = styled.span`
+  padding: 0 2px;
+  ${({ background }) => generatePatternStyles(background)}
+  box-decoration-break: clone;
+`;
+
+const TextWrapper = styled.div`
+  text-align: left;
+  line-height: 20px;
+  max-height: 100%;
 `;
 
 function StylePresetPanel() {
+  const { selectedElements } = useStory(({ state: { selectedElements } }) => {
+    return {
+      selectedElements,
+    };
+  });
+
+  const textContent =
+    stripHTML(selectedElements[0].content) || __('Text', 'web-stories');
+
   const stylePresetRenderer = (
     preset,
     i,
@@ -45,17 +90,36 @@ function StylePresetPanel() {
     if (!preset) {
       return null;
     }
+
+    const getStylePresetText = () => {
+      const isHighLight =
+        preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+      return (
+        <TextWrapper>
+          {isHighLight ? (
+            <HighLight background={preset.backgroundColor}>
+              {textContent}
+            </HighLight>
+          ) : (
+            textContent
+          )}
+        </TextWrapper>
+      );
+    };
+
     return (
       <Preset
         tabIndex={activeIndex === i ? 0 : -1}
         preset={preset}
         onClick={() => handleOnClick(preset)}
+        styles={generatePresetStyle(preset, true)}
         aria-label={
           isEditMode
             ? __('Delete style preset', 'web-stories')
             : __('Apply style preset', 'web-stories')
         }
       >
+        {getStylePresetText()}
         {isEditMode && <Remove />}
       </Preset>
     );

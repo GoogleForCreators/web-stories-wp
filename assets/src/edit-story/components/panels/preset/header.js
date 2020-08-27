@@ -152,6 +152,7 @@ PresetsHeader.propTypes = {
   handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
   canCollapse: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
 };
 
 export default PresetsHeader;

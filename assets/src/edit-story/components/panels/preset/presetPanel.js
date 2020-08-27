@@ -248,6 +248,7 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
         presets={isColor ? colors : textStyles}
         handleOnClick={handlePresetClick}
         itemRenderer={itemRenderer}
+        type={presetType}
       />
       {resizeable && <Resize position="bottom" />}
     </Panel>
