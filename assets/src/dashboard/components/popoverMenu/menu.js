@@ -53,7 +53,7 @@ MenuContainer.propTypes = {
 
 export const MenuItem = styled.li`
   ${TypographyPresets.Small};
-  ${({ theme, isDisabled, isHovering }) => `
+  ${({ theme, isDisabled, isHovering, separator }) => `
     margin-bottom: 0; /* override common js */
     padding: 5px 25px;
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
@@ -64,6 +64,13 @@ export const MenuItem = styled.li`
 
     &:focus, &:active, &:hover {
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+    }
+    
+    ${
+      separator === 'top' &&
+      `
+        border-top: 1px solid ${theme.colors.gray50};
+      `
     }
   `}
 `;
@@ -77,13 +84,6 @@ const MenuItemContent = styled.span`
   align-self: flex-start;
   height: 100%;
   margin: auto 0;
-`;
-
-const Separator = styled.li`
-  height: 1px;
-  background: ${({ theme }) => theme.colors.gray50};
-  width: 100%;
-  margin: 6px 0;
 `;
 
 const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
@@ -158,6 +158,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
           isDisabled={itemIsDisabled}
+          separator={item.separator}
           {...MenuItemPropsAsLink}
         >
           <MenuItemContent>{item.label}</MenuItemContent>
@@ -167,18 +168,9 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
     [hoveredIndex, onSelect]
   );
 
-  const renderSeparator = useCallback((index) => {
-    return <Separator key={`separator-${index}`} />;
-  }, []);
-
   return (
     <MenuContainer ref={listRef}>
-      {items.map((item, index) => {
-        if (item.separator) {
-          return renderSeparator(index);
-        }
-        return renderMenuItem(item, index);
-      })}
+      {items.map((item, index) => renderMenuItem(item, index))}
     </MenuContainer>
   );
 };
