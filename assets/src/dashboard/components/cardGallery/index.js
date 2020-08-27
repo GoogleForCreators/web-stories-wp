@@ -38,8 +38,8 @@ import {
   MiniCard,
   MiniCardsContainer,
   ItemContainer,
+  MiniCardButton,
 } from './components';
-import FocusableGalleryItem from './focusableGalleryItem';
 
 const MAX_WIDTH = 680;
 const ACTIVE_CARD_WIDTH = 330;
@@ -157,6 +157,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
         >
           {pages.map((page, index) => {
             const isCurrentPage = activePageId === page.id;
+            const isActive = isCurrentPage && isInteractive;
             return (
               <ItemContainer
                 key={`page-${index}`}
@@ -165,10 +166,10 @@ function CardGallery({ story, isRTL, galleryLabel }) {
                 }}
                 width={miniWrapperSize.width}
               >
-                <FocusableGalleryItem
+                <MiniCardButton
                   gridRef={gridRef}
                   isSelected={isCurrentPage}
-                  isActive={isCurrentPage && isInteractive}
+                  tabIndex={isActive ? 0 : -1}
                   {...miniWrapperSize}
                   onClick={() => handleMiniCardClick(index, page.id)}
                   aria-label={
@@ -188,7 +189,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
                   <MiniCard {...miniCardSize}>
                     <PreviewPage page={page} pageSize={miniCardSize} />
                   </MiniCard>
-                </FocusableGalleryItem>
+                </MiniCardButton>
               </ItemContainer>
             );
           })}
