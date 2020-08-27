@@ -27,6 +27,17 @@ import { getHTMLInfo } from '../../richText/htmlManipulation';
 import createSolid from '../../../utils/createSolid';
 import objectPick from '../../../utils/objectPick';
 
+const TEXT_PRESET_STYLES = [
+  'backgroundColor',
+  'backgroundTextMode',
+  'font',
+  'fontSize',
+  'lineHeight',
+  'letterSpacing',
+  'padding',
+  'textAlign',
+];
+
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = stylePresets.colors;
   const patternType = isText ? 'color' : 'background';
@@ -49,8 +60,17 @@ export function findMatchingStylePreset(preset, stylePresets) {
 }
 
 export function generatePresetStyle(preset, prepareForCSS) {
-  const { color, backgroundColor, font, backgroundTextMode } = preset;
+  const {
+    color,
+    backgroundColor,
+    font,
+    backgroundTextMode,
+    textAlign,
+    letterSpacing,
+  } = preset;
   let style = {
+    textAlign,
+    letterSpacing,
     fontFamily: generateFontFamily(font),
     ...generatePatternStyles(color, 'color'),
   };
@@ -88,12 +108,8 @@ export function getTextPresets(elements, stylePresets, type) {
                   ? createSolid(0, 0, 0)
                   : extractedColor;
               return {
+                ...objectPick(text, TEXT_PRESET_STYLES),
                 color,
-                ...objectPick(text, [
-                  'backgroundColor',
-                  'backgroundTextMode',
-                  'font',
-                ]),
               };
             })
             .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
