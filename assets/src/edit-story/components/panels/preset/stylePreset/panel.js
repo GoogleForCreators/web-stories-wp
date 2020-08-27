@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -23,10 +28,45 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import PresetPanel from '../presetPanel';
+import { Remove } from '../../../../icons';
+
+const Preset = styled.button`
+  width: 50%;
+`;
 
 function StylePresetPanel() {
+  const stylePresetRenderer = (
+    preset,
+    i,
+    activeIndex,
+    handleOnClick,
+    isEditMode
+  ) => {
+    if (!preset) {
+      return null;
+    }
+    return (
+      <Preset
+        tabIndex={activeIndex === i ? 0 : -1}
+        preset={preset}
+        onClick={() => handleOnClick(preset)}
+        aria-label={
+          isEditMode
+            ? __('Delete style preset', 'web-stories')
+            : __('Apply style preset', 'web-stories')
+        }
+      >
+        {isEditMode && <Remove />}
+      </Preset>
+    );
+  };
+
   return (
-    <PresetPanel presetType="style" title={__('Saved styles', 'web-stories')} />
+    <PresetPanel
+      presetType="style"
+      title={__('Saved styles', 'web-stories')}
+      itemRenderer={stylePresetRenderer}
+    />
   );
 }
 export default StylePresetPanel;
