@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -40,43 +40,48 @@ function useInsertPreset() {
 
   const lastPreset = useRef(null);
 
-  const getPosition = useCallback(
-    (element) => {
-      const { y } = element;
-      // If the difference between the new and the previous version number is not 1,
-      // the preset wasn't clicked right after the previous.
-      if (
-        !lastPreset.current ||
-        versionNumber - lastPreset.current.versionNumber !== 1
-      ) {
-        return y;
-      }
-      const {
-        element: { height: lastHeight, y: lastY },
-      } = lastPreset.current;
-      let positionedY = lastY + lastHeight + POSITION_MARGIN;
-      // Let's get the width/height of the element about to be inserted.
-      const { width, height } = getInsertedElementSize(
-        TYPE,
-        element.width,
-        element.height,
-        {
-          ...element,
-          y: positionedY,
-        }
-      );
-      // If the element is going out of page, use the default position.
-      if (positionedY + height >= PAGE_HEIGHT) {
-        positionedY = y;
-      }
-      return {
-        width,
-        height,
+  useEffect(() => {
+    // Version number change is happening due to adding a preset.
+    // If we have set the last element but not the history version number yet,
+    // Set the version number that was the result of adding the preset.
+    if (lastPreset.current?.element && !lastPreset.current.versionNumber) {
+      lastPreset.current.versionNumber = versionNumber;
+    } else if (lastPreset.current?.versionNumber) {
+      // If the version number changes meanwhile and we already have it set
+      // something else changed meanwhile so clear the lastPreset, too.
+      lastPreset.current = null;
+    }
+  }, [versionNumber]);
+
+  const getPosition = useCallback((element) => {
+    const { y } = element;
+    if (!lastPreset.current) {
+      return y;
+    }
+    const {
+      element: { height: lastHeight, y: lastY },
+    } = lastPreset.current;
+    let positionedY = lastY + lastHeight + POSITION_MARGIN;
+    // Let's get the width/height of the element about to be inserted.
+    const { width, height } = getInsertedElementSize(
+      TYPE,
+      element.width,
+      element.height,
+      {
+        ...element,
         y: positionedY,
-      };
-    },
-    [versionNumber]
-  );
+      }
+    );
+    // If the element is going out of page, use the default position.
+    if (positionedY + height >= PAGE_HEIGHT) {
+      positionedY = y;
+    }
+    return {
+      width,
+      height,
+      y: positionedY,
+    };
+  }, []);
 
   const insertPreset = useCallback(
     (element) => {
@@ -86,11 +91,11 @@ function useInsertPreset() {
         ...atts,
       });
       lastPreset.current = {
-        versionNumber,
+        versionNumber: null,
         element: addedElement,
       };
     },
-    [getPosition, versionNumber, insertElement]
+    [getPosition, insertElement]
   );
   return insertPreset;
 }
