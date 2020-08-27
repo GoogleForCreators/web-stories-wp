@@ -39,6 +39,9 @@ import {
   MiniCardsContainer,
   MiniCardWrapper,
 } from './components';
+import useGridViewKeys from '../../utils/useGridViewKeys';
+import { useConfig } from '../../../edit-story/app';
+import GalleryItem from './galleryItem';
 
 const MAX_WIDTH = 680;
 const ACTIVE_CARD_WIDTH = 330;
@@ -49,8 +52,13 @@ const CARD_WRAPPER_BUFFER = 12;
 function CardGallery({ story }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
+  const [activePageId, setActivePageId] = useState();
   const [pages, setPages] = useState([]);
   const containerRef = useRef();
+  const gridRef = useRef();
+  const pageRefs = useRef({});
+
+  const { isRTL } = useConfig(); // is this right?
 
   useEffect(() => {
     setPages(story.pages || []);
@@ -84,8 +92,10 @@ function CardGallery({ story }) {
     };
   }, [dimensionMultiplier]);
 
-  const handleMiniCardClick = useCallback((index) => {
+  const handleMiniCardClick = useCallback((index, id) => {
+    console.log('CLICK!!!! index?? ', index, ' ID: ', id);
     setActivePageIndex(index);
+    setActivePageId(id);
   }, []);
 
   const updateContainerSize = useCallback(() => {
@@ -114,6 +124,24 @@ function CardGallery({ story }) {
     setActivePageIndex(0);
   }, [story]);
 
+  useEffect(() => {
+    console.log('SET ACTIVE PAGE: ', story);
+
+    setActivePageId(story.pages[0].id);
+  }, [story]);
+
+  console.log('active page id: ', activePageId);
+  useGridViewKeys({
+    ref: containerRef,
+    gridRef,
+    itemRefs: pageRefs,
+    isRTL,
+    currentItemId: activePageId,
+    items: pages,
+  });
+
+  const isInteractive = pages.length > 1;
+
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
       {metrics.miniCardSize && (
@@ -126,24 +154,46 @@ function CardGallery({ story }) {
           <MiniCardsContainer
             rowHeight={metrics.miniWrapperSize.height}
             gap={metrics.gap}
+            ref={gridRef}
+            aria-label={__('Gallery Items', 'web-stories')} // todo
           >
-            {pages.map((page, index) => (
-              <MiniCardWrapper
-                key={index}
-                isSelected={index === activePageIndex}
-                {...metrics.miniWrapperSize}
-                onClick={() => handleMiniCardClick(index)}
-                aria-label={sprintf(
-                  /* translators: %s: page number. */
-                  __('Page Preview - Page %s', 'web-stories'),
-                  index + 1
-                )}
-              >
-                <MiniCard {...metrics.miniCardSize}>
-                  <PreviewPage page={page} pageSize={metrics.miniCardSize} />
-                </MiniCard>
-              </MiniCardWrapper>
-            ))}
+            {pages.map((page, index) => {
+              const isCurrentPage = activePageId === page.id;
+              console.log(activePageId, page.id);
+              console.log('is interactive? ', isInteractive);
+              return (
+                <GalleryItem
+                  key={`page-${index}`}
+                  ref={(el) => {
+                    pageRefs.current[page.id] = el;
+                  }}
+                  gridRef={gridRef}
+                  isSelected={isCurrentPage}
+                  isActive={isCurrentPage && isInteractive}
+                  isInteractive={isInteractive}
+                  index={index}
+                  {...metrics.miniWrapperSize}
+                  onClick={() => handleMiniCardClick(index, page.id)} // to remove need for index
+                  aria-label={
+                    isCurrentPage
+                      ? sprintf(
+                          /* translators: %s: page number. */
+                          __('Page %s (current page)', 'web-stories'),
+                          index + 1
+                        )
+                      : sprintf(
+                          /* translators: %s: page number. */
+                          __('Page %s', 'web-stories'),
+                          index + 1
+                        )
+                  }
+                >
+                  <MiniCard {...metrics.miniCardSize}>
+                    <PreviewPage page={page} pageSize={metrics.miniCardSize} />
+                  </MiniCard>
+                </GalleryItem>
+              );
+            })}
           </MiniCardsContainer>
         </UnitsProvider>
       )}

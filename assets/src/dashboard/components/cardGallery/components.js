@@ -34,20 +34,31 @@ export const MiniCardsContainer = styled.div`
     grid-template-columns: repeat(3, auto);
     grid-auto-rows: ${rowHeight}px;
     grid-gap: ${gap}px;
+    &:focus-within {
+border: 1px solid red;
+    }
   `}
 `;
 
-export const MiniCardWrapper = styled.div`
-  ${({ width, height, theme, isSelected }) => `
+export const MiniCardWrapper = styled.button(
+  ({ width, height, theme, isSelected }) => `
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
-    ${isSelected ? `border: 3px solid ${theme.colors.bluePrimary600}` : ''}
-  `}
-`;
+    background-color: transparent;
+    border: ${
+      isSelected ? theme.borders.bluePrimary : theme.borders.transparent
+    };
+    border-width: 3px;
+
+    &:focus {
+      border: 3px solid lime;
+    }
+  `
+);
 
 export const MiniCard = styled.div(
   ({ width, theme }) => `
