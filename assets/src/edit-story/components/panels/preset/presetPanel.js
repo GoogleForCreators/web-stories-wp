@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -94,6 +95,7 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
     (evt) => {
       evt.stopPropagation();
       let addedPresets = {
+        textStyles: [],
         colors: [],
       };
       if (isText) {
@@ -119,7 +121,7 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
         updateStory({
           properties: {
             stylePresets: {
-              textStyles: [...textStyles, addedPresets.textStyles],
+              textStyles: [...textStyles, ...addedPresets.textStyles],
               colors: [...colors, ...addedPresets.colors],
             },
           },
@@ -161,7 +163,13 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
   const handleApplyPreset = useCallback(
     (preset) => {
       if (isText) {
-        handleSetColor(preset);
+        if (isColor) {
+          handleSetColor(preset);
+          return;
+        }
+        const { color, ...rest } = preset;
+        extraPropsToAdd.current = rest;
+        handleSetColor(color);
       } else if (isBackground) {
         updateCurrentPageProperties({
           properties: { backgroundColor: preset },
@@ -175,6 +183,7 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
     },
     [
       isBackground,
+      isColor,
       updateCurrentPageProperties,
       isText,
       handleSetColor,
@@ -244,5 +253,11 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
     </Panel>
   );
 }
+
+PresetPanel.propTypes = {
+  presetType: PropTypes.string,
+  itemRenderer: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+};
 
 export default PresetPanel;
