@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import { useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,82 +32,22 @@ import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
-import { dataFontEm } from '../../../../units';
-import { useHistory } from '../../../../app/history';
-import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
-import { PAGE_HEIGHT } from '../../../../constants';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
+import useInsertPreset from './useInsertPreset';
 
 const SectionContent = styled.p``;
 
-const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';
 
 function TextPane(props) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
-  const {
-    state: { versionNumber },
-  } = useHistory();
 
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
-  const lastPreset = useRef(null);
-
-  const getPosition = useCallback(
-    (element) => {
-      const { y } = element;
-      // If the difference between the new and the previous version number is not 1,
-      // the preset wasn't clicked right after the previous.
-      if (
-        !lastPreset.current ||
-        versionNumber - lastPreset.current.versionNumber !== 1
-      ) {
-        return y;
-      }
-      const {
-        element: { height: lastHeight, y: lastY },
-      } = lastPreset.current;
-      let positionedY = lastY + lastHeight + POSITION_MARGIN;
-      // Let's get the width/height of the element about to be inserted.
-      const { width, height } = getInsertedElementSize(
-        TYPE,
-        element.width,
-        element.height,
-        {
-          ...element,
-          y: positionedY,
-        }
-      );
-      // If the element is going out of page, use the default position.
-      if (positionedY + height >= PAGE_HEIGHT) {
-        positionedY = y;
-      }
-      return {
-        width,
-        height,
-        y: positionedY,
-      };
-    },
-    [versionNumber]
-  );
-
-  const handleClickPreset = useCallback(
-    (element) => {
-      const atts = getPosition(element);
-      const addedElement = insertElement(TYPE, {
-        ...element,
-        ...atts,
-      });
-      lastPreset.current = {
-        versionNumber,
-        element: addedElement,
-      };
-    },
-    [getPosition, versionNumber, insertElement]
-  );
+  const insertPreset = useInsertPreset();
 
   return (
     <Pane id={paneId} {...props}>
@@ -134,7 +73,7 @@ function TextPane(props) {
             key={i}
             title={title}
             element={element}
-            onClick={() => handleClickPreset(element)}
+            onClick={() => insertPreset(element)}
           />
         ))}
       </Section>
