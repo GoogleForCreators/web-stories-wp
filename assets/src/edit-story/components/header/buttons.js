@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { trackEvent } from '../../../tracking';
 import addQueryArgs from '../../utils/addQueryArgs';
+import { TRANSITION_DURATION } from '../dialog';
 import { useStory, useLocalMedia, useConfig, useHistory } from '../../app';
 import useRefreshPostEditURL from '../../utils/useRefreshPostEditURL';
 import { Outline, Primary } from '../button';
@@ -39,6 +40,7 @@ import { useGlobalKeyDownEffect } from '../keyboard';
 import PreviewErrorDialog from './previewErrorDialog';
 import PostPublishDialog from './postPublishDialog';
 import TitleMissingDialog from './titleMissingDialog';
+import useHeader from './use';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -180,6 +182,7 @@ function Publish() {
   const { isUploading } = useLocalMedia((state) => ({
     isUploading: state.state.isUploading,
   }));
+  const { titleInput } = useHeader();
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
 
@@ -209,8 +212,11 @@ function Publish() {
 
   const fixTitle = useCallback(() => {
     setShowDialog(false);
-    // TODO fix title input
-  }, []);
+    // Focus title input when dialog is closed
+    // Disable reason: If component unmounts, nothing bad can happen
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    setTimeout(() => titleInput?.focus(), TRANSITION_DURATION);
+  }, [titleInput]);
 
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')

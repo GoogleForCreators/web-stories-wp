@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import Buttons from './buttons';
 import Title from './title';
+import HeaderProvider from './provider';
 
 const Background = styled.header`
   display: flex;
@@ -43,14 +44,16 @@ const ButtonCell = styled.div`
 
 function HeaderLayout() {
   return (
-    <Background>
-      <Head>
-        <Title />
-      </Head>
-      <ButtonCell>
-        <Buttons />
-      </ButtonCell>
-    </Background>
+    <HeaderProvider>
+      <Background>
+        <Head>
+          <Title />
+        </Head>
+        <ButtonCell>
+          <Buttons />
+        </ButtonCell>
+      </Background>
+    </HeaderProvider>
   );
 }
 

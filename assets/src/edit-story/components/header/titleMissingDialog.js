@@ -53,7 +53,7 @@ function TitleMissingDialog({ open, onIgnore, onFix }) {
           <Plain onClick={onIgnore}>
             {__('Publish anyway', 'web-stories')}
           </Plain>
-          <Plain onclick={onFix}>{__('Add a title', 'web-stories')}</Plain>
+          <Plain onClick={onFix}>{__('Add a title', 'web-stories')}</Plain>
         </>
       }
     >
