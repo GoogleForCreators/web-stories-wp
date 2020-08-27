@@ -153,6 +153,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
           gap={gap}
           ref={gridRef}
           aria-label={galleryLabel}
+          data-testid="mini-cards-container"
         >
           {pages.map((page, index) => {
             const isCurrentPage = activePageId === page.id;
@@ -174,7 +175,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
                     isCurrentPage
                       ? sprintf(
                           /* translators: %s: page number. */
-                          __('Active Page Preview - Page %s', 'web-stories'),
+                          __('Page %s (current page)', 'web-stories'),
                           index + 1
                         )
                       : sprintf(
@@ -213,7 +214,14 @@ function CardGallery({ story, isRTL, galleryLabel }) {
             height: metrics.activeCardSize.height,
           }}
         >
-          <ActiveCard {...metrics.activeCardSize}>
+          <ActiveCard
+            {...metrics.activeCardSize}
+            aria-label={sprintf(
+              /* translators: %s: page number. */
+              __('Active Page Preview - Page %s', 'web-stories'),
+              activePageIndex + 1
+            )}
+          >
             <PreviewPage
               page={pages[activePageIndex]}
               pageSize={metrics.activeCardSize}
