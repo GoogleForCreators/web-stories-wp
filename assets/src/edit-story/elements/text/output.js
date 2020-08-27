@@ -129,7 +129,7 @@ export function TextOutputWithUnits({
       // margin: `0 ${paddingStyles.horizontal}`,
       left: `-${paddingStyles.horizontal}`,
       top: '0',
-      margin: `${-marginOffset / 2}px 0 ${-marginOffset / 2}px 0`,
+      margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
     };
   };
 

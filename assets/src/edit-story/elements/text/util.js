@@ -36,7 +36,7 @@ export function generateParagraphTextStyle(
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
     wordBreak: 'break-word',
-    margin: `${-marginOffset / 2}px 0 ${-marginOffset / 2}px 0`,
+    margin: `${dataToStyleY(-marginOffset / 2)} 0`,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
     font,

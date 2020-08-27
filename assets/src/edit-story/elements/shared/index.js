@@ -71,7 +71,7 @@ export const elementWithTextParagraphStyle = ({ element }) => {
   const { marginOffset } = calcFontMetrics(element);
   return css`
     margin: ${({ margin }) => margin || 0};
-    margin: ${-marginOffset / 2}px 0 ${-marginOffset / 2}px 0;
+    margin: ${-marginOffset / 2}px 0;
     padding: ${({ padding }) => padding || 0};
     line-height: ${({ lineHeight }) => lineHeight};
     text-align: ${({ textAlign }) => textAlign};
