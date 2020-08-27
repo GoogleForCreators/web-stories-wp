@@ -78,31 +78,36 @@ function TemplateDetails() {
   } = useRouteHistory();
 
   const {
+    isLoading,
     templates,
     templatesOrderById,
     totalPages,
     createStoryFromTemplate,
     fetchMyTemplateById,
+    fetchExternalTemplates,
     fetchExternalTemplateById,
     fetchRelatedTemplates,
   } = useApi(
     ({
       state: {
-        templates: { templates, templatesOrderById, totalPages },
+        templates: { templates, templatesOrderById, totalPages, isLoading },
       },
       actions: {
         storyApi: { createStoryFromTemplate },
         templateApi: {
+          fetchExternalTemplates,
           fetchMyTemplateById,
           fetchExternalTemplateById,
           fetchRelatedTemplates,
         },
       },
     }) => ({
+      isLoading,
       templates,
       templatesOrderById,
       totalPages,
       createStoryFromTemplate,
+      fetchExternalTemplates,
       fetchMyTemplateById,
       fetchExternalTemplateById,
       fetchRelatedTemplates,
@@ -116,14 +121,33 @@ function TemplateDetails() {
       return;
     }
 
+    if ((!templates || Object.values(templates).length === 0) && !isLoading) {
+      fetchExternalTemplates();
+      return;
+    }
+
+    if (isLoading) {
+      return;
+    }
+
     const id = parseInt(templateId);
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
     const templateFetchFn = isLocalTemplate
       ? fetchMyTemplateById
       : fetchExternalTemplateById;
 
-    templateFetchFn(id).then(setTemplate);
-  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+    templateFetchFn(id)
+      .then(setTemplate)
+      .catch(() => {});
+  }, [
+    isLoading,
+    fetchExternalTemplates,
+    fetchExternalTemplateById,
+    fetchMyTemplateById,
+    isLocal,
+    templateId,
+    templates,
+  ]);
 
   useEffect(() => {
     if (!template || !templateId) {
