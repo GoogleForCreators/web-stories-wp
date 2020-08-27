@@ -18,41 +18,42 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { MiniCardWrapper } from './components';
+import { useState, useCallback } from 'react';
 
-function GalleryItem({ children, isActive, gridRef, ...rest }) {
-  console.log('isactive? ', isActive);
+/**
+ * Internal dependencies
+ */
+import { MiniCardButton } from './components';
+
+function FocusableGalleryItem({ children, isActive, gridRef, ...rest }) {
   const [tabIndex, setTabIndex] = useState(isActive ? 0 : -1);
 
-  const onBlur = (e) => {
-    console.log('blur captured ', e.relatedTarget, gridRef);
-    if (gridRef?.current?.contains(e.relatedTarget)) {
-      console.log('????');
-      setTabIndex(-1);
-    }
-  };
+  const onBlur = useCallback(
+    (e) => {
+      if (gridRef?.current?.contains(e.relatedTarget)) {
+        setTabIndex(-1);
+      }
+    },
+    [gridRef]
+  );
 
-  const onFocus = () => {
-    console.log('FOCUS!! ');
-    setTabIndex(0);
-  };
+  const onFocus = () => setTabIndex(0);
 
   return (
-    <MiniCardWrapper
+    <MiniCardButton
       tabIndex={tabIndex}
       onBlur={onBlur}
       onFocus={onFocus}
       {...rest}
     >
       {children}
-    </MiniCardWrapper>
+    </MiniCardButton>
   );
 }
 
-export default GalleryItem;
+export default FocusableGalleryItem;
 
-GalleryItem.propTypes = {
+FocusableGalleryItem.propTypes = {
   children: PropTypes.node.isRequired,
   isActive: PropTypes.bool,
   gridRef: PropTypes.object,

@@ -199,16 +199,10 @@ function useGridViewKeys({
 // @todo: provide a cleaner `focusFirst()` API and takes into account
 // `tabIndex`, `disabled`, links, buttons, inputs, etc.
 function focusOnPage(item) {
-  console.log('focus on a button: ', item);
-  if (item) {
-    item.focus();
+  const button = item?.querySelector('button');
+  if (button) {
+    button.focus();
   }
-
-  //   const button = item?.querySelector('button');
-  //   if (button) {
-  //     console.log('yup!');
-  //     button.focus();
-  //   }
 }
 
 function getArrowDir(key, pos, neg, isRTL) {
@@ -225,7 +219,6 @@ function getArrowDir(key, pos, neg, isRTL) {
 function getGridColumnAndRowCount(grid, itemCount) {
   let columns = 0;
   let prevX;
-  console.log('MY GRID: ', grid);
   for (const el of grid.children) {
     const { x } = el.getBoundingClientRect();
     if (prevX != null && x < prevX) {
@@ -254,10 +247,7 @@ function getColumn(index, numColumns) {
 function getIndex({ row, column, numRows, numColumns, numItems }) {
   const isOutOfBounds =
     row > numRows || row <= 0 || column > numColumns || column <= 0;
-  console.log(
-    'IS OUT OF BOUNDS: ',
-    row > numRows || row <= 0 || column > numColumns || column <= 0
-  );
+
   if (isOutOfBounds) {
     return -1;
   }

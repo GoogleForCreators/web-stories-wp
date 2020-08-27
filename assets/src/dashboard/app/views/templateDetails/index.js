@@ -277,7 +277,14 @@ function TemplateDetails() {
                     <LargeDisplayPagination>
                       {PrevButton}
                     </LargeDisplayPagination>
-                    <CardGallery story={template} />
+                    <CardGallery
+                      story={template}
+                      isRTL={isRTL}
+                      galleryLabel={__(
+                        'Template details by page',
+                        'web-stories'
+                      )}
+                    />
                   </Column>
                   <Column>
                     <DetailContainer>

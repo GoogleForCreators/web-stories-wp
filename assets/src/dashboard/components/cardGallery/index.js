@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
+import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
@@ -30,18 +30,16 @@ import { __, sprintf } from '@wordpress/i18n';
 import { STORY_ANIMATION_STATE } from '../../../animation';
 import { UnitsProvider } from '../../../edit-story/units';
 import { StoryPropType } from '../../types';
-import { getPagePreviewHeights } from '../../utils';
+import { getPagePreviewHeights, useGridViewKeys } from '../../utils';
 import PreviewPage from '../previewPage';
 import {
   ActiveCard,
   GalleryContainer,
   MiniCard,
   MiniCardsContainer,
-  MiniCardWrapper,
+  ItemContainer,
 } from './components';
-import useGridViewKeys from '../../utils/useGridViewKeys';
-import { useConfig } from '../../../edit-story/app';
-import GalleryItem from './galleryItem';
+import FocusableGalleryItem from './focusableGalleryItem';
 
 const MAX_WIDTH = 680;
 const ACTIVE_CARD_WIDTH = 330;
@@ -49,7 +47,7 @@ const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
-function CardGallery({ story }) {
+function CardGallery({ story, isRTL, galleryLabel }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [activePageId, setActivePageId] = useState();
@@ -58,7 +56,7 @@ function CardGallery({ story }) {
   const gridRef = useRef();
   const pageRefs = useRef({});
 
-  const { isRTL } = useConfig(); // is this right?
+  const isInteractive = pages.length > 1;
 
   useEffect(() => {
     setPages(story.pages || []);
@@ -93,7 +91,6 @@ function CardGallery({ story }) {
   }, [dimensionMultiplier]);
 
   const handleMiniCardClick = useCallback((index, id) => {
-    console.log('CLICK!!!! index?? ', index, ' ID: ', id);
     setActivePageIndex(index);
     setActivePageId(id);
   }, []);
@@ -125,12 +122,9 @@ function CardGallery({ story }) {
   }, [story]);
 
   useEffect(() => {
-    console.log('SET ACTIVE PAGE: ', story);
-
     setActivePageId(story.pages[0].id);
   }, [story]);
 
-  console.log('active page id: ', activePageId);
   useGridViewKeys({
     ref: containerRef,
     gridRef,
@@ -140,45 +134,47 @@ function CardGallery({ story }) {
     items: pages,
   });
 
-  const isInteractive = pages.length > 1;
+  const GalleryItems = useMemo(() => {
+    if (!metrics.miniCardSize) {
+      return null;
+    }
 
-  return (
-    <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      {metrics.miniCardSize && (
-        <UnitsProvider
-          pageSize={{
-            width: metrics.miniCardSize.width,
-            height: metrics.miniCardSize.height,
-          }}
+    const { miniCardSize, gap, miniWrapperSize } = metrics;
+
+    return (
+      <UnitsProvider
+        pageSize={{
+          width: miniCardSize.width,
+          height: miniCardSize.height,
+        }}
+      >
+        <MiniCardsContainer
+          rowHeight={miniWrapperSize.height}
+          gap={gap}
+          ref={gridRef}
+          aria-label={galleryLabel}
         >
-          <MiniCardsContainer
-            rowHeight={metrics.miniWrapperSize.height}
-            gap={metrics.gap}
-            ref={gridRef}
-            aria-label={__('Gallery Items', 'web-stories')} // todo
-          >
-            {pages.map((page, index) => {
-              const isCurrentPage = activePageId === page.id;
-              console.log(activePageId, page.id);
-              console.log('is interactive? ', isInteractive);
-              return (
-                <GalleryItem
-                  key={`page-${index}`}
-                  ref={(el) => {
-                    pageRefs.current[page.id] = el;
-                  }}
+          {pages.map((page, index) => {
+            const isCurrentPage = activePageId === page.id;
+            return (
+              <ItemContainer
+                key={`page-${index}`}
+                ref={(el) => {
+                  pageRefs.current[page.id] = el;
+                }}
+                width={miniWrapperSize.width}
+              >
+                <FocusableGalleryItem
                   gridRef={gridRef}
                   isSelected={isCurrentPage}
                   isActive={isCurrentPage && isInteractive}
-                  isInteractive={isInteractive}
-                  index={index}
-                  {...metrics.miniWrapperSize}
-                  onClick={() => handleMiniCardClick(index, page.id)} // to remove need for index
+                  {...miniWrapperSize}
+                  onClick={() => handleMiniCardClick(index, page.id)}
                   aria-label={
                     isCurrentPage
                       ? sprintf(
                           /* translators: %s: page number. */
-                          __('Page %s (current page)', 'web-stories'),
+                          __('Active Page Preview - Page %s', 'web-stories'),
                           index + 1
                         )
                       : sprintf(
@@ -188,15 +184,28 @@ function CardGallery({ story }) {
                         )
                   }
                 >
-                  <MiniCard {...metrics.miniCardSize}>
-                    <PreviewPage page={page} pageSize={metrics.miniCardSize} />
+                  <MiniCard {...miniCardSize}>
+                    <PreviewPage page={page} pageSize={miniCardSize} />
                   </MiniCard>
-                </GalleryItem>
-              );
-            })}
-          </MiniCardsContainer>
-        </UnitsProvider>
-      )}
+                </FocusableGalleryItem>
+              </ItemContainer>
+            );
+          })}
+        </MiniCardsContainer>
+      </UnitsProvider>
+    );
+  }, [
+    activePageId,
+    galleryLabel,
+    handleMiniCardClick,
+    isInteractive,
+    metrics,
+    pages,
+  ]);
+
+  return (
+    <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
+      {GalleryItems}
       {metrics.activeCardSize && pages[activePageIndex] && (
         <UnitsProvider
           pageSize={{
@@ -204,14 +213,7 @@ function CardGallery({ story }) {
             height: metrics.activeCardSize.height,
           }}
         >
-          <ActiveCard
-            aria-label={sprintf(
-              /* translators: %s: active preview page number */
-              __('Active Page Preview - Page %s', 'web-stories'),
-              activePageIndex + 1
-            )}
-            {...metrics.activeCardSize}
-          >
+          <ActiveCard {...metrics.activeCardSize}>
             <PreviewPage
               page={pages[activePageIndex]}
               pageSize={metrics.activeCardSize}
@@ -226,6 +228,8 @@ function CardGallery({ story }) {
 
 CardGallery.propTypes = {
   story: StoryPropType.isRequired,
+  isRTL: PropTypes.bool,
+  galleryLabel: PropTypes.string.isRequired,
 };
 
 export default CardGallery;

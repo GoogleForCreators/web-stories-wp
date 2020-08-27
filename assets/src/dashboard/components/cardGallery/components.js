@@ -34,13 +34,19 @@ export const MiniCardsContainer = styled.div`
     grid-template-columns: repeat(3, auto);
     grid-auto-rows: ${rowHeight}px;
     grid-gap: ${gap}px;
-    &:focus-within {
-border: 1px solid red;
-    }
+
   `}
 `;
 
-export const MiniCardWrapper = styled.button(
+export const ItemContainer = styled.div`
+  ${({ width }) => `
+    display: flex;
+    justify-content: space-around;
+    width: ${width ? `${width}px` : '100%'};
+  `}
+`;
+
+export const MiniCardButton = styled.button(
   ({ width, height, theme, isSelected }) => `
     display: flex;
     align-items: center;
@@ -48,15 +54,12 @@ export const MiniCardWrapper = styled.button(
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
+    padding: 0;
     background-color: transparent;
     border: ${
       isSelected ? theme.borders.bluePrimary : theme.borders.transparent
     };
-    border-width: 3px;
-
-    &:focus {
-      border: 3px solid lime;
-    }
+    border-width: 2px; 
   `
 );
 

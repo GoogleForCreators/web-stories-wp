@@ -23,6 +23,7 @@ export { default as memoize } from './memoize';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export { default as useFocusOut } from './useFocusOut';
+export { default as useGridViewKeys } from './useGridViewKeys';
 export {
   default as usePagePreviewSize,
   getPagePreviewHeights,
