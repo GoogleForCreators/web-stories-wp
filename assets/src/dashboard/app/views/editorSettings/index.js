@@ -28,12 +28,15 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import useApi from '../../api/useApi';
-import { Layout } from '../../../components';
+import { Layout, Dialog, Button } from '../../../components';
+import { BUTTON_TYPES } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
+
+const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
@@ -81,6 +84,8 @@ function EditorSettings() {
     maxUploadFormatted,
   } = useConfig();
 
+  const [activeDialog, setActiveDialog] = useState('');
+  const [activeLogo, setActiveLogo] = useState(null);
   const [mediaError, setMediaError] = useState('');
   /**
    * WP settings references publisher logos by ID.
@@ -147,13 +152,15 @@ function EditorSettings() {
     [maxUpload, maxUploadFormatted, uploadMedia]
   );
 
-  const handleRemoveLogo = useCallback(
-    (e, media) => {
-      e.preventDefault();
-      updateSettings({ publisherLogoIdToRemove: media.id });
-    },
-    [updateSettings]
-  );
+  const handleRemoveLogo = useCallback((e, media) => {
+    e.preventDefault();
+
+    setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
+    setActiveLogo(media.id);
+  }, []);
+
+  const isActiveRemoveLogoDialog =
+    activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && activeLogo;
 
   const orderedPublisherLogos = useMemo(() => {
     if (Object.keys(mediaById).length <= 0) {
@@ -196,6 +203,39 @@ function EditorSettings() {
           </Main>
         </Layout.Scrollable>
       </Wrapper>
+
+      {isActiveRemoveLogoDialog && (
+        <Dialog
+          isOpen={true}
+          contentLabel={__(
+            'Dialog to confirm removing a publisher logo',
+            'web-stories'
+          )}
+          title={__('Remove Publisher Logo', 'web-stories')}
+          onClose={() => setActiveDialog('')}
+          actions={
+            <>
+              <Button
+                type={BUTTON_TYPES.DEFAULT}
+                onClick={() => setActiveDialog('')}
+              >
+                {__('Cancel', 'web-stories')}
+              </Button>
+              <Button
+                type={BUTTON_TYPES.DEFAULT}
+                onClick={() => {
+                  updateSettings({ publisherLogoIdToRemove: activeLogo });
+                  setActiveDialog('');
+                }}
+              >
+                {__('Remove Logo', 'web-stories')}
+              </Button>
+            </>
+          }
+        >
+          {__('Are you sure you want to remove this logo?', 'web-stories')}
+        </Dialog>
+      )}
     </Layout.Provider>
   );
 }

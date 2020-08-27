@@ -131,6 +131,12 @@ describe('Settings View', () => {
 
     await fixture.events.click(RemovePublisherLogoButton);
 
+    const confirmRemoveButton = fixture.screen.getByRole('button', {
+      name: /^Remove Logo$/,
+    });
+
+    await fixture.events.click(confirmRemoveButton);
+
     const UpdatedPublisherLogos = within(
       await fixture.screen.getByTestId('editor-settings')
     ).queryAllByTestId(/^publisher-logo/);
@@ -154,6 +160,13 @@ describe('Settings View', () => {
     expect(RemovePublisherLogoButton).toBeTruthy();
 
     await fixture.events.focus(RemovePublisherLogoButton);
+    await fixture.events.keyboard.press('Enter');
+
+    const confirmRemoveButton = fixture.screen.getByRole('button', {
+      name: /^Remove Logo$/,
+    });
+
+    await fixture.events.focus(confirmRemoveButton);
     await fixture.events.keyboard.press('Enter');
 
     const UpdatedPublisherLogos = within(
