@@ -126,7 +126,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
   }, [story]);
 
   useGridViewKeys({
-    ref: containerRef,
+    containerRef,
     gridRef,
     itemRefs: pageRefs,
     isRTL,

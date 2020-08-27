@@ -22,16 +22,37 @@ import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from './'; // using from edit-story
+import { useKeyDownEffect } from './';
 
-function useGridViewKeys({
-  currentItemId, // currently selected/active item, only updated on 'enter' or 'click' (not relevant here)
-  items, // an array of the items in the grid, mostly needed for their ids i think
-  ref, // container of grid
-  gridRef, // the grid
-  itemRefs, // object of refs, one per each grid item, key is the item id
-  isRTL,
-}) {
+// This functionality is taken from edit-story/components/canvas/gridview/useGridViewKeys
+// and updated to separate it from story context
+// so that it can be reused in the dashboard's different grids
+
+/**
+ * @typedef {Object} UseGridViewKeysProps
+ * @property {string} currentItemId string Currently selected/active item, only updated on 'enter' or 'click'
+ * @property {Array} items The items in the grid, used to reference Ids
+ * @property {Object} containerRef Attached to the grid's container element
+ * @property {Object} gridRef Attached to the grid element
+ * @property {Object} itemRefs A single ref where .current is assigned keys, one for each grid item
+ * @property {boolean} isRTL indicates if user is viewing page right to left
+ */
+
+/**
+ * Allows keyboard arrow navigation through grids
+ *
+ * @param  {UseGridViewKeysProps} props
+ */
+
+function useGridViewKeys(props) {
+  const {
+    currentItemId,
+    items,
+    containerRef,
+    gridRef,
+    itemRefs,
+    isRTL,
+  } = props;
   const [focusedItemId, setFocusedItemId] = useState();
   const itemIds = useMemo(() => items.map(({ id }) => id), [items]);
   // Navigate focus left, right, up, down
@@ -40,7 +61,7 @@ function useGridViewKeys({
   }, [currentItemId]);
 
   useKeyDownEffect(
-    ref,
+    containerRef,
     { key: ['up', 'down', 'left', 'right'] },
     ({ key }) => {
       switch (key) {
@@ -110,7 +131,7 @@ function useGridViewKeys({
   // jump to beginning or end of row and set active state. do this after normal keydown is good to go
   // Rearrange pages
   useKeyDownEffect(
-    ref,
+    containerRef,
     { key: ['mod+up', 'mod+down', 'mod+left', 'mod+right'], shift: true },
     (e) => {
       const { key, shiftKey } = e;
@@ -198,14 +219,14 @@ function useGridViewKeys({
 
 // @todo: provide a cleaner `focusFirst()` API and takes into account
 // `tabIndex`, `disabled`, links, buttons, inputs, etc.
-function focusOnPage(item) {
+export function focusOnPage(item) {
   const button = item?.querySelector('button');
   if (button) {
     button.focus();
   }
 }
 
-function getArrowDir(key, pos, neg, isRTL) {
+export function getArrowDir(key, pos, neg, isRTL) {
   const rtlDir = isRTL ? -1 : 1;
   if (key === pos) {
     return rtlDir;
@@ -216,7 +237,7 @@ function getArrowDir(key, pos, neg, isRTL) {
   return 0;
 }
 
-function getGridColumnAndRowCount(grid, itemCount) {
+export function getGridColumnAndRowCount(grid, itemCount) {
   let columns = 0;
   let prevX;
   for (const el of grid.children) {
@@ -234,17 +255,17 @@ function getGridColumnAndRowCount(grid, itemCount) {
 }
 
 // will return a 1 based index
-function getRow(index, numColumns) {
+export function getRow(index, numColumns) {
   return Math.ceil((index + 1) / numColumns);
 }
 
 // will return a 1 based index
-function getColumn(index, numColumns) {
+export function getColumn(index, numColumns) {
   return (index % numColumns) + 1;
 }
 
 // will return a 0 based index
-function getIndex({ row, column, numRows, numColumns, numItems }) {
+export function getIndex({ row, column, numRows, numColumns, numItems }) {
   const isOutOfBounds =
     row > numRows || row <= 0 || column > numColumns || column <= 0;
 
