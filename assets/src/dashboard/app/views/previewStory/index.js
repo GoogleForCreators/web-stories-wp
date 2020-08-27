@@ -68,6 +68,7 @@ const IframeContainer = styled.div`
 
   &:focus {
     border: ${({ theme }) => theme.borders.bluePrimary};
+    border-width: 2px;
   }
 `;
 
