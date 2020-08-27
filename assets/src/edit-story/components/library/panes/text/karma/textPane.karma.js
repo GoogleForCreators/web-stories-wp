@@ -41,11 +41,16 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
   it('should ensure staggered presets fit on the page', async () => {
     await fixture.editor.library.textTab.click();
-    await fixture.events.click(
-      fixture.editor.library.text.preset('Heading 1'),
-      { clickCount: 10 }
-    );
+    // Stagger all different text presets.
+    await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await fixture.events.click(fixture.editor.library.text.preset('Heading 2'));
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
+    await fixture.events.click(fixture.editor.library.text.preset('Caption'));
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await fixture.events.click(fixture.editor.library.text.preset('OVERLINE'));
 
-    await fixture.snapshot('staggered same type text presets');
+    await fixture.snapshot('staggered all text presets');
   });
 });
