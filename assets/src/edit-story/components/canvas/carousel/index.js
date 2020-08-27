@@ -132,6 +132,10 @@ const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
 //   margin-bottom: 12px;
 // `;
 
+const SafeZoneToggle = styled(ToggleButton).attrs(buttonDimensions)`
+  margin-bottom: 12px;
+`;
+
 const PageList = styled(Reorderable).attrs({
   area: 'carousel',
   role: 'listbox',
@@ -477,7 +481,7 @@ function Carousel() {
               }
               placement="left"
             >
-              <ToggleButton
+              <SafeZoneToggle
                 icon={<SafeZone />}
                 value={showSafeZone}
                 onChange={() => setShowSafeZone((current) => !current)}
