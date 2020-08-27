@@ -20,11 +20,13 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../keyboard';
 import MULTIPLE_VALUE from './multipleValue';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
@@ -108,6 +110,9 @@ function ToggleButton({
   ...rest
 }) {
   const toggle = () => onChange(!value);
+  const inputRef = useRef();
+  // <enter> doesn't normally toggle checkboxes, but we'd like it to
+  useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
 
   value = value === MULTIPLE_VALUE ? '' : value;
   return (
@@ -119,6 +124,7 @@ function ToggleButton({
         iconHeight={iconHeight}
       >
         <CheckBoxInput
+          ref={inputRef}
           checked={value}
           onChange={toggle}
           disabled={disabled}

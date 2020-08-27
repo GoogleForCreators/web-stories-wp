@@ -25,6 +25,7 @@ import { Fragment, useRef, forwardRef, useImperativeHandle } from 'react';
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../keyboard';
 import WithTooltip from '../tooltip';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
@@ -101,6 +102,8 @@ function Toggle(
   const inputRef = useRef();
   useImperativeHandle(ref, () => inputRef.current);
   const toggle = () => onChange(!value);
+  // <enter> doesn't normally toggle checkboxes, but we'd like it to
+  useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
 
   return (
     <Wrapper>
