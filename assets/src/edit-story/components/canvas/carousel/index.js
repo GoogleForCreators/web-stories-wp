@@ -36,7 +36,6 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
-  SafeZone,
   Plain,
 } from '../../button';
 import {
@@ -61,6 +60,8 @@ import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
 import useCanvas from '../useCanvas';
 import WithTooltip from '../../tooltip';
+import { ToggleButton } from '../../form';
+import { SafeZone } from '../../../icons';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
@@ -122,14 +123,14 @@ const buttonDimensions = { width: '24', height: '24' };
 
 const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
 
-const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
-  ${({ active, theme }) =>
-    active &&
-    css`
-      background: ${rgba(theme.colors.bg.white, 0.1)};
-    `}
-  margin-bottom: 12px;
-`;
+// const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
+//   ${({ active, theme }) =>
+//     active &&
+//     css`
+//       background: ${rgba(theme.colors.bg.white, 0.1)};
+//     `}
+//   margin-bottom: 12px;
+// `;
 
 const PageList = styled(Reorderable).attrs({
   area: 'carousel',
@@ -476,9 +477,12 @@ function Carousel() {
               }
               placement="left"
             >
-              <SafeZoneButton
-                active={showSafeZone}
-                onClick={() => setShowSafeZone((current) => !current)}
+              <ToggleButton
+                icon={<SafeZone />}
+                value={showSafeZone}
+                onChange={() => setShowSafeZone((current) => !current)}
+                iconHeight={24}
+                iconWidth={24}
                 aria-label={
                   showSafeZone
                     ? __('Disable Safe Zone', 'web-stories')
