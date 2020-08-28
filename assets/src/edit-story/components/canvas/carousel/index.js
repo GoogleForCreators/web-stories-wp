@@ -120,15 +120,23 @@ const OverflowButtons = styled.div`
 `;
 
 const StyledGridViewButton = styled(GridViewButton).attrs({
-  width: '24',
   height: '24',
+  width: '24',
 })``;
 
 const SafeZoneToggle = styled(ToggleButton).attrs({
-  iconWidth: 24,
   iconHeight: 24,
+  iconWidth: 24,
 })`
+  height: 24px;
+  width: 24px;
   margin-bottom: 12px;
+
+  & label {
+    height: 24px;
+    width: 24px;
+    border-radius: 2px;
+  }
 `;
 
 const PageList = styled(Reorderable).attrs({
@@ -480,8 +488,6 @@ function Carousel() {
                 icon={<SafeZone />}
                 value={showSafeZone}
                 onChange={setShowSafeZone}
-                // iconHeight={24}
-                // iconWidth={24}
                 aria-label={
                   showSafeZone
                     ? __('Disable Safe Zone', 'web-stories')
