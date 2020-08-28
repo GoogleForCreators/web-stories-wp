@@ -32,7 +32,7 @@ import { Row, TextArea } from '../../form';
 import { useStory } from '../../../app/story';
 import Note from '../../panels/shared/note';
 
-const EXCERPT_MAX_LENGTH = 200;
+export const EXCERPT_MAX_LENGTH = 200;
 
 function ExcerptPanel() {
   const { excerpt, updateStory } = useStory(
