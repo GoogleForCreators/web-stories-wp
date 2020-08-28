@@ -51,6 +51,7 @@ const Container = styled.div`
   ${({ disabled, readOnly }) => (disabled || readOnly) && `opacity: 0.3`};
 
   padding: 6px 12px;
+  padding-right: 6px;
   border-radius: 4px;
   border: 1px solid transparent;
   &:focus-within {
@@ -63,6 +64,7 @@ const Counter = styled.div`
   font-size: ${({ theme }) => theme.fonts.tab.size};
   text-align: right;
   line-height: 1;
+  padding-right: 6px;
 `;
 
 function TextArea({
