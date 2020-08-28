@@ -24,7 +24,11 @@ import { useEffect, useRef, useState } from 'react';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { calculateSrcSet, mediaWithScale } from '../media/util';
+import {
+  calculateSrcSet,
+  getSmallestUrlForWidth,
+  mediaWithScale,
+} from '../media/util';
 import { getMediaSizePositionProps } from '../media';
 import MediaDisplay from '../media/display';
 import { preloadImage } from '../../app/media/utils';
@@ -39,13 +43,9 @@ function ImageDisplay({ element, box }) {
   const { resource, scale, focalX, focalY } = element;
   const { width, height } = box;
   const ref = useRef();
-  const srcSet = calculateSrcSet(resource);
 
   let initialSrcType = 'smallest';
-  let initialSrc =
-    resource.sizes?.['web-stories-thumbnail']?.source_url ||
-    resource.sizes?.web_stories_thumbnail?.source_url ||
-    resource.sizes?.medium?.source_url;
+  let initialSrc = getSmallestUrlForWidth(0, resource);
 
   if (resourceList[resource.id]?.type === 'cached') {
     initialSrcType = 'cached';
@@ -59,6 +59,7 @@ function ImageDisplay({ element, box }) {
 
   const [srcType, setSrcType] = useState(initialSrcType);
   const [src, setSrc] = useState(initialSrc);
+  const srcSet = srcType === 'fullsize' && calculateSrcSet(resource);
 
   const imgProps = getMediaSizePositionProps(
     resource,
