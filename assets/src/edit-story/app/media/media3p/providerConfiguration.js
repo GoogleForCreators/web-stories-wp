@@ -30,8 +30,8 @@ const ContentType = {
 };
 
 const ProviderType = {
-  UNSPLASH: 'unsplash',
-  COVERR: 'coverr',
+  IMAGES: 'images',
+  VIDEO: 'video',
 };
 
 /** @typedef {import('react').React.Component} ReactComponent */
@@ -62,8 +62,9 @@ const ProviderType = {
  * @type {Object.<string, ProviderConfiguration>}
  */
 export const PROVIDERS = {
-  [ProviderType.UNSPLASH]: {
-    displayName: 'Unsplash',
+  [ProviderType.IMAGES]: {
+    providerId: 'UNSPLASH',
+    displayName: __('Images', 'web-stories'),
     supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
     requiresAuthorAttribution: true,
@@ -77,8 +78,9 @@ export const PROVIDERS = {
       'web-stories'
     ),
   },
-  [ProviderType.COVERR]: {
-    displayName: 'Coverr',
+  [ProviderType.VIDEO]: {
+    providerId: 'COVERR',
+    displayName: __('Video', 'web-stories'),
     featureName: 'showCoverrTab',
     supportedContentTypes: [ContentType.VIDEO],
     supportsCategories: false,

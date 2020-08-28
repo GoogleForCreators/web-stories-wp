@@ -69,7 +69,7 @@ function Media3pApiProvider({ children }) {
       );
     }
     return [
-      `provider:${provider}`,
+      `provider:${PROVIDERS[provider].providerId}`,
       mediaType && `type:${mediaType}`,
       selectedCategoryId && `category:${selectedCategoryId}`,
       searchTerm,
