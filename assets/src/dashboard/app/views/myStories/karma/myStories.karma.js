@@ -140,7 +140,9 @@ describe('Grid view', () => {
 
     utils = within(firstStory);
 
-    expect(utils.getByText(/Copy/)).toBeTruthy();
+    const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+    expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
   });
 
   it('should Delete a story', async () => {
@@ -627,7 +629,9 @@ describe('List view', () => {
 
       utils = within(rows[0]);
 
-      expect(utils.getByText(/Copy/)).toBeTruthy();
+      const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+      expect(copiedStory).toBeTruthy();
     });
 
     it('should Delete a story', async () => {

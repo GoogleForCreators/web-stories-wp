@@ -22,6 +22,7 @@ import formattedUsersObject from '../../../../../dataUtils/formattedUsersObject'
 
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
+import { ToastProvider } from '../../../../../components';
 import Content from '../';
 
 const fakeStories = [
@@ -66,27 +67,29 @@ describe('My Stories <Content />', function () {
 
   it('should render the content grid with the correct story count.', function () {
     const { getAllByTestId } = renderWithThemeAndFlagsProvider(
-      <LayoutProvider>
-        <Content
-          filter={STORY_STATUSES[0]}
-          search={{ keyword: '' }}
-          stories={fakeStories}
-          users={formattedUsersObject}
-          page={{
-            requestNextPage: jest.fn,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-          storyActions={{
-            createTemplateFromStory: jest.fn,
-            duplicateStory: jest.fn,
-            trashStory: jest.fn,
-            updateStory: jest.fn,
-          }}
-        />
-      </LayoutProvider>,
+      <ToastProvider>
+        <LayoutProvider>
+          <Content
+            filter={STORY_STATUSES[0]}
+            search={{ keyword: '' }}
+            stories={fakeStories}
+            users={formattedUsersObject}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300 },
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </ToastProvider>,
       { enableInProgressStoryActions: false }
     );
 
@@ -95,27 +98,29 @@ describe('My Stories <Content />', function () {
 
   it('should show "Create a story to get started!" if no stories are present.', function () {
     const { getByText } = renderWithThemeAndFlagsProvider(
-      <LayoutProvider>
-        <Content
-          filter={STORY_STATUSES[0]}
-          search={{ keyword: '' }}
-          stories={[]}
-          users={{}}
-          page={{
-            requestNextPage: jest.fn,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-          storyActions={{
-            createTemplateFromStory: jest.fn,
-            duplicateStory: jest.fn,
-            trashStory: jest.fn,
-            updateStory: jest.fn,
-          }}
-        />
-      </LayoutProvider>,
+      <ToastProvider>
+        <LayoutProvider>
+          <Content
+            filter={STORY_STATUSES[0]}
+            search={{ keyword: '' }}
+            stories={[]}
+            users={{}}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300 },
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </ToastProvider>,
       { enableInProgressStoryActions: false }
     );
 
@@ -124,27 +129,29 @@ describe('My Stories <Content />', function () {
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
     const { getByText } = renderWithThemeAndFlagsProvider(
-      <LayoutProvider>
-        <Content
-          filter={STORY_STATUSES[0]}
-          search={{ keyword: 'scooby dooby doo' }}
-          stories={[]}
-          users={{}}
-          page={{
-            requestNextPage: jest.fn,
-          }}
-          view={{
-            style: VIEW_STYLE.GRID,
-            pageSize: { width: 200, height: 300 },
-          }}
-          storyActions={{
-            createTemplateFromStory: jest.fn,
-            duplicateStory: jest.fn,
-            trashStory: jest.fn,
-            updateStory: jest.fn,
-          }}
-        />
-      </LayoutProvider>,
+      <ToastProvider>
+        <LayoutProvider>
+          <Content
+            filter={STORY_STATUSES[0]}
+            search={{ keyword: 'scooby dooby doo' }}
+            stories={[]}
+            users={{}}
+            page={{
+              requestNextPage: jest.fn,
+            }}
+            view={{
+              style: VIEW_STYLE.GRID,
+              pageSize: { width: 200, height: 300 },
+            }}
+            storyActions={{
+              createTemplateFromStory: jest.fn,
+              duplicateStory: jest.fn,
+              trashStory: jest.fn,
+              updateStory: jest.fn,
+            }}
+          />
+        </LayoutProvider>
+      </ToastProvider>,
       { enableInProgressStoryActions: false }
     );
 

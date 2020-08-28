@@ -61,6 +61,7 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
+  STORY_CONTEXT_MENU_ACTIONS,
 } from '../../../constants';
 import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
@@ -235,59 +236,70 @@ export default function StoryListView({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {stories.map((story) => (
-            <TableRow key={`story-${story.id}`}>
-              <TablePreviewCell>
-                <PreviewContainer>
-                  <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
-                  </PreviewErrorBoundary>
-                </PreviewContainer>
-              </TablePreviewCell>
-              <TableCell>
-                <TitleTableCellContainer>
-                  {renameStory.id === story.id ? (
-                    <InlineInputForm
-                      onEditComplete={(newTitle) =>
-                        renameStory.handleOnRenameStory(story, newTitle)
-                      }
-                      onEditCancel={renameStory.handleCancelRename}
-                      value={story.title}
-                      id={story.id}
-                      label={__('Rename story', 'web-stories')}
-                    />
-                  ) : (
-                    <>
-                      <Paragraph2>{titleFormatted(story.title)}</Paragraph2>
-                      <StoryMenu
-                        onMoreButtonSelected={storyMenu.handleMenuToggle}
-                        contextMenuId={storyMenu.contextMenuId}
-                        onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                        story={story}
-                        menuItems={storyMenu.menuItems}
-                        verticalAlign="center"
+          {stories.map((story) => {
+            const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
+              if (
+                menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK
+              ) {
+                return { ...menuItem, url: story.link };
+              }
+              return menuItem;
+            });
+
+            return (
+              <TableRow key={`story-${story.id}`}>
+                <TablePreviewCell>
+                  <PreviewContainer>
+                    <PreviewErrorBoundary>
+                      <PreviewPage page={story.pages[0]} pageSize={pageSize} />
+                    </PreviewErrorBoundary>
+                  </PreviewContainer>
+                </TablePreviewCell>
+                <TableCell>
+                  <TitleTableCellContainer>
+                    {renameStory.id === story.id ? (
+                      <InlineInputForm
+                        onEditComplete={(newTitle) =>
+                          renameStory.handleOnRenameStory(story, newTitle)
+                        }
+                        onEditCancel={renameStory.handleCancelRename}
+                        value={story.title}
+                        id={story.id}
+                        label={__('Rename story', 'web-stories')}
                       />
-                    </>
-                  )}
-                </TitleTableCellContainer>
-              </TableCell>
-              <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>
-                {getRelativeDisplayDate(story.created, dateSettings)}
-              </TableCell>
-              <TableCell>
-                {getRelativeDisplayDate(story.modified, dateSettings)}
-              </TableCell>
-              {storyStatus !== STORY_STATUS.DRAFT && (
-                <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISH &&
-                    __('Published', 'web-stories')}
-                  {story.status === STORY_STATUS.FUTURE &&
-                    __('Scheduled', 'web-stories')}
-                </TableStatusCell>
-              )}
-            </TableRow>
-          ))}
+                    ) : (
+                      <>
+                        <Paragraph2>{titleFormatted(story.title)}</Paragraph2>
+                        <StoryMenu
+                          onMoreButtonSelected={storyMenu.handleMenuToggle}
+                          contextMenuId={storyMenu.contextMenuId}
+                          onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                          story={story}
+                          menuItems={storyMenuItems}
+                          verticalAlign="center"
+                        />
+                      </>
+                    )}
+                  </TitleTableCellContainer>
+                </TableCell>
+                <TableCell>{users[story.author]?.name || '—'}</TableCell>
+                <TableCell>
+                  {getRelativeDisplayDate(story.created, dateSettings)}
+                </TableCell>
+                <TableCell>
+                  {getRelativeDisplayDate(story.modified, dateSettings)}
+                </TableCell>
+                {storyStatus !== STORY_STATUS.DRAFT && (
+                  <TableStatusCell>
+                    {story.status === STORY_STATUS.PUBLISH &&
+                      __('Published', 'web-stories')}
+                    {story.status === STORY_STATUS.FUTURE &&
+                      __('Scheduled', 'web-stories')}
+                  </TableStatusCell>
+                )}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </ListView>
