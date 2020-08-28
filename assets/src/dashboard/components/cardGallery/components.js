@@ -79,7 +79,7 @@ export const MiniCardButton = styled.button(
 
     ${KEYBOARD_USER_SELECTOR} &:focus {
       border-radius: 0;
-      border-color: ${rgba(theme.colors.bluePrimary, 0.5)};
+      border-color: ${rgba(theme.colors.bluePrimary, 0.85)};
       outline: none;
     }
   `
