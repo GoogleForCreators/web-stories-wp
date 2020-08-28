@@ -185,7 +185,7 @@ export function LeftRail() {
         </Content>
         <Content>
           <NavButton
-            type={BUTTON_TYPES.CTA}
+            type={BUTTON_TYPES.PRIMARY}
             href={newStoryURL}
             isLink
             onClick={onCreateNewStoryClick}
