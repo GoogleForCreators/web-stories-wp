@@ -39,6 +39,7 @@ function ImageDisplay({ element, box }) {
   const { resource, scale, focalX, focalY } = element;
   const { width, height } = box;
   const ref = useRef();
+  const srcSet = calculateSrcSet(resource);
 
   let initialSrcType = 'smallest';
   let initialSrc =
@@ -72,19 +73,17 @@ function ImageDisplay({ element, box }) {
     let timeout;
     if (resourceList[resource.id]?.type !== 'fullsize') {
       timeout = setTimeout(async () => {
-        await preloadImage(resource.src);
+        const preloadedImg = await preloadImage(resource.src, srcSet);
         resourceList[resource.id] = {
           type: 'fullsize',
         };
-        setSrc(resource.src);
+        setSrc(preloadedImg.currentSrc);
         setSrcType('fullsize');
       });
     }
 
     return () => clearTimeout(timeout);
-  }, [resource.id, resource.src, srcType]);
-
-  const srcSet = srcType === 'fullsize' && calculateSrcSet(resource);
+  }, [resource.id, resource.src, srcSet, srcType]);
 
   return (
     <MediaDisplay element={element} mediaRef={ref}>
