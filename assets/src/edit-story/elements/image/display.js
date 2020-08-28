@@ -59,7 +59,7 @@ function ImageDisplay({ element, box }) {
 
   const [srcType, setSrcType] = useState(initialSrcType);
   const [src, setSrc] = useState(initialSrc);
-  const srcSet = srcType === 'fullsize' && calculateSrcSet(resource);
+  const srcSet = srcType === 'fullsize' ? calculateSrcSet(resource) : '';
 
   const imgProps = getMediaSizePositionProps(
     resource,
