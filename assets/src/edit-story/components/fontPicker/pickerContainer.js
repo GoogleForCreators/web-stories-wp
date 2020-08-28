@@ -43,22 +43,23 @@ const PickerContainer = styled.div`
   width: 100%;
   min-width: 160px;
   max-height: 355px;
+  padding: 16px 0 0 0;
   box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.15)};
   overflow: hidden;
-  border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.bg.v14};
-  background-clip: padding-box;
-  padding: 0;
 `;
 
 const List = styled(ScrollList)`
   width: 100%;
   max-height: 305px;
   padding: 5px 0;
-  margin: 0;
+  margin: 16px 0 0 0;
+  background-color: ${({ theme }) => theme.colors.bg.black};
   font-size: 14px;
   text-align: left;
   list-style: none;
+  border-radius: ${({ theme }) => theme.border.radius.default};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
+  overflow: hidden;
   scrollbar-width: thin;
   scrollbar-color: transparent
     ${({ theme }) => rgba(theme.colors.bg.workspace, 0.38)};
@@ -96,9 +97,9 @@ const SearchInput = styled.input.attrs({
   margin: 1px 1px 0;
   padding: 6px 12px 6px 26px;
   width: 100%;
-  border-radius: 4px 4px 0 0;
-  background: ${({ theme }) => theme.colors.bg.v15};
-  border: none;
+  border-radius: ${({ theme }) => theme.border.radius.default};
+  background: ${({ theme }) => theme.colors.bg.panel};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
   color: ${({ theme }) => theme.colors.fg.white};
   font-size: ${({ theme }) => theme.fonts.input.size};
   line-height: ${({ theme }) => theme.fonts.input.lineHeight};
@@ -106,8 +107,7 @@ const SearchInput = styled.input.attrs({
   font-family: ${({ theme }) => theme.fonts.input.family};
 
   &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.selection};
+    border-color: ${({ theme }) => theme.colors.accent.primary};
   }
 `;
 
@@ -122,15 +122,16 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   white-space: nowrap;
   overflow: hidden;
   color: ${({ theme }) => theme.colors.fg.white};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
+  line-height: 1;
   position: relative;
   cursor: pointer;
+  background-clip: padding-box;
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v15};
+    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.1)};
     outline: none;
   }
 `;
@@ -143,14 +144,17 @@ const Selected = styled(Checkmark)`
   height: 28px;
 `;
 
-const NoResult = styled.span`
-  letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 15px 12px 15px 26px;
-  margin: 0;
-  font-style: italic;
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+const NoResult = styled.div`
+  width: 100%;
+  padding: 18px 16px;
+  margin: 16px 0 0 0;
+  text-align: center;
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.75)};
+  font-size: ${({ theme }) => theme.fonts.tab.size};
+  line-height: 20px;
+  background-color: ${({ theme }) => theme.colors.bg.black};
+  border-radius: ${({ theme }) => theme.border.radius.default};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
 `;
 
 function FontPickerContainer({ value, onSelect, onClose, isOpen }) {

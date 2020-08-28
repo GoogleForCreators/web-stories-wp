@@ -221,6 +221,11 @@ const theme = {
       textAlign: 'center',
     },
   },
+  border: {
+    radius: {
+      default: '4px',
+    },
+  },
 };
 
 export default theme;
