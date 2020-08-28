@@ -39,6 +39,7 @@ import {
   Layout,
   PaginationButton,
   Pill,
+  useToastContext,
 } from '../../../components';
 import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
 import { useConfig } from '../../config';
@@ -48,6 +49,7 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
 import { PreviewStoryView } from '..';
 import useApi from '../../api/useApi';
+import { ALERT_SEVERITY } from '../../../constants';
 import {
   ByLine,
   Column,
@@ -76,6 +78,10 @@ function TemplateDetails() {
     },
     actions,
   } = useRouteHistory();
+
+  const { addToast } = useToastContext(({ actions: { addToast } }) => ({
+    addToast,
+  }));
 
   const {
     isLoading,
@@ -138,7 +144,13 @@ function TemplateDetails() {
 
     templateFetchFn(id)
       .then(setTemplate)
-      .catch(() => {});
+      .catch(() => {
+        addToast({
+          message: { body: __('Could not load the template.', 'web-stories') },
+          severity: ALERT_SEVERITY.ERROR,
+          id: Date.now(),
+        });
+      });
   }, [
     isLoading,
     fetchExternalTemplates,
@@ -147,6 +159,7 @@ function TemplateDetails() {
     isLocal,
     templateId,
     templates,
+    addToast,
   ]);
 
   useEffect(() => {
@@ -264,7 +277,13 @@ function TemplateDetails() {
   );
 
   if (!template) {
-    return null;
+    return (
+      <Layout.Provider>
+        <Layout.Fixed>
+          <DetailViewNavBar handleCta={onHandleCta} />
+        </Layout.Fixed>
+      </Layout.Provider>
+    );
   }
 
   if (activePreview.value) {
