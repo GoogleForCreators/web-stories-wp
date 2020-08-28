@@ -38,6 +38,7 @@ const ProviderType = {
 
 /**
  * @typedef ProviderConfiguration
+ * @property {string} providerId The ID of the provider
  * @property {string} displayName The display name of the provider.
  * @property {?string} featureName An optional feature that must be turned on
  * for the provider tab to be displayed.
