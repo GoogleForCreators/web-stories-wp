@@ -59,10 +59,9 @@ const List = styled(ScrollList)`
   list-style: none;
   border-radius: ${({ theme }) => theme.border.radius.default};
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
-  overflow: hidden;
   scrollbar-width: thin;
   scrollbar-color: transparent
-    ${({ theme }) => rgba(theme.colors.bg.workspace, 0.38)};
+    ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -76,7 +75,7 @@ const List = styled(ScrollList)`
     border: 2px solid transparent;
     background-clip: padding-box;
     border-radius: 8px;
-    background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.38)};
+    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
   }
 `;
 
