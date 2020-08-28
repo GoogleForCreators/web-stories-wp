@@ -128,8 +128,8 @@
  * @typedef {Object} Media3pContextState
  * @property {string} searchTerm search term for media3p
  * @property {string} selectedProvider current selected provider
- * @property {Media3pProviderContextState} unsplash state for unsplash
- * @property {Media3pProviderContextState} coverr state for coverr
+ * @property {Media3pProviderContextState} images state for images tab
+ * @property {Media3pProviderContextState} videos state for videos tab
  */
 
 /**
@@ -138,8 +138,8 @@
  * @typedef {Object} Media3pContext
  * @property {Media3pContextState} state Non-provider-specific state
  * @property {Media3pContextActions} actions Non-provider-specific actions
- * @property {Media3pProviderContext} unsplash Unsplash state and actions
- * @property {Media3pProviderContext} coverr Coverr state and actions
+ * @property {Media3pProviderContext} images Images state and actions
+ * @property {Media3pProviderContext} videos Videos state and actions
  */
 
 /**
@@ -148,8 +148,8 @@
  * @typedef {Object} Media3pReducerState
  * @property {string} searchTerm current search term
  * @property {string} selectedProvider selected provider
- * @property {Media3pProviderReducerState} unsplash state for unsplash
- * @property {Media3pProviderReducerState} coverr state for coverr
+ * @property {Media3pProviderReducerState} images state for images tab
+ * @property {Media3pProviderReducerState} videos state for videos tab
  */
 
 /**

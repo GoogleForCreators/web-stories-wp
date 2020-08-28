@@ -38,7 +38,7 @@ const ProviderType = {
 
 /**
  * @typedef ProviderConfiguration
- * @property {string} providerId The ID of the provider
+ * @property {string} providerSource The source of the provider in the API.
  * @property {string} displayName The display name of the provider.
  * @property {?string} featureName An optional feature that must be turned on
  * for the provider tab to be displayed.
@@ -64,7 +64,7 @@ const ProviderType = {
  */
 export const PROVIDERS = {
   [ProviderType.IMAGES]: {
-    providerId: 'UNSPLASH',
+    providerSource: 'UNSPLASH',
     displayName: __('Images', 'web-stories'),
     supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
@@ -80,7 +80,7 @@ export const PROVIDERS = {
     ),
   },
   [ProviderType.VIDEO]: {
-    providerId: 'COVERR',
+    providerSource: 'COVERR',
     displayName: __('Video', 'web-stories'),
     featureName: 'showCoverrTab',
     supportedContentTypes: [ContentType.VIDEO],
