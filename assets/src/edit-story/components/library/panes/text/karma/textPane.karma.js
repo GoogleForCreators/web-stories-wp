@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
@@ -40,16 +45,34 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   });
 
   it('should ensure staggered presets fit on the page', async () => {
+    const addPreset = async (title) => {
+      await fixture.events.click(fixture.editor.library.text.preset(title));
+    };
+    const hasElementsAdded = async (number) => {
+      // BG element adds 1 extra.
+      await waitFor(() =>
+        expect(
+          fixture.querySelectorAll('[data-testid="frameElement"]').length
+        ).toEqual(number + 1)
+      );
+    };
     await fixture.editor.library.textTab.click();
     // Stagger all different text presets.
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 2'));
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
-    await fixture.events.click(fixture.editor.library.text.preset('Caption'));
-    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await fixture.events.click(fixture.editor.library.text.preset('OVERLINE'));
+
+    await addPreset('Heading 1');
+    await hasElementsAdded(1);
+    await addPreset('Paragraph');
+    await hasElementsAdded(2);
+    await addPreset('Heading 2');
+    await hasElementsAdded(3);
+    await addPreset('Heading 3');
+    await hasElementsAdded(4);
+    await addPreset('Caption');
+    await hasElementsAdded(5);
+    await addPreset('Paragraph');
+    await hasElementsAdded(6);
+    await addPreset('OVERLINE');
+    await hasElementsAdded(7);
 
     await fixture.snapshot('staggered all text presets');
   });
