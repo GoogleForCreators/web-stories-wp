@@ -85,7 +85,7 @@ function EditorSettings() {
   } = useConfig();
 
   const [activeDialog, setActiveDialog] = useState('');
-  const [activeLogo, setActiveLogo] = useState(null);
+  const [activeLogo, setActiveLogo] = useState('');
   const [mediaError, setMediaError] = useState('');
   /**
    * WP settings references publisher logos by ID.
