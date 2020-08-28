@@ -22,7 +22,15 @@ import { useEffect, useMemo, useState } from 'react';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from './';
+import {
+  useKeyDownEffect,
+  focusOnPage,
+  getArrowDir,
+  getGridColumnAndRowCount,
+  getRow,
+  getColumn,
+  getIndex,
+} from './';
 
 // This functionality is taken from edit-story/components/canvas/gridview/useGridViewKeys
 // and updated to separate it from story context
@@ -215,70 +223,6 @@ function useGridViewKeys(props) {
     },
     [currentItemId, itemIds, isRTL, gridRef, itemRefs, focusedItemId]
   );
-}
-
-// @todo: provide a cleaner `focusFirst()` API and takes into account
-// `tabIndex`, `disabled`, links, buttons, inputs, etc.
-export function focusOnPage(item) {
-  const button = item?.querySelector('button');
-  if (button) {
-    button.focus();
-  }
-}
-
-export function getArrowDir(key, pos, neg, isRTL) {
-  const rtlDir = isRTL ? -1 : 1;
-  if (key === pos) {
-    return rtlDir;
-  }
-  if (key === neg) {
-    return -1 * rtlDir;
-  }
-  return 0;
-}
-
-export function getGridColumnAndRowCount(grid, itemCount) {
-  let columns = 0;
-  let prevX;
-  for (const el of grid.children) {
-    const { x } = el.getBoundingClientRect();
-    if (prevX != null && x < prevX) {
-      break;
-    }
-    prevX = x;
-    columns++;
-  }
-
-  const rows = Math.ceil(itemCount / columns);
-
-  return { rows, columns };
-}
-
-// will return a 1 based index
-export function getRow(index, numColumns) {
-  return Math.ceil((index + 1) / numColumns);
-}
-
-// will return a 1 based index
-export function getColumn(index, numColumns) {
-  return (index % numColumns) + 1;
-}
-
-// will return a 0 based index
-export function getIndex({ row, column, numRows, numColumns, numItems }) {
-  const isOutOfBounds =
-    row > numRows || row <= 0 || column > numColumns || column <= 0;
-
-  if (isOutOfBounds) {
-    return -1;
-  }
-
-  const index = numColumns * (row - 1) + (column - 1);
-
-  // If the index is greater than or equal to numItems default to the last index.
-  // This handles the case when we press ArrowDown and there is another row, but
-  // the column below is empty. It will default to the last item in the list.
-  return index >= numItems ? numItems - 1 : index;
 }
 
 export default useGridViewKeys;
