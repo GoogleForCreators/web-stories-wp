@@ -164,10 +164,10 @@ export const exposedActions = {
 };
 
 // Internal actions
-const restore = (dispatch) => ({ pages, selection, current, story }) =>
+const restore = (dispatch) => ({ version, pages, selection, current, story }) =>
   dispatch({
     type: types.RESTORE,
-    payload: { pages, selection, current, story },
+    payload: { version, pages, selection, current, story },
   });
 
 export const internalActions = {

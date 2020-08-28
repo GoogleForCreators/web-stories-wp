@@ -27,6 +27,7 @@ import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
 const INITIAL_STATE = {
+  version: null,
   pages: [],
   current: null,
   selection: [],

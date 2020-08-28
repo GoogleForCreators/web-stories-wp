@@ -105,6 +105,7 @@ function DevTools() {
   } = useStory();
 
   const {
+    version,
     pages,
     current,
     selection,
@@ -114,6 +115,7 @@ function DevTools() {
     current,
     selection,
     story: { stylePresets },
+    version,
     pages,
   };
   const storyData = isDummyResources
