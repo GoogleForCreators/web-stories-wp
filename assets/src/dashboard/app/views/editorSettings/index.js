@@ -211,7 +211,10 @@ function EditorSettings() {
             'Dialog to confirm removing a publisher logo',
             'web-stories'
           )}
-          title={__('Remove Publisher Logo', 'web-stories')}
+          title={__(
+            'Are you sure you want to remove this logo?',
+            'web-stories'
+          )}
           onClose={() => setActiveDialog('')}
           actions={
             <>
@@ -233,7 +236,10 @@ function EditorSettings() {
             </>
           }
         >
-          {__('Are you sure you want to remove this logo?', 'web-stories')}
+          {__(
+            'This will affect any stories that currently use it as their publisher logo.',
+            'web-stories'
+          )}
         </Dialog>
       )}
     </Layout.Provider>
