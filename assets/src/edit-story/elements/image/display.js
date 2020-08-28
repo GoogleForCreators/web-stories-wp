@@ -84,13 +84,15 @@ function ImageDisplay({ element, box }) {
     return () => clearTimeout(timeout);
   }, [resource.id, resource.src, srcType]);
 
+  const srcSet = srcType === 'fullsize' && calculateSrcSet(resource);
+
   return (
     <MediaDisplay element={element} mediaRef={ref}>
       <Img
         ref={ref}
         draggable={false}
         src={src}
-        srcSet={calculateSrcSet(resource)}
+        srcSet={srcSet}
         alt={resource.alt}
         {...imgProps}
       />
