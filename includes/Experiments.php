@@ -395,6 +395,17 @@ class Experiments {
 				'description' => __( 'Enable the Coverr tab in the Third-party media tab.', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @sks
+			 * Issue: #4081
+			 * Creation date: 2020-08-28
+			 */
+			[
+				'name'        => 'enableEyeDropper',
+				'label'       => __( 'enableEyeDropper', 'web-stories' ),
+				'description' => __( 'Show eyedropper.', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

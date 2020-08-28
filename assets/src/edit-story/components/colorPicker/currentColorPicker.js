@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
+import { useFeature } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -32,6 +33,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Eyedropper } from '../button';
+import Flags from '../../flags';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
@@ -107,6 +109,7 @@ const OpacityPlaceholder = styled.div`
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
+  const enableEyeDropper = useFeature(Flags.ENABLE_EYE_DROPPER);
 
   const handleFormatHex = useCallback((v) => `#${v}`, []);
 
@@ -165,12 +168,14 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       </Body>
       <Footer>
         {/* TODO: implement (see https://github.com/google/web-stories-wp/issues/262) */}
-        <EyedropperButton
-          width={EYEDROPPER_ICON_SIZE}
-          height={EYEDROPPER_ICON_SIZE}
-          aria-label={__('Select color', 'web-stories')}
-          isDisabled
-        />
+        {enableEyeDropper && (
+          <EyedropperButton
+            width={EYEDROPPER_ICON_SIZE}
+            height={EYEDROPPER_ICON_SIZE}
+            aria-label={__('Select color', 'web-stories')}
+            isDisabled
+          />
+        )}
         <EditablePreview
           label={__('Edit hex value', 'web-stories')}
           value={hexValue}

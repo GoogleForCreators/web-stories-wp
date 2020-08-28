@@ -23,6 +23,8 @@
 const Flags = {
   // Flag for using incremental search in media and media3p with a debouncer.
   INCREMENTAL_SEARCH_DEBOUNCE_MEDIA: 'incrementalSearchDebounceMedia',
+  // Flag for showing the color picker
+  ENABLE_EYE_DROPPER: 'enableEyeDropper',
 };
 
 export default Flags;
