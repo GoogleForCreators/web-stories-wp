@@ -67,10 +67,19 @@ export const MenuItem = styled.li`
     }
     
     ${
-      separator === 'top' &&
-      `
+      separator === 'top'
+        ? `
         border-top: 1px solid ${theme.colors.gray50};
       `
+        : ''
+    }
+
+    ${
+      separator === 'bottom'
+        ? `
+        border-bottom: 1px solid ${theme.colors.gray50};
+      `
+        : ''
     }
   `}
 `;
