@@ -273,6 +273,9 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.type(firstStoryTitle);
 
+      // Wait for the debounce
+      await fixture.events.sleep(300);
+
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
       expect(storyElements.length).toEqual(
