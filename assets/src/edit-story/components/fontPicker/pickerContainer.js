@@ -42,7 +42,6 @@ const PickerContainer = styled.div`
   flex-wrap: wrap;
   width: 100%;
   min-width: 160px;
-  max-height: 355px;
   padding: 16px 0 0 0;
   box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.15)};
   overflow: hidden;
@@ -64,7 +63,7 @@ const List = styled(ScrollList)`
     ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
 
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 2px;
   }
 
   ::-webkit-scrollbar-track {
@@ -72,9 +71,7 @@ const List = styled(ScrollList)`
   }
 
   ::-webkit-scrollbar-thumb {
-    border: 2px solid transparent;
-    background-clip: padding-box;
-    border-radius: 8px;
+    border: none;
     background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
   }
 `;
