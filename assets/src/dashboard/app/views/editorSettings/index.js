@@ -159,8 +159,9 @@ function EditorSettings() {
     setActiveLogo(media.id);
   }, []);
 
-  const isActiveRemoveLogoDialog =
-    activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && activeLogo;
+  const isActiveRemoveLogoDialog = Boolean(
+    activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && activeLogo
+  );
 
   const orderedPublisherLogos = useMemo(() => {
     if (Object.keys(mediaById).length <= 0) {
@@ -204,44 +205,39 @@ function EditorSettings() {
         </Layout.Scrollable>
       </Wrapper>
 
-      {isActiveRemoveLogoDialog && (
-        <Dialog
-          isOpen={true}
-          contentLabel={__(
-            'Dialog to confirm removing a publisher logo',
-            'web-stories'
-          )}
-          title={__(
-            'Are you sure you want to remove this logo?',
-            'web-stories'
-          )}
-          onClose={() => setActiveDialog('')}
-          actions={
-            <>
-              <Button
-                type={BUTTON_TYPES.DEFAULT}
-                onClick={() => setActiveDialog('')}
-              >
-                {__('Cancel', 'web-stories')}
-              </Button>
-              <Button
-                type={BUTTON_TYPES.DEFAULT}
-                onClick={() => {
-                  updateSettings({ publisherLogoIdToRemove: activeLogo });
-                  setActiveDialog('');
-                }}
-              >
-                {__('Remove Logo', 'web-stories')}
-              </Button>
-            </>
-          }
-        >
-          {__(
-            'This will affect any stories that currently use it as their publisher logo.',
-            'web-stories'
-          )}
-        </Dialog>
-      )}
+      <Dialog
+        isOpen={isActiveRemoveLogoDialog}
+        contentLabel={__(
+          'Dialog to confirm removing a publisher logo',
+          'web-stories'
+        )}
+        title={__('Are you sure you want to remove this logo?', 'web-stories')}
+        onClose={() => setActiveDialog('')}
+        actions={
+          <>
+            <Button
+              type={BUTTON_TYPES.DEFAULT}
+              onClick={() => setActiveDialog('')}
+            >
+              {__('Cancel', 'web-stories')}
+            </Button>
+            <Button
+              type={BUTTON_TYPES.DEFAULT}
+              onClick={() => {
+                updateSettings({ publisherLogoIdToRemove: activeLogo });
+                setActiveDialog('');
+              }}
+            >
+              {__('Remove Logo', 'web-stories')}
+            </Button>
+          </>
+        }
+      >
+        {__(
+          'This will affect any stories that currently use it as their publisher logo.',
+          'web-stories'
+        )}
+      </Dialog>
     </Layout.Provider>
   );
 }
