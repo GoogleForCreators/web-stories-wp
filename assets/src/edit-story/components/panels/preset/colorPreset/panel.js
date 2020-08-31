@@ -116,7 +116,7 @@ Color.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-function ColorPresetPanel() {
+function ColorPresetPanel({ pushUpdate }) {
   const { currentPage, selectedElements } = useStory(
     ({ state: { currentPage, selectedElements } }) => {
       return {
@@ -176,8 +176,13 @@ function ColorPresetPanel() {
     <PresetPanel
       title={__('Saved colors', 'web-stories')}
       itemRenderer={colorPresetRenderer}
+      pushUpdate={pushUpdate}
     />
   );
 }
+
+ColorPresetPanel.propTypes = {
+  pushUpdate: PropTypes.func.isRequired,
+};
 
 export default ColorPresetPanel;

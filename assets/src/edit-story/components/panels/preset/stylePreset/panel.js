@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -72,11 +73,12 @@ const TextWrapper = styled.div`
   overflow: hidden;
   border-radius: 4px;
   padding: 3px;
+  max-width: 100%;
   ${({ styles }) => styles}
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
 
-function StylePresetPanel() {
+function StylePresetPanel({ pushUpdate }) {
   const { selectedElements } = useStory(({ state: { selectedElements } }) => {
     return {
       selectedElements,
@@ -139,7 +141,13 @@ function StylePresetPanel() {
       presetType="style"
       title={__('Saved styles', 'web-stories')}
       itemRenderer={stylePresetRenderer}
+      pushUpdate={pushUpdate}
     />
   );
 }
+
+StylePresetPanel.propTypes = {
+  pushUpdate: PropTypes.func.isRequired,
+};
+
 export default StylePresetPanel;

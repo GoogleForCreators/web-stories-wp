@@ -33,7 +33,12 @@ import Resize from './resize';
 import useApplyPreset from './useApplyPreset';
 import useAddPreset from './useAddPreset';
 
-function PresetPanel({ presetType = 'color', title, itemRenderer }) {
+function PresetPanel({
+  presetType = 'color',
+  title,
+  itemRenderer,
+  pushUpdate,
+}) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
   const { selectedElements, stylePresets, updateStory } = useStory(
@@ -58,7 +63,7 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
   const isText = areAllType('text', selectedElements);
   const isShape = areAllType('shape', selectedElements);
 
-  const handleApplyPreset = useApplyPreset(isColor);
+  const handleApplyPreset = useApplyPreset(isColor, pushUpdate);
   const handleAddPreset = useAddPreset(presetType);
 
   const handleDeletePreset = useCallback(
@@ -142,6 +147,7 @@ PresetPanel.propTypes = {
   presetType: PropTypes.string,
   itemRenderer: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default PresetPanel;

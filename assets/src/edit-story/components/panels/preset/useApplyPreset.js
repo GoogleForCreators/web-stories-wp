@@ -23,9 +23,14 @@ import { useCallback, useRef } from 'react';
  */
 import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import { useStory } from '../../../app/story';
+import { usePresubmitHandler } from '../../form';
+import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { areAllType } from './utils';
 
-function useApplyPreset(isColor) {
+function useApplyPreset(isColor, pushUpdate) {
+  // Update size and position if relevant values have changed.
+  usePresubmitHandler(getUpdatedSizeAndPosition, []);
+
   const {
     currentPage,
     selectedElementIds,
@@ -51,18 +56,17 @@ function useApplyPreset(isColor) {
   const isBackground = selectedElements[0].id === currentPage.elements[0].id;
 
   const extraPropsToAdd = useRef(null);
-  const miniPushUpdate = useCallback(
+  const push = useCallback(
     (updater) => {
-      updateElementsById({
-        elementIds: selectedElementIds,
-        properties: (oldProps) => ({
+      pushUpdate((oldProps) => {
+        return {
           ...updater(oldProps),
           ...extraPropsToAdd.current,
-        }),
-      });
+        };
+      }, true);
       extraPropsToAdd.current = null;
     },
-    [selectedElementIds, updateElementsById]
+    [pushUpdate]
   );
 
   const {
@@ -74,7 +78,7 @@ function useApplyPreset(isColor) {
       handleSelectFontWeight,
       handleClickBold,
     },
-  } = useRichTextFormatting(selectedElements, miniPushUpdate);
+  } = useRichTextFormatting(selectedElements, push);
 
   const handleApplyPreset = useCallback(
     (preset) => {
