@@ -62,19 +62,34 @@ export function generatePresetStyle(preset, prepareForCSS) {
     color,
     backgroundColor,
     font,
+    fontWeight,
     backgroundTextMode,
     textAlign,
     letterSpacing,
     lineHeight,
+    isItalic,
+    isUnderline,
+    padding,
+    fontSize,
   } = preset;
   let style = {
     textAlign,
     letterSpacing,
-    lineHeight,
+    fontWeight,
+    textDecoration: isUnderline ? 'underline' : null,
+    fontStyle: isItalic ? 'italic' : null,
     fontFamily: generateFontFamily(font),
     ...generatePatternStyles(color, 'color'),
   };
 
+  if (!prepareForCSS) {
+    style = {
+      ...style,
+      fontSize,
+      lineHeight,
+      padding,
+    };
+  }
   // If it's highlight mode then the highlight is displayed on the text wrapper instead.
   if (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     style = {

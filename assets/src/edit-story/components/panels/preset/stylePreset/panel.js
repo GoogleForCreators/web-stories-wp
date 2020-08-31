@@ -102,7 +102,10 @@ function StylePresetPanel() {
         preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
       const isFill = preset.backgroundTextMode === BACKGROUND_TEXT_MODE.FILL;
       return (
-        <TextWrapper background={isFill ? preset.backgroundColor : null}>
+        <TextWrapper
+          styles={generatePresetStyle(preset, true)}
+          background={isFill ? preset.backgroundColor : null}
+        >
           {isHighLight ? (
             <HighLight background={preset.backgroundColor}>
               {textContent}
@@ -119,7 +122,6 @@ function StylePresetPanel() {
         tabIndex={activeIndex === i ? 0 : -1}
         preset={preset}
         onClick={() => handleOnClick(preset)}
-        styles={generatePresetStyle(preset, true)}
         aria-label={
           isEditMode
             ? __('Delete style preset', 'web-stories')
