@@ -84,7 +84,7 @@ function EditorSettings() {
     maxUploadFormatted,
   } = useConfig();
 
-  const [activeDialog, setActiveDialog] = useState('');
+  const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
   const [mediaError, setMediaError] = useState('');
   /**
@@ -212,12 +212,12 @@ function EditorSettings() {
           'web-stories'
         )}
         title={__('Are you sure you want to remove this logo?', 'web-stories')}
-        onClose={() => setActiveDialog('')}
+        onClose={() => setActiveDialog(null)}
         actions={
           <>
             <Button
               type={BUTTON_TYPES.DEFAULT}
-              onClick={() => setActiveDialog('')}
+              onClick={() => setActiveDialog(null)}
             >
               {__('Cancel', 'web-stories')}
             </Button>
@@ -225,7 +225,7 @@ function EditorSettings() {
               type={BUTTON_TYPES.DEFAULT}
               onClick={() => {
                 updateSettings({ publisherLogoIdToRemove: activeLogo });
-                setActiveDialog('');
+                setActiveDialog(null);
               }}
             >
               {__('Remove Logo', 'web-stories')}
