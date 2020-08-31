@@ -78,12 +78,15 @@ const List = styled(ScrollList)`
   }
 `;
 
-const Divider = styled.hr`
-  margin: 5px 0;
-  height: 0;
+const Divider = styled.div`
   background: transparent;
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
-  border-width: 1px 0 0;
+  font-family: ${({ theme }) => theme.fonts.tab.family};
+  font-weight: ${({ theme }) => theme.fonts.tab.weight};
+  font-size: ${({ theme }) => theme.fonts.tab.size};
+  line-height: 14px;
+  color: ${({ theme }) => theme.colors.accent.secondary};
+  padding: 8px 8px ${({ collapsed }) => (collapsed ? 0 : 8)}px 8px;
+  margin: 0;
 `;
 
 const SearchContainer = styled.div`
@@ -170,7 +173,7 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
   },
 }))`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 8px 12px 8px 26px;
+  padding: 8px 16px;
   margin: 0;
   white-space: nowrap;
   overflow: hidden;
@@ -190,11 +193,10 @@ const Item = styled.div.attrs(({ fontFamily }) => ({
 `;
 
 const Selected = styled(Checkmark)`
-  position: absolute;
-  left: 0;
-  top: 3px;
-  width: 28px;
-  height: 28px;
+  display: inline-block;
+  width: 8px;
+  height: auto;
+  margin-right: 8px;
 `;
 
 const NoResult = styled.div`
@@ -303,6 +305,9 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen, fillWidth }) {
   const itemRenderer = useCallback(
     ({ service, name }, index) => (
       <>
+        {dividerIndexTracker.current >= 0 && index === 0 && (
+          <Divider>{__('Recently used', 'web-stories')}</Divider>
+        )}
         <Item
           fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
           onClick={() => onSelect(name)}
@@ -312,7 +317,9 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen, fillWidth }) {
           )}
           {name}
         </Item>
-        {index === dividerIndexTracker.current && <Divider />}
+        {index === dividerIndexTracker.current && (
+          <Divider collapsed>{__('Recommended', 'web-stories')}</Divider>
+        )}
       </>
     ),
     [onSelect, value]
