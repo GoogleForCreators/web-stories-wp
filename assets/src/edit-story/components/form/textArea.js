@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
@@ -50,8 +50,8 @@ const Container = styled.div`
 
   ${({ disabled, readOnly }) => (disabled || readOnly) && `opacity: 0.3`};
 
-  padding: 6px 12px;
-  padding-right: 6px;
+  padding: 6px;
+  padding-left: 12px;
   border-radius: 4px;
   border: 1px solid transparent;
   &:focus-within {
@@ -81,14 +81,8 @@ function TextArea({
   onBlur,
   ...rest
 }) {
-  const hasMaxLength = useMemo(() => typeof maxLength === 'number', [
-    maxLength,
-  ]);
-
-  const showCounter = useMemo(() => showTextLimit && hasMaxLength, [
-    showTextLimit,
-    hasMaxLength,
-  ]);
+  const hasMaxLength = typeof maxLength === 'number';
+  const showCounter = showTextLimit && hasMaxLength;
 
   const handleChange = useCallback(
     (e) => {
