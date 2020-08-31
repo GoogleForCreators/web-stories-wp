@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * WordPress dependencies
@@ -27,8 +27,8 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import useApi from '../../api/useApi';
 import { Layout } from '../../../components';
-import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
@@ -37,15 +37,43 @@ import PublisherLogoSettings from './publisherLogo';
 
 function EditorSettings() {
   const {
-    actions: {
-      settingsApi: { fetchSettings, updateSettings },
-      mediaApi: { fetchMediaById, uploadMedia },
-    },
-    state: {
-      settings: { activePublisherLogoId, googleAnalyticsId, publisherLogoIds },
-      media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
-    },
-  } = useContext(ApiContext);
+    fetchSettings,
+    updateSettings,
+    googleAnalyticsId,
+    fetchMediaById,
+    uploadMedia,
+    activePublisherLogoId,
+    isMediaLoading,
+    mediaById,
+    newlyCreatedMediaIds,
+    publisherLogoIds,
+  } = useApi(
+    ({
+      actions: {
+        settingsApi: { fetchSettings, updateSettings },
+        mediaApi: { fetchMediaById, uploadMedia },
+      },
+      state: {
+        settings: {
+          activePublisherLogoId,
+          googleAnalyticsId,
+          publisherLogoIds,
+        },
+        media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
+      },
+    }) => ({
+      fetchSettings,
+      updateSettings,
+      googleAnalyticsId,
+      fetchMediaById,
+      uploadMedia,
+      activePublisherLogoId,
+      isMediaLoading,
+      mediaById,
+      newlyCreatedMediaIds,
+      publisherLogoIds,
+    })
+  );
 
   const {
     capabilities: { canUploadFiles } = {},

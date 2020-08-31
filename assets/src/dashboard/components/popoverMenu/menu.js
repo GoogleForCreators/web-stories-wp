@@ -38,6 +38,14 @@ export const MenuContainer = styled.ul`
   overflow: hidden;
   padding: 5px 0;
   pointer-events: auto;
+
+  & > a {
+    background-color: none;
+    text-decoration: none;
+    &:focus {
+      box-shadow: none; /*override common js */
+    }
+  }
 `;
 MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
@@ -46,12 +54,17 @@ MenuContainer.propTypes = {
 export const MenuItem = styled.li`
   ${TypographyPresets.Small};
   ${({ theme, isDisabled, isHovering }) => `
+    margin-bottom: 0; /* override common js */
     padding: 5px 25px;
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
     color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
     display: flex;
     width: 100%;
+
+    &:focus, &:active, &:hover {
+      color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+    }
   `}
 `;
 
@@ -70,6 +83,7 @@ const Separator = styled.li`
   height: 1px;
   background: ${({ theme }) => theme.colors.gray50};
   width: 100%;
+  margin: 6px 0;
 `;
 
 const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
@@ -128,6 +142,15 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
   const renderMenuItem = useCallback(
     (item, index) => {
       const itemIsDisabled = !item.value && item.value !== 0;
+      const MenuItemPropsAsLink = item.url
+        ? {
+            target: '_blank',
+            rel: 'noreferrer',
+            href: item.url,
+            as: 'a',
+          }
+        : {};
+
       return (
         <MenuItem
           key={`${item.value}_${index}`}
@@ -135,6 +158,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
           isDisabled={itemIsDisabled}
+          {...MenuItemPropsAsLink}
         >
           <MenuItemContent>{item.label}</MenuItemContent>
         </MenuItem>

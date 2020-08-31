@@ -63,7 +63,7 @@ const ProviderType = {
  */
 export const PROVIDERS = {
   [ProviderType.UNSPLASH]: {
-    displayName: 'Unsplash',
+    displayName: __('Images', 'web-stories'),
     supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
     requiresAuthorAttribution: true,
@@ -78,7 +78,7 @@ export const PROVIDERS = {
     ),
   },
   [ProviderType.COVERR]: {
-    displayName: 'Coverr',
+    displayName: __('Video', 'web-stories'),
     featureName: 'showCoverrTab',
     supportedContentTypes: [ContentType.VIDEO],
     supportsCategories: false,

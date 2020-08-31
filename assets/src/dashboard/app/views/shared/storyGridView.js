@@ -42,7 +42,7 @@ import {
   RenameStoryPropType,
   DateSettingsPropType,
 } from '../../../types';
-import { STORY_STATUS } from '../../../constants';
+import { STORY_STATUS, STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
 import { getRelativeDisplayDate } from '../../../utils';
 
 export const DetailRow = styled.div`
@@ -84,6 +84,13 @@ const StoryGridView = ({
               onEditCancel: renameStory?.handleCancelRename,
             }
           : {};
+
+        const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
+          if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
+            return { ...menuItem, url: story.link };
+          }
+          return menuItem;
+        });
 
         return (
           <CardGridItem
@@ -127,7 +134,7 @@ const StoryGridView = ({
                 contextMenuId={storyMenu.contextMenuId}
                 onMenuItemSelected={storyMenu.handleMenuItemSelected}
                 story={story}
-                menuItems={storyMenu.menuItems}
+                menuItems={storyMenuItems}
               />
             </DetailRow>
           </CardGridItem>

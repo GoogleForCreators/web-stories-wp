@@ -221,7 +221,6 @@ function VideoControls({
     ? ({ children }) => (
         <Popup
           anchor={elementRef}
-          showOverflow
           isOpen
           placement="top"
           spacing={playAboveSpacing}
