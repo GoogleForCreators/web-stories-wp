@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -26,6 +26,8 @@ import { useEffect, useRef } from 'react';
 import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
+import { useKeyDownEffect } from '../../components/keyboard';
+import getKeyboardMovement from '../../utils/getKeyboardMovement';
 import getFocalFromOffset from './getFocalFromOffset';
 
 function EditPanMoveable({
@@ -47,7 +49,7 @@ function EditPanMoveable({
   const translateRef = useRef([0, 0]);
   const transformFlip = getTransformFlip(flip);
 
-  const update = () => {
+  const update = useCallback(() => {
     const [tx, ty] = translateRef.current;
     fullMedia.style.transform = `translate(${tx}px, ${ty}px) ${
       transformFlip ?? ''
@@ -55,12 +57,45 @@ function EditPanMoveable({
     croppedMedia.style.transform = `translate(${tx}px, ${ty}px) ${
       transformFlip ?? ''
     }`;
-  };
+  }, [croppedMedia, fullMedia, transformFlip]);
 
   // Refresh moveables to ensure that the selection rect is always correct.
   useEffect(() => {
     moveableRef.current.updateRect();
   });
+
+  useKeyDownEffect(
+    croppedMedia,
+    { key: ['up', 'down', 'left', 'right'], shift: true },
+    ({ key, shiftKey }) => {
+      let { dx, dy } = getKeyboardMovement(key, shiftKey);
+      if (flip?.vertical) {
+        dy = -dy;
+      }
+      if (flip?.horizontal) {
+        dx = -dx;
+      }
+      const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - dx);
+      const panFocalY = getFocalFromOffset(height, mediaHeight, offsetY - dy);
+      setProperties({
+        focalX: flip?.horizontal ? 100 - panFocalX : panFocalX,
+        focalY: flip?.vertical ? 100 - panFocalY : panFocalY,
+      });
+      update();
+    },
+    [
+      update,
+      flip?.horizontal,
+      flip?.vertical,
+      offsetX,
+      offsetY,
+      setProperties,
+      width,
+      height,
+      mediaHeight,
+      mediaWidth,
+    ]
+  );
 
   return (
     <Moveable
@@ -71,16 +106,17 @@ function EditPanMoveable({
       throttleDrag={0}
       onDrag={({ dist }) => {
         let [tx, ty] = dist;
-        if (flip.vertical) {
+        if (flip?.vertical) {
           ty = -ty;
         }
-        if (flip.horizontal) {
+        if (flip?.horizontal) {
           tx = -tx;
         }
         translateRef.current = [tx, ty];
         update();
       }}
       onDragEnd={() => {
+        croppedMedia.focus();
         const [tx, ty] = translateRef.current;
         translateRef.current = [0, 0];
         const panFocalX = getFocalFromOffset(width, mediaWidth, offsetX - tx);
