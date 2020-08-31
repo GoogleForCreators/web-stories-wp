@@ -28,14 +28,15 @@
 |                                                 | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
-| Creator can Add and Write Text                  | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
+| Creator can Add and Write Text                  | Consecutive text presets                         | 🏆 **100.00%** *(2 / 2)*    |
+|                                                 | Delete textbox                                   | 🛴 **66.67%** *(2 / 3)*     |
 |                                                 | Select all text inside a textbox                 | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Select an individual word to edit                | 🏆 **100.00%** *(7 / 7)*    |
 |                                                 | Write/edit text                                  | 🏆 **100.00%** *(1 / 1)*    |
-|                                                 | *[total]*                                        | 🏔️ **90.91%** *(10 / 11)*  |
+|                                                 | *[total]*                                        | 🏔️ **92.31%** *(12 / 13)*  |
 | Creator can Transform an Element                | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                 | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                 | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
-| *\[total\]*                                     | *\[total\]*                                      | 🛴 **66.14%** *(168 / 254)* |
+| *\[total\]*                                     | *\[total\]*                                      | 🛴 **66.67%** *(172 / 258)* |
