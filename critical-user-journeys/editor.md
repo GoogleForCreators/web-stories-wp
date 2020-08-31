@@ -12,9 +12,10 @@
 |                                                 | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*      |
 |                                                 | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*      |
 | Creator Can Manipulate an Image/Video on Canvas | Apply a solid or gradient overlay                | 🏆 **100.00%** *(6 / 6)*    |
+|                                                 | Enter edit mode                                  | 🏆 **100.00%** *(4 / 4)*    |
 |                                                 | Set different poster image                       | 🏆 **100.00%** *(2 / 2)*    |
 |                                                 | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*      |
-|                                                 | *[total]*                                        | 🛴 **66.67%** *(8 / 12)*    |
+|                                                 | *[total]*                                        | 🛴 **75.00%** *(12 / 16)*   |
 | Creator Can Style Text                          | Apply B                                          | 🏔️ **94.74%** *(18 / 19)*  |
 |                                                 | Apply I                                          | 🛴 **80.00%** *(8 / 10)*    |
 |                                                 | Apply U                                          | 🛴 **77.78%** *(7 / 9)*     |
@@ -39,4 +40,4 @@
 |                                                 | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                 | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
-| *\[total\]*                                     | *\[total\]*                                      | 🛴 **66.67%** *(172 / 258)* |
+| *\[total\]*                                     | *\[total\]*                                      | 🛴 **67.67%** *(180 / 266)* |
