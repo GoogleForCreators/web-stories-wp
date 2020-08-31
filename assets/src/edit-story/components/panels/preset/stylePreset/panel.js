@@ -38,17 +38,16 @@ import { generatePresetStyle } from '../utils';
 const REMOVE_ICON_SIZE = 18;
 
 const Preset = styled.button`
+  background-color: rgba(255, 255, 255, 0.04);
   display: inline-block;
   border-color: transparent;
   position: relative;
   cursor: pointer;
-  background-color: transparent;
   border-width: 0;
   border-radius: 4px;
   padding: 0 3px;
   height: 100%;
   width: 100%;
-  ${({ styles }) => styles}
   svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
@@ -64,10 +63,17 @@ const HighLight = styled.span`
   box-decoration-break: clone;
 `;
 
+const LINE_HEIGHT = 20;
 const TextWrapper = styled.div`
+  display: inline-block;
   text-align: left;
-  line-height: 20px;
-  max-height: 100%;
+  line-height: ${LINE_HEIGHT}px;
+  max-height: ${LINE_HEIGHT * 2 + 3}px;
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 3px;
+  ${({ styles }) => styles}
+  ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
 
 function StylePresetPanel() {
@@ -94,8 +100,9 @@ function StylePresetPanel() {
     const getStylePresetText = () => {
       const isHighLight =
         preset.backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+      const isFill = preset.backgroundTextMode === BACKGROUND_TEXT_MODE.FILL;
       return (
-        <TextWrapper>
+        <TextWrapper background={isFill ? preset.backgroundColor : null}>
           {isHighLight ? (
             <HighLight background={preset.backgroundColor}>
               {textContent}
