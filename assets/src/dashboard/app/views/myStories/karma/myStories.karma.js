@@ -889,6 +889,177 @@ describe('List view', () => {
         storieModifiedSortedByModified.reverse()
       );
     });
+
+    it('should sort by Title in List View with keyboard', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      // There is a second hidden span with the same text
+      const titleHeader = fixture.screen.getAllByText(/^Title/)[0];
+
+      await fixture.events.focus(titleHeader);
+      await fixture.events.keyboard.press('Enter');
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storieTitlesSortedByTitle = storiesOrderById.map(
+        (id) => stories[id].title
+      );
+
+      // title is the second column
+      let rowTitles = rows.map((row) => row.children[1].innerText);
+
+      expect(rowTitles).toEqual(storieTitlesSortedByTitle);
+
+      // sort by descending
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      // title is the second column
+      rowTitles = rows.map((row) => row.children[1].innerText);
+
+      expect(rowTitles).toEqual(storieTitlesSortedByTitle.reverse());
+    });
+
+    it('should sort by Author in List View with keyboard', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      const authorHeader = fixture.screen.getByText(/^Author/);
+
+      await fixture.events.focus(authorHeader);
+      await fixture.events.keyboard.press('Enter');
+
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const users = await getUsers();
+
+      const storieAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => users[stories[id].author].name
+      );
+
+      // author is the third column
+      let rowAuthors = rows.map((row) => row.children[2].innerText);
+
+      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+
+      // sort by descending
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      // author is the third column
+      rowAuthors = rows.map((row) => row.children[2].innerText);
+
+      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+    });
+
+    it('should sort by Date Created in List View with keyboard', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      const dateCreatedHeader = fixture.screen.getByText(/^Date Created/);
+
+      await fixture.events.focus(dateCreatedHeader);
+      await fixture.events.keyboard.press('Enter');
+
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+      );
+
+      let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
+
+      expect(rowDateCreatedValues).toEqual(
+        storiesDateCreatedSortedByDateCreated
+      );
+
+      // sort by ascending
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      // author is the fourth column
+      rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
+
+      expect(rowDateCreatedValues).toEqual(
+        storiesDateCreatedSortedByDateCreated.reverse()
+      );
+    });
+
+    it('should sort by Last Modified in List View with keyboard', async () => {
+      // last modified desc is the default sort
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storieModifiedSortedByModified = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+      );
+
+      // Last Modified is the fifth column
+      let rowModifiedValues = rows.map((row) => row.children[4].innerText);
+
+      expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
+
+      // sort ascending
+      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+
+      await fixture.events.focus(lastModifiedHeader);
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      rowModifiedValues = rows.map((row) => row.children[4].innerText);
+
+      expect(rowModifiedValues).toEqual(
+        storieModifiedSortedByModified.reverse()
+      );
+    });
   });
 
   describe('CUJ: Creator can view their stories in list view: Go to WP list view to do any action', () => {
