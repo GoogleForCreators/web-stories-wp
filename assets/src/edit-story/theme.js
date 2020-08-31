@@ -157,6 +157,7 @@ const theme = {
       fg: '#FFFFFFCC',
     },
     outline: '#686868',
+    input: '#1c1d1d',
   },
   fonts: {
     title: {

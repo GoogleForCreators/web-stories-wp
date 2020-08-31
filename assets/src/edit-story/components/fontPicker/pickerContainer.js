@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useRef, useCallback, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
@@ -33,24 +33,26 @@ import { __ } from '@wordpress/i18n';
 import { useDebouncedCallback } from 'use-debounce/lib';
 import useFocusOut from '../../utils/useFocusOut';
 import { ReactComponent as Checkmark } from '../../icons/checkmark.svg';
+import { ReactComponent as SearchIcon } from '../../icons/search.svg';
+import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { useFont } from '../../app/font';
+import Popup from '../popup';
 import ScrollList from './scrollList';
 
 const PickerContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
   min-width: 160px;
-  padding: 16px 0 0 0;
-  box-shadow: 0px 8px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.15)};
-  overflow: hidden;
+  z-index: 2;
 `;
 
 const List = styled(ScrollList)`
   width: 100%;
   max-height: 305px;
-  padding: 5px 0;
+  padding: 10px 0;
   margin: 16px 0 0 0;
   background-color: ${({ theme }) => theme.colors.bg.black};
   font-size: 14px;
@@ -84,23 +86,78 @@ const Divider = styled.hr`
   border-width: 1px 0 0;
 `;
 
+const SearchContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  margin-top: 16px;
+`;
+
+const inputIconStyles = css`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  height: 14px;
+  width: 30px;
+  padding: 0;
+  margin: 0;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+
+  > svg {
+    height: 100%;
+    width: auto;
+    color: ${({ theme }) => theme.colors.fg.white};
+    fill: ${({ theme }) => theme.colors.fg.white};
+  }
+`;
+
+const SearchIconContainer = styled.div`
+  ${inputIconStyles}
+  left: 0;
+`;
+
+const ClearButton = styled.button`
+  ${inputIconStyles}
+  right: 0;
+  height: 100%;
+  opacity: 0.4;
+  cursor: pointer;
+
+  > svg {
+    height: 10px;
+  }
+`;
+
 const SearchInput = styled.input.attrs({
   type: 'search',
   role: 'combobox',
   ['aria-autocomplete']: 'list',
   ['aria-owns']: 'editor-font-picker-list',
 })`
-  margin: 1px 1px 0;
-  padding: 6px 12px 6px 26px;
   width: 100%;
+  padding: 6px 20px 6px 30px;
   border-radius: ${({ theme }) => theme.border.radius.default};
-  background: ${({ theme }) => theme.colors.bg.panel};
+  background: ${({ theme }) => theme.colors.input};
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
   color: ${({ theme }) => theme.colors.fg.white};
   font-size: ${({ theme }) => theme.fonts.input.size};
   line-height: ${({ theme }) => theme.fonts.input.lineHeight};
   font-weight: ${({ theme }) => theme.fonts.input.weight};
   font-family: ${({ theme }) => theme.fonts.input.family};
+
+  &::-ms-clear {
+    display: none;
+  }
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    appearance: none;
+  }
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.accent.primary};
@@ -147,13 +204,13 @@ const NoResult = styled.div`
   text-align: center;
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.75)};
   font-size: ${({ theme }) => theme.fonts.tab.size};
-  line-height: 20px;
+  line-height: 14px;
   background-color: ${({ theme }) => theme.colors.bg.black};
   border-radius: ${({ theme }) => theme.border.radius.default};
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
 `;
 
-function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
+function FontPickerContainer({ value, onSelect, onClose, isOpen, fillWidth }) {
   const {
     state: { fonts, recentFonts, curatedFonts },
     actions: { ensureMenuFontsLoaded },
@@ -262,28 +319,46 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   );
 
   return (
-    <PickerContainer role="dialog" ref={ref}>
-      <SearchInput
-        ref={inputRef}
-        aria-expanded={Boolean(matchingFonts.length)}
-        value={searchKeyword}
-        onKeyDown={handleKeyPress}
-        placeholder={__('Search', 'web-stories')}
-        onChange={handleSearchInputChanged}
-      />
-      {matchingFonts.length ? (
-        <List
-          id="editor-font-picker-list"
-          onKeyDown={handleKeyPress}
-          items={matchingFonts}
-          onScroll={handleScroll}
-          itemRenderer={itemRenderer}
-          currentOffset={currentOffset}
-        />
-      ) : (
-        <NoResult>{__('No matches found', 'web-stories')}</NoResult>
-      )}
-    </PickerContainer>
+    isOpen && (
+      <PickerContainer role="dialog" ref={ref}>
+        <SearchContainer>
+          <SearchInput
+            ref={inputRef}
+            aria-expanded={Boolean(matchingFonts.length)}
+            value={searchKeyword}
+            onKeyDown={handleKeyPress}
+            placeholder={__('Search', 'web-stories')}
+            onChange={handleSearchInputChanged}
+          />
+          <SearchIconContainer>
+            <SearchIcon />
+          </SearchIconContainer>
+          {searchKeyword.trim().length > 0 && (
+            <ClearButton
+              onClick={() =>
+                handleSearchInputChanged({ target: { value: '' } })
+              }
+            >
+              <CloseIcon />
+            </ClearButton>
+          )}
+        </SearchContainer>
+        <Popup anchor={inputRef} isOpen={isOpen} fillWidth={fillWidth}>
+          {matchingFonts.length ? (
+            <List
+              id="editor-font-picker-list"
+              onKeyDown={handleKeyPress}
+              items={matchingFonts}
+              onScroll={handleScroll}
+              itemRenderer={itemRenderer}
+              currentOffset={currentOffset}
+            />
+          ) : (
+            <NoResult>{__('No matches found', 'web-stories')}</NoResult>
+          )}
+        </Popup>
+      </PickerContainer>
+    )
   );
 }
 
@@ -292,6 +367,7 @@ FontPickerContainer.propTypes = {
   value: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+  fillWidth: PropTypes.number.isRequired,
 };
 
 export default FontPickerContainer;

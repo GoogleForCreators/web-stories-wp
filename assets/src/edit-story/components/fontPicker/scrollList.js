@@ -34,6 +34,11 @@ const Item = styled.li.attrs({
   role: 'option',
 })`
   overflow: hidden;
+  margin: 6px 0 0 0;
+
+  :first-of-type {
+    margin-top: 0;
+  }
 `;
 
 function ScrollList({

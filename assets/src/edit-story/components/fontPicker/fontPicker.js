@@ -32,7 +32,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ReactComponent as DropDownIcon } from '../../icons/dropdown.svg';
-import Popup from '../popup';
 import FontPickerContainer from './pickerContainer';
 
 const DEFAULT_WIDTH = 240;
@@ -138,14 +137,13 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
         <FontPickerTitle>{value || placeholder}</FontPickerTitle>
         <DropDownIcon />
       </FontPickerSelect>
-      <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
-        <FontPickerContainer
-          isOpen={isOpen}
-          value={value}
-          onSelect={handleSelect}
-          onClose={debouncedCloseFontPicker}
-        />
-      </Popup>
+      <FontPickerContainer
+        isOpen={isOpen}
+        value={value}
+        onSelect={handleSelect}
+        onClose={debouncedCloseFontPicker}
+        fillWidth={DEFAULT_WIDTH}
+      />
     </Container>
   );
 }
