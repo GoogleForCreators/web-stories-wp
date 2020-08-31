@@ -14,16 +14,26 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import EditorSettingsView from '../';
+const MOVE_COARSE_STEP = 10;
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/View',
-  component: EditorSettingsView,
-};
+function getKeyboardMovement(key, shiftKey, coarseDistance = MOVE_COARSE_STEP) {
+  const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
+  const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
+  const delta = shiftKey ? 1 : coarseDistance;
+  return {
+    dx: dirX * delta,
+    dy: dirY * delta,
+  };
+}
 
-export const _default = () => {
-  return <EditorSettingsView />;
-};
+function getArrowDir(key, pos, neg) {
+  if (key === pos) {
+    return 1;
+  }
+  if (key === neg) {
+    return -1;
+  }
+  return 0;
+}
+
+export default getKeyboardMovement;

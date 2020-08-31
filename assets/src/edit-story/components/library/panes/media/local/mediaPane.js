@@ -33,7 +33,8 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
-import { MainButton, SearchInput } from '../../../common';
+import { SearchInput } from '../../../common';
+import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import {
   getResourceFromMediaPicker,
@@ -206,9 +207,9 @@ function MediaPane(props) {
               onChange={onFilter}
               options={FILTERS}
             />
-            <MainButton onClick={openMediaPicker}>
+            <Primary onClick={openMediaPicker}>
               {__('Upload', 'web-stories')}
-            </MainButton>
+            </Primary>
           </FilterArea>
         </PaneHeader>
 

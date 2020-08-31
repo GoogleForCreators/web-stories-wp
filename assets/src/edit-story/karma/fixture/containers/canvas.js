@@ -168,6 +168,18 @@ class EditLayer extends Container {
   get text() {
     return this.node.querySelector('[data-testid="textEditor"]');
   }
+
+  get media() {
+    return this.getByRole('img', { name: /move/i });
+  }
+
+  get sizeSlider() {
+    return this.getByRole('slider');
+  }
+
+  get sizeReset() {
+    return this.getByRole('button', { name: /reset/i });
+  }
 }
 
 /**

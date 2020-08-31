@@ -52,7 +52,7 @@ export const GlobalStyle = createGlobalStyle`
    */
   * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
+    scrollbar-color: ${({ theme }) => theme.colors.bg.workspace}
     ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   }
 
@@ -68,7 +68,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.bg.v10};
+    background-color: ${({ theme }) => rgba(theme.colors.bg.divider, 0.04)};
     width: 3px;
     border-radius: 6px;
     border: 2px solid transparent;
@@ -87,6 +87,8 @@ const theme = {
       panel: '#282A2A',
       white: '#FFFFFF',
       black: '#000000',
+      divider: '#FFFFFF',
+
       // Legacy
       // v0: '#000000', <=> replaced with 'black'
       // v1: '#1B1D1C', <=> replaced with 'workspace'
@@ -114,7 +116,10 @@ const theme = {
     fg: {
       black: '#000000',
       white: '#FFFFFF',
-      primary: '#1B1D1C',
+      primary: '#EDEFEC',
+      gray24: '#5E615C',
+      gray16: '#414442',
+      gray8: '#2F3131',
 
       // v0: '#000000', <=> replaced with fg.black
       // v1: '#FFFFFF', <=> replaced with fg.white
@@ -132,6 +137,7 @@ const theme = {
       primary: '#1A73E8',
       secondary: '#8AB4F8',
     },
+    activeDirection: '#dd8162',
     // action: '#1A73E8', <=> replaced by accent.primary
     danger: '#FF0000',
     warning: '#EA4335',
@@ -151,6 +157,7 @@ const theme = {
       bg: '#000000CC',
       fg: '#FFFFFFCC',
     },
+    outline: '#686868',
   },
   fonts: {
     title: {
@@ -205,6 +212,14 @@ const theme = {
       weight: 'normal',
       size: '13px',
       lineHeight: '24px',
+    },
+    mediaError: {
+      family: 'Roboto',
+      style: 'italic',
+      weight: 'normal',
+      size: '16px',
+      lineHeight: '24px',
+      textAlign: 'center',
     },
   },
 };

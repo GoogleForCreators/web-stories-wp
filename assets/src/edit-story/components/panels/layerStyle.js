@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -29,14 +28,9 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import clamp from '../../utils/clamp';
-import { Row, Numeric, usePresubmitHandler } from '../form';
+import { Row, BoxedNumeric, usePresubmitHandler } from '../form';
 import { SimplePanel } from './panel';
 import { getCommonValue } from './utils';
-
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
 
 const MIN_MAX = {
   OPACITY: {

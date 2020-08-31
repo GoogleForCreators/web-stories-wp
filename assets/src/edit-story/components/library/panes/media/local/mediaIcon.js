@@ -25,7 +25,7 @@ import { __ } from '@wordpress/i18n';
 import { Upload } from '../../../../../icons';
 
 function MediaIcon() {
-  return <Upload aria-label={__('Media library', 'web-stories')} />;
+  return <Upload aria-label={__('Media Gallery', 'web-stories')} />;
 }
 
 export default MediaIcon;

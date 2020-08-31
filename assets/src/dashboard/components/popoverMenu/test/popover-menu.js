@@ -31,6 +31,11 @@ describe('PopoverMenu', () => {
     { value: 'foo', label: 'two' },
     { value: false, label: 'invalid option' },
     { value: 'bar', label: 'three' },
+    {
+      value: 'link',
+      label: 'i am a link!',
+      url: 'https://www.google.com/',
+    },
   ];
   const onClickMock = jest.fn();
 
@@ -64,5 +69,14 @@ describe('PopoverMenu', () => {
     fireEvent.click(menuItem);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render one anchor and 4 list items', () => {
+    const { queryAllByRole } = renderWithTheme(
+      <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
+    );
+
+    expect(queryAllByRole('listitem')).toHaveLength(4);
+    expect(queryAllByRole('link')).toHaveLength(1);
   });
 });

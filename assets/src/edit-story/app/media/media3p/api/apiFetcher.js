@@ -15,7 +15,7 @@
  */
 
 export const API_DOMAIN = 'https://staging-media3p.sandbox.googleapis.com';
-const API_KEY = 'AIzaSyAgauA-izuTeGWFe9d9O0d0id-pV43Y4kE'; // dev key
+const API_KEY = 'AIzaSyDix_Q7ErmApBteRK0w-C3hOWymRM8t-8M'; // staging key
 
 /**
  * The methods exposed by the api

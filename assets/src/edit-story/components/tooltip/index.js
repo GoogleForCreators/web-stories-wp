@@ -18,9 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
@@ -36,21 +36,23 @@ const Wrapper = styled.div`
 `;
 
 const Tooltip = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.black};
-  color: ${({ theme }) => theme.colors.fg.white};
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: 12px;
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+  ${({ theme }) => css`
+    background-color: ${theme.colors.bg.black};
+    color: ${theme.colors.fg.white};
+    font-family: ${theme.fonts.tab.family};
+    font-size: ${theme.fonts.tab.size};
+    line-height: ${theme.fonts.tab.lineHeight};
+    letter-spacing: ${theme.fonts.tab.letterSpacing};
+    box-shadow: 0px 6px 10px ${rgba(theme.colors.bg.black, 0.1)};
+  `}
   padding: ${PADDING}px ${PADDING * 2}px;
   border-radius: 6px;
-  box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
   flex-direction: row;
-  white-space: nowrap;
-  will-change: transform;
+  max-width: 13em;
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
@@ -62,30 +64,32 @@ const TRANSPARENT_BORDER = `6px solid transparent`;
 const TooltipArrow = styled.div`
   position: absolute;
   box-shadow: 0px 6px 10px ${({ theme }) => rgba(theme.colors.bg.black, 0.1)};
-  ${({ placement, theme }) => {
+  ${({ placement, theme, translateX }) => {
     switch (placement) {
       case Placement.TOP:
       case Placement.TOP_START:
       case Placement.TOP_END:
-        return `
+        return css`
           bottom: -6px;
           border-top: 6px solid ${theme.colors.bg.black};
           border-left: ${TRANSPARENT_BORDER};
           border-right: ${TRANSPARENT_BORDER};
+          transform: translateX(${translateX}px);
         `;
       case Placement.BOTTOM:
       case Placement.BOTTOM_START:
       case Placement.BOTTOM_END:
-        return `
+        return css`
           top: -6px;
           border-bottom: 6px solid ${theme.colors.bg.black};
           border-left: ${TRANSPARENT_BORDER};
           border-right: ${TRANSPARENT_BORDER};
+          transform: translateX(${translateX}px);
         `;
       case Placement.LEFT:
       case Placement.LEFT_START:
       case Placement.LEFT_END:
-        return `
+        return css`
           right: -6px;
           border-top: ${TRANSPARENT_BORDER};
           border-bottom: ${TRANSPARENT_BORDER};
@@ -94,7 +98,7 @@ const TooltipArrow = styled.div`
       case Placement.RIGHT:
       case Placement.RIGHT_START:
       case Placement.RIGHT_END:
-        return `
+        return css`
           left: -6px;
           border-top: ${TRANSPARENT_BORDER};
           border-bottom: ${TRANSPARENT_BORDER};
@@ -105,6 +109,8 @@ const TooltipArrow = styled.div`
     }
   }}
 `;
+
+const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
 
 function WithTooltip({
   title,
@@ -119,7 +125,10 @@ function WithTooltip({
   ...props
 }) {
   const [shown, setShown] = useState(false);
-  const ref = useRef(null);
+  const [arrowDelta, setArrowDelta] = useState(null);
+  const anchorRef = useRef(null);
+  const tooltipRef = useRef(null);
+
   const spacing = useMemo(
     () => ({
       x:
@@ -133,6 +142,19 @@ function WithTooltip({
     }),
     [placement]
   );
+
+  const postionArrow = useCallback(() => {
+    const anchorElBoundingBox = anchorRef.current?.getBoundingClientRect();
+    const tooltipElBoundingBox = tooltipRef.current?.getBoundingClientRect();
+    if (!tooltipElBoundingBox || !anchorElBoundingBox) {
+      return;
+    }
+    const delta =
+      getBoundingBoxCenter(anchorElBoundingBox) -
+      getBoundingBoxCenter(tooltipElBoundingBox);
+
+    setArrowDelta(delta);
+  }, []);
 
   return (
     <>
@@ -153,20 +175,26 @@ function WithTooltip({
           setShown(false);
           onBlur(e);
         }}
-        ref={ref}
+        ref={anchorRef}
         {...props}
       >
         {children}
       </Wrapper>
       <Popup
-        anchor={ref}
+        anchor={anchorRef}
         placement={placement}
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
+        onPositionUpdate={postionArrow}
       >
-        <Tooltip arrow={arrow} placement={placement} shown={shown}>
+        <Tooltip
+          ref={tooltipRef}
+          arrow={arrow}
+          placement={placement}
+          shown={shown}
+        >
           {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
-          <TooltipArrow placement={placement} />
+          <TooltipArrow placement={placement} translateX={arrowDelta} />
         </Tooltip>
       </Popup>
     </>

@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useLayoutEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -29,43 +30,58 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ArrowDown } from '../../../../button/index';
+import { ArrowDown } from '../../../../button';
 import CategoryPill from './categoryPill';
+import { PILL_HEIGHT } from './pill';
 
-// Pills have a margin of 4, so the l/r padding is 24-4=20.
+const CATEGORY_TOP_MARGIN = 16;
+const CATEGORY_BOTTOM_MARGIN = 30;
+const CATEGORY_COLLAPSED_FULL_HEIGHT =
+  PILL_HEIGHT + CATEGORY_TOP_MARGIN + CATEGORY_BOTTOM_MARGIN;
+
 const CategorySection = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v3};
-  ${({ hasCategories }) => (hasCategories ? '' : 'min-height: 104px;')}
-  padding: 30px 20px 10px;
+  height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
+  min-height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex: 0 1 auto;
+  position: relative;
+  transition: height 0.2s, min-height 0.2s;
 `;
 
 // This hides the category pills unless expanded
 const CategoryPillContainer = styled.div`
-  height: 36px;
   overflow: hidden;
-  transition: height 0.2s;
+  margin: ${CATEGORY_TOP_MARGIN}px 12px ${CATEGORY_BOTTOM_MARGIN}px 24px;
 `;
 
 const CategoryPillInnerContainer = styled.div`
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
+  position: relative;
+  transition: transform 0.2s;
 `;
 
 // Flips the button upside down when expanded;
 // Important: the visibily is 'inherit' when props.visible because otherwise
 // it gets shown even when the provider is not the selectedProvider!
-const ExpandButton = styled(ArrowDown).attrs(({ isExpanded }) => ({
-  'aria-label': isExpanded
-    ? __('Collapse Categories', 'web-stories')
-    : __('Expand Categories', 'web-stories'),
-}))`
-  ${(props) => props.isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'};
-  visibility: ${(props) => (props.visible ? 'inherit' : 'hidden')};
+const ExpandButton = styled(ArrowDown)`
+  display: flex;
+  position: absolute;
+  bottom: -16px;
+  background: ${({ theme }) => theme.colors.fg.gray16};
+  max-height: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
+  visibility: ${({ visible }) => (visible ? 'inherit' : 'hidden')};
   align-self: center;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Media3pCategories = ({
@@ -77,10 +93,7 @@ const Media3pCategories = ({
   const [isExpanded, setIsExpanded] = useState(false);
 
   function renderCategories() {
-    return (selectedCategoryId
-      ? [categories.find((e) => e.id === selectedCategoryId)]
-      : categories
-    ).map((e, i) => {
+    return categories.map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
         <CategoryPill
@@ -89,6 +102,7 @@ const Media3pCategories = ({
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
           key={e.id}
+          categoryId={e.id}
           title={e.displayName}
           onClick={() => {
             if (selected) {
@@ -103,33 +117,95 @@ const Media3pCategories = ({
     });
   }
 
-  const containerRef = useRef();
+  const categorySectionRef = useRef();
   const innerContainerRef = useRef();
 
+  const [focusedRowOffset, setFocusedRowOffset] = useState(0);
+
+  // Handles expand and contract animation.
   // We calculate the actual height of the categories list, and set its explicit
   // height if it's expanded, in order to have a CSS height transition.
   useLayoutEffect(() => {
-    if (!containerRef.current || !innerContainerRef.current) {
+    if (!categorySectionRef.current || !innerContainerRef.current) {
       return;
     }
+    let height;
     if (!isExpanded) {
-      containerRef.current.style.height = '36px';
+      height = `${CATEGORY_COLLAPSED_FULL_HEIGHT}px`;
     } else {
-      containerRef.current.style.height = `${innerContainerRef.current.offsetHeight}px`;
+      height = `${
+        innerContainerRef.current.offsetHeight +
+        CATEGORY_TOP_MARGIN +
+        CATEGORY_BOTTOM_MARGIN
+      }px`;
     }
-  }, [containerRef, innerContainerRef, isExpanded]);
+    // Safari has some strange issues with flex-shrink that require setting
+    // min-height as well.
+    categorySectionRef.current.style.height = height;
+    categorySectionRef.current.style.minHeight = height;
+
+    setFocusedRowOffset(0);
+  }, [categorySectionRef, innerContainerRef, isExpanded]);
+
+  // Handles setting which row will be seen, by manipulating translateY.
+  useLayoutEffect(() => {
+    if (!innerContainerRef.current) {
+      return;
+    }
+    const categoryPills = Array.from(
+      innerContainerRef.current.querySelectorAll('.categoryPill')
+    );
+    const selectedCategoryPill = selectedCategoryId
+      ? categoryPills.find((p) => p.dataset.categoryId == selectedCategoryId)
+      : null;
+    const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
+
+    if (selectedCategoryPillOffsetTop) {
+      setFocusedRowOffset(selectedCategoryPillOffsetTop);
+    }
+  }, [innerContainerRef, isExpanded, selectedCategoryId]);
+
+  // Handles fading category rows in and out depending on the selected category.
+  useLayoutEffect(() => {
+    if (!innerContainerRef.current) {
+      return;
+    }
+    const categoryPills = Array.from(
+      innerContainerRef.current.querySelectorAll('.categoryPill')
+    );
+    const selectedCategoryPill = selectedCategoryId
+      ? categoryPills.find((p) => p.dataset.categoryId == selectedCategoryId)
+      : null;
+    const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
+
+    for (let categoryPill of categoryPills) {
+      const isSameRow =
+        selectedCategoryPill &&
+        categoryPill.offsetTop == selectedCategoryPillOffsetTop;
+      if (selectedCategoryPill && !isSameRow) {
+        categoryPill.classList.add('invisible');
+      } else {
+        categoryPill.classList.remove('invisible');
+      }
+    }
+  }, [innerContainerRef, isExpanded, selectedCategoryId]);
 
   return (
-    <CategorySection hasCategories={Boolean(categories.length)}>
+    <CategorySection
+      ref={categorySectionRef}
+      hasCategories={Boolean(categories.length)}
+    >
       {categories.length ? (
         <>
           <CategoryPillContainer
             id="category-pill-container"
-            ref={containerRef}
             isExpanded={isExpanded}
             role="tablist"
           >
-            <CategoryPillInnerContainer ref={innerContainerRef}>
+            <CategoryPillInnerContainer
+              ref={innerContainerRef}
+              style={{ transform: `translateY(-${focusedRowOffset}px` }}
+            >
               {renderCategories()}
             </CategoryPillInnerContainer>
           </CategoryPillContainer>
@@ -140,6 +216,7 @@ const Media3pCategories = ({
             isExpanded={isExpanded}
             aria-controls="category-pill-container"
             aria-expanded={isExpanded}
+            aria-label={__('Expand', 'web-stories')}
           />
         </>
       ) : null}

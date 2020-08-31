@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
 
 /**
@@ -41,13 +41,13 @@ import {
   Pill,
 } from '../../../components';
 import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
-import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
 import { PreviewStoryView } from '..';
+import useApi from '../../api/useApi';
 import {
   ByLine,
   Column,
@@ -78,18 +78,36 @@ function TemplateDetails() {
   } = useRouteHistory();
 
   const {
-    state: {
-      templates: { templates, templatesOrderById, totalPages },
-    },
-    actions: {
-      storyApi: { createStoryFromTemplate },
-      templateApi: {
-        fetchMyTemplateById,
-        fetchExternalTemplateById,
-        fetchRelatedTemplates,
+    templates,
+    templatesOrderById,
+    totalPages,
+    createStoryFromTemplate,
+    fetchMyTemplateById,
+    fetchExternalTemplateById,
+    fetchRelatedTemplates,
+  } = useApi(
+    ({
+      state: {
+        templates: { templates, templatesOrderById, totalPages },
       },
-    },
-  } = useContext(ApiContext);
+      actions: {
+        storyApi: { createStoryFromTemplate },
+        templateApi: {
+          fetchMyTemplateById,
+          fetchExternalTemplateById,
+          fetchRelatedTemplates,
+        },
+      },
+    }) => ({
+      templates,
+      templatesOrderById,
+      totalPages,
+      createStoryFromTemplate,
+      fetchMyTemplateById,
+      fetchExternalTemplateById,
+      fetchRelatedTemplates,
+    })
+  );
 
   const { activePreview } = useTemplateView({ totalPages });
 
