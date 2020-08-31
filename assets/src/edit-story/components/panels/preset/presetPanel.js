@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -25,47 +25,29 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../../../app/story';
 import { Panel } from '../panel';
-import useRichTextFormatting from '../textStyle/useRichTextFormatting';
 import { COLOR_PRESETS_PER_ROW } from '../../../constants';
-import {
-  getPagePreset,
-  getShapePresets,
-  getTextPresets,
-  areAllType,
-} from './utils';
+import { areAllType } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
 import Resize from './resize';
+import useApplyPreset from './useApplyPreset';
+import useAddPreset from './useAddPreset';
 
 function PresetPanel({ presetType = 'color', title, itemRenderer }) {
   const isStyle = 'style' === presetType;
   const isColor = 'color' === presetType;
-  const {
-    currentPage,
-    selectedElementIds,
-    selectedElements,
-    stylePresets,
-    updateStory,
-    updateElementsById,
-    updateCurrentPageProperties,
-  } = useStory(
+  const { selectedElements, stylePresets, updateStory } = useStory(
     ({
       state: {
-        currentPage,
-        selectedElementIds,
         selectedElements,
         story: { stylePresets },
       },
-      actions: { updateStory, updateElementsById, updateCurrentPageProperties },
+      actions: { updateStory },
     }) => {
       return {
-        currentPage,
-        selectedElementIds,
         selectedElements,
         stylePresets,
         updateStory,
-        updateElementsById,
-        updateCurrentPageProperties,
       };
     }
   );
@@ -75,7 +57,9 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
 
   const isText = areAllType('text', selectedElements);
   const isShape = areAllType('shape', selectedElements);
-  const isBackground = selectedElements[0].id === currentPage.elements[0].id;
+
+  const handleApplyPreset = useApplyPreset(isColor);
+  const handleAddPreset = useAddPreset(presetType);
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
@@ -89,132 +73,6 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
       });
     },
     [colors, textStyles, updateStory]
-  );
-
-  const handleAddPreset = useCallback(
-    (evt) => {
-      evt.stopPropagation();
-      let addedPresets = {
-        textStyles: [],
-        colors: [],
-      };
-      if (isText) {
-        addedPresets = {
-          ...addedPresets,
-          ...getTextPresets(selectedElements, stylePresets, presetType),
-        };
-      } else if (isBackground) {
-        addedPresets = {
-          ...addedPresets,
-          ...getPagePreset(currentPage, stylePresets),
-        };
-      } else {
-        addedPresets = {
-          ...addedPresets,
-          ...getShapePresets(selectedElements, stylePresets),
-        };
-      }
-      if (
-        addedPresets.colors?.length > 0 ||
-        addedPresets.textStyles?.length > 0
-      ) {
-        updateStory({
-          properties: {
-            stylePresets: {
-              textStyles: [...textStyles, ...addedPresets.textStyles],
-              colors: [...colors, ...addedPresets.colors],
-            },
-          },
-        });
-      }
-    },
-    [
-      currentPage,
-      isBackground,
-      colors,
-      isText,
-      presetType,
-      textStyles,
-      selectedElements,
-      updateStory,
-      stylePresets,
-    ]
-  );
-
-  const extraPropsToAdd = useRef(null);
-  const miniPushUpdate = useCallback(
-    (updater) => {
-      updateElementsById({
-        elementIds: selectedElementIds,
-        properties: (oldProps) => ({
-          ...updater(oldProps),
-          ...extraPropsToAdd.current,
-        }),
-      });
-      extraPropsToAdd.current = null;
-    },
-    [selectedElementIds, updateElementsById]
-  );
-
-  const {
-    handlers: {
-      handleSetColor,
-      handleSetLetterSpacing,
-      handleClickUnderline,
-      handleClickItalic,
-      handleSelectFontWeight,
-      handleClickBold,
-    },
-  } = useRichTextFormatting(selectedElements, miniPushUpdate);
-
-  const handleApplyPreset = useCallback(
-    (preset) => {
-      if (isText) {
-        if (isColor) {
-          handleSetColor(preset);
-          return;
-        }
-        const {
-          color,
-          fontWeight,
-          isBold,
-          isItalic,
-          isUnderline,
-          letterSpacing,
-          ...rest
-        } = preset;
-        extraPropsToAdd.current = rest;
-        handleSetColor(color);
-        handleSetLetterSpacing(letterSpacing);
-        handleSelectFontWeight(fontWeight);
-        handleClickUnderline(isUnderline);
-        handleClickItalic(isItalic);
-        handleClickBold(isBold);
-      } else if (isBackground) {
-        updateCurrentPageProperties({
-          properties: { backgroundColor: preset },
-        });
-      } else {
-        updateElementsById({
-          elementIds: selectedElementIds,
-          properties: { backgroundColor: preset },
-        });
-      }
-    },
-    [
-      isBackground,
-      isColor,
-      updateCurrentPageProperties,
-      isText,
-      handleSetColor,
-      selectedElementIds,
-      updateElementsById,
-      handleSetLetterSpacing,
-      handleClickUnderline,
-      handleClickItalic,
-      handleSelectFontWeight,
-      handleClickBold,
-    ]
   );
 
   const hasPresets = colors.length > 0;
