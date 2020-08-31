@@ -75,7 +75,6 @@ function PublisherLogoSettings({
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-  const isInteractive = publisherLogos.length > 1;
   const [activePublisherLogo, _setActivePublisherLogoId] = useState(null);
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
@@ -84,28 +83,16 @@ function PublisherLogoSettings({
   const onRemoveLogoClick = useCallback(
     (e, { publisherLogo, idx }) => {
       e.preventDefault();
-      const moveFocusByIndex =
-        idx > 1 ? publisherLogosById[idx - 1] : publisherLogosById[0];
+      e.stopPropagation();
+
       handleRemoveLogo(publisherLogo);
 
-      // need to delete the removed logo from itemRefs & move focus to moveFocusByIndex value
-      const currentCopy = { ...itemRefs.current };
-      itemRefs.current = Object.keys(currentCopy).reduce((acc, itemId) => {
-        if (itemId === publisherLogo.id.toString()) {
-          return acc;
-        }
-
-        return {
-          ...acc,
-          [itemId]: currentCopy[itemId],
-        };
-      }, {});
-
-      itemRefs.current[moveFocusByIndex].focus();
-
-      setActivePublisherLogoId(moveFocusByIndex);
+      const moveFocusByIndex =
+        idx > 1 ? publisherLogosById[idx - 1] : publisherLogosById[0];
+      _setActivePublisherLogoId(moveFocusByIndex);
+      itemRefs.current[moveFocusByIndex].firstChild.focus();
     },
-    [handleRemoveLogo, publisherLogosById, setActivePublisherLogoId]
+    [handleRemoveLogo, publisherLogosById]
   );
 
   const setActivePublisherLogoId = useCallback((id) => {
@@ -126,6 +113,7 @@ function PublisherLogoSettings({
     currentItemId: activePublisherLogo,
     items: publisherLogos,
   });
+
   return (
     <SettingForm>
       <div>
@@ -140,8 +128,7 @@ function PublisherLogoSettings({
                 return null;
               }
 
-              const isCurrentLogo = activePublisherLogo === publisherLogo.id;
-              const isActive = isCurrentLogo && isInteractive;
+              const isActive = activePublisherLogo === publisherLogo.id;
 
               return (
                 <div
@@ -152,7 +139,7 @@ function PublisherLogoSettings({
                   }}
                 >
                   <GridItemButton
-                    isSelected={isCurrentLogo}
+                    isSelected={isActive}
                     tabIndex={isActive ? 0 : -1}
                     onClick={(e) => {
                       e.preventDefault();
