@@ -80,21 +80,28 @@ function PublisherLogoSettings({
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
   ]);
-  console.log('publisherLogosById', publisherLogosById);
-  console.log(itemRefs.current);
+
   const onRemoveLogoClick = useCallback(
     (e, { publisherLogo, idx }) => {
       e.preventDefault();
-      e.stopPropagation();
-      console.log('delete index: ', idx);
       const moveFocusByIndex =
         idx > 1 ? publisherLogosById[idx - 1] : publisherLogosById[0];
-      console.log('move to this focus: ', moveFocusByIndex);
       handleRemoveLogo(publisherLogo);
 
-      delete itemRefs.current[publisherLogo.id];
+      // need to delete the removed logo from itemRefs & move focus to moveFocusByIndex value
+      const currentCopy = { ...itemRefs.current };
+      itemRefs.current = Object.keys(currentCopy).reduce((acc, itemId) => {
+        if (itemId === publisherLogo.id.toString()) {
+          return acc;
+        }
 
-      // itemRefs.current[moveFocusByIndex].focus();
+        return {
+          ...acc,
+          [itemId]: currentCopy[itemId],
+        };
+      }, {});
+
+      itemRefs.current[moveFocusByIndex].focus();
 
       setActivePublisherLogoId(moveFocusByIndex);
     },
@@ -102,13 +109,11 @@ function PublisherLogoSettings({
   );
 
   const setActivePublisherLogoId = useCallback((id) => {
-    console.log('????? ', id);
     _setActivePublisherLogoId(id);
   }, []);
 
   useEffect(() => {
     if (publisherLogos.length > 0 && !activePublisherLogo) {
-      console.log('SET ACTIVE PUBLISHER LOGO ', activePublisherLogo);
       setActivePublisherLogoId(publisherLogos?.[0].id);
     }
   }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
@@ -121,7 +126,6 @@ function PublisherLogoSettings({
     currentItemId: activePublisherLogo,
     items: publisherLogos,
   });
-  console.log('focus: ', activePublisherLogo);
   return (
     <SettingForm>
       <div>
