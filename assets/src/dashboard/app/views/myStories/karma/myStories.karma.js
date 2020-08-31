@@ -140,7 +140,9 @@ describe('Grid view', () => {
 
     utils = within(firstStory);
 
-    expect(utils.getByText(/Copy/)).toBeTruthy();
+    const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+    expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
   });
 
   it('should Delete a story', async () => {
@@ -272,6 +274,9 @@ describe('Grid view', () => {
       await fixture.events.focus(searchInput);
 
       await fixture.events.keyboard.type(firstStoryTitle);
+
+      // Wait for the debounce
+      await fixture.events.sleep(300);
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
@@ -624,7 +629,9 @@ describe('List view', () => {
 
       utils = within(rows[0]);
 
-      expect(utils.getByText(/Copy/)).toBeTruthy();
+      const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+      expect(copiedStory).toBeTruthy();
     });
 
     it('should Delete a story', async () => {

@@ -121,9 +121,8 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
-      <ToastProvider>
-        <ToasterView />
-      </ToastProvider>
+
+      <ToasterView />
     </AppFrame>
   );
 };
@@ -139,7 +138,9 @@ function App({ config }) {
               <RouterProvider>
                 <GlobalStyle />
                 <KeyboardOnlyOutline />
-                <AppContent />
+                <ToastProvider>
+                  <AppContent />
+                </ToastProvider>
               </RouterProvider>
             </NavProvider>
           </ApiProvider>
