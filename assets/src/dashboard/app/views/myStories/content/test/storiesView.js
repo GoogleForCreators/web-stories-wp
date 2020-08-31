@@ -19,7 +19,7 @@
  */
 import { fillerDateSettingsObject } from '../../../../../dataUtils/dateSettings';
 import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
-
+import { ToastProvider } from '../../../../../components';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
@@ -60,26 +60,28 @@ const fakeStories = [
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
     const { getAllByTestId } = renderWithThemeAndFlagsProvider(
-      <StoriesView
-        filterValue="all"
-        sort={{
-          value: STORY_SORT_OPTIONS.NAME,
-          direction: SORT_DIRECTION.ASC,
-        }}
-        storyActions={{
-          createTemplateFromStory: jest.fn,
-          duplicateStory: jest.fn,
-          trashStory: jest.fn,
-          updateStory: jest.fn,
-        }}
-        dateSettings={fillerDateSettingsObject}
-        stories={fakeStories}
-        users={{}}
-        view={{
-          style: VIEW_STYLE.GRID,
-          pageSize: { width: 210, height: 316 },
-        }}
-      />,
+      <ToastProvider>
+        <StoriesView
+          filterValue="all"
+          sort={{
+            value: STORY_SORT_OPTIONS.NAME,
+            direction: SORT_DIRECTION.ASC,
+          }}
+          storyActions={{
+            createTemplateFromStory: jest.fn,
+            duplicateStory: jest.fn,
+            trashStory: jest.fn,
+            updateStory: jest.fn,
+          }}
+          dateSettings={fillerDateSettingsObject}
+          stories={fakeStories}
+          users={{}}
+          view={{
+            style: VIEW_STYLE.GRID,
+            pageSize: { width: 210, height: 316 },
+          }}
+        />
+      </ToastProvider>,
       { enableInProgressStoryActions: false }
     );
 

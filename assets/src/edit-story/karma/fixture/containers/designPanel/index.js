@@ -22,6 +22,7 @@ import { TextStyle } from './textStyle';
 import { Alignment } from './alignment';
 import { BackgroundOverlay } from './backgroundOverlay';
 import { Link } from './link';
+import { VideoAccessibility } from './videoAccessibility';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -60,6 +61,14 @@ export class DesignPanel extends Container {
     return this._get(this.getByRole('region', { name: /Link/ }), 'link', Link);
   }
 
+  get videoAccessibility() {
+    return this._get(
+      this.getByRole('region', { name: /accessibility/i }),
+      'videoAccessibility',
+      VideoAccessibility
+    );
+  }
+
   get stylePreset() {
     // @todo: implement
     return null;
@@ -96,11 +105,6 @@ export class DesignPanel extends Container {
   }
 
   get sizePosition() {
-    // @todo: implement
-    return null;
-  }
-
-  get videoAccessibility() {
     // @todo: implement
     return null;
   }

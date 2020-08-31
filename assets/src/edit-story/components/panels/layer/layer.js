@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
+import styled, { css } from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -52,9 +51,9 @@ const LayerButton = styled.button.attrs({
 
   ${({ isSelected, theme }) =>
     isSelected &&
-    `
-    background: ${rgba(theme.colors.accent.primary, 0.14)};
-  `}
+    css`
+      background: ${theme.colors.fg.gray24};
+    `}
 
   &:active {
     outline: none;
@@ -84,6 +83,8 @@ const LayerDescription = styled.div`
   margin-left: 0;
   text-align: left;
   color: ${({ theme }) => theme.colors.fg.white};
+  font-family: ${({ theme }) => theme.fonts.description.family};
+  font-size: ${({ theme }) => theme.fonts.description.size};
 `;
 
 const LockedIcon = styled(Locked)`

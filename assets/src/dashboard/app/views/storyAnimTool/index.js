@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 
 /**
@@ -37,8 +37,8 @@ import {
 } from '../../../constants';
 import { PreviewPage } from '../../../components';
 import { clamp, getPagePreviewHeights } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
+import useApi from '../../api/useApi';
 import UpdateTemplateForm from './updateTemplateForm';
 import Timeline from './timeline';
 import {
@@ -67,14 +67,16 @@ function StoryAnimTool() {
   const globalTimeSubscription = useMemo(() => emitter(), []);
   const flags = useFeatures();
 
-  const {
-    actions: {
-      storyApi: { updateStory, fetchStories },
-    },
-    state: {
-      stories: { stories, storiesOrderById },
-    },
-  } = useContext(ApiContext);
+  const { updateStory, fetchStories, stories, storiesOrderById } = useApi(
+    ({
+      actions: {
+        storyApi: { updateStory, fetchStories },
+      },
+      state: {
+        stories: { stories, storiesOrderById },
+      },
+    }) => ({ updateStory, fetchStories, stories, storiesOrderById })
+  );
 
   useEffect(() => {
     fetchStories({

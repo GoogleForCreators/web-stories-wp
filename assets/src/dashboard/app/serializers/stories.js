@@ -33,6 +33,7 @@ export default function reshapeStoryObject(editStoryURL) {
       status,
       date_gmt,
       author,
+      link,
       story_data: storyData,
     } = originalStoryData;
     if (
@@ -59,6 +60,7 @@ export default function reshapeStoryObject(editStoryURL) {
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       editStoryLink: `${editStoryURL}&post=${id}`,
+      link,
       originalStoryData,
     };
   };

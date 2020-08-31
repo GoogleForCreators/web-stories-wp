@@ -50,20 +50,19 @@ export const MiniCardWrapper = styled.div`
 `;
 
 export const MiniCard = styled.div(
-  ({ width, containerHeight, theme }) => `
+  ({ width, theme }) => `
     position: relative;
     width: ${width}px;
-    height: ${containerHeight}px;
     cursor: pointer;
     border: ${theme.storyPreview.border};
   `
 );
 
 export const ActiveCard = styled.div(
-  ({ width, containerHeight, theme }) => `
+  ({ width, theme }) => `
     position: relative;
+    box-sizing: border-box;
     width: ${width}px;
-    height: ${containerHeight}px;
     border: ${theme.storyPreview.border};
     box-shadow: ${theme.storyPreview.shadow};
   `

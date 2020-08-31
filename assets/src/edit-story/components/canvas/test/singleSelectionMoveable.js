@@ -65,7 +65,12 @@ describe('singleSelectionMoveable', () => {
     target = document.createElement('div');
 
     storyContext = {
-      state: { selectedElements: [element] },
+      state: {
+        selectedElements: [element],
+        currentPage: {
+          elements: [],
+        },
+      },
       actions: { updateSelectedElements },
     };
     canvasContext = {
@@ -73,6 +78,9 @@ describe('singleSelectionMoveable', () => {
         pageSize,
         nodesById: { '1': target },
         fullbleedContainer: document.body,
+      },
+      actions: {
+        setDisplayLinkGuidelines: jest.fn(),
       },
     };
   });

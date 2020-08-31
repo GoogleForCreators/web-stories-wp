@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -36,8 +35,8 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
-import { ApiContext } from '../../../api/apiProvider';
 import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
+import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
   let fixture;
@@ -54,7 +53,7 @@ describe('Grid view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -141,7 +140,9 @@ describe('Grid view', () => {
 
     utils = within(firstStory);
 
-    expect(utils.getByText(/Copy/)).toBeTruthy();
+    const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+    expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
   });
 
   it('should Delete a story', async () => {
@@ -273,6 +274,9 @@ describe('Grid view', () => {
       await fixture.events.focus(searchInput);
 
       await fixture.events.keyboard.type(firstStoryTitle);
+
+      // Wait for the debounce
+      await fixture.events.sleep(300);
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
@@ -480,7 +484,7 @@ describe('List view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -488,7 +492,7 @@ describe('List view', () => {
   async function getUsers() {
     const {
       state: { users },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return users;
   }
@@ -625,7 +629,9 @@ describe('List view', () => {
 
       utils = within(rows[0]);
 
-      expect(utils.getByText(/Copy/)).toBeTruthy();
+      const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+      expect(copiedStory).toBeTruthy();
     });
 
     it('should Delete a story', async () => {

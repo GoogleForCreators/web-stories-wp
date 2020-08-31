@@ -18,11 +18,14 @@
  * External dependencies
  */
 import { useState, useCallback } from 'react';
+import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
  */
+import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
+import { getResourceFromLocalFile } from '../../../../../utils';
 import PublisherLogoSettings from '../';
 
 export default {
@@ -31,41 +34,54 @@ export default {
 };
 
 export const _default = () => {
-  const [uploadedContent, setUploadedContent] = useState([]);
+  const [uploadedContent, setUploadedContent] = useState(
+    formattedPublisherLogos
+  );
 
-  const handleSubmit = useCallback(({ newPublisherLogos, deleteLogo }) => {
-    if (newPublisherLogos) {
-      action('onSubmit fired')(newPublisherLogos);
+  const handleAddLogos = useCallback(async (newPublisherLogos) => {
+    action('onSubmit fired')(newPublisherLogos);
 
-      setUploadedContent((existingUploads) => {
-        const newUploads = newPublisherLogos.map(({ file, localResource }) => {
-          return {
-            src: localResource.src,
-            title: file.name,
-            alt: localResource.alt,
-          };
-        });
+    // this is purely for the sake of storybook demoing
+    const resources = await Promise.all(
+      newPublisherLogos.map(async (file) => ({
+        localResource: await getResourceFromLocalFile(file),
+        file,
+      }))
+    );
 
-        return [...existingUploads, ...newUploads];
+    setUploadedContent((existingUploads) => {
+      const newUploads = resources.map(({ file, localResource }) => {
+        return {
+          src: localResource.src,
+          title: file.name,
+          alt: localResource.alt,
+        };
       });
-    }
 
-    if (deleteLogo) {
-      action('onDelete fired')(deleteLogo);
+      return [...existingUploads, ...newUploads];
+    });
+  }, []);
 
-      setUploadedContent((existingUploadedContent) => {
-        const revisedMockUploads = existingUploadedContent.filter(
-          (uploadedLogo) => uploadedLogo.title !== deleteLogo.title
-        );
-        return revisedMockUploads;
-      });
-    }
+  const handleRemoveLogo = useCallback((e, deleteLogo) => {
+    e.preventDefault();
+    action('onDelete fired')(deleteLogo);
+
+    setUploadedContent((existingUploadedContent) => {
+      const revisedMockUploads = existingUploadedContent.filter(
+        (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
+      );
+      return revisedMockUploads;
+    });
   }, []);
 
   return (
     <PublisherLogoSettings
-      onUpdatePublisherLogo={handleSubmit}
+      canUploadFiles={boolean('canUploadFile', true)}
+      handleAddLogos={handleAddLogos}
+      handleRemoveLogo={handleRemoveLogo}
+      isLoading={boolean('isLoading', false)}
       publisherLogos={uploadedContent}
+      uploadError={text('uploadError', '')}
     />
   );
 };

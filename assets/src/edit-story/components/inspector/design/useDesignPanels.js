@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -31,25 +32,34 @@ function useDesignPanels() {
   const {
     selectedElementIds,
     selectedElements,
+    selectedElementAnimations,
     deleteSelectedElements,
     updateElementsById,
   } = useStory(
     ({
-      state: { selectedElementIds, selectedElements },
+      state: {
+        selectedElementIds,
+        selectedElements,
+        selectedElementAnimations,
+      },
       actions: { deleteSelectedElements, updateElementsById },
     }) => {
       return {
         selectedElementIds,
         selectedElements,
+        selectedElementAnimations,
         deleteSelectedElements,
         updateElementsById,
       };
     }
   );
 
-  const panels = useMemo(() => getPanels(selectedElements), [selectedElements]);
+  const flags = useFeatures();
+  const panels = useMemo(() => getPanels(selectedElements, flags), [
+    selectedElements,
+    flags,
+  ]);
   const [submitHandlers, registerSubmitHandler] = useHandlers();
-
   const onSetProperties = useCallback(
     (newPropertiesOrUpdater) => {
       updateElementsById({
@@ -98,6 +108,7 @@ function useDesignPanels() {
       onSetProperties,
       deleteSelectedElements,
       selectedElements,
+      selectedElementAnimations,
     },
   };
 }

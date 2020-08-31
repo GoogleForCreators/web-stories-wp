@@ -28,12 +28,12 @@ export class Library extends Container {
   }
 
   get mediaTab() {
-    return this.getByRole('tab', { name: /Media library/ });
+    return this.getByRole('tab', { name: /Media Gallery/ });
   }
 
   get media() {
     return this._get(
-      this.getByRole('tabpanel', { name: /Media library/ }),
+      this.getByRole('tabpanel', { name: /Media Gallery/ }),
       'media',
       Media
     );
@@ -48,8 +48,11 @@ export class Library extends Container {
   }
 
   get text() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('tabpanel', { name: /Text library/ }),
+      'text',
+      Text
+    );
   }
 
   get shapesTab() {
@@ -62,6 +65,15 @@ export class Library extends Container {
       'shapes',
       Shapes
     );
+  }
+}
+
+export class Text extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+  preset(name) {
+    return this.getByRole('button', { name });
   }
 }
 

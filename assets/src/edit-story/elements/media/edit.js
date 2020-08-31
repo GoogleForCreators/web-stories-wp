@@ -116,6 +116,9 @@ function MediaEdit({ element, box }) {
     [id, updateElementById]
   );
 
+  const isImage = 'image' === type;
+  const isVideo = 'video' === type;
+
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
@@ -144,9 +147,6 @@ function MediaEdit({ element, box }) {
     ...mediaProps,
   };
 
-  const isImage = 'image' === type;
-  const isVideo = 'video' === type;
-
   useEffect(() => {
     if (
       croppedMedia &&
@@ -156,6 +156,11 @@ function MediaEdit({ element, box }) {
       croppedMedia.focus();
     }
   }, [croppedMedia]);
+
+  const srcSet = calculateSrcSet(element.resource);
+  if (isImage && srcSet) {
+    cropMediaProps.srcSet = srcSet;
+  }
 
   return (
     <Element ref={elementRef}>

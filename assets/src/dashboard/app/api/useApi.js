@@ -17,13 +17,9 @@
 /**
  * Internal dependencies
  */
-import EditorSettingsView from '../';
+import { identity, useContextSelector } from '../../utils';
+import { ApiContext } from './apiProvider';
 
-export default {
-  title: 'Dashboard/Views/EditorSettings/View',
-  component: EditorSettingsView,
-};
-
-export const _default = () => {
-  return <EditorSettingsView />;
-};
+export default function useApi(selector = identity) {
+  return useContextSelector(ApiContext, selector);
+}

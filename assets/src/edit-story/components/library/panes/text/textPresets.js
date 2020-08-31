@@ -36,7 +36,7 @@ const DEFAULT_PRESET = {
   fontSize: dataFontEm(1.2),
   lineHeight: 1.5,
   x: DEFAULT_LEFT_MARGIN,
-  y: (PAGE_HEIGHT - dataFontEm(1.2)) / 2,
+  y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
   font: TEXT_ELEMENT_DEFAULT_FONT,
   width: 160,
   textAlign: 'center',
@@ -44,10 +44,10 @@ const DEFAULT_PRESET = {
 
 const PRESETS = [
   {
-    title: __('Heading', 'web-stories'),
+    title: __('Heading 1', 'web-stories'),
     element: {
       content: `<span style="font-weight: 700">${__(
-        'Heading',
+        'Heading 1',
         'web-stories'
       )}</span>`,
       fontSize: dataFontEm(2),
@@ -59,10 +59,10 @@ const PRESETS = [
     },
   },
   {
-    title: __('Subheading', 'web-stories'),
+    title: __('Heading 2', 'web-stories'),
     element: {
-      content: `<span style="font-weight: 500">${__(
-        'Subheading',
+      content: `<span style="font-weight: 600">${__(
+        'Heading 2',
         'web-stories'
       )}</span>`,
       fontSize: dataFontEm(1.5),
@@ -74,7 +74,22 @@ const PRESETS = [
     },
   },
   {
-    title: __('Body text', 'web-stories'),
+    title: __('Heading 3', 'web-stories'),
+    element: {
+      content: `<span style="font-weight: 500">${__(
+        'Heading 3',
+        'web-stories'
+      )}</span>`,
+      fontSize: dataFontEm(1),
+      lineHeight: 1,
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
+  },
+  {
+    title: __('Paragraph', 'web-stories'),
     element: {
       content: __(
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -83,7 +98,31 @@ const PRESETS = [
       fontSize: dataFontEm(1.2),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.2)) / 2,
+      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
+  },
+  {
+    title: __('Caption', 'web-stories'),
+    element: {
+      content: __('Caption', 'web-stories'),
+      fontSize: dataFontEm(1),
+      lineHeight: 1.5,
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+      font: TEXT_ELEMENT_DEFAULT_FONT,
+      width: DEFAULT_ELEMENT_WIDTH,
+    },
+  },
+  {
+    title: __('OVERLINE', 'web-stories'),
+    element: {
+      content: __('OVERLINE', 'web-stories'),
+      fontSize: dataFontEm(1),
+      lineHeight: 1.5,
+      x: DEFAULT_LEFT_MARGIN,
+      y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
       font: TEXT_ELEMENT_DEFAULT_FONT,
       width: DEFAULT_ELEMENT_WIDTH,
     },
