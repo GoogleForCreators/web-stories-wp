@@ -74,3 +74,8 @@ export const BACKGROUND_TEXT_MODE = {
   FILL: 'FILL',
   HIGHLIGHT: 'HIGHLIGHT',
 };
+
+export const FONT_WEIGHT = {
+  NORMAL: 400,
+  BOLD: 700,
+};

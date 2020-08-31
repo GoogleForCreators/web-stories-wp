@@ -92,8 +92,8 @@ describe('Media3pCategories', () => {
     const categoryPill3 = queryByRole('tab', { name: 'Category 3' });
 
     expect(categoryPill1).toHaveAttribute('aria-selected', 'true');
-    expect(categoryPill2).toBeNull();
-    expect(categoryPill3).toBeNull();
+    expect(categoryPill2).toHaveAttribute('aria-selected', 'false');
+    expect(categoryPill3).toHaveAttribute('aria-selected', 'false');
   });
 
   it('should render <Media3pCategories /> with and allow selection', () => {

@@ -34,14 +34,20 @@ import useLibrary from '../../useLibrary';
 import { Pane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
+import useInsertPreset from './useInsertPreset';
 
 const SectionContent = styled.p``;
+
+const TYPE = 'text';
 
 function TextPane(props) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
+
+  const insertPreset = useInsertPreset();
 
   return (
     <Pane id={paneId} {...props}>
@@ -57,7 +63,7 @@ function TextPane(props) {
       <Section
         title={__('Presets', 'web-stories')}
         titleTools={
-          <MainButton onClick={() => insertElement('text', DEFAULT_PRESET)}>
+          <MainButton onClick={() => insertElement(TYPE, DEFAULT_PRESET)}>
             {__('Add new text', 'web-stories')}
           </MainButton>
         }
@@ -67,7 +73,7 @@ function TextPane(props) {
             key={i}
             title={title}
             element={element}
-            onClick={() => insertElement('text', element)}
+            onClick={() => insertPreset(element)}
           />
         ))}
       </Section>
