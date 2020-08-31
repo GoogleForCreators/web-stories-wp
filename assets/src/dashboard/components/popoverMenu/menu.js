@@ -53,7 +53,7 @@ MenuContainer.propTypes = {
 
 export const MenuItem = styled.li`
   ${TypographyPresets.Small};
-  ${({ theme, isDisabled, isHovering, separator }) => `
+  ${({ theme, isDisabled, isHovering }) => `
     margin-bottom: 0; /* override common js */
     padding: 5px 25px;
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
@@ -62,25 +62,18 @@ export const MenuItem = styled.li`
     display: flex;
     width: 100%;
 
+    &.separatorTop {
+      border-top: 1px solid ${theme.colors.gray50};
+    }
+
+    &.separatorBottom {
+      border-bottom: 1px solid ${theme.colors.gray50};
+    }
+
     &:focus, &:active, &:hover {
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     }
-    
-    ${
-      separator === 'top'
-        ? `
-        border-top: 1px solid ${theme.colors.gray50};
-      `
-        : ''
-    }
-
-    ${
-      separator === 'bottom'
-        ? `
-        border-bottom: 1px solid ${theme.colors.gray50};
-      `
-        : ''
-    }
+  
   `}
 `;
 
@@ -167,7 +160,10 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
           isDisabled={itemIsDisabled}
-          separator={item.separator}
+          className={
+            (item.separator === 'top' && 'separatorTop') ||
+            (item.separator === 'bottom' && 'separatorBottom')
+          }
           {...MenuItemPropsAsLink}
         >
           <MenuItemContent>{item.label}</MenuItemContent>
