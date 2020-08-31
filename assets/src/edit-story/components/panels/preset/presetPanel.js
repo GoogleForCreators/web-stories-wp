@@ -157,7 +157,14 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
   );
 
   const {
-    handlers: { handleSetColor },
+    handlers: {
+      handleSetColor,
+      handleSetLetterSpacing,
+      handleClickUnderline,
+      handleClickItalic,
+      handleSelectFontWeight,
+      handleClickBold,
+    },
   } = useRichTextFormatting(selectedElements, miniPushUpdate);
 
   const handleApplyPreset = useCallback(
@@ -167,9 +174,22 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
           handleSetColor(preset);
           return;
         }
-        const { color, ...rest } = preset;
+        const {
+          color,
+          fontWeight,
+          isBold,
+          isItalic,
+          isUnderline,
+          letterSpacing,
+          ...rest
+        } = preset;
         extraPropsToAdd.current = rest;
         handleSetColor(color);
+        handleSetLetterSpacing(letterSpacing);
+        handleSelectFontWeight(fontWeight);
+        handleClickUnderline(isUnderline);
+        handleClickItalic(isItalic);
+        handleClickBold(isBold);
       } else if (isBackground) {
         updateCurrentPageProperties({
           properties: { backgroundColor: preset },
@@ -189,6 +209,11 @@ function PresetPanel({ presetType = 'color', title, itemRenderer }) {
       handleSetColor,
       selectedElementIds,
       updateElementsById,
+      handleSetLetterSpacing,
+      handleClickUnderline,
+      handleClickItalic,
+      handleSelectFontWeight,
+      handleClickBold,
     ]
   );
 

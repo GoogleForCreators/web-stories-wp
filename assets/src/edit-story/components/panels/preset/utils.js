@@ -24,7 +24,6 @@ import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
-import createSolid from '../../../utils/createSolid';
 import objectPick from '../../../utils/objectPick';
 
 const TEXT_PRESET_STYLES = [
@@ -33,7 +32,6 @@ const TEXT_PRESET_STYLES = [
   'font',
   'fontSize',
   'lineHeight',
-  'letterSpacing',
   'padding',
   'textAlign',
 ];
@@ -67,10 +65,12 @@ export function generatePresetStyle(preset, prepareForCSS) {
     backgroundTextMode,
     textAlign,
     letterSpacing,
+    lineHeight,
   } = preset;
   let style = {
     textAlign,
     letterSpacing,
+    lineHeight,
     fontFamily: generateFontFamily(font),
     ...generatePatternStyles(color, 'color'),
   };
@@ -83,6 +83,25 @@ export function generatePresetStyle(preset, prepareForCSS) {
     };
   }
   return style;
+}
+
+function getTextInlineStyles(content) {
+  const {
+    color,
+    fontWeight,
+    isBold,
+    isItalic,
+    isUnderline,
+    letterSpacing,
+  } = getHTMLInfo(content);
+  return {
+    color,
+    fontWeight,
+    isBold,
+    isItalic,
+    isUnderline,
+    letterSpacing,
+  };
 }
 
 export function getTextPresets(elements, stylePresets, type) {
@@ -102,14 +121,9 @@ export function getTextPresets(elements, stylePresets, type) {
         ? []
         : elements
             .map((text) => {
-              const extractedColor = getHTMLInfo(text.content).color;
-              const color =
-                extractedColor === MULTIPLE_VALUE
-                  ? createSolid(0, 0, 0)
-                  : extractedColor;
               return {
                 ...objectPick(text, TEXT_PRESET_STYLES),
-                color,
+                ...getTextInlineStyles(text.content),
               };
             })
             .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
