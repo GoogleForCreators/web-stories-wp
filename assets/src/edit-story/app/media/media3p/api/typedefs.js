@@ -19,19 +19,13 @@
  *
  * @typedef {(obj:{
  * provider: string,
+ * contentType: ?string,
  * searchTerm: ?string,
+ * categoryId: ?string,
  * orderBy: ?string,
  * mediaType: ?string,
  * pageToken: ?string
  * }) => Promise<{nextPageToken: *, media: *}>} ListMediaFn
- *
- * @typedef {(obj:{
- * provider: string,
- * selectedCategoryId: string,
- * orderBy: ?string,
- * mediaType: ?string,
- * pageToken: ?string
- * }) => Promise<{nextPageToken: *, media: *}>} ListCategoryMediaFn
  *
  * @typedef {(obj:{provider: string, orderBy: ?string})
  * => Promise<{categories: *}>} ListCategoriesFn
@@ -47,8 +41,6 @@
  * @property {Object} actions contains all the actions used to interact with
  * media3p api
  * @property {ListMediaFn} actions.listMedia list media
- * @property {ListCategoryMediaFn} actions.listCategoriesMedia list categories
- * media
  * @property {ListCategoriesFn} actions.listCategoriesFn list categories
  * @property {RegisterUsageFn} actions.registerUsage register usage
  */

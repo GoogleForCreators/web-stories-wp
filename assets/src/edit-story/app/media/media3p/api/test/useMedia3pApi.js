@@ -222,7 +222,7 @@ describe('useMedia3pApi', () => {
 
     await result.current.actions.listMedia({
       provider: 'unsplash',
-      searchTerm: 'cat',
+      filter: { searchTerm: 'cat' },
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
@@ -239,13 +239,35 @@ describe('useMedia3pApi', () => {
     );
     const { result } = renderHook(() => useMedia3pApi(), { wrapper });
 
-    await result.current.actions.listCategoryMedia({
+    await result.current.actions.listMedia({
       provider: 'unsplash',
-      selectedCategoryId: 'category/1',
+      filter: { categoryId: 'category/1' },
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
       filter: 'provider:unsplash category:category/1',
+      orderBy: undefined,
+      pageSize: 20,
+      pageToken: undefined,
+    });
+  });
+
+  it('should call listMedia with contentType', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    await result.current.actions.listMedia({
+      provider: 'unsplash',
+      filter: {
+        contentType: 'sticker',
+        searchTerm: 'cat',
+      },
+    });
+
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:unsplash contentType:sticker cat',
       orderBy: undefined,
       pageSize: 20,
       pageToken: undefined,
