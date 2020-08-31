@@ -379,7 +379,9 @@ function Carousel() {
         aria-label={__('Page Carousel', 'web-stories')}
         data-ready={resizedForPages === pages.length}
       >
-        <NavArea area="space" />
+        <NavArea area="space">
+          <span>{`version ${window.webStoriesEditorSettings.config.version}`}</span>
+        </NavArea>
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
