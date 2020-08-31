@@ -23,7 +23,6 @@
  * searchTerm: ?string,
  * categoryId: ?string,
  * orderBy: ?string,
- * mediaType: ?string,
  * pageToken: ?string
  * }) => Promise<{nextPageToken: *, media: *}>} ListMediaFn
  *
