@@ -24,6 +24,7 @@ import { render } from '@testing-library/react';
  */
 import { TestDisplayElement } from '../../../components/canvas/test/_utils';
 import { OverlayType } from '../../../utils/backgroundOverlay';
+import resourceList from '../../../utils/resourceList';
 
 describe('MediaDisplay', () => {
   let imageElement;
@@ -96,7 +97,8 @@ describe('MediaDisplay', () => {
     refs = {};
   });
 
-  it('should render img with srcset', () => {
+  it('should render img with srcset, when fullsize resource is loaded', () => {
+    resourceList[imageElement.resource.id] = { type: 'fullsize' };
     const { container } = render(
       <TestDisplayElement storyContext={storyContext} element={imageElement} />
     );
