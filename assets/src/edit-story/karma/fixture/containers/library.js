@@ -28,12 +28,12 @@ export class Library extends Container {
   }
 
   get mediaTab() {
-    return this.getByRole('tab', { name: /Media library/ });
+    return this.getByRole('tab', { name: /Media Gallery/ });
   }
 
   get media() {
     return this._get(
-      this.getByRole('tabpanel', { name: /Media library/ }),
+      this.getByRole('tabpanel', { name: /Media Gallery/ }),
       'media',
       Media
     );

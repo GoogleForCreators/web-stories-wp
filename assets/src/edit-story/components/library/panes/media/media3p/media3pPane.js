@@ -213,7 +213,7 @@ function Media3pPane(props) {
               disabled={Boolean(
                 selectedProvider &&
                   PROVIDERS[selectedProvider].supportsCategories &&
-                  media3p[selectedProvider].categories?.selectedCategoryId
+                  media3p[selectedProvider]?.state.categories.selectedCategoryId
               )}
             />
           </SearchInputContainer>
