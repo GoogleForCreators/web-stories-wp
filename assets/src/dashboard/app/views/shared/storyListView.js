@@ -84,7 +84,7 @@ const PreviewContainer = styled.div`
   height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.storyPreview.border};
+  border: ${({ theme }) => theme.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
