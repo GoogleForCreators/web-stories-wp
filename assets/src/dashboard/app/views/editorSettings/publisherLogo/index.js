@@ -41,7 +41,7 @@ import { FileUpload } from '../../../../components';
 import { Close as RemoveIcon } from '../../../../icons';
 
 export const TEXT = {
-  SECTION_HEADING: __('Published Logo', 'web-stories'),
+  SECTION_HEADING: __('Publisher Logo', 'web-stories'),
   CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
     'web-stories'
