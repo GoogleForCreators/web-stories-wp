@@ -75,7 +75,9 @@ function PublisherLogoSettings({
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
+
   const [activePublisherLogo, _setActivePublisherLogoId] = useState(null);
+
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
   ]);
