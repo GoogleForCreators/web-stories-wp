@@ -8,6 +8,6 @@
 |                                             | *[total]*                                                          | 🏆 **100.00%** *(7 / 7)*   |
 | Creator can view their stories in list view | Go to WP list view to do any action                                | 🏆 **100.00%** *(1 / 1)*   |
 |                                             | See stories in list view                                           | 🏆 **100.00%** *(6 / 6)*   |
-|                                             | Sort their stories (last modified / date created / author / title) | 🏆 **100.00%** *(4 / 4)*   |
-|                                             | *[total]*                                                          | 🏆 **100.00%** *(11 / 11)* |
-| *\[total\]*                                 | *\[total\]*                                                        | 🏆 **100.00%** *(56 / 56)* |
+|                                             | Sort their stories (last modified / date created / author / title) | 🏆 **100.00%** *(8 / 8)*   |
+|                                             | *[total]*                                                          | 🏆 **100.00%** *(15 / 15)* |
+| *\[total\]*                                 | *\[total\]*                                                        | 🏆 **100.00%** *(64 / 64)* |
