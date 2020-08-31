@@ -30,15 +30,14 @@ const ContentType = {
 };
 
 const ProviderType = {
-  IMAGES: 'images',
-  VIDEO: 'video',
+  UNSPLASH: 'unsplash',
+  COVERR: 'coverr',
 };
 
 /** @typedef {import('react').React.Component} ReactComponent */
 
 /**
  * @typedef ProviderConfiguration
- * @property {string} providerSource The source of the provider in the API.
  * @property {string} displayName The display name of the provider.
  * @property {?string} featureName An optional feature that must be turned on
  * for the provider tab to be displayed.
@@ -63,8 +62,7 @@ const ProviderType = {
  * @type {Object.<string, ProviderConfiguration>}
  */
 export const PROVIDERS = {
-  [ProviderType.IMAGES]: {
-    providerSource: 'UNSPLASH',
+  [ProviderType.UNSPLASH]: {
     displayName: __('Images', 'web-stories'),
     supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
@@ -79,8 +77,7 @@ export const PROVIDERS = {
       'web-stories'
     ),
   },
-  [ProviderType.VIDEO]: {
-    providerSource: 'COVERR',
+  [ProviderType.COVERR]: {
     displayName: __('Video', 'web-stories'),
     featureName: 'showCoverrTab',
     supportedContentTypes: [ContentType.VIDEO],
