@@ -152,16 +152,14 @@ function EditorSettings() {
     [maxUpload, maxUploadFormatted, uploadMedia]
   );
 
-  const handleRemoveLogo = useCallback((e, media) => {
-    e.preventDefault();
-
-    setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
-    setActiveLogo(media.id);
-  }, []);
-
   const isActiveRemoveLogoDialog = Boolean(
     activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && activeLogo
   );
+
+  const handleRemoveLogo = useCallback((media) => {
+    setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
+    setActiveLogo(media.id);
+  }, []);
 
   const orderedPublisherLogos = useMemo(() => {
     if (Object.keys(mediaById).length <= 0) {

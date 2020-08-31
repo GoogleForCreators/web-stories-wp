@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import {
   Error,
+  GridItemButton,
   Logo,
   RemoveLogoButton,
   SettingForm,
@@ -39,6 +41,8 @@ import {
 } from '../components';
 import { FileUpload } from '../../../../components';
 import { Close as RemoveIcon } from '../../../../icons';
+import { useGridViewKeys } from '../../../../utils';
+import { useConfig } from '../../../config';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -66,38 +70,117 @@ function PublisherLogoSettings({
   publisherLogos,
   uploadError,
 }) {
+  const { isRTL } = useConfig();
+
+  const containerRef = useRef();
+  const gridRef = useRef();
+  const itemRefs = useRef({});
+  const isInteractive = publisherLogos.length > 1;
+  const [activePublisherLogo, _setActivePublisherLogoId] = useState(null);
+  const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
+    publisherLogos,
+  ]);
+  console.log('publisherLogosById', publisherLogosById);
+  console.log(itemRefs.current);
+  const onRemoveLogoClick = useCallback(
+    (e, { publisherLogo, idx }) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('delete index: ', idx);
+      const moveFocusByIndex =
+        idx > 1 ? publisherLogosById[idx - 1] : publisherLogosById[0];
+      console.log('move to this focus: ', moveFocusByIndex);
+      handleRemoveLogo(publisherLogo);
+
+      delete itemRefs.current[publisherLogo.id];
+
+      // itemRefs.current[moveFocusByIndex].focus();
+
+      setActivePublisherLogoId(moveFocusByIndex);
+    },
+    [handleRemoveLogo, publisherLogosById, setActivePublisherLogoId]
+  );
+
+  const setActivePublisherLogoId = useCallback((id) => {
+    console.log('????? ', id);
+    _setActivePublisherLogoId(id);
+  }, []);
+
+  useEffect(() => {
+    if (publisherLogos.length > 0 && !activePublisherLogo) {
+      console.log('SET ACTIVE PUBLISHER LOGO ', activePublisherLogo);
+      setActivePublisherLogoId(publisherLogos?.[0].id);
+    }
+  }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
+
+  useGridViewKeys({
+    containerRef,
+    gridRef,
+    itemRefs,
+    isRTL,
+    currentItemId: activePublisherLogo,
+    items: publisherLogos,
+  });
+  console.log('focus: ', activePublisherLogo);
   return (
     <SettingForm>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
         <HelperText>{TEXT.CONTEXT}</HelperText>
       </div>
-      <div>
+      <div ref={containerRef}>
         {publisherLogos.length > 0 && (
-          <UploadedContainer>
+          <UploadedContainer ref={gridRef}>
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
               }
+
+              const isCurrentLogo = activePublisherLogo === publisherLogo.id;
+              const isActive = isCurrentLogo && isInteractive;
+
               return (
                 <div
                   key={`${publisherLogo.title}_${idx}`}
                   data-testid={`publisher-logo-${idx}`}
+                  ref={(el) => {
+                    itemRefs.current[publisherLogo.id] = el;
+                  }}
                 >
-                  <Logo src={publisherLogo.src} alt={publisherLogo.title} />
-                  {!publisherLogo.isActive && (
-                    <RemoveLogoButton
-                      data-testid={`remove-publisher-logo-${idx}`}
-                      aria-label={sprintf(
-                        /* translators: %s: logo title */
-                        __('Remove %s as a publisher logo', 'web-stories'),
-                        publisherLogo.title
-                      )}
-                      onClick={(e) => handleRemoveLogo(e, publisherLogo)}
-                    >
-                      <RemoveIcon aria-hidden="true" />
-                    </RemoveLogoButton>
-                  )}
+                  <GridItemButton
+                    isSelected={isCurrentLogo}
+                    tabIndex={isActive ? 0 : -1}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActivePublisherLogoId(publisherLogo.id);
+                    }}
+                    aria-label={sprintf(
+                      /* translators: %s: logo number. */
+                      __(
+                        'Publisher Logo %s (currently selected)',
+                        'web-stories'
+                      ),
+                      idx + 1
+                    )}
+                  >
+                    <Logo src={publisherLogo.src} alt={publisherLogo.title} />
+                    {!publisherLogo.isActive && (
+                      <RemoveLogoButton
+                        tabIndex={isActive ? 0 : -1}
+                        data-testid={`remove-publisher-logo-${idx}`}
+                        aria-label={sprintf(
+                          /* translators: %s: logo title */
+                          __('Remove %s as a publisher logo', 'web-stories'),
+                          publisherLogo.title
+                        )}
+                        onClick={(e) =>
+                          onRemoveLogoClick(e, { publisherLogo, idx })
+                        }
+                      >
+                        <RemoveIcon aria-hidden="true" />
+                      </RemoveLogoButton>
+                    )}
+                  </GridItemButton>
                 </div>
               );
             })}
