@@ -152,26 +152,22 @@ function TabView({
 
   return (
     <Tabs aria-label={label} ref={ref}>
-      {tabs.map(({ id, title, ariaLabel, icon: Icon }) => {
-        const extraProps = ariaLabel ? { 'aria-label': ariaLabel } : {};
-        return (
-          <Tab
-            key={id}
-            ref={(tabRef) => (tabRefs.current[id] = tabRef)}
-            id={getTabId(id)}
-            isActive={tab === id}
-            aria-controls={
-              getAriaControlsId ? getAriaControlsId(id) : getTabId(id)
-            }
-            aria-selected={tab === id}
-            onClick={() => tabChanged(id)}
-            {...extraProps}
-          >
-            {title}
-            {Boolean(Icon) && <Icon isActive={id === tab} />}
-          </Tab>
-        );
-      })}
+      {tabs.map(({ id, title, icon: Icon }) => (
+        <Tab
+          key={id}
+          ref={(tabRef) => (tabRefs.current[id] = tabRef)}
+          id={getTabId(id)}
+          isActive={tab === id}
+          aria-controls={
+            getAriaControlsId ? getAriaControlsId(id) : getTabId(id)
+          }
+          aria-selected={tab === id}
+          onClick={() => tabChanged(id)}
+        >
+          {title}
+          {Boolean(Icon) && <Icon isActive={id === tab} />}
+        </Tab>
+      ))}
     </Tabs>
   );
 }

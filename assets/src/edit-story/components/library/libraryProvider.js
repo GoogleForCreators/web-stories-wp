@@ -24,10 +24,6 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 import { useInsertElement } from '../canvas';
 import Context from './context';
 import { AnimationPane, AnimationIcon } from './panes/animation';
@@ -37,42 +33,12 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 
-const MEDIA = {
-  icon: MediaIcon,
-  Pane: MediaPane,
-  id: 'media',
-  ariaLabel: __('Media Gallery', 'web-stories'),
-};
-const MEDIA3P = {
-  icon: Media3pIcon,
-  Pane: Media3pPane,
-  id: 'media3p',
-  ariaLabel: __('Explore Media', 'web-stories'),
-};
-const TEXT = {
-  icon: TextIcon,
-  Pane: TextPane,
-  id: 'text',
-  ariaLabel: __('Text', 'web-stories'),
-};
-const SHAPES = {
-  icon: ShapesIcon,
-  Pane: ShapesPane,
-  id: 'shapes',
-  ariaLabel: __('Shapes', 'web-stories'),
-};
-const ELEMS = {
-  icon: ElementsIcon,
-  Pane: ElementsPane,
-  id: 'elements',
-  ariaLabel: __('Elements', 'web-stories'),
-};
-const ANIM = {
-  icon: AnimationIcon,
-  Pane: AnimationPane,
-  id: 'animation',
-  ariaLabel: __('Animation', 'web-stories'),
-};
+const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
+const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
+const TEXT = { icon: TextIcon, Pane: TextPane, id: 'text' };
+const SHAPES = { icon: ShapesIcon, Pane: ShapesPane, id: 'shapes' };
+const ELEMS = { icon: ElementsIcon, Pane: ElementsPane, id: 'elements' };
+const ANIM = { icon: AnimationIcon, Pane: AnimationPane, id: 'animation' };
 
 function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
