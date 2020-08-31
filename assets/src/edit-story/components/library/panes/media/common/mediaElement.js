@@ -272,12 +272,14 @@ const MediaElement = ({
     showVideoDetail,
     dropTargetsBindings,
   });
-  const attribution = active && resource.attribution?.author && (
-    <Attribution
-      author={resource.attribution.author.displayName}
-      url={resource.attribution.author.url}
-    />
-  );
+  const attribution = active &&
+    resource.attribution?.author?.displayName &&
+    resource.attribution?.author?.url && (
+      <Attribution
+        author={resource.attribution.author.displayName}
+        url={resource.attribution.author.url}
+      />
+    );
 
   const ref = useRef();
 
@@ -363,7 +365,7 @@ function getInnerElement(
   const makeImageVisible = () => {
     ref.current.style.opacity = '1';
   };
-  if (type === 'image') {
+  if (['image', 'gif'].includes(type)) {
     return (
       <Image
         key={src}
