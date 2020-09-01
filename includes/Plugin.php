@@ -61,13 +61,6 @@ class Plugin {
 	public $template;
 
 	/**
-	 * Beta version updater.
-	 *
-	 * @var Updater
-	 */
-	public $updater;
-
-	/**
 	 * Dashboard.
 	 *
 	 * @var Dashboard
