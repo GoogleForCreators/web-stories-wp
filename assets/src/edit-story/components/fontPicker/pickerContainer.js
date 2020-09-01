@@ -36,7 +36,6 @@ import { ReactComponent as Checkmark } from '../../icons/checkmark.svg';
 import { ReactComponent as SearchIcon } from '../../icons/search.svg';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { useFont } from '../../app/font';
-import Popup from '../popup';
 import ScrollList from './scrollList';
 
 const PickerContainer = styled.div`
@@ -85,12 +84,12 @@ const Divider = styled.div`
   font-size: ${({ theme }) => theme.fonts.tab.size};
   line-height: 14px;
   color: ${({ theme }) => theme.colors.accent.secondary};
-  padding: 8px 8px ${({ collapsed }) => (collapsed ? 0 : 8)}px 8px;
+  padding: 8px 8px ${({ collapsed }) => (collapsed ? 2 : 8)}px 8px;
   margin: 0;
 `;
 
 const SearchContainer = styled.div`
-  position: absolute;
+  position: relative;
   width: 100%;
   margin-top: 16px;
 `;
@@ -212,7 +211,7 @@ const NoResult = styled.div`
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
 `;
 
-function FontPickerContainer({ value, onSelect, onClose, isOpen, fillWidth }) {
+function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
     state: { fonts, recentFonts, curatedFonts },
     actions: { ensureMenuFontsLoaded },
@@ -350,20 +349,18 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen, fillWidth }) {
             </ClearButton>
           )}
         </SearchContainer>
-        <Popup anchor={inputRef} isOpen={isOpen} fillWidth={fillWidth}>
-          {matchingFonts.length ? (
-            <List
-              id="editor-font-picker-list"
-              onKeyDown={handleKeyPress}
-              items={matchingFonts}
-              onScroll={handleScroll}
-              itemRenderer={itemRenderer}
-              currentOffset={currentOffset}
-            />
-          ) : (
-            <NoResult>{__('No matches found', 'web-stories')}</NoResult>
-          )}
-        </Popup>
+        {matchingFonts.length ? (
+          <List
+            id="editor-font-picker-list"
+            onKeyDown={handleKeyPress}
+            items={matchingFonts}
+            onScroll={handleScroll}
+            itemRenderer={itemRenderer}
+            currentOffset={currentOffset}
+          />
+        ) : (
+          <NoResult>{__('No matches found', 'web-stories')}</NoResult>
+        )}
       </PickerContainer>
     )
   );
@@ -374,7 +371,6 @@ FontPickerContainer.propTypes = {
   value: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
-  fillWidth: PropTypes.number.isRequired,
 };
 
 export default FontPickerContainer;
