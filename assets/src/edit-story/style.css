@@ -22,33 +22,44 @@
 
 #screen-meta,
 #screen-meta-links,
-#screen-meta-links ~ :not(#edit-story):not(.clear) {
+#screen-meta-links ~ :not(#edit-story):not(.clear):not(#stories-editor-no-js) {
   display: none;
 }
 
-body.edit-story #wpcontent,
-body.edit-story #wpbody-content {
+body.edit-story.js #wpcontent,
+body.edit-story.js #wpbody-content {
   padding: 0;
 }
 
-body.edit-story #edit-story {
+body.edit-story.js #edit-story {
   background-color: #1b1d1c; /* theme.colors.bg.workspace */
   position: relative;
   height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
 }
 
-body.edit-story .loading-message {
+body.edit-story.js .loading-message {
   color: #fff;
   text-align: center;
   margin: 0;
   padding: 0.67em 0;
 }
 
-body.edit-story #wpfooter {
+body.edit-story.no-js .loading-message {
+  display: none;
+}
+body.edit-story #stories-editor-no-js {
   display: none;
 }
 
-body.edit-story #edit-story .components-spinner {
+body.edit-story.no-js #stories-editor-no-js {
+  display: block;
+}
+
+body.edit-story.js #wpfooter {
+  display: none;
+}
+
+body.edit-story.js #edit-story .components-spinner {
   float: none;
   margin: 0 11px;
 }

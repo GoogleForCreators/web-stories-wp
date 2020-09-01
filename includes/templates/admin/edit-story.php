@@ -76,6 +76,12 @@ require_once ABSPATH . 'wp-admin/admin-header.php';
 
 ?>
 
+<div id="stories-editor-no-js" class="wrap">
+	<div class="notice notice-error notice-alt">
+		<p><?php esc_html_e( 'The Web Stories editor requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+	</div>
+</div>
+
 <div id="edit-story">
 	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
 </div>

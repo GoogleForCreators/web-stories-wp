@@ -26,11 +26,12 @@ body {
 }
 
 #screen-meta,
-#screen-meta ~ :not(#web-stories-dashboard):not(.clear) {
+#screen-meta
+  ~ :not(#web-stories-dashboard):not(.clear):not(#stories-dashboard-no-js) {
   display: none;
 }
 
-body.web-story_page_stories-dashboard {
+body.web-story_page_stories-dashboard.js {
   position: relative;
 }
 
@@ -38,8 +39,8 @@ body.web-story_page_stories-dashboard {
   z-index: 4;
 }
 
-body.web-story_page_stories-dashboard #wpwrap,
-body.web-story_page_stories-dashboard #wpbody-content {
+body.web-story_page_stories-dashboard.js #wpwrap,
+body.web-story_page_stories-dashboard.js #wpbody-content {
   position: absolute;
   overflow: hidden;
   top: 0;
@@ -50,22 +51,37 @@ body.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
-body.web-story_page_stories-dashboard #wpcontent,
-body.web-story_page_stories-dashboard #wpbody-content {
+body.web-story_page_stories-dashboard.js #wpcontent,
+body.web-story_page_stories-dashboard.js #wpbody-content {
   padding: 0;
 }
 
-body.web-story_page_stories-dashboard #wpbody {
+body.web-story_page_stories-dashboard.js #wpbody {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
+body.web-story_page_stories-dashboard.js
+  #web-stories-dashboard
+  .loading-message {
   text-align: center;
 }
 
-body.web-story_page_stories-dashboard #wpfooter {
+body.web-story_page_stories-dashboard.no-js
+  #web-stories-dashboard
+  .loading-message {
+  display: none;
+}
+body.web-story_page_stories-dashboard #stories-editor-no-js {
+  display: none;
+}
+
+body.web-story_page_stories-dashboard.no-js #stories-editor-no-js {
+  display: block;
+}
+
+body.web-story_page_stories-dashboard.js #wpfooter {
   display: none;
 }
 

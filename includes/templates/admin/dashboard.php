@@ -30,7 +30,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-
+<div id="stories-dashboard-no-js" class="wrap">
+	<div class="notice notice-error notice-alt">
+		<p><?php esc_html_e( 'The Web Stories dashboard requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+	</div>
+</div>
 <div id="web-stories-dashboard">
 	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
 </div>
