@@ -91,6 +91,17 @@ const NavArea = styled(Area)`
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
+const EditorVersion = styled.div`
+  display: inline-block;
+  position: relative;
+  margin-left: 14px;
+  bottom: 30px;
+  font-size: 12px;
+  line-height: 20px;
+  letter-spacing: 0.0133em;
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+`;
+
 const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
@@ -242,7 +253,7 @@ function Carousel() {
       actions: { setCurrentPage, arrangePage },
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
-  const { isRTL } = useConfig();
+  const { isRTL, version } = useConfig();
   const { showSafeZone, setShowSafeZone } = useCanvas(
     ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
       showSafeZone,
@@ -379,9 +390,7 @@ function Carousel() {
         aria-label={__('Page Carousel', 'web-stories')}
         data-ready={resizedForPages === pages.length}
       >
-        <NavArea area="space">
-          <span>{`version ${window.webStoriesEditorSettings.config.version}`}</span>
-        </NavArea>
+        <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
             isHidden={!hasHorizontalOverflow || isAtBeginningOfList}
@@ -509,6 +518,7 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
+      <EditorVersion>{`version ${version}`}</EditorVersion>
       <Modal
         open={isGridViewOpen}
         onClose={closeModal}
