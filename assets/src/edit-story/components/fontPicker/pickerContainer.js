@@ -46,19 +46,20 @@ const PickerContainer = styled.div`
   width: 100%;
   min-width: 160px;
   z-index: 2;
+  background-color: ${({ theme }) => theme.colors.bg.black};
+  border-radius: ${({ theme }) => theme.border.radius.default};
+  padding: 5px;
+  margin-top: 16px;
 `;
 
 const List = styled(ScrollList)`
   width: 100%;
   max-height: 305px;
-  padding: 10px 0;
-  margin: 16px 0 0 0;
-  background-color: ${({ theme }) => theme.colors.bg.black};
+  padding: 0 0 10px 0;
+  margin: 10px 0 0 0;
   font-size: 14px;
   text-align: left;
   list-style: none;
-  border-radius: ${({ theme }) => theme.border.radius.default};
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
   scrollbar-width: thin;
   scrollbar-color: transparent
     ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
@@ -84,14 +85,13 @@ const Divider = styled.div`
   font-size: ${({ theme }) => theme.fonts.tab.size};
   line-height: 14px;
   color: ${({ theme }) => theme.colors.accent.secondary};
-  padding: 8px 8px ${({ collapsed }) => (collapsed ? 2 : 8)}px 8px;
+  padding: 8px;
   margin: 0;
 `;
 
 const SearchContainer = styled.div`
   position: relative;
   width: 100%;
-  margin-top: 16px;
 `;
 
 const inputIconStyles = css`
@@ -200,15 +200,12 @@ const Selected = styled(Checkmark)`
 
 const NoResult = styled.div`
   width: 100%;
-  padding: 18px 16px;
-  margin: 16px 0 0 0;
+  padding: 13px 11px;
+  margin: 0;
   text-align: center;
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.75)};
   font-size: ${({ theme }) => theme.fonts.tab.size};
   line-height: 14px;
-  background-color: ${({ theme }) => theme.colors.bg.black};
-  border-radius: ${({ theme }) => theme.border.radius.default};
-  border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
 `;
 
 function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
@@ -307,6 +304,9 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
         {dividerIndexTracker.current >= 0 && index === 0 && (
           <Divider>{__('Recently used', 'web-stories')}</Divider>
         )}
+        {index === dividerIndexTracker.current + 1 && (
+          <Divider>{__('Recommended', 'web-stories')}</Divider>
+        )}
         <Item
           fontFamily={service.includes('google') ? `'${name}::MENU'` : name}
           onClick={() => onSelect(name)}
@@ -316,9 +316,6 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
           )}
           {name}
         </Item>
-        {index === dividerIndexTracker.current && (
-          <Divider collapsed>{__('Recommended', 'web-stories')}</Divider>
-        )}
       </>
     ),
     [onSelect, value]
