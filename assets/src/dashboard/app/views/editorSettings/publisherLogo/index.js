@@ -113,16 +113,31 @@ function PublisherLogoSettings({
 
   // Update publisher logo focus when logo is removed
   useEffect(() => {
-    if (indexRemoved && publisherLogosById.length !== publisherLogoCount) {
+    if (
+      Boolean(indexRemoved?.toString()) &&
+      publisherLogosById.length !== publisherLogoCount
+    ) {
+      if (publisherLogosById.length === 0) {
+        // if the user has removed their last publisher logo, the logo grid will not render
+        // the first element child of containerRef becomes the input upload
+        // upload will always be present unless upload is not enabled.
+        // currently only admin can get to settings, which means they have upload ability
+        // checking for current and firstElementChild are safeguards
+        return containerRef.current?.firstElementChild
+          ?.getElementsByTagName('input')[0]
+          .focus();
+      }
+
       const moveFocusByIndex =
-        indexRemoved > 1
+        indexRemoved > 0
           ? publisherLogosById[indexRemoved - 1]
           : publisherLogosById[0];
 
       setActivePublisherLogoId(moveFocusByIndex);
       itemRefs.current[moveFocusByIndex].firstChild.focus();
-      setIndexRemoved(null);
+      return setIndexRemoved(null);
     }
+    return undefined;
   }, [
     activePublisherLogo,
     indexRemoved,
