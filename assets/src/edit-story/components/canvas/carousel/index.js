@@ -96,9 +96,9 @@ const EditorVersion = styled.div`
   position: relative;
   margin-left: 14px;
   bottom: 30px;
-  font-size: 12px;
-  line-height: 20px;
-  letter-spacing: 0.0133em;
+  font-size: ${({ theme }) => theme.fonts.version.size};
+  line-height: ${({ theme }) => theme.fonts.version.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
 `;
 
@@ -518,7 +518,13 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
-      <EditorVersion>{`version ${version}`}</EditorVersion>
+      <EditorVersion>
+        {sprintf(
+          /* translators: %s: editor version. */
+          __('version %s', 'web-stories'),
+          version
+        )}
+      </EditorVersion>
       <Modal
         open={isGridViewOpen}
         onClose={closeModal}
