@@ -129,6 +129,7 @@ const CardPreviewContainer = ({
   bottomAction,
   story,
   pageSize,
+  ariaLabel,
   children,
   containerAction = () => {},
 }) => {
@@ -189,6 +190,7 @@ const CardPreviewContainer = ({
         {children}
       </PreviewPane>
       <EditControls
+        aria-label={ariaLabel}
         data-testid="card-action-container"
         ref={containElem}
         cardSize={pageSize}
@@ -233,6 +235,7 @@ const ActionButtonPropType = PropTypes.shape({
 });
 
 CardPreviewContainer.propTypes = {
+  ariaLabel: PropTypes.string, //TODO will be required after updating story grids
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,

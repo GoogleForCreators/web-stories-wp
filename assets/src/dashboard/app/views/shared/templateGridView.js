@@ -60,9 +60,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
   const gridRef = useRef();
   const itemRefs = useRef({});
 
-  const [activeGridItemId, _setActiveGridItemId] = useState(null);
-
-  const setActiveGridItemId = useCallback((id) => _setActiveGridItemId(id), []);
+  const [activeGridItemId, setActiveGridItemId] = useState(null);
 
   const targetAction = useCallback(
     (template) => {
@@ -90,7 +88,11 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   return (
     <div ref={containerRef}>
-      <GridContainer pageSize={pageSize} gridRef={gridRef}>
+      <GridContainer
+        pageSize={pageSize}
+        gridRef={gridRef}
+        ariaLabel={__('Available templates', 'web-stories')}
+      >
         {templates.map((template) => {
           const isActive = activeGridItemId === template.id;
           const tabIndex = isActive ? 0 : -1;
@@ -112,17 +114,22 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                   isActive
                     ? sprintf(
                         /* translators: %s: template title.*/
-                        __('Template %s (currently selected)', 'web-stories'),
+                        __('%s (currently selected)', 'web-stories'),
                         template.title
                       )
-                    : sprintf(
-                        /* translators: %s: template title.*/
-                        __('Template %s', 'web-stories'),
-                        template.title
-                      )
+                    : template.title
                 }
               />
               <CardPreviewContainer
+                ariaLabel={
+                  isActive
+                    ? sprintf(
+                        /* translators: %s: template title.*/
+                        __('%s (currently selected)', 'web-stories'),
+                        template.title
+                      )
+                    : template.title
+                }
                 tabIndex={tabIndex}
                 pageSize={pageSize}
                 story={template}
