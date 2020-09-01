@@ -40,42 +40,33 @@ const Paragraph = styled.p`
 `;
 
 const GUIDELINES =
-  'https://drive.google.com/corp/drive/folders/1dqPtjNTYN7OxTngWAYhy8zn8X3EuRTGJ';
+  'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title';
 
 function TitleMissingDialog({ open, onIgnore, onFix }) {
   return (
     <Dialog
       open={open}
       onClose={onFix}
-      title={__('Title missing!', 'web-stories')}
+      title={__('Missing title', 'web-stories')}
       actions={
         <>
-          <Plain onClick={onIgnore}>
-            {__('Publish anyway', 'web-stories')}
-          </Plain>
           <Plain onClick={onFix}>{__('Add a title', 'web-stories')}</Plain>
+          <Plain onClick={onIgnore}>
+            {__('Publish without title', 'web-stories')}
+          </Plain>
         </>
       }
     >
       <Paragraph>
-        {__('Your story is missing a title!', 'web-stories')}
-      </Paragraph>
-      <Paragraph>
         {__(
-          'Research shows that stories with a good short title perform much better.',
+          'We recommend adding a title to the story prior to publishing',
           'web-stories'
         )}
-      </Paragraph>
-      <Paragraph>
+        {' ('}
         <Link href={GUIDELINES} target="_blank" rel="noopener noreferrer">
-          {__('See our guidelines to learn more.', 'web-stories')}
+          {__('learn more', 'web-stories')}
         </Link>
-      </Paragraph>
-      <Paragraph>
-        {__(
-          'Do you want to go ahead and publish anyway or do you want to add a title?',
-          'web-stories'
-        )}
+        {').'}
       </Paragraph>
     </Dialog>
   );
