@@ -49,6 +49,7 @@ const ProviderType = {
  * for the provider tab to be displayed.
  * @property {ContentType[]} supportedContentTypes The supported content types
  * by the provider.
+ * @property {?ContentType} contentTypeFilter Optional. The content type to filter by.
  * @property {boolean} supportsCategories Whether this provider supports
  * filtering media by category.
  * @property {boolean} requiresAuthorAttribution Whether this provider
@@ -100,6 +101,7 @@ export const PROVIDERS = {
     displayName: __('GIFs', 'web-stories'),
     featureName: 'showGifTab',
     supportedContentTypes: [ContentType.GIF],
+    contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
     requiresAuthorAttribution: false,
     attributionComponent: TenorAttribution,
