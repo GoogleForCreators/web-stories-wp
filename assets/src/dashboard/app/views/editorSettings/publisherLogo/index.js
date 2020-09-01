@@ -77,10 +77,15 @@ function PublisherLogoSettings({
   const itemRefs = useRef({});
 
   const [activePublisherLogo, _setActivePublisherLogoId] = useState(null);
+  const [indexRemoved, setIndexRemoved] = useState(null);
 
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
   ]);
+
+  const [publisherLogoCount, setPublisherLogoCount] = useState(
+    publisherLogosById.length
+  );
 
   const onRemoveLogoClick = useCallback(
     (e, { publisherLogo, idx }) => {
@@ -88,24 +93,43 @@ function PublisherLogoSettings({
       e.stopPropagation();
 
       handleRemoveLogo(publisherLogo);
-
-      const moveFocusByIndex =
-        idx > 1 ? publisherLogosById[idx - 1] : publisherLogosById[0];
-      _setActivePublisherLogoId(moveFocusByIndex);
-      itemRefs.current[moveFocusByIndex].firstChild.focus();
+      setIndexRemoved(idx);
+      setPublisherLogoCount(publisherLogosById.length);
     },
-    [handleRemoveLogo, publisherLogosById]
+    [handleRemoveLogo, publisherLogosById.length]
   );
 
   const setActivePublisherLogoId = useCallback((id) => {
     _setActivePublisherLogoId(id);
   }, []);
 
+  // set active logo when first painting
   useEffect(() => {
     if (publisherLogos.length > 0 && !activePublisherLogo) {
       setActivePublisherLogoId(publisherLogos?.[0].id);
     }
   }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
+
+  // Update publisher logo focus when logo is removed
+  useEffect(() => {
+    if (indexRemoved && publisherLogosById.length !== publisherLogoCount) {
+      const moveFocusByIndex =
+        indexRemoved > 1
+          ? publisherLogosById[indexRemoved - 1]
+          : publisherLogosById[0];
+
+      setActivePublisherLogoId(moveFocusByIndex);
+      itemRefs.current[moveFocusByIndex].firstChild.focus();
+      setIndexRemoved(null);
+    }
+  }, [
+    activePublisherLogo,
+    indexRemoved,
+    publisherLogoCount,
+    publisherLogosById,
+    publisherLogosById.length,
+    setActivePublisherLogoId,
+  ]);
 
   useGridViewKeys({
     containerRef,
@@ -145,6 +169,7 @@ function PublisherLogoSettings({
                     tabIndex={isActive ? 0 : -1}
                     onClick={(e) => {
                       e.preventDefault();
+                      e.stopPropagation();
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
                     aria-label={sprintf(
