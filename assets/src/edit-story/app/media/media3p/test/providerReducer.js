@@ -70,7 +70,11 @@ describe('providerReducer', () => {
     });
 
     expect(result.current.state).toStrictEqual(
-      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+      expect.objectContaining({
+        isMediaLoaded: true,
+        pageToken: 'page2',
+        nextPageToken: 'page2',
+      })
     );
 
     act(() => {
@@ -79,6 +83,7 @@ describe('providerReducer', () => {
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
+        isMediaLoaded: false,
         pageToken: undefined,
         nextPageToken: undefined,
       })
