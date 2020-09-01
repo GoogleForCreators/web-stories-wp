@@ -17,16 +17,15 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
 
+<<<<<<< HEAD
 function CompactIndicatorWithRef(
   { onClick, isActive, ariaLabel, role, tabIndex },
   ref
@@ -44,6 +43,9 @@ function CompactIndicatorWithRef(
 }
 
 const Indicator = styled.button`
+=======
+const CompactIndicator = styled.button`
+>>>>>>> clean up
   display: block;
   width: ${COMPACT_THUMB_WIDTH}px;
   height: ${COMPACT_THUMB_HEIGHT}px;
@@ -69,6 +71,7 @@ const Indicator = styled.button`
     `}
 `;
 
+<<<<<<< HEAD
 const CompactIndicator = forwardRef(CompactIndicatorWithRef);
 
 CompactIndicator.propTypes = {
@@ -81,4 +84,6 @@ CompactIndicator.propTypes = {
 
 CompactIndicatorWithRef.propTypes = CompactIndicator.propTypes;
 
+=======
+>>>>>>> clean up
 export default CompactIndicator;
