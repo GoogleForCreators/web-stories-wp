@@ -31,6 +31,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import {
   Error,
   GridItemButton,
+  GridItemContainer,
   Logo,
   RemoveLogoButton,
   SettingForm,
@@ -146,7 +147,7 @@ function PublisherLogoSettings({
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
         <HelperText>{TEXT.CONTEXT}</HelperText>
       </div>
-      <div ref={containerRef}>
+      <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
           <UploadedContainer ref={gridRef}>
             {publisherLogos.map((publisherLogo, idx) => {
@@ -157,14 +158,14 @@ function PublisherLogoSettings({
               const isActive = activePublisherLogo === publisherLogo.id;
 
               return (
-                <div
+                <GridItemContainer
                   key={`${publisherLogo.title}_${idx}`}
-                  data-testid={`publisher-logo-${idx}`}
                   ref={(el) => {
                     itemRefs.current[publisherLogo.id] = el;
                   }}
                 >
                   <GridItemButton
+                    data-testid={`publisher-logo-${idx}`}
                     isSelected={isActive}
                     tabIndex={isActive ? 0 : -1}
                     onClick={(e) => {
@@ -172,34 +173,42 @@ function PublisherLogoSettings({
                       e.stopPropagation();
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
-                    aria-label={sprintf(
-                      /* translators: %s: logo number. */
-                      __(
-                        'Publisher Logo %s (currently selected)',
-                        'web-stories'
-                      ),
-                      idx + 1
-                    )}
+                    aria-label={
+                      isActive
+                        ? sprintf(
+                            /* translators: %s: logo number.*/
+                            __(
+                              'Publisher Logo %s (currently selected)',
+                              'web-stories'
+                            ),
+                            idx + 1
+                          )
+                        : sprintf(
+                            /* translators: %s: logo number.*/
+                            __('Publisher Logo %s', 'web-stories'),
+                            idx + 1
+                          )
+                    }
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
-                    {!publisherLogo.isActive && (
-                      <RemoveLogoButton
-                        tabIndex={isActive ? 0 : -1}
-                        data-testid={`remove-publisher-logo-${idx}`}
-                        aria-label={sprintf(
-                          /* translators: %s: logo title */
-                          __('Remove %s as a publisher logo', 'web-stories'),
-                          publisherLogo.title
-                        )}
-                        onClick={(e) =>
-                          onRemoveLogoClick(e, { publisherLogo, idx })
-                        }
-                      >
-                        <RemoveIcon aria-hidden="true" />
-                      </RemoveLogoButton>
-                    )}
                   </GridItemButton>
-                </div>
+                  {!publisherLogo.isActive && (
+                    <RemoveLogoButton
+                      tabIndex={isActive ? 0 : -1}
+                      data-testid={`remove-publisher-logo-${idx}`}
+                      aria-label={sprintf(
+                        /* translators: %s: logo title */
+                        __('Remove %s as a publisher logo', 'web-stories'),
+                        publisherLogo.title
+                      )}
+                      onClick={(e) =>
+                        onRemoveLogoClick(e, { publisherLogo, idx })
+                      }
+                    >
+                      <RemoveIcon aria-hidden="true" />
+                    </RemoveLogoButton>
+                  )}
+                </GridItemContainer>
               );
             })}
           </UploadedContainer>

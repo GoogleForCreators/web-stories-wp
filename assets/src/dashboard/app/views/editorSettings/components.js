@@ -104,6 +104,10 @@ export const UploadedContainer = styled.div`
   padding-bottom: 24px;
 `;
 
+export const GridItemContainer = styled.div`
+  position: relative;
+`;
+
 export const GridItemButton = styled.button`
   position: relative;
   display: block;
