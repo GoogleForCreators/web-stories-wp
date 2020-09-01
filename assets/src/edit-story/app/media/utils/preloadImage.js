@@ -27,7 +27,9 @@ const preloadImage = (src, srcset) => {
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.decoding = 'async';
-    image.srcset = srcset;
+    if (srcset) {
+      image.srcset = srcset;
+    }
     image.src = src;
   });
 };
