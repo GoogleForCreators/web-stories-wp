@@ -91,8 +91,13 @@ export function generatePresetStyle(preset, prepareForCSS) {
       padding,
     };
   }
+
+  // Generate background only if it's on.
   // If it's highlight mode then the highlight is displayed on the text wrapper instead.
-  if (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+  if (
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE &&
+    (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT)
+  ) {
     style = {
       ...style,
       ...generatePatternStyles(backgroundColor, 'background'),

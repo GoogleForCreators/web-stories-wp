@@ -66,8 +66,8 @@ const HighLight = styled.span`
 
 const LINE_HEIGHT = 20;
 const TextWrapper = styled.div`
+  position: relative;
   display: inline-block;
-  text-align: left;
   line-height: ${LINE_HEIGHT}px;
   max-height: ${LINE_HEIGHT * 2 + 3}px;
   overflow: hidden;
@@ -76,6 +76,19 @@ const TextWrapper = styled.div`
   max-width: 100%;
   ${({ styles }) => styles}
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
+  ${({ transparent }) =>
+    transparent
+      ? `
+    background-image: conic-gradient(
+    #fff 0.25turn,
+    #d3d4d4 0turn 0.5turn,
+    #fff 0turn 0.75turn,
+    #d3d4d4 0turn 1turn
+  );
+  background-size: 15px 15px;
+  background-repeat: repeat;
+  `
+      : null}
 `;
 
 function StylePresetPanel({ pushUpdate }) {
@@ -106,6 +119,7 @@ function StylePresetPanel({ pushUpdate }) {
       return (
         <TextWrapper
           styles={generatePresetStyle(preset, true)}
+          transparent={preset.backgroundTextMode === BACKGROUND_TEXT_MODE.NONE}
           background={isFill ? preset.backgroundColor : null}
         >
           {isHighLight ? (
