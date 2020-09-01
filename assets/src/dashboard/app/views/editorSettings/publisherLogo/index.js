@@ -91,7 +91,6 @@ function PublisherLogoSettings({
   const onRemoveLogoClick = useCallback(
     (e, { publisherLogo, idx }) => {
       e.preventDefault();
-      e.stopPropagation();
 
       handleRemoveLogo(publisherLogo);
       setIndexRemoved(idx);
@@ -128,13 +127,13 @@ function PublisherLogoSettings({
           .focus();
       }
 
-      const moveFocusByIndex =
+      const moveItemFocusByIndex =
         indexRemoved > 0
           ? publisherLogosById[indexRemoved - 1]
           : publisherLogosById[0];
 
-      setActivePublisherLogoId(moveFocusByIndex);
-      itemRefs.current[moveFocusByIndex].firstChild.focus();
+      setActivePublisherLogoId(moveItemFocusByIndex);
+      itemRefs.current[moveItemFocusByIndex].firstChild.focus();
       return setIndexRemoved(null);
     }
     return undefined;
@@ -143,7 +142,6 @@ function PublisherLogoSettings({
     indexRemoved,
     publisherLogoCount,
     publisherLogosById,
-    publisherLogosById.length,
     setActivePublisherLogoId,
   ]);
 
@@ -185,7 +183,6 @@ function PublisherLogoSettings({
                     tabIndex={isActive ? 0 : -1}
                     onClick={(e) => {
                       e.preventDefault();
-                      e.stopPropagation();
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
                     aria-label={
