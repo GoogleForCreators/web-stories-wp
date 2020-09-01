@@ -138,7 +138,6 @@ function PresetsHeader({
     );
   };
 
-  // Todo: Rename label to 'Presets' post-beta.
   return (
     <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
       {title}
