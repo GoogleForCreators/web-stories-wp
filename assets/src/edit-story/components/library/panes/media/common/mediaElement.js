@@ -153,7 +153,7 @@ const MediaElement = ({
     alt,
   } = resource;
 
-  // Threat GIFs as images for now.
+  // Treat GIFs as images for now.
   if (resource.type == 'gif') {
     resource.type = 'image';
   }
