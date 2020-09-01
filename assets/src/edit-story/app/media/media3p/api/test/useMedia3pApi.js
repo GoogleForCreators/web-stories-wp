@@ -267,7 +267,7 @@ describe('useMedia3pApi', () => {
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
-      filter: 'provider:unsplash contentType:sticker cat',
+      filter: 'provider:unsplash type:sticker cat',
       orderBy: undefined,
       pageSize: 20,
       pageToken: undefined,

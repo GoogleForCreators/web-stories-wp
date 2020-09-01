@@ -62,7 +62,7 @@ function Media3pApiProvider({ children }) {
     }
     return [
       `provider:${provider}`,
-      contentType && `contentType:${contentType}`,
+      contentType && `type:${contentType}`,
       categoryId && `category:${categoryId}`,
       searchTerm,
     ]
