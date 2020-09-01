@@ -60,10 +60,11 @@ DashboardGrid.propTypes = {
   columnWidth: PropTypes.number.isRequired,
 };
 
-const CardGrid = ({ children, pageSize, gridRef }) => (
+const CardGrid = ({ ariaLabel, children, pageSize, gridRef }) => (
   <DashboardGrid
     role="list"
     tabIndex={0}
+    aria-label={ariaLabel}
     ref={gridRef}
     columnWidth={pageSize.width}
     columnHeight={pageSize.containerHeight}
@@ -73,6 +74,7 @@ const CardGrid = ({ children, pageSize, gridRef }) => (
 );
 
 CardGrid.propTypes = {
+  ariaLabel: PropTypes.string, // TODO this will be required as soon as story grids are updated
   children: PropTypes.node.isRequired,
   gridRef: PropTypes.object, // TODO this will be required as soon as story grids are updated
   pageSize: PageSizePropType.isRequired,
