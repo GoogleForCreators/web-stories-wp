@@ -77,7 +77,7 @@ function PublisherLogoSettings({
   const gridRef = useRef();
   const itemRefs = useRef({});
 
-  const [activePublisherLogo, _setActivePublisherLogoId] = useState(null);
+  const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
 
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
@@ -96,10 +96,6 @@ function PublisherLogoSettings({
     },
     [handleRemoveLogo, publisherLogosById.length]
   );
-
-  const setActivePublisherLogoId = useCallback((id) => {
-    _setActivePublisherLogoId(id);
-  }, []);
 
   // set active logo when first painting
   useEffect(() => {
@@ -120,9 +116,7 @@ function PublisherLogoSettings({
         // upload will always be present unless upload is not enabled.
         // currently only admin can get to settings, which means they have upload ability
         // checking for current and firstElementChild are safeguards
-        return containerRef.current?.firstElementChild
-          ?.getElementsByTagName('input')[0]
-          .focus();
+        return containerRef.current?.getElementsByTagName('input')[0].focus();
       }
 
       const moveItemFocusByIndex =
