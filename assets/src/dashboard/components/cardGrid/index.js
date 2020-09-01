@@ -63,6 +63,7 @@ DashboardGrid.propTypes = {
 const CardGrid = ({ ariaLabel, children, pageSize, gridRef }) => (
   <DashboardGrid
     role="list"
+    data-testid={'dashboard-grid-list'}
     tabIndex={0}
     aria-label={ariaLabel}
     ref={gridRef}
