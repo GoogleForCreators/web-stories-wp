@@ -42,6 +42,7 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import resourceList from '../../../../../utils/resourceList';
 import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
@@ -100,7 +101,13 @@ function Media3pPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(
-    (resource) => insertElement(resource.type, { resource }),
+    (resource, thumbnailURL) => {
+      resourceList[resource.id] = {
+        url: thumbnailURL,
+        type: 'cached',
+      };
+      insertElement(resource.type, { resource });
+    },
     [insertElement]
   );
 

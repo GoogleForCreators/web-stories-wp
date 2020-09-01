@@ -30,6 +30,7 @@ import { useDropTargets } from '../../../../../app';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
+import resourceList from '../../../../../utils/resourceList';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
@@ -153,6 +154,11 @@ const MediaElement = ({
     alt,
   } = resource;
 
+  // Treat GIFs as images for now.
+  if (resource.type == 'gif') {
+    resource.type = 'image';
+  }
+
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -171,9 +177,13 @@ const MediaElement = ({
     mediaElement?.current?.getBoundingClientRect();
 
   const dropTargetsBindings = useMemo(
-    () => ({
+    () => (thumbnailURL) => ({
       draggable: 'true',
       onDragStart: (e) => {
+        resourceList[resource.id] = {
+          url: thumbnailURL,
+          type: 'cached',
+        };
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
@@ -257,8 +267,8 @@ const MediaElement = ({
     };
   }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = () => {
-    onInsert(resource, width, height);
+  const onClick = (thumbnailUrl) => () => {
+    onInsert(resource, thumbnailUrl);
   };
 
   const innerElement = getInnerElement(type, {
@@ -272,12 +282,14 @@ const MediaElement = ({
     showVideoDetail,
     dropTargetsBindings,
   });
-  const attribution = active && resource.attribution?.author && (
-    <Attribution
-      author={resource.attribution.author.displayName}
-      url={resource.attribution.author.url}
-    />
-  );
+  const attribution = active &&
+    resource.attribution?.author?.displayName &&
+    resource.attribution?.author?.url && (
+      <Attribution
+        author={resource.attribution.author.displayName}
+        url={resource.attribution.author.url}
+      />
+    );
 
   const ref = useRef();
 
@@ -363,20 +375,21 @@ function getInnerElement(
   const makeImageVisible = () => {
     ref.current.style.opacity = '1';
   };
-  if (type === 'image') {
+  if (['image', 'gif'].includes(type)) {
+    const thumbnailURL = getSmallestUrlForWidth(width, resource);
     return (
       <Image
         key={src}
-        src={getSmallestUrlForWidth(width, resource)}
+        src={thumbnailURL}
         ref={ref}
         width={width}
         height={height}
         alt={alt}
         aria-label={alt}
         loading={'lazy'}
-        onClick={onClick}
+        onClick={onClick(thumbnailURL)}
         onLoad={makeImageVisible}
-        {...dropTargetsBindings}
+        {...dropTargetsBindings(thumbnailURL)}
       />
     );
   } else if (type === 'video') {
@@ -392,10 +405,10 @@ function getInnerElement(
           preload="none"
           aria-label={alt}
           muted
-          onClick={onClick}
+          onClick={onClick(poster)}
           // crossorigin='anonymous' is required to play videos from other domains.
           crossOrigin="anonymous"
-          {...dropTargetsBindings}
+          {...dropTargetsBindings(poster)}
         >
           <source
             src={getSmallestUrlForWidth(width, resource)}
