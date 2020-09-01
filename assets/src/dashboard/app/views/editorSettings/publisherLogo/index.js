@@ -162,7 +162,7 @@ function PublisherLogoSettings({
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
-          <UploadedContainer ref={gridRef}>
+          <UploadedContainer ref={gridRef} role="list">
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
@@ -176,6 +176,7 @@ function PublisherLogoSettings({
                   ref={(el) => {
                     itemRefs.current[publisherLogo.id] = el;
                   }}
+                  role="listitem"
                 >
                   <GridItemButton
                     data-testid={`publisher-logo-${idx}`}
