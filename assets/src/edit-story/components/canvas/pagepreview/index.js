@@ -83,14 +83,14 @@ function PagePreview({ index, gridRef, ...props }) {
   }));
   const page = pages[index];
   const { backgroundColor } = page;
-  const { width: thumbWidth, height: thumbHeight, tabIndex } = props;
+  const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page tabIndex={tabIndex} {...props}>
+        <Page {...props}>
           <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
