@@ -236,7 +236,8 @@ function TextEdit({
     const wrapper = wrapperRef.current;
     const textBox = textBoxRef.current;
     const { marginOffset } = calcFontMetrics(element);
-    editorHeightRef.current = textBox.offsetHeight - marginOffset;
+    editorHeightRef.current =
+      textBox.offsetHeight - dataToEditorY(marginOffset);
     wrapper.style.height = `${editorHeightRef.current}px`;
     if (editWrapper) {
       const [dx, dy] = calcRotatedResizeOffset(
@@ -251,7 +252,7 @@ function TextEdit({
       editWrapper.style.top = `${boxRef.current.y + dy}px`;
       onResize && onResize();
     }
-  }, [editWrapper, element, onResize]);
+  }, [dataToEditorY, editWrapper, element, onResize]);
   // Invoke on each content update.
   const handleUpdate = useCallback(
     (newContent) => {

@@ -67,11 +67,10 @@ export const elementWithFont = css`
 `;
 
 // See generateParagraphTextStyle for the full set of properties.
-export const elementWithTextParagraphStyle = ({ element }) => {
+export const elementWithTextParagraphStyle = ({ element, dataToEditorY }) => {
   const { marginOffset } = calcFontMetrics(element);
   return css`
-    margin: ${({ margin }) => margin || 0};
-    margin: ${-marginOffset / 2}px 0;
+    margin: ${-dataToEditorY(marginOffset / 2)}px 0;
     padding: ${({ padding }) => padding || 0};
     line-height: ${({ lineHeight }) => lineHeight};
     text-align: ${({ textAlign }) => textAlign};

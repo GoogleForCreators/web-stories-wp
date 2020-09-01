@@ -52,7 +52,6 @@ const HighlightWrapperElement = styled.div`
   ${elementWithTextParagraphStyle}
   line-height: ${({ lineHeight, verticalPadding }) =>
     getHighlightLineheight(lineHeight, verticalPadding)};
-  margin: 0;
   padding: 0;
 `;
 const HighlightElement = styled.p`
@@ -67,7 +66,6 @@ const MarginedElement = styled.span`
   position: relative;
   display: block;
   top: 0;
-  margin: ${({ marginOffset }) => `${-marginOffset / 2}px 0`};
   left: ${({ horizontalPadding }) => `-${horizontalPadding}px`};
 `;
 
@@ -123,7 +121,7 @@ function TextDisplay({
   const props = {
     font,
     element,
-    marginOffset,
+    marginOffset: dataToEditorY(marginOffset),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
       ? {}
       : { backgroundColor }),
