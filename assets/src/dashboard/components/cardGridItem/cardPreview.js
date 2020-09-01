@@ -20,6 +20,8 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState, useCallback } from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
@@ -29,6 +31,7 @@ import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
   DEFAULT_STORY_PAGE_ADVANCE_DURATION,
+  KEYBOARD_USER_SELECTOR,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { clamp, useFocusOut } from '../../utils';
@@ -62,6 +65,11 @@ const EditControls = styled.div`
   background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)}`};
+  }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
@@ -116,6 +124,7 @@ const cardMachine = {
 const cardReducer = (state, action) => cardMachine?.[state]?.[action] || state;
 
 const CardPreviewContainer = ({
+  tabIndex,
   centerAction,
   bottomAction,
   story,
@@ -157,7 +166,7 @@ const CardPreviewContainer = ({
 
   const handleKeyDownEditControls = useCallback(
     ({ key }) => {
-      if (key === 'Enter') {
+      if (key.toLowerCase() === 'enter') {
         containerAction();
       }
     },
@@ -189,12 +198,13 @@ const CardPreviewContainer = ({
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
         onClick={containerAction}
         onKeyDown={handleKeyDownEditControls}
-        tabIndex={0}
+        tabIndex={tabIndex}
       >
         <EmptyActionContainer />
         {centerAction?.label && (
           <ActionContainer>
             <Button
+              tabIndex={tabIndex}
               data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
@@ -204,7 +214,10 @@ const CardPreviewContainer = ({
           </ActionContainer>
         )}
         <ActionContainer>
-          <Button {...getActionAttributes(bottomAction.targetAction)}>
+          <Button
+            {...getActionAttributes(bottomAction.targetAction)}
+            tabIndex={tabIndex}
+          >
             {bottomAction.label}
           </Button>
         </ActionContainer>
@@ -226,6 +239,7 @@ CardPreviewContainer.propTypes = {
   containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,
+  tabIndex: PropTypes.number,
 };
 
 export default CardPreviewContainer;

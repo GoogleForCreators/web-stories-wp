@@ -25,7 +25,7 @@ import styled from 'styled-components';
 import { MoreVerticalButton } from '../storyMenu';
 import { ActionLabel } from './types';
 
-const CardGridItem = styled.div`
+const CardGridItem = styled.div.attrs({ role: 'listItem' })`
   margin: 0;
   width: 100%;
   display: flex;
@@ -49,3 +49,4 @@ export default CardGridItem;
 export { default as CardPreviewContainer } from './cardPreview';
 export { ActionLabel };
 export { default as CardTitle } from './cardTitle';
+export { FocusableGridItem } from './focusableGridItem';
