@@ -18,6 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 export const GalleryContainer = styled.div`
   ${({ maxWidth }) => `
@@ -27,6 +33,9 @@ export const GalleryContainer = styled.div`
     max-width: ${maxWidth}px;
   `}
 `;
+GalleryContainer.propTypes = {
+  maxWidth: PropTypes.number.isRequired,
+};
 
 export const MiniCardsContainer = styled.div`
   ${({ rowHeight, gap }) => `
@@ -34,37 +43,74 @@ export const MiniCardsContainer = styled.div`
     grid-template-columns: repeat(3, auto);
     grid-auto-rows: ${rowHeight}px;
     grid-gap: ${gap}px;
+
   `}
 `;
+MiniCardsContainer.propTypes = {
+  rowHeight: PropTypes.number.isRequired,
+  gap: PropTypes.number.isRequired,
+};
 
-export const MiniCardWrapper = styled.div`
-  ${({ width, height, theme, isSelected }) => `
+export const ItemContainer = styled.div`
+  ${({ width }) => `
+    display: flex;
+    justify-content: space-around;
+    width: ${width ? `${width}px` : '100%'};
+  `}
+`;
+ItemContainer.propTypes = {
+  width: PropTypes.number.isRequired,
+};
+
+export const MiniCardButton = styled.button(
+  ({ width, height, theme, isSelected }) => `
     display: flex;
     align-items: center;
     justify-content: center;
     width: ${width}px;
     height: ${height}px;
     overflow: hidden;
-    ${isSelected ? `border: 3px solid ${theme.colors.bluePrimary600}` : ''}
-  `}
-`;
+    padding: 0;
+    background-color: transparent;
+    border: ${
+      isSelected ? theme.borders.bluePrimary : theme.borders.transparent
+    };
+    border-width: 2px; 
 
-export const MiniCard = styled.div(
-  ({ width, containerHeight, theme }) => `
-    position: relative;
-    width: ${width}px;
-    height: ${containerHeight}px;
-    cursor: pointer;
-    border: ${theme.storyPreview.border};
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      border-radius: 0;
+      border-color: ${rgba(theme.colors.bluePrimary, 0.85)};
+      outline: none;
+    }
   `
 );
+MiniCardButton.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  isSelected: PropTypes.bool,
+};
 
-export const ActiveCard = styled.div(
-  ({ width, containerHeight, theme }) => `
+export const MiniCard = styled.div(
+  ({ width, theme }) => `
     position: relative;
     width: ${width}px;
-    height: ${containerHeight}px;
-    border: ${theme.storyPreview.border};
+    cursor: pointer;
+    border: ${theme.borders.gray75};
+  `
+);
+MiniCard.propTypes = {
+  width: PropTypes.number.isRequired,
+};
+
+export const ActiveCard = styled.div(
+  ({ width, theme }) => `
+    position: relative;
+    box-sizing: border-box;
+    width: ${width}px;
+    border: ${theme.borders.gray75};
     box-shadow: ${theme.storyPreview.shadow};
   `
 );
+ActiveCard.propTypes = {
+  width: PropTypes.number.isRequired,
+};

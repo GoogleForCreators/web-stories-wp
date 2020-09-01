@@ -144,10 +144,8 @@ function ColorPresetPanel({ pushUpdate }) {
         (isText && presetHasGradient(color)));
     let tooltip = null;
     if (disabled) {
-      // @todo The correct text here should be: Page background colors can not have an opacity.
-      // However, due to bug with Tooltips/Popup, the text flows out of the screen.
       tooltip = isBackground
-        ? __('Opacity not allowed for Page', 'web-stories')
+        ? __('Page background colors cannot have an opacity.', 'web-stories')
         : __('Gradient not allowed for Text', 'web-stories');
     }
     return (

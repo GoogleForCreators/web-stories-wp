@@ -57,15 +57,25 @@ function useElementsWithLinks() {
     return linksInActivePageAttachment.length > 0;
   }, [currentPage, selectedElements, pageAttachmentContainer]);
 
+  /**
+   * Returns the elements that were found in the attachment area.
+   */
+  const getElementsInAttachmentArea = useCallback(
+    (els, verifyLink = false) => {
+      if (!pageAttachmentContainer) {
+        return [];
+      }
+      return els.filter((element) => {
+        return isElementBelowLimit(element, verifyLink);
+      });
+    },
+    [pageAttachmentContainer]
+  );
+
   // Checks if a link is in the attachment area, even if there's no active attachment.
   const getLinksInAttachmentArea = useCallback(() => {
-    if (!pageAttachmentContainer) {
-      return [];
-    }
-    return elementsWithLinks.filter((element) => {
-      return isElementBelowLimit(element);
-    });
-  }, [elementsWithLinks, pageAttachmentContainer]);
+    return getElementsInAttachmentArea(elementsWithLinks, true);
+  }, [elementsWithLinks, getElementsInAttachmentArea]);
 
   const isElementInAttachmentArea = useCallback(
     (element) => {
@@ -86,6 +96,7 @@ function useElementsWithLinks() {
     getLinksInAttachmentArea,
     hasInvalidLinkSelected: hasInvalidLinkSelected(),
     isElementInAttachmentArea,
+    getElementsInAttachmentArea,
   };
 }
 
