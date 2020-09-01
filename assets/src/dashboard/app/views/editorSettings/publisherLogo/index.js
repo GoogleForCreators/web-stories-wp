@@ -84,9 +84,7 @@ function PublisherLogoSettings({
     publisherLogos,
   ]);
 
-  const [publisherLogoCount, setPublisherLogoCount] = useState(
-    publisherLogosById.length
-  );
+  const publisherLogoCount = useRef(publisherLogosById.length);
 
   const onRemoveLogoClick = useCallback(
     (e, { publisherLogo, idx }) => {
@@ -94,7 +92,7 @@ function PublisherLogoSettings({
 
       handleRemoveLogo(publisherLogo);
       setIndexRemoved(idx);
-      setPublisherLogoCount(publisherLogosById.length);
+      publisherLogoCount.current = publisherLogosById.length;
     },
     [handleRemoveLogo, publisherLogosById.length]
   );
@@ -114,7 +112,7 @@ function PublisherLogoSettings({
   useEffect(() => {
     if (
       Boolean(indexRemoved?.toString()) &&
-      publisherLogosById.length !== publisherLogoCount
+      publisherLogosById.length !== publisherLogoCount.current
     ) {
       if (publisherLogosById.length === 0) {
         // if the user has removed their last publisher logo, the logo grid will not render
@@ -140,7 +138,6 @@ function PublisherLogoSettings({
   }, [
     activePublisherLogo,
     indexRemoved,
-    publisherLogoCount,
     publisherLogosById,
     setActivePublisherLogoId,
   ]);
