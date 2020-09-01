@@ -34,6 +34,7 @@ import {
   LIBRARY_MIN_WIDTH,
   LIBRARY_MAX_WIDTH,
   INSPECTOR_MIN_WIDTH,
+  INSPECTOR_MAX_WIDTH,
 } from '../../constants';
 
 const Editor = styled.section.attrs({
@@ -50,10 +51,11 @@ const Editor = styled.section.attrs({
   width: 100%;
 
   display: grid;
-  grid-template-areas: 'lib main';
+  grid-template-areas: 'lib canv insp';
   grid-template-columns:
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
-    minmax(${CANVAS_MIN_WIDTH + INSPECTOR_MIN_WIDTH}px, 1fr);
+    minmax(${CANVAS_MIN_WIDTH}px, 1fr)
+    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
 `;
 
 const Area = styled.div`
@@ -69,9 +71,7 @@ function Layout() {
       <Area area="lib">
         <Library />
       </Area>
-      <Area area="main">
-        <Workspace />
-      </Area>
+      <Workspace />
     </Editor>
   );
 }
