@@ -259,15 +259,15 @@ describe('useMedia3pApi', () => {
     const { result } = renderHook(() => useMedia3pApi(), { wrapper });
 
     await result.current.actions.listMedia({
-      provider: 'unsplash',
+      provider: 'tenor',
       filter: {
-        contentType: 'sticker',
+        contentType: 'gif',
         searchTerm: 'cat',
       },
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
-      filter: 'provider:unsplash type:sticker cat',
+      filter: 'provider:tenor type:gif cat',
       orderBy: undefined,
       pageSize: 20,
       pageToken: undefined,
