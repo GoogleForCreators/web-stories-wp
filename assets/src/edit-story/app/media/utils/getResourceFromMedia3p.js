@@ -78,10 +78,12 @@ import createResource from './createResource';
  * object required for a Resource.
  *
  * @param {Media3pMedia} m The Media3P Media object.
+ * @param {?function(string):boolean} mimeTypeSelector An optional selector
+ * of image mime types to include.
  * @return {Object} The array of "sizes"-type objects.
  */
-function getImageUrls(m) {
-  if (m.type.toLowerCase() !== 'image') {
+function getImageUrls(m, mimeTypeSelector = () => true) {
+  if (!['image', 'gif'].includes(m.type.toLowerCase())) {
     throw new Error('Invalid media type.');
   }
 
@@ -93,9 +95,9 @@ function getImageUrls(m) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
   }
 
-  const sortedImages = m.imageUrls.sort(
-    (x, y) => (y.width ?? 0) - (x.width ?? 0)
-  );
+  const sortedImages = m.imageUrls
+    .filter((i) => mimeTypeSelector(i.mimeType))
+    .sort((x, y) => (y.width ?? 0) - (x.width ?? 0));
   const originalSize = getOriginalSize(sortedImages);
   const sizesFromBiggest = sortedImages.map((u) =>
     mediaUrlToImageSizeDescription(m, u, originalSize)
@@ -230,6 +232,23 @@ function getVideoResourceFromMedia3p(m) {
   });
 }
 
+function getGifResourceFromMedia3p(m) {
+  const imageUrls = getImageUrls(m, (mime) => mime.includes('gif'));
+  return createResource({
+    type: m.type.toLowerCase(),
+    mimeType: imageUrls.full.mime_type,
+    creationDate: m.createTime,
+    src: imageUrls.full.source_url,
+    width: imageUrls.full.width,
+    height: imageUrls.full.height,
+    title: m.description,
+    alt: null,
+    local: false,
+    sizes: imageUrls,
+    attribution: getAttributionFromMedia3p(m),
+  });
+}
+
 /**
  * Generates a resource object from a Media3P object from the API.
  *
@@ -242,6 +261,8 @@ export default function getResourceFromMedia3p(m) {
       return getImageResourceFromMedia3p(m);
     case 'video':
       return getVideoResourceFromMedia3p(m);
+    case 'gif':
+      return getGifResourceFromMedia3p(m);
     default:
       throw new Error('Invalid media type.');
   }
