@@ -85,7 +85,6 @@ function WithLink({ element, active, children, anchorRef }) {
         isOpen={active}
         placement={'top'}
         spacing={spacing}
-        showOverflow={true}
       >
         {link && (
           <Tooltip>

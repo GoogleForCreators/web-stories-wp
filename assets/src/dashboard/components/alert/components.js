@@ -80,8 +80,8 @@ export const AlertTitle = styled.span`
 export const DismissButton = styled.button`
   align-self: center;
   margin: 0 0 0 auto;
-  width: 25px;
-  height: 25px;
+  width: 36px;
+  height: 36px;
   background-color: transparent;
   color: ${({ theme }) => theme.colors.white};
   border: ${({ theme }) => theme.borders.transparent};

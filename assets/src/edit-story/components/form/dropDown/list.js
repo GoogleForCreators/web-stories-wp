@@ -43,7 +43,7 @@ const ListContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.white};
 `;
 
-const List = styled.ul.attrs({ role: 'listbox' })`
+const List = styled.ul`
   width: 100%;
   padding: 5px 0;
   margin: 0;
@@ -55,7 +55,7 @@ const List = styled.ul.attrs({ role: 'listbox' })`
   box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.black, 0.175)};
 `;
 
-const Item = styled.li.attrs({ tabIndex: '0', role: 'option' })`
+const Item = styled.li.attrs({ tabIndex: '0' })`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
   padding: 16px;
   margin: 0;
@@ -81,6 +81,7 @@ function DropDownList({
   value,
   options,
   toggleOptions,
+  hasMenuRole = false,
   ...rest
 }) {
   const listContainerRef = useRef();
@@ -152,9 +153,12 @@ function DropDownList({
     [clearSearchValue, searchValue, options]
   );
 
-  const handleEnter = useCallback(() => {
-    handleCurrentValue(focusedValue);
-  }, [focusedValue, handleCurrentValue]);
+  const handleEnter = useCallback(
+    (evt) => {
+      handleCurrentValue(focusedValue, evt);
+    },
+    [focusedValue, handleCurrentValue]
+  );
 
   useFocusOut(listContainerRef, toggleOptions);
 
@@ -191,25 +195,24 @@ function DropDownList({
     }
   }, [focusedValue, options, focusedIndex, listRef]);
 
-  const handleItemClick = (option) => {
-    handleCurrentValue(option);
+  const handleItemClick = (option, evt) => {
+    handleCurrentValue(option, evt);
   };
 
   return (
     <ListContainer ref={listContainerRef}>
       <List
         {...rest}
-        aria-multiselectable={false}
-        aria-required={false}
         aria-activedescendant={value || ''}
         ref={listRef}
+        role={hasMenuRole ? 'menu' : 'listbox'}
       >
         {options.map(({ name, value: optValue }) => (
           <Item
             id={`dropDown-${optValue}`}
-            aria-selected={value === optValue}
             key={optValue}
-            onClick={() => handleItemClick(optValue)}
+            onClick={(evt) => handleItemClick(optValue, evt)}
+            role={hasMenuRole ? 'menuitem' : 'option'}
           >
             {name}
           </Item>
@@ -224,6 +227,7 @@ DropDownList.propTypes = {
   handleCurrentValue: PropTypes.func.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
+  hasMenuRole: PropTypes.bool,
 };
 
 export default DropDownList;

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -40,7 +41,11 @@ export const _default = () => {
     <FontProvider>
       <TransformProvider>
         <CardGalleryContainer>
-          <CardGallery story={formattedTemplatesArray[0]} />
+          <CardGallery
+            story={formattedTemplatesArray[0]}
+            isRTL={boolean('isRTL')}
+            galleryLabel={text('galleryLabel', 'my aria label text')}
+          />
         </CardGalleryContainer>
       </TransformProvider>
     </FontProvider>

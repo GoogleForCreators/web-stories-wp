@@ -61,7 +61,7 @@ export default function AnimationTimeline({
           >
             <TimingBar
               label={animation.label}
-              offset={animation.offset}
+              delay={animation.delay}
               duration={animation.duration}
               maxDuration={duration}
               onUpdateAnimation={(delta) => onUpdateAnimation(animation, delta)}
