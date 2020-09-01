@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -34,12 +34,15 @@ import {
   CardGridItem,
   CardPreviewContainer,
   CardGrid,
+  FocusableGridItem,
 } from '../../../components';
 import {
   PageSizePropType,
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
+import { useGridViewKeys } from '../../../utils';
+import { useConfig } from '../../config';
 
 const GridContainer = styled(CardGrid)`
   width: ${({ theme }) =>
@@ -52,6 +55,15 @@ const GridContainer = styled(CardGrid)`
 `;
 
 function TemplateGridView({ pageSize, templates, templateActions }) {
+  const { isRTL } = useConfig();
+  const containerRef = useRef();
+  const gridRef = useRef();
+  const itemRefs = useRef({});
+
+  const [activeGridItemId, _setActiveGridItemId] = useState(null);
+
+  const setActiveGridItemId = useCallback((id) => _setActiveGridItemId(id), []);
+
   const targetAction = useCallback(
     (template) => {
       return () => {
@@ -62,32 +74,78 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
     [templateActions]
   );
 
+  useGridViewKeys({
+    containerRef,
+    gridRef,
+    itemRefs,
+    isRTL,
+    currentItemId: activeGridItemId,
+    items: templates,
+  });
+
+  // when keyboard focus changes through FocusableGridItem immediately focus the CardPreviewContainer
+  useEffect(() => {
+    itemRefs.current?.[activeGridItemId]?.lastChild.focus();
+  }, [activeGridItemId]);
+
   return (
-    <GridContainer pageSize={pageSize}>
-      {templates.map((template) => (
-        <CardGridItem
-          key={template.id}
-          data-testid={`template-grid-item-${template.id}`}
-        >
-          <CardPreviewContainer
-            pageSize={pageSize}
-            story={template}
-            centerAction={{
-              targetAction: template.centerTargetAction,
-              label:
-                TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[template.status],
-            }}
-            bottomAction={{
-              targetAction: targetAction(template),
-              label: __('Use template', 'web-stories'),
-            }}
-            containerAction={(e) =>
-              templateActions.handlePreviewTemplate(e, template)
-            }
-          />
-        </CardGridItem>
-      ))}
-    </GridContainer>
+    <div ref={containerRef}>
+      <GridContainer pageSize={pageSize} gridRef={gridRef}>
+        {templates.map((template) => {
+          const isActive = activeGridItemId === template.id;
+          const tabIndex = isActive ? 0 : -1;
+          return (
+            <CardGridItem
+              key={template.id}
+              data-testid={`template-grid-item-${template.id}`}
+              ref={(el) => {
+                itemRefs.current[template.id] = el;
+              }}
+            >
+              <FocusableGridItem
+                onFocus={() => {
+                  setActiveGridItemId(template.id);
+                }}
+                isSelected={isActive}
+                tabIndex={tabIndex}
+                aria-label={
+                  isActive
+                    ? sprintf(
+                        /* translators: %s: template title.*/
+                        __('Template %s (currently selected)', 'web-stories'),
+                        template.title
+                      )
+                    : sprintf(
+                        /* translators: %s: template title.*/
+                        __('Template %s', 'web-stories'),
+                        template.title
+                      )
+                }
+              />
+              <CardPreviewContainer
+                tabIndex={tabIndex}
+                pageSize={pageSize}
+                story={template}
+                centerAction={{
+                  targetAction: template.centerTargetAction,
+                  label:
+                    TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[
+                      template.status
+                    ],
+                }}
+                bottomAction={{
+                  targetAction: targetAction(template),
+                  label: __('Use template', 'web-stories'),
+                }}
+                containerAction={(e) =>
+                  templateActions.handlePreviewTemplate(e, template)
+                }
+              />
+            </CardGridItem>
+          );
+        })}
+      </GridContainer>
+    </div>
   );
 }
 

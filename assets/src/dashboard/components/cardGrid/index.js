@@ -19,11 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../types';
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const DashboardGrid = styled.div(
   ({ columnHeight, columnWidth, theme }) => `
@@ -34,7 +36,7 @@ const DashboardGrid = styled.div(
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
   grid-template-rows: minmax(${columnHeight}px, auto);
-
+  
   ${theme.breakpoint.tablet} {
     grid-column-gap: ${theme.grid.columnGap.tablet}px;
   }
@@ -47,6 +49,10 @@ const DashboardGrid = styled.div(
   ${theme.breakpoint.min} {
     grid-column-gap: ${theme.grid.columnGap.min}px;
   }
+  
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+  }
 `
 );
 DashboardGrid.propTypes = {
@@ -54,8 +60,11 @@ DashboardGrid.propTypes = {
   columnWidth: PropTypes.number.isRequired,
 };
 
-const CardGrid = ({ children, pageSize }) => (
+const CardGrid = ({ children, pageSize, gridRef }) => (
   <DashboardGrid
+    role="list"
+    tabIndex={0}
+    ref={gridRef}
     columnWidth={pageSize.width}
     columnHeight={pageSize.containerHeight}
   >
@@ -65,6 +74,7 @@ const CardGrid = ({ children, pageSize }) => (
 
 CardGrid.propTypes = {
   children: PropTypes.node.isRequired,
+  gridRef: PropTypes.object, // TODO this will be required as soon as story grids are updated
   pageSize: PageSizePropType.isRequired,
 };
 
