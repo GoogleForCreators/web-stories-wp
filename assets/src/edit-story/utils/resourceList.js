@@ -15,24 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * Temporary list to hold currently used resources and their state.
+ * { type: string (cached|smallest|fullsize), url: string }
  */
-import StoryPropTypes from '../../types';
-import VisibleImage from '../media/visibleImage';
-import { getSmallestUrlForWidth } from '../media/util';
 
-function ImageLayerContent({
-  element: {
-    resource,
-    resource: { alt },
-  },
-}) {
-  const src = getSmallestUrlForWidth(0, resource);
-  return <VisibleImage src={src} alt={alt} height="20" />;
-}
+const resourceList = {};
 
-ImageLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default ImageLayerContent;
+export default resourceList;
