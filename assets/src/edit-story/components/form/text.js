@@ -161,7 +161,7 @@ function TextInput({
             );
           }
           if (onBlur) {
-            onBlur();
+            onBlur(evt);
           }
         }}
       />
