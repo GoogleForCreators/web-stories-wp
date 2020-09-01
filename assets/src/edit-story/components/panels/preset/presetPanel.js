@@ -130,6 +130,7 @@ function PresetPanel({
         setIsEditMode={setIsEditMode}
         canCollapse={canCollapse}
         title={title}
+        presetType={presetType}
       />
       <Presets
         isEditMode={isEditMode}

@@ -102,9 +102,18 @@ function PresetsHeader({
   setIsEditMode,
   presets,
   canCollapse,
+  presetType,
 }) {
   const hasPresets = presets.length > 0;
 
+  const addLabel =
+    'style' === presetType
+      ? __('Add style preset', 'web-stories')
+      : __('Add color preset', 'web-stories');
+  const editLabel =
+    'style' === presetType
+      ? __('Edit style presets', 'web-stories')
+      : __('Edit color presets', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -116,9 +125,7 @@ function PresetsHeader({
               setIsEditMode(!isEditMode);
             }}
             aria-label={
-              isEditMode
-                ? __('Exit edit mode', 'web-stories')
-                : __('Edit presets', 'web-stories')
+              isEditMode ? __('Exit edit mode', 'web-stories') : editLabel
             }
             isEditMode={isEditMode}
           >
@@ -129,7 +136,7 @@ function PresetsHeader({
           <Button
             Icon={AddPresetButton}
             onClick={handleAddPreset}
-            aria-label={__('Add preset', 'web-stories')}
+            aria-label={addLabel}
           >
             <Add />
           </Button>
@@ -152,6 +159,7 @@ PresetsHeader.propTypes = {
   setIsEditMode: PropTypes.func.isRequired,
   canCollapse: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
+  presetType: PropTypes.string.isRequired,
 };
 
 export default PresetsHeader;

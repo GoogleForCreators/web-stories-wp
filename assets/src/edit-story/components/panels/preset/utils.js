@@ -188,9 +188,9 @@ export function presetHasGradient({ type }) {
   return Boolean(type) && 'solid' !== type;
 }
 
-export const areAllType = (elType, selectedElements) => {
+export function areAllType(elType, selectedElements) {
   return (
     selectedElements.length > 0 &&
     selectedElements.every(({ type }) => elType === type)
   );
-};
+}

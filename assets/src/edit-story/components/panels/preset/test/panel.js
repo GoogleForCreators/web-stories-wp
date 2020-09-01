@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import StylePresetPanel from '../stylePreset';
+import ColorPresetPanel from '../colorPreset';
 import StoryContext from '../../../../app/story/context';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import {
@@ -30,6 +30,7 @@ import {
   getTextPresets,
   getPagePreset,
   presetHasOpacity,
+  areAllType,
 } from '../utils';
 import { renderWithTheme } from '../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
@@ -41,6 +42,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
   const updateStory = jest.fn();
   const updateElementsById = jest.fn();
   const updateCurrentPageProperties = jest.fn();
+  const pushUpdate = jest.fn();
 
   const textElement = {
     id: '1',
@@ -52,7 +54,9 @@ function setupPanel(extraStylePresets, extraStateProps) {
         elements: [
           {
             id: 'bg',
+            type: 'shape',
           },
+          textElement,
         ],
       },
       selectedElementIds: ['1'],
@@ -60,13 +64,14 @@ function setupPanel(extraStylePresets, extraStateProps) {
       ...extraStateProps,
       story: {
         stylePresets: {
-          ...{ colors: [] },
+          ...{ colors: [], textStyles: [] },
           ...extraStylePresets,
         },
       },
     },
     actions: { updateStory, updateElementsById, updateCurrentPageProperties },
   };
+
   const {
     getAllByRole,
     getByRole,
@@ -77,7 +82,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
     queryAllByLabelText,
   } = renderWithTheme(
     <StoryContext.Provider value={storyContextValue}>
-      <StylePresetPanel />
+      <ColorPresetPanel pushUpdate={pushUpdate} />
     </StoryContext.Provider>
   );
   return {
@@ -86,6 +91,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
     getByText,
     queryByText,
     getByLabelText,
+    pushUpdate,
     queryByLabelText,
     queryAllByLabelText,
     updateStory,
@@ -95,7 +101,7 @@ function setupPanel(extraStylePresets, extraStateProps) {
 }
 
 describe('Panels/StylePreset', () => {
-  const EDIT_BUTTON_LABEL = 'Edit presets';
+  const EDIT_BUTTON_LABEL = 'Edit color presets';
   const APPLY_PRESET = 'Apply color preset';
   const TEST_COLOR = {
     color: {
@@ -116,9 +122,13 @@ describe('Panels/StylePreset', () => {
     backgroundColor: TEST_COLOR,
   };
 
+  areAllType.mockImplementation((elType, els) => {
+    return els.length > 0 && els.every(({ type }) => elType === type);
+  });
+
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
-    const element = getByText('Saved Colors');
+    const element = getByText('Saved colors');
     expect(element).toBeDefined();
   });
 
@@ -142,7 +152,7 @@ describe('Panels/StylePreset', () => {
   describe('Panels/StylePreset/Header', () => {
     it('should display only Add button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
-      const addButton = queryByLabelText('Add preset');
+      const addButton = queryByLabelText('Add color preset');
       expect(addButton).toBeDefined();
 
       const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
@@ -189,10 +199,11 @@ describe('Panels/StylePreset', () => {
       getTextPresets.mockImplementation(() => {
         return {
           colors: [TEST_COLOR_2],
+          textStyles: [],
         };
       });
 
-      const addButton = queryByLabelText('Add preset');
+      const addButton = queryByLabelText('Add color preset');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
@@ -200,6 +211,7 @@ describe('Panels/StylePreset', () => {
         properties: {
           stylePresets: {
             colors: [TEST_COLOR_2],
+            textStyles: [],
           },
         },
       });
@@ -227,7 +239,7 @@ describe('Panels/StylePreset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add preset');
+      const addButton = queryByLabelText('Add color preset');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
@@ -235,6 +247,7 @@ describe('Panels/StylePreset', () => {
         properties: {
           stylePresets: {
             colors: [TEST_COLOR_2],
+            textStyles: [],
           },
         },
       });
@@ -261,7 +274,7 @@ describe('Panels/StylePreset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add preset');
+      const addButton = queryByLabelText('Add color preset');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
@@ -269,6 +282,7 @@ describe('Panels/StylePreset', () => {
         properties: {
           stylePresets: {
             colors: [TEST_COLOR_2],
+            textStyles: [],
           },
         },
       });
@@ -293,7 +307,7 @@ describe('Panels/StylePreset', () => {
         };
       });
 
-      const addButton = queryByLabelText('Add preset');
+      const addButton = queryByLabelText('Add color preset');
       fireEvent.click(addButton);
 
       expect(updateStory).toHaveBeenCalledTimes(1);
@@ -301,6 +315,7 @@ describe('Panels/StylePreset', () => {
         properties: {
           stylePresets: {
             colors: [TEST_COLOR_2],
+            textStyles: [],
           },
         },
       });
@@ -327,6 +342,7 @@ describe('Panels/StylePreset', () => {
         properties: {
           stylePresets: {
             colors: [TEST_COLOR_2],
+            textStyles: [],
           },
         },
       });
@@ -366,18 +382,15 @@ describe('Panels/StylePreset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR],
       };
-      const { getByRole, updateElementsById } = setupPanel(extraStylePresets);
+      const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
 
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 
       fireEvent.click(applyPreset);
-      expect(updateElementsById).toHaveBeenCalledTimes(1);
-      expect(updateElementsById).toHaveBeenCalledWith({
-        elementIds: ['1'],
-        properties: expect.any(Function),
-      });
-      const updaterFunction = updateElementsById.mock.calls[0][0].properties;
+      expect(pushUpdate).toHaveBeenCalledTimes(1);
+      expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function), true);
+      const updaterFunction = pushUpdate.mock.calls[0][0];
       const partiallyBlueContent = {
         content: 'Hello <span style="color: blue">World</span>',
       };
