@@ -25,6 +25,7 @@ import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
 import objectPick from '../../../utils/objectPick';
+import createSolid from '../../../utils/createSolid';
 
 const TEXT_PRESET_STYLES = [
   'backgroundColor',
@@ -100,6 +101,10 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
+function getExtractedInlineValue(value) {
+  return value !== MULTIPLE_VALUE ? value : null;
+}
+
 function getTextInlineStyles(content) {
   const {
     color,
@@ -110,12 +115,12 @@ function getTextInlineStyles(content) {
     letterSpacing,
   } = getHTMLInfo(content);
   return {
-    color,
-    fontWeight,
-    isBold,
-    isItalic,
-    isUnderline,
-    letterSpacing,
+    color: color !== MULTIPLE_VALUE ? color : createSolid(0, 0, 0),
+    fontWeight: getExtractedInlineValue(fontWeight),
+    isBold: getExtractedInlineValue(isBold),
+    isItalic: getExtractedInlineValue(isItalic),
+    isUnderline: getExtractedInlineValue(isUnderline),
+    letterSpacing: getExtractedInlineValue(letterSpacing),
   };
 }
 

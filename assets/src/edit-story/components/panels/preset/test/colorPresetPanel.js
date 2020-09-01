@@ -100,9 +100,10 @@ function setupPanel(extraStylePresets, extraStateProps) {
   };
 }
 
-describe('Panels/StylePreset', () => {
+describe('Panels/Preset', () => {
   const EDIT_BUTTON_LABEL = 'Edit color presets';
   const APPLY_PRESET = 'Apply color preset';
+  const PANEL_LABEL = 'Saved colors';
   const TEST_COLOR = {
     color: {
       r: 1,
@@ -126,9 +127,9 @@ describe('Panels/StylePreset', () => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
 
-  it('should render <StylePresetPanel /> panel', () => {
+  it('should render <ColorPresetPanel /> panel', () => {
     const { getByText } = setupPanel();
-    const element = getByText('Saved colors');
+    const element = getByText(PANEL_LABEL);
     expect(element).toBeDefined();
   });
 
@@ -146,10 +147,10 @@ describe('Panels/StylePreset', () => {
       ],
     };
     const { queryByText } = setupPanel(null, extraStateProps);
-    expect(queryByText('Saved Colors')).toBeNull();
+    expect(queryByText(PANEL_LABEL)).toBeNull();
   });
 
-  describe('Panels/StylePreset/Header', () => {
+  describe('Panels/Preset/Header', () => {
     it('should display only Add button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
       const addButton = queryByLabelText('Add color preset');

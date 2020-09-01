@@ -239,11 +239,14 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
-  // Disable reason: feature temporarily removed from beta.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should use black color when adding text style preset for multi-color text fields', () => {
+  it('should use black color when adding text style preset for multi-color text fields', () => {
     const stylePreset = {
       ...STYLE_PRESET,
+      fontWeight: 400,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      letterSpacing: 0,
       font: {
         family: 'Foo',
         fallbacks: ['Bar'],
@@ -263,6 +266,46 @@ describe('Panels/StylePreset/utils', () => {
       fillColors: [],
     };
     const expected = {
+      colors: [],
+      textStyles: [
+        {
+          ...stylePreset,
+          color: { color: { r: 0, g: 0, b: 0 } },
+        },
+      ],
+    };
+    const presets = getTextPresets(elements, stylePresets, 'style');
+    expect(presets).toStrictEqual(expected);
+  });
+
+  it('should default to null/false when adding text style preset for mixed inline styles', () => {
+    const stylePreset = {
+      ...STYLE_PRESET,
+      fontWeight: null,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      letterSpacing: null,
+      font: {
+        family: 'Foo',
+        fallbacks: ['Bar'],
+      },
+    };
+    const elements = [
+      {
+        type: 'text',
+        x: 30,
+        content:
+          '<span style="letter-spacing: 2px; font-style: italic; font-weight: 700; text-decoration: underline; color: rgb(1,1,1)">O</span><span style="text-decoration: none; color: rgb(2,1,1)">K</span>',
+        ...objectWithout(stylePreset, ['color']),
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      fillColors: [],
+    };
+    const expected = {
+      colors: [],
       textStyles: [
         {
           ...stylePreset,
