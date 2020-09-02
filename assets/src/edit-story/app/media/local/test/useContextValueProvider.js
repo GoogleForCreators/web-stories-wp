@@ -199,16 +199,14 @@ describe('useContextValueProvider', () => {
       deleteMediaElement: jest.fn(),
     };
 
-    const useUploadMediaResult = {
+    useUploadMedia.mockReturnValue({
       uploadMedia: jest.fn(),
       isUploading: jest.fn(),
-    };
-    useUploadMedia.mockImplementation(() => useUploadMediaResult);
+    });
 
-    const useUploadVideoFrameResult = {
+    useUploadVideoFrame.mockReturnValue({
       uploadVideoFrame: jest.fn(),
-    };
-    useUploadVideoFrame.mockImplementation(() => useUploadVideoFrameResult);
+    });
   });
 
   it('resetWithFetch calls getMedia with cacheBust:true and then fetchMediaSuccess', async () => {
