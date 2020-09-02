@@ -29,10 +29,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
-import {
-  GET_MEDIA_RESPONSE_HEADER,
-  GET_MEDIA_RESPONSE_BODY,
-} from './sampleApiResponses';
+import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
 

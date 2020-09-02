@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -27,7 +26,7 @@ import useContextValueProvider from '../useContextValueProvider';
 import {
   GET_MEDIA_RESPONSE_BODY,
   GET_MEDIA_RESPONSE_HEADER,
-} from '../../../api/test/sampleApiResponses';
+} from '../../../api/test/_utils';
 import { ConfigProvider } from '../../../config';
 
 jest.mock('../../useUploadMedia');
@@ -174,7 +173,6 @@ const renderAllProviders = ({
 describe('useContextValueProvider', () => {
   let reducerState;
   let reducerActions;
-
   beforeEach(() => {
     reducerState = {
       processing: [],
@@ -199,14 +197,16 @@ describe('useContextValueProvider', () => {
       deleteMediaElement: jest.fn(),
     };
 
-    useUploadMedia.mockReturnValue({
+    const useUploadMediaResult = {
       uploadMedia: jest.fn(),
       isUploading: jest.fn(),
-    });
+    };
+    useUploadMedia.mockImplementation(() => useUploadMediaResult);
 
-    useUploadVideoFrame.mockReturnValue({
+    const useUploadVideoFrameResult = {
       uploadVideoFrame: jest.fn(),
-    });
+    };
+    useUploadVideoFrame.mockImplementation(() => useUploadVideoFrameResult);
   });
 
   it('resetWithFetch calls getMedia with cacheBust:true and then fetchMediaSuccess', async () => {
@@ -235,19 +235,25 @@ describe('useContextValueProvider', () => {
       configState,
       apiState,
     });
-    // Set up second call to getMedia via resetWithFetch()
-    getMedia.mockImplementation(() => {
-      return Promise.resolve({
-        data: GET_MEDIA_RESPONSE_BODY,
-        headers: GET_MEDIA_RESPONSE_HEADER,
+
+    // This promise will only complete when the "done()" callback is called
+    // (see reducerActions.fetchMediaSuccess mock implementation in Promise).
+    await new Promise((done) => {
+      getMedia.mockImplementation(() => {
+        return Promise.resolve({
+          data: GET_MEDIA_RESPONSE_BODY,
+          headers: GET_MEDIA_RESPONSE_HEADER,
+        });
       });
+      reducerActions.fetchMediaSuccess.mockImplementation(() => {
+        done();
+      });
+
+      // Act:
+      result.current.actions.resetWithFetch();
     });
 
-    // Act:
-    result.current.actions.resetWithFetch();
-
-    await waitFor(() => {}); // Delay to make sure all functions are called.
-
+    // Assert after fetchMediaSuccess callback is called:
     expect(getMedia).toHaveBeenNthCalledWith(2, {
       mediaType: '',
       searchTerm: '',
