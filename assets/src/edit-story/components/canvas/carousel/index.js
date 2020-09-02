@@ -521,7 +521,7 @@ function Carousel() {
       <EditorVersion>
         {sprintf(
           /* translators: %s: editor version. */
-          __('version %s', 'web-stories'),
+          __('Version %s', 'web-stories'),
           version
         )}
       </EditorVersion>
