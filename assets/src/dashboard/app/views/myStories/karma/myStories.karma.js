@@ -1086,7 +1086,7 @@ describe('List view', () => {
     });
   });
 
-  describe('CUJ: Creator can navigate list view using keyboard', () => {
+  describe('CUJ: Creator can navigate list view using keyboard: Tab through each story in the list', () => {
     let storiesSortedByModified = [];
 
     beforeEach(async () => {
