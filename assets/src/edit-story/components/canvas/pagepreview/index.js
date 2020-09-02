@@ -108,7 +108,6 @@ function PagePreview({ index, gridRef, ...props }) {
 }
 
 PagePreview.propTypes = {
-  ariaLabel: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
