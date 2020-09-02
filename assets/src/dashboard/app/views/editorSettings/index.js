@@ -37,6 +37,8 @@ import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
+const minHeight = 96;
+const minWidth = 96;
 
 function EditorSettings() {
   const {
@@ -120,12 +122,29 @@ function EditorSettings() {
   );
 
   const handleAddLogos = useCallback(
-    (files) => {
-      const isFileSizeWithinMaxUpload = files.every(
-        (file) => file.size <= maxUpload
-      );
+    async (files) => {
+      let allFileSizesWithinMaxUpload = true;
+      let allFileDimensionsWithinMinSize = true;
+      let errorProcessingImages = false;
+      let imagePromises = [];
 
-      if (!isFileSizeWithinMaxUpload) {
+      files.forEach((file) => {
+        allFileSizesWithinMaxUpload =
+          allFileSizesWithinMaxUpload && file.size <= maxUpload;
+
+        imagePromises.push(
+          new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(file.name));
+
+            img.src = URL.createObjectURL(file);
+          })
+        );
+      });
+
+      if (!allFileSizesWithinMaxUpload) {
         const errorText =
           files.length === 1
             ? sprintf(
@@ -146,6 +165,55 @@ function EditorSettings() {
               );
         return setMediaError(errorText);
       }
+
+      const images = await Promise.all(imagePromises).catch(() => {
+        errorProcessingImages = true;
+      });
+
+      if (errorProcessingImages) {
+        const errorText =
+          files.length === 1
+            ? __(
+                'Sorry, there was an error processing your upload. Please try again.',
+                'web-stories'
+              )
+            : __(
+                'Sorry, there was an error processing one or more of your uploads. Please try again.',
+                'web-stories'
+              );
+        return setMediaError(errorText);
+      }
+
+      allFileDimensionsWithinMinSize =
+        allFileDimensionsWithinMinSize &&
+        images.every(
+          ({ height, width }) => height >= minHeight && width >= minWidth
+        );
+
+      if (!allFileDimensionsWithinMinSize) {
+        const errorText =
+          files.length === 1
+            ? sprintf(
+                /* translators: 1 = minimum width, 2 = minimum height */
+                __(
+                  "Sorry, this file's dimensions are too small. Make sure your logo is larger than %1$dx%2$d.",
+                  'web-stories'
+                ),
+                minWidth,
+                minHeight
+              )
+            : sprintf(
+                /* translators: 1 = minimum width, 2 = minimum height */
+                __(
+                  "Sorry, one or more of these files dimension's are too small. Make sure your logos are all larger than %1$dx%2$d.",
+                  'web-stories'
+                ),
+                minWidth,
+                minHeight
+              );
+        return setMediaError(errorText);
+      }
+
       setMediaError('');
       return uploadMedia(files);
     },
