@@ -47,8 +47,6 @@ const ProviderType = {
  * @property {string} displayName The display name of the provider.
  * @property {?string} featureName An optional feature that must be turned on
  * for the provider tab to be displayed.
- * @property {ContentType[]} supportedContentTypes The supported content types
- * by the provider.
  * @property {?ContentType} contentTypeFilter Optional. The content type to filter by.
  * @property {boolean} supportsCategories Whether this provider supports
  * filtering media by category.
@@ -71,7 +69,6 @@ const ProviderType = {
 export const PROVIDERS = {
   [ProviderType.UNSPLASH]: {
     displayName: __('Images', 'web-stories'),
-    supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
     requiresAuthorAttribution: true,
     attributionComponent: UnsplashAttribution,
@@ -87,7 +84,6 @@ export const PROVIDERS = {
   [ProviderType.COVERR]: {
     displayName: __('Video', 'web-stories'),
     featureName: 'showCoverrTab',
-    supportedContentTypes: [ContentType.VIDEO],
     supportsCategories: false,
     requiresAuthorAttribution: false,
     attributionComponent: CoverrAttribution,
@@ -100,7 +96,6 @@ export const PROVIDERS = {
   [ProviderType.TENOR]: {
     displayName: __('GIFs', 'web-stories'),
     featureName: 'showGifTab',
-    supportedContentTypes: [ContentType.GIF],
     contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
     requiresAuthorAttribution: false,
