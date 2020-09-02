@@ -35,7 +35,7 @@ const MEASURER_STYLES = {
   left: '-9999px',
   zIndex: -1,
   overflowWrap: 'break-word',
-  ...(true && {
+  ...(false && {
     // For debugging purposes - this will show the output render on screen
     background: 'red',
     visibility: 'visible',
