@@ -29,7 +29,11 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import useApi from '../../api/useApi';
 import { Layout, Dialog, Button } from '../../../components';
-import { BUTTON_TYPES } from '../../../constants';
+import {
+  BUTTON_TYPES,
+  MIN_IMG_WIDTH,
+  MIN_IMG_HEIGHT,
+} from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
@@ -37,8 +41,6 @@ import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
-const MIN_IMG_HEIGHT = 96;
-const MIN_IMG_WIDTH = 96;
 
 function EditorSettings() {
   const {
@@ -194,7 +196,7 @@ function EditorSettings() {
             ? sprintf(
                 /* translators: 1 = minimum width, 2 = minimum height */
                 __(
-                  'Sorry, this file is too small. Make sure your logo is larger than %s.",
+                  'Sorry, this file is too small. Make sure your logo is larger than %s.',
                   'web-stories'
                 ),
                 sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
