@@ -25,7 +25,10 @@ import PropTypes from 'prop-types';
  */
 import { useStory } from '../../../app/story';
 import { Panel } from '../panel';
-import { COLOR_PRESETS_PER_ROW } from '../../../constants';
+import {
+  COLOR_PRESETS_PER_ROW,
+  STYLE_PRESETS_PER_ROW,
+} from '../../../constants';
 import { areAllType } from './utils';
 import PresetsHeader from './header';
 import Presets from './presets';
@@ -68,16 +71,23 @@ function PresetPanel({
 
   const handleDeletePreset = useCallback(
     (toDelete) => {
+      const updatedStyles = isColor
+        ? colors.filter((color) => color !== toDelete)
+        : textStyles.filter((style) => style !== toDelete);
       updateStory({
         properties: {
           stylePresets: {
-            textStyles: textStyles.filter((style) => style !== toDelete),
-            colors: colors.filter((color) => color !== toDelete),
+            textStyles: isColor ? textStyles : updatedStyles,
+            colors: isColor ? updatedStyles : colors,
           },
         },
       });
+      // If no styles left, exit edit mode.
+      if (updatedStyles.length === 0) {
+        setIsEditMode(false);
+      }
     },
-    [colors, textStyles, updateStory]
+    [colors, isColor, textStyles, updateStory]
   );
 
   const hasPresets = colors.length > 0;
@@ -102,12 +112,15 @@ function PresetPanel({
     }
   };
 
-  const rowHeight = 35;
-
-  // Assume at least 2 lines if there are presets to leave some room.
-  const colorRows =
-    colors.length > 0 ? Math.max(2, colors.length / COLOR_PRESETS_PER_ROW) : 0;
-  const initialHeight = colorRows * rowHeight;
+  const rowHeight = isColor ? 35 : 48;
+  const presetsCount = isColor ? colors.length : textStyles.length;
+  let initialHeight = 0;
+  if (presetsCount > 0) {
+    const presetsPerRow = isColor
+      ? COLOR_PRESETS_PER_ROW
+      : STYLE_PRESETS_PER_ROW;
+    initialHeight = Math.max(1.5, colors.length / presetsPerRow) * rowHeight;
+  }
 
   const resizeable = hasPresets;
   const canCollapse = !isEditMode && hasPresets;
