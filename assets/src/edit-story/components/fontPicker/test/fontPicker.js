@@ -97,12 +97,13 @@ describe('Font Picker', () => {
 
     // Roboto option should be visible and have a selected checkmark
     const selectedRobotoOption = getByRole('option', {
-      // The "accessible name" is derived by concatenating the accessible names
-      // of all children,  which in this case is an SVG with aria-label="Selected"
-      // and a plain text node with the font name. Thus this works!
-      name: 'Selected Roboto',
+      selected: true,
     });
     expect(selectedRobotoOption).toBeInTheDocument();
+    expect(selectedRobotoOption.lastChild).toHaveAttribute(
+      'font-family',
+      "'Roboto::MENU'"
+    );
 
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
