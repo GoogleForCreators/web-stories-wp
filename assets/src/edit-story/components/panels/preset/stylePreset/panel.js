@@ -47,7 +47,7 @@ const Preset = styled.button`
   cursor: pointer;
   border-width: 0;
   border-radius: 4px;
-  padding: 0 3px;
+  padding: 3px;
   height: 100%;
   width: 100%;
   svg {
