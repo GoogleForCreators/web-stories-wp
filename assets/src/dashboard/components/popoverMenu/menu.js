@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
@@ -47,6 +48,7 @@ export const MenuContainer = styled.ul`
     }
   }
 `;
+
 MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
@@ -121,6 +123,14 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             event.preventDefault();
             if (onSelect) {
               onSelect(items[hoveredIndex]);
+            }
+            break;
+
+          case KEYS.ESC:
+            event.preventDefault();
+            if (onSelect) {
+              // Close menu
+              onSelect(-1);
             }
             break;
 
