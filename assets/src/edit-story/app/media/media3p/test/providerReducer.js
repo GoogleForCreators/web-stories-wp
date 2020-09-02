@@ -70,7 +70,11 @@ describe('providerReducer', () => {
     });
 
     expect(result.current.state).toStrictEqual(
-      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+      expect.objectContaining({
+        isMediaLoaded: true,
+        pageToken: 'page2',
+        nextPageToken: 'page2',
+      })
     );
 
     act(() => {
@@ -79,6 +83,7 @@ describe('providerReducer', () => {
 
     expect(result.current.state).toStrictEqual(
       expect.objectContaining({
+        isMediaLoaded: false,
         pageToken: undefined,
         nextPageToken: undefined,
       })
@@ -112,6 +117,43 @@ describe('providerReducer', () => {
 
     act(() => {
       result.current.actions.selectCategory({ categoryId: 'lala' });
+    });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({
+        pageToken: undefined,
+        nextPageToken: undefined,
+      })
+    );
+  });
+
+  it('should reset {next}pageToken when the category is deselected', () => {
+    const { result } = renderHook(() =>
+      useMediaReducer(providerReducer, {
+        ...actionsToWrap,
+        ...paginationActionsToWrap,
+        ...categoryActionsToWrap,
+      })
+    );
+
+    act(() => {
+      result.current.actions.fetchMediaSuccess({
+        provider: 'provider',
+        media: [{ id: 'id' }],
+        nextPageToken: 'page2',
+      });
+    });
+
+    act(() => {
+      result.current.actions.setNextPage({ provider: 'provider' });
+    });
+
+    expect(result.current.state).toStrictEqual(
+      expect.objectContaining({ pageToken: 'page2', nextPageToken: 'page2' })
+    );
+
+    act(() => {
+      result.current.actions.deselectCategory({ categoryId: 'lala' });
     });
 
     expect(result.current.state).toStrictEqual(

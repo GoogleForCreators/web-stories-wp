@@ -61,12 +61,23 @@ function providerReducer(state = INITIAL_STATE, { type, payload }) {
       // clears out the pageToken and nextPageToken for all providers.
       return {
         ...state,
+        isMediaLoaded: false,
         pageToken: undefined,
         nextPageToken: undefined,
       };
     }
 
     case categoryTypes.SELECT_CATEGORY: {
+      // This is called only for the provider in the payload, so it clears
+      // out only that provider's pageToken and nextPageToken.
+      return {
+        ...state,
+        pageToken: undefined,
+        nextPageToken: undefined,
+      };
+    }
+
+    case categoryTypes.DESELECT_CATEGORY: {
       // This is called only for the provider in the payload, so it clears
       // out only that provider's pageToken and nextPageToken.
       return {
