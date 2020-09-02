@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import { waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -235,23 +236,18 @@ describe('useContextValueProvider', () => {
       configState,
       apiState,
     });
-
-    // This promise will only complete when the "done()" callback is called
-    // (see reducerActions.fetchMediaSuccess mock implementation in Promise).
-    await new Promise((done) => {
-      getMedia.mockImplementation(() => {
-        return Promise.resolve({
-          data: GET_MEDIA_RESPONSE_BODY,
-          headers: GET_MEDIA_RESPONSE_HEADER,
-        });
+    // Set up second call to getMedia via resetWithFetch()
+    getMedia.mockImplementation(() => {
+      return Promise.resolve({
+        data: GET_MEDIA_RESPONSE_BODY,
+        headers: GET_MEDIA_RESPONSE_HEADER,
       });
-      reducerActions.fetchMediaSuccess.mockImplementation(() => {
-        done();
-      });
-
-      // Act:
-      result.current.actions.resetWithFetch();
     });
+
+    // Act:
+    result.current.actions.resetWithFetch();
+
+    await waitFor(() => {}); // Delay to make sure all functions are called.
 
     // Assert after fetchMediaSuccess callback is called:
     expect(getMedia).toHaveBeenNthCalledWith(2, {
