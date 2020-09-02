@@ -153,6 +153,23 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
   },
 ];
 
+const renderAllProviders = ({
+  reducerState,
+  reducerActions,
+  configState,
+  apiState,
+}) =>
+  renderHook(() => useContextValueProvider(reducerState, reducerActions), {
+    // eslint-disable-next-line react/display-name
+    wrapper: (params) => (
+      <ConfigProvider config={configState}>
+        <ApiContext.Provider value={apiState}>
+          {params.children}
+        </ApiContext.Provider>
+      </ConfigProvider>
+    ),
+  });
+
 describe('useContextValueProvider', () => {
   let reducerState;
   let reducerActions;
@@ -212,19 +229,12 @@ describe('useContextValueProvider', () => {
         video: [],
       },
     };
-    const { result } = renderHook(
-      () => useContextValueProvider(reducerState, reducerActions),
-      {
-        // eslint-disable-next-line react/display-name
-        wrapper: (params) => (
-          <ConfigProvider config={configState}>
-            <ApiContext.Provider value={apiState}>
-              {params.children}
-            </ApiContext.Provider>
-          </ConfigProvider>
-        ),
-      }
-    );
+    const { result } = renderAllProviders({
+      reducerState,
+      reducerActions,
+      configState,
+      apiState,
+    });
 
     // This promise will only complete when the "done()" callback is called
     // (see reducerActions.fetchMediaSuccess mock implementation in Promise).

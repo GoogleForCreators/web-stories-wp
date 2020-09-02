@@ -16,14 +16,12 @@
 /**
  * WordPress dependencies
  */
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-
-jest.mock('@wordpress/api-fetch');
-import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -36,30 +34,36 @@ import {
   GET_MEDIA_RESPONSE_BODY,
 } from './sampleApiResponses';
 
+jest.mock('@wordpress/api-fetch');
+
+const renderApiProvider = ({ configValue }) => {
+  return renderHook(() => useAPI(), {
+    // eslint-disable-next-line react/display-name
+    wrapper: (props) => (
+      <ConfigProvider config={configValue}>
+        <ApiProvider {...props} />
+      </ConfigProvider>
+    ),
+  });
+};
+
 describe('APIProvider', () => {
   beforeEach(() => {
-    apiFetch.mockImplementation(() => {
-      return Promise.resolve({
+    apiFetch.mockReturnValue(
+      Promise.resolve({
         body: GET_MEDIA_RESPONSE_BODY,
         headers: GET_MEDIA_RESPONSE_HEADER,
-      });
-    });
+      })
+    );
   });
 
-  it('when getMedia called with cacheBust:true, should call api with &cache_bust=true', () => {
-    const { result } = renderHook(() => useAPI(), {
-      // eslint-disable-next-line react/display-name
-      wrapper: (props) => (
-        <ConfigProvider
-          config={{
-            api: {
-              media: 'mediaPath',
-            },
-          }}
-        >
-          <ApiProvider {...props} />
-        </ConfigProvider>
-      ),
+  it('getMedia with cacheBust:true should call api with &cache_bust=true', () => {
+    const { result } = renderApiProvider({
+      configValue: {
+        api: {
+          media: 'mediaPath',
+        },
+      },
     });
 
     act(() => {
