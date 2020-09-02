@@ -93,9 +93,12 @@ const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
 const EditorVersion = styled.div`
   display: inline-block;
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
   margin-left: 14px;
-  bottom: 30px;
+  margin-bottom: 10px;
+  pointer-events: none;
   font-size: ${({ theme }) => theme.fonts.version.size};
   line-height: ${({ theme }) => theme.fonts.version.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
