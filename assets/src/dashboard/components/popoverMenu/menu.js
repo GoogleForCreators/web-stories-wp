@@ -71,6 +71,7 @@ export const MenuItem = styled.li`
     }
 
     &:focus, &:active, &:hover {
+      outline: none;
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     }
   
@@ -128,9 +129,9 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             break;
         }
       };
-
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      const listRefEl = listRef.current;
+      listRefEl.addEventListener('keydown', handleKeyDown);
+      return () => listRefEl.removeEventListener('keydown', handleKeyDown);
     }
   }, [hoveredIndex, items, onSelect, isOpen]);
 
@@ -155,6 +156,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
 
       return (
         <MenuItem
+          tabIndex={0}
           key={`${item.value}_${index}`}
           isHovering={index === hoveredIndex}
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}

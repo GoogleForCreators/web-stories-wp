@@ -75,9 +75,9 @@ const CardGrid = ({ ariaLabel, children, pageSize, gridRef }) => (
 );
 
 CardGrid.propTypes = {
-  ariaLabel: PropTypes.string, // TODO this will be required as soon as story grids are updated
+  ariaLabel: PropTypes.string,
   children: PropTypes.node.isRequired,
-  gridRef: PropTypes.object, // TODO this will be required as soon as story grids are updated
+  gridRef: PropTypes.object,
   pageSize: PageSizePropType.isRequired,
 };
 
