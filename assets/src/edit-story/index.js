@@ -42,8 +42,6 @@ const initialize = (id, config, flags) => {
   Modal.setAppElement(appElement);
 
   initializeTracking('Editor');
-  flags.media3pTab = true;
-  flags.showCoverrTab = true;
   render(
     <FlagsProvider features={flags}>
       <App config={config} />
