@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
 /**
@@ -39,7 +40,7 @@ import { generatePresetStyle } from '../utils';
 const REMOVE_ICON_SIZE = 18;
 
 const Preset = styled.button`
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.16)};
   display: inline-block;
   border-color: transparent;
   position: relative;
@@ -76,19 +77,6 @@ const TextWrapper = styled.div`
   max-width: 100%;
   ${({ styles }) => styles}
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
-  ${({ transparent }) =>
-    transparent
-      ? `
-    background-image: conic-gradient(
-    #fff 0.25turn,
-    #d3d4d4 0turn 0.5turn,
-    #fff 0turn 0.75turn,
-    #d3d4d4 0turn 1turn
-  );
-  background-size: 15px 15px;
-  background-repeat: repeat;
-  `
-      : null}
 `;
 
 function StylePresetPanel({ pushUpdate }) {
@@ -119,7 +107,6 @@ function StylePresetPanel({ pushUpdate }) {
       return (
         <TextWrapper
           styles={generatePresetStyle(preset, true)}
-          transparent={preset.backgroundTextMode === BACKGROUND_TEXT_MODE.NONE}
           background={isFill ? preset.backgroundColor : null}
         >
           {isHighLight ? (
