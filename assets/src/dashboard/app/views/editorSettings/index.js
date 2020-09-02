@@ -194,11 +194,10 @@ function EditorSettings() {
             ? sprintf(
                 /* translators: 1 = minimum width, 2 = minimum height */
                 __(
-                  "Sorry, this file's dimensions are too small. Make sure your logo is larger than %1$dx%2$d.",
+                  'Sorry, this file is too small. Make sure your logo is larger than %s.",
                   'web-stories'
                 ),
-                MIN_IMG_WIDTH,
-                MIN_IMG_HEIGHT
+                sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
               )
             : sprintf(
                 /* translators: %s: image dimensions in pixels. */
