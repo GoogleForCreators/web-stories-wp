@@ -23,6 +23,7 @@
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
  * y-unit CSS.
  * @param {Object<*>} element Text element properties.
+ * @param dataToPaddingY
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
@@ -30,7 +31,8 @@ export function generateParagraphTextStyle(
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY = dataToStyleY,
-  element
+  element,
+  dataToPaddingY = dataToStyleY
 ) {
   const { font, fontSize, lineHeight, padding, textAlign } = props;
   const { marginOffset } = calcFontMetrics(element);
@@ -39,7 +41,7 @@ export function generateParagraphTextStyle(
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
     wordBreak: 'break-word',
-    margin: `${dataToStyleY(-marginOffset / 2)} 0`,
+    margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
     font,

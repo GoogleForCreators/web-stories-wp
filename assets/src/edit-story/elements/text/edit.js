@@ -282,7 +282,10 @@ function TextEdit({
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
     if (highlight) {
+      const updatedMargin = transform?.updates?.marginOffset;
       highlight.style.fontSize = target.style.fontSize;
+      highlight.style.margin = `${dataToEditorY(-updatedMargin) / 2}px 0`;
+      target.style.margin = `${dataToEditorY(-updatedMargin) / 2}px 0`;
     }
 
     if (transform === null) {

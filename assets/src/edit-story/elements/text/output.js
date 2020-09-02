@@ -83,14 +83,19 @@ export function TextOutputWithUnits({
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
+  const {
+    dataToEditorY: _dataToEditorY,
+    ...styles
+  } = generateParagraphTextStyle(
+    rest,
+    dataToStyleX,
+    dataToStyleY,
+    dataToFontSizeY,
+    element,
+    dataToPaddingY
+  );
   const fillStyle = {
-    ...generateParagraphTextStyle(
-      rest,
-      dataToStyleX,
-      dataToStyleY,
-      dataToFontSizeY,
-      element
-    ),
+    ...styles,
     ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
