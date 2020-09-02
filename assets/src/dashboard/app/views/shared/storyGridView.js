@@ -22,6 +22,7 @@ import { __ } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -73,8 +74,14 @@ const StoryGridView = ({
   dateSettings,
   previewStory,
 }) => {
+  const gridRef = useRef();
+
   return (
-    <StoryGrid pageSize={pageSize}>
+    <StoryGrid
+      pageSize={pageSize}
+      gridRef={gridRef}
+      ariaLabel={__('Grid view of stories', 'web-stories')}
+    >
       {stories.map((story) => {
         const titleRenameProps = renameStory
           ? {

@@ -411,15 +411,13 @@ describe('Grid view', () => {
       expect(viewPreviewStory).toBeTruthy();
     });
 
-    it('should trigger template preview when user presses Enter while focused on a card', async () => {
-      const { storiesOrderById } = await getStoriesState();
+    it('should trigger story preview when user presses Enter while focused on a card', async () => {
+      const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
 
-      const currentCard = await getGridElementById(storiesOrderById[1]);
-      const utils = within(currentCard);
-      const activeCard = utils.getByTestId('card-action-container');
-      expect(activeCard).toBeTruthy();
+      await fixture.events.focus(gridContainer);
 
-      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('tab');
+
       await fixture.events.keyboard.press('Enter');
 
       const viewPreviewStory = await fixture.screen.queryByTestId(
