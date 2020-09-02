@@ -126,6 +126,9 @@ function APIProvider({ children }) {
 
       // cacheBusting is due to the preloading logic preloading and caching
       // some requests. (see preload_paths in Dashboard.php)
+      // Adding cache_bust forces the path to look different from the preloaded
+      // paths and hence skipping the cache. (cache_bust itself doesn't do
+      // anything)
       if (cacheBust) {
         apiPath = addQueryArgs(apiPath, { cache_bust: true });
       }
