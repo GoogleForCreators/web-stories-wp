@@ -21,13 +21,19 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
+import ApiContext from '../../../api/context';
 import useContextValueProvider from '../useContextValueProvider';
 import {
   GET_MEDIA_RESPONSE_BODY,
   GET_MEDIA_RESPONSE_HEADER,
 } from '../../../api/test/sampleApiResponses';
-jest.mock('../../../api/useAPI');
-import useAPIMock from '../../../api/useAPI';
+import { ConfigProvider } from '../../../config';
+
+jest.mock('../../useUploadMedia');
+import useUploadMedia from '../../useUploadMedia';
+
+jest.mock('../../utils/useUploadVideoFrame');
+import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
 
 // Media List representation in state based on GET_MEDIA_RESPONSE_BODY.
 const MEDIA_LIST_FROM_GET_MEDIA = [
@@ -147,19 +153,9 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
   },
 ];
 
-jest.mock('../../useUploadMedia');
-import useUploadMedia from '../../useUploadMedia';
-
-jest.mock('../../utils/useUploadVideoFrame');
-import useUploadVideoFrame from '../../utils/useUploadVideoFrame';
-
-jest.mock('../../../config/useConfig');
-import useConfig from '../../../config/useConfig';
-
 describe('useContextValueProvider', () => {
   let reducerState;
   let reducerActions;
-
   beforeEach(() => {
     reducerState = {
       processing: [],
@@ -194,32 +190,40 @@ describe('useContextValueProvider', () => {
       uploadVideoFrame: jest.fn(),
     };
     useUploadVideoFrame.mockImplementation(() => useUploadVideoFrameResult);
-
-    const useConfigResult = {
-      allowedMimeTypes: {
-        video: [],
-      },
-    };
-    useConfig.mockImplementation(() => useConfigResult);
   });
 
-  it('resetWithFetch should call getMedia with cache = true', async () => {
+  it('resetWithFetch calls getMedia with cacheBust:true and then fetchMediaSuccess', async () => {
     // Set up and make initial call to useContextValueProvider (which calls
     // getMedia and fetchMediaSuccess once). Sets an empty media state.
-    const getMedia = jest.fn(() => {
-      return Promise.resolve({
+    const getMedia = jest.fn(() =>
+      Promise.resolve({
         data: [],
         headers: GET_MEDIA_RESPONSE_HEADER,
-      });
-    });
-    const useApiResult = {
+      })
+    );
+    const apiState = {
       actions: {
         getMedia,
       },
     };
-    useAPIMock.mockImplementation(() => useApiResult);
-    const { result } = renderHook(() =>
-      useContextValueProvider(reducerState, reducerActions)
+    const configState = {
+      api: {},
+      allowedMimeTypes: {
+        video: [],
+      },
+    };
+    const { result } = renderHook(
+      () => useContextValueProvider(reducerState, reducerActions),
+      {
+        // eslint-disable-next-line react/display-name
+        wrapper: (params) => (
+          <ConfigProvider config={configState}>
+            <ApiContext.Provider value={apiState}>
+              {params.children}
+            </ApiContext.Provider>
+          </ConfigProvider>
+        ),
+      }
     );
 
     // This promise will only complete when the "done()" callback is called

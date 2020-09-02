@@ -20,7 +20,7 @@
 /**
  * External dependencies
  */
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 
 jest.mock('@wordpress/api-fetch');
 import apiFetch from '@wordpress/api-fetch';
@@ -29,34 +29,51 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import useAPI from '../useAPI';
-
-jest.mock('../../config/useConfig');
-import useConfig from '../../config/useConfig';
-
-// function APIProvider({ children }) {
-//   const {
-//     api: { stories, media, fonts, link, users },
-//   } = useConfig();
+import ApiProvider from '../apiProvider';
+import { ConfigProvider } from '../../config';
+import {
+  GET_MEDIA_RESPONSE_HEADER,
+  GET_MEDIA_RESPONSE_BODY,
+} from './sampleApiResponses';
 
 describe('apiProvider', () => {
   beforeEach(() => {
-    apiFetch.mockReturnValue('hello');
-    useConfig.mockReturnValue({
-      api: {
-        stories: {},
-        media: {},
-        fonts: {},
-        link: {},
-        users: {},
-      },
+    apiFetch.mockImplementation(() => {
+      return Promise.resolve({
+        body: GET_MEDIA_RESPONSE_BODY,
+        headers: GET_MEDIA_RESPONSE_HEADER,
+      });
     });
   });
 
-  it('should do something', () => {
-    const { result } = renderHook(() => useAPI());
+  it('when getMedia called with cacheBust:true, should call api with &cache_bust=true', () => {
+    const { result } = renderHook(() => useAPI(), {
+      // eslint-disable-next-line react/display-name
+      wrapper: (props) => (
+        <ConfigProvider
+          config={{
+            api: {
+              media: 'mediaPath',
+            },
+          }}
+        >
+          <ApiProvider {...props} />
+        </ConfigProvider>
+      ),
+    });
 
-    result.current.actions.getMedia();
+    act(() => {
+      result.current.actions.getMedia({
+        mediaType: '',
+        searchTerm: '',
+        pagingNum: 1,
+        cacheBust: true,
+      });
+    });
 
-    expect(true).toBe(false);
+    expect(apiFetch).toHaveBeenCalledWith({
+      path:
+        '/mediaPath?context=edit&per_page=100&page=1&_web_stories_envelope=true&cache_bust=true',
+    });
   });
 });
