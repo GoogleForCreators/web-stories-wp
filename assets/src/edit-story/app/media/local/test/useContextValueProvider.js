@@ -174,6 +174,7 @@ const renderAllProviders = ({
 describe('useContextValueProvider', () => {
   let reducerState;
   let reducerActions;
+
   beforeEach(() => {
     reducerState = {
       processing: [],
