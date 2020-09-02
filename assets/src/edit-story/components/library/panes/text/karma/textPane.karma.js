@@ -15,9 +15,18 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma/fixture';
+import { useStory } from '../../../../../app/story';
+import { dataFontEm } from '../../../../../units';
+import stripHTML from '../../../../../utils/stripHTML';
+import { PRESETS } from '../textPresets';
 
 describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => {
   let fixture;
@@ -40,16 +49,63 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   });
 
   it('should ensure staggered presets fit on the page', async () => {
+    const POSITION_MARGIN = dataFontEm(1);
+    const PARAGRAPH_TEXT =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    let lastY;
+    let lastHeight;
+    let storyContext;
+
+    const verifyDefaultPosition = async (name, content) => {
+      storyContext = await fixture.renderHook(() => useStory());
+      const element = storyContext.state.selectedElements[0];
+      await waitFor(() => {
+        expect(stripHTML(element.content)).toEqual(content);
+        const preset = PRESETS.find(({ title }) => name === title);
+        expect(element.y).toEqual(preset.element.y);
+      });
+      lastY = element.y;
+      lastHeight = element.height;
+    };
+
+    const verifyStaggeredPosition = async (content) => {
+      storyContext = await fixture.renderHook(() => useStory());
+      const element = storyContext.state.selectedElements[0];
+      await waitFor(() => {
+        expect(stripHTML(element.content)).toEqual(content);
+        expect(element.y).toEqual(lastY + lastHeight + POSITION_MARGIN);
+      });
+      lastY = element.y;
+      lastHeight = element.height;
+    };
+
     await fixture.editor.library.textTab.click();
     // Stagger all different text presets.
+
     await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
+    await verifyDefaultPosition('Heading 1', 'Heading 1');
+
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await verifyStaggeredPosition('Paragraph');
+
     await fixture.events.click(fixture.editor.library.text.preset('Heading 2'));
+    await verifyStaggeredPosition('Heading 2');
+
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await verifyStaggeredPosition(PARAGRAPH_TEXT);
+
     await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
+    await verifyStaggeredPosition('Heading 3');
+
+    // Caption should be positioned in the default position again.
     await fixture.events.click(fixture.editor.library.text.preset('Caption'));
+    await verifyDefaultPosition('Caption', 'Caption');
+
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+    await verifyStaggeredPosition(PARAGRAPH_TEXT);
+
     await fixture.events.click(fixture.editor.library.text.preset('OVERLINE'));
+    await verifyStaggeredPosition('OVERLINE');
 
     await fixture.snapshot('staggered all text presets');
   });
