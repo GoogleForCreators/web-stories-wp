@@ -201,13 +201,12 @@ function EditorSettings() {
                 MIN_IMG_HEIGHT
               )
             : sprintf(
-                /* translators: 1 = minimum width, 2 = minimum height */
+                /* translators: %s: image dimensions in pixels. */
                 __(
-                  "Sorry, one or more of these files dimension's are too small. Make sure your logos are all larger than %1$dx%2$d.",
+                  'Sorry, one or more files are too small. Make sure your logos are all larger than %s.',
                   'web-stories'
                 ),
-                MIN_IMG_WIDTH,
-                MIN_IMG_HEIGHT
+                sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
               );
         return setMediaError(errorText);
       }
