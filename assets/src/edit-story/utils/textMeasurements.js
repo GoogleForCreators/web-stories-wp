@@ -24,6 +24,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import { PAGE_HEIGHT } from '../constants';
 import { TextOutputWithUnits } from '../elements/text/output';
+import { calcFontMetrics } from '../elements/text/util';
 
 const MEASURER_STYLES = {
   boxSizing: 'border-box',
@@ -65,18 +66,24 @@ export function calculateFitTextFontSize(element, width, height) {
   // Binomial search for the best font size.
   let minFontSize = 1;
   let maxFontSize = PAGE_HEIGHT;
+  let margin;
   while (maxFontSize - minFontSize > 1) {
     const mid = (minFontSize + maxFontSize) / 2;
-    setStyles(measurer, { fontSize: `${mid}px` });
+    const { marginOffset } = calcFontMetrics({ ...element, fontSize: mid });
+    margin = marginOffset;
+    setStyles(measurer, {
+      fontSize: `${mid}px`,
+      margin: `${-marginOffset / 2}px 0`,
+    });
     const currentHeight = measurer.scrollHeight;
-    if (currentHeight > height) {
+    if (currentHeight > height + marginOffset) {
       maxFontSize = mid;
     } else {
       minFontSize = mid;
     }
   }
 
-  return minFontSize;
+  return { fontSize: minFontSize, marginOffset: margin };
 }
 
 function getOrCreateMeasurer(element) {

@@ -148,6 +148,10 @@ function TextDisplay({
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
       : '';
+    const updatedMargin = transform?.updates?.marginOffset;
+    target.style.margin = updatedMargin
+      ? `${dataToEditorY(-updatedMargin) / 2}px 0`
+      : '';
   });
 
   // Setting the text color of the entire block to black essentially removes all inline

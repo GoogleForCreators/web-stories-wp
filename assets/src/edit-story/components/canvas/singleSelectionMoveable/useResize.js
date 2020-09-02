@@ -111,6 +111,11 @@ function useSingleSelectionResize({
     if (updates && updates.height) {
       newHeight = dataToEditorY(updates.height);
     }
+    if (updates && updates.marginOffset) {
+      target.firstChild.firstChild.style.margin = `${
+        -dataToEditorY(updates.marginOffset) / 2
+      }px 0`;
+    }
 
     target.style.width = `${newWidth}px`;
     target.style.height = `${newHeight}px`;
