@@ -124,7 +124,6 @@ function EditorSettings() {
   const handleAddLogos = useCallback(
     async (files) => {
       let allFileSizesWithinMaxUpload = true;
-      let allFileDimensionsWithinMinSize = true;
       let errorProcessingImages = false;
       let imagePromises = [];
 
@@ -184,13 +183,11 @@ function EditorSettings() {
         return setMediaError(errorText);
       }
 
-      allFileDimensionsWithinMinSize =
-        allFileDimensionsWithinMinSize &&
-        images.every(
-          ({ height, width }) => height >= minHeight && width >= minWidth
-        );
+      const allFileDimensionsValid = images.every(
+        ({ height, width }) => height >= minHeight && width >= minWidth
+      );
 
-      if (!allFileDimensionsWithinMinSize) {
+      if (!allFileDimensionsValid) {
         const errorText =
           files.length === 1
             ? sprintf(
