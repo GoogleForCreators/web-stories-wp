@@ -36,7 +36,7 @@ import {
   GET_MEDIA_RESPONSE_BODY,
 } from './sampleApiResponses';
 
-describe('apiProvider', () => {
+describe('APIProvider', () => {
   beforeEach(() => {
     apiFetch.mockImplementation(() => {
       return Promise.resolve({

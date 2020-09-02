@@ -124,6 +124,8 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
+      // cacheBusting is due to the preloading logic preloading and caching
+      // some requests. (see preload_paths in Dashboard.php)
       if (cacheBust) {
         apiPath = addQueryArgs(apiPath, { cache_bust: true });
       }
