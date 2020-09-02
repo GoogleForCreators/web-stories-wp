@@ -37,8 +37,8 @@ import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
-const minHeight = 96;
-const minWidth = 96;
+const MIN_IMG_HEIGHT = 96;
+const MIN_IMG_WIDTH = 96;
 
 function EditorSettings() {
   const {
@@ -184,7 +184,8 @@ function EditorSettings() {
       }
 
       const allFileDimensionsValid = images.every(
-        ({ height, width }) => height >= minHeight && width >= minWidth
+        ({ height, width }) =>
+          height >= MIN_IMG_HEIGHT && width >= MIN_IMG_WIDTH
       );
 
       if (!allFileDimensionsValid) {
@@ -196,8 +197,8 @@ function EditorSettings() {
                   "Sorry, this file's dimensions are too small. Make sure your logo is larger than %1$dx%2$d.",
                   'web-stories'
                 ),
-                minWidth,
-                minHeight
+                MIN_IMG_WIDTH,
+                MIN_IMG_HEIGHT
               )
             : sprintf(
                 /* translators: 1 = minimum width, 2 = minimum height */
@@ -205,8 +206,8 @@ function EditorSettings() {
                   "Sorry, one or more of these files dimension's are too small. Make sure your logos are all larger than %1$dx%2$d.",
                   'web-stories'
                 ),
-                minWidth,
-                minHeight
+                MIN_IMG_WIDTH,
+                MIN_IMG_HEIGHT
               );
         return setMediaError(errorText);
       }
