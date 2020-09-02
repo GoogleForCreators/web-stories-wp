@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useRef, useState, useCallback } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -127,6 +127,7 @@ const CardPreviewContainer = ({
   tabIndex,
   centerAction,
   bottomAction,
+  topAction,
   story,
   pageSize,
   ariaLabel,
@@ -165,14 +166,6 @@ const CardPreviewContainer = ({
     return () => intervalId && clearInterval(intervalId);
   }, [storyPages.length, cardState]);
 
-  const handleKeyDownEditControls = useCallback(
-    ({ key }) => {
-      if (key.toLowerCase() === 'enter') {
-        containerAction();
-      }
-    },
-    [containerAction]
-  );
   return (
     <>
       <PreviewPane cardSize={pageSize}>
@@ -199,10 +192,22 @@ const CardPreviewContainer = ({
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
         onClick={containerAction}
-        onKeyDown={handleKeyDownEditControls}
         tabIndex={tabIndex}
       >
-        <EmptyActionContainer />
+        {!topAction && <EmptyActionContainer />}
+        {topAction?.label && (
+          <ActionContainer>
+            <Button
+              tabIndex={tabIndex}
+              data-testid="card-top-action"
+              type={BUTTON_TYPES.SECONDARY}
+              {...getActionAttributes(topAction.targetAction)}
+            >
+              {topAction.label}
+            </Button>
+          </ActionContainer>
+        )}
+
         {centerAction?.label && (
           <ActionContainer>
             <Button
@@ -239,6 +244,7 @@ CardPreviewContainer.propTypes = {
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  topAction: ActionButtonPropType,
   containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,

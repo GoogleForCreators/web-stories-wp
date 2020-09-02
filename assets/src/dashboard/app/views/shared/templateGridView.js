@@ -144,9 +144,13 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                   targetAction: targetAction(template),
                   label: __('Use template', 'web-stories'),
                 }}
-                containerAction={(e) =>
-                  templateActions.handlePreviewTemplate(e, template)
-                }
+                topAction={{
+                  targetAction: (e) => {
+                    e.stopPropagation();
+                    templateActions.handlePreviewTemplate(e, template);
+                  },
+                  label: __('Preview', 'web-stories'),
+                }}
               />
             </CardGridItem>
           );
