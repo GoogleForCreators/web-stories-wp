@@ -106,7 +106,7 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum }) => {
+    ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
       let apiPath = media;
       const perPage = 100;
       apiPath = addQueryArgs(apiPath, {
@@ -122,6 +122,10 @@ function APIProvider({ children }) {
 
       if (searchTerm) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
+      }
+
+      if (cacheBust) {
+        apiPath = addQueryArgs(apiPath, { cache_bust: true });
       }
 
       return apiFetch({ path: apiPath }).then((response) => {
