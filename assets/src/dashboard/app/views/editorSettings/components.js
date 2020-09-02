@@ -87,6 +87,11 @@ export const FinePrintHelperText = styled.p`
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
+export const FormLabel = styled.span`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.gray400};
+`;
+
 export const Error = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-bottom: 10px;

@@ -38,8 +38,9 @@ export const ApiContext = createContext({ state: {}, actions: {} });
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, assetsURL } = useConfig();
 
-  const { users, api: usersApi } = useUsersApi(dataAdapter, {
+  const { users, me, api: usersApi } = useUsersApi(dataAdapter, {
     userApi: api.users,
+    meApi: api.me,
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
@@ -70,6 +71,7 @@ export default function ApiProvider({ children }) {
         stories,
         templates,
         users,
+        me,
       },
       actions: {
         mediaApi,

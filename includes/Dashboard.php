@@ -262,6 +262,7 @@ class Dashboard {
 				'api'                => [
 					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'     => '/web-stories/v1/media',
+					'me'        => '/wp/v2/users/me',
 					'users'     => '/wp/v2/users',
 					'fonts'     => '/web-stories/v1/fonts',
 					'templates' => '/web-stories/v1/web-story-template',
