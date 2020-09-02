@@ -248,7 +248,6 @@ describe('useContextValueProvider', () => {
 
     await waitFor(() => {}); // Delay to make sure all functions are called.
 
-    // Assert after fetchMediaSuccess callback is called:
     expect(getMedia).toHaveBeenNthCalledWith(2, {
       mediaType: '',
       searchTerm: '',
