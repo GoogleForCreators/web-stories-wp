@@ -150,19 +150,13 @@ describe('Grid view', () => {
       await fixture.render();
     });
 
-    it('should trigger template preview when user clicks a card', async () => {
+    it('should trigger template preview when user clicks first button in card', async () => {
       const { templatesOrderById } = await getTemplatesState();
 
       const currentCard = await getTemplateElementById(templatesOrderById[1]);
       const utils = within(currentCard);
-
-      const activeCard = utils.getByTestId('card-action-container');
-      expect(activeCard).toBeTruthy();
-
-      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-      expect(firstTemplate.contains(document.activeElement)).toBeTrue();
-
-      await fixture.events.keyboard.press('right');
+      const previewButton = utils.getByTestId('card-top-action');
+      await fixture.events.click(previewButton);
 
       const secondTemplate = getTemplateElementById(templatesOrderById[1]);
       expect(secondTemplate.contains(document.activeElement)).toBeTrue();
@@ -178,10 +172,13 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.press('right');
 
+      await fixture.events.keyboard.press('Enter');
+
       const secondTemplate = getTemplateElementById(templatesOrderById[1]);
       expect(secondTemplate.contains(document.activeElement)).toBeTrue();
 
       await fixture.events.keyboard.press('tab');
+
       await fixture.events.keyboard.press('Enter');
 
       await fixture.events.keyboard.press('left');
