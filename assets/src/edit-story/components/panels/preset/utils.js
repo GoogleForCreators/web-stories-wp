@@ -84,11 +84,13 @@ export function generatePresetStyle(preset, prepareForCSS) {
   };
 
   if (!prepareForCSS) {
+    // If we're not preparing the matching style for actual CSS, add background text mode as well here.
     style = {
       ...style,
       fontSize,
       lineHeight,
       padding,
+      backgroundTextMode,
     };
   }
 
