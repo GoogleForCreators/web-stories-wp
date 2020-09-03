@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div id="stories-dashboard-no-js" class="wrap">
 	<div class="notice notice-error notice-alt">
-		<p><?php esc_html_e( 'The Web Stories dashboard requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+		<p><?php esc_html_e( 'Web Stories for WordPress requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
 	</div>
 </div>
 <div id="web-stories-dashboard">
