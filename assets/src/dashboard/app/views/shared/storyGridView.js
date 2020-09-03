@@ -79,7 +79,7 @@ const StoryGridView = ({
   return (
     <StoryGrid
       pageSize={pageSize}
-      gridRef={gridRef}
+      ref={gridRef}
       ariaLabel={__('Grid view of stories', 'web-stories')}
     >
       {stories.map((story) => {
