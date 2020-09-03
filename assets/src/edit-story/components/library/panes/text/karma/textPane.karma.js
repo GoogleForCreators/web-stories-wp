@@ -92,7 +92,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     // @todo Remove this once #4094 gets fixed!
     // Wait until the history has changed to its initial (incorrect due to a bug) position.
-    await fixture.events.sleep(300);
+    await fixture.events.sleep(500);
 
     // Stagger all different text presets.
 
