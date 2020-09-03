@@ -45,8 +45,11 @@ import {
   DateSettingsPropType,
 } from '../../../types';
 import { STORY_STATUS, STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import { getRelativeDisplayDate, useGridViewKeys } from '../../../utils';
-
+import {
+  getRelativeDisplayDate,
+  useGridViewKeys,
+  useFocusOut,
+} from '../../../utils';
 import { useConfig } from '../../config';
 
 export const DetailRow = styled.div`
@@ -99,11 +102,7 @@ const StoryGridView = ({
     }
   }, [activeGridItemId]);
 
-  // useEffect(() => {
-  //   document.addEventListener('keydown', (e) => {
-  //     console.log(document.activeElement, e.currentTarget);
-  //   });
-  // }, []);
+  useFocusOut(containerRef, () => setActiveGridItemId(null), []);
 
   return (
     <div ref={containerRef}>
