@@ -18,7 +18,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -29,7 +34,7 @@ import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import EditCropMoveable from './editCropMoveable';
-import { mediaWithScale } from './util';
+import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
@@ -101,6 +106,7 @@ function MediaEdit({ element, box }) {
   const [fullMedia, setFullMedia] = useState(null);
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
+  const elementRef = useRef();
 
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
@@ -109,6 +115,9 @@ function MediaEdit({ element, box }) {
     (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
   );
+
+  const isImage = 'image' === type;
+  const isVideo = 'video' === type;
 
   const mediaProps = getMediaSizePositionProps(
     resource,
@@ -132,16 +141,36 @@ function MediaEdit({ element, box }) {
     ref: setCroppedMedia,
     draggable: false,
     src: resource.src,
-    alt: resource.alt,
+    alt: __('Drag to move media element', 'web-stories'),
     opacity: opacity / 100,
+    tabIndex: 0,
     ...mediaProps,
   };
 
-  const isImage = 'image' === type;
-  const isVideo = 'video' === type;
+  useEffect(() => {
+    if (
+      croppedMedia &&
+      elementRef.current &&
+      !elementRef.current.contains(document.activeElement)
+    ) {
+      croppedMedia.focus();
+    }
+  }, [croppedMedia]);
+
+  const srcSet = calculateSrcSet(element.resource);
+  if (isImage && srcSet) {
+    cropMediaProps.srcSet = srcSet;
+  }
+
   return (
-    <Element>
-      {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
+    <Element ref={elementRef}>
+      {isImage && (
+        <FadedImage
+          {...fadedMediaProps}
+          src={resource.src}
+          srcSet={calculateSrcSet(resource)}
+        />
+      )}
       {isVideo && (
         <FadedVideo {...fadedMediaProps}>
           <source src={resource.src} type={resource.mimeType} />

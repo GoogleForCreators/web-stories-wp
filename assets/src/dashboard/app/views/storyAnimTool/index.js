@@ -17,12 +17,13 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';
@@ -33,12 +34,11 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  STORY_PAGE_STATE,
 } from '../../../constants';
 import { PreviewPage } from '../../../components';
 import { clamp, getPagePreviewHeights } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
+import useApi from '../../api/useApi';
 import UpdateTemplateForm from './updateTemplateForm';
 import Timeline from './timeline';
 import {
@@ -59,7 +59,7 @@ function StoryAnimTool() {
   const [activeAnimation, setActiveAnimation] = useState({});
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [pageAnimationState, setPageAnimationState] = useState(
-    STORY_PAGE_STATE.RESET
+    STORY_ANIMATION_STATE.RESET
   );
 
   const [selectedElementIds, setSelectedElementIds] = useState({});
@@ -67,14 +67,16 @@ function StoryAnimTool() {
   const globalTimeSubscription = useMemo(() => emitter(), []);
   const flags = useFeatures();
 
-  const {
-    actions: {
-      storyApi: { updateStory, fetchStories },
-    },
-    state: {
-      stories: { stories, storiesOrderById },
-    },
-  } = useContext(ApiContext);
+  const { updateStory, fetchStories, stories, storiesOrderById } = useApi(
+    ({
+      actions: {
+        storyApi: { updateStory, fetchStories },
+      },
+      state: {
+        stories: { stories, storiesOrderById },
+      },
+    }) => ({ updateStory, fetchStories, stories, storiesOrderById })
+  );
 
   useEffect(() => {
     fetchStories({
@@ -348,7 +350,7 @@ function StoryAnimTool() {
                         animationState={pageAnimationState}
                         subscribeGlobalTime={globalTimeSubscription.subscribe}
                         onAnimationComplete={() =>
-                          setPageAnimationState(STORY_PAGE_STATE.RESET)
+                          setPageAnimationState(STORY_ANIMATION_STATE.RESET)
                         }
                       />
                     </ActiveCard>
@@ -372,23 +374,29 @@ function StoryAnimTool() {
                 {'Next Page'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PLAYING)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.PLAYING)
+                }
               >
                 {'Play'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.PAUSED)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.PAUSED)
+                }
               >
                 {'Pause'}
               </button>
               <button
-                onClick={() => setPageAnimationState(STORY_PAGE_STATE.RESET)}
+                onClick={() =>
+                  setPageAnimationState(STORY_ANIMATION_STATE.RESET)
+                }
               >
                 {'Reset'}
               </button>
               <button
                 onClick={() =>
-                  setPageAnimationState(STORY_PAGE_STATE.SCRUBBING)
+                  setPageAnimationState(STORY_ANIMATION_STATE.SCRUBBING)
                 }
               >
                 {'Scrub'}
@@ -421,7 +429,7 @@ function StoryAnimTool() {
             onAnimationDelete={handleAnimationDelete}
             onToggleTargetSelect={setIsElementSelectable}
             emitGlobalTime={globalTimeSubscription.emit}
-            canScrub={pageAnimationState === STORY_PAGE_STATE.SCRUBBING}
+            canScrub={pageAnimationState === STORY_ANIMATION_STATE.SCRUBBING}
           />
         </>
       )}

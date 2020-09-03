@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -67,8 +68,12 @@ const Hint = styled.div`
 `;
 
 function FramesLayer() {
-  const { currentPage } = useStory((state) => ({
+  const { currentPage, isAnimating } = useStory((state) => ({
     currentPage: state.state.currentPage,
+    isAnimating: [
+      STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.SCRUBBING,
+    ].includes(state.state.animationState),
   }));
   const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
     showSafeZone,
@@ -90,27 +95,29 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
-      aria-label={__('Frames', 'web-stories')}
+      aria-label={__('Frames layer', 'web-stories')}
     >
-      <FramesPageArea
-        showSafeZone={showSafeZone}
-        overlay={
-          Boolean(draggingResource) &&
-          isDropSource(draggingResource.type) &&
-          Object.keys(dropTargets).length > 0 && (
-            <FrameSidebar>
-              <Hint>
-                {__('Drop targets are outlined in blue.', 'web-stories')}
-              </Hint>
-            </FrameSidebar>
-          )
-        }
-      >
-        {currentPage &&
-          currentPage.elements.map(({ id, ...rest }) => {
-            return <FrameElement key={id} element={{ id, ...rest }} />;
-          })}
-      </FramesPageArea>
+      {!isAnimating && (
+        <FramesPageArea
+          showSafeZone={showSafeZone}
+          overlay={
+            Boolean(draggingResource) &&
+            isDropSource(draggingResource.type) &&
+            Object.keys(dropTargets).length > 0 && (
+              <FrameSidebar>
+                <Hint>
+                  {__('Drop targets are outlined in blue.', 'web-stories')}
+                </Hint>
+              </FrameSidebar>
+            )
+          }
+        >
+          {currentPage &&
+            currentPage.elements.map(({ id, ...rest }) => {
+              return <FrameElement key={id} element={{ id, ...rest }} />;
+            })}
+        </FramesPageArea>
+      )}
       <MenuArea
         pointerEvents="initial"
         // Make its own stacking context.

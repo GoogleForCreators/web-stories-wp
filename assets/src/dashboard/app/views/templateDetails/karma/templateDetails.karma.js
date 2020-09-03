@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
 import { within } from '@testing-library/react';
 import qs from 'query-string';
 
@@ -24,72 +23,91 @@ import qs from 'query-string';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { ApiContext } from '../../../api/apiProvider';
 import {
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../constants';
+import useApi from '../../../api/useApi';
 
-describe('CUJ: Creator can browse templates in grid view', () => {
+describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
+  let fixture;
+  let enableTemplatePreviews = false;
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+
+    fixture.setFlags({ enableTemplatePreviews });
+
+    await fixture.render();
+
+    await navigateToFirstTemplate();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  async function navigateToFirstTemplate() {
+    const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
+      name: /^Explore Templates$/,
+    });
+
+    await fixture.events.click(exploreTemplatesMenuItem);
+
+    const { templatesOrderById } = await getTemplatesState();
+
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+
+    const utils = within(firstTemplate);
+
+    await fixture.events.hover(firstTemplate);
+
+    const view = utils.getByText(
+      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+    );
+
+    await fixture.events.click(view);
+  }
+
+  function getTemplateElementById(id) {
+    const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
+
+    return template;
+  }
+
+  async function focusOnCardGallery() {
+    let limit = 0;
+    const cardGallery = fixture.screen.getByTestId('mini-cards-container');
+
+    while (!cardGallery.contains(document.activeElement) && limit < 5) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+
+    return cardGallery.contains(document.activeElement)
+      ? Promise.resolve()
+      : Promise.reject(new Error('could not focus on page list'));
+  }
+
+  async function getTemplatesState() {
+    const {
+      state: { templates },
+    } = await fixture.renderHook(() => useApi());
+    return templates;
+  }
+
+  function getQueryParams() {
+    return qs.parse(
+      qs.extract(
+        qs.parseUrl(window.location.href, { parseFragmentIdentifier: true })
+          .fragmentIdentifier ?? ''
+      )
+    );
+  }
+
   describe('Action: See pre-built template details page', () => {
-    let fixture;
-
-    beforeEach(async () => {
-      fixture = new Fixture();
-      await fixture.render();
-
-      await navigateToFirstTemplate();
-    });
-
-    afterEach(() => {
-      fixture.restore();
-    });
-
-    async function navigateToFirstTemplate() {
-      const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-        name: /^Explore Templates$/,
-      });
-
-      await fixture.events.click(exploreTemplatesMenuItem);
-
-      const { templatesOrderById } = await getTemplatesState();
-
-      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-
-      const utils = within(firstTemplate);
-
-      await fixture.events.hover(firstTemplate);
-
-      const view = utils.getByText(
-        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
-      );
-
-      await fixture.events.click(view);
-    }
-
-    function getTemplateElementById(id) {
-      const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
-
-      return template;
-    }
-
-    async function getTemplatesState() {
-      const {
-        state: { templates },
-      } = await fixture.renderHook(() => useContext(ApiContext));
-      return templates;
-    }
-
-    function getQueryParams() {
-      return qs.parse(
-        qs.extract(
-          qs.parseUrl(window.location.href, { parseFragmentIdentifier: true })
-            .fragmentIdentifier ?? ''
-        )
-      );
-    }
-
     it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
       const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
 
@@ -103,7 +121,7 @@ describe('CUJ: Creator can browse templates in grid view', () => {
     });
 
     it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
-      const firstPage = fixture.screen.getByLabelText('Page Preview - Page 1');
+      const firstPage = fixture.screen.getByRole('button', { name: /Page 1/ });
 
       expect(firstPage).toBeTruthy();
 
@@ -113,7 +131,7 @@ describe('CUJ: Creator can browse templates in grid view', () => {
 
       expect(activePage).toBeTruthy();
 
-      const secondPage = fixture.screen.getByLabelText('Page Preview - Page 2');
+      const secondPage = fixture.screen.getByRole('button', { name: /Page 2/ });
 
       expect(secondPage).toBeTruthy();
 
@@ -122,6 +140,42 @@ describe('CUJ: Creator can browse templates in grid view', () => {
       fixture.screen.getByLabelText('Active Page Preview - Page 2');
 
       expect(activePage).toBeTruthy();
+    });
+
+    it('should update the "Active Preview Page" when using keyboard to navigate gallery', async () => {
+      await focusOnCardGallery();
+      let page1 = fixture.screen.getByRole('button', { name: /Page 1/ });
+      expect(page1).toEqual(document.activeElement);
+
+      // go right by 1
+      await fixture.events.keyboard.press('right');
+      const page2 = fixture.screen.getByRole('button', { name: /Page 2/ });
+      expect(page2).toEqual(document.activeElement);
+
+      // go left 1
+      await fixture.events.keyboard.press('left');
+      expect(page1).toEqual(document.activeElement);
+
+      // go left 1 (focus should remain on page 1)
+      await fixture.events.keyboard.press('left');
+      expect(page1).toEqual(document.activeElement);
+
+      const page4 = fixture.screen.getByRole('button', { name: /Page 4/ });
+      await fixture.events.keyboard.seq(({ press }) => [
+        press('right'),
+        press('right'),
+        press('right'),
+      ]);
+      expect(page4).toEqual(document.activeElement);
+
+      await fixture.events.keyboard.press('right');
+      await fixture.events.keyboard.press('Enter');
+
+      const activePreviewPage = fixture.screen.getByLabelText(
+        'Active Page Preview - Page 5'
+      );
+
+      expect(activePreviewPage).toBeTruthy();
     });
 
     it('should load the next related template when clicking "View Next Template" button', async () => {
@@ -265,6 +319,64 @@ describe('CUJ: Creator can browse templates in grid view', () => {
         name: /Template Title/,
       });
       expect(nextTemplateTitle.innerText).toEqual(nextTemplate.title);
+    });
+  });
+
+  describe('Action: See template preview from detail template view', () => {
+    enableTemplatePreviews = true;
+
+    it('should trigger template preview when user clicks a related template', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+
+      const relatedTemplatesSection = await fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
+
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
+
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      const { x, y } = activeCard.getBoundingClientRect();
+      // x, y of the first related template in detail view gives us the outer edge and top, we need to add slightly to these dimension to have anything be clickable
+      await fixture.events.mouse.click(x + 20, y + 10);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      // this await is necessary to get the related template section painted.
+      // TODO update once we have an api to connect to for actual related templates not just randomized static templates
+      await getTemplatesState();
+      const relatedTemplatesSection = fixture.screen.getByRole('region', {
+        name: /Related Templates/,
+      });
+      // // Select the first related template (all related templates have the data-testid attribute)
+      const firstRelatedTemplate = relatedTemplatesSection.querySelector(
+        '[data-testid]'
+      );
+      const utils = within(firstRelatedTemplate);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
     });
   });
 });

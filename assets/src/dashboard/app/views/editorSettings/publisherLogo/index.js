@@ -15,96 +15,126 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { getResourceFromLocalFile } from '../../../../utils';
 import {
+  Error,
+  Logo,
+  RemoveLogoButton,
   SettingForm,
-  FileUploadHelperText,
+  HelperText,
   FinePrintHelperText,
-  UploadContainer,
+  UploadedContainer,
   SettingHeading,
 } from '../components';
+import { FileUpload } from '../../../../components';
+import { Close as RemoveIcon } from '../../../../icons';
 
-const TEXT = {
-  SECTION_HEADING: __('Publisher Logo', 'web-stories'),
+export const TEXT = {
+  SECTION_HEADING: __('Published Logo', 'web-stories'),
   CONTEXT: __(
     'Upload your logos here and they will become available to any stories you create.',
     'web-stories'
   ),
   INSTRUCTIONS: __(
-    'Click on upload or drag a jpg, png, or static gif in the box above. Avoid vector files, such as svg or eps. Logos should be at least 96x96 pixels and a perfect square. The background should not be transparent.',
+    'Avoid vector files, such as svg or eps. Logos should be at least 96x96 pixels and a perfect square. The background should not be transparent.',
     'web-stories'
   ),
-  SUBMIT: __('Upload', 'web-stories'),
+  SUBMIT: __('Upload logo', 'web-stories'),
   ARIA_LABEL: __('Click to upload a new logo', 'web-stories'),
-  HELPER_UPLOAD: __('You can also drag your logo here', 'web-stories'),
+  HELPER_UPLOAD: __(
+    'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.',
+    'web-stories'
+  ),
 };
 
-function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
-  const onSubmitNewFile = useCallback(
-    async (files) => {
-      const resources = await Promise.all(
-        files.map(async (file) => ({
-          localResource: await getResourceFromLocalFile(file),
-          file,
-        }))
-      );
-      onUpdatePublisherLogo({ newPublisherLogos: resources });
-    },
-    [onUpdatePublisherLogo]
-  );
-
-  const onSubmitDeleteFile = useCallback(
-    (_, fileData) => {
-      onUpdatePublisherLogo({ deleteLogo: fileData });
-    },
-    [onUpdatePublisherLogo]
-  );
-
+function PublisherLogoSettings({
+  canUploadFiles,
+  handleAddLogos,
+  handleRemoveLogo,
+  isLoading,
+  publisherLogos,
+  uploadError,
+}) {
   return (
     <SettingForm>
-      <SettingHeading htmlFor="publisherLogo">
-        {TEXT.SECTION_HEADING}
-      </SettingHeading>
       <div>
-        <FileUploadHelperText>{TEXT.CONTEXT}</FileUploadHelperText>
-        <UploadContainer
-          onSubmit={onSubmitNewFile}
-          onDelete={onSubmitDeleteFile}
-          id="settings_publisher_logos"
-          label={TEXT.SUBMIT}
-          isMultiple
-          ariaLabel={TEXT.ARIA_LABEL}
-          uploadedContent={publisherLogos}
-          emptyDragHelperText={TEXT.HELPER_UPLOAD}
-        />
-        <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+        <HelperText>{TEXT.CONTEXT}</HelperText>
+      </div>
+      <div>
+        {publisherLogos.length > 0 && (
+          <UploadedContainer>
+            {publisherLogos.map((publisherLogo, idx) => {
+              if (!publisherLogo) {
+                return null;
+              }
+              return (
+                <div
+                  key={`${publisherLogo.title}_${idx}`}
+                  data-testid={`publisher-logo-${idx}`}
+                >
+                  <Logo src={publisherLogo.src} alt={publisherLogo.title} />
+                  {!publisherLogo.isActive && (
+                    <RemoveLogoButton
+                      data-testid={`remove-publisher-logo-${idx}`}
+                      aria-label={sprintf(
+                        /* translators: %s: logo title */
+                        __('Remove %s as a publisher logo', 'web-stories'),
+                        publisherLogo.title
+                      )}
+                      onClick={(e) => handleRemoveLogo(e, publisherLogo)}
+                    >
+                      <RemoveIcon aria-hidden="true" />
+                    </RemoveLogoButton>
+                  )}
+                </div>
+              );
+            })}
+          </UploadedContainer>
+        )}
+        {uploadError && <Error>{uploadError}</Error>}
+        {canUploadFiles && (
+          <>
+            <FileUpload
+              onSubmit={handleAddLogos}
+              id="settings_publisher_logos"
+              isLoading={isLoading}
+              label={TEXT.SUBMIT}
+              isMultiple
+              ariaLabel={TEXT.ARIA_LABEL}
+              instructionalText={TEXT.HELPER_UPLOAD}
+            />
+            <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+          </>
+        )}
       </div>
     </SettingForm>
   );
 }
 
 PublisherLogoSettings.propTypes = {
-  onUpdatePublisherLogo: PropTypes.func,
+  canUploadFiles: PropTypes.bool,
+  handleAddLogos: PropTypes.func,
+  handleRemoveLogo: PropTypes.func,
+  isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape({
       src: PropTypes.string,
       title: PropTypes.string,
-      alt: PropTypes.string,
-      id: PropTypes.string,
+      id: PropTypes.number,
     })
   ),
+  uploadError: PropTypes.string,
 };
 export default PublisherLogoSettings;

@@ -15,14 +15,14 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -38,6 +38,7 @@ import {
   UsersPropType,
   StoriesPropType,
   StoryActionsPropType,
+  DateSettingsPropType,
 } from '../../../../types';
 import {
   FilterPropTypes,
@@ -60,7 +61,7 @@ function Content({
   storyActions,
   users,
   view,
-  dateFormat,
+  dateSettings,
 }) {
   return (
     <Layout.Scrollable>
@@ -81,7 +82,7 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
-                  dateFormat={dateFormat}
+                  dateSettings={dateSettings}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -110,7 +111,7 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
-  dateFormat: PropTypes.string,
+  dateSettings: DateSettingsPropType,
 };
 
 export default Content;

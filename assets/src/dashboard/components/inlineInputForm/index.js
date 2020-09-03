@@ -26,10 +26,20 @@ import styled from 'styled-components';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { useFocusOut } from '../../utils/';
 import { TextInput } from '../input';
+import { TypographyPresets } from '../typography';
 
 const Label = styled.label(visuallyHiddenStyles);
 
+const ErrorText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: 1em;
+  padding-top: 0.25em;
+`;
+
 const InlineInputForm = ({
+  noAutoFocus,
+  error,
   id,
   label,
   onEditCancel,
@@ -40,6 +50,10 @@ const InlineInputForm = ({
   const inputContainerRef = useRef(null);
   const [newValue, setNewValue] = useState(value);
 
+  useEffect(() => {
+    setNewValue(value);
+  }, [value]);
+
   useFocusOut(
     inputContainerRef,
     () => {
@@ -49,14 +63,17 @@ const InlineInputForm = ({
   );
 
   useEffect(() => {
-    if (inputContainerRef.current) {
+    if (!noAutoFocus && inputContainerRef.current) {
       inputContainerRef.current.firstChild?.focus();
     }
-  }, []);
+  }, [noAutoFocus]);
 
-  const handleChange = useCallback(({ target }) => {
-    setNewValue(target.value);
-  }, []);
+  const handleChange = useCallback(
+    ({ target }) => {
+      setNewValue(target.value);
+    },
+    [setNewValue]
+  );
 
   const handleKeyPress = useCallback(
     ({ nativeEvent }) => {
@@ -79,14 +96,18 @@ const InlineInputForm = ({
         onKeyDown={handleKeyPress}
         onChange={handleChange}
         placeholder={placeholder}
+        error={error}
       />
+      {error && <ErrorText>{error}</ErrorText>}
     </div>
   );
 };
 
 InlineInputForm.propTypes = {
+  error: PropTypes.string,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
+  noAutoFocus: PropTypes.bool,
   onEditCancel: PropTypes.func.isRequired,
   onEditComplete: PropTypes.func.isRequired,
   placeholder: PropTypes.string,

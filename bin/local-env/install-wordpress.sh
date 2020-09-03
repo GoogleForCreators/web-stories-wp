@@ -6,6 +6,7 @@ set -e
 # Common variables.
 WP_DEBUG=${WP_DEBUG-true}
 SCRIPT_DEBUG=${SCRIPT_DEBUG-true}
+WEBSTORIES_DEV_MODE=${WEBSTORIES_DEV_MODE-true}
 WP_VERSION=${WP_VERSION-"latest"}
 
 # Include useful functions
@@ -142,4 +143,15 @@ if [ "$SCRIPT_DEBUG" != $SCRIPT_DEBUG_CURRENT ]; then
 	wp config set SCRIPT_DEBUG $SCRIPT_DEBUG --raw --type=constant --quiet
 	SCRIPT_DEBUG_RESULT=$(wp config get --type=constant --format=json SCRIPT_DEBUG | tr -d '\r')
 	echo -e $(status_message "SCRIPT_DEBUG: $SCRIPT_DEBUG_RESULT...")
+fi
+
+WEBSTORIES_DEV_MODE_CURRENT=!$WEBSTORIES_DEV_MODE;
+if [ "$(wp config has --type=constant WEBSTORIES_DEV_MODE)" ]; then
+  WEBSTORIES_DEV_MODE_CURRENT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
+fi
+
+if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
+  wp config set WEBSTORIES_DEV_MODE $WEBSTORIES_DEV_MODE --raw --type=constant --quiet
+  WEBSTORIES_DEV_MODE_RESULT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
+  echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi

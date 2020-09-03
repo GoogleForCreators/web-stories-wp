@@ -23,30 +23,25 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row, Button } from '../../form';
-import { createLink, getLinkFromElement } from '../../elementLink';
+import { Media, Row, Button, LinkInput, MULTIPLE_VALUE } from '../../form';
+import { createLink } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
-import { Note, ExpandedTextInput } from '../shared';
+import { ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
-import inRange from '../../../utils/inRange';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
-
-const MIN_MAX = {
-  URL: {
-    MIN: 2,
-    MAX: 2048, // Based on sitemaps url limits (safe side)
-  },
-};
+import { useCommonObjectValue } from '../utils';
+import useElementsWithLinks from '../../../utils/useElementsWithLinks';
+import { useStory } from '../../../app/story';
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.white};
@@ -80,21 +75,34 @@ const Error = styled.span`
 `;
 
 function LinkPanel({ selectedElements, pushUpdateForObject }) {
-  const { clearEditing } = useCanvas((state) => ({
+  const {
+    clearEditing,
+    setDisplayLinkGuidelines,
+    displayLinkGuidelines,
+  } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
+    setDisplayLinkGuidelines: state.actions.setDisplayLinkGuidelines,
+    displayLinkGuidelines: state.state.displayLinkGuidelines,
   }));
 
-  const selectedElement = selectedElements[0];
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+
+  const { getElementsInAttachmentArea } = useElementsWithLinks();
+  const hasElementsInAttachmentArea =
+    getElementsInAttachmentArea(selectedElements).length > 0 &&
+    currentPage?.pageAttachment?.url?.length > 0;
+
   const defaultLink = useMemo(
     () => createLink({ url: '', icon: null, desc: null }),
     []
   );
-  const link = useMemo(
-    () => getLinkFromElement(selectedElement) || defaultLink,
-    [selectedElement, defaultLink]
-  );
+
+  const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
+  const [isLinkFocused, setIsLinkFocused] = useState(false);
 
   const {
     actions: { getLinkMetadata },
@@ -137,6 +145,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       clearEditing();
 
       if (properties.url) {
+        // Don't submit any changes in case of multiple value.
+        if (MULTIPLE_VALUE === properties.url) {
+          return;
+        }
         const urlWithProtocol = withProtocol(properties.url);
         const valid = isValidUrl(urlWithProtocol);
         setIsInvalidUrl(!valid);
@@ -145,7 +157,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           populateMetadata(urlWithProtocol);
         }
       }
-      return pushUpdateForObject(
+      pushUpdateForObject(
         'link',
         properties.url !== ''
           ? {
@@ -166,81 +178,95 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
-  const hasSomeLinkContent =
-    Boolean(link.url) && inRange(link.url.length, MIN_MAX.URL);
+  const hasLinkSet = Boolean(link.url?.length);
+  const displayMetaFields = hasLinkSet && !isInvalidUrl;
+
+  // If we're focusing on the link input and any of the relevant values changes,
+  // Check if we need to hide/display the guidelines.
+  useEffect(() => {
+    if (isLinkFocused) {
+      // Display the guidelines if there's no link / if it's multiple value.
+      const hasLink = hasLinkSet && link.url !== MULTIPLE_VALUE;
+      setDisplayLinkGuidelines(hasElementsInAttachmentArea && !hasLink);
+    }
+  }, [
+    selectedElements,
+    isLinkFocused,
+    hasElementsInAttachmentArea,
+    hasLinkSet,
+    setDisplayLinkGuidelines,
+    link.url,
+  ]);
 
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
-      <Row>
-        <Note>{__('Type an address to apply a link', 'web-stories')}</Note>
-      </Row>
-
-      <Row>
-        <ExpandedTextInput
-          placeholder={__('Web address', 'web-stories')}
-          onChange={(value) =>
-            handleChange({ url: value }, !value /* submit */)
-          }
-          onBlur={(atts = {}) => {
-            const { onClear } = atts;
-            // If the onBlur is not clearing the field, add protocol.
-            if (link.url?.length > 0 && !onClear) {
-              const urlWithProtocol = withProtocol(link.url);
-              if (urlWithProtocol !== link.url) {
-                handleChange({ url: urlWithProtocol }, true /* submit */);
-              }
-            }
-          }}
-          value={link.url || ''}
-          clear
-          aria-label={__('Edit: Element link', 'web-stories')}
-          minLength={MIN_MAX.URL.MIN}
-          maxLength={MIN_MAX.URL.MAX}
-        />
-      </Row>
-      {Boolean(link.url) && isInvalidUrl && (
+      <LinkInput
+        description={__('Type an address to apply a link', 'web-stories')}
+        onChange={(value) =>
+          !displayLinkGuidelines &&
+          handleChange({ url: value }, !value /* submit */)
+        }
+        onBlur={() => {
+          setDisplayLinkGuidelines(false);
+          setIsLinkFocused(false);
+        }}
+        onFocus={() => {
+          setIsLinkFocused(true);
+        }}
+        value={link.url || ''}
+        clear
+        aria-label={__('Edit: Element link', 'web-stories')}
+      />
+      {displayLinkGuidelines && (
         <Row>
-          <Error>{__('Invalid web address.', 'web-stories')}</Error>
-        </Row>
-      )}
-
-      {hasSomeLinkContent && !isInvalidUrl && (
-        <Row>
-          <ExpandedTextInput
-            placeholder={__('Optional description', 'web-stories')}
-            onChange={(value) =>
-              handleChange({ desc: value }, !value /* submit */)
-            }
-            value={link.desc || ''}
-            aria-label={__('Edit: Link description', 'web-stories')}
-          />
-        </Row>
-      )}
-      {Boolean(link.url) && !isInvalidUrl && (
-        <Row spaceBetween={false}>
-          <Media
-            value={link.icon || ''}
-            onChange={handleChangeIcon}
-            title={__('Select as link icon', 'web-stories')}
-            ariaLabel={__('Edit link icon', 'web-stories')}
-            buttonInsertText={__('Select as link icon', 'web-stories')}
-            type={'image'}
-            size={64}
-            loading={fetchingMetadata}
-            circle
-          />
-          <IconInfo>
-            <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
-            {link.icon && (
-              <IconRemoveButton
-                onClick={() => handleChange({ icon: null }, true /* submit */)}
-              >
-                <CloseIcon width={14} height={14} />
-                {__('Remove', 'web-stories')}
-              </IconRemoveButton>
+          <Error>
+            {__(
+              'Link can not reside below the dashed line when a page attachment is present',
+              'web-stories'
             )}
-          </IconInfo>
+          </Error>
         </Row>
+      )}
+
+      {displayMetaFields && (
+        <>
+          <Row>
+            <ExpandedTextInput
+              placeholder={__('Optional description', 'web-stories')}
+              onChange={(value) =>
+                handleChange({ desc: value }, !value /* submit */)
+              }
+              value={link.desc || ''}
+              aria-label={__('Edit: Link description', 'web-stories')}
+            />
+          </Row>
+          <Row spaceBetween={false}>
+            <Media
+              value={link.icon || ''}
+              onChange={handleChangeIcon}
+              title={__('Select as link icon', 'web-stories')}
+              ariaLabel={__('Edit link icon', 'web-stories')}
+              buttonInsertText={__('Select as link icon', 'web-stories')}
+              type={'image'}
+              size={64}
+              loading={fetchingMetadata}
+              circle
+            />
+            <IconInfo>
+              <IconText>{__('Optional brand icon', 'web-stories')}</IconText>
+              {link.icon && (
+                <IconRemoveButton
+                  onClick={() =>
+                    handleChange({ icon: null }, true /* submit */)
+                  }
+                >
+                  <CloseIcon width={14} height={14} />
+                  {__('Remove', 'web-stories')}
+                </IconRemoveButton>
+              )}
+            </IconInfo>
+          </Row>
+        </>
       )}
     </SimplePanel>
   );

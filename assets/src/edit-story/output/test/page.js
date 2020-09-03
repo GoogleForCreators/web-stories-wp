@@ -17,6 +17,11 @@
 /**
  * External dependencies
  */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
+ * External dependencies
+ */
 import { render } from '@testing-library/react';
 
 /**
@@ -404,6 +409,133 @@ describe('Page output', () => {
     });
   });
 
+  describe('pageAttachment', () => {
+    it('should output page attachment if the URL is set', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageAttachment = container.querySelector(
+        'amp-story-page-attachment'
+      );
+      await expect(pageAttachment.dataset.ctaText).toStrictEqual('Click me!');
+      await expect(pageAttachment).toHaveAttribute(
+        'href',
+        'https://example.test'
+      );
+      await expect(pageAttachment).toBeInTheDocument();
+    });
+
+    it('should not output page attachment if the URL is empty', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: '',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageAttachment = container.querySelector(
+        'amp-story-page-attachment'
+      );
+      await expect(pageAttachment).not.toBeInTheDocument();
+    });
+
+    it('should not output a link in page attachment area', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            {
+              isBackground: true,
+              id: 'baz',
+              type: 'image',
+              mimeType: 'image/png',
+              origRatio: 1,
+              x: 50,
+              y: 100,
+              scale: 1,
+              rotationAngle: 0,
+              width: 1,
+              height: 1,
+              resource: {
+                type: 'image',
+                mimeType: 'image/png',
+                id: 123,
+                src: 'https://example.com/image.png',
+                poster: 'https://example.com/poster.png',
+                height: 1,
+                width: 1,
+              },
+            },
+            {
+              id: 'baz',
+              type: 'text',
+              content: 'Hello, link!',
+              x: 50,
+              y: PAGE_HEIGHT,
+              height: 300,
+              width: 100,
+              rotationAngle: 10,
+              padding: {
+                vertical: 0,
+                horizontal: 0,
+              },
+              link: {
+                url: 'http://shouldremove.com',
+              },
+              fontSize: 30,
+              font: {
+                family: 'Roboto',
+                service: 'fonts.google.com',
+              },
+              color: {
+                color: {
+                  r: 255,
+                  g: 255,
+                  b: 255,
+                  a: 0.5,
+                },
+              },
+            },
+          ],
+          pageAttachment: {
+            url: 'http://example.com',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, link');
+      expect(content).not.toContain('http://shouldremove.com');
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {
@@ -431,6 +563,23 @@ describe('Page output', () => {
         autoAdvance: false,
       };
 
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    it('should produce valid AMP output with Page Attachment', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: true,
+        pageAttachment: {
+          url: 'http://example.com',
+          ctaText: 'Click me!',
+        },
+      };
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 

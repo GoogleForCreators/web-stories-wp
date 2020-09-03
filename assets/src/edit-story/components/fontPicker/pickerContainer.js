@@ -155,7 +155,7 @@ const NoResult = styled.span`
 
 function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const {
-    state: { fonts, recentFonts },
+    state: { fonts, recentFonts, curatedFonts },
     actions: { ensureMenuFontsLoaded },
   } = useFont();
 
@@ -165,7 +165,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [matchingFonts, setMatchingFonts] = useState([
     ...recentFonts,
-    ...fonts,
+    ...curatedFonts,
   ]);
 
   useEffect(() => {
@@ -177,7 +177,8 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
   const handleScroll = useCallback(
     (startIndex, endIndex) => {
       const startFrom = Math.max(0, startIndex - 2);
-      const endAt = Math.min(matchingFonts.length - 1, endIndex + 2);
+      // Slice does not include the last element, thus we use matchingFonts.length directly here.
+      const endAt = Math.min(matchingFonts.length, endIndex + 2);
       const visibleFontNames = matchingFonts
         .slice(startFrom, endAt)
         .filter(({ service }) => service === 'fonts.google.com')
@@ -196,7 +197,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
       // Restore default if less than 2 characters.
       if (searchKeyword.trim().length < 2) {
         dividerIndexTracker.current = recentFonts.length - 1;
-        setMatchingFonts([...recentFonts, ...fonts]);
+        setMatchingFonts([...recentFonts, ...curatedFonts]);
         return;
       }
       const _fonts = fonts.filter(({ name }) =>
@@ -210,7 +211,7 @@ function FontPickerContainer({ value, onSelect, onClose, isOpen }) {
     },
     250,
     {},
-    [searchKeyword, fonts]
+    [searchKeyword, fonts, curatedFonts]
   );
 
   const handleSearchInputChanged = useCallback(

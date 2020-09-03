@@ -15,15 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -60,7 +60,11 @@ export default function useSettingsApi(
 
       dispatch({
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
-        payload: response,
+        payload: {
+          googleAnalyticsId: response.web_stories_ga_tracking_id,
+          activePublisherLogoId: response.web_stories_active_publisher_logo,
+          publisherLogoIds: response.web_stories_publisher_logos,
+        },
       });
     } catch (err) {
       dispatch({
@@ -76,18 +80,43 @@ export default function useSettingsApi(
   }, [dataAdapter, globalStoriesSettingsApi]);
 
   const updateSettings = useCallback(
-    async (settings = {}) => {
+    async ({
+      googleAnalyticsId,
+      publisherLogoIds,
+      publisherLogoIdToRemove,
+    }) => {
       try {
+        const query = {};
+        if (googleAnalyticsId !== undefined) {
+          query.web_stories_ga_tracking_id = googleAnalyticsId;
+        }
+
+        if (publisherLogoIds) {
+          query.web_stories_publisher_logos = [
+            ...new Set([...state.publisherLogoIds, ...publisherLogoIds]),
+          ];
+        }
+
+        if (publisherLogoIdToRemove) {
+          query.web_stories_publisher_logos = state.publisherLogoIds.filter(
+            (logoId) => logoId !== publisherLogoIdToRemove
+          );
+        }
+
         const response = await dataAdapter.post(
           queryString.stringifyUrl({
             url: globalStoriesSettingsApi,
-            query: settings,
+            query,
           })
         );
 
         dispatch({
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
-          payload: response,
+          payload: {
+            googleAnalyticsId: response.web_stories_ga_tracking_id,
+            activePublisherLogoId: response.web_stories_active_publisher_logo,
+            publisherLogoIds: response.web_stories_publisher_logos,
+          },
         });
       } catch (err) {
         dispatch({
@@ -101,7 +130,7 @@ export default function useSettingsApi(
         });
       }
     },
-    [dataAdapter, globalStoriesSettingsApi]
+    [dataAdapter, globalStoriesSettingsApi, state.publisherLogoIds]
   );
 
   const api = useMemo(

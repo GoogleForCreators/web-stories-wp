@@ -22,9 +22,10 @@ export const ACTION_TYPES = {
 };
 
 export const defaultSettingsState = {
+  activePublisherLogoId: null,
   error: {},
-  googleAnalyticsId: null,
-  publisherLogos: [],
+  googleAnalyticsId: '',
+  publisherLogoIds: [],
 };
 
 function settingsReducer(state, action) {
@@ -41,9 +42,15 @@ function settingsReducer(state, action) {
     case ACTION_TYPES.FETCH_SETTINGS_SUCCESS: {
       return {
         ...state,
+        activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
         googleAnalyticsId: action.payload.googleAnalyticsId,
-        publisherLogos: action.payload.publisherLogos,
+        publisherLogoIds: [
+          ...new Set([
+            action.payload.activePublisherLogoId,
+            ...action.payload.publisherLogoIds,
+          ]),
+        ],
       };
     }
 

@@ -45,7 +45,13 @@ import { generateParagraphTextStyle, getHighlightLineheight } from './util';
  * @return {*} Rendered component.
  */
 export function TextOutputWithUnits({
-  element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
+  element: {
+    content: rawContent,
+    backgroundColor,
+    backgroundTextMode,
+    padding,
+    ...rest
+  },
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
@@ -112,11 +118,8 @@ export function TextOutputWithUnits({
   const marginStyle = {
     display: 'inline-block',
     position: 'relative',
-    // Disable reason: style lint can't figure out an interpolated calc
-    // stylelint-disable function-calc-no-invalid
-    margin: `0 calc(${paddingStyles.horizontal} + 2%)`,
-    left: `calc(-${paddingStyles.horizontal} - 2%)`,
-    // stylelint-enable function-calc-no-invalid
+    margin: `0 ${paddingStyles.horizontal}`,
+    left: `-${paddingStyles.horizontal}`,
     top: '0',
   };
 
@@ -140,6 +143,8 @@ export function TextOutputWithUnits({
     ...textStyle,
     background: 'none',
   };
+
+  const content = rawContent.replace(/\n$/, '\n\n');
 
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.

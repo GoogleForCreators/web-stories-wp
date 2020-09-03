@@ -15,23 +15,23 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
 import { DEFAULT_FILE_UPLOAD_TYPES } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { DefaultButton } from '../button';
-import { Close as _DeleteIcon, UploadIcon as _UploadIcon } from '../../icons';
 import { TypographyPresets } from '../typography';
 
 const Input = styled.input(visuallyHiddenStyles);
@@ -43,103 +43,23 @@ const UploadFormArea = styled.div`
   justify-content: flex-end;
   width: 100%;
   min-height: 153px;
-  padding: 36px 36px 10px;
+  padding: 40px 0;
   border-radius: 4px;
   border: ${({ isDragging, theme }) =>
-    isDragging ? theme.borders.bluePrimary : theme.borders.transparent};
-  border-width: 2px;
-  background-color: ${({ theme }) => theme.colors.gray25};
+    isDragging ? theme.borders.bluePrimary : theme.borders.gray100};
+  border-style: dashed;
 
   transition: border-color 300ms ease-in;
 `;
 
-const StaticUploadArea = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: ${({ theme }) => theme.colors.gray500};
-  z-index: 0;
-`;
-
-const StaticAreaText = styled.span`
-  ${TypographyPresets.Medium};
-  margin: 0 auto 20px;
-`;
-
-const StaticAreaIcon = styled(_UploadIcon)`
-  width: 52px;
-  height: 52px;
-`;
-const UploadedContentContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-self: flex-start;
-`;
-
-const DeleteButton = styled.button`
-  position: absolute;
-  z-index: 10;
-  border-radius: 100%;
-  width: 30px;
-  height: 30px;
-  margin-top: -10px;
-  margin-left: -10px;
-  background-color: ${({ theme }) => theme.colors.gray75};
-  color: ${({ theme }) => theme.colors.gray500};
-  border: ${({ theme }) => theme.borders.transparent};
-  opacity: 1;
-
-  transition: opacity 300ms ease-in-out;
-`;
-
-const UploadedContent = styled.div`
-  width: 60px;
-  margin: 0 15px 10px 0;
-
-  ${DeleteButton} {
-    opacity: 0;
-    visibility: none;
-  }
-
-  &:hover,
-  &:focus {
-    ${DeleteButton} {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-`;
-
-const DisplayImage = styled.img`
-  width: 100%;
-  height: 60px;
-  margin-bottom: 5px;
-  object-fit: cover;
-`;
-
-const DeleteIcon = styled(_DeleteIcon)`
-  width: 100%;
-  height: 100%;
-`;
-
-const DisplayTitle = styled.span`
+const UploadHelperText = styled.span`
   ${TypographyPresets.ExtraSmall};
-  display: inline-block;
-  width: 100%;
-  margin-right: 0.5em;
-  white-space: normal;
-  word-break: break-word;
+  margin: 0 auto 16px;
+  padding: 0 20%;
+  color: ${({ theme }) => theme.colors.gray200};
 `;
 
+/* TODO: new button styles */
 const UploadLabelAsCta = styled(DefaultButton).attrs({
   as: 'label',
 })`
@@ -148,6 +68,30 @@ const UploadLabelAsCta = styled(DefaultButton).attrs({
   z-index: 10;
   font-size: 14px;
   line-height: 16px;
+
+  &:focus-within {
+    border: ${({ theme }) => theme.borders.action};
+  }
+`;
+
+const LoadingIndicator = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.white};
+  opacity: ${({ isLoading }) => (isLoading ? 0.6 : 0)};
+  z-index: ${({ isLoading }) => (isLoading ? '100' : '0')};
+
+  transition: opacity ease-in-out 300ms;
+
+  p {
+    ${TypographyPresets.Small};
+    font-style: italic;
+  }
 `;
 
 function disableDefaults(e) {
@@ -158,13 +102,11 @@ function disableDefaults(e) {
 const FileUpload = ({
   id,
   label,
-  onDelete,
   onSubmit,
-  isFileNameVisible,
+  isLoading,
   isMultiple,
   ariaLabel,
-  emptyDragHelperText = __('You can also drag your file here', 'web-stories'),
-  uploadedContent = [],
+  instructionalText = __('You can also drag your file here', 'web-stories'),
   acceptableFormats = DEFAULT_FILE_UPLOAD_TYPES,
 }) => {
   const uploadFileContainer = useRef(null);
@@ -211,13 +153,6 @@ const FileUpload = ({
     [isDragging]
   );
 
-  const handleDeleteFile = useCallback(
-    (index, fileData) => {
-      onDelete(index, fileData);
-    },
-    [onDelete]
-  );
-
   useEffect(() => {
     if (!fileInputRef?.current) {
       return;
@@ -229,7 +164,6 @@ const FileUpload = ({
     };
   }, [handleChange]);
 
-  const hasUploadedContent = uploadedContent.length > 0;
   return (
     <UploadFormArea
       ref={uploadFileContainer}
@@ -240,38 +174,10 @@ const FileUpload = ({
       onDragOver={disableDefaults}
       data-testid="file-upload-drop-area"
     >
-      {hasUploadedContent ? (
-        <UploadedContentContainer data-testid="file-upload-content-container">
-          {uploadedContent.map((file, idx) => (
-            <UploadedContent key={idx}>
-              {Boolean(onDelete) && (
-                <DeleteButton
-                  data-testid={`file-upload-delete-button_${idx}`}
-                  onClick={() => handleDeleteFile(idx, file)}
-                  aria-label={sprintf(
-                    /* translators: %s is the file name to delete */
-                    __('Delete %s', 'web-stories'),
-                    file.title
-                  )}
-                >
-                  <DeleteIcon />
-                </DeleteButton>
-              )}
-              <DisplayImage
-                alt={file.title}
-                title={file.title}
-                src={file.src}
-              />
-              {isFileNameVisible && <DisplayTitle>{file.title}</DisplayTitle>}
-            </UploadedContent>
-          ))}
-        </UploadedContentContainer>
-      ) : (
-        <StaticUploadArea aria-hidden={true}>
-          <StaticAreaIcon />
-          <StaticAreaText>{emptyDragHelperText}</StaticAreaText>
-        </StaticUploadArea>
-      )}
+      <LoadingIndicator isLoading={isLoading}>
+        <p>{__('Loading…', 'web-stories')}</p>
+      </LoadingIndicator>
+      <UploadHelperText>{instructionalText}</UploadHelperText>
 
       <UploadLabelAsCta htmlFor={id} aria-label={ariaLabel}>
         {label}
@@ -282,6 +188,9 @@ const FileUpload = ({
           data-testid={'upload-file-input'}
           accept={acceptableFormats.join(',')}
           multiple={isMultiple}
+          disabled={isLoading}
+          aria-live="polite"
+          aria-busy={isLoading}
         />
       </UploadLabelAsCta>
     </UploadFormArea>
@@ -291,16 +200,12 @@ const FileUpload = ({
 FileUpload.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   label: PropTypes.string.isRequired,
-  onDelete: PropTypes.func,
   onSubmit: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
   isMultiple: PropTypes.bool,
-  isFileNameVisible: PropTypes.bool,
   ariaLabel: PropTypes.string,
   acceptableFormats: PropTypes.arrayOf(PropTypes.string),
-  uploadedContent: PropTypes.arrayOf(
-    PropTypes.shape({ src: PropTypes.string, name: PropTypes.string })
-  ),
-  emptyDragHelperText: PropTypes.string,
+  instructionalText: PropTypes.string,
 };
 
 export default FileUpload;

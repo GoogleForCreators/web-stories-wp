@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
@@ -23,17 +28,16 @@ import { useStory } from '../../../../app/story';
 describe('Background Overlay Panel', () => {
   let fixture;
   let bgImageId;
-  const getOverlay = () => getElementOverlay(fixture, bgImageId);
-  const getOverlaySwitcher = (type) =>
-    fixture.screen.getByLabelText(`Set overlay: ${type}`);
+  let backgroundOverlayPanel;
+  let getBackgroundElementOverlay;
 
   beforeEach(async () => {
-    jasmine.addMatchers(customMatchers);
-
     fixture = new Fixture();
     await fixture.render();
 
-    await addDummyImage(fixture, 0);
+    await fixture.events.click(fixture.editor.library.media.item(0));
+
+    // TODO: replace with correctly addressing this button through fixture container
     const setAsBackground = fixture.screen.getByRole('button', {
       name: 'Set as background',
     });
@@ -44,100 +48,103 @@ describe('Background Overlay Panel', () => {
       },
     } = await fixture.renderHook(() => useStory());
     bgImageId = elements[0].id;
+
+    backgroundOverlayPanel =
+      fixture.editor.inspector.designPanel.backgroundOverlay;
+    getBackgroundElementOverlay = () =>
+      fixture.editor.canvas.displayLayer.display(bgImageId).overlay;
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
-  it('should render when there is an image in the background', () => {
-    expect(getOverlaySwitcher('None')).toBeTruthy();
+  describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Apply a solid or gradient overlay', () => {
+    it('should render panel when there is an image in the background', () => {
+      expect(backgroundOverlayPanel).toBeTruthy();
+    });
 
-    const overlay = getOverlay();
-    expect(overlay).not.toBeTruthy();
+    it('should not render an overlay when there is none', () => {
+      expect(backgroundOverlayPanel.none.checked).toBeTruthy();
+      expect(getBackgroundElementOverlay()).not.toBeTruthy();
+    });
+
+    it('should correctly show focus border only when using keyboard', async () => {
+      // Click solid button
+      await fixture.events.click(backgroundOverlayPanel.solid.button);
+
+      // Verify button is clicked and has focus
+      expect(backgroundOverlayPanel.solid.checked).toBeTruthy();
+      expect(backgroundOverlayPanel.solid.node).toHaveFocus();
+
+      // Verify an overlay has been added
+      const overlay = await waitFor(getBackgroundElementOverlay);
+      expect(overlay).toBeTruthy();
+
+      // Screenshot it
+      await fixture.snapshot(
+        'BG has solid overlay, "solid" button is toggled and has no visible focus'
+      );
+
+      // shift-tab to none button
+      await fixture.events.keyboard.shortcut('shift+tab');
+
+      // Verify none button has focus
+      expect(backgroundOverlayPanel.none.node).toHaveFocus();
+
+      // Press space to activate none button
+      await fixture.events.keyboard.press('Space');
+
+      // Verify none button is toggled and overlay has been removed
+      expect(getBackgroundElementOverlay()).not.toBeTruthy();
+      expect(backgroundOverlayPanel.none.checked).toBeTruthy();
+
+      // Screenshot it
+      await fixture.snapshot(
+        'BG has no overlay, "none" button is toggled and has visible focus'
+      );
+    });
+
+    it('should render correct overlay when clicking "solid"', async () => {
+      await fixture.events.click(backgroundOverlayPanel.solid.button);
+
+      const overlay = await waitFor(getBackgroundElementOverlay);
+      expect(overlay).toBeTruthy();
+      expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.3)');
+    });
+
+    it('should render correct overlay when clicking "linear"', async () => {
+      await fixture.events.click(backgroundOverlayPanel.linear.button);
+
+      const overlay = await waitFor(getBackgroundElementOverlay);
+      expect(overlay).toBeTruthy();
+      expect(overlay).toHaveStyle(
+        'background-image',
+        'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
+      );
+    });
+
+    it('should render correct overlay when clicking "radial"', async () => {
+      await fixture.events.click(backgroundOverlayPanel.radial.button);
+
+      const overlay = await waitFor(getBackgroundElementOverlay);
+      expect(overlay).toBeTruthy();
+      expect(overlay).toHaveStyle(
+        'background-image',
+        'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
+      );
+    });
   });
 
-  it('should render correct overlay when clicking "solid"', async () => {
-    getOverlaySwitcher('Solid').click();
+  // Disable reason: tests not implemented yet
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xdescribe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Set overlay color(s) & other gradient properties', () => {
+    it('should render overlay color component iff it has an overlay');
 
-    const overlay = await waitFor(getOverlay);
-    expect(overlay).toBeTruthy();
-    expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.3)');
-  });
+    it('should render correct solid overlay as customized');
 
-  it('should render correct overlay when clicking "linear"', async () => {
-    getOverlaySwitcher('Linear').click();
+    it('should render correct linear gradient overlay as customized');
 
-    const overlay = await waitFor(getOverlay);
-    expect(overlay).toBeTruthy();
-    expect(overlay).toHaveStyle(
-      'background-image',
-      'linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.9) 100%)'
-    );
-  });
-
-  it('should render correct overlay when clicking "radial"', async () => {
-    getOverlaySwitcher('Radial').click();
-
-    const overlay = await waitFor(getOverlay);
-    expect(overlay).toBeTruthy();
-    expect(overlay).toHaveStyle(
-      'background-image',
-      'radial-gradient(80% 50%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.6) 100%)'
-    );
+    it('should render correct radial gradient overlay as customized');
   });
 });
-
-function getMediaLibraryElementByIndex(fixture, index) {
-  return fixture.querySelectorAll('[data-testid=mediaElement]')[index];
-}
-
-function getElementOverlay(fixture, id) {
-  return fixture.querySelector(
-    `[data-element-id="${id}"] [class^="displayElement__BackgroundOverlay"]`
-  );
-}
-
-async function addDummyImage(fixture, index) {
-  await fixture.events.click(getMediaLibraryElementByIndex(fixture, index));
-}
-
-const customMatchers = {
-  toHaveStyle: (util, customEqualityTesters) => ({
-    compare: function (element, property, expected) {
-      const actual = getComputedStyle(element)[property];
-      const pass = util.equals(actual, expected, customEqualityTesters);
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not have style "${property}: ${expected}"`
-          : `Expected element to have style "${property}: ${expected}" but found "${actual}"`,
-      };
-    },
-  }),
-};
-
-function wait(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
-async function waitFor(callback) {
-  let msToWait = [0, 1, 5, 10, 100]; // we use some exponential fall-off
-
-  while (msToWait.length) {
-    let [msToWaitNow, ...msToWaitNext] = msToWait;
-    msToWait = msToWaitNext;
-    // Disable reason: This is how this function is normally defined
-    // See e.g. https://makandracards.com/makandra/75562-jasmine-using-async-await-to-write-nice-asynchronous-specs
-    // eslint-disable-next-line no-await-in-loop
-    await wait(msToWaitNow);
-    let result = callback();
-    if (result) {
-      return result;
-    }
-  }
-
-  throw new Error('timed out waiting');
-}

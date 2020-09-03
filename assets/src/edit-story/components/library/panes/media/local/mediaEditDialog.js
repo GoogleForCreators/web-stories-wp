@@ -36,9 +36,9 @@ import Dialog from '../../../../dialog';
 import { Plain } from '../../../../button';
 import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
-import getThumbnailUrl from '../../../../../app/media/utils/getThumbnailUrl';
 import StoryPropTypes from '../../../../../types';
 import { useConfig } from '../../../../../app';
+import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -190,7 +190,7 @@ function MediaEditDialog({ resource, onClose }) {
       <DialogBody>
         {type === 'image' ? (
           <Image
-            src={getThumbnailUrl(THUMBNAIL_WIDTH, resource)}
+            src={getSmallestUrlForWidth(THUMBNAIL_WIDTH, resource)}
             alt={alt}
             loading={'lazy'}
           />

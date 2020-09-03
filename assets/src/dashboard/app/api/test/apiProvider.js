@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { useContext } from 'react';
-import ApiProvider, { ApiContext } from '../apiProvider';
+import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
+import useApi from '../useApi';
 
 jest.mock('../wpAdapter', () => ({
   get: () =>
@@ -40,10 +40,11 @@ jest.mock('../wpAdapter', () => ({
           id: 123,
           status: 'publish',
           author: 1,
+          link: 'https://www.story-link.com',
           title: { rendered: 'Carlos', raw: 'Carlos' },
           story_data: { pages: [{ id: 1, elements: [] }] },
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
         },
       ],
     }),
@@ -55,8 +56,9 @@ jest.mock('../wpAdapter', () => ({
       title: { rendered: title, raw: title },
       author: 1,
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified: '1970-01-01T00:00:00.000Z',
-      date: '1970-01-01T00:00:00.000Z',
+      modified_gmt: '1970-01-01T00:00:00.000Z',
+      date_gmt: '1970-01-01T00:00:00.000Z',
+      link: 'https://www.story-link.com',
     });
   },
   deleteRequest: (path, { data }) =>
@@ -65,14 +67,15 @@ jest.mock('../wpAdapter', () => ({
       status: 'publish',
       title: { rendered: data.title, raw: data.title },
       story_data: { pages: [{ id: 1, elements: [] }] },
-      modified: '1970-01-01T00:00:00.000Z',
-      date: '1970-01-01T00:00:00.000Z',
+      modified_gmt: '1970-01-01T00:00:00.000Z',
+      date_gmt: '1970-01-01T00:00:00.000Z',
+      link: 'https://www.story-link.com',
     }),
 }));
 
 describe('ApiProvider', () => {
   it('should return a story in state data when the API request is fired', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider
@@ -93,15 +96,17 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
+        link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
+          link: 'https://www.story-link.com',
           story_data: {
             pages: [
               {
@@ -128,7 +133,7 @@ describe('ApiProvider', () => {
   });
 
   it('should return an updated story in state data when the API request is fired', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider
@@ -146,7 +151,7 @@ describe('ApiProvider', () => {
     await act(async () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
         pages: [
           {
             elements: [],
@@ -155,6 +160,7 @@ describe('ApiProvider', () => {
         ],
         status: 'publish',
         title: 'New Title',
+        link: 'https://www.story-link.com',
       });
     });
 
@@ -164,15 +170,17 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
+        link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
+          link: 'https://www.story-link.com',
           story_data: {
             pages: [
               {
@@ -198,8 +206,8 @@ describe('ApiProvider', () => {
     });
   });
 
-  it('should return an duplicated story in state data when the duplicate method is called.', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+  it('should return a duplicated story in state data when the duplicate method is called.', async () => {
+    const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider
@@ -225,7 +233,9 @@ describe('ApiProvider', () => {
         status: 'publish',
         title: 'Carlos',
         author: 1,
+        link: 'https://www.story-link.com',
         originalStoryData: {
+          link: 'https://www.story-link.com',
           story_data: {
             author: 1,
             pages: [
@@ -248,15 +258,17 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
+        link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
+          link: 'https://www.story-link.com',
           story_data: {
             pages: [
               {
@@ -284,15 +296,17 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',
         id: 456,
-        modified: moment('1970-01-01T00:00:00.000Z'),
-        created: moment('1970-01-01T00:00:00.000Z'),
+        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
         author: 1,
+        link: 'https://www.story-link.com',
         originalStoryData: {
           id: 456,
-          modified: '1970-01-01T00:00:00.000Z',
-          date: '1970-01-01T00:00:00.000Z',
+          modified_gmt: '1970-01-01T00:00:00.000Z',
+          date_gmt: '1970-01-01T00:00:00.000Z',
           status: 'publish',
           author: 1,
+          link: 'https://www.story-link.com',
           story_data: {
             pages: [
               {
@@ -319,7 +333,7 @@ describe('ApiProvider', () => {
   });
 
   it('should delete a story when the trash story method is called.', async () => {
-    const { result } = renderHook(() => useContext(ApiContext), {
+    const { result } = renderHook(() => useApi(), {
       // eslint-disable-next-line react/display-name
       wrapper: (props) => (
         <ConfigProvider

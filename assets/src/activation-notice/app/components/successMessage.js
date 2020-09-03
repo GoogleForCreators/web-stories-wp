@@ -50,6 +50,7 @@ const Title = styled.h2`
   font-family: ${({ theme }) => theme.fonts.title.family};
   font-size: ${({ theme }) => theme.fonts.title.size};
   line-height: ${({ theme }) => theme.fonts.title.lineHeight};
+  font-weight: normal;
   color: ${({ theme }) => theme.colors.primary};
   margin: 0 0 10px;
 `;
@@ -63,6 +64,7 @@ const PrimaryLink = styled.a`
   padding: 5px 8px;
   cursor: pointer;
   text-decoration: none;
+  border-radius: 4px;
 
   &:focus,
   &:hover {

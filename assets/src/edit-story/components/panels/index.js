@@ -18,11 +18,13 @@
  * Internal dependencies
  */
 import { elementTypes } from '../../elements';
+import AnimationPanel from './animation';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
+import PageAttachmentPanel from './pageAttachment';
 import PageStylePanel from './pageStyle';
 import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
@@ -34,12 +36,14 @@ import VideoOptionsPanel from './videoOptions';
 import StylePresetPanel from './stylePreset';
 export { default as LayerPanel } from './layer';
 
+const ANIMATION = 'animation';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
 const STYLE_PRESETS = 'stylePresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
 const LAYER_STYLE = 'layerStyle';
 const LINK = 'link';
+const PAGE_ATTACHMENT = 'pageAttachment';
 const PAGE_STYLE = 'pageStyle';
 const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
@@ -54,6 +58,7 @@ export const PanelTypes = {
   ELEMENT_ALIGNMENT,
   STYLE_PRESETS,
   PAGE_STYLE,
+  PAGE_ATTACHMENT,
   BACKGROUND_SIZE_POSITION,
   BACKGROUND_OVERLAY,
   SIZE_POSITION,
@@ -65,6 +70,7 @@ export const PanelTypes = {
   VIDEO_OPTIONS,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
+  ANIMATION,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -73,7 +79,9 @@ function intersect(a, b) {
   return a.filter((v) => b.includes(v));
 }
 
-export function getPanels(elements) {
+export function getPanels(elements, options = {}) {
+  const { enableAnimation } = options;
+
   if (elements.length === 0) {
     return [{ type: NO_SELECTION, Panel: NoSelectionPanel }];
   }
@@ -82,7 +90,10 @@ export function getPanels(elements) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [{ type: PAGE_STYLE, Panel: PageStylePanel }];
+    const panels = [
+      { type: PAGE_STYLE, Panel: PageStylePanel },
+      { type: PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
+    ];
 
     if (!elements[0].isDefaultBackground) {
       panels.push({
@@ -118,6 +129,8 @@ export function getPanels(elements) {
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {
       switch (type) {
+        case ANIMATION:
+          return enableAnimation ? { type, Panel: AnimationPanel } : null;
         case BACKGROUND_SIZE_POSITION:
           // Only display when isBackground.
           return null;

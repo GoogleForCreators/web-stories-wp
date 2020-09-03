@@ -17,13 +17,19 @@
 /**
  * Internal dependencies
  */
-import commonReducer, {
+import paginationReducer, {
   INITIAL_STATE as COMMON_INITIAL_STATE,
 } from '../pagination/reducer';
 
 import categoriesReducer, {
   INITIAL_STATE as CATEGORIES_INITIAL_STATE,
 } from './categories/reducer';
+import * as media3pTypes from './types';
+import * as categoryTypes from './categories/types';
+
+/**
+ * @typedef {import('./typedefs').Media3pProviderReducerState} Media3pProviderReducerState
+ */
 
 const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
@@ -37,17 +43,53 @@ const INITIAL_STATE = {
  * be evaluated, so the provider-specific `state` passed here will always
  * correspond to the `payload.provider` value.
  *
- * @param {Object} state The state to reduce
+ * @param {Media3pProviderReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {Object} The new state
+ * @return {Media3pProviderReducerState} The new state
  */
 function providerReducer(state = INITIAL_STATE, { type, payload }) {
-  return {
-    ...commonReducer(state, { type, payload }),
+  state = {
+    ...paginationReducer(state, { type, payload }),
     categories: categoriesReducer(state.categories, { type, payload }),
   };
+
+  switch (type) {
+    case media3pTypes.MEDIA3P_SET_SEARCH_TERM: {
+      // This action doesn't have a provider in its payload, so effectively
+      // clears out the pageToken and nextPageToken for all providers.
+      return {
+        ...state,
+        isMediaLoaded: false,
+        pageToken: undefined,
+        nextPageToken: undefined,
+      };
+    }
+
+    case categoryTypes.SELECT_CATEGORY: {
+      // This is called only for the provider in the payload, so it clears
+      // out only that provider's pageToken and nextPageToken.
+      return {
+        ...state,
+        pageToken: undefined,
+        nextPageToken: undefined,
+      };
+    }
+
+    case categoryTypes.DESELECT_CATEGORY: {
+      // This is called only for the provider in the payload, so it clears
+      // out only that provider's pageToken and nextPageToken.
+      return {
+        ...state,
+        pageToken: undefined,
+        nextPageToken: undefined,
+      };
+    }
+
+    default:
+      return state;
+  }
 }
 
 export default providerReducer;

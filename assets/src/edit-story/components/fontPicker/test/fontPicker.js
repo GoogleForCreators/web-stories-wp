@@ -26,6 +26,7 @@ import FontPicker from '../';
 import { FontProvider } from '../../../app/font';
 import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
+import { curatedFontNames } from '../../../app/font/curatedFonts';
 import fontsListResponse from './fontsResponse';
 
 async function getFontPicker(options) {
@@ -54,6 +55,10 @@ async function getFontPicker(options) {
   return accessors;
 }
 
+const availableCuratedFonts = fontsListResponse.filter(
+  (font) => curatedFontNames.indexOf(font.name) > 0
+);
+
 describe('Font Picker', () => {
   // Mock scrollTo
   const scrollTo = jest.fn();
@@ -75,7 +80,7 @@ describe('Font Picker', () => {
 
     // Should render all options
     const allOptionItems = getAllByRole('option');
-    expect(allOptionItems).toHaveLength(fontsListResponse.length);
+    expect(allOptionItems).toHaveLength(availableCuratedFonts.length);
   });
 
   it('should mark the currently selected font', async () => {
@@ -125,7 +130,7 @@ describe('Font Picker', () => {
     });
 
     // The second font in the list.
-    expect(onChangeFn).toHaveBeenCalledWith('Abel');
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
   });
 
   it('should close the menu when the Esc key is pressed.', async () => {
@@ -158,29 +163,29 @@ describe('Font Picker', () => {
     expect(fontsList).toBeInTheDocument();
 
     // Move down by 2
-    await act(() => {
+    act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
       });
     });
-    await act(() => {
+    act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
       });
     });
 
-    await act(() => {
+    act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowUp',
       });
     });
 
-    await act(() => {
+    act(() => {
       fireEvent.keyDown(fontsList, { key: 'Enter' });
     });
 
-    // Moving down by 2 and back 1 up should end up with the second font: Abel.
-    expect(onChangeFn).toHaveBeenCalledWith('Abel');
+    // Moving down by 2 and back 1 up should end up with the second font: Roboto Condensed.
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
   });
 
   it('should search and filter the list to match the results.', async () => {
@@ -189,7 +194,7 @@ describe('Font Picker', () => {
     const selectButton = getByRole('button');
     fireEvent.click(selectButton);
 
-    expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
+    expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
 
     act(() => {
       fireEvent.change(getByRole('combobox'), {
@@ -208,7 +213,7 @@ describe('Font Picker', () => {
     const selectButton = getByRole('button');
     fireEvent.click(selectButton);
 
-    expect(queryAllByRole('option')).toHaveLength(fontsListResponse.length);
+    expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
 
     act(() => {
       fireEvent.change(getByRole('combobox'), {

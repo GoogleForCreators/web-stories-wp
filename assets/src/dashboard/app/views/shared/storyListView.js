@@ -35,6 +35,7 @@ import {
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
+  DateSettingsPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -60,6 +61,7 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
+  STORY_CONTEXT_MENU_ACTIONS,
 } from '../../../constants';
 import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
@@ -68,7 +70,7 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
+import { getRelativeDisplayDate } from '../../../utils/';
 
 const ListView = styled.div`
   width: 100%;
@@ -82,7 +84,7 @@ const PreviewContainer = styled.div`
   height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.storyPreview.border};
+  border: ${({ theme }) => theme.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
@@ -133,6 +135,9 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
+const titleFormatted = (rawTitle) => {
+  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+};
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
@@ -144,7 +149,7 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
-  dateFormat,
+  dateSettings,
 }) {
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -157,6 +162,15 @@ export default function StoryListView({
     },
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
+
+  const onKeyDownSort = useCallback(
+    ({ key }, sortBy) => {
+      if (key === 'Enter') {
+        onSortTitleSelected(sortBy);
+      }
+    },
+    [onSortTitleSelected]
+  );
   return (
     <ListView data-testid="story-list-view">
       <Table>
@@ -164,11 +178,13 @@ export default function StoryListView({
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+              onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
             </TablePreviewHeaderCell>
             <TableTitleHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+              onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
               <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
@@ -183,6 +199,9 @@ export default function StoryListView({
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
+                }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
               >
                 {__('Author', 'web-stories')}
@@ -202,88 +221,105 @@ export default function StoryListView({
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.DATE_CREATED)
                 }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
+                }
               >
                 {__('Date Created', 'web-stories')}
-                <ArrowIconWithTitle
-                  active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                  asc={sortDirection === SORT_DIRECTION.ASC}
-                >
-                  <ArrowIconSvg />
-                </ArrowIconWithTitle>
               </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg />
+              </ArrowIconWithTitle>
             </TableDateHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
+                }
               >
                 {__('Last Modified', 'web-stories')}
-                <ArrowIconWithTitle
-                  active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.ASC}
-                >
-                  <ArrowIconSvg />
-                </ArrowIconWithTitle>
               </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg />
+              </ArrowIconWithTitle>
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
         </TableHeader>
         <TableBody>
-          {stories.map((story) => (
-            <TableRow key={`story-${story.id}`}>
-              <TablePreviewCell>
-                <PreviewContainer>
-                  <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
-                  </PreviewErrorBoundary>
-                </PreviewContainer>
-              </TablePreviewCell>
-              <TableCell>
-                <TitleTableCellContainer>
-                  {renameStory.id === story.id ? (
-                    <InlineInputForm
-                      onEditComplete={(newTitle) =>
-                        renameStory.handleOnRenameStory(story, newTitle)
-                      }
-                      onEditCancel={renameStory.handleCancelRename}
-                      value={story.title}
-                      id={story.id}
-                      label={__('Rename story', 'web-stories')}
-                    />
-                  ) : (
-                    <>
-                      <Paragraph2>{story.title}</Paragraph2>
-                      <StoryMenu
-                        onMoreButtonSelected={storyMenu.handleMenuToggle}
-                        contextMenuId={storyMenu.contextMenuId}
-                        onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                        story={story}
-                        menuItems={storyMenu.menuItems}
-                        verticalAlign="center"
+          {stories.map((story) => {
+            const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
+              if (
+                menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK
+              ) {
+                return { ...menuItem, url: story.link };
+              }
+              return menuItem;
+            });
+
+            return (
+              <TableRow key={`story-${story.id}`}>
+                <TablePreviewCell>
+                  <PreviewContainer>
+                    <PreviewErrorBoundary>
+                      <PreviewPage page={story.pages[0]} pageSize={pageSize} />
+                    </PreviewErrorBoundary>
+                  </PreviewContainer>
+                </TablePreviewCell>
+                <TableCell>
+                  <TitleTableCellContainer>
+                    {renameStory.id === story.id ? (
+                      <InlineInputForm
+                        onEditComplete={(newTitle) =>
+                          renameStory.handleOnRenameStory(story, newTitle)
+                        }
+                        onEditCancel={renameStory.handleCancelRename}
+                        value={story.title}
+                        id={story.id}
+                        label={__('Rename story', 'web-stories')}
                       />
-                    </>
-                  )}
-                </TitleTableCellContainer>
-              </TableCell>
-              <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>
-                {getFormattedDisplayDate(story.created, dateFormat)}
-              </TableCell>
-              <TableCell>
-                {getFormattedDisplayDate(story.modified, dateFormat)}
-              </TableCell>
-              {storyStatus !== STORY_STATUS.DRAFT && (
-                <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISH &&
-                    __('Published', 'web-stories')}
-                  {story.status === STORY_STATUS.FUTURE &&
-                    __('Scheduled', 'web-stories')}
-                </TableStatusCell>
-              )}
-            </TableRow>
-          ))}
+                    ) : (
+                      <>
+                        <Paragraph2>{titleFormatted(story.title)}</Paragraph2>
+                        <StoryMenu
+                          onMoreButtonSelected={storyMenu.handleMenuToggle}
+                          contextMenuId={storyMenu.contextMenuId}
+                          onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                          story={story}
+                          menuItems={storyMenuItems}
+                          verticalAlign="center"
+                        />
+                      </>
+                    )}
+                  </TitleTableCellContainer>
+                </TableCell>
+                <TableCell>{users[story.author]?.name || '—'}</TableCell>
+                <TableCell>
+                  {getRelativeDisplayDate(story.created, dateSettings)}
+                </TableCell>
+                <TableCell>
+                  {getRelativeDisplayDate(story.modified, dateSettings)}
+                </TableCell>
+                {storyStatus !== STORY_STATUS.DRAFT && (
+                  <TableStatusCell>
+                    {story.status === STORY_STATUS.PUBLISH &&
+                      __('Published', 'web-stories')}
+                    {story.status === STORY_STATUS.FUTURE &&
+                      __('Scheduled', 'web-stories')}
+                  </TableStatusCell>
+                )}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </ListView>
@@ -301,5 +337,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
-  dateFormat: PropTypes.string,
+  dateSettings: DateSettingsPropType,
 };

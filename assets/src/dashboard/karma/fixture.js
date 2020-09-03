@@ -34,7 +34,17 @@ import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
+  capabilities: {
+    canManageSettings: true,
+    canUploadFiles: true,
+  },
+  maxUpload: 104857600,
+  maxUploadFormatted: '100 MB',
   isRTL: false,
+  dateFormat: 'F j, Y',
+  timeFormat: 'g:i a',
+  gmtOffset: -4,
+  timezone: 'America/New_York',
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
@@ -45,6 +55,7 @@ const defaultConfig = {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     fonts: '/web-stories/v1/fonts',
+    settings: '/wp/v2/settings',
   },
 };
 
@@ -110,7 +121,7 @@ export default class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```

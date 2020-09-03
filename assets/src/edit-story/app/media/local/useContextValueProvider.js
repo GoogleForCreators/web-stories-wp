@@ -28,14 +28,20 @@ import useUploadMedia from '../useUploadMedia';
 import { getResourceFromAttachment } from '../utils';
 
 /**
+ * @typedef {import('./typedefs').LocalMediaContext} LocalMediaContext
+ * @typedef {import('./typedefs').LocalMediaReducerState} LocalMediaReducerState
+ * @typedef {import('./typedefs').LocalMediaReducerActions} LocalMediaReducerActions
+ */
+
+/**
  * Context fragment provider for local media.
  * This is called from {@link MediaProvider} to provide the media global state.
  *
- * @param {Object} reducerState The 'local' fragment of the state returned from
- * `useMediaReducer`
- * @param {Object} reducerActions The 'local' fragment of the actions returned
- * from `useMediaReducer`
- * @return {Object} Context.
+ * @param {LocalMediaReducerState} reducerState The 'local' fragment of the
+ * state returned from `useMediaReducer`
+ * @param {LocalMediaReducerActions} reducerActions The 'local' fragment of the
+ * actions returned from `useMediaReducer`
+ * @return {LocalMediaContext} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
   const {
@@ -70,6 +76,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         searchTerm: currentSearchTerm = '',
         pageToken: p = 1,
         mediaType: currentMediaType,
+        cacheBust: cacheBust,
       } = {},
       callback
     ) => {
@@ -78,6 +85,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
         pagingNum: p,
+        cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers['X-WP-TotalPages']);
@@ -120,7 +128,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     resetFilters();
     const isFirstPage = !pageToken;
     if (!mediaType && !searchTerm && isFirstPage) {
-      fetchMedia({ mediaType }, fetchMediaSuccess);
+      fetchMedia({ mediaType, cacheBust: true }, fetchMediaSuccess);
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 

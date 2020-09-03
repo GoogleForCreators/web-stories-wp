@@ -33,6 +33,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import {
+  fillerDateSettingsObject,
   formattedStoriesArray,
   formattedUsersObject,
   STORYBOOK_PAGE_SIZE,
@@ -72,11 +73,13 @@ const page = {
   set: action('set page number'),
   requestNextPage: action('request next page clicked'),
 };
+
 const storyActions = {
   createTemplateFromStory: action('create template from story clicked'),
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),
+  handlePreviewStory: action('handle preview story selected'),
 };
 
 const defaultProps = {
@@ -167,7 +170,7 @@ export const _StoriesViewGrid = () => (
       stories={formattedStoriesArray}
       users={formattedUsersObject}
       view={view}
-      dateFormat="F j, Y"
+      dateSettings={fillerDateSettingsObject}
     />
   </FlagsProvider>
 );
@@ -181,7 +184,7 @@ export const _StoriesViewList = () => (
       stories={formattedStoriesArray}
       users={formattedUsersObject}
       view={{ ...view, style: VIEW_STYLE.LIST }}
-      dateFormat="F j, Y"
+      dateSettings={fillerDateSettingsObject}
     />
   </FlagsProvider>
 );

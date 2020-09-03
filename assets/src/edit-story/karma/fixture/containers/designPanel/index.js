@@ -19,6 +19,10 @@
  */
 import { Container } from '../container';
 import { TextStyle } from './textStyle';
+import { Alignment } from './alignment';
+import { BackgroundOverlay } from './backgroundOverlay';
+import { Link } from './link';
+import { VideoAccessibility } from './videoAccessibility';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -38,18 +42,31 @@ export class DesignPanel extends Container {
   }
 
   get alignment() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Alignment/ }),
+      'alignment',
+      Alignment
+    );
   }
 
   get backgroundOverlay() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Overlay/ }),
+      'backgroundOverlay',
+      BackgroundOverlay
+    );
   }
 
   get link() {
-    // @todo: implement
-    return null;
+    return this._get(this.getByRole('region', { name: /Link/ }), 'link', Link);
+  }
+
+  get videoAccessibility() {
+    return this._get(
+      this.getByRole('region', { name: /accessibility/i }),
+      'videoAccessibility',
+      VideoAccessibility
+    );
   }
 
   get stylePreset() {
@@ -88,11 +105,6 @@ export class DesignPanel extends Container {
   }
 
   get sizePosition() {
-    // @todo: implement
-    return null;
-  }
-
-  get videoAccessibility() {
     // @todo: implement
     return null;
   }

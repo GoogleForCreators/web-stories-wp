@@ -19,7 +19,7 @@
  */
 import React, { useCallback, useState, useMemo, forwardRef } from 'react';
 import { FlagsProvider } from 'flagged';
-import { render, act, screen } from '@testing-library/react';
+import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
 
 /**
@@ -45,7 +45,9 @@ const DEFAULT_CONFIG = {
     video: ['video/mp4', 'video/ogg'],
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
-  capabilities: {},
+  capabilities: {
+    hasUploadMediaAction: true,
+  },
 };
 
 /**
@@ -70,8 +72,6 @@ const DEFAULT_CONFIG = {
 export class Fixture {
   constructor() {
     this._config = { ...DEFAULT_CONFIG };
-
-    this._flags = {};
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -164,7 +164,7 @@ export class Fixture {
    * ```
    * beforeEach(async () => {
    *   fixture = new Fixture();
-   *   fixture.setFlags({mediaDropdownMenu: true});
+   *   fixture.setFlags({FEATURE_NAME: true});
    *   await fixture.render();
    * });
    * ```
@@ -188,7 +188,7 @@ export class Fixture {
    *
    * @return {Promise} Yields when the editor rendering is complete.
    */
-  render() {
+  async render() {
     const root = document.querySelector('test-root');
 
     // see http://reactcommunity.org/react-modal/accessibility/
@@ -214,9 +214,20 @@ export class Fixture {
       'editor'
     );
 
+    // wait for the media gallery items to load, as many tests assume they're
+    // there
+    let mediaElements;
+    await waitFor(() => {
+      mediaElements = this.querySelectorAll('[data-testid=mediaElement]');
+      if (!mediaElements?.length) {
+        throw new Error(
+          `Not ready: only found ${mediaElements?.length} media elements`
+        );
+      }
+    });
+
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
-    return Promise.resolve();
   }
 
   /**
@@ -421,7 +432,7 @@ class APIProviderFixture {
         // @todo: put this to __db__/
         () =>
           asyncResponse({
-            title: { raw: 'Auto Draft' },
+            title: { raw: '' },
             status: 'draft',
             author: 1,
             slug: '',
@@ -456,13 +467,99 @@ class APIProviderFixture {
       const getAllFonts = useCallback(
         // @todo: put actual data to __db__/
         () =>
-          asyncResponse(
-            [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+          asyncResponse([
+            {
+              name: 'Abel',
+              value: 'Abel',
+              family: 'Abel',
+              fallbacks: ['sans-serif'],
+              service: 'fonts.google.com',
+              weights: [400],
+              styles: ['regular'],
+              variants: [[0, 400]],
+            },
+            {
+              name: 'Abhaya Libre',
+              value: 'Abhaya Libre',
+              family: 'Abhaya Libre',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [400, 500, 600, 700, 800],
+              styles: ['regular'],
+              variants: [
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+                [0, 800],
+              ],
+            },
+            ...[TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
               name: font.family,
               value: font.family,
               ...font,
-            }))
-          ),
+            })),
+            {
+              name: 'Source Serif Pro',
+              value: 'Source Serif Pro',
+              family: 'Source Serif Pro',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [400, 600, 700],
+              styles: ['regular'],
+              variants: [
+                [0, 400],
+                [0, 600],
+                [0, 700],
+              ],
+            },
+            {
+              name: 'Space Mono',
+              value: 'Space Mono',
+              family: 'Space Mono',
+              fallbacks: ['monospace'],
+              service: 'fonts.google.com',
+              weights: [400, 700],
+              styles: ['regular', 'italic'],
+              variants: [
+                [0, 400],
+                [1, 400],
+                [0, 700],
+                [1, 700],
+              ],
+            },
+            {
+              name: 'Ubuntu',
+              value: 'Ubuntu',
+              family: 'Ubuntu',
+              fallbacks: ['monospace'],
+              service: 'fonts.google.com',
+              weights: [400, 700],
+              styles: ['regular', 'italic'],
+              variants: [
+                [0, 400],
+                [1, 400],
+                [0, 700],
+                [1, 700],
+              ],
+            },
+            {
+              name: 'Yrsa',
+              value: 'Yrsa',
+              family: 'Yrsa',
+              fallbacks: ['serif'],
+              service: 'fonts.google.com',
+              weights: [300, 400, 500, 600, 700],
+              styles: ['regular'],
+              variants: [
+                [0, 300],
+                [0, 400],
+                [0, 500],
+                [0, 600],
+                [0, 700],
+              ],
+            },
+          ]),
         []
       );
 

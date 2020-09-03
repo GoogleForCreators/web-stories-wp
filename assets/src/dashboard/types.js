@@ -66,7 +66,7 @@ export const UserPropType = PropTypes.shape({
   avatar_urls: PropTypes.object,
 });
 
-export const StoriesPropType = PropTypes.arrayOf(StoryPropType).isRequired;
+export const StoriesPropType = PropTypes.arrayOf(StoryPropType);
 export const TemplatesPropType = PropTypes.arrayOf(TemplatePropType).isRequired;
 export const TagsPropType = PropTypes.objectOf(TagPropType).isRequired;
 export const CategoriesPropType = PropTypes.objectOf(CategoryPropType)
@@ -105,6 +105,7 @@ export const StoryMenuPropType = PropTypes.shape({
     PropTypes.shape({
       label: PropTypes.string,
       value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+      url: PropTypes.string,
     })
   ),
 });
@@ -129,3 +130,10 @@ export const ToastMessagePropType = PropTypes.shape({
 });
 
 export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
+
+export const DateSettingsPropType = PropTypes.shape({
+  dateFormat: PropTypes.string,
+  timeFormat: PropTypes.string,
+  gmtOffset: PropTypes.number,
+  timezone: PropTypes.string,
+});

@@ -26,60 +26,6 @@
 
 namespace Google\Web_Stories;
 
-/**
- * Handles plugin activation.
- *
- * Throws an error if the site is running on PHP < 5.6
- *
- * @since 1.0.0
- *
- * @param bool $network_wide Whether to activate network-wide.
- *
- * @return void
- */
-function activate( $network_wide ) {
-	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
-		wp_die(
-			/* translators: %s: PHP version number */
-			esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_PHP_VERSION ) ),
-			esc_html__( 'Plugin could not be activated', 'web-stories' )
-		);
-	}
-
-	$story = new Story_Post_Type();
-	$story->init();
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
-
-	do_action( 'web_stories_activation', $network_wide );
-}
-
-/**
- * Handles plugin deactivation.
- *
- * @since 1.0.0
- *
- * @param bool $network_wide Whether to deactivate network-wide.
- *
- * @return void
- */
-function deactivate( $network_wide ) {
-	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
-		return;
-	}
-
-	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
-
-	do_action( 'web_stories_deactivation', $network_wide );
-}
-
-register_activation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\activate' );
-register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, '\Google\Web_Stories\deactivate' );
-
 if (
 	! class_exists( '\Google\Web_Stories\Plugin' ) ||
 	! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' )
@@ -129,13 +75,98 @@ if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
 		if ( class_exists( '\WP_CLI' ) ) {
 			\WP_CLI::warning( "$heading\n$body" );
 		} else {
-			echo "$heading\n$body\n"; // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo "$heading\n$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 	}
 
 	// However, we still need to stop further execution.
 	return;
 }
+
+/**
+ * Handles plugin activation.
+ *
+ * Throws an error if the site is running on PHP < 5.6
+ *
+ * @since 1.0.0
+ *
+ * @param bool $network_wide Whether to activate network-wide.
+ *
+ * @return void
+ */
+function activate( $network_wide = false ) {
+	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
+		wp_die(
+		/* translators: %s: PHP version number */
+			esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_PHP_VERSION ) ),
+			esc_html__( 'Plugin could not be activated', 'web-stories' )
+		);
+	}
+
+	if ( version_compare( get_bloginfo( 'version' ), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
+		wp_die(
+		/* translators: %s: WordPress version number */
+			esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) ),
+			esc_html__( 'Plugin could not be activated', 'web-stories' )
+		);
+	}
+
+	$story = new Story_Post_Type( new Experiments() );
+	$story->init();
+	$story->add_caps_to_roles();
+	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+	}
+
+	do_action( 'web_stories_activation', $network_wide );
+}
+
+/**
+ * Hook into new site when they are created and run activation hook.
+ *
+ * @param int|\WP_Site $site Site ID or object.
+ *
+ * @return void
+ */
+function new_site( $site ) {
+	if ( ! is_multisite() ) {
+		return;
+	}
+	$site = get_site( $site );
+	if ( ! $site ) {
+		return;
+	}
+	$site_id = (int) $site->blog_id;
+	switch_to_blog( $site_id );
+	activate();
+	restore_current_blog();
+}
+add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
+
+/**
+ * Handles plugin deactivation.
+ *
+ * @since 1.0.0
+ *
+ * @param bool $network_wide Whether to deactivate network-wide.
+ *
+ * @return void
+ */
+function deactivate( $network_wide ) {
+	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
+		return;
+	}
+
+	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
+	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+	}
+
+	do_action( 'web_stories_deactivation', $network_wide );
+}
+
+register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
+register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
 
 global $web_stories;
 

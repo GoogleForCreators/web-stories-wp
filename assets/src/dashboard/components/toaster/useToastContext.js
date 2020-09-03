@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { useContextSelector, identity } from '../../utils';
 import { ToasterContext } from './provider';
 
-const useToasterContext = () => {
-  const context = useContext(ToasterContext);
+const useToasterContext = (selector = identity) => {
+  const context = useContextSelector(ToasterContext, selector);
   if (!context) {
     throw new Error(
       'useToasterContext() must be used within a <Toast.Provider />'

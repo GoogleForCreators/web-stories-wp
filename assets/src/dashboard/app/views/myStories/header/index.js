@@ -15,15 +15,17 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDebouncedCallback } from 'use-debounce';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
@@ -114,13 +116,18 @@ function Header({
     [scrollToTop, sort]
   );
 
+  const [debouncedTypeaheadChange] = useDebouncedCallback(
+    search.setKeyword,
+    300
+  );
+
   return (
     <Layout.Squishable>
       <PageHeading
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
         stories={stories}
-        handleTypeaheadChange={search.setKeyword}
+        handleTypeaheadChange={debouncedTypeaheadChange}
         typeaheadValue={search.keyword}
       >
         {HeaderToggleButtons}

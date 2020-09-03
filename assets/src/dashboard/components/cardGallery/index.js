@@ -15,28 +15,30 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-/**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { UnitsProvider } from '../../../edit-story/units';
-import { STORY_PAGE_STATE } from '../../constants';
 import { StoryPropType } from '../../types';
-import { getPagePreviewHeights } from '../../utils';
+import { getPagePreviewHeights, useGridViewKeys } from '../../utils';
 import PreviewPage from '../previewPage';
 import {
   ActiveCard,
   GalleryContainer,
   MiniCard,
   MiniCardsContainer,
-  MiniCardWrapper,
+  ItemContainer,
+  MiniCardButton,
 } from './components';
 
 const MAX_WIDTH = 680;
@@ -45,11 +47,16 @@ const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
-function CardGallery({ story }) {
+function CardGallery({ story, isRTL, galleryLabel }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
+  const [activePageId, setActivePageId] = useState();
   const [pages, setPages] = useState([]);
   const containerRef = useRef();
+  const gridRef = useRef();
+  const pageRefs = useRef({});
+
+  const isInteractive = pages.length > 1;
 
   useEffect(() => {
     setPages(story.pages || []);
@@ -83,8 +90,9 @@ function CardGallery({ story }) {
     };
   }, [dimensionMultiplier]);
 
-  const handleMiniCardClick = useCallback((index) => {
+  const handleMiniCardClick = useCallback((index, id) => {
     setActivePageIndex(index);
+    setActivePageId(id);
   }, []);
 
   const updateContainerSize = useCallback(() => {
@@ -113,39 +121,93 @@ function CardGallery({ story }) {
     setActivePageIndex(0);
   }, [story]);
 
+  useEffect(() => {
+    setActivePageId(story.pages[0].id);
+  }, [story]);
+
+  useGridViewKeys({
+    containerRef,
+    gridRef,
+    itemRefs: pageRefs,
+    isRTL,
+    currentItemId: activePageId,
+    items: pages,
+  });
+
+  const GalleryItems = useMemo(() => {
+    if (!metrics.miniCardSize) {
+      return null;
+    }
+
+    const { miniCardSize, gap, miniWrapperSize } = metrics;
+
+    return (
+      <UnitsProvider
+        pageSize={{
+          width: miniCardSize.width,
+          height: miniCardSize.height,
+        }}
+      >
+        <MiniCardsContainer
+          rowHeight={miniWrapperSize.height}
+          gap={gap}
+          ref={gridRef}
+          aria-label={galleryLabel}
+          data-testid="mini-cards-container"
+        >
+          {pages.map((page, index) => {
+            const isCurrentPage = activePageId === page.id;
+            const isActive = isCurrentPage && isInteractive;
+            return (
+              <ItemContainer
+                key={`page-${index}`}
+                ref={(el) => {
+                  pageRefs.current[page.id] = el;
+                }}
+                width={miniWrapperSize.width}
+              >
+                <MiniCardButton
+                  gridRef={gridRef}
+                  isSelected={isCurrentPage}
+                  tabIndex={isActive ? 0 : -1}
+                  {...miniWrapperSize}
+                  onClick={() => handleMiniCardClick(index, page.id)}
+                  aria-label={
+                    isCurrentPage
+                      ? sprintf(
+                          /* translators: %s: page number. */
+                          __('Page %s (current page)', 'web-stories'),
+                          index + 1
+                        )
+                      : sprintf(
+                          /* translators: %s: page number. */
+                          __('Page %s', 'web-stories'),
+                          index + 1
+                        )
+                  }
+                >
+                  <MiniCard {...miniCardSize}>
+                    <PreviewPage page={page} pageSize={miniCardSize} />
+                  </MiniCard>
+                </MiniCardButton>
+              </ItemContainer>
+            );
+          })}
+        </MiniCardsContainer>
+      </UnitsProvider>
+    );
+  }, [
+    activePageId,
+    galleryLabel,
+    handleMiniCardClick,
+    isInteractive,
+    metrics,
+    pages,
+  ]);
+
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      {metrics.miniCardSize && (
-        <UnitsProvider
-          pageSize={{
-            width: metrics.miniCardSize.width,
-            height: metrics.miniCardSize.height,
-          }}
-        >
-          <MiniCardsContainer
-            rowHeight={metrics.miniWrapperSize.height}
-            gap={metrics.gap}
-          >
-            {pages.map((page, index) => (
-              <MiniCardWrapper
-                key={index}
-                isSelected={index === activePageIndex}
-                {...metrics.miniWrapperSize}
-                onClick={() => handleMiniCardClick(index)}
-                aria-label={sprintf(
-                  /* translators: %s: page number. */
-                  __('Page Preview - Page %s', 'web-stories'),
-                  index + 1
-                )}
-              >
-                <MiniCard {...metrics.miniCardSize}>
-                  <PreviewPage page={page} pageSize={metrics.miniCardSize} />
-                </MiniCard>
-              </MiniCardWrapper>
-            ))}
-          </MiniCardsContainer>
-        </UnitsProvider>
-      )}
+      {GalleryItems}
       {metrics.activeCardSize && pages[activePageIndex] && (
         <UnitsProvider
           pageSize={{
@@ -154,17 +216,17 @@ function CardGallery({ story }) {
           }}
         >
           <ActiveCard
+            {...metrics.activeCardSize}
             aria-label={sprintf(
               /* translators: %s: active preview page number */
               __('Active Page Preview - Page %s', 'web-stories'),
               activePageIndex + 1
             )}
-            {...metrics.activeCardSize}
           >
             <PreviewPage
               page={pages[activePageIndex]}
               pageSize={metrics.activeCardSize}
-              animationState={STORY_PAGE_STATE.PLAYING}
+              animationState={STORY_ANIMATION_STATE.PLAYING}
             />
           </ActiveCard>
         </UnitsProvider>
@@ -175,6 +237,8 @@ function CardGallery({ story }) {
 
 CardGallery.propTypes = {
   story: StoryPropType.isRequired,
+  isRTL: PropTypes.bool,
+  galleryLabel: PropTypes.string.isRequired,
 };
 
 export default CardGallery;

@@ -17,7 +17,12 @@
 /**
  * Internal dependencies
  */
+import * as media3pTypes from '../types';
 import * as types from './types';
+
+/**
+ * @typedef {import('./typedefs').CategoriesReducerState} CategoriesReducerState
+ */
 
 export const INITIAL_STATE = {
   isLoading: true,
@@ -32,11 +37,11 @@ export const INITIAL_STATE = {
  * This is called by the reducers for the state nodes:
  * media/local, media/media3p/unsplash, media/media3p/coverr, etc.
  *
- * @param {Object} state The state to reduce
+ * @param {CategoriesReducerState} state The state to reduce
  * @param {Object} obj An object with the type and payload
  * @param {string} obj.type A constant that identifies the reducer action
  * @param {Object} obj.payload The details of the action, specific to the action
- * @return {Object} The new state
+ * @return {CategoriesReducerState} The new state
  */
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
@@ -71,6 +76,12 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       };
     }
     case types.DESELECT_CATEGORY: {
+      return {
+        ...state,
+        selectedCategoryId: undefined,
+      };
+    }
+    case media3pTypes.MEDIA3P_SET_SEARCH_TERM: {
       return {
         ...state,
         selectedCategoryId: undefined,

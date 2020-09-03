@@ -25,42 +25,56 @@ import propTypes from 'prop-types';
  */
 import {
   TimelineContainer,
-  TimelineContent,
   TimelineLegend,
   TimelineTimingContainer,
   TimelineTitleBar,
   TimelineRow,
 } from './components';
+import AnimationRuler from './ruler';
+import TimingBar from './timingBar';
 
-export default function AnimationTimeline({ animations }) {
+export default function AnimationTimeline({
+  animations,
+  duration,
+  onUpdateAnimation,
+}) {
   return (
     <TimelineContainer>
-      <TimelineTitleBar>
-        <TimelineLegend />
-      </TimelineTitleBar>
-      <TimelineContent>
-        <TimelineLegend>
-          {animations.map((animation, index) => (
-            <TimelineRow
-              key={`timeline-animation-item-${animation.id}-legend`}
-              alternating={Boolean(index % 2)}
+      <TimelineLegend>
+        <TimelineTitleBar />
+        {animations.map((animation, index) => (
+          <TimelineRow
+            key={`timeline-animation-item-${animation.id}-legend`}
+            alternating={Boolean(index % 2)}
+          />
+        ))}
+      </TimelineLegend>
+      <TimelineTimingContainer>
+        <TimelineTitleBar>
+          <AnimationRuler duration={duration} />
+        </TimelineTitleBar>
+        {animations.map((animation, index) => (
+          <TimelineRow
+            data-testid="timeline-animation-item"
+            key={`timeline-animation-item-${animation.id}`}
+            alternating={Boolean(index % 2)}
+          >
+            <TimingBar
+              label={animation.label}
+              delay={animation.delay}
+              duration={animation.duration}
+              maxDuration={duration}
+              onUpdateAnimation={(delta) => onUpdateAnimation(animation, delta)}
             />
-          ))}
-        </TimelineLegend>
-        <TimelineTimingContainer>
-          {animations.map((animation, index) => (
-            <TimelineRow
-              data-testid="timeline-animation-item"
-              key={`timeline-animation-item-${animation.id}`}
-              alternating={Boolean(index % 2)}
-            />
-          ))}
-        </TimelineTimingContainer>
-      </TimelineContent>
+          </TimelineRow>
+        ))}
+      </TimelineTimingContainer>
     </TimelineContainer>
   );
 }
 
 AnimationTimeline.propTypes = {
   animations: propTypes.arrayOf(propTypes.object).isRequired,
+  duration: propTypes.number.isRequired,
+  onUpdateAnimation: propTypes.func.isRequired,
 };

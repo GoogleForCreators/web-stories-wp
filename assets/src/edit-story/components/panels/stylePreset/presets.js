@@ -19,6 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,6 +34,7 @@ import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { PanelContent } from '../panel';
 import { StylePresetPropType } from '../../../types';
 import WithTooltip from '../../tooltip';
+import { useKeyDownEffect } from '../../keyboard';
 import PresetGroup from './presetGroup';
 import { presetHasOpacity, presetHasGradient } from './utils';
 
@@ -80,12 +82,40 @@ const ColorWrapper = styled.div`
   overflow: hidden;
   position: relative;
   ${({ disabled }) => (disabled ? 'opacity: 0.4;' : '')}
+
+  &:focus-within {
+    border-color: ${({ theme }) => theme.colors.fg.white};
+    border-width: 3px;
+  }
 `;
 
-const Color = styled.button.attrs({ type: 'button' })`
+const ColorButton = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
+
+  &:focus {
+    outline: none !important;
+  }
 `;
+
+function Color({ onClick, children, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
+  return (
+    <ColorButton ref={ref} onClick={onClick} {...rest}>
+      {children}
+    </ColorButton>
+  );
+}
+
+Color.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 function Presets({
   stylePresets,
@@ -108,10 +138,8 @@ function Presets({
         (isText && presetHasGradient(color)));
     let tooltip = null;
     if (disabled) {
-      // @todo The correct text here should be: Page background colors can not have an opacity.
-      // However, due to bug with Tooltips/Popup, the text flows out of the screen.
       tooltip = isBackground
-        ? __('Opacity not allowed for Page', 'web-stories')
+        ? __('Page background colors cannot have an opacity.', 'web-stories')
         : __('Gradient not allowed for Text', 'web-stories');
     }
     return (

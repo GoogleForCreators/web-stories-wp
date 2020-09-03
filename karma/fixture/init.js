@@ -158,6 +158,105 @@ beforeAll(() => {
       frameElement.style.left = '';
     };
   });
+
+  // Add custom matchers inspired by jest's and jest-dom's ditto
+  jasmine.addMatchers({
+    toBeEmpty: () => ({
+      compare: function (actual) {
+        const innerHTML = actual?.innerHTML ?? '';
+        const pass = innerHTML === '';
+        return {
+          pass,
+          message: pass
+            ? `Expected element to not be empty`
+            : `Expected element to be empty`,
+        };
+      },
+    }),
+    toHaveFocus: () => ({
+      compare: function (actual) {
+        const doc = actual?.ownerDocument || actual?.document;
+        const pass = doc.activeElement === actual;
+        return {
+          pass,
+          message: pass
+            ? `Expected element ${actual} to not have focus`
+            : `Expected element ${actual} to have focus, but focus is on ${doc.activeElement}`,
+        };
+      },
+    }),
+    toHaveStyle: (util, customEqualityTesters) => ({
+      compare: function (element, property, expected) {
+        const actual = element
+          ? window.getComputedStyle(element)[property]
+          : null;
+        const pass = util.equals(actual, expected, customEqualityTesters);
+        return {
+          pass,
+          message: pass
+            ? `Expected element to not have style "${property}: ${expected}"`
+            : `Expected element to have style "${property}: ${expected}" but found "${actual}"`,
+        };
+      },
+    }),
+    toHaveProperty: (util, customEqualityTesters) => ({
+      compare: function (element, property, expected) {
+        const actual = element?.[property] ?? '';
+        const pass =
+          typeof expected === 'string'
+            ? util.equals(actual, expected, customEqualityTesters)
+            : expected.test(actual);
+        return {
+          pass,
+          message: pass
+            ? `Expected element to not have ${property} = "${expected}"`
+            : `Expected element to have ${property} = "${expected}" but found "${actual}"`,
+        };
+      },
+    }),
+  });
+
+  // Virtual cursor.
+  withCleanupAll(() => {
+    const el = document.createElement('div');
+    el.id = '__karma__cursor';
+    el.className = 'i__karma__snapshot__hide';
+    el.style.cssText = `
+      width: 0px;
+      height: 0px;
+      border-left: 10px solid red;
+      border-bottom: 10px solid transparent;
+      position: fixed;
+      top: 0px;
+      left: 0px;
+      z-index: 2147483647;
+      pointer-events: none;
+    `;
+    document.body.appendChild(el);
+
+    let clientX = -9999;
+    let clientY = -9999;
+    let scheduled = false;
+
+    const move = (evt) => {
+      clientX = evt.clientX;
+      clientY = evt.clientY;
+      if (!scheduled) {
+        scheduled = true;
+        requestAnimationFrame(() => {
+          scheduled = false;
+          el.style.transform = `translate(${clientX}px, ${clientY}px)`;
+        });
+      }
+    };
+
+    document.addEventListener('mousemove', move, true);
+    document.addEventListener('drag', move, true);
+    return () => {
+      document.removeEventListener('mousemove', move, true);
+      document.removeEventListener('drag', move, true);
+    };
+  });
 });
 
 afterAll(() => {

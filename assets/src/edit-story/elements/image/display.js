@@ -18,15 +18,21 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { mediaWithScale } from '../media/util';
+import {
+  calculateSrcSet,
+  getSmallestUrlForWidth,
+  mediaWithScale,
+} from '../media/util';
 import { getMediaSizePositionProps } from '../media';
 import MediaDisplay from '../media/display';
+import { preloadImage } from '../../app/media/utils';
+import resourceList from '../../utils/resourceList';
 
 const Img = styled.img`
   position: absolute;
@@ -38,6 +44,23 @@ function ImageDisplay({ element, box }) {
   const { width, height } = box;
   const ref = useRef();
 
+  let initialSrcType = 'smallest';
+  let initialSrc = getSmallestUrlForWidth(0, resource);
+
+  if (resourceList[resource.id]?.type === 'cached') {
+    initialSrcType = 'cached';
+    initialSrc = resourceList[resource.id].url;
+  }
+
+  if (resourceList[resource.id]?.type === 'fullsize' || resource.local) {
+    initialSrcType = 'fullsize';
+    initialSrc = resource.src;
+  }
+
+  const [srcType, setSrcType] = useState(initialSrcType);
+  const [src, setSrc] = useState(initialSrc);
+  const srcSet = srcType === 'fullsize' ? calculateSrcSet(resource) : '';
+
   const imgProps = getMediaSizePositionProps(
     resource,
     width,
@@ -47,12 +70,29 @@ function ImageDisplay({ element, box }) {
     focalY
   );
 
+  useEffect(() => {
+    let timeout;
+    if (resourceList[resource.id]?.type !== 'fullsize') {
+      timeout = setTimeout(async () => {
+        const preloadedImg = await preloadImage(resource.src, srcSet);
+        resourceList[resource.id] = {
+          type: 'fullsize',
+        };
+        setSrc(preloadedImg.currentSrc);
+        setSrcType('fullsize');
+      });
+    }
+
+    return () => clearTimeout(timeout);
+  }, [resource.id, resource.src, srcSet, srcType]);
+
   return (
     <MediaDisplay element={element} mediaRef={ref}>
       <Img
         ref={ref}
         draggable={false}
-        src={resource.src}
+        src={src}
+        srcSet={srcSet}
         alt={resource.alt}
         {...imgProps}
       />

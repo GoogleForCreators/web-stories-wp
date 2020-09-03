@@ -146,13 +146,13 @@ describe('useMedia3pApi', () => {
           },
           creationDate: '1234',
           height: 3536,
-          id: undefined,
-          length: null,
-          lengthFormatted: null,
+          id: 'media/unsplash:1234',
+          length: undefined,
+          lengthFormatted: undefined,
           local: false,
           mimeType: 'image/jpeg',
-          poster: null,
-          posterId: null,
+          poster: undefined,
+          posterId: undefined,
           sizes: {
             web_stories_thumbnail: {
               file: 'media/unsplash:1234',
@@ -325,5 +325,16 @@ describe('useMedia3pApi', () => {
     });
 
     expect(registerUsageResult).toBeUndefined();
+  });
+
+  it('should properly handle an empty listMedia response', () => {
+    apiFetcherMock.listMedia.mockImplementation(() => Promise.resolve({}));
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+
+    expect(async () => {
+      await renderHook(() => useMedia3pApi(), { wrapper });
+    }).not.toThrow();
   });
 });

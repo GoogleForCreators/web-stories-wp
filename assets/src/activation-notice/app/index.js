@@ -20,7 +20,6 @@
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
 
 /**
  * Internal dependencies
@@ -28,20 +27,19 @@ import { useState } from 'react';
 import { lightTheme, darkTheme, GlobalStyle } from '../theme';
 import MessageContent from './components/messageContent';
 import { ConfigProvider } from './config';
+import usePrefersDarkMode from './utils/usePrefersDarkMode';
 
 function App({ config }) {
   const { isRTL } = config;
 
-  const [theme, setTheme] = useState('light');
-  const toggleTheme = () =>
-    theme === 'light' ? setTheme('dark') : setTheme('light');
+  const prefersDarkMode = usePrefersDarkMode();
 
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <ThemeProvider theme={prefersDarkMode ? darkTheme : lightTheme}>
         <ConfigProvider config={config}>
           <GlobalStyle />
-          <MessageContent onDoubleClick={toggleTheme} />
+          <MessageContent />
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>

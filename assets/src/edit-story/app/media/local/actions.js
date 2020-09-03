@@ -21,17 +21,32 @@ import * as common from '../pagination/actions';
 import * as types from './types';
 
 export const fetchMediaStart = (dispatch) => (properties) =>
-  common.fetchMediaStart(dispatch)({ ...properties, provider: 'local' });
+  common.fetchMediaStart(dispatch)({
+    ...properties,
+    provider: 'local',
+  });
 export const fetchMediaSuccess = (dispatch) => (properties) =>
-  common.fetchMediaSuccess(dispatch)({ ...properties, provider: 'local' });
+  common.fetchMediaSuccess(dispatch)({
+    ...properties,
+    provider: 'local',
+  });
 export const fetchMediaError = (dispatch) => (properties) =>
-  common.fetchMediaError(dispatch)({ ...properties, provider: 'local' });
+  common.fetchMediaError(dispatch)({
+    ...properties,
+    provider: 'local',
+  });
 export const setNextPage = (dispatch) => (properties) =>
   common.setNextPage(dispatch)({ ...properties, provider: 'local' });
 export const updateMediaElement = (dispatch) => (properties) =>
-  common.updateMediaElement(dispatch)({ ...properties, provider: 'local' });
+  common.updateMediaElement(dispatch)({
+    ...properties,
+    provider: 'local',
+  });
 export const deleteMediaElement = (dispatch) => (properties) =>
-  common.deleteMediaElement(dispatch)({ ...properties, provider: 'local' });
+  common.deleteMediaElement(dispatch)({
+    ...properties,
+    provider: 'local',
+  });
 
 export const resetFilters = (dispatch) => () => {
   dispatch({ type: types.LOCAL_MEDIA_RESET_FILTERS });

@@ -50,20 +50,20 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     DEFAULT_RESOURCE
   );
 
+  const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
   const title = getCommonValue(selectedElements, 'title', resource.title);
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
   const handleChangePoster = useCallback(
     (image) => {
-      pushUpdate(
-        {
-          poster: image.sizes?.medium?.url || image.url,
-        },
-        true
-      );
+      const newPoster = image?.sizes?.medium?.url || image?.url;
+      if (newPoster === rawPoster) {
+        return;
+      }
+      pushUpdate({ poster: newPoster }, true);
     },
-    [pushUpdate]
+    [pushUpdate, rawPoster]
   );
 
   usePresubmitHandler(
@@ -90,6 +90,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           buttonInsertText={__('Set as video poster', 'web-stories')}
           type={'image'}
           ariaLabel={__('Edit: Video poster', 'web-stories')}
+          canReset
         />
       </Row>
       <Row>

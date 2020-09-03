@@ -17,27 +17,34 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../../api/apiProvider';
 import { Toaster, useToastContext } from '../../../components/toaster';
 import { ALERT_SEVERITY } from '../../../constants';
+import useApi from '../../api/useApi';
 
 function ToasterView() {
-  const {
-    state: {
-      stories: { error: storyError },
-      templates: { error: templateError },
-    },
-  } = useContext(ApiContext);
+  const { storyError, templateError, settingsError, mediaError } = useApi(
+    ({
+      state: {
+        stories: { error: storyError },
+        templates: { error: templateError },
+        settings: { error: settingsError },
+        media: { error: mediaError },
+      },
+    }) => ({ storyError, templateError, settingsError, mediaError })
+  );
 
   const {
     actions: { removeToast, addToast },
     state: { activeToasts },
   } = useToastContext();
+
+  const enableSettingsView = useFeature('enableSettingsView');
 
   useEffect(() => {
     if (storyError?.id) {
@@ -58,6 +65,26 @@ function ToasterView() {
       });
     }
   }, [templateError, addToast]);
+
+  useEffect(() => {
+    if (enableSettingsView && settingsError?.id) {
+      addToast({
+        message: settingsError.message,
+        severity: ALERT_SEVERITY.ERROR,
+        id: settingsError.id,
+      });
+    }
+  }, [settingsError, addToast, enableSettingsView]);
+
+  useEffect(() => {
+    if (mediaError?.id) {
+      addToast({
+        message: mediaError.message,
+        severity: ALERT_SEVERITY.ERROR,
+        id: mediaError.id,
+      });
+    }
+  }, [mediaError, addToast]);
 
   return (
     <Toaster

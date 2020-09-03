@@ -70,17 +70,22 @@ const colors = {
   selection: '#44aaff',
   warning: '#FF9800',
   success: '#4CAF4F',
+  // Updated design colors
+  black: '#000',
   // todo
   placeholder: '#d9dbdd',
+  storyPreviewBackground: '#202125',
 };
 
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
+  gray75: `1px solid ${colors.gray75}`,
   gray100: `1px solid ${colors.gray100}`,
   gray800: `1px solid ${colors.gray800}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
   action: `1px solid ${colors.action}`,
+  danger: `1px solid ${colors.danger}`,
 };
 
 const theme = {
@@ -137,7 +142,6 @@ const theme = {
   },
   storyPreview: {
     shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
-    border: `1px solid ${colors.gray75}`,
     borderRadius: 4,
   },
   tooltip: {
@@ -175,11 +179,11 @@ const theme = {
     presets: {
       xxl: {
         family: themeFonts.primary,
-        size: 32,
+        size: 36,
         minSize: 18,
-        lineHeight: 53,
-        minLineHeight: 43,
-        letterSpacing: -0.005,
+        lineHeight: 40,
+        minLineHeight: 40,
+        letterSpacing: -0.01,
         minLetterSpacing: -0.01,
       },
       xl: {

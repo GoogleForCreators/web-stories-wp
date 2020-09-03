@@ -26,6 +26,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Renderer\Image;
+use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Traits\Assets;
 
 /**
@@ -54,11 +57,17 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		wp_register_script( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
-		wp_register_style( 'amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
+		wp_register_script( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
+		wp_register_style( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$this->register_script( self::SCRIPT_HANDLE, [ 'amp-story-player', Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ 'amp-story-player' ] );
+		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
+
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesEmbedBlockSettings',
+			$this->get_script_settings()
+		);
 
 		// todo: use register_block_type_from_metadata() once generally available.
 
@@ -101,6 +110,17 @@ class Embed_Block {
 	}
 
 	/**
+	 * Returns script settings.
+	 *
+	 * @return array Script settings.
+	 */
+	private function get_script_settings() {
+		return [
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+		];
+	}
+
+	/**
 	 * Filter the allowed tags for KSES to allow for amp-story children.
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
@@ -139,83 +159,30 @@ class Embed_Block {
 			$attributes['title'] = __( 'Web Story', 'web-stories' );
 		}
 
+		$defaults = [
+			'align'  => 'none',
+			'height' => 0,
+			'poster' => '',
+			'width'  => 0,
+		];
+
+		$attributes = wp_parse_args( $attributes, $defaults );
+
+		$data = [
+			'title'           => $attributes['title'],
+			'url'             => $attributes['url'],
+			'poster_portrait' => $attributes['poster'],
+		];
+
+		$story = new Story( $data );
+
 		if ( is_feed() ) {
-			return $this->render_block_feed( $attributes );
+			$renderer = new Image( $story );
+		} else {
+			$renderer = new Embed( $story );
 		}
 
-		return $this->render_block_html( $attributes );
+		return $renderer->render( $attributes );
 	}
 
-	/**
-	 * Renders the block type output in default context.
-	 *
-	 * @param array $attributes Block attributes.
-	 *
-	 * @return string Rendered block type output.
-	 */
-	protected function render_block_html( array $attributes ) {
-		$url          = (string) $attributes['url'];
-		$title        = (string) $attributes['title'];
-		$poster       = ! empty( $attributes['poster'] ) ? esc_url( $attributes['poster'] ) : '';
-		$align        = sprintf( 'align%s', $attributes['align'] );
-		$margin       = ( 'center' === $attributes['align'] ) ? 'auto' : '0';
-		$player_style = sprintf( 'width: %dpx; height: %dpx; margin: %s', absint( $attributes['width'] ), absint( $attributes['height'] ), esc_attr( $margin ) );
-		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
-
-		wp_enqueue_style( 'amp-story-player' );
-		wp_enqueue_script( 'amp-story-player' );
-
-		ob_start();
-		?>
-		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-			<amp-story-player
-				style="<?php echo esc_attr( $player_style ); ?>"
-			>
-				<a
-					href="<?php echo esc_url( $url ); ?>"
-					style="<?php echo esc_attr( $poster_style ); ?>"
-				>
-					<?php echo esc_html( $title ); ?>
-				</a>
-			</amp-story-player>
-		</div>
-		<?php
-
-		return (string) ob_get_clean();
-	}
-
-	/**
-	 * Renders the block type output in an RSS feed context.
-	 *
-	 * @param array $attributes Block attributes.
-	 *
-	 * @return string Rendered block type output.
-	 */
-	protected function render_block_feed( array $attributes ) {
-		$url   = (string) $attributes['url'];
-		$title = (string) $attributes['title'];
-
-		ob_start();
-		?>
-		<div class="wp-block-web-stories-embed">
-			<a href="<?php echo esc_url( $url ); ?>">
-				<?php
-				if ( ! empty( $attributes['poster'] ) ) {
-					printf(
-						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
-						esc_url( $attributes['poster'] ),
-						absint( $attributes['width'] ),
-						absint( $attributes['height'] ),
-						esc_attr( $title )
-					);
-				} else {
-					echo esc_html( $title );
-				}
-				?>
-			</a>
-		</div>
-		<?php
-
-		return (string) ob_get_clean();
-	}
 }

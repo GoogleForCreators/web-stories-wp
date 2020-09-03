@@ -38,7 +38,14 @@ function StoryProvider({ storyId, children }) {
     api,
     internal: { restore },
   } = useStoryReducer();
-  const { pages, current, selection, story, capabilities } = reducerState;
+  const {
+    pages,
+    current,
+    selection,
+    story,
+    animationState,
+    capabilities,
+  } = reducerState;
 
   // Generate current page info.
   const {
@@ -67,7 +74,12 @@ function StoryProvider({ storyId, children }) {
   }, [pages, current]);
 
   // Generate selection info
-  const { selectedElementIds, selectedElements, hasSelection } = useMemo(() => {
+  const {
+    selectedElementIds,
+    selectedElements,
+    selectedElementAnimations,
+    hasSelection,
+  } = useMemo(() => {
     if (!currentPage) {
       return {
         selectedElements: [],
@@ -75,10 +87,23 @@ function StoryProvider({ storyId, children }) {
         hasSelection: false,
       };
     }
+
     const els = currentPage.elements.filter(({ id }) => selection.includes(id));
+    const animations = (currentPage.animations || []).reduce(
+      (acc, { targets, ...properties }) => {
+        if (targets.some((id) => selection.includes(id))) {
+          return [...acc, { ...properties }];
+        }
+
+        return acc;
+      },
+      []
+    );
+
     return {
       selectedElementIds: selection,
       selectedElements: els,
+      selectedElementAnimations: animations,
       hasSelection: els.length > 0,
     };
   }, [currentPage, selection]);
@@ -117,8 +142,10 @@ function StoryProvider({ storyId, children }) {
       currentPage,
       selectedElementIds,
       selectedElements,
+      selectedElementAnimations,
       hasSelection,
       story,
+      animationState,
       capabilities,
       meta: {
         isSaving: isSaving || isAutoSaving,

@@ -28,6 +28,8 @@ export const STORY_CONTEXT_MENU_ACTIONS = {
   DUPLICATE: 'duplicate-action',
   CREATE_TEMPLATE: 'create-template-action',
   DELETE: 'delete-story-action',
+  COPY_STORY_LINK: 'copy-story-link',
+  OPEN_STORY_LINK: 'open-story-link',
 };
 
 export const STORY_CONTEXT_MENU_ITEMS = [
@@ -40,10 +42,18 @@ export const STORY_CONTEXT_MENU_ITEMS = [
     value: STORY_CONTEXT_MENU_ACTIONS.PREVIEW,
     inProgress: true,
   },
-  { label: null, value: false, separator: true },
+  {
+    label: __('Open in new tab', 'web-stories'),
+    value: STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK,
+  },
+  {
+    label: __('Copy Story URL', 'web-stories'),
+    value: STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK,
+  },
   {
     label: __('Rename', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.RENAME,
+    separator: 'top',
   },
   {
     label: __('Duplicate', 'web-stories'),
@@ -54,10 +64,10 @@ export const STORY_CONTEXT_MENU_ITEMS = [
     value: STORY_CONTEXT_MENU_ACTIONS.CREATE_TEMPLATE,
     inProgress: true,
   },
-  { label: null, value: false, separator: true },
   {
     label: __('Delete Story', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
+    separator: 'top',
   },
 ];
 
@@ -140,7 +150,7 @@ export const STORY_VIEWING_LABELS = {
   ),
 };
 
-export const STORY_PAGE_STATE = {
+export const STORY_ANIMATION_STATE = {
   RESET: 'reset',
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',

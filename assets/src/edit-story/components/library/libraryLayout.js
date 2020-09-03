@@ -41,17 +41,17 @@ const Layout = styled.section.attrs({
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.bg.panel};
   color: ${({ theme }) => theme.colors.fg.white};
+  max-height: 100%;
 `;
 
 // @todo Verify that L10N works with the translation happening here.
 const TabsArea = styled.nav.attrs({
   'aria-label': __('Library tabs', 'web-stories'),
-})`
-  grid-area: tabs;
-`;
+})``;
 
 const LibraryPaneContainer = styled.div`
-  overflow: auto;
+  height: 100%;
+  min-height: 0;
 `;
 
 function LibraryLayout() {
@@ -65,6 +65,7 @@ function LibraryLayout() {
     <Layout>
       <TabsArea>
         <TabView
+          label={__('Element Library Selection', 'web-stories')}
           tabs={tabs}
           initialTab={initialTab}
           onTabChange={(id) => setTab(id)}
