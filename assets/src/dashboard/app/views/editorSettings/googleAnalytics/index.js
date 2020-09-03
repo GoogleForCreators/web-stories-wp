@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -29,13 +29,15 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
-import { InlineInputForm } from '../../../../components';
+import { TextInput } from '../../../../components';
 import {
   FormContainer,
   InlineLink,
   SettingForm,
   SettingHeading,
   TextInputHelperText,
+  SaveButton,
+  ErrorText,
 } from '../components';
 
 export const TEXT = {
@@ -53,49 +55,67 @@ export const TEXT = {
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
-  const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
+  const [analyticsId, setAnlayticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
+  const canSave = analyticsId !== googleAnalyticsId && !inputError;
+  const disableSaveButton = !canSave;
 
-  useEffect(() => {
-    setAnalyticsId(googleAnalyticsId);
-  }, [googleAnalyticsId]);
+  // const handleUpdateId = useCallback(
+  //   (value) => {
+  // if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
+  //   setInputError('');
+  //   return handleUpdate(value);
+  // }
+  //     return setInputError(TEXT.INPUT_ERROR);
+  //   },
+  //   [handleUpdate, setInputError]
+  // );
 
-  const handleCancelUpdateId = useCallback(() => {
-    setAnalyticsId(googleAnalyticsId);
-  }, [googleAnalyticsId, setAnalyticsId]);
+  const handleUpdateId = useCallback((event) => {
+    const { value } = event.target;
+    setAnlayticsId(value);
 
-  const handleUpdateId = useCallback(
-    (value) => {
-      if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
-        setInputError('');
-        return handleUpdate(value);
-      }
-      return setInputError(TEXT.INPUT_ERROR);
-    },
-    [handleUpdate, setInputError]
-  );
+    if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
+      setInputError('');
+
+      return;
+    }
+
+    setInputError(TEXT.INPUT_ERROR);
+  }, []);
+
+  // const debouncedHandleUpdateIds
+
+  const handleOnSave = useCallback(() => {
+    if (canSave) {
+      handleUpdate(analyticsId);
+    }
+  }, [canSave, analyticsId, handleUpdate]);
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading htmlFor="gaTrackingID">
         {TEXT.SECTION_HEADING}
       </SettingHeading>
       <FormContainer>
-        <InlineInputForm
+        <TextInput
           label={TEXT.ARIA_LABEL}
           id="gaTrackingId"
           value={analyticsId}
-          onEditCancel={handleCancelUpdateId}
-          onEditComplete={handleUpdateId}
+          onChange={handleUpdateId}
           placeholder={TEXT.PLACEHOLDER}
           error={inputError}
-          noAutoFocus={true}
         />
+        {inputError && <ErrorText>{inputError}</ErrorText>}
         <TextInputHelperText>
           {TEXT.CONTEXT}
           <InlineLink href={TEXT.CONTEXT_ARTICLE_LINK}>
             {TEXT.CONTEXT_ARTICLE}
           </InlineLink>
         </TextInputHelperText>
+        <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
+          {'Save'}
+        </SaveButton>
       </FormContainer>
     </SettingForm>
   );

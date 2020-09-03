@@ -25,9 +25,11 @@ import styled from 'styled-components';
 import {
   TypographyPresets,
   StandardViewContentGutter,
+  Button,
 } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
+import { BUTTON_TYPES } from '../../../constants';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -128,6 +130,17 @@ export const RemoveLogoButton = styled.button`
     height: 100%;
     display: block;
   }
+`;
+
+export const SaveButton = styled(Button).attrs({ type: BUTTON_TYPES.PRIMARY })`
+  float: right;
+`;
+
+export const ErrorText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: 1em;
+  padding-top: 0.25em;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
