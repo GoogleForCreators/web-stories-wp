@@ -73,7 +73,7 @@ describe('Embed Block', () => {
     );
     await page.keyboard.press('Enter');
 
-    expect(page).toMatch('Embed Settings');
+    await expect(page).toMatch('Embed Settings');
   });
 
   it('should produce valid AMP when using the AMP plugin', async () => {
