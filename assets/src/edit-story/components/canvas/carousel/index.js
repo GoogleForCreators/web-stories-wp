@@ -100,6 +100,7 @@ const EditorVersion = styled.div`
   margin-bottom: 10px;
   pointer-events: none;
   font-size: ${({ theme }) => theme.fonts.version.size};
+  font-family: ${({ theme }) => theme.fonts.version.family};
   line-height: ${({ theme }) => theme.fonts.version.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
