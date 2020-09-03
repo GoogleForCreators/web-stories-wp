@@ -76,7 +76,7 @@ describe('getResourceFromMedia3p', () => {
       poster:
         'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
       posterId: undefined,
-      id: undefined,
+      id: 'media/coverr:g9re0sRUYA',
       length: 121,
       lengthFormatted: '2:01',
       title: 'NYC Postcard',
@@ -159,7 +159,7 @@ describe('getResourceFromMedia3p', () => {
       poster:
         'https://storage.coverr.co/t/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?v=1596077699474',
       posterId: undefined,
-      id: undefined,
+      id: 'media/coverr:g9re0sRUYA',
       length: 121,
       lengthFormatted: '2:01',
       title: 'NYC Postcard',

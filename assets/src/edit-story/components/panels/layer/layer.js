@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { rgba } from 'polished';
+import styled, { css } from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -52,9 +51,9 @@ const LayerButton = styled.button.attrs({
 
   ${({ isSelected, theme }) =>
     isSelected &&
-    `
-    background: ${rgba(theme.colors.bg.divider, 0.04)};
-  `}
+    css`
+      background: ${theme.colors.fg.gray24};
+    `}
 
   &:active {
     outline: none;

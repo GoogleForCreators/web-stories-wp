@@ -18,14 +18,18 @@
  * Preload image using a promise.
  *
  * @param {string} src Image source.
+ * @param {string} srcset Image source set.
  * @return {Promise} Image object.
  */
-const preloadImage = (src) => {
+const preloadImage = (src, srcset) => {
   return new Promise((resolve, reject) => {
     const image = new window.Image();
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.decoding = 'async';
+    if (srcset) {
+      image.srcset = srcset;
+    }
     image.src = src;
   });
 };

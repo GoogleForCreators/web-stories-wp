@@ -36,7 +36,6 @@ import {
   RightArrow,
   GridView as GridViewButton,
   Keyboard as KeyboardShortcutsButton,
-  SafeZone,
   Plain,
 } from '../../button';
 import {
@@ -61,6 +60,8 @@ import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
 
 import useCanvas from '../useCanvas';
 import WithTooltip from '../../tooltip';
+import { ToggleButton } from '../../form';
+import { SafeZone } from '../../../icons';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
@@ -90,6 +91,21 @@ const NavArea = styled(Area)`
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
+const EditorVersion = styled.div`
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  margin-left: 14px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  font-size: ${({ theme }) => theme.fonts.version.size};
+  font-family: ${({ theme }) => theme.fonts.version.family};
+  line-height: ${({ theme }) => theme.fonts.version.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+`;
+
 const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
@@ -118,17 +134,24 @@ const OverflowButtons = styled.div`
   }
 `;
 
-const buttonDimensions = { width: '24', height: '24' };
+const StyledGridViewButton = styled(GridViewButton).attrs({
+  height: '24',
+  width: '24',
+})``;
 
-const StyledGridViewButton = styled(GridViewButton).attrs(buttonDimensions)``;
-
-const SafeZoneButton = styled(SafeZone).attrs(buttonDimensions)`
-  ${({ active, theme }) =>
-    active &&
-    css`
-      background: ${rgba(theme.colors.bg.white, 0.1)};
-    `}
+const SafeZoneToggle = styled(ToggleButton).attrs({
+  iconHeight: 24,
+  iconWidth: 24,
+})`
+  height: 24px;
+  width: 24px;
   margin-bottom: 12px;
+
+  & label {
+    height: 24px;
+    width: 24px;
+    border-radius: 2px;
+  }
 `;
 
 const PageList = styled(Reorderable).attrs({
@@ -234,7 +257,7 @@ function Carousel() {
       actions: { setCurrentPage, arrangePage },
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
-  const { isRTL } = useConfig();
+  const { isRTL, version } = useConfig();
   const { showSafeZone, setShowSafeZone } = useCanvas(
     ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
       showSafeZone,
@@ -412,6 +435,7 @@ function Carousel() {
                 )}
                 <ReorderablePage position={index}>
                   <Page
+                    tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     onClick={handleClickPage(page)}
                     role="option"
                     data-page-id={page.id}
@@ -476,9 +500,10 @@ function Carousel() {
               }
               placement="left"
             >
-              <SafeZoneButton
-                active={showSafeZone}
-                onClick={() => setShowSafeZone((current) => !current)}
+              <SafeZoneToggle
+                icon={<SafeZone />}
+                value={showSafeZone}
+                onChange={setShowSafeZone}
                 aria-label={
                   showSafeZone
                     ? __('Disable Safe Zone', 'web-stories')
@@ -498,6 +523,13 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
+      <EditorVersion>
+        {sprintf(
+          /* translators: %s: editor version. */
+          __('Version %s', 'web-stories'),
+          version
+        )}
+      </EditorVersion>
       <Modal
         open={isGridViewOpen}
         onClose={closeModal}

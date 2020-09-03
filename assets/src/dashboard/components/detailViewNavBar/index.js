@@ -89,16 +89,18 @@ export function DetailViewNavBar({ handleCta, handleBookmarkClick, ctaText }) {
         {handleBookmarkClick && (
           <BookmarkToggle onClick={handleBookmarkClick} />
         )}
-        <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
-          {ctaText}
-        </CapitalizedButton>
+        {ctaText && ctaText.trim().length > 0 && (
+          <CapitalizedButton type={BUTTON_TYPES.CTA} onClick={handleCta}>
+            {ctaText}
+          </CapitalizedButton>
+        )}
       </Container>
     </Nav>
   );
 }
 
 DetailViewNavBar.propTypes = {
-  ctaText: PropTypes.string.isRequired,
+  ctaText: PropTypes.string,
   handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,
 };

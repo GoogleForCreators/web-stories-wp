@@ -128,8 +128,8 @@
  * @typedef {Object} Media3pContextState
  * @property {string} searchTerm search term for media3p
  * @property {string} selectedProvider current selected provider
- * @property {Media3pProviderContextState} unsplash state for unsplash
- * @property {Media3pProviderContextState} coverr state for coverr
+ * @property {Media3pProviderContextState} unsplash state for Unsplash tab
+ * @property {Media3pProviderContextState} coverr state for Coverr tab
  */
 
 /**
@@ -148,8 +148,8 @@
  * @typedef {Object} Media3pReducerState
  * @property {string} searchTerm current search term
  * @property {string} selectedProvider selected provider
- * @property {Media3pProviderReducerState} unsplash state for unsplash
- * @property {Media3pProviderReducerState} coverr state for coverr
+ * @property {Media3pProviderReducerState} unsplash state for Unsplash tab
+ * @property {Media3pProviderReducerState} coverr state for Coverr tab
  */
 
 /**

@@ -39,13 +39,14 @@ import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { Button, Dialog } from '../../../../../components';
+import { Button, Dialog, useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
   BUTTON_TYPES,
+  ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 
@@ -69,6 +70,9 @@ function StoriesView({
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
 
+  const {
+    actions: { addToast },
+  } = useToastContext();
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
 
@@ -110,11 +114,37 @@ function StoriesView({
           setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
+          global.navigator.clipboard.writeText(story.link);
+
+          addToast({
+            message: {
+              title: __('URL copied', 'web-stories'),
+              body:
+                story.title.length > 0
+                  ? sprintf(
+                      /* translators: %s is the story title. */
+                      __(
+                        '%s has been copied to your clipboard.',
+                        'web-stories'
+                      ),
+                      story.title
+                    )
+                  : __(
+                      '(no title) has been copied to your clipboard.',
+                      'web-stories'
+                    ),
+            },
+            severity: ALERT_SEVERITY.SUCCESS,
+            id: Date.now(),
+          });
+          break;
+
         default:
           break;
       }
     },
-    [storyActions]
+    [addToast, storyActions]
   );
 
   const enabledMenuItems = useMemo(() => {
