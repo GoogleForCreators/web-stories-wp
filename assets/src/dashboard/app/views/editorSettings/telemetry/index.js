@@ -69,7 +69,7 @@ export default function TelemetrySettings({
           />
           <FormLabel aria-checked={checked}>
             {__(
-              'Help us improve the Web Stories for WordPress plugin by allowing tracking of usage stats. All data are treated in accordance with',
+              'Help us improve the Web Stories for WordPress plugin by allowing tracking of usage stats. All data are treated in accordance with Google Privacy Policy.',
               'web-stories'
             )}
             &nbsp;
@@ -78,7 +78,7 @@ export default function TelemetrySettings({
               rel="noreferrer"
               target="_blank"
             >
-              {__('Google Privacy Policy', 'web-stories')}
+              {__('Learn more', 'web-stories')}
               {'.'}
             </a>
           </FormLabel>
