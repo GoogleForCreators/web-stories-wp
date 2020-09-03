@@ -52,6 +52,40 @@ class HTML {
 	protected $document;
 
 	/**
+	 * AMP requires the HTML markup to be encoded in UTF-8.
+	 *
+	 * @var string
+	 */
+	const AMP_ENCODING = 'utf-8';
+
+	/**
+	 * Encoding identifier to use for an unknown encoding.
+	 *
+	 * "auto" is recognized by mb_convert_encoding() as a special value.
+	 *
+	 * @var string
+	 */
+	const UNKNOWN_ENCODING = 'auto';
+
+	/**
+	 * Default document type to use.
+	 *
+	 * @var string
+	 */
+	const DEFAULT_DOCTYPE = '<!DOCTYPE html>';
+
+	/**
+	 * Encoding detection order in case we have to guess.
+	 *
+	 * This list of encoding detection order is just a wild guess and might need fine-tuning over time.
+	 * If the charset was not provided explicitly, we can really only guess, as the detection can
+	 * never be 100% accurate and reliable.
+	 *
+	 * @var string
+	 */
+	const ENCODING_DETECTION_ORDER = 'UTF-8, EUC-JP, eucJP-win, JIS, ISO-2022-JP, ISO-8859-15, ISO-8859-1, ASCII';
+
+	/**
 	 * Story_Renderer constructor.
 	 *
 	 * @param Story $story Post object.
@@ -66,8 +100,8 @@ class HTML {
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = '<!DOCTYPE html>' . $this->story->get_markup();
-		$markup = mb_convert_encoding( $markup, 'HTML-ENTITIES', 'UTF-8' );
+		$markup = self::DEFAULT_DOCTYPE . $this->story->get_markup();
+		$markup = $this->adapt_encoding( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->remove_noscript_amp_boilerplate( $markup );
 
@@ -86,6 +120,31 @@ class HTML {
 	}
 
 	/**
+	 * Adapt the encoding of the content.
+	 *
+	 * @param string $markup Source content to adapt the encoding of.
+	 * @return string Adapted content.
+	 */
+	protected function adapt_encoding( $markup ) {
+		/*
+		 * Default encoding of the markup.
+		 *
+		 * "auto" is recognized by mb_convert_encoding() as a special value.
+		 */
+		$encoding = 'auto';
+
+		if ( function_exists( 'mb_detect_encoding' ) ) {
+			$encoding = mb_detect_encoding( $markup, self::ENCODING_DETECTION_ORDER, true );
+		}
+
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$markup = mb_convert_encoding( $markup, self::AMP_ENCODING, $encoding );
+		}
+
+		return $markup;
+	}
+
+	/**
 	 * Loads a full HTML document and returns a DOMDocument instance.
 	 *
 	 * @param string $string Input string.
@@ -93,7 +152,7 @@ class HTML {
 	 *
 	 * @return DOMDocument DOMDocument instance.
 	 */
-	private function load_html( $string, $options = 0 ) {
+	protected function load_html( $string, $options = 0 ) {
 		$options |= LIBXML_COMPACT;
 
 		/*
@@ -234,7 +293,7 @@ class HTML {
 			return;
 		}
 
-		$head->appendChild( $this->document->importNode( $fragment, true ) );
+		$head->appendChild( $fragment );
 	}
 
 	/**
@@ -295,7 +354,7 @@ class HTML {
 			return;
 		}
 
-		$head->appendChild( $this->document->importNode( $script, true ) );
+		$head->appendChild( $script );
 	}
 
 	/**
@@ -324,7 +383,7 @@ class HTML {
 		$fragment = $this->document->createDocumentFragment();
 		$fragment->appendXml( $output );
 
-		$story_element->appendChild( $this->document->importNode( $fragment, true ) );
+		$story_element->appendChild( $fragment );
 
 		/*
 		 * $fragment could contain anything (amp-analytics, amp-pixel, etc.).
