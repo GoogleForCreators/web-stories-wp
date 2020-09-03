@@ -92,7 +92,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
     <div ref={containerRef}>
       <GridContainer
         pageSize={pageSize}
-        gridRef={gridRef}
+        ref={gridRef}
         ariaLabel={__('Available templates', 'web-stories')}
       >
         {templates.map((template) => {

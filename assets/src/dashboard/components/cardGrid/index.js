@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -61,24 +62,28 @@ DashboardGrid.propTypes = {
   columnWidth: PropTypes.number.isRequired,
 };
 
-const CardGrid = ({ ariaLabel, children, pageSize, gridRef }) => (
-  <DashboardGrid
-    role="list"
-    data-testid={'dashboard-grid-list'}
-    tabIndex={0}
-    aria-label={ariaLabel}
-    ref={gridRef}
-    columnWidth={pageSize.width}
-    columnHeight={pageSize.containerHeight}
-  >
-    {children}
-  </DashboardGrid>
-);
+const CardGrid = forwardRef(function CardGrid(
+  { ariaLabel, children, pageSize },
+  ref
+) {
+  return (
+    <DashboardGrid
+      ref={ref}
+      role="list"
+      data-testid={'dashboard-grid-list'}
+      tabIndex={0}
+      aria-label={ariaLabel}
+      columnWidth={pageSize.width}
+      columnHeight={pageSize.containerHeight}
+    >
+      {children}
+    </DashboardGrid>
+  );
+});
 
 CardGrid.propTypes = {
   ariaLabel: PropTypes.string,
   children: PropTypes.node.isRequired,
-  gridRef: PropTypes.object,
   pageSize: PageSizePropType.isRequired,
 };
 
