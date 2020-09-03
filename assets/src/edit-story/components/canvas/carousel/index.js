@@ -420,6 +420,7 @@ function Carousel() {
                 )}
                 <ReorderablePage position={index}>
                   <Page
+                    tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     onClick={handleClickPage(page)}
                     role="option"
                     data-page-id={page.id}
