@@ -56,7 +56,7 @@ export const TEXT = {
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
-  const [analyticsId, setAnalyticsId] = useState(() => googleAnalyticsId);
+  const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
