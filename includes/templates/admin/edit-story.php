@@ -73,15 +73,9 @@ wp_add_inline_script(
 );
 
 require_once ABSPATH . 'wp-admin/admin-header.php';
-
+require_once __DIR__ . '/error-no-js.php';
 ?>
 
-<div id="stories-editor-no-js" class="wrap">
-	<div class="notice notice-error notice-alt">
-		<p><?php esc_html_e( 'Web Stories for WordPress requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
-	</div>
-</div>
-
-<div id="edit-story">
+<div id="edit-story" class="hide-if-no-js">
 	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
 </div>

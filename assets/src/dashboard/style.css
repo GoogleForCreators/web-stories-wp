@@ -27,11 +27,11 @@ body {
 
 #screen-meta,
 #screen-meta
-  ~ :not(#web-stories-dashboard):not(.clear):not(#stories-dashboard-no-js) {
+  ~ :not(#web-stories-dashboard):not(.clear):not(#web-stories-no-js) {
   display: none;
 }
 
-body.web-story_page_stories-dashboard.js {
+body.web-story_page_stories-dashboard {
   position: relative;
 }
 
@@ -39,8 +39,8 @@ body.web-story_page_stories-dashboard.js {
   z-index: 4;
 }
 
-body.web-story_page_stories-dashboard.js #wpwrap,
-body.web-story_page_stories-dashboard.js #wpbody-content {
+body.web-story_page_stories-dashboard #wpwrap,
+body.web-story_page_stories-dashboard #wpbody-content {
   position: absolute;
   overflow: hidden;
   top: 0;
@@ -51,37 +51,22 @@ body.web-story_page_stories-dashboard.js #wpbody-content {
   padding: 0;
 }
 
-body.web-story_page_stories-dashboard.js #wpcontent,
-body.web-story_page_stories-dashboard.js #wpbody-content {
+body.web-story_page_stories-dashboard #wpcontent,
+body.web-story_page_stories-dashboard #wpbody-content {
   padding: 0;
 }
 
-body.web-story_page_stories-dashboard.js #wpbody {
+body.web-story_page_stories-dashboard #wpbody {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-body.web-story_page_stories-dashboard.js
-  #web-stories-dashboard
-  .loading-message {
+body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
   text-align: center;
 }
 
-body.web-story_page_stories-dashboard.no-js
-  #web-stories-dashboard
-  .loading-message {
-  display: none;
-}
-body.web-story_page_stories-dashboard #stories-editor-no-js {
-  display: none;
-}
-
-body.web-story_page_stories-dashboard.no-js #stories-editor-no-js {
-  display: block;
-}
-
-body.web-story_page_stories-dashboard.js #wpfooter {
+body.web-story_page_stories-dashboard #wpfooter {
   display: none;
 }
 
@@ -89,4 +74,8 @@ body.web-story_page_stories-dashboard.js #wpfooter {
 
 button {
   font-size: inherit;
+}
+
+#web-stories-no-js {
+  margin: 25px 20px 0px 20px;
 }

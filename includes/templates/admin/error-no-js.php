@@ -1,6 +1,6 @@
 <?php
 /**
- * Stories dashboard.
+ * Stories no js error.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -29,10 +29,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require_once __DIR__ . '/error-no-js.php';
-
 ?>
-
-<div id="web-stories-dashboard" class="hide-if-no-js">
-	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+<div id="web-stories-no-js" class="wrap hide-if-js">
+	<div class="notice notice-error notice-alt">
+		<p><?php esc_html_e( 'Web Stories for WordPress requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+	</div>
 </div>
