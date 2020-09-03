@@ -142,14 +142,6 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                   label: __('Use template', 'web-stories'),
                   ariaLabel: __('Use this template', 'web-stories'),
                 }}
-                topAction={{
-                  targetAction: (e) => {
-                    e.stopPropagation();
-                    templateActions.handlePreviewTemplate(e, template);
-                  },
-                  label: __('Preview', 'web-stories'),
-                  ariaLabel: __('Open preview', 'web-stories'),
-                }}
               />
             </CardGridItem>
           );

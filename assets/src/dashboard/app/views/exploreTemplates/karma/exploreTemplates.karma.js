@@ -143,51 +143,6 @@ describe('Grid view', () => {
     });
   });
 
-  describe('Action: See template preview from explore templates', () => {
-    beforeEach(async () => {
-      fixture.setFlags({ enableTemplatePreviews: true });
-
-      await fixture.render();
-    });
-
-    it('should trigger template preview when user clicks first button in card', async () => {
-      const { templatesOrderById } = await getTemplatesState();
-
-      const currentCard = await getTemplateElementById(templatesOrderById[1]);
-      const utils = within(currentCard);
-      const previewButton = utils.getByTestId('card-top-action');
-      await fixture.events.click(previewButton);
-
-      const secondTemplate = getTemplateElementById(templatesOrderById[1]);
-      expect(secondTemplate.contains(document.activeElement)).toBeTrue();
-
-      await fixture.events.keyboard.press('right');
-
-    it('should trigger template preview when user presses Enter while focused on a card', async () => {
-      const { templatesOrderById } = await getTemplatesState();
-
-      await focusOnGridByKeyboard();
-
-      await fixture.events.keyboard.press('right');
-
-      await fixture.events.keyboard.press('right');
-
-      await fixture.events.keyboard.press('Enter');
-
-      const secondTemplate = getTemplateElementById(templatesOrderById[1]);
-      expect(secondTemplate.contains(document.activeElement)).toBeTrue();
-
-      await fixture.events.keyboard.press('tab');
-
-      await fixture.events.keyboard.press('Enter');
-
-      await fixture.events.keyboard.press('left');
-
-      const thirdTemplate = getTemplateElementById(templatesOrderById[2]);
-      expect(thirdTemplate.contains(document.activeElement)).toBeTrue();
-    });
-  });
-
   describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
     it('should navigate to view an individual template', async () => {
       const { templatesOrderById } = await getTemplatesState();
