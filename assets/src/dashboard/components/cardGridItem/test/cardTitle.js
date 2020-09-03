@@ -35,6 +35,7 @@ describe('CardTitle', () => {
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
+        tabIndex={0}
       />
     );
 
@@ -51,6 +52,7 @@ describe('CardTitle', () => {
         onEditComplete={jest.fn}
         editMode={true}
         id="sampleStoryId"
+        tabIndex={0}
       />
     );
     const titleInput = getByDisplayValue('Sample Story');
@@ -69,6 +71,7 @@ describe('CardTitle', () => {
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
+        tabIndex={0}
       />
     );
 
@@ -84,6 +87,7 @@ describe('CardTitle', () => {
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
+        tabIndex={0}
       />
     );
 
@@ -99,6 +103,7 @@ describe('CardTitle', () => {
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
+        tabIndex={0}
       />
     );
 
@@ -113,6 +118,7 @@ describe('CardTitle', () => {
         displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
+        tabIndex={0}
       />
     );
 

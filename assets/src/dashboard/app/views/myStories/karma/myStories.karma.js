@@ -390,31 +390,12 @@ describe('Grid view', () => {
       await fixture.render();
     });
 
-    it('should trigger template preview when user clicks a card', async () => {
-      const { storiesOrderById } = await getStoriesState();
-
-      const currentCard = await getGridElementById(storiesOrderById[1]);
-      const utils = within(currentCard);
-
-      const activeCard = utils.getByTestId('card-action-container');
-      expect(activeCard).toBeTruthy();
-
-      const { x, y } = activeCard.getBoundingClientRect();
-
-      // We need to click slightly above the center of the card to avoid clicking 'View'
-      await fixture.events.mouse.click(x - 20, y);
-
-      const viewPreviewStory = await fixture.screen.queryByTestId(
-        'preview-iframe'
-      );
-
-      expect(viewPreviewStory).toBeTruthy();
-    });
-
     it('should trigger story preview when user presses Enter while focused on a card', async () => {
       const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
 
       await fixture.events.focus(gridContainer);
+
+      await fixture.events.keyboard.press('right');
 
       await fixture.events.keyboard.press('tab');
 
@@ -599,11 +580,17 @@ describe('List view', () => {
 
       const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
 
+      const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
+
+      await fixture.events.focus(gridContainer);
+
       const listViewButton = fixture.screen.getByLabelText(
         new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
       );
 
       expect(listViewButton).toBeTruthy();
+
+      await fixture.events.hover(listViewButton);
 
       await fixture.events.click(listViewButton);
 
