@@ -54,7 +54,7 @@ const defaultConfig = {
   api: {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
-    me: '/wp/v2/users/me',
+    currentUser: '/wp/v2/users/me',
     fonts: '/web-stories/v1/fonts',
     settings: '/wp/v2/settings',
   },

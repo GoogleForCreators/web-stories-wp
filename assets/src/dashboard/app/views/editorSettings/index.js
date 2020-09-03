@@ -41,8 +41,8 @@ const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
-    me,
-    fetchMe,
+    currentUser,
+    fetchCurrentUser,
     fetchSettings,
     updateSettings,
     toggleWebStoriesTrackingOptIn,
@@ -59,7 +59,7 @@ function EditorSettings() {
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
-        usersApi: { fetchMe, toggleWebStoriesTrackingOptIn },
+        usersApi: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       },
       state: {
         settings: {
@@ -68,7 +68,7 @@ function EditorSettings() {
           publisherLogoIds,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
-        me,
+        currentUser,
       },
     }) => ({
       fetchSettings,
@@ -81,9 +81,9 @@ function EditorSettings() {
       mediaById,
       newlyCreatedMediaIds,
       publisherLogoIds,
-      fetchMe,
+      fetchCurrentUser,
       toggleWebStoriesTrackingOptIn,
-      me,
+      currentUser,
     })
   );
 
@@ -108,8 +108,8 @@ function EditorSettings() {
 
   useEffect(() => {
     fetchSettings();
-    fetchMe();
-  }, [fetchMe, fetchSettings]);
+    fetchCurrentUser();
+  }, [fetchCurrentUser, fetchSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -212,9 +212,11 @@ function EditorSettings() {
               uploadError={mediaError}
             />
             <TelemetrySettings
-              disabled={me.isUpdating}
+              disabled={currentUser.isUpdating}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
-              selected={Boolean(me.data.meta?.web_stories_tracking_optin)}
+              selected={Boolean(
+                currentUser.data.meta?.web_stories_tracking_optin
+              )}
             />
           </Main>
         </Layout.Scrollable>

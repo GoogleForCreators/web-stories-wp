@@ -27,9 +27,9 @@ import { USERS_PER_REQUEST } from '../../constants';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useUserApi(dataAdapter, { userApi, meApi }) {
+export default function useUserApi(dataAdapter, { userApi, currentUserApi }) {
   const [users, setUsers] = useState({});
-  const [me, setMe] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
   const fetchUsers = useCallback(async () => {
     try {
@@ -60,22 +60,23 @@ export default function useUserApi(dataAdapter, { userApi, meApi }) {
     }
   }, [dataAdapter, userApi]);
 
-  const fetchMe = useCallback(async () => {
+  const fetchCurrentUser = useCallback(async () => {
     try {
-      setMe(await dataAdapter.get(meApi));
+      setCurrentUser(await dataAdapter.get(currentUserApi));
     } catch (e) {
-      setMe({});
+      setCurrentUser({});
     }
-  }, [dataAdapter, meApi]);
+  }, [dataAdapter, currentUserApi]);
 
   const toggleWebStoriesTrackingOptIn = useCallback(async () => {
     setIsUpdating(true);
     try {
-      setMe(
-        await dataAdapter.post(meApi, {
+      setCurrentUser(
+        await dataAdapter.post(currentUserApi, {
           data: {
             meta: {
-              web_stories_tracking_optin: !me.meta.web_stories_tracking_optin,
+              web_stories_tracking_optin: !currentUser.meta
+                .web_stories_tracking_optin,
             },
           },
         })
@@ -83,7 +84,7 @@ export default function useUserApi(dataAdapter, { userApi, meApi }) {
     } finally {
       setIsUpdating(false);
     }
-  }, [dataAdapter, me, meApi]);
+  }, [dataAdapter, currentUser, currentUserApi]);
 
   useEffect(() => {
     fetchUsers();
@@ -91,10 +92,17 @@ export default function useUserApi(dataAdapter, { userApi, meApi }) {
 
   return useMemo(
     () => ({
-      api: { fetchUsers, fetchMe, toggleWebStoriesTrackingOptIn },
+      api: { fetchUsers, fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       users,
-      me: { data: me, isUpdating },
+      currentUser: { data: currentUser, isUpdating },
     }),
-    [fetchUsers, fetchMe, toggleWebStoriesTrackingOptIn, users, me, isUpdating]
+    [
+      fetchUsers,
+      fetchCurrentUser,
+      toggleWebStoriesTrackingOptIn,
+      users,
+      currentUser,
+      isUpdating,
+    ]
   );
 }

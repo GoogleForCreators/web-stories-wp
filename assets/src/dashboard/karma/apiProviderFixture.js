@@ -43,7 +43,7 @@ export default function ApiProviderFixture({ children }) {
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
   const [users] = useState(formattedUsersObject);
-  const [me, setMe] = useState(getMeState());
+  const [currentUser, setCurrentUser] = useState(getCurrentUserState());
   const settingsApi = useMemo(
     () => ({
       fetchSettings: () =>
@@ -107,10 +107,11 @@ export default function ApiProviderFixture({ children }) {
   const usersApi = useMemo(
     () => ({
       fetchUsers: jasmine.createSpy('fetchUsers'),
-      fetchMe: jasmine.createSpy('fetchMe'),
-      toggleWebStoriesTrackingOptIn: () => setMe(toggleOptInTracking(me)),
+      fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
+      toggleWebStoriesTrackingOptIn: () =>
+        setCurrentUser(toggleOptInTracking(currentUser)),
     }),
-    [me]
+    [currentUser]
   );
 
   const fontApi = useMemo(
@@ -136,7 +137,7 @@ export default function ApiProviderFixture({ children }) {
         stories,
         templates,
         users,
-        me,
+        currentUser,
       },
       actions: {
         mediaApi,
@@ -153,7 +154,7 @@ export default function ApiProviderFixture({ children }) {
       stories,
       templates,
       users,
-      me,
+      currentUser,
       mediaApi,
       settingsApi,
       storyApi,
@@ -194,7 +195,7 @@ function getSettingsState() {
   };
 }
 
-function getMeState() {
+function getCurrentUserState() {
   return {
     data: { id: 1, meta: { web_stories_tracking_optin: true } },
     isUpdating: false,
