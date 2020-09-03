@@ -35,3 +35,5 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           pattern: '{assets/js/*.js,assets/css/*.css}'
           build-script: 'build:js'
+          minimum-change-threshold: 100
+          strip-hash: 'chunk-.*-(\w{20})\.js$'

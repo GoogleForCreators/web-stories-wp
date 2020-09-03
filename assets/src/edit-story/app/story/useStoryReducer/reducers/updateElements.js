@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../../../dashboard/constants';
-import { updateElementWithUpdater, intersect } from './utils';
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
+import { updateElementWithUpdater, updateAnimations, intersect } from './utils';
 
 /**
  * Update elements by the given list of ids with the given properties.
@@ -70,16 +70,51 @@ function updateElements(
     return state;
   }
 
-  const updatedElements = oldPage.elements.map((element) => {
-    if (!idsToUpdate.includes(element.id)) {
-      return element;
+  const {
+    animationLookup,
+    elements: updatedElements,
+  } = oldPage.elements.reduce(
+    ({ animationLookup, elements }, element) => {
+      if (!idsToUpdate.includes(element.id)) {
+        return {
+          animationLookup,
+          elements: [...elements, element],
+        };
+      }
+
+      const { animation, ...elem } = updateElementWithUpdater(
+        element,
+        propertiesOrUpdater,
+        pageIndex
+      );
+
+      const animLookup = animation
+        ? { [animation.id]: { ...animation, targets: [elem.id] } }
+        : {};
+
+      return {
+        animationLookup: {
+          ...animationLookup,
+          ...animLookup,
+        },
+        elements: [...elements, elem],
+      };
+    },
+    {
+      animationLookup: {},
+      elements: [],
     }
-    return updateElementWithUpdater(element, propertiesOrUpdater, pageIndex);
-  });
+  );
+
+  const newAnimations =
+    Object.keys(animationLookup).length > 0
+      ? updateAnimations(oldPage.animations || [], animationLookup)
+      : oldPage.animations;
 
   const newPage = {
     ...oldPage,
     elements: updatedElements,
+    ...(newAnimations ? { animations: newAnimations } : {}),
   };
 
   const newPages = [

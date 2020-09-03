@@ -42,19 +42,21 @@ import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import resourceList from '../../../../../utils/resourceList';
 import Media3pCategories from './media3pCategories';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
 const ProviderTabSection = styled.div`
-  margin-top: 30px;
+  margin-top: 16px;
+  margin-bottom: 16px;
   padding: 0 24px;
 `;
 
 const MediaSubheading = styled.div`
   margin-top: 24px;
   padding: 0 24px;
-  visibility: ${(props) => (props.shouldDisplay ? 'inherit' : 'hidden')};
+  ${(props) => props.shouldDisplay || 'display: none;'}
 `;
 
 const PaneBottom = styled.div`
@@ -99,7 +101,13 @@ function Media3pPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(
-    (resource) => insertElement(resource.type, { resource }),
+    (resource, thumbnailURL) => {
+      resourceList[resource.id] = {
+        url: thumbnailURL,
+        type: 'cached',
+      };
+      insertElement(resource.type, { resource });
+    },
     [insertElement]
   );
 
@@ -212,7 +220,7 @@ function Media3pPane(props) {
               disabled={Boolean(
                 selectedProvider &&
                   PROVIDERS[selectedProvider].supportsCategories &&
-                  media3p[selectedProvider].categories?.selectedCategoryId
+                  media3p[selectedProvider]?.state.categories.selectedCategoryId
               )}
             />
           </SearchInputContainer>

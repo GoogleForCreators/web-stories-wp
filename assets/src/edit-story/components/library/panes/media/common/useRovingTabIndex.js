@@ -15,24 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../../../../app/config';
+import { useKeyDownEffect } from '../../../../keyboard';
+
+/**
  * A point in 2D space.
  *
  * @typedef {Object} Point2D A point in 2D space.
  * @property {number} x The X coordinate.
  * @property {number} y The Y coordinate.
- */
-
-/**
- * Internal dependencies
- */
-/**
- * External dependencies
- */
-import { useCallback } from 'react';
-import { useConfig } from '../../../../../app/config';
-import { useKeyDownEffect } from '../../../../keyboard';
-/**
- * External dependencies
  */
 
 /**
@@ -132,7 +130,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref }) {
+export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
   const { isRTL } = useConfig();
 
   /**
@@ -206,6 +204,6 @@ export default function useRovingTabIndex({ ref }) {
       key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
     },
     onKeyDown,
-    [ref, onKeyDown]
+    [ref, onKeyDown, ...keyEventDeps]
   );
 }

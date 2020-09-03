@@ -15,23 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import { useCallback } from 'react';
-
-/**
  * Internal dependencies
  */
-import { getResourceFromLocalFile } from '../../../../utils';
 import {
+  Error,
   Logo,
-  DeleteLogoButton,
+  RemoveLogoButton,
   SettingForm,
   HelperText,
   FinePrintHelperText,
@@ -39,7 +38,7 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { Close as DeleteIcon } from '../../../../icons';
+import { Close as RemoveIcon } from '../../../../icons';
 
 export const TEXT = {
   SECTION_HEADING: __('Published Logo', 'web-stories'),
@@ -59,27 +58,14 @@ export const TEXT = {
   ),
 };
 
-function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
-  const onSubmitNewFile = useCallback(
-    async (files) => {
-      const resources = await Promise.all(
-        files.map(async (file) => ({
-          localResource: await getResourceFromLocalFile(file),
-          file,
-        }))
-      );
-      onUpdatePublisherLogo({ newPublisherLogos: resources });
-    },
-    [onUpdatePublisherLogo]
-  );
-
-  const onSubmitDeleteFile = useCallback(
-    (_, fileData) => {
-      onUpdatePublisherLogo({ deleteLogo: fileData });
-    },
-    [onUpdatePublisherLogo]
-  );
-
+function PublisherLogoSettings({
+  canUploadFiles,
+  handleAddLogos,
+  handleRemoveLogo,
+  isLoading,
+  publisherLogos,
+  uploadError,
+}) {
   return (
     <SettingForm>
       <div>
@@ -90,50 +76,65 @@ function PublisherLogoSettings({ onUpdatePublisherLogo, publisherLogos }) {
         {publisherLogos.length > 0 && (
           <UploadedContainer>
             {publisherLogos.map((publisherLogo, idx) => {
+              if (!publisherLogo) {
+                return null;
+              }
               return (
                 <div
                   key={`${publisherLogo.title}_${idx}`}
-                  data-testid={`remove-publisher-logo-${idx}`}
+                  data-testid={`publisher-logo-${idx}`}
                 >
                   <Logo src={publisherLogo.src} alt={publisherLogo.title} />
-                  <DeleteLogoButton
-                    aria-label={sprintf(
-                      /* translators: %s: uploaded logo title */
-                      __('delete %s as a publisher logo', 'web-stories'),
-                      publisherLogo.title
-                    )}
-                    onClick={(e) => onSubmitDeleteFile(e, publisherLogo)}
-                  >
-                    <DeleteIcon aria-hidden="true" />
-                  </DeleteLogoButton>
+                  {!publisherLogo.isActive && (
+                    <RemoveLogoButton
+                      data-testid={`remove-publisher-logo-${idx}`}
+                      aria-label={sprintf(
+                        /* translators: %s: logo title */
+                        __('Remove %s as a publisher logo', 'web-stories'),
+                        publisherLogo.title
+                      )}
+                      onClick={(e) => handleRemoveLogo(e, publisherLogo)}
+                    >
+                      <RemoveIcon aria-hidden="true" />
+                    </RemoveLogoButton>
+                  )}
                 </div>
               );
             })}
           </UploadedContainer>
         )}
-        <FileUpload
-          onSubmit={onSubmitNewFile}
-          id="settings_publisher_logos"
-          label={TEXT.SUBMIT}
-          isMultiple
-          ariaLabel={TEXT.ARIA_LABEL}
-          instructionalText={TEXT.HELPER_UPLOAD}
-        />
-        <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+        {uploadError && <Error>{uploadError}</Error>}
+        {canUploadFiles && (
+          <>
+            <FileUpload
+              onSubmit={handleAddLogos}
+              id="settings_publisher_logos"
+              isLoading={isLoading}
+              label={TEXT.SUBMIT}
+              isMultiple
+              ariaLabel={TEXT.ARIA_LABEL}
+              instructionalText={TEXT.HELPER_UPLOAD}
+            />
+            <FinePrintHelperText>{TEXT.INSTRUCTIONS}</FinePrintHelperText>
+          </>
+        )}
       </div>
     </SettingForm>
   );
 }
 
 PublisherLogoSettings.propTypes = {
-  onUpdatePublisherLogo: PropTypes.func,
+  canUploadFiles: PropTypes.bool,
+  handleAddLogos: PropTypes.func,
+  handleRemoveLogo: PropTypes.func,
+  isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape({
       src: PropTypes.string,
       title: PropTypes.string,
-      alt: PropTypes.string,
-      id: PropTypes.string,
+      id: PropTypes.number,
     })
   ),
+  uploadError: PropTypes.string,
 };
 export default PublisherLogoSettings;

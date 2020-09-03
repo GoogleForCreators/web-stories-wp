@@ -586,10 +586,9 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-
 		$settings = [
-			'id'     => 'edit-story',
-			'config' => [
+			'id'         => 'edit-story',
+			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'dateFormat'       => get_option( 'date_format' ),
@@ -618,10 +617,11 @@ class Story_Post_Type {
 					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => array_merge(
+			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
 			),
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
 		];
 
 		/**

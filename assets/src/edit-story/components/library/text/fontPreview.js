@@ -33,17 +33,14 @@ import stripHTML from '../../../utils/stripHTML';
 const PREVIEW_EM_SCALE = ALLOWED_EDITOR_PAGE_WIDTHS[0] / PAGE_WIDTH;
 
 const Preview = styled.button`
-  position: relative;
   background: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
-  padding: 6px;
+  padding: 12px 16px;
   margin-bottom: 12px;
   border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   border: none;
   cursor: pointer;
+  text-align: left;
 `;
 
 const Text = styled.span`

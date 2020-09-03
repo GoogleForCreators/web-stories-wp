@@ -19,7 +19,7 @@
  */
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -29,7 +29,7 @@ const CalendarWrapper = styled.div`
 
 function DatePicker({ currentDate, onChange, onViewChange }) {
   const nodeRef = useRef();
-  const value = new Date(currentDate);
+  const value = useMemo(() => new Date(currentDate), [currentDate]);
   const handleOnChange = useCallback(
     (newDate) => {
       newDate.setHours(value.getHours());

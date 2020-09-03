@@ -18,14 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
+import { createContext } from '../../utils';
 import dataAdapter from './wpAdapter';
 import useFontApi from './useFontApi';
+import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
@@ -52,6 +54,10 @@ export default function ApiProvider({ children }) {
 
   const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
 
+  const { media, api: mediaApi } = useMediaApi(dataAdapter, {
+    globalMediaApi: api.media,
+  });
+
   const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
     globalStoriesSettingsApi: api.settings,
   });
@@ -59,12 +65,14 @@ export default function ApiProvider({ children }) {
   const value = useMemo(
     () => ({
       state: {
+        media,
         settings,
         stories,
         templates,
         users,
       },
       actions: {
+        mediaApi,
         settingsApi,
         storyApi,
         templateApi,
@@ -73,10 +81,12 @@ export default function ApiProvider({ children }) {
       },
     }),
     [
+      media,
       settings,
       stories,
       templates,
       users,
+      mediaApi,
       settingsApi,
       storyApi,
       templateApi,

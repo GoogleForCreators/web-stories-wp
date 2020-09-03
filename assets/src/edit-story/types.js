@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { AnimationProps } from '../dashboard/animations/parts/types';
+import { AnimationProps } from '../animation/parts/types';
 import { OverlayType } from './utils/backgroundOverlay';
 import { BACKGROUND_TEXT_MODE } from './constants';
 import MULTIPLE_VALUE from './components/form/multipleValue';
@@ -191,6 +191,8 @@ StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.image,
   StoryPropTypes.elements.video,
 ]);
+
+export const AnimationPropType = PropTypes.shape(AnimationProps);
 
 export const FontPropType = PropTypes.shape({
   family: PropTypes.string,

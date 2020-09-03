@@ -46,6 +46,7 @@ const Indicator = styled.button`
   border: 0;
   outline: 0;
   cursor: ${({ isInteractive }) => (isInteractive ? 'pointer' : 'default')};
+  border-radius: 6px;
   background: ${({ isActive, theme }) =>
     isActive ? theme.colors.selection : 'rgba(255, 255, 255, 0.28)'};
   ${({ isActive, isInteractive, theme }) =>
