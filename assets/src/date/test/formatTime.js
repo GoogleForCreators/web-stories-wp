@@ -31,14 +31,14 @@ describe('formatTime', () => {
   });
 
   it('should return 12:47 pm with no formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedTime = formatTime(dateString);
 
     expect(formattedTime).toBe('12:47 pm');
   });
 
   it('should return 12:47 PM with g:i A formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedTime = formatTime(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -7,
@@ -50,7 +50,7 @@ describe('formatTime', () => {
   });
 
   it('should return 12:47 with H:i formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedTime = formatTime(dateString, {
       dateFormat: 'm/d/Y',
       gmtOffset: -7,

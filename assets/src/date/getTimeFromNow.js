@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/** @typedef {import('moment').Moment} Moment */
+
 /**
  * Internal dependencies
  */
@@ -23,8 +25,7 @@ import { getMoment } from './getMoment';
 /**
  * Get the time passed from or time until a date to the time now in any timezone.
  *
- * @param {Date} date Uses moment to find time passed since/until.
- * If date is not an instance of moment when passed in it will create a moment from it.
+ * @param {Date|Moment|string} date Date to parse.
  *
  * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
  *

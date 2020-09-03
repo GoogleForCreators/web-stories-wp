@@ -30,7 +30,7 @@ import { DEFAULT_DATE_SETTINGS } from './';
 /**
  * Formats a date by dateSettings.dateFormat (no time).
  *
- * @param {Date|Moment} date Date to format.
+ * @param {Date|Moment|string} date Date to format.
  * @param {import('./').DateSettings} dateSettings Date settings.
  *
  * @return {string} Displayable relative date string

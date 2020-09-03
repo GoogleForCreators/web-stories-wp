@@ -43,7 +43,7 @@ import {
  *
  * @see {@link https://momentjs.com/guides/#/parsing/}
  *
- * @param {Date|Moment} date Date to format according to how much time or how many days have passed since date.
+ * @param {Date|Moment|string} date Date to format according to how much time or how many days have passed since date.
  *
  * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
  *

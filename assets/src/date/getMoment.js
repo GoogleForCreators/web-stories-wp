@@ -29,7 +29,7 @@ import moment from 'moment-timezone';
  *
  * Any moment created with moment.utc() will be in UTC mode, and any moment created with moment() will not.
  *
- * @param {Date|Moment} date Date object.
+ * @param {Date|Moment|string} date Date object.
  * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
  *
  * @return {Moment} Moment object in specified timezone.

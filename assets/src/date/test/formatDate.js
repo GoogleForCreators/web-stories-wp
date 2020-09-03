@@ -31,14 +31,14 @@ describe('formatDate', () => {
   });
 
   it('should return 2020-05-02 with no formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString);
 
     expect(formattedDate).toBe('2020-05-02');
   });
 
   it('should return May 2, 2020 with F j, Y formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString, {
       dateFormat: 'F j, Y',
       gmtOffset: -7,
@@ -50,7 +50,7 @@ describe('formatDate', () => {
   });
 
   it('should return 2020-05-02 with Y-m-d formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString, {
       dateFormat: 'Y-m-d',
       gmtOffset: -7,
@@ -62,7 +62,7 @@ describe('formatDate', () => {
   });
 
   it('should return 05/02/2020 with m/d/Y formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString, {
       dateFormat: 'm/d/Y',
       gmtOffset: -7,
@@ -74,7 +74,7 @@ describe('formatDate', () => {
   });
 
   it('should return 02/05/2020 with d/m/Y formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString, {
       dateFormat: 'd/m/Y',
       gmtOffset: -7,
@@ -86,7 +86,7 @@ describe('formatDate', () => {
   });
 
   it('should return Sat 05 02 2020 with D m d yy formatting options', () => {
-    const dateString = moment.parseZone('2020-05-02T10:47:26');
+    const dateString = '2020-05-02T10:47:26';
     const formattedDate = formatDate(dateString, {
       dateFormat: 'D m d yy',
       gmtOffset: -7,
