@@ -150,7 +150,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
 
   useEffect(() => {
     if (listRef.current && isOpen) {
-      listRef.current?.children[0].focus();
+      listRef.current?.children[currentValueIndex].focus();
     }
     setHoveredIndex(currentValueIndex);
   }, [currentValueIndex, isOpen]);
