@@ -41,7 +41,7 @@ import {
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../types';
-import { useGridViewKeys } from '../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../utils';
 import { useConfig } from '../../config';
 
 const GridContainer = styled(CardGrid)`
@@ -87,6 +87,8 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
       itemRefs.current?.[activeGridItemId]?.lastChild.focus();
     }
   }, [activeGridItemId]);
+
+  useFocusOut(containerRef, () => setActiveGridItemId(null), []);
 
   return (
     <div ref={containerRef}>
@@ -139,14 +141,6 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                   targetAction: targetAction(template),
                   label: __('Use template', 'web-stories'),
                   ariaLabel: __('Use this template', 'web-stories'),
-                }}
-                topAction={{
-                  targetAction: (e) => {
-                    e.stopPropagation();
-                    templateActions.handlePreviewTemplate(e, template);
-                  },
-                  label: __('Preview', 'web-stories'),
-                  ariaLabel: __('Open preview', 'web-stories'),
                 }}
               />
             </CardGridItem>
