@@ -51,6 +51,7 @@ export default function TelemetrySettings({
   onCheckboxSelected,
   disabled,
 }) {
+  const checked = Boolean(selected);
   return (
     <SettingForm>
       <div>
@@ -61,11 +62,12 @@ export default function TelemetrySettings({
       <div>
         <Label>
           <CheckBox
+            data-testid="telemetry-settings-checkbox"
             disabled={disabled}
             onChange={onCheckboxSelected}
-            checked={Boolean(selected)}
+            checked={checked}
           />
-          <FormLabel>
+          <FormLabel aria-checked={checked}>
             {__(
               'Help us improve the Web Stories for WordPress plugin by allowing tracking of usage stats. All data are treated in accordance with',
               'web-stories'
