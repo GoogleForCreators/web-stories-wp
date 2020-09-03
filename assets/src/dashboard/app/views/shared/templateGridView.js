@@ -148,6 +148,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                     templateActions.handlePreviewTemplate(e, template);
                   },
                   label: __('Preview', 'web-stories'),
+                  ariaLabel: __('Open Preview', 'web-stories'),
                 }}
               />
             </CardGridItem>
