@@ -56,18 +56,18 @@ export const TEXT = {
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
-  const [analyticsId, setAnlayticsId] = useState(() => googleAnalyticsId);
+  const [analyticsId, setAnalyticsId] = useState(() => googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
 
   useEffect(() => {
-    setAnlayticsId(googleAnalyticsId);
+    setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
 
   const handleUpdateId = useCallback((event) => {
     const { value } = event.target;
-    setAnlayticsId(value);
+    setAnalyticsId(value);
 
     if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
       setInputError('');
