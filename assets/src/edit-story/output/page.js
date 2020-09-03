@@ -53,7 +53,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
   // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
   const validElements = regularElements.map((element) =>
-    hasPageAttachment && !isElementBelowLimit(element)
+    !hasPageAttachment || !isElementBelowLimit(element)
       ? element
       : {
           ...element,
