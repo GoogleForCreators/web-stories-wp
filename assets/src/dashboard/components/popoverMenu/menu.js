@@ -124,9 +124,12 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             break;
 
           case KEYS.ENTER:
-            event.preventDefault();
-            if (onSelect) {
-              onSelect(items[hoveredIndex]);
+            // let anchor items be handled natively by browser
+            if (!items[hoveredIndex].url) {
+              event.preventDefault();
+              if (onSelect) {
+                onSelect(items[hoveredIndex]);
+              }
             }
             break;
 
