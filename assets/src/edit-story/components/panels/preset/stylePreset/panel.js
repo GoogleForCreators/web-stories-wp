@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -36,10 +37,11 @@ import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { useStory } from '../../../../app/story';
 import stripHTML from '../../../../utils/stripHTML';
 import { generatePresetStyle } from '../utils';
+import { useKeyDownEffect } from '../../../keyboard';
 
 const REMOVE_ICON_SIZE = 18;
 
-const Preset = styled.button`
+const PresetButton = styled.button`
   background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.16)};
   display: inline-block;
   border-color: transparent;
@@ -78,6 +80,26 @@ const TextWrapper = styled.div`
   ${({ styles }) => styles}
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
+
+// @todo Remove this once #4239 gets merged.
+function Preset({ onClick, children, ...rest }) {
+  // We unfortunately have to manually assign this listener, as it would be default behaviour
+  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
+  // for text elements. For non-text element selection, this does nothing, that default beviour
+  // wouldn't do.
+  const ref = useRef();
+  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
+  return (
+    <PresetButton ref={ref} onClick={onClick} {...rest}>
+      {children}
+    </PresetButton>
+  );
+}
+
+Preset.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
 
 function StylePresetPanel({ pushUpdate }) {
   const { selectedElements } = useStory(({ state: { selectedElements } }) => {
