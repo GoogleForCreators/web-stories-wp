@@ -103,10 +103,12 @@ MiniCard.propTypes = {
 };
 
 export const ActiveCard = styled.div(
-  ({ width, theme }) => `
+  ({ width, containerHeight, theme }) => `
     position: relative;
     box-sizing: border-box;
     width: ${width}px;
+    overflow: hidden;
+    height: ${containerHeight}px;
     border: ${theme.borders.gray75};
     box-shadow: ${theme.storyPreview.shadow};
   `

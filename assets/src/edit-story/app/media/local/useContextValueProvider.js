@@ -76,6 +76,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         searchTerm: currentSearchTerm = '',
         pageToken: p = 1,
         mediaType: currentMediaType,
+        cacheBust: cacheBust,
       } = {},
       callback
     ) => {
@@ -84,6 +85,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         mediaType: currentMediaType,
         searchTerm: currentSearchTerm,
         pagingNum: p,
+        cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
           const totalPages = parseInt(headers['X-WP-TotalPages']);
@@ -126,7 +128,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     resetFilters();
     const isFirstPage = !pageToken;
     if (!mediaType && !searchTerm && isFirstPage) {
-      fetchMedia({ mediaType }, fetchMediaSuccess);
+      fetchMedia({ mediaType, cacheBust: true }, fetchMediaSuccess);
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 

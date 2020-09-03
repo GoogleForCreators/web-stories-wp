@@ -49,6 +49,7 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
+import resourceList from '../../../../../utils/resourceList';
 import { DropDown } from '../../../../form';
 import paneId from './paneId';
 
@@ -125,7 +126,8 @@ function MediaPane(props) {
    */
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
-    insertMediaElement(resource);
+    // WordPress media picker event, sizes.medium.url is the smallest image
+    insertMediaElement(resource, mediaPickerEl.sizes.medium.url);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -152,7 +154,13 @@ function MediaPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(
-    (resource) => insertElement(resource.type, { resource }),
+    (resource, thumbnailURL) => {
+      resourceList[resource.id] = {
+        url: thumbnailURL,
+        type: 'cached',
+      };
+      insertElement(resource.type, { resource });
+    },
     [insertElement]
   );
 
