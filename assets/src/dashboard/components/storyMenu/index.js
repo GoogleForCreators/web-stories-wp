@@ -92,9 +92,7 @@ export default function StoryMenu({
         menuOpen={isPopoverMenuOpen}
         isVisible={itemActive}
         aria-label="More Options"
-        onClick={() => {
-          onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id);
-        }}
+        onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
