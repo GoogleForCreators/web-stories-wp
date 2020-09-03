@@ -125,7 +125,15 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink} tabIndex={tabIndex}>
+        <TitleStoryLink
+          href={titleLink}
+          tabIndex={tabIndex}
+          aria-label={sprintf(
+            /* translators: %s: title*/
+            __('Open %s in editor', 'web-stories'),
+            title
+          )}
+        >
           {titleFormatted(title)}
         </TitleStoryLink>
       )}
