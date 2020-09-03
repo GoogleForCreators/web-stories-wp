@@ -54,6 +54,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     let lastY;
     let lastHeight;
+    let nextY;
+    let nextHeight;
     let storyContext;
 
     const verifyDefaultPosition = async (name, content) => {
@@ -64,29 +66,37 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         const preset = PRESETS.find(({ title }) => name === title);
         expect(element.y).toEqual(preset.element.y);
       });
-      lastY = element.y;
-      lastHeight = element.height;
+      nextY = element.y;
+      nextHeight = element.height;
     };
 
     const verifyStaggeredPosition = async (content) => {
+      // Store both last and next value to ensure incorrect value isn't used within waitFor.
+      lastY = nextY;
+      lastHeight = nextHeight;
       storyContext = await fixture.renderHook(() => useStory());
       const element = storyContext.state.selectedElements[0];
       await waitFor(() => {
         expect(stripHTML(element.content)).toEqual(content);
         expect(element.y).toEqual(lastY + lastHeight + POSITION_MARGIN);
       });
-      lastY = element.y;
-      lastHeight = element.height;
+      nextY = element.y;
+      nextHeight = element.height;
     };
 
     await fixture.editor.library.textTab.click();
+
+    // @todo Remove this once #4094 gets fixed!
+    // Wait until the history has changed to its initial (incorrect due to a bug) position.
+    await fixture.events.sleep(300);
+
     // Stagger all different text presets.
 
     await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
     await verifyDefaultPosition('Heading 1', 'Heading 1');
 
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await verifyStaggeredPosition('Paragraph');
+    await verifyStaggeredPosition(PARAGRAPH_TEXT);
 
     await fixture.events.click(fixture.editor.library.text.preset('Heading 2'));
     await verifyStaggeredPosition('Heading 2');
