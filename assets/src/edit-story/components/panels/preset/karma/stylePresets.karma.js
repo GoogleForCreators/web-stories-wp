@@ -165,7 +165,7 @@ describe('Panel: Style Presets', () => {
       const editButton = fixture.screen.getByRole('button', {
         name: 'Edit style presets',
       });
-      fixture.events.click(editButton);
+      await fixture.events.click(editButton);
 
       // Apply button should get replaced by delete button.
       await waitForElementToBeRemoved(applyPresetButton);
@@ -173,7 +173,7 @@ describe('Panel: Style Presets', () => {
       const deletePresetButton = fixture.screen.getByRole('button', {
         name: 'Delete style preset',
       });
-      await deletePresetButton.click();
+      await fixture.events.click(deletePresetButton);
       await waitForElementToBeRemoved(deletePresetButton);
     });
   });
