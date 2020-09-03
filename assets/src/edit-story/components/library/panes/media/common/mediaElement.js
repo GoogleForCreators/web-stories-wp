@@ -406,8 +406,6 @@ function getInnerElement(
           aria-label={alt}
           muted
           onClick={onClick(poster)}
-          // crossorigin='anonymous' is required to play videos from other domains.
-          crossOrigin="anonymous"
           {...dropTargetsBindings(poster)}
         >
           <source
