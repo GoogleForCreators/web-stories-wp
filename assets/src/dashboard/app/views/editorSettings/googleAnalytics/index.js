@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useEffect } from 'react';
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
 import { TextInput } from '../../../../components';
 import {
@@ -55,10 +56,14 @@ export const TEXT = {
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
-  const [analyticsId, setAnlayticsId] = useState(googleAnalyticsId);
+  const [analyticsId, setAnlayticsId] = useState(() => googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
+
+  useEffect(() => {
+    setAnlayticsId(googleAnalyticsId);
+  }, [googleAnalyticsId]);
 
   const handleUpdateId = useCallback((event) => {
     const { value } = event.target;
