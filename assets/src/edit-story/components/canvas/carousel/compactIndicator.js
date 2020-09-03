@@ -25,27 +25,7 @@ import { rgba } from 'polished';
  */
 import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
 
-<<<<<<< HEAD
-function CompactIndicatorWithRef(
-  { onClick, isActive, ariaLabel, role, tabIndex },
-  ref
-) {
-  return (
-    <Indicator
-      onClick={onClick}
-      isActive={isActive}
-      aria-label={ariaLabel}
-      role={role}
-      ref={ref}
-      tabIndex={tabIndex}
-    />
-  );
-}
-
-const Indicator = styled.button`
-=======
 const CompactIndicator = styled.button`
->>>>>>> clean up
   display: block;
   width: ${COMPACT_THUMB_WIDTH}px;
   height: ${COMPACT_THUMB_HEIGHT}px;
@@ -71,19 +51,4 @@ const CompactIndicator = styled.button`
     `}
 `;
 
-<<<<<<< HEAD
-const CompactIndicator = forwardRef(CompactIndicatorWithRef);
-
-CompactIndicator.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  isActive: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
-  tabIndex: PropTypes.number,
-  role: PropTypes.string,
-};
-
-CompactIndicatorWithRef.propTypes = CompactIndicator.propTypes;
-
-=======
->>>>>>> clean up
 export default CompactIndicator;
