@@ -87,7 +87,6 @@ describe('Embed Block', () => {
 
     const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
 
-    //eslint-disable-next-line jest/no-if
     if (werePrePublishChecksEnabled) {
       await disablePrePublishChecks();
     }
