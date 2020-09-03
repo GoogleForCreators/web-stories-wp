@@ -82,7 +82,7 @@ class Embed {
 			$player_style = sprintf( 'margin: %s', esc_attr( $margin ) );
 			?>
 			<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-				<amp-story-player width="<?php echo esc_attr( absint( $args['width'] ) ); ?>" height="<?php echo esc_attr( absint( $args['height'] ) ); ?>" style="<?php echo esc_attr( $player_style ); ?>">
+				<amp-story-player width="<?php echo esc_attr( $args['width'] ); ?>" height="<?php echo esc_attr( $args['height'] ); ?>" style="<?php echo esc_attr( $player_style ); ?>">
 					<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
 				</amp-story-player>
 			</div>
