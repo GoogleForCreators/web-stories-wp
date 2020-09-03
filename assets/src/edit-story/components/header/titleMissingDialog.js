@@ -39,10 +39,11 @@ const Paragraph = styled.p`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
 `;
 
-const GUIDELINES =
-  'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title';
-
 function TitleMissingDialog({ open, onIgnore, onFix }) {
+  const link = __(
+    'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
+    'web-stories'
+  );
   return (
     <Dialog
       open={open}
@@ -59,14 +60,12 @@ function TitleMissingDialog({ open, onIgnore, onFix }) {
     >
       <Paragraph>
         {__(
-          'We recommend adding a title to the story prior to publishing',
+          'We recommend adding a title to the story prior to publishing.',
           'web-stories'
-        )}
-        {' ('}
-        <Link href={GUIDELINES} target="_blank" rel="noopener noreferrer">
-          {__('learn more', 'web-stories')}
+        )}{' '}
+        <Link href={link} target="_blank" rel="noopener noreferrer">
+          {__('Learn more.', 'web-stories')}
         </Link>
-        {').'}
       </Paragraph>
     </Dialog>
   );
