@@ -97,6 +97,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
   useEffect(() => {
     if (isOpen) {
       const handleKeyDown = (event) => {
+        event.stopPropagation();
         switch (event.key) {
           case KEYS.UP:
             event.preventDefault();
@@ -137,7 +138,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
 
   useEffect(() => {
     if (listRef.current && isOpen) {
-      listRef.current[currentValueIndex]?.focus();
+      listRef.current?.children[0].focus();
     }
     setHoveredIndex(currentValueIndex);
   }, [currentValueIndex, isOpen]);
@@ -176,7 +177,11 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
   );
 
   return (
-    <MenuContainer ref={listRef}>
+    <MenuContainer
+      tabIndex={0}
+      ref={listRef}
+      onKeyDown={(e) => e.stopPropagation()}
+    >
       {items.map((item, index) => renderMenuItem(item, index))}
     </MenuContainer>
   );

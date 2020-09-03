@@ -16,13 +16,13 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -34,6 +34,7 @@ import {
   CardPreviewContainer,
   ActionLabel,
   StoryMenu,
+  FocusableGridItem,
 } from '../../../components';
 import {
   StoriesPropType,
@@ -44,7 +45,9 @@ import {
   DateSettingsPropType,
 } from '../../../types';
 import { STORY_STATUS, STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import { getRelativeDisplayDate } from '../../../utils';
+import { getRelativeDisplayDate, useGridViewKeys } from '../../../utils';
+
+import { useConfig } from '../../config';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -74,80 +77,130 @@ const StoryGridView = ({
   dateSettings,
   previewStory,
 }) => {
+  const { isRTL } = useConfig();
+  const containerRef = useRef();
   const gridRef = useRef();
+  const itemRefs = useRef({});
+  const [activeGridItemId, setActiveGridItemId] = useState(null);
+
+  useGridViewKeys({
+    containerRef,
+    gridRef,
+    itemRefs,
+    isRTL,
+    currentItemId: activeGridItemId,
+    items: stories,
+  });
+
+  // when keyboard focus changes through FocusableGridItem immediately focus the edit preview layer on top of preview
+  useEffect(() => {
+    if (activeGridItemId) {
+      itemRefs.current?.[activeGridItemId]?.children[2].focus();
+    }
+  }, [activeGridItemId]);
+
+  // useEffect(() => {
+  //   document.addEventListener('keydown', (e) => {
+  //     console.log(document.activeElement, e.currentTarget);
+  //   });
+  // }, []);
 
   return (
-    <StoryGrid
-      pageSize={pageSize}
-      ref={gridRef}
-      ariaLabel={__('Grid view of stories', 'web-stories')}
-    >
-      {stories.map((story) => {
-        const titleRenameProps = renameStory
-          ? {
-              editMode: renameStory?.id === story?.id,
-              onEditComplete: (newTitle) =>
-                renameStory?.handleOnRenameStory(story, newTitle),
-              onEditCancel: renameStory?.handleCancelRename,
+    <div ref={containerRef}>
+      <StoryGrid
+        pageSize={pageSize}
+        ref={gridRef}
+        ariaLabel={__('Viewing stories', 'web-stories')}
+      >
+        {stories.map((story) => {
+          const isActive = activeGridItemId === story.id;
+          const tabIndex = isActive ? 0 : -1;
+          const titleRenameProps = renameStory
+            ? {
+                editMode: renameStory?.id === story?.id,
+                onEditComplete: (newTitle) =>
+                  renameStory?.handleOnRenameStory(story, newTitle),
+                onEditCancel: renameStory?.handleCancelRename,
+              }
+            : {};
+
+          const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
+            if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
+              return { ...menuItem, url: story.link };
             }
-          : {};
+            return menuItem;
+          });
 
-        const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
-          if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
-            return { ...menuItem, url: story.link };
-          }
-          return menuItem;
-        });
-
-        return (
-          <CardGridItem
-            key={story.id}
-            data-testid={`story-grid-item-${story.id}`}
-          >
-            <CardPreviewContainer
-              pageSize={pageSize}
-              story={story}
-              centerAction={{
-                targetAction: (e) => previewStory(e, story),
-                label: centerActionLabelByStatus[story.status],
+          return (
+            <CardGridItem
+              key={story.id}
+              data-testid={`story-grid-item-${story.id}`}
+              ref={(el) => {
+                itemRefs.current[story.id] = el;
               }}
-              bottomAction={{
-                targetAction: story.bottomTargetAction,
-                label: bottomActionLabel,
-              }}
-              containerAction={(e) => previewStory(e, story)}
-            />
-            <DetailRow>
-              <CardTitle
-                title={story.title}
-                titleLink={story.editStoryLink}
-                status={story?.status}
-                id={story.id}
-                secondaryTitle={
-                  isSavedTemplate
-                    ? __('Google', 'web-stories')
-                    : users[story.author]?.name
-                }
-                displayDate={
-                  story?.status === STORY_STATUS.DRAFT
-                    ? getRelativeDisplayDate(story?.modified, dateSettings)
-                    : getRelativeDisplayDate(story?.created, dateSettings)
-                }
-                {...titleRenameProps}
+            >
+              <FocusableGridItem
+                onFocus={() => {
+                  setActiveGridItemId(story.id);
+                }}
+                isSelected={isActive}
+                tabIndex={tabIndex}
+                ariaLabelledBy={`${story.id}_story`}
               />
-
-              <StoryMenu
-                onMoreButtonSelected={storyMenu.handleMenuToggle}
-                contextMenuId={storyMenu.contextMenuId}
-                onMenuItemSelected={storyMenu.handleMenuItemSelected}
+              <CardPreviewContainer
+                id={`${story.id}_story`}
+                ariaLabel={sprintf(
+                  /* translators: %s: story title.*/
+                  __('preview of %s', 'web-stories'),
+                  story.title
+                )}
+                tabIndex={tabIndex}
+                pageSize={pageSize}
                 story={story}
-                menuItems={storyMenuItems}
+                centerAction={{
+                  targetAction: (e) => previewStory(e, story),
+                  label: centerActionLabelByStatus[story.status],
+                }}
+                bottomAction={{
+                  targetAction: story.bottomTargetAction,
+                  label: bottomActionLabel,
+                }}
               />
-            </DetailRow>
-          </CardGridItem>
-        );
-      })}
-    </StoryGrid>
+              <DetailRow>
+                <CardTitle
+                  tabIndex={tabIndex}
+                  title={story.title}
+                  titleLink={story.editStoryLink}
+                  status={story?.status}
+                  id={story.id}
+                  secondaryTitle={
+                    isSavedTemplate
+                      ? __('Google', 'web-stories')
+                      : users[story.author]?.name
+                  }
+                  displayDate={
+                    story?.status === STORY_STATUS.DRAFT
+                      ? getRelativeDisplayDate(story?.modified, dateSettings)
+                      : getRelativeDisplayDate(story?.created, dateSettings)
+                  }
+                  {...titleRenameProps}
+                />
+
+                <StoryMenu
+                  itemActive={isActive}
+                  tabIndex={tabIndex}
+                  onMoreButtonSelected={storyMenu.handleMenuToggle}
+                  contextMenuId={storyMenu.contextMenuId}
+                  onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                  story={story}
+                  menuItems={storyMenuItems}
+                />
+              </DetailRow>
+            </CardGridItem>
+          );
+        })}
+      </StoryGrid>
+    </div>
   );
 };
 
