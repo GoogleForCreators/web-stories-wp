@@ -56,7 +56,7 @@ export default function TelemetrySettings({
     <SettingForm>
       <div>
         <SettingHeading>
-          {__('Anonymous Data Sharing Opt-in', 'web-stories')}
+          {__('Data Sharing Opt-in', 'web-stories')}
         </SettingHeading>
       </div>
       <div>
