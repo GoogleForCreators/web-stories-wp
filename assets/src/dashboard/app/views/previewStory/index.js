@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -35,7 +35,7 @@ import dashboardTheme from '../../../theme';
 import { Close as CloseIcon } from '../../../icons';
 import { StoryPropType } from '../../../types';
 import { useResizeEffect } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
+import useApi from '../../api/useApi';
 
 const CLOSE_BUTTON_SIZE = {
   HEIGHT: 30,
@@ -84,15 +84,29 @@ const HelperContainer = styled.div`
   flex-direction: column;
 `;
 
-const PreviewStory = ({ story, handleClose, isTemplate }) => {
+const PreviewStory = ({ story, handleClose }) => {
   const {
-    state: {
-      stories: { previewMarkup, isLoading, error },
-    },
-    actions: {
-      storyApi: { createStoryPreviewFromTemplate, clearStoryPreview },
-    },
-  } = useContext(ApiContext);
+    previewMarkup,
+    isLoading,
+    error,
+    createStoryPreview,
+    clearStoryPreview,
+  } = useApi(
+    ({
+      state: {
+        stories: { previewMarkup, isLoading, error },
+      },
+      actions: {
+        storyApi: { createStoryPreview, clearStoryPreview },
+      },
+    }) => ({
+      previewMarkup,
+      isLoading,
+      error,
+      createStoryPreview,
+      clearStoryPreview,
+    })
+  );
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
 
@@ -126,16 +140,15 @@ const PreviewStory = ({ story, handleClose, isTemplate }) => {
 
     if (!story) {
       setPreviewError(__('Unable to Render Preview', 'web-stories'));
-    } else if (isTemplate) {
-      createStoryPreviewFromTemplate(story);
     } else {
-      // TODO handle story previews. Should be the default
+      createStoryPreview(story);
     }
+
     return () => {
       clearStoryPreview();
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     };
-  }, [isTemplate, story, createStoryPreviewFromTemplate, clearStoryPreview]);
+  }, [story, clearStoryPreview, createStoryPreview]);
 
   useResizeEffect(
     containerRef,
@@ -209,6 +222,5 @@ export default PreviewStory;
 
 PreviewStory.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  isTemplate: PropTypes.bool,
   story: StoryPropType.isRequired,
 };

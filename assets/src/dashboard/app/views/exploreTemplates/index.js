@@ -17,38 +17,58 @@
 /**
  * External dependencies
  */
-import { useCallback, useContext, useMemo, useEffect } from 'react';
+import { useCallback, useMemo, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
 import { PreviewStoryView } from '../';
 
+import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
 
 function ExploreTemplates() {
   const {
-    state: {
-      templates: {
-        allPagesFetched,
-        isLoading,
-        templates,
-        templatesOrderById,
-        totalPages,
-        totalTemplates,
+    allPagesFetched,
+    isLoading,
+    templates,
+    templatesOrderById,
+    totalPages,
+    totalTemplates,
+    createStoryFromTemplate,
+    fetchExternalTemplates,
+  } = useApi(
+    ({
+      state: {
+        templates: {
+          allPagesFetched,
+          isLoading,
+          templates,
+          templatesOrderById,
+          totalPages,
+          totalTemplates,
+        },
       },
-    },
-    actions: {
-      storyApi: { createStoryFromTemplate },
-      templateApi: { fetchExternalTemplates },
-    },
-  } = useContext(ApiContext);
+      actions: {
+        storyApi: { createStoryFromTemplate },
+        templateApi: { fetchExternalTemplates },
+      },
+    }) => ({
+      allPagesFetched,
+      isLoading,
+      templates,
+      templatesOrderById,
+      totalPages,
+      totalTemplates,
+      createStoryFromTemplate,
+      fetchExternalTemplates,
+    })
+  );
 
-  const { filter, page, previewVisible, search, sort, view } = useTemplateView({
+  const { filter, page, activePreview, search, sort, view } = useTemplateView({
     totalPages,
   });
 
@@ -64,16 +84,15 @@ function ExploreTemplates() {
 
   const handlePreviewTemplate = useCallback(
     (e, template) => {
-      previewVisible.set(e, template);
+      activePreview.set(e, template);
     },
-    [previewVisible]
+    [activePreview]
   );
 
-  if (previewVisible.value) {
+  if (activePreview.value) {
     return (
       <PreviewStoryView
-        isTemplate
-        story={previewVisible.value}
+        story={activePreview.value}
         handleClose={handlePreviewTemplate}
       />
     );

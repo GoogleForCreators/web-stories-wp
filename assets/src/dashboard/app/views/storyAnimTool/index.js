@@ -17,12 +17,13 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { UnitsProvider } from '../../../../edit-story/units';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import stripHTML from '../../../../edit-story/utils/stripHTML';
@@ -33,12 +34,11 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  STORY_ANIMATION_STATE,
 } from '../../../constants';
 import { PreviewPage } from '../../../components';
 import { clamp, getPagePreviewHeights } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
 import FontProvider from '../../font/fontProvider';
+import useApi from '../../api/useApi';
 import UpdateTemplateForm from './updateTemplateForm';
 import Timeline from './timeline';
 import {
@@ -67,14 +67,16 @@ function StoryAnimTool() {
   const globalTimeSubscription = useMemo(() => emitter(), []);
   const flags = useFeatures();
 
-  const {
-    actions: {
-      storyApi: { updateStory, fetchStories },
-    },
-    state: {
-      stories: { stories, storiesOrderById },
-    },
-  } = useContext(ApiContext);
+  const { updateStory, fetchStories, stories, storiesOrderById } = useApi(
+    ({
+      actions: {
+        storyApi: { updateStory, fetchStories },
+      },
+      state: {
+        stories: { stories, storiesOrderById },
+      },
+    }) => ({ updateStory, fetchStories, stories, storiesOrderById })
+  );
 
   useEffect(() => {
     fetchStories({

@@ -22,27 +22,22 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../../components';
+import {
+  TypographyPresets,
+  StandardViewContentGutter,
+} from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
+import { Link } from '../../../components/link';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
 `;
-export const Header = styled.header`
-  padding-top: 100px;
-`;
 
-export const Heading = styled.h2`
-  ${TypographyPresets.ExtraExtraLarge};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
-  color: ${({ theme }) => theme.colors.black};
-  padding: 0;
-`;
-
-export const Main = styled.main`
+export const Main = styled(StandardViewContentGutter)`
   display: flex;
   flex-direction: column;
-  padding-top: 56px;
+  padding-top: 36px;
+  margin-top: 20px;
   max-width: 945px;
   width: 100%;
 `;
@@ -73,6 +68,10 @@ export const FormContainer = styled.div`
   }
 `;
 
+export const InlineLink = styled(Link)`
+  margin-left: 0.25em;
+`;
+
 export const HelperText = styled.p`
   ${TypographyPresets.Small};
   color: ${({ theme }) => theme.colors.gray200};
@@ -86,6 +85,12 @@ export const FinePrintHelperText = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-top: 10px;
   color: ${({ theme }) => theme.colors.gray200};
+`;
+
+export const Error = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  padding-bottom: 10px;
+  color: ${({ theme }) => theme.colors.danger};
 `;
 
 export const UploadedContainer = styled.div`
@@ -104,7 +109,7 @@ export const Logo = styled.img`
   border-radius: 4px;
 `;
 
-export const DeleteLogoButton = styled.button`
+export const RemoveLogoButton = styled.button`
   position: relative;
   left: 2px;
   bottom: 30px;

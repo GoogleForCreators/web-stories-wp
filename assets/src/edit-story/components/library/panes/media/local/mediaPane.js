@@ -24,6 +24,7 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
+
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -32,7 +33,8 @@ import { __ } from '@wordpress/i18n';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
-import { MainButton, SearchInput } from '../../../common';
+import { SearchInput } from '../../../common';
+import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
 import {
   getResourceFromMediaPicker,
@@ -47,6 +49,8 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
+import resourceList from '../../../../../utils/resourceList';
+import { DropDown } from '../../../../form';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -57,28 +61,10 @@ const FilterArea = styled.div`
   padding: 0 1.5em 0 1.5em;
 `;
 
-const FilterButtons = styled.div`
-  flex: 1 1 auto;
-`;
-
-const FilterButton = styled.button`
-  border: 0;
-  cursor: pointer;
-  background: none;
-  padding: 0;
-  margin: 0 18px 0 0;
-  color: ${({ theme, active }) =>
-    active ? theme.colors.fg.white : theme.colors.mg.v1};
-  font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  font-weight: ${({ active }) => (active ? 'bold' : 'normal')};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-`;
-
 const FILTERS = [
-  { filter: '', name: __('All', 'web-stories') },
-  { filter: 'image', name: __('Images', 'web-stories') },
-  { filter: 'video', name: __('Video', 'web-stories') },
+  { value: '', name: __('All', 'web-stories') },
+  { value: 'image', name: __('Images', 'web-stories') },
+  { value: 'video', name: __('Video', 'web-stories') },
 ];
 
 function MediaPane(props) {
@@ -140,7 +126,8 @@ function MediaPane(props) {
    */
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
-    insertMediaElement(resource);
+    // WordPress media picker event, sizes.medium.url is the smallest image
+    insertMediaElement(resource, mediaPickerEl.sizes.medium.url);
   };
 
   const openMediaPicker = useMediaPicker({
@@ -154,7 +141,7 @@ function MediaPane(props) {
    * @param {string} value that is passed to rest api to filter.
    */
   const onFilter = useCallback(
-    (filter) => () => {
+    (filter) => {
       setMediaType({ mediaType: filter });
     },
     [setMediaType]
@@ -167,7 +154,13 @@ function MediaPane(props) {
    * @return {null|*} Return onInsert or null.
    */
   const insertMediaElement = useCallback(
-    (resource) => insertElement(resource.type, { resource }),
+    (resource, thumbnailURL) => {
+      resourceList[resource.id] = {
+        url: thumbnailURL,
+        type: 'cached',
+      };
+      insertElement(resource.type, { resource });
+    },
     [insertElement]
   );
 
@@ -209,20 +202,14 @@ function MediaPane(props) {
             />
           </SearchInputContainer>
           <FilterArea>
-            <FilterButtons>
-              {FILTERS.map(({ filter, name }, index) => (
-                <FilterButton
-                  key={index}
-                  active={filter === mediaType}
-                  onClick={onFilter(filter)}
-                >
-                  {name}
-                </FilterButton>
-              ))}
-            </FilterButtons>
-            <MainButton onClick={openMediaPicker}>
+            <DropDown
+              value={mediaType?.toString() || FILTERS[0].value}
+              onChange={onFilter}
+              options={FILTERS}
+            />
+            <Primary onClick={openMediaPicker}>
               {__('Upload', 'web-stories')}
-            </MainButton>
+            </Primary>
           </FilterArea>
         </PaneHeader>
 

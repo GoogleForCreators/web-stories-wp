@@ -40,6 +40,8 @@ describe('Panels/SizePosition', () => {
     defaultElement = {
       id: '1',
       isBackground: false,
+      x: 20,
+      y: 20,
       width: 100,
       height: 80,
       rotationAngle: 0,
@@ -48,6 +50,8 @@ describe('Panels/SizePosition', () => {
     unlockAspectRatioElement = {
       id: '1',
       isBackground: false,
+      x: 20,
+      y: 20,
       width: 100,
       height: 80,
       rotationAngle: 0,
@@ -274,16 +278,18 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: dataPixels(150 / (100 / 80)),
-      });
-      expect(submits[imageWithSameSize.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: dataPixels(150 / (100 / 80)),
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: dataPixels(150 / (100 / 80)),
+        })
+      );
+      expect(submits[imageWithSameSize.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: dataPixels(150 / (100 / 80)),
+        })
+      );
     });
 
     it('should update width with lock ratio and different size', () => {
@@ -299,16 +305,18 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: 150 / (100 / 80),
-      });
-      expect(submits[imageWithDifferentSize.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: dataPixels(150 / (200 / 120)),
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: 150 / (100 / 80),
+        })
+      );
+      expect(submits[imageWithDifferentSize.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: dataPixels(150 / (200 / 120)),
+        })
+      );
     });
 
     it('should update height with lock ratio and different size', () => {
@@ -324,16 +332,18 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ height: 160, width: MULTIPLE_VALUE });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        height: 160,
-        width: 160 * (100 / 80),
-      });
-      expect(submits[imageWithDifferentSize.id]).toStrictEqual({
-        rotationAngle: 0,
-        height: 160,
-        width: dataPixels(160 * (200 / 120)),
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          height: 160,
+          width: 160 * (100 / 80),
+        })
+      );
+      expect(submits[imageWithDifferentSize.id]).toStrictEqual(
+        expect.objectContaining({
+          height: 160,
+          width: dataPixels(160 * (200 / 120)),
+        })
+      );
     });
 
     it('should disable aspect ratio lock if all elements had lock enabled', () => {
@@ -379,11 +389,12 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ height: 2000, width: 2000 * (100 / 80) });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        height: 1000 / (100 / 80),
-        width: 1000,
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          height: 1000 / (100 / 80),
+          width: 1000,
+        })
+      );
     });
   });
 });

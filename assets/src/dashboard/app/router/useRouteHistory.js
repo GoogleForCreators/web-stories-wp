@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { useContext } from 'react';
-
-/**
  * Internal dependencies
  */
+import { identity, useContextSelector } from '../../utils';
 import { RouterContext } from './routerProvider';
 
-function useRouteHistory() {
-  return useContext(RouterContext);
+function useRouteHistory(selector = identity) {
+  return useContextSelector(RouterContext, selector);
 }
 
 export default useRouteHistory;

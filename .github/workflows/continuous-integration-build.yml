@@ -66,42 +66,42 @@ jobs:
         run: |
           npm run build:js
           npm run workflow:version -- --nightly
+          mkdir -p build/web-stories-composer build/web-stories-regular build/web-stories-dev
 
       - name: Bundle composer version
-        run: npm run workflow:build-plugin -- --cdn --composer
-
-      - name: Upload composer bundle
-        uses: actions/upload-artifact@v2
-        with:
-          name: web-stories-composer
-          path: build/web-stories
+        run: |
+          npm run workflow:build-plugin -- --cdn --composer
+          mv build/web-stories build/web-stories-composer/
 
       - name: Bundle regular version
-        run: npm run workflow:build-plugin -- --cdn
-
-      - name: Upload regular bundle
-        uses: actions/upload-artifact@v2
-        with:
-          name: web-stories
-          path: build/web-stories
+        run: |
+          npm run workflow:build-plugin -- --cdn
+          mv build/web-stories build/web-stories-regular/
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           NODE_ENV=development npx webpack --config webpack.config.cjs
           npm run workflow:build-plugin -- --cdn
+          mv build/web-stories build/web-stories-dev/
+
+      - name: Upload composer bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-stories-composer
+          path: build/web-stories-composer
+
+      - name: Upload regular bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: web-stories
+          path: build/web-stories-regular
 
       - name: Upload development bundle
         uses: actions/upload-artifact@v2
         with:
           name: web-stories-dev
-          path: build/web-stories
-
-      - name: Upload bundles in combined ZIP file
-        uses: actions/upload-artifact@v2
-        with:
-          name: All ZIP Files
-          path: build/*.zip
+          path: build/web-stories-dev
 
   deploy-to-wiki:
     runs-on: ubuntu-latest
@@ -121,12 +121,9 @@ jobs:
 
       - name: ZIP artifacts
         run: |
-          rm -rf web-stories.zip web-stories-composer.zip web-stories-dev.zip
-          zip -mrT web-stories.zip web-stories
-          mv web-stories-composer web-stories
-          zip -mrT web-stories-composer.zip web-stories
-          mv web-stories-dev web-stories
-          zip -mrT web-stories-dev.zip web-stories
+          rm -rf web-stories.zip web-stories-composer.zip web-stories-composer web-stories-dev.zip
+          (cd web-stories && zip -mrT web-stories.zip web-stories && mv web-stories.zip ../ )
+          (cd web-stories-dev && zip -mrT web-stories-dev.zip web-stories && mv web-stories-dev.zip ../ )
         working-directory: ${{ github.ref }}
 
       - name: Commit updates

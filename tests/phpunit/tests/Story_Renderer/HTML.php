@@ -95,54 +95,6 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::insert_content_after_opening_body
-	 */
-	public function test_insert_content_after_opening_body() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$function = static function() {
-			echo '<p>Hello World</p>';
-		};
-
-		add_action( 'web_stories_body_open', $function );
-
-		$actual = $this->setup_renderer( $post );
-
-		remove_action( 'web_stories_body_open', $function );
-
-		$this->assertContains( '<body><p>Hello World</p><amp-story', $actual );
-	}
-
-	/**
-	 * @covers ::insert_content_before_closing_body
-	 */
-	public function test_insert_content_before_closing_body() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$function = static function() {
-			echo '<p>Hello World</p>';
-		};
-
-		add_action( 'web_stories_footer', $function );
-
-		$actual = $this->setup_renderer( $post );
-
-		remove_action( 'web_stories_footer', $function );
-
-		$this->assertContains( '</amp-story><p>Hello World</p></body>', $actual );
-	}
-
-	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
 	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
@@ -236,7 +188,7 @@ class HTML extends \WP_UnitTestCase {
 		);
 
 		$function = static function() {
-			echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json"></script></amp-analytics>';
+			echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
 		};
 
 		add_action( 'web_stories_insert_analytics_configuration', $function );
@@ -246,7 +198,7 @@ class HTML extends \WP_UnitTestCase {
 		remove_action( 'web_stories_insert_analytics_configuration', $function );
 
 		$this->assertContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
-		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"><script type="application/json"></script></amp-analytics></amp-story></body>', $actual );
+		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body>', $actual );
 	}
 
 	/**

@@ -15,16 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -39,13 +39,14 @@ import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { Button, Dialog } from '../../../../../components';
+import { Button, Dialog, useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
   BUTTON_TYPES,
+  ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 
@@ -64,9 +65,14 @@ function StoriesView({
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
+  const enableStoryPreviews = useFeature('enableStoryPreviews');
+
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
 
+  const {
+    actions: { addToast },
+  } = useToastContext();
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
 
@@ -108,11 +114,37 @@ function StoriesView({
           setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
+          global.navigator.clipboard.writeText(story.link);
+
+          addToast({
+            message: {
+              title: __('URL copied', 'web-stories'),
+              body:
+                story.title.length > 0
+                  ? sprintf(
+                      /* translators: %s is the story title. */
+                      __(
+                        '%s has been copied to your clipboard.',
+                        'web-stories'
+                      ),
+                      story.title
+                    )
+                  : __(
+                      '(no title) has been copied to your clipboard.',
+                      'web-stories'
+                    ),
+            },
+            severity: ALERT_SEVERITY.SUCCESS,
+            id: Date.now(),
+          });
+          break;
+
         default:
           break;
       }
     },
-    [storyActions]
+    [addToast, storyActions]
   );
 
   const enabledMenuItems = useMemo(() => {
@@ -163,10 +195,11 @@ function StoriesView({
       <StoryGridView
         bottomActionLabel={__('Open in editor', 'web-stories')}
         centerActionLabelByStatus={
-          enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+          enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
         }
         pageSize={view.pageSize}
         renameStory={renameStory}
+        previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
         users={users}

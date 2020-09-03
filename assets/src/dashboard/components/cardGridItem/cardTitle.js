@@ -15,16 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -109,6 +109,10 @@ const CardTitle = ({
     }
   }, [status, displayDate]);
 
+  const titleFormatted = (rawTitle) => {
+    return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+  };
+
   return (
     <StyledCardTitle>
       {editMode ? (
@@ -120,7 +124,9 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
+        <TitleStoryLink href={titleLink}>
+          {titleFormatted(title)}
+        </TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (

@@ -15,24 +15,22 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../../../../app/config';
+import { useKeyDownEffect } from '../../../../keyboard';
+
+/**
  * A point in 2D space.
  *
  * @typedef {Object} Point2D A point in 2D space.
  * @property {number} x The X coordinate.
  * @property {number} y The Y coordinate.
- */
-
-/**
- * Internal dependencies
- */
-/**
- * External dependencies
- */
-import { useCallback } from 'react';
-import { useConfig } from '../../../../../app/config';
-import { useKeyDownEffect } from '../../../../keyboard';
-/**
- * External dependencies
  */
 
 /**
@@ -85,7 +83,7 @@ function getSiblingDirection(isRTL, key) {
  * @return {Element} The sibling.
  */
 function getNextSibling(e, siblingDirection) {
-  return e.parentNode[siblingDirection]?.firstChild;
+  return e[siblingDirection];
 }
 
 /**
@@ -132,7 +130,7 @@ function getClosestValidSibling(element, siblingDirection) {
   return closestValidSibling;
 }
 
-export default function useRovingTabIndex({ ref }) {
+export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
   const { isRTL } = useConfig();
 
   /**
@@ -170,20 +168,20 @@ export default function useRovingTabIndex({ ref }) {
           closestValidSibling.focus();
         } else if (key === 'ArrowUp') {
           // First sibling.
-          const sibling = element.parentNode.parentNode.firstChild.firstChild;
+          const sibling = element.parentNode.firstChild;
           switchFocusToElement(sibling);
         } else {
           // Last sibling.
-          const sibling = element.parentNode.parentNode.lastChild.firstChild;
+          const sibling = element.parentNode.lastChild;
           switchFocusToElement(sibling);
         }
       } else if (key === 'Home') {
         // First sibling.
-        const sibling = element.parentNode.parentNode.firstChild.firstChild;
+        const sibling = element.parentNode.firstChild;
         switchFocusToElement(sibling);
       } else if (key === 'End') {
         // Last sibling.
-        const sibling = element.parentNode.parentNode.lastChild.firstChild;
+        const sibling = element.parentNode.lastChild;
         switchFocusToElement(sibling);
       } else if (key === 'PageDown' || key === 'PageUp') {
         let sibling = element;
@@ -206,6 +204,6 @@ export default function useRovingTabIndex({ ref }) {
       key: ['up', 'down', 'left', 'right', 'pageup', 'pagedown', 'home', 'end'],
     },
     onKeyDown,
-    [ref, onKeyDown]
+    [ref, onKeyDown, ...keyEventDeps]
   );
 }

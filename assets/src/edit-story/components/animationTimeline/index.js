@@ -31,8 +31,13 @@ import {
   TimelineRow,
 } from './components';
 import AnimationRuler from './ruler';
+import TimingBar from './timingBar';
 
-export default function AnimationTimeline({ animations, duration }) {
+export default function AnimationTimeline({
+  animations,
+  duration,
+  onUpdateAnimation,
+}) {
   return (
     <TimelineContainer>
       <TimelineLegend>
@@ -53,7 +58,15 @@ export default function AnimationTimeline({ animations, duration }) {
             data-testid="timeline-animation-item"
             key={`timeline-animation-item-${animation.id}`}
             alternating={Boolean(index % 2)}
-          />
+          >
+            <TimingBar
+              label={animation.label}
+              delay={animation.delay}
+              duration={animation.duration}
+              maxDuration={duration}
+              onUpdateAnimation={(delta) => onUpdateAnimation(animation, delta)}
+            />
+          </TimelineRow>
         ))}
       </TimelineTimingContainer>
     </TimelineContainer>
@@ -63,4 +76,5 @@ export default function AnimationTimeline({ animations, duration }) {
 AnimationTimeline.propTypes = {
   animations: propTypes.arrayOf(propTypes.object).isRequired,
   duration: propTypes.number.isRequired,
+  onUpdateAnimation: propTypes.func.isRequired,
 };

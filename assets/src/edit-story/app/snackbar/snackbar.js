@@ -27,7 +27,7 @@ const Container = styled.div`
 const Main = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 4px;
-  color: ${({ theme }) => theme.colors.fg.black};
+  color: ${({ theme }) => theme.colors.fg.white};
   max-width: 456px;
   display: flex;
   flex-grow: 1;

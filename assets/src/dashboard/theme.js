@@ -79,11 +79,13 @@ const colors = {
 
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
+  gray75: `1px solid ${colors.gray75}`,
   gray100: `1px solid ${colors.gray100}`,
   gray800: `1px solid ${colors.gray800}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
   action: `1px solid ${colors.action}`,
+  danger: `1px solid ${colors.danger}`,
 };
 
 const theme = {
@@ -140,7 +142,6 @@ const theme = {
   },
   storyPreview: {
     shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
-    border: `1px solid ${colors.gray75}`,
     borderRadius: 4,
   },
   tooltip: {

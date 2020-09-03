@@ -23,16 +23,32 @@ export { default as memoize } from './memoize';
 export { default as throttleToAnimationFrame } from './throttleToAnimationFrame';
 export { default as useDashboardResultsLabel } from './useDashboardResultsLabel';
 export { default as useFocusOut } from './useFocusOut';
+export { default as useGridViewKeys } from './useGridViewKeys';
 export {
   default as usePagePreviewSize,
   getPagePreviewHeights,
 } from './usePagePreviewSize';
 export { default as useStoryView } from './useStoryView';
 export { default as useTemplateView } from './useTemplateView';
+export { default as validateGoogleAnalyticsIdFormat } from './validateGoogleAnalyticsIdFormat';
 
 export { default as addQueryArgs } from '../../edit-story/utils/addQueryArgs';
 export { default as getStoryPropsToSave } from '../../edit-story/app/story/utils/getStoryPropsToSave';
+export { useKeyDownEffect } from '../../edit-story/components/keyboard';
+export {
+  focusOnPage,
+  getArrowDir,
+  getGridColumnAndRowCount,
+  getRow,
+  getColumn,
+  getIndex,
+} from '../../edit-story/components/canvas/gridview/useGridViewKeys';
 export { default as useResizeEffect } from '../../edit-story/utils/useResizeEffect';
 // TODO use these shared utils to structure image resources mirroring editor
 export { default as getTypeFromMime } from '../../edit-story/app/media/utils/getTypeFromMime';
 export { default as getResourceFromLocalFile } from '../../edit-story/app/media/utils/getResourceFromLocalFile';
+export {
+  createContext,
+  identity,
+  useContextSelector,
+} from '../../edit-story/utils/context';

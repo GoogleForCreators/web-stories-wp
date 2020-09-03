@@ -15,14 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFeature } from 'flagged';
+
+/**
  * WordPress dependencies
  */
 import { sprintf, __ } from '@wordpress/i18n';
-/**
- * External dependencies
- */
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,15 +39,17 @@ import {
   Layout,
   PaginationButton,
   Pill,
+  useToastContext,
 } from '../../../components';
 import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
-import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
 import { PreviewStoryView } from '..';
+import useApi from '../../api/useApi';
+import { ALERT_SEVERITY } from '../../../constants';
 import {
   ByLine,
   Column,
@@ -76,24 +79,60 @@ function TemplateDetails() {
     actions,
   } = useRouteHistory();
 
-  const {
-    state: {
-      templates: { templates, templatesOrderById, totalPages },
-    },
-    actions: {
-      storyApi: { createStoryFromTemplate },
-      templateApi: {
-        fetchMyTemplateById,
-        fetchExternalTemplateById,
-        fetchRelatedTemplates,
-      },
-    },
-  } = useContext(ApiContext);
+  const { addToast } = useToastContext(({ actions: { addToast } }) => ({
+    addToast,
+  }));
 
-  const { previewVisible } = useTemplateView({ totalPages });
+  const {
+    isLoading,
+    templates,
+    templatesOrderById,
+    totalPages,
+    createStoryFromTemplate,
+    fetchMyTemplateById,
+    fetchExternalTemplates,
+    fetchExternalTemplateById,
+    fetchRelatedTemplates,
+  } = useApi(
+    ({
+      state: {
+        templates: { templates, templatesOrderById, totalPages, isLoading },
+      },
+      actions: {
+        storyApi: { createStoryFromTemplate },
+        templateApi: {
+          fetchExternalTemplates,
+          fetchMyTemplateById,
+          fetchExternalTemplateById,
+          fetchRelatedTemplates,
+        },
+      },
+    }) => ({
+      isLoading,
+      templates,
+      templatesOrderById,
+      totalPages,
+      createStoryFromTemplate,
+      fetchExternalTemplates,
+      fetchMyTemplateById,
+      fetchExternalTemplateById,
+      fetchRelatedTemplates,
+    })
+  );
+
+  const { activePreview } = useTemplateView({ totalPages });
 
   useEffect(() => {
     if (!templateId) {
+      return;
+    }
+
+    if ((!templates || Object.values(templates).length === 0) && !isLoading) {
+      fetchExternalTemplates();
+      return;
+    }
+
+    if (isLoading) {
       return;
     }
 
@@ -103,8 +142,25 @@ function TemplateDetails() {
       ? fetchMyTemplateById
       : fetchExternalTemplateById;
 
-    templateFetchFn(id).then(setTemplate);
-  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+    templateFetchFn(id)
+      .then(setTemplate)
+      .catch(() => {
+        addToast({
+          message: { body: __('Could not load the template.', 'web-stories') },
+          severity: ALERT_SEVERITY.ERROR,
+          id: Date.now(),
+        });
+      });
+  }, [
+    isLoading,
+    fetchExternalTemplates,
+    fetchExternalTemplateById,
+    fetchMyTemplateById,
+    isLocal,
+    templateId,
+    templates,
+    addToast,
+  ]);
 
   useEffect(() => {
     if (!template || !templateId) {
@@ -215,20 +271,25 @@ function TemplateDetails() {
 
   const handlePreviewTemplate = useCallback(
     (e, previewTemplate) => {
-      previewVisible.set(e, previewTemplate);
+      activePreview.set(e, previewTemplate);
     },
-    [previewVisible]
+    [activePreview]
   );
 
   if (!template) {
-    return null;
+    return (
+      <Layout.Provider>
+        <Layout.Fixed>
+          <DetailViewNavBar handleCta={onHandleCta} />
+        </Layout.Fixed>
+      </Layout.Provider>
+    );
   }
 
-  if (previewVisible.value) {
+  if (activePreview.value) {
     return (
       <PreviewStoryView
-        isTemplate
-        story={previewVisible.value}
+        story={activePreview.value}
         handleClose={handlePreviewTemplate}
       />
     );
@@ -259,7 +320,14 @@ function TemplateDetails() {
                     <LargeDisplayPagination>
                       {PrevButton}
                     </LargeDisplayPagination>
-                    <CardGallery story={template} />
+                    <CardGallery
+                      story={template}
+                      isRTL={isRTL}
+                      galleryLabel={__(
+                        'Template details by page',
+                        'web-stories'
+                      )}
+                    />
                   </Column>
                   <Column>
                     <DetailContainer>

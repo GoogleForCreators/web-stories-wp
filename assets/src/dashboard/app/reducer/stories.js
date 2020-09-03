@@ -23,13 +23,11 @@ import reshapeStoryObject from '../serializers/stories';
 export const ACTION_TYPES = {
   CLEAR_STORY_PREVIEW: 'clear_story_preview',
   CREATING_STORY_FROM_TEMPLATE: 'creating_story_from_template',
-  CREATING_STORY_PREVIEW_FROM_TEMPLATE: 'creating_story_preview_from_template',
   CREATE_STORY_FROM_TEMPLATE_SUCCESS: 'create_story_from_template_success',
   CREATE_STORY_FROM_TEMPLATE_FAILURE: 'create_story_from_template_failure',
-  CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS:
-    'create_story_preview_from_template_success',
-  CREATE_STORY_PREVIEW_FROM_TEMPLATE_FAILURE:
-    'create_story_preview_from_template_failure',
+  CREATE_STORY_PREVIEW_SUCCESS: 'create_story_preview_success',
+  CREATE_STORY_PREVIEW_FAILURE: 'create_story_preview_failure',
+  CREATING_STORY_PREVIEW: 'creating_story_preview',
   LOADING_STORIES: 'loading_stories',
   FETCH_STORIES_SUCCESS: 'fetch_stories_success',
   FETCH_STORIES_FAILURE: 'fetch_stories_failure',
@@ -55,7 +53,7 @@ function storyReducer(state, action) {
   switch (action.type) {
     case ACTION_TYPES.LOADING_STORIES:
     case ACTION_TYPES.CREATING_STORY_FROM_TEMPLATE:
-    case ACTION_TYPES.CREATING_STORY_PREVIEW_FROM_TEMPLATE: {
+    case ACTION_TYPES.CREATING_STORY_PREVIEW: {
       return {
         ...state,
         isLoading: action.payload,
@@ -63,7 +61,7 @@ function storyReducer(state, action) {
     }
 
     case ACTION_TYPES.CREATE_STORY_FROM_TEMPLATE_FAILURE:
-    case ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_FAILURE:
+    case ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE:
     case ACTION_TYPES.FETCH_STORIES_FAILURE:
     case ACTION_TYPES.UPDATE_STORY_FAILURE:
     case ACTION_TYPES.TRASH_STORY_FAILURE:
@@ -81,7 +79,7 @@ function storyReducer(state, action) {
       };
     }
 
-    case ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS: {
+    case ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS: {
       return {
         ...state,
         previewMarkup: action.payload,

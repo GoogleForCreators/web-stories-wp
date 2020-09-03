@@ -23,8 +23,9 @@ export const DROPDOWN_ITEM_PROP_TYPE = PropTypes.shape({
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   selected: PropTypes.bool,
-  separator: PropTypes.bool,
+  separator: PropTypes.oneOf(['top', 'bottom']),
   disabled: PropTypes.bool,
+  url: PropTypes.string,
 });
 
 export const ColorType = PropTypes.shape({

@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { STORY_ANIMATION_STATE } from '../../../dashboard/constants';
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -95,7 +95,7 @@ function FramesLayer() {
       // there's no selection, but it's not reacheable by keyboard
       // otherwise.
       tabIndex="-1"
-      aria-label={__('Frames', 'web-stories')}
+      aria-label={__('Frames layer', 'web-stories')}
     >
       {!isAnimating && (
         <FramesPageArea

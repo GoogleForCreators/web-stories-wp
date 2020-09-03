@@ -13,6 +13,7 @@ services:
       WORDPRESS_CONFIG_EXTRA: |
         define( 'SCRIPT_DEBUG', true );
         define( 'FS_METHOD', 'direct' );
+        define( 'WEBSTORIES_DEV_MODE', true );
     volumes:
       - wordpress_data:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini

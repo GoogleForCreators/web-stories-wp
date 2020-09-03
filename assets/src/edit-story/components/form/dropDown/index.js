@@ -98,11 +98,12 @@ const DropDownTitle = styled.span`
 `;
 
 function DropDown({
-  value,
-  onChange,
+  value = '',
+  onChange = () => {},
   options = [],
   disabled = false,
   lightMode = false,
+  placement = 'bottom-end',
   placeholder = __('Select an option', 'web-stories'),
   ...rest
 }) {
@@ -171,7 +172,7 @@ function DropDown({
       <Popup
         anchor={selectRef}
         isOpen={isOpen}
-        placement={'bottom-end'}
+        placement={placement}
         fillWidth={true}
       >
         <DropDownList
@@ -187,13 +188,14 @@ function DropDown({
 }
 
 DropDown.propTypes = {
-  value: PropTypes.any.isRequired,
-  onChange: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  onChange: PropTypes.func,
   options: PropTypes.array,
   disabled: PropTypes.bool,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
   labelledBy: PropTypes.string,
+  placement: PropTypes.string,
 };
 
 export default DropDown;

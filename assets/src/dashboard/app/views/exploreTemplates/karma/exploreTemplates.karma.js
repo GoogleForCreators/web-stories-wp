@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { useContext } from 'react';
 
 /**
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
-import { ApiContext } from '../../../api/apiProvider';
+import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
   let fixture;
@@ -58,7 +57,7 @@ describe('Grid view', () => {
   async function getTemplatesState() {
     const {
       state: { templates },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
     return templates;
   }
 

@@ -28,6 +28,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
+use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
 use Google\Web_Stories\Traits\Publisher;
@@ -175,8 +176,16 @@ class Story_Post_Type {
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
+
+		// Filter RSS content fields.
 		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
 		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
+
+		// Filter content and excerpt for search and post type archive.
+		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
+		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
+
+		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
@@ -241,6 +250,39 @@ class Story_Post_Type {
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
 		do_action( 'web_stories_add_capabilities', $all_capabilities );
+	}
+
+	/**
+	 * Removes story capabilities from all user roles.
+	 *
+	 * @return void
+	 */
+	public function remove_caps_from_roles() {
+		$post_type_object = get_post_type_object( self::POST_TYPE_SLUG );
+
+		if ( ! $post_type_object ) {
+			return;
+		}
+
+		$all_capabilities = array_values( (array) $post_type_object->cap );
+		$all_roles        = wp_roles();
+		$roles            = array_values( (array) $all_roles->role_objects );
+		foreach ( $roles as $role ) {
+			if ( $role instanceof WP_Role ) {
+				foreach ( $all_capabilities as $cap ) {
+					$role->remove_cap( $cap );
+				}
+			}
+		}
+
+		/**
+		 * Fires when removing the custom capabilities from existing roles.
+		 *
+		 * Can be used to remove the capabilities from other, custom roles.
+		 *
+		 * @param array $all_capabilities List of all post type capabilities, for reference.
+		 */
+		do_action( 'web_stories_remove_capabilities', $all_capabilities );
 	}
 
 	/**
@@ -544,10 +586,9 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-
 		$settings = [
-			'id'     => 'edit-story',
-			'config' => [
+			'id'         => 'edit-story',
+			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
 				'dateFormat'       => get_option( 'date_format' ),
@@ -573,13 +614,14 @@ class Story_Post_Type {
 				'metadata'         => [
 					'publisher'       => $this->get_publisher_data(),
 					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
-					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.jpg', WEBSTORIES_PLUGIN_FILE ),
+					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE ),
 				],
 			],
-			'flags'  => array_merge(
+			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
 			),
+			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
 		];
 
 		/**
@@ -639,5 +681,49 @@ class Story_Post_Type {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Change the content to an embedded player
+	 *
+	 * @param string $content Current content of filter.
+	 *
+	 * @return string
+	 */
+	public function embed_player( $content ) {
+		$post = get_post();
+
+		if ( is_feed() ) {
+			return $content;
+		}
+
+		if ( ! is_search() && ! is_post_type_archive( self::POST_TYPE_SLUG ) ) {
+			return $content;
+		}
+
+		if ( $post instanceof WP_Post && self::POST_TYPE_SLUG === $post->post_type ) {
+			$story = new Story();
+			$story->load_from_post( $post );
+
+			$embed   = new Embed( $story );
+			$content = $embed->render();
+		}
+
+		return $content;
+	}
+
+
+	/**
+	 * Reset default title to empty string for auto-drafts.
+	 *
+	 * @param array $data Array of data to save.
+	 *
+	 * @return array
+	 */
+	public function change_default_title( $data ) {
+		if ( self::POST_TYPE_SLUG === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
+			$data['post_title'] = '';
+		}
+		return $data;
 	}
 }

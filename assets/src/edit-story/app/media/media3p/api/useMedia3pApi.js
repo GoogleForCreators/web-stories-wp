@@ -20,8 +20,18 @@
 import { identity, useContextSelector } from '../../../../utils/context';
 import Context from './context';
 
-function useMedia3pApi(selector) {
-  return useContextSelector(Context, selector ?? identity);
+/** @typedef {import('./typedefs').Media3pApiContext} Media3pApiContext */
+
+/**
+ * Context value consumer to select a fragment of the context from
+ * {@link ./media3pApiProvider}.
+ *
+ * @return {Media3pApiContext} The selected context value fragment.
+ */
+function useMedia3pApi() {
+  // No selector because none of the context properties have a state because
+  // they are currently all functions without state.
+  return useContextSelector(Context, identity);
 }
 
 export default useMedia3pApi;

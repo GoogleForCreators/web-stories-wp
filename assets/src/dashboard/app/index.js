@@ -22,10 +22,11 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -47,9 +48,10 @@ import {
   ToastProvider,
 } from '../components';
 import ApiProvider from './api/apiProvider';
-import { Route, RouterProvider, RouterContext, matchPath } from './router';
-import { ConfigProvider } from './config';
+import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
+import { ConfigProvider, useConfig } from './config';
 import {
+  EditorSettingsView,
   ExploreTemplatesView,
   MyStoriesView,
   SavedTemplatesView,
@@ -61,7 +63,11 @@ import {
 const AppContent = () => {
   const {
     state: { currentPath },
-  } = useContext(RouterContext);
+  } = useRouteHistory();
+
+  const { capabilities: { canManageSettings } = {} } = useConfig();
+  const enableSettingsView =
+    useFeature('enableSettingsView') && canManageSettings;
 
   useEffect(() => {
     const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
@@ -104,14 +110,18 @@ const AppContent = () => {
           path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
           component={<TemplateDetailsView />}
         />
+        {enableSettingsView && (
+          <Route
+            path={APP_ROUTES.EDITOR_SETTINGS}
+            component={<EditorSettingsView />}
+          />
+        )}
         <Route
           path={APP_ROUTES.STORY_ANIM_TOOL}
           component={<StoryAnimTool />}
         />
       </PageContent>
-      <ToastProvider>
-        <ToasterView />
-      </ToastProvider>
+      <ToasterView />
     </AppFrame>
   );
 };
@@ -122,15 +132,17 @@ function App({ config }) {
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
-          <ApiProvider>
-            <NavProvider>
-              <RouterProvider>
-                <GlobalStyle />
-                <KeyboardOnlyOutline />
-                <AppContent />
-              </RouterProvider>
-            </NavProvider>
-          </ApiProvider>
+          <ToastProvider>
+            <ApiProvider>
+              <NavProvider>
+                <RouterProvider>
+                  <GlobalStyle />
+                  <KeyboardOnlyOutline />
+                  <AppContent />
+                </RouterProvider>
+              </NavProvider>
+            </ApiProvider>
+          </ToastProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>

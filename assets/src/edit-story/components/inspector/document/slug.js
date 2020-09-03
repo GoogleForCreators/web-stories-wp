@@ -55,21 +55,30 @@ function SlugPanel() {
   const { slug, link, permalinkConfig, updateStory } = useStory(
     ({
       state: {
-        story: { slug, link, permalinkConfig },
+        story: { slug = '', link, permalinkConfig },
       },
       actions: { updateStory },
     }) => ({ slug, link, permalinkConfig, updateStory })
   );
-  const handleChangeValue = useCallback(
-    (value) => {
+
+  const updateSlug = useCallback(
+    (value, isEditing) => {
       const newSlug = value.slice(0, MIN_MAX.PERMALINK.MAX);
 
       updateStory({
-        properties: { slug: cleanForSlug(newSlug) },
+        properties: { slug: cleanForSlug(newSlug, isEditing) },
       });
     },
     [updateStory]
   );
+
+  const handleChange = useCallback((value) => updateSlug(value, true), [
+    updateSlug,
+  ]);
+
+  const handleBlur = useCallback((evt) => updateSlug(evt.target.value, false), [
+    updateSlug,
+  ]);
 
   const displayLink =
     slug && permalinkConfig && inRange(slug.length, MIN_MAX.PERMALINK)
@@ -82,7 +91,8 @@ function SlugPanel() {
         <BoxedTextInput
           label={__('URL Slug', 'web-stories')}
           value={slug}
-          onChange={handleChangeValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
           placeholder={__('Enter slug', 'web-stories')}
           aria-label={__('Edit: URL slug', 'web-stories')}
           minLength={MIN_MAX.PERMALINK.MIN}

@@ -85,7 +85,6 @@ export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
-    inProgress: true,
   },
   {
     value: APP_ROUTES.SUPPORT,
@@ -127,7 +126,6 @@ export const STORIES_PER_REQUEST = 24;
 
 export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
-export * from './animation';
 export * from './components';
 export * from './direction';
 export * from './pageStructure';

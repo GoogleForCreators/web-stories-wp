@@ -34,6 +34,12 @@ import { AppFrame } from '../components';
 import ApiProviderFixture from './apiProviderFixture';
 
 const defaultConfig = {
+  capabilities: {
+    canManageSettings: true,
+    canUploadFiles: true,
+  },
+  maxUpload: 104857600,
+  maxUploadFormatted: '100 MB',
   isRTL: false,
   dateFormat: 'F j, Y',
   timeFormat: 'g:i a',
@@ -49,6 +55,7 @@ const defaultConfig = {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
     fonts: '/web-stories/v1/fonts',
+    settings: '/wp/v2/settings',
   },
 };
 

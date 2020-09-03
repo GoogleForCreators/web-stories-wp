@@ -20,10 +20,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useEffect } from 'react';
-
-/**
- * Internal dependencies
- */
 import { rgba } from 'polished';
 
 /**
@@ -55,7 +51,7 @@ function getBackgroundColor(isPrimary, isSecondary, theme) {
 const Header = styled.h2`
   background-color: ${({ isPrimary, isSecondary, theme }) =>
     getBackgroundColor(isPrimary, isSecondary, theme)};
-  border: 0 solid ${({ theme }) => theme.colors.bg.v9};
+  border: 0 solid ${({ theme }) => rgba(theme.colors.fg.gray16, 0.6)};
   border-top-width: ${({ isPrimary, isSecondary }) =>
     isPrimary || isSecondary ? 0 : '1px'};
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};

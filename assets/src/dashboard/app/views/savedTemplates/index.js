@@ -15,14 +15,14 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useEffect, useMemo } from 'react';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
-/**
- * External dependencies
- */
-import { useEffect, useMemo, useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -50,7 +50,7 @@ import useStoryView, {
 import { StoriesPropType } from '../../../types';
 import FontProvider from '../../font/fontProvider';
 import { BodyViewOptions, PageHeading } from '../shared';
-import { ApiContext } from '../../api/apiProvider';
+import useApi from '../../api/useApi';
 import SavedTemplatesGridView from './savedTemplatesGridView';
 
 function Header({ filter, search, sort, stories, view }) {
@@ -114,14 +114,16 @@ function Content({ stories, view, page }) {
 }
 
 function SavedTemplates() {
-  const {
-    actions: {
-      templateApi: { fetchMyTemplates },
-    },
-    state: {
-      templates: { savedTemplates, savedTemplatesOrderById },
-    },
-  } = useContext(ApiContext);
+  const { fetchMyTemplates, savedTemplates, savedTemplatesOrderById } = useApi(
+    ({
+      actions: {
+        templateApi: { fetchMyTemplates },
+      },
+      state: {
+        templates: { savedTemplates, savedTemplatesOrderById },
+      },
+    }) => ({ fetchMyTemplates, savedTemplates, savedTemplatesOrderById })
+  );
 
   const { filter, page, sort, search, view } = useStoryView({
     filters: SAVED_TEMPLATES_STATUSES,

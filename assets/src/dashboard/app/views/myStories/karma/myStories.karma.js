@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { useContext } from 'react';
 
 /**
  * Internal dependencies
@@ -36,8 +35,8 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
-import { ApiContext } from '../../../api/apiProvider';
 import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
+import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
   let fixture;
@@ -54,9 +53,15 @@ describe('Grid view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
+  }
+
+  function getGridElementById(id) {
+    const gridElement = fixture.screen.getByTestId(`story-grid-item-${id}`);
+
+    return gridElement;
   }
 
   it('should render', async () => {
@@ -135,7 +140,9 @@ describe('Grid view', () => {
 
     utils = within(firstStory);
 
-    expect(utils.getByText(/Copy/)).toBeTruthy();
+    const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+    expect(copiedStory.text.includes('(Copy)')).toBeTruthy();
   });
 
   it('should Delete a story', async () => {
@@ -268,6 +275,9 @@ describe('Grid view', () => {
 
       await fixture.events.keyboard.type(firstStoryTitle);
 
+      // Wait for the debounce
+      await fixture.events.sleep(300);
+
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
       expect(storyElements.length).toEqual(
@@ -373,6 +383,90 @@ describe('Grid view', () => {
       expect(renderedStoriesById).toEqual(storiesOrderById);
     });
   });
+
+  describe('Action: Creator can preview their story from grid view', () => {
+    beforeEach(async () => {
+      fixture.setFlags({ enableStoryPreviews: true });
+      await fixture.render();
+    });
+
+    it('should trigger template preview when user clicks a card', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      const { x, y } = activeCard.getBoundingClientRect();
+
+      // We need to click slightly above the center of the card to avoid clicking 'View'
+      await fixture.events.mouse.click(x - 20, y);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on a card', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+      const activeCard = utils.getByTestId('card-action-container');
+      expect(activeCard).toBeTruthy();
+
+      await fixture.events.focus(activeCard);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user clicks the center button (view or preview)', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+
+      const centerActionButton = utils.getByTestId('card-center-action');
+      expect(centerActionButton).toBeTruthy();
+
+      // We need to click slightly above the center of the card to avoid clicking 'View'
+      await fixture.events.click(centerActionButton);
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+
+    it('should trigger template preview when user presses Enter while focused on the center button (view or preview)', async () => {
+      const { storiesOrderById } = await getStoriesState();
+
+      const currentCard = await getGridElementById(storiesOrderById[1]);
+      const utils = within(currentCard);
+
+      const centerActionButton = utils.getByTestId('card-center-action');
+      expect(centerActionButton).toBeTruthy();
+
+      await fixture.events.focus(centerActionButton);
+      await fixture.events.keyboard.press('Enter');
+
+      const viewPreviewStory = await fixture.screen.queryByTestId(
+        'preview-iframe'
+      );
+
+      expect(viewPreviewStory).toBeTruthy();
+    });
+  });
 });
 
 describe('List view', () => {
@@ -390,7 +484,7 @@ describe('List view', () => {
   async function getStoriesState() {
     const {
       state: { stories },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return stories;
   }
@@ -398,7 +492,7 @@ describe('List view', () => {
   async function getUsers() {
     const {
       state: { users },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
 
     return users;
   }
@@ -535,7 +629,9 @@ describe('List view', () => {
 
       utils = within(rows[0]);
 
-      expect(utils.getByText(/Copy/)).toBeTruthy();
+      const copiedStory = utils.queryAllByText(/Copy/)[0];
+
+      expect(copiedStory).toBeTruthy();
     });
 
     it('should Delete a story', async () => {
@@ -784,6 +880,177 @@ describe('List view', () => {
       const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
 
       await fixture.events.click(lastModifiedHeader);
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      rowModifiedValues = rows.map((row) => row.children[4].innerText);
+
+      expect(rowModifiedValues).toEqual(
+        storieModifiedSortedByModified.reverse()
+      );
+    });
+
+    it('should sort by Title in List View with keyboard', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      // There is a second hidden span with the same text
+      const titleHeader = fixture.screen.getAllByText(/^Title/)[0];
+
+      await fixture.events.focus(titleHeader);
+      await fixture.events.keyboard.press('Enter');
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storieTitlesSortedByTitle = storiesOrderById.map(
+        (id) => stories[id].title
+      );
+
+      // title is the second column
+      let rowTitles = rows.map((row) => row.children[1].innerText);
+
+      expect(rowTitles).toEqual(storieTitlesSortedByTitle);
+
+      // sort by descending
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      // title is the second column
+      rowTitles = rows.map((row) => row.children[1].innerText);
+
+      expect(rowTitles).toEqual(storieTitlesSortedByTitle.reverse());
+    });
+
+    it('should sort by Author in List View with keyboard', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      const authorHeader = fixture.screen.getByText(/^Author/);
+
+      await fixture.events.focus(authorHeader);
+      await fixture.events.keyboard.press('Enter');
+
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const users = await getUsers();
+
+      const storieAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => users[stories[id].author].name
+      );
+
+      // author is the third column
+      let rowAuthors = rows.map((row) => row.children[2].innerText);
+
+      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+
+      // sort by descending
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      // author is the third column
+      rowAuthors = rows.map((row) => row.children[2].innerText);
+
+      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+    });
+
+    it('should sort by Date Created in List View with keyboard', async () => {
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      const dateCreatedHeader = fixture.screen.getByText(/^Date Created/);
+
+      await fixture.events.focus(dateCreatedHeader);
+      await fixture.events.keyboard.press('Enter');
+
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+      );
+
+      let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
+
+      expect(rowDateCreatedValues).toEqual(
+        storiesDateCreatedSortedByDateCreated
+      );
+
+      // sort by ascending
+      await fixture.events.keyboard.press('Enter');
+
+      rows = fixture.screen.getAllByRole('row').slice(1);
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      // author is the fourth column
+      rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
+
+      expect(rowDateCreatedValues).toEqual(
+        storiesDateCreatedSortedByDateCreated.reverse()
+      );
+    });
+
+    it('should sort by Last Modified in List View with keyboard', async () => {
+      // last modified desc is the default sort
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      await fixture.events.focus(listViewButton);
+      await fixture.events.keyboard.press('Enter');
+
+      // drop the header row using slice
+      let rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      expect(rows.length).toEqual(storiesOrderById.length);
+
+      const storieModifiedSortedByModified = storiesOrderById.map((id) =>
+        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+      );
+
+      // Last Modified is the fifth column
+      let rowModifiedValues = rows.map((row) => row.children[4].innerText);
+
+      expect(rowModifiedValues).toEqual(storieModifiedSortedByModified);
+
+      // sort ascending
+      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+
+      await fixture.events.focus(lastModifiedHeader);
+      await fixture.events.keyboard.press('Enter');
 
       rows = fixture.screen.getAllByRole('row').slice(1);
 

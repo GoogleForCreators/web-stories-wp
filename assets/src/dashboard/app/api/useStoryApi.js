@@ -15,16 +15,16 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 import { useFeatures } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -194,32 +194,42 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     });
   }, []);
 
-  const createStoryPreviewFromTemplate = useCallback(
-    async (template) => {
+  const createStoryPreview = useCallback(
+    async (dashboardStory) => {
       dispatch({
-        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW_FROM_TEMPLATE,
+        type: STORY_ACTION_TYPES.CREATING_STORY_PREVIEW,
         payload: true,
       });
 
       try {
-        const { createdBy, pages, title, excerpt } = template;
+        const {
+          author,
+          createdBy,
+          created,
+          modified,
+          pages,
+          password,
+          title,
+          excerpt,
+          status,
+        } = dashboardStory;
 
         const storyProps = await getStoryPropsToSave({
           story: {
-            status: 'auto-draft',
+            status: status || 'auto-draft',
             title: title,
-            author: 1,
+            author: author || 1,
             slug: title,
-            date: Date.now().toString(),
-            modified: Date.now().toString(),
+            date: created ? created.format() : Date.now().toString(),
+            modified: modified ? modified.format() : Date.now().toString(),
             featuredMedia: 0,
-            password: '',
+            password: password || '',
             excerpt: excerpt || '',
           },
           pages,
           metadata: {
             publisher: {
-              name: createdBy,
+              name: createdBy || '',
             },
             fallbackPoster: '',
           },
@@ -236,12 +246,12 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         );
 
         dispatch({
-          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_SUCCESS,
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_SUCCESS,
           payload: markup.toString(),
         });
       } catch (err) {
         dispatch({
-          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FROM_TEMPLATE_FAILURE,
+          type: STORY_ACTION_TYPES.CREATE_STORY_PREVIEW_FAILURE,
           payload: {
             message: {
               body: err.message,
@@ -371,14 +381,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       duplicateStory,
       fetchStories,
       createStoryFromTemplate,
-      createStoryPreviewFromTemplate,
+      createStoryPreview,
       trashStory,
       updateStory,
     }),
     [
       clearStoryPreview,
       createStoryFromTemplate,
-      createStoryPreviewFromTemplate,
+      createStoryPreview,
       duplicateStory,
       trashStory,
       updateStory,
