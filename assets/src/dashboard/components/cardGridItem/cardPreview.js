@@ -202,6 +202,7 @@ const CardPreviewContainer = ({
               data-testid="card-top-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(topAction.targetAction)}
+              aria-label={topAction.ariaLabel}
             >
               {topAction.label}
             </Button>
@@ -215,6 +216,7 @@ const CardPreviewContainer = ({
               data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
+              aria-label={centerAction.ariaLabel}
             >
               {centerAction.label}
             </Button>
@@ -224,6 +226,7 @@ const CardPreviewContainer = ({
           <Button
             {...getActionAttributes(bottomAction.targetAction)}
             tabIndex={tabIndex}
+            aria-label={bottomAction.ariaLabel}
           >
             {bottomAction.label}
           </Button>
@@ -237,6 +240,7 @@ const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
   label: ActionLabel,
+  ariaLabel: PropTypes.string,
 });
 
 CardPreviewContainer.propTypes = {
