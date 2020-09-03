@@ -83,7 +83,9 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   // when keyboard focus changes through FocusableGridItem immediately focus the CardPreviewContainer
   useEffect(() => {
-    itemRefs.current?.[activeGridItemId]?.lastChild.focus();
+    if (activeGridItemId) {
+      itemRefs.current?.[activeGridItemId]?.lastChild.focus();
+    }
   }, [activeGridItemId]);
 
   return (
@@ -110,26 +112,15 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                 }}
                 isSelected={isActive}
                 tabIndex={tabIndex}
-                aria-label={
-                  isActive
-                    ? sprintf(
-                        /* translators: %s: template title.*/
-                        __('%s (currently selected)', 'web-stories'),
-                        template.title
-                      )
-                    : template.title
-                }
+                ariaLabelledBy={`${template.id}_template`}
               />
               <CardPreviewContainer
-                ariaLabel={
-                  isActive
-                    ? sprintf(
-                        /* translators: %s: template title.*/
-                        __('%s (currently selected)', 'web-stories'),
-                        template.title
-                      )
-                    : template.title
-                }
+                id={`${template.id}_template`}
+                ariaLabel={sprintf(
+                  /* translators: %s: template title.*/
+                  __('preview of %s template', 'web-stories'),
+                  template.title
+                )}
                 tabIndex={tabIndex}
                 pageSize={pageSize}
                 story={template}
