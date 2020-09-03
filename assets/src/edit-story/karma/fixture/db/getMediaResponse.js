@@ -288,4 +288,47 @@ export default [
       sizes: {},
     },
   },
+  {
+    id: 8,
+    guid: {
+      rendered: 'http://localhost:9876/__static__/transparent.png',
+    },
+    title: {
+      raw: 'image with transparent background',
+    },
+    description: {
+      raw: '',
+    },
+    alt_text: 'image with transparent background',
+    mime_type: 'image/png',
+    featured_media_src: {},
+    featured_media: 0,
+    media_details: {
+      width: 400,
+      height: 400,
+      sizes: {
+        medium: {
+          file: 'transparent.png',
+          width: 400,
+          height: 400,
+          mime_type: 'image/png',
+          source_url: 'http://localhost:9876/__static__/transparent.png',
+        },
+        thumbnail: {
+          file: 'transparent.png',
+          width: 400,
+          height: 400,
+          mime_type: 'image/png',
+          source_url: 'http://localhost:9876/__static__/transparent.png',
+        },
+        web_stories_thumbnail: {
+          file: 'transparent.png',
+          width: 400,
+          height: 400,
+          mime_type: 'image/png',
+          source_url: 'http://localhost:9876/__static__/transparent.png',
+        },
+      },
+    },
+  },
 ];

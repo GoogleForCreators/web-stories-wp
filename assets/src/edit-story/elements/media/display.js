@@ -31,7 +31,8 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
-  background-color: #C4C4C4;
+  ${({ showPlaceholder }) =>
+    showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
 `;
@@ -40,6 +41,7 @@ function MediaDisplay({
   element: { id, resource, scale, focalX, focalY },
   mediaRef,
   children,
+  showPlaceholder = false,
 }) {
   useTransformHandler(id, (transform) => {
     const target = mediaRef.current;
@@ -62,13 +64,14 @@ function MediaDisplay({
       }
     }
   });
-  return <Element>{children}</Element>;
+  return <Element showPlaceholder={showPlaceholder}>{children}</Element>;
 }
 
 MediaDisplay.propTypes = {
   element: StoryPropTypes.elements.media,
   mediaRef: PropTypes.object,
   children: PropTypes.node.isRequired,
+  showPlaceholder: PropTypes.bool,
 };
 
 export default MediaDisplay;

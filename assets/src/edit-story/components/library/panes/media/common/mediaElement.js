@@ -180,10 +180,10 @@ const MediaElement = ({
     () => (thumbnailURL) => ({
       draggable: 'true',
       onDragStart: (e) => {
-        resourceList[resource.id] = {
+        resourceList.set(resource.id, {
           url: thumbnailURL,
           type: 'cached',
-        };
+        });
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
