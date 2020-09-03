@@ -145,10 +145,13 @@ const StoryGridView = ({
                 }}
                 isSelected={isActive}
                 tabIndex={tabIndex}
-                ariaLabelledBy={`${story.id}_story`}
+                title={sprintf(
+                  /* translators: %s: story title.*/
+                  __('Press Enter to explore details about %s', 'web-stories'),
+                  story.title
+                )}
               />
               <CardPreviewContainer
-                id={`${story.id}_story`}
                 ariaLabel={sprintf(
                   /* translators: %s: story title.*/
                   __('preview of %s', 'web-stories'),
