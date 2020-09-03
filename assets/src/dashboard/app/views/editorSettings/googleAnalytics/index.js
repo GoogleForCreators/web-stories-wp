@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -28,7 +28,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useEffect } from 'react';
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
 import { TextInput } from '../../../../components';
 import {
@@ -117,7 +116,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
           </InlineLink>
         </TextInputHelperText>
         <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
-          {'Save'}
+          {__('Save', 'web-stories')}
         </SaveButton>
       </FormContainer>
     </SettingForm>
