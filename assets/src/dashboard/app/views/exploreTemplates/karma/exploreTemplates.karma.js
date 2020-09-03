@@ -109,7 +109,7 @@ describe('Grid view', () => {
 
       expect(view).toBeTruthy();
 
-      const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
+      const useTemplate = utils.getByText(/^Use template$/);
 
       expect(useTemplate).toBeTruthy();
     });
