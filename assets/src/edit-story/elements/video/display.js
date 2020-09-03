@@ -90,8 +90,6 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           {...videoProps}
           loop={loop}
           preload="none"
-          // crossorigin='anonymous' is required to play videos from other domains.
-          crossOrigin="anonymous"
           ref={ref}
         >
           <source src={resource.src} type={resource.mimeType} />

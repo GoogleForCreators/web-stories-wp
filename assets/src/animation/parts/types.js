@@ -41,7 +41,7 @@ export const AnimationProps = {
   id: PropTypes.string.isRequired,
   type: PropTypes.oneOf([
     ...Object.values(ANIMATION_TYPES),
-    ...Object.values(ANIMATION_EFFECTS),
+    ...Object.values(ANIMATION_EFFECTS).map((o) => o.value),
   ]),
   targets: PropTypes.arrayOf(PropTypes.string),
   ...GeneralAnimationPropTypes,

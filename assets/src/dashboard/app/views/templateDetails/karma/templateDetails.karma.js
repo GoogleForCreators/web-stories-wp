@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
 import { within } from '@testing-library/react';
 import qs from 'query-string';
 
@@ -24,12 +23,12 @@ import qs from 'query-string';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { ApiContext } from '../../../api/apiProvider';
 import {
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
 } from '../../../../constants';
+import useApi from '../../../api/useApi';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;
@@ -77,10 +76,25 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
     return template;
   }
 
+  async function focusOnCardGallery() {
+    let limit = 0;
+    const cardGallery = fixture.screen.getByTestId('mini-cards-container');
+
+    while (!cardGallery.contains(document.activeElement) && limit < 5) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+
+    return cardGallery.contains(document.activeElement)
+      ? Promise.resolve()
+      : Promise.reject(new Error('could not focus on page list'));
+  }
+
   async function getTemplatesState() {
     const {
       state: { templates },
-    } = await fixture.renderHook(() => useContext(ApiContext));
+    } = await fixture.renderHook(() => useApi());
     return templates;
   }
 
@@ -107,7 +121,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
     });
 
     it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
-      const firstPage = fixture.screen.getByLabelText('Page Preview - Page 1');
+      const firstPage = fixture.screen.getByRole('button', { name: /Page 1/ });
 
       expect(firstPage).toBeTruthy();
 
@@ -117,7 +131,7 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
       expect(activePage).toBeTruthy();
 
-      const secondPage = fixture.screen.getByLabelText('Page Preview - Page 2');
+      const secondPage = fixture.screen.getByRole('button', { name: /Page 2/ });
 
       expect(secondPage).toBeTruthy();
 
@@ -126,6 +140,42 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
       fixture.screen.getByLabelText('Active Page Preview - Page 2');
 
       expect(activePage).toBeTruthy();
+    });
+
+    it('should update the "Active Preview Page" when using keyboard to navigate gallery', async () => {
+      await focusOnCardGallery();
+      let page1 = fixture.screen.getByRole('button', { name: /Page 1/ });
+      expect(page1).toEqual(document.activeElement);
+
+      // go right by 1
+      await fixture.events.keyboard.press('right');
+      const page2 = fixture.screen.getByRole('button', { name: /Page 2/ });
+      expect(page2).toEqual(document.activeElement);
+
+      // go left 1
+      await fixture.events.keyboard.press('left');
+      expect(page1).toEqual(document.activeElement);
+
+      // go left 1 (focus should remain on page 1)
+      await fixture.events.keyboard.press('left');
+      expect(page1).toEqual(document.activeElement);
+
+      const page4 = fixture.screen.getByRole('button', { name: /Page 4/ });
+      await fixture.events.keyboard.seq(({ press }) => [
+        press('right'),
+        press('right'),
+        press('right'),
+      ]);
+      expect(page4).toEqual(document.activeElement);
+
+      await fixture.events.keyboard.press('right');
+      await fixture.events.keyboard.press('Enter');
+
+      const activePreviewPage = fixture.screen.getByLabelText(
+        'Active Page Preview - Page 5'
+      );
+
+      expect(activePreviewPage).toBeTruthy();
     });
 
     it('should load the next related template when clicking "View Next Template" button', async () => {

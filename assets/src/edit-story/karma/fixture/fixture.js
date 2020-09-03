@@ -45,7 +45,9 @@ const DEFAULT_CONFIG = {
     video: ['video/mp4', 'video/ogg'],
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
-  capabilities: {},
+  capabilities: {
+    hasUploadMediaAction: true,
+  },
 };
 
 /**

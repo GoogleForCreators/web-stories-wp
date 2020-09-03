@@ -30,9 +30,12 @@ import { useDropTargets } from '../../../../../app';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
+import resourceList from '../../../../../utils/resourceList';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
+
+const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
 const styledTiles = css`
   width: 100%;
@@ -151,6 +154,11 @@ const MediaElement = ({
     alt,
   } = resource;
 
+  // Treat GIFs as images for now.
+  if (resource.type == 'gif') {
+    resource.type = 'image';
+  }
+
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
@@ -169,9 +177,13 @@ const MediaElement = ({
     mediaElement?.current?.getBoundingClientRect();
 
   const dropTargetsBindings = useMemo(
-    () => ({
+    () => (thumbnailURL) => ({
       draggable: 'true',
       onDragStart: (e) => {
+        resourceList[resource.id] = {
+          url: thumbnailURL,
+          type: 'cached',
+        };
         setDraggingResource(resource);
         const { x, y, width: w, height: h } = measureMediaElement();
         const offsetX = e.clientX - x;
@@ -206,6 +218,10 @@ const MediaElement = ({
     setActive(false);
   }, []);
 
+  const [hoverTimer, setHoverTimer] = useState(null);
+  const activeRef = useRef(active);
+  activeRef.current = active;
+
   useEffect(() => {
     if (type === 'video') {
       if (isMenuOpen) {
@@ -216,16 +232,25 @@ const MediaElement = ({
       } else {
         if (active) {
           setShowVideoDetail(false);
-          if (mediaElement.current) {
+          if (mediaElement.current && hoverTimer == null) {
+            const timer = setTimeout(() => {
+              if (activeRef.current) {
+                const playPromise = mediaElement.current.play();
+                if (playPromise) {
+                  // All supported browsers return promise but unit test runner does not.
+                  playPromise.catch(() => {});
+                }
+              }
+            }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
+            setHoverTimer(timer);
             // Pointer still in the media element, continue the video.
-            const playPromise = mediaElement.current.play();
-            if (playPromise) {
-              // All supported browsers return promise but unit test runner does not.
-              playPromise.catch(() => {});
-            }
           }
         } else {
           setShowVideoDetail(true);
+          if (hoverTimer != null) {
+            clearTimeout(hoverTimer);
+            setHoverTimer(null);
+          }
           if (mediaElement.current) {
             // Stop video and reset position.
             mediaElement.current.pause();
@@ -234,10 +259,16 @@ const MediaElement = ({
         }
       }
     }
-  }, [isMenuOpen, active, type]);
+    return () => {
+      if (hoverTimer != null) {
+        clearTimeout(hoverTimer);
+        setHoverTimer(null);
+      }
+    };
+  }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = () => {
-    onInsert(resource, width, height);
+  const onClick = (thumbnailUrl) => () => {
+    onInsert(resource, thumbnailUrl);
   };
 
   const innerElement = getInnerElement(type, {
@@ -251,12 +282,14 @@ const MediaElement = ({
     showVideoDetail,
     dropTargetsBindings,
   });
-  const attribution = active && resource.attribution?.author && (
-    <Attribution
-      author={resource.attribution.author.displayName}
-      url={resource.attribution.author.url}
-    />
-  );
+  const attribution = active &&
+    resource.attribution?.author?.displayName &&
+    resource.attribution?.author?.url && (
+      <Attribution
+        author={resource.attribution.author.displayName}
+        url={resource.attribution.author.url}
+      />
+    );
 
   const ref = useRef();
 
@@ -342,20 +375,21 @@ function getInnerElement(
   const makeImageVisible = () => {
     ref.current.style.opacity = '1';
   };
-  if (type === 'image') {
+  if (['image', 'gif'].includes(type)) {
+    const thumbnailURL = getSmallestUrlForWidth(width, resource);
     return (
       <Image
         key={src}
-        src={getSmallestUrlForWidth(width, resource)}
+        src={thumbnailURL}
         ref={ref}
         width={width}
         height={height}
         alt={alt}
         aria-label={alt}
         loading={'lazy'}
-        onClick={onClick}
+        onClick={onClick(thumbnailURL)}
         onLoad={makeImageVisible}
-        {...dropTargetsBindings}
+        {...dropTargetsBindings(thumbnailURL)}
       />
     );
   } else if (type === 'video') {
@@ -371,10 +405,8 @@ function getInnerElement(
           preload="none"
           aria-label={alt}
           muted
-          onClick={onClick}
-          // crossorigin='anonymous' is required to play videos from other domains.
-          crossOrigin="anonymous"
-          {...dropTargetsBindings}
+          onClick={onClick(poster)}
+          {...dropTargetsBindings(poster)}
         >
           <source
             src={getSmallestUrlForWidth(width, resource)}

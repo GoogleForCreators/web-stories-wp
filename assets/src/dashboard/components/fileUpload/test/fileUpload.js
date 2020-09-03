@@ -26,18 +26,29 @@ import { renderWithTheme } from '../../../testUtils/';
 import FileUpload from '../';
 
 describe('FileUpload', () => {
-  it('should render empty upload component by default', () => {
+  it('should render upload component by default', () => {
     const { queryAllByTestId } = renderWithTheme(
       <FileUpload
         onSubmit={jest.fn}
-        onDelete={jest.fn}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
-        uploadedContent={[]}
       />
     );
     expect(queryAllByTestId('file-upload-content-container')).toHaveLength(0);
+  });
+
+  it('should render upload component with loading overlay when isLoading is true', () => {
+    const { getByText } = renderWithTheme(
+      <FileUpload
+        onSubmit={jest.fn}
+        id={'898989'}
+        label="Upload"
+        ariaLabel="Click to upload a file"
+        isLoading={true}
+      />
+    );
+    expect(getByText(/^Loading/)).toBeInTheDocument();
   });
 
   it('should trigger onSubmit when file is added through input', () => {
@@ -46,11 +57,9 @@ describe('FileUpload', () => {
     const { getByTestId } = renderWithTheme(
       <FileUpload
         onSubmit={onSubmitMock}
-        onDelete={jest.fn}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
-        uploadedContent={[]}
       />
     );
 
@@ -70,11 +79,9 @@ describe('FileUpload', () => {
     const { getByTestId } = renderWithTheme(
       <FileUpload
         onSubmit={onSubmitMock}
-        onDelete={jest.fn}
         id={'898989'}
         label="Upload"
         ariaLabel="Click to upload a file"
-        uploadedContent={[]}
       />
     );
 

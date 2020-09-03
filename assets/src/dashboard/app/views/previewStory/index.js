@@ -22,7 +22,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -35,7 +35,7 @@ import dashboardTheme from '../../../theme';
 import { Close as CloseIcon } from '../../../icons';
 import { StoryPropType } from '../../../types';
 import { useResizeEffect } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
+import useApi from '../../api/useApi';
 
 const CLOSE_BUTTON_SIZE = {
   HEIGHT: 30,
@@ -86,13 +86,27 @@ const HelperContainer = styled.div`
 
 const PreviewStory = ({ story, handleClose }) => {
   const {
-    state: {
-      stories: { previewMarkup, isLoading, error },
-    },
-    actions: {
-      storyApi: { createStoryPreview, clearStoryPreview },
-    },
-  } = useContext(ApiContext);
+    previewMarkup,
+    isLoading,
+    error,
+    createStoryPreview,
+    clearStoryPreview,
+  } = useApi(
+    ({
+      state: {
+        stories: { previewMarkup, isLoading, error },
+      },
+      actions: {
+        storyApi: { createStoryPreview, clearStoryPreview },
+      },
+    }) => ({
+      previewMarkup,
+      isLoading,
+      error,
+      createStoryPreview,
+      clearStoryPreview,
+    })
+  );
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
 
