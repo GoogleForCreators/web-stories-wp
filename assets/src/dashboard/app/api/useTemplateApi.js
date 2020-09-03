@@ -225,25 +225,18 @@ const useTemplateApi = (dataAdapter, config) => {
           totalTemplates: reshapedTemplates.length,
         },
       });
-
-      dispatch({
-        type: TEMPLATE_ACTION_TYPES.LOADING_TEMPLATES,
-      });
     },
     [assetsURL]
   );
 
   const fetchExternalTemplateById = useCallback(
-    async (templateId) => {
+    (templateId) => {
       if (state.templates[templateId]) {
-        return state.templates[templateId];
+        return Promise.resolve(state.templates[templateId]);
       }
-
-      await fetchExternalTemplates();
-
-      return state.templates[templateId];
+      return Promise.reject(new Error());
     },
-    [fetchExternalTemplates, state]
+    [state]
   );
 
   const bookmarkTemplateById = useCallback((templateId, shouldBookmark) => {

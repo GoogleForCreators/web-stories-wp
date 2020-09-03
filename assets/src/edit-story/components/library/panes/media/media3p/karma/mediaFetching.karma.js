@@ -315,6 +315,21 @@ describe('Media3pPane fetching', () => {
     );
   });
 
+  it('should expand category section on arrow down', async () => {
+    mockListMedia();
+    mockListCategories();
+    await fixture.events.click(media3pTab);
+
+    await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
+    await fixture.events.keyboard.press('tab');
+    expect(document.activeElement.textContent).toBe('Sustainability');
+
+    await fixture.events.keyboard.press('ArrowDown');
+    const expandButton = fixture.screen.getByTestId('category-expand-button');
+    expect(expandButton.getAttribute('aria-expanded')).toBe('true');
+  });
+
   it('should fetch 2nd page', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
@@ -368,6 +383,30 @@ describe('Media3pPane fetching', () => {
     await waitFor(() => {
       expect(mediaGallery.scrollTop).toBe(0);
     });
+  });
+
+  it('should have a delay before autoplaying videos', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    const coverrTab = fixture.querySelector('#provider-tab-coverr');
+
+    await fixture.events.click(coverrTab);
+    await expectMediaElements(coverrSection, MEDIA_PER_PAGE);
+
+    let mediaElements = coverrSection.querySelectorAll(
+      '[data-testid=mediaElement]'
+    );
+
+    const firstMediaElement = mediaElements.item(0);
+    await fixture.events.focus(firstMediaElement);
+    const video = firstMediaElement.querySelector('video');
+
+    expect(video.paused).toBe(true);
+
+    jasmine.clock().tick(700);
+
+    expect(video.paused).toBe(false);
   });
 
   describe('Gallery navigation', () => {

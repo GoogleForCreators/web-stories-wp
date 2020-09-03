@@ -25,7 +25,7 @@ import { __ } from '@wordpress/i18n';
 import { Media } from '../../../../../icons';
 
 function Media3pIcon() {
-  return <Media aria-label={__('Third Party Media library', 'web-stories')} />;
+  return <Media aria-label={__('Explore Media', 'web-stories')} />;
 }
 
 export default Media3pIcon;

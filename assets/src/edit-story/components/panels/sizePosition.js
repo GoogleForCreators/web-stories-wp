@@ -30,19 +30,21 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
+  BoxedNumeric,
   Button,
   Row,
-  Numeric,
   Toggle,
   usePresubmitHandler,
   MULTIPLE_VALUE,
 } from '../form';
 import { dataPixels } from '../../units';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { Lock as Locked, Unlock as Unlocked } from '../../icons';
-
 import useStory from '../../app/story/useStory';
 import { getDefinitionForType } from '../../elements';
 import clamp from '../../utils/clamp';
+import { calcRotatedObjectPositionAndSize } from '../../utils/getBoundRect';
+import { DANGER_ZONE_HEIGHT } from '../../units/dimensions';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 import FlipControls from './shared/flipControls';
@@ -62,15 +64,24 @@ const MIN_MAX = {
     MIN: 1,
     MAX: 1000,
   },
+  X: {
+    MIN: 1,
+    MAX: PAGE_WIDTH - 1,
+  },
+  Y: {
+    MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
+    MAX: PAGE_HEIGHT + Math.floor(DANGER_ZONE_HEIGHT) - 1,
+  },
 };
-
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
 
 const StyledToggle = styled(Toggle)`
   margin: 0 10px;
+`;
+
+const Spacer = styled.span`
+  display: block;
+  width: 50px;
+  flex-shrink: 0;
 `;
 
 function isNum(v) {
@@ -83,6 +94,8 @@ function SizePositionPanel({
   pushUpdate,
   pushUpdateForObject,
 }) {
+  const x = getCommonValue(selectedElements, 'x');
+  const y = getCommonValue(selectedElements, 'y');
   const width = getCommonValue(selectedElements, 'width');
   const height = getCommonValue(selectedElements, 'height');
   const rotationAngle = getCommonValue(selectedElements, 'rotationAngle');
@@ -114,6 +127,14 @@ function SizePositionPanel({
   const canFlip = selectedElements.every(
     ({ type }) => getDefinitionForType(type).canFlip
   );
+
+  const actualDimensions = useMemo(
+    () => calcRotatedObjectPositionAndSize(rotationAngle, x, y, width, height),
+    [rotationAngle, x, y, width, height]
+  );
+
+  const xOffset = x - actualDimensions.x;
+  const yOffset = y - actualDimensions.y;
 
   const getUpdateObject = (nWidth, nHeight) =>
     rawLockAspectRatio === MULTIPLE_VALUE
@@ -180,6 +201,25 @@ function SizePositionPanel({
     };
   }, []);
 
+  usePresubmitHandler(
+    ({ rotationAngle: na, x: nx, y: ny, width: nw, height: nh }) => {
+      const newDims = calcRotatedObjectPositionAndSize(na, nx, ny, nw, nh);
+      const newXOffset = nx - newDims.x;
+      const newYOffset = ny - newDims.y;
+      return {
+        x: clamp(nx, {
+          MIN: MIN_MAX.X.MIN + newXOffset - newDims.width,
+          MAX: MIN_MAX.X.MAX + newXOffset,
+        }),
+        y: clamp(ny, {
+          MIN: MIN_MAX.Y.MIN + newYOffset - newDims.height,
+          MAX: MIN_MAX.Y.MAX + newYOffset,
+        }),
+      };
+    },
+    []
+  );
+
   const setDimensionMinMax = useCallback(
     (value, ratio, minmax) => {
       if (lockAspectRatio && value >= minmax.MAX) {
@@ -243,6 +283,28 @@ function SizePositionPanel({
           </Button>
         </Row>
       )}
+      {/** X/Y */}
+      <Row expand>
+        <BoxedNumeric
+          suffix={_x('X', 'Position on X axis', 'web-stories')}
+          value={x}
+          min={MIN_MAX.X.MIN + xOffset - actualDimensions.width}
+          max={MIN_MAX.X.MAX + xOffset}
+          onChange={(value) => pushUpdate({ x: value })}
+          aria-label={__('X position', 'web-stories')}
+          canBeNegative
+        />
+        <Spacer />
+        <BoxedNumeric
+          suffix={_x('Y', 'Position on Y axis', 'web-stories')}
+          value={y}
+          min={MIN_MAX.Y.MIN + yOffset - actualDimensions.height}
+          max={MIN_MAX.Y.MAX + yOffset}
+          onChange={(value) => pushUpdate({ y: value })}
+          aria-label={__('Y position', 'web-stories')}
+          canBeNegative
+        />
+      </Row>
       {/** Width/height & lock ratio */}
       <Row expand>
         <BoxedNumeric

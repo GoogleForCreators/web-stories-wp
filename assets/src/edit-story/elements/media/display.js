@@ -31,6 +31,8 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
+  background-color: #C4C4C4;
+  color: transparent;
   overflow: hidden;
 `;
 

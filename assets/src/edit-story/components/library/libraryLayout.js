@@ -50,8 +50,8 @@ const TabsArea = styled.nav.attrs({
 })``;
 
 const LibraryPaneContainer = styled.div`
-  overflow: auto;
-  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
 `;
 
 function LibraryLayout() {

@@ -30,6 +30,7 @@ import { rgba } from 'polished';
  */
 import { ReactComponent as UnsplashLogoFull } from '../../../icons/unsplash_logo_full.svg';
 import { ReactComponent as CoverrLogoFull } from '../../../icons/coverr_logo.svg';
+import { ReactComponent as TenorLogoFull } from '../../../icons/tenor_logo_white.svg';
 
 const AttributionPill = styled.div`
   position: absolute;
@@ -63,10 +64,18 @@ const CoverrLogo = styled(CoverrLogoFull)`
   margin-top: 2px;
 `;
 
+const TenorLogo = styled(TenorLogoFull)`
+  height: 14px;
+  ${logo}
+  margin: 0 2px 2px 6px;
+`;
+
 const unsplashUrl =
   'https://unsplash.com?utm_source=web_stories_wordpress&utm_medium=referral';
 const coverrUrl =
   'https://coverr.co?utm_source=web_stories_wordpress&utm_medium=referral&utm_campaign=api_powered_by';
+const tenorUrl =
+  'https://tenor.com?utm_source=web_stories_wordpress&utm_medium=referral';
 
 export function UnsplashAttribution() {
   return (
@@ -85,6 +94,16 @@ export function CoverrAttribution() {
       <AttributionPill>
         {__('Powered by', 'web-stories')}
         <CoverrLogo />
+      </AttributionPill>
+    </a>
+  );
+}
+
+export function TenorAttribution() {
+  return (
+    <a href={tenorUrl} target={'_blank'} rel={'noreferrer'}>
+      <AttributionPill>
+        <TenorLogo data-label={__('Powered by Tenor', 'web-stories')} />
       </AttributionPill>
     </a>
   );

@@ -92,6 +92,7 @@ function PaginatedMediaGallery({
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
     if (
+      !resources.length ||
       !node ||
       // This condition happens when the component is hidden, and causes the
       // calculation below to load a new page in error.
@@ -117,7 +118,7 @@ function PaginatedMediaGallery({
       setNextPage();
       return;
     }
-  }, [hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
+  }, [resources, hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
 
   // Scroll to the top when the searchTerm or selected category changes.
   useEffect(() => {

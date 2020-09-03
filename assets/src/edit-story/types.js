@@ -192,6 +192,8 @@ StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.video,
 ]);
 
+export const AnimationPropType = PropTypes.shape(AnimationProps);
+
 export const FontPropType = PropTypes.shape({
   family: PropTypes.string,
   service: PropTypes.string,

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState, useEffect } from 'react';
@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
@@ -60,11 +61,22 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.3)};
-  flex-basis: ${({ flexBasis }) => flexBasis}px;
+  flex-basis: ${({ flexBasis }) => defaultUnit(flexBasis, 'px')};
   border: 1px solid;
   border-color: ${({ theme, focused }) =>
     focused ? theme.colors.whiteout : 'transparent'};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
+`;
+
+const Suffix = styled.span`
+  ${({ isSingleCharacter }) =>
+    isSingleCharacter &&
+    css`
+      flex-shrink: 0;
+      display: inline-block;
+      width: ${({ theme }) => theme.fonts.body2.size};
+      text-align: center;
+    `}
 `;
 
 function Numeric({
@@ -191,7 +203,9 @@ function Numeric({
         }}
         onFocus={handleFocus}
       />
-      {suffix}
+      {suffix && (
+        <Suffix isSingleCharacter={suffix.length === 1}>{suffix}</Suffix>
+      )}
     </Container>
   );
 }
@@ -206,7 +220,7 @@ Numeric.propTypes = {
   suffix: PropTypes.any,
   disabled: PropTypes.bool,
   symbol: PropTypes.string,
-  flexBasis: PropTypes.number,
+  flexBasis: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   textCenter: PropTypes.bool,
   float: PropTypes.bool,
   min: PropTypes.number,

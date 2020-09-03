@@ -22,23 +22,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  CANVAS_MIN_WIDTH,
-  INSPECTOR_MIN_WIDTH,
-  INSPECTOR_MAX_WIDTH,
-} from '../../constants';
-
-const WorkspaceLayout = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-
-  display: grid;
-  grid-template-areas: 'canv insp';
-  grid-template-columns:
-    minmax(${CANVAS_MIN_WIDTH}px, 1fr)
-    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
-`;
 
 const Area = styled.div`
   grid-area: ${({ area }) => area};
@@ -50,4 +33,4 @@ const Area = styled.div`
 const CanvasArea = styled(Area).attrs({ area: 'canv', zIndex: 1 })``;
 const InspectorArea = styled(Area).attrs({ area: 'insp', zIndex: 2 })``;
 
-export { WorkspaceLayout, CanvasArea, InspectorArea };
+export { CanvasArea, InspectorArea };

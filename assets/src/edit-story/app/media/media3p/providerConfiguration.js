@@ -22,16 +22,22 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { CoverrAttribution, UnsplashAttribution } from './attribution';
+import {
+  CoverrAttribution,
+  TenorAttribution,
+  UnsplashAttribution,
+} from './attribution';
 
 const ContentType = {
   IMAGE: 'image',
   VIDEO: 'video',
+  GIF: 'gif',
 };
 
 const ProviderType = {
   UNSPLASH: 'unsplash',
   COVERR: 'coverr',
+  TENOR: 'tenor',
 };
 
 /** @typedef {import('react').React.Component} ReactComponent */
@@ -63,7 +69,7 @@ const ProviderType = {
  */
 export const PROVIDERS = {
   [ProviderType.UNSPLASH]: {
-    displayName: 'Unsplash',
+    displayName: __('Images', 'web-stories'),
     supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
     requiresAuthorAttribution: true,
@@ -78,7 +84,7 @@ export const PROVIDERS = {
     ),
   },
   [ProviderType.COVERR]: {
-    displayName: 'Coverr',
+    displayName: __('Video', 'web-stories'),
     featureName: 'showCoverrTab',
     supportedContentTypes: [ContentType.VIDEO],
     supportsCategories: false,
@@ -89,5 +95,14 @@ export const PROVIDERS = {
       'web-stories'
     ),
     defaultPreviewWidth: 640,
+  },
+  [ProviderType.TENOR]: {
+    displayName: __('GIFs', 'web-stories'),
+    featureName: 'showGifTab',
+    supportedContentTypes: [ContentType.GIF],
+    supportsCategories: true,
+    requiresAuthorAttribution: false,
+    attributionComponent: TenorAttribution,
+    fetchMediaErrorMessage: __('Error loading media from Tenor', 'web-stories'),
   },
 };

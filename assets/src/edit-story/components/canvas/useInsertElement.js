@@ -22,14 +22,14 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { DEFAULT_DPR, PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { createNewElement, getDefinitionForType } from '../../elements';
 import { dataPixels } from '../../units';
 import { useLocalMedia, useStory } from '../../app';
 import { DEFAULT_MASK } from '../../masks';
+import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
+import getInsertedElementSize from '../../utils/getInsertedElementSize';
 import useFocusCanvas from './useFocusCanvas';
-
-const RESIZE_WIDTH_DIRECTION = [1, 0];
 
 function useInsertElement() {
   const { addElement } = useStory((state) => ({
@@ -38,6 +38,9 @@ function useInsertElement() {
   const { uploadVideoPoster } = useLocalMedia((state) => ({
     uploadVideoPoster: state.actions.uploadVideoPoster,
   }));
+  const {
+    actions: { registerUsage },
+  } = useMedia3pApi();
 
   /**
    * @param {Object} resource The resource to verify/update.
@@ -56,6 +59,23 @@ function useInsertElement() {
     [uploadVideoPoster]
   );
 
+  /**
+   * If the resource has a register usage url then the fact that it's been
+   * inserted needs to be registered as per API provider policies.
+   *
+   * @param {Object} resource The resource to attempt to register usage.
+   */
+  const handleRegisterUsage = useCallback(
+    (resource) => {
+      if (!resource.local && resource?.attribution?.registerUsageUrl) {
+        registerUsage({
+          registerUsageUrl: resource.attribution.registerUsageUrl,
+        });
+      }
+    },
+    [registerUsage]
+  );
+
   const focusCanvas = useFocusCanvas();
 
   /**
@@ -64,11 +84,18 @@ function useInsertElement() {
    */
   const insertElement = useCallback(
     (type, props) => {
+      if (type == 'gif') {
+        // Treat GIFs just like images
+        type = 'image';
+        props.resource.type = 'image';
+      }
+
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });
       if (resource) {
         backfillResource(resource);
+        handleRegisterUsage(resource);
       }
       // Auto-play on insert.
       if (type === 'video') {
@@ -82,7 +109,7 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [addElement, backfillResource, focusCanvas]
+    [addElement, backfillResource, focusCanvas, handleRegisterUsage]
   );
 
   return insertElement;
@@ -112,55 +139,25 @@ function getElementProperties(
     ...rest
   }
 ) {
-  const {
-    defaultAttributes,
-    isMaskable,
-    updateForResizeEvent,
-  } = getDefinitionForType(type);
+  const { isMaskable } = getDefinitionForType(type);
 
-  const attrs = { type, ...defaultAttributes, ...rest };
+  const attrs = { type, ...rest };
 
   // Width and height defaults. Width takes precedence.
   const ratio =
     resource && isNum(resource.width) && isNum(resource.height)
       ? resource.width / resource.height
       : 1;
-  if (!isNum(width)) {
-    if (isNum(height)) {
-      // Height is known: use aspect ratio.
-      width = height * ratio;
-    } else if (resource) {
-      // Resource is available: take resource's width with DPR, but limit
-      // to fit on the page (80% max).
-      width = Math.min(resource.width * DEFAULT_DPR, PAGE_WIDTH * 0.8);
-    } else {
-      // Default to half of page.
-      width = PAGE_WIDTH / 2;
-    }
-  }
-  if (!isNum(height) && updateForResizeEvent) {
-    // Try resize API with width-only direction.
-    height = updateForResizeEvent(attrs, RESIZE_WIDTH_DIRECTION, width).height;
-  }
-  if (!isNum(height)) {
-    // Fallback to simple ratio calculation.
-    height = width / ratio;
-  }
-
-  // Ensure that the element fits on the page.
-  if (width > PAGE_WIDTH || height > PAGE_HEIGHT) {
-    const pageRatio = PAGE_WIDTH / PAGE_HEIGHT;
-    const newRatio = width / height;
-    if (newRatio <= pageRatio) {
-      width = Math.min(width, PAGE_WIDTH);
-      height = width / newRatio;
-    } else {
-      height = Math.min(height, PAGE_HEIGHT);
-      width = height * newRatio;
-    }
-  }
-  width = dataPixels(width);
-  height = dataPixels(height);
+  const size = getInsertedElementSize(
+    type,
+    width,
+    height,
+    attrs,
+    ratio,
+    resource
+  );
+  width = size.width;
+  height = size.height;
 
   // X and y defaults: in the top quarter of the page.
   if (!isNum(x)) {
