@@ -29,7 +29,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
-import { TextInput } from '../../../../components';
 import {
   FormContainer,
   InlineLink,
@@ -38,6 +37,8 @@ import {
   TextInputHelperText,
   SaveButton,
   ErrorText,
+  InlineForm,
+  GoogleAnalyticsTextInput,
 } from '../components';
 
 export const TEXT = {
@@ -99,15 +100,20 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
         {TEXT.SECTION_HEADING}
       </SettingHeading>
       <FormContainer>
-        <TextInput
-          label={TEXT.ARIA_LABEL}
-          id="gaTrackingId"
-          value={analyticsId}
-          onChange={handleUpdateId}
-          onKeyDown={handleOnKeyDown}
-          placeholder={TEXT.PLACEHOLDER}
-          error={inputError}
-        />
+        <InlineForm>
+          <GoogleAnalyticsTextInput
+            label={TEXT.ARIA_LABEL}
+            id="gaTrackingId"
+            value={analyticsId}
+            onChange={handleUpdateId}
+            onKeyDown={handleOnKeyDown}
+            placeholder={TEXT.PLACEHOLDER}
+            error={inputError}
+          />
+          <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
+            {__('Save', 'web-stories')}
+          </SaveButton>
+        </InlineForm>
         {inputError && <ErrorText>{inputError}</ErrorText>}
         <TextInputHelperText>
           {TEXT.CONTEXT}
@@ -115,9 +121,6 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
             {TEXT.CONTEXT_ARTICLE}
           </InlineLink>
         </TextInputHelperText>
-        <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
-          {__('Save', 'web-stories')}
-        </SaveButton>
       </FormContainer>
     </SettingForm>
   );

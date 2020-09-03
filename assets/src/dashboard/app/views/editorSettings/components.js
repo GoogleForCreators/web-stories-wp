@@ -27,6 +27,7 @@ import {
   TypographyPresets,
   StandardViewContentGutter,
   Button,
+  TextInput,
 } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
@@ -162,15 +163,26 @@ export const RemoveLogoButton = styled.button`
   }
 `;
 
-export const SaveButton = styled(Button).attrs({ type: BUTTON_TYPES.PRIMARY })`
-  float: right;
-`;
+export const SaveButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PRIMARY,
+})``;
 
 export const ErrorText = styled.p`
   ${TypographyPresets.ExtraSmall};
   color: ${({ theme }) => theme.colors.danger};
   margin-left: 1em;
   padding-top: 0.25em;
+`;
+
+export const InlineForm = styled.div`
+  display: flex;
+`;
+
+export const GoogleAnalyticsTextInput = styled(TextInput)`
+  flex: 3;
+  width: auto;
+  display: inline-block;
+  margin-right: 5px;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);
