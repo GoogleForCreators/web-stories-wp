@@ -41,6 +41,10 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
   it('should add text presets below each other if added consecutively', async () => {
     await fixture.editor.library.textTab.click();
+    // @todo Remove this once #4094 gets fixed!
+    // Wait until the history has changed to its initial (incorrect due to a bug) position.
+    await fixture.events.sleep(300);
+
     await fixture.events.click(fixture.editor.library.text.preset('Heading 1'));
     await fixture.events.click(fixture.editor.library.text.preset('Heading 3'));
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
