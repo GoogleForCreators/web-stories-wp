@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/** @typedef {import('moment').Moment} Moment */
+
 /**
  * WordPress dependencies
  */
@@ -23,6 +25,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { getMoment } from './getMoment';
+
 import {
   DEFAULT_DATE_SETTINGS,
   formatDate,
@@ -40,8 +43,7 @@ import {
  *
  * @see {@link https://momentjs.com/guides/#/parsing/}
  *
- * @param {Date} date Date to format according to how much time or how many days have passed since date
- * If date is not an instance of moment when passed in it will create a moment from it.
+ * @param {Date|Moment} date Date to format according to how much time or how many days have passed since date.
  *
  * @param {import('./').DateSettings} dateSettings - An object that has keys to set date timezone, offset, and display {@link DateSettings}
  *

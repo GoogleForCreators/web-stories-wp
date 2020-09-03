@@ -19,6 +19,8 @@
  */
 import DateFormatter from 'php-date-formatter';
 
+/** @typedef {import('moment').Moment} Moment */
+
 /**
  * Internal dependencies
  */
@@ -28,7 +30,7 @@ import { DEFAULT_DATE_SETTINGS } from './';
 /**
  * Formats a date by dateSettings.timeFormat.
  *
- * @param {Date} date Date to format.
+ * @param {Date|Moment} date Date to format.
  * @param {import('./').DateSettings} dateSettings Date settings.
  *
  * @return {string} Displayable relative date string
