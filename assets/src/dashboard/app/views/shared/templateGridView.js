@@ -112,13 +112,16 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                 }}
                 isSelected={isActive}
                 tabIndex={tabIndex}
-                ariaLabelledBy={`${template.id}_template`}
+                title={sprintf(
+                  /* translators: %s: template title.*/
+                  __('Press Enter to explore %s template', 'web-stories'),
+                  template.title
+                )}
               />
               <CardPreviewContainer
-                id={`${template.id}_template`}
                 ariaLabel={sprintf(
                   /* translators: %s: template title.*/
-                  __('preview of %s template', 'web-stories'),
+                  __('Currently on %s template', 'web-stories'),
                   template.title
                 )}
                 tabIndex={tabIndex}
@@ -130,10 +133,12 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                     TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[
                       template.status
                     ],
+                  ariaLabel: __('Go to template details', 'web-stories'),
                 }}
                 bottomAction={{
                   targetAction: targetAction(template),
                   label: __('Use template', 'web-stories'),
+                  ariaLabel: __('Use this template', 'web-stories'),
                 }}
                 topAction={{
                   targetAction: (e) => {
@@ -141,6 +146,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
                     templateActions.handlePreviewTemplate(e, template);
                   },
                   label: __('Preview', 'web-stories'),
+                  ariaLabel: __('Open Preview', 'web-stories'),
                 }}
               />
             </CardGridItem>
