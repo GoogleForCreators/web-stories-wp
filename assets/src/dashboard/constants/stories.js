@@ -118,8 +118,8 @@ export const STORY_STATUS = {
 };
 
 export const STORY_ITEM_CENTER_ACTION_LABELS = {
-  [STORY_STATUS.PUBLISH]: __('View', 'web-stories'),
-  [STORY_STATUS.FUTURE]: __('View', 'web-stories'),
+  [STORY_STATUS.PUBLISH]: __('Preview', 'web-stories'),
+  [STORY_STATUS.FUTURE]: __('Preview', 'web-stories'),
   [STORY_STATUS.DRAFT]: __('Preview', 'web-stories'),
 };
 
