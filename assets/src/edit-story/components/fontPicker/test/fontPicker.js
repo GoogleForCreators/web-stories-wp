@@ -97,13 +97,12 @@ describe('Font Picker', () => {
 
     // Roboto option should be visible and have a selected checkmark
     const selectedRobotoOption = getByRole('option', {
-      selected: true,
+      // The "accessible name" is derived by concatenating the accessible names
+      // of all children,  which in this case is an SVG with aria-label="Selected"
+      // and a plain text node with the font name. Thus this works!
+      name: 'Selected Roboto',
     });
     expect(selectedRobotoOption).toBeInTheDocument();
-    expect(selectedRobotoOption.lastChild).toHaveAttribute(
-      'font-family',
-      "'Roboto::MENU'"
-    );
 
     // We can't really validate this number anyway in JSDom (no actual
     // layout is happening), so just expect it to be called
@@ -120,6 +119,14 @@ describe('Font Picker', () => {
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
+    // focus first element in list
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
+    // focus second element in list
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
@@ -163,12 +170,19 @@ describe('Font Picker', () => {
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
-    // Move down by 2
+    // Move to first element in list
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
       });
     });
+    // Move to second element in list
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+    // Move to third element in list
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
