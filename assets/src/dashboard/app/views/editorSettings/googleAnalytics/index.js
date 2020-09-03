@@ -84,6 +84,16 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
     }
   }, [canSave, analyticsId, handleUpdate]);
 
+  const handleOnKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleOnSave();
+      }
+    },
+    [handleOnSave]
+  );
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading htmlFor="gaTrackingID">
@@ -95,6 +105,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
           id="gaTrackingId"
           value={analyticsId}
           onChange={handleUpdateId}
+          onKeyDown={handleOnKeyDown}
           placeholder={TEXT.PLACEHOLDER}
           error={inputError}
         />
