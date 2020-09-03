@@ -60,17 +60,6 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
 
-  // const handleUpdateId = useCallback(
-  //   (value) => {
-  // if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
-  //   setInputError('');
-  //   return handleUpdate(value);
-  // }
-  //     return setInputError(TEXT.INPUT_ERROR);
-  //   },
-  //   [handleUpdate, setInputError]
-  // );
-
   const handleUpdateId = useCallback((event) => {
     const { value } = event.target;
     setAnlayticsId(value);
@@ -83,8 +72,6 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
 
     setInputError(TEXT.INPUT_ERROR);
   }, []);
-
-  // const debouncedHandleUpdateIds
 
   const handleOnSave = useCallback(() => {
     if (canSave) {
