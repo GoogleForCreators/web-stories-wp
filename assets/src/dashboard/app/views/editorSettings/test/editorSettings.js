@@ -132,7 +132,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos={rawPublisherLogos}
       />
     );
-    expect(queryAllByTestId(/^publisher-logo/)).toHaveLength(
+    expect(queryAllByTestId(/^publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
     );
 

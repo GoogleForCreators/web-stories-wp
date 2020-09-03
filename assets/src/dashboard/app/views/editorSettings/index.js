@@ -152,9 +152,7 @@ function EditorSettings() {
     [maxUpload, maxUploadFormatted, uploadMedia]
   );
 
-  const handleRemoveLogo = useCallback((e, media) => {
-    e.preventDefault();
-
+  const handleRemoveLogo = useCallback((media) => {
     setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
     setActiveLogo(media.id);
   }, []);
@@ -168,14 +166,16 @@ function EditorSettings() {
       return [];
     }
 
-    return publisherLogoIds.map((publisherLogoId) => {
-      if (mediaById[publisherLogoId]) {
-        return publisherLogoId === activePublisherLogoId
-          ? { ...mediaById[publisherLogoId], isActive: true }
-          : mediaById[publisherLogoId];
-      }
-      return undefined; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
-    });
+    return publisherLogoIds
+      .map((publisherLogoId) => {
+        if (mediaById[publisherLogoId]) {
+          return publisherLogoId === activePublisherLogoId
+            ? { ...mediaById[publisherLogoId], isActive: true }
+            : mediaById[publisherLogoId];
+        }
+        return {}; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
+      })
+      .filter((logo) => logo?.id);
   }, [activePublisherLogoId, publisherLogoIds, mediaById]);
 
   return (
