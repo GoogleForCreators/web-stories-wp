@@ -37,7 +37,6 @@ describe('save', () => {
         class="wp-block-web-stories-embed alignnone"
       >
         <amp-story-player
-          data-testid="amp-story-player"
           style="margin: 0px;"
         >
           <a

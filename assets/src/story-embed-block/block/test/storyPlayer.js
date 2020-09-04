@@ -34,7 +34,6 @@ describe('StoryPlayer', () => {
     const { container } = render(<StoryPlayer url={url} title={title} />);
     expect(container.firstChild).toMatchInlineSnapshot(`
       <amp-story-player
-        data-testid="amp-story-player"
         style="margin: 0px;"
       >
         <a
@@ -52,7 +51,6 @@ describe('StoryPlayer', () => {
     );
     expect(container.firstChild).toMatchInlineSnapshot(`
       <amp-story-player
-        data-testid="amp-story-player"
         style="margin: 0px;"
       >
         <a
