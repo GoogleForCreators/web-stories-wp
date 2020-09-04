@@ -34,7 +34,8 @@ import {
   GridItemButton,
   GridItemContainer,
   Logo,
-  RemoveLogoButton,
+  MenuContainer,
+  LogoMenuButton,
   SettingForm,
   HelperText,
   FinePrintHelperText,
@@ -43,8 +44,9 @@ import {
 } from '../components';
 import { FileUpload } from '../../../../components';
 import { EditPencil as EditPencilIcon } from '../../../../icons';
-import { useGridViewKeys } from '../../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../utils';
 import { useConfig } from '../../../config';
+import { PopoverMenuCard } from '../../../../components/popoverMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -64,6 +66,11 @@ export const TEXT = {
   ),
 };
 
+const PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS = {
+  REMOVE_LOGO: 'remove_logo',
+  SET_DEFAULT: 'set_default',
+};
+
 function PublisherLogoSettings({
   canUploadFiles,
   handleAddLogos,
@@ -77,9 +84,12 @@ function PublisherLogoSettings({
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
+  const popoverMenuContainerRef = useRef(null);
 
   const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
+
+  const [contextMenuId, setContextMenuId] = useState(null);
 
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
@@ -88,9 +98,7 @@ function PublisherLogoSettings({
   const publisherLogoCount = useRef(publisherLogosById.length);
 
   const onRemoveLogoClick = useCallback(
-    (e, { publisherLogo, idx }) => {
-      e.preventDefault();
-
+    (publisherLogo, idx) => {
       handleRemoveLogo(publisherLogo);
       setIndexRemoved(idx);
       publisherLogoCount.current = publisherLogosById.length;
@@ -98,12 +106,12 @@ function PublisherLogoSettings({
     [handleRemoveLogo, publisherLogosById.length]
   );
 
-  // set active logo when first painting
-  useEffect(() => {
-    if (publisherLogos.length > 0 && !activePublisherLogo) {
-      setActivePublisherLogoId(publisherLogos?.[0].id);
-    }
-  }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
+  // // set active logo when first painting
+  // useEffect(() => {
+  //   if (publisherLogos.length > 0 && !activePublisherLogo) {
+  //     setActivePublisherLogoId(publisherLogos?.[0].id);
+  //   }
+  // }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
 
   // Update publisher logo focus when logo is removed
   useEffect(() => {
@@ -146,6 +154,41 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
+  const onMoreButtonSelected = useCallback((openMenuLogoId) => {
+    console.log('more button selected: ', openMenuLogoId);
+    setContextMenuId(openMenuLogoId);
+  }, []);
+
+  const onMenuItemSelected = useCallback(
+    (sender, logo, index) => {
+      setContextMenuId(-1);
+
+      switch (sender.value) {
+        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO:
+          onRemoveLogoClick(logo, index);
+          break;
+
+        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT:
+          break;
+
+        default:
+          break;
+      }
+    },
+    [onRemoveLogoClick]
+  );
+
+  const handleFocusOut = useCallback(
+    (publisherLogoId) => {
+      if (contextMenuId === publisherLogoId) {
+        onMoreButtonSelected(-1);
+      }
+    },
+    [contextMenuId, onMoreButtonSelected]
+  );
+
+  useFocusOut(popoverMenuContainerRef, handleFocusOut, [contextMenuId]);
+
   return (
     <SettingForm>
       <div>
@@ -154,13 +197,14 @@ function PublisherLogoSettings({
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
-          <UploadedContainer ref={gridRef} role="list">
+          <UploadedContainer ref={gridRef} role="list" tabIndex={0}>
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
               }
 
               const isActive = activePublisherLogo === publisherLogo.id;
+              const isPopoverMenuOpen = contextMenuId === publisherLogo.id;
 
               return (
                 <GridItemContainer
@@ -202,21 +246,46 @@ function PublisherLogoSettings({
                       {__('Default', 'web-stories')}
                     </DefaultLogoText>
                   )}
-                  <RemoveLogoButton
-                    tabIndex={isActive ? 0 : -1}
-                    isActive={isActive}
-                    data-testid={`remove-publisher-logo-${idx}`}
-                    aria-label={sprintf(
-                      /* translators: %s: logo title */
-                      __('Remove %s as a publisher logo', 'web-stories'),
-                      publisherLogo.title
-                    )}
-                    onClick={(e) =>
-                      onRemoveLogoClick(e, { publisherLogo, idx })
-                    }
-                  >
-                    <EditPencilIcon aria-hidden="true" />
-                  </RemoveLogoButton>
+                  <MenuContainer ref={containerRef}>
+                    <LogoMenuButton
+                      tabIndex={isActive ? 0 : -1}
+                      isActive={isActive}
+                      menuOpen={isPopoverMenuOpen}
+                      data-testid={`remove-publisher-logo-${idx}`}
+                      aria-label={sprintf(
+                        /* translators: %s: logo title */
+                        __('Remove %s as a publisher logo', 'web-stories'),
+                        publisherLogo.title
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onMoreButtonSelected(
+                          isPopoverMenuOpen ? -1 : publisherLogo.id
+                        );
+                      }}
+                    >
+                      <EditPencilIcon aria-hidden="true" />
+                    </LogoMenuButton>
+                    <PopoverMenuCard
+                      isOpen={isPopoverMenuOpen}
+                      onSelect={(menuItem) => {
+                        onMenuItemSelected(menuItem, publisherLogo, idx);
+                      }}
+                      items={[
+                        {
+                          value:
+                            PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT,
+                          label: __('Set as Default', 'web-stories'),
+                        },
+                        {
+                          value:
+                            PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO,
+                          label: __('Delete', 'web-stories'),
+                        },
+                      ]}
+                    />
+                  </MenuContainer>
                 </GridItemContainer>
               );
             })}

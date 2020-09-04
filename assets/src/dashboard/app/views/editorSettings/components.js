@@ -116,6 +116,13 @@ export const UploadedContainer = styled.div`
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   padding-bottom: 24px;
+  border: ${({ theme }) => theme.borders.transparent};
+  border-width: 2px;
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: none;
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+  }
 `;
 
 export const GridItemContainer = styled.div`
@@ -130,7 +137,6 @@ export const GridItemContainer = styled.div`
 `;
 
 export const GridItemButton = styled.button`
-  position: relative;
   display: block;
   background-color: transparent;
   border: ${({ theme }) => theme.borders.transparent};
@@ -154,8 +160,15 @@ export const Logo = styled.img`
   border-radius: 4px;
 `;
 
-export const RemoveLogoButton = styled.button`
-  opacity: 1; // ${({ isActive }) => (isActive ? 1 : 0)};
+export const MenuContainer = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+export const LogoMenuButton = styled.button`
+  opacity: ${({ isActive, menuOpen }) => (menuOpen || isActive ? 1 : 0)};
   position: absolute;
   display: flex;
   align-items: center;
