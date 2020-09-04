@@ -322,13 +322,13 @@ function EditorSettings() {
                 setActiveDialog(null);
               }}
             >
-              {__('Remove Logo', 'web-stories')}
+              {__('Delete Logo', 'web-stories')}
             </Button>
           </>
         }
       >
         {__(
-          'This will affect any stories that currently use it as their publisher logo.',
+          'The logo will be removed from any stories that currently use it as their publisher logo.',
           'web-stories'
         )}
       </Dialog>
