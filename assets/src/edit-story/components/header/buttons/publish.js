@@ -84,6 +84,8 @@ function Publish() {
     setTimeout(() => titleInput?.focus(), TRANSITION_DURATION);
   }, [titleInput]);
 
+  const handleClose = useCallback(() => setShowDialog(false), []);
+
   const text = hasFutureDate
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
@@ -100,6 +102,7 @@ function Publish() {
         open={Boolean(showDialog)}
         onIgnore={publish}
         onFix={fixTitle}
+        onClose={handleClose}
       />
     </>
   );

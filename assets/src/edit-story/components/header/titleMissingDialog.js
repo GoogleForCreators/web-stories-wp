@@ -39,7 +39,7 @@ const Paragraph = styled.p`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
 `;
 
-function TitleMissingDialog({ open, onIgnore, onFix }) {
+function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
   const link = __(
     'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
     'web-stories'
@@ -47,7 +47,7 @@ function TitleMissingDialog({ open, onIgnore, onFix }) {
   return (
     <Dialog
       open={open}
-      onClose={onFix}
+      onClose={onClose}
       title={__('Missing title', 'web-stories')}
       actions={
         <>
@@ -74,6 +74,7 @@ function TitleMissingDialog({ open, onIgnore, onFix }) {
 TitleMissingDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   onIgnore: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   onFix: PropTypes.func.isRequired,
 };
 
