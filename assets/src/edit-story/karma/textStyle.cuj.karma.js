@@ -284,6 +284,7 @@ describe('Element: Text', () => {
       it('should allow selecting a font with arrow keys and Enter', async () => {
         await fixture.events.keyboard.press('down');
         await fixture.events.keyboard.press('down');
+        await fixture.events.keyboard.press('down');
         await fixture.events.keyboard.press('Enter');
         await openFontPicker();
 
