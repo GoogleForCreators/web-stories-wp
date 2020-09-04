@@ -31,6 +31,7 @@ import {
   StandardViewContentGutter,
 } from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
+import TelemetryBanner from './telemetryBanner';
 
 const Container = styled.div`
   padding: 10px 0 0;
@@ -95,13 +96,6 @@ export const HeaderToggleButtonContainer = styled.div`
   height: 65%;
 `;
 
-const Banner = styled.div.attrs({ id: 'dillon' })`
-  height: 161px;
-  margin: 0 20px;
-  background-image: url('/wp-content/plugins/web-stories/assets/images/analytics-banner-bg.png');
-  text-align: center;
-`;
-
 const PageHeading = ({
   children,
   defaultTitle,
@@ -114,15 +108,7 @@ const PageHeading = ({
 }) => {
   return (
     <Container>
-      <Banner>
-        <h2>{'Help improve the editor!'}</h2>
-        <p>
-          {`Check the box to help us imporve the Web Stories plugin by allowing
-          tracking of product usage stats. All data are treated in accordance
-          with Google Privacy Policy`}
-        </p>
-        <span>{`You can update your selection later by visiting Settings.`}</span>
-      </Banner>
+      <TelemetryBanner />
       <HeadingBodyWrapper>
         <StyledHeader>
           <NavMenuButton showOnlyOnSmallViewport />
