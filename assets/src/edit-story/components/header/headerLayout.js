@@ -20,13 +20,21 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import Buttons from './buttons';
 import Title from './title';
 import HeaderProvider from './provider';
 
-const Background = styled.header`
+const Background = styled.header.attrs({
+  role: 'group',
+  'aria-label': __('Story canvas header', 'web-stories'),
+})`
   display: flex;
   align-items: center;
   justify-content: space-between;
