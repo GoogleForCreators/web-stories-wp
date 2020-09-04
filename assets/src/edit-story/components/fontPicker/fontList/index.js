@@ -25,6 +25,7 @@ import {
   useLayoutEffect,
 } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -209,18 +210,19 @@ function FontList({
       id="editor-font-picker-list"
       role="listbox"
       onKeyDown={handleKeyPress}
-      aria-multiselectable={false}
+      aria-label={__('Font List Selector', 'web-stories')}
       aria-required={false}
     >
-      {filteredListGroups.map(
-        (group, i) =>
+      {filteredListGroups.map((group, i) => {
+        const groupLabelId = `group-${uuidv4()}`;
+        return (
           group.options.length > 0 && (
             <Group
               key={group.label}
               role="group"
-              aria-labelledby={`group-${i}`}
+              aria-labelledby={groupLabelId}
             >
-              <GroupLabel id={`group-${i}`} role="presentation">
+              <GroupLabel id={groupLabelId} role="presentation">
                 {group.label}
               </GroupLabel>
               {group.options.map((font, j) => (
@@ -252,7 +254,8 @@ function FontList({
               ))}
             </Group>
           )
-      )}
+        );
+      })}
     </List>
   );
 }
