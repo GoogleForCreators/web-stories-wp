@@ -144,7 +144,6 @@ export function TextOutputWithUnits({
     WebkitBoxDecorationBreak: 'clone',
     /* stylelint-enable */
     boxDecorationBreak: 'clone',
-    borderRadius: '3px',
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
