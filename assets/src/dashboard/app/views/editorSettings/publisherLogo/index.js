@@ -106,13 +106,6 @@ function PublisherLogoSettings({
     [handleRemoveLogo, publisherLogosById.length]
   );
 
-  // // set active logo when first painting
-  // useEffect(() => {
-  //   if (publisherLogos.length > 0 && !activePublisherLogo) {
-  //     setActivePublisherLogoId(publisherLogos?.[0].id);
-  //   }
-  // }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
-
   // Update publisher logo focus when logo is removed
   useEffect(() => {
     if (
@@ -154,8 +147,18 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
+  const onUploadedLogoContainerFocus = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!activePublisherLogo) {
+        setActivePublisherLogoId(publisherLogos?.[0].id);
+        itemRefs.current?.[publisherLogos?.[0].id]?.children?.[0].focus();
+      }
+    },
+    [activePublisherLogo, publisherLogos]
+  );
+
   const onMoreButtonSelected = useCallback((openMenuLogoId) => {
-    console.log('more button selected: ', openMenuLogoId);
     setContextMenuId(openMenuLogoId);
   }, []);
 
@@ -178,14 +181,11 @@ function PublisherLogoSettings({
     [onRemoveLogoClick]
   );
 
-  const handleFocusOut = useCallback(
-    (publisherLogoId) => {
-      if (contextMenuId === publisherLogoId) {
-        onMoreButtonSelected(-1);
-      }
-    },
-    [contextMenuId, onMoreButtonSelected]
-  );
+  const handleFocusOut = useCallback(() => {
+    if (contextMenuId === activePublisherLogo) {
+      onMoreButtonSelected(-1);
+    }
+  }, [activePublisherLogo, contextMenuId, onMoreButtonSelected]);
 
   useFocusOut(popoverMenuContainerRef, handleFocusOut, [contextMenuId]);
 
@@ -197,7 +197,12 @@ function PublisherLogoSettings({
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
-          <UploadedContainer ref={gridRef} role="list" tabIndex={0}>
+          <UploadedContainer
+            ref={gridRef}
+            role="list"
+            tabIndex={0}
+            onFocus={onUploadedLogoContainerFocus}
+          >
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
@@ -246,7 +251,7 @@ function PublisherLogoSettings({
                       {__('Default', 'web-stories')}
                     </DefaultLogoText>
                   )}
-                  <MenuContainer ref={containerRef}>
+                  <MenuContainer ref={popoverMenuContainerRef}>
                     <LogoMenuButton
                       tabIndex={isActive ? 0 : -1}
                       isActive={isActive}
