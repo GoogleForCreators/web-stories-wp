@@ -150,6 +150,7 @@ const StoryGridView = ({
                   setActiveGridItemId(story.id);
                 }}
                 isSelected={isActive}
+                id={`focusable-story-grid-item-${story.id}`}
                 tabIndex={tabIndex}
                 title={sprintf(
                   /* translators: %s: story title.*/

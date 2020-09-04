@@ -34,7 +34,7 @@ import { WPBODY_ID, BUTTON_TYPES } from '../../../constants';
 import dashboardTheme from '../../../theme';
 import { Close as CloseIcon } from '../../../icons';
 import { StoryPropType } from '../../../types';
-import { useResizeEffect } from '../../../utils';
+import { useResizeEffect, useFocusOut } from '../../../utils';
 import useApi from '../../api/useApi';
 
 const CLOSE_BUTTON_SIZE = {
@@ -109,6 +109,19 @@ const PreviewStory = ({ story, handleClose }) => {
   );
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
+
+  useFocusOut(
+    containerRef,
+    () => {
+      const storyGridEl = document.getElementById(
+        `focusable-story-grid-item-${story.id}`
+      );
+      if (storyGridEl) {
+        storyGridEl.focus();
+      }
+    },
+    [story]
+  );
 
   const [modalDimensions, setModalDimensions] = useState({
     width: containerRef.current?.offsetWidth || window.innerWidth,
