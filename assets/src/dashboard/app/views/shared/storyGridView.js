@@ -98,7 +98,7 @@ const StoryGridView = ({
 
   useEffect(() => {
     if (!activeGridItemId && returnStoryFocusId) {
-      itemRefs.current?.[returnStoryFocusId]?.children[0].focus();
+      itemRefs.current?.[returnStoryFocusId]?.children?.[0]?.focus();
     }
   }, [activeGridItemId, returnStoryFocusId]);
 
