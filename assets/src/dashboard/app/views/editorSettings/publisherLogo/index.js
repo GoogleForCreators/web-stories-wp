@@ -34,8 +34,6 @@ import {
   GridItemButton,
   GridItemContainer,
   Logo,
-  MenuContainer,
-  LogoMenuButton,
   SettingForm,
   HelperText,
   FinePrintHelperText,
@@ -43,10 +41,10 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { EditPencil as EditPencilIcon } from '../../../../icons';
-import { useGridViewKeys, useFocusOut } from '../../../../utils';
+import { useGridViewKeys } from '../../../../utils';
 import { useConfig } from '../../../config';
-import { PopoverMenuCard } from '../../../../components/popoverMenu';
+import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
+import PopoverLogoContextMenu from './popoverLogoContextMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -66,11 +64,6 @@ export const TEXT = {
   ),
 };
 
-const PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS = {
-  REMOVE_LOGO: 'remove_logo',
-  SET_DEFAULT: 'set_default',
-};
-
 function PublisherLogoSettings({
   canUploadFiles,
   handleAddLogos,
@@ -85,7 +78,6 @@ function PublisherLogoSettings({
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-  const popoverMenuContainerRef = useRef(null);
 
   const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
@@ -95,6 +87,8 @@ function PublisherLogoSettings({
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
   ]);
+
+  const hasOnlyOneLogo = publisherLogosById.length === 1;
 
   const publisherLogoCount = useRef(publisherLogosById.length);
 
@@ -159,10 +153,6 @@ function PublisherLogoSettings({
     [activePublisherLogo, publisherLogos]
   );
 
-  const onMoreButtonSelected = useCallback((openMenuLogoId) => {
-    setContextMenuId(openMenuLogoId);
-  }, []);
-
   const onMenuItemSelected = useCallback(
     (sender, logo, index) => {
       setContextMenuId(-1);
@@ -182,14 +172,6 @@ function PublisherLogoSettings({
     },
     [handleUpdateDefaultLogo, onRemoveLogoClick]
   );
-
-  const handleFocusOut = useCallback(() => {
-    if (contextMenuId === activePublisherLogo) {
-      onMoreButtonSelected(-1);
-    }
-  }, [activePublisherLogo, contextMenuId, onMoreButtonSelected]);
-
-  useFocusOut(popoverMenuContainerRef, handleFocusOut, [contextMenuId]);
 
   return (
     <SettingForm>
@@ -211,7 +193,6 @@ function PublisherLogoSettings({
               }
 
               const isActive = activePublisherLogo === publisherLogo.id;
-              const isPopoverMenuOpen = contextMenuId === publisherLogo.id;
 
               return (
                 <GridItemContainer
@@ -253,47 +234,19 @@ function PublisherLogoSettings({
                       {__('Default', 'web-stories')}
                     </DefaultLogoText>
                   )}
-                  <MenuContainer ref={popoverMenuContainerRef}>
-                    <LogoMenuButton
-                      tabIndex={isActive ? 0 : -1}
-                      isActive={isActive}
-                      menuOpen={isPopoverMenuOpen}
-                      data-testid={`remove-publisher-logo-${idx}`}
-                      aria-label={sprintf(
-                        /* translators: %s: logo title */
-                        __('Remove %s as a publisher logo', 'web-stories'),
-                        publisherLogo.title
-                      )}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        onMoreButtonSelected(
-                          isPopoverMenuOpen ? -1 : publisherLogo.id
-                        );
+                  {publisherLogo.id}
+                  {!hasOnlyOneLogo && (
+                    <PopoverLogoContextMenu
+                      activePublisherLogo={activePublisherLogo}
+                      idx={idx}
+                      publisherLogo={publisherLogo}
+                      onMenuItemSelected={onMenuItemSelected}
+                      contextMenuId={{
+                        set: setContextMenuId,
+                        value: contextMenuId,
                       }}
-                    >
-                      <EditPencilIcon aria-hidden="true" />
-                    </LogoMenuButton>
-                    <PopoverMenuCard
-                      isOpen={isPopoverMenuOpen}
-                      onSelect={(menuItem) => {
-                        onMenuItemSelected(menuItem, publisherLogo, idx);
-                      }}
-                      items={[
-                        {
-                          value: publisherLogo.isDefault
-                            ? false
-                            : PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT,
-                          label: __('Set as Default', 'web-stories'),
-                        },
-                        {
-                          value:
-                            PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO,
-                          label: __('Delete', 'web-stories'),
-                        },
-                      ]}
                     />
-                  </MenuContainer>
+                  )}
                 </GridItemContainer>
               );
             })}
@@ -330,6 +283,7 @@ PublisherLogoSettings.propTypes = {
       src: PropTypes.string,
       title: PropTypes.string,
       id: PropTypes.number,
+      isDefault: PropTypes.bool,
     })
   ),
   uploadError: PropTypes.string,

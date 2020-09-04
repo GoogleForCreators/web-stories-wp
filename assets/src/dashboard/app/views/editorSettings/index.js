@@ -100,6 +100,8 @@ function EditorSettings() {
   const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
   const [mediaError, setMediaError] = useState('');
+
+  const mediaIds = useMemo(() => Object.keys(mediaById), [mediaById]);
   /**
    * WP settings references publisher logos by ID.
    * We must retrieve the media for those IDs from /media when present
@@ -236,6 +238,40 @@ function EditorSettings() {
     setActiveLogo(media.id);
   }, []);
 
+  const handleDialogConfirmRemoveLogo = useCallback(() => {
+    if (activeLogo === activePublisherLogoId) {
+      // find the next publisher logo to make default, there's cases where publisher logo ids have their media removed in the editor but the instance of them as a publisher logo is still present
+      // so we need to find the next available logo by making sure media exists for it as well.
+      const newDefaultLogoId = publisherLogoIds.reduce((acc, logoId) => {
+        if (logoId === activeLogo) {
+          return undefined;
+        }
+        const availableMedia = mediaIds.find(
+          (mediaId) => mediaId.toString() === logoId.toString()
+        );
+
+        if (availableMedia) {
+          return availableMedia;
+        }
+        return acc;
+      }, false);
+
+      updateSettings({
+        publisherLogoIdToRemove: activeLogo,
+        publisherLogoToMakeDefault: newDefaultLogoId,
+      });
+    } else {
+      updateSettings({ publisherLogoIdToRemove: activeLogo });
+    }
+    setActiveDialog(null);
+  }, [
+    activeLogo,
+    activePublisherLogoId,
+    mediaIds,
+    publisherLogoIds,
+    updateSettings,
+  ]);
+
   const handleUpdateDefaultLogo = useCallback(
     (media) => {
       updateSettings({ publisherLogoToMakeDefault: media.id });
@@ -317,10 +353,7 @@ function EditorSettings() {
             </Button>
             <Button
               type={BUTTON_TYPES.DEFAULT}
-              onClick={() => {
-                updateSettings({ publisherLogoIdToRemove: activeLogo });
-                setActiveDialog(null);
-              }}
+              onClick={handleDialogConfirmRemoveLogo}
             >
               {__('Delete Logo', 'web-stories')}
             </Button>
