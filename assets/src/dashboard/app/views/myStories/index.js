@@ -116,20 +116,9 @@ function MyStories() {
   }, [stories, storiesOrderById]);
 
   const handlePreviewStory = useCallback(
-    (e, story) => {
-      activePreview.set(e, story);
-    },
+    (e, story) => activePreview.set(e, story),
     [activePreview]
   );
-
-  if (activePreview.value) {
-    return (
-      <PreviewStoryView
-        story={activePreview.value}
-        handleClose={handlePreviewStory}
-      />
-    );
-  }
 
   return (
     <Layout.Provider>
@@ -166,6 +155,13 @@ function MyStories() {
       <Layout.Fixed>
         <ScrollToTop />
       </Layout.Fixed>
+
+      {activePreview.value && (
+        <PreviewStoryView
+          story={activePreview.value}
+          handleClose={handlePreviewStory}
+        />
+      )}
     </Layout.Provider>
   );
 }
