@@ -29,6 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
+  DefaultLogoText,
   Error,
   GridItemButton,
   GridItemContainer,
@@ -41,7 +42,7 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { Close as RemoveIcon } from '../../../../icons';
+import { EditPencil as EditPencilIcon } from '../../../../icons';
 import { useGridViewKeys } from '../../../../utils';
 import { useConfig } from '../../../config';
 
@@ -196,22 +197,26 @@ function PublisherLogoSettings({
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   </GridItemButton>
-                  {!publisherLogo.isActive && (
-                    <RemoveLogoButton
-                      tabIndex={isActive ? 0 : -1}
-                      data-testid={`remove-publisher-logo-${idx}`}
-                      aria-label={sprintf(
-                        /* translators: %s: logo title */
-                        __('Remove %s as a publisher logo', 'web-stories'),
-                        publisherLogo.title
-                      )}
-                      onClick={(e) =>
-                        onRemoveLogoClick(e, { publisherLogo, idx })
-                      }
-                    >
-                      <RemoveIcon aria-hidden="true" />
-                    </RemoveLogoButton>
+                  {publisherLogo.isDefault && (
+                    <DefaultLogoText>
+                      {__('Default', 'web-stories')}
+                    </DefaultLogoText>
                   )}
+                  <RemoveLogoButton
+                    tabIndex={isActive ? 0 : -1}
+                    isActive={isActive}
+                    data-testid={`remove-publisher-logo-${idx}`}
+                    aria-label={sprintf(
+                      /* translators: %s: logo title */
+                      __('Remove %s as a publisher logo', 'web-stories'),
+                      publisherLogo.title
+                    )}
+                    onClick={(e) =>
+                      onRemoveLogoClick(e, { publisherLogo, idx })
+                    }
+                  >
+                    <EditPencilIcon aria-hidden="true" />
+                  </RemoveLogoButton>
                 </GridItemContainer>
               );
             })}

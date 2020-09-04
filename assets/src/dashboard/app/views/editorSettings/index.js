@@ -133,6 +133,9 @@ function EditorSettings() {
     [updateSettings]
   );
 
+  // TODO if there are no logos present the first logo uploaded needs to be automatically made the default
+  // If you delete a logo that is set as default, auto set the one to the far left as the default -- i think this can come later, first block ability to delete a default logo
+
   const handleAddLogos = useCallback(
     async (files) => {
       let allFileSizesWithinMaxUpload = true;
@@ -246,7 +249,7 @@ function EditorSettings() {
       .map((publisherLogoId) => {
         if (mediaById[publisherLogoId]) {
           return publisherLogoId === activePublisherLogoId
-            ? { ...mediaById[publisherLogoId], isActive: true }
+            ? { ...mediaById[publisherLogoId], isDefault: true }
             : mediaById[publisherLogoId];
         }
         return {}; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
