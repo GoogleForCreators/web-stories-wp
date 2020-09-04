@@ -431,13 +431,14 @@ function fetchExternalTemplateById(id, currentState) {
   return Promise.resolve(currentState.templates?.[id] ?? {});
 }
 
-function toggleOptInTracking(me) {
+function toggleOptInTracking(currentUser) {
   return {
-    ...me,
+    ...currentUser,
     data: {
-      ...me.data,
+      ...currentUser.data,
       meta: {
-        web_stories_tracking_optin: !me.data.meta.web_stories_tracking_optin,
+        web_stories_tracking_optin: !currentUser.data.meta
+          .web_stories_tracking_optin,
       },
     },
   };
