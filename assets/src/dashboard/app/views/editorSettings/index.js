@@ -119,6 +119,7 @@ function EditorSettings() {
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
+      // TODO check to see if there are no logos already, if there isn't make one of the newly createdMediaIds the default logo
       updateSettings({ publisherLogoIds: newlyCreatedMediaIds });
     }
   }, [updateSettings, newlyCreatedMediaIds]);
@@ -134,9 +135,6 @@ function EditorSettings() {
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
     [updateSettings]
   );
-
-  // TODO if there are no logos present the first logo uploaded needs to be automatically made the default
-  // If you delete a logo that is set as default, auto set the one to the far left as the default -- i think this can come later, first block ability to delete a default logo
 
   const handleAddLogos = useCallback(
     async (files) => {

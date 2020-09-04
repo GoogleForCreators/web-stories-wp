@@ -234,7 +234,6 @@ function PublisherLogoSettings({
                       {__('Default', 'web-stories')}
                     </DefaultLogoText>
                   )}
-                  {publisherLogo.id}
                   {!hasOnlyOneLogo && (
                     <PopoverLogoContextMenu
                       activePublisherLogo={activePublisherLogo}
