@@ -75,6 +75,7 @@ function PublisherLogoSettings({
   canUploadFiles,
   handleAddLogos,
   handleRemoveLogo,
+  handleUpdateDefaultLogo,
   isLoading,
   publisherLogos,
   uploadError,
@@ -172,13 +173,14 @@ function PublisherLogoSettings({
           break;
 
         case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT:
+          handleUpdateDefaultLogo(logo);
           break;
 
         default:
           break;
       }
     },
-    [onRemoveLogoClick]
+    [handleUpdateDefaultLogo, onRemoveLogoClick]
   );
 
   const handleFocusOut = useCallback(() => {
@@ -321,6 +323,7 @@ PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
   handleAddLogos: PropTypes.func,
   handleRemoveLogo: PropTypes.func,
+  handleUpdateDefaultLogo: PropTypes.func,
   isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape({
