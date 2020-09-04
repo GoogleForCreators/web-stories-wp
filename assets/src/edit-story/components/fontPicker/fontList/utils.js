@@ -18,7 +18,7 @@ export const createFontFilter = (fonts) => (keyword) =>
     name.toLowerCase().includes(keyword.toLowerCase())
   );
 
-export const isKeywordFilterable = (keyword) => keyword.trim().length > 2;
+export const isKeywordFilterable = (keyword) => keyword.trim().length >= 2;
 
 export const getOptions = (groups) => groups.flatMap(({ options }) => options);
 

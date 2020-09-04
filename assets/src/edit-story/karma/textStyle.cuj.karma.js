@@ -96,7 +96,7 @@ describe('Element: Text', () => {
     it('should display only the fonts from curated list by default', () => {
       const options = document
         .getElementById('editor-font-picker-list')
-        .querySelectorAll('li');
+        .querySelectorAll('li[role="option"]');
       expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
     });
 
@@ -107,7 +107,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         let options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(2);
         expect(options[0].textContent).toBe('Abel');
         expect(options[1].textContent).toBe('Abhaya Libre');
@@ -117,7 +117,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(1);
         expect(options[0].textContent).toBe('Abel');
       });
@@ -128,7 +128,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         let options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
@@ -138,7 +138,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         const options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(2);
 
         await fixture.events.keyboard.press('Backspace');
@@ -146,7 +146,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         const defaultOptions = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         // Back to all options.
         expect(defaultOptions.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
@@ -163,7 +163,7 @@ describe('Element: Text', () => {
       it('should not display any recent fonts by default', () => {
         let options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
 
@@ -178,7 +178,7 @@ describe('Element: Text', () => {
 
         let options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 1);
         expect(options[0].textContent).toBe('Space Mono');
 
@@ -191,7 +191,7 @@ describe('Element: Text', () => {
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 2);
 
         await fixture.events.keyboard.type('Abhaya Libre');
@@ -203,7 +203,7 @@ describe('Element: Text', () => {
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 3);
 
         await fixture.events.keyboard.type('Source Serif Pro');
@@ -215,7 +215,7 @@ describe('Element: Text', () => {
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 4);
 
         await fixture.events.keyboard.type('Roboto');
@@ -227,7 +227,7 @@ describe('Element: Text', () => {
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
 
         await fixture.events.keyboard.type('Yrsa');
@@ -240,7 +240,7 @@ describe('Element: Text', () => {
 
         options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
 
         // Ensure there are only 5 extra options added.
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
@@ -261,22 +261,22 @@ describe('Element: Text', () => {
       });
 
       it('should include recent fonts to search', async () => {
-        await fixture.events.keyboard.type('Ab');
+        await fixture.events.keyboard.type('Abe');
         await wait(TIMEOUT);
         const option = fixture.screen.getByText('Abel');
         await fixture.events.click(option);
         await wait(TIMEOUT);
         await openFontPicker();
 
-        await fixture.events.keyboard.type('Ab');
+        await fixture.events.keyboard.type('Abe');
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         let options = document
           .getElementById('editor-font-picker-list')
-          .querySelectorAll('li');
+          .querySelectorAll('li[role="option"]');
 
         // Twice for 'Abel', once for Abhaya Libre.
-        expect(options.length).toBe(3);
+        expect(options.length).toBe(2);
       });
     });
 
