@@ -607,10 +607,9 @@ class APIProviderFixture {
         () => jasmine.createSpy('getAllStatuses'),
         []
       );
-      const getAllUsers = useCallback(
-        () => jasmine.createSpy('getAllUsers'),
-        []
-      );
+
+      // @todo Add test users when needed for testing.
+      const getAllUsers = useCallback(() => asyncResponse([]), []);
 
       const state = {
         actions: {
