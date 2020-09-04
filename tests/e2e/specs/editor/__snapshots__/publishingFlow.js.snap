@@ -2,10 +2,6 @@
 
 exports[`Publishing Flow should guide me towards creating a new post to embed my story 1`] = `
 "<!-- wp:web-stories/embed {\\"url\\":\\"http://localhost:8899/stories/publishing-flow-test\\",\\"title\\":\\"Publishing Flow Test\\",\\"poster\\":\\"\\"} -->
-<div class=\\"wp-block-web-stories-embed alignnone\\">
-			<amp-story-player style=\\"width: 360px;height: 600px;margin: 0\\">
-				<a href=\\"http://localhost:8899/stories/publishing-flow-test\\" style=\\"\\">Publishing Flow Test</a>
-			</amp-story-player>
-		</div>
+<div class=\\"wp-block-web-stories-embed alignnone\\"><amp-story-player style=\\"width:360px;height:600px;margin:0\\"><a href=\\"http://localhost:8899/stories/publishing-flow-test\\">Publishing Flow Test</a></amp-story-player></div>
 <!-- /wp:web-stories/embed -->"
 `;
