@@ -39,6 +39,7 @@
     "draftjs-filters": "^2.3.0",
     "flagged": "^2.0.1",
     "history": "^5.0.0",
+    "html2canvas": "^1.0.0-rc.7",
     "mockdate": "^3.0.2",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",

@@ -20,6 +20,7 @@
 import { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import html2canvas from 'html2canvas';
 
 /**
  * WordPress dependencies
@@ -36,6 +37,10 @@ import { useConfig } from '../../../../app/config';
 import PanelTitle from '../../../panels/panel/shared/title';
 import PanelContent from '../../../panels/panel/shared/content';
 import Panel from '../../../panels/panel/panel';
+import Button from '../../../form/button';
+import { useCanvas } from '../../../canvas';
+import useUploader from '../../../../app/uploader/useUploader';
+import useSnackbar from '../../../../app/snackbar/useSnackbar';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -55,6 +60,9 @@ function PublishPanel() {
     state: { tab, users, isUsersLoading },
     actions: { loadUsers },
   } = useInspector();
+
+  const { showSnackbar } = useSnackbar();
+  const { uploadFile } = useUploader();
 
   const {
     isSaving,
@@ -80,6 +88,12 @@ function PublishPanel() {
     }
   );
 
+  const { fullbleedContainer } = useCanvas(
+    ({ state: { fullbleedContainer } }) => ({
+      fullbleedContainer,
+    })
+  );
+
   useEffect(() => {
     if (tab === 'document') {
       loadUsers();
@@ -98,6 +112,31 @@ function PublishPanel() {
       }),
     [updateStory]
   );
+
+  const generateCanvas = useCallback(async () => {
+    try {
+      const canvas = await html2canvas(fullbleedContainer);
+      const blob = await new Promise((resolve, reject) =>
+        canvas.toBlob(
+          (value) => (value ? resolve(value) : reject(new Error())),
+          'image/jpeg'
+        )
+      );
+      const { id, media_details, source_url } = await uploadFile(
+        new File([blob], 'cover-image.jpg', { type: 'image/jpeg' })
+      );
+      updateStory({
+        properties: {
+          featuredMedia: id,
+          featuredMediaUrl: media_details.sizes?.medium?.url || source_url,
+        },
+      });
+    } catch (e) {
+      showSnackbar({
+        message: __('Could not generate a cover image.', 'web-stories'),
+      });
+    }
+  }, [fullbleedContainer, uploadFile, showSnackbar, updateStory]);
 
   // @todo Enforce square image while selecting in Media Library.
   const handleChangePublisherLogo = useCallback(
@@ -179,6 +218,9 @@ function PublishPanel() {
               type={'image'}
               ariaLabel={__('Edit: Cover image', 'web-stories')}
             />
+            <Button onClick={generateCanvas}>
+              {__('Generate Cover Image', 'web-stories')}
+            </Button>
           </MediaWrapper>
         </Row>
       </PanelContent>

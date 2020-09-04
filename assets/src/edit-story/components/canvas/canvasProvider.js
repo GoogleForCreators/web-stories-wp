@@ -190,10 +190,10 @@ function CanvasProvider({ children }) {
       editingElement,
       editingElementState,
       lastSelectionEvent,
-      pageSize,
       showSafeZone,
-      setPageContainer,
-      setFullbleedContainer,
+      pageSize,
+      displayLinkGuidelines,
+      pageAttachmentContainer,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
@@ -201,12 +201,6 @@ function CanvasProvider({ children }) {
       clearEditing,
       handleSelectElement,
       selectIntersection,
-      setPageSize,
-      setShowSafeZone,
-      displayLinkGuidelines,
-      setDisplayLinkGuidelines,
-      pageAttachmentContainer,
-      setPageAttachmentContainer,
     ]
   );
   return (
