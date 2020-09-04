@@ -73,10 +73,10 @@ function Buttons() {
       isFreshlyPublished,
     })
   );
-  const [showDialog, setShowDialog] = useState(isFreshlyPublished);
-  useEffect(() => {
-    setShowDialog(isFreshlyPublished);
-  }, [isFreshlyPublished]);
+  const [showDialog, setShowDialog] = useState(false);
+  useEffect(() => setShowDialog(Boolean(isFreshlyPublished)), [
+    isFreshlyPublished,
+  ]);
 
   const isDraft = 'draft' === status;
 
@@ -100,7 +100,7 @@ function Buttons() {
         </List>
       </ButtonList>
       <PostPublishDialog
-        open={Boolean(showDialog)}
+        open={showDialog}
         onClose={() => setShowDialog(false)}
         confirmURL={confirmURL}
         storyURL={link}
