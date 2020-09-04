@@ -82,7 +82,9 @@ const CloseIcon = styled(CloseSVG).attrs(ICON_METRICS.TELEMETRY_BANNER_EXIT)`
   align-items: center;
 `;
 
-const ToggleButton = styled.button`
+const ToggleButton = styled.button.attrs({
+  ['aria-label']: __('Close Telemetry Banner', 'web-stories'),
+})`
   border: none;
   padding: 4px;
   border-radius: 50%;
@@ -103,14 +105,14 @@ export default function TelemetryBanner({
   visible = true,
   disabled = false,
   onChange = () => {},
-  // onClose,
+  onClose = () => {},
   checked = false,
 }) {
   return visible ? (
     <Banner>
       <Header>
         <Title>{__('Help improve the editor!', 'web-stories')}</Title>
-        <ToggleButton>
+        <ToggleButton onClick={onClose}>
           <CloseIcon />
         </ToggleButton>
       </Header>
@@ -118,7 +120,7 @@ export default function TelemetryBanner({
         <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
         <LabelText aria-checked={checked}>
           {__(
-            'Check the box to help us imporve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with',
+            'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with',
             'web-stories'
           )}
           &nbsp;
@@ -153,5 +155,5 @@ TelemetryBanner.propTypes = {
   checked: PropTypes.boolean,
   disabled: PropTypes.boolean,
   onChange: PropTypes.func,
-  // onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
 };
