@@ -279,8 +279,9 @@ function PublisherLogoSettings({
                       }}
                       items={[
                         {
-                          value:
-                            PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT,
+                          value: publisherLogo.isDefault
+                            ? false
+                            : PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT,
                           label: __('Set as Default', 'web-stories'),
                         },
                         {
