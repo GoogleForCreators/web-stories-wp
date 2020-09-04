@@ -193,6 +193,11 @@ class Story_Post_Type {
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
+
+		// Demo content.
+		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+		add_action( 'admin_init', [ $this, 'redirect_demo' ] );
+		add_filter( 'web_stories_default_content', [ $this, 'prefill_demo_content' ] );
 	}
 
 	/**
@@ -726,5 +731,60 @@ class Story_Post_Type {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Registers the demo admin menu page.
+	 *
+	 * @return void
+	 */
+	public function add_menu_page() {
+		add_submenu_page(
+			'edit.php?post_type=' . self::POST_TYPE_SLUG,
+			__( 'Demo', 'web-stories' ),
+			__( 'Demo', 'web-stories' ),
+			'edit_posts',
+			'web-stories-demo',
+			static function() {
+				// This function is not actually used.
+				// \Google\Web_Stories\Story_Post_Type::redirect_demo() will redirect to the story editor anyway.
+				return null;
+			},
+			20
+		);
+	}
+
+	/**
+	 * Redirects the demo page to edit a new story.
+	 *
+	 * @return void
+	 */
+	public function redirect_demo() {
+		global $pagenow;
+
+		if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'web-stories-demo' === $_GET['page'] ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[ 'post_type' => self::POST_TYPE_SLUG ],
+					admin_url( 'post-new.php?web-stories-demo' )
+				)
+			);
+			exit;
+		}
+	}
+
+	/**
+	 * Pre-fills story with demo content.
+	 *
+	 * @param string $content Default post content.
+	 *
+	 * @return string Pre-filled post content if applicable, or the default content otherwise.
+	 */
+	public function prefill_demo_content( $content ) {
+		if ( ! isset( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $content;
+		}
+
+		return file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/demo.json' );
 	}
 }
