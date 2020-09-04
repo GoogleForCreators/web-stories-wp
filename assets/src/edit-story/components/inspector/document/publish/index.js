@@ -20,7 +20,6 @@
 import { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import html2canvas from 'html2canvas';
 
 /**
  * WordPress dependencies
@@ -70,15 +69,22 @@ function PublishPanel() {
     featuredMediaUrl,
     publisherLogoUrl,
     updateStory,
+    storyId,
   } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { author = '', featuredMediaUrl = '', publisherLogoUrl = '' },
+        story: {
+          storyId = '',
+          author = '',
+          featuredMediaUrl = '',
+          publisherLogoUrl = '',
+        },
       },
       actions: { updateStory },
     }) => {
       return {
+        storyId,
         isSaving,
         author,
         featuredMediaUrl,
@@ -115,6 +121,7 @@ function PublishPanel() {
 
   const generateCanvas = useCallback(async () => {
     try {
+      const html2canvas = (await import('html2canvas')).default;
       const canvas = await html2canvas(fullbleedContainer);
       const blob = await new Promise((resolve, reject) =>
         canvas.toBlob(
@@ -123,7 +130,9 @@ function PublishPanel() {
         )
       );
       const { id, media_details, source_url } = await uploadFile(
-        new File([blob], 'cover-image.jpg', { type: 'image/jpeg' })
+        new File([blob], `web-story-${storyId}-cover-generated.jpg`, {
+          type: 'image/jpeg',
+        })
       );
       updateStory({
         properties: {
@@ -136,7 +145,7 @@ function PublishPanel() {
         message: __('Could not generate a cover image.', 'web-stories'),
       });
     }
-  }, [fullbleedContainer, uploadFile, showSnackbar, updateStory]);
+  }, [fullbleedContainer, uploadFile, storyId, updateStory, showSnackbar]);
 
   // @todo Enforce square image while selecting in Media Library.
   const handleChangePublisherLogo = useCallback(
