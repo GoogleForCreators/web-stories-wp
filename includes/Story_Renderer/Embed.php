@@ -73,15 +73,29 @@ class Embed {
 		$player_style = sprintf( 'width: %dpx;height: %dpx;margin: %s', absint( $args['width'] ), absint( $args['height'] ), esc_attr( $margin ) );
 		$poster_style = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 
-		if ( ! function_exists( 'is_amp_endpoint' ) || ! is_amp_endpoint() ) {
-			wp_enqueue_style( 'standalone-amp-story-player' );
-			wp_enqueue_script( 'standalone-amp-story-player' );
+		ob_start();
+
+		if (
+			( function_exists( 'amp_is_request' ) && amp_is_request() ) ||
+			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() )
+		) {
+			$player_style = sprintf( 'margin: %s', esc_attr( $margin ) );
+			?>
+			<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
+				<amp-story-player width="<?php echo esc_attr( $args['width'] ); ?>" height="<?php echo esc_attr( $args['height'] ); ?>" style="<?php echo esc_attr( $player_style ); ?>">
+					<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
+				</amp-story-player>
+			</div>
+			<?php
+
+			return (string) ob_get_clean();
 		}
 
-		ob_start();
+		wp_enqueue_style( 'standalone-amp-story-player' );
+		wp_enqueue_script( 'standalone-amp-story-player' );
 		?>
 		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
-			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>" data-testid="amp-story-player">
+			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>">
 				<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
 			</amp-story-player>
 		</div>
