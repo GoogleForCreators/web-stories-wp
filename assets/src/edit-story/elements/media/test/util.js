@@ -61,7 +61,7 @@ describe('util', () => {
           size3: {
             source_url: 'URL3',
             width: 400,
-            height: 400,
+            height: 410,
           },
         },
       };
@@ -114,9 +114,9 @@ describe('util', () => {
         width: 400,
         height: 200,
         sizes: {
-          img1: { width: 200, height: 1, source_url: 'full-url' },
-          img2: { width: 300, height: 1, source_url: 'med-url' },
-          img3: { width: 400, height: 1, source_url: 'large-url' },
+          img1: { width: 200, height: 100, source_url: 'full-url' },
+          img2: { width: 300, height: 150, source_url: 'med-url' },
+          img3: { width: 400, height: 200, source_url: 'large-url' },
         },
       };
       expect(getSmallestUrlForWidth(210, resource)).toBe('med-url');
@@ -129,15 +129,15 @@ describe('util', () => {
         width: 400,
         height: 200,
         sizes: {
-          img1: { width: 200, height: 1, source_url: 'full-url' },
-          img2: { width: 300, height: 1, source_url: 'med-url' },
-          img3: { width: 400, height: 1, source_url: 'large-url' },
+          img1: { width: 200, height: 100, source_url: 'full-url' },
+          img2: { width: 300, height: 150, source_url: 'med-url' },
+          img3: { width: 400, height: 200, source_url: 'large-url' },
         },
       };
       expect(getSmallestUrlForWidth(160, resource)).toBe('large-url');
     });
 
-    it('should return an image with the same orientation', () => {
+    it('should return an image with the same aspect ratio', () => {
       const resource = {
         src: 'default-url',
         width: 400,
@@ -145,8 +145,8 @@ describe('util', () => {
         sizes: {
           img1: { width: 200, height: 500, source_url: 'portrait-url' },
           img2: { width: 250, height: 250, source_url: 'square-url' },
-          img3: { width: 300, height: 1, source_url: 'med-url' },
-          img4: { width: 400, height: 1, source_url: 'large-url' },
+          img3: { width: 300, height: 150, source_url: 'med-url' },
+          img4: { width: 400, height: 200, source_url: 'large-url' },
         },
       };
       expect(getSmallestUrlForWidth(150, resource)).toBe('med-url');
