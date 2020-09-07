@@ -30,22 +30,27 @@ import {
   STYLE_PRESETS_PER_ROW,
 } from '../../../constants';
 
-const PRESET_SIZE = 30;
+const COLOR_SIZE = 30;
+const STYLE_HEIGHT = 48;
+const STYLE_WIDTH = 112;
 
 const Group = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(
+    ${({ type }) => (type === 'color' ? 6 : 2)},
+    1fr
+  );
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 `;
 
 const ButtonWrapper = styled.div`
-  height: ${PRESET_SIZE}px;
-  width: ${PRESET_SIZE}px;
+  height: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_HEIGHT)}px;
+  width: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_WIDTH)}px;
   margin: auto;
 `;
 
-function PresetGroup({ presets, itemRenderer, type }) {
+function PresetGroup({ presets, itemRenderer, type, handleClick, isEditMode }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
 
@@ -95,10 +100,10 @@ function PresetGroup({ presets, itemRenderer, type }) {
   }, [activeIndex, presets.length]);
 
   return (
-    <Group ref={groupRef}>
+    <Group ref={groupRef} type={type}>
       {presets.map((preset, i) => (
-        <ButtonWrapper key={i}>
-          {itemRenderer(preset, i, activeIndex)}
+        <ButtonWrapper key={i} type={type}>
+          {itemRenderer(preset, i, activeIndex, handleClick, isEditMode)}
         </ButtonWrapper>
       ))}
     </Group>
@@ -109,6 +114,8 @@ PresetGroup.propTypes = {
   presets: PropTypes.array.isRequired,
   itemRenderer: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
+  handleClick: PropTypes.func.isRequired,
+  isEditMode: PropTypes.bool.isRequired,
 };
 
 export default PresetGroup;

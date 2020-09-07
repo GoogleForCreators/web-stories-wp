@@ -39,7 +39,7 @@ export const FULLBLEED_RATIO = 9 / 16;
 export const PAGE_ATTACHMENT_HEIGHT_RATIO = 0.2;
 
 export const COLOR_PRESETS_PER_ROW = 6;
-export const STYLE_PRESETS_PER_ROW = 3;
+export const STYLE_PRESETS_PER_ROW = 2;
 
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;

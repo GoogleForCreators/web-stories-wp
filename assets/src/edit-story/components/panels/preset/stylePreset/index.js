@@ -14,26 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Temporary list to hold currently used resources and their state.
- * { type: string (cached|smallest|fullsize), url: string }
- */
-
-const resourceList = {
-  list: {},
-  resetList: function () {
-    this.list = {};
-  },
-  get: function (id) {
-    return this.list[id];
-  },
-  set: function (id, value) {
-    if (value?.type === 'cached' && this.list[id]) {
-      // We already have better (or equal) resource than cached, prevent flickering
-      return;
-    }
-    this.list[id] = value;
-  },
-};
-
-export default resourceList;
+export { default } from './panel';

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import ColorPresetActions from '../stylePreset/colorPresetActions';
+import ColorPresetActions from '../preset/colorPreset/colorPresetActions';
 
 function getColorPickerActions(color) {
   return <ColorPresetActions color={color} />;
