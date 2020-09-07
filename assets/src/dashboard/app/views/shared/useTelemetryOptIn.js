@@ -85,10 +85,10 @@ export default function useTelemetryOptIn() {
   let bannerVisible = true;
 
   if (
-    bannerPreviouslyClosed ||
-    currentPath === APP_ROUTES.EDITOR_SETTINGS ||
-    !dataIsLoaded ||
-    (!optInCheckboxClicked && optedIn)
+    bannerPreviouslyClosed || // The banner has been closed before
+    currentPath === APP_ROUTES.EDITOR_SETTINGS || // The user is on the settings page
+    !dataIsLoaded || // currentUser is not loaded yet
+    (!optInCheckboxClicked && optedIn) // currentUser is loaded and optedIn is true but the user has not checked the opt in checkbox
   ) {
     bannerVisible = false;
   }
