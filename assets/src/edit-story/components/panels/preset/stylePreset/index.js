@@ -14,13 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import ColorPresetActions from '../preset/colorPreset/colorPresetActions';
-
-function getColorPickerActions(color) {
-  return <ColorPresetActions color={color} />;
-}
-
-export default getColorPickerActions;
+export { default } from './panel';

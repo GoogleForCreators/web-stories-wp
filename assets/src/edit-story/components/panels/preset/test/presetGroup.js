@@ -27,6 +27,7 @@ import { renderWithTheme } from '../../../../testUtils';
 
 function setupPresetGroup() {
   const itemRenderer = jest.fn();
+  const handleClick = jest.fn();
   const presets = [
     createSolid(1, 1, 1),
     createSolid(0, 0, 0),
@@ -41,8 +42,9 @@ function setupPresetGroup() {
     <PresetGroup
       presets={presets}
       itemRenderer={itemRenderer}
-      label={'Colors'}
       type={'color'}
+      handleClick={handleClick}
+      isEditMode={false}
     />
   );
   return {
