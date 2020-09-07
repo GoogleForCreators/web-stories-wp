@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 
 /**
  * Internal dependencies
@@ -51,6 +51,11 @@ const Page = styled.button`
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
   outline: 0;
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+  }
+
   ${({ isActive, isInteractive, theme }) =>
     !isActive &&
     isInteractive &&
@@ -78,25 +83,14 @@ function PagePreview({ index, gridRef, ...props }) {
   }));
   const page = pages[index];
   const { backgroundColor } = page;
-  const { width: thumbWidth, height: thumbHeight, isActive } = props;
+  const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
-  const [tabIndex, setTabIndex] = useState(isActive ? 0 : -1);
-
-  const onBlur = (e) => {
-    if (gridRef?.current?.contains(e.relatedTarget)) {
-      setTabIndex(-1);
-    }
-  };
-
-  const onFocus = () => {
-    setTabIndex(0);
-  };
 
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
-        <Page tabIndex={tabIndex} onBlur={onBlur} onFocus={onFocus} {...props}>
+        <Page {...props}>
           <PreviewWrapper background={backgroundColor}>
             {page.elements.map(({ id, ...rest }) => (
               <DisplayElement
@@ -120,6 +114,7 @@ PagePreview.propTypes = {
   isInteractive: PropTypes.bool,
   isActive: PropTypes.bool,
   gridRef: PropTypes.any,
+  tabIndex: PropTypes.number,
 };
 
 PagePreview.defaultProps = {

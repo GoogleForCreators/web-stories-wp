@@ -26,7 +26,8 @@ body {
 }
 
 #screen-meta,
-#screen-meta ~ :not(#web-stories-dashboard):not(.clear) {
+#screen-meta
+  ~ :not(#web-stories-dashboard):not(.clear):not(#web-stories-no-js) {
   display: none;
 }
 
@@ -73,4 +74,8 @@ body.web-story_page_stories-dashboard #wpfooter {
 
 button {
   font-size: inherit;
+}
+
+#web-stories-no-js {
+  margin: 25px 20px 0px 20px;
 }

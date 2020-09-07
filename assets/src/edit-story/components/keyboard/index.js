@@ -39,6 +39,15 @@ const NON_EDITABLE_INPUT_TYPES = [
   'reset',
   'hidden',
 ];
+const CLICKABLE_INPUT_TYPES = [
+  'submit',
+  'button',
+  'checkbox',
+  'radio',
+  'image',
+  'file',
+  'reset',
+];
 
 const globalRef = createRef();
 
@@ -247,6 +256,7 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     key: keyOrArray,
     shift = false,
     repeat = true,
+    clickable = true,
     editable = false,
     dialog = false,
   } = keySpec;
@@ -255,7 +265,7 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     .map((key) => keyDict[key] || key)
     .flat();
   const allKeys = addMods(mappedKeys, shift);
-  return { key: allKeys, shift, repeat, editable, dialog };
+  return { key: allKeys, shift, clickable, repeat, editable, dialog };
 }
 
 function addMods(keys, shift) {
@@ -267,7 +277,12 @@ function addMods(keys, shift) {
 
 function createKeyHandler(
   keyTarget,
-  { repeat: repeatAllowed, editable: editableAllowed, dialog: dialogAllowed },
+  {
+    repeat: repeatAllowed,
+    editable: editableAllowed,
+    clickable: clickableAllowed,
+    dialog: dialogAllowed,
+  },
   callback
 ) {
   return (evt) => {
@@ -278,6 +293,9 @@ function createKeyHandler(
     if (!editableAllowed && isEditableTarget(target)) {
       return undefined;
     }
+    if (!clickableAllowed && isClickableTarget(target)) {
+      return undefined;
+    }
     if (!dialogAllowed && crossesDialogBoundary(target, keyTarget)) {
       return undefined;
     }
@@ -286,6 +304,16 @@ function createKeyHandler(
     // and default behavior.
     return false;
   };
+}
+
+function isClickableTarget({ tagName, type }) {
+  if (['BUTTON', 'A'].includes(tagName)) {
+    return true;
+  }
+  if (tagName === 'INPUT') {
+    return CLICKABLE_INPUT_TYPES.includes(type);
+  }
+  return false;
 }
 
 function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {

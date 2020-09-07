@@ -18,31 +18,38 @@
  * External dependencies
  */
 import { useState } from 'react';
-import { boolean, text } from '@storybook/addon-knobs';
+import { number, boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import Switch from '../switch';
+import TextArea from '../textArea';
 
 export default {
-  title: 'Stories Editor/Components/Form/Switch',
-  component: Switch,
+  title: 'Stories Editor/Components/Form/TextArea',
+  component: TextArea,
 };
 
 export const _default = () => {
-  const onLabel = text('OnLabel', 'Fit to Device');
-  const offLabel = text('OffLabel', 'Do not format');
-  const disabled = boolean('Disabled', false);
-  const [value, setValue] = useState(true);
+  const [value, setValue] = useState('');
+
+  const placeholder = text('Placeholder', 'Write some text');
+  const maxLength = number('Max Character Count', 100);
+  const rows = number('Text Rows', 4);
+  const showTextLimit = boolean('Toggle Character Limit Label', true);
 
   return (
-    <Switch
-      value={value}
-      onLabel={onLabel}
-      offLabel={offLabel}
-      onChange={setValue}
-      disabled={disabled}
-    />
+    <div
+      style={{ width: '300px', backgroundColor: '#444', borderRadius: '4px' }}
+    >
+      <TextArea
+        value={value}
+        onTextChange={setValue}
+        placeholder={placeholder}
+        maxLength={maxLength}
+        rows={rows}
+        showTextLimit={showTextLimit}
+      />
+    </div>
   );
 };

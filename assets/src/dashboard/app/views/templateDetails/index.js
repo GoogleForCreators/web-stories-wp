@@ -39,6 +39,7 @@ import {
   Layout,
   PaginationButton,
   Pill,
+  useToastContext,
 } from '../../../components';
 import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
 import { useConfig } from '../../config';
@@ -48,6 +49,7 @@ import useRouteHistory from '../../router/useRouteHistory';
 import { TemplateGridView } from '../shared';
 import { PreviewStoryView } from '..';
 import useApi from '../../api/useApi';
+import { ALERT_SEVERITY } from '../../../constants';
 import {
   ByLine,
   Column,
@@ -77,32 +79,41 @@ function TemplateDetails() {
     actions,
   } = useRouteHistory();
 
+  const { addToast } = useToastContext(({ actions: { addToast } }) => ({
+    addToast,
+  }));
+
   const {
+    isLoading,
     templates,
     templatesOrderById,
     totalPages,
     createStoryFromTemplate,
     fetchMyTemplateById,
+    fetchExternalTemplates,
     fetchExternalTemplateById,
     fetchRelatedTemplates,
   } = useApi(
     ({
       state: {
-        templates: { templates, templatesOrderById, totalPages },
+        templates: { templates, templatesOrderById, totalPages, isLoading },
       },
       actions: {
         storyApi: { createStoryFromTemplate },
         templateApi: {
+          fetchExternalTemplates,
           fetchMyTemplateById,
           fetchExternalTemplateById,
           fetchRelatedTemplates,
         },
       },
     }) => ({
+      isLoading,
       templates,
       templatesOrderById,
       totalPages,
       createStoryFromTemplate,
+      fetchExternalTemplates,
       fetchMyTemplateById,
       fetchExternalTemplateById,
       fetchRelatedTemplates,
@@ -116,14 +127,40 @@ function TemplateDetails() {
       return;
     }
 
+    if ((!templates || Object.values(templates).length === 0) && !isLoading) {
+      fetchExternalTemplates();
+      return;
+    }
+
+    if (isLoading) {
+      return;
+    }
+
     const id = parseInt(templateId);
     const isLocalTemplate = isLocal && isLocal.toLowerCase() === 'true';
     const templateFetchFn = isLocalTemplate
       ? fetchMyTemplateById
       : fetchExternalTemplateById;
 
-    templateFetchFn(id).then(setTemplate);
-  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+    templateFetchFn(id)
+      .then(setTemplate)
+      .catch(() => {
+        addToast({
+          message: { body: __('Could not load the template.', 'web-stories') },
+          severity: ALERT_SEVERITY.ERROR,
+          id: Date.now(),
+        });
+      });
+  }, [
+    isLoading,
+    fetchExternalTemplates,
+    fetchExternalTemplateById,
+    fetchMyTemplateById,
+    isLocal,
+    templateId,
+    templates,
+    addToast,
+  ]);
 
   useEffect(() => {
     if (!template || !templateId) {
@@ -240,7 +277,13 @@ function TemplateDetails() {
   );
 
   if (!template) {
-    return null;
+    return (
+      <Layout.Provider>
+        <Layout.Fixed>
+          <DetailViewNavBar handleCta={onHandleCta} />
+        </Layout.Fixed>
+      </Layout.Provider>
+    );
   }
 
   if (activePreview.value) {
