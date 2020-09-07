@@ -20,12 +20,15 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { KEYS } from '../../constants';
+import { KEYS, STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { TypographyPresets } from '../typography';
+
+const CLOSE_MENU_ACTION = { value: STORY_CONTEXT_MENU_ACTIONS.CLOSE };
 
 export const MenuContainer = styled.ul`
   align-items: flex-start;
@@ -47,6 +50,7 @@ export const MenuContainer = styled.ul`
     }
   }
 `;
+
 MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
@@ -62,9 +66,18 @@ export const MenuItem = styled.li`
     display: flex;
     width: 100%;
 
+    &.separatorTop {
+      border-top: 1px solid ${theme.colors.gray50};
+    }
+
+    &.separatorBottom {
+      border-bottom: 1px solid ${theme.colors.gray50};
+    }
+
     &:focus, &:active, &:hover {
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     }
+
   `}
 `;
 
@@ -77,13 +90,6 @@ const MenuItemContent = styled.span`
   align-self: flex-start;
   height: 100%;
   margin: auto 0;
-`;
-
-const Separator = styled.li`
-  height: 1px;
-  background: ${({ theme }) => theme.colors.gray50};
-  width: 100%;
-  margin: 6px 0;
 `;
 
 const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
@@ -119,6 +125,14 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             event.preventDefault();
             if (onSelect) {
               onSelect(items[hoveredIndex]);
+            }
+            break;
+
+          case KEYS.ESC:
+            event.preventDefault();
+            if (onSelect) {
+              // Close menu
+              onSelect(CLOSE_MENU_ACTION);
             }
             break;
 
@@ -158,6 +172,10 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
           isDisabled={itemIsDisabled}
+          className={
+            (item.separator === 'top' && 'separatorTop') ||
+            (item.separator === 'bottom' && 'separatorBottom')
+          }
           {...MenuItemPropsAsLink}
         >
           <MenuItemContent>{item.label}</MenuItemContent>
@@ -167,18 +185,9 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
     [hoveredIndex, onSelect]
   );
 
-  const renderSeparator = useCallback((index) => {
-    return <Separator key={`separator-${index}`} />;
-  }, []);
-
   return (
     <MenuContainer ref={listRef}>
-      {items.map((item, index) => {
-        if (item.separator) {
-          return renderSeparator(index);
-        }
-        return renderMenuItem(item, index);
-      })}
+      {items.map((item, index) => renderMenuItem(item, index))}
     </MenuContainer>
   );
 };

@@ -41,6 +41,28 @@ describe('Settings View', () => {
     fixture.restore();
   });
 
+  async function focusOnPublisherLogos() {
+    let limit = 0;
+    const publisherLogosContainer = fixture.screen.getByTestId(
+      'publisher-logos-container'
+    );
+
+    expect(publisherLogosContainer).toBeTruthy();
+
+    while (
+      !publisherLogosContainer.contains(document.activeElement) &&
+      limit < 8
+    ) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
+
+    return publisherLogosContainer.contains(document.activeElement)
+      ? Promise.resolve()
+      : Promise.reject(new Error('could not focus on publisher logos'));
+  }
+
   function navigateToEditorSettings() {
     const editorSettingsMenuItem = fixture.screen.queryByRole('link', {
       name: /^Editor Settings$/,
@@ -145,34 +167,45 @@ describe('Settings View', () => {
   });
 
   it('should remove a publisher logo on keydown enter', async () => {
-    const settingsView = await fixture.screen.getByTestId('editor-settings');
+    const settingsView = await fixture.screen.getByTestId(
+      'publisher-logos-container'
+    );
 
     const PublisherLogos = within(settingsView).queryAllByTestId(
       /^publisher-logo/
     );
+
     const initialPublisherLogosLength = PublisherLogos.length;
     expect(PublisherLogos).toBeTruthy();
 
-    const RemovePublisherLogoButton = within(settingsView).queryAllByTestId(
-      /^remove-publisher-logo/
-    )[0];
+    await focusOnPublisherLogos();
 
-    expect(RemovePublisherLogoButton).toBeTruthy();
+    let page1 = fixture.screen.getByTestId(/^publisher-logo-0/);
+    expect(page1).toEqual(document.activeElement);
 
-    await fixture.events.focus(RemovePublisherLogoButton);
+    // go right by 1
+    await fixture.events.keyboard.press('right');
+
     await fixture.events.keyboard.press('Enter');
 
-    const confirmRemoveButton = fixture.screen.getByRole('button', {
-      name: /^Remove Logo$/,
-    });
+    const page2 = fixture.screen.getByTestId(/^publisher-logo-1/);
+    expect(page2).toEqual(document.activeElement);
 
-    await fixture.events.focus(confirmRemoveButton);
+    await fixture.events.keyboard.press('Tab');
+
     await fixture.events.keyboard.press('Enter');
 
-    const UpdatedPublisherLogos = within(
-      await fixture.screen.getByTestId('editor-settings')
+    // tab through confirmation dialog to remove logo
+    await fixture.events.keyboard.press('Tab');
+
+    await fixture.events.keyboard.press('Tab');
+
+    await fixture.events.keyboard.press('Enter');
+
+    const updatedLogos = within(
+      await fixture.screen.getByTestId('publisher-logos-container')
     ).queryAllByTestId(/^publisher-logo/);
 
-    expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
+    expect(updatedLogos.length).toBeLessThan(initialPublisherLogosLength);
   });
 });

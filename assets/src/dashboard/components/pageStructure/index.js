@@ -24,7 +24,7 @@ import { useFeature } from 'flagged';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -227,8 +227,11 @@ export function LeftRail() {
         <AppInfo>
           {__('\u00A9 2020 Google', 'web-stories')}
           <br />
-          {__('Version', 'web-stories')}&nbsp;
-          {version}
+          {sprintf(
+            /* translators: %s: editor version. */
+            __('Version %s', 'web-stories'),
+            version
+          )}
         </AppInfo>
       </Content>
     </LeftRailContainer>

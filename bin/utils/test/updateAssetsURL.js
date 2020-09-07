@@ -23,7 +23,6 @@ import { __setMockFiles, readFileSync } from 'fs';
  * Internal dependencies
  */
 import updateAssetsURL from '../updateAssetsURL';
-import { ASSETS_URL_CDN } from '../constants';
 
 jest.mock('fs');
 
@@ -44,15 +43,7 @@ describe('updateAssetsURL', () => {
     __setMockFiles(MOCK_FILE_INFO);
   });
 
-  it('replaces assets URL constant with default URL to the CDN', () => {
-    updateAssetsURL('/foo/plugin.php');
-    const fileContent = readFileSync('/foo/plugin.php');
-    expect(fileContent).toContain(
-      `define( 'WEBSTORIES_ASSETS_URL', '${ASSETS_URL_CDN}' );`
-    );
-  });
-
-  it('replaces assets URL constant with custom CDN URL', () => {
+  it('replaces assets URL constant with CDN URL', () => {
     updateAssetsURL('/foo/plugin.php', 'https://cdn.example.com/');
     const fileContent = readFileSync('/foo/plugin.php');
     expect(fileContent).toContain(

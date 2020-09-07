@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -31,7 +31,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { useStory } from '../../../app/story';
 import { PatternPropType } from '../../../types';
-import { useKeyDownEffect } from '../../keyboard';
 import { findMatchingColor } from './utils';
 
 const ActionsWrapper = styled.div`
@@ -62,8 +61,6 @@ function ColorPresetActions({ color }) {
 
   const { colors } = stylePresets;
 
-  const linkRef = useRef();
-
   // @todo This will change with the missing multi-selection handling.
   const isText =
     selectedElements.length > 0 &&
@@ -91,16 +88,9 @@ function ColorPresetActions({ color }) {
     [stylePresets, isText, colors, updateStory]
   );
 
-  useKeyDownEffect(
-    linkRef,
-    { key: ['space', 'enter'] },
-    () => handleAddColorPreset(color),
-    [color, handleAddColorPreset]
-  );
-
   return (
     <ActionsWrapper>
-      <AddColorPreset ref={linkRef} onClick={() => handleAddColorPreset(color)}>
+      <AddColorPreset onClick={() => handleAddColorPreset(color)}>
         {__('+ Add to Color Preset', 'web-stories')}
       </AddColorPreset>
     </ActionsWrapper>

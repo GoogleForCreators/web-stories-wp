@@ -60,7 +60,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should render an image for each publisherLogo in the array', () => {
-    const { queryAllByTestId } = renderWithTheme(
+    const { queryAllByRole } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -69,9 +69,7 @@ describe('PublisherLogo', () => {
       />
     );
 
-    expect(queryAllByTestId(/^publisher-logo/)).toHaveLength(
-      formattedPublisherLogos.length
-    );
+    expect(queryAllByRole('img')).toHaveLength(formattedPublisherLogos.length);
   });
 
   it('should render a button to remove publisherLogos aside from the default logo', () => {

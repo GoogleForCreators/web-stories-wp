@@ -167,7 +167,6 @@ function CardGallery({ story, isRTL, galleryLabel }) {
                 width={miniWrapperSize.width}
               >
                 <MiniCardButton
-                  gridRef={gridRef}
                   isSelected={isCurrentPage}
                   tabIndex={isActive ? 0 : -1}
                   {...miniWrapperSize}
