@@ -29,7 +29,7 @@ import { TypographyPresets } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { ICON_METRICS } from '../../../constants';
 
-const Banner = styled.div.attrs({ id: 'dillon' })`
+const Banner = styled.div.attrs()`
   display: flex;
   flex-direction: column;
   justify-content: center;
