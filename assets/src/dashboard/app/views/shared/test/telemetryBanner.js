@@ -15,21 +15,23 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
-const { useState } = require('react');
-const { fireEvent } = require('@testing-library/react');
-const { TelemetryOptInBanner } = require('../telemetryBanner');
-const { renderWithTheme } = require('../../../../testUtils');
+import { useState } from 'react';
+import userEvent from '@testing-library/user-event';
 
-function TelemetryBannerTestContainer() {
+/**
+ * Internal dependencies
+ */
+import { TelemetryOptInBanner } from '../telemetryBanner';
+import { renderWithTheme } from '../../../../testUtils';
+
+function TelemetryBannerTestContainer(props) {
   const [state, setState] = useState({
     visible: true,
     checked: false,
     disabled: false,
+    ...props,
   });
 
   const onClose = () =>
@@ -69,7 +71,7 @@ describe('TelemetryBanner', () => {
 
     expect(checkbox).not.toBeChecked();
 
-    fireEvent.click(checkbox);
+    userEvent.click(checkbox);
 
     expect(checkbox).toBeChecked();
   });
@@ -81,8 +83,22 @@ describe('TelemetryBanner', () => {
 
     expect(closeButton).toBeInTheDocument();
 
-    fireEvent.click(closeButton);
+    userEvent.click(closeButton);
 
     expect(closeButton).not.toBeInTheDocument();
+  });
+
+  it('should not be able to be checked when disabled', () => {
+    const { getByRole } = renderWithTheme(
+      <TelemetryBannerTestContainer disabled={true} />
+    );
+
+    const checkbox = getByRole('checkbox');
+
+    expect(checkbox).not.toBeChecked();
+
+    userEvent.click(checkbox);
+
+    expect(checkbox).not.toBeChecked();
   });
 });
