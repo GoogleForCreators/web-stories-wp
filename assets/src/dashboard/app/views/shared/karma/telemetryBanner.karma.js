@@ -71,7 +71,7 @@ describe('Telemetry Banner', () => {
     expect(bannerHeader).toBeNull();
   });
 
-  it('should enable telemetry tracking and close the banner when the checkbox is clicked', async () => {
+  it('should enable telemetry tracking when the checkbox is clicked', async () => {
     let optedIn = await fixture.renderHook(() =>
       useApi(
         ({ state: { currentUser } }) =>
@@ -87,12 +87,6 @@ describe('Telemetry Banner', () => {
 
     await fixture.events.click(checkbox);
 
-    const bannerHeader = await fixture.screen.queryByText(
-      /Help improve the editor!/
-    );
-
-    expect(bannerHeader).toBeNull();
-
     optedIn = await fixture.renderHook(() =>
       useApi(
         ({ state: { currentUser } }) =>
@@ -103,12 +97,12 @@ describe('Telemetry Banner', () => {
     expect(optedIn).toBeTrue();
   });
 
-  it('should not display the banner after it has been interacted with', async () => {
-    const checkbox = await fixture.querySelector('#telemetry-banner-opt-in');
+  it('should not display the banner after it has been closed with', async () => {
+    const exitButton = await fixture.screen.getByRole('button', {
+      name: /Close Telemetry Banner/,
+    });
 
-    expect(checkbox).toBeTruthy();
-
-    await fixture.events.click(checkbox);
+    await fixture.events.click(exitButton);
 
     let bannerHeader = await fixture.screen.queryByText(
       /Help improve the editor!/
