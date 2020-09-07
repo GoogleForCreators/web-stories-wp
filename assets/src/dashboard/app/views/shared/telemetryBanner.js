@@ -25,9 +25,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useCallback } from 'react';
 import { TypographyPresets } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { ICON_METRICS } from '../../../constants';
+import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Banner = styled.div.attrs()`
   display: flex;
@@ -101,7 +103,7 @@ const ToggleButton = styled.button.attrs({
   }
 `;
 
-export default function TelemetryBanner({
+export function TelemetryOptInBanner({
   visible = true,
   disabled = false,
   onChange = () => {},
@@ -150,10 +152,35 @@ export default function TelemetryBanner({
   ) : null;
 }
 
-TelemetryBanner.propTypes = {
-  visible: PropTypes.boolean,
-  checked: PropTypes.boolean,
-  disabled: PropTypes.boolean,
-  onChange: PropTypes.func,
-  onClose: PropTypes.func,
+TelemetryOptInBanner.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  checked: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
+
+export default function TelemetryBannerContainer(props) {
+  const {
+    bannerVisible,
+    setBannerVisibility,
+    optedIn,
+    disabled,
+    toggleWebStoriesTrackingOptIn,
+  } = useTelemetryOptIn();
+
+  const onClose = useCallback(() => {
+    setBannerVisibility(false);
+  }, [setBannerVisibility]);
+
+  return (
+    <TelemetryOptInBanner
+      visible={bannerVisible}
+      checked={optedIn}
+      disabled={disabled}
+      onChange={toggleWebStoriesTrackingOptIn}
+      onClose={onClose}
+      {...props}
+    />
+  );
+}
