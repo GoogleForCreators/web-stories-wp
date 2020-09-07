@@ -192,6 +192,7 @@ const categories = [
 describe('Media3pPane fetching', () => {
   let fixture;
   let media3pTab;
+  let shapesTab;
   let unsplashSection;
   let coverrSection;
   let media3pPane;
@@ -205,6 +206,7 @@ describe('Media3pPane fetching', () => {
     await fixture.render();
 
     media3pTab = fixture.querySelector('#library-tab-media3p');
+    shapesTab = fixture.querySelector('#library-tab-shapes');
     unsplashSection = fixture.querySelector(
       '#provider-bottom-wrapper-unsplash'
     );
@@ -345,6 +347,37 @@ describe('Media3pPane fetching', () => {
     );
     jasmine.clock().tick(500);
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
+  });
+
+  // The scroll position was being reset because the resize event in <Gallery>
+  // would render no images when the media pane was hidden (width->0).
+  // This was fixed by re-rendering <Gallery> whenever MediaPane/Media3pPane is
+  // re-rendered, which causes the resize event to be suppressed at exactly the
+  // right time.
+  // A more robust fix to the scroll position reset issue can be found here:
+  // https://github.com/neptunian/react-photo-gallery/pull/184
+  it('should retain scroll position on tab change', async () => {
+    mockListMedia();
+    await fixture.events.click(media3pTab);
+
+    const mediaGallery = unsplashSection.querySelector(
+      '[data-testid="media-gallery-container"]'
+    );
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+    mediaGallery.scrollTo(0, 10);
+    await waitFor(() => {
+      if (mediaGallery.scrollTop != 10) {
+        throw new Error('media scroll position must be initially');
+      }
+    });
+
+    await fixture.events.click(shapesTab);
+    await fixture.events.click(media3pTab);
+    await waitFor(() => {
+      if (mediaGallery.scrollTop != 10) {
+        throw new Error('media scroll position must be retained');
+      }
+    });
   });
 
   it('should render the second provider', async () => {
