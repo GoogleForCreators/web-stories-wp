@@ -79,6 +79,7 @@ const StoryGridView = ({
   renameStory,
   dateSettings,
   previewStory,
+  returnStoryFocusId,
 }) => {
   const { isRTL } = useConfig();
   const containerRef = useRef();
@@ -94,6 +95,12 @@ const StoryGridView = ({
     currentItemId: activeGridItemId,
     items: stories,
   });
+
+  useEffect(() => {
+    if (!activeGridItemId && returnStoryFocusId) {
+      itemRefs.current?.[returnStoryFocusId]?.children?.[0]?.focus();
+    }
+  }, [activeGridItemId, returnStoryFocusId]);
 
   // when keyboard focus changes through FocusableGridItem immediately focus the edit preview layer on top of preview
   useEffect(() => {
@@ -223,6 +230,7 @@ StoryGridView.propTypes = {
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
   dateSettings: DateSettingsPropType,
+  returnStoryFocusId: PropTypes.number,
 };
 
 export default StoryGridView;
