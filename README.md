@@ -6,6 +6,12 @@ Visual storytelling for WordPress.
 [![Commit activity](https://img.shields.io/github/commit-activity/m/google/web-stories-wp)](https://github.com/google/web-stories-wp/pulse/monthly)
 [![Code Coverage](https://codecov.io/gh/google/web-stories-wp/branch/main/graph/badge.svg)](https://codecov.io/gh/google/web-stories-wp)
 ![License](https://img.shields.io/github/license/google/web-stories-wp)
+[![GitHub repo size](https://img.shields.io/github/repo-size/google/web-stories-wp)](https://github.com/google/web-stories-wp)
+[![GitHub issues](https://img.shields.io/github/issues/google/web-stories-wp.svg)](https://GitHub.com/google/web-stories-wp/issues/)
+[![GitHub contributors](https://img.shields.io/github/contributors/google/web-stories-wp.svg)](https://GitHub.com/google/web-stories-wp/graphs/contributors/)
+
+
+
 
 <details>
 <summary>
