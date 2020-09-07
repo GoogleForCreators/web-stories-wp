@@ -1,0 +1,4 @@
+public/static/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+public/static/**/*.png filter=lfs diff=lfs merge=lfs -text
+public/static/**/*.webm filter=lfs diff=lfs merge=lfs -text
+public/static/**/*.jpg filter=lfs diff=lfs merge=lfs -text
