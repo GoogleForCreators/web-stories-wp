@@ -18,16 +18,12 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
 import PropTypes from 'prop-types';
-import { useContext } from '../../../utils/context';
 
 /**
  * Internal dependencies
  */
+import { useContext } from 'use-context-selector';
 import DragHandle from '../panel/shared/handle';
 import panelContext from '../panel/context';
 import useInspector from '../../inspector/useInspector';
