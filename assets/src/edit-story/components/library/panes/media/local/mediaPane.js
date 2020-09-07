@@ -155,10 +155,10 @@ function MediaPane(props) {
    */
   const insertMediaElement = useCallback(
     (resource, thumbnailURL) => {
-      resourceList[resource.id] = {
+      resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
-      };
+      });
       insertElement(resource.type, { resource });
     },
     [insertElement]
