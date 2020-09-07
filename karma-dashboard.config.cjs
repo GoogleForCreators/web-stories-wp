@@ -96,7 +96,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: !config.singleRun,
+    autoWatch: true,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -129,7 +129,7 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: Boolean(config.singleRun),
+    singleRun: false,
 
     // Concurrency level
     // how many browsers should be started simultaneously
@@ -138,14 +138,8 @@ module.exports = function (config) {
     // Allow not having any tests
     failOnEmptyTestSuite: false,
 
-    // Bump browserNoActivityTimeout to 60s to prevent Github Actions timeout
-    browserNoActivityTimeout: 60000,
-
-    // Set number of disconnections tolerated.
-    browserDisconnectTolerance: 5,
-
-    // Increase retry limit when browser crashes.
-    retryLimit: 5,
+    // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
+    browserNoActivityTimeout: 100000,
   });
 };
 
