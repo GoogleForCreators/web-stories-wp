@@ -208,4 +208,28 @@ describe('Settings View', () => {
 
     expect(updatedLogos.length).toBeLessThan(initialPublisherLogosLength);
   });
+
+  it('should render the telemetry settings checkbox', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const TelemetrySettingsCheckbox = within(settingsView).queryAllByTestId(
+      /^telemetry-settings-checkbox/
+    );
+
+    expect(TelemetrySettingsCheckbox).toBeTruthy();
+  });
+
+  it('should toggle the value and call the API provider when the tracking opt in box is clicked', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const TelemetrySettingsCheckbox = within(settingsView).queryAllByTestId(
+      /^telemetry-settings-checkbox/
+    );
+
+    expect(TelemetrySettingsCheckbox[0].checked).toBeTrue();
+
+    await fixture.events.click(TelemetrySettingsCheckbox[0]);
+
+    expect(TelemetrySettingsCheckbox[0].checked).toBeFalse();
+  });
 });
