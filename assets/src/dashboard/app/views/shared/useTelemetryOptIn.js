@@ -67,12 +67,14 @@ export default function useTelemetryOptIn() {
     setOptedIn(Boolean(currentUser.data.meta?.web_stories_tracking_optin));
   }, [currentUser]);
 
-  useEffect(() => {
-    fetchCurrentUser();
-  }, [fetchCurrentUser, currentPath]);
-
   const dataIsLoaded =
     currentUser.data.meta?.web_stories_tracking_optin !== undefined;
+
+  useEffect(() => {
+    if (!dataIsLoaded) {
+      fetchCurrentUser();
+    }
+  }, [dataIsLoaded, fetchCurrentUser]);
 
   const _toggleWebStoriesTrackingOptIn = useCallback(() => {
     toggleWebStoriesTrackingOptIn();
