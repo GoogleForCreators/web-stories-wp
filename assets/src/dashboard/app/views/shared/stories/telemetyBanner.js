@@ -16,13 +16,26 @@
 /**
  * Internal dependencies
  */
-import TelemetryBanner from '../telemetryBanner';
+/**
+ * External dependencies
+ */
+import { boolean } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { TelemetryOptInBanner } from '../telemetryBanner';
 
 export default {
   title: 'Dashboard/Views/Shared/TelemetryBanner',
-  component: TelemetryBanner,
+  component: TelemetryOptInBanner,
 };
 
 export const _default = () => {
-  return <TelemetryBanner />;
+  return (
+    <TelemetryOptInBanner
+      visible={boolean('Visible', true)}
+      checked={boolean('Checked', false)}
+      disabled={boolean('Disabled', false)}
+      onChange={action('onChange')}
+      onClose={action('onClose')}
+    />
+  );
 };
