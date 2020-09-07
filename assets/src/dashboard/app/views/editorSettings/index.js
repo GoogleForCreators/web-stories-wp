@@ -119,10 +119,15 @@ function EditorSettings() {
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
-      // TODO check to see if there are no logos already, if there isn't make one of the newly createdMediaIds the default logo
-      updateSettings({ publisherLogoIds: newlyCreatedMediaIds });
+      const updateObject = { publisherLogoIds: newlyCreatedMediaIds };
+
+      if (publisherLogoIds.filter((id) => id !== 0).length === 0) {
+        updateObject.publisherLogoToMakeDefault = newlyCreatedMediaIds[0];
+      }
+
+      updateSettings(updateObject);
     }
-  }, [updateSettings, newlyCreatedMediaIds]);
+  }, [updateSettings, newlyCreatedMediaIds, publisherLogoIds]);
 
   useEffect(() => {
     if (publisherLogoIds.length > 0) {
