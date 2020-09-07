@@ -239,6 +239,7 @@ function TextEdit({
     editorHeightRef.current =
       textBox.offsetHeight - dataToEditorY(marginOffset);
     wrapper.style.height = `${editorHeightRef.current}px`;
+    textBox.style.margin = '';
     if (editWrapper) {
       const [dx, dy] = calcRotatedResizeOffset(
         boxRef.current.rotationAngle,
