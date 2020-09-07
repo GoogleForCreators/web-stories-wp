@@ -94,6 +94,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
     <div ref={containerRef}>
       <GridContainer
         pageSize={pageSize}
+        role="list"
         ref={gridRef}
         ariaLabel={__('Available templates', 'web-stories')}
       >
@@ -103,6 +104,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
           return (
             <CardGridItem
               key={template.id}
+              role="listitem"
               data-testid={`template-grid-item-${template.id}`}
               ref={(el) => {
                 itemRefs.current[template.id] = el;
