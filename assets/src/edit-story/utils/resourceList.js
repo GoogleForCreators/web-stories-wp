@@ -21,6 +21,9 @@
 
 const resourceList = {
   list: {},
+  resetList: function () {
+    this.list = {};
+  },
   get: function (id) {
     return this.list[id];
   },
