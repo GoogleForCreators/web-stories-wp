@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -30,20 +30,17 @@ import { APP_ROUTES } from '../../../constants';
 // the banner previously. If they have, we do not show the banner again.
 const LOCAL_STORAGE_KEY = `web_stories_tracking_optin_banner_visible`;
 
-function setInitialBannerVisibility() {
+function setInitialBannerPreviouslyClosed() {
   const storageValue = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-  if (storageValue === null) {
-    return true;
-  }
-
-  return JSON.parse(storageValue);
+  return Boolean(JSON.parse(storageValue));
 }
 
 export default function useTelemetryOptIn() {
-  const [_bannerVisible, setBannerVisibility] = useState(
-    setInitialBannerVisibility
+  const [bannerPreviouslyClosed, setBannerPreviouslyClosed] = useState(
+    setInitialBannerPreviouslyClosed
   );
+  const [optInCheckboxClicked, setOptInCheckboxClicked] = useState(false);
   const {
     currentUser,
     toggleWebStoriesTrackingOptIn,
@@ -56,46 +53,51 @@ export default function useTelemetryOptIn() {
       },
     }) => ({ currentUser, toggleWebStoriesTrackingOptIn, fetchCurrentUser })
   );
-  const [optedIn, setOptedIn] = useState(
-    Boolean(currentUser.data.meta?.web_stories_tracking_optin)
-  );
   const { currentPath } = useRouteHistory(({ state: { currentPath } }) => ({
     currentPath,
   }));
 
-  useEffect(() => {
-    setOptedIn(Boolean(currentUser.data.meta?.web_stories_tracking_optin));
-  }, [currentUser]);
-
   const dataIsLoaded =
     currentUser.data.meta?.web_stories_tracking_optin !== undefined;
 
+  const optedIn = Boolean(currentUser.data.meta?.web_stories_tracking_optin);
+
+  const dataFetched = useRef(false);
+
   useEffect(() => {
-    if (!dataIsLoaded) {
+    if (!dataIsLoaded && !dataFetched.current) {
       fetchCurrentUser();
+      dataFetched.current = true;
     }
   }, [dataIsLoaded, fetchCurrentUser]);
 
   const _toggleWebStoriesTrackingOptIn = useCallback(() => {
     toggleWebStoriesTrackingOptIn();
-    setBannerVisibility(false);
+    localStorage.setItem(LOCAL_STORAGE_KEY, false);
+    setOptInCheckboxClicked(true);
   }, [toggleWebStoriesTrackingOptIn]);
 
-  useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, _bannerVisible);
-  }, [_bannerVisible]);
+  const closeBanner = useCallback(() => {
+    setBannerPreviouslyClosed(true);
+    localStorage.setItem(LOCAL_STORAGE_KEY, false);
+  }, []);
 
-  const bannerVisible =
-    dataIsLoaded &&
-    !optedIn &&
-    _bannerVisible &&
-    currentPath !== APP_ROUTES.EDITOR_SETTINGS;
+  let bannerVisible = true;
+
+  if (
+    bannerPreviouslyClosed ||
+    currentPath === APP_ROUTES.EDITOR_SETTINGS ||
+    !dataIsLoaded ||
+    (!optInCheckboxClicked && optedIn)
+  ) {
+    bannerVisible = false;
+  }
 
   return {
     bannerVisible,
-    setBannerVisibility,
     optedIn,
     disabled: currentUser.isUpdating,
+    closeBanner,
     toggleWebStoriesTrackingOptIn: _toggleWebStoriesTrackingOptIn,
   };
 }

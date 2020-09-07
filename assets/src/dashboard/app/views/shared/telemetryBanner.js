@@ -25,7 +25,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useCallback } from 'react';
 import { TypographyPresets } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { ICON_METRICS } from '../../../constants';
@@ -163,15 +162,11 @@ TelemetryOptInBanner.propTypes = {
 export default function TelemetryBannerContainer(props) {
   const {
     bannerVisible,
-    setBannerVisibility,
+    closeBanner,
     optedIn,
     disabled,
     toggleWebStoriesTrackingOptIn,
   } = useTelemetryOptIn();
-
-  const onClose = useCallback(() => {
-    setBannerVisibility(false);
-  }, [setBannerVisibility]);
 
   return (
     <TelemetryOptInBanner
@@ -179,7 +174,7 @@ export default function TelemetryBannerContainer(props) {
       checked={optedIn}
       disabled={disabled}
       onChange={toggleWebStoriesTrackingOptIn}
-      onClose={onClose}
+      onClose={closeBanner}
       {...props}
     />
   );
