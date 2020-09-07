@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -35,7 +34,6 @@ import WithTooltip from '../../../tooltip';
 import { Remove } from '../../../../icons';
 import { useStory } from '../../../../app/story';
 import generatePatternStyles from '../../../../utils/generatePatternStyles';
-import { useKeyDownEffect } from '../../../keyboard';
 
 const PRESET_SIZE = 30;
 const REMOVE_ICON_SIZE = 18;
@@ -87,8 +85,7 @@ const presetCSS = css`
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
   }
 `;
-
-const ColorButton = styled.button.attrs({ type: 'button' })`
+const Color = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
 
@@ -96,25 +93,6 @@ const ColorButton = styled.button.attrs({ type: 'button' })`
     outline: none !important;
   }
 `;
-
-function Color({ onClick, children, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
-  return (
-    <ColorButton ref={ref} onClick={onClick} {...rest}>
-      {children}
-    </ColorButton>
-  );
-}
-
-Color.propTypes = {
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 function ColorPresetPanel({ pushUpdate }) {
   const { currentPage, selectedElements } = useStory(

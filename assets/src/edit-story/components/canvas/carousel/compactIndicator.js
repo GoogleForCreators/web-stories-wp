@@ -27,7 +27,10 @@ import { forwardRef } from 'react';
  */
 import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
 
-function CompactIndicatorWithRef({ onClick, isActive, ariaLabel, role }, ref) {
+function CompactIndicatorWithRef(
+  { onClick, isActive, ariaLabel, role, tabIndex },
+  ref
+) {
   return (
     <Indicator
       onClick={onClick}
@@ -35,6 +38,7 @@ function CompactIndicatorWithRef({ onClick, isActive, ariaLabel, role }, ref) {
       aria-label={ariaLabel}
       role={role}
       ref={ref}
+      tabIndex={tabIndex}
     />
   );
 }
@@ -49,6 +53,11 @@ const Indicator = styled.button`
   border-radius: 6px;
   background: ${({ isActive, theme }) =>
     isActive ? theme.colors.selection : 'rgba(255, 255, 255, 0.28)'};
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+  }
+
   ${({ isActive, isInteractive, theme }) =>
     !isActive &&
     isInteractive &&
@@ -66,6 +75,7 @@ CompactIndicator.propTypes = {
   onClick: PropTypes.func.isRequired,
   isActive: PropTypes.bool,
   ariaLabel: PropTypes.string.isRequired,
+  tabIndex: PropTypes.number,
   role: PropTypes.string,
 };
 

@@ -61,7 +61,7 @@ const ElementRow = styled.div`
   overflow: overlay;
 `;
 
-const IconButton = styled.button.attrs({
+const Icon = styled.button.attrs({
   type: 'button',
 })`
   display: flex;
@@ -116,25 +116,6 @@ const PAGE_RECT = {
   endY: PAGE_HEIGHT,
   width: PAGE_WIDTH,
   height: PAGE_HEIGHT,
-};
-
-function Icon({ onClick, children, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
-  return (
-    <IconButton ref={ref} onClick={onClick} {...rest}>
-      {children}
-    </IconButton>
-  );
-}
-
-Icon.propTypes = {
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
 };
 
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {

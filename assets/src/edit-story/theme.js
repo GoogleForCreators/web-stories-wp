@@ -220,6 +220,12 @@ const theme = {
       lineHeight: '24px',
       textAlign: 'center',
     },
+    version: {
+      family: 'Roboto',
+      size: '12px',
+      lineHeight: '20px',
+      letterSpacing: '0.0133em',
+    },
   },
 };
 

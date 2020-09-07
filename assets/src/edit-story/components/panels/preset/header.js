@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Add, EditPencil } from '../../../icons';
-import { useKeyDownEffect } from '../../keyboard';
 import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
@@ -75,26 +73,6 @@ const EditMode = styled.button`
         `}
 `;
 
-function Button({ onClick, Icon, children, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
-  return (
-    <Icon ref={ref} onClick={onClick} {...rest}>
-      {children}
-    </Icon>
-  );
-}
-
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  Icon: PropTypes.elementType.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
-
 function PresetsHeader({
   title,
   handleAddPreset,
@@ -118,8 +96,7 @@ function PresetsHeader({
     return (
       <>
         {hasPresets && (
-          <Button
-            Icon={EditMode}
+          <EditMode
             onClick={(evt) => {
               evt.stopPropagation();
               setIsEditMode(!isEditMode);
@@ -130,16 +107,12 @@ function PresetsHeader({
             isEditMode={isEditMode}
           >
             {isEditMode ? __('Exit', 'web-stories') : <EditPencil />}
-          </Button>
+          </EditMode>
         )}
         {!isEditMode && (
-          <Button
-            Icon={AddPresetButton}
-            onClick={handleAddPreset}
-            aria-label={addLabel}
-          >
+          <AddPresetButton onClick={handleAddPreset} aria-label={addLabel}>
             <Add />
-          </Button>
+          </AddPresetButton>
         )}
       </>
     );
