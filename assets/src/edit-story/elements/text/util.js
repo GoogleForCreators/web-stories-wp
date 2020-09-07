@@ -88,18 +88,26 @@ export const getHighlightLineheight = function (
 
 export function calcFontMetrics(element) {
   let marginOffset, contentAreaPx, lineBoxPx;
-  if (element.font.metrics) {
-    const {
-      fontSize,
-      lineHeight,
-      font: {
-        metrics: { upm, asc, des },
-      },
-    } = element;
-    contentAreaPx = ((asc - des) / upm) * fontSize;
-    lineBoxPx = lineHeight * fontSize;
-    marginOffset = lineBoxPx - contentAreaPx;
+
+  if (!element.font.metrics) {
+    return {
+      contentAreaPx: 0,
+      lineBoxPx: 0,
+      marginOffset: 0,
+    };
   }
+
+  const {
+    fontSize,
+    lineHeight,
+    font: {
+      metrics: { upm, asc, des },
+    },
+  } = element;
+  contentAreaPx = ((asc - des) / upm) * fontSize;
+  lineBoxPx = lineHeight * fontSize;
+  marginOffset = lineBoxPx - contentAreaPx;
+
   return {
     marginOffset,
     contentAreaPx,
