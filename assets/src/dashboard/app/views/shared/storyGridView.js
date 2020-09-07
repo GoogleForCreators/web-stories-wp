@@ -109,6 +109,7 @@ const StoryGridView = ({
       <StoryGrid
         pageSize={pageSize}
         ref={gridRef}
+        role="list"
         ariaLabel={__('Viewing stories', 'web-stories')}
       >
         {stories.map((story) => {
@@ -134,6 +135,7 @@ const StoryGridView = ({
             <CardGridItem
               key={story.id}
               data-testid={`story-grid-item-${story.id}`}
+              role="listitem"
               ref={(el) => {
                 itemRefs.current[story.id] = el;
               }}
