@@ -86,6 +86,13 @@ class HTML {
 	const ENCODING_DETECTION_ORDER = 'UTF-8, EUC-JP, eucJP-win, JIS, ISO-2022-JP, ISO-8859-15, ISO-8859-1, ASCII';
 
 	/**
+	 * AMP boilerplate <noscript> fallback.
+	 *
+	 * @var string
+	 */
+	const AMP_NOSCRIPT_BOILERPLATE = '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>';
+
+	/**
 	 * Story_Renderer constructor.
 	 *
 	 * @param Story $story Post object.
@@ -122,16 +129,13 @@ class HTML {
 	/**
 	 * Adapt the encoding of the content.
 	 *
+	 * @link https://github.com/ampproject/amp-wp/blob/a393acf701e8e44d80225affed99d528ee751cb9/lib/common/src/Dom/Document.php
+	 *
 	 * @param string $markup Source content to adapt the encoding of.
 	 * @return string Adapted content.
 	 */
 	protected function adapt_encoding( $markup ) {
-		/*
-		 * Default encoding of the markup.
-		 *
-		 * "auto" is recognized by mb_convert_encoding() as a special value.
-		 */
-		$encoding = 'auto';
+		$encoding = self::UNKNOWN_ENCODING;
 
 		if ( function_exists( 'mb_detect_encoding' ) ) {
 			$encoding = mb_detect_encoding( $markup, self::ENCODING_DETECTION_ORDER, true );
@@ -267,7 +271,7 @@ class HTML {
 	 * @return string Filtered content.
 	 */
 	protected function remove_noscript_amp_boilerplate( $content ) {
-		return str_replace( '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>', '', $content );
+		return str_replace( self::AMP_NOSCRIPT_BOILERPLATE, '', $content );
 	}
 
 	/**
@@ -283,17 +287,13 @@ class HTML {
 	 */
 	protected function add_noscript_amp_boilerplate() {
 		$fragment = $this->document->createDocumentFragment();
-		$fragment->appendXml(
-			'<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>'
-		);
+		$fragment->appendXml( self::AMP_NOSCRIPT_BOILERPLATE );
 
 		$head = $this->get_element_by_tag_name( 'head' );
 
-		if ( ! $head ) {
-			return;
+		if ( $head ) {
+			$head->appendChild( $fragment );
 		}
-
-		$head->appendChild( $fragment );
 	}
 
 	/**
@@ -350,11 +350,9 @@ class HTML {
 		/* @var DOMElement $head The <head> element. */
 		$head = $this->get_element_by_tag_name( 'head' );
 
-		if ( ! $head ) {
-			return;
+		if ( $head ) {
+			$head->appendChild( $script );
 		}
-
-		$head->appendChild( $script );
 	}
 
 	/**
