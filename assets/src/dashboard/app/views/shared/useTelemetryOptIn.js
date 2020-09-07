@@ -68,9 +68,7 @@ export default function useTelemetryOptIn() {
   }, [currentUser]);
 
   useEffect(() => {
-    if (currentPath !== APP_ROUTES.EDITOR_SETTINGS) {
-      fetchCurrentUser();
-    }
+    fetchCurrentUser();
   }, [fetchCurrentUser, currentPath]);
 
   const dataIsLoaded =

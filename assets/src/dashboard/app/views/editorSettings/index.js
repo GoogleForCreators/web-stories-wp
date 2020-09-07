@@ -36,6 +36,7 @@ import {
 } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
+import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
@@ -45,11 +46,8 @@ const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
-    currentUser,
-    fetchCurrentUser,
     fetchSettings,
     updateSettings,
-    toggleWebStoriesTrackingOptIn,
     googleAnalyticsId,
     fetchMediaById,
     uploadMedia,
@@ -63,7 +61,6 @@ function EditorSettings() {
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
-        usersApi: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       },
       state: {
         settings: {
@@ -72,7 +69,6 @@ function EditorSettings() {
           publisherLogoIds,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
-        currentUser,
       },
     }) => ({
       fetchSettings,
@@ -85,9 +81,6 @@ function EditorSettings() {
       mediaById,
       newlyCreatedMediaIds,
       publisherLogoIds,
-      fetchCurrentUser,
-      toggleWebStoriesTrackingOptIn,
-      currentUser,
     })
   );
 
@@ -96,6 +89,12 @@ function EditorSettings() {
     maxUpload,
     maxUploadFormatted,
   } = useConfig();
+
+  const {
+    disabled,
+    toggleWebStoriesTrackingOptIn,
+    optedIn,
+  } = useTelemetryOptIn();
 
   const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
@@ -112,8 +111,7 @@ function EditorSettings() {
 
   useEffect(() => {
     fetchSettings();
-    fetchCurrentUser();
-  }, [fetchCurrentUser, fetchSettings]);
+  }, [fetchSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -278,11 +276,9 @@ function EditorSettings() {
               uploadError={mediaError}
             />
             <TelemetrySettings
-              disabled={currentUser.isUpdating}
+              disabled={disabled}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
-              selected={Boolean(
-                currentUser.data.meta?.web_stories_tracking_optin
-              )}
+              selected={optedIn}
             />
           </Main>
         </Layout.Scrollable>
