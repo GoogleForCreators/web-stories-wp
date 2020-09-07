@@ -21,6 +21,7 @@
  * External dependencies
  */
 const { useState } = require('react');
+const { fireEvent } = require('@testing-library/react');
 const { TelemetryOptInBanner } = require('../telemetryBanner');
 const { renderWithTheme } = require('../../../../testUtils');
 
@@ -59,5 +60,29 @@ describe('TelemetryBanner', () => {
     const checkbox = getByRole('checkbox');
 
     expect(checkbox).not.toBeChecked();
+  });
+
+  it('should change the checkbox to checked when clicked', () => {
+    const { getByRole } = renderWithTheme(<TelemetryBannerTestContainer />);
+
+    const checkbox = getByRole('checkbox');
+
+    expect(checkbox).not.toBeChecked();
+
+    fireEvent.click(checkbox);
+
+    expect(checkbox).toBeChecked();
+  });
+
+  it('should close and not be visible when the close icon is clicked', () => {
+    const { getByRole } = renderWithTheme(<TelemetryBannerTestContainer />);
+
+    const closeButton = getByRole('button');
+
+    expect(closeButton).toBeInTheDocument();
+
+    fireEvent.click(closeButton);
+
+    expect(closeButton).not.toBeInTheDocument();
   });
 });
