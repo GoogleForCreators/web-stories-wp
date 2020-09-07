@@ -410,6 +410,57 @@ describe('Page output', () => {
   });
 
   describe('pageAttachment', () => {
+    const BACKGROUND_ELEMENT = {
+      isBackground: true,
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+      },
+    };
+
+    const TEXT_ELEMENT = {
+      id: 'baz',
+      type: 'text',
+      content: 'Hello, link!',
+      x: 50,
+      y: PAGE_HEIGHT,
+      height: 300,
+      width: 100,
+      rotationAngle: 10,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      fontSize: 30,
+      font: {
+        family: 'Roboto',
+        service: 'fonts.google.com',
+      },
+      color: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+          a: 0.5,
+        },
+      },
+    };
+
     it('should output page attachment if the URL is set', async () => {
       const props = {
         id: '123',
@@ -468,56 +519,11 @@ describe('Page output', () => {
         page: {
           id: '123',
           elements: [
+            BACKGROUND_ELEMENT,
             {
-              isBackground: true,
-              id: 'baz',
-              type: 'image',
-              mimeType: 'image/png',
-              origRatio: 1,
-              x: 50,
-              y: 100,
-              scale: 1,
-              rotationAngle: 0,
-              width: 1,
-              height: 1,
-              resource: {
-                type: 'image',
-                mimeType: 'image/png',
-                id: 123,
-                src: 'https://example.com/image.png',
-                poster: 'https://example.com/poster.png',
-                height: 1,
-                width: 1,
-              },
-            },
-            {
-              id: 'baz',
-              type: 'text',
-              content: 'Hello, link!',
-              x: 50,
-              y: PAGE_HEIGHT,
-              height: 300,
-              width: 100,
-              rotationAngle: 10,
-              padding: {
-                vertical: 0,
-                horizontal: 0,
-              },
+              ...TEXT_ELEMENT,
               link: {
                 url: 'http://shouldremove.com',
-              },
-              fontSize: 30,
-              font: {
-                family: 'Roboto',
-                service: 'fonts.google.com',
-              },
-              color: {
-                color: {
-                  r: 255,
-                  g: 255,
-                  b: 255,
-                  a: 0.5,
-                },
               },
             },
           ],
@@ -533,6 +539,63 @@ describe('Page output', () => {
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).toContain('Hello, link');
       expect(content).not.toContain('http://shouldremove.com');
+    });
+
+    it('should output a link outside of page attachment area', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: 'http://shouldoutput.com',
+              },
+              y: 0,
+              height: 100,
+            },
+          ],
+          pageAttachment: {
+            url: 'http://example.com',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, link');
+      expect(content).toContain('http://shouldoutput.com');
+    });
+
+    it('should output a link in page attachment area if page attachment is not set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: 'http://shouldoutput.com',
+              },
+            },
+          ],
+          pageAttachment: null,
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, link');
+      expect(content).toContain('http://shouldoutput.com');
     });
   });
 
