@@ -61,33 +61,7 @@ function PaginatedMediaGallery({
   setNextPage,
 }) {
   // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
-  // State and callback ref necessary to recalculate the padding of the list
-  // given the scrollbar width.
-  const [scrollbarWidth, setScrollbarWidth] = useState(0);
   const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-    setScrollbarWidth(element.offsetWidth - element.clientWidth);
-  };
-
-  // Recalculates padding so that it stays centered.
-  // As of May 2020 this cannot be achieved without js (as the scrollbar-gutter
-  // prop is not yet ready).
-  useLayoutEffect(() => {
-    if (!scrollbarWidth) {
-      return;
-    }
-    const currentPaddingLeft = parseFloat(
-      window
-        .getComputedStyle(refContainer.current, null)
-        .getPropertyValue('padding-left')
-    );
-    refContainer.current.style['padding-right'] =
-      currentPaddingLeft - scrollbarWidth + 'px';
-  }, [scrollbarWidth, refContainer]);
 
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
@@ -196,10 +170,7 @@ function PaginatedMediaGallery({
     PROVIDERS[providerType].attributionComponent();
   return (
     <>
-      <MediaGalleryContainer
-        data-testid="media-gallery-container"
-        ref={refCallbackContainer}
-      >
+      <MediaGalleryContainer data-testid="media-gallery-container">
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
       {showLoadingPill && (
