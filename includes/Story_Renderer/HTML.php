@@ -52,6 +52,47 @@ class HTML {
 	protected $document;
 
 	/**
+	 * AMP requires the HTML markup to be encoded in UTF-8.
+	 *
+	 * @var string
+	 */
+	const AMP_ENCODING = 'utf-8';
+
+	/**
+	 * Encoding identifier to use for an unknown encoding.
+	 *
+	 * "auto" is recognized by mb_convert_encoding() as a special value.
+	 *
+	 * @var string
+	 */
+	const UNKNOWN_ENCODING = 'auto';
+
+	/**
+	 * Default document type to use.
+	 *
+	 * @var string
+	 */
+	const DEFAULT_DOCTYPE = '<!DOCTYPE html>';
+
+	/**
+	 * Encoding detection order in case we have to guess.
+	 *
+	 * This list of encoding detection order is just a wild guess and might need fine-tuning over time.
+	 * If the charset was not provided explicitly, we can really only guess, as the detection can
+	 * never be 100% accurate and reliable.
+	 *
+	 * @var string
+	 */
+	const ENCODING_DETECTION_ORDER = 'UTF-8, EUC-JP, eucJP-win, JIS, ISO-2022-JP, ISO-8859-15, ISO-8859-1, ASCII';
+
+	/**
+	 * AMP boilerplate <noscript> fallback.
+	 *
+	 * @var string
+	 */
+	const AMP_NOSCRIPT_BOILERPLATE = '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>';
+
+	/**
 	 * Story_Renderer constructor.
 	 *
 	 * @param Story $story Post object.
@@ -66,13 +107,16 @@ class HTML {
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = '<!DOCTYPE html>' . $this->story->get_markup();
+		$markup = self::DEFAULT_DOCTYPE . $this->story->get_markup();
+		$markup = $this->adapt_encoding( $markup );
 		$markup = $this->replace_html_head( $markup );
+		$markup = $this->remove_noscript_amp_boilerplate( $markup );
 
 		$this->document = $this->load_html( $markup );
 
 		// Run all further transformations on the DOMDocument.
 
+		$this->add_noscript_amp_boilerplate();
 		$this->transform_html_start_tag();
 		$this->insert_analytics_configuration();
 
@@ -83,6 +127,28 @@ class HTML {
 	}
 
 	/**
+	 * Adapt the encoding of the content.
+	 *
+	 * @link https://github.com/ampproject/amp-wp/blob/a393acf701e8e44d80225affed99d528ee751cb9/lib/common/src/Dom/Document.php
+	 *
+	 * @param string $markup Source content to adapt the encoding of.
+	 * @return string Adapted content.
+	 */
+	protected function adapt_encoding( $markup ) {
+		$encoding = self::UNKNOWN_ENCODING;
+
+		if ( function_exists( 'mb_detect_encoding' ) ) {
+			$encoding = mb_detect_encoding( $markup, self::ENCODING_DETECTION_ORDER, true );
+		}
+
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$markup = mb_convert_encoding( $markup, self::AMP_ENCODING, $encoding );
+		}
+
+		return $markup;
+	}
+
+	/**
 	 * Loads a full HTML document and returns a DOMDocument instance.
 	 *
 	 * @param string $string Input string.
@@ -90,7 +156,7 @@ class HTML {
 	 *
 	 * @return DOMDocument DOMDocument instance.
 	 */
-	private function load_html( $string, $options = 0 ) {
+	protected function load_html( $string, $options = 0 ) {
 		$options |= LIBXML_COMPACT;
 
 		/*
@@ -193,6 +259,45 @@ class HTML {
 	}
 
 	/**
+	 * Remove <noscript> AMP boilerplate fragment from the existing markup.
+	 *
+	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
+	 * That's why we temporarily remove this fragment and re-add it later.
+	 *
+	 * @see https://github.com/ampproject/amp-wp/pull/5097
+	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @param string $content Story markup.
+	 *
+	 * @return string Filtered content.
+	 */
+	protected function remove_noscript_amp_boilerplate( $content ) {
+		return str_replace( self::AMP_NOSCRIPT_BOILERPLATE, '', $content );
+	}
+
+	/**
+	 * Re-add <noscript> AMP boilerplate using DOMDocument.
+	 *
+	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
+	 * That's why we temporarily remove this fragment and re-add it later.
+	 *
+	 * @see https://github.com/ampproject/amp-wp/pull/5097
+	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @return void
+	 */
+	protected function add_noscript_amp_boilerplate() {
+		$fragment = $this->document->createDocumentFragment();
+		$fragment->appendXml( self::AMP_NOSCRIPT_BOILERPLATE );
+
+		$head = $this->get_element_by_tag_name( 'head' );
+
+		if ( $head ) {
+			$head->appendChild( $fragment );
+		}
+	}
+
+	/**
 	 * Replaces the placeholder of publisher logo in the content.
 	 *
 	 * @return void
@@ -246,11 +351,9 @@ class HTML {
 		/* @var DOMElement $head The <head> element. */
 		$head = $this->get_element_by_tag_name( 'head' );
 
-		if ( ! $head ) {
-			return;
+		if ( $head ) {
+			$head->appendChild( $script );
 		}
-
-		$head->appendChild( $this->document->importNode( $script, true ) );
 	}
 
 	/**
@@ -279,7 +382,7 @@ class HTML {
 		$fragment = $this->document->createDocumentFragment();
 		$fragment->appendXml( $output );
 
-		$story_element->appendChild( $this->document->importNode( $fragment, true ) );
+		$story_element->appendChild( $fragment );
 
 		/*
 		 * $fragment could contain anything (amp-analytics, amp-pixel, etc.).
