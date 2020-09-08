@@ -75,6 +75,23 @@ describe('PublisherLogo', () => {
     expect(queryAllByRole('img')).toHaveLength(formattedPublisherLogos.length);
   });
 
+  it('should specify the first logo displayed as default', () => {
+    const { queryAllByRole } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={jest.fn}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+      />
+    );
+
+    const FirstGridItem = queryAllByRole('listitem')[0];
+    expect(FirstGridItem).toBeDefined();
+    const Default = within(FirstGridItem).getByText('Default');
+    expect(Default).toBeDefined();
+  });
+
   it('should render a context menu button for each uploaded logo', () => {
     const { queryAllByTestId } = renderWithTheme(
       <PublisherLogoSettings
