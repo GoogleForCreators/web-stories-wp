@@ -64,16 +64,25 @@ describe('TelemetryBanner', () => {
     expect(checkbox).not.toBeChecked();
   });
 
-  it('should change the checkbox to checked when clicked', () => {
-    const { getByRole } = renderWithTheme(<TelemetryBannerTestContainer />);
+  it('should change the checkbox to checked and update the header when clicked', () => {
+    const { getByRole, getByText } = renderWithTheme(
+      <TelemetryBannerTestContainer />
+    );
 
     const checkbox = getByRole('checkbox');
 
     expect(checkbox).not.toBeChecked();
 
+    let bannerHeader = getByText(/Help improve the editor!/);
+
+    expect(bannerHeader).toBeInTheDocument();
+
     userEvent.click(checkbox);
 
     expect(checkbox).toBeChecked();
+
+    bannerHeader = getByText(/Your selection has been updated./);
+    expect(bannerHeader).toBeInTheDocument();
   });
 
   it('should close and not be visible when the close icon is clicked', () => {

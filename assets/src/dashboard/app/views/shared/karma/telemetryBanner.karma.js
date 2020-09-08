@@ -93,6 +93,12 @@ describe('Telemetry Banner', () => {
     );
 
     expect(optedIn).toBeTrue();
+
+    const bannerHeader = await fixture.screen.getByText(
+      /Your selection has been updated./
+    );
+
+    expect(bannerHeader).toBeTruthy();
   });
 
   it('should not display the banner after it has been closed with', async () => {

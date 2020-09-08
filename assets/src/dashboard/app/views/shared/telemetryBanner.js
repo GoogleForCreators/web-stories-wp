@@ -112,7 +112,14 @@ export function TelemetryOptInBanner({
   return visible ? (
     <Banner>
       <Header>
-        <Title>{__('Help improve the editor!', 'web-stories')}</Title>
+        <Title>
+          {checked
+            ? __(
+                'Your selection has been updated. Thank you for helping to improve the editor',
+                'web-stories'
+              )
+            : __('Help improve the editor!', 'web-stories')}
+        </Title>
         <ToggleButton onClick={onClose}>
           <CloseIcon />
         </ToggleButton>
