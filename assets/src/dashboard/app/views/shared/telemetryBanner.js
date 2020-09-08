@@ -121,7 +121,7 @@ export function TelemetryOptInBanner({
         <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
         <LabelText aria-checked={checked}>
           {__(
-            'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with',
+            'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
             'web-stories'
           )}
           &nbsp;
@@ -130,20 +130,23 @@ export function TelemetryOptInBanner({
             rel="noreferrer"
             target="_blank"
           >
-            {__('Google Privacy Policy', 'web-stories')}
+            {__('Learn more', 'web-stories')}
             {'.'}
           </a>
         </LabelText>
       </Label>
       <VisitSettingsText>
-        {__('You can update your selection later by visiting', 'web-stories')}
+        {__(
+          'You can update your selection later by visiting Settings.',
+          'web-stories'
+        )}
         &nbsp;
         <a
           href={`${window.location.href}editor-settings`}
           rel="noreferrer"
           target="_blank"
         >
-          {__('Settings', 'web-stories')}
+          {__('Update now', 'web-stories')}
           {'.'}
         </a>
       </VisitSettingsText>
