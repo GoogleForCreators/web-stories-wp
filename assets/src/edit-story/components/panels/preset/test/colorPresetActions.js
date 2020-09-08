@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
-import ColorPresetActions from '../colorPresetActions';
+import ColorPresetActions from '../colorPreset/colorPresetActions';
 import { renderWithTheme } from '../../../../testUtils';
 
 function setupActions() {

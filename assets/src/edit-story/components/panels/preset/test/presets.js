@@ -26,25 +26,20 @@ import { renderWithTheme } from '../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 function setupPresets(props = {}) {
-  const {
-    isEditMode = false,
-    isText = true,
-    stylePresets,
-    textContent = '',
-  } = props;
+  const { isEditMode = false, stylePresets } = props;
   const presets = {
     colors: [],
     textStyles: [],
     ...stylePresets,
   };
-  const handlePresetClick = jest.fn();
+  const handleOnClick = jest.fn();
   return renderWithTheme(
     <Presets
+      presets={presets}
+      handleOnClick={handleOnClick}
+      itemRenderer={jest.fn()}
       isEditMode={isEditMode}
-      handlePresetClick={handlePresetClick}
-      isText={isText}
-      stylePresets={presets}
-      textContent={textContent}
+      type={'color'}
     />
   );
 }

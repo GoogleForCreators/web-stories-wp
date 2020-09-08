@@ -46,8 +46,10 @@ const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-  line-height: ${({ lineHeight, verticalPadding }) =>
-    getHighlightLineheight(lineHeight, verticalPadding)};
+  line-height: ${({
+    lineHeight,
+    verticalPadding,
+  }) => getHighlightLineheight(lineHeight, verticalPadding)};
   margin: 0;
   padding: 0;
 `;

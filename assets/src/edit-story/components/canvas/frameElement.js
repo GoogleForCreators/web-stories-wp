@@ -42,18 +42,17 @@ import useCanvas from './useCanvas';
 // Pointer events are disabled in the display mode to ensure that selection
 // can be limited to the mask.
 const Wrapper = styled.div`
-	${elementWithPosition}
-	${elementWithSize}
+  ${elementWithPosition}
+  ${elementWithSize}
 	${elementWithRotation}
   pointer-events: initial;
 
-	&:focus,
-	&:active,
-	&:hover {
-		outline: ${({ theme, hasMask }) =>
+  &:focus,
+  &:active,
+  &:hover {
+    outline: ${({ theme, hasMask }) =>
       hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
-	}
-  
+  }
 `;
 
 const EmptyFrame = styled.div`

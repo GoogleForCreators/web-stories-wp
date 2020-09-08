@@ -39,13 +39,17 @@ import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
+import TelemetrySettings from './telemetry';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
+    currentUser,
+    fetchCurrentUser,
     fetchSettings,
     updateSettings,
+    toggleWebStoriesTrackingOptIn,
     googleAnalyticsId,
     fetchMediaById,
     uploadMedia,
@@ -59,6 +63,7 @@ function EditorSettings() {
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
+        usersApi: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       },
       state: {
         settings: {
@@ -67,6 +72,7 @@ function EditorSettings() {
           publisherLogoIds,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
+        currentUser,
       },
     }) => ({
       fetchSettings,
@@ -79,6 +85,9 @@ function EditorSettings() {
       mediaById,
       newlyCreatedMediaIds,
       publisherLogoIds,
+      fetchCurrentUser,
+      toggleWebStoriesTrackingOptIn,
+      currentUser,
     })
   );
 
@@ -103,7 +112,8 @@ function EditorSettings() {
 
   useEffect(() => {
     fetchSettings();
-  }, [fetchSettings]);
+    fetchCurrentUser();
+  }, [fetchCurrentUser, fetchSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -266,6 +276,13 @@ function EditorSettings() {
               canUploadFiles={canUploadFiles}
               isLoading={isMediaLoading}
               uploadError={mediaError}
+            />
+            <TelemetrySettings
+              disabled={currentUser.isUpdating}
+              onCheckboxSelected={toggleWebStoriesTrackingOptIn}
+              selected={Boolean(
+                currentUser.data.meta?.web_stories_tracking_optin
+              )}
             />
           </Main>
         </Layout.Scrollable>

@@ -98,7 +98,7 @@ describe('MediaDisplay', () => {
   });
 
   it('should render img with srcset, when fullsize resource is loaded', () => {
-    resourceList[imageElement.resource.id] = { type: 'fullsize' };
+    resourceList.set(imageElement.resource.id, { type: 'fullsize' });
     const { container } = render(
       <TestDisplayElement storyContext={storyContext} element={imageElement} />
     );

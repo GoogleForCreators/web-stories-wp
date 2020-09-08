@@ -116,6 +116,7 @@ const theme = {
       black: '#000000',
       white: '#FFFFFF',
       primary: '#EDEFEC',
+      tertiary: '#767570',
       gray24: '#5E615C',
       gray16: '#414442',
       gray8: '#2F3131',
@@ -157,6 +158,7 @@ const theme = {
       fg: '#FFFFFFCC',
     },
     outline: '#686868',
+    input: '#1c1d1d',
   },
   fonts: {
     title: {
@@ -225,6 +227,11 @@ const theme = {
       size: '12px',
       lineHeight: '20px',
       letterSpacing: '0.0133em',
+    },
+  },
+  border: {
+    radius: {
+      default: '4px',
     },
   },
 };
