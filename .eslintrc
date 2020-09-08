@@ -283,7 +283,22 @@
         "jasmine/no-disabled-tests": "error",
         "jasmine/no-spec-dupes": ["error", "branch"],
         "jasmine/no-suite-dupes": ["error", "branch"],
-        "jsdoc/require-jsdoc": "off"
+        "jsdoc/require-jsdoc": "off",
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@testing-library/react",
+                "message": "Use karma fixtures instead."
+              },
+              {
+                "name": "@testing-library/react-hooks",
+                "message": "Use karma fixtures instead."
+              }
+            ]
+          }
+        ]
       },
       "globals": {
         "karmaPuppeteer": "readonly",
