@@ -25,7 +25,7 @@ import styled from 'styled-components';
 import { MoreVerticalButton } from '../storyMenu';
 import { ActionLabel } from './types';
 
-const CardGridItem = styled.div.attrs({ role: 'listItem' })`
+const CardGridItem = styled.div.attrs({ role: 'listitem' })`
   margin: 0;
   width: 100%;
   display: flex;
