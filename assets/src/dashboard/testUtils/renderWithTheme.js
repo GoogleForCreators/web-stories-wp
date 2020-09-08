@@ -49,18 +49,23 @@ const defaultProviderValues = {
   theme,
   config: {},
 };
+
+// Please use renderWithProviders instead of renderWithTheme or renderWithThemeAndFlagsProvider
+// TODO: deprecate and replace instances of the above render utils
 export const renderWithProviders = (
   ui,
-  providerValues = defaultProviderValues,
+  providerValues = {},
   renderOptions = {}
-) =>
-  render(
-    <FlagsProvider features={providerValues.features}>
-      <ThemeProvider theme={providerValues.theme}>
-        <ConfigProvider config={providerValues.config}>
+) => {
+  const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
+  return render(
+    <FlagsProvider features={mergedProviderValues.features}>
+      <ThemeProvider theme={mergedProviderValues.theme}>
+        <ConfigProvider config={mergedProviderValues.config}>
           <MockApiProvider>{ui}</MockApiProvider>
         </ConfigProvider>
       </ThemeProvider>
     </FlagsProvider>,
     renderOptions
   );
+};

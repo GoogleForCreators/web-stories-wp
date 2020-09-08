@@ -15,5 +15,6 @@
  */
 export {
   default as renderWithTheme,
+  renderWithProviders,
   renderWithThemeAndFlagsProvider,
 } from './renderWithTheme';
