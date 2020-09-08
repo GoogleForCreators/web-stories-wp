@@ -91,7 +91,7 @@
     "@svgr/webpack": "^5.4.0",
     "@testing-library/dom": "^7.24.1",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.0.1",
+    "@testing-library/react": "^11.0.2",
     "@testing-library/react-hooks": "^3.4.1",
     "@wordpress/babel-plugin-import-jsx-pragma": "^2.7.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.8.0",
