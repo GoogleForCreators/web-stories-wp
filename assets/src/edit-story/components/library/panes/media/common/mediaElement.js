@@ -156,11 +156,11 @@ const MediaElement = ({
     alt,
   } = resource;
 
-  const posterRef = useRef(null);
+  const newVideoRef = useRef(null);
 
   useEffect(() => {
     if (resource.poster && resource.poster.includes('blob')) {
-      posterRef.current = resource.poster;
+      newVideoRef.current = resource.poster;
     }
   }, [resource.poster]);
 
@@ -291,7 +291,7 @@ const MediaElement = ({
     onClick,
     showVideoDetail,
     dropTargetsBindings,
-    posterRef,
+    newVideoRef,
   });
   const attribution = active &&
     resource.attribution?.author?.displayName &&
@@ -381,7 +381,7 @@ function getInnerElement(
     onClick,
     showVideoDetail,
     dropTargetsBindings,
-    posterRef,
+    newVideoRef,
   }
 ) {
   const makeMediaVisible = () => {
@@ -408,7 +408,7 @@ function getInnerElement(
     );
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
-    const displayPoster = poster ? poster : posterRef.current;
+    const displayPoster = poster ? poster : newVideoRef.current;
     return (
       <>
         <Video
@@ -421,7 +421,7 @@ function getInnerElement(
           aria-label={alt}
           muted
           onClick={onClick(poster)}
-          showWithoutDelay={posterRef.current}
+          showWithoutDelay={newVideoRef.current}
           {...dropTargetsBindings(poster)}
         >
           <source
@@ -431,7 +431,7 @@ function getInnerElement(
         </Video>
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
-        {!posterRef.current && (
+        {!newVideoRef.current && (
           <HiddenPosterImage src={poster} onLoad={makeMediaVisible} />
         )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
