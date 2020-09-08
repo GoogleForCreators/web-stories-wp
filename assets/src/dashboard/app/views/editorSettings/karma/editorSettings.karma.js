@@ -86,7 +86,7 @@ describe('Settings View', () => {
     expect(PageHeading).toBeTruthy();
   });
 
-  it('should update the tracking id', async () => {
+  it('should update the tracking id when pressning Enter', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const input = within(settingsView).getByRole('textbox');
@@ -108,11 +108,98 @@ describe('Settings View', () => {
 
     const { googleAnalyticsId } = await getSettingsState();
 
-    const newInput = await fixture.screen.getByRole('textbox');
-    expect(newInput.value).toBe(googleAnalyticsId);
+    expect(input.value).toBe(googleAnalyticsId);
   });
 
-  it("it should not allow an update of google analytics id when id format doesn't match required format", async () => {
+  it('should update the tracking id by clicking the save button', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const { getByRole } = within(settingsView);
+
+    const input = getByRole('textbox');
+    const button = getByRole('button', { name: /Save/ });
+
+    await fixture.events.hover(input);
+
+    await fixture.events.click(input);
+
+    const inputLength = input.value.length;
+
+    for (let iter = 0; iter < inputLength; iter++) {
+      // disable eslint to prevent overlapping .act calls
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('Backspace');
+    }
+
+    await fixture.events.keyboard.type('UA-009345-6');
+    await fixture.events.click(button);
+
+    const { googleAnalyticsId } = await getSettingsState();
+
+    expect(input.value).toBe(googleAnalyticsId);
+  });
+
+  it('should allow the analytics id to saved as an empty string', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+    const { googleAnalyticsId: initialId } = await getSettingsState();
+
+    expect(initialId).not.toEqual('');
+
+    const { getByRole } = within(settingsView);
+
+    const input = getByRole('textbox');
+    const button = getByRole('button', { name: /Save/ });
+
+    await fixture.events.hover(input);
+
+    await fixture.events.click(input);
+
+    const inputLength = input.value.length;
+
+    for (let iter = 0; iter < inputLength; iter++) {
+      // disable eslint to prevent overlapping .act calls
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('Backspace');
+    }
+
+    await fixture.events.click(button);
+
+    const { googleAnalyticsId: analyticsId } = await getSettingsState();
+
+    expect(analyticsId).toEqual('');
+  });
+
+  it('should not allow an invalid analytics id to saved', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+    const { googleAnalyticsId: initialId } = await getSettingsState();
+
+    expect(initialId).not.toEqual('');
+
+    const { getByRole } = within(settingsView);
+
+    const input = getByRole('textbox');
+    const button = getByRole('button', { name: /Save/ });
+
+    await fixture.events.hover(input);
+
+    await fixture.events.click(input);
+
+    const inputLength = input.value.length;
+
+    for (let iter = 0; iter < inputLength; iter++) {
+      // disable eslint to prevent overlapping .act calls
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('Backspace');
+    }
+    await fixture.events.keyboard.type('INVALID');
+    await fixture.events.click(button);
+
+    const { googleAnalyticsId: analyticsId } = await getSettingsState();
+
+    expect(analyticsId).toEqual(initialId);
+  });
+
+  it("should not allow an update of google analytics id when id format doesn't match required format", async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 
     const input = within(settingsView).getByRole('textbox');
