@@ -242,7 +242,7 @@ class Media {
 			'compare' => 'NOT EXISTS',
 		];
 
-		$query->set( 'meta_query', $meta_query );
+		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 
 	/**
