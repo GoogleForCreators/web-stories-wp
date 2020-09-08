@@ -19,7 +19,7 @@
  */
 import { useState, useCallback, useRef } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
@@ -62,7 +62,7 @@ const FontPickerSelect = styled.button`
 
   ${({ disabled }) =>
     disabled &&
-    `
+    css`
       pointer-events: none;
       opacity: 0.3;
     `}
