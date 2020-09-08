@@ -54,8 +54,13 @@ const GridContainer = styled(CardGrid)`
 function TemplateGridView({ pageSize, templates, templateActions }) {
   const targetAction = useCallback(
     (template) => {
-      return () => {
-        trackEvent('dashboard', 'use_template', undefined, template.id);
+      return async () => {
+        await trackEvent(
+          'use_template',
+          'dashboard',
+          template.title,
+          template.id
+        );
         templateActions.createStoryFromTemplate(template);
       };
     },

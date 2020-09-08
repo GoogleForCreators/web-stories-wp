@@ -24,6 +24,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../tracking';
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
 import { clamp, usePagePreviewSize } from './index';
@@ -31,12 +32,12 @@ import { clamp, usePagePreviewSize } from './index';
 export default function useStoryView({ filters, totalPages }) {
   const enableStoryPreviews = useFeature('enableStoryPreviews');
 
-  const [viewStyle, setViewStyle] = useState(VIEW_STYLE.GRID);
+  const [viewStyle, _setViewStyle] = useState(VIEW_STYLE.GRID);
   const [sort, _setSort] = useState(STORY_SORT_OPTIONS.LAST_MODIFIED);
   const [filter, _setFilter] = useState(
     filters.length > 0 ? filters[0].value : null
   );
-  const [sortDirection, setSortDirection] = useState(SORT_DIRECTION.DESC);
+  const [sortDirection, _setSortDirection] = useState(SORT_DIRECTION.DESC);
   const [page, setPage] = useState(1);
   const [searchKeyword, _setSearchKeyword] = useState('');
   const [activePreview, _setActivePreview] = useState();
@@ -56,10 +57,17 @@ export default function useStoryView({ filters, totalPages }) {
 
   const setSort = useCallback(
     (newSort) => {
+      if (newSort !== sort) {
+        trackEvent('sort_stories', 'dashboard', '', '', {
+          order: sortDirection,
+          orderby: newSort,
+        });
+      }
+
       _setSort(newSort);
       setPageClamped(1);
     },
-    [setPageClamped]
+    [sort, sortDirection, setPageClamped]
   );
 
   const setFilter = useCallback(
@@ -70,18 +78,42 @@ export default function useStoryView({ filters, totalPages }) {
     [setPageClamped]
   );
 
-  const toggleViewStyle = useCallback(() => {
-    if (viewStyle === VIEW_STYLE.LIST) {
-      setViewStyle(VIEW_STYLE.GRID);
-    } else {
-      setViewStyle(VIEW_STYLE.LIST);
-      if (sort === STORY_SORT_OPTIONS.NAME) {
-        setSortDirection(SORT_DIRECTION.ASC);
-      } else {
-        setSortDirection(SORT_DIRECTION.DESC);
+  const setSortDirection = useCallback(
+    (newSortDirection) => {
+      if (newSortDirection !== sortDirection) {
+        trackEvent('sort_stories', 'dashboard', '', '', {
+          order: newSortDirection,
+          orderby: sort,
+        });
+
+        _setSortDirection(newSortDirection);
       }
+    },
+    [sort, sortDirection]
+  );
+
+  const setViewStyle = useCallback((newViewStyle) => {
+    trackEvent('toggle_stories_view', 'dashboard', '', '', {
+      mode: newViewStyle,
+    });
+    _setViewStyle(newViewStyle);
+  }, []);
+
+  const toggleViewStyle = useCallback(() => {
+    const newViewStyle =
+      viewStyle === VIEW_STYLE.LIST ? VIEW_STYLE.GRID : VIEW_STYLE.LIST;
+
+    setViewStyle(newViewStyle);
+
+    if (newViewStyle === VIEW_STYLE.LIST) {
+      const newSortDirection =
+        sort === STORY_SORT_OPTIONS.NAME
+          ? SORT_DIRECTION.ASC
+          : SORT_DIRECTION.DESC;
+
+      setSortDirection(newSortDirection);
     }
-  }, [sort, viewStyle]);
+  }, [sort, setSortDirection, viewStyle, setViewStyle]);
 
   const setSearchKeyword = useCallback(
     (newSearchKeyword) => {
@@ -143,8 +175,9 @@ export default function useStoryView({ filters, totalPages }) {
       toggleViewStyle,
       pageSize,
       sort,
-      sortDirection,
       setSort,
+      sortDirection,
+      setSortDirection,
       filter,
       setFilter,
       page,

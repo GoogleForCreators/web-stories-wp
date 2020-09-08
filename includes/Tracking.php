@@ -103,8 +103,6 @@ class Tracking {
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
-			'siteUrl'         => esc_url_raw( $site_url ),
-			'userIdHash'      => md5( $site_url . '|' . $current_user->ID ),
 		];
 	}
 

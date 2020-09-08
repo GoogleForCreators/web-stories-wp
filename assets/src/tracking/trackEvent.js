@@ -25,19 +25,22 @@ import track from './track';
  * Send an Analytics tracking event.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/events
+ * @see  https://support.google.com/analytics/answer/1033068#Anatomy
  *
- * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
  * @param {string} eventName The event name (e.g. 'search').
+ * @param {string} eventCategory The event category (e.g. 'editor'). GA defaults this to 'engagement'.
  * @param {string} [eventLabel] The event label (e.g. 'search_term').
  * @param {string} [eventValue] The event value (e.g. the actual search term).
+ * @param {Object<*>} [additionalData] Additional event data to send.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
 async function trackEvent(
-  eventCategory,
   eventName,
+  eventCategory,
   eventLabel = '',
-  eventValue = ''
+  eventValue = '',
+  additionalData = {}
 ) {
   if (!isTrackingEnabled()) {
     return Promise.resolve();
@@ -48,8 +51,7 @@ async function trackEvent(
     event_category: eventCategory,
     event_label: eventLabel,
     event_value: eventValue,
-    dimension1: config.siteUrl,
-    dimension2: config.userIdHash,
+    ...additionalData,
   };
 
   return track(eventName, eventData);

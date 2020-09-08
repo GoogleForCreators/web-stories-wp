@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../../tracking';
 import {
   Layout,
   ToggleButtonGroup,
@@ -77,6 +78,17 @@ function Header({
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
 
+  const handleClick = useCallback(
+    async (filterValue) => {
+      await trackEvent('filter_stories', 'dashboard', '', '', {
+        status: filterValue,
+      });
+      filter.set(filterValue);
+      scrollToTop();
+    },
+    [filter, scrollToTop]
+  );
+
   const HeaderToggleButtons = useMemo(() => {
     if (
       totalStoriesByStatus &&
@@ -91,8 +103,7 @@ function Header({
           buttons={STORY_STATUSES.map((storyStatus) => {
             return {
               handleClick: () => {
-                filter.set(storyStatus.value);
-                scrollToTop();
+                handleClick(storyStatus.value);
               },
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
@@ -107,7 +118,7 @@ function Header({
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, scrollToTop, totalStoriesByStatus]);
+  }, [filter, totalStoriesByStatus, handleClick]);
 
   const onSortChange = useCallback(
     (newSort) => {
@@ -117,10 +128,12 @@ function Header({
     [scrollToTop, sort]
   );
 
-  const [debouncedTypeaheadChange] = useDebouncedCallback(
-    search.setKeyword,
-    TEXT_INPUT_DEBOUNCE
-  );
+  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
+    await trackEvent('search_stories', 'dashboard', '', '', {
+      search_term: value,
+    });
+    search.setKeyword(value);
+  }, TEXT_INPUT_DEBOUNCE);
 
   return (
     <Layout.Squishable>

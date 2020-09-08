@@ -112,6 +112,7 @@ function Panel({
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
   const panelTitleId = `panel-title-${name}-${uuidv4()}`;
+  const panelTitleReadable = `panel-title-${name}`;
 
   const contextValue = {
     state: {
@@ -120,6 +121,7 @@ function Panel({
       isCollapsed,
       panelContentId,
       panelTitleId,
+      panelTitleReadable,
     },
     actions: {
       setHeight: manuallySetHeight,

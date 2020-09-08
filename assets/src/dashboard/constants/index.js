@@ -94,8 +94,8 @@ export const secondaryPaths = [
 ];
 
 export const VIEW_STYLE = {
-  GRID: 'GRID',
-  LIST: 'LIST',
+  GRID: 'grid',
+  LIST: 'list',
 };
 
 export const VIEW_STYLE_LABELS = {

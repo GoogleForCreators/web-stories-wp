@@ -80,7 +80,7 @@ function PreviewButton() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
-    trackEvent('editor', 'preview_story');
+    trackEvent('preview_story', 'editor');
 
     // Display the actual link in case of a draft.
     const previewLink = isDraft
@@ -185,11 +185,9 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const handlePublish = useCallback(() => {
-    if (hasFutureDate) {
-      trackEvent('editor', 'schedule_story');
-    } else {
-      trackEvent('editor', 'publish_story');
-    }
+    trackEvent('publish_story', 'editor', '', '', {
+      status: hasFutureDate ? 'future' : 'publish',
+    });
 
     saveStory({ status: 'publish' });
     refreshPostEditURL();

@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../../../tracking';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
@@ -146,6 +147,9 @@ function MediaPane(props) {
   const onFilter = useCallback(
     (filter) => {
       setMediaType({ mediaType: filter });
+      trackEvent('filter_media', 'editor', '', '', {
+        type: filter,
+      });
     },
     [setMediaType]
   );
@@ -186,7 +190,12 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+  const onSearch = (value) => {
+    setSearchTerm({ searchTerm: value });
+    trackEvent('search_media', 'editor', '', '', {
+      search_term: value,
+    });
+  };
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA

@@ -22,12 +22,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { trackClick } from '../../../../tracking';
 import {
   Dropdown,
   StandardViewContentGutter,
@@ -84,6 +86,13 @@ export default function BodyViewOptions({
   sortDropdownAriaLabel,
   wpListURL,
 }) {
+  const handleClassicListViewClick = useCallback(
+    (evt) => {
+      trackClick(evt, 'open_classic_list_view', 'dashboard', wpListURL);
+    },
+    [wpListURL]
+  );
+
   return (
     <StandardViewContentGutter>
       <DisplayFormatContainer>
@@ -104,7 +113,10 @@ export default function BodyViewOptions({
           {showGridToggle && (
             <ControlsContainer>
               {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
-                <ExternalLink href={wpListURL}>
+                <ExternalLink
+                  href={wpListURL}
+                  onClick={handleClassicListViewClick}
+                >
                   {__('See classic WP list view', 'web-stories')}
                 </ExternalLink>
               )}

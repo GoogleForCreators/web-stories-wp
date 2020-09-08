@@ -35,6 +35,7 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
+import { trackEvent } from '../../../../../tracking';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
@@ -130,7 +131,14 @@ function Title({
   canCollapse,
 }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId, panelTitleId },
+    state: {
+      isCollapsed,
+      height,
+      resizeable,
+      panelContentId,
+      panelTitleId,
+      panelTitleReadable,
+    },
     actions: {
       collapse,
       expand,
@@ -170,6 +178,13 @@ function Title({
     : __('Collapse panel', 'web-stories');
 
   const toggle = isCollapsed ? expand : collapse;
+  const onToggle = useCallback(() => {
+    toggle();
+    trackEvent('panel_toggled', 'editor', '', '', {
+      panel_id: panelTitleReadable,
+      status: isCollapsed ? 'collapsed' : 'expanded',
+    });
+  }, [panelTitleReadable, isCollapsed, toggle]);
 
   return (
     <Header
@@ -187,14 +202,14 @@ function Title({
           handleDoubleClick={resetHeight}
         />
       )}
-      <HeaderButton onClick={toggle}>
+      <HeaderButton onClick={onToggle}>
         <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (
             <Toggle
               isCollapsed={isCollapsed}
-              toggle={toggle}
+              toggle={onToggle}
               aria-label={titleLabel}
               aria-expanded={!isCollapsed}
               aria-controls={panelContentId}

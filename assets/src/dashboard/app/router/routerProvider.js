@@ -46,10 +46,14 @@ function RouterProvider({ children, ...props }) {
     });
   }, []);
 
-  useEffect(() => {
+  const currentScreen = useMemo(() => {
     const query = stringify(queryParams);
-    trackScreenView(currentPath + (query ? `?${query}` : ''));
+    return currentPath + (query ? `?${query}` : '');
   }, [currentPath, queryParams]);
+
+  useEffect(() => {
+    trackScreenView(currentScreen);
+  }, [currentScreen]);
 
   const value = useMemo(
     () => ({

@@ -18,9 +18,10 @@
  * Internal dependencies
  */
 import track from './track';
+import isTrackingEnabled from './isTrackingEnabled';
 
 /**
- * Send an Analytics screen_view event.
+ * Send an Analytics timing_complete event.
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/user-timings
  *
@@ -32,6 +33,10 @@ import track from './track';
  */
 //eslint-disable-next-line require-await
 async function trackTimingComplete(name, value, eventCategory, eventLabel) {
+  if (!isTrackingEnabled()) {
+    return Promise.resolve();
+  }
+
   const eventData = {
     name,
     value,

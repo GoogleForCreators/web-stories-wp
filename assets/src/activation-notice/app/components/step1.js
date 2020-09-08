@@ -60,7 +60,7 @@ function Step1() {
 
   const onClick = useCallback(
     (evt) => {
-      trackClick(evt, 'activation-notice', demoStoryURL);
+      trackClick(evt, 'open_demo_story', 'activation-notice', demoStoryURL);
     },
     [demoStoryURL]
   );

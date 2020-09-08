@@ -45,8 +45,9 @@ export default {
   setupFilesAfterEnv: ['<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
-    '<rootDir>/node_modules',
     '<rootDir>/build',
+    '<rootDir>/node_modules',
+    '<rootDir>/vendor',
     'testUtils',
     '_utils',
   ],
