@@ -148,7 +148,7 @@ describe('Panels/StylePreset/utils', () => {
     ).not.toBeDefined();
   });
 
-  it('should get correct text presets from selected elements', () => {
+  it('should get correct text style presets from selected elements', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       font: {
@@ -171,7 +171,8 @@ describe('Panels/StylePreset/utils', () => {
       {
         type: 'text',
         x: 30,
-        content: '<span style="color: rgb(2,2,2)">Content</span>',
+        content:
+          '<span style="font-weight: 700; font-style: italic; color: rgb(2,2,2)">Content</span>',
         ...objectWithout(stylePreset, ['color']),
       },
     ];
@@ -180,9 +181,39 @@ describe('Panels/StylePreset/utils', () => {
       colors: [],
     };
     const expected = {
-      colors: [TEST_COLOR, TEST_COLOR_2],
+      colors: [],
+      textStyles: [
+        {
+          backgroundTextMode: 'NONE',
+          color: TEST_COLOR,
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          fontWeight: 400,
+          isBold: false,
+          isItalic: false,
+          isUnderline: false,
+          letterSpacing: 0,
+          padding: {
+            horizontal: 0,
+            vertical: 0,
+          },
+        },
+        {
+          backgroundColor: TEST_COLOR,
+          backgroundTextMode: 'FILL',
+          color: TEST_COLOR_2,
+          font: {
+            fallbacks: ['Bar'],
+            family: 'Foo',
+          },
+          fontWeight: 700,
+          isBold: true,
+          isItalic: true,
+          isUnderline: false,
+          letterSpacing: 0,
+        },
+      ],
     };
-    const presets = getTextPresets(elements, stylePresets);
+    const presets = getTextPresets(elements, stylePresets, 'style');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -202,16 +233,20 @@ describe('Panels/StylePreset/utils', () => {
     };
     const expected = {
       colors: [],
+      textStyles: [],
     };
-    const presets = getTextPresets(elements, stylePresets);
+    const presets = getTextPresets(elements, stylePresets, 'color');
     expect(presets).toStrictEqual(expected);
   });
 
-  // Disable reason: feature temporarily removed from beta.
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should use black color when adding text style preset for multi-color text fields', () => {
+  it('should use black color when adding text style preset for multi-color text fields', () => {
     const stylePreset = {
       ...STYLE_PRESET,
+      fontWeight: 400,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      letterSpacing: 0,
       font: {
         family: 'Foo',
         fallbacks: ['Bar'],
@@ -231,6 +266,7 @@ describe('Panels/StylePreset/utils', () => {
       fillColors: [],
     };
     const expected = {
+      colors: [],
       textStyles: [
         {
           ...stylePreset,
@@ -238,7 +274,46 @@ describe('Panels/StylePreset/utils', () => {
         },
       ],
     };
-    const presets = getTextPresets(elements, stylePresets);
+    const presets = getTextPresets(elements, stylePresets, 'style');
+    expect(presets).toStrictEqual(expected);
+  });
+
+  it('should default to null/false when adding text style preset for mixed inline styles', () => {
+    const stylePreset = {
+      ...STYLE_PRESET,
+      fontWeight: null,
+      isBold: false,
+      isItalic: false,
+      isUnderline: false,
+      letterSpacing: null,
+      font: {
+        family: 'Foo',
+        fallbacks: ['Bar'],
+      },
+    };
+    const elements = [
+      {
+        type: 'text',
+        x: 30,
+        content:
+          '<span style="letter-spacing: 2px; font-style: italic; font-weight: 700; text-decoration: underline; color: rgb(1,1,1)">O</span><span style="text-decoration: none; color: rgb(2,1,1)">K</span>',
+        ...objectWithout(stylePreset, ['color']),
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      fillColors: [],
+    };
+    const expected = {
+      colors: [],
+      textStyles: [
+        {
+          ...stylePreset,
+          color: { color: { r: 0, g: 0, b: 0 } },
+        },
+      ],
+    };
+    const presets = getTextPresets(elements, stylePresets, 'style');
     expect(presets).toStrictEqual(expected);
   });
 
@@ -269,13 +344,14 @@ describe('Panels/StylePreset/utils', () => {
         ...objectWithout(stylePreset, ['color']),
       },
     ];
-    const stylePresets = {
+    const colorPresets = {
       colors: [TEST_COLOR, TEST_COLOR_2],
     };
     const expected = {
       colors: [],
+      textStyles: [],
     };
-    const presets = getTextPresets(elements, stylePresets);
+    const presets = getTextPresets(elements, colorPresets, 'color');
     expect(presets).toStrictEqual(expected);
   });
 

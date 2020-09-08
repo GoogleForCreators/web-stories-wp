@@ -26,10 +26,12 @@ import { rgba } from 'polished';
 import {
   TypographyPresets,
   StandardViewContentGutter,
+  Button,
+  TextInput,
 } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
-import { KEYBOARD_USER_SELECTOR } from '../../../constants';
+import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../../constants';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -87,6 +89,11 @@ export const FinePrintHelperText = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-top: 10px;
   color: ${({ theme }) => theme.colors.gray200};
+`;
+
+export const FormLabel = styled.span`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.gray400};
 `;
 
 export const Error = styled.p`
@@ -159,6 +166,28 @@ export const RemoveLogoButton = styled.button`
     border-width: 2px;
     outline: none;
   }
+`;
+
+export const SaveButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PRIMARY,
+})``;
+
+export const ErrorText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: 1em;
+  padding-top: 0.25em;
+`;
+
+export const InlineForm = styled.div`
+  display: flex;
+`;
+
+export const GoogleAnalyticsTextInput = styled(TextInput)`
+  flex: 3;
+  width: auto;
+  display: inline-block;
+  margin-right: 5px;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);

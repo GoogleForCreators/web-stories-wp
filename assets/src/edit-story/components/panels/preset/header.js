@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Add, EditPencil } from '../../../icons';
-import { StylePresetPropType } from '../../../types';
 import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
@@ -46,7 +45,7 @@ const buttonCSS = css`
   justify-content: center;
 `;
 
-const AddColorPresetButton = styled.button`
+const AddPresetButton = styled.button`
   ${buttonCSS}
   svg {
     width: 26px;
@@ -75,15 +74,24 @@ const EditMode = styled.button`
 `;
 
 function PresetsHeader({
-  handleAddColorPreset,
+  title,
+  handleAddPreset,
   isEditMode,
   setIsEditMode,
-  stylePresets,
+  presets,
   canCollapse,
+  presetType,
 }) {
-  const { colors } = stylePresets;
-  const hasPresets = colors.length > 0;
+  const hasPresets = presets.length > 0;
 
+  const addLabel =
+    'style' === presetType
+      ? __('Add style preset', 'web-stories')
+      : __('Add color preset', 'web-stories');
+  const editLabel =
+    'style' === presetType
+      ? __('Edit style presets', 'web-stories')
+      : __('Edit color presets', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -94,9 +102,7 @@ function PresetsHeader({
               setIsEditMode(!isEditMode);
             }}
             aria-label={
-              isEditMode
-                ? __('Exit edit mode', 'web-stories')
-                : __('Edit presets', 'web-stories')
+              isEditMode ? __('Exit edit mode', 'web-stories') : editLabel
             }
             isEditMode={isEditMode}
           >
@@ -104,31 +110,29 @@ function PresetsHeader({
           </EditMode>
         )}
         {!isEditMode && (
-          <AddColorPresetButton
-            onClick={handleAddColorPreset}
-            aria-label={__('Add preset', 'web-stories')}
-          >
+          <AddPresetButton onClick={handleAddPreset} aria-label={addLabel}>
             <Add />
-          </AddColorPresetButton>
+          </AddPresetButton>
         )}
       </>
     );
   };
 
-  // Todo: Rename label to 'Presets' post-beta.
   return (
     <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
-      {__('Saved Colors', 'web-stories')}
+      {title}
     </PanelTitle>
   );
 }
 
 PresetsHeader.propTypes = {
-  stylePresets: StylePresetPropType.isRequired,
+  presets: PropTypes.array.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  handleAddColorPreset: PropTypes.func.isRequired,
+  handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
   canCollapse: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  presetType: PropTypes.string.isRequired,
 };
 
 export default PresetsHeader;

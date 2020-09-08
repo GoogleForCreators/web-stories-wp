@@ -43,7 +43,7 @@ export default function ApiProviderFixture({ children }) {
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
   const [users] = useState(formattedUsersObject);
-
+  const [currentUser, setCurrentUser] = useState(getCurrentUserState());
   const settingsApi = useMemo(
     () => ({
       fetchSettings: () =>
@@ -107,8 +107,11 @@ export default function ApiProviderFixture({ children }) {
   const usersApi = useMemo(
     () => ({
       fetchUsers: jasmine.createSpy('fetchUsers'),
+      fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
+      toggleWebStoriesTrackingOptIn: () =>
+        setCurrentUser(toggleOptInTracking(currentUser)),
     }),
-    []
+    [currentUser]
   );
 
   const fontApi = useMemo(
@@ -134,6 +137,7 @@ export default function ApiProviderFixture({ children }) {
         stories,
         templates,
         users,
+        currentUser,
       },
       actions: {
         mediaApi,
@@ -150,6 +154,7 @@ export default function ApiProviderFixture({ children }) {
       stories,
       templates,
       users,
+      currentUser,
       mediaApi,
       settingsApi,
       storyApi,
@@ -187,6 +192,13 @@ function getSettingsState() {
     error: {},
     googleAnalyticsId: '',
     publisherLogoIds: [],
+  };
+}
+
+function getCurrentUserState() {
+  return {
+    data: { id: 1, meta: { web_stories_tracking_optin: true } },
+    isUpdating: false,
   };
 }
 
@@ -417,6 +429,19 @@ function fetchExternalTemplates(currentState) {
 
 function fetchExternalTemplateById(id, currentState) {
   return Promise.resolve(currentState.templates?.[id] ?? {});
+}
+
+function toggleOptInTracking(currentUser) {
+  return {
+    ...currentUser,
+    data: {
+      ...currentUser.data,
+      meta: {
+        web_stories_tracking_optin: !currentUser.data.meta
+          .web_stories_tracking_optin,
+      },
+    },
+  };
 }
 
 function fetchRelatedTemplates(currentTemplateId, currentState) {

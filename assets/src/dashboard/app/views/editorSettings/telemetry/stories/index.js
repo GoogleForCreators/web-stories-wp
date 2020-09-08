@@ -13,27 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { action } from '@storybook/addon-actions';
+import { boolean } from '@storybook/addon-knobs';
 
 /**
- * Temporary list to hold currently used resources and their state.
- * { type: string (cached|smallest|fullsize), url: string }
+ * Internal dependencies
  */
+import TelemetrySettings from '../';
 
-const resourceList = {
-  list: {},
-  resetList: function () {
-    this.list = {};
-  },
-  get: function (id) {
-    return this.list[id];
-  },
-  set: function (id, value) {
-    if (value?.type === 'cached' && this.list[id]) {
-      // We already have better (or equal) resource than cached, prevent flickering
-      return;
-    }
-    this.list[id] = value;
-  },
+export default {
+  title: 'Dashboard/Views/EditorSettings/Telemetry',
+  component: TelemetrySettings,
 };
 
-export default resourceList;
+export const _default = () => {
+  return (
+    <TelemetrySettings
+      disabled={boolean('disabled', true)}
+      selected={boolean('userOptIn', true)}
+      onCheckboxSelected={action('onCheckboxSelected fired')}
+    />
+  );
+};
