@@ -27,8 +27,10 @@ import { USERS_PER_REQUEST } from '../../constants';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useUserApi(dataAdapter, { userApi }) {
+export default function useUserApi(dataAdapter, { userApi, currentUserApi }) {
   const [users, setUsers] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [isUpdating, setIsUpdating] = useState(false);
   const fetchUsers = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
@@ -58,15 +60,49 @@ export default function useUserApi(dataAdapter, { userApi }) {
     }
   }, [dataAdapter, userApi]);
 
+  const fetchCurrentUser = useCallback(async () => {
+    try {
+      setCurrentUser(await dataAdapter.get(currentUserApi));
+    } catch (e) {
+      setCurrentUser({});
+    }
+  }, [dataAdapter, currentUserApi]);
+
+  const toggleWebStoriesTrackingOptIn = useCallback(async () => {
+    setIsUpdating(true);
+    try {
+      setCurrentUser(
+        await dataAdapter.post(currentUserApi, {
+          data: {
+            meta: {
+              web_stories_tracking_optin: !currentUser.meta
+                .web_stories_tracking_optin,
+            },
+          },
+        })
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  }, [dataAdapter, currentUser, currentUserApi]);
+
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
 
   return useMemo(
     () => ({
-      api: { fetchUsers },
+      api: { fetchUsers, fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       users,
+      currentUser: { data: currentUser, isUpdating },
     }),
-    [fetchUsers, users]
+    [
+      fetchUsers,
+      fetchCurrentUser,
+      toggleWebStoriesTrackingOptIn,
+      users,
+      currentUser,
+      isUpdating,
+    ]
   );
 }

@@ -38,6 +38,7 @@ const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
+const mockFetchCurrentUser = jest.fn();
 
 const SettingsWrapper = ({
   canUploadFiles,
@@ -68,6 +69,15 @@ const SettingsWrapper = ({
               newlyCreatedMediaIds: [],
               mediaById: logos,
             },
+            currentUser: {
+              isUpdating: false,
+              data: {
+                id: 1,
+                meta: {
+                  web_stories_tracking_optin: true,
+                },
+              },
+            },
           },
           actions: {
             settingsApi: {
@@ -77,6 +87,9 @@ const SettingsWrapper = ({
             mediaApi: {
               uploadMedia: mockUploadMedia,
               fetchMediaById: mockFetchMediaById,
+            },
+            usersApi: {
+              fetchCurrentUser: mockFetchCurrentUser,
             },
           },
         }}
