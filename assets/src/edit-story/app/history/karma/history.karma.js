@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { renderHook } from '@testing-library/react-hooks';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma/fixture';
@@ -44,7 +39,7 @@ describe('CUJ: Creator can View and Modify Document Settings: Navigating without
     // Wait to ensure any processes (in case of bugs) would be finished.
     await fixture.events.sleep(500);
 
-    const { result } = renderHook(() => useHistory());
+    const { result } = fixture.renderHook(() => useHistory());
 
     expect(result.state.hasNewChanges).toBeFalse();
 
