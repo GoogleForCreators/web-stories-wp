@@ -142,7 +142,7 @@ class HTML {
 		}
 
 		if ( function_exists( 'mb_convert_encoding' ) ) {
-			$markup = mb_convert_encoding( $markup, self::AMP_ENCODING, $encoding );
+			$markup = mb_convert_encoding($markup, 'HTML-ENTITIES', $encoding);
 		}
 
 		return $markup;
@@ -170,7 +170,7 @@ class HTML {
 
 		$libxml_previous_state = libxml_use_internal_errors( true );
 
-		$doc = new DOMDocument();
+		$doc = new DOMDocument( '1.0', self::AMP_ENCODING );
 		$doc->loadHTML( $string, $options );
 
 		libxml_clear_errors();
