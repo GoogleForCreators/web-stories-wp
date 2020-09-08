@@ -49,9 +49,16 @@ const Image = styled.img`
   ${styledTiles}
 `;
 
+const OriginalImage = styled.img`
+  width: 100%;
+  border-radius: 4px;
+  position: absolute;
+`;
+
 const Video = styled.video`
   ${styledTiles}
   object-fit: cover;
+  z-index: -1;
 `;
 
 const Container = styled.div.attrs((props) => ({
@@ -153,6 +160,14 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
+
+  const posterRef = useRef(null);
+
+  useEffect(() => {
+    if (resource.poster && resource.poster.includes('blob')) {
+      posterRef.current = resource.poster;
+    }
+  }, [resource.poster]);
 
   // Treat GIFs as images for now.
   if (resource.type == 'gif') {
@@ -281,6 +296,7 @@ const MediaElement = ({
     onClick,
     showVideoDetail,
     dropTargetsBindings,
+    posterRef,
   });
   const attribution = active &&
     resource.attribution?.author?.displayName &&
@@ -370,10 +386,15 @@ function getInnerElement(
     onClick,
     showVideoDetail,
     dropTargetsBindings,
+    posterRef,
   }
 ) {
-  const makeImageVisible = () => {
-    ref.current.style.opacity = '1';
+  const makeMediaVisible = () => {
+    if (ref.current) {
+      ref.current.style.zIndex = 0;
+      ref.current.style.opacity = 1;
+      posterRef.current = null;
+    }
   };
   if (['image', 'gif'].includes(type)) {
     const thumbnailURL = getSmallestUrlForWidth(width, resource);
@@ -388,24 +409,26 @@ function getInnerElement(
         aria-label={alt}
         loading={'lazy'}
         onClick={onClick(thumbnailURL)}
-        onLoad={makeImageVisible}
+        onLoad={makeMediaVisible}
         {...dropTargetsBindings(thumbnailURL)}
       />
     );
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
+    const displayPoster = poster ? poster : posterRef.current;
     return (
       <>
         <Video
           key={src}
           ref={ref}
-          poster={poster}
+          poster={displayPoster}
           width={width}
           height={height}
           preload="none"
           aria-label={alt}
           muted
           onClick={onClick(poster)}
+          onCanPlay={makeMediaVisible()}
           {...dropTargetsBindings(poster)}
         >
           <source
@@ -413,9 +436,9 @@ function getInnerElement(
             type={mimeType}
           />
         </Video>
+        {posterRef.current && <OriginalImage src={posterRef.current} />}
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
-        <HiddenPosterImage src={poster} onLoad={makeImageVisible} />
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
