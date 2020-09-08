@@ -140,15 +140,6 @@ export function TelemetryOptInBanner({
           'You can update your selection later by visiting Settings.',
           'web-stories'
         )}
-        &nbsp;
-        <a
-          href={`${window.location.href}editor-settings`}
-          rel="noreferrer"
-          target="_blank"
-        >
-          {__('Update now', 'web-stories')}
-          {'.'}
-        </a>
       </VisitSettingsText>
     </Banner>
   ) : null;
