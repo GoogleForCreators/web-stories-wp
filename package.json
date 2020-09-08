@@ -28,7 +28,7 @@
     "@wordpress/compose": "^3.19.3",
     "@wordpress/data": "^4.22.3",
     "@wordpress/date": "^3.11.0",
-    "@wordpress/element": "^2.16.0",
+    "@wordpress/element": "^2.17.0",
     "@wordpress/i18n": "^3.14.0",
     "big.js": "^5.2.2",
     "classnames": "^2.2.6",
