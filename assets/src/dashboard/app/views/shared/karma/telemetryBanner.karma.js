@@ -45,8 +45,6 @@ describe('Telemetry Banner', () => {
 
   afterEach(() => {
     fixture.restore();
-
-    localStorage.clear();
   });
 
   it('should render the telemetry opt in banner', async () => {
@@ -59,7 +57,7 @@ describe('Telemetry Banner', () => {
 
   it('should close the banner when the exit button is closed', async () => {
     const exitButton = await fixture.screen.getByRole('button', {
-      name: /Close Telemetry Banner/,
+      name: /Dismiss Notice/,
     });
 
     await fixture.events.click(exitButton);
@@ -99,7 +97,7 @@ describe('Telemetry Banner', () => {
 
   it('should not display the banner after it has been closed with', async () => {
     const exitButton = await fixture.screen.getByRole('button', {
-      name: /Close Telemetry Banner/,
+      name: /Dismiss Notice/,
     });
 
     await fixture.events.click(exitButton);
