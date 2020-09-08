@@ -40,10 +40,12 @@ describe('CUJ: Creator can View and Modify Document Settings: Navigating without
     await fixture.events.sleep(500);
 
     const {
-      state: { hasNewChanges },
+      state: { hasNewChanges, canUndo, canRedo },
     } = await fixture.renderHook(() => useHistory());
 
     expect(hasNewChanges).toBeFalse();
+    expect(canUndo).toBeFalse();
+    expect(canRedo).toBeFalse();
 
     await fixture.snapshot('No new history changes');
   });
