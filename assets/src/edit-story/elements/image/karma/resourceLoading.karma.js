@@ -42,9 +42,9 @@ describe('Image resource loading integration', () => {
     // We don't check for immediately cached value here because we would have to set a timeout of about 100ms in image/display in order to catch it here
     // expect(resourceList.get(2).type).toEqual('cached');
 
-    await fixture.events.sleep(1); // Wait a bit for fullsize timeout
+    await fixture.events.sleep(100); // Wait a bit for fullsize timeout
 
-    expect(resourceList.get(2).type).toEqual('fullsize');
+    expect(resourceList.get(2)?.type).toEqual('fullsize');
     const frames = fixture.screen.getAllByTestId('frameElement');
     const imageFrame = frames[1];
     const imageId = imageFrame.dataset.elementId;
