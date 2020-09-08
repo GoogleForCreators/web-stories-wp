@@ -142,7 +142,7 @@ class HTML {
 		}
 
 		if ( function_exists( 'mb_convert_encoding' ) ) {
-			$markup = mb_convert_encoding($markup, 'HTML-ENTITIES', $encoding);
+			$markup = mb_convert_encoding( $markup, 'HTML-ENTITIES', $encoding );
 		}
 
 		return $markup;
