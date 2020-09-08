@@ -32,19 +32,8 @@ export function getMediaWithScaleCss({ width, height, offsetX, offsetY }) {
   return `width:${width}px; height:${height}px; left:${-offsetX}px; top:${-offsetY}px;`;
 }
 
-const getOrientation = (obj) => {
-  if (obj.width / obj.height > 1) {
-    return Orientation.LANDSCAPE;
-  } else if (obj.width / obj.height < 1) {
-    return Orientation.PORTRAIT;
-  }
-  return Orientation.SQUARE;
-};
-
-const Orientation = {
-  PORTRAIT: 'portrait',
-  LANDSCAPE: 'landscape',
-  SQUARE: 'square',
+const aspectRatiosApproximatelyMatch = (obj1, obj2) => {
+  return Math.abs(obj1.width / obj1.height - obj2.width / obj2.height) < 0.01;
 };
 
 /**
@@ -62,7 +51,7 @@ export function calculateSrcSet(resource) {
   return (
     Object.values(resource.sizes)
       .sort((s1, s2) => s2.width - s1.width)
-      .filter((s) => getOrientation(s) === getOrientation(resource))
+      .filter((s) => aspectRatiosApproximatelyMatch(s, resource))
       // Remove duplicates. Given it's already ordered in descending width order, we can be
       // more efficient and just check the last item in each reduction.
       .reduce(
@@ -89,7 +78,7 @@ export function getSmallestUrlForWidth(minWidth, resource) {
   if (resource.sizes) {
     const smallestMedia = Object.values(resource.sizes)
       .sort((s1, s2) => s1.width - s2.width)
-      .filter((s) => getOrientation(s) === getOrientation(resource))
+      .filter((s) => aspectRatiosApproximatelyMatch(s, resource))
       .find((s) => s.width >= minWidth * window.devicePixelRatio);
     if (smallestMedia) {
       return smallestMedia.source_url;

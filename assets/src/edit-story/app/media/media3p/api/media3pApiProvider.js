@@ -73,14 +73,16 @@ function Media3pApiProvider({ children }) {
   /**
    * Get media for the given parameters.
    *
+   * @typedef {Object} ListMediaFilter
+   * @property {?string} contentType Optional. The content type to filter.
+   * @property {?string} searchTerm Optional. The search term to send,
+   * eg: 'cute cats'.
+   * @property {?string} categoryId Optional. Id of the selected category.
+   *
    * @type {import('./typedefs').ListMediaFn}
    * @param {Object} obj - An object with the options.
    * @param {string} obj.provider The provider to get the media from.
-   * @param {?string} obj.filter filter
-   * @param {?string} obj.filter.contentType Optional. The content type to filter.
-   * @param {?string} obj.filter.searchTerm Optional. The search term to send,
-   * eg: 'cute cats'.
-   * @param {?string} obj.filter.categoryId Optional. Id of the selected category.
+   * @param {?ListMediaFilter} obj.filter Optional. The filter attributes.
    * @param {?string} obj.orderBy The desired ordering of the results.
    * Defaults to 'relevance' in the API.
    * @param {?string} obj.pageToken An optional page token to provide,
