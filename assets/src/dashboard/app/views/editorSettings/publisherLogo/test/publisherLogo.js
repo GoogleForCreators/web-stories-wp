@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -29,16 +29,17 @@ import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisher
 
 describe('PublisherLogo', () => {
   const mockHandleAddLogos = jest.fn();
-  const mockHandleRemoveLogo = jest.fn();
 
   it('should render a fileUpload container and helper text by default when canUploadFiles is true', () => {
     const { getByTestId, getByText } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={mockHandleRemoveLogo}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={[]}
         canUploadFiles={true}
+        canUpdateLogos={true}
       />
     );
 
@@ -50,7 +51,8 @@ describe('PublisherLogo', () => {
     const { queryAllByTestId } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={mockHandleRemoveLogo}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={[]}
       />
@@ -63,7 +65,8 @@ describe('PublisherLogo', () => {
     const { queryAllByRole } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={mockHandleRemoveLogo}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
       />
@@ -72,64 +75,153 @@ describe('PublisherLogo', () => {
     expect(queryAllByRole('img')).toHaveLength(formattedPublisherLogos.length);
   });
 
-  it('should render a button to remove publisherLogos aside from the default logo', () => {
+  it('should render a context menu button for each uploaded logo', () => {
     const { queryAllByTestId } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={mockHandleRemoveLogo}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
+        canUpdateLogos={true}
       />
     );
 
-    expect(queryAllByTestId(/^remove-publisher-logo/)).toHaveLength(
-      formattedPublisherLogos.length - 1
-    );
+    expect(
+      queryAllByTestId(/^publisher-logo-context-menu-button-/)
+    ).toHaveLength(formattedPublisherLogos.length);
   });
 
   it('should render an error message if uploadError is present', () => {
     const { getByText } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={mockHandleRemoveLogo}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
         uploadError={'Something went wrong.'}
+        canUpdateLogos={true}
+        canUploadFiles={true}
       />
     );
 
     expect(getByText('Something went wrong.')).toBeInTheDocument();
   });
 
+  // TODO this won't work until we can focus the menu when it's open, which we need merged from PR #4317
+  // eslint-disable-next-line jest/no-commented-out-tests
+  // it('should trigger mockHandleRemoveLogo when delete button is pressed with enter on an uploaded file', () => {
+  //   const mockHandleRemoveLogo = jest.fn();
+
+  //   const { getByTestId } = renderWithTheme(
+  //     <PublisherLogoSettings
+  //       handleAddLogos={mockHandleAddLogos}
+  //       handleRemoveLogo={mockHandleRemoveLogo}
+  //       handleUpdateDefaultLogo={jest.fn}
+  //       isLoading={false}
+  //       publisherLogos={formattedPublisherLogos}
+  //       canUpdateLogos={true}
+  //     />
+  //   );
+
+  // const ContextMenuButton = getByTestId(
+  //   'publisher-logo-context-menu-button-2'
+  // );
+
+  // fireEvent.click(ContextMenuButton);
+
+  //   const ContextMenu = getByTestId('publisher-logo-context-menu-2');
+  //   expect(ContextMenu).toBeDefined();
+
+  //   const DeleteFileButton = within(ContextMenu).getByText(/^Delete/).closest('li');
+  //   expect(DeleteFileButton).toBeDefined();
+
+  //   fireEvent.keyDown(DeleteFileButton, { key: 'Enter', keyCode: 13 });
+
+  //   expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
+  // });
+
   it('should trigger mockHandleRemoveLogo when delete button is clicked on an uploaded file', () => {
+    const mockHandleRemoveLogo = jest.fn();
+
     const { getByTestId } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
+        handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
+        canUpdateLogos={true}
       />
     );
 
-    const DeleteFileButton = getByTestId('remove-publisher-logo-2').lastChild;
+    const ContextMenu = getByTestId('publisher-logo-context-menu-1');
+    expect(ContextMenu).toBeDefined();
+
+    const DeleteFileButton = within(ContextMenu).getByText(/^Delete$/);
     expect(DeleteFileButton).toBeDefined();
+
     fireEvent.click(DeleteFileButton);
     expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
   });
 
-  it('should trigger mockHandleRemoveLogo when delete button is pressed with enter on an uploaded file', () => {
+  it('should trigger mockHandleUpdateDefaultLogo when update default logo button is clicked on an uploaded file', () => {
+    const mockHandleDefaultLogo = jest.fn();
+
     const { getByTestId } = renderWithTheme(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
-        handleRemoveLogo={mockHandleRemoveLogo}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={mockHandleDefaultLogo}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
+        canUpdateLogos={true}
       />
     );
 
-    const DeleteFileButton = getByTestId('remove-publisher-logo-1').lastChild;
-    expect(DeleteFileButton).toBeDefined();
-    fireEvent.keyDown(DeleteFileButton, { key: 'Enter', code: 'Enter' });
-    expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
+    const ContextMenu = getByTestId('publisher-logo-context-menu-1');
+    expect(ContextMenu).toBeDefined();
+
+    const UpdateDefaultLogoButton = within(ContextMenu)
+      .getByText(/^Set as Default$/)
+      .closest('li');
+
+    expect(UpdateDefaultLogoButton).toBeDefined();
+
+    fireEvent.click(UpdateDefaultLogoButton);
+    expect(mockHandleDefaultLogo).toHaveBeenCalledTimes(1);
+  });
+
+  it('should trigger mockHandleUpdateDefaultLogo when update default logo button is pressed with enter on an uploaded file', () => {
+    const mockHandleDefaultLogo = jest.fn();
+    const { getByTestId } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={mockHandleAddLogos}
+        handleRemoveLogo={jest.fn}
+        handleUpdateDefaultLogo={mockHandleDefaultLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+        canUpdateLogos={true}
+      />
+    );
+    const ContextMenuButton = getByTestId(
+      'publisher-logo-context-menu-button-1'
+    );
+
+    fireEvent.click(ContextMenuButton);
+
+    const ContextMenu = getByTestId('publisher-logo-context-menu-1');
+    expect(ContextMenu).toBeDefined();
+
+    const UpdateDefaultLogoButton = within(ContextMenu)
+      .getByText(/^Set as Default$/)
+      .closest('li');
+
+    expect(UpdateDefaultLogoButton).toBeDefined();
+
+    fireEvent.keyDown(UpdateDefaultLogoButton, { key: 'Enter', keyCode: 13 });
+
+    expect(mockHandleDefaultLogo).toHaveBeenCalledTimes(1);
   });
 });

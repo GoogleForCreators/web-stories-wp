@@ -65,7 +65,7 @@ function PopoverLogoContextMenu({
         tabIndex={isActive ? 0 : -1}
         isActive={isActive}
         menuOpen={isPopoverMenuOpen}
-        data-testid={`publisher-logo-context-menu-${idx}`}
+        data-testid={`publisher-logo-context-menu-button-${idx}`}
         aria-label={sprintf(
           /* translators: %s: logo title */
           __('Publisher logo menu for %s', 'web-stories'),
@@ -84,6 +84,7 @@ function PopoverLogoContextMenu({
         onSelect={(menuItem) => {
           onMenuItemSelected(menuItem, publisherLogo, idx);
         }}
+        data-testid={`publisher-logo-context-menu-${idx}`}
         items={[
           {
             value: publisherLogo.isDefault

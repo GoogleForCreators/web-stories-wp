@@ -92,7 +92,7 @@ function EditorSettings() {
   );
 
   const {
-    capabilities: { canUploadFiles } = {},
+    capabilities: { canUploadFiles, canManageSettings } = {},
     maxUpload,
     maxUploadFormatted,
   } = useConfig();
@@ -316,6 +316,7 @@ function EditorSettings() {
           <Main>
             <GoogleAnalyticsSettings
               handleUpdate={handleUpdateGoogleAnalyticsId}
+              canUpdateAnalyticsId={canManageSettings}
               googleAnalyticsId={googleAnalyticsId}
             />
             <PublisherLogoSettings
@@ -324,6 +325,7 @@ function EditorSettings() {
               handleUpdateDefaultLogo={handleUpdateDefaultLogo}
               publisherLogos={orderedPublisherLogos}
               canUploadFiles={canUploadFiles}
+              canUpdateLogos={canManageSettings}
               isLoading={isMediaLoading}
               uploadError={mediaError}
             />

@@ -66,6 +66,7 @@ export const TEXT = {
 
 function PublisherLogoSettings({
   canUploadFiles,
+  canUpdateLogos,
   handleAddLogos,
   handleRemoveLogo,
   handleUpdateDefaultLogo,
@@ -142,6 +143,8 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
+  const showLogoContextMenu = !hasOnlyOneLogo && canUpdateLogos;
+
   const onUploadedLogoContainerFocus = useCallback(
     (e) => {
       e.preventDefault();
@@ -203,7 +206,7 @@ function PublisherLogoSettings({
                   role="listitem"
                 >
                   <GridItemButton
-                    data-testid={`publisher-logo-${idx}`}
+                    data-testid={`uploaded-publisher-logo-${idx}`}
                     isSelected={isActive}
                     tabIndex={isActive ? 0 : -1}
                     onClick={(e) => {
@@ -234,7 +237,7 @@ function PublisherLogoSettings({
                       {__('Default', 'web-stories')}
                     </DefaultLogoText>
                   )}
-                  {!hasOnlyOneLogo && (
+                  {showLogoContextMenu && (
                     <PopoverLogoContextMenu
                       activePublisherLogo={activePublisherLogo}
                       idx={idx}
@@ -273,6 +276,7 @@ function PublisherLogoSettings({
 
 PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
+  canUpdateLogos: PropTypes.bool,
   handleAddLogos: PropTypes.func,
   handleRemoveLogo: PropTypes.func,
   handleUpdateDefaultLogo: PropTypes.func,
