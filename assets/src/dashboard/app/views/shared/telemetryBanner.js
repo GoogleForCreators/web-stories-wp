@@ -37,6 +37,7 @@ const Banner = styled.div.attrs()`
   align-items: center;
   height: 161px;
   margin: 0 20px;
+  padding-top: 24px;
   background-image: url('/wp-content/plugins/web-stories/assets/images/analytics-banner-bg.png');
   border-radius: 8px;
 `;
@@ -115,7 +116,7 @@ export function TelemetryOptInBanner({
         <Title>
           {checked
             ? __(
-                'Your selection has been updated. Thank you for helping to improve the editor',
+                'Your selection has been updated. Thank you for helping to improve the editor!',
                 'web-stories'
               )
             : __('Help improve the editor!', 'web-stories')}
