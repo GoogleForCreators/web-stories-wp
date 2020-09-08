@@ -111,9 +111,7 @@ function Preview() {
           }
         }
       })
-      .catch(() => {
-        setPreviewLinkToOpenViaDialog(previewLink);
-      });
+      .catch(() => setPreviewLinkToOpenViaDialog(previewLink));
   }, [autoSave, autoSaveLink, isDraft, link, saveStory]);
 
   const openPreviewLinkSync = useCallback(
