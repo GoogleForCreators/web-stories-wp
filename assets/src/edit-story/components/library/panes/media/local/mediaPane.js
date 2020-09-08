@@ -51,18 +51,20 @@ import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
 import { DropDown } from '../../../../form';
+import { Placement } from '../../../../popup';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
 
 const FilterArea = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-top: 30px;
   padding: 0 1.5em 0 1.5em;
 `;
 
 const FILTERS = [
-  { value: '', name: __('All', 'web-stories') },
+  { value: '', name: __('All Types', 'web-stories') },
   { value: 'image', name: __('Images', 'web-stories') },
   { value: 'video', name: __('Video', 'web-stories') },
 ];
@@ -209,6 +211,7 @@ function MediaPane(props) {
               value={mediaType?.toString() || FILTERS[0].value}
               onChange={onFilter}
               options={FILTERS}
+              placement={Placement.BOTTOM_START}
             />
             <Primary onClick={openMediaPicker}>
               {__('Upload', 'web-stories')}
