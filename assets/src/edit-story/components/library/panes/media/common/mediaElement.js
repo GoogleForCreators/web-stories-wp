@@ -49,16 +49,11 @@ const Image = styled.img`
   ${styledTiles}
 `;
 
-const OriginalImage = styled.img`
-  width: 100%;
-  border-radius: 4px;
-  position: absolute;
-`;
-
+// Display the newly uploaded videos without a delay: showWithoutDelay
 const Video = styled.video`
   ${styledTiles}
   object-fit: cover;
-  z-index: -1;
+  ${({ showWithoutDelay }) => (showWithoutDelay ? 'opacity: 1;' : '')}
 `;
 
 const Container = styled.div.attrs((props) => ({
@@ -391,9 +386,7 @@ function getInnerElement(
 ) {
   const makeMediaVisible = () => {
     if (ref.current) {
-      ref.current.style.zIndex = 0;
       ref.current.style.opacity = 1;
-      posterRef.current = null;
     }
   };
   if (['image', 'gif'].includes(type)) {
@@ -428,7 +421,7 @@ function getInnerElement(
           aria-label={alt}
           muted
           onClick={onClick(poster)}
-          onCanPlay={makeMediaVisible()}
+          showWithoutDelay={posterRef.current}
           {...dropTargetsBindings(poster)}
         >
           <source
@@ -436,9 +429,11 @@ function getInnerElement(
             type={mimeType}
           />
         </Video>
-        {posterRef.current && <OriginalImage src={posterRef.current} />}
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
+        {!posterRef.current && (
+          <HiddenPosterImage src={poster} onLoad={makeMediaVisible} />
+        )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
