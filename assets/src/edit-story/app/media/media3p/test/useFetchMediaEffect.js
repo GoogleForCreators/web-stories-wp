@@ -95,8 +95,7 @@ describe('useFetchMediaEffect', () => {
     expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
-  it('should fetch media when the provider is set and contentType is filtered',
-      async () => {
+  it('should fetch media when the provider is set and contentType is filtered', async () => {
     mockListMedia.mockImplementation(() =>
       Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
     );
