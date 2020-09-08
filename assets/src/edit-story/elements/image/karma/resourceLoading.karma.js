@@ -33,7 +33,9 @@ describe('Image resource loading integration', () => {
     fixture.restore();
   });
 
-  it('should use cached thumbnail then switch to fullsize', async () => {
+  // Disable reason: flaky and blocks merging. See https://github.com/google/web-stories-wp/issues/4388
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should use cached thumbnail then switch to fullsize', async () => {
     const image = fixture.screen.getAllByLabelText(
       'image with transparent background'
     );
