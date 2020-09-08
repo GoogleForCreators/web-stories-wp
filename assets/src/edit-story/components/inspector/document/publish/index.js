@@ -40,6 +40,7 @@ import Button from '../../../form/button';
 import { useCanvas } from '../../../canvas';
 import useUploader from '../../../../app/uploader/useUploader';
 import useSnackbar from '../../../../app/snackbar/useSnackbar';
+import { useAPI } from '../../../../app/api';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -62,6 +63,9 @@ function PublishPanel() {
 
   const { showSnackbar } = useSnackbar();
   const { uploadFile } = useUploader();
+  const {
+    actions: { updateMedia },
+  } = useAPI();
 
   const {
     isSaving,
@@ -121,7 +125,9 @@ function PublishPanel() {
 
   const generateCanvas = useCallback(async () => {
     try {
-      const html2canvas = (await import(/* webpackChunkName: "html2canvas" */ 'html2canvas')).default;
+      const html2canvas = (
+        await import(/* webpackChunkName: "html2canvas" */ 'html2canvas')
+      ).default;
       const canvas = await html2canvas(fullbleedContainer);
       const blob = await new Promise((resolve, reject) =>
         canvas.toBlob(
@@ -134,6 +140,11 @@ function PublishPanel() {
           type: 'image/jpeg',
         })
       );
+      await updateMedia(id, {
+        meta: {
+          web_stories_is_poster: true,
+        },
+      });
       updateStory({
         properties: {
           featuredMedia: id,
@@ -145,7 +156,14 @@ function PublishPanel() {
         message: __('Could not generate a cover image.', 'web-stories'),
       });
     }
-  }, [fullbleedContainer, uploadFile, storyId, updateStory, showSnackbar]);
+  }, [
+    fullbleedContainer,
+    uploadFile,
+    storyId,
+    updateMedia,
+    updateStory,
+    showSnackbar,
+  ]);
 
   // @todo Enforce square image while selecting in Media Library.
   const handleChangePublisherLogo = useCallback(
