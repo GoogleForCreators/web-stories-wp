@@ -25,6 +25,8 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import theme from '../theme';
+import { ConfigProvider } from '../app/config';
+import MockApiProvider from './mockApiProvider';
 
 // eslint-disable-next-line react/prop-types
 const WithThemeProvider = ({ children }) => {
@@ -41,3 +43,24 @@ export const renderWithThemeAndFlagsProvider = (ui, featureFlags = {}) => {
     <FlagsProvider features={featureFlags}>{ui}</FlagsProvider>
   );
 };
+
+const defaultProviderValues = {
+  features: {},
+  theme,
+  config: {},
+};
+export const renderWithProviders = (
+  ui,
+  providerValues = defaultProviderValues,
+  renderOptions = {}
+) =>
+  render(
+    <FlagsProvider features={providerValues.features}>
+      <ThemeProvider theme={providerValues.theme}>
+        <ConfigProvider config={providerValues.config}>
+          <MockApiProvider>{ui}</MockApiProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </FlagsProvider>,
+    renderOptions
+  );
