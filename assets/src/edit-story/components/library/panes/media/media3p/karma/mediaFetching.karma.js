@@ -356,6 +356,8 @@ describe('Media3pPane fetching', () => {
   // right time.
   // A more robust fix to the scroll position reset issue can be found here:
   // https://github.com/neptunian/react-photo-gallery/pull/184
+  // If that PR be released, another option is to patch it using:
+  // https://www.npmjs.com/package/patch-package
   it('should retain scroll position on tab change', async () => {
     mockListMedia();
     await fixture.events.click(media3pTab);
