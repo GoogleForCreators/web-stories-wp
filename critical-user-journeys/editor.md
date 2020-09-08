@@ -40,6 +40,8 @@
 |                                                                   | Manage Text Style Presets                        | 🚨 **0.00%** *(0 / 1)*      |
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | *[total]*                                        | 🛴 **85.71%** *(6 / 7)*     |
+| Creator can Preview & Publish Their Story                         | Publish story                                    | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
 |                                                                   | Align element to page                            | 🚨 **22.22%** *(2 / 9)*     |
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -47,4 +49,4 @@
 |                                                                   | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
 | Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **68.79%** *(194 / 282)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **69.01%** *(196 / 284)* |
