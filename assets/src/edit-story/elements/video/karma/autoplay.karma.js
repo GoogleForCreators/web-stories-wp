@@ -27,10 +27,12 @@ import { getBackgroundElementId } from '../../../components/dropTargets/karma/ba
 
 describe('Autoplay video', () => {
   let fixture;
+  let mediaPane;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    mediaPane = fixture.container.querySelector('#library-pane-media');
   });
 
   afterEach(() => {
@@ -45,13 +47,15 @@ describe('Autoplay video', () => {
 
   it('should autoplay on insert and on drop', async () => {
     // TODO: Switch to role selector after they are merged
-    const allFilter = fixture.screen.getByText('All');
+    const allFilter = Array.from(mediaPane.querySelectorAll('span')).find(
+      (el) => el.textContent === 'All'
+    );
     await fixture.events.mouse.clickOn(allFilter);
-    const videoFilter = fixture.screen.getByText('Video');
+    const videoFilter = document.querySelector('#dropDown-video');
     await fixture.events.mouse.clickOn(videoFilter);
-    const video = fixture.screen.getAllByLabelText('ranger9', {
-      selector: 'video',
-    });
+    const video = Array.from(mediaPane.querySelectorAll('video')).filter(
+      (el) => el.ariaLabel === 'ranger9'
+    );
     await fixture.events.mouse.clickOn(video[0]);
 
     const videoFrame = fixture.editor.canvas.framesLayer.frames[1].node;

@@ -55,28 +55,26 @@ describe('LibraryTabs integration', () => {
     });
 
     it('should switch tabs on left and right keys', async () => {
-      // Next: text pane.
+      // Next: media3p pane.
       await fixture.events.keyboard.press('ArrowRight');
       // @todo: what's the best way to confirm switching of a tab?
-      const textPane = fixture.container.querySelector('#library-pane-text');
+      const textPane = fixture.container.querySelector('#library-pane-media3p');
       expect(getExpandedPanes()).toEqual([textPane]);
       await fixture.waitOnScreen(textPane);
       await fixture.snapshot('on text pane');
 
-      // Next: shapes pane.
+      // Next: text pane.
       await fixture.events.keyboard.press('ArrowRight');
-      const shapesPane = fixture.container.querySelector(
-        '#library-pane-shapes'
-      );
+      const shapesPane = fixture.container.querySelector('#library-pane-text');
       expect(getExpandedPanes()).toEqual([shapesPane]);
       await fixture.waitOnScreen(shapesPane);
       await fixture.snapshot('on text pane');
 
-      // Back: text pane.
+      // Back: media3p pane.
       await fixture.events.keyboard.press('ArrowLeft');
       expect(getExpandedPanes()).toEqual([textPane]);
       await fixture.waitOnScreen(
-        fixture.container.querySelector('#library-pane-text')
+        fixture.container.querySelector('#library-pane-media3p')
       );
 
       // Back: media pane.
