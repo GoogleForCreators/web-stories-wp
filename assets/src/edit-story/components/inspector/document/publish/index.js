@@ -121,7 +121,7 @@ function PublishPanel() {
 
   const generateCanvas = useCallback(async () => {
     try {
-      const html2canvas = (await import('html2canvas')).default;
+      const html2canvas = (await import(/* webpackChunkName: "html2canvas" */ 'html2canvas')).default;
       const canvas = await html2canvas(fullbleedContainer);
       const blob = await new Promise((resolve, reject) =>
         canvas.toBlob(
