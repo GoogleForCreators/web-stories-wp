@@ -27,7 +27,7 @@ const Container = styled.div`
 const Main = styled.div`
   background-color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 4px;
-  color: ${({ theme }) => theme.colors.fg.white};
+  color: ${({ theme }) => theme.colors.fg.black};
   max-width: 456px;
   display: flex;
   flex-grow: 1;
@@ -62,7 +62,7 @@ const ActionButton = styled.button`
   justify-content: center;
   font-size: ${({ theme }) => theme.fonts.body2.size};
   line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-  color: ${({ theme }) => theme.colors.accent.primary};
+  color: ${({ theme }) => theme.colors.fg.tertiary};
   outline: none;
   border: 0;
   cursor: pointer;

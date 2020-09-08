@@ -9,20 +9,21 @@
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "03e75ddd0261b675dece60fb67fc2e9c6af4ad35"
+                "reference": "4d0612461232b313d06321f1501c3989bd6aecf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/03e75ddd0261b675dece60fb67fc2e9c6af4ad35",
-                "reference": "03e75ddd0261b675dece60fb67fc2e9c6af4ad35",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/4d0612461232b313d06321f1501c3989bd6aecf9",
+                "reference": "4d0612461232b313d06321f1501c3989bd6aecf9",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
+                "sirbrillig/phpcs-variable-analysis": "^2.8.3",
                 "squizlabs/php_codesniffer": "^3.5.5",
                 "wp-coding-standards/wpcs": "^2.3"
             },
@@ -51,7 +52,7 @@
                 "standards",
                 "wordpress"
             ],
-            "time": "2020-07-07T07:48:04+00:00"
+            "time": "2020-09-07T10:45:45+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",

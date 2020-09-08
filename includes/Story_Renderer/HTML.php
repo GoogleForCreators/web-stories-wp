@@ -224,7 +224,8 @@ class HTML {
 	protected function get_html_head_markup() {
 		ob_start();
 		?>
-		<meta name="generator" content="<?php printf( 'Web Stories %s', esc_attr( WEBSTORIES_VERSION ) ); ?>" />
+		<meta name="amp-story-generator-name" content="Web Stories for WordPress" />
+		<meta name="amp-story-generator-version" content="<?php echo esc_attr( WEBSTORIES_VERSION ); ?>" />
 		<?php
 
 		/**

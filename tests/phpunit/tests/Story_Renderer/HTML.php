@@ -90,7 +90,8 @@ class HTML extends \WP_UnitTestCase {
 		$this->assertNotContains( 'BAR', $actual );
 		$this->assertNotContains( $start_tag, $actual );
 		$this->assertNotContains( $end_tag, $actual );
-		$this->assertContains( '<meta name="generator" content="Web Stories', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -25,9 +26,12 @@ import styled from 'styled-components';
 import {
   TypographyPresets,
   StandardViewContentGutter,
+  Button,
+  TextInput,
 } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
+import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../../constants';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -87,6 +91,11 @@ export const FinePrintHelperText = styled.p`
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
+export const FormLabel = styled.span`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.gray400};
+`;
+
 export const Error = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-bottom: 10px;
@@ -102,6 +111,28 @@ export const UploadedContainer = styled.div`
   padding-bottom: 24px;
 `;
 
+export const GridItemContainer = styled.div`
+  position: relative;
+`;
+
+export const GridItemButton = styled.button`
+  position: relative;
+  display: block;
+  background-color: transparent;
+  border: ${({ theme }) => theme.borders.transparent};
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  border-width: 2px;
+  padding: 0;
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+    border-width: 2px;
+    outline: none;
+  }
+`;
+
 export const Logo = styled.img`
   object-fit: cover;
   width: 100%;
@@ -110,13 +141,13 @@ export const Logo = styled.img`
 `;
 
 export const RemoveLogoButton = styled.button`
-  position: relative;
+  position: absolute;
   left: 2px;
-  bottom: 30px;
+  bottom: 2px;
   width: 24px;
   height: 24px;
   text-align: center;
-
+  padding: 0;
   color: ${({ theme }) => theme.colors.white};
   background: ${({ theme }) => theme.colors.gray700};
   border-radius: 50%;
@@ -124,10 +155,39 @@ export const RemoveLogoButton = styled.button`
   cursor: pointer;
 
   & > svg {
+    padding: 6px;
     width: 100%;
     height: 100%;
     display: block;
   }
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+    border-width: 2px;
+    outline: none;
+  }
+`;
+
+export const SaveButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PRIMARY,
+})``;
+
+export const ErrorText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: 1em;
+  padding-top: 0.25em;
+`;
+
+export const InlineForm = styled.div`
+  display: flex;
+`;
+
+export const GoogleAnalyticsTextInput = styled(TextInput)`
+  flex: 3;
+  width: auto;
+  display: inline-block;
+  margin-right: 5px;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);

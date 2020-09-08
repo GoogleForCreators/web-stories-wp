@@ -48,6 +48,7 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
   },
+  version: '1.0.0-alpha.9',
 };
 
 /**

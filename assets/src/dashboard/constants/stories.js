@@ -30,6 +30,7 @@ export const STORY_CONTEXT_MENU_ACTIONS = {
   DELETE: 'delete-story-action',
   COPY_STORY_LINK: 'copy-story-link',
   OPEN_STORY_LINK: 'open-story-link',
+  CLOSE: 'close-menu',
 };
 
 export const STORY_CONTEXT_MENU_ITEMS = [

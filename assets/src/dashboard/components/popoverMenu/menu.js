@@ -20,12 +20,15 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { KEYS } from '../../constants';
+import { KEYS, STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { TypographyPresets } from '../typography';
+
+const CLOSE_MENU_ACTION = { value: STORY_CONTEXT_MENU_ACTIONS.CLOSE };
 
 export const MenuContainer = styled.ul`
   align-items: flex-start;
@@ -47,6 +50,7 @@ export const MenuContainer = styled.ul`
     }
   }
 `;
+
 MenuContainer.propTypes = {
   isOpen: PropTypes.bool,
 };
@@ -73,7 +77,7 @@ export const MenuItem = styled.li`
     &:focus, &:active, &:hover {
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     }
-  
+
   `}
 `;
 
@@ -121,6 +125,14 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             event.preventDefault();
             if (onSelect) {
               onSelect(items[hoveredIndex]);
+            }
+            break;
+
+          case KEYS.ESC:
+            event.preventDefault();
+            if (onSelect) {
+              // Close menu
+              onSelect(CLOSE_MENU_ACTION);
             }
             break;
 

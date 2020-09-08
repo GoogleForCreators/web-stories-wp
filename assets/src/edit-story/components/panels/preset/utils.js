@@ -24,6 +24,18 @@ import { generateFontFamily } from '../../../elements/text/util';
 import { BACKGROUND_TEXT_MODE } from '../../../constants';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
+import objectPick from '../../../utils/objectPick';
+import createSolid from '../../../utils/createSolid';
+
+const TEXT_PRESET_STYLES = [
+  'backgroundColor',
+  'backgroundTextMode',
+  'font',
+  'fontSize',
+  'lineHeight',
+  'padding',
+  'textAlign',
+];
 
 export function findMatchingColor(color, stylePresets, isText) {
   const colorsToMatch = stylePresets.colors;
@@ -47,14 +59,47 @@ export function findMatchingStylePreset(preset, stylePresets) {
 }
 
 export function generatePresetStyle(preset, prepareForCSS) {
-  const { color, backgroundColor, font, backgroundTextMode } = preset;
+  const {
+    color,
+    backgroundColor,
+    font,
+    fontWeight,
+    backgroundTextMode,
+    textAlign,
+    letterSpacing,
+    lineHeight,
+    isItalic,
+    isUnderline,
+    padding,
+    fontSize,
+  } = preset;
   let style = {
+    textAlign,
+    letterSpacing,
+    fontWeight,
+    textDecoration: isUnderline ? 'underline' : null,
+    fontStyle: isItalic ? 'italic' : null,
     fontFamily: generateFontFamily(font),
     ...generatePatternStyles(color, 'color'),
   };
 
+  if (!prepareForCSS) {
+    // If we're not preparing the matching style for actual CSS, add background text mode as well here.
+    style = {
+      ...style,
+      fontSize,
+      lineHeight,
+      padding,
+      backgroundTextMode,
+    };
+  }
+
+  // Generate background only if it's on.
   // If it's highlight mode then the highlight is displayed on the text wrapper instead.
-  if (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+  if (
+    backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE &&
+    (!prepareForCSS || backgroundTextMode !== BACKGROUND_TEXT_MODE.HIGHLIGHT)
+  ) {
     style = {
       ...style,
       ...generatePatternStyles(backgroundColor, 'background'),
@@ -63,15 +108,52 @@ export function generatePresetStyle(preset, prepareForCSS) {
   return style;
 }
 
-export function getTextPresets(elements, stylePresets) {
+function getExtractedInlineValue(value) {
+  return value !== MULTIPLE_VALUE ? value : null;
+}
+
+function getTextInlineStyles(content) {
+  const {
+    color,
+    fontWeight,
+    isBold,
+    isItalic,
+    isUnderline,
+    letterSpacing,
+  } = getHTMLInfo(content);
+  return {
+    color: color !== MULTIPLE_VALUE ? color : createSolid(0, 0, 0),
+    fontWeight: getExtractedInlineValue(fontWeight),
+    isBold: getExtractedInlineValue(isBold),
+    isItalic: getExtractedInlineValue(isItalic),
+    isUnderline: getExtractedInlineValue(isUnderline),
+    letterSpacing: getExtractedInlineValue(letterSpacing),
+  };
+}
+
+export function getTextPresets(elements, stylePresets, type) {
   // @todo Fix: Currently when two selected elements have the same attributes, two presets are added.
   return {
-    colors: elements
-      .map(({ content }) => getHTMLInfo(content).color)
-      .filter((color) => color !== MULTIPLE_VALUE)
-      .filter(
-        (color) => color && !findMatchingColor(color, stylePresets, true)
-      ),
+    colors:
+      'style' === type
+        ? []
+        : elements
+            .map(({ content }) => getHTMLInfo(content).color)
+            .filter((color) => color !== MULTIPLE_VALUE)
+            .filter(
+              (color) => color && !findMatchingColor(color, stylePresets, true)
+            ),
+    textStyles:
+      'color' === type
+        ? []
+        : elements
+            .map((text) => {
+              return {
+                ...objectPick(text, TEXT_PRESET_STYLES),
+                ...getTextInlineStyles(text.content),
+              };
+            })
+            .filter((preset) => !findMatchingStylePreset(preset, stylePresets)),
   };
 }
 
@@ -116,4 +198,11 @@ export function presetHasOpacity(preset) {
 
 export function presetHasGradient({ type }) {
   return Boolean(type) && 'solid' !== type;
+}
+
+export function areAllType(elType, selectedElements) {
+  return (
+    selectedElements.length > 0 &&
+    selectedElements.every(({ type }) => elType === type)
+  );
 }
