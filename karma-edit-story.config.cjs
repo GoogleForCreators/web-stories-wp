@@ -140,6 +140,9 @@ module.exports = function (config) {
 
     // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
     browserNoActivityTimeout: 100000,
+
+    // Wait a bit longer for browser to reconnect.
+    browserDisconnectTimeout: 10000,
   });
 };
 
