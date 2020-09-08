@@ -116,6 +116,18 @@ const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const SelectableParagraph = styled(Paragraph2).attrs({
+  tabIndex: 0,
+  onFocus: onFocusSelectAll,
+  onBlur: onBlurDeselectAll,
+})``;
+
+const StyledTableRow = styled(TableRow)`
+  &:hover ${MoreVerticalButton}, &:focus-within ${MoreVerticalButton} {
+    opacity: 1;
+  }
+`;
+
 const TitleTableCellContainer = styled.div`
   display: flex;
   align-items: center;
@@ -135,9 +147,18 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
-const titleFormatted = (rawTitle) => {
+function titleFormatted(rawTitle) {
   return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-};
+}
+
+function onFocusSelectAll(e) {
+  window.getSelection().selectAllChildren(e.target);
+}
+
+function onBlurDeselectAll() {
+  window.getSelection().removeAllRanges();
+}
+
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
@@ -171,6 +192,7 @@ export default function StoryListView({
     },
     [onSortTitleSelected]
   );
+
   return (
     <ListView data-testid="story-list-view">
       <Table>
@@ -267,7 +289,7 @@ export default function StoryListView({
             });
 
             return (
-              <TableRow key={`story-${story.id}`}>
+              <StyledTableRow key={`story-${story.id}`}>
                 <TablePreviewCell>
                   <PreviewContainer>
                     <PreviewErrorBoundary>
@@ -289,7 +311,9 @@ export default function StoryListView({
                       />
                     ) : (
                       <>
-                        <Paragraph2>{titleFormatted(story.title)}</Paragraph2>
+                        <SelectableParagraph>
+                          {titleFormatted(story.title)}
+                        </SelectableParagraph>
                         <StoryMenu
                           onMoreButtonSelected={storyMenu.handleMenuToggle}
                           contextMenuId={storyMenu.contextMenuId}
@@ -317,7 +341,7 @@ export default function StoryListView({
                       __('Scheduled', 'web-stories')}
                   </TableStatusCell>
                 )}
-              </TableRow>
+              </StyledTableRow>
             );
           })}
         </TableBody>

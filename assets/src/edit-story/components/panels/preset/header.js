@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -31,8 +30,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Add, EditPencil } from '../../../icons';
-import { StylePresetPropType } from '../../../types';
-import { useKeyDownEffect } from '../../keyboard';
 import { PanelTitle } from '../panel';
 
 const buttonCSS = css`
@@ -48,7 +45,7 @@ const buttonCSS = css`
   justify-content: center;
 `;
 
-const AddColorPresetButton = styled.button`
+const AddPresetButton = styled.button`
   ${buttonCSS}
   svg {
     width: 26px;
@@ -76,83 +73,66 @@ const EditMode = styled.button`
         `}
 `;
 
-function Button({ onClick, Icon, children, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
-  return (
-    <Icon ref={ref} onClick={onClick} {...rest}>
-      {children}
-    </Icon>
-  );
-}
-
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  Icon: PropTypes.elementType.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
-
 function PresetsHeader({
-  handleAddColorPreset,
+  title,
+  handleAddPreset,
   isEditMode,
   setIsEditMode,
-  stylePresets,
+  presets,
   canCollapse,
+  presetType,
 }) {
-  const { colors } = stylePresets;
-  const hasPresets = colors.length > 0;
+  const hasPresets = presets.length > 0;
 
+  const addLabel =
+    'style' === presetType
+      ? __('Add style preset', 'web-stories')
+      : __('Add color preset', 'web-stories');
+  const editLabel =
+    'style' === presetType
+      ? __('Edit style presets', 'web-stories')
+      : __('Edit color presets', 'web-stories');
   const getActions = () => {
     return (
       <>
         {hasPresets && (
-          <Button
-            Icon={EditMode}
+          <EditMode
             onClick={(evt) => {
               evt.stopPropagation();
               setIsEditMode(!isEditMode);
             }}
             aria-label={
-              isEditMode
-                ? __('Exit edit mode', 'web-stories')
-                : __('Edit presets', 'web-stories')
+              isEditMode ? __('Exit edit mode', 'web-stories') : editLabel
             }
             isEditMode={isEditMode}
           >
             {isEditMode ? __('Exit', 'web-stories') : <EditPencil />}
-          </Button>
+          </EditMode>
         )}
         {!isEditMode && (
-          <Button
-            Icon={AddColorPresetButton}
-            onClick={handleAddColorPreset}
-            aria-label={__('Add preset', 'web-stories')}
-          >
+          <AddPresetButton onClick={handleAddPreset} aria-label={addLabel}>
             <Add />
-          </Button>
+          </AddPresetButton>
         )}
       </>
     );
   };
 
-  // Todo: Rename label to 'Presets' post-beta.
   return (
     <PanelTitle secondaryAction={getActions()} canCollapse={canCollapse}>
-      {__('Saved Colors', 'web-stories')}
+      {title}
     </PanelTitle>
   );
 }
 
 PresetsHeader.propTypes = {
-  stylePresets: StylePresetPropType.isRequired,
+  presets: PropTypes.array.isRequired,
   isEditMode: PropTypes.bool.isRequired,
-  handleAddColorPreset: PropTypes.func.isRequired,
+  handleAddPreset: PropTypes.func.isRequired,
   setIsEditMode: PropTypes.func.isRequired,
   canCollapse: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  presetType: PropTypes.string.isRequired,
 };
 
 export default PresetsHeader;

@@ -38,6 +38,7 @@ import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
+  TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -118,7 +119,7 @@ function Header({
 
   const [debouncedTypeaheadChange] = useDebouncedCallback(
     search.setKeyword,
-    300
+    TEXT_INPUT_DEBOUNCE
   );
 
   return (

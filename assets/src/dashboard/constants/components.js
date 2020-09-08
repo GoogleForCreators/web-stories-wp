@@ -44,6 +44,7 @@ export const DROPDOWN_TYPES = {
 
 export const KEYS = {
   ENTER: 'Enter',
+  ESC: 'Escape',
   UP: 'ArrowUp',
   DOWN: 'ArrowDown',
 };

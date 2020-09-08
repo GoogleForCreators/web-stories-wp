@@ -19,7 +19,6 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,36 +28,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Remove } from '../../../icons';
-import generatePatternStyles from '../../../utils/generatePatternStyles';
-import { PanelContent } from '../panel';
-import { StylePresetPropType } from '../../../types';
-import WithTooltip from '../../tooltip';
-import { useKeyDownEffect } from '../../keyboard';
-import PresetGroup from './presetGroup';
-import { presetHasOpacity, presetHasGradient } from './utils';
+import PresetPanel from '../presetPanel';
+import { areAllType, presetHasGradient, presetHasOpacity } from '../utils';
+import WithTooltip from '../../../tooltip';
+import { Remove } from '../../../../icons';
+import { useStory } from '../../../../app/story';
+import generatePatternStyles from '../../../../utils/generatePatternStyles';
 
-const REMOVE_ICON_SIZE = 18;
 const PRESET_SIZE = 30;
-
-const presetCSS = css`
-  display: block;
-  width: 100%;
-  height: 100%;
-  font-size: 13px;
-  position: relative;
-  cursor: pointer;
-  background-color: transparent;
-  border-color: transparent;
-  border-width: 0;
-  svg {
-    width: ${REMOVE_ICON_SIZE}px;
-    height: ${REMOVE_ICON_SIZE}px;
-    position: absolute;
-    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
-  }
-`;
+const REMOVE_ICON_SIZE = 18;
 
 const Transparent = styled.div`
   width: 100%;
@@ -89,7 +67,25 @@ const ColorWrapper = styled.div`
   }
 `;
 
-const ColorButton = styled.button.attrs({ type: 'button' })`
+const presetCSS = css`
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 13px;
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  border-color: transparent;
+  border-width: 0;
+  svg {
+    width: ${REMOVE_ICON_SIZE}px;
+    height: ${REMOVE_ICON_SIZE}px;
+    position: absolute;
+    top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+  }
+`;
+const Color = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
 
@@ -98,37 +94,25 @@ const ColorButton = styled.button.attrs({ type: 'button' })`
   }
 `;
 
-function Color({ onClick, children, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', onClick, [onClick]);
-  return (
-    <ColorButton ref={ref} onClick={onClick} {...rest}>
-      {children}
-    </ColorButton>
+function ColorPresetPanel({ pushUpdate }) {
+  const { currentPage, selectedElements } = useStory(
+    ({ state: { currentPage, selectedElements } }) => {
+      return {
+        currentPage,
+        selectedElements,
+      };
+    }
   );
-}
 
-Color.propTypes = {
-  children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired,
-};
-
-function Presets({
-  stylePresets,
-  handleOnClick,
-  isEditMode,
-  isText,
-  isBackground,
-}) {
-  const { colors } = stylePresets;
-
-  const hasPresets = colors.length > 0;
-
-  const colorPresetRenderer = (color, i, activeIndex) => {
+  const isText = areAllType('text', selectedElements);
+  const isBackground = selectedElements[0].id === currentPage.elements[0].id;
+  const colorPresetRenderer = (
+    color,
+    i,
+    activeIndex,
+    handleOnClick,
+    isEditMode
+  ) => {
     if (!color) {
       return null;
     }
@@ -165,24 +149,16 @@ function Presets({
   };
 
   return (
-    <PanelContent isPrimary padding={hasPresets ? null : '0'}>
-      {hasPresets && (
-        <PresetGroup
-          itemRenderer={colorPresetRenderer}
-          presets={colors}
-          type={'color'}
-        />
-      )}
-    </PanelContent>
+    <PresetPanel
+      title={__('Saved colors', 'web-stories')}
+      itemRenderer={colorPresetRenderer}
+      pushUpdate={pushUpdate}
+    />
   );
 }
 
-Presets.propTypes = {
-  stylePresets: StylePresetPropType.isRequired,
-  handleOnClick: PropTypes.func.isRequired,
-  isEditMode: PropTypes.bool.isRequired,
-  isText: PropTypes.bool.isRequired,
-  isBackground: PropTypes.bool.isRequired,
+ColorPresetPanel.propTypes = {
+  pushUpdate: PropTypes.func.isRequired,
 };
 
-export default Presets;
+export default ColorPresetPanel;

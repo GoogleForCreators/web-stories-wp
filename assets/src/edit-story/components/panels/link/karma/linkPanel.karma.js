@@ -347,6 +347,6 @@ describe('Link Panel', () => {
   // Disable reason: tests not implemented yet
   // eslint-disable-next-line jasmine/no-disabled-tests
   xdescribe('CUJ: Creator Can Add A Link: Edit description', () => {
-    it('should be able to edit descrption');
+    it('should be able to edit description');
   });
 });

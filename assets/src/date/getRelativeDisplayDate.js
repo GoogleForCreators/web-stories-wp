@@ -64,5 +64,5 @@ export function getRelativeDisplayDate(
 
   const fmt = new DateFormatter();
 
-  return fmt.formatDate(date.toDate(), dateSettings.dateFormat);
+  return fmt.formatDate(displayDate.toDate(), dateSettings.dateFormat);
 }
