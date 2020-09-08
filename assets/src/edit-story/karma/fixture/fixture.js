@@ -608,12 +608,8 @@ class APIProviderFixture {
         []
       );
 
-      // @todo Add test users when needed for testing.
       const getAllUsers = useCallback(
-        () =>
-          jasmine.createSpy('getAllUsers').and.returnValue({
-            then: jasmine.createSpy('getAllUsersPromise'),
-          }),
+        () => asyncResponse([{ id: 1, name: 'John Doe' }]),
         []
       );
 
