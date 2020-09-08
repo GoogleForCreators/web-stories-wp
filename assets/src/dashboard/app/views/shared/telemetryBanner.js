@@ -84,7 +84,7 @@ const CloseIcon = styled(CloseSVG).attrs(ICON_METRICS.TELEMETRY_BANNER_EXIT)`
 `;
 
 const ToggleButton = styled.button.attrs({
-  ['aria-label']: __('Close Telemetry Banner', 'web-stories'),
+  ['aria-label']: __('Dismiss Notice', 'web-stories'),
 })`
   border: none;
   padding: 4px;
