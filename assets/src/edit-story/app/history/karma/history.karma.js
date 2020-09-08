@@ -41,7 +41,7 @@ describe('CUJ: Creator can View and Modify Document Settings: Navigating without
 
     const {
       state: { hasNewChanges },
-    } = fixture.renderHook(() => useHistory());
+    } = await fixture.renderHook(() => useHistory());
 
     expect(hasNewChanges).toBeFalse();
 
