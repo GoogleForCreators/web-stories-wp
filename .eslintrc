@@ -289,10 +289,6 @@
           {
             "paths": [
               {
-                "name": "@testing-library/react",
-                "message": "Use karma fixtures instead."
-              },
-              {
                 "name": "@testing-library/react-hooks",
                 "message": "Use karma fixtures instead."
               }
