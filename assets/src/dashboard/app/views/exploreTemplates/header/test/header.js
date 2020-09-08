@@ -27,7 +27,7 @@ import {
   VIEW_STYLE,
   TEMPLATES_GALLERY_SORT_OPTIONS,
 } from '../../../../../constants';
-import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Header from '../';
 
@@ -69,7 +69,7 @@ const fakeTemplates = [
 
 describe('Explore Templates <Header />', function () {
   it('should have results label that says "Viewing all templates" on initial page view', function () {
-    const { getByText } = renderWithThemeAndFlagsProvider(
+    const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -86,14 +86,14 @@ describe('Explore Templates <Header />', function () {
           }}
         />
       </LayoutProvider>,
-      { enableInProgressTemplateActions: false }
+      { features: { enableInProgressTemplateActions: false } }
     );
 
     expect(getByText('Viewing all templates')).toBeInTheDocument();
   });
 
   it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithThemeAndFlagsProvider(
+    const { getByPlaceholderText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -110,7 +110,7 @@ describe('Explore Templates <Header />', function () {
           }}
         />
       </LayoutProvider>,
-      { enableInProgressTemplateActions: true }
+      { features: { enableInProgressTemplateActions: true } }
     );
     expect(getByPlaceholderText('Search Templates').value).toBe('Harry Potter');
     expect(getByText('8 results')).toBeInTheDocument();
@@ -118,7 +118,7 @@ describe('Explore Templates <Header />', function () {
 
   it('should call the set keyword function when new text is searched', function () {
     const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithThemeAndFlagsProvider(
+    const { getByPlaceholderText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -135,7 +135,7 @@ describe('Explore Templates <Header />', function () {
           }}
         />
       </LayoutProvider>,
-      { enableInProgressTemplateActions: true }
+      { features: { enableInProgressTemplateActions: true } }
     );
     fireEvent.change(getByPlaceholderText('Search Templates'), {
       target: { value: 'Hermione Granger' },
@@ -145,7 +145,7 @@ describe('Explore Templates <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithThemeAndFlagsProvider(
+    const { getAllByText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -162,7 +162,7 @@ describe('Explore Templates <Header />', function () {
           }}
         />
       </LayoutProvider>,
-      { enableInProgressTemplateActions: true }
+      { features: { enableInProgressTemplateActions: true } }
     );
     fireEvent.click(getAllByText('Popular')[0].parentElement);
     fireEvent.click(getByText('Recent'));
@@ -170,8 +170,8 @@ describe('Explore Templates <Header />', function () {
     expect(setSortFn).toHaveBeenCalledWith('recent');
   });
 
-  it('should not render with search when enableInProgressTemplateActions is false', function () {
-    const { queryAllByRole } = renderWithThemeAndFlagsProvider(
+  it('should not render with search when features:{enableInProgressTemplateActions is false}', function () {
+    const { queryAllByRole } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ value: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -188,7 +188,7 @@ describe('Explore Templates <Header />', function () {
           }}
         />
       </LayoutProvider>,
-      { enableInProgressTemplateActions: false }
+      { features: { enableInProgressTemplateActions: false } }
     );
     expect(queryAllByRole('textbox')).toHaveLength(0);
   });

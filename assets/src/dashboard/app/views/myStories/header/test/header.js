@@ -29,7 +29,7 @@ import {
   STORY_STATUSES,
 } from '../../../../../constants';
 import LayoutProvider from '../../../../../components/layout/provider';
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import Header from '../';
 
 const fakeStories = [
@@ -64,7 +64,7 @@ const fakeStories = [
 
 describe('My Stories <Header />', function () {
   it('should have results label that says "Viewing all stories" on initial page view', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -88,7 +88,7 @@ describe('My Stories <Header />', function () {
   });
 
   it('should render with the correct count label and search keyword.', function () {
-    const { getByPlaceholderText, getByText } = renderWithTheme(
+    const { getByPlaceholderText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -113,7 +113,7 @@ describe('My Stories <Header />', function () {
   });
 
   it('should have results label that says "Viewing drafts" when filter is set to drafts', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={{ status: 'DRAFT', value: STORY_STATUS.DRAFT }}
@@ -137,7 +137,7 @@ describe('My Stories <Header />', function () {
   });
 
   it('should have 3 toggle buttons, one for each status that say how many items belong to that status', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -164,7 +164,7 @@ describe('My Stories <Header />', function () {
 
   it('should call the set keyword function when new text is searched', async function () {
     const setKeywordFn = jest.fn();
-    const { getByPlaceholderText } = renderWithTheme(
+    const { getByPlaceholderText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
@@ -194,7 +194,7 @@ describe('My Stories <Header />', function () {
 
   it('should call the set sort function when a new sort is selected', function () {
     const setSortFn = jest.fn();
-    const { getAllByText, getByText } = renderWithTheme(
+    const { getAllByText, getByText } = renderWithProviders(
       <LayoutProvider>
         <Header
           filter={STORY_STATUSES[0]}
