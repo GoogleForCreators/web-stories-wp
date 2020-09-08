@@ -45,4 +45,6 @@
 |                                                                   | Resize                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Rotate                                           | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **68.57%** *(192 / 280)* |
+| Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **68.79%** *(194 / 282)* |
