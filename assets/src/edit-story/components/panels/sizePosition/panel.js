@@ -128,7 +128,7 @@ function SizePositionPanel({
           width: nWidth,
         };
 
-  usePresubmitHandlers(MIN_MAX, lockAspectRatio, height, width);
+  usePresubmitHandlers(lockAspectRatio, height, width);
 
   const handleSetBackground = useCallback(() => {
     combineElements({
