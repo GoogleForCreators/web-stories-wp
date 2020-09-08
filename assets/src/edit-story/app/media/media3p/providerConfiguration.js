@@ -85,7 +85,6 @@ export const PROVIDERS = {
   },
   [ProviderType.COVERR]: {
     displayName: __('Video', 'web-stories'),
-    featureName: 'showCoverrTab',
     supportedContentTypes: [ContentType.VIDEO],
     supportsCategories: false,
     requiresAuthorAttribution: false,
