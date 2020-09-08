@@ -32,8 +32,8 @@ describe('CUJ: Creator can View and Modify Document Settings: Navigating without
   });
 
   it('should not have new history changes when switching tabs without changes', async () => {
-    // Click on the text tab.
-    await fixture.events.click(fixture.editor.library.textTab);
+    // Click on the shapes tab.
+    await fixture.events.click(fixture.editor.library.shapesTab);
     // Click on the document tab.
     await fixture.events.click(fixture.editor.inspector.documentTab);
     // Wait to ensure any processes (in case of bugs) would be finished.
