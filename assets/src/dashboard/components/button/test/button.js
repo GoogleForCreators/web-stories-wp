@@ -24,14 +24,14 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import Button from '../';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 
 describe('Button', () => {
   const buttonText = 'Some button text';
   const onClickMock = jest.fn();
 
   it('should render the default non cta button', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <Button onClick={onClickMock}>{buttonText}</Button>
     );
 
@@ -39,7 +39,7 @@ describe('Button', () => {
   });
 
   it('should not allow onClick action when <Button /> is disabled', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <Button isDisabled onClick={onClickMock}>
         {buttonText}
       </Button>
@@ -52,7 +52,7 @@ describe('Button', () => {
   });
 
   it('should simulate a click on <Button />', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <Button onClick={onClickMock}>{buttonText}</Button>
     );
 
