@@ -22,16 +22,42 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * WordPress dependencies
  */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
+import {
+  loginUser,
+  switchUserToAdmin,
+  visitAdminPage,
+} from '@wordpress/e2e-test-utils';
 
 describe('Get Started Story', () => {
-  it('should prefill post title and post content', async () => {
-    await visitAdminPage(
-      'post-new.php',
-      'post_type=web-story&web-stories-demo=1'
-    );
-    await expect(page).toMatch('Tips to make the most of Web Stories');
+  describe('Admin User', () => {
+    it('should prefill post title and post content', async () => {
+      await visitAdminPage(
+        'post-new.php',
+        'post_type=web-story&web-stories-demo=1'
+      );
+      await expect(page).toMatch('Tips to make the most of Web Stories');
 
-    await percySnapshot(page, 'Get Started Story');
+      await percySnapshot(page, 'Get Started Story (Admin)');
+    });
+  });
+
+  describe('Author User', () => {
+    beforeAll(async () => {
+      await loginUser('author', 'password');
+    });
+
+    afterAll(async () => {
+      await switchUserToAdmin();
+    });
+
+    it('should prefill post title and post content', async () => {
+      await visitAdminPage(
+        'post-new.php',
+        'post_type=web-story&web-stories-demo=1'
+      );
+      await expect(page).toMatch('Tips to make the most of Web Stories');
+
+      await percySnapshot(page, 'Get Started Story (Author)');
+    });
   });
 });
