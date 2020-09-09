@@ -90,7 +90,7 @@ const FillElement = styled.p`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
 `;
-const Background = styled.p`
+const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
   margin: 0;
