@@ -41,7 +41,7 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { useGridViewKeys } from '../../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../utils';
 import { useConfig } from '../../../config';
 import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
 import PopoverLogoContextMenu from './popoverLogoContextMenu';
@@ -145,17 +145,6 @@ function PublisherLogoSettings({
 
   const showLogoContextMenu = !hasOnlyOneLogo && canUpdateLogos;
 
-  const onUploadedLogoContainerFocus = useCallback(
-    (e) => {
-      e.preventDefault();
-      if (!activePublisherLogo) {
-        setActivePublisherLogoId(publisherLogos?.[0].id);
-        itemRefs.current?.[publisherLogos?.[0].id]?.children?.[0].focus();
-      }
-    },
-    [activePublisherLogo, publisherLogos]
-  );
-
   const onMenuItemSelected = useCallback(
     (sender, logo, index) => {
       setContextMenuId(-1);
@@ -176,6 +165,8 @@ function PublisherLogoSettings({
     [handleUpdateDefaultLogo, handleRemoveLogoClick]
   );
 
+  useFocusOut(containerRef, () => setActivePublisherLogoId(null), []);
+
   return (
     <SettingForm>
       <div>
@@ -185,10 +176,10 @@ function PublisherLogoSettings({
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
           <UploadedContainer
+            tabIndex={0}
             ref={gridRef}
             role="list"
-            tabIndex={0}
-            onFocus={onUploadedLogoContainerFocus}
+            ariaLabel={__('Viewing existing publisher logos', 'web-stories')}
           >
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
@@ -206,6 +197,9 @@ function PublisherLogoSettings({
                   role="listitem"
                 >
                   <GridItemButton
+                    onFocus={() => {
+                      setActivePublisherLogoId(publisherLogo.id);
+                    }}
                     data-testid={`uploaded-publisher-logo-${idx}`}
                     isSelected={isActive}
                     tabIndex={isActive ? 0 : -1}
@@ -213,22 +207,14 @@ function PublisherLogoSettings({
                       e.preventDefault();
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
-                    aria-label={
-                      isActive
-                        ? sprintf(
-                            /* translators: %s: logo number.*/
-                            __(
-                              'Publisher Logo %s (currently selected)',
-                              'web-stories'
-                            ),
-                            idx + 1
-                          )
-                        : sprintf(
-                            /* translators: %s: logo number.*/
-                            __('Publisher Logo %s', 'web-stories'),
-                            idx + 1
-                          )
-                    }
+                    aria-label={sprintf(
+                      /* translators: %s: logo number.*/
+                      __(
+                        'Publisher Logo %s (currently selected)',
+                        'web-stories'
+                      ),
+                      idx + 1
+                    )}
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   </GridItemButton>
@@ -239,6 +225,7 @@ function PublisherLogoSettings({
                   )}
                   {showLogoContextMenu && (
                     <PopoverLogoContextMenu
+                      isActive={isActive}
                       activePublisherLogo={activePublisherLogo}
                       idx={idx}
                       publisherLogo={publisherLogo}

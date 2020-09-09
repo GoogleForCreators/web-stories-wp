@@ -126,38 +126,39 @@ describe('PublisherLogo', () => {
     expect(getByText('Something went wrong.')).toBeInTheDocument();
   });
 
-  // TODO this won't work until we can focus the menu when it's open, which we need merged from PR #4317
-  // eslint-disable-next-line jest/no-commented-out-tests
-  // it('should trigger mockHandleRemoveLogo when delete button is pressed with enter on an uploaded file', () => {
-  //   const mockHandleRemoveLogo = jest.fn();
+  it('should trigger mockHandleRemoveLogo when delete button is pressed with enter on an uploaded file', () => {
+    const mockHandleRemoveLogo = jest.fn();
 
-  //   const { getByTestId } = renderWithTheme(
-  //     <PublisherLogoSettings
-  //       handleAddLogos={mockHandleAddLogos}
-  //       handleRemoveLogo={mockHandleRemoveLogo}
-  //       handleUpdateDefaultLogo={jest.fn}
-  //       isLoading={false}
-  //       publisherLogos={formattedPublisherLogos}
-  //       canUpdateLogos={true}
-  //     />
-  //   );
+    const { getByTestId } = renderWithTheme(
+      <PublisherLogoSettings
+        handleAddLogos={jest.fn}
+        handleRemoveLogo={mockHandleRemoveLogo}
+        handleUpdateDefaultLogo={mockHandleRemoveLogo}
+        isLoading={false}
+        publisherLogos={formattedPublisherLogos}
+        canUpdateLogos={true}
+      />
+    );
 
-  // const ContextMenuButton = getByTestId(
-  //   'publisher-logo-context-menu-button-2'
-  // );
+    const ContextMenuButton = getByTestId(
+      'publisher-logo-context-menu-button-2'
+    );
+    fireEvent.click(ContextMenuButton);
 
-  // fireEvent.click(ContextMenuButton);
+    const ContextMenu = getByTestId('publisher-logo-context-menu-2');
+    expect(ContextMenu).toBeDefined();
 
-  //   const ContextMenu = getByTestId('publisher-logo-context-menu-2');
-  //   expect(ContextMenu).toBeDefined();
+    const MenuItems = within(ContextMenu).queryAllByRole('listitem');
+    const DeleteFileButton = MenuItems[1];
+    expect(DeleteFileButton).toBeDefined();
 
-  //   const DeleteFileButton = within(ContextMenu).getByText(/^Delete/).closest('li');
-  //   expect(DeleteFileButton).toBeDefined();
+    fireEvent.keyDown(DeleteFileButton, {
+      key: 'Enter',
+      keyCode: 13,
+    });
 
-  //   fireEvent.keyDown(DeleteFileButton, { key: 'Enter', keyCode: 13 });
-
-  //   expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
-  // });
+    expect(mockHandleRemoveLogo).toHaveBeenCalledTimes(1);
+  });
 
   it('should trigger mockHandleRemoveLogo when delete button is clicked on an uploaded file', () => {
     const mockHandleRemoveLogo = jest.fn();

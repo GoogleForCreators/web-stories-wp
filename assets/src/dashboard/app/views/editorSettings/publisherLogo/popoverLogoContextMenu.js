@@ -45,6 +45,7 @@ function PopoverLogoContextMenu({
   const popoverMenuContainerRef = useRef(null);
 
   const isPopoverMenuOpen = contextMenuId.value === publisherLogo.id;
+  const tabIndex = isActive ? 0 : -1;
 
   const onMoreButtonSelected = useCallback(
     (openMenuLogoId) => contextMenuId.set(openMenuLogoId),
@@ -62,7 +63,7 @@ function PopoverLogoContextMenu({
   return (
     <MenuContainer ref={popoverMenuContainerRef}>
       <LogoMenuButton
-        tabIndex={isActive ? 0 : -1}
+        tabIndex={tabIndex}
         isActive={isActive}
         menuOpen={isPopoverMenuOpen}
         data-testid={`publisher-logo-context-menu-button-${idx}`}
@@ -73,7 +74,6 @@ function PopoverLogoContextMenu({
         )}
         onClick={(e) => {
           e.preventDefault();
-          e.stopPropagation();
           onMoreButtonSelected(isPopoverMenuOpen ? -1 : publisherLogo.id);
         }}
       >

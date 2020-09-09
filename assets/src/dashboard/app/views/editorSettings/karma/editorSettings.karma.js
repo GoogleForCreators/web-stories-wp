@@ -41,27 +41,27 @@ describe('Settings View', () => {
     fixture.restore();
   });
 
-  // async function focusOnPublisherLogos() {
-  //   let limit = 0;
-  //   const publisherLogosContainer = fixture.screen.getByTestId(
-  //     'publisher-logos-container'
-  //   );
+  async function focusOnPublisherLogos() {
+    let limit = 0;
+    const publisherLogosContainer = fixture.screen.getByTestId(
+      'publisher-logos-container'
+    );
 
-  //   expect(publisherLogosContainer).toBeTruthy();
+    expect(publisherLogosContainer).toBeTruthy();
 
-  //   while (
-  //     !publisherLogosContainer.contains(document.activeElement) &&
-  //     limit < 8
-  //   ) {
-  //     // eslint-disable-next-line no-await-in-loop
-  //     await fixture.events.keyboard.press('tab');
-  //     limit++;
-  //   }
+    while (
+      !publisherLogosContainer.contains(document.activeElement) &&
+      limit < 8
+    ) {
+      // eslint-disable-next-line no-await-in-loop
+      await fixture.events.keyboard.press('tab');
+      limit++;
+    }
 
-  //   return publisherLogosContainer.contains(document.activeElement)
-  //     ? Promise.resolve()
-  //     : Promise.reject(new Error('could not focus on publisher logos'));
-  // }
+    return publisherLogosContainer.contains(document.activeElement)
+      ? Promise.resolve()
+      : Promise.reject(new Error('could not focus on publisher logos'));
+  }
 
   function navigateToEditorSettings() {
     const editorSettingsMenuItem = fixture.screen.queryByRole('link', {
@@ -323,49 +323,54 @@ describe('Settings View', () => {
     expect(UpdatedPublisherLogos.length).toBe(initialPublisherLogosLength - 1);
   });
 
-  // TODO this won't work until we can focus the menu when it's open, which we need merged from PR #4317
-  // it('should remove a publisher logo on keydown enter', async () => {
-  //   const settingsView = await fixture.screen.getByTestId(
-  //     'publisher-logos-container'
-  //   );
+  it('should remove a publisher logo on keydown enter', async () => {
+    const settingsView = await fixture.screen.getByTestId(
+      'publisher-logos-container'
+    );
 
-  //   const PublisherLogos = within(settingsView).queryAllByTestId(
-  //     /^uploaded-publisher-logo-/
-  //   );
+    const PublisherLogos = within(settingsView).queryAllByTestId(
+      /^uploaded-publisher-logo-/
+    );
 
-  //   const initialPublisherLogosLength = PublisherLogos.length;
-  //   expect(PublisherLogos).toBeTruthy();
+    const initialPublisherLogosLength = PublisherLogos.length;
+    expect(PublisherLogos).toBeTruthy();
 
-  //   await focusOnPublisherLogos();
+    await focusOnPublisherLogos();
 
-  //   let page1 = fixture.screen.getByTestId(/^updated-publisher-logo-0/);
-  //   expect(page1).toEqual(document.activeElement);
+    let page1 = fixture.screen.getByTestId(/^uploaded-publisher-logo-0/);
+    await fixture.events.keyboard.press('right');
+    expect(page1).toEqual(document.activeElement);
 
-  //   // go right by 1
-  //   await fixture.events.keyboard.press('right');
+    // // go right by 1
+    await fixture.events.keyboard.press('right');
 
-  //   await fixture.events.keyboard.press('Enter');
+    await fixture.events.keyboard.press('Enter');
 
-  //   const page2 = fixture.screen.getByTestId(/^updated-publisher-logo-1/);
-  //   expect(page2).toEqual(document.activeElement);
+    const page2 = fixture.screen.getByTestId(/^uploaded-publisher-logo-1/);
+    expect(page2).toEqual(document.activeElement);
 
-  //   await fixture.events.keyboard.press('Tab');
+    await fixture.events.keyboard.press('Tab');
 
-  //   await fixture.events.keyboard.press('Enter');
+    await fixture.events.keyboard.press('Enter');
 
-  //   // tab through confirmation dialog to remove logo
-  //   await fixture.events.keyboard.press('Tab');
+    // we want to select the second list item
+    await fixture.events.keyboard.press('ArrowDown');
 
-  //   await fixture.events.keyboard.press('Tab');
+    await fixture.events.keyboard.press('Enter');
 
-  //   await fixture.events.keyboard.press('Enter');
+    // tab through confirmation dialog to remove logo
+    await fixture.events.keyboard.press('Tab');
 
-  //   const updatedLogos = within(
-  //     await fixture.screen.getByTestId('publisher-logos-container')
-  //   ).queryAllByTestId(/^uploaded-publisher-logo-/);
+    await fixture.events.keyboard.press('Tab');
 
-  //   expect(updatedLogos.length).toBeLessThan(initialPublisherLogosLength);
-  // });
+    await fixture.events.keyboard.press('Enter');
+
+    const updatedLogos = within(
+      await fixture.screen.getByTestId('publisher-logos-container')
+    ).queryAllByTestId(/^uploaded-publisher-logo-/);
+
+    expect(updatedLogos.length).toBeLessThan(initialPublisherLogosLength);
+  });
 
   it('should render the telemetry settings checkbox', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
