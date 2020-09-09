@@ -23,12 +23,12 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { ALERT_SEVERITY } from '../../../constants';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Alert from '../';
 
 describe('Alert', () => {
   it('should render 1 alert', () => {
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <Alert message={'this is an error'} severity={ALERT_SEVERITY.ERROR} />
     );
 
@@ -37,7 +37,7 @@ describe('Alert', () => {
     expect(alert).toBeInTheDocument();
   });
   it('should render 1 alert with a title', () => {
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <Alert
         message={'this is an error'}
         title={'this is an alert title'}
@@ -52,7 +52,7 @@ describe('Alert', () => {
 
   it('should recognize click on DismissButton', () => {
     const mockDismissClick = jest.fn();
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <Alert
         isAllowDismiss={true}
         message={'this is an error'}
