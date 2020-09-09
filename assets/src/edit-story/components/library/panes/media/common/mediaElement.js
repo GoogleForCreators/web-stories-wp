@@ -17,44 +17,23 @@
 /**
  * External dependencies
  */
-import styled, { keyframes, css } from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useEffect, useCallback, memo, useState, useRef, useMemo } from 'react';
+import { useEffect, useCallback, memo, useState, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { useDropTargets } from '../../../../../app';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
-import resourceList from '../../../../../utils/resourceList';
-import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
+import InnerElement from './InnerElement';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
-
-const styledTiles = css`
-  width: 100%;
-  cursor: pointer;
-  transition: 0.2s transform, 0.15s opacity;
-  border-radius: 4px;
-  opacity: 0;
-`;
-
-const Image = styled.img`
-  ${styledTiles}
-`;
-
-// Display the newly uploaded videos without a delay: showWithoutDelay
-const Video = styled.video`
-  ${styledTiles}
-  object-fit: cover;
-  ${({ showWithoutDelay }) => (showWithoutDelay ? 'opacity: 1;' : '')}
-`;
 
 const Container = styled.div.attrs((props) => ({
   style: {
@@ -72,19 +51,6 @@ const InnerContainer = styled.div`
   body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
     outline: solid 2px #fff;
   }
-`;
-
-const Duration = styled.div`
-  position: absolute;
-  bottom: 8px;
-  left: 8px;
-  background: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.6)};
-  font-family: ${({ theme }) => theme.fonts.duration.family};
-  font-size: ${({ theme }) => theme.fonts.duration.size};
-  line-height: ${({ theme }) => theme.fonts.duration.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.duration.letterSpacing};
-  padding: 0 6px;
-  border-radius: 10px;
 `;
 
 const gradientAnimation = keyframes`
@@ -118,10 +84,6 @@ const UploadingIndicator = styled.div`
       transition-property: width;
     }
   }
-`;
-
-const HiddenPosterImage = styled.img`
-  display: none;
 `;
 
 /**
@@ -179,46 +141,6 @@ const MediaElement = ({
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const {
-    actions: { handleDrag, handleDrop, setDraggingResource },
-  } = useDropTargets();
-
-  const measureMediaElement = () =>
-    mediaElement?.current?.getBoundingClientRect();
-
-  const dropTargetsBindings = useMemo(
-    () => (thumbnailURL) => ({
-      draggable: 'true',
-      onDragStart: (e) => {
-        resourceList.set(resource.id, {
-          url: thumbnailURL,
-          type: 'cached',
-        });
-        setDraggingResource(resource);
-        const { x, y, width: w, height: h } = measureMediaElement();
-        const offsetX = e.clientX - x;
-        const offsetY = e.clientY - y;
-        e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
-        e.dataTransfer.setData(
-          'resource/media',
-          JSON.stringify({
-            resource,
-            offset: { x: offsetX, y: offsetY, w, h },
-          })
-        );
-      },
-      onDrag: (e) => {
-        handleDrag(resource, e.clientX, e.clientY);
-      },
-      onDragEnd: (e) => {
-        e.preventDefault();
-        setDraggingResource(null);
-        handleDrop(resource);
-      },
-    }),
-    [setDraggingResource, resource, handleDrag, handleDrop]
-  );
-
   const makeActive = useCallback(() => setActive(true), []);
   const makeInactive = useCallback(() => setActive(false), []);
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
@@ -233,66 +155,53 @@ const MediaElement = ({
   activeRef.current = active;
 
   useEffect(() => {
-    if (type === 'video') {
-      if (isMenuOpen) {
-        if (mediaElement.current && !mediaElement.current.paused) {
-          // If it's a video, pause the preview while the dropdown menu is open.
-          mediaElement.current.pause();
-        }
-      } else {
-        if (active) {
-          setShowVideoDetail(false);
-          if (mediaElement.current && hoverTimer == null) {
-            const timer = setTimeout(() => {
-              if (activeRef.current) {
-                const playPromise = mediaElement.current.play();
-                if (playPromise) {
-                  // All supported browsers return promise but unit test runner does not.
-                  playPromise.catch(() => {});
-                }
-              }
-            }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
-            setHoverTimer(timer);
-            // Pointer still in the media element, continue the video.
-          }
-        } else {
-          setShowVideoDetail(true);
-          if (hoverTimer != null) {
-            clearTimeout(hoverTimer);
-            setHoverTimer(null);
-          }
-          if (mediaElement.current) {
-            // Stop video and reset position.
-            mediaElement.current.pause();
-            mediaElement.current.currentTime = 0;
-          }
-        }
-      }
+    if (type !== 'video') {
+      return undefined;
     }
-    return () => {
-      if (hoverTimer != null) {
+    const resetHoverTime = () => {
+      if (hoverTimer !== null) {
         clearTimeout(hoverTimer);
         setHoverTimer(null);
       }
     };
+    if (isMenuOpen) {
+      if (mediaElement.current && !mediaElement.current.paused) {
+        // If it's a video, pause the preview while the dropdown menu is open.
+        mediaElement.current.pause();
+      }
+    } else {
+      if (active) {
+        setShowVideoDetail(false);
+        if (mediaElement.current && hoverTimer == null) {
+          const timer = setTimeout(() => {
+            if (activeRef.current) {
+              const playPromise = mediaElement.current.play();
+              if (playPromise) {
+                // All supported browsers return promise but unit test runner does not.
+                playPromise.catch(() => {});
+              }
+            }
+          }, AUTOPLAY_PREVIEW_VIDEO_DELAY_MS);
+          setHoverTimer(timer);
+          // Pointer still in the media element, continue the video.
+        }
+      } else {
+        setShowVideoDetail(true);
+        resetHoverTime();
+        if (mediaElement.current) {
+          // Stop video and reset position.
+          mediaElement.current.pause();
+          mediaElement.current.currentTime = 0;
+        }
+      }
+    }
+    return resetHoverTime;
   }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
   const onClick = (thumbnailUrl) => () => {
     onInsert(resource, thumbnailUrl);
   };
 
-  const innerElement = getInnerElement(type, {
-    src,
-    ref: mediaElement,
-    resource,
-    alt,
-    width,
-    height,
-    onClick,
-    showVideoDetail,
-    dropTargetsBindings,
-    newVideoRef,
-  });
   const attribution = active &&
     resource.attribution?.author?.displayName &&
     resource.attribution?.author?.url && (
@@ -342,7 +251,18 @@ const MediaElement = ({
       tabIndex={index === 0 ? 0 : -1}
     >
       <InnerContainer>
-        {innerElement}
+        <InnerElement
+          type={type}
+          src={src}
+          mediaElement={mediaElement}
+          resource={resource}
+          alt={alt}
+          width={width}
+          height={height}
+          onClick={onClick}
+          showVideoDetail={showVideoDetail}
+          newVideoRef={newVideoRef}
+        />
         {attribution}
         {local && (
           <CSSTransition
@@ -368,78 +288,6 @@ const MediaElement = ({
     </Container>
   );
 };
-
-function getInnerElement(
-  type,
-  {
-    src,
-    ref,
-    resource,
-    alt,
-    width,
-    height,
-    onClick,
-    showVideoDetail,
-    dropTargetsBindings,
-    newVideoRef,
-  }
-) {
-  const makeMediaVisible = () => {
-    if (ref.current) {
-      ref.current.style.opacity = 1;
-    }
-  };
-  if (['image', 'gif'].includes(type)) {
-    const thumbnailURL = getSmallestUrlForWidth(width, resource);
-    return (
-      <Image
-        key={src}
-        src={thumbnailURL}
-        ref={ref}
-        width={width}
-        height={height}
-        alt={alt}
-        aria-label={alt}
-        loading={'lazy'}
-        onClick={onClick(thumbnailURL)}
-        onLoad={makeMediaVisible}
-        {...dropTargetsBindings(thumbnailURL)}
-      />
-    );
-  } else if (type === 'video') {
-    const { lengthFormatted, poster, mimeType } = resource;
-    const displayPoster = poster ? poster : newVideoRef.current;
-    return (
-      <>
-        <Video
-          key={src}
-          ref={ref}
-          poster={displayPoster}
-          width={width}
-          height={height}
-          preload="none"
-          aria-label={alt}
-          muted
-          onClick={onClick(poster)}
-          showWithoutDelay={newVideoRef.current}
-          {...dropTargetsBindings(poster)}
-        >
-          <source
-            src={getSmallestUrlForWidth(width, resource)}
-            type={mimeType}
-          />
-        </Video>
-        {/* This hidden image allows us to fade in the poster image in the
-        gallery as there's no event when a video's poster loads. */}
-        {!newVideoRef.current && (
-          <HiddenPosterImage src={poster} onLoad={makeMediaVisible} />
-        )}
-        {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
-      </>
-    );
-  }
-  throw new Error('Invalid media element type.');
-}
 
 MediaElement.propTypes = {
   index: PropTypes.number.isRequired,

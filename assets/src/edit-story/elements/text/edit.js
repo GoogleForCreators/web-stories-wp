@@ -65,9 +65,8 @@ const TextBox = styled.div`
   ${elementWithTextParagraphStyle}
   ${elementWithBackgroundColor}
 
-  opacity: ${({
-    opacity,
-  }) => (typeof opacity !== 'undefined' ? opacity / 100 : null)};
+  opacity: ${({ opacity }) =>
+    typeof opacity !== 'undefined' ? opacity / 100 : null};
   position: absolute;
   top: 0;
   left: 0;
