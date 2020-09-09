@@ -62,6 +62,7 @@ function Content({
   users,
   view,
   dateSettings,
+  initialFocusStoryId,
 }) {
   return (
     <Layout.Scrollable>
@@ -83,6 +84,7 @@ function Content({
                   users={users}
                   view={view}
                   dateSettings={dateSettings}
+                  initialFocusStoryId={initialFocusStoryId}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -112,6 +114,7 @@ Content.propTypes = {
   users: UsersPropType,
   view: ViewPropTypes,
   dateSettings: DateSettingsPropType,
+  initialFocusStoryId: PropTypes.number,
 };
 
 export default Content;
