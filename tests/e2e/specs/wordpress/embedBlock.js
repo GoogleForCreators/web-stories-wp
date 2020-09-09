@@ -46,14 +46,26 @@ describe('Embed Block', () => {
   beforeAll(async () => {
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
+      // amp-story-player scripts
       if (request.url().startsWith('https://cdn.ampproject.org/')) {
         request.respond({
           status: 200,
           body: '',
         });
-      } else {
-        request.continue();
+        return;
       }
+
+      // Fetching metadata for the story.
+      if (request.url().includes('web-stories/v1/embed')) {
+        request.respond({
+          status: 200,
+          body:
+            '{"title":"Stories in AMP - Hello World","poster":"https:\\/\\/amp.dev\\/static\\/samples\\/img\\/story_dog2_portrait.jpg"}',
+        });
+        return;
+      }
+
+      request.continue();
     });
   });
 
