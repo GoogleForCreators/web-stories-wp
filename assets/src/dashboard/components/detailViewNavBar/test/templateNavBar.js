@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import { DetailViewNavBar } from '../';
 
 describe('DetailViewNavBar', () => {
   it('should render nav bar for detail template view', () => {
-    const { getByRole } = renderWithTheme(<DetailViewNavBar />);
+    const { getByRole } = renderWithProviders(<DetailViewNavBar />);
     const nav = getByRole('navigation');
 
     expect(nav).toBeDefined();
