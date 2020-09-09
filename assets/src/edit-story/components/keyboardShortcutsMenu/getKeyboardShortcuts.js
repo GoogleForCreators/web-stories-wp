@@ -28,6 +28,7 @@ import { SPECIAL_KEYS } from './constants';
 function getKeyboardShortcuts() {
   const isMacOs = isPlatformMacOS();
   const cmdOrCtrl = isMacOs ? SPECIAL_KEYS.COMMAND : SPECIAL_KEYS.CONTROL;
+  const optionOrAlt = isMacOs ? SPECIAL_KEYS.OPTION : SPECIAL_KEYS.ALT;
 
   return {
     headers: [
@@ -38,20 +39,20 @@ function getKeyboardShortcuts() {
     ],
     panels: [
       {
-        // This shortcut panel should remain disabled until
-        // this ticket has been completed:
-        // https://github.com/google/web-stories-wp/issues/4241
-        disabled: true,
         label: __(
           'Switch between element, workspace and design panels',
           'web-stories'
         ),
         shortcut: [
           cmdOrCtrl,
+          optionOrAlt,
           SPECIAL_KEYS.SHIFT,
-          '<',
+          { label: __('+', 'web-stories') },
+          '1',
           { label: __('or', 'web-stories') },
-          '>',
+          '2',
+          { label: __('or', 'web-stories') },
+          '3',
         ],
       },
     ],
