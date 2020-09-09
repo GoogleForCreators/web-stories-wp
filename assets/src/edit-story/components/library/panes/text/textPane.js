@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 import { rgba } from 'polished';
@@ -36,6 +36,7 @@ import DisplayElement from '../../../canvas/displayElement';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
+import useBatchingCallback from '../../../../utils/useBatchingCallback';
 import { Pane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
@@ -79,7 +80,7 @@ function TextPane(props) {
     }
   }, [showTextSets]);
 
-  const insertElements = useCallback(
+  const insertElements = useBatchingCallback(
     (elements) => {
       elements.forEach((e) => insertElement(e.type, e));
     },

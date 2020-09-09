@@ -26,19 +26,17 @@
  *
  * @param {Object} state Current state.
  * @param {Object} payload New state to set.
- * @param {number} payload.version Current data version of story.
  * @param {Array<Object>} payload.pages List of pages.
  * @param {string} payload.current Current page ID.
  * @param {Array} payload.selection Selection.
  * @param {Object} payload.story Story object.
  * @return {Object} New state
  */
-function restore(state, { version, pages, current, selection, story }) {
+function restore(state, { pages, current, selection, story }) {
   if (!Array.isArray(pages) || pages.length === 0) {
     return state;
   }
 
-  const newVersion = version ?? null;
   const newStory = typeof story === 'object' ? story : {};
   const newCurrent = pages.some(({ id }) => id === current)
     ? current
@@ -46,7 +44,6 @@ function restore(state, { version, pages, current, selection, story }) {
   const newSelection = Array.isArray(selection) ? selection : [];
 
   return {
-    version: newVersion,
     pages,
     current: newCurrent,
     selection: newSelection,

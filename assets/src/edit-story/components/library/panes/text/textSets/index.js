@@ -21,8 +21,5 @@ import getTextSets from './getTextSets';
 
 export default async function () {
   const textSetLibrary = await getTextSets();
-
-  return Object.values(textSetLibrary).reduce((textSets, set) => {
-    return [...textSets, ...set];
-  }, []);
+  return Object.values(textSetLibrary).flat();
 }

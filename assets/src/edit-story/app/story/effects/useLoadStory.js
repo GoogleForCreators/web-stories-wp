@@ -24,7 +24,7 @@ import { useEffect } from 'react';
  */
 import { useAPI, useHistory } from '../../';
 import { createPage } from '../../../elements';
-import { migrate, DATA_VERSION } from '../../../migration';
+import { migrate } from '../../../migration';
 
 // When ID is set, load story from API.
 function useLoadStory({ storyId, shouldLoad, restore }) {
@@ -110,7 +110,6 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
 
         // TODO read current page and selection from deeplink?
         restore({
-          version: DATA_VERSION,
           pages,
           story,
           selection: [],

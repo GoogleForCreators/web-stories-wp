@@ -31,7 +31,6 @@ describe('restore', () => {
     const result = restore({ pages });
 
     expect(result).toStrictEqual({
-      version: null,
       animationState: STORY_ANIMATION_STATE.RESET,
       pages,
       selection: [],
@@ -95,7 +94,6 @@ describe('restore', () => {
     });
 
     expect(result).toStrictEqual({
-      version: null,
       animationState: STORY_ANIMATION_STATE.RESET,
       pages: [],
       selection: [],
@@ -112,7 +110,6 @@ describe('restore', () => {
     const result = restore({});
 
     expect(result).toStrictEqual({
-      version: null,
       animationState: STORY_ANIMATION_STATE.RESET,
       pages: [],
       selection: [],
@@ -128,7 +125,6 @@ describe('restore', () => {
 
     // First restore to some non-initial state.
     const stateWithContent = restore({
-      version: 2,
       pages: [{ id: '111' }, { id: '222', elements: [{ id: '333' }] }],
       current: '222',
       selection: ['333'],
@@ -136,7 +132,6 @@ describe('restore', () => {
     });
 
     // And validate that it is non-initial.
-    expect(stateWithContent.version).not.toBeNull();
     expect(stateWithContent.pages).not.toHaveLength(0);
     expect(stateWithContent.current).not.toBeNull();
     expect(stateWithContent.selection).not.toHaveLength(0);
@@ -144,10 +139,9 @@ describe('restore', () => {
 
     // Then override by restoring to a new state.
     const pages = [{ id: '123' }];
-    const result = restore({ version: 3, pages });
+    const result = restore({ pages });
 
     expect(result).toStrictEqual({
-      version: 3,
       animationState: STORY_ANIMATION_STATE.RESET,
       pages,
       selection: [],
