@@ -76,7 +76,6 @@ export const _default = () => {
   return (
     <PublisherLogoSettings
       canUploadFiles={boolean('canUploadFile', true)}
-      canUpdateLogos={boolean('canUpdateLogos', true)}
       handleAddLogos={handleAddLogos}
       handleRemoveLogo={handleRemoveLogo}
       isLoading={boolean('isLoading', false)}

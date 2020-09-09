@@ -312,21 +312,23 @@ function EditorSettings() {
         </Layout.Squishable>
         <Layout.Scrollable>
           <Main>
-            <GoogleAnalyticsSettings
-              handleUpdate={handleUpdateGoogleAnalyticsId}
-              canUpdateAnalyticsId={canManageSettings}
-              googleAnalyticsId={googleAnalyticsId}
-            />
-            <PublisherLogoSettings
-              handleAddLogos={handleAddLogos}
-              handleRemoveLogo={handleRemoveLogo}
-              handleUpdateDefaultLogo={handleUpdateDefaultLogo}
-              publisherLogos={orderedPublisherLogos}
-              canUploadFiles={canUploadFiles}
-              canUpdateLogos={canManageSettings}
-              isLoading={isMediaLoading}
-              uploadError={mediaError}
-            />
+            {canManageSettings && (
+              <GoogleAnalyticsSettings
+                handleUpdate={handleUpdateGoogleAnalyticsId}
+                googleAnalyticsId={googleAnalyticsId}
+              />
+            )}
+            {canManageSettings && (
+              <PublisherLogoSettings
+                handleAddLogos={handleAddLogos}
+                handleRemoveLogo={handleRemoveLogo}
+                handleUpdateDefaultLogo={handleUpdateDefaultLogo}
+                publisherLogos={orderedPublisherLogos}
+                canUploadFiles={canUploadFiles}
+                isLoading={isMediaLoading}
+                uploadError={mediaError}
+              />
+            )}
             <TelemetrySettings
               disabled={currentUser.isUpdating}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}

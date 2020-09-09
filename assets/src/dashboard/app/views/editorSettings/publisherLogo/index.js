@@ -66,7 +66,6 @@ export const TEXT = {
 
 function PublisherLogoSettings({
   canUploadFiles,
-  canUpdateLogos,
   handleAddLogos,
   handleRemoveLogo,
   handleUpdateDefaultLogo,
@@ -143,7 +142,7 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
-  const showLogoContextMenu = !hasOnlyOneLogo && canUpdateLogos;
+  const showLogoContextMenu = !hasOnlyOneLogo;
 
   const onMenuItemSelected = useCallback(
     (sender, logo, index) => {
@@ -263,7 +262,6 @@ function PublisherLogoSettings({
 
 PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
-  canUpdateLogos: PropTypes.bool,
   handleAddLogos: PropTypes.func,
   handleRemoveLogo: PropTypes.func,
   handleUpdateDefaultLogo: PropTypes.func,

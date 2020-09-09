@@ -55,11 +55,7 @@ export const TEXT = {
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
 };
 
-function GoogleAnalyticsSettings({
-  canUpdateAnalyticsId,
-  googleAnalyticsId,
-  handleUpdate,
-}) {
+function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
@@ -113,7 +109,6 @@ function GoogleAnalyticsSettings({
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
-            disabled={!canUpdateAnalyticsId}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {__('Save', 'web-stories')}
@@ -131,7 +126,6 @@ function GoogleAnalyticsSettings({
   );
 }
 GoogleAnalyticsSettings.propTypes = {
-  canUpdateAnalyticsId: PropTypes.bool,
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
 };

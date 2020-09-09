@@ -39,7 +39,6 @@ describe('PublisherLogo', () => {
         isLoading={false}
         publisherLogos={[]}
         canUploadFiles={true}
-        canUpdateLogos={true}
       />
     );
 
@@ -100,7 +99,6 @@ describe('PublisherLogo', () => {
         handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
-        canUpdateLogos={true}
       />
     );
 
@@ -118,7 +116,6 @@ describe('PublisherLogo', () => {
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
         uploadError={'Something went wrong.'}
-        canUpdateLogos={true}
         canUploadFiles={true}
       />
     );
@@ -136,7 +133,6 @@ describe('PublisherLogo', () => {
         handleUpdateDefaultLogo={mockHandleRemoveLogo}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
-        canUpdateLogos={true}
       />
     );
 
@@ -170,7 +166,6 @@ describe('PublisherLogo', () => {
         handleUpdateDefaultLogo={jest.fn}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
-        canUpdateLogos={true}
       />
     );
 
@@ -194,7 +189,6 @@ describe('PublisherLogo', () => {
         handleUpdateDefaultLogo={mockHandleDefaultLogo}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
-        canUpdateLogos={true}
       />
     );
 
@@ -220,7 +214,6 @@ describe('PublisherLogo', () => {
         handleUpdateDefaultLogo={mockHandleDefaultLogo}
         isLoading={false}
         publisherLogos={formattedPublisherLogos}
-        canUpdateLogos={true}
       />
     );
     const ContextMenuButton = getByTestId(
