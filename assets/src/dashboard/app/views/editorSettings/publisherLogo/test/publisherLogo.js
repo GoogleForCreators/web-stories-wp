@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 
 import PublisherLogoSettings, { TEXT } from '..';
 import formattedPublisherLogos from '../../../../../dataUtils/formattedPublisherLogos';
@@ -32,7 +32,7 @@ describe('PublisherLogo', () => {
   const mockHandleRemoveLogo = jest.fn();
 
   it('should render a fileUpload container and helper text by default when canUploadFiles is true', () => {
-    const { getByTestId, getByText } = renderWithTheme(
+    const { getByTestId, getByText } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -47,7 +47,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should not render fileUpload container when canUploadFiles is false', () => {
-    const { queryAllByTestId } = renderWithTheme(
+    const { queryAllByTestId } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -60,7 +60,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should render an image for each publisherLogo in the array', () => {
-    const { queryAllByRole } = renderWithTheme(
+    const { queryAllByRole } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -73,7 +73,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should render a button to remove publisherLogos aside from the default logo', () => {
-    const { queryAllByTestId } = renderWithTheme(
+    const { queryAllByTestId } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -88,7 +88,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should render an error message if uploadError is present', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -102,7 +102,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should trigger mockHandleRemoveLogo when delete button is clicked on an uploaded file', () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
@@ -118,7 +118,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should trigger mockHandleRemoveLogo when delete button is pressed with enter on an uploaded file', () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={mockHandleRemoveLogo}
