@@ -497,6 +497,14 @@ describe('List view', () => {
     return users;
   }
 
+  function isElementVisible(element) {
+    return Boolean(
+      element.offsetWidth ||
+        element.offsetHeight ||
+        element.getClientRects().length
+    );
+  }
+
   describe('CUJ: Creator can view their stories in list view: See stories in list view', () => {
     it('should switch to List View', async () => {
       const listViewButton = fixture.screen.getByLabelText(
@@ -1075,6 +1083,69 @@ describe('List view', () => {
       });
 
       expect(wpListViewLink).toBeTruthy();
+    });
+  });
+
+  describe('CUJ: Creator can navigate list view using keyboard: Tab through each story in the list', () => {
+    let storiesSortedByModified = [];
+
+    beforeEach(async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+      storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      const listViewButton = fixture.screen.getByLabelText(
+        new RegExp(`^${VIEW_STYLE_LABELS[VIEW_STYLE.GRID]}$`)
+      );
+
+      // switch to list view
+      await fixture.events.click(listViewButton);
+
+      // place focus on last modified header
+      const lastModifiedHeader = fixture.screen.getByText(/^Last Modified/);
+      await fixture.events.focus(lastModifiedHeader);
+    });
+
+    it('should be able to tab to story title', async () => {
+      // tabbing from Last Modified should get us to title
+      await fixture.events.keyboard.press('Tab');
+
+      const title = await document.activeElement.innerText;
+      expect(title).toContain(storiesSortedByModified[0].title);
+    });
+
+    it('should be able to tab to story menu control', async () => {
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+      const { getByText } = within(rows[0]);
+
+      // Rename shouldn't be found until menu is open
+      expect(isElementVisible(getByText(/^Rename/))).toBeFalse();
+
+      // tabbing from Last Modified should get us to title
+      await fixture.events.keyboard.press('Tab');
+
+      // tabbing from title should move to menu control
+      await fixture.events.keyboard.press('Tab');
+
+      // hitting enter should open menu
+      await fixture.events.keyboard.press('Enter');
+
+      // Rename should be findable
+      expect(isElementVisible(getByText(/^Rename/))).toBeTrue();
+    });
+
+    it('should be able to tab to another story title', async () => {
+      // tabbing from Last Modified should get us to title
+      await fixture.events.keyboard.press('Tab');
+
+      // tabbing from title should move to menu control
+      await fixture.events.keyboard.press('Tab');
+
+      // tabbing from menu control should move to next story title
+      await fixture.events.keyboard.press('Tab');
+
+      const title = await document.activeElement.innerText;
+      expect(title).toContain(storiesSortedByModified[1].title);
     });
   });
 });

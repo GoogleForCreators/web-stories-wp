@@ -91,7 +91,7 @@ describe('ApiProvider', () => {
     });
 
     expect(result.current.state.stories.stories).toStrictEqual({
-      '123': {
+      123: {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
@@ -165,7 +165,7 @@ describe('ApiProvider', () => {
     });
 
     expect(result.current.state.stories.stories).toStrictEqual({
-      '123': {
+      123: {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
@@ -253,7 +253,7 @@ describe('ApiProvider', () => {
     });
 
     expect(result.current.state.stories.stories).toStrictEqual({
-      '123': {
+      123: {
         bottomTargetAction: 'editStory&post=123',
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
@@ -291,7 +291,7 @@ describe('ApiProvider', () => {
         status: 'publish',
         title: 'Carlos',
       },
-      '456': {
+      456: {
         bottomTargetAction: 'editStory&post=456',
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',

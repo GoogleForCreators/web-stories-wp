@@ -29,19 +29,27 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import useApi from '../../api/useApi';
 import { Layout, Dialog, Button } from '../../../components';
-import { BUTTON_TYPES } from '../../../constants';
+import {
+  BUTTON_TYPES,
+  MIN_IMG_WIDTH,
+  MIN_IMG_HEIGHT,
+} from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
+import TelemetrySettings from './telemetry';
 
 const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
+    currentUser,
+    fetchCurrentUser,
     fetchSettings,
     updateSettings,
+    toggleWebStoriesTrackingOptIn,
     googleAnalyticsId,
     fetchMediaById,
     uploadMedia,
@@ -55,6 +63,7 @@ function EditorSettings() {
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
+        usersApi: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       },
       state: {
         settings: {
@@ -63,6 +72,7 @@ function EditorSettings() {
           publisherLogoIds,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
+        currentUser,
       },
     }) => ({
       fetchSettings,
@@ -75,6 +85,9 @@ function EditorSettings() {
       mediaById,
       newlyCreatedMediaIds,
       publisherLogoIds,
+      fetchCurrentUser,
+      toggleWebStoriesTrackingOptIn,
+      currentUser,
     })
   );
 
@@ -99,7 +112,8 @@ function EditorSettings() {
 
   useEffect(() => {
     fetchSettings();
-  }, [fetchSettings]);
+    fetchCurrentUser();
+  }, [fetchCurrentUser, fetchSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
@@ -120,12 +134,28 @@ function EditorSettings() {
   );
 
   const handleAddLogos = useCallback(
-    (files) => {
-      const isFileSizeWithinMaxUpload = files.every(
-        (file) => file.size <= maxUpload
-      );
+    async (files) => {
+      let allFileSizesWithinMaxUpload = true;
+      let errorProcessingImages = false;
+      let imagePromises = [];
 
-      if (!isFileSizeWithinMaxUpload) {
+      files.forEach((file) => {
+        allFileSizesWithinMaxUpload =
+          allFileSizesWithinMaxUpload && file.size <= maxUpload;
+
+        imagePromises.push(
+          new Promise((resolve, reject) => {
+            const img = new Image();
+
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(file.name));
+
+            img.src = URL.createObjectURL(file);
+          })
+        );
+      });
+
+      if (!allFileSizesWithinMaxUpload) {
         const errorText =
           files.length === 1
             ? sprintf(
@@ -146,15 +176,59 @@ function EditorSettings() {
               );
         return setMediaError(errorText);
       }
+
+      const images = await Promise.all(imagePromises).catch(() => {
+        errorProcessingImages = true;
+      });
+
+      if (errorProcessingImages) {
+        const errorText =
+          files.length === 1
+            ? __(
+                'Sorry, there was an error processing your upload. Please try again.',
+                'web-stories'
+              )
+            : __(
+                'Sorry, there was an error processing one or more of your uploads. Please try again.',
+                'web-stories'
+              );
+        return setMediaError(errorText);
+      }
+
+      const allFileDimensionsValid = images.every(
+        ({ height, width }) =>
+          height >= MIN_IMG_HEIGHT && width >= MIN_IMG_WIDTH
+      );
+
+      if (!allFileDimensionsValid) {
+        const errorText =
+          files.length === 1
+            ? sprintf(
+                /* translators: 1 = minimum width, 2 = minimum height */
+                __(
+                  'Sorry, this file is too small. Make sure your logo is larger than %s.',
+                  'web-stories'
+                ),
+                sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
+              )
+            : sprintf(
+                /* translators: %s: image dimensions in pixels. */
+                __(
+                  'Sorry, one or more files are too small. Make sure your logos are all larger than %s.',
+                  'web-stories'
+                ),
+                sprintf('%1$dx%2$dpx', MIN_IMG_WIDTH, MIN_IMG_HEIGHT)
+              );
+        return setMediaError(errorText);
+      }
+
       setMediaError('');
       return uploadMedia(files);
     },
     [maxUpload, maxUploadFormatted, uploadMedia]
   );
 
-  const handleRemoveLogo = useCallback((e, media) => {
-    e.preventDefault();
-
+  const handleRemoveLogo = useCallback((media) => {
     setActiveDialog(ACTIVE_DIALOG_REMOVE_LOGO);
     setActiveLogo(media.id);
   }, []);
@@ -168,14 +242,16 @@ function EditorSettings() {
       return [];
     }
 
-    return publisherLogoIds.map((publisherLogoId) => {
-      if (mediaById[publisherLogoId]) {
-        return publisherLogoId === activePublisherLogoId
-          ? { ...mediaById[publisherLogoId], isActive: true }
-          : mediaById[publisherLogoId];
-      }
-      return undefined; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
-    });
+    return publisherLogoIds
+      .map((publisherLogoId) => {
+        if (mediaById[publisherLogoId]) {
+          return publisherLogoId === activePublisherLogoId
+            ? { ...mediaById[publisherLogoId], isActive: true }
+            : mediaById[publisherLogoId];
+        }
+        return {}; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
+      })
+      .filter((logo) => logo?.id);
   }, [activePublisherLogoId, publisherLogoIds, mediaById]);
 
   return (
@@ -200,6 +276,13 @@ function EditorSettings() {
               canUploadFiles={canUploadFiles}
               isLoading={isMediaLoading}
               uploadError={mediaError}
+            />
+            <TelemetrySettings
+              disabled={currentUser.isUpdating}
+              onCheckboxSelected={toggleWebStoriesTrackingOptIn}
+              selected={Boolean(
+                currentUser.data.meta?.web_stories_tracking_optin
+              )}
             />
           </Main>
         </Layout.Scrollable>

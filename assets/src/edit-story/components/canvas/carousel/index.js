@@ -91,6 +91,21 @@ const NavArea = styled(Area)`
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
+const EditorVersion = styled.div`
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  margin-left: 14px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  font-size: ${({ theme }) => theme.fonts.version.size};
+  font-family: ${({ theme }) => theme.fonts.version.family};
+  line-height: ${({ theme }) => theme.fonts.version.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+`;
+
 const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
@@ -242,7 +257,7 @@ function Carousel() {
       actions: { setCurrentPage, arrangePage },
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
-  const { isRTL } = useConfig();
+  const { isRTL, version } = useConfig();
   const { showSafeZone, setShowSafeZone } = useCanvas(
     ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
       showSafeZone,
@@ -420,10 +435,11 @@ function Carousel() {
                 )}
                 <ReorderablePage position={index}>
                   <Page
+                    tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     onClick={handleClickPage(page)}
                     role="option"
                     data-page-id={page.id}
-                    ariaLabel={
+                    aria-label={
                       isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
@@ -507,6 +523,13 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
+      <EditorVersion>
+        {sprintf(
+          /* translators: %s: editor version. */
+          __('Version %s', 'web-stories'),
+          version
+        )}
+      </EditorVersion>
       <Modal
         open={isGridViewOpen}
         onClose={closeModal}

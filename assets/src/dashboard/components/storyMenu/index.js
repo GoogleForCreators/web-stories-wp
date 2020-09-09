@@ -59,6 +59,7 @@ const MenuContainer = styled.div`
     margin: 0; /* 0 out margin that is needed by default on other instances of popover menus */
   }
 `;
+
 MenuContainer.propTypes = {
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };

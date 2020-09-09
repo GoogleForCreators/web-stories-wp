@@ -65,5 +65,6 @@ export function getRelativeDisplayDate(
     return __('yesterday', 'web-stories');
   }
 
-  return formatDate(displayDate, dateSettings);
+  // Calls getMoment() itself.
+  return formatDate(date, dateSettings);
 }

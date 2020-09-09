@@ -90,7 +90,8 @@ class HTML extends \WP_UnitTestCase {
 		$this->assertNotContains( 'BAR', $actual );
 		$this->assertNotContains( $start_tag, $actual );
 		$this->assertNotContains( $end_tag, $actual );
-		$this->assertContains( '<meta name="generator" content="Web Stories', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 
@@ -216,6 +217,23 @@ class HTML extends \WP_UnitTestCase {
 		$actual = $this->setup_renderer( $post );
 
 		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
+	}
+
+	/**
+	 * @covers ::remove_noscript_amp_boilerplate
+	 * @covers ::add_noscript_amp_boilerplate
+	 */
+	public function test_removes_and_reinserts_noscript_amp_boilerplate() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$actual = $this->setup_renderer( $post );
+
+		$this->assertContains( '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>', $actual );
 	}
 
 	/**
