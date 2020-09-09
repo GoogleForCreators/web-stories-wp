@@ -26,6 +26,7 @@ import { useFeature } from 'flagged';
 import { Toaster, useToastContext } from '../../../components/toaster';
 import { ALERT_SEVERITY } from '../../../constants';
 import useApi from '../../api/useApi';
+import { useConfig } from '../../config';
 
 function ToasterView() {
   const { storyError, templateError, settingsError, mediaError } = useApi(
@@ -43,8 +44,10 @@ function ToasterView() {
     actions: { removeToast, addToast },
     state: { activeToasts },
   } = useToastContext();
+  const { capabilities: { canManageSettings } = {} } = useConfig();
 
-  const enableSettingsView = useFeature('enableSettingsView');
+  const enableSettingsView =
+    useFeature('enableSettingsView') && canManageSettings; // we only want to show errors about settings when users have access to managing them, otherwise they can't read settings anyways
 
   useEffect(() => {
     if (storyError?.id) {
