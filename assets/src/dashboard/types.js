@@ -104,7 +104,7 @@ export const StoryMenuPropType = PropTypes.shape({
   menuItems: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
-      value: PropTypes.oneOfType[(PropTypes.string, PropTypes.bool)],
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
       url: PropTypes.string,
     })
   ),
@@ -134,6 +134,6 @@ export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
 export const DateSettingsPropType = PropTypes.shape({
   dateFormat: PropTypes.string,
   timeFormat: PropTypes.string,
-  gmtOffset: PropTypes.number,
+  gmtOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   timezone: PropTypes.string,
 });

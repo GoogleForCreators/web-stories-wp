@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -35,7 +35,6 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
-import { useKeyDownEffect } from '../../../keyboard';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
@@ -104,15 +103,8 @@ const Collapse = styled.button`
 `;
 
 function Toggle({ children, toggle, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', toggle, [toggle]);
   return (
     <Collapse
-      ref={ref}
       onClick={(evt) => {
         evt.stopPropagation();
         toggle();

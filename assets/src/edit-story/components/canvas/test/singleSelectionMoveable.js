@@ -76,7 +76,7 @@ describe('singleSelectionMoveable', () => {
     canvasContext = {
       state: {
         pageSize,
-        nodesById: { '1': target },
+        nodesById: { 1: target },
         fullbleedContainer: document.body,
       },
       actions: {

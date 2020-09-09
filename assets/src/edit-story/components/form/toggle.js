@@ -102,11 +102,7 @@ function Toggle(
   const inputRef = useRef();
   useImperativeHandle(ref, () => inputRef.current);
   const toggle = () => onChange(!value);
-
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
+  // <enter> doesn't normally toggle checkboxes, but we'd like it to
   useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
 
   return (

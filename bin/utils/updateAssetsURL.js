@@ -19,11 +19,6 @@
  */
 import { readFileSync, writeFileSync } from 'fs';
 
-/**
- * Internal dependencies
- */
-import { ASSETS_URL_CDN } from './constants.js';
-
 const ASSETS_URL_CONSTANT_REGEX = /define\(\s*'WEBSTORIES_ASSETS_URL',\s*([^)]*?)\s*\);/;
 
 /**
@@ -42,7 +37,7 @@ function updateAssetsURL(pluginFile, cdn) {
     pluginFile,
     pluginFileContent.replace(
       versionConstant[0],
-      `define( 'WEBSTORIES_ASSETS_URL', '${cdn || ASSETS_URL_CDN}' );`
+      `define( 'WEBSTORIES_ASSETS_URL', '${cdn}' );`
     )
   );
 }

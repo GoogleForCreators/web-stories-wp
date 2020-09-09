@@ -25,13 +25,11 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import useFetchMediaEffect from '../useFetchMediaEffect';
 
 const mockListMedia = jest.fn();
-const mockListCategoryMedia = jest.fn();
 
 jest.mock('../api', () => ({
   useMedia3pApi: () => ({
     actions: {
       listMedia: mockListMedia,
-      listCategoryMedia: mockListCategoryMedia,
     },
   }),
 }));
@@ -85,11 +83,39 @@ describe('useFetchMediaEffect', () => {
     });
     expect(mockListMedia).toHaveBeenCalledWith({
       provider: 'unsplash',
-      searchTerm: undefined,
+      filter: { searchTerm: undefined },
       pageToken: undefined,
     });
     expect(fetchMediaSuccess).toHaveBeenCalledWith({
       provider: 'unsplash',
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+      pageToken: undefined,
+    });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
+  });
+
+  it('should fetch media when the provider is set and contentType is filtered', async () => {
+    mockListMedia.mockImplementation(() =>
+      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
+    );
+
+    await renderUseFetchMediaEffect({
+      provider: 'tenor',
+      selectedProvider: 'tenor',
+    });
+
+    expect(fetchMediaStart).toHaveBeenCalledWith({
+      provider: 'tenor',
+      pageToken: undefined,
+    });
+    expect(mockListMedia).toHaveBeenCalledWith({
+      provider: 'tenor',
+      filter: { contentType: 'gif' },
+      pageToken: undefined,
+    });
+    expect(fetchMediaSuccess).toHaveBeenCalledWith({
+      provider: 'tenor',
       media: [{ id: 1 }],
       nextPageToken: 'nextPageToken',
       pageToken: undefined,
@@ -110,7 +136,7 @@ describe('useFetchMediaEffect', () => {
     });
     expect(mockListMedia).toHaveBeenCalledWith({
       provider: 'unsplash',
-      searchTerm: 'cat',
+      filter: { searchTerm: 'cat' },
       pageToken: undefined,
     });
     expect(fetchMediaSuccess).toHaveBeenCalledWith({
@@ -123,7 +149,7 @@ describe('useFetchMediaEffect', () => {
   });
 
   it('should fetch media when the provider is set and category id', async () => {
-    mockListCategoryMedia.mockImplementation(() =>
+    mockListMedia.mockImplementation(() =>
       Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
     );
 
@@ -133,9 +159,12 @@ describe('useFetchMediaEffect', () => {
       provider: 'unsplash',
       pageToken: undefined,
     });
-    expect(mockListCategoryMedia).toHaveBeenCalledWith({
+    expect(mockListMedia).toHaveBeenCalledWith({
       provider: 'unsplash',
-      selectedCategoryId: 'category/1',
+      filter: {
+        searchTerm: null,
+        categoryId: 'category/1',
+      },
       pageToken: undefined,
     });
     expect(fetchMediaSuccess).toHaveBeenCalledWith({

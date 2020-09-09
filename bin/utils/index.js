@@ -16,6 +16,7 @@
 
 export { default as bundlePlugin } from './bundlePlugin.js';
 export { default as buildFonts } from './buildFonts.js';
+export { default as createBuild } from './createBuild.js';
 export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
 export { default as updateAssetsURL } from './updateAssetsURL.js';
 export { default as updateVersionNumbers } from './updateVersionNumbers.js';
