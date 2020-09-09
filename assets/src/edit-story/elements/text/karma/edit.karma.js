@@ -197,8 +197,7 @@ describe('TextEdit integration', () => {
           height: heightAfterExitingEditMode,
         } = frame.getBoundingClientRect();
 
-        let difference = Math.abs(heightAfterExitingEditMode - initialHeight);
-        expect(difference).toBeLessThan(1);
+        expect(initialHeight).toBeCloseTo(heightAfterExitingEditMode, 0);
 
         // Reenter edit mode
         await fixture.events.click(frame);
@@ -209,8 +208,7 @@ describe('TextEdit integration', () => {
           height: heightAfterReenteringEditMode,
         } = textElement.getBoundingClientRect();
 
-        difference = Math.abs(heightAfterReenteringEditMode - initialHeight);
-        expect(difference).toBeLessThan(1);
+        expect(heightAfterReenteringEditMode).toBeCloseTo(initialHeight, 0);
       });
     });
   });
