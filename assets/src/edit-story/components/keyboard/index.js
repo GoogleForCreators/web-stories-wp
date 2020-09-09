@@ -53,7 +53,7 @@ const globalRef = createRef();
 
 function setGlobalRef() {
   if (!globalRef.current) {
-    globalRef.current = document;
+    globalRef.current = document.documentElement;
   }
 }
 
