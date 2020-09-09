@@ -41,11 +41,13 @@ import {
   APP_ROUTES,
 } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { ReactComponent as WebStoriesLogo } from '../../images/logo.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
+  Header,
   NavButton,
   NavLink,
   NavList,
@@ -179,9 +181,12 @@ export function LeftRail() {
     >
       <div ref={upperContentRef}>
         <Content>
-          <WebStoriesHeading>
-            {__('Web Stories', 'web-stories')}
-          </WebStoriesHeading>
+          <Header>
+            <WebStoriesLogo aria-hidden={true} />
+            <WebStoriesHeading>
+              {__('Web Stories', 'web-stories')}
+            </WebStoriesHeading>
+          </Header>
         </Content>
         <Content>
           <NavButton

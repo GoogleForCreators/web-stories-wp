@@ -34,6 +34,16 @@ export const Content = styled.div`
   }
 `;
 
+export const Header = styled.div`
+  display: flex;
+  align-items: flex-start;
+
+  & > svg {
+    width: 30%;
+    margin-right: 5px;
+  }
+`;
+
 export const NavButton = styled(Button)`
   margin-bottom: 0;
   margin-top: 0;
@@ -90,8 +100,8 @@ export const WebStoriesHeading = styled.h1`
   line-height: 1em;
   letter-spacing: -0.01em;
   text-align: center;
-  text-transform: uppercase;
-  font-size: 24px;
+  text-transform: capitalize;
+  font-size: 21px;
   font-weight: 400;
   color: ${({ theme }) => theme.colors.gray900};
   align-self: center;
