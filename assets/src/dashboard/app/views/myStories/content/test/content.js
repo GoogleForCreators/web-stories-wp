@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import formattedUsersObject from '../../../../../dataUtils/formattedUsersObject';
 
 import { VIEW_STYLE, STORY_STATUSES } from '../../../../../constants';
@@ -66,7 +66,7 @@ describe('My Stories <Content />', function () {
   });
 
   it('should render the content grid with the correct story count.', function () {
-    const { getAllByTestId } = renderWithThemeAndFlagsProvider(
+    const { getAllByTestId } = renderWithProviders(
       <ToastProvider>
         <LayoutProvider>
           <Content
@@ -90,14 +90,14 @@ describe('My Stories <Content />', function () {
           />
         </LayoutProvider>
       </ToastProvider>,
-      { enableInProgressStoryActions: false }
+      { features: { enableInProgressStoryActions: false } }
     );
 
     expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);
   });
 
   it('should show "Create a story to get started!" if no stories are present.', function () {
-    const { getByText } = renderWithThemeAndFlagsProvider(
+    const { getByText } = renderWithProviders(
       <ToastProvider>
         <LayoutProvider>
           <Content
@@ -121,14 +121,14 @@ describe('My Stories <Content />', function () {
           />
         </LayoutProvider>
       </ToastProvider>,
-      { enableInProgressStoryActions: false }
+      { features: { enableInProgressStoryActions: false } }
     );
 
     expect(getByText('Create a story to get started!')).toBeInTheDocument();
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no stories are found for a search query are present.', function () {
-    const { getByText } = renderWithThemeAndFlagsProvider(
+    const { getByText } = renderWithProviders(
       <ToastProvider>
         <LayoutProvider>
           <Content
@@ -152,7 +152,7 @@ describe('My Stories <Content />', function () {
           />
         </LayoutProvider>
       </ToastProvider>,
-      { enableInProgressStoryActions: false }
+      { features: { enableInProgressStoryActions: false } }
     );
 
     expect(
