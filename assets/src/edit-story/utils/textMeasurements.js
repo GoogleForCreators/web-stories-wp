@@ -40,7 +40,7 @@ const MEASURER_STYLES = {
     // For debugging purposes - this will show the output render on screen
     background: 'red',
     visibility: 'visible',
-    top: '399px',
+    top: '99px',
     left: '99px',
     zIndex: 10000,
   }),

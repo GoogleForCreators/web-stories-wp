@@ -85,6 +85,7 @@ export function TextOutputWithUnits({
 
   const {
     dataToEditorY: _dataToEditorY,
+    font: _font,
     ...styles
   } = generateParagraphTextStyle(
     rest,
