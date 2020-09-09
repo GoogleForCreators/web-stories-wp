@@ -17,32 +17,31 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { Label, ShortcutKeyWrapper, ShortcutKey } from './components';
+import { ShortcutKeyWrapper, ShortcutKey, ShortcutKeyLabel } from './styled';
 import { KEY_SIZE } from './constants';
 
-const StyledLabel = styled(Label)`
-  margin: 0 8px;
-`;
-
-function ShortCutLabel({ keys, alignment = 'center' }) {
+function ShortCutLabel({ keys, alignment = 'center', ...rest }) {
   const commands = useMemo(
     () =>
       keys.map((key, index) =>
         key.label ? (
-          <StyledLabel key={index}>{key.label}</StyledLabel>
+          <ShortcutKeyLabel key={index}>{key.label}</ShortcutKeyLabel>
         ) : (
           <ShortcutKey
             key={index}
-            keySize={key.length > 1 ? KEY_SIZE.LARGE : KEY_SIZE.NORMAL}
+            aria-label={key.title}
+            title={key.title}
+            keySize={
+              (key.symbol || key).length > 1 ? KEY_SIZE.LARGE : KEY_SIZE.NORMAL
+            }
           >
-            {key}
+            {key.symbol || key}
           </ShortcutKey>
         )
       ),
@@ -50,13 +49,22 @@ function ShortCutLabel({ keys, alignment = 'center' }) {
   );
 
   return (
-    <ShortcutKeyWrapper alignment={alignment}>{commands}</ShortcutKeyWrapper>
+    <ShortcutKeyWrapper alignment={alignment} {...rest}>
+      {commands}
+    </ShortcutKeyWrapper>
   );
 }
 
 ShortCutLabel.propTypes = {
   keys: PropTypes.arrayOf(
-    PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        title: PropTypes.string,
+        label: PropTypes.string,
+        symbol: PropTypes.string,
+      }),
+    ])
   ),
   alignment: PropTypes.oneOf(['left', 'center', 'right']),
 };

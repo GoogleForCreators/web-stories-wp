@@ -21,16 +21,24 @@ import { Fragment, useMemo, useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
+import { Close as CloseIcon } from '../../icons';
 import { useKeyDownEffect } from '../keyboard';
-import useFocusOut from '../../utils/useFocusOut';
+import getKeyboardShortcuts from './getKeyboardShortcuts';
 import ShortcutLabel from './shortcutLabel';
-import { KEYBOARD_SHORTCUTS } from './constants';
 import {
   Container,
+  PanelsWrapper,
   Panel,
+  HeaderWrapper,
   HeaderRow,
+  MenuHeaderContainer,
   MenuHeader,
   SectionHeader,
   SectionWrapper,
@@ -38,29 +46,37 @@ import {
   ContentWrapper,
   Column,
   Label,
-  Note,
-} from './components';
+  PanelLabel,
+  CloseButton,
+} from './styled';
+import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
 function ShortcutMenu({ toggleMenu }) {
   const containerRef = useRef();
+  const closeRef = useRef();
+  const keyboardShortcuts = useMemo(() => getKeyboardShortcuts(), []);
 
   // Filter out disabled keyboard shortcuts for headers, panels, sections
   const headers = useMemo(
-    () => KEYBOARD_SHORTCUTS.headers.filter((o) => !o.disabled),
-    []
+    () => keyboardShortcuts.headers.filter((o) => !o.disabled),
+    [keyboardShortcuts]
   );
   const panels = useMemo(
-    () => KEYBOARD_SHORTCUTS.panels.filter((o) => !o.disabled),
-    []
+    () => keyboardShortcuts.panels.filter((o) => !o.disabled),
+    [keyboardShortcuts]
   );
   const sections = useMemo(
     () =>
-      KEYBOARD_SHORTCUTS.sections.map((section) => ({
+      keyboardShortcuts.sections.map((section) => ({
         ...section,
         commands: section.commands.filter((o) => !o.disabled),
       })),
-    []
+    [keyboardShortcuts]
   );
+
+  const headerLabels = useMemo(() => headers.map((h) => h.label).join(' '), [
+    headers,
+  ]);
 
   const leftHalfCount = Math.ceil(sections.length / 2);
   const { leftSideSections, rightSideSections } = useMemo(
@@ -90,12 +106,16 @@ function ShortcutMenu({ toggleMenu }) {
   const renderSection = useCallback(
     ({ title, commands }) => (
       <SectionWrapper key={title}>
-        <SectionHeader>{title}</SectionHeader>
-        <SectionContent>
+        <SectionHeader id={title}>{title}</SectionHeader>
+        <SectionContent role="group" aria-labelledby={title}>
           {commands.map(({ label, shortcut }) => (
             <Fragment key={label}>
-              <Label>{label}</Label>
-              <ShortcutLabel keys={shortcut} alignment={'left'} />
+              <Label role="listitem">{label}</Label>
+              <ShortcutLabel
+                role="listitem"
+                keys={shortcut}
+                alignment={'left'}
+              />
             </Fragment>
           ))}
         </SectionContent>
@@ -104,29 +124,46 @@ function ShortcutMenu({ toggleMenu }) {
     []
   );
 
-  useFocusOut(containerRef, (e) => toggleMenu(e, false), [toggleMenu]);
-  useKeyDownEffect(containerRef, { key: 'esc' }, (e) => toggleMenu(e, false), [
+  const handleCloseClick = useCallback((e) => toggleMenu(e, false), [
     toggleMenu,
   ]);
 
   useEffect(() => {
-    containerRef.current.focus?.();
+    closeRef.current.focus?.();
   }, []);
 
+  useKeyDownEffect(containerRef, TOGGLE_SHORTCUTS_MENU, toggleMenu, [
+    toggleMenu,
+  ]);
+
   return (
-    <Container ref={containerRef}>
-      {headers.map(({ label, shortcut }) => (
-        <HeaderRow key={label}>
-          <MenuHeader>{label}</MenuHeader>
-          <ShortcutLabel keys={shortcut} />
-        </HeaderRow>
-      ))}
-      {panels.map(({ label, shortcut }) => (
-        <Panel key={label}>
-          <Note>{label}</Note>
-          <ShortcutLabel keys={shortcut} />
-        </Panel>
-      ))}
+    <Container ref={containerRef} role="list" aria-labelledby={headerLabels}>
+      <CloseButton
+        ref={closeRef}
+        onClick={handleCloseClick}
+        title={__('Close menu', 'web-stories')}
+        aria-label={__('Close menu', 'web-stories')}
+      >
+        <CloseIcon width="14px" height="14px" />
+      </CloseButton>
+      <HeaderWrapper role="group">
+        {headers.map(({ label, shortcut }) => (
+          <HeaderRow key={label}>
+            <MenuHeaderContainer role="listitem">
+              <MenuHeader id={label}>{label}</MenuHeader>
+            </MenuHeaderContainer>
+            <ShortcutLabel role="listitem" keys={shortcut} />
+          </HeaderRow>
+        ))}
+      </HeaderWrapper>
+      <PanelsWrapper role="group">
+        {panels.map(({ label, shortcut }) => (
+          <Panel key={label}>
+            <PanelLabel role="listitem">{label}</PanelLabel>
+            <ShortcutLabel keys={shortcut} role="listitem" />
+          </Panel>
+        ))}
+      </PanelsWrapper>
       <ContentWrapper>
         <Column>{leftSideSections.map(renderSection)}</Column>
         <Column>{rightSideSections.map(renderSection)}</Column>

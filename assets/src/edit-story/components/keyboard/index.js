@@ -342,15 +342,23 @@ function crossesDialogBoundary(target, keyTarget) {
 }
 
 /**
+ * Determines if the current platform is a Mac or not.
+ *
+ * @return {boolean} True if platform is a Mac.
+ */
+export function isPlatformMacOS() {
+  const { platform } = global.navigator;
+  return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+}
+
+/**
  * Prettifies keyboard shortcuts in a platform-agnostic way.
  *
  * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
  * @return {string} Prettified keyboard shortcut.
  */
 export function prettifyShortcut(shortcut) {
-  const { platform } = global.navigator;
-  const isMacOS =
-    platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+  const isMacOS = isPlatformMacOS();
 
   const replacementKeyMap = {
     alt: isMacOS ? '⌥' : 'Alt',

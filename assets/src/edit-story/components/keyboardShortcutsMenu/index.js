@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useCallback, useEffect } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -28,63 +28,42 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useGlobalKeyDownEffect, useKeyDownEffect } from '../keyboard';
+import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
+import { useGlobalKeyDownEffect } from '../keyboard';
 import WithTooltip from '../tooltip';
-import Popup, { Placement } from '../popup';
+import { Placement } from '../popup';
+import Modal from '../modal';
 import { Keyboard as KeyboardShortcutsButton } from '../button';
 import ShortcutMenu from './shortcutMenu';
+import { TOGGLE_SHORTCUTS_MENU } from './constants';
 
-function KeyboardShortcutsMenu({
-  placement = Placement.TOP_END,
-  spacing = { x: 0, y: 12 },
-  onMenuToggled,
-}) {
+function KeyboardShortcutsMenu({ onMenuToggled }) {
   const anchorRef = useRef();
-  const isOpenBuffer = useRef(false);
-  const isOpenSetTimeout = useRef(0);
-
   const [isOpen, setIsOpen] = useState(false);
 
-  const tryToggleMenu = useCallback(
-    (showMenu) => {
-      isOpenBuffer.current = showMenu;
+  const toggleMenu = useCallback(
+    (e, showMenu) => {
+      e.preventDefault();
 
-      // Stop previous timeout
-      window.clearTimeout(isOpenSetTimeout.current);
+      setIsOpen((prevIsOpen) => {
+        const menuOpen = showMenu ?? !prevIsOpen;
 
-      // Some toggle menu events can come in rapidly, to
-      // ensure that we don't just toggle the menu closed
-      // and then immediately open it, this little setTimeout
-      // will make sure only the last toggle will actually
-      // happen.
-      isOpenSetTimeout.current = window.setTimeout(() => {
-        setIsOpen(isOpenBuffer.current);
         if (onMenuToggled) {
-          onMenuToggled(isOpenBuffer.current);
+          onMenuToggled(menuOpen);
         }
 
-        isOpenBuffer.current = false;
-      }, 10);
+        if (isKeyboardUser && !menuOpen) {
+          // When menu closes, return focus to toggle menu button
+          anchorRef.current.focus?.();
+        }
+
+        return menuOpen;
+      });
     },
     [onMenuToggled]
   );
 
-  const toggleMenu = useCallback(
-    (_, showMenu) => {
-      tryToggleMenu(showMenu ?? !isOpen);
-    },
-    [tryToggleMenu, isOpen]
-  );
-
-  useGlobalKeyDownEffect('mod+/', toggleMenu, [toggleMenu]);
-  useKeyDownEffect(anchorRef, 'enter', toggleMenu, [toggleMenu]);
-
-  useEffect(() => {
-    return () => {
-      // On unmount, stop any timeout that's been set.
-      window.clearTimeout(isOpenSetTimeout.current);
-    };
-  }, []);
+  useGlobalKeyDownEffect(TOGGLE_SHORTCUTS_MENU, toggleMenu, [toggleMenu]);
 
   return (
     <>
@@ -97,7 +76,6 @@ function KeyboardShortcutsMenu({
         placement={Placement.LEFT}
       >
         <KeyboardShortcutsButton
-          disabled={true}
           ref={anchorRef}
           width="24"
           height="24"
@@ -112,24 +90,14 @@ function KeyboardShortcutsMenu({
           onClick={toggleMenu}
         />
       </WithTooltip>
-      <Popup
-        anchor={anchorRef}
-        isOpen={isOpen}
-        placement={placement}
-        spacing={spacing}
-      >
+      <Modal open={isOpen} onClose={toggleMenu}>
         <ShortcutMenu toggleMenu={toggleMenu} />
-      </Popup>
+      </Modal>
     </>
   );
 }
 
 KeyboardShortcutsMenu.propTypes = {
-  placement: PropTypes.string,
-  spacing: PropTypes.shape({
-    x: PropTypes.number,
-    y: PropTypes.number,
-  }),
   onMenuToggled: PropTypes.func,
 };
 

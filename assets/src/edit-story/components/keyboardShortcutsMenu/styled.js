@@ -25,7 +25,8 @@ import { rgba } from 'polished';
  */
 import { KEY_SIZE } from './constants';
 
-export const Container = styled.div.attrs({ tabIndex: 0 })`
+export const Container = styled.div`
+  position: relative;
   width: 100%;
   max-width: 625px;
   min-width: 300px;
@@ -38,6 +39,10 @@ export const Container = styled.div.attrs({ tabIndex: 0 })`
   overflow: auto;
 `;
 
+export const PanelsWrapper = styled.dl`
+  margin: 0;
+`;
+
 export const Panel = styled.div`
   width: 100%;
   border: 1px solid ${({ theme }) => rgba(theme.colors.bg.white, 0.24)};
@@ -46,9 +51,17 @@ export const Panel = styled.div`
   margin-bottom: 24px;
 `;
 
+export const HeaderWrapper = styled.dl`
+  margin: 0;
+`;
+
 export const HeaderRow = styled.div`
   display: flex;
   margin-bottom: 30px;
+`;
+
+export const MenuHeaderContainer = styled.dt`
+  margin: 0;
 `;
 
 export const MenuHeader = styled.h1(
@@ -80,7 +93,7 @@ export const SectionWrapper = styled.div`
   margin-bottom: 60px;
 `;
 
-export const SectionContent = styled.div`
+export const SectionContent = styled.dl`
   display: grid;
   grid-template-columns: 1fr 0.75fr;
   row-gap: 12px;
@@ -100,16 +113,17 @@ export const Column = styled.div`
   }
 `;
 
-export const Label = styled.span(
+export const Label = styled.dt(
   ({ theme }) => `
     color: ${theme.colors.fg.white};
     font-family: ${theme.fonts.body2.family};
     font-size: ${theme.fonts.body2.size};
     line-height: ${theme.fonts.body2.lineHeight};
+    margin: 0;
   `
 );
 
-export const Note = styled.p(
+export const PanelLabel = styled.dt(
   ({ theme }) => `
     width: 100%;
     color: ${theme.colors.fg.secondary};
@@ -123,13 +137,24 @@ export const Note = styled.p(
   `
 );
 
-export const ShortcutKeyWrapper = styled.div`
+export const ShortcutKeyWrapper = styled.dd`
   display: flex;
   justify-content: ${({ alignment }) => alignment};
   align-items: center;
+  margin: 0;
 `;
 
-export const ShortcutKey = styled.div(
+export const ShortcutKeyLabel = styled.span(
+  ({ theme }) => `
+    color: ${theme.colors.fg.white};
+    font-family: ${theme.fonts.body2.family};
+    font-size: ${theme.fonts.body2.size};
+    line-height: ${theme.fonts.body2.lineHeight};
+    margin: 0 8px;
+  `
+);
+
+export const ShortcutKey = styled.span(
   ({ theme, keySize = KEY_SIZE.NORMAL }) => `
     display: flex;
     justify-content: center;
@@ -148,3 +173,14 @@ export const ShortcutKey = styled.div(
     }
   `
 );
+
+export const CloseButton = styled.button`
+  background-color: transparent;
+  border: 0;
+  margin: 24px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: ${({ theme }) => theme.colors.fg.white};
+  cursor: pointer;
+`;
