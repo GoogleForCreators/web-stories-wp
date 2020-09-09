@@ -98,12 +98,12 @@ describe('keyboard/index.js', () => {
   describe('useGlobalIsKeyPressed', () => {
     it('should initialise and then register key up and down events', () => {
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
-      testIsKeyPressed(result, document, keys.a);
+      testIsKeyPressed(result, document.documentElement, keys.a);
     });
 
     it('should not register when other keys are pressed', () => {
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
-      testIsKeyPressed(result, document, keys.b, false);
+      testIsKeyPressed(result, document.documentElement, keys.b, false);
     });
 
     it('should register key presses on any part of the document', () => {
