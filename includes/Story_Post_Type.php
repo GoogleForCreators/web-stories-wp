@@ -762,7 +762,7 @@ class Story_Post_Type {
 	public function redirect_demo() {
 		global $pagenow;
 
-		if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'web-stories-demo' === $_GET['page'] ) {
+		if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'web-stories-demo' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			wp_safe_redirect(
 				add_query_arg(
 					[ 'post_type' => self::POST_TYPE_SLUG ],
@@ -791,6 +791,12 @@ class Story_Post_Type {
 			return $content;
 		}
 
-		return file_get_contents( $file );
+		$file_content = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+
+		if ( ! $file_content ) {
+			return '';
+		}
+
+		return $file_content;
 	}
 }
