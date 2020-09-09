@@ -104,6 +104,9 @@ export function calcFontMetrics(element) {
       metrics: { upm, asc, des },
     },
   } = element;
+
+  // We cant to cut some of the "virtual-area"
+  // More info: https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
   contentAreaPx = ((asc - des) / upm) * fontSize;
   lineBoxPx = lineHeight * fontSize;
   marginOffset = lineBoxPx - contentAreaPx;
