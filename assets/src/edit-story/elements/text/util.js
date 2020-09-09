@@ -23,7 +23,7 @@
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
  * y-unit CSS.
  * @param {Object<*>} element Text element properties.
- * @param dataToPaddingY
+ * @param {function(number):any} dataToPaddingY Falls back to dataToStyleX if not provided.
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
