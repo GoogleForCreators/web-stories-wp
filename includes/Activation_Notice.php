@@ -127,7 +127,15 @@ class Activation_Notice {
 			)
 		);
 
-		$demo_story_url = 'https://google.github.io/web-stories-wp/beta/tips.html';
+		$demo_story_url = admin_url(
+			add_query_arg(
+				[
+					'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
+					'web-stories-demo' => 1,
+				],
+				'post-new.php'
+			)
+		);
 
 		return [
 			'id'         => 'web-stories-plugin-activation-notice',
