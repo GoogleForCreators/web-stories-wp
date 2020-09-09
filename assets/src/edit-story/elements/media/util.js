@@ -61,6 +61,7 @@ export function calculateSrcSet(resource) {
             : [...unique, s],
         []
       )
+      .filter((s) => s && s.source_url && s.width)
       .map((s) => `${s.source_url} ${s.width}w`)
       .join(',')
   );
