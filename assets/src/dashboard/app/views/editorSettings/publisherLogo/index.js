@@ -93,7 +93,7 @@ function PublisherLogoSettings({
 
   const publisherLogoCount = useRef(publisherLogosById.length);
 
-  const onRemoveLogoClick = useCallback(
+  const handleRemoveLogoClick = useCallback(
     (publisherLogo, idx) => {
       handleRemoveLogo(publisherLogo);
       setIndexRemoved(idx);
@@ -162,7 +162,7 @@ function PublisherLogoSettings({
 
       switch (sender.value) {
         case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO:
-          onRemoveLogoClick(logo, index);
+          handleRemoveLogoClick(logo, index);
           break;
 
         case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT:
@@ -173,7 +173,7 @@ function PublisherLogoSettings({
           break;
       }
     },
-    [handleUpdateDefaultLogo, onRemoveLogoClick]
+    [handleUpdateDefaultLogo, handleRemoveLogoClick]
   );
 
   return (
