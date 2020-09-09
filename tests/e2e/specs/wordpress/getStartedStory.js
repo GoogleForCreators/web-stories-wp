@@ -35,7 +35,10 @@ describe('Get Started Story', () => {
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
-      await expect(page).toMatch('Tips to make the most of Web Stories');
+
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toMatch(/Tips to make the most/i);
+      await expect(page).toMatch(/to make the most of/i);
 
       await percySnapshot(page, 'Get Started Story (Admin)');
     });
@@ -55,7 +58,10 @@ describe('Get Started Story', () => {
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
-      await expect(page).toMatch('Tips to make the most of Web Stories');
+
+      await expect(page).toMatchElement('input[placeholder="Add title"]');
+      await expect(page).toMatch(/Tips to make the most/i);
+      await expect(page).toMatch(/to make the most of/i);
 
       await percySnapshot(page, 'Get Started Story (Author)');
     });
