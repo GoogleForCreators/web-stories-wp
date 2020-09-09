@@ -44,6 +44,7 @@ const README_FILE = 'readme.txt';
 const FONTS_FILE = 'includes/data/fonts.json';
 const BUILD_DIR = 'build/web-stories';
 const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
+const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;
 
 program
   .command('version')
@@ -178,6 +179,7 @@ program
   })
   .action(() => {
     updateTemplates(TEMPLATES_DIR);
+    updateTemplates(STORIES_DIR);
 
     console.log("Templates updated! Don't forget to run prettier!");
   });
