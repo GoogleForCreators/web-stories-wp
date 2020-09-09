@@ -22,9 +22,8 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithThemeAndFlagsProvider } from '../../../../testUtils';
+import { renderWithProviders } from '../../../../testUtils';
 import completeTemplateObject from '../../../../dataUtils/completeTemplateObject';
-import { ApiContext } from '../../../api/apiProvider';
 import PreviewStory from '../';
 
 function renderPreviewInContext({
@@ -34,9 +33,13 @@ function renderPreviewInContext({
   hasStory,
   onClose,
 }) {
-  return renderWithThemeAndFlagsProvider(
-    <ApiContext.Provider
-      value={{
+  return renderWithProviders(
+    <PreviewStory
+      story={hasStory && completeTemplateObject}
+      handleClose={onClose}
+    />,
+    {
+      api: {
         state: {
           stories: {
             error: errorText ? { message: { title: errorText } } : {},
@@ -50,13 +53,8 @@ function renderPreviewInContext({
             clearStoryPreview: jest.fn(),
           },
         },
-      }}
-    >
-      <PreviewStory
-        story={hasStory && completeTemplateObject}
-        handleClose={onClose}
-      />
-    </ApiContext.Provider>
+      },
+    }
   );
 }
 
