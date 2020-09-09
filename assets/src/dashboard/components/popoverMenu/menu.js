@@ -75,6 +75,7 @@ export const MenuItem = styled.li`
     }
 
     &:focus, &:active, &:hover {
+      outline: none;
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     }
 
@@ -100,6 +101,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
   useEffect(() => {
     if (isOpen) {
       const handleKeyDown = (event) => {
+        event.stopPropagation();
         switch (event.key) {
           case KEYS.UP:
             event.preventDefault();
@@ -122,9 +124,12 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             break;
 
           case KEYS.ENTER:
-            event.preventDefault();
-            if (onSelect) {
-              onSelect(items[hoveredIndex]);
+            // let anchor items be handled natively by browser
+            if (!items[hoveredIndex].url) {
+              event.preventDefault();
+              if (onSelect) {
+                onSelect(items[hoveredIndex]);
+              }
             }
             break;
 
@@ -140,15 +145,15 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
             break;
         }
       };
-
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      const listRefEl = listRef.current;
+      listRefEl.addEventListener('keydown', handleKeyDown);
+      return () => listRefEl.removeEventListener('keydown', handleKeyDown);
     }
   }, [hoveredIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
     if (listRef.current && isOpen) {
-      listRef.current[currentValueIndex]?.focus();
+      listRef.current?.children[currentValueIndex].focus();
     }
     setHoveredIndex(currentValueIndex);
   }, [currentValueIndex, isOpen]);
@@ -167,6 +172,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
 
       return (
         <MenuItem
+          tabIndex={0}
           key={`${item.value}_${index}`}
           isHovering={index === hoveredIndex}
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
@@ -186,7 +192,11 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
   );
 
   return (
-    <MenuContainer ref={listRef}>
+    <MenuContainer
+      tabIndex={0}
+      ref={listRef}
+      onKeyDown={(e) => e.stopPropagation()}
+    >
       {items.map((item, index) => renderMenuItem(item, index))}
     </MenuContainer>
   );

@@ -71,6 +71,7 @@ export const _default = () => {
           status={STORY_STATUS.DRAFT}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
+          tabIndex={0}
         />
       </CardGridItem>
     </CardGrid>
@@ -102,6 +103,7 @@ export const _publishedStory = () => {
           status={STORY_STATUS.PUBLISH}
           onEditCancel={() => {}}
           onEditComplete={() => {}}
+          tabIndex={0}
         />
       </CardGridItem>
     </CardGrid>
