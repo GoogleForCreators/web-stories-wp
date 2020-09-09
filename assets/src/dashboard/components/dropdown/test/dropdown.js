@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Dropdown from '../';
 
 describe('Dropdown', () => {
@@ -30,7 +30,7 @@ describe('Dropdown', () => {
   const onClickMock = jest.fn();
 
   it('should render a <Dropdown /> button by default', () => {
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <Dropdown
         placeholder="placeholder text"
         ariaLabel="my dropdown test"
