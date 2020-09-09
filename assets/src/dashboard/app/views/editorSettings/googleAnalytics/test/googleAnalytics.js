@@ -40,7 +40,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   });
 
   it('should render google analytics input and helper text by default', function () {
-    const { getByRole, getByText, rerender } = renderWithProviders(
+    const { getByRole, getByText } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
@@ -52,13 +52,6 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
-
-    rerender(
-      <GoogleAnalyticsSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
-      />
-    );
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
