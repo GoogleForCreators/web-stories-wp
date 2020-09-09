@@ -112,7 +112,7 @@ function useSingleSelectionResize({
       newHeight = dataToEditorY(updates.height);
     }
     if (updates && updates.marginOffset) {
-      target.firstChild.firstChild.style.margin = `${
+      target.querySelector('.syncMargin').style.margin = `${
         -dataToEditorY(updates.marginOffset) / 2
       }px 0`;
     }

@@ -51,7 +51,8 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBackgroundColor = css`
-  ${({ backgroundColor }) => generatePatternStyles(backgroundColor)};
+  ${({ backgroundColor }) =>
+    backgroundColor && generatePatternStyles(backgroundColor)};
 `;
 
 export const elementWithFont = css`

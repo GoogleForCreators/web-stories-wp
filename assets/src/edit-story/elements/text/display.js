@@ -91,7 +91,7 @@ const FillElement = styled.p`
   ${elementWithTextParagraphStyle}
 `;
 const Background = styled.p`
-  ${({ backgroundColor }) => backgroundColor && elementWithBackgroundColor}
+  ${elementWithBackgroundColor}
   ${elementFillContent}
   margin: 0;
 `;

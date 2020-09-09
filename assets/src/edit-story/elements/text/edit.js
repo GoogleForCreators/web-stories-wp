@@ -59,7 +59,7 @@ import {
 // on the content and properties.
 const Wrapper = styled.div`
   ${elementFillContent}
-  ${({ backgroundColor }) => backgroundColor && elementWithBackgroundColor}
+  ${elementWithBackgroundColor}
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -325,7 +325,7 @@ function TextEdit({
           />
         </TextBox>
       )}
-      <TextBox ref={textBoxRef} {...textProps}>
+      <TextBox className="syncMargin" ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}
           content={content}
