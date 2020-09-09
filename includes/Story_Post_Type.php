@@ -785,6 +785,12 @@ class Story_Post_Type {
 			return $content;
 		}
 
-		return file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/demo.json' );
+		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/demo.json';
+
+		if ( ! is_readable( $file ) ) {
+			return $content;
+		}
+
+		return file_get_contents( $file );
 	}
 }
