@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -40,6 +39,7 @@ const mockFetchCurrentUser = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
+  canManageSettings,
   activeLogoId,
   isLoading,
   googleAnalyticsId,
@@ -48,7 +48,10 @@ function createProviderValues({
 }) {
   return {
     config: {
-      capabilities: { canUploadFiles: canUploadFiles },
+      capabilities: {
+        canUploadFiles: canUploadFiles,
+        canManageSettings: canManageSettings,
+      },
       maxUpload: 104857600,
       maxUploadFormatted: '100 MB',
     },
@@ -98,6 +101,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
         canUploadFiles: true,
+        canManageSettings: true,
         isLoading: false,
         logoIds: [],
         logos: {},
@@ -123,6 +127,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
         canUploadFiles: true,
+        canManageSettings: true,
         isLoading: false,
         activeLogoId: publisherLogoIds[0],
         logoIds: publisherLogoIds,
@@ -130,21 +135,18 @@ describe('Editor Settings: <Editor Settings />', function () {
       })
     );
 
-    expect(queryAllByTestId(/^publisher-logo-/)).toHaveLength(
+    expect(queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
-    );
-
-    expect(queryAllByTestId(/^remove-publisher-logo/)).toHaveLength(
-      publisherLogoIds.length - 1
     );
   });
 
   it('should call mockUpdateSettings when a logo is removed', function () {
-    const { getByTestId, getByText } = renderWithProviders(
+    const { getByTestId, getByRole } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
         canUploadFiles: true,
+        canManageSettings: true,
         isLoading: false,
         activeLogoId: publisherLogoIds[0],
         logoIds: publisherLogoIds,
@@ -152,14 +154,29 @@ describe('Editor Settings: <Editor Settings />', function () {
       })
     );
 
-    const RemoveLogoButton = getByTestId('remove-publisher-logo-2').lastChild;
-    expect(RemoveLogoButton).toBeDefined();
+    const ContextMenuButton = getByTestId(
+      'publisher-logo-context-menu-button-1'
+    );
 
-    fireEvent.click(RemoveLogoButton);
+    fireEvent.click(ContextMenuButton);
 
-    const ConfirmRemoveLogoButton = getByText('Remove Logo');
+    const ContextMenu = getByTestId('publisher-logo-context-menu-1');
+    expect(ContextMenu).toBeDefined();
 
-    fireEvent.click(ConfirmRemoveLogoButton);
+    const { getByText } = within(ContextMenu);
+
+    const DeleteFileButton = getByText('Delete');
+    expect(DeleteFileButton).toBeDefined();
+
+    fireEvent.click(DeleteFileButton);
+
+    const DeleteDialog = getByRole('dialog');
+    expect(DeleteDialog).toBeDefined();
+
+    const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
+    expect(ConfirmDeleteButton).toBeDefined();
+
+    fireEvent.click(ConfirmDeleteButton);
 
     expect(mockUpdateSettings).toHaveBeenCalledTimes(1);
   });
@@ -170,6 +187,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
         canUploadFiles: false,
+        canManageSettings: true,
         isLoading: false,
         logoIds: [],
         logos: {},

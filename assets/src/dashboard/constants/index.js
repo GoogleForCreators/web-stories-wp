@@ -127,6 +127,8 @@ export const STORIES_PER_REQUEST = 24;
 
 export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
+export const TEXT_INPUT_DEBOUNCE = 300;
+
 export const MIN_IMG_HEIGHT = 96;
 export const MIN_IMG_WIDTH = 96;
 
@@ -134,5 +136,6 @@ export * from './components';
 export * from './direction';
 export * from './pageStructure';
 export * from './savedTemplates';
+export * from './settings';
 export * from './stories';
 export * from './templates';

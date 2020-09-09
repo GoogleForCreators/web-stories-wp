@@ -41,18 +41,23 @@ export const renderWithProviders = (
   renderOptions = {}
 ) => {
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
-  return render(
+
+  // eslint-disable-next-line react/prop-types
+  const Wrapper = ({ children }) => (
     <FlagsProvider features={mergedProviderValues.features}>
       <ThemeProvider theme={mergedProviderValues.theme}>
         <ConfigProvider config={mergedProviderValues.config}>
           <MockApiProvider value={mergedProviderValues.api}>
-            {ui}
+            {children}
           </MockApiProvider>
         </ConfigProvider>
       </ThemeProvider>
-    </FlagsProvider>,
-    renderOptions
+    </FlagsProvider>
   );
+
+  const mergedRenderOptions = { wrapper: Wrapper, ...renderOptions };
+
+  return render(ui, mergedRenderOptions);
 };
 
 export default renderWithProviders;

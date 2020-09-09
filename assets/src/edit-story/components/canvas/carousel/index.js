@@ -439,7 +439,7 @@ function Carousel() {
                     onClick={handleClickPage(page)}
                     role="option"
                     data-page-id={page.id}
-                    ariaLabel={
+                    aria-label={
                       isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
