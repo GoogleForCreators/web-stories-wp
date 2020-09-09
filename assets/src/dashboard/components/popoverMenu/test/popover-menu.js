@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import PopoverMenu from '../';
 
 describe('PopoverMenu', () => {
@@ -40,7 +40,7 @@ describe('PopoverMenu', () => {
   const onClickMock = jest.fn();
 
   it('should render a <PopoverMenu />', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -48,7 +48,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should simulate a click on one of the items', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -60,7 +60,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should not allow click on item that has false value', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -72,7 +72,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should render one anchor and 4 list items', () => {
-    const { queryAllByRole } = renderWithTheme(
+    const { queryAllByRole } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 

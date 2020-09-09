@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import TypeaheadOptions from '../';
 
 describe('TypeaheadOptions', () => {
@@ -41,7 +41,7 @@ describe('TypeaheadOptions', () => {
   window.HTMLElement.prototype.scrollIntoView = () => {};
 
   it('should render a <TypeaheadOptions />', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -49,7 +49,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should simulate a click on one of the items', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -61,7 +61,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should not allow click on item that has false value', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -73,7 +73,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should have 6 items', () => {
-    const { getAllByRole } = renderWithTheme(
+    const { getAllByRole } = renderWithProviders(
       <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -83,7 +83,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it('should show selected value if one is present when menu is rendered that matches an item', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <TypeaheadOptions
         onSelect={onClickMock}
         items={demoItems}
@@ -106,7 +106,7 @@ describe('TypeaheadOptions', () => {
   });
 
   it("should not show selected value if currentSelection doesn't match an item", () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <TypeaheadOptions
         onSelect={onClickMock}
         items={demoItems}

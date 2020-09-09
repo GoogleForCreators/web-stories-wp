@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Pill from '../';
 import { PILL_LABEL_TYPES } from '../../../constants/components';
 
@@ -31,7 +31,7 @@ describe('Pill', () => {
   const onClickMock = jest.fn();
 
   it('should render default pill as checkbox', () => {
-    const { getByRole, getByText } = renderWithTheme(
+    const { getByRole, getByText } = renderWithProviders(
       <Pill onClick={onClickMock} name="test_pill" value="test">
         {pillText}
       </Pill>
@@ -41,7 +41,7 @@ describe('Pill', () => {
   });
 
   it('should render pill as radio input', () => {
-    const { getByRole, getByText } = renderWithTheme(
+    const { getByRole, getByText } = renderWithProviders(
       <Pill
         onClick={onClickMock}
         name="test_pill"
@@ -56,7 +56,7 @@ describe('Pill', () => {
   });
 
   it('should simulate a click on <Pill />', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <Pill
         onClick={onClickMock}
         name="test_pill"
@@ -75,7 +75,7 @@ describe('Pill', () => {
   });
 
   it(`should render standard ${PILL_LABEL_TYPES.DEFAULT} pill label by default`, () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <Pill onClick={onClickMock} name="test_pill" value="test">
         {pillText}
       </Pill>
@@ -87,7 +87,7 @@ describe('Pill', () => {
   });
 
   it(`should render standard ${PILL_LABEL_TYPES.SWATCH} pill label when labelType is 'swatch'`, () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <Pill
         onClick={onClickMock}
         name="test_pill"
@@ -104,7 +104,7 @@ describe('Pill', () => {
   });
 
   it(`should render standard ${PILL_LABEL_TYPES.FLOATING} pill label when labelType is 'FLOATING'`, () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <Pill
         onClick={onClickMock}
         name="test_pill"

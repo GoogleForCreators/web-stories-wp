@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import TypeaheadInput from '..';
 
 describe('TypeaheadInput', () => {
@@ -35,7 +35,7 @@ describe('TypeaheadInput', () => {
   const onClickMock = jest.fn();
 
   it('should render a <TypeaheadInput /> by default', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <TypeaheadInput
         inputId={'demo-search-component'}
         placeholder="placeholder text"
@@ -53,7 +53,7 @@ describe('TypeaheadInput', () => {
   });
 
   it('should clear input value when button is clicked', () => {
-    const { getByRole, getByTestId } = renderWithTheme(
+    const { getByRole, getByTestId } = renderWithProviders(
       <TypeaheadInput
         inputId={'demo-search-component'}
         placeholder="placeholder text"

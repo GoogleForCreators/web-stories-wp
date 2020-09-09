@@ -21,12 +21,12 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
+import { renderWithProviders } from '../../../testUtils';
 import InlineInputForm from '../';
 
 describe('InlineInputForm', () => {
   it('should render a text input field', () => {
-    const { getByRole, getByText } = renderWithTheme(
+    const { getByRole, getByText } = renderWithProviders(
       <InlineInputForm
         onEditComplete={jest.fn}
         onEditCancel={jest.fn}
@@ -46,7 +46,7 @@ describe('InlineInputForm', () => {
   it('should call onEditCancel when focus is removed from input', () => {
     const mockCancel = jest.fn();
 
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <InlineInputForm
         onEditComplete={jest.fn}
         onEditCancel={mockCancel}
@@ -67,7 +67,7 @@ describe('InlineInputForm', () => {
   it('should call onEditComplete when enter is hit from the input', () => {
     const mockComplete = jest.fn();
 
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <InlineInputForm
         onEditComplete={mockComplete}
         onEditCancel={jest.fn}

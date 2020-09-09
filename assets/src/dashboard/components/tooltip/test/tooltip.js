@@ -22,12 +22,12 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { act } from 'react-dom/test-utils';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Tooltip from '../';
 
 describe('<Tooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <Tooltip content="Grid View">
         <div />
       </Tooltip>
@@ -37,7 +37,7 @@ describe('<Tooltip />', function () {
   });
 
   it('should be visible when the mouse is hovering over the container', function () {
-    const { getByTestId, getByText } = renderWithTheme(
+    const { getByTestId, getByText } = renderWithProviders(
       <Tooltip content="Grid View">
         <div />
       </Tooltip>
