@@ -32,7 +32,10 @@ import {
 /**
  * Internal dependencies
  */
-import { addRequestInterception, withDisabledToolbarOnFrontend } from '../../utils';
+import {
+  addRequestInterception,
+  withDisabledToolbarOnFrontend,
+} from '../../utils';
 
 const EMBED_BLOCK_CONTENT = `
 <!-- wp:web-stories/embed {"url":"https://preview.amp.dev/documentation/examples/introduction/stories_in_amp","title":"Stories in AMP - Hello World","poster":"https://amp.dev/static/samples/img/story_dog2_portrait.jpg"} -->
