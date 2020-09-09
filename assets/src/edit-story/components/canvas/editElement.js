@@ -34,8 +34,8 @@ import { useUnits } from '../../units';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`
-	${elementWithPosition}
-	${elementWithSize}
+  ${elementWithPosition}
+  ${elementWithSize}
 	${elementWithRotation}
 	pointer-events: initial;
 `;

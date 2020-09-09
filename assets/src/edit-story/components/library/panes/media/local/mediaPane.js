@@ -127,7 +127,10 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     // WordPress media picker event, sizes.medium.url is the smallest image
-    insertMediaElement(resource, mediaPickerEl.sizes.medium.url);
+    insertMediaElement(
+      resource,
+      mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
+    );
   };
 
   const openMediaPicker = useMediaPicker({

@@ -158,6 +158,7 @@ const theme = {
       fg: '#FFFFFFCC',
     },
     outline: '#686868',
+    input: '#1c1d1d',
   },
   fonts: {
     title: {
@@ -226,6 +227,11 @@ const theme = {
       size: '12px',
       lineHeight: '20px',
       letterSpacing: '0.0133em',
+    },
+  },
+  border: {
+    radius: {
+      default: '4px',
     },
   },
 };

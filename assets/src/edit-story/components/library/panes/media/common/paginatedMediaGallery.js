@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import React, {
-  memo,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -194,4 +193,4 @@ PaginatedMediaGallery.propTypes = {
   selectedCategoryId: PropTypes.string,
 };
 
-export default memo(PaginatedMediaGallery);
+export default PaginatedMediaGallery;
