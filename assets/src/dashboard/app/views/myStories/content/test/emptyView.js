@@ -17,18 +17,20 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import EmptyView from '../emptyView';
 
 describe('My Stories <EmptyView />', function () {
   it('should render default text when no searchKeyword is preset', function () {
-    const { getByText } = renderWithTheme(<EmptyView />);
+    const { getByText } = renderWithProviders(<EmptyView />);
 
     expect(getByText('Create a story to get started!')).toBeInTheDocument();
   });
 
   it('should render searchKeyword with no results when searchKeyword is preset', function () {
-    const { getByText } = renderWithTheme(<EmptyView searchKeyword="Koalas" />);
+    const { getByText } = renderWithProviders(
+      <EmptyView searchKeyword="Koalas" />
+    );
 
     expect(
       getByText('Sorry, we couldn\'t find any results matching "Koalas"')
