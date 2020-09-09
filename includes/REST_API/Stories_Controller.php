@@ -125,6 +125,8 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// Make everything localizable.
 
+		// TODO: Replace image URLs, and clean up demo story.
+
 		$kses = new KSES();
 		$kses->init();
 
