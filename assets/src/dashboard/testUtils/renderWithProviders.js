@@ -28,16 +28,6 @@ import theme from '../theme';
 import { ConfigProvider } from '../app/config';
 import MockApiProvider from './mockApiProvider';
 
-// eslint-disable-next-line react/prop-types
-const WithThemeProvider = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-};
-
-const renderWithTheme = (ui, options) =>
-  render(ui, { wrapper: WithThemeProvider, ...options });
-
-export default renderWithTheme;
-
 const defaultProviderValues = {
   features: {},
   theme,
@@ -45,9 +35,6 @@ const defaultProviderValues = {
   api: {},
 };
 
-// Please use renderWithProviders instead of renderWithTheme or renderWithProviders
-// and feel free to add provider/mock provider as needed to this util.
-// TODO: deprecate and replace instances of the above render utils
 export const renderWithProviders = (
   ui,
   providerValues = {},
@@ -67,3 +54,5 @@ export const renderWithProviders = (
     renderOptions
   );
 };
+
+export default renderWithProviders;
