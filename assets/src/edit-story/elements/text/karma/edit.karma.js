@@ -208,7 +208,10 @@ describe('TextEdit integration', () => {
           height: heightAfterReenteringEditMode,
         } = textElement.getBoundingClientRect();
 
-        expect(heightAfterReenteringEditMode).toEqual(initialHeight);
+        const difference = Math.abs(
+          heightAfterReenteringEditMode - initialHeight
+        );
+        expect(difference).toBeLessThan(1);
       });
     });
   });
