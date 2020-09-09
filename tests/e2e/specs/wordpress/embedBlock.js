@@ -32,7 +32,7 @@ import {
 /**
  * Internal dependencies
  */
-import { addRequestInterception } from '../../utils';
+import { addRequestInterception, withDisabledToolbarOnFrontend } from '../../utils';
 
 const EMBED_BLOCK_CONTENT = `
 <!-- wp:web-stories/embed {"url":"https://preview.amp.dev/documentation/examples/introduction/stories_in_amp","title":"Stories in AMP - Hello World","poster":"https://amp.dev/static/samples/img/story_dog2_portrait.jpg"} -->
@@ -88,35 +88,43 @@ describe('Embed Block', () => {
     await expect(page).toMatch('Embed Settings');
   });
 
-  it('should produce valid AMP when using the AMP plugin', async () => {
-    await activatePlugin('amp');
+  describe('AMP validation', () => {
+    withDisabledToolbarOnFrontend();
 
-    await createNewPost({
-      showWelcomeGuide: false,
+    it('should produce valid AMP when using the AMP plugin', async () => {
+      await activatePlugin('amp');
+
+      await createNewPost({
+        showWelcomeGuide: false,
+      });
+
+      await setPostContent(EMBED_BLOCK_CONTENT);
+
+      const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
+
+      if (werePrePublishChecksEnabled) {
+        await disablePrePublishChecks();
+      }
+
+      await publishPostWithPrePublishChecksDisabled();
+      await enablePrePublishChecks();
+
+      const postPermalink = await page.evaluate(() =>
+        wp.data.select('core/editor').getPermalink()
+      );
+
+      const ampPostPermaLink = postPermalink.includes('?')
+        ? `${postPermalink}&amp`
+        : `${postPermalink}?amp`;
+
+      await Promise.all([
+        page.goto(ampPostPermaLink),
+        page.waitForNavigation(),
+      ]);
+
+      await expect(page).toBeValidAMP();
+
+      await deactivatePlugin('amp');
     });
-
-    await setPostContent(EMBED_BLOCK_CONTENT);
-
-    const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
-
-    if (werePrePublishChecksEnabled) {
-      await disablePrePublishChecks();
-    }
-
-    await publishPostWithPrePublishChecksDisabled();
-    await enablePrePublishChecks();
-
-    const postPermalink = await page.evaluate(() =>
-      wp.data.select('core/editor').getPermalink()
-    );
-
-    await Promise.all([
-      page.goto(`${postPermalink}?amp`),
-      page.waitForNavigation(),
-    ]);
-
-    await expect(page).toBeValidAMP();
-
-    await deactivatePlugin('amp');
   });
 });
