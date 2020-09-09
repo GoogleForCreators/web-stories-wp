@@ -21,7 +21,6 @@ export const rawPublisherLogos = {
     id: 577,
     src: 'https://picsum.photos/96',
     title: 'dummy image 1',
-    isDefault: true,
   },
   584: {
     id: 584,

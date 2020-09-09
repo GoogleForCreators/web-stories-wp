@@ -223,6 +223,67 @@ describe('Settings View', () => {
     expect(errorMessage).toBeTruthy();
   });
 
+  it('should update the default a publisher logo on click', async () => {
+    const settingsView = await fixture.screen.getByTestId('editor-settings');
+
+    const publisherLogosContainer = within(settingsView).getByTestId(
+      'publisher-logos-container'
+    );
+
+    const InitialDefault = within(publisherLogosContainer).queryAllByRole(
+      'listitem'
+    )[0];
+    const confirmInitialDefault = within(InitialDefault).getByText(/^Default/);
+    expect(confirmInitialDefault).toBeTruthy();
+
+    const LogoToMakeDefault = within(publisherLogosContainer).queryAllByRole(
+      'listitem'
+    )[1];
+    const confirmCurrentlyNotDefault = within(LogoToMakeDefault).queryAllByText(
+      /^Default/
+    );
+    expect(confirmCurrentlyNotDefault.length).toBe(0);
+
+    const ContextMenuButton = within(publisherLogosContainer).getByTestId(
+      'publisher-logo-context-menu-button-1'
+    );
+    expect(ContextMenuButton).toBeTruthy();
+
+    await fixture.events.click(ContextMenuButton);
+
+    const ContextMenu = within(settingsView).getByTestId(
+      'publisher-logo-context-menu-1'
+    );
+    expect(ContextMenu).toBeDefined();
+
+    const UpdateDefaultLogoButton = within(ContextMenu).getByText(
+      /^Set as Default$/
+    );
+
+    expect(UpdateDefaultLogoButton).toBeTruthy();
+
+    await fixture.events.click(UpdateDefaultLogoButton);
+
+    const newPublisherLogosContainer = await fixture.screen.getByTestId(
+      'publisher-logos-container'
+    );
+
+    const FormerDefaultLogo = within(newPublisherLogosContainer).queryAllByRole(
+      'listitem'
+    )[0];
+    const confirmNotDefault = within(FormerDefaultLogo).queryAllByText(
+      /^Default/
+    );
+    expect(confirmNotDefault.length).toBe(0);
+
+    const NewLogoToMakeDefault = within(
+      newPublisherLogosContainer
+    ).queryAllByRole('listitem')[1];
+
+    const confirmDefault = within(NewLogoToMakeDefault).getByText(/^Default/);
+    expect(confirmDefault).toBeTruthy();
+  });
+
   it('should remove a publisher logo on click', async () => {
     const settingsView = await fixture.screen.getByTestId('editor-settings');
 

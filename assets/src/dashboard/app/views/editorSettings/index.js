@@ -276,9 +276,7 @@ function EditorSettings() {
   ]);
 
   const handleUpdateDefaultLogo = useCallback(
-    (media) => {
-      updateSettings({ publisherLogoToMakeDefault: media.id });
-    },
+    (media) => updateSettings({ publisherLogoToMakeDefault: media.id }),
     [updateSettings]
   );
 
