@@ -18,24 +18,24 @@
  * Internal dependencies
  */
 import BookmarkChip from '../';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 
 describe('BookmarkChip', () => {
   it('should render a <BookmarkChip />', () => {
-    const { getByRole } = renderWithTheme(<BookmarkChip />);
+    const { getByRole } = renderWithProviders(<BookmarkChip />);
 
     expect(getByRole('button')).toBeDefined();
   });
 
   it('should render `not-bookmarked` when `isBookmarked` is false', () => {
-    const { queryByTestId } = renderWithTheme(<BookmarkChip />);
+    const { queryByTestId } = renderWithProviders(<BookmarkChip />);
 
     expect(queryByTestId('not-bookmarked')).toBeDefined();
     expect(queryByTestId('is-bookmarked')).toBeNull();
   });
 
   it('should render `is-bookmarked` when `isBookmarked` is true', () => {
-    const { queryByTestId } = renderWithTheme(
+    const { queryByTestId } = renderWithProviders(
       <BookmarkChip isBookmarked={true} />
     );
 
