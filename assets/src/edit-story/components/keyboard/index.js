@@ -91,8 +91,13 @@ function useKeyEffectInternal(
       ) {
         throw new Error('only an element or a document node can be used');
       }
-      const mousetrap = getOrCreateMousetrap(node);
+
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
+      if (keySpec.key.length === 1 && keySpec.key[0] === '') {
+        return undefined;
+      }
+
+      const mousetrap = getOrCreateMousetrap(node);
       const handler = createKeyHandler(node, keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler, type);
       return () => {

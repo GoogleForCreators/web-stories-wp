@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useConfig } from '../../app';
-import { useKeyDownEffect } from '../keyboard';
+import { useKeyDownEffect, useGlobalKeyDownEffect } from '../keyboard';
 
 const Tabs = styled.ul.attrs({
   role: 'tablist',
@@ -93,6 +93,7 @@ function TabView({
   onTabChange = () => {},
   tabs = [],
   label = '',
+  shortcut = '',
   initialTab,
 }) {
   const [tab, setTab] = useState(initialTab || tabs[0]?.id);
@@ -117,6 +118,12 @@ function TabView({
       setTab(initialTab);
     }
   }, [initialTab]);
+
+  useGlobalKeyDownEffect(
+    { key: shortcut, editable: true },
+    () => tabChanged(tab),
+    [tabChanged, tab]
+  );
 
   const selectTabByIndex = useCallback(
     (index) => {
@@ -179,6 +186,7 @@ TabView.propTypes = {
   tabs: PropTypes.array.isRequired,
   initialTab: PropTypes.any,
   label: PropTypes.string,
+  shortcut: PropTypes.string,
 };
 
 export default TabView;
