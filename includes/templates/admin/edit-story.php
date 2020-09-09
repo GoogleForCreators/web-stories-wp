@@ -31,28 +31,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post_type, $post_type_object, $post;
 
-/**
- * Filters the default content when creating a new story.
- *
- * @param string  $post_content Default post content.
- * @param WP_Post $post         Post object.
- */
-$post->post_content_filtered = (string) apply_filters( 'web_stories_default_content', $post->post_content_filtered, $post );
-
-add_filter(
-	'rest_prepare_' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-	static function( WP_REST_Response $response ) use ( $post ) {
-		$data = $response->get_data();
-		if ( array_key_exists( 'story_data', $data ) ) {
-			$data['story_data'] = json_decode( $post->post_content_filtered, true );
-			$response->set_data( $data );
-		}
-
-		return $response;
-	},
-	10
-);
-
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 
 // Preload common data.

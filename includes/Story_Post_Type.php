@@ -197,7 +197,6 @@ class Story_Post_Type {
 		// Demo content.
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_init', [ $this, 'redirect_demo' ] );
-		add_filter( 'web_stories_default_content', [ $this, 'prefill_demo_content' ] );
 	}
 
 	/**
@@ -736,6 +735,8 @@ class Story_Post_Type {
 	/**
 	 * Registers the demo admin menu page.
 	 *
+	 * @todo Remove
+	 *
 	 * @return void
 	 */
 	public function add_menu_page() {
@@ -745,11 +746,9 @@ class Story_Post_Type {
 			__( 'Demo', 'web-stories' ),
 			'edit_posts',
 			'web-stories-demo',
-			static function() {
-				// This function is not actually used.
-				// \Google\Web_Stories\Story_Post_Type::redirect_demo() will redirect to the story editor anyway.
-				return null;
-			},
+			// This is not actually used.
+			// \Google\Web_Stories\Story_Post_Type::redirect_demo() will redirect to the story editor anyway.
+			'__return_null',
 			20
 		);
 	}
@@ -773,30 +772,5 @@ class Story_Post_Type {
 		}
 	}
 
-	/**
-	 * Pre-fills story with demo content.
-	 *
-	 * @param string $content Default post content.
-	 *
-	 * @return string Pre-filled post content if applicable, or the default content otherwise.
-	 */
-	public function prefill_demo_content( $content ) {
-		if ( ! isset( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			return $content;
-		}
 
-		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';
-
-		if ( ! is_readable( $file ) ) {
-			return $content;
-		}
-
-		$file_content = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-
-		if ( ! $file_content ) {
-			return '';
-		}
-
-		return $file_content;
-	}
 }
