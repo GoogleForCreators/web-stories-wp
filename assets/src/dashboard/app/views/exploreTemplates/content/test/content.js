@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { TEMPLATES_GALLERY_STATUS, VIEW_STYLE } from '../../../../../constants';
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import LayoutProvider from '../../../../../components/layout/provider';
 import Content from '../';
 
@@ -69,7 +69,7 @@ describe('Explore Templates <Content />', function () {
   });
 
   it('should render the content grid with the correct template count.', function () {
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithProviders(
       <LayoutProvider>
         <Content
           filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -93,7 +93,7 @@ describe('Explore Templates <Content />', function () {
   });
 
   it('should show "No templates currently available" if no templates are present.', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Content
           filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
@@ -114,7 +114,7 @@ describe('Explore Templates <Content />', function () {
   });
 
   it('should show "Sorry, we couldn\'t find any results matching "scooby dooby doo" if no templates are found for a search query are present.', function () {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <LayoutProvider>
         <Content
           filter={{ view: TEMPLATES_GALLERY_STATUS.ALL }}
