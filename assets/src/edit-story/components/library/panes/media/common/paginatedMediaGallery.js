@@ -60,7 +60,6 @@ function PaginatedMediaGallery({
   onInsert,
   setNextPage,
 }) {
-  // TODO(#1698): Ensure scrollbars auto-disappear in MacOS.
   const refContainer = useRef();
 
   const loadNextPageIfNeeded = useCallback(() => {
