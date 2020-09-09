@@ -126,7 +126,7 @@
     "eslint-plugin-react": "^7.20.6",
     "eslint-plugin-react-hooks": "^4.1.0",
     "eslint-plugin-testing-library": "^3.3.0",
-    "got": "^11.6.0",
+    "got": "^11.6.1",
     "husky": "^4.2.5",
     "jasmine-core": "^3.6.0",
     "jest": "^25.5.4",
