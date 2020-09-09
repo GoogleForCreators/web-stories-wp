@@ -32,7 +32,7 @@ import {
   ArrowRight as ArrowRightIcon,
   ArrowDown as ArrowDownIcon,
   GridView as GridViewIcon,
-  KeyboardShortcut as KeyboardShortcutIcon,
+  Keyboard as KeyboardIcon,
   Close as CloseIcon,
   Eyedropper as EyedropperIcon,
   More as MoreIcon,
@@ -180,7 +180,7 @@ export const GridView = (props) => (
 export const Keyboard = forwardRef(function Keyboard(props, ref) {
   return (
     <StyledButton {...props} ref={ref}>
-      <KeyboardShortcutIcon />
+      <KeyboardIcon />
     </StyledButton>
   );
 });

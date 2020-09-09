@@ -52,7 +52,6 @@ export { ReactComponent as GridView } from './grid_view.svg';
 export { ReactComponent as Info } from './info.svg';
 export { ReactComponent as Italic } from './italic_icon.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';
-export { ReactComponent as KeyboardShortcut } from './keyboard_shortcut.svg';
 export { ReactComponent as LayoutHelper } from './layout_helper.svg';
 export { ReactComponent as Link } from './link.svg';
 export { ReactComponent as LinkAlt } from './links.svg'; // todo: remove?
