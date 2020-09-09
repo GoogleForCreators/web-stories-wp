@@ -785,7 +785,7 @@ class Story_Post_Type {
 			return $content;
 		}
 
-		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/demo.json';
+		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';
 
 		if ( ! is_readable( $file ) ) {
 			return $content;
