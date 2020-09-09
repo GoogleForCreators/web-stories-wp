@@ -21,14 +21,14 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import GoogleAnalyticsSettings, { TEXT } from '../';
 
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   const mockUpdate = jest.fn();
 
   it('should render google analytics input and helper text by default', function () {
-    const { getByRole, getByText } = renderWithTheme(
+    const { getByRole, getByText } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={''}
         handleUpdate={mockUpdate}
@@ -43,7 +43,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={''}
         handleUpdate={mockUpdate}
