@@ -42,6 +42,7 @@ const defaultProviderValues = {
   features: {},
   theme,
   config: {},
+  api: {},
 };
 
 // Please use renderWithProviders instead of renderWithTheme or renderWithProviders
@@ -57,7 +58,9 @@ export const renderWithProviders = (
     <FlagsProvider features={mergedProviderValues.features}>
       <ThemeProvider theme={mergedProviderValues.theme}>
         <ConfigProvider config={mergedProviderValues.config}>
-          <MockApiProvider>{ui}</MockApiProvider>
+          <MockApiProvider value={mergedProviderValues.api}>
+            {ui}
+          </MockApiProvider>
         </ConfigProvider>
       </ThemeProvider>
     </FlagsProvider>,

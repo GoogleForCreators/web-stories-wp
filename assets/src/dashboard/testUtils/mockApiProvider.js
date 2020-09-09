@@ -28,7 +28,7 @@ import { ApiContext } from '../app/api/apiProvider';
 
 const noop = () => {};
 
-export default function MockApiProvider({ children }) {
+export default function MockApiProvider({ children, value }) {
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
 
   const usersApi = useMemo(
@@ -41,18 +41,22 @@ export default function MockApiProvider({ children }) {
     [currentUser]
   );
 
-  const value = useMemo(
+  const mergedValue = useMemo(
     () => ({
       state: { currentUser },
       actions: { usersApi },
+      ...value,
     }),
-    [currentUser, usersApi]
+    [currentUser, usersApi, value]
   );
-  return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
+  return (
+    <ApiContext.Provider value={mergedValue}>{children}</ApiContext.Provider>
+  );
 }
 
 MockApiProvider.propTypes = {
   children: PropTypes.node,
+  value: PropTypes.object,
 };
 
 function getCurrentUserState() {
