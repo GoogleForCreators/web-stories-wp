@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -88,5 +93,23 @@ describe('Selection integration', () => {
     ]);
     expect(await getSelection()).toEqual([element1.id]);
     await fixture.snapshot();
+  });
+
+  it('should return focus to selection when pressing mod+alt+2', async () => {
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+
+    // Click nothing, then element
+    await fixture.events.click(fixture.editor.canvas.node);
+    await fixture.events.click(frame1);
+    await waitFor(() => expect(frame1).toHaveFocus());
+
+    // Click elsewhere
+    await fixture.events.click(fixture.editor.canvas.header.title);
+    expect(frame1).not.toHaveFocus();
+
+    // Return focus with shortcut
+    await fixture.events.keyboard.shortcut('mod+alt+2');
+    await waitFor(() => expect(frame1).toHaveFocus());
+    await fixture.snapshot('selected element has focus');
   });
 });
