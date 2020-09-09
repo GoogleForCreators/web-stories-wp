@@ -93,7 +93,7 @@ const MenuItemContent = styled.span`
   margin: auto 0;
 `;
 
-const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
+const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
   const [hoveredIndex, setHoveredIndex] = useState(currentValueIndex);
   const listRef = useRef(null);
 
@@ -196,6 +196,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect }) => {
       tabIndex={0}
       ref={listRef}
       onKeyDown={(e) => e.stopPropagation()}
+      {...rest}
     >
       {items.map((item, index) => renderMenuItem(item, index))}
     </MenuContainer>
