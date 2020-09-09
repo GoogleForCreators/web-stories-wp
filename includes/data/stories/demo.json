@@ -2,6 +2,7 @@
   "version": 24,
   "pages": [
     {
+      "backgroundOverlay": "none",
       "elements": [
         {
           "opacity": 100,
@@ -9,171 +10,560 @@
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
-          "x": 42,
-          "y": 43,
-          "width": 330,
-          "height": 494,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "mask": { "type": "rectangle" },
           "isBackground": true,
-          "type": "image",
-          "id": "0f01a0ae-9b1b-4652-ab99-745559d0258e",
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "8efc5cd0-a346-40f0-be6a-13df86cc734e"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 30,
+          "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "resource": {
             "type": "image",
-            "mimeType": "image/jpeg",
-            "creationDate": "2020-06-05T15:23:38",
-            "src": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash.jpg",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T14:08:07",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png",
             "width": 330,
-            "height": 494,
+            "height": 585,
             "posterId": 0,
-            "id": 932,
-            "title": "hannah-olinger-8eSrC43qdro-unsplash",
-            "alt": "hannah-olinger-8eSrC43qdro-unsplash",
+            "id": 11499,
+            "title": "Story-2",
+            "alt": "Story-2",
             "local": false,
             "sizes": {
               "medium": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-200x300.jpg",
-                "width": 200,
+                "file": "Story-2-169x300.png",
+                "width": 169,
                 "height": 300,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-200x300.jpg"
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-169x300.png"
               },
               "large": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-684x1024.jpg",
-                "width": 684,
+                "file": "Story-2-577x1024.png",
+                "width": 577,
                 "height": 1024,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-684x1024.jpg"
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-577x1024.png"
               },
               "thumbnail": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-150x150.jpg",
+                "file": "Story-2-150x150.png",
                 "width": 150,
                 "height": 150,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-150x150.jpg"
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x150.png"
               },
               "medium_large": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-768x1151.jpg",
+                "file": "Story-2-768x1364.png",
                 "width": 768,
-                "height": 1151,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-768x1151.jpg"
+                "height": 1364,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-768x1364.png"
               },
               "1536x1536": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-1025x1536.jpg",
-                "width": 1025,
+                "file": "Story-2-865x1536.png",
+                "width": 865,
                 "height": 1536,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-1025x1536.jpg"
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-865x1536.png"
               },
               "2048x2048": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-1367x2048.jpg",
-                "width": 1367,
+                "file": "Story-2-1153x2048.png",
+                "width": 1153,
                 "height": 2048,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-1367x2048.jpg"
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1153x2048.png"
               },
               "post-thumbnail": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-1200x1798.jpg",
+                "file": "Story-2-1200x2131.png",
                 "width": 1200,
-                "height": 1798,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-1200x1798.jpg"
-              },
-              "twentytwenty-fullscreen": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-1980x2966.jpg",
-                "width": 1980,
-                "height": 2966,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-1980x2966.jpg"
+                "height": 2131,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1200x2131.png"
               },
               "web-stories-poster-portrait": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-696x928.jpg",
-                "width": 696,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-696x928.jpg"
-              },
-              "web-stories-poster-square": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-928x928.jpg",
-                "width": 928,
-                "height": 928,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-928x928.jpg"
+                "file": "Story-2-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x853.png"
               },
               "web-stories-poster-landscape": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-928x696.jpg",
-                "width": 928,
-                "height": 696,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-928x696.jpg"
+                "file": "Story-2-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-853x640.png"
               },
-              "web_stories_thumbnail": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-150x225.jpg",
+              "web-stories-poster-square": {
+                "file": "Story-2-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "Story-2-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "Story-2-150x266.png",
                 "width": 150,
-                "height": 225,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-150x225.jpg"
+                "height": 266,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x266.png"
               },
               "full": {
-                "file": "hannah-olinger-8eSrC43qdro-unsplash-scaled.jpg",
-                "width": 1709,
-                "height": 2560,
-                "mime_type": "image/jpeg",
-                "source_url": "https://web-stories.local/wp-content/uploads/2020/06/hannah-olinger-8eSrC43qdro-unsplash-scaled.jpg"
+                "file": "Story-2.png",
+                "width": 1421,
+                "height": 2524,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png"
               }
             }
-          }
+          },
+          "type": "image",
+          "x": -177,
+          "y": 117,
+          "width": 355,
+          "height": 630,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "f1d66717-c7c9-4304-ab1e-9e7490c96dd8"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 30,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T14:07:52",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png",
+            "width": 330,
+            "height": 586,
+            "posterId": 0,
+            "id": 11498,
+            "title": "Story-3",
+            "alt": "Story-3",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "Story-3-169x300.png",
+                "width": 169,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-169x300.png"
+              },
+              "large": {
+                "file": "Story-3-576x1024.png",
+                "width": 576,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-576x1024.png"
+              },
+              "thumbnail": {
+                "file": "Story-3-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x150.png"
+              },
+              "medium_large": {
+                "file": "Story-3-768x1365.png",
+                "width": 768,
+                "height": 1365,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-768x1365.png"
+              },
+              "1536x1536": {
+                "file": "Story-3-864x1536.png",
+                "width": 864,
+                "height": 1536,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-864x1536.png"
+              },
+              "2048x2048": {
+                "file": "Story-3-1153x2048.png",
+                "width": 1153,
+                "height": 2048,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1153x2048.png"
+              },
+              "post-thumbnail": {
+                "file": "Story-3-1200x2132.png",
+                "width": 1200,
+                "height": 2132,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1200x2132.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "Story-3-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "Story-3-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "Story-3-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "Story-3-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "Story-3-150x267.png",
+                "width": 150,
+                "height": 267,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x267.png"
+              },
+              "full": {
+                "file": "Story-3.png",
+                "width": 1420,
+                "height": 2523,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png"
+              }
+            }
+          },
+          "type": "image",
+          "x": 153,
+          "y": 307,
+          "width": 355,
+          "height": 630,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "c36505ae-cf3f-4cf1-aee4-bac8c96c6f8f"
         },
         {
           "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "HIGHLIGHT",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1.png",
+            "width": 1648,
+            "height": 1728,
+            "id": 11746,
+            "title": "scrim",
+            "alt": "scrim",
+            "local": true,
+            "sizes": {
+              "medium": {
+                "file": "scrim-1-286x300.png",
+                "width": 286,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-286x300.png"
+              },
+              "large": {
+                "file": "scrim-1-977x1024.png",
+                "width": 977,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-977x1024.png"
+              },
+              "thumbnail": {
+                "file": "scrim-1-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-150x150.png"
+              },
+              "medium_large": {
+                "file": "scrim-1-768x805.png",
+                "width": 768,
+                "height": 805,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-768x805.png"
+              },
+              "1536x1536": {
+                "file": "scrim-1-1465x1536.png",
+                "width": 1465,
+                "height": 1536,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-1465x1536.png"
+              },
+              "post-thumbnail": {
+                "file": "scrim-1-1200x1258.png",
+                "width": 1200,
+                "height": 1258,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-1200x1258.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "scrim-1-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "scrim-1-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "scrim-1-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "scrim-1-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "scrim-1-150x157.png",
+                "width": 150,
+                "height": 157,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-150x157.png"
+              },
+              "full": {
+                "file": "scrim-1.png",
+                "width": 1648,
+                "height": 1728,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1.png"
+              }
+            }
+          },
+          "type": "image",
+          "x": 0,
+          "y": -57,
+          "width": 412,
+          "height": 432,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "4532138d-3dbc-48fe-b1b3-9f159f17d02f"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T14:13:41",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo.png",
+            "width": 330,
+            "height": 242,
+            "posterId": 0,
+            "id": 11504,
+            "title": "webstorieslogo",
+            "alt": "webstorieslogo",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "webstorieslogo-300x220.png",
+                "width": 300,
+                "height": 220,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-300x220.png"
+              },
+              "large": {
+                "file": "webstorieslogo-1024x752.png",
+                "width": 1024,
+                "height": 752,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-1024x752.png"
+              },
+              "thumbnail": {
+                "file": "webstorieslogo-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-150x150.png"
+              },
+              "medium_large": {
+                "file": "webstorieslogo-768x564.png",
+                "width": 768,
+                "height": 564,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-768x564.png"
+              },
+              "post-thumbnail": {
+                "file": "webstorieslogo-1200x881.png",
+                "width": 1200,
+                "height": 881,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-1200x881.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "webstorieslogo-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "webstorieslogo-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "webstorieslogo-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "webstorieslogo-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "webstorieslogo-150x110.png",
+                "width": 150,
+                "height": 110,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-150x110.png"
+              },
+              "full": {
+                "file": "webstorieslogo.png",
+                "width": 1226,
+                "height": 900,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo.png"
+              }
+            }
+          },
+          "type": "image",
+          "x": 55,
+          "y": 215,
+          "width": 304,
+          "height": 223,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "e331f466-1cff-45ad-9631-be1731c292d5"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
           "font": {
-            "family": "Roboto",
-            "weights": [100, 300, 400, 500, 700, 900],
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
             "styles": ["italic", "regular"],
             "variants": [
               [0, 100],
-              [1, 100],
+              [0, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 500],
-              [1, 500],
+              [0, 600],
               [0, 700],
-              [1, 700],
+              [0, 800],
               [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
               [1, 900]
-            ],
-            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com"
+            ]
           },
-          "fontSize": 30,
-          "backgroundColor": { "color": { "r": 231, "g": 48, "b": 48 } },
-          "lineHeight": 1.3,
+          "fontSize": 44,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "id": "43126832-15e7-4a56-8850-677cc2e5d93a",
-          "content": "<span style=\"color: #fbfbfb\">This is your first story!</span>",
-          "x": 40,
-          "y": 36,
-          "width": 329,
-          "height": 38,
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">Tips </span><span style=\"font-weight: 100; color: #fff\">to make the most of</span>",
+          "width": 334,
+          "height": 122,
           "scale": 100,
           "focalX": 50,
-          "focalY": 50
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "0e74eb8a-5f77-4f1c-a68f-c2f52f786679",
+          "x": 44,
+          "y": 73
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
-      "id": "e172bcc5-e493-467d-9fce-d223414a8d8a",
+      "id": "06a5a574-5692-4d32-b216-65f1637fce04",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -188,10 +578,2016 @@
         "isBackground": true,
         "isDefaultBackground": true,
         "type": "shape",
-        "id": "15914c98-23aa-4a2e-b006-be2855b17601"
+        "id": "8efc5cd0-a346-40f0-be6a-13df86cc734e"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip1.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-1.jpeg",
+            "posterId": 11683,
+            "id": 11681,
+            "length": 5,
+            "lengthFormatted": "0:05",
+            "title": "WebStoriesTip1",
+            "alt": "WebStoriesTip1",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "f9d690ab-26f3-4935-a53d-aabe0e07f43f"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "scrim",
+            "alt": "scrim",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "scrim-300x196.png",
+                "width": 300,
+                "height": 196,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
+              },
+              "large": {
+                "file": "scrim-1024x669.png",
+                "width": 1024,
+                "height": 669,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
+              },
+              "thumbnail": {
+                "file": "scrim-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
+              },
+              "medium_large": {
+                "file": "scrim-768x501.png",
+                "width": 768,
+                "height": 501,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
+              },
+              "1536x1536": {
+                "file": "scrim-1536x1003.png",
+                "width": 1536,
+                "height": 1003,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
+              },
+              "post-thumbnail": {
+                "file": "scrim-1200x783.png",
+                "width": 1200,
+                "height": 783,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "scrim-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "scrim-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "scrim-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "scrim-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "scrim-150x98.png",
+                "width": 150,
+                "height": 98,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
+              },
+              "full": {
+                "file": "scrim.png",
+                "width": 1648,
+                "height": 1076,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
+              }
+            }
+          },
+          "type": "image",
+          "x": 0,
+          "y": 238,
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "fdc079dd-1b51-4ee3-92b3-30f36c0415d3"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 83.5,
+          "y": 501,
+          "id": "004a2890-04b2-4cea-aa73-961f2450507f",
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">Drag your image or video to the edge of the page to set as page background.</span>",
+          "width": 245,
+          "height": 75,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">SET A PAGE BACKGROUND</span>",
+          "width": 291,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "68b0dbfc-c986-4267-b96e-b2bc025d56c9",
+          "x": 61,
+          "y": 461,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "266aff79-1125-4ffd-a4e5-9100541c1b5f",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "3a640753-8538-4056-b81b-af839012db1b",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip2.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-2.jpeg",
+            "posterId": 11687,
+            "id": 11685,
+            "length": 10,
+            "lengthFormatted": "0:10",
+            "title": "WebStoriesTip2",
+            "alt": "WebStoriesTip2",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "701d5397-143a-40bb-8c53-b65cdefd3410"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "scrim",
+            "alt": "scrim",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "scrim-300x196.png",
+                "width": 300,
+                "height": 196,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
+              },
+              "large": {
+                "file": "scrim-1024x669.png",
+                "width": 1024,
+                "height": 669,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
+              },
+              "thumbnail": {
+                "file": "scrim-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
+              },
+              "medium_large": {
+                "file": "scrim-768x501.png",
+                "width": 768,
+                "height": 501,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
+              },
+              "1536x1536": {
+                "file": "scrim-1536x1003.png",
+                "width": 1536,
+                "height": 1003,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
+              },
+              "post-thumbnail": {
+                "file": "scrim-1200x783.png",
+                "width": 1200,
+                "height": 783,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "scrim-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "scrim-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "scrim-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "scrim-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "scrim-150x98.png",
+                "width": 150,
+                "height": 98,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
+              },
+              "full": {
+                "file": "scrim.png",
+                "width": 1648,
+                "height": 1076,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
+              }
+            }
+          },
+          "type": "image",
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "fdc079dd-1b51-4ee3-92b3-30f36c0415d3",
+          "id": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
+          "x": 0,
+          "y": 238
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 53.5,
+          "y": 501,
+          "id": "f8b4a07c-1f1b-4140-945c-66a729bd77ae",
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">Once you've set a page background, add a solid, linear or radial gradient overlay to increase text contrast or add visual styles.</span>",
+          "width": 305,
+          "height": 100,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">BACKGROUND OVERLAY</span>",
+          "width": 252,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "00b5e9e3-1134-4407-974c-8f0f0770eb19",
+          "x": 80,
+          "y": 461,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "f3d54fcf-e8ae-4232-b400-465c81953282",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip-SafeZone-1.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-11.jpeg",
+            "posterId": 11804,
+            "id": 11802,
+            "length": 4,
+            "lengthFormatted": "0:04",
+            "title": "WebStoriesTip-SafeZone",
+            "alt": "WebStoriesTip-SafeZone",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "6341dab4-1424-433f-963c-f142d6a83970"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 43,
+          "y": 501,
+          "id": "8abc8e46-48f4-4a57-8396-3a74d5fa0790",
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">Add your designs to the page, keeping crucial elements inside the safe zone (tick marks) to ensure they are visible across most devices.</span>",
+          "width": 326,
+          "height": 100,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">SAFE ZONE</span>",
+          "width": 230,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "8f0b5de9-1252-4dab-9596-d1bc7dd45e1c",
+          "x": 91,
+          "y": 461,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "6728de08-eedb-40a2-9a3a-604ff4c87214",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/ftueSampleStory-SysLayer-1.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-12.jpeg",
+            "posterId": 11809,
+            "id": 11807,
+            "length": 2,
+            "lengthFormatted": "0:02",
+            "title": "ftueSampleStory-SysLayer",
+            "alt": "ftueSampleStory-SysLayer",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "949c85d7-9bc4-472f-a904-c1cd996954be"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 61,
+          "y": 501,
+          "id": "3cdc3e2c-80b9-4946-b0c6-5d473ffe127d",
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">The story system layer is docked at the top. </span><span style=\"font-weight: 500; color: #fff\">Preview your story</span><span style=\"font-weight: 200; color: #fff\"> to ensure system layer icons are not blocking crucial elements.</span>",
+          "width": 290,
+          "height": 100,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">STORY SYSTEM LAYER</span>",
+          "width": 230,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "7d453d81-a14d-4420-b143-6a39854dceea",
+          "x": 91,
+          "y": 461,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "87eb274d-a2dd-495f-add0-ad681cf757f5",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip5.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-8.jpeg",
+            "posterId": 11786,
+            "id": 11784,
+            "length": 20,
+            "lengthFormatted": "0:20",
+            "title": "WebStoriesTip5",
+            "alt": "WebStoriesTip5",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "3195a5c5-933c-4b45-a66c-152bbd619fdb"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "scrim",
+            "alt": "scrim",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "scrim-300x196.png",
+                "width": 300,
+                "height": 196,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
+              },
+              "large": {
+                "file": "scrim-1024x669.png",
+                "width": 1024,
+                "height": 669,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
+              },
+              "thumbnail": {
+                "file": "scrim-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
+              },
+              "medium_large": {
+                "file": "scrim-768x501.png",
+                "width": 768,
+                "height": 501,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
+              },
+              "1536x1536": {
+                "file": "scrim-1536x1003.png",
+                "width": 1536,
+                "height": 1003,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
+              },
+              "post-thumbnail": {
+                "file": "scrim-1200x783.png",
+                "width": 1200,
+                "height": 783,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "scrim-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "scrim-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "scrim-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "scrim-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "scrim-150x98.png",
+                "width": 150,
+                "height": 98,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
+              },
+              "full": {
+                "file": "scrim.png",
+                "width": 1648,
+                "height": 1076,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
+              }
+            }
+          },
+          "type": "image",
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
+          "id": "3acdf9d7-aa57-46fe-b7f1-2673b05c50b4",
+          "x": 0,
+          "y": 238
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 75,
+          "y": 501,
+          "id": "0108f423-121e-41e7-8fb9-68da265caaba",
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">Our shapes are quite basic for now but they act as masks. Drag an image or video into the mask to place.</span>",
+          "width": 268,
+          "height": 100,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">SHAPE + MASKING</span>",
+          "width": 230,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "bee50053-183a-43dc-95cd-dcfa6817f4e6",
+          "x": 91,
+          "y": 461,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "f79a3e34-81ab-4165-a2aa-83da192b1e9d",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "1c6ec285-92e7-41f8-b140-722e3a2fab3b",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip-Post.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-13.jpeg",
+            "posterId": 11830,
+            "id": 11828,
+            "length": 9,
+            "lengthFormatted": "0:09",
+            "title": "WebStoriesTip-Post",
+            "alt": "WebStoriesTip-Post",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "55b9134a-502f-416b-9d48-0079af916ae6"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "scrim",
+            "alt": "scrim",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "scrim-300x196.png",
+                "width": 300,
+                "height": 196,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
+              },
+              "large": {
+                "file": "scrim-1024x669.png",
+                "width": 1024,
+                "height": 669,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
+              },
+              "thumbnail": {
+                "file": "scrim-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
+              },
+              "medium_large": {
+                "file": "scrim-768x501.png",
+                "width": 768,
+                "height": 501,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
+              },
+              "1536x1536": {
+                "file": "scrim-1536x1003.png",
+                "width": 1536,
+                "height": 1003,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
+              },
+              "post-thumbnail": {
+                "file": "scrim-1200x783.png",
+                "width": 1200,
+                "height": 783,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "scrim-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "scrim-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "scrim-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "scrim-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "scrim-150x98.png",
+                "width": 150,
+                "height": 98,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
+              },
+              "full": {
+                "file": "scrim.png",
+                "width": 1648,
+                "height": 1076,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
+              }
+            }
+          },
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
+          "id": "6a7c0c70-192f-44eb-b878-15f3018d92ca",
+          "x": 0,
+          "y": 238,
+          "type": "image"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 54,
+          "y": 497,
+          "id": "5542ba59-9388-49fc-b7e1-f2ec50c047a9",
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">Embed stories into your blog post. Open the block menu &amp; select the Web Stories block. Insert the story link to embed your story. That's it!</span>",
+          "width": 304,
+          "height": 100,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text"
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">EMBED VISUAL STORIES</span>",
+          "width": 321,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
+          "id": "86baa049-1a48-44ae-a82c-08ba93244754",
+          "x": 46,
+          "y": 461,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "4cbf7ec8-cf12-4ff2-bfb0-3bef7f3d76cb",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+          "type": "shape"
+        },
+        {
+          "opacity": 10,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 30,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T14:08:07",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png",
+            "width": 330,
+            "height": 585,
+            "posterId": 0,
+            "id": 11499,
+            "title": "Story-2",
+            "alt": "Story-2",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "Story-2-169x300.png",
+                "width": 169,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-169x300.png"
+              },
+              "large": {
+                "file": "Story-2-577x1024.png",
+                "width": 577,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-577x1024.png"
+              },
+              "thumbnail": {
+                "file": "Story-2-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x150.png"
+              },
+              "medium_large": {
+                "file": "Story-2-768x1364.png",
+                "width": 768,
+                "height": 1364,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-768x1364.png"
+              },
+              "1536x1536": {
+                "file": "Story-2-865x1536.png",
+                "width": 865,
+                "height": 1536,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-865x1536.png"
+              },
+              "2048x2048": {
+                "file": "Story-2-1153x2048.png",
+                "width": 1153,
+                "height": 2048,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1153x2048.png"
+              },
+              "post-thumbnail": {
+                "file": "Story-2-1200x2131.png",
+                "width": 1200,
+                "height": 2131,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1200x2131.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "Story-2-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "Story-2-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "Story-2-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "Story-2-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "Story-2-150x266.png",
+                "width": 150,
+                "height": 266,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x266.png"
+              },
+              "full": {
+                "file": "Story-2.png",
+                "width": 1421,
+                "height": 2524,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png"
+              }
+            }
+          },
+          "type": "image",
+          "width": 355,
+          "height": 630,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "f1d66717-c7c9-4304-ab1e-9e7490c96dd8",
+          "id": "a0fdd4b7-cd14-45ef-abf3-3b1fb310be6a",
+          "x": -177,
+          "y": 117
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 40,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "type": "text",
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 100; color: #fff\">READ ABOUT BEST PRACTICES FOR CREATING A SUCCESSFUL WEB STORY&nbsp;</span>",
+          "width": 313,
+          "height": 200,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "0e74eb8a-5f77-4f1c-a68f-c2f52f786679",
+          "id": "0106c119-e3d1-416f-92e4-b3f5b7e6c2c5",
+          "x": 47,
+          "y": 161
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "width": 30,
+          "height": 4,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "4ce80a9c-b414-4924-9f0e-29451a6b1a8c",
+          "id": "9acf6b79-00a8-4264-854d-63a465f0a8c7",
+          "x": 191,
+          "y": 0
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 800],
+              [1, 800],
+              [0, 900],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "type": "text",
+          "id": "e59aa680-9a49-439a-98fd-18660d8dfa21",
+          "content": "<span style=\"color: #1a73e8\">bit.ly/storybestpractices</span>",
+          "x": 46,
+          "y": 422,
+          "width": 226,
+          "height": 23,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "link": {
+            "url": "https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/",
+            "icon": "https://amp.dev/static/img/sharing/docs-guide-600x314.png",
+            "desc": "Best practices for creating a successful Web Story - amp.dev"
+          }
+        },
+        {
+          "opacity": 10,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 30,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T14:07:52",
+            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png",
+            "width": 330,
+            "height": 586,
+            "posterId": 0,
+            "id": 11498,
+            "title": "Story-3",
+            "alt": "Story-3",
+            "local": false,
+            "sizes": {
+              "medium": {
+                "file": "Story-3-169x300.png",
+                "width": 169,
+                "height": 300,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-169x300.png"
+              },
+              "large": {
+                "file": "Story-3-576x1024.png",
+                "width": 576,
+                "height": 1024,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-576x1024.png"
+              },
+              "thumbnail": {
+                "file": "Story-3-150x150.png",
+                "width": 150,
+                "height": 150,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x150.png"
+              },
+              "medium_large": {
+                "file": "Story-3-768x1365.png",
+                "width": 768,
+                "height": 1365,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-768x1365.png"
+              },
+              "1536x1536": {
+                "file": "Story-3-864x1536.png",
+                "width": 864,
+                "height": 1536,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-864x1536.png"
+              },
+              "2048x2048": {
+                "file": "Story-3-1153x2048.png",
+                "width": 1153,
+                "height": 2048,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1153x2048.png"
+              },
+              "post-thumbnail": {
+                "file": "Story-3-1200x2132.png",
+                "width": 1200,
+                "height": 2132,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1200x2132.png"
+              },
+              "web-stories-poster-portrait": {
+                "file": "Story-3-640x853.png",
+                "width": 640,
+                "height": 853,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x853.png"
+              },
+              "web-stories-poster-landscape": {
+                "file": "Story-3-853x640.png",
+                "width": 853,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-853x640.png"
+              },
+              "web-stories-poster-square": {
+                "file": "Story-3-640x640.png",
+                "width": 640,
+                "height": 640,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x640.png"
+              },
+              "web-stories-publisher-logo": {
+                "file": "Story-3-96x96.png",
+                "width": 96,
+                "height": 96,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-96x96.png"
+              },
+              "web-stories-thumbnail": {
+                "file": "Story-3-150x267.png",
+                "width": 150,
+                "height": 267,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x267.png"
+              },
+              "full": {
+                "file": "Story-3.png",
+                "width": 1420,
+                "height": 2523,
+                "mime_type": "image/png",
+                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png"
+              }
+            }
+          },
+          "type": "image",
+          "width": 355,
+          "height": 630,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "c36505ae-cf3f-4cf1-aee4-bac8c96c6f8f",
+          "id": "9748eb4e-205d-4c90-8c27-90d34856a592",
+          "x": 153,
+          "y": 307
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "17fc30f7-8968-41a2-aaef-c7a1be1b753c",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "c412199f-d6f5-45cc-8ad8-c4020c3968ad",
+        "type": "shape"
       }
     }
   ],
-  "autoAdvance": true,
+  "autoAdvance": false,
   "defaultPageDuration": 7
 }
