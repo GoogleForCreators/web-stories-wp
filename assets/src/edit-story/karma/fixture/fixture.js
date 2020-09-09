@@ -45,7 +45,11 @@ const DEFAULT_CONFIG = {
     video: ['video/mp4', 'video/ogg'],
   },
   allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'ogg'],
-  capabilities: {},
+  capabilities: {
+    hasUploadMediaAction: true,
+    hasPublishAction: true,
+  },
+  version: '1.0.0-alpha.9',
 };
 
 /**
@@ -110,6 +114,10 @@ export class Fixture {
 
   get container() {
     return this._container;
+  }
+
+  get document() {
+    return this._container.ownerDocument;
   }
 
   get screen() {
@@ -604,8 +612,9 @@ class APIProviderFixture {
         () => jasmine.createSpy('getAllStatuses'),
         []
       );
+
       const getAllUsers = useCallback(
-        () => jasmine.createSpy('getAllUsers'),
+        () => asyncResponse([{ id: 1, name: 'John Doe' }]),
         []
       );
 

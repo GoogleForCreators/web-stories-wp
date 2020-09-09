@@ -19,6 +19,7 @@
  */
 import { useMemo, memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * WordPress dependencies
@@ -37,6 +38,7 @@ import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
+  TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -115,13 +117,18 @@ function Header({
     [scrollToTop, sort]
   );
 
+  const [debouncedTypeaheadChange] = useDebouncedCallback(
+    search.setKeyword,
+    TEXT_INPUT_DEBOUNCE
+  );
+
   return (
     <Layout.Squishable>
       <PageHeading
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
         stories={stories}
-        handleTypeaheadChange={search.setKeyword}
+        handleTypeaheadChange={debouncedTypeaheadChange}
         typeaheadValue={search.keyword}
       >
         {HeaderToggleButtons}

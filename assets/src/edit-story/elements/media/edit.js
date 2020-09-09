@@ -18,7 +18,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -101,6 +106,7 @@ function MediaEdit({ element, box }) {
   const [fullMedia, setFullMedia] = useState(null);
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
+  const elementRef = useRef();
 
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
@@ -135,10 +141,21 @@ function MediaEdit({ element, box }) {
     ref: setCroppedMedia,
     draggable: false,
     src: resource.src,
-    alt: resource.alt,
+    alt: __('Drag to move media element', 'web-stories'),
     opacity: opacity / 100,
+    tabIndex: 0,
     ...mediaProps,
   };
+
+  useEffect(() => {
+    if (
+      croppedMedia &&
+      elementRef.current &&
+      !elementRef.current.contains(document.activeElement)
+    ) {
+      croppedMedia.focus();
+    }
+  }, [croppedMedia]);
 
   const srcSet = calculateSrcSet(element.resource);
   if (isImage && srcSet) {
@@ -146,7 +163,7 @@ function MediaEdit({ element, box }) {
   }
 
   return (
-    <Element>
+    <Element ref={elementRef}>
       {isImage && (
         <FadedImage
           {...fadedMediaProps}

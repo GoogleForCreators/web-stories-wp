@@ -119,6 +119,14 @@ describe('Font Picker', () => {
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
+    // focus first element in list
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+
+    // focus second element in list
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
@@ -162,12 +170,19 @@ describe('Font Picker', () => {
     const fontsList = getByRole('listbox');
     expect(fontsList).toBeInTheDocument();
 
-    // Move down by 2
+    // Move to first element in list
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',
       });
     });
+    // Move to second element in list
+    act(() => {
+      fireEvent.keyDown(fontsList, {
+        key: 'ArrowDown',
+      });
+    });
+    // Move to third element in list
     act(() => {
       fireEvent.keyDown(fontsList, {
         key: 'ArrowDown',

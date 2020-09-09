@@ -38,6 +38,7 @@ const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
 const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
+const mockFetchCurrentUser = jest.fn();
 
 const SettingsWrapper = ({
   canUploadFiles,
@@ -68,6 +69,15 @@ const SettingsWrapper = ({
               newlyCreatedMediaIds: [],
               mediaById: logos,
             },
+            currentUser: {
+              isUpdating: false,
+              data: {
+                id: 1,
+                meta: {
+                  web_stories_tracking_optin: true,
+                },
+              },
+            },
           },
           actions: {
             settingsApi: {
@@ -77,6 +87,9 @@ const SettingsWrapper = ({
             mediaApi: {
               uploadMedia: mockUploadMedia,
               fetchMediaById: mockFetchMediaById,
+            },
+            usersApi: {
+              fetchCurrentUser: mockFetchCurrentUser,
             },
           },
         }}
@@ -132,7 +145,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         logos={rawPublisherLogos}
       />
     );
-    expect(queryAllByTestId(/^publisher-logo/)).toHaveLength(
+    expect(queryAllByTestId(/^publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
     );
 
@@ -142,7 +155,7 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should call mockUpdateSettings when a logo is removed', function () {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId, getByText } = renderWithTheme(
       <SettingsWrapper
         googleAnalyticsId="UA-098909-05"
         canUploadFiles={true}
@@ -157,6 +170,11 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(RemoveLogoButton).toBeDefined();
 
     fireEvent.click(RemoveLogoButton);
+
+    const ConfirmRemoveLogoButton = getByText('Remove Logo');
+
+    fireEvent.click(ConfirmRemoveLogoButton);
+
     expect(mockUpdateSettings).toHaveBeenCalledTimes(1);
   });
 

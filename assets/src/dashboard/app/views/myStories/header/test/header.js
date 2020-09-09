@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -162,7 +162,7 @@ describe('My Stories <Header />', function () {
     expect(getByText('Published (10)')).toBeInTheDocument();
   });
 
-  it('should call the set keyword function when new text is searched', function () {
+  it('should call the set keyword function when new text is searched', async function () {
     const setKeywordFn = jest.fn();
     const { getByPlaceholderText } = renderWithTheme(
       <LayoutProvider>
@@ -187,7 +187,9 @@ describe('My Stories <Header />', function () {
     fireEvent.change(getByPlaceholderText('Search Stories'), {
       target: { value: 'Hermione Granger' },
     });
-    expect(setKeywordFn).toHaveBeenCalledWith('Hermione Granger');
+    await waitFor(() => {
+      expect(setKeywordFn).toHaveBeenCalledWith('Hermione Granger');
+    });
   });
 
   it('should call the set sort function when a new sort is selected', function () {

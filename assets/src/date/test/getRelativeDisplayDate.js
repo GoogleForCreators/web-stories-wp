@@ -157,6 +157,18 @@ describe('date/getRelativeDisplayDate', () => {
     expect(formattedDate).toBe('Sat 05 02 2020');
   });
 
+  it('should correctly format a string date', () => {
+    const dateString = '2020-05-02T10:47:26';
+    const formattedDate = getRelativeDisplayDate(dateString, {
+      dateFormat: 'm/d/Y',
+      gmtOffset: -7,
+      timeFormat: 'g:i A',
+      timezone: 'America/Los_Angeles',
+    });
+
+    expect(formattedDate).toBe('05/02/2020');
+  });
+
   it('should return an empty string with a null date', () => {
     const formattedDate = getRelativeDisplayDate(null, {
       dateFormat: 'F j, Y',

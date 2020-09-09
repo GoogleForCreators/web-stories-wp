@@ -36,7 +36,7 @@ const inputStyles = css`
   border-color: transparent;
   outline: none;
   &:focus {
-    border-color: ${({ theme }) => theme.colors.fg.white} !important;
+    border-color: ${({ theme }) => theme.colors.whiteout} !important;
     box-shadow: none !important;
   }
 `;

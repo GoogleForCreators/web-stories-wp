@@ -23,15 +23,15 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { useDebouncedCallback } from 'use-debounce';
-import { Media, Row, Button, LinkInput } from '../../form';
-import { createLink, getLinkFromElement } from '../../elementLink';
+import { Media, Row, Button, LinkInput, MULTIPLE_VALUE } from '../../form';
+import { createLink } from '../../elementLink';
 import { useAPI } from '../../../app/api';
 import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../utils/url';
 import { SimplePanel } from '../panel';
@@ -39,7 +39,9 @@ import { ExpandedTextInput } from '../shared';
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useCanvas } from '../../canvas';
 import { Close } from '../../../icons';
+import { useCommonObjectValue } from '../utils';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
+import { useStory } from '../../../app/story';
 
 const IconText = styled.span`
   color: ${({ theme }) => theme.colors.fg.white};
@@ -83,19 +85,24 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     displayLinkGuidelines: state.state.displayLinkGuidelines,
   }));
 
-  const { isElementInAttachmentArea } = useElementsWithLinks();
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
 
-  const selectedElement = selectedElements[0];
+  const { getElementsInAttachmentArea } = useElementsWithLinks();
+  const hasElementsInAttachmentArea =
+    getElementsInAttachmentArea(selectedElements).length > 0 &&
+    currentPage?.pageAttachment?.url?.length > 0;
+
   const defaultLink = useMemo(
     () => createLink({ url: '', icon: null, desc: null }),
     []
   );
-  const link = useMemo(
-    () => getLinkFromElement(selectedElement) || defaultLink,
-    [selectedElement, defaultLink]
-  );
+
+  const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
+  const [isLinkFocused, setIsLinkFocused] = useState(false);
 
   const {
     actions: { getLinkMetadata },
@@ -138,6 +145,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       clearEditing();
 
       if (properties.url) {
+        // Don't submit any changes in case of multiple value.
+        if (MULTIPLE_VALUE === properties.url) {
+          return;
+        }
         const urlWithProtocol = withProtocol(properties.url);
         const valid = isValidUrl(urlWithProtocol);
         setIsInvalidUrl(!valid);
@@ -146,7 +157,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           populateMetadata(urlWithProtocol);
         }
       }
-      return pushUpdateForObject(
+      pushUpdateForObject(
         'link',
         properties.url !== ''
           ? {
@@ -170,6 +181,23 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const hasLinkSet = Boolean(link.url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
 
+  // If we're focusing on the link input and any of the relevant values changes,
+  // Check if we need to hide/display the guidelines.
+  useEffect(() => {
+    if (isLinkFocused) {
+      // Display the guidelines if there's no link / if it's multiple value.
+      const hasLink = hasLinkSet && link.url !== MULTIPLE_VALUE;
+      setDisplayLinkGuidelines(hasElementsInAttachmentArea && !hasLink);
+    }
+  }, [
+    selectedElements,
+    isLinkFocused,
+    hasElementsInAttachmentArea,
+    hasLinkSet,
+    setDisplayLinkGuidelines,
+    link.url,
+  ]);
+
   return (
     <SimplePanel name="link" title={__('Link', 'web-stories')}>
       <LinkInput
@@ -180,11 +208,10 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         }
         onBlur={() => {
           setDisplayLinkGuidelines(false);
+          setIsLinkFocused(false);
         }}
         onFocus={() => {
-          if (isElementInAttachmentArea(selectedElement) && !hasLinkSet) {
-            setDisplayLinkGuidelines(true);
-          }
+          setIsLinkFocused(true);
         }}
         value={link.url || ''}
         clear

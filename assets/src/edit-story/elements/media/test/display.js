@@ -24,6 +24,7 @@ import { render } from '@testing-library/react';
  */
 import { TestDisplayElement } from '../../../components/canvas/test/_utils';
 import { OverlayType } from '../../../utils/backgroundOverlay';
+import resourceList from '../../../utils/resourceList';
 
 describe('MediaDisplay', () => {
   let imageElement;
@@ -50,7 +51,7 @@ describe('MediaDisplay', () => {
         width: 1000,
         height: 800,
         sizes: {
-          mid: {
+          medium: {
             source_url: 'https://example.com/image1-mid',
             width: 500,
             height: 400,
@@ -96,7 +97,8 @@ describe('MediaDisplay', () => {
     refs = {};
   });
 
-  it('should render img with srcset', () => {
+  it('should render img with srcset, when fullsize resource is loaded', () => {
+    resourceList.set(imageElement.resource.id, { type: 'fullsize' });
     const { container } = render(
       <TestDisplayElement storyContext={storyContext} element={imageElement} />
     );
@@ -106,7 +108,8 @@ describe('MediaDisplay', () => {
     expect(img.srcset).toBe(
       'https://example.com/image1 1000w,https://example.com/image1-mid 500w'
     );
-    expect(img.src).toBe('https://example.com/image1');
+    // Take optimized image loading into account, fullsize uses original image
+    expect(img.src).toBe(imageElement.resource.src);
   });
 
   it('should render img with scale and focal point', () => {

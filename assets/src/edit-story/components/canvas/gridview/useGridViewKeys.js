@@ -214,14 +214,14 @@ function useGridViewKeys(ref, gridRef, pageRefs, isRTL) {
 
 // @todo: provide a cleaner `focusFirst()` API and takes into account
 // `tabIndex`, `disabled`, links, buttons, inputs, etc.
-function focusOnPage(page) {
+export function focusOnPage(page) {
   const button = page?.querySelector('button');
   if (button) {
     button.focus();
   }
 }
 
-function getArrowDir(key, pos, neg, isRTL) {
+export function getArrowDir(key, pos, neg, isRTL) {
   const rtlDir = isRTL ? -1 : 1;
   if (key === pos) {
     return rtlDir;
@@ -232,7 +232,7 @@ function getArrowDir(key, pos, neg, isRTL) {
   return 0;
 }
 
-function getGridColumnAndRowCount(grid, pageCount) {
+export function getGridColumnAndRowCount(grid, pageCount) {
   let columns = 0;
   let prevX;
   for (const el of grid.children) {
@@ -250,17 +250,17 @@ function getGridColumnAndRowCount(grid, pageCount) {
 }
 
 // will return a 1 based index
-function getRow(index, numColumns) {
+export function getRow(index, numColumns) {
   return Math.ceil((index + 1) / numColumns);
 }
 
 // will return a 1 based index
-function getColumn(index, numColumns) {
+export function getColumn(index, numColumns) {
   return (index % numColumns) + 1;
 }
 
 // will return a 0 based index
-function getIndex({ row, column, numRows, numColumns, numItems }) {
+export function getIndex({ row, column, numRows, numColumns, numItems }) {
   const isOutOfBounds =
     row > numRows || row <= 0 || column > numColumns || column <= 0;
 

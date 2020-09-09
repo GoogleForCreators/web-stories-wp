@@ -146,7 +146,7 @@ describe('useMedia3pApi', () => {
           },
           creationDate: '1234',
           height: 3536,
-          id: undefined,
+          id: 'media/unsplash:1234',
           length: undefined,
           lengthFormatted: undefined,
           local: false,
@@ -222,7 +222,7 @@ describe('useMedia3pApi', () => {
 
     await result.current.actions.listMedia({
       provider: 'unsplash',
-      searchTerm: 'cat',
+      filter: { searchTerm: 'cat' },
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
@@ -239,13 +239,35 @@ describe('useMedia3pApi', () => {
     );
     const { result } = renderHook(() => useMedia3pApi(), { wrapper });
 
-    await result.current.actions.listCategoryMedia({
+    await result.current.actions.listMedia({
       provider: 'unsplash',
-      selectedCategoryId: 'category/1',
+      filter: { categoryId: 'category/1' },
     });
 
     expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
       filter: 'provider:unsplash category:category/1',
+      orderBy: undefined,
+      pageSize: 20,
+      pageToken: undefined,
+    });
+  });
+
+  it('should call listMedia with contentType', async () => {
+    const wrapper = (params) => (
+      <Media3pApiProvider>{params.children}</Media3pApiProvider>
+    );
+    const { result } = renderHook(() => useMedia3pApi(), { wrapper });
+
+    await result.current.actions.listMedia({
+      provider: 'tenor',
+      filter: {
+        contentType: 'gif',
+        searchTerm: 'cat',
+      },
+    });
+
+    expect(apiFetcherMock.listMedia).toHaveBeenCalledWith({
+      filter: 'provider:tenor type:gif cat',
       orderBy: undefined,
       pageSize: 20,
       pageToken: undefined,

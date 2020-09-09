@@ -19,7 +19,7 @@ export const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
 export const SCROLLBAR_WIDTH = 11;
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
-export const CANVAS_MIN_WIDTH = 480;
+export const CANVAS_MIN_WIDTH = 570;
 export const LIBRARY_MIN_WIDTH = 220;
 export const LIBRARY_MAX_WIDTH = 360;
 export const INSPECTOR_MIN_WIDTH = 220;
@@ -39,7 +39,7 @@ export const FULLBLEED_RATIO = 9 / 16;
 export const PAGE_ATTACHMENT_HEIGHT_RATIO = 0.2;
 
 export const COLOR_PRESETS_PER_ROW = 6;
-export const STYLE_PRESETS_PER_ROW = 3;
+export const STYLE_PRESETS_PER_ROW = 2;
 
 // Default device pixel ratio.
 export const DEFAULT_DPR = 0.5;
@@ -73,4 +73,9 @@ export const BACKGROUND_TEXT_MODE = {
   NONE: 'NONE',
   FILL: 'FILL',
   HIGHLIGHT: 'HIGHLIGHT',
+};
+
+export const FONT_WEIGHT = {
+  NORMAL: 400,
+  BOLD: 700,
 };

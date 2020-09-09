@@ -78,7 +78,6 @@ const ExpandButton = styled(ArrowDown)`
   height: 32px;
   border-radius: 16px;
   ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
-  visibility: ${({ visible }) => (visible ? 'inherit' : 'hidden')};
   align-self: center;
   justify-content: center;
   align-items: center;
@@ -160,7 +159,7 @@ const Media3pCategories = ({
       : null;
     const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
 
-    if (selectedCategoryPillOffsetTop) {
+    if (!isExpanded && selectedCategoryPill) {
       setFocusedRowOffset(selectedCategoryPillOffsetTop);
     }
   }, [innerContainerRef, isExpanded, selectedCategoryId]);
@@ -182,7 +181,7 @@ const Media3pCategories = ({
       const isSameRow =
         selectedCategoryPill &&
         categoryPill.offsetTop == selectedCategoryPillOffsetTop;
-      if (selectedCategoryPill && !isSameRow) {
+      if (selectedCategoryPill && !isSameRow && !isExpanded) {
         categoryPill.classList.add('invisible');
       } else {
         categoryPill.classList.remove('invisible');
@@ -212,7 +211,6 @@ const Media3pCategories = ({
           <ExpandButton
             data-testid="category-expand-button"
             onClick={() => setIsExpanded(!isExpanded)}
-            visible={!selectedCategoryId}
             isExpanded={isExpanded}
             aria-controls="category-pill-container"
             aria-expanded={isExpanded}

@@ -18,15 +18,21 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { calculateSrcSet, mediaWithScale } from '../media/util';
+import {
+  calculateSrcSet,
+  getSmallestUrlForWidth,
+  mediaWithScale,
+} from '../media/util';
 import { getMediaSizePositionProps } from '../media';
 import MediaDisplay from '../media/display';
+import { preloadImage } from '../../app/media/utils';
+import resourceList from '../../utils/resourceList';
 
 const Img = styled.img`
   position: absolute;
@@ -38,6 +44,23 @@ function ImageDisplay({ element, box }) {
   const { width, height } = box;
   const ref = useRef();
 
+  let initialSrcType = 'smallest';
+  let initialSrc = getSmallestUrlForWidth(0, resource);
+
+  if (resourceList.get(resource.id)?.type === 'cached') {
+    initialSrcType = 'cached';
+    initialSrc = resourceList.get(resource.id).url;
+  }
+
+  if (resourceList.get(resource.id)?.type === 'fullsize' || resource.local) {
+    initialSrcType = 'fullsize';
+    initialSrc = resource.src;
+  }
+
+  const [srcType, setSrcType] = useState(initialSrcType);
+  const [src, setSrc] = useState(initialSrc);
+  const srcSet = srcType === 'fullsize' ? calculateSrcSet(resource) : '';
+
   const imgProps = getMediaSizePositionProps(
     resource,
     width,
@@ -47,13 +70,35 @@ function ImageDisplay({ element, box }) {
     focalY
   );
 
+  useEffect(() => {
+    let timeout;
+    if (resourceList.get(resource.id)?.type !== 'fullsize') {
+      timeout = setTimeout(async () => {
+        const preloadedImg = await preloadImage(resource.src, srcSet);
+        resourceList.set(resource.id, {
+          type: 'fullsize',
+        });
+        setSrc(preloadedImg.currentSrc);
+        setSrcType('fullsize');
+      });
+    }
+
+    return () => clearTimeout(timeout);
+  }, [resource.id, resource.src, srcSet, srcType]);
+
+  const showPlaceholder = srcType !== 'fullsize';
+
   return (
-    <MediaDisplay element={element} mediaRef={ref}>
+    <MediaDisplay
+      element={element}
+      mediaRef={ref}
+      showPlaceholder={showPlaceholder}
+    >
       <Img
         ref={ref}
         draggable={false}
-        src={resource.src}
-        srcSet={calculateSrcSet(resource)}
+        src={src}
+        srcSet={srcSet}
         alt={resource.alt}
         {...imgProps}
       />

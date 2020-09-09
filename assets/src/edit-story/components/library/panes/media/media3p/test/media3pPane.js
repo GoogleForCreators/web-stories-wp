@@ -43,7 +43,6 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
   PROVIDERS: {
     PROVIDER_1: {
       displayName: 'Provider 1',
-      supportedContentTypes: ['image'],
       supportsCategories: true,
       requiresAuthorAttribution: true,
       fetchMediaErrorMessage: 'Error loading media from Provider 1',
@@ -180,9 +179,26 @@ describe('Media3pPane', () => {
     expect(getComputedStyle(queryByText('Trending')).display).not.toBe('none');
   });
 
-  it('should render <Media3pPane /> with the category display name when selected', () => {
+  it('should render <Media3pPane /> with enabled search when a category is not selected', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
+    useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
+    const { container } = renderWithTheme(<Media3pPane isActive={true} />);
+
+    expect(container.querySelector('input')).toBeEnabled();
+  });
+
+  it('should render <Media3pPane /> with disabled search when a category is selected', () => {
+    useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
+    useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
+    useMediaResult.selectedProvider = 'PROVIDER_1';
     useMediaResult.media3p.PROVIDER_1.state.categories.selectedCategoryId =
       'provider1/1';
+    const { container } = renderWithTheme(<Media3pPane isActive={true} />);
+
+    expect(container.querySelector('input')).toBeDisabled();
+  });
+
+  it('should render <Media3pPane /> with the category display name when selected', () => {
     useMediaResult.media3p.PROVIDER_1.state.isMediaLoaded = true;
     useMediaResult.media3p.PROVIDER_1.state.media = MEDIA;
     const { queryByTestId } = renderWithTheme(<Media3pPane isActive={true} />);

@@ -30,11 +30,20 @@ const demoItems = [
   { value: '1', label: 'one' },
   { value: 'foo', label: 'two' },
   { value: false, label: 'invalid option' },
-  { value: 'bar', label: 'three' },
+  { value: 'bar', label: 'three', separator: 'top' },
+  {
+    value: 'link',
+    label: 'i am a link!',
+    url: 'https://www.google.com/',
+  },
   {
     value: 'edge_case',
     label: 'i am a very very very very very very very long label',
+    separator: 'bottom',
   },
+  { value: 'lions', label: 'lions' },
+  { value: 'tigers', label: 'tigers', separator: 'top' },
+  { value: 'bears', label: 'bears' },
 ];
 
 export default {

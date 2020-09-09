@@ -121,9 +121,7 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
-      <ToastProvider>
-        <ToasterView />
-      </ToastProvider>
+      <ToasterView />
     </AppFrame>
   );
 };
@@ -134,15 +132,17 @@ function App({ config }) {
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
-          <ApiProvider>
-            <NavProvider>
-              <RouterProvider>
-                <GlobalStyle />
-                <KeyboardOnlyOutline />
-                <AppContent />
-              </RouterProvider>
-            </NavProvider>
-          </ApiProvider>
+          <ToastProvider>
+            <ApiProvider>
+              <NavProvider>
+                <RouterProvider>
+                  <GlobalStyle />
+                  <KeyboardOnlyOutline />
+                  <AppContent />
+                </RouterProvider>
+              </NavProvider>
+            </ApiProvider>
+          </ToastProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>
