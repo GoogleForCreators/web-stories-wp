@@ -20,7 +20,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -31,17 +30,20 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { UnitsProvider } from '../../../../units';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
-import DisplayElement from '../../../canvas/displayElement';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
-import useBatchingCallback from '../../../../utils/useBatchingCallback';
-import { Pane } from '../shared';
+import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import loadTextSets from './textSets';
+import TextSet from './textSet';
+
+const Pane = styled(SharedPane)`
+  overflow-y: auto;
+  max-height: 100%;
+`;
 
 const ITEM_SIZE = 150;
 
@@ -53,15 +55,6 @@ const TextSetContainer = styled.div`
   row-gap: 12px;
   overflow: auto;
   max-height: 280px;
-`;
-
-const TextSetItem = styled.div`
-  position: relative;
-  width: ${ITEM_SIZE}px;
-  height: ${ITEM_SIZE}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
-  border-radius: 4px;
-  cursor: pointer;
 `;
 
 const TYPE = 'text';
@@ -79,13 +72,6 @@ function TextPane(props) {
       loadTextSets().then((sets) => setTextSets(sets));
     }
   }, [showTextSets]);
-
-  const insertElements = useBatchingCallback(
-    (elements) => {
-      elements.forEach((e) => insertElement(e.type, e));
-    },
-    [insertElement]
-  );
 
   const insertPreset = useInsertPreset();
 
@@ -127,35 +113,7 @@ function TextPane(props) {
               }}
             >
               {textSets.map((elements, index) => (
-                <TextSetItem
-                  key={index}
-                  style={{ justifySelf: index % 2 === 0 ? 'start' : 'end' }}
-                  onClick={() => insertElements(elements)}
-                >
-                  {elements.map(
-                    ({
-                      id,
-                      content,
-                      x,
-                      y,
-                      textSetWidth,
-                      textSetHeight,
-                      ...rest
-                    }) => (
-                      <DisplayElement
-                        previewMode
-                        key={id}
-                        element={{
-                          id,
-                          content: `<span style="color: #fff">${content}<span>`,
-                          x: x + (PAGE_WIDTH - textSetWidth) / 2,
-                          y: y + (PAGE_HEIGHT - textSetHeight) / 2,
-                          ...rest,
-                        }}
-                      />
-                    )
-                  )}
-                </TextSetItem>
+                <TextSet key={index} elements={elements} index={index} />
               ))}
             </UnitsProvider>
           </TextSetContainer>
