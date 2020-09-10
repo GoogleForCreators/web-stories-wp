@@ -765,7 +765,7 @@ class Story_Post_Type {
 			wp_safe_redirect(
 				add_query_arg(
 					[ 'post_type' => self::POST_TYPE_SLUG ],
-					admin_url( 'post-new.php?web-stories-demo' )
+					admin_url( 'post-new.php?web-stories-demo=1' )
 				)
 			);
 			exit;
