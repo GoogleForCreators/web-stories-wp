@@ -29,7 +29,7 @@ import { getAMPValidationErrors } from '../../js/matchers/utils';
  * @return {CustomMatcherResult} Matcher result.
  */
 async function toBeValidAMP(page) {
-  const errors = await getAMPValidationErrors(await page.content(), true);
+  const errors = await getAMPValidationErrors(await page.content(), false);
   const pass = errors.length === 0;
 
   return {
