@@ -78,6 +78,7 @@ const ExpandButton = styled(ArrowDown)`
   height: 32px;
   border-radius: 16px;
   ${({ isExpanded }) => isExpanded && 'transform: matrix(1, 0, 0, -1, 0, 0);'}
+  visibility: inherit;
   align-self: center;
   justify-content: center;
   align-items: center;
