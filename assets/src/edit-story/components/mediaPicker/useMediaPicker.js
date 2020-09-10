@@ -31,6 +31,7 @@ import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
 import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
+import { trackEvent } from '../../../tracking';
 
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
@@ -72,6 +73,8 @@ export default function useMediaPicker({
   }, [uploadVideoPoster, updateMedia]);
 
   const openMediaPicker = (evt) => {
+    trackEvent('open_media_modal', 'editor');
+
     // If a user does not have the rights to upload to the media library, do not show the media picker.
     if (!hasUploadMediaAction) {
       const message = __(

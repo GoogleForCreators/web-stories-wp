@@ -112,8 +112,10 @@ function EditorSettings() {
    */
 
   useEffect(() => {
-    fetchSettings();
-  }, [fetchSettings]);
+    if (canManageSettings) {
+      fetchSettings();
+    }
+  }, [fetchSettings, canManageSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {

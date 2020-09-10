@@ -73,6 +73,9 @@
         "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
+    "import/dynamic-import-chunkname": [ "error", {
+      "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
+    } ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",

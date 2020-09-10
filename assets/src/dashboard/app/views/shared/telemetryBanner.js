@@ -28,9 +28,10 @@ import { __ } from '@wordpress/i18n';
 import { TypographyPresets } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { ICON_METRICS } from '../../../constants';
+import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
-const Banner = styled.div.attrs()`
+const Banner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,7 +39,7 @@ const Banner = styled.div.attrs()`
   height: 161px;
   margin: 0 20px;
   padding-top: 24px;
-  background-image: url('/wp-content/plugins/web-stories/assets/images/analytics-banner-bg.png');
+  background-image: url('${({ $backgroundUrl }) => $backgroundUrl}');
   border-radius: 8px;
 `;
 
@@ -110,8 +111,10 @@ export function TelemetryOptInBanner({
   onClose = () => {},
   checked = false,
 }) {
+  const { assetsURL } = useConfig();
+
   return visible ? (
-    <Banner>
+    <Banner $backgroundUrl={`${assetsURL}images/analytics-banner-bg.png`}>
       <Header>
         <Title>
           {checked

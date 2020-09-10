@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useCallback } from 'react';
+import { useEffect, useMemo, useCallback, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -109,6 +109,8 @@ function MyStories() {
     view.style,
   ]);
 
+  const [lastActiveStoryId, setLastActiveStoryId] = useState(null);
+
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
       return stories[storyId];
@@ -118,16 +120,21 @@ function MyStories() {
   const handlePreviewStory = useCallback(
     (e, story) => {
       activePreview.set(e, story);
+      setLastActiveStoryId(story?.id);
+    },
+    [activePreview]
+  );
+
+  const handleClose = useCallback(
+    (e) => {
+      activePreview.set(e, undefined);
     },
     [activePreview]
   );
 
   if (activePreview.value) {
     return (
-      <PreviewStoryView
-        story={activePreview.value}
-        handleClose={handlePreviewStory}
-      />
+      <PreviewStoryView story={activePreview.value} handleClose={handleClose} />
     );
   }
 
@@ -161,6 +168,7 @@ function MyStories() {
         }}
         users={users}
         view={view}
+        initialFocusStoryId={lastActiveStoryId}
       />
 
       <Layout.Fixed>

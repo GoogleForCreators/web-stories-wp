@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -84,6 +89,24 @@ describe('LibraryTabs integration', () => {
       const mediaPane = fixture.container.querySelector('#library-pane-media');
       expect(getExpandedPanes()).toEqual([mediaPane]);
       await fixture.waitOnScreen(mediaPane);
+    });
+
+    it('should return focus to current tab when pressing mod+alt+1', async () => {
+      const { textTab } = fixture.editor.library;
+
+      // Click tab
+      await fixture.events.mouse.clickOn(textTab);
+      await waitFor(() => fixture.editor.library.text);
+      expect(textTab).toHaveFocus();
+
+      // Click elsewhere
+      await fixture.events.click(fixture.editor.canvas.header.title);
+      expect(textTab).not.toHaveFocus();
+
+      // Return focus with shortcut
+      await fixture.events.keyboard.shortcut('mod+alt+1');
+      expect(textTab).toHaveFocus();
+      await fixture.snapshot('text tab has focus');
     });
   });
 });

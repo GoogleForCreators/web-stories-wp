@@ -2,6 +2,7 @@
 .github
 .idea
 .storybook
+.wordpress-org
 __mocks__
 __static__
 assets/src

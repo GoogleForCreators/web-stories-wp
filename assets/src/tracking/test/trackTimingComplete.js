@@ -35,8 +35,6 @@ describe('trackTimingComplete', () => {
     config.appName = 'Foo App';
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.siteUrl = 'https://www.example.com';
-    config.userIdHash = 'a1b2c3';
     config.trackingId = 'UA-12345678-1';
 
     gtag.mockImplementationOnce((type, eventName, eventData) => {

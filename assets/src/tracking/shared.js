@@ -35,17 +35,12 @@ const DEFAULT_CONFIG = {
   trackingAllowed: false,
   trackingEnabled: false,
   trackingId: '',
-  siteUrl: '',
-  userIdHash: '',
 };
 
-const { trackingAllowed, trackingId, siteUrl, userIdHash } =
-  global.webStoriesTrackingSettings || {};
+const { trackingAllowed, trackingId } = global.webStoriesTrackingSettings || {};
 
 export const config = {
   ...DEFAULT_CONFIG,
   trackingAllowed,
   trackingId,
-  siteUrl,
-  userIdHash,
 };

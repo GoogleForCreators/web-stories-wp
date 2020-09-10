@@ -80,12 +80,13 @@ const StoryGridView = ({
   dateSettings,
   previewStory,
   returnStoryFocusId,
+  initialFocusStoryId = null,
 }) => {
   const { isRTL } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-  const [activeGridItemId, setActiveGridItemId] = useState(null);
+  const [activeGridItemId, setActiveGridItemId] = useState(initialFocusStoryId);
 
   useGridViewKeys({
     containerRef,
@@ -231,6 +232,7 @@ StoryGridView.propTypes = {
   renameStory: RenameStoryPropType,
   dateSettings: DateSettingsPropType,
   returnStoryFocusId: PropTypes.number,
+  initialFocusStoryId: PropTypes.number,
 };
 
 export default StoryGridView;

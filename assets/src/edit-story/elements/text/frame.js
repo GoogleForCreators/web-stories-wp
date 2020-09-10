@@ -46,12 +46,18 @@ const Element = styled.p`
   user-select: none;
 `;
 
-function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
+function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
-  const props = generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY);
+  const props = generateParagraphTextStyle(
+    rest,
+    dataToEditorX,
+    dataToEditorY,
+    undefined,
+    element
+  );
   const { selectedElementIds } = useStory((state) => ({
     selectedElementIds: state.state.selectedElementIds,
   }));
@@ -71,7 +77,7 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     }
 
     const wrapper = wrapperRef.current;
-    const element = elementRef.current;
+    const elementNode = elementRef.current;
 
     let clickTime = 0;
     let clickCoordinates = null;
@@ -124,12 +130,12 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     };
 
     wrapper.addEventListener('keydown', handleKeyDown);
-    element.addEventListener('mousedown', handleMouseDown);
-    element.addEventListener('mouseup', handleMouseUp);
+    elementNode.addEventListener('mousedown', handleMouseDown);
+    elementNode.addEventListener('mouseup', handleMouseUp);
     return () => {
       wrapper.removeEventListener('keydown', handleKeyDown);
-      element.removeEventListener('mousedown', handleMouseDown);
-      element.removeEventListener('mouseup', handleMouseUp);
+      elementNode.removeEventListener('mousedown', handleMouseDown);
+      elementNode.removeEventListener('mouseup', handleMouseUp);
     };
   }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
 
@@ -137,7 +143,9 @@ function TextFrame({ element: { id, content, ...rest }, wrapperRef }) {
     <Element
       ref={elementRef}
       data-testid="textFrame"
+      className="syncMargin"
       dangerouslySetInnerHTML={{ __html: content }}
+      element={element}
       {...props}
     />
   );
