@@ -112,6 +112,7 @@ const sharedConfig = {
     }),
   ].filter(Boolean),
   optimization: {
+    sideEffects: true,
     minimizer: [
       new TerserPlugin({
         parallel: true,
