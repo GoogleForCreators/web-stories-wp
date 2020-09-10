@@ -306,6 +306,7 @@ class Experiments {
 				'label'       => __( 'Keyboard Shortcuts', 'web-stories' ),
 				'description' => __( 'Enable keyboard shortcuts button', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy
