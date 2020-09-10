@@ -52,7 +52,7 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
           onMenuToggled(menuOpen);
         }
 
-        if (isKeyboardUser && !menuOpen) {
+        if (isKeyboardUser() && !menuOpen) {
           // When menu closes, return focus to toggle menu button
           anchorRef.current.focus?.();
         }
@@ -68,25 +68,18 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
   return (
     <>
       <WithTooltip
-        title={
-          isOpen
-            ? __('Close Keyboard Shortcuts', 'web-stories')
-            : __('Open Keyboard Shortcuts', 'web-stories')
-        }
+        title={__('Open Keyboard Shortcuts', 'web-stories')}
         placement={Placement.LEFT}
       >
         <KeyboardShortcutsButton
+          data-testid={'keyboard-shortcuts-toggle'}
           ref={anchorRef}
           width="24"
           height="24"
           aria-pressed={isOpen}
           aria-haspopup={true}
           aria-expanded={isOpen}
-          aria-label={
-            isOpen
-              ? __('Close Keyboard Shortcuts', 'web-stories')
-              : __('Open Keyboard Shortcuts', 'web-stories')
-          }
+          aria-label={__('Open Keyboard Shortcuts', 'web-stories')}
           onClick={toggleMenu}
         />
       </WithTooltip>

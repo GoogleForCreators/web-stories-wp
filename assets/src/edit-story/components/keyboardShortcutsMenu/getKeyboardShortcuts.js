@@ -46,7 +46,6 @@ function getKeyboardShortcuts() {
         shortcut: [
           cmdOrCtrl,
           optionOrAlt,
-          SPECIAL_KEYS.SHIFT,
           { label: __('+', 'web-stories') },
           '1',
           { label: __('or', 'web-stories') },
