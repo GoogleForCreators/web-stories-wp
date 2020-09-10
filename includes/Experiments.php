@@ -373,6 +373,18 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
+			 * Description: Flag for showing the Coverr Media3p subtab.
+			 * Author: @diegovar
+			 * Issue: #3349
+			 * Creation date: 2020-08-05
+			 */
+			[
+				'name'        => 'showCoverrTab',
+				'label'       => __( 'Coverr', 'web-stories' ),
+				'description' => __( 'Enable the Coverr tab in the Third-party media tab.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Description: Flag for showing the Gif Media3p subtab.
 			 * Author: @diegovar
 			 * Issue: #3349

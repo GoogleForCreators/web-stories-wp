@@ -199,6 +199,7 @@ describe('Media3pPane fetching', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ showCoverrTab: true });
 
     jasmine.clock().install();
 
