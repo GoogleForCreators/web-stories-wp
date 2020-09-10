@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import React, {
+  memo,
   useCallback,
   useEffect,
   useLayoutEffect,
@@ -59,7 +60,14 @@ function PaginatedMediaGallery({
   onInsert,
   setNextPage,
 }) {
+  // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
+  const refCallbackContainer = (element) => {
+    refContainer.current = element;
+    if (!element) {
+      return;
+    }
+  };
 
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
@@ -168,7 +176,10 @@ function PaginatedMediaGallery({
     PROVIDERS[providerType].attributionComponent();
   return (
     <>
-      <MediaGalleryContainer data-testid="media-gallery-container">
+      <MediaGalleryContainer
+        data-testid="media-gallery-container"
+        ref={refCallbackContainer}
+      >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
       {showLoadingPill && (
@@ -193,4 +204,4 @@ PaginatedMediaGallery.propTypes = {
   selectedCategoryId: PropTypes.string,
 };
 
-export default PaginatedMediaGallery;
+export default memo(PaginatedMediaGallery);
