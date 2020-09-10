@@ -41,19 +41,18 @@ import {
   APP_ROUTES,
 } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import { ReactComponent as WebStoriesLogo } from '../../images/logo.svg';
+import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  Header,
   NavButton,
   NavLink,
   NavList,
   NavListItem,
   Rule,
-  WebStoriesHeading,
+  VisuallyHiddenHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -181,12 +180,10 @@ export function LeftRail() {
     >
       <div ref={upperContentRef}>
         <Content>
-          <Header>
-            <WebStoriesLogo aria-hidden={true} />
-            <WebStoriesHeading>
-              {__('Web Stories', 'web-stories')}
-            </WebStoriesHeading>
-          </Header>
+          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
+          <VisuallyHiddenHeading>
+            {__('Web Stories', 'web-stories')}
+          </VisuallyHiddenHeading>
         </Content>
         <Content>
           <NavButton

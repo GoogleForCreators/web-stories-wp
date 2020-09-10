@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import Button from '../button';
 import { TypographyPresets } from '../typography';
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 
 export const Content = styled.div`
   display: flex;
@@ -32,15 +33,8 @@ export const Content = styled.div`
   > * {
     margin: 20px;
   }
-`;
-
-export const Header = styled.div`
-  display: flex;
-  align-items: flex-start;
-
   & > svg {
-    width: 30%;
-    margin-right: 5px;
+    max-width: 100%;
   }
 `;
 
@@ -93,16 +87,4 @@ export const AppInfo = styled.div`
   color: ${({ theme }) => theme.colors.gray500};
 `;
 
-export const WebStoriesHeading = styled.h1`
-  width: 100%;
-  margin-bottom: 0;
-  font-family: ${({ theme }) => theme.typography.family.secondary};
-  line-height: 1em;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-transform: capitalize;
-  font-size: 21px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray900};
-  align-self: center;
-`;
+export const VisuallyHiddenHeading = styled.h1(visuallyHiddenStyles);
