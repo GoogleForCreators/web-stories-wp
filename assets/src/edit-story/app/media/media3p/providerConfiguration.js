@@ -70,7 +70,6 @@ const ProviderType = {
 export const PROVIDERS = {
   [ProviderType.UNSPLASH]: {
     displayName: __('Images', 'web-stories'),
-    supportedContentTypes: [ContentType.IMAGE],
     supportsCategories: true,
     requiresAuthorAttribution: true,
     attributionComponent: UnsplashAttribution,
@@ -97,7 +96,7 @@ export const PROVIDERS = {
   [ProviderType.TENOR]: {
     displayName: __('GIFs', 'web-stories'),
     featureName: 'showGifTab',
-    supportedContentTypes: [ContentType.GIF],
+    contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
     requiresAuthorAttribution: false,
     attributionComponent: TenorAttribution,
