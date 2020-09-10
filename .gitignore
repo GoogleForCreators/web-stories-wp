@@ -2,4 +2,8 @@
 .idea/
 .vscode/
 .DS_Store
-node_modules
+assets/
+bin/
+vendor/
+node_modules/
+phpcs.xml
