@@ -13,7 +13,11 @@ docs
 karma
 node_modules
 patches
+plugin-assets
+public
+static
 tests
+vendor
 .browserslistrc
 .DS_Store
 .distignore
@@ -58,3 +62,4 @@ SECURITY.md
 webpack.config.cjs
 webpack.config.test.cjs
 assets/images/templates
+assets/images/plugin-activation
