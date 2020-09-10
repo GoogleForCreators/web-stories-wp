@@ -18,7 +18,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -72,9 +72,16 @@ function InnerElement({
   height,
   onClick,
   showVideoDetail,
-  newVideoRef,
   mediaElement,
 }) {
+  const newVideoPosterRef = useRef(null);
+
+  useEffect(() => {
+    if (resource.poster && resource.poster.includes('blob')) {
+      newVideoPosterRef.current = resource.poster;
+    }
+  }, [resource.poster]);
+
   const {
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
@@ -148,7 +155,7 @@ function InnerElement({
     );
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
-    const displayPoster = poster ? poster : newVideoRef.current;
+    const displayPoster = poster ? poster : newVideoPosterRef.current;
     return (
       <>
         <Video
@@ -161,7 +168,7 @@ function InnerElement({
           aria-label={alt}
           muted
           onClick={onClick(poster)}
-          showWithoutDelay={newVideoRef.current}
+          showWithoutDelay={newVideoPosterRef.current}
           {...dropTargetsBindings(poster)}
         >
           <source
@@ -171,7 +178,7 @@ function InnerElement({
         </Video>
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
-        {!newVideoRef.current && (
+        {!newVideoPosterRef.current && (
           <HiddenPosterImage src={poster} onLoad={makeMediaVisible} />
         )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}

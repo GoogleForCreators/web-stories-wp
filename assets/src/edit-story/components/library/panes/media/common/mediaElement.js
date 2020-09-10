@@ -31,7 +31,7 @@ import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline
 import { useKeyDownEffect } from '../../../../keyboard';
 import useRovingTabIndex from './useRovingTabIndex';
 import Attribution from './attribution';
-import InnerElement from './InnerElement';
+import InnerElement from './innerElement';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
@@ -117,14 +117,6 @@ const MediaElement = ({
     local,
     alt,
   } = resource;
-
-  const newVideoRef = useRef(null);
-
-  useEffect(() => {
-    if (resource.poster && resource.poster.includes('blob')) {
-      newVideoRef.current = resource.poster;
-    }
-  }, [resource.poster]);
 
   // Treat GIFs as images for now.
   if (resource.type == 'gif') {
@@ -261,7 +253,6 @@ const MediaElement = ({
           height={height}
           onClick={onClick}
           showVideoDetail={showVideoDetail}
-          newVideoRef={newVideoRef}
         />
         {attribution}
         {local && (
