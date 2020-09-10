@@ -116,6 +116,7 @@ const theme = {
       black: '#000000',
       white: '#FFFFFF',
       primary: '#EDEFEC',
+      secondary: '#A1A09B',
       tertiary: '#767570',
       gray24: '#5E615C',
       gray16: '#414442',

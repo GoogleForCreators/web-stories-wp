@@ -123,7 +123,7 @@ function DropDown({
   );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
-    if (isKeyboardUser) {
+    if (isKeyboardUser()) {
       // Return keyboard focus to button when closing dropdown
       selectRef.current.focus();
     }
