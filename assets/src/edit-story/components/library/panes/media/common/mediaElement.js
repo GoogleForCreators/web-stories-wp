@@ -35,11 +35,15 @@ import InnerElement from './innerElement';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
-const Container = styled.div.attrs((props) => ({
+const Container = styled.button.attrs((props) => ({
   style: {
     width: props.width + 'px',
     height: props.height + 'px',
     margin: props.margin,
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    border: 'none',
+    padding: 0,
   },
 }))``;
 
