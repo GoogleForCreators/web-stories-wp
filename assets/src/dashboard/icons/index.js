@@ -27,6 +27,7 @@ export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as Download } from './download.svg';
 export { ReactComponent as DropDownArrow } from './dropDownArrow.svg';
 export { ReactComponent as DropUpArrow } from './dropUpArrow.svg';
+export { ReactComponent as EditPencil } from './editPencil.svg';
 export { ReactComponent as Grid } from './grid.svg';
 export { ReactComponent as LeftArrow } from './leftArrow.svg';
 export { ReactComponent as List } from './list.svg';
