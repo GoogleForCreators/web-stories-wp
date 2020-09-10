@@ -22,9 +22,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import Button from '../button';
 import { TypographyPresets } from '../typography';
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 
 export const Content = styled.div`
   display: flex;
