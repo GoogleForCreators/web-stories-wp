@@ -46,7 +46,7 @@ export class Inspector extends Container {
   }
 
   get documentPanel() {
-    // @todo: implement
-    return null;
+    // TODO: Wrap in proper container
+    return this.getByRole('tabpanel', { name: /Document/ });
   }
 }

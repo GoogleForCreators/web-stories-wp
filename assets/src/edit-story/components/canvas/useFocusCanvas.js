@@ -19,6 +19,11 @@
  */
 import { useCallback } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import { useGlobalKeyDownEffect } from '../keyboard';
+
 function useFocusCanvas() {
   /**
    * @param {boolean} force When true, the focus will always be
@@ -35,6 +40,14 @@ function useFocusCanvas() {
       doc.dispatchEvent(evt);
     });
   }, []);
+
+  // Globally listen for Cmd+Option+2 / Ctrl+Alt+2 for focus
+  useGlobalKeyDownEffect(
+    { key: 'mod+option+2', editable: true },
+    () => focusCanvas(true),
+    [focusCanvas]
+  );
+
   return focusCanvas;
 }
 

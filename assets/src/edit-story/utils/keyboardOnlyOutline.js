@@ -37,12 +37,15 @@ const ACCEPTED_KEYS = [
   'ArrowLeft',
   'ArrowRight',
   'Tab',
+  'Digit1',
+  'Digit2',
+  'Digit3',
 ];
 
 const KeyboardOnlyOutline = () => {
   const [usingKeyboard, setUsingKeyboard] = useState(false);
   const handleKeydown = (e) => {
-    if (!usingKeyboard && ACCEPTED_KEYS.includes(e.key)) {
+    if (!usingKeyboard && ACCEPTED_KEYS.includes(e.code)) {
       setUsingKeyboard(true);
     }
   };

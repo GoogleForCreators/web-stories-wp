@@ -89,4 +89,19 @@ describe('Selection integration', () => {
     expect(await getSelection()).toEqual([element1.id]);
     await fixture.snapshot();
   });
+
+  it('should return focus to selection when pressing mod+alt+2', async () => {
+    // NB: We can't actually validate that the frame has focus, as that's a bit flaky,
+    // But as long as the focus moves in the shortcut press, it's fair to assume that it has
+    // Move to the canvas selection.
+
+    // Click elsewhere
+    await fixture.events.click(fixture.editor.canvas.header.title);
+    expect(fixture.editor.canvas.header.title).toHaveFocus();
+
+    // Return focus with shortcut
+    await fixture.events.keyboard.shortcut('mod+alt+2');
+    expect(fixture.editor.canvas.header.title).not.toHaveFocus();
+    await fixture.snapshot('selected element has focus');
+  });
 });
