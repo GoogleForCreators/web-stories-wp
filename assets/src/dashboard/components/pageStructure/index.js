@@ -52,7 +52,6 @@ import {
   NavList,
   NavListItem,
   Rule,
-  VisuallyHiddenHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -181,9 +180,6 @@ export function LeftRail() {
       <div ref={upperContentRef}>
         <Content>
           <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
-          <VisuallyHiddenHeading>
-            {__('Web Stories', 'web-stories')}
-          </VisuallyHiddenHeading>
         </Content>
         <Content>
           <NavButton

@@ -22,7 +22,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import Button from '../button';
 import { TypographyPresets } from '../typography';
 
@@ -86,5 +85,3 @@ export const AppInfo = styled.div`
   ${TypographyPresets.ExtraSmall};
   color: ${({ theme }) => theme.colors.gray500};
 `;
-
-export const VisuallyHiddenHeading = styled.h1(visuallyHiddenStyles);
