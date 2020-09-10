@@ -138,8 +138,11 @@ module.exports = function (config) {
     // Allow not having any tests
     failOnEmptyTestSuite: false,
 
-    // Bump browserNoActivityTimeout to 60s to prevent github actions timeout
-    browserNoActivityTimeout: 60000,
+    // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
+    browserNoActivityTimeout: 100000,
+
+    // Wait a bit longer for browser to reconnect.
+    browserDisconnectTimeout: 10000,
   });
 };
 

@@ -69,18 +69,45 @@ function StoriesView({
 
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
+  const [focusedStory, setFocusedStory] = useState({});
+  const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
   const {
     actions: { addToast },
   } = useToastContext();
+
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
+
+  const storiesById = useMemo(() => stories.map(({ id }) => id), [stories]);
+
+  useEffect(() => {
+    // if a dialog is opened and the keyboard used we need to return the focus of the proper grid item to ease keyboard usage
+    // focusedStory is set when activeDialog is removed
+    // then we use storiesById to find the proper index of the interacted with item and use that to decide where to move focus
+    if (focusedStory.id && !returnStoryFocusId) {
+      const storyArrayIndex = storiesById.indexOf(focusedStory.id);
+      const adjustedIndex = focusedStory.isDeleted ? -1 : 0;
+      const focusIndex = storyArrayIndex + adjustedIndex;
+      const storyIdToFocus = storiesById[focusIndex];
+
+      setReturnStoryFocusId(storyIdToFocus);
+    }
+  }, [focusedStory, returnStoryFocusId, storiesById]);
 
   useEffect(() => {
     if (!activeDialog) {
       setActiveStory(null);
     }
   }, [activeDialog, setActiveStory]);
+
+  useEffect(() => {
+    // every time the activeDialog is truthy we want to reset our state that helps determine where to send focus back to when the dialog is closed
+    if (activeDialog) {
+      setFocusedStory({});
+      setReturnStoryFocusId(null);
+    }
+  }, [activeDialog]);
 
   const handleOnRenameStory = useCallback(
     (story, newTitle) => {
@@ -204,6 +231,7 @@ function StoriesView({
         stories={stories}
         users={users}
         dateSettings={dateSettings}
+        returnStoryFocusId={returnStoryFocusId}
       />
     );
 
@@ -215,12 +243,18 @@ function StoriesView({
           isOpen={true}
           contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
           title={__('Delete Story', 'web-stories')}
-          onClose={() => setActiveDialog('')}
+          onClose={() => {
+            setFocusedStory({ id: activeStory.id });
+            setActiveDialog('');
+          }}
           actions={
             <>
               <Button
                 type={BUTTON_TYPES.DEFAULT}
-                onClick={() => setActiveDialog('')}
+                onClick={() => {
+                  setFocusedStory({ id: activeStory.id });
+                  setActiveDialog('');
+                }}
               >
                 {__('Cancel', 'web-stories')}
               </Button>
@@ -228,6 +262,7 @@ function StoriesView({
                 type={BUTTON_TYPES.DEFAULT}
                 onClick={() => {
                   storyActions.trashStory(activeStory);
+                  setFocusedStory({ id: activeStory.id, isDeleted: true });
                   setActiveDialog('');
                 }}
               >
