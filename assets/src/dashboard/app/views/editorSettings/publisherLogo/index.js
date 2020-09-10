@@ -29,11 +29,11 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
+  DefaultLogoText,
   Error,
   GridItemButton,
   GridItemContainer,
   Logo,
-  RemoveLogoButton,
   SettingForm,
   HelperText,
   FinePrintHelperText,
@@ -41,9 +41,10 @@ import {
   SettingHeading,
 } from '../components';
 import { FileUpload } from '../../../../components';
-import { Close as RemoveIcon } from '../../../../icons';
-import { useGridViewKeys } from '../../../../utils';
+import { useGridViewKeys, useFocusOut } from '../../../../utils';
 import { useConfig } from '../../../config';
+import { PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS } from '../../../../constants';
+import PopoverLogoContextMenu from './popoverLogoContextMenu';
 
 export const TEXT = {
   SECTION_HEADING: __('Publisher Logo', 'web-stories'),
@@ -67,6 +68,7 @@ function PublisherLogoSettings({
   canUploadFiles,
   handleAddLogos,
   handleRemoveLogo,
+  handleUpdateDefaultLogo,
   isLoading,
   publisherLogos,
   uploadError,
@@ -80,29 +82,24 @@ function PublisherLogoSettings({
   const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
 
+  const [contextMenuId, setContextMenuId] = useState(null);
+
   const publisherLogosById = useMemo(() => publisherLogos.map(({ id }) => id), [
     publisherLogos,
   ]);
 
+  const hasOnlyOneLogo = publisherLogosById.length === 1;
+
   const publisherLogoCount = useRef(publisherLogosById.length);
 
-  const onRemoveLogoClick = useCallback(
-    (e, { publisherLogo, idx }) => {
-      e.preventDefault();
-
+  const handleRemoveLogoClick = useCallback(
+    (publisherLogo, idx) => {
       handleRemoveLogo(publisherLogo);
       setIndexRemoved(idx);
       publisherLogoCount.current = publisherLogosById.length;
     },
     [handleRemoveLogo, publisherLogosById.length]
   );
-
-  // set active logo when first painting
-  useEffect(() => {
-    if (publisherLogos.length > 0 && !activePublisherLogo) {
-      setActivePublisherLogoId(publisherLogos?.[0].id);
-    }
-  }, [activePublisherLogo, publisherLogos, setActivePublisherLogoId]);
 
   // Update publisher logo focus when logo is removed
   useEffect(() => {
@@ -145,6 +142,30 @@ function PublisherLogoSettings({
     items: publisherLogos,
   });
 
+  const showLogoContextMenu = !hasOnlyOneLogo;
+
+  const onMenuItemSelected = useCallback(
+    (sender, logo, index) => {
+      setContextMenuId(-1);
+
+      switch (sender.value) {
+        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.REMOVE_LOGO:
+          handleRemoveLogoClick(logo, index);
+          break;
+
+        case PUBLISHER_LOGO_CONTEXT_MENU_ACTIONS.SET_DEFAULT:
+          handleUpdateDefaultLogo(logo);
+          break;
+
+        default:
+          break;
+      }
+    },
+    [handleUpdateDefaultLogo, handleRemoveLogoClick]
+  );
+
+  useFocusOut(containerRef, () => setActivePublisherLogoId(null), []);
+
   return (
     <SettingForm>
       <div>
@@ -153,7 +174,12 @@ function PublisherLogoSettings({
       </div>
       <div ref={containerRef} data-testid="publisher-logos-container">
         {publisherLogos.length > 0 && (
-          <UploadedContainer ref={gridRef} role="list">
+          <UploadedContainer
+            tabIndex={0}
+            ref={gridRef}
+            role="list"
+            ariaLabel={__('Viewing existing publisher logos', 'web-stories')}
+          >
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
@@ -170,47 +196,44 @@ function PublisherLogoSettings({
                   role="listitem"
                 >
                   <GridItemButton
-                    data-testid={`publisher-logo-${idx}`}
+                    onFocus={() => {
+                      setActivePublisherLogoId(publisherLogo.id);
+                    }}
+                    data-testid={`uploaded-publisher-logo-${idx}`}
                     isSelected={isActive}
                     tabIndex={isActive ? 0 : -1}
                     onClick={(e) => {
                       e.preventDefault();
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
-                    aria-label={
-                      isActive
-                        ? sprintf(
-                            /* translators: %s: logo number.*/
-                            __(
-                              'Publisher Logo %s (currently selected)',
-                              'web-stories'
-                            ),
-                            idx + 1
-                          )
-                        : sprintf(
-                            /* translators: %s: logo number.*/
-                            __('Publisher Logo %s', 'web-stories'),
-                            idx + 1
-                          )
-                    }
+                    aria-label={sprintf(
+                      /* translators: %s: logo number.*/
+                      __(
+                        'Publisher Logo %s (currently selected)',
+                        'web-stories'
+                      ),
+                      idx + 1
+                    )}
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
                   </GridItemButton>
-                  {!publisherLogo.isActive && (
-                    <RemoveLogoButton
-                      tabIndex={isActive ? 0 : -1}
-                      data-testid={`remove-publisher-logo-${idx}`}
-                      aria-label={sprintf(
-                        /* translators: %s: logo title */
-                        __('Remove %s as a publisher logo', 'web-stories'),
-                        publisherLogo.title
-                      )}
-                      onClick={(e) =>
-                        onRemoveLogoClick(e, { publisherLogo, idx })
-                      }
-                    >
-                      <RemoveIcon aria-hidden="true" />
-                    </RemoveLogoButton>
+                  {publisherLogo.isDefault && (
+                    <DefaultLogoText>
+                      {__('Default', 'web-stories')}
+                    </DefaultLogoText>
+                  )}
+                  {showLogoContextMenu && (
+                    <PopoverLogoContextMenu
+                      isActive={isActive}
+                      activePublisherLogo={activePublisherLogo}
+                      idx={idx}
+                      publisherLogo={publisherLogo}
+                      onMenuItemSelected={onMenuItemSelected}
+                      contextMenuId={{
+                        set: setContextMenuId,
+                        value: contextMenuId,
+                      }}
+                    />
                   )}
                 </GridItemContainer>
               );
@@ -241,12 +264,14 @@ PublisherLogoSettings.propTypes = {
   canUploadFiles: PropTypes.bool,
   handleAddLogos: PropTypes.func,
   handleRemoveLogo: PropTypes.func,
+  handleUpdateDefaultLogo: PropTypes.func,
   isLoading: PropTypes.bool,
   publisherLogos: PropTypes.arrayOf(
     PropTypes.shape({
       src: PropTypes.string,
       title: PropTypes.string,
       id: PropTypes.number,
+      isDefault: PropTypes.bool,
     })
   ),
   uploadError: PropTypes.string,

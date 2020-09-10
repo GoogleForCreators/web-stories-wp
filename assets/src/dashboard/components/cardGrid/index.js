@@ -19,11 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { PageSizePropType } from '../../types';
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const DashboardGrid = styled.div(
   ({ columnHeight, columnWidth, theme }) => `
@@ -34,6 +37,7 @@ const DashboardGrid = styled.div(
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
   grid-template-rows: minmax(${columnHeight}px, auto);
+  margin-top: 2px; // this is for keyboard focus 
 
   ${theme.breakpoint.tablet} {
     grid-column-gap: ${theme.grid.columnGap.tablet}px;
@@ -47,6 +51,10 @@ const DashboardGrid = styled.div(
   ${theme.breakpoint.min} {
     grid-column-gap: ${theme.grid.columnGap.min}px;
   }
+  
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+  }
 `
 );
 DashboardGrid.propTypes = {
@@ -54,16 +62,27 @@ DashboardGrid.propTypes = {
   columnWidth: PropTypes.number.isRequired,
 };
 
-const CardGrid = ({ children, pageSize }) => (
-  <DashboardGrid
-    columnWidth={pageSize.width}
-    columnHeight={pageSize.containerHeight}
-  >
-    {children}
-  </DashboardGrid>
-);
+const CardGrid = forwardRef(function CardGrid(
+  { ariaLabel, children, pageSize },
+  ref
+) {
+  return (
+    <DashboardGrid
+      ref={ref}
+      role="list"
+      data-testid={'dashboard-grid-list'}
+      tabIndex={0}
+      aria-label={ariaLabel}
+      columnWidth={pageSize.width}
+      columnHeight={pageSize.containerHeight}
+    >
+      {children}
+    </DashboardGrid>
+  );
+});
 
 CardGrid.propTypes = {
+  ariaLabel: PropTypes.string,
   children: PropTypes.node.isRequired,
   pageSize: PageSizePropType.isRequired,
 };
