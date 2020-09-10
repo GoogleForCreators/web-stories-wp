@@ -46,7 +46,7 @@ class Tracking extends \WP_UnitTestCase {
 		( new \Google\Web_Stories\Tracking() )->init();
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
 
-		$request  = new WP_REST_Request( 'GET', sprintf( '/wp/v2/users/%d', self::$user_id ) );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, sprintf( '/wp/v2/users/%d', self::$user_id ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertArrayHasKey( \Google\Web_Stories\Tracking::OPTIN_META_KEY, $data['meta'] );
