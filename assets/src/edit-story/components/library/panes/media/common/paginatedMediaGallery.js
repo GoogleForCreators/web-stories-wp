@@ -61,12 +61,6 @@ function PaginatedMediaGallery({
 }) {
   // State and callback ref necessary to load on scroll.
   const refContainer = useRef();
-  const refCallbackContainer = (element) => {
-    refContainer.current = element;
-    if (!element) {
-      return;
-    }
-  };
 
   const loadNextPageIfNeeded = useCallback(() => {
     const node = refContainer.current;
@@ -177,7 +171,7 @@ function PaginatedMediaGallery({
     <>
       <MediaGalleryContainer
         data-testid="media-gallery-container"
-        ref={refCallbackContainer}
+        ref={refContainer}
       >
         <MediaGalleryInnerContainer>{mediaGallery}</MediaGalleryInnerContainer>
       </MediaGalleryContainer>
