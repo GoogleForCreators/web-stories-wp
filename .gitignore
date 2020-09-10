@@ -1,9 +1,11 @@
 .firebase/
 .idea/
 .vscode/
-.DS_Store
 assets/
 bin/
-vendor/
+build/
 node_modules/
+plugin-assets/
+vendor/
+.DS_Store
 phpcs.xml
