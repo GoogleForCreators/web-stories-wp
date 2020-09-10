@@ -69,15 +69,11 @@ class Tracking extends \WP_UnitTestCase {
 	public function test_get_settings() {
 		wp_set_current_user( self::$user_id );
 
-		add_filter( 'site_url', [ $this, 'filter_site_url' ] );
 		$settings = ( new \Google\Web_Stories\Tracking() )->get_settings();
-		remove_filter( 'site_url', [ $this, 'filter_site_url' ] );
 
 		$expected = [
 			'trackingAllowed' => false,
 			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
-			'siteUrl'         => 'https://example.com/with/trailing/slash',
-			'userIdHash'      => md5( 'https://example.com/with/trailing/slash|' . self::$user_id ),
 		];
 
 		$this->assertEqualSetsWithIndex( $expected, $settings );
@@ -90,21 +86,15 @@ class Tracking extends \WP_UnitTestCase {
 		wp_set_current_user( self::$user_id );
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\Tracking::OPTIN_META_KEY, true );
 
-		add_filter( 'site_url', [ $this, 'filter_site_url' ] );
 		$settings = ( new \Google\Web_Stories\Tracking() )->get_settings();
-		remove_filter( 'site_url', [ $this, 'filter_site_url' ] );
 
 		$expected = [
 			'trackingAllowed' => true,
 			'trackingId'      => \Google\Web_Stories\Tracking::TRACKING_ID,
-			'siteUrl'         => 'https://example.com/with/trailing/slash',
-			'userIdHash'      => md5( 'https://example.com/with/trailing/slash|' . self::$user_id ),
 		];
 
-		$this->assertEqualSetsWithIndex( $expected, $settings );
-	}
+		delete_user_meta( get_current_user_id(), \Google\Web_Stories\Tracking::OPTIN_META_KEY );
 
-	public function filter_site_url() {
-		return 'https://example.com/with/trailing/slash/';
+		$this->assertEqualSetsWithIndex( $expected, $settings );
 	}
 }

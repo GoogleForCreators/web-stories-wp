@@ -57,7 +57,7 @@ function Step3() {
 
   const onClick = useCallback(
     (evt) => {
-      trackClick(evt, 'activation-notice', newStoryURL);
+      trackClick(evt, 'open_story_editor', 'activation-notice', newStoryURL);
     },
     [newStoryURL]
   );

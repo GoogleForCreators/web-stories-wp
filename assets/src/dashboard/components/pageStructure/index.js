@@ -165,7 +165,7 @@ export function LeftRail() {
   }, [sideBarVisible]);
 
   const onCreateNewStoryClick = useCallback(async () => {
-    await trackEvent('dashboard', 'create_new_story');
+    await trackEvent('create_new_story', 'dashboard');
   }, []);
 
   return (

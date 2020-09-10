@@ -56,13 +56,11 @@ function Publish() {
   const hasFutureDate = Date.now() < Date.parse(date);
 
   const publish = useCallback(() => {
-    setShowDialog(false);
-    if (hasFutureDate) {
-      trackEvent('editor', 'schedule_story');
-    } else {
-      trackEvent('editor', 'publish_story');
-    }
+    trackEvent('publish_story', 'editor', '', '', {
+      status: hasFutureDate ? 'future' : 'publish',
+    });
 
+    setShowDialog(false);
     saveStory({ status: 'publish' });
     refreshPostEditURL();
   }, [refreshPostEditURL, saveStory, hasFutureDate]);

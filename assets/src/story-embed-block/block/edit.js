@@ -36,7 +36,7 @@ import EmbedControls from './embedControls';
 import EmbedLoadinng from './embedLoading';
 import EmbedPlaceholder from './embedPlaceholder';
 import EmbedPreview from './embedPreview';
-import { name, icon } from './';
+import { icon } from './';
 import './edit.css';
 
 const MIN_SIZE = 20;
@@ -64,8 +64,12 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
   useEffect(() => {
     setLocalURL(outerURL);
-    trackEvent('block-editor', name, 'url_embedded', outerURL);
+    trackEvent('story_embedded', 'block-editor', '', '', { url: outerURL });
   }, [outerURL]);
+
+  useEffect(() => {
+    trackEvent('story_poster_changed', 'block-editor');
+  }, [poster]);
 
   useEffect(() => {
     if (ref.current && global.AmpStoryPlayer) {
