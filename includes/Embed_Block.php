@@ -35,14 +35,21 @@ use Google\Web_Stories\Traits\Assets;
  * Embed block class.
  */
 class Embed_Block {
-
 	use Assets;
+
 	/**
 	 * Script handle.
 	 *
 	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-embed-block';
+
+	/**
+	 * Block name.
+	 *
+	 * @var string
+	 */
+	const BLOCK_NAME = 'web-stories/embed';
 
 	/**
 	 * Initializes the Web Stories embed block.
@@ -67,7 +74,7 @@ class Embed_Block {
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
 		register_block_type(
-			'web-stories/embed',
+			self::BLOCK_NAME,
 			[
 				'attributes'      => [
 					'url'    => [

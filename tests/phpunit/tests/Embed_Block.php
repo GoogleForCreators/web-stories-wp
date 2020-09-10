@@ -24,9 +24,7 @@ use WP_Block_Type_Registry;
  */
 class Embed_Block extends \WP_UnitTestCase {
 	public function tearDown() {
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
-			unregister_block_type( 'web-stories/embed' );
-		}
+		unregister_block_type( \Google\Web_Stories\Embed_Block::BLOCK_NAME );
 
 		parent::tearDown();
 	}
@@ -51,7 +49,6 @@ class Embed_Block extends \WP_UnitTestCase {
 	 */
 	public function test_render_block() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$actual = $embed_block->render_block(
 			[
@@ -73,7 +70,6 @@ class Embed_Block extends \WP_UnitTestCase {
 	 */
 	public function test_render_block_missing_url() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$actual = $embed_block->render_block(
 			[
@@ -95,7 +91,6 @@ class Embed_Block extends \WP_UnitTestCase {
 	 */
 	public function test_render_block_missing_title() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$actual = $embed_block->render_block(
 			[
@@ -117,7 +112,6 @@ class Embed_Block extends \WP_UnitTestCase {
 	 */
 	public function test_render_block_feed_no_poster() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$this->go_to( '/?feed=rss2' );
 
