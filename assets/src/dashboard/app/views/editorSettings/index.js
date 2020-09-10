@@ -85,7 +85,7 @@ function EditorSettings() {
   );
 
   const {
-    capabilities: { canUploadFiles } = {},
+    capabilities: { canUploadFiles, canManageSettings } = {},
     maxUpload,
     maxUploadFormatted,
   } = useConfig();
@@ -110,7 +110,9 @@ function EditorSettings() {
    */
 
   useEffect(() => {
-    fetchSettings();
+    if ( canManageSettings ) {
+      fetchSettings();
+    }
   }, [fetchSettings]);
 
   useEffect(() => {
@@ -263,18 +265,20 @@ function EditorSettings() {
         </Layout.Squishable>
         <Layout.Scrollable>
           <Main>
-            <GoogleAnalyticsSettings
+            { canManageSettings && <GoogleAnalyticsSettings
               handleUpdate={handleUpdateGoogleAnalyticsId}
               googleAnalyticsId={googleAnalyticsId}
-            />
-            <PublisherLogoSettings
-              handleAddLogos={handleAddLogos}
-              handleRemoveLogo={handleRemoveLogo}
-              publisherLogos={orderedPublisherLogos}
-              canUploadFiles={canUploadFiles}
-              isLoading={isMediaLoading}
-              uploadError={mediaError}
-            />
+            /> }
+            { canManageSettings &&
+              <PublisherLogoSettings
+              handleAddLogos={ handleAddLogos }
+              handleRemoveLogo={ handleRemoveLogo }
+              publisherLogos={ orderedPublisherLogos }
+              canUploadFiles={ canUploadFiles }
+              isLoading={ isMediaLoading }
+              uploadError={ mediaError }
+              />
+            }
             <TelemetrySettings
               disabled={disabled}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}

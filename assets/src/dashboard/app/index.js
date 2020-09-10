@@ -65,9 +65,7 @@ const AppContent = () => {
     state: { currentPath },
   } = useRouteHistory();
 
-  const { capabilities: { canManageSettings } = {} } = useConfig();
-  const enableSettingsView =
-    useFeature('enableSettingsView') && canManageSettings;
+  const enableSettingsView = useFeature('enableSettingsView');
 
   useEffect(() => {
     const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
