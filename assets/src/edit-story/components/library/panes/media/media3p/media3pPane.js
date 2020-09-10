@@ -170,6 +170,7 @@ function Media3pPane(props) {
     const shouldDisplayMediaSubheading = Boolean(
       state.media?.length || state.categories.selectedCategoryId
     );
+    const resources = state.media.filter(() => true);
     return (
       <ProviderMediaCategoriesWrapper
         dataProvider={providerType}
@@ -193,7 +194,7 @@ function Media3pPane(props) {
         </MediaSubheading>
         <PaginatedMediaGallery
           providerType={providerType}
-          resources={state.media}
+          resources={resources}
           isMediaLoading={state.isMediaLoading}
           isMediaLoaded={state.isMediaLoaded}
           hasMore={state.hasMore}
@@ -205,7 +206,7 @@ function Media3pPane(props) {
       </ProviderMediaCategoriesWrapper>
     );
   }
-
+console.warn('=====', selectedProvider);
   // TODO(#2368): handle pagination / infinite scrolling
   return (
     <StyledPane id={paneId} {...props}>
@@ -240,7 +241,8 @@ function Media3pPane(props) {
         </PaneHeader>
         <PaneBottom ref={paneBottomRef}>
           {enabledProviders.map((providerType) =>
-            getProviderMediaAndCategories(providerType)
+            // getProviderMediaAndCategories(providerType)
+           isActive && selectedProvider === providerType ? getProviderMediaAndCategories(providerType) : <div/>
           )}
         </PaneBottom>
       </PaneInner>

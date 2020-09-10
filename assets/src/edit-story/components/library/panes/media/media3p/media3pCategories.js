@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
@@ -231,4 +231,4 @@ Media3pCategories.propTypes = {
   deselectCategory: PropTypes.func,
 };
 
-export default Media3pCategories;
+export default memo(Media3pCategories);

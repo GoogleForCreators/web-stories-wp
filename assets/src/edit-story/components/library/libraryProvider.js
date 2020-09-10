@@ -51,7 +51,7 @@ function LibraryProvider({ children }) {
   const tabs = useMemo(
     () => [
       MEDIA,
-      ...(media3pTab ? [MEDIA3P] : []),
+      ...(true ? [MEDIA3P] : []),
       TEXT,
       SHAPES,
       ...(showElementsTab ? [ELEMS] : []),

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -182,6 +182,7 @@ function MediaPane(props) {
   );
 
   const resources = media.filter(filterResource);
+//  const resources = useMemo(() => media.filter(filterResource), [media]);
 
   const onSearch = (v) => setSearchTerm({ searchTerm: v });
 
@@ -189,6 +190,7 @@ function MediaPane(props) {
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
 
+  const { isActive } = props;
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -213,7 +215,7 @@ function MediaPane(props) {
           </FilterArea>
         </PaneHeader>
 
-        {isMediaLoaded && !media.length ? (
+        {(!isActive) ? (<div/>) : (isMediaLoaded && !media.length ? (
           <MediaGalleryMessage>
             {__('No media found', 'web-stories')}
           </MediaGalleryMessage>
@@ -228,7 +230,7 @@ function MediaPane(props) {
             setNextPage={setNextPage}
             searchTerm={searchTerm}
           />
-        )}
+        ))}
       </PaneInner>
     </StyledPane>
   );

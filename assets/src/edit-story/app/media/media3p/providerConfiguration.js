@@ -83,7 +83,7 @@ export const PROVIDERS = {
   },
   [ProviderType.COVERR]: {
     displayName: __('Video', 'web-stories'),
-    featureName: 'showCoverrTab',
+    //featureName: 'showCoverrTab',
     supportsCategories: false,
     requiresAuthorAttribution: false,
     attributionComponent: CoverrAttribution,
@@ -95,7 +95,7 @@ export const PROVIDERS = {
   },
   [ProviderType.TENOR]: {
     displayName: __('GIFs', 'web-stories'),
-    featureName: 'showGifTab',
+    //featureName: 'showGifTab',
     contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
     requiresAuthorAttribution: false,
