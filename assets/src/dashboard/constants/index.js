@@ -135,5 +135,6 @@ export * from './components';
 export * from './direction';
 export * from './pageStructure';
 export * from './savedTemplates';
+export * from './settings';
 export * from './stories';
 export * from './templates';

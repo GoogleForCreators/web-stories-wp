@@ -18,8 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useReducer, useRef, useState, useCallback } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
@@ -29,6 +31,7 @@ import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
   DEFAULT_STORY_PAGE_ADVANCE_DURATION,
+  KEYBOARD_USER_SELECTOR,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { clamp, useFocusOut } from '../../utils';
@@ -62,6 +65,11 @@ const EditControls = styled.div`
   background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)}`};
+  }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
@@ -116,10 +124,13 @@ const cardMachine = {
 const cardReducer = (state, action) => cardMachine?.[state]?.[action] || state;
 
 const CardPreviewContainer = ({
+  tabIndex,
   centerAction,
   bottomAction,
+  topAction,
   story,
   pageSize,
+  ariaLabel,
   children,
   containerAction = () => {},
 }) => {
@@ -155,14 +166,6 @@ const CardPreviewContainer = ({
     return () => intervalId && clearInterval(intervalId);
   }, [storyPages.length, cardState]);
 
-  const handleKeyDownEditControls = useCallback(
-    ({ key }) => {
-      if (key === 'Enter') {
-        containerAction();
-      }
-    },
-    [containerAction]
-  );
   return (
     <>
       <PreviewPane cardSize={pageSize}>
@@ -180,6 +183,7 @@ const CardPreviewContainer = ({
         {children}
       </PreviewPane>
       <EditControls
+        aria-label={ariaLabel}
         data-testid="card-action-container"
         ref={containElem}
         cardSize={pageSize}
@@ -188,23 +192,42 @@ const CardPreviewContainer = ({
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
         onClick={containerAction}
-        onKeyDown={handleKeyDownEditControls}
-        tabIndex={0}
+        tabIndex={tabIndex}
       >
-        <EmptyActionContainer />
+        {!topAction && <EmptyActionContainer />}
+        {topAction?.label && (
+          <ActionContainer>
+            <Button
+              tabIndex={tabIndex}
+              data-testid="card-top-action"
+              type={BUTTON_TYPES.SECONDARY}
+              {...getActionAttributes(topAction.targetAction)}
+              aria-label={topAction.ariaLabel}
+            >
+              {topAction.label}
+            </Button>
+          </ActionContainer>
+        )}
+
         {centerAction?.label && (
           <ActionContainer>
             <Button
+              tabIndex={tabIndex}
               data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
+              aria-label={centerAction.ariaLabel}
             >
               {centerAction.label}
             </Button>
           </ActionContainer>
         )}
         <ActionContainer>
-          <Button {...getActionAttributes(bottomAction.targetAction)}>
+          <Button
+            {...getActionAttributes(bottomAction.targetAction)}
+            tabIndex={tabIndex}
+            aria-label={bottomAction.ariaLabel}
+          >
             {bottomAction.label}
           </Button>
         </ActionContainer>
@@ -217,15 +240,19 @@ const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
   label: ActionLabel,
+  ariaLabel: PropTypes.string,
 });
 
 CardPreviewContainer.propTypes = {
+  ariaLabel: PropTypes.string, //TODO will be required after updating story grids
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  topAction: ActionButtonPropType,
   containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,
+  tabIndex: PropTypes.number,
 };
 
 export default CardPreviewContainer;
