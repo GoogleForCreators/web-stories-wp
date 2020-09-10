@@ -90,12 +90,15 @@ const sharedConfig = {
       },
       {
         test: /\.svg$/,
-        use: [{
-          loader: '@svgr/webpack',
-          options: {
-            "titleProp": true
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
+            },
           },
-        }, 'url-loader'],
+          'url-loader',
+        ],
       },
       {
         test: /\.css$/,
