@@ -60,6 +60,7 @@ function StoriesView({
   users,
   view,
   dateSettings,
+  initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -243,6 +244,7 @@ function StoriesView({
         users={users}
         dateSettings={dateSettings}
         returnStoryFocusId={returnStoryFocusId}
+        initialFocusStoryId={initialFocusStoryId}
       />
     );
 
@@ -294,5 +296,6 @@ StoriesView.propTypes = {
   users: UsersPropType,
   view: ViewPropTypes,
   dateSettings: DateSettingsPropType,
+  initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;
