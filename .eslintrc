@@ -73,6 +73,9 @@
         "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
       } ]
     } ],
+    "import/dynamic-import-chunkname": [ "error", {
+      "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
+    } ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
     "no-return-await": "error",
@@ -283,7 +286,18 @@
         "jasmine/no-disabled-tests": "error",
         "jasmine/no-spec-dupes": ["error", "branch"],
         "jasmine/no-suite-dupes": ["error", "branch"],
-        "jsdoc/require-jsdoc": "off"
+        "jsdoc/require-jsdoc": "off",
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@testing-library/react-hooks",
+                "message": "Use karma fixtures instead."
+              }
+            ]
+          }
+        ]
       },
       "globals": {
         "karmaPuppeteer": "readonly",

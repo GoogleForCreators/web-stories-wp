@@ -220,6 +220,23 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::remove_noscript_amp_boilerplate
+	 * @covers ::add_noscript_amp_boilerplate
+	 */
+	public function test_removes_and_reinserts_noscript_amp_boilerplate() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$actual = $this->setup_renderer( $post );
+
+		$this->assertContains( '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>', $actual );
+	}
+
+	/**
 	 * Helper to setup rendered.
 	 *
 	 * @param \WP_Post $post Post Object.

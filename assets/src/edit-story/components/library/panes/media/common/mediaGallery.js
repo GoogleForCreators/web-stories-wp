@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useCallback, memo } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -80,4 +80,4 @@ MediaGallery.propTypes = {
   providerType: PropTypes.string.isRequired,
 };
 
-export default memo(MediaGallery);
+export default MediaGallery;

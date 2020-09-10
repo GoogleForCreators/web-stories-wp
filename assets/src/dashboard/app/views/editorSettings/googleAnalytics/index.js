@@ -29,13 +29,16 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
-import { InlineInputForm } from '../../../../components';
 import {
   FormContainer,
   InlineLink,
   SettingForm,
   SettingHeading,
   TextInputHelperText,
+  SaveButton,
+  ErrorText,
+  InlineForm,
+  GoogleAnalyticsTextInput,
 } from '../components';
 
 export const TEXT = {
@@ -55,41 +58,63 @@ export const TEXT = {
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
+  const canSave = analyticsId !== googleAnalyticsId && !inputError;
+  const disableSaveButton = !canSave;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
   }, [googleAnalyticsId]);
 
-  const handleCancelUpdateId = useCallback(() => {
-    setAnalyticsId(googleAnalyticsId);
-  }, [googleAnalyticsId, setAnalyticsId]);
+  const handleUpdateId = useCallback((event) => {
+    const { value } = event.target;
+    setAnalyticsId(value);
 
-  const handleUpdateId = useCallback(
-    (value) => {
-      if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
-        setInputError('');
-        return handleUpdate(value);
+    if (value.length === 0 || validateGoogleAnalyticsIdFormat(value)) {
+      setInputError('');
+
+      return;
+    }
+
+    setInputError(TEXT.INPUT_ERROR);
+  }, []);
+
+  const handleOnSave = useCallback(() => {
+    if (canSave) {
+      handleUpdate(analyticsId);
+    }
+  }, [canSave, analyticsId, handleUpdate]);
+
+  const handleOnKeyDown = useCallback(
+    (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleOnSave();
       }
-      return setInputError(TEXT.INPUT_ERROR);
     },
-    [handleUpdate, setInputError]
+    [handleOnSave]
   );
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <SettingHeading htmlFor="gaTrackingID">
         {TEXT.SECTION_HEADING}
       </SettingHeading>
       <FormContainer>
-        <InlineInputForm
-          label={TEXT.ARIA_LABEL}
-          id="gaTrackingId"
-          value={analyticsId}
-          onEditCancel={handleCancelUpdateId}
-          onEditComplete={handleUpdateId}
-          placeholder={TEXT.PLACEHOLDER}
-          error={inputError}
-          noAutoFocus={true}
-        />
+        <InlineForm>
+          <GoogleAnalyticsTextInput
+            label={TEXT.ARIA_LABEL}
+            id="gaTrackingId"
+            value={analyticsId}
+            onChange={handleUpdateId}
+            onKeyDown={handleOnKeyDown}
+            placeholder={TEXT.PLACEHOLDER}
+            error={inputError}
+          />
+          <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
+            {__('Save', 'web-stories')}
+          </SaveButton>
+        </InlineForm>
+        {inputError && <ErrorText>{inputError}</ErrorText>}
         <TextInputHelperText>
           {TEXT.CONTEXT}
           <InlineLink href={TEXT.CONTEXT_ARTICLE_LINK}>

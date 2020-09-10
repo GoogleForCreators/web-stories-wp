@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -42,6 +42,7 @@ const mockFetchCurrentUser = jest.fn();
 
 const SettingsWrapper = ({
   canUploadFiles,
+  canManageSettings,
   activeLogoId,
   isLoading,
   googleAnalyticsId,
@@ -51,7 +52,10 @@ const SettingsWrapper = ({
   return (
     <ConfigProvider
       config={{
-        capabilities: { canUploadFiles: canUploadFiles },
+        capabilities: {
+          canUploadFiles: canUploadFiles,
+          canManageSettings: canManageSettings,
+        },
         maxUpload: 104857600,
         maxUploadFormatted: '100 MB',
       }}
@@ -103,6 +107,7 @@ const SettingsWrapper = ({
 SettingsWrapper.propTypes = {
   activeLogoId: PropTypes.number,
   canUploadFiles: PropTypes.bool,
+  canManageSettings: PropTypes.bool,
   isLoading: PropTypes.bool,
   googleAnalyticsId: PropTypes.string,
   logoIds: PropTypes.array,
@@ -115,6 +120,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <SettingsWrapper
         googleAnalyticsId="UA-098909-05"
         canUploadFiles={true}
+        canManageSettings={true}
         isLoading={false}
         logoIds={[]}
         logos={{}}
@@ -139,26 +145,24 @@ describe('Editor Settings: <Editor Settings />', function () {
       <SettingsWrapper
         googleAnalyticsId="UA-098909-05"
         canUploadFiles={true}
+        canManageSettings={true}
         isLoading={false}
         activeLogoId={publisherLogoIds[0]}
         logoIds={publisherLogoIds}
         logos={rawPublisherLogos}
       />
     );
-    expect(queryAllByTestId(/^publisher-logo-/)).toHaveLength(
+    expect(queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
-    );
-
-    expect(queryAllByTestId(/^remove-publisher-logo/)).toHaveLength(
-      publisherLogoIds.length - 1
     );
   });
 
   it('should call mockUpdateSettings when a logo is removed', function () {
-    const { getByTestId, getByText } = renderWithTheme(
+    const SettingsPage = renderWithTheme(
       <SettingsWrapper
         googleAnalyticsId="UA-098909-05"
         canUploadFiles={true}
+        canManageSettings={true}
         isLoading={false}
         activeLogoId={publisherLogoIds[0]}
         logoIds={publisherLogoIds}
@@ -166,14 +170,31 @@ describe('Editor Settings: <Editor Settings />', function () {
       />
     );
 
-    const RemoveLogoButton = getByTestId('remove-publisher-logo-2').lastChild;
-    expect(RemoveLogoButton).toBeDefined();
+    const ContextMenuButton = SettingsPage.getByTestId(
+      'publisher-logo-context-menu-button-1'
+    );
 
-    fireEvent.click(RemoveLogoButton);
+    fireEvent.click(ContextMenuButton);
 
-    const ConfirmRemoveLogoButton = getByText('Remove Logo');
+    const ContextMenu = SettingsPage.getByTestId(
+      'publisher-logo-context-menu-1'
+    );
+    expect(ContextMenu).toBeDefined();
 
-    fireEvent.click(ConfirmRemoveLogoButton);
+    const { getByText } = within(ContextMenu);
+
+    const DeleteFileButton = getByText('Delete');
+    expect(DeleteFileButton).toBeDefined();
+
+    fireEvent.click(DeleteFileButton);
+
+    const DeleteDialog = SettingsPage.getByRole('dialog');
+    expect(DeleteDialog).toBeDefined();
+
+    const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
+    expect(ConfirmDeleteButton).toBeDefined();
+
+    fireEvent.click(ConfirmDeleteButton);
 
     expect(mockUpdateSettings).toHaveBeenCalledTimes(1);
   });
@@ -183,6 +204,7 @@ describe('Editor Settings: <Editor Settings />', function () {
       <SettingsWrapper
         googleAnalyticsId="UA-098909-05"
         canUploadFiles={false}
+        canManageSettings={true}
         isLoading={false}
         logoIds={[]}
         logos={{}}
