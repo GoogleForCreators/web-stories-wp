@@ -54,11 +54,15 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-const Container = styled.div.attrs((props) => ({
+const Container = styled.button.attrs((props) => ({
   style: {
     width: props.width + 'px',
     height: props.height + 'px',
     margin: props.margin,
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    border: 'none',
+    padding: 0,
   },
 }))``;
 
