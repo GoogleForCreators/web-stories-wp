@@ -45,7 +45,7 @@ describe('Autoplay video', () => {
 
   it('should autoplay on insert and on drop', async () => {
     // TODO: Switch to role selector after they are merged
-    const allFilter = fixture.screen.getByText('All');
+    const allFilter = fixture.screen.getByText('All Types');
     await fixture.events.mouse.clickOn(allFilter);
     const videoFilter = fixture.screen.getByText('Video');
     await fixture.events.mouse.clickOn(videoFilter);
