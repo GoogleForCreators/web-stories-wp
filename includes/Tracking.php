@@ -70,7 +70,7 @@ class Tracking {
 				'default'           => false,
 				'show_in_rest'      => true,
 				'auth_callback'     => static function() {
-					return current_user_can( 'manage_options' );
+					return current_user_can( 'edit_user', get_current_user_id() );
 				},
 				'single'            => true,
 			]
