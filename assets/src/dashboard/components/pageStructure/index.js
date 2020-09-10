@@ -41,6 +41,7 @@ import {
   APP_ROUTES,
 } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -51,7 +52,6 @@ import {
   NavList,
   NavListItem,
   Rule,
-  WebStoriesHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -174,9 +174,7 @@ export function LeftRail() {
     >
       <div ref={upperContentRef}>
         <Content>
-          <WebStoriesHeading>
-            {__('Web Stories', 'web-stories')}
-          </WebStoriesHeading>
+          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
         </Content>
         <Content>
           <NavButton
