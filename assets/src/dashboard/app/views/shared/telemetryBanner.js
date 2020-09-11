@@ -28,7 +28,7 @@ import { __ } from '@wordpress/i18n';
 import { useLayoutEffect, useRef } from 'react';
 import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
-import { ICON_METRICS, TELEMETRY_BANNER_HEIGHT } from '../../../constants';
+import { TELEMETRY_BANNER_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
@@ -79,19 +79,24 @@ const CheckBox = styled.input.attrs({
   margin: 5px 12px 0 0;
 `;
 
-const CloseIcon = styled(CloseSVG).attrs(ICON_METRICS.TELEMETRY_BANNER_EXIT)`
+const CloseIcon = styled(CloseSVG)`
   color: ${({ theme }) => theme.colors.white};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  margin: 0 auto;
+  padding: 2px;
+  width: 14px;
+  height: auto;
+  display: inline-block;
 `;
 
 const ToggleButton = styled.button.attrs({
   ['aria-label']: __('Dismiss Notice', 'web-stories'),
 })`
-  border: none;
-  padding: 4px;
+  display: flex;
+  height: 16px;
+  width: 16px;
+  border: ${({ theme }) => theme.borders.transparent};
   border-radius: 50%;
+  padding: 0;
   background: ${({ theme }) => theme.colors.gray200};
   cursor: pointer;
   float: right;
