@@ -25,6 +25,8 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import theme from '../theme';
+import { ConfigProvider } from '../app/config';
+import MockApiProvider from './mockApiProvider';
 
 // eslint-disable-next-line react/prop-types
 const WithThemeProvider = ({ children }) => {
@@ -39,5 +41,32 @@ export default renderWithTheme;
 export const renderWithThemeAndFlagsProvider = (ui, featureFlags = {}) => {
   return renderWithTheme(
     <FlagsProvider features={featureFlags}>{ui}</FlagsProvider>
+  );
+};
+
+const defaultProviderValues = {
+  features: {},
+  theme,
+  config: {},
+};
+
+// Please use renderWithProviders instead of renderWithTheme or renderWithThemeAndFlagsProvider
+// and feel free to add provider/mock provider as needed to this util.
+// TODO: deprecate and replace instances of the above render utils
+export const renderWithProviders = (
+  ui,
+  providerValues = {},
+  renderOptions = {}
+) => {
+  const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
+  return render(
+    <FlagsProvider features={mergedProviderValues.features}>
+      <ThemeProvider theme={mergedProviderValues.theme}>
+        <ConfigProvider config={mergedProviderValues.config}>
+          <MockApiProvider>{ui}</MockApiProvider>
+        </ConfigProvider>
+      </ThemeProvider>
+    </FlagsProvider>,
+    renderOptions
   );
 };

@@ -49,6 +49,7 @@ import {
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
+import { trackEvent } from '../../../../../../tracking';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -59,6 +60,7 @@ function StoriesView({
   users,
   view,
   dateSettings,
+  initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -110,18 +112,27 @@ function StoriesView({
   }, [activeDialog]);
 
   const handleOnRenameStory = useCallback(
-    (story, newTitle) => {
+    async (story, newTitle) => {
       setTitleRenameId(-1);
+      await trackEvent('rename_story', 'dashboard');
       storyActions.updateStory({ ...story, title: { raw: newTitle } });
     },
     [storyActions]
   );
 
+  const handleOnDeleteStory = useCallback(async () => {
+    await trackEvent('delete_story', 'dashboard');
+    storyActions.trashStory(activeStory);
+    setFocusedStory({ id: activeStory.id, isDeleted: true });
+    setActiveDialog('');
+  }, [storyActions, activeStory]);
+
   const handleMenuItemSelected = useCallback(
-    (sender, story) => {
+    async (sender, story) => {
       setContextMenuId(-1);
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          await trackEvent('open_in_editor', 'dashboard');
           window.location.href = story.bottomTargetAction;
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
@@ -129,6 +140,7 @@ function StoriesView({
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          await trackEvent('duplicate_story', 'dashboard');
           storyActions.duplicateStory(story);
           break;
 
@@ -232,6 +244,7 @@ function StoriesView({
         users={users}
         dateSettings={dateSettings}
         returnStoryFocusId={returnStoryFocusId}
+        initialFocusStoryId={initialFocusStoryId}
       />
     );
 
@@ -258,14 +271,7 @@ function StoriesView({
               >
                 {__('Cancel', 'web-stories')}
               </Button>
-              <Button
-                type={BUTTON_TYPES.DEFAULT}
-                onClick={() => {
-                  storyActions.trashStory(activeStory);
-                  setFocusedStory({ id: activeStory.id, isDeleted: true });
-                  setActiveDialog('');
-                }}
-              >
+              <Button type={BUTTON_TYPES.DEFAULT} onClick={handleOnDeleteStory}>
                 {__('Delete', 'web-stories')}
               </Button>
             </>
@@ -290,5 +296,6 @@ StoriesView.propTypes = {
   users: UsersPropType,
   view: ViewPropTypes,
   dateSettings: DateSettingsPropType,
+  initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;
