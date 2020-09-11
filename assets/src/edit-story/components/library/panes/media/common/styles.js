@@ -36,7 +36,7 @@ export const PaneHeader = styled.div`
 `;
 
 export const MediaGalleryContainer = styled.div`
-  overflow: auto;
+  overflow: scroll;
   padding: 0 24px;
   margin-top: 1em;
   position: relative;
