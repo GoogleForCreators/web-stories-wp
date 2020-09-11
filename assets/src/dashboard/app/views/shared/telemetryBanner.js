@@ -25,9 +25,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../../components';
+import { useLayoutEffect, useRef } from 'react';
+import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
-import { ICON_METRICS } from '../../../constants';
+import { ICON_METRICS, TELEMETRY_BANNER_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
@@ -36,7 +37,7 @@ const Banner = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 161px;
+  height: ${TELEMETRY_BANNER_HEIGHT};
   margin: 0 20px;
   padding-top: 24px;
   background-image: url('${({ $backgroundUrl }) => $backgroundUrl}');
@@ -172,6 +173,22 @@ export default function TelemetryBannerContainer(props) {
     disabled,
     toggleWebStoriesTrackingOptIn,
   } = useTelemetryOptIn();
+
+  const {
+    actions: { setTelemetryBannerOpen },
+  } = useLayoutContext();
+
+  const previousBannerVisible = useRef(bannerVisible);
+
+  useLayoutEffect(() => {
+    if (bannerVisible && previousBannerVisible.current === false) {
+      setTelemetryBannerOpen(true);
+      previousBannerVisible.current = true;
+    } else if (!bannerVisible && previousBannerVisible.current) {
+      setTelemetryBannerOpen(false);
+      previousBannerVisible.current = false;
+    }
+  }, [bannerVisible, setTelemetryBannerOpen]);
 
   return (
     <TelemetryOptInBanner
