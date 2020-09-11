@@ -55,6 +55,7 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
+  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -172,6 +173,10 @@ export default function StoryListView({
   users,
   dateSettings,
 }) {
+  const {
+    state: { squishContentHeight },
+  } = useLayoutContext();
+
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -196,7 +201,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table>
-        <StickyTableHeader>
+        <StickyTableHeader top={squishContentHeight - 36}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}

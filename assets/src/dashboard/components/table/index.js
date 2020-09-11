@@ -18,6 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -43,9 +45,12 @@ export const StickyTableHeader = styled(TableHeader)`
     background: ${({ theme }) => theme.colors.gray50};
     position: sticky;
     z-index: 2;
-    top: 125px;
+    top: ${({ top }) => `${top}px` || 0};
   }
 `;
+StickyTableHeader.propTypes = {
+  top: PropTypes.number,
+};
 
 export const TableHeaderCell = styled.th`
   padding: ${({ theme }) => theme.table.headerCellPadding}px;
