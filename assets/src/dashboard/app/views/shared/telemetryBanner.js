@@ -25,9 +25,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../../components';
+import { useLayoutEffect, useRef } from 'react';
+import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
-import { ICON_METRICS } from '../../../constants';
+import { TELEMETRY_BANNER_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
@@ -36,7 +37,7 @@ const Banner = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 161px;
+  height: ${TELEMETRY_BANNER_HEIGHT};
   margin: 0 20px;
   padding-top: 24px;
   background-image: url('${({ $backgroundUrl }) => $backgroundUrl}');
@@ -78,19 +79,24 @@ const CheckBox = styled.input.attrs({
   margin: 5px 12px 0 0;
 `;
 
-const CloseIcon = styled(CloseSVG).attrs(ICON_METRICS.TELEMETRY_BANNER_EXIT)`
+const CloseIcon = styled(CloseSVG)`
   color: ${({ theme }) => theme.colors.white};
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  margin: 0 auto;
+  padding: 2px;
+  width: 14px;
+  height: auto;
+  display: inline-block;
 `;
 
 const ToggleButton = styled.button.attrs({
   ['aria-label']: __('Dismiss Notice', 'web-stories'),
 })`
-  border: none;
-  padding: 4px;
+  display: flex;
+  height: 16px;
+  width: 16px;
+  border: ${({ theme }) => theme.borders.transparent};
   border-radius: 50%;
+  padding: 0;
   background: ${({ theme }) => theme.colors.gray200};
   cursor: pointer;
   float: right;
@@ -172,6 +178,22 @@ export default function TelemetryBannerContainer(props) {
     disabled,
     toggleWebStoriesTrackingOptIn,
   } = useTelemetryOptIn();
+
+  const {
+    actions: { setTelemetryBannerOpen },
+  } = useLayoutContext();
+
+  const previousBannerVisible = useRef(bannerVisible);
+
+  useLayoutEffect(() => {
+    if (bannerVisible && previousBannerVisible.current === false) {
+      setTelemetryBannerOpen(true);
+      previousBannerVisible.current = true;
+    } else if (!bannerVisible && previousBannerVisible.current) {
+      setTelemetryBannerOpen(false);
+      previousBannerVisible.current = false;
+    }
+  }, [bannerVisible, setTelemetryBannerOpen]);
 
   return (
     <TelemetryOptInBanner
