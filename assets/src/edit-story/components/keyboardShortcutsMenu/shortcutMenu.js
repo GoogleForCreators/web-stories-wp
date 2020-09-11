@@ -137,7 +137,12 @@ function ShortcutMenu({ toggleMenu }) {
   ]);
 
   return (
-    <Container ref={containerRef} role="list" aria-labelledby={headerLabels}>
+    <Container
+      data-testid={'keyboard-shortcuts-menu'}
+      ref={containerRef}
+      role="list"
+      aria-labelledby={headerLabels}
+    >
       <CloseButton
         ref={closeRef}
         onClick={handleCloseClick}
