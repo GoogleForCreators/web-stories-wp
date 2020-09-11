@@ -25,11 +25,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import DisplayElement from '../../../../canvas/displayElement';
-import {
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-  TEXT_SET_SIZE,
-} from '../../../../../constants';
+import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
 import useBatchingCallback from '../../../../../utils/useBatchingCallback';
 import useLibrary from '../../../useLibrary';
 
@@ -71,7 +67,10 @@ function TextSet({ elements, index }) {
               id,
               content: `<span style="color: #fff">${content}<span>`,
               x: x + (PAGE_WIDTH - textSetWidth) / 2,
-              y: y + (PAGE_HEIGHT - textSetHeight) / 2,
+              y:
+                y +
+                (PAGE_WIDTH - textSetHeight) /
+                  2 /* Use PAGE_WIDTH here since the area is square */,
               ...rest,
             }}
           />

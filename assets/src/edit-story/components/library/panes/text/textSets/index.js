@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { Section } from '../../../common';
 import { UnitsProvider } from '../../../../../units';
-import { TEXT_SET_SIZE } from '../../../../../constants';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import { getTextSets } from './utils';
 import TextSet from './textSet';
 
@@ -40,8 +40,6 @@ const TextSetContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 12px;
-  overflow: auto;
-  max-height: 280px;
 `;
 
 function TextSets() {
@@ -56,7 +54,7 @@ function TextSets() {
         <UnitsProvider
           pageSize={{
             width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE,
+            height: TEXT_SET_SIZE / PAGE_RATIO,
           }}
         >
           {textSets.map((elements, index) => (
