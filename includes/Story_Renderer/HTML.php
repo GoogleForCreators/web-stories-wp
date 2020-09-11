@@ -371,7 +371,7 @@ class HTML {
 
 		ob_start();
 
-		do_action( 'web_stories_insert_analytics_configuration' );
+		do_action( 'web_stories_print_analytics' );
 
 		$output = (string) ob_get_clean();
 

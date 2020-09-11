@@ -192,11 +192,11 @@ class HTML extends \WP_UnitTestCase {
 			echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
 		};
 
-		add_action( 'web_stories_insert_analytics_configuration', $function );
+		add_action( 'web_stories_print_analytics', $function );
 
 		$actual = $this->setup_renderer( $post );
 
-		remove_action( 'web_stories_insert_analytics_configuration', $function );
+		remove_action( 'web_stories_print_analytics', $function );
 
 		$this->assertContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
 		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body>', $actual );

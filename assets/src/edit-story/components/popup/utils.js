@@ -145,9 +145,12 @@ export function getOffset(placement, spacing, anchor, dock, popup) {
     bodyRect
   );
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
+
   // Vertical
   const offsetY = getYOffset(placement, spacingV, anchorRect);
-  const maxOffsetY = bodyRect.height + bodyRect.y - height;
+  const maxOffsetY =
+    bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
+
   // Clamp values
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),

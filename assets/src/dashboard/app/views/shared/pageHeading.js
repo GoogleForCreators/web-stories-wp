@@ -31,6 +31,7 @@ import {
   StandardViewContentGutter,
 } from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
+import TelemetryBanner from './telemetryBanner';
 
 const Container = styled.div`
   padding: 10px 0 0;
@@ -107,6 +108,7 @@ const PageHeading = ({
 }) => {
   return (
     <Container>
+      <TelemetryBanner />
       <HeadingBodyWrapper>
         <StyledHeader>
           <NavMenuButton showOnlyOnSmallViewport />

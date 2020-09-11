@@ -239,6 +239,7 @@ class Experiments {
 				'label'       => __( 'Settings Views', 'web-stories' ),
 				'description' => __( 'Enable settings view in dashboard', 'web-stories' ),
 				'group'       => 'dashboard',
+				'default'     => true,
 			],
 			/**
 			 * Author: @brittanyirl
@@ -305,6 +306,7 @@ class Experiments {
 				'label'       => __( 'Keyboard Shortcuts', 'web-stories' ),
 				'description' => __( 'Enable keyboard shortcuts button', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy

@@ -50,9 +50,18 @@ function loadTrackingScript(sendPageView = true) {
       app_name: config.appName,
       send_page_view: sendPageView,
       // Setting the transport method to 'beacon' lets the hit be sent
-      // using 'navigator.sendBeacon' in browser that support it.
+      // using 'navigator.sendBeacon' in browsers that support it.
       transport_type: 'beacon',
     });
+
+    // Clean up location param.
+    const url = new URL(window.location.href);
+    url.searchParams.delete('paged');
+    url.searchParams.delete('plugin_status');
+    url.searchParams.delete('post');
+    url.searchParams.delete('s');
+
+    gtag('set', 'location', url.toString());
   });
 }
 

@@ -4,13 +4,16 @@
 .vscode/
 .DS_Store
 node_modules
-/vendor
 /assets/css
 /assets/js
 /assets/testjs
 /build
 /bin/build
 /bin/local-env/data
+/plugin-assets
+/public
+/static
+/vendor
 phpcs.xml
 phpunit.xml
 phpunit-multisite.xml

@@ -100,6 +100,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           'weights',
           'styles',
           'variants',
+          'metrics',
         ]),
       };
       await maybeEnqueueFontStyle(

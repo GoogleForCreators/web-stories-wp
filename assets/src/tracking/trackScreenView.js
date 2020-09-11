@@ -19,9 +19,12 @@
  */
 import { config } from './shared';
 import track from './track';
+import isTrackingEnabled from './isTrackingEnabled';
 
 /**
  * Send an Analytics screen_view event.
+ *
+ * @todo Provide more data like app_version?
  *
  * @see https://developers.google.com/analytics/devguides/collection/gtagjs/screens
  *
@@ -30,8 +33,10 @@ import track from './track';
  */
 //eslint-disable-next-line require-await
 async function trackScreenView(screenName) {
-  // TODO: Provide more data like app_version?
-  // See https://developers.google.com/analytics/devguides/collection/gtagjs/screens
+  if (!isTrackingEnabled()) {
+    return Promise.resolve();
+  }
+
   const eventData = {
     app_name: config.appName,
     screen_name: screenName,

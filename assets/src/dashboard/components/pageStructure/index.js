@@ -41,6 +41,7 @@ import {
   APP_ROUTES,
 } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
+import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
@@ -51,7 +52,6 @@ import {
   NavList,
   NavListItem,
   Rule,
-  WebStoriesHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -100,17 +100,12 @@ export const LeftRailContainer = styled.nav.attrs({
 
 export function LeftRail() {
   const { state } = useRouteHistory();
-  const {
-    newStoryURL,
-    version,
-    capabilities: { canManageSettings } = {},
-  } = useConfig();
+  const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
   const enableInProgressViews = useFeature('enableInProgressViews');
-  const enableSettingsViews =
-    useFeature('enableSettingsView') && canManageSettings;
+  const enableSettingsViews = useFeature('enableSettingsView');
 
   const {
     state: { sideBarVisible },
@@ -165,7 +160,7 @@ export function LeftRail() {
   }, [sideBarVisible]);
 
   const onCreateNewStoryClick = useCallback(async () => {
-    await trackEvent('dashboard', 'create_new_story');
+    await trackEvent('create_new_story', 'dashboard');
   }, []);
 
   return (
@@ -179,9 +174,7 @@ export function LeftRail() {
     >
       <div ref={upperContentRef}>
         <Content>
-          <WebStoriesHeading>
-            {__('Web Stories', 'web-stories')}
-          </WebStoriesHeading>
+          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
         </Content>
         <Content>
           <NavButton

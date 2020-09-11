@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import ErrorActions from './errorActions';
 
 class ErrorBoundary extends Component {
@@ -37,7 +38,10 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     this.setState({ error, errorInfo });
-    // In the future we might take some action here (report to 3P service with tree info)
+    trackEvent('error', 'editor', '', '', {
+      error,
+      error_info: errorInfo,
+    });
   }
 
   render() {
