@@ -37,6 +37,16 @@ export const TableHeader = styled.thead`
   border-bottom: ${({ theme }) => theme.table.border};
 `;
 
+export const StickyTableHeader = styled(TableHeader)`
+  width: 100%;
+  th {
+    background: ${({ theme }) => theme.colors.gray50};
+    position: sticky;
+    z-index: 2;
+    top: 125px;
+  }
+`;
+
 export const TableHeaderCell = styled.th`
   padding: ${({ theme }) => theme.table.headerCellPadding}px;
   font-weight: ${({ theme }) => theme.typography.weight.normal};

@@ -89,7 +89,9 @@ const defaultProps = {
   page: page,
   search: search,
   sort: sort,
-  stories: formattedStoriesArray,
+  stories: formattedStoriesArray
+    .concat(formattedStoriesArray)
+    .concat(formattedStoriesArray),
   storyActions: storyActions,
   users: formattedUsersObject,
   view: view,

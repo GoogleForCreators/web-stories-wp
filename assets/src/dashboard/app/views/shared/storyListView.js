@@ -44,7 +44,7 @@ import {
   TableBody,
   TableCell,
   TableDateHeaderCell,
-  TableHeader,
+  StickyTableHeader,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
@@ -196,7 +196,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table>
-        <TableHeader>
+        <StickyTableHeader>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
@@ -276,7 +276,7 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
-        </TableHeader>
+        </StickyTableHeader>
         <TableBody>
           {stories.map((story) => {
             const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
