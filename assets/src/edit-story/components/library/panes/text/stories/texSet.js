@@ -22,7 +22,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import TextSet from '../textSet';
+import TextSet from '../textSets/textSet';
 import LibraryProvider from '../../../libraryProvider';
 import { UnitsProvider } from '../../../../../units';
 import { getBox } from '../../../../../units/dimensions';
@@ -30,6 +30,7 @@ import { TransformProvider } from '../../../../transform';
 import { FontProvider } from '../../../../../app/font';
 import { APIProvider } from '../../../../../app/api';
 import { ConfigProvider } from '../../../../../app/config';
+import { TEXT_SET_SIZE } from '../../../../../constants';
 
 export default {
   title: 'Stories Editor/Components/Library/Panes/Text/TextSet',
@@ -42,7 +43,7 @@ export default {
 };
 
 export const _default = () => {
-  const elements = [
+  const textSet1 = [
     {
       opacity: 100,
       flip: {
@@ -139,24 +140,138 @@ export const _default = () => {
     },
   ];
 
+  const textSet2 = [
+    {
+      opacity: 100,
+      flip: {
+        vertical: false,
+        horizontal: false,
+      },
+      rotationAngle: 0,
+      lockAspectRatio: true,
+      backgroundTextMode: 'NONE',
+      font: {
+        family: 'Roboto',
+        weights: [100, 300, 400, 500, 700, 900],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 100],
+          [1, 100],
+          [0, 300],
+          [1, 300],
+          [0, 400],
+          [1, 400],
+          [0, 500],
+          [1, 500],
+          [0, 700],
+          [1, 700],
+          [0, 900],
+          [1, 900],
+        ],
+        fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+        service: 'fonts.google.com',
+      },
+      fontSize: 18,
+      backgroundColor: {
+        color: {
+          r: 196,
+          g: 196,
+          b: 196,
+        },
+      },
+      lineHeight: 1.5,
+      textAlign: 'left',
+      padding: {
+        locked: true,
+        horizontal: 0,
+        vertical: 0,
+      },
+      type: 'text',
+      content:
+        'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.',
+      x: 43,
+      y: 225,
+      width: 334,
+      height: 183,
+      scale: 100,
+      focalX: 50,
+      focalY: 50,
+      id: 'f7167da6-fd69-4abb-b688-60c17f0e2e37',
+    },
+    {
+      opacity: 100,
+      flip: {
+        vertical: false,
+        horizontal: false,
+      },
+      rotationAngle: 0,
+      lockAspectRatio: true,
+      backgroundTextMode: 'NONE',
+      font: {
+        family: 'Roboto',
+        weights: [100, 300, 400, 500, 700, 900],
+        styles: ['italic', 'regular'],
+        variants: [
+          [0, 100],
+          [1, 100],
+          [0, 300],
+          [1, 300],
+          [0, 400],
+          [1, 400],
+          [0, 500],
+          [1, 500],
+          [0, 700],
+          [1, 700],
+          [0, 900],
+          [1, 900],
+        ],
+        fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
+        service: 'fonts.google.com',
+      },
+      fontSize: 36,
+      backgroundColor: {
+        color: {
+          r: 196,
+          g: 196,
+          b: 196,
+        },
+      },
+      lineHeight: 1.2,
+      textAlign: 'initial',
+      padding: {
+        locked: true,
+        horizontal: 0,
+        vertical: 0,
+      },
+      type: 'text',
+      content:
+        '<span style="font-weight: 700">Good design is innovative</span>',
+      x: 43,
+      y: 119,
+      width: 246,
+      height: 86,
+      scale: 100,
+      focalX: 50,
+      focalY: 50,
+      id: 'ae467c59-7fac-43c1-b2ad-2b68938879c9',
+    },
+  ];
+
   return (
     <LibraryProvider insertElements={() => {}}>
       <UnitsProvider
         getBox={getBox}
         pageSize={{
-          width: 100,
-          height: 100,
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE,
         }}
       >
         <TransformProvider registerTransformHandler={() => {}}>
           <ConfigProvider config={{ api: { stories: [] } }}>
             <APIProvider getAllFonts={() => {}}>
               <FontProvider maybeEnqueueFontStyle={() => {}}>
-                <TextSet
-                  elements={elements}
-                  index={0}
-                  insertElement={() => {}}
-                />
+                <TextSet elements={textSet1} index={0} />
+                <TextSet elements={textSet2} index={1} />
               </FontProvider>
             </APIProvider>
           </ConfigProvider>

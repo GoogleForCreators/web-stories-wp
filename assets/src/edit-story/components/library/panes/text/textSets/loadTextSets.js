@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { migrate } from '../../../../../migration/migrate';
+import { migrate } from '../../../../../migration';
 
 function updateMinMax(minMax, element) {
   // Purposely mutating object so passed

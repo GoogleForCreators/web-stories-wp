@@ -24,17 +24,19 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import DisplayElement from '../../../canvas/displayElement';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
-import useBatchingCallback from '../../../../utils/useBatchingCallback';
-import useLibrary from '../../useLibrary';
-
-const ITEM_SIZE = 150;
+import DisplayElement from '../../../../canvas/displayElement';
+import {
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+  TEXT_SET_SIZE,
+} from '../../../../../constants';
+import useBatchingCallback from '../../../../../utils/useBatchingCallback';
+import useLibrary from '../../../useLibrary';
 
 const TextSetItem = styled.div`
   position: relative;
-  width: ${ITEM_SIZE}px;
-  height: ${ITEM_SIZE}px;
+  width: ${TEXT_SET_SIZE}px;
+  height: ${TEXT_SET_SIZE}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
   border-radius: 4px;
   cursor: pointer;

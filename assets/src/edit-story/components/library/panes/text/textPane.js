@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 
@@ -29,7 +28,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../units';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
@@ -37,24 +35,11 @@ import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 import useInsertPreset from './useInsertPreset';
-import loadTextSets from './textSets';
-import TextSet from './textSet';
+import TextSets from './textSets';
 
 const Pane = styled(SharedPane)`
   overflow-y: auto;
   max-height: 100%;
-`;
-
-const ITEM_SIZE = 150;
-
-// TODO: max-height should be dynamically calculated
-// based on height of window.
-const TextSetContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 12px;
-  overflow: auto;
-  max-height: 280px;
 `;
 
 const TYPE = 'text';
@@ -65,13 +50,6 @@ function TextPane(props) {
   }));
 
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
-  const [textSets, setTextSets] = useState([]);
-
-  useEffect(() => {
-    if (showTextSets) {
-      loadTextSets().then((sets) => setTextSets(sets));
-    }
-  }, [showTextSets]);
 
   const insertPreset = useInsertPreset();
 
@@ -103,22 +81,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && (
-        <Section title={__('Text Sets', 'web-stories')}>
-          <TextSetContainer>
-            <UnitsProvider
-              pageSize={{
-                width: ITEM_SIZE,
-                height: ITEM_SIZE,
-              }}
-            >
-              {textSets.map((elements, index) => (
-                <TextSet key={index} elements={elements} index={index} />
-              ))}
-            </UnitsProvider>
-          </TextSetContainer>
-        </Section>
-      )}
+      {showTextSets && <TextSets />}
     </Pane>
   );
 }
