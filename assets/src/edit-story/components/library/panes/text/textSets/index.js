@@ -34,8 +34,6 @@ import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import { getTextSets } from './utils';
 import TextSet from './textSet';
 
-// TODO: max-height should be dynamically calculated
-// based on height of window.
 const TextSetContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;

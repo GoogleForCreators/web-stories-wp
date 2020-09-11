@@ -22,15 +22,15 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-import TextSet from '../textSets/textSet';
-import LibraryProvider from '../../../libraryProvider';
-import { UnitsProvider } from '../../../../../units';
-import { getBox } from '../../../../../units/dimensions';
-import { TransformProvider } from '../../../../transform';
-import { FontProvider } from '../../../../../app/font';
-import { APIProvider } from '../../../../../app/api';
-import { ConfigProvider } from '../../../../../app/config';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import TextSet from '../textSet';
+import LibraryProvider from '../../../../libraryProvider';
+import { UnitsProvider } from '../../../../../../units';
+import { getBox } from '../../../../../../units/dimensions';
+import { TransformProvider } from '../../../../../transform';
+import { FontProvider } from '../../../../../../app/font';
+import { APIProvider } from '../../../../../../app/api';
+import { ConfigProvider } from '../../../../../../app/config';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
 
 export default {
   title: 'Stories Editor/Components/Library/Panes/Text/TextSet',
