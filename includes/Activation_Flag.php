@@ -81,8 +81,6 @@ class Activation_Flag {
 	/**
 	 * Deletes the flag that the plugin has just been activated.
 	 *
-	 * Migrated from Activation class.
-	 *
 	 * @since 1.0.0
 	 *
 	 * @param bool $network_wide Whether the plugin is being deactivated network-wide.
