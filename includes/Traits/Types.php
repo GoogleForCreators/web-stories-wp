@@ -35,6 +35,8 @@ trait Types {
 	/**
 	 * Returns a list of allowed file types.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array List of allowed file types.
 	 */
 	public function get_allowed_file_types() {
@@ -64,6 +66,8 @@ trait Types {
 	/**
 	 * Returns a list of allowed mime types per media type (image, audio, video).
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array List of allowed mime types.
 	 */
 	public function get_allowed_mime_types() {
@@ -86,6 +90,8 @@ trait Types {
 		 *
 		 * This can be used to add additionally supported formats, for example by plugins
 		 * that do video transcoding.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param array $default_allowed_mime_types Associative array of allowed mime types per media type (image, audio, video).
 		 */

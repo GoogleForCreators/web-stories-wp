@@ -39,6 +39,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 *
 	 * Override the namespace.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $post_type Post type.
 	 */
 	public function __construct( $post_type ) {
@@ -50,6 +52,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * Retrieves a collection of media.
 	 *
 	 * Read _web_stories_envelope param to envelope response.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -65,6 +69,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 
 	/**
 	 * Retrieves the query params for the posts collection.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Collection parameters.
 	 */
