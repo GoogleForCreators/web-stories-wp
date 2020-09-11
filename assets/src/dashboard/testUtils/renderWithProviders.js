@@ -28,45 +28,36 @@ import theme from '../theme';
 import { ConfigProvider } from '../app/config';
 import MockApiProvider from './mockApiProvider';
 
-// eslint-disable-next-line react/prop-types
-const WithThemeProvider = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-};
-
-const renderWithTheme = (ui, options) =>
-  render(ui, { wrapper: WithThemeProvider, ...options });
-
-export default renderWithTheme;
-
-export const renderWithThemeAndFlagsProvider = (ui, featureFlags = {}) => {
-  return renderWithTheme(
-    <FlagsProvider features={featureFlags}>{ui}</FlagsProvider>
-  );
-};
-
 const defaultProviderValues = {
   features: {},
   theme,
   config: {},
+  api: {},
 };
 
-// Please use renderWithProviders instead of renderWithTheme or renderWithThemeAndFlagsProvider
-// and feel free to add provider/mock provider as needed to this util.
-// TODO: deprecate and replace instances of the above render utils
 export const renderWithProviders = (
   ui,
   providerValues = {},
   renderOptions = {}
 ) => {
   const mergedProviderValues = { ...defaultProviderValues, ...providerValues };
-  return render(
+
+  // eslint-disable-next-line react/prop-types
+  const Wrapper = ({ children }) => (
     <FlagsProvider features={mergedProviderValues.features}>
       <ThemeProvider theme={mergedProviderValues.theme}>
         <ConfigProvider config={mergedProviderValues.config}>
-          <MockApiProvider>{ui}</MockApiProvider>
+          <MockApiProvider value={mergedProviderValues.api}>
+            {children}
+          </MockApiProvider>
         </ConfigProvider>
       </ThemeProvider>
-    </FlagsProvider>,
-    renderOptions
+    </FlagsProvider>
   );
+
+  const mergedRenderOptions = { wrapper: Wrapper, ...renderOptions };
+
+  return render(ui, mergedRenderOptions);
 };
+
+export default renderWithProviders;

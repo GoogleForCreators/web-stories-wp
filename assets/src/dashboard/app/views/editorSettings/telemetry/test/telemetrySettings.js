@@ -22,12 +22,12 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import TelemetrySettings from '../index';
 
 describe('Editor Settings: <TelemetrySettings />', function () {
   it('should render the telemetry as checked when selected is true.', function () {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <TelemetrySettings
         disabled={false}
         onCheckboxSelected={jest.fn()}
@@ -39,7 +39,7 @@ describe('Editor Settings: <TelemetrySettings />', function () {
   });
 
   it('should render the telemetry as not checked when selected is false.', function () {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <TelemetrySettings
         disabled={false}
         onCheckboxSelected={jest.fn()}
@@ -52,7 +52,7 @@ describe('Editor Settings: <TelemetrySettings />', function () {
 
   it('should call the change function when the checkbox is clicked.', function () {
     const changeFn = jest.fn();
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <TelemetrySettings
         disabled={false}
         onCheckboxSelected={changeFn}

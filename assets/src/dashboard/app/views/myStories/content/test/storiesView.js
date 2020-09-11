@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { fillerDateSettingsObject } from '../../../../../dataUtils/dateSettings';
-import { renderWithThemeAndFlagsProvider } from '../../../../../testUtils';
+import { renderWithProviders } from '../../../../../testUtils';
 import { ToastProvider } from '../../../../../components';
 import {
   STORY_SORT_OPTIONS,
@@ -59,7 +59,7 @@ const fakeStories = [
 
 describe('My Stories <StoriesView />', function () {
   it(`should render stories as a grid when view is ${VIEW_STYLE.GRID}`, function () {
-    const { getAllByTestId } = renderWithThemeAndFlagsProvider(
+    const { getAllByTestId } = renderWithProviders(
       <ToastProvider>
         <StoriesView
           filterValue="all"
@@ -82,7 +82,7 @@ describe('My Stories <StoriesView />', function () {
           }}
         />
       </ToastProvider>,
-      { enableInProgressStoryActions: false }
+      { features: { enableInProgressStoryActions: false } }
     );
 
     expect(getAllByTestId(/^story-grid-item/)).toHaveLength(fakeStories.length);

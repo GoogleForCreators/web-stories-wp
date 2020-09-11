@@ -23,14 +23,14 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { VIEW_STYLE } from '../../../constants';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import ViewStyleBar from '..';
 
 describe('<ViewStyleBar />', function () {
   const mockPress = jest.fn();
 
   it(`should render the list icon when layoutStyle is ${VIEW_STYLE.GRID}`, function () {
-    const { getByTestId, queryAllByTestId } = renderWithTheme(
+    const { getByTestId, queryAllByTestId } = renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.GRID} onPress={mockPress} />
     );
 
@@ -42,7 +42,7 @@ describe('<ViewStyleBar />', function () {
   });
 
   it(`should render the grid icon when layoutStyle is ${VIEW_STYLE.LIST}`, function () {
-    const { getByTestId, queryAllByTestId } = renderWithTheme(
+    const { getByTestId, queryAllByTestId } = renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );
 
@@ -54,7 +54,7 @@ describe('<ViewStyleBar />', function () {
   });
 
   it('should have triggered mockPress once on onPress click', function () {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );
 

@@ -22,12 +22,12 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Dialog from '../';
 
 describe('Dialog', () => {
   it('should not render a dialog by default', () => {
-    const { queryAllByRole } = renderWithTheme(
+    const { queryAllByRole } = renderWithProviders(
       <Dialog onClose={jest.fn}>
         <p>{'dialog child'}</p>
       </Dialog>
@@ -42,7 +42,7 @@ describe('Dialog', () => {
       <button onClick={mockButtonClick}>{'dialog button'}</button>
     );
 
-    const { getByRole, getByText } = renderWithTheme(
+    const { getByRole, getByText } = renderWithProviders(
       <Dialog
         onClose={jest.fn}
         isOpen={true}

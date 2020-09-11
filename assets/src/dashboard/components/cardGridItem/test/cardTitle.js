@@ -23,12 +23,12 @@ import moment from 'moment-timezone';
  * Internal dependencies
  */
 import CardTitle from '../cardTitle';
-import { renderWithTheme } from '../../../testUtils';
+import { renderWithProviders } from '../../../testUtils';
 import { STORY_STATUS } from '../../../constants';
 
 describe('CardTitle', () => {
   it('should render Card Title with static text when edit mode is false', () => {
-    const { getByText, queryByTestId } = renderWithTheme(
+    const { getByText, queryByTestId } = renderWithProviders(
       <CardTitle
         title="Sample Story"
         displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
@@ -44,7 +44,7 @@ describe('CardTitle', () => {
   });
 
   it('should render Card Title with an input field when edit mode is true', () => {
-    const { getByDisplayValue, getByLabelText } = renderWithTheme(
+    const { getByDisplayValue, getByLabelText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
         displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
@@ -63,7 +63,7 @@ describe('CardTitle', () => {
   });
 
   it(`should prepend "draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
         displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
@@ -79,7 +79,7 @@ describe('CardTitle', () => {
   });
 
   it(`should display "Scheduled" before created date when ${STORY_STATUS.FUTURE}`, () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
         displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
@@ -95,7 +95,7 @@ describe('CardTitle', () => {
   });
 
   it(`should display "Published" before created date when ${STORY_STATUS.PUBLISH}`, () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
         displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
@@ -111,7 +111,7 @@ describe('CardTitle', () => {
   });
 
   it('should render Card Title with an author', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
         secondaryTitle="Harry Potter"
