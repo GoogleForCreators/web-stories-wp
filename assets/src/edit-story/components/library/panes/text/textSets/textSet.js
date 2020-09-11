@@ -47,8 +47,10 @@ function TextSet({ elements, index }) {
     insertElement: state.actions.insertElement,
   }));
 
-  const insertElements = useBatchingCallback(
+  const insertSet = useBatchingCallback(
     (toAdd) => {
+      // @todo Select all the added elements.
+      // @todo Position correctly when adding.
       toAdd.forEach((e) => insertElement(e.type, e));
     },
     [insertElement]
@@ -58,7 +60,7 @@ function TextSet({ elements, index }) {
     <TextSetItem
       key={index}
       style={{ justifySelf: index % 2 === 0 ? 'start' : 'end' }}
-      onClick={() => insertElements(elements)}
+      onClick={() => insertSet(elements)}
     >
       {elements.map(
         ({ id, content, x, y, textSetWidth, textSetHeight, ...rest }) => (

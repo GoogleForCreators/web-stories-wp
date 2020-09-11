@@ -79,17 +79,19 @@ export const _default = () => {
       type: 'text',
       content: '<span style="color: #ddd0d0">Subscribe now!</span>',
       fontWeight: 400,
-      x: 30,
-      y: 233,
-      width: 358,
+      x: 0,
+      y: 106,
+      width: 248,
       height: 150,
       scale: 100,
       focalX: 50,
       focalY: 50,
       id: 'b027dcd3-f9da-44e9-9b44-bd2da3e51851',
+      textSetWidth: 305,
+      textSetHeight: 295,
     },
     {
-      opacity: 30,
+      opacity: 90,
       flip: {
         vertical: false,
         horizontal: false,
@@ -114,9 +116,9 @@ export const _default = () => {
       fontSize: 26,
       backgroundColor: {
         color: {
-          r: 255,
-          g: 255,
-          b: 255,
+          r: 50,
+          g: 50,
+          b: 50,
         },
       },
       lineHeight: 1.5,
@@ -127,133 +129,19 @@ export const _default = () => {
         vertical: 0,
       },
       type: 'text',
-      content: '<span style="font-weight: 700">Contact us!</span>',
+      content:
+        '<span style="font-weight: 700; color: #fffffe">Contact us!</span>',
       fontWeight: 400,
-      x: 82,
-      y: 404,
+      x: 0,
+      y: 280,
       width: 252,
       height: 39,
       scale: 100,
       focalX: 50,
       focalY: 50,
       id: '72d6429a-1e1a-4b42-9cb2-e8d2e1afc03e',
-    },
-  ];
-
-  const textSet2 = [
-    {
-      opacity: 100,
-      flip: {
-        vertical: false,
-        horizontal: false,
-      },
-      rotationAngle: 0,
-      lockAspectRatio: true,
-      backgroundTextMode: 'NONE',
-      font: {
-        family: 'Roboto',
-        weights: [100, 300, 400, 500, 700, 900],
-        styles: ['italic', 'regular'],
-        variants: [
-          [0, 100],
-          [1, 100],
-          [0, 300],
-          [1, 300],
-          [0, 400],
-          [1, 400],
-          [0, 500],
-          [1, 500],
-          [0, 700],
-          [1, 700],
-          [0, 900],
-          [1, 900],
-        ],
-        fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-        service: 'fonts.google.com',
-      },
-      fontSize: 18,
-      backgroundColor: {
-        color: {
-          r: 196,
-          g: 196,
-          b: 196,
-        },
-      },
-      lineHeight: 1.5,
-      textAlign: 'left',
-      padding: {
-        locked: true,
-        horizontal: 0,
-        vertical: 0,
-      },
-      type: 'text',
-      content:
-        'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.',
-      x: 43,
-      y: 225,
-      width: 334,
-      height: 183,
-      scale: 100,
-      focalX: 50,
-      focalY: 50,
-      id: 'f7167da6-fd69-4abb-b688-60c17f0e2e37',
-    },
-    {
-      opacity: 100,
-      flip: {
-        vertical: false,
-        horizontal: false,
-      },
-      rotationAngle: 0,
-      lockAspectRatio: true,
-      backgroundTextMode: 'NONE',
-      font: {
-        family: 'Roboto',
-        weights: [100, 300, 400, 500, 700, 900],
-        styles: ['italic', 'regular'],
-        variants: [
-          [0, 100],
-          [1, 100],
-          [0, 300],
-          [1, 300],
-          [0, 400],
-          [1, 400],
-          [0, 500],
-          [1, 500],
-          [0, 700],
-          [1, 700],
-          [0, 900],
-          [1, 900],
-        ],
-        fallbacks: ['Helvetica Neue', 'Helvetica', 'sans-serif'],
-        service: 'fonts.google.com',
-      },
-      fontSize: 36,
-      backgroundColor: {
-        color: {
-          r: 196,
-          g: 196,
-          b: 196,
-        },
-      },
-      lineHeight: 1.2,
-      textAlign: 'initial',
-      padding: {
-        locked: true,
-        horizontal: 0,
-        vertical: 0,
-      },
-      type: 'text',
-      content:
-        '<span style="font-weight: 700">Good design is innovative</span>',
-      x: 43,
-      y: 119,
-      width: 246,
-      height: 86,
-      scale: 100,
-      focalX: 50,
-      focalY: 50,
-      id: 'ae467c59-7fac-43c1-b2ad-2b68938879c9',
+      textSetWidth: 305,
+      textSetHeight: 295,
     },
   ];
 
@@ -271,7 +159,6 @@ export const _default = () => {
             <APIProvider getAllFonts={() => {}}>
               <FontProvider maybeEnqueueFontStyle={() => {}}>
                 <TextSet elements={textSet1} index={0} />
-                <TextSet elements={textSet2} index={1} />
               </FontProvider>
             </APIProvider>
           </ConfigProvider>
