@@ -63,7 +63,6 @@ const Area = styled.div`
   position: relative;
   overflow: hidden;
   z-index: 2;
-  min-width: 360px;
 `;
 
 function Layout() {
