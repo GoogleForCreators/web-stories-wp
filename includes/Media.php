@@ -321,7 +321,7 @@ class Media {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $prepared Prepared data before response.s
+	 * @param array $prepared Prepared data before response.
 	 *
 	 * @return string
 	 */
