@@ -66,7 +66,24 @@
               [1, 900]
             ],
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com"
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
           },
           "fontSize": 18,
           "backgroundColor": {
@@ -122,7 +139,24 @@
               [1, 900]
             ],
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com"
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
           },
           "fontSize": 36,
           "backgroundColor": {
@@ -274,7 +308,24 @@
               [1, 900]
             ],
             "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com"
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
           },
           "fontSize": 18,
           "backgroundColor": {
@@ -370,7 +421,24 @@
               [1, 700],
               [1, 800],
               [1, 900]
-            ]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1016,
+              "des": -345,
+              "tAsc": 1016,
+              "tDes": -345,
+              "tLGap": 0,
+              "wAsc": 1123,
+              "wDes": 345,
+              "xH": 452,
+              "capH": 636,
+              "yMin": -293,
+              "yMax": 962,
+              "hAsc": 1016,
+              "hDes": -345,
+              "lGap": 0
+            }
           },
           "fontSize": 18,
           "backgroundColor": {
