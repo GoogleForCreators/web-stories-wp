@@ -24,7 +24,7 @@ import userEvent from '@testing-library/user-event';
  * Internal dependencies
  */
 import { TelemetryOptInBanner } from '../telemetryBanner';
-import { renderWithTheme } from '../../../../testUtils';
+import { renderWithProviders } from '../../../../testUtils';
 
 function TelemetryBannerTestContainer(props) {
   const [state, setState] = useState({
@@ -57,7 +57,7 @@ function TelemetryBannerTestContainer(props) {
 
 describe('TelemetryBanner', () => {
   it('should render visible with the checkbox unchecked', () => {
-    const { getByRole } = renderWithTheme(<TelemetryBannerTestContainer />);
+    const { getByRole } = renderWithProviders(<TelemetryBannerTestContainer />);
 
     const checkbox = getByRole('checkbox');
 
@@ -65,7 +65,7 @@ describe('TelemetryBanner', () => {
   });
 
   it('should change the checkbox to checked and update the header when clicked', () => {
-    const { getByRole, getByText } = renderWithTheme(
+    const { getByRole, getByText } = renderWithProviders(
       <TelemetryBannerTestContainer />
     );
 
@@ -86,7 +86,7 @@ describe('TelemetryBanner', () => {
   });
 
   it('should close and not be visible when the close icon is clicked', () => {
-    const { getByRole } = renderWithTheme(<TelemetryBannerTestContainer />);
+    const { getByRole } = renderWithProviders(<TelemetryBannerTestContainer />);
 
     const closeButton = getByRole('button');
 
@@ -98,7 +98,7 @@ describe('TelemetryBanner', () => {
   });
 
   it('should not be able to be checked when disabled', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <TelemetryBannerTestContainer disabled={true} />
     );
 

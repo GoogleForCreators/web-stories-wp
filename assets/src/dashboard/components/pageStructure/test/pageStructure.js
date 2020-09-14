@@ -24,14 +24,14 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
+import { renderWithProviders } from '../../../testUtils';
 import { LeftRail } from '../index';
 import NavProvider, { NavContext } from '../../navProvider';
 import { primaryPaths } from '../../../constants';
 
 describe('<LeftRail />', () => {
   it('should be visible by default in a regular viewport.', () => {
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <FlagsProvider features={{ enableInProgressViews: false }}>
         <NavProvider>
           <LeftRail />
@@ -62,7 +62,7 @@ describe('<LeftRail />', () => {
         </NavContext.Provider>
       );
     };
-    const wrapper = renderWithTheme(
+    const wrapper = renderWithProviders(
       <FlagsProvider features={{ enableInProgressViews: false }}>
         <MockedNavProvider toggleSideBar={toggleSideBarFn}>
           <LeftRail />
