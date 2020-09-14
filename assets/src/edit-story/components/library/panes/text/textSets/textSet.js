@@ -28,6 +28,7 @@ import DisplayElement from '../../../../canvas/displayElement';
 import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
 import useBatchingCallback from '../../../../../utils/useBatchingCallback';
 import useLibrary from '../../../useLibrary';
+import { useStory } from '../../../../../app/story';
 
 const TextSetItem = styled.div`
   position: relative;
@@ -43,9 +44,16 @@ function TextSet({ elements, index }) {
     insertElement: state.actions.insertElement,
   }));
 
+  const { setSelectedElementsById } = useStory(
+    ({ actions: { setSelectedElementsById } }) => {
+      return {
+        setSelectedElementsById,
+      };
+    }
+  );
   const insertSet = useBatchingCallback(
     (toAdd) => {
-      // @todo Select all the added elements.
+      const addedElements = [];
       toAdd.forEach((element) => {
         const toInsert = {
           ...element,
@@ -56,10 +64,14 @@ function TextSet({ elements, index }) {
         delete toInsert.previewOffsetY;
         delete toInsert.textSetWidth;
         delete toInsert.textSetHeight;
-        insertElement(element.type, toInsert);
+        addedElements.push(insertElement(element.type, toInsert));
+      });
+      // Select all added elements.
+      setSelectedElementsById({
+        elementIds: addedElements.map(({ id }) => id),
       });
     },
-    [insertElement]
+    [insertElement, setSelectedElementsById]
   );
 
   return (
