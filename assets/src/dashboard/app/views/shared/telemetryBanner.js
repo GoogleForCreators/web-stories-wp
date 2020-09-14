@@ -39,6 +39,7 @@ const Banner = styled.div`
   margin: 0 20px;
   padding-top: 24px;
   background-image: url('${({ backgroundUrl }) => backgroundUrl}');
+  background-size: cover;
   border-radius: 8px;
 `;
 
