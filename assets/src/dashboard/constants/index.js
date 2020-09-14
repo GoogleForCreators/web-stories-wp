@@ -132,9 +132,6 @@ export const TEXT_INPUT_DEBOUNCE = 300;
 export const MIN_IMG_HEIGHT = 96;
 export const MIN_IMG_WIDTH = 96;
 
-// Includes height, padding, margin
-export const TELEMETRY_BANNER_HEIGHT = 161;
-
 export * from './components';
 export * from './direction';
 export * from './pageStructure';
