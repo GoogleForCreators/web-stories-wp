@@ -59,19 +59,27 @@ function TextSet({ elements, index }) {
       onClick={() => insertSet(elements)}
     >
       {elements.map(
-        ({ id, content, x, y, textSetWidth, textSetHeight, ...rest }) => (
+        ({
+          id,
+          content,
+          previewOffsetX,
+          previewOffsetY,
+          textSetWidth,
+          textSetHeight,
+          ...rest
+        }) => (
           <DisplayElement
             previewMode
             key={id}
             element={{
               id,
               content: `<span style="color: #fff">${content}<span>`,
-              x: x + (PAGE_WIDTH - textSetWidth) / 2,
+              ...rest,
+              x: previewOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
               y:
-                y +
+                previewOffsetY +
                 (PAGE_WIDTH - textSetHeight) /
                   2 /* Use PAGE_WIDTH here since the area is square */,
-              ...rest,
             }}
           />
         )
