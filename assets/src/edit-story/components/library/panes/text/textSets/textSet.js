@@ -46,8 +46,18 @@ function TextSet({ elements, index }) {
   const insertSet = useBatchingCallback(
     (toAdd) => {
       // @todo Select all the added elements.
-      // @todo Position correctly when adding.
-      toAdd.forEach((e) => insertElement(e.type, e));
+      toAdd.forEach((element) => {
+        const toInsert = {
+          ...element,
+          id: null,
+        };
+        // Remove all preview element data.
+        delete toInsert.previewOffsetX;
+        delete toInsert.previewOffsetY;
+        delete toInsert.textSetWidth;
+        delete toInsert.textSetHeight;
+        insertElement(element.type, toInsert);
+      });
     },
     [insertElement]
   );
