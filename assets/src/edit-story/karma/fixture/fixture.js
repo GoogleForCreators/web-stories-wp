@@ -17,7 +17,13 @@
 /**
  * External dependencies
  */
-import React, { useCallback, useState, useMemo, forwardRef } from 'react';
+import React, {
+  useCallback,
+  useState,
+  useMemo,
+  forwardRef,
+  StrictMode,
+} from 'react';
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';
@@ -202,7 +208,9 @@ export class Fixture {
 
     const { container, getByRole } = render(
       <FlagsProvider features={this._flags}>
-        <App key={Math.random()} config={this._config} />
+        <StrictMode>
+          <App key={Math.random()} config={this._config} />
+        </StrictMode>
       </FlagsProvider>,
       {
         container: root,

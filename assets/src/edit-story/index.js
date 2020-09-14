@@ -18,6 +18,7 @@
  * External dependencies
  */
 import Modal from 'react-modal';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
 
@@ -47,7 +48,9 @@ const initialize = (id, config, flags) => {
 
   render(
     <FlagsProvider features={flags}>
-      <App config={config} />
+      <StrictMode>
+        <App config={config} />
+      </StrictMode>
     </FlagsProvider>,
     appElement
   );
