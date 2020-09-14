@@ -76,6 +76,7 @@ function TextSet({ elements, index }) {
 
   return (
     <TextSetItem
+      role="listitem"
       key={index}
       style={{ justifySelf: index % 2 === 0 ? 'start' : 'end' }}
       onClick={() => insertSet(elements)}
@@ -91,7 +92,7 @@ function TextSet({ elements, index }) {
           ...rest
         }) => (
           <DisplayElement
-            previewMode
+            previewMode={true}
             key={id}
             element={{
               id,

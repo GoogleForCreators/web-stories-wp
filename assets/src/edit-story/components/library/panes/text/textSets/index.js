@@ -46,9 +46,10 @@ function TextSets() {
   useEffect(() => {
     getTextSets().then((sets) => setTextSets(sets));
   }, []);
+  const title = __('Text Sets', 'web-stories');
   return (
-    <Section title={__('Text Sets', 'web-stories')}>
-      <TextSetContainer>
+    <Section id={title} title={title}>
+      <TextSetContainer role="group" aria-labelledby={title}>
         <UnitsProvider
           pageSize={{
             width: TEXT_SET_SIZE,

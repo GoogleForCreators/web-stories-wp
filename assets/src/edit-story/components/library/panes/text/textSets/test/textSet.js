@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { fireEvent } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import LibraryContext from '../../../../context';
@@ -27,8 +32,7 @@ import TextSet from '../textSet';
 import { renderWithTheme } from '../../../../../../testUtils';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
 import { UnitsProvider } from '../../../../../../units';
-
-const insertElement = jest.fn();
+import StoryContext from '../../../../../../app/story/context';
 
 const SETS = [
   {
@@ -85,6 +89,8 @@ const SETS = [
     focalX: 50,
     focalY: 50,
     id: '1',
+    previewOffsetX: 0,
+    previewOffsetY: 0,
     textSetWidth: 333,
     textSetHeight: 304,
   },
@@ -162,14 +168,16 @@ const SETS = [
     focalX: 50,
     focalY: 50,
     id: '2',
+    previewOffsetX: 30,
+    previewOffsetY: 30,
     textSetWidth: 333,
     textSetHeight: 304,
   },
 ];
 
-function setup(elements) {
-  insertElement.mockReset();
+const insertElement = jest.fn();
 
+function setup(elements) {
   const libraryValue = {
     actions: {
       insertElement,
@@ -192,31 +200,43 @@ function setup(elements) {
     },
   };
 
-  const { container } = renderWithTheme(
+  const storyValue = {
+    actions: {
+      setSelectedElementsById: jest.fn(),
+    },
+  };
+
+  const { queryAllByRole, container } = renderWithTheme(
     <TransformContext.Provider value={transformValue}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
-          <FontContext.Provider value={fontsValue}>
-            <LibraryContext.Provider value={libraryValue}>
-              <UnitsProvider
-                pageSize={{
-                  width: TEXT_SET_SIZE,
-                  height: TEXT_SET_SIZE / PAGE_RATIO,
-                }}
-                getBox={getBox}
-              >
-                <TextSet elements={elements} index={0} />
-              </UnitsProvider>
-            </LibraryContext.Provider>
-          </FontContext.Provider>
+          <StoryContext.Provider value={storyValue}>
+            <FontContext.Provider value={fontsValue}>
+              <LibraryContext.Provider value={libraryValue}>
+                <UnitsProvider
+                  pageSize={{
+                    width: TEXT_SET_SIZE,
+                    height: TEXT_SET_SIZE / PAGE_RATIO,
+                  }}
+                  getBox={getBox}
+                >
+                  <TextSet elements={elements} index={0} />
+                </UnitsProvider>
+              </LibraryContext.Provider>
+            </FontContext.Provider>
+          </StoryContext.Provider>
         </APIContext.Provider>
       </ConfigContext.Provider>
     </TransformContext.Provider>
   );
-  return { container };
+  return { queryAllByRole, container };
 }
 
 describe('TextSets', () => {
+  beforeEach(() => {
+    insertElement.mockReset();
+  });
+
   it('should render', () => {
     const { container } = setup(SETS);
     const el1 = container.querySelector('[data-element-id="1"]');
@@ -230,6 +250,29 @@ describe('TextSets', () => {
     const el2 = container.querySelector('[data-element-id="2"]');
     expect(el2).toHaveTextContent(
       'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.'
+    );
+  });
+
+  it('should allow inserting a text set', async () => {
+    insertElement.mockImplementation((type, element) => {
+      return {
+        type,
+        id: '123',
+        ...element,
+      };
+    });
+    const { queryAllByRole } = setup(SETS);
+    const sets = queryAllByRole('listitem');
+    expect(sets).toHaveLength(1);
+    await fireEvent.click(sets[0]);
+
+    expect(insertElement).toHaveBeenCalledTimes(2);
+
+    const element1 = insertElement.mock.calls[0][1];
+    expect(element1.content).toContain('Good design is aesthetic');
+    const element2 = insertElement.mock.calls[1][1];
+    expect(element2.content).toContain(
+      'The possibilities for innovation are not'
     );
   });
 });
