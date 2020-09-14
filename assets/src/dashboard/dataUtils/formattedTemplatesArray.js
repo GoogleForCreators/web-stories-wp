@@ -23,7 +23,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=10&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 10,
@@ -1277,7 +1277,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=9&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 9,
@@ -1475,7 +1475,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=3&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 3,
@@ -1673,7 +1673,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=4&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 4,
@@ -1871,7 +1871,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=5&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 5,
@@ -2069,7 +2069,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=6&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 6,
@@ -2267,7 +2267,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=7&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 7,
@@ -2465,7 +2465,7 @@ const formattedTemplatesArray = [
   {
     version: 2,
     centerTargetAction: 'template-detail?id=8&isLocal=false',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 8,
