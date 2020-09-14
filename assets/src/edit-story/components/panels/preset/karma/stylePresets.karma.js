@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitForElementToBeRemoved } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma/fixture';
@@ -148,9 +143,7 @@ describe('Panel: Style Presets', () => {
   });
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Text Style Presets', () => {
-    // Disable reason: edit icon does not work in test mode for some reason.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow deleting a text style preset', async () => {
+    it('should allow deleting a text style preset', async () => {
       // Add text element and style preset.
       await addText();
       const addButton = fixture.screen.getByRole('button', {
@@ -158,23 +151,38 @@ describe('Panel: Style Presets', () => {
       });
       await addButton.click();
 
-      const applyPresetButton = fixture.screen.queryByRole('button', {
-        name: APPLY_BUTTON,
-      });
-
       const editButton = fixture.screen.getByRole('button', {
         name: 'Edit style presets',
       });
       await fixture.events.click(editButton);
 
-      // Apply button should get replaced by delete button.
-      await waitForElementToBeRemoved(applyPresetButton);
+      await fixture.snapshot('Style presets in edit mode');
 
+      // Verify being in edit mode.
+      const exitEditButton = fixture.screen.getByRole('button', {
+        name: 'Exit edit mode',
+      });
+      expect(exitEditButton).toBeTruthy();
       const deletePresetButton = fixture.screen.getByRole('button', {
         name: 'Delete style preset',
       });
+
+      expect(deletePresetButton).toBeTruthy();
       await fixture.events.click(deletePresetButton);
-      await waitForElementToBeRemoved(deletePresetButton);
+
+      // Verify the edit mode was exited (due to removing all elements).
+      expect(
+        fixture.screen.queryByRole('button', {
+          name: 'Exit edit mode',
+        })
+      ).toBeFalsy();
+
+      // Verify there is no edit button either (since we have no presets left).
+      expect(
+        fixture.screen.queryByRole('button', {
+          name: 'Edit style presets',
+        })
+      ).toBeFalsy();
     });
   });
 

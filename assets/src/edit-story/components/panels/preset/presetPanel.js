@@ -90,7 +90,7 @@ function PresetPanel({
     [colors, isColor, textStyles, updateStory]
   );
 
-  const hasPresets = colors.length > 0;
+  const hasPresets = colors.length > 0 || textStyles.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
