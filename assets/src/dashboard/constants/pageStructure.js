@@ -28,3 +28,4 @@ export const WPBODY_ID = 'wpbody';
 
 export const DASHBOARD_LEFT_NAV_WIDTH = 190;
 export const DASHBOARD_TOP_MARGIN = 45;
+export const DEFAULT_DASHBOARD_TOP_SPACE = 10;

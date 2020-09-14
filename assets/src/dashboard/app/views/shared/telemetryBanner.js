@@ -31,12 +31,6 @@ import { Close as CloseSVG } from '../../../icons';
 import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
-const BannerContainer = styled.div`
-  height: ${TELEMETRY_BANNER_HEIGHT}px;
-  display: block;
-  padding-top: 10px;
-`;
-
 const Banner = styled.div`
   height: 100%;
   display: flex;

@@ -67,6 +67,7 @@ import {
 import {
   FULLBLEED_RATIO,
   DASHBOARD_TOP_MARGIN,
+  DEFAULT_DASHBOARD_TOP_SPACE,
 } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
@@ -181,8 +182,9 @@ export default function StoryListView({
   } = useLayoutContext();
 
   // get sticky position from the squishContentHeight (header area),
-  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll.
-  const stickyTopPosition = squishContentHeight - DASHBOARD_TOP_MARGIN;
+  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
+  const stickyTopPosition =
+    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
 
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
