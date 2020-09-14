@@ -26,11 +26,15 @@ import { createNewStory } from '../../utils';
 
 describe('Story Editor with disabled JavaScript', () => {
   it('should display error message', async () => {
+    // Disable javascript for test.
     await page.setJavaScriptEnabled(false);
 
     await createNewStory();
 
     await expect(page).toMatchElement('#web-stories-no-js');
+
+    // Re-enable javascript for snapsnots.
+    await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Editor no js');
   });
