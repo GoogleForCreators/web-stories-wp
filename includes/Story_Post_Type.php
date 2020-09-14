@@ -614,7 +614,6 @@ class Story_Post_Type {
 				'metadata'         => [
 					'publisher'       => $this->get_publisher_data(),
 					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
-					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE ),
 				],
 				'version'          => WEBSTORIES_VERSION,
 			],
