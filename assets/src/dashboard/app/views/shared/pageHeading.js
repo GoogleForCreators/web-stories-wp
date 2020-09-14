@@ -30,13 +30,8 @@ import {
   NavMenuButton,
   StandardViewContentGutter,
 } from '../../../components';
-import { SQUISH_CSS_VAR } from '../../../components/layout';
 import TypeaheadSearch from './typeaheadSearch';
 import TelemetryBanner from './telemetryBanner';
-
-const Container = styled.div`
-  padding: ${cssLerp('0px', '10px', SQUISH_CSS_VAR)} 0 0;
-`;
 
 const StyledHeader = styled.h2`
   ${TypographyPresets.ExtraExtraLarge};
@@ -108,7 +103,7 @@ const PageHeading = ({
   typeaheadValue = '',
 }) => {
   return (
-    <Container>
+    <>
       <TelemetryBanner />
       <HeadingBodyWrapper>
         <StyledHeader>
@@ -129,7 +124,7 @@ const PageHeading = ({
           </SearchContainer>
         )}
       </HeadingBodyWrapper>
-    </Container>
+    </>
   );
 };
 

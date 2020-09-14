@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { TypographyPresets } from '../typography';
+import { Z_INDEX } from '../../constants';
 
 export const Table = styled.table`
   ${TypographyPresets.Small};
@@ -41,10 +42,15 @@ export const TableHeader = styled.thead`
 
 export const StickyTableHeader = styled(TableHeader)`
   width: 100%;
+  border-top: 0;
+  border-bottom: 0;
   th {
+    height: 100%;
     background: ${({ theme }) => theme.colors.gray50};
+    border-top-width: 0;
+    border-bottom: ${({ theme }) => theme.table.border};
     position: sticky;
-    z-index: 2;
+    z-index: ${Z_INDEX.STICKY_TABLE};
     top: ${({ top }) => `${top}px` || 0};
   }
 `;

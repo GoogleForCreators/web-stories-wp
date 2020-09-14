@@ -64,7 +64,10 @@ import {
   STORY_STATUS,
   STORY_CONTEXT_MENU_ACTIONS,
 } from '../../../constants';
-import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
+import {
+  FULLBLEED_RATIO,
+  DASHBOARD_TOP_MARGIN,
+} from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
@@ -177,6 +180,11 @@ export default function StoryListView({
     state: { squishContentHeight },
   } = useLayoutContext();
 
+  // get sticky position from the squishContentHeight (header area),
+  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll,
+  // then add the list view component's top margin to that number to get true space from top of browser
+  const stickyTopPosition = squishContentHeight - DASHBOARD_TOP_MARGIN;
+
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -201,7 +209,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table>
-        <StickyTableHeader top={squishContentHeight - 36}>
+        <StickyTableHeader top={stickyTopPosition}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
