@@ -181,8 +181,7 @@ export default function StoryListView({
   } = useLayoutContext();
 
   // get sticky position from the squishContentHeight (header area),
-  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll,
-  // then add the list view component's top margin to that number to get true space from top of browser
+  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll.
   const stickyTopPosition = squishContentHeight - DASHBOARD_TOP_MARGIN;
 
   const onSortTitleSelected = useCallback(
