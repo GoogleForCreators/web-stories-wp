@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import PopoverPanel from '../';
 
 const categoryDemoData = [
@@ -41,7 +41,7 @@ const categoryDemoData = [
 
 describe('CardGrid', () => {
   it('should render children when open', () => {
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithProviders(
       <PopoverPanel
         isOpen
         onClose={() => {}}
@@ -57,7 +57,7 @@ describe('CardGrid', () => {
   });
 
   it('should not render children when open', () => {
-    const { queryByTestId } = renderWithTheme(
+    const { queryByTestId } = renderWithProviders(
       <PopoverPanel
         isOpen={false}
         onClose={() => {}}
@@ -72,7 +72,7 @@ describe('CardGrid', () => {
 
   it('calls the close function when the x icon is pressed', () => {
     const closeFn = jest.fn();
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <PopoverPanel
         isOpen
         onClose={closeFn}

@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import ToggleButtonGroup from '../';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 
 const TEST_BUTTON_GROUP = [
   { label: 'label one', value: 'label_one' },
@@ -35,7 +35,7 @@ describe('ToggleButton', () => {
   const onClickMock = jest.fn();
 
   it('should render a button group with three items', () => {
-    const { getAllByRole } = renderWithTheme(
+    const { getAllByRole } = renderWithProviders(
       <ToggleButtonGroup
         buttons={TEST_BUTTON_GROUP.map((storyStatus) => {
           return {
@@ -53,7 +53,7 @@ describe('ToggleButton', () => {
   });
 
   it('should simulate a click on a button in <ToggleButtonGroup />', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <ToggleButtonGroup
         buttons={TEST_BUTTON_GROUP.map((storyStatus) => {
           return {
