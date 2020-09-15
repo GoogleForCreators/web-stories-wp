@@ -86,6 +86,8 @@ class Embed_Controller extends WP_REST_Controller {
 	 *
 	 * Returns information about the given story.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -99,6 +101,8 @@ class Embed_Controller extends WP_REST_Controller {
 
 		/**
 		 * Filters the link data TTL value.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param int $time Time to live (in seconds). Default is 1 day.
 		 * @param string $url The attempted URL.
@@ -129,6 +133,8 @@ class Embed_Controller extends WP_REST_Controller {
 		 * Filters the HTTP request args for link data retrieval.
 		 *
 		 * Can be used to adjust timeout and response size limit.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param array $args Arguments used for the HTTP request
 		 * @param string $url The attempted URL.
@@ -162,7 +168,10 @@ class Embed_Controller extends WP_REST_Controller {
 	/**
 	 * Retrieves the story metadata for a given URL on the current site.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $url  The URL that should be inspected for metadata.
+	 *
 	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( $url ) {
@@ -240,6 +249,8 @@ class Embed_Controller extends WP_REST_Controller {
 	/**
 	 * Parses an HTML document to and returns the story's title and poster.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $html HTML document markup.
 	 *
 	 * @return array|false Response data or false if document is not a story.
@@ -265,6 +276,8 @@ class Embed_Controller extends WP_REST_Controller {
 
 	/**
 	 * Checks if current user can process links.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */

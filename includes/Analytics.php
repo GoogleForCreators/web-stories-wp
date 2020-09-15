@@ -33,6 +33,8 @@ class Analytics {
 	/**
 	 * Initializes all hooks.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -42,6 +44,8 @@ class Analytics {
 
 	/**
 	 * Determines whether the built-in Analytics module in Site Kit is active.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
@@ -84,6 +88,8 @@ class Analytics {
 
 	/**
 	 * Returns the  Google Analytics tracking ID.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string Tracking ID.
 	 */
@@ -207,6 +213,8 @@ class Analytics {
 	/**
 	 * Prints the <amp-analytics> tag for single stories.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function print_analytics_tag() {
@@ -229,7 +237,10 @@ class Analytics {
 	/**
 	 * Filters Site Kit's Google Analytics configuration.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $gtag_opt Array of gtag configuration options.
+	 *
 	 * @return array Modified configuration options.
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {

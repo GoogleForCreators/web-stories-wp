@@ -33,6 +33,8 @@ if ( ! function_exists( '\is_amp_endpoint' ) ) {
 	 * Polyfill to ensure compatibility with plugins checking for AMP
 	 * when the AMP plugin itself is not available.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
 	function is_amp_endpoint() {
@@ -46,6 +48,8 @@ if ( ! function_exists( '\amp_is_request' ) ) {
 	 *
 	 * Polyfill to ensure compatibility with plugins checking for AMP
 	 * when the AMP plugin itself is not available.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */

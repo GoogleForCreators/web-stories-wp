@@ -50,6 +50,8 @@ class Database_Upgrader {
 	/**
 	 * Hooked into admin_init and walks through an array of upgrade methods.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -77,6 +79,8 @@ class Database_Upgrader {
 	/**
 	 * Runs the upgrade routine.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $routine         The method to call.
 	 * @param string $version         The new version.
 	 * @param string $current_version The current set version.
@@ -92,6 +96,8 @@ class Database_Upgrader {
 	/**
 	 * First database migration.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function upgrade_1() {
@@ -100,6 +106,8 @@ class Database_Upgrader {
 
 	/**
 	 * Replaces conic color type with linear.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -152,6 +160,8 @@ class Database_Upgrader {
 	/**
 	 * Add the editor term, to make sure it exists.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function v_2_add_term() {
@@ -160,6 +170,8 @@ class Database_Upgrader {
 
 	/**
 	 * Removes broken text styles (with color.r|g|b structure).
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -192,6 +204,8 @@ class Database_Upgrader {
 	 * Migration for version 2.0.3.
 	 * Color presets: Removes fillColor and textColor and unifies to one color.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function unify_color_presets() {
@@ -218,6 +232,8 @@ class Database_Upgrader {
 	/**
 	 * Split publisher logos into two options.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function update_publisher_logos() {
@@ -235,6 +251,8 @@ class Database_Upgrader {
 	/**
 	 * Adds story capabilities to default user roles.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function add_stories_caps() {
@@ -244,6 +262,8 @@ class Database_Upgrader {
 
 	/**
 	 * Flush rewrites.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -255,6 +275,8 @@ class Database_Upgrader {
 
 	/**
 	 * Runs the needed cleanup after an update, setting the DB version to latest version, flushing caches etc.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $previous_version The previous version.
 	 *
