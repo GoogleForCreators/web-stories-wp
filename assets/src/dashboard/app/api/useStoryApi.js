@@ -231,7 +231,6 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
             publisher: {
               name: createdBy || '',
             },
-            fallbackPoster: '',
           },
           flags,
         });
