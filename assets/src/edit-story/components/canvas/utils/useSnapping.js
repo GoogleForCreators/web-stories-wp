@@ -18,10 +18,10 @@
  * Internal dependencies
  */
 import { useGlobalIsKeyPressed } from '../../keyboard';
-import useCanvas from '../useCanvas';
+import { useUnits } from '../../../units';
 
 function useSnapping({ canSnap, otherNodes }) {
-  const { canvasWidth, canvasHeight } = useCanvas(
+  const { canvasWidth, canvasHeight } = useUnits(
     ({
       state: {
         pageSize: { width: canvasWidth, height: canvasHeight },
