@@ -47,7 +47,7 @@ describe('Panel: Color Presets', () => {
     fixture.restore();
   });
 
-  describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Display Panel', () => {
+  describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Display Panel', () => {
     it('should display color presets panel for a text element', async () => {
       await addText();
       const addButton = fixture.screen.getByRole('button', {
@@ -57,7 +57,7 @@ describe('Panel: Color Presets', () => {
     });
   });
 
-  describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Color Presets', () => {
+  describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
     it('should allow deleting a color preset', async () => {
       // Add text element and a color preset.
       await addText();
