@@ -23,53 +23,30 @@ import { useFeature } from 'flagged';
 /**
  * WordPress dependencies
  */
-import { sprintf, __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { trackEvent } from '../../../../tracking';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import { UnitsProvider } from '../../../../edit-story/units';
-import {
-  CardGallery,
-  ColorList,
-  DetailViewContentGutter,
-  DetailViewNavBar,
-  Layout,
-  PaginationButton,
-  Pill,
-  useToastContext,
-} from '../../../components';
-import { clamp, usePagePreviewSize, useTemplateView } from '../../../utils/';
+import { Layout, useToastContext } from '../../../components';
+import { clamp, useTemplateView, usePagePreviewSize } from '../../../utils/';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
-import { TemplateGridView } from '../shared';
 import { PreviewStoryView } from '..';
+
 import useApi from '../../api/useApi';
 import { ALERT_SEVERITY } from '../../../constants';
-import {
-  ByLine,
-  Column,
-  ColumnContainer,
-  DetailContainer,
-  LargeDisplayPagination,
-  MetadataContainer,
-  RowContainer,
-  SmallDisplayPagination,
-  SubHeading,
-  Text,
-  Title,
-} from './components';
+import Header from './header';
+import Content from './content';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
   const [orderedTemplates, setOrderedTemplates] = useState([]);
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
-  const { isRTL } = useConfig();
   const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
@@ -119,8 +96,9 @@ function TemplateDetails() {
       fetchRelatedTemplates,
     })
   );
-
+  const { isRTL } = useConfig();
   const { activePreview } = useTemplateView({ totalPages });
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
 
   useEffect(() => {
     if (!templateId) {
@@ -166,7 +144,6 @@ function TemplateDetails() {
     if (!template || !templateId) {
       return;
     }
-
     const id = parseInt(templateId);
 
     setRelatedTemplates(
@@ -187,20 +164,6 @@ function TemplateDetails() {
     templatesOrderById,
     templateId,
   ]);
-
-  const { byLine } = useMemo(() => {
-    if (!template) {
-      return {};
-    }
-
-    return {
-      byLine: sprintf(
-        /* translators: %s: template author  */
-        __('by %s', 'web-stories'),
-        template.createdBy
-      ),
-    };
-  }, [template]);
 
   const activeTemplateIndex = useMemo(() => {
     if (orderedTemplates.length <= 0) {
@@ -225,43 +188,6 @@ function TemplateDetails() {
     [activeTemplateIndex, orderedTemplates, actions]
   );
 
-  const { NextButton, PrevButton } = useMemo(() => {
-    const Previous = (
-      <PaginationButton
-        rotateRight={true}
-        aria-label={__('View previous template', 'web-stories')}
-        onClick={() => switchToTemplateByOffset(-1)}
-        disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
-      />
-    );
-
-    const Next = (
-      <PaginationButton
-        aria-label={__('View next template', 'web-stories')}
-        onClick={() => switchToTemplateByOffset(1)}
-        disabled={
-          !orderedTemplates?.length ||
-          activeTemplateIndex === orderedTemplates?.length - 1
-        }
-      />
-    );
-
-    return isRTL
-      ? {
-          NextButton: Previous,
-          PrevButton: Next,
-        }
-      : {
-          NextButton: Next,
-          PrevButton: Previous,
-        };
-  }, [
-    orderedTemplates?.length,
-    activeTemplateIndex,
-    isRTL,
-    switchToTemplateByOffset,
-  ]);
-
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
   const onHandleCta = useCallback(async () => {
@@ -276,16 +202,6 @@ function TemplateDetails() {
     [activePreview]
   );
 
-  if (!template) {
-    return (
-      <Layout.Provider>
-        <Layout.Fixed>
-          <DetailViewNavBar handleCta={onHandleCta} />
-        </Layout.Fixed>
-      </Layout.Provider>
-    );
-  }
-
   if (activePreview.value) {
     return (
       <PreviewStoryView
@@ -296,94 +212,31 @@ function TemplateDetails() {
   }
 
   return (
-    template && (
-      <FontProvider>
-        <TransformProvider>
-          <Layout.Provider>
-            <Layout.Fixed>
-              <DetailViewNavBar
-                ctaText={__('Use template', 'web-stories')}
-                handleBookmarkClick={
-                  enableBookmarks ? handleBookmarkClickSelected : null
-                }
-                handleCta={onHandleCta}
-              />
-            </Layout.Fixed>
-            <Layout.Scrollable>
-              <DetailViewContentGutter>
-                <SmallDisplayPagination>
-                  {PrevButton}
-                  {NextButton}
-                </SmallDisplayPagination>
-                <ColumnContainer>
-                  <Column>
-                    <LargeDisplayPagination>
-                      {PrevButton}
-                    </LargeDisplayPagination>
-                    <CardGallery
-                      story={template}
-                      isRTL={isRTL}
-                      galleryLabel={__(
-                        'Template details by page',
-                        'web-stories'
-                      )}
-                    />
-                  </Column>
-                  <Column>
-                    <DetailContainer>
-                      <Title>{template.title}</Title>
-                      <ByLine>{byLine}</ByLine>
-                      <Text>{template.description}</Text>
-                      <MetadataContainer>
-                        {template.tags.map((tag) => (
-                          <Pill
-                            name={tag}
-                            key={tag}
-                            disabled
-                            onClick={() => {}}
-                            value={tag}
-                          >
-                            {tag}
-                          </Pill>
-                        ))}
-                      </MetadataContainer>
-                      <MetadataContainer>
-                        <ColorList colors={template.colors} size={30} />
-                      </MetadataContainer>
-                    </DetailContainer>
-                    <LargeDisplayPagination>
-                      {NextButton}
-                    </LargeDisplayPagination>
-                  </Column>
-                </ColumnContainer>
-                {relatedTemplates.length > 0 && (
-                  <RowContainer>
-                    <SubHeading>
-                      {__('Related Templates', 'web-stories')}
-                    </SubHeading>
-                    <UnitsProvider
-                      pageSize={{
-                        width: pageSize.width,
-                        height: pageSize.height,
-                      }}
-                    >
-                      <TemplateGridView
-                        templates={relatedTemplates}
-                        pageSize={pageSize}
-                        templateActions={{
-                          createStoryFromTemplate,
-                          handlePreviewTemplate,
-                        }}
-                      />
-                    </UnitsProvider>
-                  </RowContainer>
-                )}
-              </DetailViewContentGutter>
-            </Layout.Scrollable>
-          </Layout.Provider>
-        </TransformProvider>
-      </FontProvider>
-    )
+    <FontProvider>
+      <TransformProvider>
+        <Layout.Provider>
+          <Header
+            onBookmarkClick={
+              enableBookmarks ? handleBookmarkClickSelected : null
+            }
+            onHandleCtaClick={onHandleCta}
+          />
+          <Content
+            activeTemplateIndex={activeTemplateIndex}
+            isRTL={isRTL}
+            orderedTemplatesLength={orderedTemplates?.length}
+            pageSize={pageSize}
+            switchToTemplateByOffset={switchToTemplateByOffset}
+            template={template}
+            relatedTemplates={relatedTemplates}
+            templateActions={{
+              createStoryFromTemplate,
+              handlePreviewTemplate,
+            }}
+          />
+        </Layout.Provider>
+      </TransformProvider>
+    </FontProvider>
   );
 }
 
