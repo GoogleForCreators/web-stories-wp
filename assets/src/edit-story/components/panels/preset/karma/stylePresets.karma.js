@@ -51,7 +51,7 @@ describe('Panel: Style Presets', () => {
     const button = fixture.screen.getByRole('button', {
       name,
     });
-    await button.click();
+    await fixture.events.click(button);
   };
 
   const selectTarget = async (target) => {
@@ -186,11 +186,11 @@ describe('Panel: Style Presets', () => {
       await clickButton(ADD_BUTTON);
 
       // Add color preset.
-      await fixture.screen
-        .getByRole('button', {
+      await fixture.events.click(
+        fixture.screen.getByRole('button', {
           name: 'Add color preset',
         })
-        .click();
+      );
 
       await clickButton(EDIT_BUTTON);
 

@@ -18,8 +18,6 @@
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma/fixture';
-import { useInsertElement } from '../../../canvas';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 describe('Panel: Color Presets', () => {
   let fixture;
@@ -27,16 +25,6 @@ describe('Panel: Color Presets', () => {
   const ADD_BUTTON = 'Add color preset';
   const EDIT_BUTTON = 'Edit color presets';
   const EXIT_EDIT_MODE = 'Exit edit mode';
-
-  const addText = async () => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'Hello, presets!',
-      })
-    );
-  };
 
   beforeEach(async () => {
     fixture = new Fixture();
@@ -49,7 +37,7 @@ describe('Panel: Color Presets', () => {
 
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Display Panel', () => {
     it('should display color presets panel for a text element', async () => {
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
       const addButton = fixture.screen.getByRole('button', {
         name: ADD_BUTTON,
       });
@@ -60,11 +48,11 @@ describe('Panel: Color Presets', () => {
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
     it('should allow deleting a color preset', async () => {
       // Add text element and a color preset.
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
       const addButton = fixture.screen.getByRole('button', {
         name: ADD_BUTTON,
       });
-      await addButton.click();
+      await fixture.events.click(addButton);
 
       const editButton = fixture.screen.getByRole('button', {
         name: EDIT_BUTTON,
