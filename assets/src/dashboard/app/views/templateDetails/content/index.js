@@ -17,6 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -27,7 +28,11 @@ import {
   PageSizePropType,
   TemplatePropType,
 } from '../../../../types';
-import { DetailViewContentGutter, Layout } from '../../../../components';
+import {
+  DetailViewContentGutter,
+  Layout,
+  useLayoutContext,
+} from '../../../../components';
 import DetailsGallery from './detailsGallery';
 import RelatedGrid from './relatedGrid';
 
@@ -41,6 +46,16 @@ function Content({
   template,
   templateActions,
 }) {
+  const {
+    actions: { scrollToTop },
+  } = useLayoutContext();
+
+  useEffect(() => {
+    if (template) {
+      scrollToTop();
+    }
+  }, [template, scrollToTop]);
+
   if (!template) {
     return null;
   }
