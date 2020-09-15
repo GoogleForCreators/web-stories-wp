@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import { fireEvent, within } from '@testing-library/react';
 
 /**
@@ -27,9 +26,7 @@ import {
   publisherLogoIds,
   rawPublisherLogos,
 } from '../../../../dataUtils/formattedPublisherLogos';
-import { renderWithTheme } from '../../../../testUtils';
-import { ApiContext } from '../../../api/apiProvider';
-import { ConfigProvider } from '../../../config';
+import { renderWithProviders } from '../../../../testUtils';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
 import EditorSettings from '../';
@@ -40,7 +37,7 @@ const mockUploadMedia = jest.fn();
 const mockUpdateSettings = jest.fn();
 const mockFetchCurrentUser = jest.fn();
 
-const SettingsWrapper = ({
+function createProviderValues({
   canUploadFiles,
   canManageSettings,
   activeLogoId,
@@ -48,83 +45,67 @@ const SettingsWrapper = ({
   googleAnalyticsId,
   logoIds,
   logos,
-}) => {
-  return (
-    <ConfigProvider
-      config={{
-        capabilities: {
-          canUploadFiles: canUploadFiles,
-          canManageSettings: canManageSettings,
+}) {
+  return {
+    config: {
+      capabilities: {
+        canUploadFiles: canUploadFiles,
+        canManageSettings: canManageSettings,
+      },
+      maxUpload: 104857600,
+      maxUploadFormatted: '100 MB',
+    },
+    api: {
+      state: {
+        settings: {
+          googleAnalyticsId,
+          activePublisherLogoId: activeLogoId,
+          publisherLogoIds: logoIds,
         },
-        maxUpload: 104857600,
-        maxUploadFormatted: '100 MB',
-      }}
-    >
-      <ApiContext.Provider
-        value={{
-          state: {
-            settings: {
-              googleAnalyticsId,
-              activePublisherLogoId: activeLogoId,
-              publisherLogoIds: logoIds,
-            },
-            media: {
-              isLoading,
-              newlyCreatedMediaIds: [],
-              mediaById: logos,
-            },
-            currentUser: {
-              isUpdating: false,
-              data: {
-                id: 1,
-                meta: {
-                  web_stories_tracking_optin: true,
-                },
-              },
+        media: {
+          isLoading,
+          newlyCreatedMediaIds: [],
+          mediaById: logos,
+        },
+        currentUser: {
+          isUpdating: false,
+          data: {
+            id: 1,
+            meta: {
+              web_stories_tracking_optin: true,
             },
           },
-          actions: {
-            settingsApi: {
-              fetchSettings: mockFetchSettings,
-              updateSettings: mockUpdateSettings,
-            },
-            mediaApi: {
-              uploadMedia: mockUploadMedia,
-              fetchMediaById: mockFetchMediaById,
-            },
-            usersApi: {
-              fetchCurrentUser: mockFetchCurrentUser,
-            },
-          },
-        }}
-      >
-        <EditorSettings />
-      </ApiContext.Provider>
-    </ConfigProvider>
-  );
-};
-
-SettingsWrapper.propTypes = {
-  activeLogoId: PropTypes.number,
-  canUploadFiles: PropTypes.bool,
-  canManageSettings: PropTypes.bool,
-  isLoading: PropTypes.bool,
-  googleAnalyticsId: PropTypes.string,
-  logoIds: PropTypes.array,
-  logos: PropTypes.object,
-};
+        },
+      },
+      actions: {
+        settingsApi: {
+          fetchSettings: mockFetchSettings,
+          updateSettings: mockUpdateSettings,
+        },
+        mediaApi: {
+          uploadMedia: mockUploadMedia,
+          fetchMediaById: mockFetchMediaById,
+        },
+        usersApi: {
+          fetchCurrentUser: mockFetchCurrentUser,
+        },
+      },
+    },
+  };
+}
 
 describe('Editor Settings: <Editor Settings />', function () {
   it('should render settings page with google analytics and publisher logo sections', function () {
-    const { getByText, getByRole, getByTestId } = renderWithTheme(
-      <SettingsWrapper
-        googleAnalyticsId="UA-098909-05"
-        canUploadFiles={true}
-        canManageSettings={true}
-        isLoading={false}
-        logoIds={[]}
-        logos={{}}
-      />
+    const { getByText, getByRole, getByTestId } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: true,
+        canManageSettings: true,
+        isLoading: false,
+        logoIds: [],
+        logos: {},
+      })
     );
 
     const googleAnalyticsHeading = getByText(GA_TEXT.SECTION_HEADING);
@@ -141,44 +122,45 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page with publisher logos', function () {
-    const { queryAllByTestId } = renderWithTheme(
-      <SettingsWrapper
-        googleAnalyticsId="UA-098909-05"
-        canUploadFiles={true}
-        canManageSettings={true}
-        isLoading={false}
-        activeLogoId={publisherLogoIds[0]}
-        logoIds={publisherLogoIds}
-        logos={rawPublisherLogos}
-      />
+    const { queryAllByTestId } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: true,
+        canManageSettings: true,
+        isLoading: false,
+        activeLogoId: publisherLogoIds[0],
+        logoIds: publisherLogoIds,
+        logos: rawPublisherLogos,
+      })
     );
+
     expect(queryAllByTestId(/^uploaded-publisher-logo-/)).toHaveLength(
       publisherLogoIds.length
     );
   });
 
   it('should call mockUpdateSettings when a logo is removed', function () {
-    const SettingsPage = renderWithTheme(
-      <SettingsWrapper
-        googleAnalyticsId="UA-098909-05"
-        canUploadFiles={true}
-        canManageSettings={true}
-        isLoading={false}
-        activeLogoId={publisherLogoIds[0]}
-        logoIds={publisherLogoIds}
-        logos={rawPublisherLogos}
-      />
+    const { getByTestId, getByRole } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: true,
+        canManageSettings: true,
+        isLoading: false,
+        activeLogoId: publisherLogoIds[0],
+        logoIds: publisherLogoIds,
+        logos: rawPublisherLogos,
+      })
     );
 
-    const ContextMenuButton = SettingsPage.getByTestId(
+    const ContextMenuButton = getByTestId(
       'publisher-logo-context-menu-button-1'
     );
 
     fireEvent.click(ContextMenuButton);
 
-    const ContextMenu = SettingsPage.getByTestId(
-      'publisher-logo-context-menu-1'
-    );
+    const ContextMenu = getByTestId('publisher-logo-context-menu-1');
     expect(ContextMenu).toBeDefined();
 
     const { getByText } = within(ContextMenu);
@@ -188,7 +170,7 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     fireEvent.click(DeleteFileButton);
 
-    const DeleteDialog = SettingsPage.getByRole('dialog');
+    const DeleteDialog = getByRole('dialog');
     expect(DeleteDialog).toBeDefined();
 
     const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
@@ -200,15 +182,16 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
-    const { queryAllByTestId } = renderWithTheme(
-      <SettingsWrapper
-        googleAnalyticsId="UA-098909-05"
-        canUploadFiles={false}
-        canManageSettings={true}
-        isLoading={false}
-        logoIds={[]}
-        logos={{}}
-      />
+    const { queryAllByTestId } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: false,
+        canManageSettings: true,
+        isLoading: false,
+        logoIds: [],
+        logos: {},
+      })
     );
 
     expect(queryAllByTestId('upload-file-input')).toHaveLength(0);

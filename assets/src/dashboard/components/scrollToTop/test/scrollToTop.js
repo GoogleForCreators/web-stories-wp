@@ -17,13 +17,13 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import ScrollToTop from '..';
 import Layout from '../../layout';
 
 describe('ScrollToTop', () => {
   it('should render a <ScrollToTop /> by default', () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <Layout.Provider>
         <ScrollToTop />
       </Layout.Provider>

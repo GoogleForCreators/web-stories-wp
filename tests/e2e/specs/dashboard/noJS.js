@@ -15,22 +15,27 @@
  */
 
 /**
+ * External dependencies
+ */
+import { percySnapshot } from '@percy/puppeteer';
+
+/**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import CardGridItem from '../';
+import { visitDashboard } from '../../utils';
 
-describe('CardGridItem', () => {
-  it('should render CardGridItem', () => {
-    const { getByText } = renderWithProviders(
-      <CardGridItem>
-        <div>
-          <p>{'Grid Item Paragraph'}</p>
-          <button>{'Grid Item Button'}</button>
-        </div>
-      </CardGridItem>
-    );
+describe('Stories Dashboard with disabled JavaScript', () => {
+  it('should display error message', async () => {
+    // Disable javascript for test.
+    await page.setJavaScriptEnabled(false);
 
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
+    await visitDashboard();
+
+    await expect(page).toMatchElement('#web-stories-no-js');
+
+    // Re-enable javascript for snapsnots.
+    await page.setJavaScriptEnabled(true);
+
+    await percySnapshot(page, 'Dashboard no js');
   });
 });
