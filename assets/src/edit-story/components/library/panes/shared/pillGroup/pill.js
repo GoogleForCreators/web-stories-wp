@@ -27,11 +27,13 @@ import PropTypes from 'prop-types';
 import useRovingTabIndex from '../useRovingTabIndex';
 import { useKeyDownEffect } from '../../../../keyboard';
 
+export const PILL_HEIGHT = 36;
+
 const PillContainer = styled.button`
   border: 1px solid transparent;
   margin-right: 12px;
   padding: 7px 16px 8px;
-  height: 36px;
+  height: ${PILL_HEIGHT}px;
   border-radius: 18px;
   font-size: 14px;
   line-height: 20px;

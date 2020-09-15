@@ -37,6 +37,6 @@ function getTabId(tab) {
 
 export { Pane, getPaneId, getTabId };
 
-export { default as Pill } from './pill';
+export { default as PillGroup } from './pillGroup';
 
 export { default as useRovingTabIndex } from './useRovingTabIndex';

@@ -22,10 +22,10 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import Media3pCategories from '../media3pCategories';
+import PillGroup from '../pillGroup';
 import { renderWithTheme } from '../../../../../../testUtils';
 
-describe('Media3pCategories', () => {
+describe('PillGroup', () => {
   const categories = [
     {
       id: '1',
@@ -43,9 +43,9 @@ describe('Media3pCategories', () => {
   const selectCategoryMock = jest.fn();
   const deselectCategoryMock = jest.fn();
 
-  it('should not render <Media3pCategories /> with empty category list', () => {
+  it('should not render <PillGroup /> with empty category list', () => {
     const { queryByRole } = renderWithTheme(
-      <Media3pCategories
+      <PillGroup
         categories={[]}
         selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
@@ -56,9 +56,9 @@ describe('Media3pCategories', () => {
     expect(categoryContainer).toBeNull();
   });
 
-  it('should render <Media3pCategories /> with categories', () => {
+  it('should render <PillGroup /> with categories', () => {
     const { queryByRole } = renderWithTheme(
-      <Media3pCategories
+      <PillGroup
         categories={categories}
         selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
@@ -77,9 +77,9 @@ describe('Media3pCategories', () => {
     expect(categoryPill3).toHaveAttribute('aria-selected', 'false');
   });
 
-  it('should render <Media3pCategories /> with a selected category', () => {
+  it('should render <PillGroup /> with a selected category', () => {
     const { queryByRole } = renderWithTheme(
-      <Media3pCategories
+      <PillGroup
         categories={categories}
         selectedCategoryId={'1'}
         selectCategory={selectCategoryMock}
@@ -96,9 +96,9 @@ describe('Media3pCategories', () => {
     expect(categoryPill3).toHaveAttribute('aria-selected', 'false');
   });
 
-  it('should render <Media3pCategories /> with and allow selection', () => {
+  it('should render <PillGroup /> with and allow selection', () => {
     const { queryByRole } = renderWithTheme(
-      <Media3pCategories
+      <PillGroup
         categories={categories}
         selectedCategoryId={undefined}
         selectCategory={selectCategoryMock}
@@ -112,9 +112,9 @@ describe('Media3pCategories', () => {
     expect(selectCategoryMock).toHaveBeenCalledWith('1');
   });
 
-  it('should render <Media3pCategories /> with and allow deselection', () => {
+  it('should render <PillGroup /> with and allow deselection', () => {
     const { queryByRole } = renderWithTheme(
-      <Media3pCategories
+      <PillGroup
         categories={categories}
         selectedCategoryId={'1'}
         selectCategory={selectCategoryMock}
@@ -128,9 +128,9 @@ describe('Media3pCategories', () => {
     expect(deselectCategoryMock).toHaveBeenCalledWith();
   });
 
-  it('should render <Media3pCategories /> without accessibility violations', async () => {
+  it('should render <PillGroup /> without accessibility violations', async () => {
     const { container } = renderWithTheme(
-      <Media3pCategories
+      <PillGroup
         categories={categories}
         selectedCategoryName={undefined}
         selectCategory={selectCategoryMock}

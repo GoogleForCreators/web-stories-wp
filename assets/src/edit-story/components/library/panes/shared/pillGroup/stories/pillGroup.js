@@ -22,11 +22,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Media3pCategories from '../media3pCategories';
+import PillGroup from '../pillGroup';
 
 export default {
-  title: 'Stories Editor/Components/Media3pCategories',
-  component: Media3pCategories,
+  title: 'Stories Editor/Components/PillGroup',
+  component: PillGroup,
 };
 
 const Container = styled.div`
@@ -120,7 +120,7 @@ const categories = [
 export const empty = () => {
   return (
     <Container>
-      <Media3pCategories categories={[]} />
+      <PillGroup categories={[]} />
     </Container>
   );
 };
@@ -128,7 +128,7 @@ export const empty = () => {
 export const unselected = () => {
   return (
     <Container>
-      <Media3pCategories categories={categories} />
+      <PillGroup categories={categories} />
     </Container>
   );
 };
@@ -136,9 +136,9 @@ export const unselected = () => {
 export const selected = () => {
   return (
     <Container>
-      <Media3pCategories
+      <PillGroup
         categories={categories}
-        selectedCategoryId={categories[1].name}
+        selectedCategoryId={categories[1].id}
       />
     </Container>
   );

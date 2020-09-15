@@ -31,8 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button';
-import { Pill } from '../../shared';
-import { PILL_HEIGHT } from './pill';
+import Pill, { PILL_HEIGHT } from './pill';
 
 const CATEGORY_TOP_MARGIN = 16;
 const CATEGORY_BOTTOM_MARGIN = 30;
@@ -84,7 +83,7 @@ const ExpandButton = styled(ArrowDown)`
   align-items: center;
 `;
 
-const Media3pCategories = ({
+const PillGroup = ({
   categories,
   selectedCategoryId,
   selectCategory,
@@ -223,11 +222,11 @@ const Media3pCategories = ({
   );
 };
 
-Media3pCategories.propTypes = {
+PillGroup.propTypes = {
   categories: PropTypes.array.isRequired,
   selectedCategoryId: PropTypes.string,
   selectCategory: PropTypes.func,
   deselectCategory: PropTypes.func,
 };
 
-export default Media3pCategories;
+export default PillGroup;
