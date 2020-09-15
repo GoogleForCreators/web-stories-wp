@@ -13,21 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import useRovingTabIndex from '../common/useRovingTabIndex';
+import useRovingTabIndex from '../useRovingTabIndex';
 import { useKeyDownEffect } from '../../../../keyboard';
-import { pill } from './pill';
 
 const PillContainer = styled.button`
-  ${pill};
+  border: 1px solid transparent;
+  margin-right: 12px;
+  padding: 7px 16px 8px;
+  height: 36px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 20px;
+  user-select: none;
   cursor: pointer;
   margin-bottom: 12px;
   font-family: ${({ theme }) => theme.fonts.body2.family};
@@ -35,7 +43,6 @@ const PillContainer = styled.button`
     isSelected ? theme.colors.accent.primary : theme.colors.fg.gray24};
   background-color: transparent;
   color: ${({ theme }) => theme.colors.fg.primary};
-  user-select: none;
   background-clip: padding-box;
   transition: opacity 0.2s;
   &.invisible {
@@ -43,19 +50,15 @@ const PillContainer = styled.button`
   }
 `;
 
-PillContainer.propTypes = {
-  isSelected: PropTypes.bool,
-};
-
-const CategoryPill = ({
-  index,
-  categoryId,
-  title,
+function Pill({
   isSelected,
+  onClick,
+  index,
+  title,
+  categoryId,
   isExpanded,
   setIsExpanded,
-  onClick,
-}) => {
+}) {
   const ref = useRef();
 
   // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
@@ -85,9 +88,9 @@ const CategoryPill = ({
       {title}
     </PillContainer>
   );
-};
+}
 
-CategoryPill.propTypes = {
+Pill.propTypes = {
   index: PropTypes.number,
   categoryId: PropTypes.string,
   isSelected: PropTypes.bool,
@@ -97,4 +100,4 @@ CategoryPill.propTypes = {
   onClick: PropTypes.func,
 };
 
-export default CategoryPill;
+export default Pill;

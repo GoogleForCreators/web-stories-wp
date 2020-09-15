@@ -22,8 +22,8 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../../app/config';
-import { useKeyDownEffect } from '../../../../keyboard';
+import { useConfig } from '../../../../app/config';
+import { useKeyDownEffect } from '../../../keyboard';
 
 /**
  * A point in 2D space.

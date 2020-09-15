@@ -17,34 +17,26 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
 import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import CategoryPill from '../categoryPill';
-
-export default {
-  title: 'Stories Editor/Components/CategoryPill',
-  component: CategoryPill,
-};
-
-const Container = styled.div`
-  background-color: ${({ theme }) => theme.colors.bg.v3};
-  padding: 1em;
+const Pane = styled.section.attrs(({ isActive }) => ({
+  role: 'tabpanel',
+  'aria-expanded': isActive,
+  hidden: !isActive,
+}))`
+  padding: 1.5em;
 `;
 
-export const _default = () => {
-  const [isSelected, setIsSelected] = useState(false);
+function getPaneId(tab) {
+  return `library-pane-${tab}`;
+}
 
-  return (
-    <Container>
-      <CategoryPill
-        title="Category"
-        isSelected={isSelected}
-        onClick={() => setIsSelected(!isSelected)}
-      />
-    </Container>
-  );
-};
+function getTabId(tab) {
+  return `library-tab-${tab}`;
+}
+
+export { Pane, getPaneId, getTabId };
+
+export { default as Pill } from './pill';
+
+export { default as useRovingTabIndex } from './useRovingTabIndex';

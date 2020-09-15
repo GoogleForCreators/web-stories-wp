@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button';
-import CategoryPill from './categoryPill';
+import { Pill } from '../../shared';
 import { PILL_HEIGHT } from './pill';
 
 const CATEGORY_TOP_MARGIN = 16;
@@ -96,7 +96,7 @@ const Media3pCategories = ({
     return categories.map((e, i) => {
       const selected = e.id === selectedCategoryId;
       return (
-        <CategoryPill
+        <Pill
           index={i}
           isSelected={selected}
           isExpanded={isExpanded}

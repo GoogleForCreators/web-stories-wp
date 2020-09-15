@@ -13,26 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-const Pane = styled.section.attrs(({ isActive }) => ({
-  role: 'tabpanel',
-  'aria-expanded': isActive,
-  hidden: !isActive,
-}))`
-  padding: 1.5em;
-`;
-
-function getPaneId(tab) {
-  return `library-pane-${tab}`;
-}
-
-function getTabId(tab) {
-  return `library-tab-${tab}`;
-}
-
-export { Pane, getPaneId, getTabId };
+export { default } from './pill';
