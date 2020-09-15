@@ -17,10 +17,8 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
-import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -30,38 +28,18 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../units';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
-import DisplayElement from '../../../canvas/displayElement';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
-import useBatchingCallback from '../../../../utils/useBatchingCallback';
-import { Pane } from '../shared';
+import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 import useInsertPreset from './useInsertPreset';
-import loadTextSets from './textSets';
+import TextSets from './textSets';
 
-const ITEM_SIZE = 150;
-
-// TODO: max-height should be dynamically calculated
-// based on height of window.
-const TextSetContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 12px;
-  overflow: auto;
-  max-height: 280px;
-`;
-
-const TextSetItem = styled.div`
-  position: relative;
-  width: ${ITEM_SIZE}px;
-  height: ${ITEM_SIZE}px;
-  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
-  border-radius: 4px;
-  cursor: pointer;
+const Pane = styled(SharedPane)`
+  overflow-y: auto;
+  max-height: 100%;
 `;
 
 const TYPE = 'text';
@@ -72,20 +50,6 @@ function TextPane(props) {
   }));
 
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
-  const [textSets, setTextSets] = useState([]);
-
-  useEffect(() => {
-    if (showTextSets) {
-      loadTextSets().then((sets) => setTextSets(sets));
-    }
-  }, [showTextSets]);
-
-  const insertElements = useBatchingCallback(
-    (elements) => {
-      elements.forEach((e) => insertElement(e.type, e));
-    },
-    [insertElement]
-  );
 
   const insertPreset = useInsertPreset();
 
@@ -117,50 +81,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && (
-        <Section title={__('Text Sets', 'web-stories')}>
-          <TextSetContainer>
-            <UnitsProvider
-              pageSize={{
-                width: ITEM_SIZE,
-                height: ITEM_SIZE,
-              }}
-            >
-              {textSets.map((elements, index) => (
-                <TextSetItem
-                  key={index}
-                  style={{ justifySelf: index % 2 === 0 ? 'start' : 'end' }}
-                  onClick={() => insertElements(elements)}
-                >
-                  {elements.map(
-                    ({
-                      id,
-                      content,
-                      x,
-                      y,
-                      textSetWidth,
-                      textSetHeight,
-                      ...rest
-                    }) => (
-                      <DisplayElement
-                        previewMode
-                        key={id}
-                        element={{
-                          id,
-                          content: `<span style="color: #fff">${content}<span>`,
-                          x: x + (PAGE_WIDTH - textSetWidth) / 2,
-                          y: y + (PAGE_HEIGHT - textSetHeight) / 2,
-                          ...rest,
-                        }}
-                      />
-                    )
-                  )}
-                </TextSetItem>
-              ))}
-            </UnitsProvider>
-          </TextSetContainer>
-        </Section>
-      )}
+      {showTextSets && <TextSets />}
     </Pane>
   );
 }
