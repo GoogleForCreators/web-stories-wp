@@ -30,6 +30,7 @@ describe('Panel: Style Presets', () => {
 
   const ADD_BUTTON = 'Add style preset';
   const APPLY_BUTTON = 'Apply style preset';
+  const EDIT_BUTTON = 'Edit style presets';
 
   const addText = async (extraProps = null) => {
     const insertElement = await fixture.renderHook(() => useInsertElement());
@@ -44,6 +45,13 @@ describe('Panel: Style Presets', () => {
       })
     );
     return element;
+  };
+
+  const clickButton = async (name) => {
+    const button = fixture.screen.getByRole('button', {
+      name,
+    });
+    await button.click();
   };
 
   const selectTarget = async (target) => {
@@ -107,10 +115,7 @@ describe('Panel: Style Presets', () => {
     });
 
     it('should allow adding new text style from a text element', async () => {
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
-      await addButton.click();
+      await clickButton(ADD_BUTTON);
       const applyPresetButton = fixture.screen.queryByRole('button', {
         name: APPLY_BUTTON,
       });
@@ -130,10 +135,7 @@ describe('Panel: Style Presets', () => {
       await selectTarget(frame);
 
       // Verify that two presets have been added.
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
-      await addButton.click();
+      await clickButton(ADD_BUTTON);
       const applyPresetButtons = fixture.screen.getAllByRole('button', {
         name: APPLY_BUTTON,
       });
@@ -146,15 +148,8 @@ describe('Panel: Style Presets', () => {
     it('should allow deleting a text style preset', async () => {
       // Add text element and style preset.
       await addText();
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
-      await addButton.click();
-
-      const editButton = fixture.screen.getByRole('button', {
-        name: 'Edit style presets',
-      });
-      await fixture.events.click(editButton);
+      await clickButton(ADD_BUTTON);
+      await clickButton(EDIT_BUTTON);
 
       await fixture.snapshot('Style presets in edit mode');
 
@@ -180,7 +175,48 @@ describe('Panel: Style Presets', () => {
       // Verify there is no edit button either (since we have no presets left).
       expect(
         fixture.screen.queryByRole('button', {
-          name: 'Edit style presets',
+          name: EDIT_BUTTON,
+        })
+      ).toBeFalsy();
+    });
+
+    it('should allow deleting a text style preset when color presets are present', async () => {
+      // Add text element and style preset.
+      await addText();
+      await clickButton(ADD_BUTTON);
+
+      // Add color preset.
+      await fixture.screen
+        .getByRole('button', {
+          name: 'Add color preset',
+        })
+        .click();
+
+      await clickButton(EDIT_BUTTON);
+
+      // Verify being in edit mode.
+      const exitEditButton = fixture.screen.getByRole('button', {
+        name: 'Exit edit mode',
+      });
+      expect(exitEditButton).toBeTruthy();
+      const deletePresetButton = fixture.screen.getByRole('button', {
+        name: 'Delete style preset',
+      });
+
+      expect(deletePresetButton).toBeTruthy();
+      await fixture.events.click(deletePresetButton);
+
+      // Verify the edit mode was exited (due to removing all elements).
+      expect(
+        fixture.screen.queryByRole('button', {
+          name: 'Exit edit mode',
+        })
+      ).toBeFalsy();
+
+      // Verify there is no edit button either (since we have no presets left).
+      expect(
+        fixture.screen.queryByRole('button', {
+          name: EDIT_BUTTON,
         })
       ).toBeFalsy();
     });
@@ -194,20 +230,14 @@ describe('Panel: Style Presets', () => {
 
     it('should apply text style to a single text element', async () => {
       // Add a preset
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
-      await addButton.click();
+      await clickButton(ADD_BUTTON);
       await addText({
         x: 200,
         y: 200,
         backgroundColor: createSolid(0, 0, 0),
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       });
-      const applyPresetButton = fixture.screen.queryByRole('button', {
-        name: APPLY_BUTTON,
-      });
-      await applyPresetButton.click();
+      await clickButton(APPLY_BUTTON);
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].backgroundTextMode).toEqual(
         BACKGROUND_TEXT_MODE.NONE
@@ -216,10 +246,7 @@ describe('Panel: Style Presets', () => {
     });
 
     it('should apply text style to multiple text elements', async () => {
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
-      await addButton.click();
+      await clickButton(ADD_BUTTON);
       await addText({
         x: 200,
         y: 200,
@@ -229,10 +256,7 @@ describe('Panel: Style Presets', () => {
       // Select both texts
       await selectTarget(frame);
 
-      const applyPresetButton = fixture.screen.queryByRole('button', {
-        name: APPLY_BUTTON,
-      });
-      await applyPresetButton.click();
+      await clickButton(APPLY_BUTTON);
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].backgroundTextMode).toEqual(
         BACKGROUND_TEXT_MODE.NONE
