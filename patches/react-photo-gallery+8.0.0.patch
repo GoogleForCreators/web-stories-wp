@@ -1,7 +1,3 @@
-diff --git a/node_modules/react-photo-gallery/.DS_Store b/node_modules/react-photo-gallery/.DS_Store
-new file mode 100644
-index 0000000..904f134
-Binary files /dev/null and b/node_modules/react-photo-gallery/.DS_Store differ
 diff --git a/node_modules/react-photo-gallery/dist/react-photo-gallery.esm.js b/node_modules/react-photo-gallery/dist/react-photo-gallery.esm.js
 index 4421732..775f4b2 100644
 --- a/node_modules/react-photo-gallery/dist/react-photo-gallery.esm.js
