@@ -31,8 +31,6 @@ import {
 } from '../../../../../storybookUtils';
 import FontProvider from '../../../../font/fontProvider';
 import Content from '../';
-import DetailsGallery from '../detailsGallery';
-import RelatedGrid from '../relatedGrid';
 
 const StorybookLayoutContainer = styled.div`
   margin-top: 40px;
@@ -67,37 +65,6 @@ export const _default = () => (
           />
         </StorybookLayoutContainer>
       </Layout.Provider>
-    </TransformProvider>
-  </FontProvider>
-);
-
-export const _DetailsGallery = () => (
-  <FontProvider>
-    <TransformProvider>
-      <DetailsGallery
-        activeTemplateIndex={8}
-        isRTL={boolean('isRTL')}
-        orderedTemplatesLength={12}
-        switchToTemplateByOffset={action(
-          'switch to template by offset clicked'
-        )}
-        template={formattedTemplatesArray[1]}
-      />
-    </TransformProvider>
-  </FontProvider>
-);
-
-export const _RelatedGrid = () => (
-  <FontProvider>
-    <TransformProvider>
-      <RelatedGrid
-        pageSize={STORYBOOK_PAGE_SIZE}
-        relatedTemplates={formattedTemplatesArray.slice(0, 4)}
-        templateActions={{
-          createStoryFromTemplate: action('create story from template clicked'),
-          handlePreviewTemplate: action('handle preview template clicked'),
-        }}
-      />
     </TransformProvider>
   </FontProvider>
 );

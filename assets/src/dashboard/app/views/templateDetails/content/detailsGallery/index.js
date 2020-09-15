@@ -32,8 +32,8 @@ import {
   ColorList,
   PaginationButton,
   Pill,
-} from '../../../../components';
-import { TemplatePropType } from '../../../../types';
+} from '../../../../../components';
+import { TemplatePropType } from '../../../../../types';
 import {
   ByLine,
   Column,
@@ -44,7 +44,7 @@ import {
   SmallDisplayPagination,
   Text,
   Title,
-} from './../components';
+} from './../../components';
 
 function DetailsGallery({
   activeTemplateIndex,

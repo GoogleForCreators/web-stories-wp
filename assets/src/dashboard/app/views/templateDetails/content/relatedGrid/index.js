@@ -22,14 +22,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { UnitsProvider } from '../../../../../edit-story/units';
+import { UnitsProvider } from '../../../../../../edit-story/units';
 import {
   PageSizePropType,
   TemplatesPropType,
   TemplateActionsPropType,
-} from '../../../../types';
-import { TemplateGridView } from '../../shared';
-import { RowContainer, SubHeading } from './../components';
+} from '../../../../../types';
+import { TemplateGridView } from '../../../shared';
+import { RowContainer, SubHeading } from './../../components';
 
 function RelatedGrid({ pageSize, relatedTemplates, templateActions }) {
   if (relatedTemplates.length === 0) {
