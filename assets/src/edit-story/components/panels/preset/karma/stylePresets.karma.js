@@ -29,7 +29,6 @@ describe('Panel: Style Presets', () => {
   let frame;
 
   const ADD_BUTTON = 'Add style preset';
-  const APPLY_BUTTON = 'Apply style preset';
   const EDIT_BUTTON = 'Edit style presets';
 
   const addText = async (extraProps = null) => {
@@ -45,13 +44,6 @@ describe('Panel: Style Presets', () => {
       })
     );
     return element;
-  };
-
-  const clickButton = async (name) => {
-    const button = fixture.screen.getByRole('button', {
-      name,
-    });
-    await fixture.events.click(button);
   };
 
   const selectTarget = async (target) => {
@@ -73,9 +65,8 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Display Panel', () => {
     it('should display text styles panel for a text element', async () => {
       await addText();
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
+      const addButton = await fixture.editor.inspector.designPanel
+        .textStylePreset.add;
       expect(addButton).toBeTruthy();
     });
 
@@ -115,12 +106,13 @@ describe('Panel: Style Presets', () => {
     });
 
     it('should allow adding new text style from a text element', async () => {
-      await clickButton(ADD_BUTTON);
-      const applyPresetButton = fixture.screen.queryByRole('button', {
-        name: APPLY_BUTTON,
-      });
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.add
+      );
+      const applyButton = await fixture.editor.inspector.designPanel
+        .textStylePreset.apply;
       // Verify that the preset has been added
-      expect(applyPresetButton).toBeDefined();
+      expect(applyButton).toBeDefined();
     });
 
     it('should allow adding new text style from multi-selection', async () => {
@@ -135,11 +127,12 @@ describe('Panel: Style Presets', () => {
       await selectTarget(frame);
 
       // Verify that two presets have been added.
-      await clickButton(ADD_BUTTON);
-      const applyPresetButtons = fixture.screen.getAllByRole('button', {
-        name: APPLY_BUTTON,
-      });
-      expect(applyPresetButtons.length).toBe(2);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.add
+      );
+      const presets =
+        fixture.editor.inspector.designPanel.textStylePreset.presets;
+      expect(presets.length).toBe(2);
       await fixture.snapshot('2 style presets added');
     });
   });
@@ -148,8 +141,12 @@ describe('Panel: Style Presets', () => {
     it('should allow deleting a text style preset', async () => {
       // Add text element and style preset.
       await addText();
-      await clickButton(ADD_BUTTON);
-      await clickButton(EDIT_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.add
+      );
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.edit
+      );
 
       await fixture.snapshot('Style presets in edit mode');
 
@@ -183,7 +180,9 @@ describe('Panel: Style Presets', () => {
     it('should allow deleting a text style preset when color presets are present', async () => {
       // Add text element and style preset.
       await addText();
-      await clickButton(ADD_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.add
+      );
 
       // Add color preset.
       await fixture.events.click(
@@ -192,7 +191,9 @@ describe('Panel: Style Presets', () => {
         })
       );
 
-      await clickButton(EDIT_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.edit
+      );
 
       // Verify being in edit mode.
       const exitEditButton = fixture.screen.getByRole('button', {
@@ -230,14 +231,18 @@ describe('Panel: Style Presets', () => {
 
     it('should apply text style to a single text element', async () => {
       // Add a preset
-      await clickButton(ADD_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.add
+      );
       await addText({
         x: 200,
         y: 200,
         backgroundColor: createSolid(0, 0, 0),
         backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       });
-      await clickButton(APPLY_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.apply
+      );
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].backgroundTextMode).toEqual(
         BACKGROUND_TEXT_MODE.NONE
@@ -246,7 +251,9 @@ describe('Panel: Style Presets', () => {
     });
 
     it('should apply text style to multiple text elements', async () => {
-      await clickButton(ADD_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.add
+      );
       await addText({
         x: 200,
         y: 200,
@@ -256,7 +263,9 @@ describe('Panel: Style Presets', () => {
       // Select both texts
       await selectTarget(frame);
 
-      await clickButton(APPLY_BUTTON);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStylePreset.apply
+      );
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].backgroundTextMode).toEqual(
         BACKGROUND_TEXT_MODE.NONE

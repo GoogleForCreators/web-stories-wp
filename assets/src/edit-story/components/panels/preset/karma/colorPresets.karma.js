@@ -22,7 +22,6 @@ import { Fixture } from '../../../../karma/fixture';
 describe('Panel: Color Presets', () => {
   let fixture;
 
-  const ADD_BUTTON = 'Add color preset';
   const EDIT_BUTTON = 'Edit color presets';
   const EXIT_EDIT_MODE = 'Exit edit mode';
 
@@ -38,9 +37,7 @@ describe('Panel: Color Presets', () => {
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Display Panel', () => {
     it('should display color presets panel for a text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
+      const addButton = fixture.editor.inspector.designPanel.colorPreset.add;
       expect(addButton).toBeTruthy();
     });
   });
@@ -49,26 +46,22 @@ describe('Panel: Color Presets', () => {
     it('should allow deleting a color preset', async () => {
       // Add text element and a color preset.
       await fixture.events.click(fixture.editor.library.textAdd);
-      const addButton = fixture.screen.getByRole('button', {
-        name: ADD_BUTTON,
-      });
-      await fixture.events.click(addButton);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.colorPreset.add
+      );
 
-      const editButton = fixture.screen.getByRole('button', {
-        name: EDIT_BUTTON,
-      });
-      await fixture.events.click(editButton);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.colorPreset.edit
+      );
 
       await fixture.snapshot('Color presets in edit mode');
 
       // Verify being in edit mode.
-      const exitEditButton = fixture.screen.getByRole('button', {
-        name: EXIT_EDIT_MODE,
-      });
+      const exitEditButton =
+        fixture.editor.inspector.designPanel.colorPreset.exit;
       expect(exitEditButton).toBeTruthy();
-      const deletePresetButton = fixture.screen.getByRole('button', {
-        name: 'Delete color preset',
-      });
+      const deletePresetButton =
+        fixture.editor.inspector.designPanel.colorPreset.delete;
 
       expect(deletePresetButton).toBeTruthy();
       await fixture.events.click(deletePresetButton);
