@@ -21,7 +21,7 @@ import { Fixture } from '../../../../karma/fixture';
 import { useInsertElement } from '../../../canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
-describe('Panel: Style Presets', () => {
+describe('Panel: Color Presets', () => {
   let fixture;
 
   const ADD_BUTTON = 'Add color preset';
@@ -57,7 +57,7 @@ describe('Panel: Style Presets', () => {
     });
   });
 
-  describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Text Style Presets', () => {
+  describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Color Presets', () => {
     it('should allow deleting a color preset', async () => {
       // Add text element and a color preset.
       await addText();
