@@ -18,6 +18,9 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
+import { boolean } from '@storybook/addon-knobs';
+
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -30,11 +33,22 @@ export default {
   component: Header,
 };
 
-export const _default = () => (
-  <Layout.Provider>
-    <Header
-      onBookmarkClick={action('bookmark clicked')}
-      onHandleCtaClick={action('cta clicked')}
-    />
-  </Layout.Provider>
-);
+const StorybookLayoutContainer = styled.div`
+  margin-top: 40px;
+  height: 100vh;
+`;
+
+export const _default = () => {
+  const bookmarkFlag = boolean('enable bookmark');
+
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Header
+          onBookmarkClick={bookmarkFlag && action('bookmark clicked')}
+          onHandleCtaClick={action('cta clicked')}
+        />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
+};

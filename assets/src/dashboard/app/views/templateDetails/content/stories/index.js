@@ -68,3 +68,31 @@ export const _default = () => (
     </TransformProvider>
   </FontProvider>
 );
+
+export const MissingTemplate = () => (
+  <FontProvider>
+    <TransformProvider>
+      <Layout.Provider>
+        <StorybookLayoutContainer>
+          <Content
+            activeTemplateIndex={8}
+            isRTL={boolean('isRTL')}
+            orderedTemplatesLength={12}
+            pageSize={STORYBOOK_PAGE_SIZE}
+            relatedTemplates={formattedTemplatesArray.slice(0, 3)}
+            switchToTemplateByOffset={action(
+              'switch to template by offset clicked'
+            )}
+            template={null}
+            templateActions={{
+              createStoryFromTemplate: action(
+                'create story from template clicked'
+              ),
+              handlePreviewTemplate: action('handle preview template clicked'),
+            }}
+          />
+        </StorybookLayoutContainer>
+      </Layout.Provider>
+    </TransformProvider>
+  </FontProvider>
+);
