@@ -58,6 +58,8 @@ class Tracking {
 	 *
 	 * Registers the setting in WordPress.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -93,6 +95,8 @@ class Tracking {
 
 	/**
 	 * Returns tracking settings to pass to the inline script.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Tracking settings.
 	 */

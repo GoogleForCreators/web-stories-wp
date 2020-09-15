@@ -35,6 +35,8 @@ trait Assets {
 	/**
 	 * Get asset metadata.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $handle Script handle.
 	 *
 	 * @return array
@@ -50,6 +52,8 @@ trait Assets {
 
 	/**
 	 * Register script using handle.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
@@ -75,6 +79,8 @@ trait Assets {
 	/**
 	 * Enqueue script using handle.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 *
@@ -87,6 +93,8 @@ trait Assets {
 
 	/**
 	 * Register style using handle.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $style_handle Handle of script.
 	 * @param array  $style_dependencies Array of extra dependencies.
@@ -107,6 +115,8 @@ trait Assets {
 	/**
 	 * Enqueue style using handle.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
 	 *
@@ -120,7 +130,10 @@ trait Assets {
 	/**
 	 * Remove admin styles.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $styles Array to style to be removed.
+	 *
 	 * @return void
 	 */
 	public function remove_admin_style( array $styles ) {

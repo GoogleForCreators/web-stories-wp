@@ -54,6 +54,8 @@ class Embed_Block {
 	/**
 	 * Initializes the Web Stories embed block.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -112,6 +114,8 @@ class Embed_Block {
 	/**
 	 * Returns script settings.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array Script settings.
 	 */
 	private function get_script_settings() {
@@ -122,6 +126,8 @@ class Embed_Block {
 
 	/**
 	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
 	 *
@@ -143,6 +149,8 @@ class Embed_Block {
 
 	/**
 	 * Renders the block type output for given attributes.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.

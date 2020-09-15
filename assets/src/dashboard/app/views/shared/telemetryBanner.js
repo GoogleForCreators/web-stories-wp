@@ -17,6 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useLayoutEffect, useRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
@@ -25,10 +26,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useLayoutEffect, useRef } from 'react';
 import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
-import { TELEMETRY_BANNER_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
@@ -37,10 +36,10 @@ const Banner = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: ${TELEMETRY_BANNER_HEIGHT};
   margin: 0 20px;
   padding-top: 24px;
-  background-image: url('${({ $backgroundUrl }) => $backgroundUrl}');
+  background-image: url('${({ backgroundUrl }) => backgroundUrl}');
+  background-size: cover;
   border-radius: 8px;
 `;
 
@@ -110,57 +109,67 @@ const ToggleButton = styled.button.attrs({
   }
 `;
 
-export function TelemetryOptInBanner({
-  visible = true,
-  disabled = false,
-  onChange = () => {},
-  onClose = () => {},
-  checked = false,
-}) {
-  const { assetsURL } = useConfig();
+export const TelemetryOptInBanner = forwardRef(
+  (
+    {
+      visible = true,
+      disabled = false,
+      onChange = () => {},
+      onClose = () => {},
+      checked = false,
+    },
+    ref
+  ) => {
+    const { assetsURL } = useConfig();
 
-  return visible ? (
-    <Banner $backgroundUrl={`${assetsURL}images/analytics-banner-bg.png`}>
-      <Header>
-        <Title>
-          {checked
-            ? __(
-                'Your selection has been updated. Thank you for helping to improve the editor!',
-                'web-stories'
-              )
-            : __('Help improve the editor!', 'web-stories')}
-        </Title>
-        <ToggleButton onClick={onClose}>
-          <CloseIcon />
-        </ToggleButton>
-      </Header>
-      <Label>
-        <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
-        <LabelText aria-checked={checked}>
+    return visible ? (
+      <Banner
+        ref={ref}
+        backgroundUrl={`${assetsURL}images/analytics-banner-bg.png`}
+      >
+        <Header>
+          <Title>
+            {checked
+              ? __(
+                  'Your selection has been updated. Thank you for helping to improve the editor!',
+                  'web-stories'
+                )
+              : __('Help improve the editor!', 'web-stories')}
+          </Title>
+          <ToggleButton onClick={onClose}>
+            <CloseIcon />
+          </ToggleButton>
+        </Header>
+        <Label>
+          <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
+          <LabelText aria-checked={checked}>
+            {__(
+              'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
+              'web-stories'
+            )}
+            &nbsp;
+            <a
+              href={__('https://policies.google.com/privacy', 'web-stories')}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {__('Learn more', 'web-stories')}
+              {'.'}
+            </a>
+          </LabelText>
+        </Label>
+        <VisitSettingsText>
           {__(
-            'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
+            'You can update your selection later by visiting Settings.',
             'web-stories'
           )}
-          &nbsp;
-          <a
-            href={__('https://policies.google.com/privacy', 'web-stories')}
-            rel="noreferrer"
-            target="_blank"
-          >
-            {__('Learn more', 'web-stories')}
-            {'.'}
-          </a>
-        </LabelText>
-      </Label>
-      <VisitSettingsText>
-        {__(
-          'You can update your selection later by visiting Settings.',
-          'web-stories'
-        )}
-      </VisitSettingsText>
-    </Banner>
-  ) : null;
-}
+        </VisitSettingsText>
+      </Banner>
+    ) : null;
+  }
+);
+
+TelemetryOptInBanner.displayName = 'TelemetryOptInBanner';
 
 TelemetryOptInBanner.propTypes = {
   visible: PropTypes.bool.isRequired,
@@ -178,25 +187,32 @@ export default function TelemetryBannerContainer(props) {
     disabled,
     toggleWebStoriesTrackingOptIn,
   } = useTelemetryOptIn();
+  const ref = useRef();
 
   const {
-    actions: { setTelemetryBannerOpen },
+    actions: { setTelemetryBannerOpen, setTelemetryBannerHeight },
   } = useLayoutContext();
 
   const previousBannerVisible = useRef(bannerVisible);
 
   useLayoutEffect(() => {
-    if (bannerVisible && previousBannerVisible.current === false) {
+    if (
+      bannerVisible &&
+      previousBannerVisible.current === false &&
+      ref.current
+    ) {
       setTelemetryBannerOpen(true);
+      setTelemetryBannerHeight(ref.current.offsetHeight);
       previousBannerVisible.current = true;
     } else if (!bannerVisible && previousBannerVisible.current) {
       setTelemetryBannerOpen(false);
       previousBannerVisible.current = false;
     }
-  }, [bannerVisible, setTelemetryBannerOpen]);
+  }, [bannerVisible, setTelemetryBannerOpen, setTelemetryBannerHeight]);
 
   return (
     <TelemetryOptInBanner
+      ref={ref}
       visible={bannerVisible}
       checked={optedIn}
       disabled={disabled}

@@ -160,7 +160,9 @@ describe('TextOutput', () => {
         box={{ width: 50, height: 50, x: 10, y: 10, rotationAngle: 0 }}
       />
     );
-    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2"');
+    expect(output).toHaveStyle({
+      fontFamily: '"Baloo Bhaina 2"',
+    });
   });
 
   it('should display correct font fallback', () => {
@@ -190,7 +192,9 @@ describe('TextOutput', () => {
         box={{ width: 50, height: 50, x: 10, y: 10, rotationAngle: 0 }}
       />
     );
-    expect(output.style.fontFamily).toBe('"Baloo Bhaina 2","Roboto",cursive');
+    expect(output).toHaveStyle({
+      fontFamily: '"Baloo Bhaina 2","Roboto",cursive',
+    });
   });
 
   describe('AMP validation', () => {

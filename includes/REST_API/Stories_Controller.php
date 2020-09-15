@@ -51,6 +51,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
 	 *
@@ -86,6 +88,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		 *
 		 * The dynamic portion of the hook name, `$this->post_type`, refers to the post type slug.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param WP_REST_Response $response The response object.
 		 * @param WP_Post $post Post object.
 		 * @param WP_REST_Request $request Request object.
@@ -96,7 +100,10 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Updates a single post.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
+	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
@@ -127,6 +134,8 @@ class Stories_Controller extends Stories_Base_Controller {
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Item schema as an array.
 	 */
@@ -161,6 +170,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Filters query clauses to sort posts by the author's display name.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string[] $clauses Associative array of the clauses for the query.
 	 * @param WP_Query $query   The WP_Query instance.
 	 *
@@ -188,7 +199,10 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Retrieves a collection of web stories.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
+	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
@@ -269,6 +283,8 @@ class Stories_Controller extends Stories_Base_Controller {
 		 *
 		 * @link https://developer.wordpress.org/reference/classes/wp_query/
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array           $args    Key value array of query var to query value.
 		 * @param WP_REST_Request $request The request used.
 		 */
@@ -341,6 +357,8 @@ class Stories_Controller extends Stories_Base_Controller {
 
 	/**
 	 * Retrieves the query params for the posts collection.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Collection parameters.
 	 */

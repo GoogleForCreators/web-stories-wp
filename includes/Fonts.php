@@ -33,6 +33,8 @@ class Fonts {
 	/**
 	 * Get list of fonts used in AMP Stories.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array Fonts.
 	 */
 	public function get_fonts() {
@@ -50,6 +52,8 @@ class Fonts {
 
 	/**
 	 * Get list of Google Fonts from a given JSON file.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $file Path to file containing Google Fonts definitions.
 	 *

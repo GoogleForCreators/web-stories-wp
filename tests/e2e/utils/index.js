@@ -20,3 +20,4 @@ export { default as visitDashboard } from './visitDashboard';
 export { default as addRequestInterception } from './addRequestInterception';
 export { default as withExperimentalFeatures } from './experimentalFeatures';
 export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
+export { default as publishPost } from './publishPost';
