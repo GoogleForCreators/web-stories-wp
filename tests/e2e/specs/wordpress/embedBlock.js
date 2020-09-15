@@ -21,10 +21,6 @@ import {
   activatePlugin,
   deactivatePlugin,
   createNewPost,
-  arePrePublishChecksEnabled,
-  disablePrePublishChecks,
-  publishPostWithPrePublishChecksDisabled,
-  enablePrePublishChecks,
   insertBlock,
   setPostContent,
 } from '@wordpress/e2e-test-utils';
@@ -34,6 +30,7 @@ import {
  */
 import {
   addRequestInterception,
+  publishPost,
   withDisabledToolbarOnFrontend,
 } from '../../utils';
 
@@ -103,18 +100,10 @@ describe('Embed Block', () => {
 
       await setPostContent(EMBED_BLOCK_CONTENT);
 
-      const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
+      const postPermalink = await publishPost();
 
-      if (werePrePublishChecksEnabled) {
-        await disablePrePublishChecks();
-      }
-
-      await publishPostWithPrePublishChecksDisabled();
-      await enablePrePublishChecks();
-
-      const postPermalink = await page.evaluate(() =>
-        wp.data.select('core/editor').getPermalink()
-      );
+      expect(postPermalink).not.toBeNull();
+      expect(postPermalink).toStrictEqual(expect.any(String));
 
       const ampPostPermaLink = postPermalink.includes('?')
         ? `${postPermalink}&amp`
