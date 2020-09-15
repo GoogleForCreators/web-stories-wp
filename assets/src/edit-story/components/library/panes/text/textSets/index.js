@@ -15,11 +15,53 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import getTextSets from './getTextSets';
+import { Section } from '../../../common';
+import { UnitsProvider } from '../../../../../units';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { getTextSets } from './utils';
+import TextSet from './textSet';
 
-export default async function () {
-  const textSetLibrary = await getTextSets();
-  return Object.values(textSetLibrary).flat();
+const TextSetContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 12px;
+`;
+
+function TextSets() {
+  const [textSets, setTextSets] = useState([]);
+
+  useEffect(() => {
+    getTextSets().then(setTextSets);
+  }, []);
+  return (
+    <Section title={__('Text Sets', 'web-stories')}>
+      <TextSetContainer>
+        <UnitsProvider
+          pageSize={{
+            width: TEXT_SET_SIZE,
+            height: TEXT_SET_SIZE / PAGE_RATIO,
+          }}
+        >
+          {textSets.map((elements, index) => (
+            <TextSet key={index} elements={elements} />
+          ))}
+        </UnitsProvider>
+      </TextSetContainer>
+    </Section>
+  );
 }
+
+export default TextSets;

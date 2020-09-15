@@ -9,11 +9,13 @@ License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
 Tags:              web-stories, amp, stories, storytelling, google, block
 
-Stories is a visual storytelling format for the open web which immerses your readers in fast-loading, full-screen, and visually rich experiences.
+Web Stories is a visual storytelling format for the open web which immerses your readers in fast-loading, full-screen, and visually rich experiences.
 
 == Description ==
 
-Stories is a visual storytelling format for the open web which immerses your readers in fast-loading, full-screen, and visually rich experiences. Stories can be a great addition to your overall content strategy.
+Web Stories is a visual storytelling format for the open web which immerses your readers in fast-loading, full-screen, and visually rich experiences. Stories can be a great addition to your overall content strategy.
+
+With Stories for WordPress, we're bringing first-class Web Stories support to WordPress.
 
 == Installation ==
 

@@ -23,6 +23,7 @@ import { Alignment } from './alignment';
 import { BackgroundOverlay } from './backgroundOverlay';
 import { Link } from './link';
 import { VideoAccessibility } from './videoAccessibility';
+import { Layers } from './layers';
 import { TextStylePreset } from './textStylePreset';
 import { ColorPreset } from './colorPreset';
 
@@ -125,5 +126,13 @@ export class DesignPanel extends Container {
   get videoOptions() {
     // @todo: implement
     return null;
+  }
+
+  get layerPanel() {
+    return this._get(
+      this.getByRole('region', { name: /layers/i }),
+      'layerPanel',
+      Layers
+    );
   }
 }

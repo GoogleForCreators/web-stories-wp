@@ -35,6 +35,8 @@ class Activation_Flag {
 	/**
 	 * Registers functionality through WordPress hooks.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -45,7 +47,10 @@ class Activation_Flag {
 	/**
 	 * Sets the flag that the plugin has just been activated.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param bool $network_wide Whether the plugin is being activated network-wide.
+	 *
 	 * @return bool
 	 */
 	public function set_activation_flag( $network_wide = false ) {
@@ -59,7 +64,10 @@ class Activation_Flag {
 	/**
 	 * Gets the flag that the plugin has just been activated.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param bool $network_wide Whether to check the flag network-wide.
+	 *
 	 * @return bool True if just activated, false otherwise.
 	 */
 	public function get_activation_flag( $network_wide = false ) {
@@ -73,9 +81,10 @@ class Activation_Flag {
 	/**
 	 * Deletes the flag that the plugin has just been activated.
 	 *
-	 * @since 1.10.0 Migrated from Activation class.
+	 * @since 1.0.0
 	 *
 	 * @param bool $network_wide Whether the plugin is being deactivated network-wide.
+	 *
 	 * @return bool True if flag deletion is successful, false otherwise.
 	 */
 	public function delete_activation_flag( $network_wide = false ) {

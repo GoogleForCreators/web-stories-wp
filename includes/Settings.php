@@ -77,6 +77,8 @@ class Settings {
 	/**
 	 * Initializes the Settings logic.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -85,6 +87,8 @@ class Settings {
 
 	/**
 	 * Register settings.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
