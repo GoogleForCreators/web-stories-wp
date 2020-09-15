@@ -82,6 +82,10 @@ const storyActions = {
   handlePreviewStory: action('handle preview story selected'),
 };
 
+const longerListOfStories = formattedStoriesArray
+  .concat(formattedStoriesArray)
+  .concat(formattedStoriesArray);
+
 const defaultProps = {
   allPagesFetched: false,
   filter: filter,
@@ -89,9 +93,7 @@ const defaultProps = {
   page: page,
   search: search,
   sort: sort,
-  stories: formattedStoriesArray
-    .concat(formattedStoriesArray)
-    .concat(formattedStoriesArray),
+  stories: longerListOfStories,
   storyActions: storyActions,
   users: formattedUsersObject,
   view: view,
