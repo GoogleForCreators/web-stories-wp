@@ -44,7 +44,7 @@ function TextSets() {
   const [textSets, setTextSets] = useState([]);
 
   useEffect(() => {
-    getTextSets().then((sets) => setTextSets(sets));
+    getTextSets().then(setTextSets);
   }, []);
   return (
     <Section title={__('Text Sets', 'web-stories')}>
@@ -56,7 +56,7 @@ function TextSets() {
           }}
         >
           {textSets.map((elements, index) => (
-            <TextSet key={index} elements={elements} index={index} />
+            <TextSet key={index} elements={elements} />
           ))}
         </UnitsProvider>
       </TextSetContainer>

@@ -22,6 +22,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import DisplayElement from '../../../../canvas/displayElement';
@@ -29,7 +34,9 @@ import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
 import useBatchingCallback from '../../../../../utils/useBatchingCallback';
 import useLibrary from '../../../useLibrary';
 
-const TextSetItem = styled.div`
+const TextSetItem = styled.button`
+  border: 0;
+  outline: 0;
   position: relative;
   width: ${TEXT_SET_SIZE}px;
   height: ${TEXT_SET_SIZE}px;
@@ -38,7 +45,7 @@ const TextSetItem = styled.div`
   cursor: pointer;
 `;
 
-function TextSet({ elements, index }) {
+function TextSet({ elements }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -54,9 +61,8 @@ function TextSet({ elements, index }) {
 
   return (
     <TextSetItem
-      key={index}
-      style={{ justifySelf: index % 2 === 0 ? 'start' : 'end' }}
       onClick={() => insertSet(elements)}
+      aria-label={__('Insert Text Set', 'web-stories')}
     >
       {elements.map(
         ({ id, content, x, y, textSetWidth, textSetHeight, ...rest }) => (
@@ -82,7 +88,6 @@ function TextSet({ elements, index }) {
 
 TextSet.propTypes = {
   elements: PropTypes.array.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default TextSet;
