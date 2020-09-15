@@ -61,6 +61,8 @@ class Experiments {
 	/**
 	 * Registers the experiments admin menu page.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function add_menu_page() {
@@ -88,6 +90,8 @@ class Experiments {
 
 	/**
 	 * Initializes the experiments settings page.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -129,6 +133,8 @@ class Experiments {
 
 	/**
 	 * Display a checkbox field for a single experiment.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $args {
 	 *     Array of arguments for displaying a single field.
@@ -179,6 +185,8 @@ class Experiments {
 	/**
 	 * Returns all available experiment groups.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array List of experiment groups
 	 */
 	public function get_experiment_groups() {
@@ -191,6 +199,8 @@ class Experiments {
 
 	/**
 	 * Returns a list of all experiments.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array List of experiments by group.
 	 */
@@ -415,6 +425,8 @@ class Experiments {
 	/**
 	 * Returns the experiment statuses for a given group.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $group Experiments group name.
 	 *
 	 * @return array Experiment statuses with name as key and status as value.
@@ -443,6 +455,8 @@ class Experiments {
 
 	/**
 	 * Checks whether an experiment is enabled.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $name Experiment name.
 	 *

@@ -46,6 +46,8 @@ class Image {
 	/**
 	 * Image constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Story $story   Story Object.
 	 */
 	public function __construct( Story $story ) {
@@ -54,6 +56,8 @@ class Image {
 
 	/**
 	 * Renders the block as an image.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $args Array of Argument to render.
 	 *

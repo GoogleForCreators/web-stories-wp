@@ -15,24 +15,29 @@
  */
 
 /**
- * External dependencies
- */
-
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import 'jest-extended';
-import '@testing-library/jest-dom';
-import 'jest-axe/extend-expect';
-
-/**
  * Internal dependencies
  */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+import { AbstractPanel } from './abstractPanel';
 
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+/**
+ * The layers panel.
+ */
+export class Layers extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get layersList() {
+    return this.getByRoleIn(this.node.ownerDocument, 'listbox', {
+      name: /layers list/i,
+    });
+  }
+
+  get layers() {
+    return this.getAllByRoleIn(this.layersList, 'option');
+  }
+
+  layer(name) {
+    return this.getByRoleIn(this.layersList, 'option', { name });
+  }
+}

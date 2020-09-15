@@ -39,6 +39,8 @@ trait Publisher {
 	 *
 	 * Uses a fallback logo to always create valid AMP in FE.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
 	public function get_publisher_logo_placeholder() {
@@ -47,6 +49,8 @@ trait Publisher {
 
 	/**
 	 * Returns the publisher data.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Publisher name and logo.
 	 */
@@ -62,6 +66,8 @@ trait Publisher {
 
 	/**
 	 * Gets a valid publisher logo URL. Loops through sizes and looks for a square image.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param integer $image_id Attachment ID.
 	 *
@@ -103,6 +109,8 @@ trait Publisher {
 	/**
 	 * Get the publisher logo.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
 	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
 	 *
@@ -142,6 +150,8 @@ trait Publisher {
 		 * Filters the publisher's logo.
 		 *
 		 * This should point to a square image.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param string $logo_image_url URL to the publisher's logo.
 		 * @param string $placeholder    URL to the placeholder logo.

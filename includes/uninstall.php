@@ -29,6 +29,8 @@ namespace Google\Web_Stories;
 /**
  * Deletes options and transients.
  *
+ * @since 1.0.0
+ *
  * @return void
  */
 function delete_options() {
@@ -65,6 +67,8 @@ function delete_options() {
 
 /**
  * Deletes options and transients on multisite.
+ *
+ * @since 1.0.0
  *
  * @return void
  */
@@ -104,6 +108,8 @@ function delete_site_options() {
 /**
  * Deletes all associated post meta data.
  *
+ * @since 1.0.0
+ *
  * @return void
  */
 function delete_stories_post_meta() {
@@ -113,6 +119,8 @@ function delete_stories_post_meta() {
 
 /**
  * Deletes all stories & templates.
+ *
+ * @since 1.0.0
  *
  * @return void
  */
@@ -133,6 +141,8 @@ function delete_posts() {
 /**
  * Remove user capabilities.
  *
+ * @since 1.0.0
+ *
  * @return void
  */
 function remove_caps() {
@@ -142,6 +152,8 @@ function remove_caps() {
 
 /**
  * Delete all data on a site.
+ *
+ * @since 1.0.0
  *
  * @return void
  */

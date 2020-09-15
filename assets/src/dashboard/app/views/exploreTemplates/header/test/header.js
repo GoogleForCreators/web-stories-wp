@@ -35,7 +35,7 @@ const fakeTemplates = [
   {
     id: 1,
     title: 'Beauty',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
@@ -46,7 +46,7 @@ const fakeTemplates = [
   {
     id: 2,
     title: 'Cooking',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
@@ -57,7 +57,7 @@ const fakeTemplates = [
   {
     id: 3,
     title: 'Fitness',
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',

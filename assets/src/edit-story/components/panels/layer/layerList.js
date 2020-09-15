@@ -22,6 +22,11 @@ import { Fragment, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import {
@@ -34,7 +39,10 @@ import useFocusCanvas from '../../canvas/useFocusCanvas';
 import { LAYER_HEIGHT } from './constants';
 import Layer from './layer';
 
-const LayerList = styled(Reorderable).attrs({ 'aria-orientation': 'vertical' })`
+const LayerList = styled(Reorderable).attrs({
+  'aria-orientation': 'vertical',
+  'aria-label': __('Layers List', 'web-stories'),
+})`
   flex-direction: column;
   width: 100%;
   height: 100%;

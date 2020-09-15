@@ -109,6 +109,18 @@ export class Container {
   /**
    * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
    *
+   * @param {HTMLElement} root Root node
+   * @param {Matcher} role Role name.
+   * @param {ByRoleOptions} options Options.
+   * @return {Array.<HTMLElement>} The found elements.
+   */
+  getAllByRoleIn(root, role, options) {
+    return getAllByRole(root, role, options);
+  }
+
+  /**
+   * See https://testing-library.com/docs/dom-testing-library/api-queries#byrole
+   *
    * @param {Matcher} role Role name.
    * @param {ByRoleOptions} options Options.
    * @return {HTMLElement} The found element.
