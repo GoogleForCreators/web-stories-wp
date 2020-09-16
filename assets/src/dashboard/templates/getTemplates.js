@@ -19,12 +19,6 @@
  */
 import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
 
-export function getImageFile(url) {
-  const file = (url || '').split('/').slice(-1).join('');
-  /* removes `-x` in some_file-x.jpg */
-  return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
-}
-
 export async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
     /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
