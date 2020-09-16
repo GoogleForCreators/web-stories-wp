@@ -64,7 +64,6 @@ class Database_Upgrader {
 			'2.0.4' => 'update_publisher_logos',
 			'3.0.0' => 'add_stories_caps',
 			'3.0.1' => 'rewrite_flush',
-			'3.0.2' => 'rewrite_flush',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
