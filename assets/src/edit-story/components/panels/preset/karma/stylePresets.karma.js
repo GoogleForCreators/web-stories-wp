@@ -28,9 +28,6 @@ describe('Panel: Style Presets', () => {
   let fixture;
   let frame;
 
-  const ADD_BUTTON = 'Add style preset';
-  const EDIT_BUTTON = 'Edit style presets';
-
   const addText = async (extraProps = null) => {
     const insertElement = await fixture.renderHook(() => useInsertElement());
     const element = await fixture.act(() =>
@@ -65,8 +62,8 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Display Panel', () => {
     it('should display text styles panel for a text element', async () => {
       await addText();
-      const addButton = await fixture.editor.inspector.designPanel
-        .textStylePreset.add;
+      const addButton =
+        fixture.editor.inspector.designPanel.textStylePreset.add;
       expect(addButton).toBeTruthy();
     });
 
@@ -87,10 +84,9 @@ describe('Panel: Style Presets', () => {
       const target = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await selectTarget(target);
       // Verify that the panel is not found.
-      const addButton = fixture.screen.queryByRole('button', {
-        name: ADD_BUTTON,
-      });
-      expect(addButton).toBeNull();
+      expect(
+        () => fixture.editor.inspector.designPanel.textStylePreset.add
+      ).toThrow();
     });
   });
 
@@ -109,8 +105,8 @@ describe('Panel: Style Presets', () => {
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );
-      const applyButton = await fixture.editor.inspector.designPanel
-        .textStylePreset.apply;
+      const applyButton =
+        fixture.editor.inspector.designPanel.textStylePreset.apply;
       // Verify that the preset has been added
       expect(applyButton).toBeDefined();
     });
@@ -164,17 +160,13 @@ describe('Panel: Style Presets', () => {
 
       // Verify the edit mode was exited (due to removing all elements).
       expect(
-        fixture.screen.queryByRole('button', {
-          name: 'Exit edit mode',
-        })
-      ).toBeFalsy();
+        () => fixture.editor.inspector.designPanel.textStylePreset.exit
+      ).toThrow();
 
       // Verify there is no edit button either (since we have no presets left).
       expect(
-        fixture.screen.queryByRole('button', {
-          name: EDIT_BUTTON,
-        })
-      ).toBeFalsy();
+        () => fixture.editor.inspector.designPanel.textStylePreset.edit
+      ).toThrow();
     });
 
     it('should allow deleting a text style preset when color presets are present', async () => {
@@ -209,17 +201,13 @@ describe('Panel: Style Presets', () => {
 
       // Verify the edit mode was exited (due to removing all elements).
       expect(
-        fixture.screen.queryByRole('button', {
-          name: 'Exit edit mode',
-        })
-      ).toBeFalsy();
+        () => fixture.editor.inspector.designPanel.textStylePreset.exit
+      ).toThrow();
 
       // Verify there is no edit button either (since we have no presets left).
       expect(
-        fixture.screen.queryByRole('button', {
-          name: EDIT_BUTTON,
-        })
-      ).toBeFalsy();
+        () => fixture.editor.inspector.designPanel.textStylePreset.edit
+      ).toThrow();
     });
   });
 

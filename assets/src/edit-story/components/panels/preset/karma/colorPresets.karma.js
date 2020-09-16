@@ -22,9 +22,6 @@ import { Fixture } from '../../../../karma/fixture';
 describe('Panel: Color Presets', () => {
   let fixture;
 
-  const EDIT_BUTTON = 'Edit color presets';
-  const EXIT_EDIT_MODE = 'Exit edit mode';
-
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
@@ -68,17 +65,13 @@ describe('Panel: Color Presets', () => {
 
       // Verify the edit mode was exited (due to removing all elements).
       expect(
-        fixture.screen.queryByRole('button', {
-          name: EXIT_EDIT_MODE,
-        })
-      ).toBeFalsy();
+        () => fixture.editor.inspector.designPanel.colorPreset.exit
+      ).toThrow();
 
       // Verify there is no edit button either (since we have no presets left).
       expect(
-        fixture.screen.queryByRole('button', {
-          name: EDIT_BUTTON,
-        })
-      ).toBeFalsy();
+        () => fixture.editor.inspector.designPanel.colorPreset.edit
+      ).toThrow();
     });
   });
 });
