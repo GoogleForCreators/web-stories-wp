@@ -456,14 +456,15 @@ class Story_Post_Type {
 	 */
 	public function filter_amp_story_element_validation_error_sanitized( $sanitized, $error ) {
 		if (
-			isset( $error['node_type'], $error['node_name'] )
-			&&
-			XML_ELEMENT_NODE === $error['node_type']
-			&&
-			'amp-story' === $error['node_name']
+			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			(
+				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
+				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
+			)
 		) {
-			$sanitized = false;
+			return false;
 		}
+
 		return $sanitized;
 	}
 
