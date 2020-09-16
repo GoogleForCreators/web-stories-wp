@@ -197,10 +197,6 @@ class Story_Post_Type {
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
-
-		// Demo content.
-		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
-		add_action( 'admin_init', [ $this, 'redirect_demo' ] );
 	}
 
 	/**
@@ -785,46 +781,4 @@ class Story_Post_Type {
 		}
 		return $data;
 	}
-
-	/**
-	 * Registers the demo admin menu page.
-	 *
-	 * @todo Remove
-	 *
-	 * @return void
-	 */
-	public function add_menu_page() {
-		add_submenu_page(
-			'edit.php?post_type=' . self::POST_TYPE_SLUG,
-			__( 'Demo', 'web-stories' ),
-			__( 'Demo', 'web-stories' ),
-			'edit_posts',
-			'web-stories-demo',
-			// This is not actually used.
-			// \Google\Web_Stories\Story_Post_Type::redirect_demo() will redirect to the story editor anyway.
-			'__return_null',
-			20
-		);
-	}
-
-	/**
-	 * Redirects the demo page to edit a new story.
-	 *
-	 * @return void
-	 */
-	public function redirect_demo() {
-		global $pagenow;
-
-		if ( 'edit.php' === $pagenow && isset( $_GET['page'] ) && 'web-stories-demo' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			wp_safe_redirect(
-				add_query_arg(
-					[ 'post_type' => self::POST_TYPE_SLUG ],
-					admin_url( 'post-new.php?web-stories-demo=1' )
-				)
-			);
-			exit;
-		}
-	}
-
-
 }
