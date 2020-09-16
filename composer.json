@@ -9,7 +9,8 @@
     "ext-dom": "*",
     "ext-json": "*",
     "ext-libxml": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "ampproject/amp-wp": "dev-develop"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
@@ -36,5 +37,16 @@
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ampproject/amp-wp"
+    }
+  ],
+  "provide": {
+    "ampproject/common": "dev-develop",
+    "ampproject/optimizer": "dev-develop"
+  },
+  "minimum-stability": "dev",
   "prefer-stable": true
 }
