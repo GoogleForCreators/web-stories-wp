@@ -61,14 +61,14 @@ describe('Panel: Style Presets', () => {
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Display Panel', () => {
     it('should display text styles panel for a text element', async () => {
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
       const addButton =
         fixture.editor.inspector.designPanel.textStylePreset.add;
       expect(addButton).toBeTruthy();
     });
 
     it('should not display text styles panel in case of mixed multi-selection', async () => {
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
       // Add a shape element.
       const insertElement = await fixture.renderHook(() => useInsertElement());
       const element = await fixture.act(() =>
@@ -136,7 +136,7 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Text Style Presets', () => {
     it('should allow deleting a text style preset', async () => {
       // Add text element and style preset.
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );
@@ -169,7 +169,7 @@ describe('Panel: Style Presets', () => {
 
     it('should allow deleting a text style preset when color presets are present', async () => {
       // Add text element and style preset.
-      await addText();
+      await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );
