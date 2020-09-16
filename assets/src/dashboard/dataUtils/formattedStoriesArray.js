@@ -111,7 +111,7 @@ const formattedStoriesArray = [
       slug: 'orange-shapes',
       status: 'publish',
       type: 'web-story',
-      link: 'http://localhost:8899/stories/orange-shapes',
+      link: 'http://localhost:8899/web-stories/orange-shapes',
       title: {
         raw: 'ORANGE SHAPES',
         rendered: 'ORANGE SHAPES',
@@ -134,7 +134,7 @@ const formattedStoriesArray = [
       template: '',
       categories: [],
       tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
+      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'orange-shapes',
       story_data: {
         version: 19,
@@ -424,7 +424,7 @@ const formattedStoriesArray = [
       template: '',
       categories: [],
       tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
+      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'green-shapes',
       story_data: {
         version: 19,
@@ -860,7 +860,7 @@ const formattedStoriesArray = [
       template: '',
       categories: [],
       tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
+      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'red-shapes',
       story_data: {
         version: 19,
@@ -1353,7 +1353,7 @@ const formattedStoriesArray = [
       template: '',
       categories: [],
       tags: [],
-      permalink_template: 'http://localhost:8899/stories/%pagename%',
+      permalink_template: 'http://localhost:8899/web-stories/%pagename%',
       generated_slug: 'blue-shapes',
       story_data: {
         version: 19,
