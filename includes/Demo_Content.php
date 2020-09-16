@@ -182,7 +182,7 @@ class Demo_Content {
 		];
 
 		foreach ( $replacements as $search => $replacement ) {
-			str_replace( $search, $replacement, $content );
+			$content = str_replace( $search, $replacement, $content );
 		}
 
 		$kses->remove_filters();
