@@ -721,10 +721,10 @@ class Story_Post_Type {
 	 *
 	 * @return false|string
 	 */
-	public function get_redirect_old_slug( $current ){
+	public function get_redirect_old_slug( $current ) {
 		global $wp_rewrite;
 
-		if ( is_object( $wp_rewrite ) && $wp_rewrite->using_permalinks() ){
+		if ( is_object( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
 			return false;
 		}
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
@@ -734,7 +734,6 @@ class Story_Post_Type {
 		$path = str_replace( '/' . self::REWRITE_SLUG, '/stories', $no_home );
 		// Put home url back.
 		$link = (string) home_url( $path );
-		var_dump($current, $link,get_post_type_archive_link( self::POST_TYPE_SLUG ) );
 		if ( false !== strpos( $current, $link ) ) {
 			return (string) str_replace( $link, $new_link, $current );
 		}
