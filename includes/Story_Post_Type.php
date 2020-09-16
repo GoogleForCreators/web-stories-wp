@@ -701,8 +701,25 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function redirect_old_slug() {
+		$link = $this->get_redirect_old_slug();
+		if ( false !== $link ) {
+			wp_safe_redirect( $link, 301 );
+			exit;
+		}
+	}
+
+	/**
+	 * Get url to redirect to.
+	 *
+	 * @return false|string|string[]
+	 */
+	protected function get_redirect_old_slug() {
 		if ( ! is_404() ) {
-			return;
+			return false;
+		}
+
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) && ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ), [ 'GET', 'HEAD' ], true ) ) {
+			return false;
 		}
 
 		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
@@ -714,10 +731,10 @@ class Story_Post_Type {
 		// Put home url back.
 		$link = (string) home_url( $path );
 		if ( false !== strpos( $current, $link ) ) {
-			$url = str_replace( $link, $new_link, $current );
-			wp_safe_redirect( $url, 301 );
-			exit;
+			return str_replace( $link, $new_link, $current );
 		}
+
+		return false;
 	}
 
 	/**
