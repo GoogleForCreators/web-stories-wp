@@ -17,11 +17,11 @@
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
-          "type": "shape",
-          "id": "8efc5cd0-a346-40f0-be6a-13df86cc734e"
+          "id": "f94c1f56-1c4e-461b-94b1-71919a5561d4",
+          "type": "shape"
         },
         {
-          "opacity": 100,
+          "opacity": 54,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 30,
           "lockAspectRatio": true,
@@ -31,238 +31,17 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "creationDate": "2020-09-06T14:08:07",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png",
+            "creationDate": "2020-09-10T15:03:28",
+            "src": "https://example.com/demo-story/image-1.png",
             "width": 330,
             "height": 585,
             "posterId": 0,
-            "id": 11499,
-            "title": "Story-2",
-            "alt": "Story-2",
+            "id": 12105,
+            "title": "",
+            "alt": "",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "Story-2-169x300.png",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-169x300.png"
-              },
-              "large": {
-                "file": "Story-2-577x1024.png",
-                "width": 577,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-577x1024.png"
-              },
-              "thumbnail": {
-                "file": "Story-2-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x150.png"
-              },
-              "medium_large": {
-                "file": "Story-2-768x1364.png",
-                "width": 768,
-                "height": 1364,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-768x1364.png"
-              },
-              "1536x1536": {
-                "file": "Story-2-865x1536.png",
-                "width": 865,
-                "height": 1536,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-865x1536.png"
-              },
-              "2048x2048": {
-                "file": "Story-2-1153x2048.png",
-                "width": 1153,
-                "height": 2048,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1153x2048.png"
-              },
-              "post-thumbnail": {
-                "file": "Story-2-1200x2131.png",
-                "width": 1200,
-                "height": 2131,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1200x2131.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "Story-2-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "Story-2-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "Story-2-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "Story-2-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "Story-2-150x266.png",
-                "width": 150,
-                "height": 266,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x266.png"
-              },
-              "full": {
-                "file": "Story-2.png",
-                "width": 1421,
-                "height": 2524,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png"
-              }
-            }
+            "sizes": []
           },
-          "type": "image",
-          "x": -177,
-          "y": 117,
-          "width": 355,
-          "height": 630,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "f1d66717-c7c9-4304-ab1e-9e7490c96dd8"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 30,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2020-09-06T14:07:52",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png",
-            "width": 330,
-            "height": 586,
-            "posterId": 0,
-            "id": 11498,
-            "title": "Story-3",
-            "alt": "Story-3",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "Story-3-169x300.png",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-169x300.png"
-              },
-              "large": {
-                "file": "Story-3-576x1024.png",
-                "width": 576,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-576x1024.png"
-              },
-              "thumbnail": {
-                "file": "Story-3-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x150.png"
-              },
-              "medium_large": {
-                "file": "Story-3-768x1365.png",
-                "width": 768,
-                "height": 1365,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-768x1365.png"
-              },
-              "1536x1536": {
-                "file": "Story-3-864x1536.png",
-                "width": 864,
-                "height": 1536,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-864x1536.png"
-              },
-              "2048x2048": {
-                "file": "Story-3-1153x2048.png",
-                "width": 1153,
-                "height": 2048,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1153x2048.png"
-              },
-              "post-thumbnail": {
-                "file": "Story-3-1200x2132.png",
-                "width": 1200,
-                "height": 2132,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1200x2132.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "Story-3-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "Story-3-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "Story-3-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "Story-3-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "Story-3-150x267.png",
-                "width": 150,
-                "height": 267,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x267.png"
-              },
-              "full": {
-                "file": "Story-3.png",
-                "width": 1420,
-                "height": 2523,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png"
-              }
-            }
-          },
-          "type": "image",
           "x": 153,
           "y": 307,
           "width": 355,
@@ -274,7 +53,44 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "c36505ae-cf3f-4cf1-aee4-bac8c96c6f8f"
+          "id": "97939714-0cf7-47e6-9c7d-f8820ee939a6",
+          "alt": "",
+          "type": "image"
+        },
+        {
+          "opacity": 54,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 30,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://example.com/demo-story/image-2.png",
+            "width": 1421,
+            "height": 2524,
+            "id": 12091,
+            "title": "",
+            "alt": "",
+            "local": true,
+            "sizes": []
+          },
+          "x": -184,
+          "y": 113,
+          "width": 355,
+          "height": 630,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "1ea69fdf-9f1d-4924-a150-a807f74331f5",
+          "alt": "",
+          "type": "image"
         },
         {
           "opacity": 100,
@@ -287,105 +103,19 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1.png",
+            "src": "https://example.com/demo-story/scrim-1.png",
             "width": 1648,
-            "height": 1728,
-            "id": 11746,
-            "title": "scrim",
-            "alt": "scrim",
+            "height": 2928,
+            "id": 12090,
+            "title": "",
+            "alt": "",
             "local": true,
-            "sizes": {
-              "medium": {
-                "file": "scrim-1-286x300.png",
-                "width": 286,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-286x300.png"
-              },
-              "large": {
-                "file": "scrim-1-977x1024.png",
-                "width": 977,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-977x1024.png"
-              },
-              "thumbnail": {
-                "file": "scrim-1-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-150x150.png"
-              },
-              "medium_large": {
-                "file": "scrim-1-768x805.png",
-                "width": 768,
-                "height": 805,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-768x805.png"
-              },
-              "1536x1536": {
-                "file": "scrim-1-1465x1536.png",
-                "width": 1465,
-                "height": 1536,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-1465x1536.png"
-              },
-              "post-thumbnail": {
-                "file": "scrim-1-1200x1258.png",
-                "width": 1200,
-                "height": 1258,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-1200x1258.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "scrim-1-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "scrim-1-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "scrim-1-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "scrim-1-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "scrim-1-150x157.png",
-                "width": 150,
-                "height": 157,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1-150x157.png"
-              },
-              "full": {
-                "file": "scrim-1.png",
-                "width": 1648,
-                "height": 1728,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1.png"
-              }
-            }
+            "sizes": []
           },
-          "type": "image",
           "x": 0,
           "y": -57,
           "width": 412,
-          "height": 432,
+          "height": 732,
           "mask": {
             "type": "rectangle",
             "showInLibrary": true,
@@ -393,121 +123,8 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "4532138d-3dbc-48fe-b1b3-9f159f17d02f"
-        },
-        {
-          "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2020-09-06T14:13:41",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo.png",
-            "width": 330,
-            "height": 242,
-            "posterId": 0,
-            "id": 11504,
-            "title": "webstorieslogo",
-            "alt": "webstorieslogo",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "webstorieslogo-300x220.png",
-                "width": 300,
-                "height": 220,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-300x220.png"
-              },
-              "large": {
-                "file": "webstorieslogo-1024x752.png",
-                "width": 1024,
-                "height": 752,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-1024x752.png"
-              },
-              "thumbnail": {
-                "file": "webstorieslogo-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-150x150.png"
-              },
-              "medium_large": {
-                "file": "webstorieslogo-768x564.png",
-                "width": 768,
-                "height": 564,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-768x564.png"
-              },
-              "post-thumbnail": {
-                "file": "webstorieslogo-1200x881.png",
-                "width": 1200,
-                "height": 881,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-1200x881.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "webstorieslogo-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "webstorieslogo-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "webstorieslogo-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "webstorieslogo-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "webstorieslogo-150x110.png",
-                "width": 150,
-                "height": 110,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo-150x110.png"
-              },
-              "full": {
-                "file": "webstorieslogo.png",
-                "width": 1226,
-                "height": 900,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/webstorieslogo.png"
-              }
-            }
-          },
-          "type": "image",
-          "x": 55,
-          "y": 215,
-          "width": 304,
-          "height": 223,
-          "mask": {
-            "type": "rectangle",
-            "showInLibrary": true,
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "e331f466-1cff-45ad-9631-be1731c292d5"
+          "id": "c8e87cdd-12bf-4037-99fc-815d232fefc2",
+          "type": "image"
         },
         {
           "opacity": 100,
@@ -547,7 +164,6 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
-          "type": "text",
           "title": "Heading",
           "content": "L10N_PLACEHOLDER_1_1",
           "width": 334,
@@ -556,14 +172,51 @@
           "focalX": 50,
           "focalY": 50,
           "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
-          "id": "0e74eb8a-5f77-4f1c-a68f-c2f52f786679",
+          "id": "103b0de3-c269-4dbc-bd68-568ef5b7dbd3",
           "x": 44,
-          "y": 73
+          "y": 73,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-10T20:33:23",
+            "src": "https://example.com/demo-story/web-stories-logo.png",
+            "width": 330,
+            "height": 277,
+            "posterId": 0,
+            "id": 12136,
+            "title": "Web Stories",
+            "alt": "Web Stories",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "x": 78,
+          "y": 223,
+          "width": 256,
+          "height": 215,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "6cbaf959-17c3-45c2-bfec-f81212dca5f7"
         }
       ],
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
       "type": "page",
-      "id": "06a5a574-5692-4d32-b216-65f1637fce04",
+      "id": "cf91578e-22d6-424d-928a-8e0917cfa48d",
       "defaultBackgroundElement": {
         "opacity": 100,
         "flip": { "vertical": false, "horizontal": false },
@@ -611,16 +264,16 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip1.mp4",
+            "src": "https://example.com/demo-story/video-1.mp4",
             "width": 796,
             "height": 940,
-            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-1.jpeg",
-            "posterId": 11683,
-            "id": 11681,
+            "poster": "https://example.com/demo-story/video-1-poster.jpeg",
+            "posterId": 12063,
+            "id": 12061,
             "length": 5,
             "lengthFormatted": "0:05",
-            "title": "WebStoriesTip1",
-            "alt": "WebStoriesTip1",
+            "title": "",
+            "alt": "",
             "local": true,
             "sizes": []
           },
@@ -639,7 +292,9 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "f9d690ab-26f3-4935-a53d-aabe0e07f43f"
+          "id": "b251374d-8785-4eee-8970-487dddef956e",
+          "title": "",
+          "alt": ""
         },
         {
           "opacity": 100,
@@ -653,104 +308,19 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-09-06T22:34:56",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "src": "https://example.com/demo-story/scrim.png",
             "width": 330,
             "height": 215,
             "posterId": 0,
             "id": 11577,
-            "title": "scrim",
-            "alt": "scrim",
+            "title": "",
+            "alt": "",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "scrim-300x196.png",
-                "width": 300,
-                "height": 196,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
-              },
-              "large": {
-                "file": "scrim-1024x669.png",
-                "width": 1024,
-                "height": 669,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
-              },
-              "thumbnail": {
-                "file": "scrim-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
-              },
-              "medium_large": {
-                "file": "scrim-768x501.png",
-                "width": 768,
-                "height": 501,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
-              },
-              "1536x1536": {
-                "file": "scrim-1536x1003.png",
-                "width": 1536,
-                "height": 1003,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
-              },
-              "post-thumbnail": {
-                "file": "scrim-1200x783.png",
-                "width": 1200,
-                "height": 783,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "scrim-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "scrim-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "scrim-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "scrim-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "scrim-150x98.png",
-                "width": 150,
-                "height": 98,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
-              },
-              "full": {
-                "file": "scrim.png",
-                "width": 1648,
-                "height": 1076,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
-              }
-            }
+            "sizes": []
           },
           "type": "image",
           "x": 0,
-          "y": 238,
+          "y": 258,
           "width": 412,
           "height": 268,
           "mask": {
@@ -901,7 +471,7 @@
           "mask": { "type": "rectangle" },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "3a640753-8538-4056-b81b-af839012db1b",
+          "id": "9d359fb1-0109-4c51-999e-27c188d60592",
           "type": "shape"
         },
         {
@@ -915,16 +485,16 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip2.mp4",
+            "src": "https://example.com/demo-story/video-2.mp4",
             "width": 796,
             "height": 940,
-            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-2.jpeg",
-            "posterId": 11687,
-            "id": 11685,
-            "length": 10,
-            "lengthFormatted": "0:10",
-            "title": "WebStoriesTip2",
-            "alt": "WebStoriesTip2",
+            "poster": "https://example.com/demo-story/video-2-poster.jpeg",
+            "posterId": 12112,
+            "id": 12110,
+            "length": 9,
+            "lengthFormatted": "0:09",
+            "title": "",
+            "alt": "",
             "local": true,
             "sizes": []
           },
@@ -943,7 +513,9 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "701d5397-143a-40bb-8c53-b65cdefd3410"
+          "id": "18b77d56-7ab9-40d3-8be8-da975d282a74",
+          "title": "",
+          "alt": ""
         },
         {
           "opacity": 100,
@@ -957,102 +529,16 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-09-06T22:34:56",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "src": "https://example.com/demo-story/scrim.png",
             "width": 330,
             "height": 215,
             "posterId": 0,
             "id": 11577,
-            "title": "scrim",
-            "alt": "scrim",
+            "title": "",
+            "alt": "",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "scrim-300x196.png",
-                "width": 300,
-                "height": 196,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
-              },
-              "large": {
-                "file": "scrim-1024x669.png",
-                "width": 1024,
-                "height": 669,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
-              },
-              "thumbnail": {
-                "file": "scrim-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
-              },
-              "medium_large": {
-                "file": "scrim-768x501.png",
-                "width": 768,
-                "height": 501,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
-              },
-              "1536x1536": {
-                "file": "scrim-1536x1003.png",
-                "width": 1536,
-                "height": 1003,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
-              },
-              "post-thumbnail": {
-                "file": "scrim-1200x783.png",
-                "width": 1200,
-                "height": 783,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "scrim-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "scrim-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "scrim-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "scrim-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "scrim-150x98.png",
-                "width": 150,
-                "height": 98,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
-              },
-              "full": {
-                "file": "scrim.png",
-                "width": 1648,
-                "height": 1076,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
-              }
-            }
+            "sizes": []
           },
-          "type": "image",
           "width": 412,
           "height": 268,
           "mask": {
@@ -1063,9 +549,10 @@
             "ratio": 1
           },
           "basedOn": "fdc079dd-1b51-4ee3-92b3-30f36c0415d3",
-          "id": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
+          "id": "e1be977d-bad2-4b9b-bdb6-25a4287abba3",
           "x": 0,
-          "y": 238
+          "y": 258,
+          "type": "image"
         },
         {
           "opacity": 84,
@@ -1105,12 +592,234 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
-          "x": 53.5,
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_3_2</span>",
+          "width": 282,
+          "height": 125,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "004a2890-04b2-4cea-aa73-961f2450507f",
+          "id": "8352409b-8d75-45b1-8a56-bd2f57c81a7f",
+          "x": 65,
+          "y": 501
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 20,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "title": "Heading",
+          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_3_1</span>",
+          "width": 327,
+          "height": 20,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "68b0dbfc-c986-4267-b96e-b2bc025d56c9",
+          "id": "2619d1cc-3328-4683-a5ea-3e6f07f9b5ba",
+          "x": 43,
+          "y": 462
+        }
+      ],
+      "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },
+      "type": "page",
+      "id": "9d8b64c3-5692-4e4c-ae46-785e23613db1",
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "9d359fb1-0109-4c51-999e-27c188d60592",
+        "type": "shape"
+      }
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "3a640753-8538-4056-b81b-af839012db1b",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "video",
+            "mimeType": "video/mp4",
+            "src": "https://example.com/demo-story/video-3.mp4",
+            "width": 796,
+            "height": 940,
+            "poster": "https://example.com/demo-story/video-3-poster.jpeg",
+            "posterId": 12067,
+            "id": 12065,
+            "length": 10,
+            "lengthFormatted": "0:10",
+            "title": "",
+            "alt": "",
+            "local": true,
+            "sizes": []
+          },
+          "controls": false,
+          "loop": false,
+          "autoPlay": true,
+          "type": "video",
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 486,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "6c582171-d86e-49bb-acdc-87310f004e80",
+          "title": "",
+          "alt": ""
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://example.com/demo-story/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "fdc079dd-1b51-4ee3-92b3-30f36c0415d3",
+          "id": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
+          "x": 0,
+          "y": 258
+        },
+        {
+          "opacity": 84,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 18,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
+          "x": 54,
           "y": 501,
           "id": "f8b4a07c-1f1b-4140-945c-66a729bd77ae",
           "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
           "title": "Heading",
-          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_3_2</span>",
+          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_4_2</span>",
           "width": 305,
           "height": 100,
           "scale": 100,
@@ -1157,7 +866,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "title": "Heading",
-          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_3_1</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_4_1</span>",
           "width": 252,
           "height": 20,
           "scale": 100,
@@ -1220,16 +929,16 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip-SafeZone-1.mp4",
+            "src": "https://example.com/demo-story/video-4.mp4",
             "width": 796,
             "height": 940,
-            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-11.jpeg",
-            "posterId": 11804,
-            "id": 11802,
-            "length": 4,
-            "lengthFormatted": "0:04",
-            "title": "WebStoriesTip-SafeZone",
-            "alt": "WebStoriesTip-SafeZone",
+            "poster": "https://example.com/demo-story/video-4-poster.jpeg",
+            "posterId": 12072,
+            "id": 12070,
+            "length": 3,
+            "lengthFormatted": "0:03",
+            "title": "",
+            "alt": "",
             "local": true,
             "sizes": []
           },
@@ -1248,7 +957,46 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "6341dab4-1424-433f-963c-f142d6a83970"
+          "id": "5fefcf7c-7385-48b7-a602-eac66eec58d2",
+          "title": "",
+          "alt": ""
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://example.com/demo-story/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
+          "id": "d8451bae-7bd9-4a50-ac66-b9e088c7ded6",
+          "x": 0,
+          "y": 258
         },
         {
           "opacity": 84,
@@ -1293,7 +1041,7 @@
           "id": "8abc8e46-48f4-4a57-8396-3a74d5fa0790",
           "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
           "title": "Heading",
-          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_4_2</span>",
+          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_5_2</span>",
           "width": 326,
           "height": 100,
           "scale": 100,
@@ -1340,7 +1088,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "title": "Heading",
-          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_4_1</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_5_1</span>",
           "width": 230,
           "height": 20,
           "scale": 100,
@@ -1403,16 +1151,16 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/ftueSampleStory-SysLayer-1.mp4",
+            "src": "https://example.com/demo-story/video-5.mp4",
             "width": 796,
             "height": 940,
-            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-12.jpeg",
-            "posterId": 11809,
-            "id": 11807,
-            "length": 2,
-            "lengthFormatted": "0:02",
-            "title": "ftueSampleStory-SysLayer",
-            "alt": "ftueSampleStory-SysLayer",
+            "poster": "https://example.com/demo-story/video-5-poster.jpeg",
+            "posterId": 12077,
+            "id": 12075,
+            "length": 3,
+            "lengthFormatted": "0:03",
+            "title": "",
+            "alt": "",
             "local": true,
             "sizes": []
           },
@@ -1431,7 +1179,45 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "949c85d7-9bc4-472f-a904-c1cd996954be"
+          "id": "ae751ed3-f6df-436b-ad84-bd33df1d9339",
+          "title": ""
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-09-06T22:34:56",
+            "src": "https://example.com/demo-story/scrim.png",
+            "width": 330,
+            "height": 215,
+            "posterId": 0,
+            "id": 11577,
+            "title": "",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
+          "width": 412,
+          "height": 268,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "basedOn": "d8451bae-7bd9-4a50-ac66-b9e088c7ded6",
+          "id": "7702417c-8612-4bdc-9465-d339b82dbbf1",
+          "x": 0,
+          "y": 258
         },
         {
           "opacity": 84,
@@ -1476,7 +1262,7 @@
           "id": "3cdc3e2c-80b9-4946-b0c6-5d473ffe127d",
           "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
           "title": "Heading",
-          "content": "L10N_PLACEHOLDER_5_2",
+          "content": "L10N_PLACEHOLDER_6_2",
           "width": 290,
           "height": 100,
           "scale": 100,
@@ -1523,7 +1309,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "title": "Heading",
-          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_5_1</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_6_1</span>",
           "width": 230,
           "height": 20,
           "scale": 100,
@@ -1586,16 +1372,16 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip5.mp4",
+            "src": "https://example.com/demo-story/video-6.mp4",
             "width": 796,
             "height": 940,
-            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-8.jpeg",
-            "posterId": 11786,
-            "id": 11784,
+            "poster": "https://example.com/demo-story/video-6-poster.jpeg",
+            "posterId": 12082,
+            "id": 12080,
             "length": 20,
             "lengthFormatted": "0:20",
-            "title": "WebStoriesTip5",
-            "alt": "WebStoriesTip5",
+            "title": "tips-shape",
+            "alt": "tips-shape",
             "local": true,
             "sizes": []
           },
@@ -1614,7 +1400,9 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "3195a5c5-933c-4b45-a66c-152bbd619fdb"
+          "id": "bdf63655-1cf8-42ce-9f9d-42403a0dadc1",
+          "title": "",
+          "alt": ""
         },
         {
           "opacity": 100,
@@ -1628,100 +1416,15 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-09-06T22:34:56",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "src": "https://example.com/demo-story/scrim.png",
             "width": 330,
             "height": 215,
             "posterId": 0,
             "id": 11577,
-            "title": "scrim",
-            "alt": "scrim",
+            "title": "",
+            "alt": "",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "scrim-300x196.png",
-                "width": 300,
-                "height": 196,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
-              },
-              "large": {
-                "file": "scrim-1024x669.png",
-                "width": 1024,
-                "height": 669,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
-              },
-              "thumbnail": {
-                "file": "scrim-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
-              },
-              "medium_large": {
-                "file": "scrim-768x501.png",
-                "width": 768,
-                "height": 501,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
-              },
-              "1536x1536": {
-                "file": "scrim-1536x1003.png",
-                "width": 1536,
-                "height": 1003,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
-              },
-              "post-thumbnail": {
-                "file": "scrim-1200x783.png",
-                "width": 1200,
-                "height": 783,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "scrim-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "scrim-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "scrim-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "scrim-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "scrim-150x98.png",
-                "width": 150,
-                "height": 98,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
-              },
-              "full": {
-                "file": "scrim.png",
-                "width": 1648,
-                "height": 1076,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
-              }
-            }
+            "sizes": []
           },
           "type": "image",
           "width": 412,
@@ -1736,7 +1439,7 @@
           "basedOn": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
           "id": "3acdf9d7-aa57-46fe-b7f1-2673b05c50b4",
           "x": 0,
-          "y": 238
+          "y": 285
         },
         {
           "opacity": 84,
@@ -1776,13 +1479,13 @@
           "lineHeight": 1.4,
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
-          "x": 75,
+          "x": 86,
           "y": 501,
           "id": "0108f423-121e-41e7-8fb9-68da265caaba",
           "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
           "title": "Heading",
-          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_6_2</span>",
-          "width": 268,
+          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_7_2</span>",
+          "width": 241,
           "height": 100,
           "scale": 100,
           "focalX": 50,
@@ -1828,7 +1531,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "title": "Heading",
-          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_6_1</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_7_1</span>",
           "width": 230,
           "height": 20,
           "scale": 100,
@@ -1891,16 +1594,16 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/WebStoriesTip-Post.mp4",
+            "src": "https://example.com/demo-story/video-7.mp4",
             "width": 796,
             "height": 940,
-            "poster": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/image-13.jpeg",
-            "posterId": 11830,
-            "id": 11828,
+            "poster": "https://example.com/demo-story/video-7-poster.jpeg",
+            "posterId": 12200,
+            "id": 12198,
             "length": 9,
             "lengthFormatted": "0:09",
-            "title": "WebStoriesTip-Post",
-            "alt": "WebStoriesTip-Post",
+            "title": "",
+            "alt": "",
             "local": true,
             "sizes": []
           },
@@ -1919,7 +1622,7 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "55b9134a-502f-416b-9d48-0079af916ae6"
+          "id": "1d6ed66d-37ba-4ccf-98ff-137ab6b83c48"
         },
         {
           "opacity": 100,
@@ -1933,101 +1636,17 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-09-06T22:34:56",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png",
+            "src": "https://example.com/demo-story/scrim.png",
             "width": 330,
             "height": 215,
             "posterId": 0,
             "id": 11577,
-            "title": "scrim",
-            "alt": "scrim",
+            "title": "",
+            "alt": "",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "scrim-300x196.png",
-                "width": 300,
-                "height": 196,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-300x196.png"
-              },
-              "large": {
-                "file": "scrim-1024x669.png",
-                "width": 1024,
-                "height": 669,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1024x669.png"
-              },
-              "thumbnail": {
-                "file": "scrim-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x150.png"
-              },
-              "medium_large": {
-                "file": "scrim-768x501.png",
-                "width": 768,
-                "height": 501,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-768x501.png"
-              },
-              "1536x1536": {
-                "file": "scrim-1536x1003.png",
-                "width": 1536,
-                "height": 1003,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1536x1003.png"
-              },
-              "post-thumbnail": {
-                "file": "scrim-1200x783.png",
-                "width": 1200,
-                "height": 783,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-1200x783.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "scrim-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "scrim-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "scrim-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "scrim-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "scrim-150x98.png",
-                "width": 150,
-                "height": 98,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim-150x98.png"
-              },
-              "full": {
-                "file": "scrim.png",
-                "width": 1648,
-                "height": 1076,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/scrim.png"
-              }
-            }
+            "sizes": []
           },
+          "type": "image",
           "width": 412,
           "height": 268,
           "mask": {
@@ -2037,11 +1656,10 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "basedOn": "d66ea269-787e-4495-bfc0-ffa42d6879ed",
-          "id": "6a7c0c70-192f-44eb-b878-15f3018d92ca",
+          "basedOn": "3acdf9d7-aa57-46fe-b7f1-2673b05c50b4",
+          "id": "5174af41-1e7b-4031-9f8c-86bbe5a0f152",
           "x": 0,
-          "y": 238,
-          "type": "image"
+          "y": 285
         },
         {
           "opacity": 84,
@@ -2086,7 +1704,7 @@
           "id": "5542ba59-9388-49fc-b7e1-f2ec50c047a9",
           "basedOn": "2a187a24-c4ae-4a0d-9911-cb60d11bb02b",
           "title": "Heading",
-          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_7_2</span>",
+          "content": "<span style=\"font-weight: 200; color: #fff\">L10N_PLACEHOLDER_8_2</span>",
           "width": 304,
           "height": 100,
           "scale": 100,
@@ -2133,7 +1751,7 @@
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "title": "Heading",
-          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_7_1</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">L10N_PLACEHOLDER_8_1</span>",
           "width": 321,
           "height": 20,
           "scale": 100,
@@ -2186,7 +1804,7 @@
           "type": "shape"
         },
         {
-          "opacity": 10,
+          "opacity": 12,
           "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 30,
           "lockAspectRatio": true,
@@ -2196,110 +1814,17 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "creationDate": "2020-09-06T14:08:07",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png",
+            "creationDate": "2020-09-10T15:03:28",
+            "src": "https://example.com/demo-story/image-1.png",
             "width": 330,
             "height": 585,
             "posterId": 0,
-            "id": 11499,
-            "title": "Story-2",
-            "alt": "Story-2",
+            "id": 12105,
+            "title": "",
+            "alt": "",
             "local": false,
-            "sizes": {
-              "medium": {
-                "file": "Story-2-169x300.png",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-169x300.png"
-              },
-              "large": {
-                "file": "Story-2-577x1024.png",
-                "width": 577,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-577x1024.png"
-              },
-              "thumbnail": {
-                "file": "Story-2-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x150.png"
-              },
-              "medium_large": {
-                "file": "Story-2-768x1364.png",
-                "width": 768,
-                "height": 1364,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-768x1364.png"
-              },
-              "1536x1536": {
-                "file": "Story-2-865x1536.png",
-                "width": 865,
-                "height": 1536,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-865x1536.png"
-              },
-              "2048x2048": {
-                "file": "Story-2-1153x2048.png",
-                "width": 1153,
-                "height": 2048,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1153x2048.png"
-              },
-              "post-thumbnail": {
-                "file": "Story-2-1200x2131.png",
-                "width": 1200,
-                "height": 2131,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-1200x2131.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "Story-2-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "Story-2-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "Story-2-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "Story-2-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "Story-2-150x266.png",
-                "width": 150,
-                "height": 266,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2-150x266.png"
-              },
-              "full": {
-                "file": "Story-2.png",
-                "width": 1421,
-                "height": 2524,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-2.png"
-              }
-            }
+            "sizes": []
           },
-          "type": "image",
           "width": 355,
           "height": 630,
           "mask": {
@@ -2309,10 +1834,48 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "basedOn": "f1d66717-c7c9-4304-ab1e-9e7490c96dd8",
-          "id": "a0fdd4b7-cd14-45ef-abf3-3b1fb310be6a",
-          "x": -177,
-          "y": 117
+          "type": "image",
+          "basedOn": "379d931f-8fd9-4c34-bfe8-ea3fcc5c52b8",
+          "id": "9ddf0c1f-82be-4393-8a5b-9c91a852c0ac",
+          "x": 153,
+          "y": 307,
+          "alt": ""
+        },
+        {
+          "opacity": 12,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 30,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://example.com/demo-story/image-2.png",
+            "width": 1421,
+            "height": 2524,
+            "id": 12091,
+            "title": "",
+            "alt": "",
+            "local": true,
+            "sizes": []
+          },
+          "width": 355,
+          "height": 630,
+          "mask": {
+            "type": "rectangle",
+            "showInLibrary": true,
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "b505dc4f-2ce4-457b-9566-1aaf581fb553",
+          "id": "ef054939-2026-4ecf-96d5-fea67ab45d40",
+          "x": -184,
+          "y": 113,
+          "alt": ""
         },
         {
           "opacity": 100,
@@ -2347,23 +1910,23 @@
               [1, 900]
             ]
           },
-          "fontSize": 40,
+          "fontSize": 38,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "initial",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
           "title": "Heading",
-          "content": "<span style=\"font-weight: 100; color: #fff\">L10N_PLACEHOLDER_8_1</span>",
+          "content": "L10N_PLACEHOLDER_9_1",
           "width": 313,
-          "height": 200,
+          "height": 190,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "0e74eb8a-5f77-4f1c-a68f-c2f52f786679",
           "id": "0106c119-e3d1-416f-92e4-b3f5b7e6c2c5",
-          "x": 47,
-          "y": 161
+          "x": 49.5,
+          "y": 211
         },
         {
           "opacity": 100,
@@ -2380,8 +1943,8 @@
           "mask": { "type": "rectangle" },
           "basedOn": "4ce80a9c-b414-4924-9f0e-29451a6b1a8c",
           "id": "9acf6b79-00a8-4264-854d-63a465f0a8c7",
-          "x": 191,
-          "y": 0
+          "x": 49.5,
+          "y": 454
         },
         {
           "opacity": 100,
@@ -2424,23 +1987,23 @@
           "type": "text",
           "id": "e59aa680-9a49-439a-98fd-18660d8dfa21",
           "content": "<span style=\"color: #1a73e8\">bit.ly/storybestpractices</span>",
-          "x": 46,
-          "y": 422,
+          "x": 49.5,
+          "y": 472,
           "width": 226,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "link": {
-            "url": "L10N_PLACEHOLDER_8_2",
+            "url": "L10N_PLACEHOLDER_9_2",
             "icon": "https://amp.dev/static/img/sharing/docs-guide-600x314.png",
-            "desc": "L10N_PLACEHOLDER_8_3"
+            "desc": "L10N_PLACEHOLDER_9_3"
           }
         },
         {
-          "opacity": 10,
+          "opacity": 100,
           "flip": { "vertical": false, "horizontal": false },
-          "rotationAngle": 30,
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
           "focalX": 50,
@@ -2448,112 +2011,20 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "creationDate": "2020-09-06T14:07:52",
-            "src": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png",
-            "width": 330,
-            "height": 586,
-            "posterId": 0,
-            "id": 11498,
-            "title": "Story-3",
-            "alt": "Story-3",
-            "local": false,
-            "sizes": {
-              "medium": {
-                "file": "Story-3-169x300.png",
-                "width": 169,
-                "height": 300,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-169x300.png"
-              },
-              "large": {
-                "file": "Story-3-576x1024.png",
-                "width": 576,
-                "height": 1024,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-576x1024.png"
-              },
-              "thumbnail": {
-                "file": "Story-3-150x150.png",
-                "width": 150,
-                "height": 150,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x150.png"
-              },
-              "medium_large": {
-                "file": "Story-3-768x1365.png",
-                "width": 768,
-                "height": 1365,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-768x1365.png"
-              },
-              "1536x1536": {
-                "file": "Story-3-864x1536.png",
-                "width": 864,
-                "height": 1536,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-864x1536.png"
-              },
-              "2048x2048": {
-                "file": "Story-3-1153x2048.png",
-                "width": 1153,
-                "height": 2048,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1153x2048.png"
-              },
-              "post-thumbnail": {
-                "file": "Story-3-1200x2132.png",
-                "width": 1200,
-                "height": 2132,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-1200x2132.png"
-              },
-              "web-stories-poster-portrait": {
-                "file": "Story-3-640x853.png",
-                "width": 640,
-                "height": 853,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x853.png"
-              },
-              "web-stories-poster-landscape": {
-                "file": "Story-3-853x640.png",
-                "width": 853,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-853x640.png"
-              },
-              "web-stories-poster-square": {
-                "file": "Story-3-640x640.png",
-                "width": 640,
-                "height": 640,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-640x640.png"
-              },
-              "web-stories-publisher-logo": {
-                "file": "Story-3-96x96.png",
-                "width": 96,
-                "height": 96,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-96x96.png"
-              },
-              "web-stories-thumbnail": {
-                "file": "Story-3-150x267.png",
-                "width": 150,
-                "height": 267,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3-150x267.png"
-              },
-              "full": {
-                "file": "Story-3.png",
-                "width": 1420,
-                "height": 2523,
-                "mime_type": "image/png",
-                "source_url": "https://stories-new-wordpress-amp.pantheonsite.io/wp-content/uploads/2020/09/Story-3.png"
-              }
-            }
+            "src": "https://example.com/demo-story/web-stories-logo-circle.png",
+            "width": 800,
+            "height": 800,
+            "id": 12141,
+            "title": "Web Stories",
+            "alt": "Web Stories",
+            "local": true,
+            "sizes": []
           },
           "type": "image",
-          "width": 355,
-          "height": 630,
+          "x": 181.5,
+          "y": 72,
+          "width": 49,
+          "height": 49,
           "mask": {
             "type": "rectangle",
             "showInLibrary": true,
@@ -2561,10 +2032,7 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "basedOn": "c36505ae-cf3f-4cf1-aee4-bac8c96c6f8f",
-          "id": "9748eb4e-205d-4c90-8c27-90d34856a592",
-          "x": 153,
-          "y": 307
+          "id": "1ae96ad1-ff88-474d-a32d-ccf46f10e739"
         }
       ],
       "backgroundColor": { "color": { "r": 21, "g": 22, "b": 22 } },

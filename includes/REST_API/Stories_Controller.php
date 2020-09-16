@@ -26,7 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\KSES;
+use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
@@ -64,9 +64,10 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// $_GET param is available when the response iss preloaded in edit-story.php
 		if ( isset( $_GET['web-stories-demo'] ) && 'edit' === $context && 'auto-draft' === $post->post_status ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$demo_content = $this->get_demo_content();
+			$demo         = new Demo_Content();
+			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
-				$post->post_title            = __( 'Tips to make the most of Web Stories', 'web-stories' );
+				$post->post_title            = $demo->get_title();
 				$post->post_content_filtered = $demo_content;
 			}
 		}
@@ -107,178 +108,6 @@ class Stories_Controller extends Stories_Base_Controller {
 		 * @param WP_REST_Request $request Request object.
 		 */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
-	}
-
-	/**
-	 * Pre-fills story with demo content.
-	 *
-	 * @return string Pre-filled post content if applicable, or the default content otherwise.
-	 */
-	private function get_demo_content() {
-		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';
-
-		if ( ! is_readable( $file ) ) {
-			return '';
-		}
-
-		$file_content = file_get_contents( $file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
-
-		if ( ! $file_content ) {
-			return '';
-		}
-
-		// Make everything localizable.
-
-		// TODO: Replace image URLs, and clean up demo story.
-
-		$kses = new KSES();
-		$kses->init();
-
-		// Page 1.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_1_1',
-			addslashes(
-				wp_kses(
-					/* translators: demo content used in the "Get Started" story */
-					_x( '<span style="font-weight: 700; color: #fff">Tips </span><span style="font-weight: 100; color: #fff">to make the most of</span>', 'demo content', 'web-stories' ),
-					[
-						'span' => [ 'style' => [] ],
-					]
-				)
-			),
-			$file_content
-		);
-
-		// Page 2.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_2_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'SET A PAGE BACKGROUND', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_2_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Drag your image or video to the edge of the page to set as page background.', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		// Page 3.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_3_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'BACKGROUND OVERLAY', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_3_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Once you\'ve set a page background, add a solid, linear or radial gradient overlay to increase text contrast or add visual styles.', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		// Page 4.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_4_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'SAFE ZONE', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_4_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Add your designs to the page, keeping crucial elements inside the safe zone (tick marks) to ensure they are visible across most devices.', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		// Page 5.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_5_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'STORY SYSTEM LAYER', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_5_2',
-			addslashes(
-				wp_kses(
-				/* translators: demo content used in the "Get Started" story */
-					_x( '<span style="font-weight: 200; color: #fff">The story system layer is docked at the top. </span><span style="font-weight: 500; color: #fff">Preview your story</span><span style="font-weight: 200; color: #fff"> to ensure system layer icons are not blocking crucial elements.</span>', 'demo content', 'web-stories' ),
-					[
-						'span' => [ 'style' => [] ],
-					]
-				)
-			),
-			$file_content
-		);
-
-		// Page 6.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_6_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'SHAPE + MASKING', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_6_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Our shapes are quite basic for now but they act as masks. Drag an image or video into the mask to place.', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		// Page 7.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_7_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'EMBED VISUAL STORIES', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_7_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Embed stories into your blog post. Open the block menu & select the Web Stories block. Insert the story link to embed your story. That\'s it!', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		// Page 8.
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_8_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'READ ABOUT BEST PRACTICES FOR CREATING A SUCCESSFUL WEB STORY', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_8_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$file_content = str_replace(
-			'L10N_PLACEHOLDER_8_3',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Best practices for creating a successful Web Story', 'demo content', 'web-stories' ),
-			$file_content
-		);
-
-		$kses->remove_filters();
-
-		return $file_content;
 	}
 
 	/**
