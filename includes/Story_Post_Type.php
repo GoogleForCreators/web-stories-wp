@@ -705,8 +705,8 @@ class Story_Post_Type {
 			return;
 		}
 
-		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-		$link = $this->get_redirect_old_slug( $current );
+		$current = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$link    = $this->get_redirect_old_slug( $current );
 		if ( false !== $link ) {
 			wp_safe_redirect( $link, 301 );
 			exit;
@@ -728,6 +728,7 @@ class Story_Post_Type {
 		$path = str_replace( '/' . self::REWRITE_SLUG, '/stories', $no_home );
 		// Put home url back.
 		$link = (string) home_url( $path );
+		var_dump($current, $link,get_post_type_archive_link( self::POST_TYPE_SLUG ) );
 		if ( false !== strpos( $current, $link ) ) {
 			return (string) str_replace( $link, $new_link, $current );
 		}
