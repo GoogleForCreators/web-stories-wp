@@ -178,6 +178,7 @@ class Story_Post_Type {
 
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
+		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
@@ -434,6 +435,37 @@ class Story_Post_Type {
 		}
 
 		return array_values( $post_types );
+	}
+
+	/**
+	 * Filter amp_validation_error_sanitized to prevent invalid markup removal for the amp-story element.
+	 *
+	 * Since the amp-story element requires the poster-portrait-src attribute to be valid, when this attribute is absent
+	 * the AMP plugin will try to remove the amp-story element altogether. This is not the preferred resolution! So
+	 * instead, this will force the invalid markup to be kept. When this is done, the AMP plugin in Standard mode
+	 * (which Web Stories enforces while serving singular web-story posts) will remove the amp attribute from the html
+	 * element so that the page will not be advertised as AMP. This prevents GSC from complaining about a validation
+	 * issue which we already know about.
+	 *
+	 * @since 1.0.0
+	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
+	 *
+	 * @param null|bool $sanitized Whether sanitized. Null means sanitization is not overridden.
+	 * @param array     $error Validation error being sanitized.
+	 * @return null|bool Whether sanitized.
+	 */
+	public function filter_amp_story_element_validation_error_sanitized( $sanitized, $error ) {
+		if (
+			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			(
+				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
+				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
+			)
+		) {
+			return false;
+		}
+
+		return $sanitized;
 	}
 
 	/**
