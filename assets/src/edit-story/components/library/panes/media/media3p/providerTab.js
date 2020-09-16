@@ -27,11 +27,12 @@ import { useKeyDownEffect } from '../../../../keyboard';
 import { useConfig } from '../../../../../app/config';
 import { narrowPill } from './pill';
 
-const Tab = styled.span`
+const Tab = styled.button`
   ${narrowPill};
   padding: 6px 16px;
   height: 32px;
   display: inline-block;
+  font-family: ${({ theme }) => theme.fonts.body2.family};
   background-color: ${({ active, theme }) =>
     active ? theme.colors.fg.primary : 'transparent'};
   text-align: center;

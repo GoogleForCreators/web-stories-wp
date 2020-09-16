@@ -43,7 +43,6 @@ export function useTheme() {
 
 const themeFonts = {
   primary: "'Google Sans', sans-serif",
-  secondary: "'Roboto', sans-serif",
 };
 
 const colors = {

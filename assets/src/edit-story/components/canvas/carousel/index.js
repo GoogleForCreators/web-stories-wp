@@ -35,7 +35,6 @@ import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
-  Keyboard as KeyboardShortcutsButton,
   Plain,
 } from '../../button';
 import {
@@ -57,9 +56,9 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
-
 import useCanvas from '../useCanvas';
 import WithTooltip from '../../tooltip';
+import KeyboardShortcutsMenu from '../../keyboardShortcutsMenu';
 import { ToggleButton } from '../../form';
 import { SafeZone } from '../../../icons';
 import CompactIndicator from './compactIndicator';
@@ -268,6 +267,7 @@ function Carousel() {
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
+
   const listRef = useRef(null);
   const pageRefs = useRef([]);
   const wrapperRef = useRef(null);
@@ -484,12 +484,7 @@ function Carousel() {
           <MenuIconsWrapper isCompact={isCompact}>
             {showKeyboardShortcutsButton && (
               <OverflowButtons>
-                <KeyboardShortcutsButton
-                  width="24"
-                  height="24"
-                  isDisabled
-                  aria-label={__('Keyboard Shortcuts', 'web-stories')}
-                />
+                <KeyboardShortcutsMenu />
               </OverflowButtons>
             )}
             <WithTooltip

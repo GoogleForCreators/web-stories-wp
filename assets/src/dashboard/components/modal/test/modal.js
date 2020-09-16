@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Modal from '../';
 
 describe('Modal', () => {
   it('should not render a modal by default', () => {
-    const { queryAllByRole } = renderWithTheme(
+    const { queryAllByRole } = renderWithProviders(
       <Modal onClose={jest.fn}>
         <p>{'modal child'}</p>
       </Modal>
@@ -32,7 +32,7 @@ describe('Modal', () => {
   });
 
   it('should render a modal when isOpen is true', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <Modal onClose={jest.fn} isOpen={true}>
         <p>{'modal child'}</p>
       </Modal>

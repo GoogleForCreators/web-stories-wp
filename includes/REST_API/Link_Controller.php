@@ -83,6 +83,8 @@ class Link_Controller extends WP_REST_Controller {
 	/**
 	 * Parses a URL to return some metadata for inserting links.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -96,6 +98,8 @@ class Link_Controller extends WP_REST_Controller {
 
 		/**
 		 * Filters the link data TTL value.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param int $time Time to live (in seconds). Default is 1 day.
 		 * @param string $url The attempted URL.
@@ -123,6 +127,8 @@ class Link_Controller extends WP_REST_Controller {
 		 * Filters the HTTP request args for link data retrieval.
 		 *
 		 * Can be used to adjust timeout and response size limit.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param array $args Arguments used for the HTTP request
 		 * @param string $url The attempted URL.
@@ -222,6 +228,8 @@ class Link_Controller extends WP_REST_Controller {
 
 	/**
 	 * Checks if current user can process links.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */

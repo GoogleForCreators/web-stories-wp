@@ -33,6 +33,8 @@ if (
 	/**
 	 * Displays an admin notice about why the plugin is unable to load.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	function _print_missing_build_admin_notice() {
@@ -123,6 +125,8 @@ function activate( $network_wide = false ) {
 
 /**
  * Hook into new site when they are created and run activation hook.
+ *
+ * @since 1.0.0
  *
  * @param int|\WP_Site $site Site ID or object.
  *

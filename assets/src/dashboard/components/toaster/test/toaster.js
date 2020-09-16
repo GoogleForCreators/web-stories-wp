@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import Toaster from '../toaster';
 import { ALERT_SEVERITY } from '../../../constants';
 
@@ -35,7 +35,7 @@ const testToast = {
 describe('Toaster', () => {
   const mockRemoveToastClick = jest.fn();
   it('should have 1 active toast', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
@@ -49,7 +49,7 @@ describe('Toaster', () => {
   });
 
   it('should not load dismiss button when isAllowEarlyDismiss is false', () => {
-    const { queryAllByRole } = renderWithTheme(
+    const { queryAllByRole } = renderWithProviders(
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
@@ -63,7 +63,7 @@ describe('Toaster', () => {
   });
 
   it('should load dismiss button when isAllowEarlyDismiss is true', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={true}

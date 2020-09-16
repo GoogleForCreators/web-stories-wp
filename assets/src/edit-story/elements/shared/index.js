@@ -23,7 +23,7 @@ import { css } from 'styled-components';
  * Internal dependencies
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
-import { generateFontFamily } from '../text/util';
+import { calcFontMetrics, generateFontFamily } from '../text/util';
 
 export const elementFillContent = css`
   position: absolute;
@@ -51,7 +51,8 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBackgroundColor = css`
-  ${({ backgroundColor }) => generatePatternStyles(backgroundColor)};
+  ${({ backgroundColor }) =>
+    backgroundColor && generatePatternStyles(backgroundColor)};
 `;
 
 export const elementWithFont = css`
@@ -67,13 +68,16 @@ export const elementWithFont = css`
 `;
 
 // See generateParagraphTextStyle for the full set of properties.
-export const elementWithTextParagraphStyle = css`
-  margin: ${({ margin }) => margin || 0};
-  padding: ${({ padding }) => padding || 0};
-  line-height: ${({ lineHeight }) => lineHeight};
-  text-align: ${({ textAlign }) => textAlign};
-  overflow-wrap: break-word;
-`;
+export const elementWithTextParagraphStyle = ({ element, dataToEditorY }) => {
+  const { marginOffset } = calcFontMetrics(element);
+  return css`
+    margin: ${-dataToEditorY(marginOffset / 2)}px 0;
+    padding: ${({ padding }) => padding || 0};
+    line-height: ${({ lineHeight }) => lineHeight};
+    text-align: ${({ textAlign }) => textAlign};
+    overflow-wrap: break-word;
+  `;
+};
 
 export const SHARED_DEFAULT_ATTRIBUTES = {
   opacity: 100,

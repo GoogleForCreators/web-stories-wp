@@ -91,6 +91,8 @@ class Story_Post_Type {
 	/**
 	 * Dashboard constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Experiments $experiments Experiments instance.
 	 */
 	public function __construct( Experiments $experiments ) {
@@ -101,6 +103,8 @@ class Story_Post_Type {
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -201,6 +205,8 @@ class Story_Post_Type {
 	 * This gives WordPress site owners more granular control over story management,
 	 * as they can customize this to their liking.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function add_caps_to_roles() {
@@ -247,6 +253,8 @@ class Story_Post_Type {
 		 *
 		 * Can be used to add the capabilities to other, custom roles.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
 		do_action( 'web_stories_add_capabilities', $all_capabilities );
@@ -254,6 +262,8 @@ class Story_Post_Type {
 
 	/**
 	 * Removes story capabilities from all user roles.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -280,6 +290,8 @@ class Story_Post_Type {
 		 *
 		 * Can be used to remove the capabilities from other, custom roles.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
 		do_action( 'web_stories_remove_capabilities', $all_capabilities );
@@ -288,14 +300,18 @@ class Story_Post_Type {
 	/**
 	 * Base64 encoded svg icon.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string Base64-encoded SVG icon.
 	 */
 	protected function get_post_type_icon() {
-		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMiIGhlaWdodD0iNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOGg0djM5SDBWOHpNNTkgOGg0djM5aC00Vjh6TTUwIDBIMTN2NTVoMzdWMHoiIGZpbGw9ImN1cnJlbnRDb2xvciIvPjwvc3ZnPg==';
+		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
 	}
 
 	/**
 	 * Get the post type for the current request.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string|null
 	 */
@@ -350,7 +366,10 @@ class Story_Post_Type {
 	/**
 	 * Get the singular post type which is the queried object for the given validated URL post.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $post_id Post ID for Validated URL Post.
+	 *
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
 	protected function get_validated_url_post_type( $post_id ) {
@@ -380,7 +399,10 @@ class Story_Post_Type {
 	/**
 	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $options Options.
+	 *
 	 * @return array Filtered options.
 	 */
 	public function filter_amp_options( $options ) {
@@ -398,7 +420,10 @@ class Story_Post_Type {
 	 * Remove web-stories from the list unless the currently requested post type is for a web-story. This is done in
 	 * order to hide stories from the list of supportable post types on the AMP Settings screen.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string[] $post_types Post types.
+	 *
 	 * @return array Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
@@ -414,8 +439,11 @@ class Story_Post_Type {
 	/**
 	 * Add story_author as allowed orderby value for REST API.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array        $query_params Array of allowed query params.
 	 * @param WP_Post_Type $post_type Post type.
+	 *
 	 * @return array Array of query params.
 	 */
 	public function filter_rest_collection_params( $query_params, $post_type ) {
@@ -433,8 +461,11 @@ class Story_Post_Type {
 	/**
 	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $fields Array of allowed revision fields.
 	 * @param array $story Story post array.
+	 *
 	 * @return array Array of allowed fields.
 	 */
 	public function filter_revision_fields( $fields, $story ) {
@@ -446,6 +477,8 @@ class Story_Post_Type {
 
 	/**
 	 * Filter if show admin bar on single post type.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param boolean $show Current value of filter.
 	 *
@@ -463,6 +496,8 @@ class Story_Post_Type {
 	 * Replace default post editor with our own implementation.
 	 *
 	 * @codeCoverageIgnore
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param bool    $replace Bool if to replace editor or not.
 	 * @param WP_Post $post    Current post object.
@@ -491,8 +526,11 @@ class Story_Post_Type {
 	 * Disables the block editor and associated logic (like enqueueing assets)
 	 * for the story post type.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
 	 * @param string $post_type         The post type being checked.
+	 *
 	 * @return bool Whether to use the block editor.
 	 */
 	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
@@ -506,6 +544,8 @@ class Story_Post_Type {
 	/**
 	 *
 	 * Enqueue scripts for the element editor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $hook The current admin page.
 	 *
@@ -552,6 +592,8 @@ class Story_Post_Type {
 
 	/**
 	 * Get editor settings as an array.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -628,6 +670,8 @@ class Story_Post_Type {
 		/**
 		 * Filters settings passed to the web stories editor.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $settings Array of settings passed to web stories editor.
 		 */
 		return apply_filters( 'web_stories_editor_settings', $settings );
@@ -635,6 +679,8 @@ class Story_Post_Type {
 
 	/**
 	 * Set template for web-story post type.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $template Template.
 	 *
@@ -653,6 +699,8 @@ class Story_Post_Type {
 	 *
 	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $post_types Array of post types.
 	 *
 	 * @return array Modified list of post types.
@@ -665,6 +713,8 @@ class Story_Post_Type {
 
 	/**
 	 * Filter feed content for stories to render as an image.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Feed content.
 	 *
@@ -686,6 +736,8 @@ class Story_Post_Type {
 
 	/**
 	 * Change the content to an embedded player
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Current content of filter.
 	 *
@@ -716,6 +768,8 @@ class Story_Post_Type {
 
 	/**
 	 * Reset default title to empty string for auto-drafts.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $data Array of data to save.
 	 *

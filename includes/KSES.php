@@ -35,6 +35,8 @@ class KSES {
 	/**
 	 * Initializes KSES filters for stories.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -50,6 +52,8 @@ class KSES {
 	/**
 	 * Restores original KSES behavior.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function remove_filters() {
@@ -64,6 +68,8 @@ class KSES {
 
 	/**
 	 * Filters list of allowed CSS attributes.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string[] $attr Array of allowed CSS attributes.
 	 *
@@ -95,6 +101,8 @@ class KSES {
 	 *
 	 * @see safecss_filter_attr()
 	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $css A string of CSS rules.
 	 *
@@ -377,6 +385,8 @@ class KSES {
 	/**
 	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array|string $allowed_tags Allowed tags.
 	 *
 	 * @return array|string Allowed tags.
@@ -534,7 +544,10 @@ class KSES {
 	/**
 	 * Temporarily renames the style attribute to data-temp-style in full story markup.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $post_content Post content.
+	 *
 	 * @return string Filtered post content.
 	 */
 	public function filter_content_save_pre_before_kses( $post_content ) {
@@ -550,7 +563,10 @@ class KSES {
 	/**
 	 * Renames data-temp-style back to style in full story markup.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $post_content Post content.
+	 *
 	 * @return string Filtered post content.
 	 */
 	public function filter_content_save_pre_after_kses( $post_content ) {

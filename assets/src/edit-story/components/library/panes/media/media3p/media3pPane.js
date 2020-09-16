@@ -73,6 +73,7 @@ const ProviderMediaCategoriesWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   min-height: 100px;
+  max-width: 100%;
   top: 0;
   left: 0;
   &.provider-selected {

@@ -17,27 +17,25 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
-import { FlagsProvider } from 'flagged';
+import { percySnapshot } from '@percy/puppeteer';
 
 /**
  * Internal dependencies
  */
-import theme from '../theme';
+import { visitDashboard } from '../../utils';
 
-// eslint-disable-next-line react/prop-types
-const WithThemeProvider = ({ children }) => {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
-};
+describe('Stories Dashboard with disabled JavaScript', () => {
+  it('should display error message', async () => {
+    // Disable javascript for test.
+    await page.setJavaScriptEnabled(false);
 
-const renderWithTheme = (ui, options) =>
-  render(ui, { wrapper: WithThemeProvider, ...options });
+    await visitDashboard();
 
-export default renderWithTheme;
+    await expect(page).toMatchElement('#web-stories-no-js');
 
-export const renderWithThemeAndFlagsProvider = (ui, featureFlags = {}) => {
-  return renderWithTheme(
-    <FlagsProvider features={featureFlags}>{ui}</FlagsProvider>
-  );
-};
+    // Re-enable javascript for snapsnots.
+    await page.setJavaScriptEnabled(true);
+
+    await percySnapshot(page, 'Dashboard no js');
+  });
+});

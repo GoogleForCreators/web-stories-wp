@@ -30,10 +30,12 @@ import {
   NavMenuButton,
   StandardViewContentGutter,
 } from '../../../components';
+import { SQUISH_CSS_VAR } from '../../../components/layout';
 import TypeaheadSearch from './typeaheadSearch';
+import TelemetryBanner from './telemetryBanner';
 
 const Container = styled.div`
-  padding: 10px 0 0;
+  padding: ${cssLerp('0px', '10px', SQUISH_CSS_VAR)} 0 0;
 `;
 
 const StyledHeader = styled.h2`
@@ -107,6 +109,7 @@ const PageHeading = ({
 }) => {
   return (
     <Container>
+      <TelemetryBanner />
       <HeadingBodyWrapper>
         <StyledHeader>
           <NavMenuButton showOnlyOnSmallViewport />

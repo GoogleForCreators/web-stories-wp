@@ -60,7 +60,7 @@ function Preview() {
    * Open a preview of the story in current window.
    */
   const openPreviewLink = useCallback(() => {
-    trackEvent('editor', 'preview_story');
+    trackEvent('preview_story', 'editor');
 
     // Display the actual link in case of a draft.
     const previewLink = isDraft

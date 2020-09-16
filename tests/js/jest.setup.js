@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
-import { setDefaultOptions } from 'jsdom-screenshot';
 
 // Extend Jest matchers.
 // See https://github.com/testing-library/jest-dom.
@@ -37,11 +35,4 @@ expect.extend({
   toBeValidAMP,
   toBeValidAMPStoryElement,
   toBeValidAMPStoryPage,
-  toMatchImageSnapshot,
-});
-
-// TravisCI and Linux OS require --no-sandbox to be able to run the tests
-// https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-on-travis-ci
-setDefaultOptions({
-  launch: { args: process.env.CI === 'true' ? ['--no-sandbox'] : [] },
 });

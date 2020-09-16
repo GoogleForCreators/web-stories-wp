@@ -17,26 +17,34 @@
 /**
  * Generates paragraph text style for a text element.
  *
- * @param {Object<*>} element Text element properties.
+ * @param {Object} props Props.
  * @param {function(number):any} dataToStyleX Converts a x-unit to CSS.
  * @param {function(number):any} dataToStyleY Converts a y-unit to CSS.
  * @param {function(number):any} dataToFontSizeY Converts a font-size metric to
  * y-unit CSS.
+ * @param {Object<*>} element Text element properties.
+ * @param {function(number):any} dataToPaddingY Falls back to dataToStyleX if not provided.
  * @return {Object} The map of text style properties and values.
  */
 export function generateParagraphTextStyle(
-  { font, fontSize, lineHeight, padding, textAlign },
+  props,
   dataToStyleX,
   dataToStyleY,
-  dataToFontSizeY = dataToStyleY
+  dataToFontSizeY = dataToStyleY,
+  element,
+  dataToPaddingY = dataToStyleY
 ) {
+  const { font, fontSize, lineHeight, padding, textAlign } = props;
+  const { marginOffset } = calcFontMetrics(element);
   return {
+    dataToEditorY: dataToStyleY,
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
     wordBreak: 'break-word',
-    margin: 0,
+    margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
     fontFamily: generateFontFamily(font),
     fontSize: dataToFontSizeY(fontSize),
+    font,
     lineHeight,
     textAlign,
     padding: `${dataToStyleY(padding?.vertical || 0)}px ${dataToStyleX(
@@ -77,3 +85,35 @@ export const getHighlightLineheight = function (
     ${2 * Math.abs(verticalPadding)}${unit}
   )`;
 };
+
+export function calcFontMetrics(element) {
+  let marginOffset, contentAreaPx, lineBoxPx;
+
+  if (!element.font.metrics) {
+    return {
+      contentAreaPx: 0,
+      lineBoxPx: 0,
+      marginOffset: 0,
+    };
+  }
+
+  const {
+    fontSize,
+    lineHeight,
+    font: {
+      metrics: { upm, asc, des },
+    },
+  } = element;
+
+  // We cant to cut some of the "virtual-area"
+  // More info: https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
+  contentAreaPx = ((asc - des) / upm) * fontSize;
+  lineBoxPx = lineHeight * fontSize;
+  marginOffset = lineBoxPx - contentAreaPx;
+
+  return {
+    marginOffset,
+    contentAreaPx,
+    lineBoxPx,
+  };
+}

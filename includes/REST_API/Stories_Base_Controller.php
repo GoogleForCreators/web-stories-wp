@@ -46,6 +46,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * Override the namespace.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $post_type Post type.
 	 */
 	public function __construct( $post_type ) {
@@ -54,6 +56,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	}
 	/**
 	 * Prepares a single template for create or update. Add post_content_filtered field to save/insert.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 *
@@ -85,6 +89,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * Prepares a single template output for response.
 	 *
 	 * Adds post_content_filtered field to output.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
@@ -126,6 +132,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Creates a single post.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
@@ -141,6 +149,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Updates a single post.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
@@ -155,6 +165,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Item schema as an array.
 	 */
