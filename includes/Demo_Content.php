@@ -68,7 +68,7 @@ class Demo_Content {
 	 */
 	private function update_assets_urls( $content ) {
 		$content = str_replace(
-			'https://replaceme.com/images/',
+			'https://replaceme.com/',
 			trailingslashit( WEBSTORIES_CDN_URL ),
 			$content
 		);

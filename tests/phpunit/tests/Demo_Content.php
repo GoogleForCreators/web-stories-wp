@@ -72,6 +72,7 @@ class Demo_Content extends \WP_UnitTestCase {
 		$content = $demo->get_content();
 
 		$this->assertNotContains( 'https://replaceme.com', $content, 'Not all URLs have been replaced' );
+		$this->assertContains( WEBSTORIES_CDN_URL . '/images/demo-story/', $content, 'Assets URLs have been corrupted' );
 	}
 
 	/**
