@@ -76,6 +76,7 @@ describe('Panel: Style Presets', () => {
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Save Text Style', () => {
     it('should allow adding new text style from a text element', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );
@@ -87,14 +88,15 @@ describe('Panel: Style Presets', () => {
 
     it('should allow adding new text style from multi-selection', async () => {
       await fixture.editor.library.textTab.click();
-      // Add a heading.
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Heading 1')
-      );
       // Add a paragraph.
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      // Add a heading.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Heading 1')
+      );
+      // Select the paragraph as well.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
       // Verify that two presets have been added.
