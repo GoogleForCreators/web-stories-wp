@@ -28,7 +28,7 @@ import PropTypes from 'prop-types';
 import { StoryAnimation } from '../../../animation';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import OutputElement from '../element';
-import { DEFAULT_TEXT } from './constants';
+import { DEFAULT_TEXT } from './_utils/constants';
 
 function WrapAnimation({ children }) {
   return (
