@@ -274,7 +274,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::get_redirect_old_slug
 	 */
 	public function test_get_redirect_old_slug() {
-		$this->set_permalink_structure( '/%year%/%monthnum%/%day%/%postname%/' );
+		update_option( 'permalink_structure', '/%year%/%monthnum%/%day%/%hour%/%minute%/%second%' );
 
 		$current = home_url( '/stories/wibble?test=123' );
 
@@ -284,6 +284,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$this->assertContains( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ), $get_redirect_old_slug );
 		$this->assertContains( 'wibble?test=123', $get_redirect_old_slug );
+		delete_option( 'permalink_structure' );
 	}
 
 	/**
