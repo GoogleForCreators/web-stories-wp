@@ -702,7 +702,7 @@ class Story_Post_Type {
 	 */
 	public function redirect_old_slug() {
 		$link = $this->get_redirect_old_slug();
-		if ( false !== $link ) {
+		if ( is_string( $link ) ) {
 			wp_safe_redirect( $link, 301 );
 			exit;
 		}
@@ -711,7 +711,7 @@ class Story_Post_Type {
 	/**
 	 * Get url to redirect to.
 	 *
-	 * @return false|string|string[]
+	 * @return false|string
 	 */
 	protected function get_redirect_old_slug() {
 		if ( ! is_404() ) {
