@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -35,15 +36,16 @@ const PillContainer = styled.button`
   padding: 7px 16px 8px;
   height: ${PILL_HEIGHT}px;
   border-radius: 18px;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: ${({ theme }) => theme.fonts.paragraph.small.size};
+  line-height: ${({ theme }) => theme.fonts.paragraph.small.lineHeight};
   user-select: none;
   cursor: pointer;
   margin-bottom: 12px;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-family: ${({ theme }) => theme.fonts.paragraph.small.family};
   border-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.accent.primary : theme.colors.fg.gray24};
-  background-color: transparent;
+    isSelected ? 'transparent' : theme.colors.fg.gray16};
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? rgba(theme.colors.bg.divider, 0.04) : 'transparent'};
   color: ${({ theme }) => theme.colors.fg.primary};
   background-clip: padding-box;
   transition: opacity 0.2s;
