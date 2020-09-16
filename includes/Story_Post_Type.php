@@ -72,7 +72,7 @@ class Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	const REWRITE_SLUG = 'stories';
+	const REWRITE_SLUG = 'web-stories';
 
 	/**
 	 * Style Present options name.
@@ -175,6 +175,7 @@ class Story_Post_Type {
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
+		add_action( 'template_redirect', [ $this, 'redirect_old_slug' ] );
 
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
@@ -692,6 +693,27 @@ class Story_Post_Type {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Redirect old url slug. /stories -> /web-stories.
+	 *
+	 * @return void
+	 */
+	public function redirect_old_slug() {
+		$current  = home_url( $_SERVER['REQUEST_URI'] );
+		$new_link = get_post_type_archive_link( self::POST_TYPE_SLUG );
+		// Strip out home url including sub directory path.
+		$no_home  = str_replace( home_url(), '', $new_link );
+		// Replace old slug with new slug.
+		$path     = str_replace( '/'.self::REWRITE_SLUG, '/stories', $no_home );
+		// Put home url back.
+		$link     = home_url( $path );
+		if ( false !== strpos( $current, $link ) ) {
+			$url      = str_replace( $link, $new_link, $current );
+			wp_safe_redirect( $url, 301 );
+			exit;
+		}
 	}
 
 	/**
