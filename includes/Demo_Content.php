@@ -87,11 +87,9 @@ class Demo_Content {
 		$kses = new KSES();
 		$kses->init();
 
-		// Page 1.
-
-		$content = str_replace(
-			'L10N_PLACEHOLDER_1_1',
-			addslashes(
+		$replacements = [
+			// Page 1.
+			'L10N_PLACEHOLDER_1_1' => addslashes(
 				wp_kses(
 					/* translators: demo content used in the "Get Started" story */
 					_x( '<span style="font-weight: 700; color: #fff">Tips </span><span style="font-weight: 100; color: #fff">to make the most of</span>', 'demo content', 'web-stories' ),
@@ -100,157 +98,92 @@ class Demo_Content {
 					]
 				)
 			),
-			$content
-		);
 
-		// Page 2.
+			// Page 2.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_2_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'SET A PAGE BACKGROUND', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_2_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'SET A PAGE BACKGROUND', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_2_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Drag your image or video to the edge of the page to set as page background.', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_2_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Drag your image or video to the edge of the page to set as page background.', 'demo content', 'web-stories' ),
 
-		// Page 3.
+			// Page 3.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_3_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'MEDIA EDIT MODE', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_3_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Double-click the image/video to resize, re-center or crop. Note: media set as page background cannot be cropped.', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_3_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Double-click the image/video to resize, re-center or crop. Note: media set as page background cannot be cropped.', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_3_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Double-click the image/video to resize, re-center or crop. Note: media set as page background cannot be cropped.', 'demo content', 'web-stories' ),
 
-		// Page 4.
+			// Page 4.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_4_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'BACKGROUND OVERLAY', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_4_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'BACKGROUND OVERLAY', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_4_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Once you\'ve set a page background, add a solid, linear or radial gradient overlay to increase text contrast or add visual styling.', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_4_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Once you\'ve set a page background, add a solid, linear or radial gradient overlay to increase text contrast or add visual styling.', 'demo content', 'web-stories' ),
 
-		// Page 5.
+			// Page 5.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_5_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'SAFE ZONE', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_5_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'SAFE ZONE', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_5_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Add your designs to the page, keeping crucial elements inside the safe zone (tick marks) to ensure they are visible across most devices.', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_5_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Add your designs to the page, keeping crucial elements inside the safe zone (tick marks) to ensure they are visible across most devices.', 'demo content', 'web-stories' ),
 
-		// Page 6.
+			// Page 6.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_6_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'STORY SYSTEM LAYER', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_6_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'STORY SYSTEM LAYER', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_6_2',
-			addslashes(
+			'L10N_PLACEHOLDER_6_2' => addslashes(
 				wp_kses(
-				/* translators: demo content used in the "Get Started" story */
+					/* translators: demo content used in the "Get Started" story */
 					_x( '<span style="font-weight: 200; color: #fff">The story system layer is docked at the top. </span><span style="font-weight: 500; color: #fff">Preview your story</span><span style="font-weight: 200; color: #fff"> to ensure system layer icons are not blocking crucial elements.</span>', 'demo content', 'web-stories' ),
 					[
 						'span' => [ 'style' => [] ],
 					]
 				)
 			),
-			$content
-		);
 
-		// Page 7.
+			// Page 7.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_7_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'SHAPES AND MASKS', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_7_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'SHAPES AND MASKS', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_7_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Our shapes are quite basic for now but they act as masks. Drag an image or video into the mask.', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_7_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Our shapes are quite basic for now but they act as masks. Drag an image or video into the mask.', 'demo content', 'web-stories' ),
 
-		// Page 8.
+			// Page 8.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_8_1',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'EMBED VISUAL STORIES', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_8_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'EMBED VISUAL STORIES', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_8_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Embed stories into your blog post. Open the block menu & select the Web Stories block. Insert the story link to embed your story. That\'s it!', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_8_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Embed stories into your blog post. Open the block menu & select the Web Stories block. Insert the story link to embed your story. That\'s it!', 'demo content', 'web-stories' ),
 
-		// Page 9.
+			// Page 9.
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_9_1',
-			addslashes(
+			'L10N_PLACEHOLDER_9_1' => addslashes(
 				wp_kses(
-				/* translators: demo content used in the "Get Started" story */
+					/* translators: demo content used in the "Get Started" story */
 					_x( '<span style="font-weight: 100; color: #fff">READ ABOUT </span><span style="font-weight: 600; color: #fff">BEST PRACTICES</span><span style="font-weight: 100; color: #fff"> FOR CREATING A SUCCESSFUL WEB STORY</span>', 'demo content', 'web-stories' ),
 					[
 						'span' => [ 'style' => [] ],
 					]
 				)
 			),
-			$content
-		);
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_9_2',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_9_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ),
 
-		$content = str_replace(
-			'L10N_PLACEHOLDER_9_3',
-			/* translators: demo content used in the "Get Started" story */
-			esc_html_x( 'Best practices for creating a successful Web Story', 'demo content', 'web-stories' ),
-			$content
-		);
+			'L10N_PLACEHOLDER_9_3' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Best practices for creating a successful Web Story', 'demo content', 'web-stories' ),
+		];
+
+		foreach ( $replacements as $search => $replacement ) {
+			str_replace( $search, $replacement, $content );
+		}
 
 		$kses->remove_filters();
 
