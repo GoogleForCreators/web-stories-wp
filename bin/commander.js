@@ -82,12 +82,8 @@ program
     'Create Composer-ready build. Does not contain PHP autoloader.'
   )
   .option(
-    '--cdn [url]',
-    'Load any static assets from CDN. With optional URL provided.'
-  )
-  .option(
     '--zip [filename]',
-    'Load any static assets from CDN. With optional URL provided.'
+    'Generate a ready-to-use ZIP file. Optionally specify a file name.'
   )
   .option(
     '--clean',
@@ -97,11 +93,8 @@ program
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
-    console.log('  # Build plugin and point assets to CDN');
-    console.log('  $ commander.js build-plugin --cdn');
-    console.log('');
     console.log('  # Create a ZIP-file ready to install in WordPress');
-    console.log('  $ commander.js build-plugin --cdn --zip');
+    console.log('  $ commander.js build-plugin --zip');
     console.log('');
     console.log('  # Remove existing ZIP files before creating one');
     console.log('  $ commander.js build-plugin --zip --clean');
@@ -113,7 +106,7 @@ program
       '  $ commander.js build-plugin --composer --zip web-stories.zip'
     );
   })
-  .action(({ composer, cdn, zip, clean }) => {
+  .action(({ composer, zip, clean }) => {
     const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
 
     // Make sure build directory exists and is empty.
