@@ -154,7 +154,8 @@ class Story_Post_Type {
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
-					'slug' => self::REWRITE_SLUG,
+					'slug'       => self::REWRITE_SLUG,
+					'with_front' => true,
 				],
 				'public'                => true,
 				'has_archive'           => true,
@@ -720,8 +721,10 @@ class Story_Post_Type {
 	 *
 	 * @return false|string
 	 */
-	public function get_redirect_old_slug( $current ) {
-		if ( !get_option('permalink_structure') ) {
+	public function get_redirect_old_slug( $current ){
+		global $wp_rewrite;
+
+		if ( is_object( $wp_rewrite ) && $wp_rewrite->using_permalinks() ){
 			return false;
 		}
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
