@@ -175,7 +175,7 @@ class Demo_Content {
 			),
 
 			'L10N_PLACEHOLDER_9_2' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ),
+				esc_url( _x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ) ),
 
 			'L10N_PLACEHOLDER_9_3' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Best practices for creating a successful Web Story', 'demo content', 'web-stories' ),
