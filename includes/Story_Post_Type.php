@@ -37,6 +37,7 @@ use WP_Post;
 use WP_Role;
 use WP_Post_Type;
 use WP_Screen;
+use WP_Rewrite;
 
 /**
  * Class Story_Post_Type.
@@ -698,6 +699,8 @@ class Story_Post_Type {
 
 	/**
 	 * Redirect old url slug. /stories -> /web-stories.
+	 * 
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -717,6 +720,10 @@ class Story_Post_Type {
 	/**
 	 * Get redirect URL.
 	 *
+	 * @since 1.0.0
+	 *
+	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
+	 *
 	 * @param string $current Current URL.
 	 *
 	 * @return false|string
@@ -724,7 +731,7 @@ class Story_Post_Type {
 	public function get_redirect_old_slug( $current ) {
 		global $wp_rewrite;
 
-		if ( is_object( $wp_rewrite ) && $wp_rewrite->using_permalinks() ) {
+		if ( $wp_rewrite instanceof WP_Rewrite && $wp_rewrite->using_permalinks() ) {
 			return false;
 		}
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
