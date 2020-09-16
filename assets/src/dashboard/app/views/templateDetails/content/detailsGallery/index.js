@@ -56,7 +56,7 @@ function DetailsGallery({
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <PaginationButton
-        rotateRight={true}
+        rotateRight
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => switchToTemplateByOffset(-1)}
         disabled={!orderedTemplatesLength || activeTemplateIndex === 0}
@@ -90,19 +90,13 @@ function DetailsGallery({
     switchToTemplateByOffset,
   ]);
 
-  const { byLine } = useMemo(() => {
-    if (!template) {
-      return {};
-    }
-
-    return {
-      byLine: sprintf(
+  const byLine = template
+    ? sprintf(
         /* translators: %s: template author  */
         __('by %s', 'web-stories'),
         template.createdBy
-      ),
-    };
-  }, [template]);
+      )
+    : null;
 
   return (
     <>

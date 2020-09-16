@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -46,13 +46,16 @@ function Content({
   template,
   templateActions,
 }) {
+  const previousTemplateId = useRef(template?.id);
+
   const {
     actions: { scrollToTop },
   } = useLayoutContext();
 
   useEffect(() => {
-    if (template) {
+    if (template !== null && template?.id !== previousTemplateId.current) {
       scrollToTop();
+      previousTemplateId.current = template.id;
     }
   }, [template, scrollToTop]);
 
