@@ -21,5 +21,6 @@ import loadTextSets from './loadTextSets';
 
 export async function getTextSets() {
   const textSetLibrary = await loadTextSets();
-  return Object.values(textSetLibrary).flat();
+  return textSetLibrary;
+  //return Object.values(textSetLibrary).flat();
 }

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { Section } from '../../../common';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { PillGroup } from '../../shared';
 import { getTextSets } from './utils';
 import TextSet from './textSet';
 
@@ -42,12 +43,29 @@ const TextSetContainer = styled.div`
 
 function TextSets() {
   const [textSets, setTextSets] = useState([]);
+  const [filter, setFilter] = useState(null);
+
+  const getFilteredTextSets = useCallback(() => {
+    if (filter && textSets[filter]) {
+      return textSets[filter];
+    }
+    return Object.values(textSets).flat();
+  }, [filter, textSets]);
 
   useEffect(() => {
     getTextSets().then(setTextSets);
   }, []);
   return (
     <Section title={__('Text Sets', 'web-stories')}>
+      <PillGroup
+        categories={Object.keys(textSets).map((cat) => ({
+          id: cat,
+          displayName: cat,
+        }))}
+        selectedCategoryId={filter}
+        selectCategory={setFilter}
+        deselectCategory={() => setFilter(null)}
+      />
       <TextSetContainer>
         <UnitsProvider
           pageSize={{
@@ -55,7 +73,7 @@ function TextSets() {
             height: TEXT_SET_SIZE / PAGE_RATIO,
           }}
         >
-          {textSets.map((elements, index) => (
+          {getFilteredTextSets().map((elements, index) => (
             <TextSet key={index} elements={elements} />
           ))}
         </UnitsProvider>
