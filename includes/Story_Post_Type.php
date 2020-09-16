@@ -701,6 +701,14 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function redirect_old_slug() {
+		if ( ! is_404() ) {
+			return;
+		}
+
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) && ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ), [ 'GET', 'HEAD' ], true ) ) {
+			return;
+		}
+
 		$link = $this->get_redirect_old_slug();
 		if ( false !== $link ) {
 			wp_safe_redirect( $link, 301 );
@@ -714,14 +722,6 @@ class Story_Post_Type {
 	 * @return false|string
 	 */
 	protected function get_redirect_old_slug() {
-		if ( ! is_404() ) {
-			return false;
-		}
-
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) && ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ), [ 'GET', 'HEAD' ], true ) ) {
-			return false;
-		}
-
 		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
 		// Strip out home url including sub directory path.
