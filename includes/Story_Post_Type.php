@@ -705,7 +705,8 @@ class Story_Post_Type {
 			return;
 		}
 
-		$link = $this->get_redirect_old_slug();
+		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$link = $this->get_redirect_old_slug( $current );
 		if ( false !== $link ) {
 			wp_safe_redirect( $link, 301 );
 			exit;
@@ -713,12 +714,13 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Get url to redirect to.
+	 * Get redirect URL.
+	 *
+	 * @param string $current Current URL.
 	 *
 	 * @return false|string
 	 */
-	protected function get_redirect_old_slug() {
-		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+	public function get_redirect_old_slug( $current ) {
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
 		// Strip out home url including sub directory path.
 		$no_home = str_replace( (string) home_url(), '', $new_link );
