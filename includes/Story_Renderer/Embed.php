@@ -45,6 +45,8 @@ class Embed {
 	/**
 	 * Embed constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Story $story   Story Object.
 	 */
 	public function __construct( Story $story ) {
@@ -53,6 +55,8 @@ class Embed {
 
 	/**
 	 * Renders the block output in default context.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $args Array of Argument to render.
 	 *

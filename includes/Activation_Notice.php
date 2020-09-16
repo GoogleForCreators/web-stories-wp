@@ -51,6 +51,8 @@ class Activation_Notice {
 	/**
 	 * Constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Activation_Flag $activation_flag Activation flag instance.
 	 */
 	public function __construct( Activation_Flag $activation_flag ) {
@@ -59,6 +61,8 @@ class Activation_Notice {
 
 	/**
 	 * Initializes the plugin activation notice.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -71,7 +75,10 @@ class Activation_Notice {
 	/**
 	 * Enqueues assets for the plugin activation notice.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $hook_suffix The current admin page.
+	 *
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
@@ -104,6 +111,8 @@ class Activation_Notice {
 
 	/**
 	 * Returns script settings as an array.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Script settings.
 	 */
@@ -145,6 +154,8 @@ class Activation_Notice {
 	/**
 	 * Renders the plugin activation notice.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function render_notice() {
@@ -169,6 +180,8 @@ class Activation_Notice {
 
 	/**
 	 * Determines whether we're currently on the Plugins page or not.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix Current hook_suffix.
 	 *

@@ -1,4 +1,4 @@
-# Web Stories by Google
+# Web Stories for WordPress
 
 Visual storytelling for WordPress.
 
@@ -20,9 +20,28 @@ Build Status
 
 </details>
 
-## Installation
+Web Stories is a visual storytelling format for the open web which immerses your readers in fast-loading, full-screen, and visually rich experiences.
 
-Interested in using the Web Stories for WordPress plugin? [Get the beta today](https://google.github.io/web-stories-wp/beta/)!
+With Stories for WordPress, we're bringing first-class Web Stories support to WordPress.
+
+## FAQ
+
+**Where can I learn more about Web Stories?**
+
+[Web Stories](https://amp.dev/about/stories/) are tappable, engaging visual stories brought to the web. They’re powered by AMP technology, so learn more about them on [amp.dev](https://amp.dev/about/stories/).
+
+**How do I install the Stories for WordPress plugin?***
+
+The easiest way is to [download it from our website](https://wp.stories.google/).
+
+**I found a bug or missing feature! How do I report it?**
+
+Please submit feedback using this [feedback form](https://docs.google.com/forms/d/1xo5J7hdvPGDpEENZtlF3G4-mo3Q0E-S7oRvSyOjZ_I4/viewform) or [file a new issue on Github](https://github.com/google/web-stories-wp/issues/new/choose). Your help is greatly appreciated.
+
+## Contributing
+
+We'd love to accept your patches and contributions to this project. There are
+just a few small guidelines you need to follow. Please check out our [Contributing documentation](./CONTRIBUTING.md) and the [Getting Started](./docs/getting-started.md) guide.
 
 ## Product Spec
 
@@ -30,8 +49,3 @@ Interested in using the Web Stories for WordPress plugin? [Get the beta today](h
 * [Critical User Journeys](https://docs.google.com/spreadsheets/d/1zE3rdJykQY1YOQUHoczyzPNLa5_bhtv-2wfTE1-NOn0/edit)  
     * [CUJ Coverage: Dashboard](https://google.github.io/web-stories-wp/critical-user-journeys/dashboard)
     * [CUJ Coverage: Editor](https://google.github.io/web-stories-wp/critical-user-journeys/editor)
-
-## Contributing
-
-We'd love to accept your patches and contributions to this project. There are
-just a few small guidelines you need to follow. Please check out our [Contributing documentation](./CONTRIBUTING.md) and the [Getting Started](./docs/getting-started.md) guide.

@@ -18,7 +18,7 @@ const completeTemplateObject = {
   isLocal: false,
   id: 2,
   title: 'Cooking',
-  createdBy: 'Google Web Stories',
+  createdBy: 'Google',
   description:
     'Make your audience salivate by using the Cooking template to create web stories about ingredients, food recipes, how-to’s, restaurant guides and kitchen inspiration.',
   status: 'template',

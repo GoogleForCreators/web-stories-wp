@@ -74,6 +74,8 @@ class Fonts_Controller extends WP_REST_Controller {
 	/**
 	 * Gets a collection of fonts.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -108,6 +110,8 @@ class Fonts_Controller extends WP_REST_Controller {
 
 	/**
 	 * Prepares a single font output for response.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array           $font Font object.
 	 * @param WP_REST_Request $request Request object.
@@ -170,6 +174,8 @@ class Fonts_Controller extends WP_REST_Controller {
 		 *
 		 * Allows modification of the font right before it is returned.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param WP_REST_Response $response The response object.
 		 * @param Object $font The original font object.
 		 * @param WP_REST_Request $request Request used to generate the response.
@@ -179,6 +185,8 @@ class Fonts_Controller extends WP_REST_Controller {
 
 	/**
 	 * Checks if a given request has access to get fonts.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 *
@@ -190,6 +198,8 @@ class Fonts_Controller extends WP_REST_Controller {
 
 	/**
 	 * Retrieves the font' schema, conforming to JSON Schema.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Item schema data.
 	 */
@@ -259,6 +269,8 @@ class Fonts_Controller extends WP_REST_Controller {
 
 	/**
 	 * Override the collected params.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array $query_params Overriden collected params.
 	 */
