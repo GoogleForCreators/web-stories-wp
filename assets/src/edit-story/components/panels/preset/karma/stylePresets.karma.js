@@ -19,29 +19,13 @@
  */
 import { Fixture } from '../../../../karma/fixture';
 import { useInsertElement } from '../../../canvas';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 import createSolid from '../../../../utils/createSolid';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { useStory } from '../../../../app/story';
+import { DEFAULT_PRESET } from '../../../library/panes/text/textPresets';
 
 describe('Panel: Style Presets', () => {
   let fixture;
-  let frame;
-
-  const addText = async (extraProps = null) => {
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    const element = await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'Hello, presets!',
-        x: 40,
-        y: 40,
-        width: 250,
-        ...extraProps,
-      })
-    );
-    return element;
-  };
 
   const selectTarget = async (target) => {
     const { x, y, width, height } = target.getBoundingClientRect();
@@ -91,16 +75,6 @@ describe('Panel: Style Presets', () => {
   });
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Save Text Style', () => {
-    beforeEach(async () => {
-      const element = await addText({
-        backgroundColor: createSolid(15, 15, 15, 0.2),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.FILL,
-        content: '<span style="font-style: italic">Hello world</span>',
-        lineHeight: 2,
-      });
-      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-    });
-
     it('should allow adding new text style from a text element', async () => {
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
@@ -112,15 +86,16 @@ describe('Panel: Style Presets', () => {
     });
 
     it('should allow adding new text style from multi-selection', async () => {
-      // Add a second text element & select both.
-      await addText({
-        x: 200,
-        y: 200,
-        width: 250,
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: '<span style="font-weight: 700">Second text</span>',
-      });
-      await selectTarget(frame);
+      await fixture.editor.library.textTab.click();
+      // Add a heading.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Heading 1')
+      );
+      // Add a paragraph.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
       // Verify that two presets have been added.
       await fixture.events.click(
@@ -206,54 +181,57 @@ describe('Panel: Style Presets', () => {
   });
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Apply Text Style Presets', () => {
-    beforeEach(async () => {
-      const element = await addText();
-      frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
-    });
-
     it('should apply text style to a single text element', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+
       // Add a preset
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );
-      await addText({
-        x: 200,
-        y: 200,
-        backgroundColor: createSolid(0, 0, 0),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-      });
+
+      // Add a heading.
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Heading 1')
+      );
+
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.apply
       );
       const storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElements[0].backgroundTextMode).toEqual(
-        BACKGROUND_TEXT_MODE.NONE
+      expect(storyContext.state.selectedElements[0].fontSize).toEqual(
+        DEFAULT_PRESET.fontSize
       );
       await fixture.snapshot('2 texts same attributes');
     });
 
     it('should apply text style to multiple text elements', async () => {
+      await fixture.editor.library.textTab.click();
+      // Add a paragraph.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      // Add a heading.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Heading 1')
+      );
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.add
       );
-      await addText({
-        x: 200,
-        y: 200,
-        backgroundColor: createSolid(0, 0, 0),
-        backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-      });
-      // Select both texts
-      await selectTarget(frame);
+
+      // Select both.
+      await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStylePreset.apply
       );
       const storyContext = await fixture.renderHook(() => useStory());
-      expect(storyContext.state.selectedElements[0].backgroundTextMode).toEqual(
-        BACKGROUND_TEXT_MODE.NONE
+      // Verify that both now have bold.
+      expect(storyContext.state.selectedElements[0].content).toContain(
+        '<span style="font-weight: 700">'
       );
-      expect(storyContext.state.selectedElements[1].backgroundTextMode).toEqual(
-        BACKGROUND_TEXT_MODE.NONE
+      expect(storyContext.state.selectedElements[1].content).toContain(
+        '<span style="font-weight: 700">'
       );
       await fixture.snapshot('2 selected texts, same style');
     });
