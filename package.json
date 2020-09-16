@@ -102,7 +102,6 @@
     "@wordpress/jest-console": "^3.8.0",
     "@wordpress/jest-puppeteer-axe": "^1.9.0",
     "amphtml-validator": "^1.0.33",
-    "babel-eslint": "^10.1.0",
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-inline-json-import": "^0.3.2",
