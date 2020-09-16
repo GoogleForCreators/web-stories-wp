@@ -125,7 +125,7 @@ export const TelemetryOptInBanner = forwardRef(
     return visible ? (
       <Banner
         ref={ref}
-        backgroundUrl={`${assetsURL}images/analytics-banner-bg.png`}
+        backgroundUrl={`${assetsURL}images/dashboard/analytics-banner-bg.png`}
       >
         <Header>
           <Title>
