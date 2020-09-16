@@ -42,6 +42,7 @@ function Panel({
   canCollapse = true,
   initialHeight = null,
   ariaLabel = null,
+  ...rest
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
@@ -144,7 +145,7 @@ function Panel({
   );
 
   return (
-    <Wrapper {...wrapperProps}>
+    <Wrapper {...wrapperProps} {...rest}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
