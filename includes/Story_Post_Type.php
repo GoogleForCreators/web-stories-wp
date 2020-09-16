@@ -701,6 +701,10 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function redirect_old_slug() {
+		if ( ! is_404() ) {
+			return;
+		}
+
 		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
 		// Strip out home url including sub directory path.
