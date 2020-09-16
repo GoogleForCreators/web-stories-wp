@@ -31,9 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import DisplayElement from '../../../../canvas/displayElement';
 import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
-import useBatchingCallback from '../../../../../utils/useBatchingCallback';
-import useLibrary from '../../../useLibrary';
-import { useStory } from '../../../../../app/story';
+import useInsertTextSet from './useInsertTextSet';
 
 const TextSetItem = styled.button`
   border: 0;
@@ -47,45 +45,13 @@ const TextSetItem = styled.button`
 `;
 
 function TextSet({ elements }) {
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
-  const { setSelectedElementsById } = useStory(
-    ({ actions: { setSelectedElementsById } }) => {
-      return {
-        setSelectedElementsById,
-      };
-    }
-  );
-  const insertSet = useBatchingCallback(
-    (toAdd) => {
-      const addedElements = [];
-      toAdd.forEach((element) => {
-        const toInsert = {
-          ...element,
-          id: null,
-        };
-        // Remove all preview element data.
-        delete toInsert.previewOffsetX;
-        delete toInsert.previewOffsetY;
-        delete toInsert.textSetWidth;
-        delete toInsert.textSetHeight;
-        addedElements.push(insertElement(element.type, toInsert));
-      });
-      // Select all added elements.
-      setSelectedElementsById({
-        elementIds: addedElements.map(({ id }) => id),
-      });
-    },
-    [insertElement, setSelectedElementsById]
-  );
+  const insertTextSet = useInsertTextSet();
 
   return (
     <TextSetItem
       role="listitem"
       aria-label={__('Insert Text Set', 'web-stories')}
-      onClick={() => insertSet(elements)}
+      onClick={() => insertTextSet(elements)}
     >
       {elements.map(
         ({
@@ -98,7 +64,7 @@ function TextSet({ elements }) {
           ...rest
         }) => (
           <DisplayElement
-            previewMode={true}
+            previewMode
             key={id}
             element={{
               id,
