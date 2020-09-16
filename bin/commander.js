@@ -124,7 +124,7 @@ program
     rmdirSync(BUILD_DIR, { recursive: true });
     mkdirSync(BUILD_DIR, { recursive: true });
 
-    createBuild(PLUGIN_DIR, buildDirPath, composer);
+    createBuild(PLUGIN_DIR, buildDirPath, composer, cdn);
 
     if (cdn) {
       updateAssetsURL(pluginFilePath, cdn === true ? ASSETS_URL_CDN : cdn);

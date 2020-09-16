@@ -28,9 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useCallback } from 'react';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
+import { trackClick } from '../../../tracking';
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -40,6 +42,20 @@ const Paragraph = styled.p`
 `;
 
 function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
+  const onAddToPostClick = useCallback(
+    (evt) => {
+      trackClick(evt, 'add_story_to_new_post', 'editor', confirmURL);
+    },
+    [confirmURL]
+  );
+
+  const onViewStoryClick = useCallback(
+    (evt) => {
+      trackClick(evt, 'view_story', 'editor', storyURL);
+    },
+    [storyURL]
+  );
+
   return (
     <Dialog
       open={open}
@@ -48,7 +64,7 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
       actions={
         <>
           <Plain onClick={onClose}>{__('Dismiss', 'web-stories')}</Plain>
-          <Plain href={confirmURL}>
+          <Plain href={confirmURL} onClick={onAddToPostClick}>
             {__('Add to new post', 'web-stories')}
           </Plain>
         </>
@@ -56,7 +72,12 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
     >
       <Paragraph>
         {__('Your story has been successfully published!', 'web-stories')}{' '}
-        <Link href={storyURL} target="_blank" rel="noopener noreferrer">
+        <Link
+          href={storyURL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onViewStoryClick}
+        >
           {__('View story.', 'web-stories')}
         </Link>
       </Paragraph>

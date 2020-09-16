@@ -2,6 +2,7 @@
 .github
 .idea
 .storybook
+.wordpress-org
 __mocks__
 __static__
 assets/src
@@ -12,6 +13,9 @@ docs
 karma
 node_modules
 patches
+plugin-assets
+public
+static
 tests
 .browserslistrc
 .DS_Store
@@ -56,4 +60,3 @@ README.md
 SECURITY.md
 webpack.config.cjs
 webpack.config.test.cjs
-assets/images/templates

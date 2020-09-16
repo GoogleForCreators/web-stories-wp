@@ -49,6 +49,7 @@ import {
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
+import { trackEvent } from '../../../../../../tracking';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -59,6 +60,7 @@ function StoriesView({
   users,
   view,
   dateSettings,
+  initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
@@ -69,12 +71,31 @@ function StoriesView({
 
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
+  const [focusedStory, setFocusedStory] = useState({});
+  const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
 
   const {
     actions: { addToast },
   } = useToastContext();
+
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
+
+  const storiesById = useMemo(() => stories.map(({ id }) => id), [stories]);
+
+  useEffect(() => {
+    // if a dialog is opened and the keyboard used we need to return the focus of the proper grid item to ease keyboard usage
+    // focusedStory is set when activeDialog is removed
+    // then we use storiesById to find the proper index of the interacted with item and use that to decide where to move focus
+    if (focusedStory.id && !returnStoryFocusId) {
+      const storyArrayIndex = storiesById.indexOf(focusedStory.id);
+      const adjustedIndex = focusedStory.isDeleted ? -1 : 0;
+      const focusIndex = storyArrayIndex + adjustedIndex;
+      const storyIdToFocus = storiesById[focusIndex];
+
+      setReturnStoryFocusId(storyIdToFocus);
+    }
+  }, [focusedStory, returnStoryFocusId, storiesById]);
 
   useEffect(() => {
     if (!activeDialog) {
@@ -82,19 +103,36 @@ function StoriesView({
     }
   }, [activeDialog, setActiveStory]);
 
+  useEffect(() => {
+    // every time the activeDialog is truthy we want to reset our state that helps determine where to send focus back to when the dialog is closed
+    if (activeDialog) {
+      setFocusedStory({});
+      setReturnStoryFocusId(null);
+    }
+  }, [activeDialog]);
+
   const handleOnRenameStory = useCallback(
-    (story, newTitle) => {
+    async (story, newTitle) => {
       setTitleRenameId(-1);
+      await trackEvent('rename_story', 'dashboard');
       storyActions.updateStory({ ...story, title: { raw: newTitle } });
     },
     [storyActions]
   );
 
+  const handleOnDeleteStory = useCallback(async () => {
+    await trackEvent('delete_story', 'dashboard');
+    storyActions.trashStory(activeStory);
+    setFocusedStory({ id: activeStory.id, isDeleted: true });
+    setActiveDialog('');
+  }, [storyActions, activeStory]);
+
   const handleMenuItemSelected = useCallback(
-    (sender, story) => {
+    async (sender, story) => {
       setContextMenuId(-1);
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          await trackEvent('open_in_editor', 'dashboard');
           window.location.href = story.bottomTargetAction;
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
@@ -102,6 +140,7 @@ function StoriesView({
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          await trackEvent('duplicate_story', 'dashboard');
           storyActions.duplicateStory(story);
           break;
 
@@ -204,6 +243,8 @@ function StoriesView({
         stories={stories}
         users={users}
         dateSettings={dateSettings}
+        returnStoryFocusId={returnStoryFocusId}
+        initialFocusStoryId={initialFocusStoryId}
       />
     );
 
@@ -215,22 +256,22 @@ function StoriesView({
           isOpen={true}
           contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
           title={__('Delete Story', 'web-stories')}
-          onClose={() => setActiveDialog('')}
+          onClose={() => {
+            setFocusedStory({ id: activeStory.id });
+            setActiveDialog('');
+          }}
           actions={
             <>
               <Button
                 type={BUTTON_TYPES.DEFAULT}
-                onClick={() => setActiveDialog('')}
-              >
-                {__('Cancel', 'web-stories')}
-              </Button>
-              <Button
-                type={BUTTON_TYPES.DEFAULT}
                 onClick={() => {
-                  storyActions.trashStory(activeStory);
+                  setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
                 }}
               >
+                {__('Cancel', 'web-stories')}
+              </Button>
+              <Button type={BUTTON_TYPES.DEFAULT} onClick={handleOnDeleteStory}>
                 {__('Delete', 'web-stories')}
               </Button>
             </>
@@ -255,5 +296,6 @@ StoriesView.propTypes = {
   users: UsersPropType,
   view: ViewPropTypes,
   dateSettings: DateSettingsPropType,
+  initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;

@@ -35,8 +35,8 @@ use Google\Web_Stories\Traits\Assets;
  * Embed block class.
  */
 class Embed_Block {
-
 	use Assets;
+
 	/**
 	 * Script handle.
 	 *
@@ -45,7 +45,16 @@ class Embed_Block {
 	const SCRIPT_HANDLE = 'web-stories-embed-block';
 
 	/**
+	 * Block name.
+	 *
+	 * @var string
+	 */
+	const BLOCK_NAME = 'web-stories/embed';
+
+	/**
 	 * Initializes the Web Stories embed block.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -67,7 +76,7 @@ class Embed_Block {
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
 		register_block_type(
-			'web-stories/embed',
+			self::BLOCK_NAME,
 			[
 				'attributes'      => [
 					'url'    => [
@@ -105,6 +114,8 @@ class Embed_Block {
 	/**
 	 * Returns script settings.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array Script settings.
 	 */
 	private function get_script_settings() {
@@ -115,6 +126,8 @@ class Embed_Block {
 
 	/**
 	 * Filter the allowed tags for KSES to allow for amp-story children.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
 	 *
@@ -136,6 +149,8 @@ class Embed_Block {
 
 	/**
 	 * Renders the block type output for given attributes.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.

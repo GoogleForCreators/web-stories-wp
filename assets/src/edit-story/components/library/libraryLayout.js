@@ -70,6 +70,7 @@ function LibraryLayout() {
           initialTab={initialTab}
           onTabChange={(id) => setTab(id)}
           getTabId={getTabId}
+          shortcut="mod+option+1"
         />
       </TabsArea>
       <LibraryPaneContainer>

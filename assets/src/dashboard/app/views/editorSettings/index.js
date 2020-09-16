@@ -36,6 +36,7 @@ import {
 } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
+import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
@@ -45,11 +46,8 @@ const ACTIVE_DIALOG_REMOVE_LOGO = 'REMOVE_LOGO';
 
 function EditorSettings() {
   const {
-    currentUser,
-    fetchCurrentUser,
     fetchSettings,
     updateSettings,
-    toggleWebStoriesTrackingOptIn,
     googleAnalyticsId,
     fetchMediaById,
     uploadMedia,
@@ -63,7 +61,6 @@ function EditorSettings() {
       actions: {
         settingsApi: { fetchSettings, updateSettings },
         mediaApi: { fetchMediaById, uploadMedia },
-        usersApi: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       },
       state: {
         settings: {
@@ -72,7 +69,6 @@ function EditorSettings() {
           publisherLogoIds,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
-        currentUser,
       },
     }) => ({
       fetchSettings,
@@ -85,21 +81,26 @@ function EditorSettings() {
       mediaById,
       newlyCreatedMediaIds,
       publisherLogoIds,
-      fetchCurrentUser,
-      toggleWebStoriesTrackingOptIn,
-      currentUser,
     })
   );
 
   const {
-    capabilities: { canUploadFiles } = {},
+    capabilities: { canUploadFiles, canManageSettings } = {},
     maxUpload,
     maxUploadFormatted,
   } = useConfig();
 
+  const {
+    disabled,
+    toggleWebStoriesTrackingOptIn,
+    optedIn,
+  } = useTelemetryOptIn();
+
   const [activeDialog, setActiveDialog] = useState(null);
   const [activeLogo, setActiveLogo] = useState('');
   const [mediaError, setMediaError] = useState('');
+
+  const mediaIds = useMemo(() => Object.keys(mediaById), [mediaById]);
   /**
    * WP settings references publisher logos by ID.
    * We must retrieve the media for those IDs from /media when present
@@ -111,15 +112,22 @@ function EditorSettings() {
    */
 
   useEffect(() => {
-    fetchSettings();
-    fetchCurrentUser();
-  }, [fetchCurrentUser, fetchSettings]);
+    if (canManageSettings) {
+      fetchSettings();
+    }
+  }, [fetchSettings, canManageSettings]);
 
   useEffect(() => {
     if (newlyCreatedMediaIds.length > 0) {
-      updateSettings({ publisherLogoIds: newlyCreatedMediaIds });
+      const updateObject = { publisherLogoIds: newlyCreatedMediaIds };
+
+      if (publisherLogoIds.filter((id) => id !== 0).length === 0) {
+        updateObject.publisherLogoToMakeDefault = newlyCreatedMediaIds[0];
+      }
+
+      updateSettings(updateObject);
     }
-  }, [updateSettings, newlyCreatedMediaIds]);
+  }, [updateSettings, newlyCreatedMediaIds, publisherLogoIds]);
 
   useEffect(() => {
     if (publisherLogoIds.length > 0) {
@@ -233,6 +241,45 @@ function EditorSettings() {
     setActiveLogo(media.id);
   }, []);
 
+  const handleDialogConfirmRemoveLogo = useCallback(() => {
+    if (activeLogo === activePublisherLogoId) {
+      // find the next publisher logo to make default, there's cases where publisher logo ids have their media removed in the editor but the instance of them as a publisher logo is still present
+      // so we need to find the next available logo by making sure media exists for it as well.
+      const newDefaultLogoId = publisherLogoIds.reduce((acc, logoId) => {
+        if (logoId === activeLogo) {
+          return undefined;
+        }
+        const availableMedia = mediaIds.find(
+          (mediaId) => mediaId.toString() === logoId.toString()
+        );
+
+        if (availableMedia) {
+          return availableMedia;
+        }
+        return acc;
+      }, false);
+
+      updateSettings({
+        publisherLogoIdToRemove: activeLogo,
+        publisherLogoToMakeDefault: newDefaultLogoId,
+      });
+    } else {
+      updateSettings({ publisherLogoIdToRemove: activeLogo });
+    }
+    setActiveDialog(null);
+  }, [
+    activeLogo,
+    activePublisherLogoId,
+    mediaIds,
+    publisherLogoIds,
+    updateSettings,
+  ]);
+
+  const handleUpdateDefaultLogo = useCallback(
+    (media) => updateSettings({ publisherLogoToMakeDefault: media.id }),
+    [updateSettings]
+  );
+
   const isActiveRemoveLogoDialog = Boolean(
     activeDialog === ACTIVE_DIALOG_REMOVE_LOGO && activeLogo
   );
@@ -246,7 +293,7 @@ function EditorSettings() {
       .map((publisherLogoId) => {
         if (mediaById[publisherLogoId]) {
           return publisherLogoId === activePublisherLogoId
-            ? { ...mediaById[publisherLogoId], isActive: true }
+            ? { ...mediaById[publisherLogoId], isDefault: true }
             : mediaById[publisherLogoId];
         }
         return {}; // this is a safeguard against edge cases where a user has > 100 publisher logos, which is more than we're loading
@@ -265,24 +312,27 @@ function EditorSettings() {
         </Layout.Squishable>
         <Layout.Scrollable>
           <Main>
-            <GoogleAnalyticsSettings
-              handleUpdate={handleUpdateGoogleAnalyticsId}
-              googleAnalyticsId={googleAnalyticsId}
-            />
-            <PublisherLogoSettings
-              handleAddLogos={handleAddLogos}
-              handleRemoveLogo={handleRemoveLogo}
-              publisherLogos={orderedPublisherLogos}
-              canUploadFiles={canUploadFiles}
-              isLoading={isMediaLoading}
-              uploadError={mediaError}
-            />
+            {canManageSettings && (
+              <GoogleAnalyticsSettings
+                handleUpdate={handleUpdateGoogleAnalyticsId}
+                googleAnalyticsId={googleAnalyticsId}
+              />
+            )}
+            {canManageSettings && (
+              <PublisherLogoSettings
+                handleAddLogos={handleAddLogos}
+                handleRemoveLogo={handleRemoveLogo}
+                handleUpdateDefaultLogo={handleUpdateDefaultLogo}
+                publisherLogos={orderedPublisherLogos}
+                canUploadFiles={canUploadFiles}
+                isLoading={isMediaLoading}
+                uploadError={mediaError}
+              />
+            )}
             <TelemetrySettings
-              disabled={currentUser.isUpdating}
+              disabled={disabled}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
-              selected={Boolean(
-                currentUser.data.meta?.web_stories_tracking_optin
-              )}
+              selected={optedIn}
             />
           </Main>
         </Layout.Scrollable>
@@ -306,18 +356,15 @@ function EditorSettings() {
             </Button>
             <Button
               type={BUTTON_TYPES.DEFAULT}
-              onClick={() => {
-                updateSettings({ publisherLogoIdToRemove: activeLogo });
-                setActiveDialog(null);
-              }}
+              onClick={handleDialogConfirmRemoveLogo}
             >
-              {__('Remove Logo', 'web-stories')}
+              {__('Delete Logo', 'web-stories')}
             </Button>
           </>
         }
       >
         {__(
-          'This will affect any stories that currently use it as their publisher logo.',
+          'The logo will be removed from any stories that currently use it as their publisher logo.',
           'web-stories'
         )}
       </Dialog>

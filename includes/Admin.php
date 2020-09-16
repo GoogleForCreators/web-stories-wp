@@ -38,6 +38,8 @@ class Admin {
 	/**
 	 * Initialize admin-related functionality.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -51,6 +53,8 @@ class Admin {
 	 *
 	 * Makes sure the admin menu is collapsed when accessing
 	 * the dashboard and the editor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $class Current classes.
 	 *
@@ -84,6 +88,8 @@ class Admin {
 
 	/**
 	 * Pre-fills post content with a web-story/embed block.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Default post content.
 	 *
@@ -152,6 +158,8 @@ BLOCK;
 
 	/**
 	 * Pre-fills post title with the story title.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $title Default post title.
 	 *

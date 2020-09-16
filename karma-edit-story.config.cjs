@@ -28,6 +28,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
+      'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
@@ -80,7 +81,7 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
-      'progress',
+      'spec',
       config.coverage && 'cuj',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),

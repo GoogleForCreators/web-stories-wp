@@ -31,12 +31,16 @@ import { __ } from '@wordpress/i18n';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
-import { Pane } from '../shared';
+import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 import useInsertPreset from './useInsertPreset';
+import TextSets from './textSets';
 
-const SectionContent = styled.p``;
+const Pane = styled(SharedPane)`
+  overflow-y: auto;
+  max-height: 100%;
+`;
 
 const TYPE = 'text';
 
@@ -77,11 +81,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && (
-        <Section title={__('Text Sets', 'web-stories')}>
-          <SectionContent>{__('Coming soon.', 'web-stories')}</SectionContent>
-        </Section>
-      )}
+      {showTextSets && <TextSets />}
     </Pane>
   );
 }

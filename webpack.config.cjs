@@ -90,11 +90,20 @@ const sharedConfig = {
       },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack', 'url-loader'],
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
+            },
+          },
+          'url-loader',
+        ],
       },
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        sideEffects: true,
       },
     ].filter(Boolean),
   },
@@ -112,6 +121,7 @@ const sharedConfig = {
     }),
   ].filter(Boolean),
   optimization: {
+    sideEffects: true,
     minimizer: [
       new TerserPlugin({
         parallel: true,

@@ -76,6 +76,8 @@ class Story {
 	/**
 	 * Story constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $story Array of attributes.
 	 */
 	public function __construct( array $story = [] ) {
@@ -88,6 +90,8 @@ class Story {
 
 	/**
 	 * Load story from post.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param int|WP_Post $_post Post id or Post object.
 	 *
@@ -118,6 +122,8 @@ class Story {
 	/**
 	 * Getter for title attribute.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
 	public function get_title() {
@@ -126,6 +132,8 @@ class Story {
 
 	/**
 	 * Getter for url attribute.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -136,6 +144,8 @@ class Story {
 	/**
 	 * Getter for markup attribute.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
 	public function get_markup() {
@@ -144,6 +154,8 @@ class Story {
 
 	/**
 	 * Getter for poster portrait attribute.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */
@@ -154,6 +166,8 @@ class Story {
 	/**
 	 * Getter for poster landscape attribute.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string
 	 */
 	public function get_poster_landscape() {
@@ -162,6 +176,8 @@ class Story {
 
 	/**
 	 * Getter for poster square attribute.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string
 	 */

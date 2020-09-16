@@ -126,6 +126,8 @@ class Media {
 	/**
 	 * Init.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -225,7 +227,10 @@ class Media {
 	 *
 	 * Reduces unnecessary noise in the media library.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param \WP_Query $query WP_Query instance, passed by reference.
+	 *
 	 * @return void
 	 */
 	public function filter_poster_attachments( &$query ) {
@@ -247,6 +252,8 @@ class Media {
 
 	/**
 	 * Registers additional REST API fields upon API initialization.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -312,6 +319,8 @@ class Media {
 	/**
 	 * Force media attachment as string instead of the default array.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $prepared Prepared data before response.
 	 *
 	 * @return string
@@ -332,6 +341,8 @@ class Media {
 	/**
 	 * Update rest field callback.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param mixed   $value Value to update.
 	 * @param WP_Post $object Object to update on.
 	 *
@@ -349,6 +360,8 @@ class Media {
 	/**
 	 * Get attachment source for featured media.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $prepared Prepared data before response.
 	 *
 	 * @return array
@@ -365,6 +378,8 @@ class Media {
 
 	/**
 	 * Filters the attachment data prepared for JavaScript.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array   $response   Array of prepared attachment data.
 	 * @param WP_Post $attachment Attachment object.
@@ -388,6 +403,8 @@ class Media {
 	/**
 	 * Get poster image data.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $thumbnail_id Attachment ID.
 	 *
 	 * @return array
@@ -404,6 +421,8 @@ class Media {
 	 *
 	 * This prevents the poster image from becoming an orphan because it is not
 	 * displayed anywhere in WordPress or the story editor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param int $attachment_id ID of the attachment to be deleted.
 	 *

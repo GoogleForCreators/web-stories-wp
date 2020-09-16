@@ -17,14 +17,14 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import InfiniteScroller from '../index';
 
 describe('InfiniteScroller', () => {
   const onGetDataMock = jest.fn();
 
   it('should render a loading component by default', () => {
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <InfiniteScroller canLoadMore={true} onLoadMore={onGetDataMock} />
     );
 
@@ -34,7 +34,7 @@ describe('InfiniteScroller', () => {
   });
 
   it('should show all data loaded message when `allDataLoadedMessage` is true', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <InfiniteScroller
         onLoadMore={onGetDataMock}
         allDataLoadedMessage="All data has been fetched"

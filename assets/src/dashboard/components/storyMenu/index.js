@@ -35,7 +35,7 @@ export const MoreVerticalButton = styled.button`
   border: none;
   background: transparent;
   padding: 0 8px;
-  opacity: ${({ menuOpen }) => (menuOpen ? 1 : 0)};
+  opacity: ${({ menuOpen, isVisible }) => (menuOpen || isVisible ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.gray900};
@@ -71,6 +71,8 @@ export default function StoryMenu({
   story,
   verticalAlign,
   menuItems,
+  itemActive,
+  tabIndex,
 }) {
   const containerRef = useRef(null);
 
@@ -86,7 +88,9 @@ export default function StoryMenu({
   return (
     <MenuContainer ref={containerRef} verticalAlign={verticalAlign}>
       <MoreVerticalButton
+        tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
+        isVisible={itemActive}
         aria-label="More Options"
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
@@ -102,6 +106,8 @@ export default function StoryMenu({
 }
 
 StoryMenu.propTypes = {
+  itemActive: PropTypes.bool,
+  tabIndex: PropTypes.number,
   story: StoryPropType,
   onMoreButtonSelected: PropTypes.func.isRequired,
   onMenuItemSelected: PropTypes.func.isRequired,
