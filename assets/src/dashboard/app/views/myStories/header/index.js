@@ -128,6 +128,11 @@ function Header({
     [scrollToTop, sort]
   );
 
+  const onLayoutChange = useCallback(() => {
+    scrollToTop();
+    view.toggleStyle();
+  }, [scrollToTop, view]);
+
   const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
     await trackEvent('search_stories', 'dashboard', '', '', {
       search_term: value,
@@ -151,7 +156,7 @@ function Header({
         showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
-        handleLayoutSelect={view.toggleStyle}
+        handleLayoutSelect={onLayoutChange}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
         handleSortChange={onSortChange}
