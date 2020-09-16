@@ -147,14 +147,12 @@ describe('Panel: Style Presets', () => {
       await fixture.snapshot('Style presets in edit mode');
 
       // Verify being in edit mode.
-      const exitEditButton = fixture.screen.getByRole('button', {
-        name: 'Exit edit mode',
-      });
+      const exitEditButton =
+        fixture.editor.inspector.designPanel.textStylePreset.exit;
       expect(exitEditButton).toBeTruthy();
-      const deletePresetButton = fixture.screen.getByRole('button', {
-        name: 'Delete style preset',
-      });
 
+      const deletePresetButton =
+        fixture.editor.inspector.designPanel.textStylePreset.delete;
       expect(deletePresetButton).toBeTruthy();
       await fixture.events.click(deletePresetButton);
 
@@ -178,9 +176,7 @@ describe('Panel: Style Presets', () => {
 
       // Add color preset.
       await fixture.events.click(
-        fixture.screen.getByRole('button', {
-          name: 'Add color preset',
-        })
+        fixture.editor.inspector.designPanel.textStylePreset.add
       );
 
       await fixture.events.click(
@@ -188,13 +184,11 @@ describe('Panel: Style Presets', () => {
       );
 
       // Verify being in edit mode.
-      const exitEditButton = fixture.screen.getByRole('button', {
-        name: 'Exit edit mode',
-      });
-      expect(exitEditButton).toBeTruthy();
-      const deletePresetButton = fixture.screen.getByRole('button', {
-        name: 'Delete style preset',
-      });
+      expect(
+        fixture.editor.inspector.designPanel.textStylePreset.exit
+      ).toBeTruthy();
+      const deletePresetButton =
+        fixture.editor.inspector.designPanel.textStylePreset.delete;
 
       expect(deletePresetButton).toBeTruthy();
       await fixture.events.click(deletePresetButton);
