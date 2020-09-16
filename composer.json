@@ -54,7 +54,8 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/ampproject/amp-wp"
+      "url": "https://github.com/ampproject/amp-wp",
+      "no-api": true
     }
   ],
   "minimum-stability": "dev",
