@@ -69,8 +69,7 @@ class Demo_Content {
 	private function update_assets_urls( $content ) {
 		$content = str_replace(
 			'https://replaceme.com/images/',
-			// TODO: Replace with WEBSTORIES_CDN_URL once merged.
-			trailingslashit( WEBSTORIES_ASSETS_URL ),
+			trailingslashit( WEBSTORIES_CDN_URL ),
 			$content
 		);
 
