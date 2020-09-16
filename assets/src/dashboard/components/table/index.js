@@ -51,7 +51,7 @@ export const StickyTableHeader = styled(TableHeader)`
     border-bottom: ${({ theme }) => theme.table.border};
     position: sticky;
     z-index: ${Z_INDEX.STICKY_TABLE};
-    top: ${({ top }) => `${top}px` || 0};
+    top: 0;
   }
 `;
 StickyTableHeader.propTypes = {

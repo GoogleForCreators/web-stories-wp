@@ -26,7 +26,7 @@ import useLayoutContext from './useLayoutContext';
 
 const ScrollContent = styled.div`
   position: absolute;
-  top: 0;
+  top: ${(props) => props.topOffset || 0}px;
   right: 0;
   bottom: 0;
   left: 0;
@@ -42,7 +42,6 @@ const ScrollContent = styled.div`
 
 const Inner = styled.div`
   position: relative;
-  padding-top: ${(props) => props.paddingTop || 0}px;
   width: ${({ scrollbarWidth }) => `calc(100% + ${scrollbarWidth}px)`};
 `;
 
@@ -52,7 +51,7 @@ Inner.propTypes = {
 
 const Scrollable = ({ children }) => {
   const {
-    state: { scrollFrameRef, squishContentHeight },
+    state: { scrollFrameRef, squishContainerHeight },
   } = useLayoutContext();
 
   const scrollbarWidth = scrollFrameRef?.current
@@ -60,10 +59,8 @@ const Scrollable = ({ children }) => {
     : 0;
 
   return (
-    <ScrollContent ref={scrollFrameRef}>
-      <Inner scrollbarWidth={scrollbarWidth} paddingTop={squishContentHeight}>
-        {children}
-      </Inner>
+    <ScrollContent ref={scrollFrameRef} topOffset={squishContainerHeight}>
+      <Inner scrollbarWidth={scrollbarWidth}>{children}</Inner>
     </ScrollContent>
   );
 };

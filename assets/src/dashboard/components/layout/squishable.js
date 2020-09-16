@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useRef } from 'react';
+import { useLayoutEffect, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
@@ -52,7 +52,12 @@ const Squishable = ({ children }) => {
   useAddSquishVar(rootRef);
 
   const {
-    actions: { setSquishContentHeight },
+    actions: {
+      setSquishContentHeight,
+      setSquishContainerHeight,
+      addSquishListener,
+      removeSquishListener,
+    },
   } = useLayoutContext();
 
   useLayoutEffect(() => {
@@ -61,7 +66,24 @@ const Squishable = ({ children }) => {
       return;
     }
     setSquishContentHeight(contentEl.offsetHeight + SQUISH_LENGTH);
-  }, [setSquishContentHeight]);
+  }, [setSquishContentHeight, setSquishContainerHeight]);
+
+  // update squishContainerHeight when children of squishContainer change (which updates the height of the container)
+  useEffect(() => {
+    if (children) {
+      setSquishContainerHeight(rootRef?.current.offsetHeight);
+    }
+  }, [children, setSquishContainerHeight]);
+
+  useEffect(() => {
+    const adjustHeight = () =>
+      setSquishContainerHeight(rootRef?.current.offsetHeight);
+
+    addSquishListener(adjustHeight);
+    return () => {
+      removeSquishListener(adjustHeight);
+    };
+  }, [addSquishListener, removeSquishListener, setSquishContainerHeight]);
 
   return (
     <Squish ref={rootRef}>

@@ -52,6 +52,7 @@ export const LayoutContext = createContext(null);
 
 const Provider = ({ children }) => {
   const [squishContentHeight, setSquishContentHeight] = useState(0);
+  const [squishContainerHeight, setSquishContainerHeight] = useState(0);
   const scrollFrameRef = useRef(null);
   const [telemetryBannerOpen, setTelemetryBannerOpen] = useState(false);
   const [telemetryBannerHeight, setTelemetryBannerHeight] = useState();
@@ -125,6 +126,7 @@ const Provider = ({ children }) => {
     () => ({
       state: {
         scrollFrameRef,
+        squishContainerHeight,
         squishContentHeight,
         telemetryBannerOpen,
       },
@@ -143,17 +145,18 @@ const Provider = ({ children }) => {
          */
         removeSquishListener,
         setSquishContentHeight,
+        setSquishContainerHeight,
         scrollToTop,
         setTelemetryBannerOpen,
         setTelemetryBannerHeight,
       },
     }),
     [
-      setTelemetryBannerOpen,
+      squishContainerHeight,
+      squishContentHeight,
       telemetryBannerOpen,
       addSquishListener,
       removeSquishListener,
-      squishContentHeight,
       scrollToTop,
     ]
   );
