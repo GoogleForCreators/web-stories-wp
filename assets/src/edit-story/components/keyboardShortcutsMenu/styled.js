@@ -30,7 +30,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 625px;
   min-width: 300px;
-  max-height: 625px;
+  max-height: 675px;
   border-radius: 4px;
   padding: 24px;
   padding-bottom: 0;
@@ -91,11 +91,15 @@ export const SectionHeader = styled.h2(
 export const SectionWrapper = styled.div`
   width: 100%;
   margin-bottom: 60px;
+
+  &:last-child {
+    margin-bottom: 24px;
+  }
 `;
 
 export const SectionContent = styled.dl`
   display: grid;
-  grid-template-columns: 1fr 0.75fr;
+  grid-template-columns: 1fr 1fr;
   row-gap: 12px;
   column-gap: 5px;
   align-items: center;
