@@ -10,7 +10,8 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "dev-develop"
+    "ampproject/amp-wp": "dev-develop",
+    "mcaskill/composer-exclude-files": "^1.2"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
@@ -29,8 +30,17 @@
   },
   "autoload": {
     "psr-4": {
-      "Google\\Web_Stories\\": "includes"
-    }
+      "Google\\Web_Stories\\": "includes",
+      "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
+      "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
+    },
+    "exclude-from-files": [
+      "ampproject/amp-wp/back-compat/back-compat.php",
+      "ampproject/amp-wp/includes/amp-helper-functions.php",
+      "ampproject/amp-wp/includes/admin/functions.php",
+      "ampproject/amp-wp/includes/deprecated.php",
+      "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {

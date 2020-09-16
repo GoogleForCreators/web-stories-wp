@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae36a8f0cab75519d66d60ac10ac09b2",
+    "content-hash": "8a6ea7ed42e929b531e0a0f9f71a0c3c",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -208,6 +208,56 @@
                 "parallel"
             ],
             "time": "2019-05-25T14:33:33+00:00"
+        },
+        {
+            "name": "mcaskill/composer-exclude-files",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
+                "reference": "658b03e705e91aa0509b43491b755e5471d5aae9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/658b03e705e91aa0509b43491b755e5471d5aae9",
+                "reference": "658b03e705e91aa0509b43491b755e5471d5aae9",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": "^5.3.2 || ^7.0"
+            },
+            "conflict": {
+                "symfony/phpunit-bridge": "3.4.40"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0 || ^2.0",
+                "symfony/phpunit-bridge": "^3.4"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                },
+                "class": "McAskill\\Composer\\ExcludeFilePlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "McAskill\\Composer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chauncey McAskill",
+                    "email": "chauncey@mcaskill.ca"
+                }
+            ],
+            "description": "Exclude files from autoload_files.php",
+            "time": "2020-05-05T05:25:21+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
