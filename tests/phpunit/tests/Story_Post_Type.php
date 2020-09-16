@@ -279,7 +279,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$_SERVER['REQUEST_URI'] = '/stories/wibble?test=123';
 
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
-
+		$story_post_type->init();
+		
 		$get_redirect_old_slug = $this->call_private_method( $story_post_type, 'get_redirect_old_slug' );
 
 		$this->assertContains( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ), $get_redirect_old_slug );

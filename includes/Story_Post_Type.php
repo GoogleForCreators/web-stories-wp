@@ -705,10 +705,6 @@ class Story_Post_Type {
 			return;
 		}
 
-		if ( isset( $_SERVER['REQUEST_METHOD'] ) && ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ), [ 'GET', 'HEAD' ], true ) ) {
-			return;
-		}
-
 		$link = $this->get_redirect_old_slug();
 		if ( false !== $link ) {
 			wp_safe_redirect( $link, 301 );
