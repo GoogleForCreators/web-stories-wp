@@ -701,14 +701,14 @@ class Story_Post_Type {
 	 * @return void
 	 */
 	public function redirect_old_slug() {
-		$current  = home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-		$new_link = get_post_type_archive_link( self::POST_TYPE_SLUG );
+		$current  = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
 		// Strip out home url including sub directory path.
-		$no_home = str_replace( home_url(), '', $new_link );
+		$no_home = str_replace( (string) home_url(), '', $new_link );
 		// Replace old slug with new slug.
 		$path = str_replace( '/' . self::REWRITE_SLUG, '/stories', $no_home );
 		// Put home url back.
-		$link = home_url( $path );
+		$link = (string) home_url( $path );
 		if ( false !== strpos( $current, $link ) ) {
 			$url = str_replace( $link, $new_link, $current );
 			wp_safe_redirect( $url, 301 );
