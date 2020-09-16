@@ -721,6 +721,9 @@ class Story_Post_Type {
 	 * @return false|string
 	 */
 	public function get_redirect_old_slug( $current ) {
+		if ( !get_option('permalink_structure') ) {
+			return false;
+		}
 		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
 		// Strip out home url including sub directory path.
 		$no_home = str_replace( (string) home_url(), '', $new_link );
