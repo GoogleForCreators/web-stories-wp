@@ -37,6 +37,8 @@ class Updater {
 	/**
 	 * Registers functionality through WordPress hooks.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -49,9 +51,12 @@ class Updater {
 	/**
 	 * Retrieves plugin information data from custom API endpoint.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param false|object|array $value  The result object or array. Default false.
 	 * @param string             $action The type of information being requested from the Plugin Installation API.
 	 * @param mixed              $args   Plugin API arguments.
+	 *
 	 * @return false|object|array Updated $value, or passed-through $value on failure.
 	 */
 	public function plugin_info( $value, $action, $args ) {
@@ -90,7 +95,10 @@ class Updater {
 	/**
 	 * Retrieves plugin update data from custom API endpoint.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param mixed $value Update check object.
+	 *
 	 * @return object Modified update check object.
 	 */
 	public function updater_data( $value ) {
@@ -138,6 +146,8 @@ class Updater {
 	/**
 	 * Gets plugin data from the API.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array|false Associative array of plugin data, or false on failure.
 	 */
 	private function fetch_plugin_data() {
@@ -160,6 +170,8 @@ class Updater {
 	/**
 	 * Clears plugin data transient.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function clear_plugin_data() {
@@ -169,8 +181,11 @@ class Updater {
 	/**
 	 * Callback for when updates are finished.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param \WP_Upgrader $upgrader Upgrader instance.
 	 * @param array        $options  Upgrader event data.
+	 *
 	 * @return void
 	 */
 	public function upgrader_process_complete( $upgrader, $options ) {

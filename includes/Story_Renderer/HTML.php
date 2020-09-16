@@ -95,6 +95,8 @@ class HTML {
 	/**
 	 * Story_Renderer constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Story $story Post object.
 	 */
 	public function __construct( Story $story ) {
@@ -103,6 +105,8 @@ class HTML {
 
 	/**
 	 * Renders the story.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string The complete HTML markup for the story.
 	 */
@@ -131,7 +135,10 @@ class HTML {
 	 *
 	 * @link https://github.com/ampproject/amp-wp/blob/a393acf701e8e44d80225affed99d528ee751cb9/lib/common/src/Dom/Document.php
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $markup Source content to adapt the encoding of.
+	 *
 	 * @return string Adapted content.
 	 */
 	protected function adapt_encoding( $markup ) {
@@ -150,6 +157,8 @@ class HTML {
 
 	/**
 	 * Loads a full HTML document and returns a DOMDocument instance.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $string Input string.
 	 * @param int    $options Optional. Specify additional Libxml parameters.
@@ -182,6 +191,8 @@ class HTML {
 	/**
 	 * Returns the first found element with a given tag name.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $name Tag name.
 	 *
 	 * @return DOMElement|null
@@ -192,6 +203,8 @@ class HTML {
 
 	/**
 	 * Replaces the HTML start tag to make the language attributes dynamic.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -219,6 +232,8 @@ class HTML {
 	/**
 	 * Returns the full HTML <head> markup for a given story besides boilerplate.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string Filtered content.
 	 */
 	protected function get_html_head_markup() {
@@ -238,6 +253,8 @@ class HTML {
 
 	/**
 	 * Replaces markers in HTML <head> with dynamic content.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Story markup.
 	 *
@@ -266,6 +283,8 @@ class HTML {
 	 *
 	 * @see https://github.com/ampproject/amp-wp/pull/5097
 	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Story markup.
 	 *
@@ -300,6 +319,8 @@ class HTML {
 	/**
 	 * Replaces the placeholder of publisher logo in the content.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function add_publisher_logo() {
@@ -319,6 +340,8 @@ class HTML {
 
 	/**
 	 * Adds square, and landscape poster images to the <amp-story>.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -340,6 +363,8 @@ class HTML {
 	/**
 	 * Print amp-analytics script.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function insert_amp_analytics_extension() {
@@ -358,6 +383,8 @@ class HTML {
 
 	/**
 	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -394,6 +421,8 @@ class HTML {
 
 	/**
 	 * Get story meta images.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string[] Images.
 	 */

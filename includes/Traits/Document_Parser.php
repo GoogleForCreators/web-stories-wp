@@ -40,6 +40,8 @@ trait Document_Parser {
 	/**
 	 * Retrieve content of a given DOM node attribute.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
 	 * @param string                        $attribute Attribute name.
 	 *
@@ -66,6 +68,8 @@ trait Document_Parser {
 
 	/**
 	 * Take html blob and return DOMXpath object.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $html HTML Blob.
 	 *

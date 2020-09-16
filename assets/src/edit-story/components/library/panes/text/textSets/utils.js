@@ -15,24 +15,11 @@
  */
 
 /**
- * External dependencies
- */
-
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import 'jest-extended';
-import '@testing-library/jest-dom';
-import 'jest-axe/extend-expect';
-
-/**
  * Internal dependencies
  */
-import toBeValidAMP from './matchers/toBeValidAMP';
-import toBeValidAMPStoryElement from './matchers/toBeValidAMPStoryElement';
-import toBeValidAMPStoryPage from './matchers/toBeValidAMPStoryPage';
+import loadTextSets from './loadTextSets';
 
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+export async function getTextSets() {
+  const textSetLibrary = await loadTextSets();
+  return Object.values(textSetLibrary).flat();
+}

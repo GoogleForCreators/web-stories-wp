@@ -27,6 +27,7 @@ With Stories for WordPress, we're bringing first-class Web Stories support to Wo
 ## FAQ
 
 **Where can I learn more about Web Stories?**
+
 [Web Stories](https://amp.dev/about/stories/) are tappable, engaging visual stories brought to the web. They’re powered by AMP technology, so learn more about them on [amp.dev](https://amp.dev/about/stories/).
 
 **How do I install the Stories for WordPress plugin?***

@@ -77,7 +77,9 @@ describe('textMeasurements', () => {
     // Text is output as an element.
     expect(measurer.children).toHaveLength(1);
     expect(measurer.children[0].tagName).toBe('P');
-    expect(measurer.children[0].style.fontSize).toBe('16px');
+    expect(measurer.children[0]).toHaveStyle({
+      fontSize: '16px',
+    });
     expect(measurer).toHaveTextContent('Content 1');
 
     // The "web-stories-content" class ensures that the editor markup and
@@ -86,7 +88,7 @@ describe('textMeasurements', () => {
     expect(measurer.classList.contains('web-stories-content')).toBe(true);
 
     // The most important measurer styles.
-    expect(measurer.style).toMatchObject({
+    expect(measurer).toHaveStyle({
       boxSizing: 'border-box',
       position: 'fixed',
       zIndex: '-1',
@@ -97,7 +99,9 @@ describe('textMeasurements', () => {
   it('should re-render the measuring element', () => {
     calculateTextHeight(element, 100);
     const measurer = document.body['__WEB_STORIES_MEASURER__'];
-    expect(measurer.children[0].style.fontSize).toBe('16px');
+    expect(measurer.children[0]).toHaveStyle({
+      fontSize: '16px',
+    });
 
     // Re-render.
     const element2 = { ...element, fontSize: 20, content: 'Content 2' };
@@ -106,7 +110,9 @@ describe('textMeasurements', () => {
     // Text is output as an element.
     expect(measurer.children).toHaveLength(1);
     expect(measurer.children[0].tagName).toBe('P');
-    expect(measurer.children[0].style.fontSize).toBe('20px');
+    expect(measurer.children[0]).toHaveStyle({
+      fontSize: '20px',
+    });
     expect(measurer).toHaveTextContent('Content 2');
   });
 });

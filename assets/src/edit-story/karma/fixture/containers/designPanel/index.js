@@ -23,6 +23,7 @@ import { Alignment } from './alignment';
 import { BackgroundOverlay } from './backgroundOverlay';
 import { Link } from './link';
 import { VideoAccessibility } from './videoAccessibility';
+import { Layers } from './layers';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -112,5 +113,13 @@ export class DesignPanel extends Container {
   get videoOptions() {
     // @todo: implement
     return null;
+  }
+
+  get layerPanel() {
+    return this._get(
+      this.getByRole('region', { name: /layers/i }),
+      'layerPanel',
+      Layers
+    );
   }
 }
