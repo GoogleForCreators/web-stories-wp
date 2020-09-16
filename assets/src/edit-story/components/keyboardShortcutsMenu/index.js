@@ -72,7 +72,6 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
         placement={Placement.LEFT}
       >
         <KeyboardShortcutsButton
-          data-testid={'keyboard-shortcuts-toggle'}
           ref={anchorRef}
           width="24"
           height="24"
@@ -83,7 +82,11 @@ function KeyboardShortcutsMenu({ onMenuToggled }) {
           onClick={toggleMenu}
         />
       </WithTooltip>
-      <Modal open={isOpen} onClose={toggleMenu}>
+      <Modal
+        contentLabel={__('Keyboard Shortcuts Menu', 'web-stories')}
+        open={isOpen}
+        onClose={toggleMenu}
+      >
         <ShortcutMenu toggleMenu={toggleMenu} />
       </Modal>
     </>
