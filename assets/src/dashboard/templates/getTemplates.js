@@ -35,13 +35,14 @@ export async function loadTemplate(title, imageBaseUrl) {
     pages: (data.pages || []).map((page) => ({
       ...page,
       elements: page.elements?.map((elem) => {
-        if (elem.resource && elem.resource.sizes) {
+        if (elem?.resource?.sizes) {
           elem.resource.sizes = [];
         }
-        if (elem.resource && elem.resource.src) {
-          elem.resource.src = `${imageBaseUrl}images/templates/${title}/${getImageFile(
-            elem.resource.src
-          )}`;
+        if (elem?.resource?.src) {
+          elem.resource.src = elem.resource.src.replace(
+            'https://replaceme.com/',
+            imageBaseUrl
+          );
         }
         return elem;
       }),

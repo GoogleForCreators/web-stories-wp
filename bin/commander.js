@@ -33,10 +33,8 @@ import {
   createBuild,
   getCurrentVersionNumber,
   updateVersionNumbers,
-  updateAssetsURL,
   updateTemplates,
 } from './utils/index.js';
-import { ASSETS_URL_CDN } from './utils/constants.js';
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
@@ -117,17 +115,12 @@ program
   })
   .action(({ composer, cdn, zip, clean }) => {
     const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
-    const pluginFilePath = `${buildDirPath}/${PLUGIN_FILE}`;
 
     // Make sure build directory exists and is empty.
     rmdirSync(BUILD_DIR, { recursive: true });
     mkdirSync(BUILD_DIR, { recursive: true });
 
-    createBuild(PLUGIN_DIR, buildDirPath, composer, cdn);
-
-    if (cdn) {
-      updateAssetsURL(pluginFilePath, cdn === true ? ASSETS_URL_CDN : cdn);
-    }
+    createBuild(PLUGIN_DIR, buildDirPath, composer);
 
     let build = BUILD_DIR;
 
