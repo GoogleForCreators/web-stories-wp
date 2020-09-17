@@ -56,7 +56,7 @@ const ParagraphWrapper = styled.div`
 
 // @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step1() {
-  const { assetsURL, demoStoryURL, isRTL } = useConfig();
+  const { cdnURL, demoStoryURL, isRTL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -74,7 +74,7 @@ function Step1() {
         rel="noreferrer"
       >
         <Image
-          src={`${assetsURL}images/plugin-activation/tips.png`}
+          src={`${cdnURL}images/plugin-activation/tips.png`}
           alt=""
           width={170}
           height={300}

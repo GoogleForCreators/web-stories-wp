@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-export const ASSETS_URL_CDN =
-  'https://google.github.io/web-stories-wp/plugin-assets/';
-
 const DEFAULT_ATTRIBUTES = {
   weights: [400, 700],
   styles: ['italic', 'regular'],

@@ -53,7 +53,7 @@ const ParagraphWrapper = styled.div`
 `;
 
 function Step3() {
-  const { assetsURL, newStoryURL } = useConfig();
+  const { cdnURL, newStoryURL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -66,7 +66,7 @@ function Step3() {
     <Wrapper>
       <Link href={newStoryURL} onClick={onClick}>
         <Image
-          src={`${assetsURL}images/plugin-activation/editor.png`}
+          src={`${cdnURL}images/plugin-activation/editor.png`}
           alt=""
           width={320}
           height={180}

@@ -53,7 +53,7 @@ const ParagraphWrapper = styled.div`
 
 // @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step2() {
-  const { assetsURL, dashboardURL } = useConfig();
+  const { cdnURL, dashboardURL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -84,7 +84,7 @@ function Step2() {
       </ParagraphWrapper>
       <Link href={dashboardURL} onClick={onClick}>
         <Image
-          src={`${assetsURL}images/plugin-activation/dashboard.png`}
+          src={`${cdnURL}images/plugin-activation/dashboard.png`}
           alt=""
           width={320}
           height={190}

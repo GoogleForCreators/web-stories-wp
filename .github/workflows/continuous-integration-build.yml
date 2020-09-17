@@ -70,19 +70,19 @@ jobs:
 
       - name: Bundle composer version
         run: |
-          npm run workflow:build-plugin -- --cdn --composer
+          npm run workflow:build-plugin -- --composer
           mv build/web-stories build/web-stories-composer/
 
       - name: Bundle regular version
         run: |
-          npm run workflow:build-plugin -- --cdn
+          npm run workflow:build-plugin
           mv build/web-stories build/web-stories-regular/
 
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
           NODE_ENV=development npx webpack --config webpack.config.cjs
-          npm run workflow:build-plugin -- --cdn
+          npm run workflow:build-plugin
           mv build/web-stories build/web-stories-dev/
 
       - name: Upload composer bundle

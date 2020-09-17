@@ -55,16 +55,6 @@ describe('createBuild', () => {
     ]);
   });
 
-  it('should ignore assets folder if using CDN', () => {
-    createBuild('/foo', '/foo/build/web-stories', false, true);
-    expect(copyFiles).toHaveBeenCalledWith('/foo', '/foo/build/web-stories', [
-      'bar.txt',
-      'baz/',
-      'assets/images/templates/',
-      'assets/images/plugin-activation/',
-    ]);
-  });
-
   it('should ignore vendor folder for composer builds', () => {
     createBuild('/foo', '/foo/build/web-stories', true);
     expect(copyFiles).toHaveBeenCalledWith('/foo', '/foo/build/web-stories', [
