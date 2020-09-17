@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { v4 as uuidv4 } from 'uuid';
@@ -34,12 +34,18 @@ import { __ } from '@wordpress/i18n';
 import { ArrowDown } from '../../../../button';
 import { useKeyDownEffect } from '../../../../keyboard';
 import useRovingTabIndex from '../useRovingTabIndex';
-import Pill, { PILL_HEIGHT } from './pill';
+import Pill from './pill';
 
-const PILL_TOP_MARGIN = 16;
-const PILL_BOTTOM_MARGIN = 30;
-const PILL_COLLAPSED_FULL_HEIGHT =
-  PILL_HEIGHT + PILL_TOP_MARGIN + PILL_BOTTOM_MARGIN;
+/**
+ * Internal dependencies
+ */
+import {
+  PILL_COLLAPSED_FULL_HEIGHT,
+  PILL_BOTTOM_MARGIN,
+  PILL_TOP_MARGIN,
+} from './constants';
+import useExpandAnimation from './useExpandAnimation';
+import useHandleRowVisibility from './useHandleRowVisibility';
 
 const Section = styled.div`
   height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
@@ -107,60 +113,20 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     }
   };
 
-  // Handles expand and contract animation.
-  // We calculate the actual height of the categories list, and set its explicit
-  // height if it's expanded, in order to have a CSS height transition.
-  useLayoutEffect(() => {
-    if (!sectionRef.current || !innerContainerRef.current) {
-      return;
-    }
-    let height;
-    if (!isExpanded) {
-      height = `${PILL_COLLAPSED_FULL_HEIGHT}px`;
-    } else {
-      height = `${
-        innerContainerRef.current.offsetHeight +
-        PILL_TOP_MARGIN +
-        PILL_BOTTOM_MARGIN
-      }px`;
-    }
-    // Safari has some strange issues with flex-shrink that require setting
-    // min-height as well.
-    sectionRef.current.style.height = height;
-    sectionRef.current.style.minHeight = height;
+  useExpandAnimation({
+    sectionRef,
+    innerContainerRef,
+    isExpanded,
+    setFocusedRowOffset,
+  });
 
-    setFocusedRowOffset(0);
-  }, [sectionRef, innerContainerRef, isExpanded]);
-
-  // Handles setting which row will be seen, by manipulating translateY.
-  useLayoutEffect(() => {
-    if (!innerContainerRef.current) {
-      return;
-    }
-    const selectedItemOffsetTop = selectedItem.current?.offsetTop || 0;
-
-    if (!isExpanded && selectedItem) {
-      setFocusedRowOffset(selectedItemOffsetTop);
-    }
-  }, [innerContainerRef, isExpanded, selectedItemId]);
-
-  // Handles fading rows in and out depending on the selected item.
-  useLayoutEffect(() => {
-    if (!innerContainerRef.current) {
-      return;
-    }
-    const selectedItemOffsetTop = selectedItem.current?.offsetTop || 0;
-
-    for (let pill of itemRefs.current) {
-      const isSameRow =
-        selectedItem && pill.offsetTop === selectedItemOffsetTop;
-      if (selectedItem && !isSameRow && !isExpanded) {
-        pill.classList.add('invisible');
-      } else {
-        pill.classList.remove('invisible');
-      }
-    }
-  }, [innerContainerRef, isExpanded, selectedItemId]);
+  useHandleRowVisibility({
+    isExpanded,
+    innerContainerRef,
+    selectedItem,
+    setFocusedRowOffset,
+    itemRefs,
+  });
 
   const hasItems = items.length > 0;
   useRovingTabIndex({ ref: sectionRef }, [isExpanded]);

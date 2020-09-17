@@ -21,7 +21,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
-export const PILL_HEIGHT = 36;
+/**
+ * Internal dependencies
+ */
+import { PILL_HEIGHT } from './constants';
 
 const PillContainer = styled.button`
   border: 1px solid transparent;
