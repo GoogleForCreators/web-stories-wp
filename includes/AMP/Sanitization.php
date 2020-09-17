@@ -332,7 +332,7 @@ class Sanitization {
 			],
 			'AMP_Script_Sanitizer'            => [],
 			'AMP_Style_Sanitizer'             => [],
-			'AMP_Meta_Sanitizer'              => [],
+			Meta_Sanitizer::class             => [],
 			'AMP_Layout_Sanitizer'            => [],
 			'AMP_Accessibility_Sanitizer'     => [],
 			Canonical_Sanitizer::class        => [],
