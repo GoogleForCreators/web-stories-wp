@@ -164,8 +164,14 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     <Section ref={sectionRef}>
       {hasItems && (
         <>
-          <Container id={containerId} isExpanded={isExpanded} role="tablist">
+          <Container
+            id={containerId}
+            isExpanded={isExpanded}
+            role="tablist"
+            aria-label={__('Pill list', 'web-stories')}
+          >
             <InnerContainer
+              role="presentation"
               ref={innerContainerRef}
               style={{ transform: `translateY(-${focusedRowOffset}px` }}
             >
