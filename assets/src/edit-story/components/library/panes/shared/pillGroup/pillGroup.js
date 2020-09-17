@@ -99,13 +99,11 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
   const innerContainerRef = useRef();
 
   const itemRefs = useRef([]);
-  const selectedItem = useRef(null);
 
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
 
   const handleClick = (selected, id) => {
     if (selected) {
-      selectedItem.current = null;
       deselectItem();
     } else {
       setIsExpanded(false);
@@ -123,7 +121,7 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
   useHandleRowVisibility({
     isExpanded,
     innerContainerRef,
-    selectedItem,
+    selectedItemId,
     setFocusedRowOffset,
     itemRefs,
   });
@@ -160,10 +158,8 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                   <Pill
                     itemRef={(el) => {
                       itemRefs.current[i] = el;
-                      if (selected) {
-                        selectedItem.current = el;
-                      }
                     }}
+                    id={id}
                     index={i}
                     isSelected={selected}
                     isExpanded={isExpanded}

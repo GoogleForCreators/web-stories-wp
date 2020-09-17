@@ -50,11 +50,13 @@ const PillContainer = styled.button`
   }
 `;
 
-function Pill({ itemRef, children, isSelected, onClick, index }) {
+function Pill({ itemRef, children, isSelected, onClick, index, id }) {
   return (
     <PillContainer
       ref={itemRef}
-      data-testid="mediaCategory"
+      // @todo Get rid of data-* values.
+      data-testid="pill"
+      data-category-id={id}
       role="tab"
       aria-selected={isSelected}
       // The first or selected category will be in focus for roving
@@ -74,6 +76,7 @@ Pill.propTypes = {
   itemRef: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
+  id: PropTypes.string.isRequired,
 };
 
 export default Pill;

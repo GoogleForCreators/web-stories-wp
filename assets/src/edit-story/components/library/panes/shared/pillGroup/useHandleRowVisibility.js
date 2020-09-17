@@ -20,9 +20,9 @@ import { useLayoutEffect } from 'react';
 
 function useHandleRowVisibility({
   innerContainerRef,
-  selectedItem,
   isExpanded,
   setFocusedRowOffset,
+  selectedItemId,
   itemRefs,
 }) {
   // Handles setting which row will be seen, by manipulating translateY.
@@ -30,19 +30,33 @@ function useHandleRowVisibility({
     if (!innerContainerRef.current) {
       return;
     }
-    const selectedItemOffsetTop = selectedItem.current?.offsetTop || 0;
+    // This is using data-category-id since when using the
+    // changing selectedItem directly, there will be a lag @todo Replace this.
+    const selectedItem = selectedItemId
+      ? itemRefs.current.find((p) => p.dataset.categoryId === selectedItemId)
+      : null;
+    const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
     if (!isExpanded && selectedItem) {
       setFocusedRowOffset(selectedItemOffsetTop);
     }
-  }, [innerContainerRef, isExpanded, selectedItem, setFocusedRowOffset]);
+  }, [
+    innerContainerRef,
+    isExpanded,
+    selectedItemId,
+    setFocusedRowOffset,
+    itemRefs,
+  ]);
 
   // Handles fading rows in and out depending on the selected item.
   useLayoutEffect(() => {
     if (!innerContainerRef.current) {
       return;
     }
-    const selectedItemOffsetTop = selectedItem.current?.offsetTop || 0;
+    const selectedItem = selectedItemId
+      ? itemRefs.current.find((p) => p.dataset.categoryId === selectedItemId)
+      : null;
+    const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
     for (let pill of itemRefs.current) {
       const isSameRow =
@@ -53,7 +67,7 @@ function useHandleRowVisibility({
         pill.classList.remove('invisible');
       }
     }
-  }, [innerContainerRef, isExpanded, selectedItem, itemRefs]);
+  }, [innerContainerRef, isExpanded, selectedItemId, itemRefs]);
 }
 
 export default useHandleRowVisibility;

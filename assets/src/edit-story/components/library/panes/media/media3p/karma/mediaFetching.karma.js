@@ -300,7 +300,7 @@ describe('Media3pPane fetching', () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
 
     await fixture.events.focus(
-      fixture.querySelectorAll('[data-testid="mediaCategory"]')[0]
+      fixture.querySelectorAll('[data-testid="pill"]')[0]
     );
     expect(document.activeElement.textContent).toBe('Sustainability');
 
@@ -407,7 +407,7 @@ describe('Media3pPane fetching', () => {
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
 
     const mediaCategories = unsplashSection.querySelectorAll(
-      '[data-testid="mediaCategory"]'
+      '[data-testid="pill"]'
     );
     await fixture.events.click(mediaCategories[0]);
 
