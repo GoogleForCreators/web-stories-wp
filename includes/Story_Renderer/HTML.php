@@ -86,7 +86,6 @@ class HTML {
 					'link_text' => esc_html__( 'Contact Support', 'web-stories' ),
 				]
 			);
-			exit;
 		}
 
 		$this->document = $document;
