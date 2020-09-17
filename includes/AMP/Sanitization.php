@@ -71,6 +71,21 @@ class Sanitization {
 	 * @return void
 	 */
 	protected function add_missing_scripts( $document, $scripts ) {
+		// Gather all links.
+		$links = [
+			Attribute::REL_PRECONNECT => [
+				// Include preconnect link for AMP CDN for browsers that don't support preload.
+				AMP_DOM_Utils::create_node(
+					$document,
+					Tag::LINK,
+					[
+						Attribute::REL  => Attribute::REL_PRECONNECT,
+						Attribute::HREF => 'https://cdn.ampproject.org',
+					]
+				),
+			],
+		];
+
 		// Obtain the existing AMP scripts.
 		$amp_scripts     = [];
 		$ordered_scripts = [];
