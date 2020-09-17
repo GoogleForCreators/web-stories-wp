@@ -34,9 +34,6 @@ jobs:
             ${{ runner.os }}-composer-
             ${{ runner.os }}-
 
-      - name: Validate composer.json
-        run: composer --no-interaction validate --no-check-all
-
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress --no-interaction
 
