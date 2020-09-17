@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export const API_DOMAIN = 'https://staging-media3p.sandbox.googleapis.com';
-const API_KEY = 'AIzaSyDix_Q7ErmApBteRK0w-C3hOWymRM8t-8M'; // staging key
+export const API_DOMAIN = 'https://media3p.googleapis.com';
+const API_KEY = 'AIzaSyDqgPsZ0VnxAuakmX7bjnzmNQsE7Drlvk0';
 
 /**
  * The methods exposed by the api

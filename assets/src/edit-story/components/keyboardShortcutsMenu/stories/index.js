@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-export { default as bundlePlugin } from './bundlePlugin.js';
-export { default as buildFonts } from './buildFonts.js';
-export { default as createBuild } from './createBuild.js';
-export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
-export { default as updateVersionNumbers } from './updateVersionNumbers.js';
-export { default as updateTemplates } from './updateTemplates.js';
+/**
+ * Internal dependencies
+ */
+import ShortcutMenu from '../shortcutMenu';
+
+export default {
+  title: 'Stories Editor/Components/Keyboard Shortcuts Menu',
+  component: ShortcutMenu,
+};
+
+export const _default = () => {
+  return <ShortcutMenu />;
+};

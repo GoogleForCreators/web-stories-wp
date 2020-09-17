@@ -31,8 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import DisplayElement from '../../../../canvas/displayElement';
 import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
-import useBatchingCallback from '../../../../../utils/useBatchingCallback';
-import useLibrary from '../../../useLibrary';
+import useInsertTextSet from './useInsertTextSet';
 
 const TextSetItem = styled.button`
   border: 0;
@@ -46,38 +45,36 @@ const TextSetItem = styled.button`
 `;
 
 function TextSet({ elements }) {
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
-  const insertSet = useBatchingCallback(
-    (toAdd) => {
-      // @todo Select all the added elements.
-      // @todo Position correctly when adding.
-      toAdd.forEach((e) => insertElement(e.type, e));
-    },
-    [insertElement]
-  );
+  const insertTextSet = useInsertTextSet();
 
   return (
     <TextSetItem
-      onClick={() => insertSet(elements)}
+      role="listitem"
       aria-label={__('Insert Text Set', 'web-stories')}
+      onClick={() => insertTextSet(elements)}
     >
       {elements.map(
-        ({ id, content, x, y, textSetWidth, textSetHeight, ...rest }) => (
+        ({
+          id,
+          content,
+          previewOffsetX,
+          previewOffsetY,
+          textSetWidth,
+          textSetHeight,
+          ...rest
+        }) => (
           <DisplayElement
             previewMode
             key={id}
             element={{
               id,
               content: `<span style="color: #fff">${content}<span>`,
-              x: x + (PAGE_WIDTH - textSetWidth) / 2,
+              ...rest,
+              x: previewOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
               y:
-                y +
+                previewOffsetY +
                 (PAGE_WIDTH - textSetHeight) /
                   2 /* Use PAGE_WIDTH here since the area is square */,
-              ...rest,
             }}
           />
         )

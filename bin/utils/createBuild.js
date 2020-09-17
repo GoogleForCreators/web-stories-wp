@@ -34,9 +34,8 @@ const composerArgs =
  * @param {string} source Path to the source directory.
  * @param {string} target Path to target directory.
  * @param {boolean} [composer=false] Create Composer-ready ZIP file without PHP autoloader.
- * @param {boolean} [cdn] Whether to use a CDN for assets or not.
  */
-function createBuild(source, target, composer = false, cdn = false) {
+function createBuild(source, target, composer = false) {
   if (!composer) {
     execSync(`composer update --no-dev ${composerArgs}`);
   }
@@ -44,10 +43,6 @@ function createBuild(source, target, composer = false, cdn = false) {
   const ignoredFiles = getIgnoredFiles(source);
   if (composer) {
     ignoredFiles.push('vendor/');
-  }
-  if (cdn) {
-    ignoredFiles.push('assets/images/templates/');
-    ignoredFiles.push('assets/images/plugin-activation/');
   }
   copyFiles(source, target, ignoredFiles);
 

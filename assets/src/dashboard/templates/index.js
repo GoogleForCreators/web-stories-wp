@@ -27,8 +27,8 @@ import getTemplates from './getTemplates';
 
 const memoizedGetTemplates = memoize(getTemplates);
 
-export default async function ({ assetsURL }) {
-  const templates = await memoizedGetTemplates(assetsURL);
+export default async function ({ cdnURL }) {
+  const templates = await memoizedGetTemplates(cdnURL);
 
   const globalConfig = {
     createdBy: 'Google',
