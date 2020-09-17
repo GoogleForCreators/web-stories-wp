@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Story_Renderer;
 
 use AmpProject\Dom\Document;
 use DOMElement;
+use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
 
@@ -308,5 +309,17 @@ class HTML {
 		];
 
 		return array_filter( $images );
+	}
+
+	/**
+	 * Sanitizes markup to be valid AMP.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function sanitize_markup() {
+		$sanitization = new Sanitization();
+		$sanitization->sanitize_document( $this->document );
 	}
 }
