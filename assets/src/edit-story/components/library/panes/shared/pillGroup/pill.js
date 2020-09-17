@@ -59,7 +59,6 @@ function Pill({
   isSelected,
   onClick,
   index,
-  categoryId,
   isExpanded,
   setIsExpanded,
 }) {
@@ -80,7 +79,6 @@ function Pill({
       ref={ref}
       className="categoryPill"
       data-testid="mediaCategory"
-      data-category-id={categoryId}
       role="tab"
       aria-selected={isSelected}
       // The first or selected category will be in focus for roving
@@ -96,7 +94,6 @@ function Pill({
 
 Pill.propTypes = {
   index: PropTypes.number,
-  categoryId: PropTypes.string,
   isSelected: PropTypes.bool,
   isExpanded: PropTypes.bool,
   setIsExpanded: PropTypes.func,
