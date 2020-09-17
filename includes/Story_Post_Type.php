@@ -156,7 +156,7 @@ class Story_Post_Type {
 				],
 				'rewrite'               => [
 					'slug'       => self::REWRITE_SLUG,
-					'with_front' => true,
+					'with_front' => false,
 				],
 				'public'                => true,
 				'has_archive'           => true,
@@ -177,7 +177,7 @@ class Story_Post_Type {
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
-		add_action( 'template_redirect', [ $this, 'redirect_old_slug' ] );
+		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
@@ -698,54 +698,46 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Redirect old url slug. /stories -> /web-stories.
-	 * 
-	 * @since 1.0.0
+	 * Handles redirects to the post type archive.
 	 *
-	 * @return void
-	 */
-	public function redirect_old_slug() {
-		if ( ! is_404() ) {
-			return;
-		}
-
-		$current = (string) home_url( $_SERVER['REQUEST_URI'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-		$link    = $this->get_redirect_old_slug( $current );
-		if ( false !== $link ) {
-			wp_safe_redirect( $link, 301 );
-			exit;
-		}
-	}
-
-	/**
-	 * Get redirect URL.
+	 * Redirects requests to `/stories` (old) to `/web-stories` (new).
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
-	 *
-	 * @param string $current Current URL.
-	 *
-	 * @return false|string
+	 * @param bool     $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param WP_Query $query The WP_Query object.
+	 * @return bool Whether to pass-through or not.
 	 */
-	public function get_redirect_old_slug( $current ) {
+	public function redirect_post_type_archive_urls( $bypass, $query ) {
 		global $wp_rewrite;
 
-		if ( $wp_rewrite instanceof WP_Rewrite && $wp_rewrite->using_permalinks() ) {
-			return false;
-		}
-		$new_link = (string) get_post_type_archive_link( self::POST_TYPE_SLUG );
-		// Strip out home url including sub directory path.
-		$no_home = str_replace( (string) home_url(), '', $new_link );
-		// Replace old slug with new slug.
-		$path = str_replace( '/' . self::REWRITE_SLUG, '/stories', $no_home );
-		// Put home url back.
-		$link = (string) home_url( $path );
-		if ( false !== strpos( $current, $link ) ) {
-			return (string) str_replace( $link, $new_link, $current );
+		// If a plugin has already utilized the pre_handle_404 function, return without action to avoid conflicts.
+		if ( $bypass ) {
+			return $bypass;
 		}
 
-		return false;
+		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
+			return $bypass;
+		}
+
+		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
+		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
+			if ( $query->get( 'feed' ) ) {
+				$feed                  = ( $query->get( 'feed' ) === 'feed ' ) ? $query->get( 'feed' ) : '';
+				$post_type_archive_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
+			} else {
+				$post_type_archive_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
+			}
+
+			if ( ! $post_type_archive_url ) {
+				return $bypass;
+			}
+
+			wp_safe_redirect( $post_type_archive_url, 301 );
+			exit;
+		}
+
+		return $bypass;
 	}
 
 	/**

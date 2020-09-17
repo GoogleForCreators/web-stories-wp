@@ -271,23 +271,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::get_redirect_old_slug
-	 */
-	public function test_get_redirect_old_slug() {
-		update_option( 'permalink_structure', '/%year%/%monthnum%/%day%/%hour%/%minute%/%second%' );
-
-		$current = home_url( '/stories/wibble?test=123' );
-
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
-
-		$get_redirect_old_slug = $story_post_type->get_redirect_old_slug( $current );
-
-		$this->assertContains( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ), $get_redirect_old_slug );
-		$this->assertContains( 'wibble?test=123', $get_redirect_old_slug );
-		delete_option( 'permalink_structure' );
-	}
-
-	/**
 	 * @covers ::show_admin_bar
 	 */
 	public function test_show_admin_bar() {
@@ -319,6 +302,53 @@ class Story_Post_Type extends \WP_UnitTestCase {
 			$this->assertTrue( $administrator->has_cap( $cap ) );
 			$this->assertTrue( $editor->has_cap( $cap ) );
 		}
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_true() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_no_permalink() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_permalinks() {
+		update_option( 'permalink_structure', '/%year%/%monthnum%/%day%/%hour%/%minute%/%second%' );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+		delete_option( 'permalink_structure' );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_page_set() {
+		update_option( 'permalink_structure', '/%year%/%monthnum%/%day%/%hour%/%minute%/%second%' );
+		add_filter( 'post_type_archive_link', '__return_false' );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$query->set( 'pagename', 'stories' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+		remove_filter( 'post_type_archive_link', '__return_false' );
+		delete_option( 'permalink_structure' );
 	}
 
 
