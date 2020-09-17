@@ -357,7 +357,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$wp_rewrite       = new \WP_Rewrite();
 		$wp_rewrite->init();
 		$wp_rewrite->permalink_structure = '/%post_name%/';
-		
+
 		add_filter( 'post_type_archive_link', '__return_false' );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$query           = new \WP_Query();
@@ -367,6 +367,24 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		remove_filter( 'post_type_archive_link', '__return_false' );
 	}
 
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_page_feed() {
+		global $wp_rewrite;
+		$wp_rewrite       = new \WP_Rewrite();
+		$wp_rewrite->init();
+		$wp_rewrite->permalink_structure = '/%post_name%/';
+
+		add_filter( 'post_type_archive_feed_link', '__return_false' );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$query->set( 'pagename', 'stories' );
+		$query->set( 'feed', 'feed' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+		remove_filter( 'post_type_archive_feed_link', '__return_false' );
+	}
 
 	/**
 	 * @covers ::remove_caps_from_roles
