@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a6ea7ed42e929b531e0a0f9f71a0c3c",
+    "content-hash": "ae1054903cabfdfe26ba75ec67b0fe4b",
     "packages": [
         {
             "name": "ampproject/amp-wp",
             "version": "dev-develop",
             "source": {
                 "type": "git",
-                "url": "https://github.com/ampproject/amp-wp.git",
-                "reference": "c6aed8f66921a527911fa74188bf838a3d164f56"
+                "url": "https://github.com/ampproject/amp-wp",
+                "reference": "6166bba554cd8504ab31232561467ce2a3be6b59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/c6aed8f66921a527911fa74188bf838a3d164f56",
-                "reference": "c6aed8f66921a527911fa74188bf838a3d164f56",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/6166bba554cd8504ab31232561467ce2a3be6b59",
+                "reference": "6166bba554cd8504ab31232561467ce2a3be6b59",
                 "shasum": ""
             },
             "require": {
@@ -104,11 +104,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "support": {
-                "source": "https://github.com/ampproject/amp-wp/tree/develop",
-                "issues": "https://github.com/ampproject/amp-wp/issues"
-            },
-            "time": "2020-09-15T20:32:40+00:00"
+            "time": "2020-09-17T04:40:34+00:00"
         },
         {
             "name": "cweagans/composer-patches",
