@@ -130,7 +130,7 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
   useRovingTabIndex({ ref: sectionRef }, [isExpanded]);
   useKeyDownEffect(
     sectionRef,
-    !isExpanded ? 'down' : [],
+    !isExpanded ? 'down' : '',
     () => hasItems && setIsExpanded(true),
     [isExpanded, hasItems]
   );
