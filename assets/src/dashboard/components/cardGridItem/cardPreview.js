@@ -102,8 +102,6 @@ const getActionAttributes = (targetAction) =>
     ? {
         href: resolveRoute(targetAction),
         isLink: true,
-        target: '_blank',
-        rel: 'noopener noreferrer',
       }
     : { onClick: targetAction };
 

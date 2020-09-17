@@ -22,9 +22,9 @@ import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 export const generateStoryMenu = ({ menuItems, story }) =>
   menuItems.map((menuItem) => {
     if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR) {
-      return { ...menuItem, url: story.bottomTargetAction };
+      return { ...menuItem, url: story.bottomTargetAction, newTab: false };
     } else if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
-      return { ...menuItem, url: story.link };
+      return { ...menuItem, url: story.link, newTab: true };
     }
     return menuItem;
   });
