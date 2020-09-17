@@ -29,15 +29,15 @@ describe('PillGroup', () => {
   const categories = [
     {
       id: '1',
-      displayName: 'Category 1',
+      label: 'Category 1',
     },
     {
       id: '2',
-      displayName: 'Category 2',
+      label: 'Category 2',
     },
     {
       id: '3',
-      displayName: 'Category 3',
+      label: 'Category 3',
     },
   ];
   const selectCategoryMock = jest.fn();

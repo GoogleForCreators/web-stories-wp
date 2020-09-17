@@ -152,7 +152,7 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
               style={{ transform: `translateY(-${focusedRowOffset}px` }}
             >
               {items.map((item, i) => {
-                const { id, displayName } = item;
+                const { id, label } = item;
                 const selected = id === selectedItemId;
                 return (
                   <Pill
@@ -167,7 +167,7 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                     key={id}
                     onClick={() => handleClick(selected, id)}
                   >
-                    {displayName}
+                    {label}
                   </Pill>
                 );
               })}
