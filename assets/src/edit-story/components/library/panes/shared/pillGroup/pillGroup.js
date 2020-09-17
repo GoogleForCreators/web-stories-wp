@@ -143,8 +143,8 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
           <Container
             id={containerId}
             isExpanded={isExpanded}
-            role="tablist"
-            aria-label={__('Pill list', 'web-stories')}
+            role="listbox"
+            aria-label={__('List of filtering options', 'web-stories')}
           >
             <InnerContainer
               role="presentation"

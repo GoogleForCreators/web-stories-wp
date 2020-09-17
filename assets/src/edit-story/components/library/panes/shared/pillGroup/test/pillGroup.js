@@ -52,8 +52,8 @@ describe('PillGroup', () => {
         deselectItem={deselectCategoryMock}
       />
     );
-    const categoryContainer = queryByRole('tablist');
-    expect(categoryContainer).toBeNull();
+    const itemContainer = queryByRole('listbox');
+    expect(itemContainer).toBeNull();
   });
 
   it('should render <PillGroup /> with items', () => {
@@ -66,12 +66,12 @@ describe('PillGroup', () => {
       />
     );
 
-    const categoryContainer = queryByRole('tablist');
-    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
-    const categoryPill2 = queryByRole('tab', { name: 'Category 2' });
-    const categoryPill3 = queryByRole('tab', { name: 'Category 3' });
+    const itemContainer = queryByRole('listbox');
+    const categoryPill1 = queryByRole('option', { name: 'Category 1' });
+    const categoryPill2 = queryByRole('option', { name: 'Category 2' });
+    const categoryPill3 = queryByRole('option', { name: 'Category 3' });
 
-    expect(categoryContainer).toBeDefined();
+    expect(itemContainer).toBeDefined();
     expect(categoryPill1).toHaveAttribute('aria-selected', 'false');
     expect(categoryPill2).toHaveAttribute('aria-selected', 'false');
     expect(categoryPill3).toHaveAttribute('aria-selected', 'false');
@@ -87,9 +87,9 @@ describe('PillGroup', () => {
       />
     );
 
-    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
-    const categoryPill2 = queryByRole('tab', { name: 'Category 2' });
-    const categoryPill3 = queryByRole('tab', { name: 'Category 3' });
+    const categoryPill1 = queryByRole('option', { name: 'Category 1' });
+    const categoryPill2 = queryByRole('option', { name: 'Category 2' });
+    const categoryPill3 = queryByRole('option', { name: 'Category 3' });
 
     expect(categoryPill1).toHaveAttribute('aria-selected', 'true');
     expect(categoryPill2).toHaveAttribute('aria-selected', 'false');
@@ -105,7 +105,7 @@ describe('PillGroup', () => {
         deselectItem={deselectCategoryMock}
       />
     );
-    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
+    const categoryPill1 = queryByRole('option', { name: 'Category 1' });
 
     fireEvent.click(categoryPill1);
 
@@ -121,7 +121,7 @@ describe('PillGroup', () => {
         deselectItem={deselectCategoryMock}
       />
     );
-    const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
+    const categoryPill1 = queryByRole('option', { name: 'Category 1' });
 
     fireEvent.click(categoryPill1);
 

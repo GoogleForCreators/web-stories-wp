@@ -57,7 +57,7 @@ function Pill({ itemRef, children, isSelected, onClick, index, id }) {
       // @todo Get rid of data-* values.
       data-testid="pill"
       data-category-id={id}
-      role="tab"
+      role="option"
       aria-selected={isSelected}
       // The first or selected category will be in focus for roving
       // (arrow-based) navigation initially.
