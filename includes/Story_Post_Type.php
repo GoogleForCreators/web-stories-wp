@@ -37,6 +37,7 @@ use WP_Post;
 use WP_Role;
 use WP_Post_Type;
 use WP_Screen;
+use WP_Rewrite;
 
 /**
  * Class Story_Post_Type.
@@ -72,7 +73,7 @@ class Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	const REWRITE_SLUG = 'stories';
+	const REWRITE_SLUG = 'web-stories';
 
 	/**
 	 * Style Present options name.
@@ -154,7 +155,8 @@ class Story_Post_Type {
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
-					'slug' => self::REWRITE_SLUG,
+					'slug'       => self::REWRITE_SLUG,
+					'with_front' => false,
 				],
 				'public'                => true,
 				'has_archive'           => true,
@@ -175,6 +177,7 @@ class Story_Post_Type {
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
+		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
@@ -723,6 +726,49 @@ class Story_Post_Type {
 		}
 
 		return $template;
+	}
+
+	/**
+	 * Handles redirects to the post type archive.
+	 *
+	 * Redirects requests to `/stories` (old) to `/web-stories` (new).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param \WP_Query $query The WP_Query object.
+	 * @return bool Whether to pass-through or not.
+	 */
+	public function redirect_post_type_archive_urls( $bypass, $query ) {
+		global $wp_rewrite;
+
+		// If a plugin has already utilized the pre_handle_404 function, return without action to avoid conflicts.
+		if ( $bypass ) {
+			return $bypass;
+		}
+
+		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
+			return $bypass;
+		}
+
+		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
+		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
+			if ( $query->get( 'feed' ) ) {
+				$feed                  = ( $query->get( 'feed' ) === 'feed ' ) ? $query->get( 'feed' ) : '';
+				$post_type_archive_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
+			} else {
+				$post_type_archive_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
+			}
+
+			if ( ! $post_type_archive_url ) {
+				return $bypass;
+			}
+
+			wp_safe_redirect( $post_type_archive_url, 301 );
+			exit;
+		}
+
+		return $bypass;
 	}
 
 	/**
