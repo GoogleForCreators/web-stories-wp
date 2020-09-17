@@ -1,6 +1,6 @@
 {
   "root": true,
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "plugin:@wordpress/eslint-plugin/i18n",
     "eslint:recommended",
@@ -13,6 +13,7 @@
     "plugin:jsdoc/recommended"
   ],
   "plugins": [
+    "@babel",
     "@wordpress",
     "header",
     "jsdoc",

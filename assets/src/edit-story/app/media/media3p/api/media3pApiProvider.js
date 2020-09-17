@@ -130,7 +130,7 @@ function Media3pApiProvider({ children }) {
     return {
       categories: response.categories.map((m) => ({
         id: m.name,
-        displayName: m.displayName,
+        label: m.displayName,
       })),
     };
   }

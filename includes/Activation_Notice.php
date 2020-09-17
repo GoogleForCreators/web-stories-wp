@@ -142,7 +142,7 @@ class Activation_Notice {
 			'id'         => 'web-stories-plugin-activation-notice',
 			'config'     => [
 				'isRTL'        => is_rtl(),
-				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'demoStoryURL' => $demo_story_url,
 				'newStoryURL'  => $new_story_url,
 				'dashboardURL' => $dashboard_url,

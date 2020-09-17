@@ -326,11 +326,11 @@ describe('useMedia3pApi', () => {
       categories: [
         {
           id: 'categories/unsplash:1',
-          displayName: 'Covid-19',
+          label: 'Covid-19',
         },
         {
           id: 'categories/unsplash:2',
-          displayName: 'Mountains',
+          label: 'Mountains',
         },
       ],
     });

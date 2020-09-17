@@ -24,6 +24,8 @@ import { BackgroundOverlay } from './backgroundOverlay';
 import { Link } from './link';
 import { VideoAccessibility } from './videoAccessibility';
 import { Layers } from './layers';
+import { TextStylePreset } from './textStylePreset';
+import { ColorPreset } from './colorPreset';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -70,9 +72,20 @@ export class DesignPanel extends Container {
     );
   }
 
-  get stylePreset() {
-    // @todo: implement
-    return null;
+  get textStylePreset() {
+    return this._get(
+      this.getByRole('region', { name: /Saved styles/ }),
+      'textStylePreset',
+      TextStylePreset
+    );
+  }
+
+  get colorPreset() {
+    return this._get(
+      this.getByRole('region', { name: /Saved colors/ }),
+      'colorPreset',
+      ColorPreset
+    );
   }
 
   get backgroundSizePosition() {

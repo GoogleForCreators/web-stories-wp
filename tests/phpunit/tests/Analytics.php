@@ -77,8 +77,8 @@ class Analytics extends \WP_UnitTestCase {
 
 		$this->assertArrayHasKey( 'storyProgress', $result['triggers'] );
 		$this->assertArrayHasKey( 'storyEnd', $result['triggers'] );
-		$this->assertSame( '${title}', $result['triggers']['storyProgress']['vars']['eventCategory'] );
-		$this->assertSame( '${title}', $result['triggers']['storyEnd']['vars']['eventCategory'] );
+		$this->assertSame( '${title}', $result['triggers']['storyProgress']['vars']['event_category'] );
+		$this->assertSame( '${title}', $result['triggers']['storyEnd']['vars']['event_category'] );
 	}
 
 	/**
@@ -94,15 +94,27 @@ class Analytics extends \WP_UnitTestCase {
 	 * @covers ::get_default_configuration
 	 */
 	public function test_get_default_configuration() {
-		$tracking_id = 123456789;
-		update_option( Settings::SETTING_NAME_TRACKING_ID, $tracking_id, false );
-		$analytics = new \Google\Web_Stories\Analytics();
-		$actual    = $analytics->get_default_configuration();
+		$tracking_id = '123456789';
+		$analytics   = new \Google\Web_Stories\Analytics();
+		$actual      = $analytics->get_default_configuration( $tracking_id );
 		$this->assertArrayHasKey( 'vars', $actual );
 		$this->assertArrayHasKey( 'gtag_id', $actual['vars'] );
 		$this->assertSame( (string) $tracking_id, $actual['vars']['gtag_id'] );
 		$this->assertArrayHasKey( 'config', $actual['vars'] );
 		$this->assertArrayHasKey( $tracking_id, $actual['vars']['config'] );
+		$this->assertArrayHasKey( 'triggers', $actual );
+		foreach ( $actual['triggers'] as $trigger => $trigger_config ) {
+			$this->assertArrayHasKey( 'vars', $trigger_config );
+			$this->assertArrayHasKey( 'send_to', $trigger_config['vars'] );
+			$this->assertSame( $tracking_id, $trigger_config['vars']['send_to'] );
+
+			foreach ( $trigger_config['vars'] as $value ) {
+				// Catch typos like ${foo) instead of ${foo}.
+				if ( false !== strpos( $value, '$' ) ) {
+					$this->assertRegExp( '/^\${[^}]+}$/', $value, 'Invalid variable declaration present' );
+				}
+			}
+		}
 	}
 
 	/**
@@ -155,7 +167,7 @@ class Analytics extends \WP_UnitTestCase {
 
 		$actual_after = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );
 
-		delete_option( 'googlesitekit_active_modules', [ 'analytics' ] );
+		delete_option( 'googlesitekit_active_modules' );
 		update_option( 'googlesitekit-active-modules', [ 'analytics' ], false );
 
 		$actual_after_legacy = $this->call_private_method( $analytics, 'is_site_kit_analytics_module_active' );

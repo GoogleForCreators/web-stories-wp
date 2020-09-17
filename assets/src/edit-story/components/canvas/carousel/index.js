@@ -496,7 +496,6 @@ function Carousel() {
               placement="left"
             >
               <SafeZoneToggle
-                data-testid={'safe-zone-toggle'}
                 icon={<SafeZone />}
                 value={showSafeZone}
                 onChange={setShowSafeZone}
