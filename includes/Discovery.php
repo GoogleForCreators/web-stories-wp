@@ -40,6 +40,8 @@ class Discovery {
 	/**
 	 * Initialize discovery functionality.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -73,6 +75,8 @@ class Discovery {
 	 *
 	 * @see _wp_render_title_tag().
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function print_metadata() {
@@ -84,6 +88,8 @@ class Discovery {
 
 	/**
 	 * Prints the schema.org metadata on the single story template.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -97,6 +103,8 @@ class Discovery {
 
 	/**
 	 * Get schema.org metadata for the current query.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @see https://developers.google.com/search/docs/guides/enable-web-stories
 	 *
@@ -154,7 +162,9 @@ class Discovery {
 		/**
 		 * Filters the schema.org metadata for a given story.
 		 *
-		 * @param array $metadata The structured data.
+	 * @since 1.0.0
+	 *
+	 * @param array $metadata The structured data.
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
@@ -162,6 +172,8 @@ class Discovery {
 
 	/**
 	 * Prints Open Graph metadata.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -201,6 +213,8 @@ class Discovery {
 	/**
 	 * Prints Twitter card metadata.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function print_twitter_metadata() {
@@ -224,6 +238,8 @@ class Discovery {
 
 	/**
 	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */

@@ -49,6 +49,21 @@ export const LayoutContext = createContext(null);
 const Provider = ({ children }) => {
   const [squishContentHeight, setSquishContentHeight] = useState(0);
   const scrollFrameRef = useRef(null);
+  const [telemetryBannerOpen, setTelemetryBannerOpen] = useState(false);
+  const [telemetryBannerHeight, setTelemetryBannerHeight] = useState();
+  const bannerHeightIncluded = useRef(false);
+
+  useLayoutEffect(() => {
+    if (telemetryBannerOpen && !bannerHeightIncluded.current) {
+      setSquishContentHeight((height) => (height += telemetryBannerHeight));
+      bannerHeightIncluded.current = true;
+    }
+
+    if (!telemetryBannerOpen && bannerHeightIncluded.current) {
+      setSquishContentHeight((height) => (height -= telemetryBannerHeight));
+      bannerHeightIncluded.current = false;
+    }
+  }, [telemetryBannerOpen, squishContentHeight, telemetryBannerHeight]);
 
   useLayoutEffect(() => {
     const scrollFrameEl = scrollFrameRef.current;
@@ -107,6 +122,7 @@ const Provider = ({ children }) => {
       state: {
         scrollFrameRef,
         squishContentHeight,
+        telemetryBannerOpen,
       },
       actions: {
         /**
@@ -124,9 +140,18 @@ const Provider = ({ children }) => {
         removeSquishListener,
         setSquishContentHeight,
         scrollToTop,
+        setTelemetryBannerOpen,
+        setTelemetryBannerHeight,
       },
     }),
-    [addSquishListener, removeSquishListener, squishContentHeight, scrollToTop]
+    [
+      setTelemetryBannerOpen,
+      telemetryBannerOpen,
+      addSquishListener,
+      removeSquishListener,
+      squishContentHeight,
+      scrollToTop,
+    ]
   );
 
   return (

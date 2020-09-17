@@ -49,7 +49,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     sizes: mediaPickerSizes,
   } = mediaPickerEl;
   const sizes = Object.fromEntries(
-    Object.entries(mediaPickerSizes).map(([k, size]) => [
+    Object.entries(mediaPickerSizes || {}).map(([k, size]) => [
       k,
       {
         width: size.width,

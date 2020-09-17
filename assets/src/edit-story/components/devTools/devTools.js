@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
+import { DATA_VERSION } from '../../migration/migrate';
 import { dummyImage, dummyVideo } from './dummyData';
 
 const Container = styled.div`
@@ -114,6 +115,7 @@ function DevTools() {
     current,
     selection,
     story: { stylePresets },
+    version: DATA_VERSION,
     pages,
   };
   const storyData = isDummyResources

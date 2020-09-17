@@ -34,7 +34,7 @@ describe('Document Title', () => {
     const firstTemplate = await expect(page).toMatchElement(
       '[data-testid="template-grid-item-1"]'
     );
-    await expect(firstTemplate).toClick('a', { text: 'View' });
+    await expect(firstTemplate).toClick('a', { text: 'See details' });
     await expect(await page.title()).toStartWith('Template Details');
 
     await expect(page).toClick('a', { text: 'Close' });

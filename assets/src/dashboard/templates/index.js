@@ -31,7 +31,7 @@ export default async function ({ assetsURL }) {
   const templates = await memoizedGetTemplates(assetsURL);
 
   const globalConfig = {
-    createdBy: 'Google Web Stories',
+    createdBy: 'Google',
     modified: '2020-04-21',
   };
 

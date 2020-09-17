@@ -101,6 +101,22 @@ describe('util', () => {
       const srcSet = calculateSrcSet(resource);
       expect(srcSet).toBe('URL3 800w,URL2 400w,URL1 200w');
     });
+
+    it('should skip sizes that are invalid', () => {
+      const resource = {
+        src: 'default-url',
+        width: 400,
+        height: 200,
+        sizes: {
+          img1: { height: 100, source_url: 'small-url' },
+          img2: { width: 300, height: 150 },
+          img3: { width: 400, height: 200, source_url: 'large-url' },
+        },
+      };
+
+      const srcSet = calculateSrcSet(resource);
+      expect(srcSet).toBe('large-url 400w');
+    });
   });
 
   describe('getSmallestUrlForWidth', () => {

@@ -1,0 +1,537 @@
+{
+  "current": "5f52f0ff-facb-448c-95f1-5153e3c20ad8",
+  "selection": [],
+  "story": {
+    "stylePresets": {
+      "colors": [],
+      "textStyles": []
+    }
+  },
+  "version": 24,
+  "pages": [
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "960d1689-6d73-4d0b-96bc-a0bb5f6bb2ed"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
+          "x": 43,
+          "y": 225,
+          "width": 334,
+          "height": 183,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "f7167da6-fd69-4abb-b688-60c17f0e2e37"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">Good design is innovative</span>",
+          "x": 43,
+          "y": 119,
+          "width": 246,
+          "height": 86,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "ae467c59-7fac-43c1-b2ad-2b68938879c9"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "2ac019ba-8ed1-4da0-b823-f4f399b1dae7"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "c3e76da9-d593-4be1-9534-e04701760b2d"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Alegreya",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 800],
+              [1, 800],
+              [0, 900],
+              [1, 900]
+            ]
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "fontWeight": 700,
+          "x": 40,
+          "y": 291,
+          "width": 328,
+          "height": 78,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "3631d6b0-0f6a-4959-9df0-b9f3d7fcab35"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "justify",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
+          "fontWeight": 400,
+          "x": 40,
+          "y": 411,
+          "width": 333,
+          "height": 181,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "c61010e2-750e-4e6d-8372-bfb5e93f2312"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "5fddb181-523f-417a-bf9f-b564a2aec80d"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "96a05da5-14c8-4d48-91ca-3a1193c5313c"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Alegreya",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1016,
+              "des": -345,
+              "tAsc": 1016,
+              "tDes": -345,
+              "tLGap": 0,
+              "wAsc": 1123,
+              "wDes": 345,
+              "xH": 452,
+              "capH": 636,
+              "yMin": -293,
+              "yMax": 962,
+              "hAsc": 1016,
+              "hDes": -345,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
+          "width": 305,
+          "height": 189,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "e52be0d8-bcab-4b87-af5b-b12f0f4dc55e",
+          "id": "faa53471-3148-4e24-acb0-37ac4b001c61",
+          "x": 43,
+          "y": 225
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Alegreya",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 600\">Good design is innovative</span>",
+          "width": 246,
+          "height": 86,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "7f81d372-6b04-4174-884d-cb51b613ebb7",
+          "id": "8bef3e06-b1bf-467d-9e20-5b2c1bf7042e",
+          "x": 43,
+          "y": 119
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "5f52f0ff-facb-448c-95f1-5153e3c20ad8"
+    }
+  ]
+}

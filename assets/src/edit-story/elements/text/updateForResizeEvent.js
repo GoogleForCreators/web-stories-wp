@@ -29,10 +29,15 @@ function updateForResizeEvent(element, direction, newWidth, newHeight) {
 
   // Vertical or diagonal resizing w/keep ratio.
   if (isResizingHeight) {
+    const { fontSize, marginOffset } = calculateFitTextFontSize(
+      element,
+      newWidth || element.width,
+      newHeight
+    );
+
     return {
-      fontSize: dataPixels(
-        calculateFitTextFontSize(element, newWidth || element.width, newHeight)
-      ),
+      fontSize: dataPixels(fontSize),
+      marginOffset,
     };
   }
 

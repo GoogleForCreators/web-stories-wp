@@ -24,7 +24,7 @@ import { fireEvent } from '@testing-library/react';
  */
 jest.mock('../../previewPage');
 import PreviewPage from '../../previewPage';
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import CardGallery from '../';
 
 const createMockTemplate = (pages) => ({
@@ -44,7 +44,7 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'test-child' },
     ]);
 
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithProviders(
       <CardGallery story={template} />
     );
 
@@ -61,7 +61,7 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'non-active-child' },
     ]);
 
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithProviders(
       <CardGallery story={template} />
     );
 
@@ -77,7 +77,7 @@ describe('CardGallery', () => {
       { id: 'id-4', name: 'other-child' },
     ]);
 
-    const { getAllByTestId } = renderWithTheme(
+    const { getAllByTestId } = renderWithProviders(
       <CardGallery story={template} />
     );
 

@@ -108,6 +108,10 @@ export const RowContainer = styled.section.attrs({
   flex-wrap: wrap;
   padding-bottom: 40px;
   margin: 0 20px 0;
+
+  & > div {
+    width: 100%;
+  }
 `;
 
 export const SubHeading = styled.h2`

@@ -28,6 +28,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
+      'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
@@ -80,7 +81,7 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
-      'progress',
+      'spec',
       config.coverage && 'cuj',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
@@ -138,8 +139,11 @@ module.exports = function (config) {
     // Allow not having any tests
     failOnEmptyTestSuite: false,
 
-    // Bump browserNoActivityTimeout to 60s to prevent github actions timeout
-    browserNoActivityTimeout: 60000,
+    // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
+    browserNoActivityTimeout: 100000,
+
+    // Wait a bit longer for browser to reconnect.
+    browserDisconnectTimeout: 10000,
   });
 };
 

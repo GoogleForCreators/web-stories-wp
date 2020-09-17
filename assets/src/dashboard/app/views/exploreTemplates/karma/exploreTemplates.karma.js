@@ -61,53 +61,19 @@ describe('Grid view', () => {
     return templates;
   }
 
-  async function focusOnFirstTemplate() {
-    const { templatesOrderById } = await getTemplatesState();
-    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-    const seenElements = new Set([document.activeElement]);
-    let found = firstTemplate.contains(document.activeElement);
+  async function focusOnGridByKeyboard() {
+    let limit = 0;
+    const gridContainer = fixture.screen.getByTestId('dashboard-grid-list');
 
-    while (!firstTemplate.contains(document.activeElement) && !found) {
+    while (!gridContainer.contains(document.activeElement) && limit < 8) {
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('tab');
-
-      found = firstTemplate.contains(document.activeElement);
-
-      if (found || seenElements.has(document.activeElement)) {
-        break;
-      }
-      seenElements.add(document.activeElement);
+      limit++;
     }
 
-    if (!found) {
-      throw new Error('could not focus on first element');
-    }
-  }
-
-  async function focusOnTemplateById(id) {
-    const { templatesOrderById } = await getTemplatesState();
-    const index = templatesOrderById.indexOf(id);
-    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-
-    if (index === -1) {
-      throw new Error('template not found with id of: ' + id);
-    }
-
-    if (!firstTemplate.contains(document.activeElement)) {
-      await focusOnFirstTemplate();
-    }
-
-    if (index === 0) {
-      return;
-    }
-
-    await fixture.events.keyboard.seq(({ press }) =>
-      Array.from(new Array(index), () => [
-        press('tab'),
-        press('tab'),
-        press('tab'),
-      ]).reduce((acc, curr) => acc.concat(curr), [])
-    );
+    return gridContainer.contains(document.activeElement)
+      ? Promise.resolve()
+      : Promise.reject(new Error('could not focus on grid'));
   }
 
   it('should render', () => {
@@ -143,71 +109,37 @@ describe('Grid view', () => {
 
       expect(view).toBeTruthy();
 
-      const useTemplate = utils.getByRole('button', { name: /^Use template$/ });
+      const useTemplate = utils.getByText(/^Use template$/);
 
       expect(useTemplate).toBeTruthy();
     });
 
     it('should change focus as the user presses tab', async () => {
       const { templatesOrderById } = await getTemplatesState();
-      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-
       // focus on first template
-      await focusOnFirstTemplate();
+      await focusOnGridByKeyboard();
+
+      await fixture.events.keyboard.press('right');
+
+      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
       expect(firstTemplate.contains(document.activeElement)).toBeTrue();
 
-      // focus on last template
-      const lastTemplateId = templatesOrderById[templatesOrderById.length - 1];
-      const lastTemplate = await getTemplateElementById(lastTemplateId);
-      await focusOnTemplateById(lastTemplateId);
-      expect(lastTemplate.contains(document.activeElement)).toBeTrue();
-    });
-  });
+      await fixture.events.keyboard.press('right');
 
-  describe('Action: See template preview from explore templates', () => {
-    beforeEach(async () => {
-      fixture.setFlags({ enableTemplatePreviews: true });
+      const secondTemplate = getTemplateElementById(templatesOrderById[1]);
+      expect(secondTemplate.contains(document.activeElement)).toBeTrue();
 
-      await fixture.render();
-    });
+      await fixture.events.keyboard.press('right');
 
-    it('should trigger template preview when user clicks a card', async () => {
-      const { templatesOrderById } = await getTemplatesState();
+      await fixture.events.keyboard.press('right');
 
-      const currentCard = await getTemplateElementById(templatesOrderById[1]);
-      const utils = within(currentCard);
+      const fourthTemplate = getTemplateElementById(templatesOrderById[3]);
+      expect(fourthTemplate.contains(document.activeElement)).toBeTrue();
 
-      const activeCard = utils.getByTestId('card-action-container');
-      expect(activeCard).toBeTruthy();
+      await fixture.events.keyboard.press('left');
 
-      const { x, y } = activeCard.getBoundingClientRect();
-
-      // We need to click slightly above the center of the card to avoid clicking 'View'
-      await fixture.events.mouse.click(x - 20, y);
-
-      const viewPreviewStory = await fixture.screen.queryByTestId(
-        'preview-iframe'
-      );
-
-      expect(viewPreviewStory).toBeTruthy();
-    });
-
-    it('should trigger template preview when user presses Enter while focused on a card', async () => {
-      const { templatesOrderById } = await getTemplatesState();
-
-      const currentCard = await getTemplateElementById(templatesOrderById[1]);
-      const utils = within(currentCard);
-      const activeCard = utils.getByTestId('card-action-container');
-      expect(activeCard).toBeTruthy();
-
-      await fixture.events.focus(activeCard);
-      await fixture.events.keyboard.press('Enter');
-
-      const viewPreviewStory = await fixture.screen.queryByTestId(
-        'preview-iframe'
-      );
-
-      expect(viewPreviewStory).toBeTruthy();
+      const thirdTemplate = getTemplateElementById(templatesOrderById[2]);
+      expect(thirdTemplate.contains(document.activeElement)).toBeTrue();
     });
   });
 

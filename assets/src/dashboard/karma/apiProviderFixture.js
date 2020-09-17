@@ -44,6 +44,7 @@ export default function ApiProviderFixture({ children }) {
   const [templates, setTemplatesState] = useState(getTemplatesState());
   const [users] = useState(formattedUsersObject);
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
+
   const settingsApi = useMemo(
     () => ({
       fetchSettings: () =>
@@ -192,6 +193,7 @@ function getSettingsState() {
     error: {},
     googleAnalyticsId: '',
     publisherLogoIds: [],
+    activePublisherLogoId: fillerPublisherLogoIds[0],
   };
 }
 
@@ -214,6 +216,7 @@ function updateSettings(updates, currentState) {
     googleAnalyticsId,
     publisherLogoIds,
     publisherLogoIdToRemove,
+    publisherLogoToMakeDefault,
   } = updates;
   if (googleAnalyticsId !== undefined) {
     return {
@@ -234,8 +237,12 @@ function updateSettings(updates, currentState) {
         (logoId) => logoId !== publisherLogoIdToRemove
       ),
     };
+  } else if (publisherLogoToMakeDefault) {
+    return {
+      ...currentState,
+      activePublisherLogoId: publisherLogoToMakeDefault,
+    };
   }
-
   return currentState;
 }
 

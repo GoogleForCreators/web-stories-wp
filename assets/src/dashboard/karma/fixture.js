@@ -190,6 +190,7 @@ export default class Fixture {
 
   restore() {
     window.location.hash = '#';
+    localStorage.clear();
   }
 
   /**

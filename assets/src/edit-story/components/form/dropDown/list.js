@@ -40,7 +40,7 @@ const ListContainer = styled.div`
   overflow-y: auto;
   overscroll-behavior: none auto;
   border-radius: 4px;
-  background-color: ${({ theme }) => theme.colors.fg.white};
+  background-color: ${({ theme }) => theme.colors.bg.black};
 `;
 
 const List = styled.ul`
@@ -50,26 +50,23 @@ const List = styled.ul`
   font-size: 14px;
   text-align: left;
   list-style: none;
-  background-color: ${({ theme }) => theme.colors.fg.white};
   background-clip: padding-box;
   box-shadow: 0 6px 12px ${({ theme }) => rgba(theme.colors.bg.black, 0.175)};
 `;
 
 const Item = styled.li.attrs({ tabIndex: '0' })`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
-  padding: 16px;
+  padding: 8px 16px;
   margin: 0;
   font-family: ${({ theme }) => theme.fonts.label.family};
-  font-size: ${({ theme }) => theme.fonts.label.size};
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
   font-weight: ${({ theme }) => theme.fonts.label.weight};
+  line-height: 1;
+  color: ${({ theme }) => theme.colors.fg.white};
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
-  }
-
+  &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme.colors.bg.v12};
+    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.1)};
     outline: none;
   }
 `;

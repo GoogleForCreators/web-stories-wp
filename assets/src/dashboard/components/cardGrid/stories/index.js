@@ -64,6 +64,7 @@ const StorybookGridItem = (
       displayDate={moment().subtract(2, 'minutes')}
       onEditCancel={() => {}}
       onEditComplete={() => {}}
+      tabIndex={0}
     />
   </CardGridItem>
 );

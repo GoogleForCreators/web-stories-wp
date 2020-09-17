@@ -43,7 +43,6 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
   PROVIDERS: {
     PROVIDER_1: {
       displayName: 'Provider 1',
-      supportedContentTypes: ['image'],
       supportsCategories: true,
       requiresAuthorAttribution: true,
       fetchMediaErrorMessage: 'Error loading media from Provider 1',

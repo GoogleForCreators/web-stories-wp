@@ -59,6 +59,14 @@ export class Canvas extends Container {
       Fullbleed
     );
   }
+
+  get header() {
+    return this._get(
+      this.getAllByRole('group', { name: 'Story canvas header' })[0],
+      'header',
+      Header
+    );
+  }
 }
 
 /**
@@ -209,5 +217,42 @@ class Controls extends Container {
 
   get pause() {
     return this.getByRole('button', { name: 'Click to pause' });
+  }
+}
+
+/**
+ * The story header
+ */
+class Header extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get title() {
+    return this.getByRole('textbox', { name: 'Edit: Story title' });
+  }
+
+  get saveDraft() {
+    return this.getByRole('button', { name: 'Save draft' });
+  }
+
+  get switchToDraft() {
+    return this.getByRole('button', { name: 'Switch to draft' });
+  }
+
+  get update() {
+    return this.getByRole('button', { name: 'Update' });
+  }
+
+  get publish() {
+    return this.getByRole('button', { name: 'Publish' });
+  }
+
+  get preview() {
+    return this.getByRole('button', { name: 'Preview' });
+  }
+
+  get schedule() {
+    return this.getByRole('button', { name: 'Schedule' });
   }
 }

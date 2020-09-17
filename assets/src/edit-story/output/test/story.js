@@ -57,8 +57,8 @@ describe('Story output', () => {
         {
           id: '123',
           animations: [
-            { targets: ['123'], type: 'bounce', duration: 1000 },
-            { targets: ['124'], type: 'spin', duration: 500 },
+            { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            { id: 'anim1', targets: ['124'], type: 'spin', duration: 500 },
           ],
           backgroundColor: {
             type: 'solid',
@@ -296,7 +296,9 @@ describe('Story output', () => {
         pages: [
           {
             id: '123',
-            animations: [{ targets: ['123'], type: 'bounce', duration: 1000 }],
+            animations: [
+              { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            ],
             backgroundColor: {
               type: 'solid',
               color: { r: 255, g: 255, b: 255 },

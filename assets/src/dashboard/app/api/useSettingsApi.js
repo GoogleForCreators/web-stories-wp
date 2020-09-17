@@ -84,6 +84,7 @@ export default function useSettingsApi(
       googleAnalyticsId,
       publisherLogoIds,
       publisherLogoIdToRemove,
+      publisherLogoToMakeDefault,
     }) => {
       try {
         const query = {};
@@ -101,6 +102,10 @@ export default function useSettingsApi(
           query.web_stories_publisher_logos = state.publisherLogoIds.filter(
             (logoId) => logoId !== publisherLogoIdToRemove
           );
+        }
+
+        if (publisherLogoToMakeDefault) {
+          query.web_stories_active_publisher_logo = publisherLogoToMakeDefault;
         }
 
         const response = await dataAdapter.post(

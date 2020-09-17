@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
 import cleanForSlug from '../../utils/cleanForSlug';
+import useHeader from './use';
 
 const Input = styled.input`
   color: ${({ theme }) => `${theme.colors.fg.white} !important`};
@@ -53,6 +54,7 @@ function Title() {
       actions: { updateStory },
     }) => ({ title, slug, updateStory })
   );
+  const { setTitleInput } = useHeader();
 
   const { storyId } = useConfig();
 
@@ -74,6 +76,7 @@ function Title() {
 
   return (
     <Input
+      ref={setTitleInput}
       value={title}
       type={'text'}
       onBlur={handleBlur}

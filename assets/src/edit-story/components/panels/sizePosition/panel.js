@@ -29,50 +29,18 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import {
-  BoxedNumeric,
-  Button,
-  Row,
-  Toggle,
-  usePresubmitHandler,
-  MULTIPLE_VALUE,
-} from '../form';
-import { dataPixels } from '../../units';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
-import { Lock as Locked, Unlock as Unlocked } from '../../icons';
-import useStory from '../../app/story/useStory';
-import { getDefinitionForType } from '../../elements';
-import clamp from '../../utils/clamp';
-import { calcRotatedObjectPositionAndSize } from '../../utils/getBoundRect';
-import { DANGER_ZONE_HEIGHT } from '../../units/dimensions';
-import { SimplePanel } from './panel';
-import { getCommonValue, useCommonObjectValue } from './utils';
-import FlipControls from './shared/flipControls';
-
-const DEFAULT_FLIP = { horizontal: false, vertical: false };
-const MIN_MAX = {
-  // TODO: with %360 logic this is not used, but can be utilized via keyboard arrows
-  ROTATION: {
-    MIN: -360,
-    MAX: 360,
-  },
-  WIDTH: {
-    MIN: 1,
-    MAX: 1000,
-  },
-  HEIGHT: {
-    MIN: 1,
-    MAX: 1000,
-  },
-  X: {
-    MIN: 1,
-    MAX: PAGE_WIDTH - 1,
-  },
-  Y: {
-    MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
-    MAX: PAGE_HEIGHT + Math.floor(DANGER_ZONE_HEIGHT) - 1,
-  },
-};
+import { BoxedNumeric, Button, Row, Toggle, MULTIPLE_VALUE } from '../../form';
+import { dataPixels } from '../../../units';
+import { Lock as Locked, Unlock as Unlocked } from '../../../icons';
+import useStory from '../../../app/story/useStory';
+import { getDefinitionForType } from '../../../elements';
+import { calcRotatedObjectPositionAndSize } from '../../../utils/getBoundRect';
+import { SimplePanel } from '../panel';
+import FlipControls from '../shared/flipControls';
+import { getCommonValue, useCommonObjectValue } from './../utils';
+import usePresubmitHandlers from './usePresubmitHandlers';
+import { getMultiSelectionMinMaxXY, isNum } from './utils';
+import { MIN_MAX, DEFAULT_FLIP } from './constants';
 
 const StyledToggle = styled(Toggle)`
   margin: 0 10px;
@@ -83,10 +51,6 @@ const Spacer = styled.span`
   width: 50px;
   flex-shrink: 0;
 `;
-
-function isNum(v) {
-  return typeof v === 'number' && !isNaN(v);
-}
 
 function SizePositionPanel({
   selectedElements,
@@ -128,13 +92,29 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
-  const actualDimensions = useMemo(
-    () => calcRotatedObjectPositionAndSize(rotationAngle, x, y, width, height),
-    [rotationAngle, x, y, width, height]
-  );
+  const actualDimensions = useMemo(() => {
+    if (isSingleElement) {
+      return calcRotatedObjectPositionAndSize(
+        rotationAngle,
+        x,
+        y,
+        width,
+        height
+      );
+    }
+    return {};
+  }, [rotationAngle, x, y, width, height, isSingleElement]);
 
   const xOffset = x - actualDimensions.x;
   const yOffset = y - actualDimensions.y;
+  const minMaxXY = isSingleElement
+    ? {
+        minX: MIN_MAX.X.MIN + xOffset - actualDimensions.width,
+        minY: MIN_MAX.Y.MIN + yOffset - actualDimensions.height,
+        maxX: MIN_MAX.X.MAX + xOffset,
+        maxY: MIN_MAX.Y.MAX + yOffset,
+      }
+    : getMultiSelectionMinMaxXY(selectedElements);
 
   const getUpdateObject = (nWidth, nHeight) =>
     rawLockAspectRatio === MULTIPLE_VALUE
@@ -148,124 +128,7 @@ function SizePositionPanel({
           width: nWidth,
         };
 
-  // Recalculate width/height if ratio locked.
-  usePresubmitHandler(
-    (
-      newElement,
-      { width: newWidth, height: newHeight },
-      { width: oldWidth, height: oldHeight }
-    ) => {
-      const { type } = newElement;
-
-      const isResizeWidth = Boolean(newWidth);
-      const isResizeHeight = Boolean(newHeight);
-      if (!isResizeWidth && !isResizeHeight) {
-        return null;
-      }
-
-      // Use resize rules if available.
-      const { updateForResizeEvent } = getDefinitionForType(type);
-      if (updateForResizeEvent) {
-        const direction = [isResizeWidth ? 1 : 0, isResizeHeight ? 1 : 0];
-        return updateForResizeEvent(
-          newElement,
-          direction,
-          clamp(newWidth, MIN_MAX.WIDTH),
-          clamp(newHeight, MIN_MAX.HEIGHT)
-        );
-      }
-
-      // Fallback to ratio.
-      if (lockAspectRatio) {
-        const ratio = oldWidth / oldHeight;
-        if (!isResizeWidth) {
-          return {
-            width: clamp(dataPixels(newHeight * ratio), MIN_MAX.WIDTH),
-          };
-        }
-        if (!isResizeHeight) {
-          return {
-            height: clamp(dataPixels(newWidth / ratio), MIN_MAX.HEIGHT),
-          };
-        }
-      }
-
-      return null;
-    },
-    [lockAspectRatio]
-  );
-
-  usePresubmitHandler(({ rotationAngle: newRotationAngle }) => {
-    return {
-      rotationAngle: newRotationAngle % 360,
-    };
-  }, []);
-
-  usePresubmitHandler(
-    ({ rotationAngle: na, x: nx, y: ny, width: nw, height: nh }) => {
-      const newDims = calcRotatedObjectPositionAndSize(na, nx, ny, nw, nh);
-      const newXOffset = nx - newDims.x;
-      const newYOffset = ny - newDims.y;
-      return {
-        x: clamp(nx, {
-          MIN: MIN_MAX.X.MIN + newXOffset - newDims.width,
-          MAX: MIN_MAX.X.MAX + newXOffset,
-        }),
-        y: clamp(ny, {
-          MIN: MIN_MAX.Y.MIN + newYOffset - newDims.height,
-          MAX: MIN_MAX.Y.MAX + newYOffset,
-        }),
-      };
-    },
-    []
-  );
-
-  const setDimensionMinMax = useCallback(
-    (value, ratio, minmax) => {
-      if (lockAspectRatio && value >= minmax.MAX) {
-        return clamp(minmax.MAX * ratio, minmax);
-      }
-
-      return clamp(value, minmax);
-    },
-    [lockAspectRatio]
-  );
-
-  usePresubmitHandler(
-    ({ height: newHeight }, { width: oldWidth, height: oldHeight }) => {
-      const ratio = oldHeight / oldWidth;
-      newHeight = clamp(newHeight, MIN_MAX.HEIGHT);
-      if (isNum(ratio)) {
-        return {
-          height: setDimensionMinMax(
-            dataPixels(newHeight),
-            ratio,
-            MIN_MAX.HEIGHT
-          ),
-        };
-      }
-      return {
-        height: clamp(newHeight, MIN_MAX.HEIGHT),
-      };
-    },
-    [height, lockAspectRatio]
-  );
-
-  usePresubmitHandler(
-    ({ width: newWidth }, { width: oldWidth, height: oldHeight }) => {
-      const ratio = oldWidth / oldHeight;
-      newWidth = clamp(newWidth, MIN_MAX.WIDTH);
-      if (isNum(ratio)) {
-        return {
-          width: setDimensionMinMax(dataPixels(newWidth), ratio, MIN_MAX.WIDTH),
-        };
-      }
-      return {
-        width: clamp(newWidth, MIN_MAX.WIDTH),
-      };
-    },
-    [width, lockAspectRatio]
-  );
+  usePresubmitHandlers(lockAspectRatio, height, width);
 
   const handleSetBackground = useCallback(() => {
     combineElements({
@@ -288,8 +151,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('X', 'Position on X axis', 'web-stories')}
           value={x}
-          min={MIN_MAX.X.MIN + xOffset - actualDimensions.width}
-          max={MIN_MAX.X.MAX + xOffset}
+          min={minMaxXY.minX}
+          max={minMaxXY.maxX}
           onChange={(value) => pushUpdate({ x: value })}
           aria-label={__('X position', 'web-stories')}
           canBeNegative
@@ -298,8 +161,8 @@ function SizePositionPanel({
         <BoxedNumeric
           suffix={_x('Y', 'Position on Y axis', 'web-stories')}
           value={y}
-          min={MIN_MAX.Y.MIN + yOffset - actualDimensions.height}
-          max={MIN_MAX.Y.MAX + yOffset}
+          min={minMaxXY.minY}
+          max={minMaxXY.maxY}
           onChange={(value) => pushUpdate({ y: value })}
           aria-label={__('Y position', 'web-stories')}
           canBeNegative

@@ -79,9 +79,11 @@ function PageAdvancementPanel() {
     if (value !== newValue) {
       setDuration(newValue);
     }
-    updateStory({
-      properties: { defaultPageDuration: newValue },
-    });
+    if (defaultPageDuration !== newValue) {
+      updateStory({
+        properties: { defaultPageDuration: newValue },
+      });
+    }
   }, 800);
 
   useEffect(() => {

@@ -95,6 +95,34 @@ describe('useFetchMediaEffect', () => {
     expect(mockShowSnackbar).not.toHaveBeenCalled();
   });
 
+  it('should fetch media when the provider is set and contentType is filtered', async () => {
+    mockListMedia.mockImplementation(() =>
+      Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })
+    );
+
+    await renderUseFetchMediaEffect({
+      provider: 'tenor',
+      selectedProvider: 'tenor',
+    });
+
+    expect(fetchMediaStart).toHaveBeenCalledWith({
+      provider: 'tenor',
+      pageToken: undefined,
+    });
+    expect(mockListMedia).toHaveBeenCalledWith({
+      provider: 'tenor',
+      filter: { contentType: 'gif' },
+      pageToken: undefined,
+    });
+    expect(fetchMediaSuccess).toHaveBeenCalledWith({
+      provider: 'tenor',
+      media: [{ id: 1 }],
+      nextPageToken: 'nextPageToken',
+      pageToken: undefined,
+    });
+    expect(mockShowSnackbar).not.toHaveBeenCalled();
+  });
+
   it('should fetch media when the provider is set and search term', async () => {
     mockListMedia.mockImplementation(() =>
       Promise.resolve({ media: [{ id: 1 }], nextPageToken: 'nextPageToken' })

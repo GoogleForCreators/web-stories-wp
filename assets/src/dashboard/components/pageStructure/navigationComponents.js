@@ -32,6 +32,9 @@ export const Content = styled.div`
   > * {
     margin: 20px;
   }
+  & > svg {
+    max-width: 100%;
+  }
 `;
 
 export const NavButton = styled(Button)`
@@ -81,18 +84,4 @@ export const Rule = styled.div(
 export const AppInfo = styled.div`
   ${TypographyPresets.ExtraSmall};
   color: ${({ theme }) => theme.colors.gray500};
-`;
-
-export const WebStoriesHeading = styled.h1`
-  width: 100%;
-  margin-bottom: 0;
-  font-family: ${({ theme }) => theme.typography.family.secondary};
-  line-height: 1em;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 24px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray900};
-  align-self: center;
 `;

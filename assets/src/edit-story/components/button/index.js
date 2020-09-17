@@ -177,11 +177,13 @@ export const GridView = (props) => (
   </StyledButton>
 );
 
-export const Keyboard = (props) => (
-  <StyledButton {...props}>
-    <KeyboardIcon />
-  </StyledButton>
-);
+export const Keyboard = forwardRef(function Keyboard(props, ref) {
+  return (
+    <StyledButton {...props} ref={ref}>
+      <KeyboardIcon />
+    </StyledButton>
+  );
+});
 
 export const Close = forwardRef(function Close(props, ref) {
   return (

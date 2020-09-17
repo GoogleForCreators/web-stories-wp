@@ -31,6 +31,8 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 /**
  * Filters whether data should be erased when uninstalling the plugin.
  *
+ * @since 1.0.0
+ *
  * @param bool $erase Whether to erase data. Default false.
  */
 $erase = (bool) apply_filters( 'web_stories_erase_data_on_uninstall', false );

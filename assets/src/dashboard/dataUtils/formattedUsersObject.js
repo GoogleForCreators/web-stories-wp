@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 const formattedUsersObject = {
-  '1': {
+  1: {
     id: 1,
     name: 'admin',
     url: '',
@@ -22,16 +22,13 @@ const formattedUsersObject = {
     link: 'http://localhost:8899/author/admin',
     slug: 'admin',
     avatar_urls: {
-      '24':
-        'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=24&d=mm&r=g',
-      '48':
-        'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=48&d=mm&r=g',
-      '96':
-        'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=96&d=mm&r=g',
+      24: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=24&d=mm&r=g',
+      48: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=48&d=mm&r=g',
+      96: 'http://2.gravatar.com/avatar/b642b4217b34b1e8d3bd915fc65c4452?s=96&d=mm&r=g',
     },
     meta: [],
   },
-  '2': {
+  2: {
     id: 2,
     name: 'Fred Baby Diamond',
     url: '',
@@ -39,12 +36,9 @@ const formattedUsersObject = {
     link: 'http://localhost:8899/author/fred-baby-diamond',
     slug: 'fred-baby-diamond',
     avatar_urls: {
-      '24':
-        'http://0.gravatar.com/avatar/f775dcce8ac4dba60103f11582915c77?s=24&d=mm&r=g',
-      '48':
-        'http://0.gravatar.com/avatar/f775dcce8ac4dba60103f11582915c77?s=48&d=mm&r=g',
-      '96':
-        'http://0.gravatar.com/avatar/f775dcce8ac4dba60103f11582915c77?s=96&d=mm&r=g',
+      24: 'http://0.gravatar.com/avatar/f775dcce8ac4dba60103f11582915c77?s=24&d=mm&r=g',
+      48: 'http://0.gravatar.com/avatar/f775dcce8ac4dba60103f11582915c77?s=48&d=mm&r=g',
+      96: 'http://0.gravatar.com/avatar/f775dcce8ac4dba60103f11582915c77?s=96&d=mm&r=g',
     },
     meta: [],
   },

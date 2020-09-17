@@ -80,6 +80,7 @@ const CardTitle = ({
   editMode,
   onEditComplete,
   onEditCancel,
+  tabIndex,
 }) => {
   const displayDateText = useMemo(() => {
     if (!displayDate) {
@@ -124,7 +125,15 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink}>
+        <TitleStoryLink
+          href={titleLink}
+          tabIndex={tabIndex}
+          aria-label={sprintf(
+            /* translators: %s: title*/
+            __('Open %s in editor', 'web-stories'),
+            title
+          )}
+        >
           {titleFormatted(title)}
         </TitleStoryLink>
       )}
@@ -149,6 +158,7 @@ CardTitle.propTypes = {
   displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
+  tabIndex: PropTypes.number,
 };
 
 export default CardTitle;
