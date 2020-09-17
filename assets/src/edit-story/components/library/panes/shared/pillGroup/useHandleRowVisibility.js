@@ -30,10 +30,8 @@ function useHandleRowVisibility({
     if (!innerContainerRef.current) {
       return;
     }
-    // This is using data-category-id since when using the
-    // changing selectedItem directly, there will be a lag @todo Replace this.
-    const selectedItem = selectedItemId
-      ? itemRefs.current.find((p) => p.dataset.categoryId === selectedItemId)
+    const selectedItem = itemRefs.current?.[selectedItemId]
+      ? itemRefs.current[selectedItemId]
       : null;
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
@@ -53,8 +51,8 @@ function useHandleRowVisibility({
     if (!innerContainerRef.current) {
       return;
     }
-    const selectedItem = selectedItemId
-      ? itemRefs.current.find((p) => p.dataset.categoryId === selectedItemId)
+    const selectedItem = itemRefs.current?.[selectedItemId]
+      ? itemRefs.current[selectedItemId]
       : null;
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 

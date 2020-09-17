@@ -157,9 +157,8 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                 return (
                   <Pill
                     itemRef={(el) => {
-                      itemRefs.current[i] = el;
+                      itemRefs.current[id] = el;
                     }}
-                    id={id}
                     index={i}
                     isSelected={selected}
                     isExpanded={isExpanded}
