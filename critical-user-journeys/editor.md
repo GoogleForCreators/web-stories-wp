@@ -37,9 +37,12 @@
 |                                                                   | *[total]*                                        | 🏔️ **92.31%** *(12 / 13)*  |
 | Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Display Panel                                    | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | Manage Text Style Presets                        | 🚨 **0.00%** *(0 / 1)*      |
+|                                                                   | Manage Text Style Presets                        | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Save Text Style                                  | 🏆 **100.00%** *(2 / 2)*    |
-|                                                                   | *[total]*                                        | 🛴 **85.71%** *(6 / 7)*     |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(8 / 8)*    |
+| Creator can Apply or Save a Color from/to Their Preset Library    | Display Panel                                    | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | Manage Color Presets                             | 🏆 **100.00%** *(1 / 1)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(2 / 2)*    |
 | Creator can Preview & Publish Their Story                         | Publish story                                    | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*     |
@@ -49,6 +52,8 @@
 |                                                                   | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
 | Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
+| Text Sets (Text and Shape Combinations)                           | Inserting Text Sets                              | 🚨 **0.00%** *(0 / 2)*      |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*      |
 | User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | enter to open                                    | 🏆 **100.00%** *(5 / 5)*    |
@@ -56,4 +61,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.15%** *(228 / 316)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.39%** *(236 / 326)* |
