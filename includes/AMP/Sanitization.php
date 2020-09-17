@@ -57,8 +57,14 @@ class Sanitization {
 		 * @var string $sanitizer_class
 		 */
 		foreach ( $sanitizers as $sanitizer_class => $args ) {
-			if ( is_callable( [ $sanitizer_class, 'add_buffering_hooks' ] ) ) {
-				call_user_func( [ $sanitizer_class, 'add_buffering_hooks' ], $args );
+			/**
+			 * The add_buffering_hooks callable.
+			 *
+			 * @var callable $callable
+			 */
+			$callable = [ $sanitizer_class, 'add_buffering_hooks' ];
+			if ( is_callable( $callable ) ) {
+				call_user_func( $callable, $args );
 			}
 		}
 
