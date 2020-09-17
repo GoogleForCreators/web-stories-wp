@@ -704,7 +704,7 @@ class Story_Post_Type {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param bool     $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
 	 * @param \WP_Query $query The WP_Query object.
 	 * @return bool Whether to pass-through or not.
 	 */
