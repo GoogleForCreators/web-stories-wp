@@ -145,8 +145,8 @@
             }
           },
           "type": "shape",
-          "x": 0,
-          "y": 99,
+          "x": 33,
+          "y": 340,
           "width": 112,
           "height": 32,
           "scale": 100,
@@ -222,8 +222,8 @@
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #fff\">CATEGORY</span>",
           "fontWeight": 400,
-          "x": 0,
-          "y": 105.5,
+          "x": 33,
+          "y": 346.5,
           "width": 112,
           "height": 19,
           "scale": 100,
@@ -296,8 +296,8 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Ten principles for good design</span>",
           "fontWeight": 700,
-          "x": 0,
-          "y": 147,
+          "x": 33,
+          "y": 388,
           "width": 313,
           "height": 97,
           "scale": 100,
@@ -370,8 +370,8 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">By Dieter Rams</span>\n<span style=\"font-weight: 700\">January 31, 2020</span>",
           "fontWeight": 400,
-          "x": 0,
-          "y": 259,
+          "x": 33,
+          "y": 500,
           "width": 156,
           "height": 48,
           "scale": 100,
@@ -447,8 +447,8 @@
           },
           "basedOn": "7739a64c-76d0-49d4-91fe-a177500601c7",
           "id": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
-          "x": 0,
-          "y": 125
+          "x": 33,
+          "y": 360
         },
         {
           "opacity": 100,
@@ -522,8 +522,8 @@
           "focalY": 50,
           "basedOn": "ff9919e1-95ae-4276-9330-10a36a8d51d9",
           "id": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
-          "x": 0,
-          "y": 138
+          "x": 33,
+          "y": 373
         },
         {
           "opacity": 100,
@@ -597,8 +597,8 @@
           "focalY": 50,
           "basedOn": "d774160a-9a92-4fb7-b49a-261032b332fe",
           "id": "607c25aa-8966-4232-80ac-a64ba70dd497",
-          "x": 0,
-          "y": 164
+          "x": 33,
+          "y": 399
         },
         {
           "opacity": 100,
@@ -671,8 +671,8 @@
           "marginOffset": 5.578125,
           "basedOn": "2c2855fd-d71b-4041-b5a0-bcc78c55003a",
           "id": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
-          "x": 0,
-          "y": 264
+          "x": 33,
+          "y": 499
         },
         {
           "opacity": 100,
@@ -700,8 +700,8 @@
           },
           "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
           "id": "1f4211cc-c2bd-4b7c-a897-f3d1d1871466",
-          "x": 0,
-          "y": 256
+          "x": 33,
+          "y": 491
         },
         {
           "opacity": 100,
@@ -729,8 +729,8 @@
           },
           "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
           "id": "e6be672d-e0cb-4d5b-aef3-a223cf9914bf",
-          "x": 0,
-          "y": 288
+          "x": 33,
+          "y": 523
         },
         {
           "opacity": 100,
@@ -758,8 +758,8 @@
           },
           "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
           "id": "0e33182f-74b6-45fe-a6c0-7893611b182c",
-          "x": 111,
-          "y": 265
+          "x": 144,
+          "y": 500
         }
       ],
       "backgroundColor": {
@@ -880,8 +880,8 @@
           "focalY": 50,
           "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
           "id": "ebeb00e0-5e48-4b11-b213-2500d2474bc2",
-          "x": 0,
-          "y": 265
+          "x": 33,
+          "y": 504
         },
         {
           "opacity": 100,
@@ -961,8 +961,8 @@
           "focalY": 50,
           "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
           "id": "41f72c82-5f33-4ec2-be22-755a93241212",
-          "x": 0,
-          "y": 69
+          "x": 33,
+          "y": 308
         },
         {
           "opacity": 100,
@@ -1043,8 +1043,8 @@
           "marginOffset": 5.578125,
           "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
           "id": "afe7d0a5-0c85-4d3a-a34b-8a890c9e4a1a",
-          "x": 0,
-          "y": 302
+          "x": 33,
+          "y": 541
         }
       ],
       "backgroundColor": {
@@ -1113,8 +1113,8 @@
           },
           "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
           "id": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
-          "x": 109,
-          "y": 137
+          "x": 107,
+          "y": 374
         },
         {
           "opacity": 100,
@@ -1188,8 +1188,8 @@
           "focalY": 50,
           "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
           "id": "f77e3d81-d7d2-480a-b185-4a509a452b76",
-          "x": 153,
-          "y": 127
+          "x": 151,
+          "y": 364
         },
         {
           "opacity": 100,
@@ -1217,8 +1217,8 @@
           },
           "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
           "id": "146eece8-418e-465e-ba9a-dfd25b1958f4",
-          "x": 275,
-          "y": 137
+          "x": 273,
+          "y": 374
         },
         {
           "opacity": 100,
@@ -1299,8 +1299,8 @@
           "marginOffset": 5.578125,
           "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
           "id": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
-          "x": 145,
-          "y": 245
+          "x": 143,
+          "y": 482
         },
         {
           "opacity": 100,
@@ -1374,8 +1374,8 @@
           "focalY": 50,
           "basedOn": "41f72c82-5f33-4ec2-be22-755a93241212",
           "id": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
-          "x": 50,
-          "y": 155
+          "x": 48,
+          "y": 392
         }
       ],
       "backgroundColor": {
@@ -1434,8 +1434,8 @@
             }
           },
           "type": "shape",
-          "x": 0,
-          "y": 0,
+          "x": 24,
+          "y": 335,
           "width": 363,
           "height": 218,
           "scale": 100,
@@ -1512,8 +1512,8 @@
           "focalY": 50,
           "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
           "id": "ab4e5032-7d70-42c9-98bf-9761cb8be09b",
-          "x": 16,
-          "y": 13
+          "x": 40,
+          "y": 348
         },
         {
           "opacity": 100,
@@ -1541,8 +1541,8 @@
           },
           "basedOn": "e6be672d-e0cb-4d5b-aef3-a223cf9914bf",
           "id": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
-          "x": 16,
-          "y": 53
+          "x": 40,
+          "y": 388
         },
         {
           "opacity": 100,
@@ -1610,8 +1610,8 @@
           "focalY": 50,
           "basedOn": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
           "id": "c1b1f578-0c36-4e88-8182-7dfcfebb8b86",
-          "x": 16,
-          "y": 54
+          "x": 40,
+          "y": 389
         },
         {
           "opacity": 100,
@@ -1639,8 +1639,8 @@
           },
           "basedOn": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
           "id": "da8ea483-5ce8-4443-a069-bbed22a09a6e",
-          "x": 16,
-          "y": 166
+          "x": 40,
+          "y": 501
         },
         {
           "opacity": 100,
@@ -1709,8 +1709,8 @@
           "marginOffset": 5.578125,
           "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
           "id": "5df6e87c-2062-4f33-8049-608df45f5ab0",
-          "x": 16,
-          "y": 180
+          "x": 40,
+          "y": 515
         },
         {
           "opacity": 100,
@@ -1779,8 +1779,8 @@
           "marginOffset": 5.578125,
           "basedOn": "5df6e87c-2062-4f33-8049-608df45f5ab0",
           "id": "3477f800-c840-4dbd-b730-37e1597711e3",
-          "x": 225,
-          "y": 180
+          "x": 249,
+          "y": 515
         }
       ],
       "backgroundColor": {
@@ -1901,8 +1901,8 @@
           "focalY": 50,
           "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
           "id": "7dc69555-5731-4e30-b641-1431d189cdfe",
-          "x": 0,
-          "y": 123
+          "x": 33,
+          "y": 362
         },
         {
           "opacity": 100,
@@ -1972,8 +1972,8 @@
           "focalY": 50,
           "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
           "id": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
-          "x": 0,
-          "y": 156
+          "x": 33,
+          "y": 395
         },
         {
           "opacity": 100,
@@ -2054,8 +2054,8 @@
           "marginOffset": 5.578125,
           "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
           "id": "c6867853-e246-413a-b9df-29d184090da8",
-          "x": 0,
-          "y": 266
+          "x": 33,
+          "y": 505
         },
         {
           "opacity": 100,
@@ -2083,8 +2083,8 @@
           },
           "basedOn": "0e33182f-74b6-45fe-a6c0-7893611b182c",
           "id": "ee502557-00dc-4206-be40-913a8f5cbfbc",
-          "x": 126,
-          "y": 269
+          "x": 159,
+          "y": 508
         }
       ],
       "backgroundColor": {
@@ -2198,8 +2198,8 @@
           "focalY": 50,
           "basedOn": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
           "id": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
-          "x": 54,
-          "y": 101
+          "x": 50,
+          "y": 340
         },
         {
           "opacity": 100,
@@ -2272,8 +2272,8 @@
           "focalY": 50,
           "basedOn": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
           "id": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
-          "x": 50,
-          "y": 97
+          "x": 46,
+          "y": 336
         },
         {
           "opacity": 100,
@@ -2354,8 +2354,8 @@
           "marginOffset": 5.578125,
           "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
           "id": "bbd94bfc-49d5-4280-b25d-df97697225e6",
-          "x": 127,
-          "y": 209
+          "x": 123,
+          "y": 448
         },
         {
           "opacity": 100,
@@ -2435,8 +2435,8 @@
           "focalY": 50,
           "basedOn": "7dc69555-5731-4e30-b641-1431d189cdfe",
           "id": "fff8ea88-c2fc-417e-8489-b88f887718ff",
-          "x": 115,
-          "y": 277
+          "x": 111,
+          "y": 516
         },
         {
           "opacity": 100,
@@ -2454,8 +2454,8 @@
             }
           },
           "type": "shape",
-          "x": 128,
-          "y": 269,
+          "x": 124,
+          "y": 508,
           "width": 4,
           "height": 40,
           "scale": 100,
@@ -2492,8 +2492,8 @@
           },
           "basedOn": "49aa3fb2-bc63-41ac-810f-d961a96d9f47",
           "id": "87750f85-c55c-478a-b7f1-fd60b48e3e9e",
-          "x": 285,
-          "y": 269
+          "x": 281,
+          "y": 508
         },
         {
           "opacity": 100,
@@ -2521,8 +2521,8 @@
           },
           "basedOn": "87750f85-c55c-478a-b7f1-fd60b48e3e9e",
           "id": "0d7ac44c-8fd5-4383-bf39-d325ffcfc8fa",
-          "x": 128,
-          "y": 269
+          "x": 124,
+          "y": 508
         },
         {
           "opacity": 100,
@@ -2550,8 +2550,8 @@
           },
           "basedOn": "0d7ac44c-8fd5-4383-bf39-d325ffcfc8fa",
           "id": "ea329f35-fc03-4a8c-b8fc-5b9441d8d039",
-          "x": 128,
-          "y": 305
+          "x": 124,
+          "y": 544
         }
       ],
       "backgroundColor": {
@@ -2620,8 +2620,8 @@
           },
           "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
           "id": "39dd9085-76df-462d-9ca0-f09f3040fe18",
-          "x": 16,
-          "y": 11
+          "x": 14,
+          "y": 306
         },
         {
           "opacity": 100,
@@ -2649,8 +2649,8 @@
           },
           "basedOn": "39dd9085-76df-462d-9ca0-f09f3040fe18",
           "id": "e92fc3f9-3b43-4697-8201-392a09e3f9aa",
-          "x": 395,
-          "y": 11
+          "x": 393,
+          "y": 306
         },
         {
           "opacity": 100,
@@ -2678,8 +2678,8 @@
           },
           "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
           "id": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
-          "x": 16,
-          "y": 11
+          "x": 14,
+          "y": 306
         },
         {
           "opacity": 100,
@@ -2707,8 +2707,8 @@
           },
           "basedOn": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
           "id": "1ef48d77-a32f-4a85-8c75-d132a2ab04b6",
-          "x": 16,
-          "y": 283
+          "x": 14,
+          "y": 578
         },
         {
           "opacity": 100,
@@ -2784,8 +2784,8 @@
           "focalY": 50,
           "basedOn": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
           "id": "0f5f6273-994d-45d6-923d-100b88051129",
-          "x": 79,
-          "y": 55
+          "x": 77,
+          "y": 350
         },
         {
           "opacity": 100,
@@ -2813,8 +2813,8 @@
           },
           "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
           "id": "5bde3567-9a2a-44e4-a183-4c8b62aae675",
-          "x": 106,
-          "y": 167
+          "x": 104,
+          "y": 462
         },
         {
           "opacity": 100,
@@ -2890,8 +2890,8 @@
           "focalY": 50,
           "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
           "id": "9bd0f726-0d83-4066-a154-f6e415c3593d",
-          "x": 150,
-          "y": 157
+          "x": 148,
+          "y": 452
         },
         {
           "opacity": 100,
@@ -2919,8 +2919,8 @@
           },
           "basedOn": "146eece8-418e-465e-ba9a-dfd25b1958f4",
           "id": "a5beb228-301e-478b-bda4-daf8d1294720",
-          "x": 272,
-          "y": 167
+          "x": 270,
+          "y": 462
         },
         {
           "opacity": 100,
@@ -2987,8 +2987,8 @@
           "marginOffset": 5.578125,
           "basedOn": "bbd94bfc-49d5-4280-b25d-df97697225e6",
           "id": "249be185-abeb-4282-8f56-4a61ab112160",
-          "x": 126.5,
-          "y": 198
+          "x": 124.5,
+          "y": 493
         }
       ],
       "backgroundColor": {
