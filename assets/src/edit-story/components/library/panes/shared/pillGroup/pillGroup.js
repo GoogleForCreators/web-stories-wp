@@ -32,6 +32,8 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button';
+import { useKeyDownEffect } from '../../../../keyboard';
+import useRovingTabIndex from '../useRovingTabIndex';
 import Pill, { PILL_HEIGHT } from './pill';
 
 const PILL_TOP_MARGIN = 16;
@@ -90,6 +92,8 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
   const sectionRef = useRef();
   const innerContainerRef = useRef();
 
+  const itemRefs = useRef([]);
+
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
 
   // Handles expand and contract animation.
@@ -122,11 +126,8 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     if (!innerContainerRef.current) {
       return;
     }
-    const pills = Array.from(
-      innerContainerRef.current.querySelectorAll('.categoryPill')
-    );
     const selectedItem = selectedItemId
-      ? pills.find((p) => p.dataset.categoryId == selectedItemId)
+      ? itemRefs.current.find((p) => p.dataset.categoryId == selectedItemId)
       : null;
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
@@ -140,15 +141,12 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     if (!innerContainerRef.current) {
       return;
     }
-    const pills = Array.from(
-      innerContainerRef.current.querySelectorAll('.categoryPill')
-    );
     const selectedItem = selectedItemId
-      ? pills.find((p) => p.dataset.categoryId == selectedItemId)
+      ? itemRefs.current.find((p) => p.dataset.categoryId == selectedItemId)
       : null;
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
-    for (let pill of pills) {
+    for (let pill of itemRefs.current) {
       const isSameRow = selectedItem && pill.offsetTop == selectedItemOffsetTop;
       if (selectedItem && !isSameRow && !isExpanded) {
         pill.classList.add('invisible');
@@ -158,8 +156,16 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     }
   }, [innerContainerRef, isExpanded, selectedItemId]);
 
-  const containerId = `pill-group-${uuidv4()}`;
   const hasItems = items.length > 0;
+  useRovingTabIndex({ ref: sectionRef }, [isExpanded]);
+  useKeyDownEffect(
+    sectionRef,
+    !isExpanded ? 'down' : [],
+    () => hasItems && setIsExpanded(true),
+    [isExpanded, hasItems]
+  );
+
+  const containerId = `pill-group-${uuidv4()}`;
   return (
     <Section ref={sectionRef}>
       {hasItems && (
@@ -179,6 +185,9 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                 const selected = e.id === selectedItemId;
                 return (
                   <Pill
+                    itemRef={(el) => {
+                      itemRefs.current[i] = el;
+                    }}
                     index={i}
                     isSelected={selected}
                     isExpanded={isExpanded}

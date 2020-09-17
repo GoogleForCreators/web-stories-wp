@@ -18,15 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-
-/**
- * Internal dependencies
- */
-import useRovingTabIndex from '../useRovingTabIndex';
-import { useKeyDownEffect } from '../../../../keyboard';
 
 export const PILL_HEIGHT = 36;
 
@@ -54,30 +47,10 @@ const PillContainer = styled.button`
   }
 `;
 
-function Pill({
-  children,
-  isSelected,
-  onClick,
-  index,
-  isExpanded,
-  setIsExpanded,
-}) {
-  const ref = useRef();
-
-  // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
-  // conflicting 'down' arrow handlers.
-  useRovingTabIndex({ ref }, [isExpanded]);
-
-  const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);
-  useKeyDownEffect(ref, !isExpanded ? 'down' : [], expand, [
-    isExpanded,
-    expand,
-  ]);
-
+function Pill({ itemRef, children, isSelected, onClick, index }) {
   return (
     <PillContainer
-      ref={ref}
-      className="categoryPill"
+      ref={itemRef}
       data-testid="mediaCategory"
       role="tab"
       aria-selected={isSelected}
@@ -95,8 +68,7 @@ function Pill({
 Pill.propTypes = {
   index: PropTypes.number,
   isSelected: PropTypes.bool,
-  isExpanded: PropTypes.bool,
-  setIsExpanded: PropTypes.func,
+  itemRef: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
 };
