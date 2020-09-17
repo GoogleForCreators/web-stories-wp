@@ -28,6 +28,7 @@ namespace Google\Web_Stories\Story_Renderer;
 
 use AmpProject\Dom\Document;
 use DOMElement;
+use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
@@ -98,6 +99,7 @@ class HTML {
 		$this->add_publisher_logo();
 
 		$this->sanitize_markup();
+		$this->optimize_markup();
 
 		return trim( (string) $this->document->saveHTML() );
 	}
@@ -321,5 +323,17 @@ class HTML {
 	protected function sanitize_markup() {
 		$sanitization = new Sanitization();
 		$sanitization->sanitize_document( $this->document );
+	}
+
+	/**
+	 * Optimizes AMP markup.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function optimize_markup() {
+		$optimization = new Optimization();
+		$optimization->optimize_document( $this->document );
 	}
 }
