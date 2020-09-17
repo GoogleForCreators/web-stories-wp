@@ -17,6 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Story_Renderer;
 
+use Google\Web_Stories\Model\Story;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
@@ -63,7 +65,7 @@ class HTML extends \WP_UnitTestCase {
 
 		$actual = $this->setup_renderer( $post );
 
-		$this->assertContains( '<html amp="" lang="en-US">', $actual );
+		$this->assertContains( '<html amp="" lang="en-US"', $actual );
 	}
 
 	/**
@@ -94,6 +96,38 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that publisher logo is correctly added if missing.
+	 *
+	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
+	 * @covers ::add_publisher_logo
+	 */
+	public function test_add_publisher_logo_missing() {
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+			]
+		);
+
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
+
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$placeholder = $renderer->get_publisher_logo_placeholder();
+		$rendered    = $renderer->render();
+
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$this->assertContains( 'attachment', $rendered );
+		$this->assertNotContains( $placeholder, $rendered );
+	}
+
+	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
 	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
@@ -101,29 +135,24 @@ class HTML extends \WP_UnitTestCase {
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
 	 * @covers ::add_publisher_logo
 	 */
-	public function test_add_publisher_logo() {
+	public function test_add_publisher_logo_replace_placeholder() {
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
+
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $this->createMock( Story::class ) );
+		$placeholder = $renderer->get_publisher_logo_placeholder();
 
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="' . $placeholder . '" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
-		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
-		$placeholder = $renderer->get_publisher_logo_placeholder();
 
-		wp_update_post(
-			[
-				'ID'           => $post->ID,
-				'post_content' => '<html><head></head><body><amp-story publisher-logo-src="' . $placeholder . '"></amp-story></body></html>',
-			]
-		);
-
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$rendered = $renderer->render();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
@@ -142,7 +171,7 @@ class HTML extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
 
@@ -163,7 +192,7 @@ class HTML extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
 
@@ -198,7 +227,7 @@ class HTML extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
 
@@ -212,8 +241,8 @@ class HTML extends \WP_UnitTestCase {
 
 		remove_action( 'web_stories_print_analytics', $function );
 
-		$this->assertContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
-		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body>', $actual );
+		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual );
 	}
 
 	/**
@@ -224,30 +253,13 @@ class HTML extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
 
 		$actual = $this->setup_renderer( $post );
 
-		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
-	}
-
-	/**
-	 * @covers ::remove_noscript_amp_boilerplate
-	 * @covers ::add_noscript_amp_boilerplate
-	 */
-	public function test_removes_and_reinserts_noscript_amp_boilerplate() {
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript></head><body><amp-story></amp-story></body></html>',
-			]
-		);
-
-		$actual = $this->setup_renderer( $post );
-
-		$this->assertContains( '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>', $actual );
+		$this->assertNotContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual );
 	}
 
 	/**
