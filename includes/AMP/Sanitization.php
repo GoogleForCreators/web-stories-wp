@@ -57,7 +57,7 @@ class Sanitization {
 		 * @var string $sanitizer_class
 		 */
 		foreach ( $sanitizers as $sanitizer_class => $args ) {
-			if ( method_exists( $sanitizer_class, 'add_buffering_hooks' ) ) {
+			if ( is_callable( [ $sanitizer_class, 'add_buffering_hooks' ] ) ) {
 				call_user_func( [ $sanitizer_class, 'add_buffering_hooks' ], $args );
 			}
 		}
@@ -228,8 +228,10 @@ class Sanitization {
 				if ( $link->parentNode ) {
 					$link->parentNode->removeChild( $link ); // So we can move it.
 				}
-				if ( $previous_node ) {
-					$document->head->insertBefore( $link, $previous_node->nextSibling ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				if ( $previous_node && $previous_node->nextSibling ) {
+					// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+					$document->head->insertBefore( $link, $previous_node->nextSibling );
 					$previous_node = $link;
 				}
 			}
@@ -264,11 +266,19 @@ class Sanitization {
 		 */
 		ksort( $amp_scripts );
 		$ordered_scripts = array_merge( $ordered_scripts, $amp_scripts );
+		/**
+		 * Script element.
+		 *
+		 * @var DOMElement $ordered_script
+		 */
 		foreach ( $ordered_scripts as $ordered_script ) {
-			$document->head->insertBefore( $ordered_script, $previous_node->nextSibling ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
-			$previous_node = $ordered_script;
+			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			if ( $previous_node && $previous_node->nextSibling ) {
+				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				$document->head->insertBefore( $ordered_script, $previous_node->nextSibling );
+				$previous_node = $ordered_script;
+			}
 		}
-
 	}
 
 	/**

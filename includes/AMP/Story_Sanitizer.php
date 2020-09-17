@@ -52,22 +52,13 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 	public function sanitize() {
 		// Adds a publisher logo if missing or just a placeholder.
 
-		$story_elements = $this->dom->body->getElementsByTagName( 'amp-story' );
+		$story_element = $this->dom->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
-		if ( $story_elements ) {
-			/**
-			 * The <amp-story> element.
-			 *
-			 * @var DOMElement $story_element
-			 */
-			$story_element = $story_elements->item( 0 );
+		if ( $story_element ) {
+			$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
-			if ( $story_element ) {
-				$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
-
-				if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-					$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
-				}
+			if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
+				$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
 			}
 		}
 	}

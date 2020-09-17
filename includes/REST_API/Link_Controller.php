@@ -177,7 +177,8 @@ class Link_Controller extends WP_REST_Controller {
 			$title_node = $title_query->item( 0 );
 
 			if ( $title_node instanceof DOMElement ) {
-				$title = $title_node->textContent; // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+				$title = $title_node->textContent;
 			}
 		}
 
