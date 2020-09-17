@@ -275,7 +275,7 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
-  it('should get corect font weight for text preset', () => {
+  it('should get correct font weight for text preset', () => {
     const elements = [
       {
         type: 'text',
