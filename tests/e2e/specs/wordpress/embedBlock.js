@@ -78,7 +78,7 @@ describe('Embed Block', () => {
     await createNewPost({
       showWelcomeGuide: false,
     });
-    await insertBlock('Web Story');
+    await insertBlock('Web Stories');
 
     await page.keyboard.type(
       'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'

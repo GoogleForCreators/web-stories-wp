@@ -31,8 +31,7 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
-  ${({ showPlaceholder }) =>
-    showPlaceholder && `background-color: #C4C4C4;`}
+  ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
 `;

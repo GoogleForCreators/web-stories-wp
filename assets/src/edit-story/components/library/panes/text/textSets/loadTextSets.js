@@ -55,8 +55,8 @@ async function loadTextSet(name) {
         ...e,
         // Offset elements so the text set's
         // default position is (0,0)
-        x: e.x - minMax.minX,
-        y: e.y - minMax.minY,
+        previewOffsetX: e.x - minMax.minX,
+        previewOffsetY: e.y - minMax.minY,
         // The overall text set width & height
         // is the delta between the max/mins
         textSetWidth: minMax.maxX - minMax.minX,

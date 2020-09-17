@@ -33,9 +33,10 @@ describe('Image resource loading integration', () => {
     fixture.restore();
   });
 
-  // Disable reason: flaky and blocks merging. See https://github.com/google/web-stories-wp/issues/4388
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should use cached thumbnail then switch to fullsize', async () => {
+  it('should use cached thumbnail then switch to fullsize', async () => {
+    // Sleep a bit to ensure the media gallery grid is properly laid out.
+    await fixture.events.sleep(50);
+
     const image = fixture.screen.getAllByLabelText(
       'image with transparent background'
     );
@@ -46,7 +47,7 @@ describe('Image resource loading integration', () => {
 
     await fixture.events.sleep(100); // Wait a bit for fullsize timeout
 
-    expect(resourceList.get(2)?.type).toEqual('fullsize');
+    expect(resourceList.get(8).type).toEqual('fullsize');
     const frames = fixture.screen.getAllByTestId('frameElement');
     const imageFrame = frames[1];
     const imageId = imageFrame.dataset.elementId;

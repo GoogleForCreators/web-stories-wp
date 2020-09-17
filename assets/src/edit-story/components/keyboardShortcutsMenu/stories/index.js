@@ -13,4 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default } from './textSets';
+
+/**
+ * Internal dependencies
+ */
+import ShortcutMenu from '../shortcutMenu';
+
+export default {
+  title: 'Stories Editor/Components/Keyboard Shortcuts Menu',
+  component: ShortcutMenu,
+};
+
+export const _default = () => {
+  return <ShortcutMenu />;
+};
