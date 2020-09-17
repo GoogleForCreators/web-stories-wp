@@ -309,7 +309,7 @@ describe('Media3pPane fetching', () => {
 
     await fixture.events.keyboard.press('tab');
     expect(document.activeElement).toBe(
-      fixture.screen.getByTestId('category-expand-button')
+      fixture.screen.getByRole('button', { name: 'Expand' })
     );
   });
 
@@ -324,7 +324,7 @@ describe('Media3pPane fetching', () => {
     expect(document.activeElement.textContent).toBe('Sustainability');
 
     await fixture.events.keyboard.press('ArrowDown');
-    const expandButton = fixture.screen.getByTestId('category-expand-button');
+    const expandButton = fixture.screen.getByRole('button', { name: 'Expand' });
     expect(expandButton.getAttribute('aria-expanded')).toBe('true');
   });
 

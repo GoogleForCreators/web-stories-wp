@@ -200,7 +200,6 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
             </InnerContainer>
           </Container>
           <ExpandButton
-            data-testid="category-expand-button"
             onClick={() => setIsExpanded(!isExpanded)}
             isExpanded={isExpanded}
             aria-controls={containerId}
