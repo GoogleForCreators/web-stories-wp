@@ -34,14 +34,14 @@ import { __ } from '@wordpress/i18n';
 import { ArrowDown } from '../../../../button';
 import Pill, { PILL_HEIGHT } from './pill';
 
-const CATEGORY_TOP_MARGIN = 16;
-const CATEGORY_BOTTOM_MARGIN = 30;
-const CATEGORY_COLLAPSED_FULL_HEIGHT =
-  PILL_HEIGHT + CATEGORY_TOP_MARGIN + CATEGORY_BOTTOM_MARGIN;
+const PILL_TOP_MARGIN = 16;
+const PILL_BOTTOM_MARGIN = 30;
+const PILL_COLLAPSED_FULL_HEIGHT =
+  PILL_HEIGHT + PILL_TOP_MARGIN + PILL_BOTTOM_MARGIN;
 
 const Section = styled.div`
-  height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
-  min-height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
+  height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
+  min-height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
   display: flex;
   flex-direction: column;
@@ -54,7 +54,7 @@ const Section = styled.div`
 // This hides the pills unless expanded
 const Container = styled.div`
   overflow: hidden;
-  margin: ${CATEGORY_TOP_MARGIN}px 12px ${CATEGORY_BOTTOM_MARGIN}px 24px;
+  margin: ${PILL_TOP_MARGIN}px 12px ${PILL_BOTTOM_MARGIN}px 24px;
 `;
 
 const InnerContainer = styled.div`
@@ -101,12 +101,12 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     }
     let height;
     if (!isExpanded) {
-      height = `${CATEGORY_COLLAPSED_FULL_HEIGHT}px`;
+      height = `${PILL_COLLAPSED_FULL_HEIGHT}px`;
     } else {
       height = `${
         innerContainerRef.current.offsetHeight +
-        CATEGORY_TOP_MARGIN +
-        CATEGORY_BOTTOM_MARGIN
+        PILL_TOP_MARGIN +
+        PILL_BOTTOM_MARGIN
       }px`;
     }
     // Safari has some strange issues with flex-shrink that require setting
@@ -148,20 +148,21 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
       : null;
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
-    for (let item of pills) {
-      const isSameRow = selectedItem && item.offsetTop == selectedItemOffsetTop;
+    for (let pill of pills) {
+      const isSameRow = selectedItem && pill.offsetTop == selectedItemOffsetTop;
       if (selectedItem && !isSameRow && !isExpanded) {
-        item.classList.add('invisible');
+        pill.classList.add('invisible');
       } else {
-        item.classList.remove('invisible');
+        pill.classList.remove('invisible');
       }
     }
   }, [innerContainerRef, isExpanded, selectedItemId]);
 
-  const containerId = `pillgroup-${uuidv4()}`;
+  const containerId = `pill-group-${uuidv4()}`;
+  const hasItems = items.length > 0;
   return (
-    <Section ref={sectionRef} hasCategories={Boolean(items.length)}>
-      {items.length ? (
+    <Section ref={sectionRef}>
+      {hasItems && (
         <>
           <Container id={containerId} isExpanded={isExpanded} role="tablist">
             <InnerContainer
@@ -202,7 +203,7 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
             aria-label={__('Expand', 'web-stories')}
           />
         </>
-      ) : null}
+      )}
     </Section>
   );
 };
