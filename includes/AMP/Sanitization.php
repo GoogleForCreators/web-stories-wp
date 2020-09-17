@@ -114,6 +114,7 @@ class Sanitization {
 			'AMP_Meta_Sanitizer'              => [],
 			'AMP_Layout_Sanitizer'            => [],
 			'AMP_Accessibility_Sanitizer'     => [],
+			Canonical_Sanitizer::class        => [],
 			'AMP_Tag_And_Attribute_Sanitizer' => [], // Note: This validating sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
 		];
 
