@@ -55,10 +55,10 @@ const PillContainer = styled.button`
 `;
 
 function Pill({
+  children,
   isSelected,
   onClick,
   index,
-  title,
   categoryId,
   isExpanded,
   setIsExpanded,
@@ -89,7 +89,7 @@ function Pill({
       isSelected={isSelected}
       onClick={onClick}
     >
-      {title}
+      {children}
     </PillContainer>
   );
 }
@@ -100,7 +100,7 @@ Pill.propTypes = {
   isSelected: PropTypes.bool,
   isExpanded: PropTypes.bool,
   setIsExpanded: PropTypes.func,
-  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
 };
 

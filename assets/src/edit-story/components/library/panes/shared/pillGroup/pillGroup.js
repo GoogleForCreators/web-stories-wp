@@ -178,7 +178,6 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                     setIsExpanded={setIsExpanded}
                     key={e.id}
                     categoryId={e.id}
-                    title={e.displayName}
                     onClick={() => {
                       if (selected) {
                         deselectItem();
@@ -187,7 +186,9 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
                         selectItem(e.id);
                       }
                     }}
-                  />
+                  >
+                    {e.displayName}
+                  </Pill>
                 );
               })}
             </InnerContainer>
