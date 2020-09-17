@@ -61,6 +61,9 @@ function PresetPanel({
   );
 
   const { colors, textStyles } = stylePresets;
+  const presets = isColor ? colors : textStyles;
+  const hasPresets = presets.length > 0;
+
   const [isEditMode, setIsEditMode] = useState(false);
 
   const isText = areAllType('text', selectedElements);
@@ -89,8 +92,6 @@ function PresetPanel({
     },
     [colors, isColor, textStyles, updateStory]
   );
-
-  const hasPresets = colors.length > 0;
 
   useEffect(() => {
     // If there are no colors left, exit edit mode.
@@ -138,7 +139,7 @@ function PresetPanel({
     >
       <PresetsHeader
         handleAddPreset={handleAddPreset}
-        presets={isColor ? colors : textStyles}
+        presets={presets}
         isEditMode={isEditMode}
         setIsEditMode={setIsEditMode}
         canCollapse={canCollapse}
@@ -147,7 +148,7 @@ function PresetPanel({
       />
       <Presets
         isEditMode={isEditMode}
-        presets={isColor ? colors : textStyles}
+        presets={presets}
         handleOnClick={handlePresetClick}
         itemRenderer={itemRenderer}
         type={presetType}
