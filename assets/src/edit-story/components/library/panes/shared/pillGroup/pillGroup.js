@@ -93,8 +93,19 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
   const innerContainerRef = useRef();
 
   const itemRefs = useRef([]);
+  const selectedItem = useRef(null);
 
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
+
+  const handleClick = (selected, id) => {
+    if (selected) {
+      selectedItem.current = null;
+      deselectItem();
+    } else {
+      setIsExpanded(false);
+      selectItem(id);
+    }
+  };
 
   // Handles expand and contract animation.
   // We calculate the actual height of the categories list, and set its explicit
@@ -126,10 +137,7 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     if (!innerContainerRef.current) {
       return;
     }
-    const selectedItem = selectedItemId
-      ? itemRefs.current.find((p) => p.dataset.categoryId == selectedItemId)
-      : null;
-    const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
+    const selectedItemOffsetTop = selectedItem.current?.offsetTop || 0;
 
     if (!isExpanded && selectedItem) {
       setFocusedRowOffset(selectedItemOffsetTop);
@@ -141,13 +149,11 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
     if (!innerContainerRef.current) {
       return;
     }
-    const selectedItem = selectedItemId
-      ? itemRefs.current.find((p) => p.dataset.categoryId == selectedItemId)
-      : null;
-    const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
+    const selectedItemOffsetTop = selectedItem.current?.offsetTop || 0;
 
     for (let pill of itemRefs.current) {
-      const isSameRow = selectedItem && pill.offsetTop == selectedItemOffsetTop;
+      const isSameRow =
+        selectedItem && pill.offsetTop === selectedItemOffsetTop;
       if (selectedItem && !isSameRow && !isExpanded) {
         pill.classList.add('invisible');
       } else {
@@ -181,28 +187,25 @@ const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
               ref={innerContainerRef}
               style={{ transform: `translateY(-${focusedRowOffset}px` }}
             >
-              {items.map((e, i) => {
-                const selected = e.id === selectedItemId;
+              {items.map((item, i) => {
+                const { id, displayName } = item;
+                const selected = id === selectedItemId;
                 return (
                   <Pill
                     itemRef={(el) => {
                       itemRefs.current[i] = el;
+                      if (selected) {
+                        selectedItem.current = el;
+                      }
                     }}
                     index={i}
                     isSelected={selected}
                     isExpanded={isExpanded}
                     setIsExpanded={setIsExpanded}
-                    key={e.id}
-                    onClick={() => {
-                      if (selected) {
-                        deselectItem();
-                      } else {
-                        setIsExpanded(false);
-                        selectItem(e.id);
-                      }
-                    }}
+                    key={id}
+                    onClick={() => handleClick(selected, id)}
                   >
-                    {e.displayName}
+                    {displayName}
                   </Pill>
                 );
               })}
