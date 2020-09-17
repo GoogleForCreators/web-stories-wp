@@ -188,7 +188,6 @@ describe('Panels/StylePreset/utils', () => {
           color: TEST_COLOR,
           font: TEXT_ELEMENT_DEFAULT_FONT,
           fontWeight: 400,
-          isBold: false,
           isItalic: false,
           isUnderline: false,
           letterSpacing: 0,
@@ -206,7 +205,6 @@ describe('Panels/StylePreset/utils', () => {
             family: 'Foo',
           },
           fontWeight: 700,
-          isBold: true,
           isItalic: true,
           isUnderline: false,
           letterSpacing: 0,
@@ -243,7 +241,6 @@ describe('Panels/StylePreset/utils', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       fontWeight: 400,
-      isBold: false,
       isItalic: false,
       isUnderline: false,
       letterSpacing: 0,
@@ -278,11 +275,41 @@ describe('Panels/StylePreset/utils', () => {
     expect(presets).toStrictEqual(expected);
   });
 
+  it('should get corect font weight for text preset', () => {
+    const elements = [
+      {
+        type: 'text',
+        backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+        font: TEXT_ELEMENT_DEFAULT_FONT,
+        content: '<span style="font-weight: 600">Semi-bold</span>',
+      },
+    ];
+    const stylePresets = {
+      textStyles: [],
+      colors: [],
+    };
+    const expected = {
+      colors: [],
+      textStyles: [
+        {
+          backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+          font: TEXT_ELEMENT_DEFAULT_FONT,
+          color: { color: { r: 0, g: 0, b: 0 } },
+          fontWeight: 600,
+          isItalic: false,
+          isUnderline: false,
+          letterSpacing: 0,
+        },
+      ],
+    };
+    const presets = getTextPresets(elements, stylePresets, 'style');
+    expect(presets).toStrictEqual(expected);
+  });
+
   it('should default to null/false when adding text style preset for mixed inline styles', () => {
     const stylePreset = {
       ...STYLE_PRESET,
       fontWeight: null,
-      isBold: false,
       isItalic: false,
       isUnderline: false,
       letterSpacing: null,
