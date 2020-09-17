@@ -47,6 +47,8 @@ class Canonical_Sanitizer extends \AMP_Base_Sanitizer {
 	 * Sanitize the HTML contained in the DOMDocument received by the constructor.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return void
 	 */
 	public function sanitize() {
 		$link_elements = $this->dom->head->getElementsByTagName( Tag::LINK );
@@ -66,7 +68,7 @@ class Canonical_Sanitizer extends \AMP_Base_Sanitizer {
 		if ( empty( $links['canonical'] ) ) {
 			$rel_canonical = $this->dom->createElement( Tag::LINK );
 			$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
-			$rel_canonical->setAttribute( Attribute::HREF, wp_get_canonical_url() );
+			$rel_canonical->setAttribute( Attribute::HREF, (string) wp_get_canonical_url() );
 			$this->dom->head->appendChild( $rel_canonical );
 		}
 	}

@@ -49,7 +49,7 @@ class HTML {
 	/**
 	 * Document instance.
 	 *
-	 * @var Document|false Document instance.
+	 * @var Document Document instance.
 	 */
 	protected $document;
 
@@ -76,9 +76,9 @@ class HTML {
 		$markup = $this->replace_html_head( $markup );
 
 		// TODO: What if transformation failed?
-		$this->document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
+		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
 
-		if ( ! $this->document ) {
+		if ( ! $document ) {
 			wp_die(
 				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
 				esc_html__( 'Web Stories', 'web-stories' ),
@@ -88,7 +88,10 @@ class HTML {
 					'link_text' => esc_html__( 'Contact Support', 'web-stories' ),
 				]
 			);
+			exit;
 		}
+
+		$this->document = $document;
 
 		// Run all further transformations on the Document instance.
 

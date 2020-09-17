@@ -316,6 +316,8 @@ class Sanitization {
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return array Sanitizers.
 	 */
 	protected function get_sanitizers() {
 		$sanitizers = [
