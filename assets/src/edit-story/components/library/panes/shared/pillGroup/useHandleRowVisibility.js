@@ -57,6 +57,10 @@ function useHandleRowVisibility({
     const selectedItemOffsetTop = selectedItem?.offsetTop || 0;
 
     for (let pill of itemRefs.current) {
+      // Ensure the node still exists.
+      if (!pill) {
+        continue;
+      }
       const isSameRow =
         selectedItem && pill.offsetTop === selectedItemOffsetTop;
       if (selectedItem && !isSameRow && !isExpanded) {
