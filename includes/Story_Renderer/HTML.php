@@ -78,6 +78,7 @@ class HTML {
 		// TODO: What if transformation failed?
 		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
 
+		// This  should never actually happen.
 		if ( ! $document ) {
 			wp_die(
 				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
@@ -189,6 +190,8 @@ class HTML {
 
 	/**
 	 * Replaces the placeholder of publisher logo in the content.
+	 *
+	 * @todo Turn into sanitizer.
 	 *
 	 * @since 1.0.0
 	 *
