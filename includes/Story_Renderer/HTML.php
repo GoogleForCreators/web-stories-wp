@@ -47,7 +47,7 @@ class HTML {
 	/**
 	 * Document instance.
 	 *
-	 * @var Document Document instance.
+	 * @var Document|false Document instance.
 	 */
 	protected $document;
 
@@ -73,7 +73,20 @@ class HTML {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 
+		// TODO: What if transformation failed?
 		$this->document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
+
+		if ( ! $this->document ) {
+			wp_die(
+				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
+				esc_html__( 'Web Stories', 'web-stories' ),
+				[
+					'response'  => 500,
+					'link_url'  => esc_url( __( 'https://wp.stories.google/', 'web-stories' ) ),
+					'link_text' => esc_html__( 'Contact Support', 'web-stories' ),
+				]
+			);
+		}
 
 		// Run all further transformations on the Document instance.
 
@@ -82,6 +95,8 @@ class HTML {
 
 		$this->add_poster_images();
 		$this->add_publisher_logo();
+
+		$this->sanitize_markup();
 
 		return trim( (string) $this->document->saveHTML() );
 	}
