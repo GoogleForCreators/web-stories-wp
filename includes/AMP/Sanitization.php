@@ -51,6 +51,11 @@ class Sanitization {
 	 */
 	public function sanitize_document( Document $document ) {
 		$sanitizers = $this->get_sanitizers();
+		/**
+		 * Class name.
+		 *
+		 * @var string $sanitizer_class
+		 */
 		foreach ( $sanitizers as $sanitizer_class => $args ) {
 			if ( method_exists( $sanitizer_class, 'add_buffering_hooks' ) ) {
 				call_user_func( [ $sanitizer_class, 'add_buffering_hooks' ], $args );
@@ -178,13 +183,21 @@ class Sanitization {
 			if ( ! in_array( $script_handle, Amp::RENDER_DELAYING_EXTENSIONS, true ) ) {
 				continue;
 			}
+
+			/**
+			 * AMP script element.
+			 *
+			 * @var DOMElement $script_element
+			 */
+			$script_element = $amp_scripts[ $script_handle ];
+
 			$prioritized_preloads[] = AMP_DOM_Utils::create_node(
 				$document,
 				Tag::LINK,
 				[
 					Attribute::REL  => Attribute::REL_PRELOAD,
 					'as'            => Tag::SCRIPT,
-					Attribute::HREF => $amp_scripts[ $script_handle ]->getAttribute( Attribute::SRC ),
+					Attribute::HREF => $script_element->getAttribute( Attribute::SRC ),
 				]
 			);
 		}
@@ -205,6 +218,12 @@ class Sanitization {
 			if ( ! isset( $links[ $rel ] ) ) {
 				continue;
 			}
+
+			/**
+			 * Link node.
+			 *
+			 * @var DOMElement $link
+			 */
 			foreach ( $links[ $rel ] as $link ) {
 				if ( $link->parentNode ) {
 					$link->parentNode->removeChild( $link ); // So we can move it.
