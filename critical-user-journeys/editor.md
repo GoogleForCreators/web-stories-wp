@@ -49,4 +49,11 @@
 |                                                                   | *[total]*                                        | 🚨 **19.05%** *(4 / 21)*    |
 | Creator can View and Modify Document Settings                     | Navigating without changes                       | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(1 / 1)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **69.01%** *(196 / 284)* |
+| User can interact with menu using keyboard                        | Tab to menu                                      | 🏆 **100.00%** *(5 / 5)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(5 / 5)*    |
+|                                                                   | enter to open                                    | 🏆 **100.00%** *(5 / 5)*    |
+|                                                                   | esc to close                                     | 🏆 **100.00%** *(5 / 5)*    |
+| User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
+|                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **72.15%** *(228 / 316)* |
