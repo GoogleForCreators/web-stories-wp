@@ -120,7 +120,7 @@ const categories = [
 export const empty = () => {
   return (
     <Container>
-      <PillGroup categories={[]} />
+      <PillGroup items={[]} />
     </Container>
   );
 };
@@ -128,7 +128,7 @@ export const empty = () => {
 export const unselected = () => {
   return (
     <Container>
-      <PillGroup categories={categories} />
+      <PillGroup items={categories} />
     </Container>
   );
 };
@@ -136,10 +136,7 @@ export const unselected = () => {
 export const selected = () => {
   return (
     <Container>
-      <PillGroup
-        categories={categories}
-        selectedCategoryId={categories[1].id}
-      />
+      <PillGroup items={categories} selectedItemId={categories[1].id} />
     </Container>
   );
 };

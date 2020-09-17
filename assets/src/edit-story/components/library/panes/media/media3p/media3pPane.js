@@ -180,10 +180,10 @@ function Media3pPane(props) {
       >
         {PROVIDERS[providerType].supportsCategories && (
           <PillGroup
-            categories={state.categories.categories}
-            selectedCategoryId={state.categories.selectedCategoryId}
-            selectCategory={actions.selectCategory}
-            deselectCategory={actions.deselectCategory}
+            items={state.categories.categories}
+            selectedItemId={state.categories.selectedCategoryId}
+            selectItem={actions.selectCategory}
+            deselectItem={actions.deselectCategory}
           />
         )}
         <MediaSubheading

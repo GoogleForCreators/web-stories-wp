@@ -43,26 +43,26 @@ describe('PillGroup', () => {
   const selectCategoryMock = jest.fn();
   const deselectCategoryMock = jest.fn();
 
-  it('should not render <PillGroup /> with empty category list', () => {
+  it('should not render <PillGroup /> with empty item list', () => {
     const { queryByRole } = renderWithTheme(
       <PillGroup
-        categories={[]}
-        selectedCategoryId={undefined}
-        selectCategory={selectCategoryMock}
-        deselectCategory={deselectCategoryMock}
+        items={[]}
+        selectedItemId={undefined}
+        selectItem={selectCategoryMock}
+        deselectItem={deselectCategoryMock}
       />
     );
     const categoryContainer = queryByRole('tablist');
     expect(categoryContainer).toBeNull();
   });
 
-  it('should render <PillGroup /> with categories', () => {
+  it('should render <PillGroup /> with items', () => {
     const { queryByRole } = renderWithTheme(
       <PillGroup
-        categories={categories}
-        selectedCategoryId={undefined}
-        selectCategory={selectCategoryMock}
-        deselectCategory={deselectCategoryMock}
+        items={categories}
+        selectedItemId={undefined}
+        selectItem={selectCategoryMock}
+        deselectItem={deselectCategoryMock}
       />
     );
 
@@ -77,13 +77,13 @@ describe('PillGroup', () => {
     expect(categoryPill3).toHaveAttribute('aria-selected', 'false');
   });
 
-  it('should render <PillGroup /> with a selected category', () => {
+  it('should render <PillGroup /> with a selected item', () => {
     const { queryByRole } = renderWithTheme(
       <PillGroup
-        categories={categories}
-        selectedCategoryId={'1'}
-        selectCategory={selectCategoryMock}
-        deselectCategory={deselectCategoryMock}
+        items={categories}
+        selectedItemId={'1'}
+        selectItem={selectCategoryMock}
+        deselectItem={deselectCategoryMock}
       />
     );
 
@@ -99,10 +99,10 @@ describe('PillGroup', () => {
   it('should render <PillGroup /> with and allow selection', () => {
     const { queryByRole } = renderWithTheme(
       <PillGroup
-        categories={categories}
-        selectedCategoryId={undefined}
-        selectCategory={selectCategoryMock}
-        deselectCategory={deselectCategoryMock}
+        items={categories}
+        selectedItemId={undefined}
+        selectItem={selectCategoryMock}
+        deselectItem={deselectCategoryMock}
       />
     );
     const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
@@ -115,10 +115,10 @@ describe('PillGroup', () => {
   it('should render <PillGroup /> with and allow deselection', () => {
     const { queryByRole } = renderWithTheme(
       <PillGroup
-        categories={categories}
-        selectedCategoryId={'1'}
-        selectCategory={selectCategoryMock}
-        deselectCategory={deselectCategoryMock}
+        items={categories}
+        selectedItemId={'1'}
+        selectItem={selectCategoryMock}
+        deselectItem={deselectCategoryMock}
       />
     );
     const categoryPill1 = queryByRole('tab', { name: 'Category 1' });
@@ -131,10 +131,10 @@ describe('PillGroup', () => {
   it('should render <PillGroup /> without accessibility violations', async () => {
     const { container } = renderWithTheme(
       <PillGroup
-        categories={categories}
+        items={categories}
         selectedCategoryName={undefined}
-        selectCategory={selectCategoryMock}
-        deselectCategory={deselectCategoryMock}
+        selectItem={selectCategoryMock}
+        deselectItem={deselectCategoryMock}
       />
     );
 
