@@ -22,11 +22,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import Media3pCategories from '../media3pCategories';
+import PillGroup from '../pillGroup';
 
 export default {
-  title: 'Stories Editor/Components/Media3pCategories',
-  component: Media3pCategories,
+  title: 'Stories Editor/Components/PillGroup',
+  component: PillGroup,
 };
 
 const Container = styled.div`
@@ -37,90 +37,90 @@ const Container = styled.div`
 const categories = [
   {
     id: 'categories/unsplash:KHXRtL69hcY',
-    displayName: 'Sustainability',
+    label: 'Sustainability',
   },
   {
     id: 'categories/unsplash:bo8jQKTaE0Y',
-    displayName: 'Wallpapers',
+    label: 'Wallpapers',
   },
   {
     id: 'categories/unsplash:c7USHrQ0Ljw',
-    displayName: 'COVID-19',
+    label: 'COVID-19',
   },
   {
     id: 'categories/unsplash:Fzo3zuOHN6w',
-    displayName: 'Travel',
+    label: 'Travel',
   },
   {
     id: 'categories/unsplash:6sMVjTLSkeQ',
-    displayName: 'Nature',
+    label: 'Nature',
   },
   {
     id: 'categories/unsplash:iUIsnVtjB0Y',
-    displayName: 'Textures & Patterns',
+    label: 'Textures & Patterns',
   },
   {
     id: 'categories/unsplash:BJJMtteDJA4',
-    displayName: 'Current Events',
+    label: 'Current Events',
   },
   {
     id: 'categories/unsplash:towJZFskpGg',
-    displayName: 'People',
+    label: 'People',
   },
   {
     id: 'categories/unsplash:aeu6rL-j6ew',
-    displayName: 'Business & Work',
+    label: 'Business & Work',
   },
   {
     id: 'categories/unsplash:J9yrPaHXRQY',
-    displayName: 'Technology',
+    label: 'Technology',
   },
   {
     id: 'categories/unsplash:Jpg6Kidl-Hk',
-    displayName: 'Animals',
+    label: 'Animals',
   },
   {
     id: 'categories/unsplash:R_Fyn-Gwtlw',
-    displayName: 'Interiors',
+    label: 'Interiors',
   },
   {
     id: 'categories/unsplash:rnSKDHwwYUk',
-    displayName: 'Architecture',
+    label: 'Architecture',
   },
   {
     id: 'categories/unsplash:xjPR4hlkBGA',
-    displayName: 'Food & Drink',
+    label: 'Food & Drink',
   },
   {
     id: 'categories/unsplash:Bn-DjrcBrwo',
-    displayName: 'Athletics',
+    label: 'Athletics',
   },
   {
     id: 'categories/unsplash:_8zFHuhRhyo',
-    displayName: 'Spirituality',
+    label: 'Spirituality',
   },
   {
     id: 'categories/unsplash:_hb-dl4Q-4U',
-    displayName: 'Health & Wellness',
+    label: 'Health & Wellness',
   },
   {
     id: 'categories/unsplash:hmenvQhUmxM',
-    displayName: 'Film',
+    label: 'Film',
   },
   {
     id: 'categories/unsplash:S4MKLAsBB74',
-    displayName: 'Fashion',
+    label: 'Fashion',
   },
   {
     id: 'categories/unsplash:qPYsDzvJOYc',
-    displayName: 'Experimental',
+    label: 'Experimental',
   },
 ];
 
 export const empty = () => {
   return (
     <Container>
-      <Media3pCategories categories={[]} />
+      <PillGroup items={[]} />
     </Container>
   );
 };
@@ -128,7 +128,7 @@ export const empty = () => {
 export const unselected = () => {
   return (
     <Container>
-      <Media3pCategories categories={categories} />
+      <PillGroup items={categories} />
     </Container>
   );
 };
@@ -136,10 +136,7 @@ export const unselected = () => {
 export const selected = () => {
   return (
     <Container>
-      <Media3pCategories
-        categories={categories}
-        selectedCategoryId={categories[1].name}
-      />
+      <PillGroup items={categories} selectedItemId={categories[1].id} />
     </Container>
   );
 };

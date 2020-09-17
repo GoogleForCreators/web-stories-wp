@@ -23,11 +23,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import CategoryPill from '../categoryPill';
+import Pill from '../pill';
 
 export default {
-  title: 'Stories Editor/Components/CategoryPill',
-  component: CategoryPill,
+  title: 'Stories Editor/Components/Pill',
+  component: Pill,
 };
 
 const Container = styled.div`
@@ -40,7 +40,7 @@ export const _default = () => {
 
   return (
     <Container>
-      <CategoryPill
+      <Pill
         title="Category"
         isSelected={isSelected}
         onClick={() => setIsSelected(!isSelected)}

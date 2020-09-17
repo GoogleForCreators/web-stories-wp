@@ -13,29 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
-import useRovingTabIndex from '../common/useRovingTabIndex';
-import { useKeyDownEffect } from '../../../../keyboard';
-import { pill } from './pill';
+import { PILL_HEIGHT } from './constants';
 
 const PillContainer = styled.button`
-  ${pill};
+  border: 1px solid transparent;
+  margin-right: 12px;
+  padding: 7px 16px 8px;
+  height: ${PILL_HEIGHT}px;
+  border-radius: 18px;
+  font-size: ${({ theme }) => theme.fonts.paragraph.small.size};
+  line-height: ${({ theme }) => theme.fonts.paragraph.small.lineHeight};
+  user-select: none;
   cursor: pointer;
   margin-bottom: 12px;
-  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-family: ${({ theme }) => theme.fonts.paragraph.small.family};
   border-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.accent.primary : theme.colors.fg.gray24};
-  background-color: transparent;
+    isSelected ? 'transparent' : theme.colors.fg.gray16};
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? rgba(theme.colors.bg.divider, 0.04) : 'transparent'};
   color: ${({ theme }) => theme.colors.fg.primary};
-  user-select: none;
   background-clip: padding-box;
   transition: opacity 0.2s;
   &.invisible {
@@ -43,38 +50,13 @@ const PillContainer = styled.button`
   }
 `;
 
-PillContainer.propTypes = {
-  isSelected: PropTypes.bool,
-};
-
-const CategoryPill = ({
-  index,
-  categoryId,
-  title,
-  isSelected,
-  isExpanded,
-  setIsExpanded,
-  onClick,
-}) => {
-  const ref = useRef();
-
-  // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
-  // conflicting 'down' arrow handlers.
-  useRovingTabIndex({ ref }, [isExpanded]);
-
-  const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);
-  useKeyDownEffect(ref, !isExpanded ? 'down' : [], expand, [
-    isExpanded,
-    expand,
-  ]);
-
+function Pill({ itemRef, children, isSelected, onClick, index }) {
   return (
     <PillContainer
-      ref={ref}
-      className="categoryPill"
-      data-testid="mediaCategory"
-      data-category-id={categoryId}
-      role="tab"
+      ref={itemRef}
+      // @todo Get rid of data-* values.
+      data-testid="pill"
+      role="option"
       aria-selected={isSelected}
       // The first or selected category will be in focus for roving
       // (arrow-based) navigation initially.
@@ -82,19 +64,17 @@ const CategoryPill = ({
       isSelected={isSelected}
       onClick={onClick}
     >
-      {title}
+      {children}
     </PillContainer>
   );
-};
+}
 
-CategoryPill.propTypes = {
+Pill.propTypes = {
   index: PropTypes.number,
-  categoryId: PropTypes.string,
   isSelected: PropTypes.bool,
-  isExpanded: PropTypes.bool,
-  setIsExpanded: PropTypes.func,
-  title: PropTypes.string.isRequired,
+  itemRef: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
 };
 
-export default CategoryPill;
+export default Pill;
