@@ -241,24 +241,6 @@ class HTML {
 	}
 
 	/**
-	 * Print amp-analytics script.
-	 *
-	 * @todo Use AMP PHP library instead.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function insert_amp_analytics_extension() {
-		$script = $this->document->createElement( 'script' );
-		$script->setAttribute( 'src', 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js' );
-		$script->setAttribute( 'async', 'async' );
-		$script->setAttribute( 'custom-element', 'amp-analytics' );
-
-		$this->document->head->appendChild( $script );
-	}
-
-	/**
 	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
 	 *
 	 * @since 1.0.0
@@ -287,13 +269,6 @@ class HTML {
 		$fragment->appendXml( $output );
 
 		$story_element->appendChild( $fragment );
-
-		/*
-		 * $fragment could contain anything (amp-analytics, amp-pixel, etc.).
-		 *
-		 * @todo Only insert extension when it actually contains amp-analytics.
-		 */
-		$this->insert_amp_analytics_extension();
 	}
 
 	/**

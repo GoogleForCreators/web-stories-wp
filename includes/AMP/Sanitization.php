@@ -26,8 +26,15 @@
 
 namespace Google\Web_Stories\AMP;
 
+use AMP_Allowed_Tags_Generated;
 use AMP_Content_Sanitizer;
+use AMP_DOM_Utils;
+use AmpProject\Amp;
+use AmpProject\Attribute;
 use AmpProject\Dom\Document;
+use AmpProject\Extension;
+use AmpProject\Tag;
+use DOMElement;
 
 /**
  * Sanitization class.
@@ -50,8 +57,205 @@ class Sanitization {
 			}
 		}
 
-		// TODO: Do something with the result?
-		AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
+		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
+
+		$this->add_missing_scripts( $document, $result['scripts'] );
+	}
+
+	/**
+	 * Adds missing scripts.
+	 *
+	 * @param Document $document Document instance.
+	 * @param array    $scripts List of found scripts.
+	 *
+	 * @return void
+	 */
+	protected function add_missing_scripts( $document, $scripts ) {
+		// Obtain the existing AMP scripts.
+		$amp_scripts     = [];
+		$ordered_scripts = [];
+		$head_scripts    = [];
+		$runtime_src     = 'https://cdn.ampproject.org/v0.js';
+
+		/**
+		 * Script element.
+		 *
+		 * @var DOMElement $script
+		 */
+		foreach ( $document->head->getElementsByTagName( Tag::SCRIPT ) as $script ) {
+			$head_scripts[] = $script;
+		}
+
+		foreach ( $head_scripts as $script ) {
+			$src = $script->getAttribute( Attribute::SRC );
+
+			if ( ! $src || 0 !== strpos( $src, 'https://cdn.ampproject.org/' ) ) {
+				continue;
+			}
+
+			if ( 0 === stripos( strrev( $src ), 'v0.js' ) ) {
+				$amp_scripts[ Amp::RUNTIME ] = $script;
+			} elseif ( $script->hasAttribute( Attribute::CUSTOM_ELEMENT ) ) {
+				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_ELEMENT ) ] = $script;
+			} elseif ( $script->hasAttribute( Attribute::CUSTOM_TEMPLATE ) ) {
+				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_TEMPLATE ) ] = $script;
+			}
+		}
+
+		$specs = $this->get_extension_sources();
+
+		// Create scripts for any components discovered from output buffering that are missing.
+		foreach ( array_diff( array_keys( $scripts ), array_keys( $amp_scripts ) ) as $missing_script_handle ) {
+			$attrs = [
+				Attribute::SRC   => $specs[ $missing_script_handle ],
+				Attribute::ASYNC => '',
+			];
+			if ( Extension::MUSTACHE === $missing_script_handle ) {
+				$attrs[ Attribute::CUSTOM_TEMPLATE ] = $missing_script_handle;
+			} else {
+				$attrs[ Attribute::CUSTOM_ELEMENT ] = $missing_script_handle;
+			}
+
+			$amp_scripts[ $missing_script_handle ] = AMP_DOM_Utils::create_node( $document, Tag::SCRIPT, $attrs );
+		}
+
+		// Remove scripts that had already been added but couldn't be detected from output buffering.
+		$extension_specs            = AMP_Allowed_Tags_Generated::get_extension_specs();
+		$superfluous_script_handles = array_diff(
+			array_keys( $amp_scripts ),
+			array_merge( array_keys( $scripts ), [ Amp::RUNTIME ] )
+		);
+
+		foreach ( $superfluous_script_handles as $superfluous_script_handle ) {
+			if ( ! empty( $extension_specs[ $superfluous_script_handle ]['requires_usage'] ) ) {
+				unset( $amp_scripts[ $superfluous_script_handle ] );
+			}
+		}
+
+		/* phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+		 *
+		 * "2. Next, preload the AMP runtime v0.js <script> tag with <link as=script href=https://cdn.ampproject.org/v0.js rel=preload>.
+		 * The AMP runtime should start downloading as soon as possible because the AMP boilerplate hides the document via body { visibility:hidden }
+		 * until the AMP runtime has loaded. Preloading the AMP runtime tells the browser to download the script with a higher priority."
+		 * {@link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/ Optimize the AMP Runtime loading}
+		 */
+		$prioritized_preloads = [];
+		if ( ! isset( $links[ Attribute::REL_PRELOAD ] ) ) {
+			$links[ Attribute::REL_PRELOAD ] = [];
+		}
+
+		$prioritized_preloads[] = AMP_DOM_Utils::create_node(
+			$document,
+			Tag::LINK,
+			[
+				Attribute::REL  => Attribute::REL_PRELOAD,
+				'as'            => Tag::SCRIPT,
+				Attribute::HREF => $runtime_src,
+			]
+		);
+
+		/*
+		 * "3. If your page includes render-delaying extensions (e.g., amp-experiment, amp-dynamic-css-classes, amp-story),
+		 * preload those extensions as they're required by the AMP runtime for rendering the page."
+		 */
+		$amp_script_handles = array_keys( $amp_scripts );
+		foreach ( array_intersect( Amp::RENDER_DELAYING_EXTENSIONS, $amp_script_handles ) as $script_handle ) {
+			if ( ! in_array( $script_handle, Amp::RENDER_DELAYING_EXTENSIONS, true ) ) {
+				continue;
+			}
+			$prioritized_preloads[] = AMP_DOM_Utils::create_node(
+				$document,
+				Tag::LINK,
+				[
+					Attribute::REL  => Attribute::REL_PRELOAD,
+					'as'            => Tag::SCRIPT,
+					Attribute::HREF => $amp_scripts[ $script_handle ]->getAttribute( Attribute::SRC ),
+				]
+			);
+		}
+		$links[ Attribute::REL_PRELOAD ] = array_merge( $prioritized_preloads, $links[ Attribute::REL_PRELOAD ] );
+
+		// Store the last meta tag as the previous node to append to.
+		$meta_tags     = $document->head->getElementsByTagName( Tag::META );
+		$previous_node = $meta_tags->length > 0 ? $meta_tags->item( $meta_tags->length - 1 ) : $document->head->firstChild;
+
+		/*
+		 * "4. Use preconnect to speedup the connection to other origin where the full resource URL is not known ahead of time,
+		 * for example, when using Google Fonts."
+		 *
+		 * Note that \AMP_Style_Sanitizer::process_link_element() will ensure preconnect links for Google Fonts are present.
+		 */
+		$link_relations = [ Attribute::REL_PRECONNECT, Attribute::REL_DNS_PREFETCH, Attribute::REL_PRELOAD, Attribute::REL_PRERENDER, Attribute::REL_PREFETCH ];
+		foreach ( $link_relations as $rel ) {
+			if ( ! isset( $links[ $rel ] ) ) {
+				continue;
+			}
+			foreach ( $links[ $rel ] as $link ) {
+				if ( $link->parentNode ) {
+					$link->parentNode->removeChild( $link ); // So we can move it.
+				}
+				if ( $previous_node ) {
+					$document->head->insertBefore( $link, $previous_node->nextSibling ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+					$previous_node = $link;
+				}
+			}
+		}
+
+		// "5. Load the AMP runtime."
+		if ( isset( $amp_scripts[ Amp::RUNTIME ] ) ) {
+			$ordered_scripts[ Amp::RUNTIME ] = $amp_scripts[ Amp::RUNTIME ];
+			unset( $amp_scripts[ Amp::RUNTIME ] );
+		} else {
+			$script = $document->createElement( Tag::SCRIPT );
+			$script->setAttribute( Attribute::ASYNC, '' );
+			$script->setAttribute( Attribute::SRC, $runtime_src );
+			$ordered_scripts[ Amp::RUNTIME ] = $script;
+		}
+
+		/*
+		 * "6. Specify the <script> tags for render-delaying extensions (e.g., amp-experiment amp-dynamic-css-classes and amp-story"
+		 *
+		 * {@link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/ AMP Hosting Guide}
+		 */
+		foreach ( Amp::RENDER_DELAYING_EXTENSIONS as $extension ) {
+			if ( isset( $amp_scripts[ $extension ] ) ) {
+				$ordered_scripts[ $extension ] = $amp_scripts[ $extension ];
+				unset( $amp_scripts[ $extension ] );
+			}
+		}
+
+		/*
+		 * "7. Specify the <script> tags for remaining extensions (e.g., amp-bind ...). These extensions are not render-delaying
+		 * and therefore should not be preloaded as they might take away important bandwidth for the initial render."
+		 */
+		ksort( $amp_scripts );
+		$ordered_scripts = array_merge( $ordered_scripts, $amp_scripts );
+		foreach ( $ordered_scripts as $ordered_script ) {
+			$document->head->insertBefore( $ordered_script, $previous_node->nextSibling ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+			$previous_node = $ordered_script;
+		}
+
+	}
+
+	/**
+	 * Returns AMP extension URLs, keyed by extension name.
+	 *
+	 * @return array List of extensions and their URLs.
+	 */
+	protected function get_extension_sources() {
+		$specs = [];
+		// Register all AMP components as defined in the spec.
+		foreach ( AMP_Allowed_Tags_Generated::get_extension_specs() as $extension_name => $extension_spec ) {
+			$src = sprintf(
+				'https://cdn.ampproject.org/v0/%s-%s.js',
+				$extension_name,
+				end( $extension_spec['version'] )
+			);
+
+			$specs[ $extension_name ] = $src;
+		}
+
+		return $specs;
 	}
 
 	/**
