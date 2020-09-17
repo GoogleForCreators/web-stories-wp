@@ -127,7 +127,7 @@ function getKeyboardShortcuts() {
             ],
           },
           {
-            label: __('Move layer forward or backward', 'web-stories'),
+            label: __('Move forward or backward', 'web-stories'),
             shortcut: [
               cmdOrCtrl,
               SPECIAL_KEYS.UP,
@@ -136,7 +136,7 @@ function getKeyboardShortcuts() {
             ],
           },
           {
-            label: __('Move layer to front or back', 'web-stories'),
+            label: __('Move to front or back', 'web-stories'),
             shortcut: [
               cmdOrCtrl,
               SPECIAL_KEYS.SHIFT,
@@ -163,7 +163,7 @@ function getKeyboardShortcuts() {
             shortcut: [cmdOrCtrl, 'K'],
           },
           {
-            label: __('Disable snapping during drag', 'web-stories'),
+            label: __('Disable snapping while moving', 'web-stories'),
             shortcut: [cmdOrCtrl],
           },
         ],
