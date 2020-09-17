@@ -18,11 +18,14 @@
 namespace Google\Web_Stories\Tests\Story_Renderer;
 
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Traits\Publisher;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
 class HTML extends \WP_UnitTestCase {
+	use Publisher;
+
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -98,10 +101,9 @@ class HTML extends \WP_UnitTestCase {
 	/**
 	 * Tests that publisher logo is correctly added if missing.
 	 *
-	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
+	 * @covers \Google\Web_Stories\AMP\Story_Sanitizer
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
-	 * @covers ::add_publisher_logo
 	 */
 	public function test_add_publisher_logo_missing() {
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
@@ -117,30 +119,27 @@ class HTML extends \WP_UnitTestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
-		$placeholder = $renderer->get_publisher_logo_placeholder();
-		$rendered    = $renderer->render();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$rendered = $renderer->render();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
 		$this->assertContains( 'attachment', $rendered );
-		$this->assertNotContains( $placeholder, $rendered );
+		$this->assertNotContains( 'fallback-wordpress-publisher-logo.png', $rendered );
 	}
 
 	/**
 	 * Tests that publisher logo is correctly replaced.
 	 *
-	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
+	 * @covers \Google\Web_Stories\AMP\Story_Sanitizer
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
 	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
-	 * @covers ::add_publisher_logo
 	 */
 	public function test_add_publisher_logo_replace_placeholder() {
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
 		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
 
-		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $this->createMock( Story::class ) );
-		$placeholder = $renderer->get_publisher_logo_placeholder();
+		$placeholder = $this->get_publisher_logo_placeholder();
 
 		$post = self::factory()->post->create_and_get(
 			[

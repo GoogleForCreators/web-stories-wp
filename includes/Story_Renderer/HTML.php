@@ -30,15 +30,12 @@ use AmpProject\Dom\Document;
 use DOMElement;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
-use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
 
 /**
  * Class Story_Renderer
  */
 class HTML {
-	use Publisher;
-
 	/**
 	 * Current post.
 	 *
@@ -100,7 +97,6 @@ class HTML {
 		$this->insert_analytics_configuration();
 
 		$this->add_poster_images();
-		$this->add_publisher_logo();
 
 		$this->sanitize_markup();
 		$this->optimize_markup();
@@ -186,30 +182,6 @@ class HTML {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Replaces the placeholder of publisher logo in the content.
-	 *
-	 * @todo Turn into sanitizer.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function add_publisher_logo() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
-
-		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-			$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
-		}
 	}
 
 	/**
