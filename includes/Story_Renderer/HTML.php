@@ -94,8 +94,8 @@ class HTML {
 
 		$this->transform_html_start_tag();
 		$this->insert_analytics_configuration();
-
 		$this->add_poster_images();
+		$this->display_admin_bar();
 
 		if ( ! defined( '\AMP__VERSION' ) ) {
 			$this->sanitize_markup();
@@ -253,6 +253,84 @@ class HTML {
 		];
 
 		return array_filter( $images );
+	}
+
+	/**
+	 * Displays the WordPress admin bar on  the frontend.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function display_admin_bar() {
+		ob_start();
+
+		wp_admin_bar_render();
+
+
+		$output = (string) ob_get_clean();
+
+		if ( empty( $output ) ) {
+			return;
+		}
+
+		$document = Document::fromHtmlFragment( $output, get_bloginfo( 'charset' ) );
+
+		if ( ! $document ) {
+			return;
+		}
+
+		$adminbar = $document->getElementById( 'wpadminbar' );
+
+		if ( ! $adminbar ) {
+			return;
+		}
+
+		$adminbar = $this->document->importNode( $adminbar, true );
+
+		$this->document->body->appendChild( $adminbar );
+
+		$this->add_admin_bar_styles();
+	}
+
+	/**
+	 * Prints the admin bar styles.
+	 *
+	 * Does not rely on theme support for the admin bar
+	 * or the default admin bar styling callback
+	 * since Web Stories are theme-independent and requiree
+	 * specific styling.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see _admin_bar_bump_cb
+	 *
+	 * @return void
+	 */
+	protected function add_admin_bar_styles() {
+		ob_start();
+
+		wp_styles()->do_items( 'admin-bar' );
+
+		?>
+		<style media="screen" id="admin-bar-inline-css">
+			amp-story { top: 32px !important; }
+			@media screen and ( max-width: 782px ) {
+				amp-story { top: 46px !important; }
+			}
+		</style>
+		<?php
+
+		$output = (string) ob_get_clean();
+
+		if ( empty( $output ) ) {
+			return;
+		}
+
+		$fragment = $this->document->createDocumentFragment();
+		$fragment->appendXml( $output );
+
+		$this->document->head->appendChild( $fragment );
 	}
 
 	/**
