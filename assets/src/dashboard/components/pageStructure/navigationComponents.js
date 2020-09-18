@@ -33,13 +33,32 @@ export const Content = styled.div`
     margin: 20px;
   }
   & > svg {
+    margin: 0;
     max-width: 100%;
+    height: 64px;
   }
+`;
+
+export const Header = styled(Content)`
+  margin-top: 42px;
+  margin-bottom: 72px;
 `;
 
 export const NavButton = styled(Button)`
   margin-bottom: 0;
   margin-top: 0;
+  background-color: ${({ theme }) => theme.colors.foreground.gray12};
+  color: ${({ theme }) => theme.colors.black};
+  border-radius: 4px;
+  border-color: ${({ theme }) => theme.colors.foreground.gray12};
+  height: 36px;
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    background-color: ${({ theme }) => theme.colors.foreground.gray16};
+    color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 export const NavList = styled.ul`
@@ -72,14 +91,6 @@ export const NavLink = styled.a`
     }
   `}
 `;
-
-export const Rule = styled.div(
-  ({ theme }) => `
-    height: 1px;
-    margin-left: 20px;
-    background-color: ${theme.colors.gray50};
-  `
-);
 
 export const AppInfo = styled.div`
   ${TypographyPresets.ExtraSmall};

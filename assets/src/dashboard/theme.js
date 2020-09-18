@@ -74,6 +74,12 @@ const colors = {
   // todo
   placeholder: '#d9dbdd',
   storyPreviewBackground: '#202125',
+
+  foreground: {
+    gray24: '#A1A09B',
+    gray16: '#D1D1CC',
+    gray12: '#E8E8E8', // bonus shade added for side nav create story button
+  },
 };
 
 const borders = {
