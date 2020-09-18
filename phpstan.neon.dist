@@ -1,5 +1,17 @@
-includes:
-  - vendor/szepeviktor/phpstan-wordpress/extension.neon
+services:
+  -
+    class: PHPStan\WordPress\IsWpErrorFunctionTypeSpecifyingExtension
+    tags:
+      - phpstan.typeSpecifier.functionTypeSpecifyingExtension
+  -
+    class: PHPStan\WordPress\GetPostDynamicFunctionReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicFunctionReturnTypeExtension
+  -
+    class: PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
+    tags:
+      - phpstan.broker.dynamicFunctionReturnTypeExtension
+
 parameters:
   level: 8
   inferPrivatePropertyTypeFromConstructor: true
@@ -7,6 +19,8 @@ parameters:
   paths:
     - includes/
   bootstrapFiles:
+    - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    - tests/phpstan/stubs/wordpress-defines.php
     - tests/phpstan/bootstrap.php
     - includes/namespace.php
   dynamicConstantNames:
