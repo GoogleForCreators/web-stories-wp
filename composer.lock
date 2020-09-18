@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae1054903cabfdfe26ba75ec67b0fe4b",
+    "content-hash": "687599dc446104d03b3e01f23dbd54c7",
     "packages": [
         {
             "name": "ampproject/amp-wp",
-            "version": "dev-develop",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "4cc099011178aca7b359ad21978b4316374fb43d"
+                "reference": "d96052ed76a92f43b70e0a52cf8e952cf46301af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/4cc099011178aca7b359ad21978b4316374fb43d",
-                "reference": "4cc099011178aca7b359ad21978b4316374fb43d",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/d96052ed76a92f43b70e0a52cf8e952cf46301af",
+                "reference": "d96052ed76a92f43b70e0a52cf8e952cf46301af",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2020-09-18T03:02:48+00:00"
+            "time": "2020-09-18T02:03:43+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -2485,7 +2485,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "ampproject/amp-wp": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,

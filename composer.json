@@ -10,7 +10,7 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "dev-develop",
+    "ampproject/amp-wp": "^2.0.2",
     "mcaskill/composer-exclude-files": "^1.2"
   },
   "provide": {
