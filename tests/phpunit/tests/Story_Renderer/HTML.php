@@ -57,7 +57,7 @@ class HTML extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.png"></amp-story></body></html>',
 			]
 		);
 
@@ -172,6 +172,22 @@ class HTML extends \WP_UnitTestCase {
 		$this->assertNotContains( 'poster-portrait-src=', $rendered );
 		$this->assertNotContains( 'poster-square-src=', $rendered );
 		$this->assertNotContains( 'poster-landscape-src=', $rendered );
+	}
+
+	/**
+	 * @covers ::add_poster_images
+	 */
+	public function test_add_poster_images_no_poster_no_amp() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$rendered = $this->setup_renderer( $post );
+
+		$this->assertNotContains( 'amp=', $rendered );
 	}
 
 	/**
