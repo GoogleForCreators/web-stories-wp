@@ -146,7 +146,6 @@ const theme = {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
   storyPreview: {
-    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
     borderRadius: 4,
   },
   tooltip: {

@@ -43,7 +43,6 @@ const PreviewPane = styled.div`
   position: relative;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
-  box-shadow: ${({ theme }) => theme.storyPreview.shadow};
   border: ${({ theme }) => theme.borders.gray75};
   width: 100%;
   overflow: hidden;
