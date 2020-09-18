@@ -101,6 +101,7 @@ class HTML extends \WP_UnitTestCase {
 	/**
 	 * @covers ::add_poster_images
 	 * @covers ::get_poster_images
+	 * @covers ::get_element_by_tag_name
 	 */
 	public function test_add_poster_images() {
 		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
@@ -158,6 +159,7 @@ class HTML extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::insert_analytics_configuration
+	 * @covers ::get_element_by_tag_name
 	 */
 	public function test_insert_analytics_configuration() {
 		$post = self::factory()->post->create_and_get(
@@ -198,7 +200,25 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Helper to setup rendered.
+	 * @covers ::sanitize_markup
+	 * @covers ::optimize_markup
+	 */
+	public function test_sanitizes_and_optimizes_markup() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+			]
+		);
+
+		$actual = $this->setup_renderer( $post );
+
+		$this->assertContains( 'transformed="self;v=1"', $actual );
+		$this->assertContains( 'AMP optimization could not be completed', $actual );
+	}
+
+	/**
+	 * Helper to setup renderer.
 	 *
 	 * @param \WP_Post $post Post Object.
 	 *
