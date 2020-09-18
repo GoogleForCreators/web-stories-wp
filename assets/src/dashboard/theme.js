@@ -238,8 +238,8 @@ const theme = {
   },
   grid: {
     columnGap: {
-      desktop: 10,
-      tablet: 10,
+      desktop: 20,
+      tablet: 20,
       largeDisplayPhone: 10,
       smallDisplayPhone: 10,
       min: 10,
