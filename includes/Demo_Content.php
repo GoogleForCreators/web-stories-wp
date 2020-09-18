@@ -110,7 +110,7 @@ class Demo_Content {
 			// Page 3.
 
 			'L10N_PLACEHOLDER_3_1' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'Double-click the image/video to resize, re-center or crop. Note: media set as page background cannot be cropped.', 'demo content', 'web-stories' ),
+				esc_html_x( 'MEDIA EDIT MODE', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_3_2' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'Double-click the image/video to resize, re-center or crop. Note: media set as page background cannot be cropped.', 'demo content', 'web-stories' ),
