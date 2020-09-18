@@ -17,13 +17,15 @@
 
 namespace Google\Web_Stories\Tests;
 
-use WP_REST_Request;
-
+/**
+ * @coversDefaultClass \Google\Web_Stories\KSES
+ */
 class KSES extends \WP_UnitTestCase {
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *
 	 * @dataProvider data_test_safecss_filter_attr
+	 * @covers ::safecss_filter_attr
 	 *
 	 * @param string $css      A string of CSS rules.
 	 * @param string $expected Expected string of CSS rules.
@@ -38,6 +40,7 @@ class KSES extends \WP_UnitTestCase {
 	 *
 	 * @dataProvider data_test_safecss_filter_attr
 	 * @dataProvider data_test_safecss_filter_attr_extended
+	 * @covers ::safecss_filter_attr
 	 *
 	 * @param string $css      A string of CSS rules.
 	 * @param string $expected Expected string of CSS rules.
