@@ -19,6 +19,11 @@
  */
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { Up, Down } from './styled';
+
 export const TOGGLE_SHORTCUTS_MENU = 'mod+/';
 
 export const KEY_SIZE = {
@@ -32,8 +37,8 @@ export const SPECIAL_KEYS = {
   ENTER: { symbol: '⏎', title: __('Enter', 'web-stories') },
   SHIFT: { symbol: '⇧', title: __('Shift', 'web-stories') },
   OPTION: { symbol: '⌥', title: __('Option', 'web-stories') },
-  ALT: 'Alt',
+  ALT: __('Alt', 'web-stories'),
   DELETE: __('Delete', 'web-stories'),
-  UP: { symbol: '⬆', title: __('Up arrow', 'web-stories') },
-  DOWN: { symbol: '⬇', title: __('Down arrow', 'web-stories') },
+  UP: <Up aria-label={__('Up arrow', 'web-stories')} />,
+  DOWN: <Down aria-label={__('Down arrow', 'web-stories')} />,
 };
