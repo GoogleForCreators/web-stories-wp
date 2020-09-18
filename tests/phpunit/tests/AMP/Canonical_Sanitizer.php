@@ -17,8 +17,7 @@
 
 namespace Google\Web_Stories\Tests\AMP;
 
-use AMP_DOM_Utils;
-use Google\Web_Stories\Traits\Publisher;
+use AmpProject\Dom\Document;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
@@ -28,9 +27,9 @@ class Canonical_Sanitizer extends \WP_UnitTestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize_canonical_exists() {
-		$source = '<html><head><meta charset="utf-8"><title>Example</title><link rel="canonical" href="https://example.com/canonical.html"></head><body><p></p></body></html>';
+		$source = '<html><head><title>Example</title><link rel="canonical" href="https://example.com/canonical.html"></head><body><p>Hello World</p></body></html>';
 
-		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
+		$dom = Document::fromHtml( $source );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
 		$sanitizer->sanitize();
@@ -46,9 +45,32 @@ class Canonical_Sanitizer extends \WP_UnitTestCase {
 		$post_id   = self::factory()->post->create();
 		$canonical = wp_get_canonical_url( $post_id );
 
-		$source = '<html><head><meta charset="utf-8"></head><body></body></html>';
+		$source = '<html><head><title>Example</title></head><body><p>Hello World</p></body></html>';
 
-		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
+		$dom = Document::fromHtml( $source );
+
+		$this->go_to( get_permalink( $post_id ) );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Canonical_Sanitizer( $dom );
+		$sanitizer->sanitize();
+
+		$actual = $dom->saveHTML( $dom->documentElement );
+
+		wp_delete_post( $post_id );
+
+		$this->assertContains( '<link rel="canonical" href="' . $canonical . '">', $actual );
+	}
+
+	/**
+	 * @covers ::sanitize
+	 */
+	public function test_sanitize_canonical_missing_existing_link_tags() {
+		$post_id   = self::factory()->post->create();
+		$canonical = wp_get_canonical_url( $post_id );
+
+		$source = '<html><head><title>Example</title><link rel="stylesheet" href="https://example.com/style.css"><link rel="stylesheet" href="https://example.com/style2.css"></head><body><p>Hello World</p></body></html>';
+
+		$dom = Document::fromHtml( $source );
 
 		$this->go_to( get_permalink( $post_id ) );
 
