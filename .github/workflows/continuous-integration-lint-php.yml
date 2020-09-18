@@ -44,7 +44,6 @@ jobs:
         run: vendor/bin/phpcs -q --report=checkstyle --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 | cs2pr --graceful-warnings
 
       - name: Static Analysis (PHPStan)
-        # phpstan requires PHP 7.1+. Ignore version conflicts.
         run: vendor/bin/phpstan analyse --memory-limit=512M --error-format=checkstyle | cs2pr
         if: always()
 
