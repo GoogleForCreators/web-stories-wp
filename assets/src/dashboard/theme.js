@@ -135,7 +135,7 @@ const theme = {
     borderRadius: 100,
   },
   formatContainer: {
-    height: 44,
+    height: 76,
   },
   expandedTypeahead: {
     borderRadius: 8,
