@@ -246,11 +246,11 @@ const theme = {
     },
   },
   previewWidth: {
-    desktop: 221,
-    tablet: 189,
-    largeDisplayPhone: 162,
-    smallDisplayPhone: 185,
-    min: 139,
+    desktop: 232,
+    tablet: 200,
+    largeDisplayPhone: 173,
+    smallDisplayPhone: 200,
+    min: 152,
     thumbnail: 33,
   },
   breakpoint: {
