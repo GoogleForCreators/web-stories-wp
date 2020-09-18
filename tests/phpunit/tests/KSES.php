@@ -270,6 +270,15 @@ class KSES extends \WP_UnitTestCase {
 				'css'      => 'background-color:rgba(255,255,255,0.6);',
 				'expected' => 'background-color:rgba(255,255,255,0.6)',
 			],
+			// CSS clip paths.
+			[
+				'css'      => 'clip-path:url(#mask-circle-foo-bar)',
+				'expected' => 'clip-path:url(#mask-circle-foo-bar)',
+			],
+			[
+				'css'      => '-webkit-clip-path:url(#mask-circle-foo-bar)',
+				'expected' => '-webkit-clip-path:url(#mask-circle-foo-bar)',
+			],
 		];
 	}
 }

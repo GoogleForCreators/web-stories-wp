@@ -84,6 +84,8 @@ class KSES {
 			'left',
 			'transform',
 			'white-space',
+			'clip-path',
+			'-webkit-clip-path',
 		];
 
 		array_push( $attr, ...$additional );
@@ -248,6 +250,9 @@ class KSES {
 
 			'list-style',
 			'list-style-image',
+
+			'clip-path',
+			'-webkit-clip-path',
 		];
 
 		/*
