@@ -89,7 +89,6 @@ function PaginatedMediaGallery({
     // Load the next page if the page isn't full, ie. scrollbar is not visible.
     if (node.clientHeight === node.scrollHeight) {
       setNextPage();
-      return;
     }
   }, [resources, hasMore, isMediaLoaded, isMediaLoading, setNextPage]);
 
@@ -101,8 +100,7 @@ function PaginatedMediaGallery({
   // After scroll or resize, see if we need the load the next page.
   const [handleScrollOrResize] = useDebouncedCallback(
     loadNextPageIfNeeded,
-    500,
-    [loadNextPageIfNeeded]
+    500
   );
 
   // After loading a next page, see if we need to load another,
