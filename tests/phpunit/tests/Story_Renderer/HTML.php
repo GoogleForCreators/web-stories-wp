@@ -99,68 +99,6 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Tests that publisher logo is correctly added if missing.
-	 *
-	 * @covers \Google\Web_Stories\AMP\Story_Sanitizer
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
-	 */
-	public function test_add_publisher_logo_missing() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
-		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
-
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-			]
-		);
-
-		$story = new \Google\Web_Stories\Model\Story();
-		$story->load_from_post( $post );
-
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
-		$rendered = $renderer->render();
-
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-
-		$this->assertContains( 'attachment', $rendered );
-		$this->assertNotContains( 'fallback-wordpress-publisher-logo.png', $rendered );
-	}
-
-	/**
-	 * Tests that publisher logo is correctly replaced.
-	 *
-	 * @covers \Google\Web_Stories\AMP\Story_Sanitizer
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
-	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
-	 */
-	public function test_add_publisher_logo_replace_placeholder() {
-		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
-		add_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
-
-		$placeholder = $this->get_publisher_logo_placeholder();
-
-		$post = self::factory()->post->create_and_get(
-			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="' . $placeholder . '" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
-			]
-		);
-
-		$story = new \Google\Web_Stories\Model\Story();
-		$story->load_from_post( $post );
-
-		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
-		$rendered = $renderer->render();
-
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-
-		$this->assertContains( 'attachment', $rendered );
-		$this->assertNotContains( $placeholder, $rendered );
-	}
-
-	/**
 	 * @covers ::add_poster_images
 	 * @covers ::get_poster_images
 	 */
