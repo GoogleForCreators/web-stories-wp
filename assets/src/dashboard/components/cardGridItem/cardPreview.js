@@ -99,7 +99,10 @@ const EmptyActionContainer = styled(ActionContainer)`
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { href: resolveRoute(targetAction), isLink: true }
+    ? {
+        href: resolveRoute(targetAction),
+        isLink: true,
+      }
     : { onClick: targetAction };
 
 const CARD_STATE = {

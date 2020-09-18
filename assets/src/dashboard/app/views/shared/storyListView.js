@@ -61,7 +61,6 @@ import {
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  STORY_CONTEXT_MENU_ACTIONS,
 } from '../../../constants';
 import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
@@ -71,6 +70,7 @@ import {
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
 import { getRelativeDisplayDate } from '../../../utils/';
+import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 const ListView = styled.div`
   width: 100%;
@@ -278,72 +278,64 @@ export default function StoryListView({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {stories.map((story) => {
-            const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
-              if (
-                menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK
-              ) {
-                return { ...menuItem, url: story.link };
-              }
-              return menuItem;
-            });
-
-            return (
-              <StyledTableRow key={`story-${story.id}`}>
-                <TablePreviewCell>
-                  <PreviewContainer>
-                    <PreviewErrorBoundary>
-                      <PreviewPage page={story.pages[0]} pageSize={pageSize} />
-                    </PreviewErrorBoundary>
-                  </PreviewContainer>
-                </TablePreviewCell>
-                <TableCell>
-                  <TitleTableCellContainer>
-                    {renameStory.id === story.id ? (
-                      <InlineInputForm
-                        onEditComplete={(newTitle) =>
-                          renameStory.handleOnRenameStory(story, newTitle)
-                        }
-                        onEditCancel={renameStory.handleCancelRename}
-                        value={story.title}
-                        id={story.id}
-                        label={__('Rename story', 'web-stories')}
+          {stories.map((story) => (
+            <StyledTableRow key={`story-${story.id}`}>
+              <TablePreviewCell>
+                <PreviewContainer>
+                  <PreviewErrorBoundary>
+                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
+                  </PreviewErrorBoundary>
+                </PreviewContainer>
+              </TablePreviewCell>
+              <TableCell>
+                <TitleTableCellContainer>
+                  {renameStory.id === story.id ? (
+                    <InlineInputForm
+                      onEditComplete={(newTitle) =>
+                        renameStory.handleOnRenameStory(story, newTitle)
+                      }
+                      onEditCancel={renameStory.handleCancelRename}
+                      value={story.title}
+                      id={story.id}
+                      label={__('Rename story', 'web-stories')}
+                    />
+                  ) : (
+                    <>
+                      <SelectableParagraph>
+                        {titleFormatted(story.title)}
+                      </SelectableParagraph>
+                      <StoryMenu
+                        onMoreButtonSelected={storyMenu.handleMenuToggle}
+                        contextMenuId={storyMenu.contextMenuId}
+                        onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                        story={story}
+                        menuItems={generateStoryMenu({
+                          menuItems: storyMenu.menuItems,
+                          story,
+                        })}
+                        verticalAlign="center"
                       />
-                    ) : (
-                      <>
-                        <SelectableParagraph>
-                          {titleFormatted(story.title)}
-                        </SelectableParagraph>
-                        <StoryMenu
-                          onMoreButtonSelected={storyMenu.handleMenuToggle}
-                          contextMenuId={storyMenu.contextMenuId}
-                          onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                          story={story}
-                          menuItems={storyMenuItems}
-                          verticalAlign="center"
-                        />
-                      </>
-                    )}
-                  </TitleTableCellContainer>
-                </TableCell>
-                <TableCell>{users[story.author]?.name || '—'}</TableCell>
-                <TableCell>
-                  {getRelativeDisplayDate(story.created, dateSettings)}
-                </TableCell>
-                <TableCell>
-                  {getRelativeDisplayDate(story.modified, dateSettings)}
-                </TableCell>
-                {storyStatus !== STORY_STATUS.DRAFT && (
-                  <TableStatusCell>
-                    {story.status === STORY_STATUS.PUBLISH &&
-                      __('Published', 'web-stories')}
-                    {story.status === STORY_STATUS.FUTURE &&
-                      __('Scheduled', 'web-stories')}
-                  </TableStatusCell>
-                )}
-              </StyledTableRow>
-            );
-          })}
+                    </>
+                  )}
+                </TitleTableCellContainer>
+              </TableCell>
+              <TableCell>{users[story.author]?.name || '—'}</TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.created, dateSettings)}
+              </TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.modified, dateSettings)}
+              </TableCell>
+              {storyStatus !== STORY_STATUS.DRAFT && (
+                <TableStatusCell>
+                  {story.status === STORY_STATUS.PUBLISH &&
+                    __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.FUTURE &&
+                    __('Scheduled', 'web-stories')}
+                </TableStatusCell>
+              )}
+            </StyledTableRow>
+          ))}
         </TableBody>
       </Table>
     </ListView>
