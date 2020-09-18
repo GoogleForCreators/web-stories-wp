@@ -97,8 +97,10 @@ class HTML {
 
 		$this->add_poster_images();
 
-		$this->sanitize_markup();
-		$this->optimize_markup();
+		if ( ! defined( '\AMP__VERSION' ) ) {
+			$this->sanitize_markup();
+			$this->optimize_markup();
+		}
 
 		return trim( (string) $this->document->saveHTML() );
 	}
