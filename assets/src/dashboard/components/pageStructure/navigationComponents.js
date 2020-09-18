@@ -30,11 +30,10 @@ export const Content = styled.div`
   flex-direction: column;
   margin: 20px 0;
   > * {
-    margin: 20px;
+    margin: 20px 28px;
   }
   & > svg {
-    margin: 0;
-    max-width: 100%;
+    margin: 0 28px;
     height: 64px;
   }
 `;
@@ -42,6 +41,7 @@ export const Content = styled.div`
 export const Header = styled(Content)`
   margin-top: 42px;
   margin-bottom: 72px;
+  align-items: flex-start;
 `;
 
 export const NavButton = styled(Button)`
@@ -76,7 +76,7 @@ export const NavLink = styled.a`
   ${TypographyPresets.Medium};
   ${({ theme, active }) => `
     display: block;
-    padding: 4px 20px;
+    padding: 4px 28px;
     margin: 4px 0;
     font-weight: ${theme.typography.weight[active ? 'bold' : 'normal']};
     text-decoration: none;
