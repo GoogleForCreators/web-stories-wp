@@ -356,7 +356,7 @@ class Sanitization {
 	 */
 	protected function get_sanitizers() {
 		$sanitizers = [
-			'AMP_Img_Sanitizer'               => [
+			Img_Sanitizer::class              => [
 				'add_noscript_fallback' => false,
 			],
 			'AMP_Video_Sanitizer'             => [
