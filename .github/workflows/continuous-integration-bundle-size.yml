@@ -20,7 +20,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
-        uses: pat-s/always-upload-cache@v1.1.4
+        uses: pat-s/always-upload-cache@v2.1.0
         with:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
