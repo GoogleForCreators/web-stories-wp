@@ -86,6 +86,7 @@ class KSES {
 			'white-space',
 			'clip-path',
 			'-webkit-clip-path',
+			'pointer-events',
 		];
 
 		array_push( $attr, ...$additional );

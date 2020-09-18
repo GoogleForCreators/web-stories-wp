@@ -279,6 +279,11 @@ class KSES extends \WP_UnitTestCase {
 				'css'      => '-webkit-clip-path:url(#mask-circle-foo-bar)',
 				'expected' => '-webkit-clip-path:url(#mask-circle-foo-bar)',
 			],
+			// Pointer events.
+			[
+				'css'      => 'pointer-events: initial',
+				'expected' => 'pointer-events: initial',
+			],
 		];
 	}
 }
