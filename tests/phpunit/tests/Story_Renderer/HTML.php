@@ -158,7 +158,6 @@ class HTML extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::insert_analytics_configuration
-	 * @covers ::insert_amp_analytics_extension
 	 */
 	public function test_insert_analytics_configuration() {
 		$post = self::factory()->post->create_and_get(
@@ -184,7 +183,6 @@ class HTML extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::insert_analytics_configuration
-	 * @covers ::insert_amp_analytics_extension
 	 */
 	public function test_insert_analytics_configuration_no_output() {
 		$post = self::factory()->post->create_and_get(
