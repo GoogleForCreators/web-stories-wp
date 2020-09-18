@@ -152,7 +152,7 @@ describe('SearchInput', () => {
 
     expect(onSearchMock).not.toHaveBeenCalledTimes(1);
 
-    jest.advanceTimersByTime(2001);
+    jest.advanceTimersByTime(2010);
 
     expect(onSearchMock).toHaveBeenCalledTimes(1);
   });
