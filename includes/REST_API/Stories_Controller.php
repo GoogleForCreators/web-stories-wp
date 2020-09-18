@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
@@ -59,6 +60,18 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
+		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
+
+		// $_GET param is available when the response iss preloaded in edit-story.php
+		if ( isset( $_GET['web-stories-demo'] ) && 'edit' === $context && 'auto-draft' === $post->post_status ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$demo         = new Demo_Content();
+			$demo_content = $demo->get_content();
+			if ( ! empty( $demo_content ) ) {
+				$post->post_title            = $demo->get_title();
+				$post->post_content_filtered = $demo_content;
+			}
+		}
+
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
@@ -72,9 +85,9 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
-		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
-		$data    = $this->filter_response_by_context( $data, $context );
-		$links   = $response->get_links();
+
+		$data  = $this->filter_response_by_context( $data, $context );
+		$links = $response->get_links();
 
 		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
