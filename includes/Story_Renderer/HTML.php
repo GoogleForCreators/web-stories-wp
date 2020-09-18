@@ -205,18 +205,6 @@ class HTML {
 		foreach ( $poster_images as $attr => $url ) {
 			$story_element->setAttribute( $attr, esc_url( $url ) );
 		}
-
-		// Without a poster, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
-		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
-			/* @var DOMElement $html The <html> element */
-			$html = $this->get_element_by_tag_name( 'html' );
-
-			if ( $html ) {
-				$html->removeAttribute( 'amp' );
-			}
-		}
 	}
 
 	/**

@@ -50,15 +50,21 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 	 * @return void
 	 */
 	public function sanitize() {
-		// Adds a publisher logo if missing or just a placeholder.
-
 		$story_element = $this->dom->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
 		if ( $story_element ) {
+			// Add a publisher logo if missing or just a placeholder.
 			$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
 			if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
 				$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
+			}
+
+			// Without a poster, a story becomes invalid AMP.
+			// Remove the 'amp' attribute to not mark it as an AMP document anymore,
+			// preventing errors from showing up in GSC and other tools.
+			if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
+				$this->dom->html->removeAttribute( 'amp' );
 			}
 		}
 	}
