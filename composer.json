@@ -11,6 +11,7 @@
     "ext-libxml": "*",
     "ext-mbstring": "*",
     "ampproject/amp-wp": "^2.0.2",
+    "cweagans/composer-patches": "^1.6",
     "mcaskill/composer-exclude-files": "^1.2"
   },
   "provide": {
@@ -31,6 +32,9 @@
       "php": "5.6"
     },
     "sort-packages": true
+  },
+  "extra": {
+    "enable-patching": true
   },
   "autoload": {
     "psr-4": {

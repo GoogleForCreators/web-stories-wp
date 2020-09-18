@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "687599dc446104d03b3e01f23dbd54c7",
+    "content-hash": "9b2cd063d431adb1171f7f7dfdb48e68",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -278,6 +278,9 @@
                 "phpunit/phpunit": "^4.8.36"
             },
             "type": "library",
+            "extra": {
+                "patches_applied": []
+            },
             "autoload": {
                 "psr-4": {
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
