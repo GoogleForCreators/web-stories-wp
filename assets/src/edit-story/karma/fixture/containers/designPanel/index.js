@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getByLabelText } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Container } from '../container';
@@ -118,6 +123,10 @@ export class DesignPanel extends Container {
   get layerPanel() {
     // The whole panel is aria-hidden now for accessibiility reasons
     // thus it cannot be accessed by role:
-    return this._get(this.getByLabelText('Layers'), 'layerPanel', Layers);
+    return this._get(
+      getByLabelText(this._node, 'Layers'),
+      'layerPanel',
+      Layers
+    );
   }
 }

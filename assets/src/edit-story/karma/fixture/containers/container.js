@@ -19,7 +19,6 @@
  */
 import {
   getByRole,
-  getByLabelText,
   getAllByRole,
   queryByRole,
   waitFor,
@@ -71,17 +70,6 @@ export class Container {
         throw new Error(`Focus is not set within the <${this._path}> yet`);
       }
     });
-  }
-
-  /**
-   * See https://testing-library.com/docs/dom-testing-library/api-queries#bylabeltext
-   *
-   * @param {Matcher} label Label name.
-   * @param {ByRoleOptions} options Options.
-   * @return {HTMLElement} The found element.
-   */
-  getByLabelText(label, options) {
-    return getByLabelText(this._node, label, options);
   }
 
   /**
