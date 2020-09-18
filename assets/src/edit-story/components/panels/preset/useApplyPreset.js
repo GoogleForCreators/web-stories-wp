@@ -76,7 +76,6 @@ function useApplyPreset(isColor, pushUpdate) {
       handleClickUnderline,
       handleClickItalic,
       handleSelectFontWeight,
-      handleClickBold,
     },
   } = useRichTextFormatting(selectedElements, push);
 
@@ -90,7 +89,6 @@ function useApplyPreset(isColor, pushUpdate) {
         const {
           color,
           fontWeight,
-          isBold,
           isItalic,
           isUnderline,
           letterSpacing,
@@ -102,7 +100,6 @@ function useApplyPreset(isColor, pushUpdate) {
         handleSelectFontWeight(fontWeight);
         handleClickUnderline(isUnderline);
         handleClickItalic(isItalic);
-        handleClickBold(isBold);
       } else if (isBackground) {
         updateCurrentPageProperties({
           properties: { backgroundColor: preset },
@@ -126,7 +123,6 @@ function useApplyPreset(isColor, pushUpdate) {
       handleClickUnderline,
       handleClickItalic,
       handleSelectFontWeight,
-      handleClickBold,
     ]
   );
   return handleApplyPreset;
