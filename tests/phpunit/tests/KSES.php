@@ -289,4 +289,34 @@ class KSES extends \WP_UnitTestCase {
 			],
 		];
 	}
+
+	/**
+	 * Testing the filter_kses_allowed_html() method.
+	 *
+	 * @dataProvider data_test_filter_kses_allowed_html
+	 * @covers ::filter_kses_allowed_html
+	 *
+	 * @param string $html     HTML string.
+	 * @param string $expected Expected output.
+	 */
+	public function test_filter_kses_allowed_html( $html, $expected ) {
+		$kses = new \Google\Web_Stories\KSES();
+		add_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ] );
+
+		$this->assertSame( $expected, wp_unslash( wp_filter_post_kses( $html ) ) );
+		remove_filter( 'wp_kses_allowed_html', [ $kses, 'filter_kses_allowed_html' ] );
+	}
+
+	public function data_test_filter_kses_allowed_html() {
+		return [
+			'Video Element' => [
+				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
+				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
+			],
+			'Masking'       => [
+				'<svg width="0" height="0"><defs><clippath id="mask-foo" transform="scale(1 1)" clippathunits="objectBoundingBox"><path d="M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z"></path></clippath></defs></svg></div>',
+				'<svg width="0" height="0"><defs><clippath id="mask-foo" transform="scale(1 1)" clippathunits="objectBoundingBox"><path d="M 0.5 0 C 0.777344 0 1 0.222656 1 0.5 C 1 0.777344 0.777344 1 0.5 1 C 0.222656 1 0 0.777344 0 0.5 C 0 0.222656 0.222656 0 0.5 0 Z"></path></clippath></defs></svg></div>',
+			],
+		];
+	}
 }
