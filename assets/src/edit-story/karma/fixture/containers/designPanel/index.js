@@ -116,10 +116,8 @@ export class DesignPanel extends Container {
   }
 
   get layerPanel() {
-    return this._get(
-      this.getByRole('region', { name: /layers/i }),
-      'layerPanel',
-      Layers
-    );
+    // The whole panel is aria-hidden now for accessibiility reasons
+    // thus it cannot be accessed by role:
+    return this._get(this.getByLabelText('Layers'), 'layerPanel', Layers);
   }
 }
