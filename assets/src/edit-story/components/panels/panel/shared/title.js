@@ -138,6 +138,7 @@ function Title({
       panelContentId,
       panelTitleId,
       panelTitleReadable,
+      ariaHidden,
     },
     actions: {
       collapse,
@@ -200,6 +201,7 @@ function Title({
           handleHeightChange={handleHeightChange}
           handleExpandToHeightChange={handleExpandToHeightChange}
           handleDoubleClick={resetHeight}
+          tabIndex={ariaHidden ? -1 : 0}
         />
       )}
       <HeaderButton onClick={onToggle}>
@@ -213,6 +215,7 @@ function Title({
               aria-label={titleLabel}
               aria-expanded={!isCollapsed}
               aria-controls={panelContentId}
+              tabIndex={ariaHidden ? -1 : 0}
             >
               <Arrow />
             </Toggle>

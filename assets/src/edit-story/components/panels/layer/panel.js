@@ -41,6 +41,7 @@ function LayerPanel() {
         window.innerHeight / 3
       )}
       resizeable
+      ariaHidden
     >
       <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}
