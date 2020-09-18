@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -31,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  */
 import DisplayElement from '../../../../canvas/displayElement';
 import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
-import useInsertTextSet from './useInsertTextSet';
+import useLibrary from '../../../useLibrary';
 
 const TextSetItem = styled.button`
   border: 0;
@@ -45,11 +46,33 @@ const TextSetItem = styled.button`
 `;
 
 function TextSet({ elements }) {
-  const insertTextSet = useInsertTextSet();
+  const { insertTextSet } = useLibrary((state) => ({
+    insertTextSet: state.actions.insertTextSet,
+  }));
+
+  const handleDragStart = useCallback(
+    (e) => {
+      const { x, y } = e.target.getBoundingClientRect();
+      const grabOffsetX = x - e.clientX;
+      const grabOffsetY = y - e.clientY;
+
+      e.dataTransfer.setData(
+        'textset',
+        JSON.stringify({
+          grabOffsetX,
+          grabOffsetY,
+          elements,
+        })
+      );
+    },
+    [elements]
+  );
 
   return (
     <TextSetItem
       role="listitem"
+      draggable={true}
+      onDragStart={handleDragStart}
       aria-label={__('Insert Text Set', 'web-stories')}
       onClick={() => insertTextSet(elements)}
     >
@@ -57,8 +80,8 @@ function TextSet({ elements }) {
         ({
           id,
           content,
-          previewOffsetX,
-          previewOffsetY,
+          normalizedOffsetX,
+          normalizedOffsetY,
           textSetWidth,
           textSetHeight,
           ...rest
@@ -70,9 +93,9 @@ function TextSet({ elements }) {
               id,
               content: `<span style="color: #fff">${content}<span>`,
               ...rest,
-              x: previewOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
+              x: normalizedOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
               y:
-                previewOffsetY +
+                normalizedOffsetY +
                 (PAGE_WIDTH - textSetHeight) /
                   2 /* Use PAGE_WIDTH here since the area is square */,
             }}

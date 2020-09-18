@@ -15,17 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
-import useBatchingCallback from '../../../../../utils/useBatchingCallback';
-import objectWithout from '../../../../../utils/objectWithout';
-import useLibrary from '../../../useLibrary';
-import { useStory } from '../../../../../app/story';
+import useBatchingCallback from '../../utils/useBatchingCallback';
+import objectWithout from '../../utils/objectWithout';
+import { useStory } from '../../app/story';
+import useInsertElement from './useInsertElement';
 
 function useInsertTextSet() {
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
+  const insertElement = useInsertElement();
 
   const { setSelectedElementsById } = useStory(
     ({ actions: { setSelectedElementsById } }) => {
@@ -34,18 +37,21 @@ function useInsertTextSet() {
       };
     }
   );
+
   const insertTextSet = useBatchingCallback(
     (toAdd) => {
       const addedElements = [];
       toAdd.forEach((element) => {
         const toInsert = objectWithout(element, [
           'id',
-          'previewOffsetX',
-          'previewOffsetY',
+          'normalizedOffsetX',
+          'normalizedOffsetY',
           'textSetWidth',
           'textSetHeight',
         ]);
-        addedElements.push(insertElement(element.type, toInsert));
+        addedElements.push(
+          insertElement(element.type, { ...toInsert, ignorePageBoundary: true })
+        );
       });
       // Select all added elements.
       setSelectedElementsById({
@@ -54,7 +60,27 @@ function useInsertTextSet() {
     },
     [insertElement, setSelectedElementsById]
   );
-  return insertTextSet;
+
+  const insertTextSetByOffset = useCallback(
+    (elements, { offsetX, offsetY }) => {
+      const positionedTextSet = elements.reduce(
+        (acc, element) => [
+          ...acc,
+          {
+            ...element,
+            x: element.normalizedOffsetX + offsetX,
+            y: element.normalizedOffsetY + offsetY,
+          },
+        ],
+        []
+      );
+
+      insertTextSet(positionedTextSet);
+    },
+    [insertTextSet]
+  );
+
+  return { insertTextSet, insertTextSetByOffset };
 }
 
 export default useInsertTextSet;
