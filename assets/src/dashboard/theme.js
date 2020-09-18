@@ -230,8 +230,8 @@ const theme = {
     min: 10,
   },
   standardViewContentGutter: {
-    desktop: 20,
-    tablet: 20,
+    desktop: 52,
+    tablet: 52,
     largeDisplayPhone: 10,
     smallDisplayPhone: 10,
     min: 10,
