@@ -51,7 +51,9 @@ class Canonical_Sanitizer extends \AMP_Base_Sanitizer {
 	 * @return void
 	 */
 	public function sanitize() {
+		$links         = [];
 		$link_elements = $this->dom->head->getElementsByTagName( Tag::LINK );
+
 		/**
 		 * Link element.
 		 *
@@ -64,7 +66,6 @@ class Canonical_Sanitizer extends \AMP_Base_Sanitizer {
 		}
 
 		// Ensure rel=canonical link.
-		$rel_canonical = null;
 		if ( empty( $links['canonical'] ) ) {
 			$rel_canonical = $this->dom->createElement( Tag::LINK );
 			$rel_canonical->setAttribute( Attribute::REL, Attribute::REL_CANONICAL );
