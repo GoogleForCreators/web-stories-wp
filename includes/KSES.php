@@ -514,7 +514,6 @@ class KSES {
 				'preload'                    => true,
 				'rotate-to-fullscreen'       => true,
 				'src'                        => true,
-				'title'                      => true,
 			],
 			'source'                    => [
 				'type' => true,
@@ -542,7 +541,6 @@ class KSES {
 			],
 			'defs'                      => [],
 			'clippath'                  => [
-				'id'            => true,
 				'transform'     => true,
 				'clippathunits' => true,
 				'path'          => true,
