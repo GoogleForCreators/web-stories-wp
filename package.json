@@ -92,7 +92,7 @@
     "@svgr/webpack": "^5.4.0",
     "@testing-library/dom": "^7.24.2",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.0.2",
+    "@testing-library/react": "^11.0.4",
     "@testing-library/react-hooks": "^3.4.1",
     "@testing-library/user-event": "^12.1.5",
     "@wordpress/babel-plugin-import-jsx-pragma": "^2.7.0",
