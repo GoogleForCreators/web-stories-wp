@@ -21,7 +21,7 @@
     "url": "https://github.com/google/web-stories-wp/issues"
   },
   "dependencies": {
-    "@wordpress/api-fetch": "^3.19.0",
+    "@wordpress/api-fetch": "^3.19.1",
     "@wordpress/block-editor": "^4.4.0",
     "@wordpress/blocks": "^6.22.0",
     "@wordpress/components": "^10.1.0",
