@@ -156,7 +156,7 @@ const StoryGridView = ({
               />
               <CardPreviewContainer
                 ariaLabel={sprintf(
-                  /* translators: %s: story title.*/
+                  /* translators: %s: story title. */
                   __('preview of %s', 'web-stories'),
                   story.title
                 )}
