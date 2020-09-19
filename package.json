@@ -27,7 +27,7 @@
     "@wordpress/components": "^10.1.0",
     "@wordpress/compose": "^3.20.0",
     "@wordpress/data": "^4.23.0",
-    "@wordpress/date": "^3.11.0",
+    "@wordpress/date": "^3.11.1",
     "@wordpress/element": "^2.17.1",
     "@wordpress/i18n": "^3.15.0",
     "big.js": "^5.2.2",
