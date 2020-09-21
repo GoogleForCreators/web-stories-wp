@@ -51,16 +51,14 @@ function CardGallery({ story, isRTL, galleryLabel }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [activePageId, setActivePageId] = useState();
-  const [pages, setPages] = useState([]);
+  const [renderPages, setRenderPages] = useState(false);
   const containerRef = useRef();
+  const activeCardRef = useRef();
   const gridRef = useRef();
   const pageRefs = useRef({});
+  const { pages = [] } = story;
 
   const isInteractive = pages.length > 1;
-
-  useEffect(() => {
-    setPages(story.pages || []);
-  }, [story]);
 
   const metrics = useMemo(() => {
     if (!dimensionMultiplier) {
@@ -118,12 +116,11 @@ function CardGallery({ story, isRTL, galleryLabel }) {
   }, [updateContainerSize]);
 
   useEffect(() => {
+    // Reset state when the story changes
     setActivePageIndex(0);
-  }, [story]);
-
-  useEffect(() => {
-    setActivePageId(story.pages[0].id);
-  }, [story]);
+    setActivePageId(pages[0].id);
+    setRenderPages(false);
+  }, [pages]);
 
   useGridViewKeys({
     containerRef,
@@ -135,12 +132,11 @@ function CardGallery({ story, isRTL, galleryLabel }) {
   });
 
   const GalleryItems = useMemo(() => {
-    if (!metrics.miniCardSize) {
+    if (!metrics.miniCardSize || !renderPages) {
       return null;
     }
 
     const { miniCardSize, gap, miniWrapperSize } = metrics;
-
     return (
       <UnitsProvider
         pageSize={{
@@ -202,11 +198,24 @@ function CardGallery({ story, isRTL, galleryLabel }) {
     isInteractive,
     metrics,
     pages,
+    renderPages,
   ]);
+
+  useEffect(() => {
+    if (activeCardRef.current && !renderPages) {
+      const img = activeCardRef.current.querySelector('img');
+
+      if (img) {
+        img.onload = () => {
+          setRenderPages(true);
+        };
+      }
+    }
+  });
 
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      {GalleryItems}
+      {renderPages && GalleryItems}
       {metrics.activeCardSize && pages[activePageIndex] && (
         <UnitsProvider
           pageSize={{
@@ -221,6 +230,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
               __('Active Page Preview - Page %s', 'web-stories'),
               activePageIndex + 1
             )}
+            ref={activeCardRef}
           >
             <PreviewPage
               page={pages[activePageIndex]}
