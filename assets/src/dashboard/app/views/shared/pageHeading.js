@@ -40,11 +40,11 @@ const StyledHeader = styled.h2`
   justify-content: flex-start;
   align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('30px', '18px', '--squish-progress')};
+  font-size: ${cssLerp('36px', '30px', '--squish-progress')};
   white-space: nowrap;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    font-size: ${cssLerp('20px', '14px', '--squish-progress')};
+    font-size: ${cssLerp('30px', '24px', '--squish-progress')};
   }
 `;
 

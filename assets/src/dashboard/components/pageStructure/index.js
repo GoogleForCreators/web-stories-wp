@@ -33,13 +33,7 @@ import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import {
-  BUTTON_TYPES,
-  primaryPaths,
-  secondaryPaths,
-  Z_INDEX,
-  APP_ROUTES,
-} from '../../constants';
+import { BUTTON_TYPES, primaryPaths, Z_INDEX } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
@@ -47,11 +41,11 @@ import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
+  Header,
   NavButton,
   NavLink,
   NavList,
   NavListItem,
-  Rule,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -105,7 +99,6 @@ export function LeftRail() {
   const upperContentRef = useRef(null);
 
   const enableInProgressViews = useFeature('enableInProgressViews');
-  const enableSettingsViews = useFeature('enableSettingsView');
 
   const {
     state: { sideBarVisible },
@@ -131,19 +124,6 @@ export function LeftRail() {
     }
     return primaryPaths.filter((path) => !path.inProgress);
   }, [enableInProgressViews]);
-
-  const enabledSecondaryPaths = useMemo(() => {
-    let copyOfSecondaryPaths = enableSettingsViews
-      ? [...secondaryPaths]
-      : secondaryPaths.filter(
-          (path) => !path.value.includes(APP_ROUTES.EDITOR_SETTINGS)
-        );
-
-    if (enableInProgressViews) {
-      return copyOfSecondaryPaths;
-    }
-    return copyOfSecondaryPaths.filter((path) => !path.inProgress);
-  }, [enableInProgressViews, enableSettingsViews]);
 
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
@@ -173,9 +153,9 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
-        <Content>
+        <Header>
           <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
-        </Content>
+        </Header>
         <Content>
           <NavButton
             type={BUTTON_TYPES.CTA}
@@ -200,29 +180,13 @@ export function LeftRail() {
             ))}
           </NavList>
         </Content>
-        <Rule />
-        <Content>
-          <NavList>
-            {enabledSecondaryPaths.map((path) => (
-              <NavListItem key={path.value}>
-                <NavLink
-                  active={path.value === state.currentPath}
-                  href={resolveRoute(path.value)}
-                >
-                  {path.label}
-                </NavLink>
-              </NavListItem>
-            ))}
-          </NavList>
-        </Content>
       </div>
       <Content>
         <AppInfo>
-          {sprintf('\u00A9 %s Google', new Date().getFullYear())}
-          <br />
           {sprintf(
-            /* translators: %s: editor version. */
-            __('Version %s', 'web-stories'),
+            /* translators: %s: Current Year, %v: App Version */
+            __('\u00A9 %s Google Version %v', 'web-stories'),
+            new Date().getFullYear(),
             version
           )}
         </AppInfo>
