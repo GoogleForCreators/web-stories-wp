@@ -42,6 +42,7 @@ function Panel({
   canCollapse = true,
   initialHeight = null,
   ariaLabel = null,
+  ariaHidden = false,
 }) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [expandToHeight, setExpandToHeight] = useState(initialHeight);
@@ -122,6 +123,7 @@ function Panel({
       panelContentId,
       panelTitleId,
       panelTitleReadable,
+      ariaHidden,
     },
     actions: {
       setHeight: manuallySetHeight,
@@ -144,7 +146,7 @@ function Panel({
   );
 
   return (
-    <Wrapper {...wrapperProps}>
+    <Wrapper {...wrapperProps} aria-hidden={ariaHidden}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
@@ -157,6 +159,7 @@ Panel.propTypes = {
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
   ariaLabel: PropTypes.string,
+  ariaHidden: PropTypes.bool,
 };
 
 export default Panel;

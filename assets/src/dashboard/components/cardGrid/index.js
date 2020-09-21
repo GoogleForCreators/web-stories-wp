@@ -33,10 +33,11 @@ const DashboardGrid = styled.div(
   display: grid;
   width: 100%;
   grid-column-gap: ${theme.grid.columnGap.desktop}px;
-  grid-row-gap: 20px;
+  grid-row-gap: 80px;
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
   grid-template-rows: minmax(${columnHeight}px, auto);
+  scroll-margin-top: 50vh;
   margin-top: 2px; // this is for keyboard focus 
 
   ${theme.breakpoint.tablet} {

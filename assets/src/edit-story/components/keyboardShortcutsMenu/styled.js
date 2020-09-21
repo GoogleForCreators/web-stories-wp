@@ -23,6 +23,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { KeyArrowUp } from '../../icons';
 import { KEY_SIZE } from './constants';
 
 export const Container = styled.div`
@@ -30,7 +31,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 625px;
   min-width: 300px;
-  max-height: 625px;
+  max-height: 675px;
   border-radius: 4px;
   padding: 24px;
   padding-bottom: 0;
@@ -91,11 +92,15 @@ export const SectionHeader = styled.h2(
 export const SectionWrapper = styled.div`
   width: 100%;
   margin-bottom: 60px;
+
+  &:last-child {
+    margin-bottom: 24px;
+  }
 `;
 
 export const SectionContent = styled.dl`
   display: grid;
-  grid-template-columns: 1fr 0.75fr;
+  grid-template-columns: 1fr 1fr;
   row-gap: 12px;
   column-gap: 5px;
   align-items: center;
@@ -183,4 +188,13 @@ export const CloseButton = styled.button`
   right: 0;
   color: ${({ theme }) => theme.colors.fg.white};
   cursor: pointer;
+`;
+
+export const Up = styled(KeyArrowUp)`
+  width: 12px;
+  transform-origin: 50% 50%;
+`;
+
+export const Down = styled(Up)`
+  transform: rotate(0.5turn);
 `;

@@ -110,7 +110,6 @@ export const ActiveCard = styled.div(
     overflow: hidden;
     height: ${containerHeight}px;
     border: ${theme.borders.gray75};
-    box-shadow: ${theme.storyPreview.shadow};
   `
 );
 ActiveCard.propTypes = {

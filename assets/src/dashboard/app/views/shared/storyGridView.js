@@ -44,13 +44,14 @@ import {
   RenameStoryPropType,
   DateSettingsPropType,
 } from '../../../types';
-import { STORY_STATUS, STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
+import { STORY_STATUS } from '../../../constants';
 import {
   getRelativeDisplayDate,
   useGridViewKeys,
   useFocusOut,
 } from '../../../utils';
 import { useConfig } from '../../config';
+import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -132,13 +133,6 @@ const StoryGridView = ({
               }
             : {};
 
-          const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
-            if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
-              return { ...menuItem, url: story.link };
-            }
-            return menuItem;
-          });
-
           return (
             <CardGridItem
               key={story.id}
@@ -162,7 +156,7 @@ const StoryGridView = ({
               />
               <CardPreviewContainer
                 ariaLabel={sprintf(
-                  /* translators: %s: story title.*/
+                  /* translators: %s: story title. */
                   __('preview of %s', 'web-stories'),
                   story.title
                 )}
@@ -205,7 +199,10 @@ const StoryGridView = ({
                   contextMenuId={storyMenu.contextMenuId}
                   onMenuItemSelected={storyMenu.handleMenuItemSelected}
                   story={story}
-                  menuItems={storyMenuItems}
+                  menuItems={generateStoryMenu({
+                    menuItems: storyMenu.menuItems,
+                    story,
+                  })}
                 />
               </DetailRow>
             </CardGridItem>

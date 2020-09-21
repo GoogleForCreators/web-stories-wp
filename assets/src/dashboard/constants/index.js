@@ -29,8 +29,9 @@ export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
-  LAYOUT_SQUISHABLE: 2,
-  LAYOUT_FIXED: 3,
+  LAYOUT_SQUISHABLE: 3,
+  LAYOUT_FIXED: 5,
+  STICKY_TABLE: 2,
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
@@ -79,9 +80,6 @@ export const primaryPaths = [
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
   },
-];
-
-export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],

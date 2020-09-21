@@ -90,6 +90,7 @@ export const Text = styled(Paragraph2)`
 `;
 
 export const MetadataContainer = styled.fieldset`
+  border: 0;
   > label {
     margin: 0 10px 14px 0;
 

@@ -133,7 +133,6 @@ function StoriesView({
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
           await trackEvent('open_in_editor', 'dashboard');
-          window.location.href = story.bottomTargetAction;
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
           setTitleRenameId(story.id);

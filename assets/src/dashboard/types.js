@@ -42,7 +42,22 @@ export const StoryPropType = PropTypes.shape({
   modified: PropTypes.object,
 });
 
-export const TemplatePropType = StoryPropType;
+export const TemplatePropType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  status: DashboardStatusesPropType,
+  title: PropTypes.string.isRequired,
+  pages: PropTypes.arrayOf(StoryPropTypes.page),
+  modified: PropTypes.object,
+  colors: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      color: PropTypes.string.isRequired,
+    })
+  ),
+  description: PropTypes.string,
+  tags: PropTypes.arrayOf(PropTypes.string),
+  createdBy: PropTypes.string,
+});
 
 export const TagPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
