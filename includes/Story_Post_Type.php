@@ -732,6 +732,7 @@ class Story_Post_Type {
 	 * Handles redirects to the post type archive.
 	 *
 	 * Redirects requests to `/stories` (old) to `/web-stories` (new).
+	 * Redirects requests to `/stories/1234` (old) to `/web-stories/1234` (new).
 	 *
 	 * @since 1.0.0
 	 *
@@ -753,18 +754,19 @@ class Story_Post_Type {
 
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
 		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
-			if ( $query->get( 'feed' ) ) {
-				$feed                  = ( $query->get( 'feed' ) === 'feed ' ) ? $query->get( 'feed' ) : '';
-				$post_type_archive_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
-			} else {
-				$post_type_archive_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
+			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
+			if ( $query->get( 'page' ) && self::POST_TYPE_SLUG === get_post_type( absint( $query->get( 'page' ) ) ) ) {
+				$redirect_url = get_permalink( absint( $query->get( 'page' ) ) );
+			} elseif ( $query->get( 'feed' ) ) {
+				$feed         = ( $query->get( 'feed' ) === 'feed ' ) ? $query->get( 'feed' ) : '';
+				$redirect_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
 			}
 
-			if ( ! $post_type_archive_url ) {
+			if ( ! $redirect_url ) {
 				return $bypass;
 			}
 
-			wp_safe_redirect( $post_type_archive_url, 301 );
+			wp_safe_redirect( $redirect_url, 301 );
 			exit;
 		}
 
