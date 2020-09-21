@@ -35,6 +35,8 @@ const Wrapper = styled.section`
   position: relative;
 `;
 
+const LOCAL_STORAGE_PREFIX = 'web_stories_ui_settings';
+
 function Panel({
   name,
   children,
@@ -43,12 +45,38 @@ function Panel({
   initialHeight = null,
   ariaLabel = null,
   ariaHidden = false,
+  persistanceKey,
 }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [expandToHeight, setExpandToHeight] = useState(initialHeight);
-  const [height, setHeight] = useState(initialHeight);
+  const persisted = useMemo(() => {
+    const stored = localStorage.getItem(
+      `${LOCAL_STORAGE_PREFIX}:${persistanceKey}`
+    );
+    return stored && JSON.parse(stored);
+  }, [persistanceKey]);
+  const [isCollapsed, setIsCollapsed] = useState(
+    persisted?.isCollapsed || false
+  );
+  const [expandToHeight, setExpandToHeight] = useState(
+    persisted?.expandToHeight || initialHeight
+  );
+  const [height, setHeight] = useState(persisted?.height || initialHeight);
   const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
+
+  // If supplied with a persistance key, persist height & collapsed state
+  useEffect(() => {
+    if (!persistanceKey) {
+      return;
+    }
+    localStorage.setItem(
+      `${LOCAL_STORAGE_PREFIX}:${persistanceKey}`,
+      JSON.stringify({
+        height,
+        isCollapsed,
+        expandToHeight,
+      })
+    );
+  }, [height, isCollapsed, expandToHeight, persistanceKey]);
 
   const confirmTitle = useCallback(() => setHasTitle(true), []);
 
@@ -61,6 +89,7 @@ function Panel({
       setHeight(0);
     }
   }, [resizeable, canCollapse]);
+
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
@@ -71,10 +100,13 @@ function Panel({
     [resizeable, expandToHeight]
   );
 
+  // Expand panel on first mount if collapse not persisted
   useEffect(() => {
-    setIsCollapsed(!canCollapse);
+    if (persisted?.isCollapsed) {
+      return;
+    }
     expand(true);
-  }, [canCollapse, expand]);
+  }, [canCollapse, expand, persisted]);
 
   useEffect(() => {
     if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
@@ -83,12 +115,12 @@ function Panel({
   }, [collapse, height, resizeable, isCollapsed]);
 
   useEffect(() => {
-    if (manuallyChanged || !resizeable) {
+    if (manuallyChanged || persisted || !resizeable) {
       return;
     }
     setHeight(initialHeight);
     setExpandToHeight(initialHeight);
-  }, [manuallyChanged, initialHeight, resizeable]);
+  }, [manuallyChanged, initialHeight, resizeable, persisted]);
 
   const manuallySetHeight = useCallback(
     (h) => {
@@ -160,6 +192,7 @@ Panel.propTypes = {
   canCollapse: PropTypes.bool,
   ariaLabel: PropTypes.string,
   ariaHidden: PropTypes.bool,
+  persistanceKey: PropTypes.string,
 };
 
 export default Panel;
