@@ -45,15 +45,11 @@ function Panel({
   initialHeight = null,
   ariaLabel = null,
   ariaHidden = false,
-  isPersisted,
 }) {
   const persisted = useMemo(() => {
-    if (!isPersisted) {
-      return null;
-    }
     const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}:${name}`);
     return stored && JSON.parse(stored);
-  }, [name, isPersisted]);
+  }, [name]);
   const [isCollapsed, setIsCollapsed] = useState(
     Boolean(persisted?.isCollapsed)
   );
@@ -66,9 +62,6 @@ function Panel({
 
   // If supplied with a persistance key, persist height & collapsed state
   useEffect(() => {
-    if (!isPersisted) {
-      return;
-    }
     localStorage.setItem(
       `${LOCAL_STORAGE_PREFIX}:${name}`,
       JSON.stringify({
@@ -77,7 +70,7 @@ function Panel({
         expandToHeight,
       })
     );
-  }, [height, isCollapsed, expandToHeight, isPersisted, name]);
+  }, [height, isCollapsed, expandToHeight, name]);
 
   const confirmTitle = useCallback(() => setHasTitle(true), []);
 

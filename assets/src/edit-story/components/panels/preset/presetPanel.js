@@ -136,7 +136,6 @@ function PresetPanel({
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
       resizeable={resizeable}
       canCollapse={canCollapse}
-      isPersisted
     >
       <PresetsHeader
         handleAddPreset={handleAddPreset}
