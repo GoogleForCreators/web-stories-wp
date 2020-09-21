@@ -25,6 +25,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { LOCAL_STORAGE_PREFIX } from '../../../constants';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -34,8 +35,6 @@ const Wrapper = styled.section`
   flex-direction: column;
   position: relative;
 `;
-
-const LOCAL_STORAGE_PREFIX = 'web_stories_ui_settings';
 
 function Panel({
   name,
@@ -47,7 +46,9 @@ function Panel({
   ariaHidden = false,
 }) {
   const persisted = useMemo(() => {
-    const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}:${name}`);
+    const stored = localStorage.getItem(
+      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`
+    );
     return stored && JSON.parse(stored);
   }, [name]);
   const [isCollapsed, setIsCollapsed] = useState(
@@ -63,7 +64,7 @@ function Panel({
   // If supplied with a persistance key, persist height & collapsed state
   useEffect(() => {
     localStorage.setItem(
-      `${LOCAL_STORAGE_PREFIX}:${name}`,
+      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
       JSON.stringify({
         height,
         isCollapsed,

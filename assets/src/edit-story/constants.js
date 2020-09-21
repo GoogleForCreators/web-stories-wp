@@ -81,3 +81,7 @@ export const FONT_WEIGHT = {
   NORMAL: 400,
   BOLD: 700,
 };
+
+export const LOCAL_STORAGE_PREFIX = {
+  PANEL: 'web_stories_ui_settings',
+};
