@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -32,13 +32,28 @@ export const KEY_SIZE = {
 };
 
 export const SPECIAL_KEYS = {
-  COMMAND: { symbol: '⌘', title: __('Command', 'web-stories') },
-  CONTROL: { symbol: 'Ctrl', title: __('Control', 'web-stories') },
-  ENTER: { symbol: '⏎', title: __('Enter', 'web-stories') },
-  SHIFT: { symbol: '⇧', title: __('Shift', 'web-stories') },
-  OPTION: { symbol: '⌥', title: __('Option', 'web-stories') },
-  ALT: __('Alt', 'web-stories'),
-  DELETE: __('Delete', 'web-stories'),
+  COMMAND: {
+    symbol: '⌘',
+    title: _x('Command', 'The keyboard key "Command"', 'web-stories'),
+  },
+  CONTROL: {
+    symbol: 'Ctrl',
+    title: _x('Control', 'The keyboard key "Control"', 'web-stories'),
+  },
+  ENTER: {
+    symbol: '⏎',
+    title: _x('Enter', 'The keyboard key "Enter"', 'web-stories'),
+  },
+  SHIFT: {
+    symbol: '⇧',
+    title: _x('Shift', 'The keyboard key "Shift"', 'web-stories'),
+  },
+  OPTION: {
+    symbol: '⌥',
+    title: _x('Option', 'The keyboard key "Option"', 'web-stories'),
+  },
+  ALT: _x('Alt', 'The keyboard key "Alt"', 'web-stories'),
+  DELETE: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
   UP: <Up aria-label={__('Up arrow', 'web-stories')} />,
   DOWN: <Down aria-label={__('Down arrow', 'web-stories')} />,
 };
