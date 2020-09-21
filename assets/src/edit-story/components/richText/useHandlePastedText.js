@@ -21,6 +21,8 @@ import { EditorState, Modifier } from 'draft-js';
 
 function useHandlePastedText(setEditorState) {
   return (text, html, editorState) => {
+    // TODO: handle pasted html content
+    // https://github.com/google/web-stories-wp/issues/760
     const content = editorState.getCurrentContent();
     const selection = editorState.getSelection();
     const style = editorState.getCurrentInlineStyle();
