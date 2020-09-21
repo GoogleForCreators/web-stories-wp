@@ -45,16 +45,17 @@ function Panel({
   initialHeight = null,
   ariaLabel = null,
   ariaHidden = false,
-  persistenceKey,
+  isPersisted,
 }) {
   const persisted = useMemo(() => {
-    const stored = localStorage.getItem(
-      `${LOCAL_STORAGE_PREFIX}:${persistenceKey}`
-    );
+    if (!isPersisted) {
+      return null;
+    }
+    const stored = localStorage.getItem(`${LOCAL_STORAGE_PREFIX}:${name}`);
     return stored && JSON.parse(stored);
-  }, [persistenceKey]);
+  }, [name, isPersisted]);
   const [isCollapsed, setIsCollapsed] = useState(
-    persisted?.isCollapsed || false
+    Boolean(persisted?.isCollapsed)
   );
   const [expandToHeight, setExpandToHeight] = useState(
     persisted?.expandToHeight || initialHeight
@@ -65,18 +66,18 @@ function Panel({
 
   // If supplied with a persistance key, persist height & collapsed state
   useEffect(() => {
-    if (!persistenceKey) {
+    if (!isPersisted) {
       return;
     }
     localStorage.setItem(
-      `${LOCAL_STORAGE_PREFIX}:${persistenceKey}`,
+      `${LOCAL_STORAGE_PREFIX}:${name}`,
       JSON.stringify({
         height,
         isCollapsed,
         expandToHeight,
       })
     );
-  }, [height, isCollapsed, expandToHeight, persistenceKey]);
+  }, [height, isCollapsed, expandToHeight, isPersisted, name]);
 
   const confirmTitle = useCallback(() => setHasTitle(true), []);
 
@@ -192,7 +193,7 @@ Panel.propTypes = {
   canCollapse: PropTypes.bool,
   ariaLabel: PropTypes.string,
   ariaHidden: PropTypes.bool,
-  persistenceKey: PropTypes.string,
+  isPersisted: PropTypes.bool,
 };
 
 export default Panel;
