@@ -70,7 +70,10 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch('My Stories');
   });
 
-  it('should lead to the editor in step 3', async () => {
+  // Disable reason: Step 3 is not visible on the screen size used in E2E tests.
+  // This might change in the future though.
+  //eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should lead to the editor in step 3', async () => {
     const editorStep = await expect(page).toMatchElement('p', {
       text: /Jump into the\s?Editor/i,
     });
