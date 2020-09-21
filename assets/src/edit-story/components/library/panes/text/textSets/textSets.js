@@ -41,6 +41,14 @@ const TextSetContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   row-gap: 12px;
+  column-gap: 12px;
+  margin-top: 28px;
+`;
+
+/* Undo the -1.5em set by the Pane */
+const CategoryWrapper = styled.div`
+  margin-left: -1.5em;
+  margin-right: -1.5em;
 `;
 
 function TextSets() {
@@ -65,15 +73,17 @@ function TextSets() {
   const title = __('Text Sets', 'web-stories');
   return (
     <Section id={sectionId} title={title}>
-      <PillGroup
-        items={Object.keys(textSets).map((cat) => ({
-          id: cat,
-          label: cat,
-        }))}
-        selectedItemId={selectedCat}
-        selectItem={setSelectedCat}
-        deselectItem={() => setSelectedCat(null)}
-      />
+      <CategoryWrapper>
+        <PillGroup
+          items={Object.keys(textSets).map((cat) => ({
+            id: cat,
+            label: cat,
+          }))}
+          selectedItemId={selectedCat}
+          selectItem={setSelectedCat}
+          deselectItem={() => setSelectedCat(null)}
+        />
+      </CategoryWrapper>
       <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
         <UnitsProvider
           pageSize={{
