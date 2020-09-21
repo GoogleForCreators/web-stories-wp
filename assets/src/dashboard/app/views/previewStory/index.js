@@ -182,7 +182,7 @@ const PreviewStory = ({ story, handleClose }) => {
       contentLabel={
         (story?.title &&
           sprintf(
-            /* translators: %s: name of story or template getting previewed */
+            /* translators: %s: story title. */
             __('preview of %s', 'web-stories'),
             story.title
           )) ||

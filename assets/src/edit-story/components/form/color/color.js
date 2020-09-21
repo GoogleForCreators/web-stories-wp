@@ -52,8 +52,11 @@ function ColorInput({
     [value, onChange]
   );
 
-  // translators: %s: color input label name.
-  const containerLabel = sprintf(__('Color input: %s', 'web-stories'), label);
+  const containerLabel = sprintf(
+    /* translators: %s: color input label name. */
+    __('Color input: %s', 'web-stories'),
+    label
+  );
 
   return (
     <Container aria-label={containerLabel}>

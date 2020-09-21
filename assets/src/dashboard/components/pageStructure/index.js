@@ -218,7 +218,7 @@ export function LeftRail() {
       </div>
       <Content>
         <AppInfo>
-          {__('\u00A9 2020 Google', 'web-stories')}
+          {sprintf('\u00A9 %s Google', new Date().getFullYear())}
           <br />
           {sprintf(
             /* translators: %s: editor version. */

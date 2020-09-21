@@ -130,7 +130,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
               <CardPreviewContainer
                 ariaLabel={sprintf(
                   /* translators: %s: template title.*/
-                  __('Currently on %s template', 'web-stories'),
+                  __('Viewing template: %s', 'web-stories'),
                   template.title
                 )}
                 tabIndex={tabIndex}
