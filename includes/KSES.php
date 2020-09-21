@@ -304,7 +304,7 @@ class KSES {
 
 			$parts = explode( ':', $css_item, 2 );
 
-			if ( strpos( $css_item, ':' ) === false ) {
+			if ( false === strpos( $css_item, ':' ) ) {
 				$found = true;
 			} else {
 				$css_selector = trim( $parts[0] );
@@ -336,10 +336,10 @@ class KSES {
 					if ( empty( $url ) || wp_kses_bad_protocol( $url, $allowed_protocols ) !== $url ) {
 						$found = false;
 						break;
-					} else {
-						// Remove the whole `url(*)` bit that was matched above from the CSS.
-						$css_test_string = str_replace( $url_match, '', $css_test_string );
 					}
+
+					// Remove the whole `url(*)` bit that was matched above from the CSS.
+					$css_test_string = str_replace( $url_match, '', $css_test_string );
 				}
 			}
 
