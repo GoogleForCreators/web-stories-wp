@@ -363,7 +363,15 @@ class Sanitization {
 				'add_noscript_fallback' => false,
 			],
 			'AMP_Script_Sanitizer'            => [],
-			'AMP_Style_Sanitizer'             => [],
+			'AMP_Style_Sanitizer'             => [
+
+				/*
+				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
+				 *       which in turn requires AMP__VERSION to be defined.
+				 */
+				'allow_transient_caching' => false,
+				'use_document_element'    => true,
+			],
 			Meta_Sanitizer::class             => [],
 			'AMP_Layout_Sanitizer'            => [],
 			'AMP_Accessibility_Sanitizer'     => [],
@@ -410,14 +418,8 @@ class Sanitization {
 			);
 		}
 
-		/*
-		 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
-		 *       which in turn requires AMP__VERSION to be defined.
-		 */
-		$sanitizers['AMP_Style_Sanitizer']['allow_transient_caching'] = false;
-
-		// Force style sanitizer, meta sanitizer, and validating sanitizer to be at end.
-		foreach ( [ 'AMP_Style_Sanitizer', 'AMP_Meta_Sanitizer', 'AMP_Tag_And_Attribute_Sanitizer' ] as $class_name ) {
+		// Force certain sanitizers to be at end.
+		foreach ( [ 'AMP_Style_Sanitizer', 'AMP_Tag_And_Attribute_Sanitizer' ] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
 				unset( $sanitizers[ $class_name ] );
