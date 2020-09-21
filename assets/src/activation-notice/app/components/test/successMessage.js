@@ -45,6 +45,6 @@ describe('SuccessMessage', () => {
     render();
 
     expect(screen.queryByText(/Tell some stories/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Launch the editor/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Go to Stories Dashboard/i)).toBeInTheDocument();
   });
 });
