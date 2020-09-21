@@ -32,6 +32,7 @@ import { useConfig } from '../../config';
 import useTelemetryOptIn from './useTelemetryOptIn';
 
 const Banner = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -64,7 +65,7 @@ export const LabelText = styled.span`
   ${TypographyPresets.Small};
   color: ${({ theme }) => theme.colors.gray400};
   margin-bottom: 16px;
-  max-width: 530px;
+  max-width: 600px;
 `;
 
 const VisitSettingsText = styled(LabelText)``;

@@ -28,11 +28,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { DASHBOARD_TOP_MARGIN } from '../../constants/pageStructure';
+import {
+  DASHBOARD_TOP_MARGIN,
+  DEFAULT_DASHBOARD_TOP_SPACE,
+} from '../../constants/pageStructure';
 import { clamp, throttleToAnimationFrame } from '../../utils';
 
 export const SQUISH_LENGTH = DASHBOARD_TOP_MARGIN;
 export const SQUISH_CSS_VAR = '--squish-progress';
+export const END_SQUISH_LENGTH = DEFAULT_DASHBOARD_TOP_SPACE;
 
 export const dispatchSquishEvent = (el, progress) => {
   /**
