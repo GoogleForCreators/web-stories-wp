@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,6 +33,7 @@ import { Section } from '../../../common';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
+import { useRovingTabIndex } from '../../shared';
 import { getTextSets } from './utils';
 import TextSet from './textSet';
 
@@ -45,6 +46,7 @@ const TextSetContainer = styled.div`
 function TextSets() {
   const [textSets, setTextSets] = useState([]);
   const [selectedCat, setSelectedCat] = useState(null);
+  const ref = useRef();
 
   const getFilteredTextSets = useCallback(() => {
     if (selectedCat && textSets[selectedCat]) {
@@ -56,6 +58,8 @@ function TextSets() {
   useEffect(() => {
     getTextSets().then(setTextSets);
   }, []);
+
+  useRovingTabIndex({ ref });
 
   const sectionId = `section-${uuidv4()}`;
   const title = __('Text Sets', 'web-stories');
@@ -70,7 +74,7 @@ function TextSets() {
         selectItem={setSelectedCat}
         deselectItem={() => setSelectedCat(null)}
       />
-      <TextSetContainer role="list" aria-labelledby={sectionId}>
+      <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
         <UnitsProvider
           pageSize={{
             width: TEXT_SET_SIZE,

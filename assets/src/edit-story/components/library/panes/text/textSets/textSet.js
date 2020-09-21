@@ -31,6 +31,7 @@ import { __ } from '@wordpress/i18n';
  */
 import DisplayElement from '../../../../canvas/displayElement';
 import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
+import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useInsertTextSet from './useInsertTextSet';
 
 const TextSetItem = styled.button`
@@ -42,6 +43,9 @@ const TextSetItem = styled.button`
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
   border-radius: 4px;
   cursor: pointer;
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: -webkit-focus-ring-color auto 2px;
+  }
 `;
 
 function TextSet({ elements }) {
