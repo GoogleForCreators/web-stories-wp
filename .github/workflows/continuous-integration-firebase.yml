@@ -47,7 +47,7 @@ jobs:
           git checkout public/stories/**/*.html
 
       - name: Compress Images
-        uses: calibreapp/image-actions@v1.1.0
+        uses: calibreapp/image-actions@1.1.0
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
