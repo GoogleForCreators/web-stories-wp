@@ -29,7 +29,7 @@ import { ConfigProvider } from '../../config';
 
 function render() {
   const config = {
-    newStoryURL: 'foo',
+    dashboardURL: 'foo',
     demoStoryURL: 'bar',
   };
 

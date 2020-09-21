@@ -53,7 +53,7 @@ describe('Plugin Activation', () => {
     await expect(page).not.toMatch('Tell some stories.');
   });
 
-  it('should lead to the editor in success message', async () => {
+  it('should lead to the dashboard in success message', async () => {
     await expect(page).toClick('a', { text: 'Go to Stories Dashboard' });
     await page.waitForNavigation();
 

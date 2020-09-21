@@ -78,13 +78,13 @@ const ParagraphWithSpace = styled(Paragraph)`
 `;
 
 function SuccessMessage() {
-  const { newStoryURL, demoStoryURL } = useConfig();
+  const { dashboardURL, demoStoryURL } = useConfig();
 
   const onClickPrimary = useCallback(
     (evt) => {
-      trackClick(evt, 'open_dashboard', 'activation-notice', newStoryURL);
+      trackClick(evt, 'open_dashboard', 'activation-notice', dashboardURL);
     },
-    [newStoryURL]
+    [dashboardURL]
   );
   const onClickSecondary = useCallback(
     (evt) => {
@@ -104,7 +104,7 @@ function SuccessMessage() {
         {__('Welcome to Web Stories for WordPress.', 'web-stories')}
       </ParagraphWithSpace>
       <ParagraphWithSpace>
-        <PrimaryLink href={newStoryURL} onClick={onClickPrimary}>
+        <PrimaryLink href={dashboardURL} onClick={onClickPrimary}>
           {__('Go to Stories Dashboard', 'web-stories')}
         </PrimaryLink>
       </ParagraphWithSpace>
