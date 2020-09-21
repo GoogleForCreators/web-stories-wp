@@ -14,6 +14,45 @@ jobs:
         with:
           ref: static-site
 
+      - name: Read .nvmrc
+        run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
+        id: nvm
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Setup npm cache
+        uses: pat-s/always-upload-cache@v2.1.0
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-${{ env.cache-name }}-
+            ${{ runner.os }}-npm-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+          run: |
+            cd web-stories-scraper
+            npm ci
+            cd ..
+          env:
+            CI: true
+
+      - name: Download Web Stories
+        run: |
+          cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ../public/stories/
+          git checkout public/stories/**/*.html
+
+      - name: Compress Images
+        uses: calibreapp/image-actions@v1.1.0
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          compressOnly: true
+          ignorePaths: 'node_modules/**,build'
+
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v1.5.0
         with:

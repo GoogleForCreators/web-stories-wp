@@ -15,7 +15,7 @@
  */
 
 import { fileURLToPath, URL } from 'url';
-import { dirname, join, relative, extname, basename } from 'path';
+import { dirname, join, relative, extname, basename, resolve } from 'path';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 
 import scrape from 'website-scraper';
@@ -27,7 +27,7 @@ const __dirname = dirname(__filename);
 const args = process.argv.slice(2);
 
 const url = args[0] ? args[0] : undefined;
-const directory = args[1] ? join(__dirname, args[1]) : undefined;
+const directory = args[1] ? resolve(args[1]) : undefined;
 
 if (!url) {
   console.log('Story URL was not provided');
