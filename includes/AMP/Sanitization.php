@@ -29,6 +29,10 @@ namespace Google\Web_Stories\AMP;
 use AMP_Allowed_Tags_Generated;
 use AMP_Content_Sanitizer;
 use AMP_DOM_Utils;
+use AMP_Layout_Sanitizer;
+use AMP_Script_Sanitizer;
+use AMP_Style_Sanitizer;
+use AMP_Tag_And_Attribute_Sanitizer;
 use AmpProject\Amp;
 use AmpProject\Attribute;
 use AmpProject\Dom\Document;
@@ -356,14 +360,8 @@ class Sanitization {
 	 */
 	protected function get_sanitizers() {
 		$sanitizers = [
-			'AMP_Video_Sanitizer'             => [
-				'add_noscript_fallback' => false,
-			],
-			'AMP_Audio_Sanitizer'             => [
-				'add_noscript_fallback' => false,
-			],
-			'AMP_Script_Sanitizer'            => [],
-			'AMP_Style_Sanitizer'             => [
+			AMP_Script_Sanitizer::class            => [],
+			AMP_Style_Sanitizer::class             => [
 
 				/*
 				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
@@ -372,12 +370,11 @@ class Sanitization {
 				'allow_transient_caching' => false,
 				'use_document_element'    => true,
 			],
-			Meta_Sanitizer::class             => [],
-			'AMP_Layout_Sanitizer'            => [],
-			'AMP_Accessibility_Sanitizer'     => [],
-			Canonical_Sanitizer::class        => [],
-			Story_Sanitizer::class            => [],
-			'AMP_Tag_And_Attribute_Sanitizer' => [], // Note: This validating sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
+			Meta_Sanitizer::class                  => [],
+			AMP_Layout_Sanitizer::class            => [],
+			Canonical_Sanitizer::class             => [],
+			Story_Sanitizer::class                 => [],
+			AMP_Tag_And_Attribute_Sanitizer::class => [], // Note: This validating sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
 		];
 
 		/**
