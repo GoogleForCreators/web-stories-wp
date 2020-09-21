@@ -51,6 +51,7 @@ export { ReactComponent as GradientRotator } from './gradient_rotator.svg';
 export { ReactComponent as GridView } from './grid_view.svg';
 export { ReactComponent as Info } from './info.svg';
 export { ReactComponent as Italic } from './italic_icon.svg';
+export { ReactComponent as KeyArrowUp } from './key_arrow_up.svg';
 export { ReactComponent as Keyboard } from './keyboard.svg';
 export { ReactComponent as LayoutHelper } from './layout_helper.svg';
 export { ReactComponent as Link } from './link.svg';

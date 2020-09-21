@@ -23,6 +23,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { KeyArrowUp } from '../../icons';
 import { KEY_SIZE } from './constants';
 
 export const Container = styled.div`
@@ -187,4 +188,13 @@ export const CloseButton = styled.button`
   right: 0;
   color: ${({ theme }) => theme.colors.fg.white};
   cursor: pointer;
+`;
+
+export const Up = styled(KeyArrowUp)`
+  width: 12px;
+  transform-origin: 50% 50%;
+`;
+
+export const Down = styled(Up)`
+  transform: rotate(0.5turn);
 `;

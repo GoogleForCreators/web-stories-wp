@@ -63,6 +63,8 @@ describe('Keyboard Shortcuts Menu', () => {
       const openMenu = getKeyboardShortcutsMenu();
 
       expect(openMenu).toBeTruthy();
+
+      await fixture.snapshot('shortcuts dialog open');
     });
 
     describe('when menu is open', () => {
