@@ -37,6 +37,7 @@ const DashboardGrid = styled.div(
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
   grid-template-rows: minmax(${columnHeight}px, auto);
+  scroll-margin-top: 50vh;
   margin-top: 2px; // this is for keyboard focus 
 
   ${theme.breakpoint.tablet} {
