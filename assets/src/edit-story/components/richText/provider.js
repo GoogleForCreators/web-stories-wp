@@ -36,6 +36,7 @@ import getStateInfo from './getStateInfo';
 import { useFauxSelection } from './fauxSelection';
 import customImport from './customImport';
 import customExport from './customExport';
+import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
 
 function RichTextProvider({ children }) {
@@ -105,6 +106,8 @@ function RichTextProvider({ children }) {
     [updateEditorState]
   );
 
+  const handlePastedText = useHandlePastedText(setEditorState);
+
   const clearState = useCallback(() => {
     setEditorState(null);
   }, [setEditorState]);
@@ -126,6 +129,7 @@ function RichTextProvider({ children }) {
       setStateFromContent,
       updateEditorState,
       getHandleKeyCommand,
+      handlePastedText,
       clearState,
       selectionActions,
       // These actually don't work on the state at all, just pure functions
