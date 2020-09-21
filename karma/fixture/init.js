@@ -259,6 +259,11 @@ beforeAll(() => {
   });
 });
 
+// Clean up effects from localStorage.
+withCleanupAll(() => {
+  localStorage.clear();
+});
+
 afterAll(() => {
   if (cleanupsAll) {
     const toCleanup = cleanupsAll.slice(0);

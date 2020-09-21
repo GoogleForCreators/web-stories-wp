@@ -35,9 +35,6 @@ describe('Panel: Style Presets', () => {
   };
 
   beforeEach(async () => {
-    // Make sure panels are starting at initial state on every test
-    localStorage.clear();
-
     fixture = new Fixture();
     await fixture.render();
   });

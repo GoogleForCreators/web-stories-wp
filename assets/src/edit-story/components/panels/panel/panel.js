@@ -47,9 +47,16 @@ function Panel({
 }) {
   const persisted = useMemo(() => {
     const stored = localStorage.getItem(
-      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`
+      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
+      'null'
     );
-    return stored && JSON.parse(stored);
+    let parsed = null;
+    try {
+      parsed = JSON.parse(stored);
+    } catch (e) {
+      // @TODO Handle this error.
+    }
+    return parsed;
   }, [name]);
   const [isCollapsed, setIsCollapsed] = useState(
     Boolean(persisted?.isCollapsed)
