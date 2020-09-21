@@ -59,6 +59,7 @@ export {
   TableBody,
   TableCell,
   TableHeader,
+  StickyTableHeader,
   TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,

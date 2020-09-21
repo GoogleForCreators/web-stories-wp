@@ -44,7 +44,7 @@ import {
   TableBody,
   TableCell,
   TableDateHeaderCell,
-  TableHeader,
+  StickyTableHeader,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
@@ -55,6 +55,7 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
+  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -62,7 +63,11 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
+import {
+  FULLBLEED_RATIO,
+  DASHBOARD_TOP_MARGIN,
+  DEFAULT_DASHBOARD_TOP_SPACE,
+} from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
@@ -172,6 +177,15 @@ export default function StoryListView({
   users,
   dateSettings,
 }) {
+  const {
+    state: { squishContentHeight },
+  } = useLayoutContext();
+
+  // get sticky position from the squishContentHeight (header area),
+  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
+  const stickyTopPosition =
+    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
+
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -196,7 +210,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table>
-        <TableHeader>
+        <StickyTableHeader top={stickyTopPosition}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
@@ -276,7 +290,7 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
-        </TableHeader>
+        </StickyTableHeader>
         <TableBody>
           {stories.map((story) => (
             <StyledTableRow key={`story-${story.id}`}>
