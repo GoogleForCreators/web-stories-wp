@@ -57,7 +57,7 @@ describe('Plugin Activation', () => {
     await expect(page).toClick('a', { text: 'Go to Stories Dashboard' });
     await page.waitForNavigation();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await expect(page).toMatch('My Stories');
   });
 
   it('should lead to the dashboard in step 2', async () => {
