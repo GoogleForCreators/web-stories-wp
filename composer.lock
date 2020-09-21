@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b2cd063d431adb1171f7f7dfdb48e68",
+    "content-hash": "e3051b14fd2d1ed4f930923089c1c319",
     "packages": [
         {
             "name": "ampproject/amp-wp",
-            "version": "2.0.2",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "d96052ed76a92f43b70e0a52cf8e952cf46301af"
+                "reference": "c42478a87dc10f3edc7d41a8348812dbae55b0e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/d96052ed76a92f43b70e0a52cf8e952cf46301af",
-                "reference": "d96052ed76a92f43b70e0a52cf8e952cf46301af",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/c42478a87dc10f3edc7d41a8348812dbae55b0e1",
+                "reference": "c42478a87dc10f3edc7d41a8348812dbae55b0e1",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2020-09-18T02:03:43+00:00"
+            "time": "2020-09-18T19:47:16+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -279,7 +279,10 @@
             },
             "type": "library",
             "extra": {
-                "patches_applied": []
+                "patches_applied": {
+                    "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
+                    "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
+                }
             },
             "autoload": {
                 "psr-4": {
