@@ -34,12 +34,12 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-          run: |
-            cd web-stories-scraper
-            npm ci
-            cd ..
-          env:
-            CI: true
+        run: |
+          cd web-stories-scraper
+          npm ci
+          cd ..
+        env:
+          CI: true
 
       - name: Download Web Stories
         run: |
