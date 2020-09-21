@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
  */
 import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
-export const GalleryContainer = styled.div.attrs({ id: 'dillon' })`
+export const GalleryContainer = styled.div`
   ${({ maxWidth }) => `
     display: flex;
     justify-content: space-around;
