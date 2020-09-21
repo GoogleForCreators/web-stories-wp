@@ -46,15 +46,15 @@ function Panel({
   ariaHidden = false,
 }) {
   const persisted = useMemo(() => {
-    const stored = localStorage.getItem(
-      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
-      'null'
-    );
     let parsed = null;
     try {
+      const stored = localStorage.getItem(
+        `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
+        'null'
+      );
       parsed = JSON.parse(stored);
     } catch (e) {
-      // @TODO Handle this error.
+      // @TODO Add some error handling.
     }
     return parsed;
   }, [name]);

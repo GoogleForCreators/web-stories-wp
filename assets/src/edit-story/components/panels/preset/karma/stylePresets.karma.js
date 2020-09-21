@@ -35,6 +35,7 @@ describe('Panel: Style Presets', () => {
   };
 
   beforeEach(async () => {
+    localStorage.clear();
     fixture = new Fixture();
     await fixture.render();
   });
