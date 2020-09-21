@@ -18,19 +18,23 @@
  * External dependencies
  */
 import { EditorState, Modifier } from 'draft-js';
+import { useCallback } from 'react';
 
 function useHandlePastedText(setEditorState) {
-  return (text, html, editorState) => {
-    // TODO: handle pasted html content
-    // https://github.com/google/web-stories-wp/issues/760
-    const content = editorState.getCurrentContent();
-    const selection = editorState.getSelection();
-    const style = editorState.getCurrentInlineStyle();
-    const newState = Modifier.replaceText(content, selection, text, style);
-    const result = EditorState.push(editorState, newState, 'insert-characters');
-    setEditorState(result);
-    return true;
-  };
+  return useCallback(
+    (text, html, state) => {
+      // TODO: handle pasted html content
+      // https://github.com/google/web-stories-wp/issues/760
+      const content = state.getCurrentContent();
+      const selection = state.getSelection();
+      const style = state.getCurrentInlineStyle();
+      const newState = Modifier.replaceText(content, selection, text, style);
+      const result = EditorState.push(state, newState, 'insert-characters');
+      setEditorState(result);
+      return true;
+    },
+    [setEditorState]
+  );
 }
 
 export default useHandlePastedText;
