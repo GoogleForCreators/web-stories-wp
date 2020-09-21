@@ -1,0 +1,28 @@
+<header>
+  <a class="logo_link" href="{{ 'https://google.com' | url }}" title="Google.com">
+    {% include "./img/google.svg" %}
+  </a>
+  <a href="/">Web&nbsp;Stories&nbsp;<wbr>for&nbsp;WordPress</a>
+
+  <nav>
+    <ul class="links">
+      <li>
+        <a href="/" >{{$("About") }}</a>
+      </li>
+      <li>
+        <a href="/docs">{{$("Documents") }}</a>
+        <button class="toggle" [class]="active ? 'toggle active' : 'toggle'" class="hide" on="tap:AMP.setState({active: !active})" >
+          {% include "./img/toggle.svg" %}
+          <span class="visuallyhidden">show submenu for "Documents"</span>
+        </button>
+        {% include "documentation_menu.njk" %}
+      </li>
+      <li>
+        <a href="https://wordpress.org/support/plugin/amp/">{{$("Support") }}</a>
+      </li>
+      <li>
+        <a href="https://github.com/google/web-stories-wp">{{$("GitHub") }}</a>
+      </li>
+    </ul>
+    <a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-rc.1/web-stories.zip" class="fake_button">{{$("Download Plugin") }}</a>
+</header>

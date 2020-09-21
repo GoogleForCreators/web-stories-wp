@@ -1,0 +1,38 @@
+---
+title: Web Stories for WordPress - Documentation
+layout: layouts/base.njk
+rootClass: docs
+---
+
+<main>
+  <aside>
+    {% include "documentation_menu.njk" %}
+  </aside>
+
+  <section id="Getting_Started">
+    <h1>Getting started</h1>
+
+    <amp-position-observer on="scroll:gettingStartedTracker.seekTo(percent=event.percent)" target="Getting_Started" layout="nodisplay" ></amp-position-observer>
+
+    <amp-animation id="gettingStartedTracker" layout="nodisplay">
+
+      <script type="application/json">
+        {
+            "duration": "1",
+            "fill": "both",
+            "animations": [
+              {
+                "selector": "#FF",
+                "keyframes": [
+                    {"clipPath": "inset(0 0 110% 0)"},
+                    {"clipPath": "inset(0 0 -10% 0)"}
+                ]
+              }
+            ]
+          }
+      </script>
+    </amp-animation>
+  </section>
+
+
+</main>
