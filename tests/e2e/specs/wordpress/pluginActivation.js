@@ -54,7 +54,7 @@ describe('Plugin Activation', () => {
   });
 
   it('should lead to the editor in success message', async () => {
-    await expect(page).toClick('a', { text: 'Launch the editor' });
+    await expect(page).toClick('a', { text: 'Go to Stories Dashboard' });
     await page.waitForNavigation();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -62,7 +62,7 @@ describe('Plugin Activation', () => {
 
   it('should lead to the dashboard in step 2', async () => {
     const dashboardStep = await expect(page).toMatchElement('p', {
-      text: /Head to\s?Dashboard/i,
+      text: /Head to the\s?Dashboard/i,
     });
     await expect(dashboardStep).toClick('a', { text: 'Dashboard' });
     await page.waitForNavigation();
@@ -71,7 +71,10 @@ describe('Plugin Activation', () => {
   });
 
   it('should lead to the editor in step 3', async () => {
-    await expect(page).toClick('a', { text: 'Jump into the editor' });
+    const editorStep = await expect(page).toMatchElement('p', {
+      text: /Jump into the\s?Editor/i,
+    });
+    await expect(editorStep).toClick('a', { text: 'Editor' });
     await page.waitForNavigation();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
