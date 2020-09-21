@@ -83,5 +83,5 @@ export const FONT_WEIGHT = {
 };
 
 export const LOCAL_STORAGE_PREFIX = {
-  PANEL: 'web_stories_ui_settings',
+  PANEL: 'web_stories_ui_panel_settings',
 };
