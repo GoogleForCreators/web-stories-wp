@@ -97,7 +97,7 @@ export function reshapeSavedTemplates({
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { assetsURL, templateApi } = config;
+  const { cdnURL, templateApi } = config;
 
   const fetchSavedTemplates = useCallback(() => {
     // Saved Templates = Bookmarked Templates + My Templates
@@ -213,7 +213,7 @@ const useTemplateApi = (dataAdapter, config) => {
         payload: true,
       });
 
-      const reshapedTemplates = (await getAllTemplates({ assetsURL })).map(
+      const reshapedTemplates = (await getAllTemplates({ cdnURL })).map(
         reshapeTemplateObject(false)
       );
       dispatch({
@@ -226,7 +226,7 @@ const useTemplateApi = (dataAdapter, config) => {
         },
       });
     },
-    [assetsURL]
+    [cdnURL]
   );
 
   const fetchExternalTemplateById = useCallback(

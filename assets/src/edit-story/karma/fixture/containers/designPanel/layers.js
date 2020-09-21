@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getByLabelText, getAllByTestId } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { AbstractPanel } from './abstractPanel';
@@ -28,16 +33,10 @@ export class Layers extends AbstractPanel {
   }
 
   get layersList() {
-    return this.getByRoleIn(this.node.ownerDocument, 'listbox', {
-      name: /layers list/i,
-    });
+    return getByLabelText(this.node.ownerDocument, /layers list/i);
   }
 
   get layers() {
-    return this.getAllByRoleIn(this.layersList, 'option');
-  }
-
-  layer(name) {
-    return this.getByRoleIn(this.layersList, 'option', { name });
+    return getAllByTestId(this.layersList, 'layer-option');
   }
 }

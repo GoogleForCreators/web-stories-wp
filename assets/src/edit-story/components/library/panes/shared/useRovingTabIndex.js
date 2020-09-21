@@ -141,8 +141,8 @@ export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
    * @return {function({event: Event, target: Object})} The onKeyDown handler wrapper.
    */
   const onKeyDown = useCallback(
-    ({ key }) => {
-      const element = ref.current;
+    ({ key, target }) => {
+      const element = target;
       const siblingDirection = getSiblingDirection(isRTL, key);
       const switchFocusToElement = (e) => {
         element.tabIndex = -1;
@@ -195,7 +195,7 @@ export default function useRovingTabIndex({ ref }, keyEventDeps = []) {
         switchFocusToElement(sibling);
       }
     },
-    [ref, isRTL]
+    [isRTL]
   );
 
   useKeyDownEffect(

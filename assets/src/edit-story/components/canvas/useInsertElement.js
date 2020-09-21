@@ -159,12 +159,12 @@ function getElementProperties(
   width = size.width;
   height = size.height;
 
-  // X and y defaults: in the top quarter of the page.
+  // X and y defaults: in the top corner of the page.
   if (!isNum(x)) {
-    x = (PAGE_WIDTH / 4) * Math.random();
+    x = 48;
   }
   if (!isNum(y)) {
-    y = (PAGE_HEIGHT / 4) * Math.random();
+    y = 0;
   }
   x = dataPixels(Math.min(x, PAGE_WIDTH - width));
   y = dataPixels(Math.min(y, PAGE_HEIGHT - height));

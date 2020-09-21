@@ -39,6 +39,10 @@ export class Library extends Container {
     );
   }
 
+  get media3pTab() {
+    return this.getByRole('tab', { name: /Explore Media/ });
+  }
+
   get textTab() {
     return this.getByRole('tab', { name: /Text library/ });
   }

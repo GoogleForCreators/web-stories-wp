@@ -116,7 +116,6 @@ function getTextInlineStyles(content) {
   const {
     color,
     fontWeight,
-    isBold,
     isItalic,
     isUnderline,
     letterSpacing,
@@ -124,7 +123,6 @@ function getTextInlineStyles(content) {
   return {
     color: color !== MULTIPLE_VALUE ? color : createSolid(0, 0, 0),
     fontWeight: getExtractedInlineValue(fontWeight),
-    isBold: getExtractedInlineValue(isBold),
     isItalic: getExtractedInlineValue(isItalic),
     isUnderline: getExtractedInlineValue(isUnderline),
     letterSpacing: getExtractedInlineValue(letterSpacing),

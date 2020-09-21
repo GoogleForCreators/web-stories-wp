@@ -18,9 +18,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * WordPress dependencies
@@ -31,16 +32,24 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { ArrowDown } from '../../../../button';
-import Pill, { PILL_HEIGHT } from './pill';
+import { useKeyDownEffect } from '../../../../keyboard';
+import useRovingTabIndex from '../useRovingTabIndex';
+import Pill from './pill';
 
-const CATEGORY_TOP_MARGIN = 16;
-const CATEGORY_BOTTOM_MARGIN = 30;
-const CATEGORY_COLLAPSED_FULL_HEIGHT =
-  PILL_HEIGHT + CATEGORY_TOP_MARGIN + CATEGORY_BOTTOM_MARGIN;
+/**
+ * Internal dependencies
+ */
+import {
+  PILL_COLLAPSED_FULL_HEIGHT,
+  PILL_BOTTOM_MARGIN,
+  PILL_TOP_MARGIN,
+} from './constants';
+import useExpandAnimation from './useExpandAnimation';
+import useHandleRowVisibility from './useHandleRowVisibility';
 
-const CategorySection = styled.div`
-  height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
-  min-height: ${CATEGORY_COLLAPSED_FULL_HEIGHT}px;
+const Section = styled.div`
+  height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
+  min-height: ${PILL_COLLAPSED_FULL_HEIGHT}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.workspace, 0.8)};
   display: flex;
   flex-direction: column;
@@ -50,13 +59,13 @@ const CategorySection = styled.div`
   transition: height 0.2s, min-height 0.2s;
 `;
 
-// This hides the category pills unless expanded
-const CategoryPillContainer = styled.div`
+// This hides the pills unless expanded
+const Container = styled.div`
   overflow: hidden;
-  margin: ${CATEGORY_TOP_MARGIN}px 12px ${CATEGORY_BOTTOM_MARGIN}px 24px;
+  margin: ${PILL_TOP_MARGIN}px 12px ${PILL_BOTTOM_MARGIN}px 24px;
 `;
 
-const CategoryPillInnerContainer = styled.div`
+const InnerContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -83,150 +92,104 @@ const ExpandButton = styled(ArrowDown)`
   align-items: center;
 `;
 
-const PillGroup = ({
-  categories,
-  selectedCategoryId,
-  selectCategory,
-  deselectCategory,
-}) => {
+const PillGroup = ({ items, selectedItemId, selectItem, deselectItem }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  function renderCategories() {
-    return categories.map((e, i) => {
-      const selected = e.id === selectedCategoryId;
-      return (
-        <Pill
-          index={i}
-          isSelected={selected}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-          key={e.id}
-          categoryId={e.id}
-          title={e.displayName}
-          onClick={() => {
-            if (selected) {
-              deselectCategory();
-            } else {
-              setIsExpanded(false);
-              selectCategory(e.id);
-            }
-          }}
-        />
-      );
-    });
-  }
-
-  const categorySectionRef = useRef();
+  const sectionRef = useRef();
   const innerContainerRef = useRef();
+
+  const itemRefs = useRef([]);
 
   const [focusedRowOffset, setFocusedRowOffset] = useState(0);
 
-  // Handles expand and contract animation.
-  // We calculate the actual height of the categories list, and set its explicit
-  // height if it's expanded, in order to have a CSS height transition.
-  useLayoutEffect(() => {
-    if (!categorySectionRef.current || !innerContainerRef.current) {
-      return;
-    }
-    let height;
-    if (!isExpanded) {
-      height = `${CATEGORY_COLLAPSED_FULL_HEIGHT}px`;
+  const handleClick = (selected, id) => {
+    if (selected) {
+      deselectItem();
     } else {
-      height = `${
-        innerContainerRef.current.offsetHeight +
-        CATEGORY_TOP_MARGIN +
-        CATEGORY_BOTTOM_MARGIN
-      }px`;
+      setIsExpanded(false);
+      selectItem(id);
     }
-    // Safari has some strange issues with flex-shrink that require setting
-    // min-height as well.
-    categorySectionRef.current.style.height = height;
-    categorySectionRef.current.style.minHeight = height;
+  };
 
-    setFocusedRowOffset(0);
-  }, [categorySectionRef, innerContainerRef, isExpanded]);
+  useExpandAnimation({
+    sectionRef,
+    innerContainerRef,
+    isExpanded,
+    setFocusedRowOffset,
+  });
 
-  // Handles setting which row will be seen, by manipulating translateY.
-  useLayoutEffect(() => {
-    if (!innerContainerRef.current) {
-      return;
-    }
-    const categoryPills = Array.from(
-      innerContainerRef.current.querySelectorAll('.categoryPill')
-    );
-    const selectedCategoryPill = selectedCategoryId
-      ? categoryPills.find((p) => p.dataset.categoryId == selectedCategoryId)
-      : null;
-    const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
+  useHandleRowVisibility({
+    isExpanded,
+    innerContainerRef,
+    selectedItemId,
+    setFocusedRowOffset,
+    itemRefs,
+  });
 
-    if (!isExpanded && selectedCategoryPill) {
-      setFocusedRowOffset(selectedCategoryPillOffsetTop);
-    }
-  }, [innerContainerRef, isExpanded, selectedCategoryId]);
+  const hasItems = items.length > 0;
+  useRovingTabIndex({ ref: sectionRef }, [isExpanded]);
+  useKeyDownEffect(
+    sectionRef,
+    !isExpanded ? 'down' : '',
+    () => hasItems && setIsExpanded(true),
+    [isExpanded, hasItems]
+  );
 
-  // Handles fading category rows in and out depending on the selected category.
-  useLayoutEffect(() => {
-    if (!innerContainerRef.current) {
-      return;
-    }
-    const categoryPills = Array.from(
-      innerContainerRef.current.querySelectorAll('.categoryPill')
-    );
-    const selectedCategoryPill = selectedCategoryId
-      ? categoryPills.find((p) => p.dataset.categoryId == selectedCategoryId)
-      : null;
-    const selectedCategoryPillOffsetTop = selectedCategoryPill?.offsetTop || 0;
-
-    for (let categoryPill of categoryPills) {
-      const isSameRow =
-        selectedCategoryPill &&
-        categoryPill.offsetTop == selectedCategoryPillOffsetTop;
-      if (selectedCategoryPill && !isSameRow && !isExpanded) {
-        categoryPill.classList.add('invisible');
-      } else {
-        categoryPill.classList.remove('invisible');
-      }
-    }
-  }, [innerContainerRef, isExpanded, selectedCategoryId]);
-
+  const containerId = `pill-group-${uuidv4()}`;
   return (
-    <CategorySection
-      ref={categorySectionRef}
-      hasCategories={Boolean(categories.length)}
-    >
-      {categories.length ? (
+    <Section ref={sectionRef}>
+      {hasItems && (
         <>
-          <CategoryPillContainer
-            id="category-pill-container"
+          <Container
+            id={containerId}
             isExpanded={isExpanded}
-            role="tablist"
+            role="listbox"
+            aria-label={__('List of filtering options', 'web-stories')}
           >
-            <CategoryPillInnerContainer
+            <InnerContainer
+              role="presentation"
               ref={innerContainerRef}
               style={{ transform: `translateY(-${focusedRowOffset}px` }}
             >
-              {renderCategories()}
-            </CategoryPillInnerContainer>
-          </CategoryPillContainer>
+              {items.map((item, i) => {
+                const { id, label } = item;
+                const selected = id === selectedItemId;
+                return (
+                  <Pill
+                    itemRef={(el) => {
+                      itemRefs.current[id] = el;
+                    }}
+                    index={i}
+                    isSelected={selected}
+                    isExpanded={isExpanded}
+                    setIsExpanded={setIsExpanded}
+                    key={id}
+                    onClick={() => handleClick(selected, id)}
+                  >
+                    {label}
+                  </Pill>
+                );
+              })}
+            </InnerContainer>
+          </Container>
           <ExpandButton
-            data-testid="category-expand-button"
             onClick={() => setIsExpanded(!isExpanded)}
             isExpanded={isExpanded}
-            aria-controls="category-pill-container"
+            aria-controls={containerId}
             aria-expanded={isExpanded}
             aria-label={__('Expand', 'web-stories')}
           />
         </>
-      ) : null}
-    </CategorySection>
+      )}
+    </Section>
   );
 };
 
 PillGroup.propTypes = {
-  categories: PropTypes.array.isRequired,
-  selectedCategoryId: PropTypes.string,
-  selectCategory: PropTypes.func,
-  deselectCategory: PropTypes.func,
+  items: PropTypes.array.isRequired,
+  selectedItemId: PropTypes.string,
+  selectItem: PropTypes.func,
+  deselectItem: PropTypes.func,
 };
 
 export default PillGroup;

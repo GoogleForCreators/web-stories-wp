@@ -33,10 +33,8 @@ import {
   createBuild,
   getCurrentVersionNumber,
   updateVersionNumbers,
-  updateAssetsURL,
   updateTemplates,
 } from './utils/index.js';
-import { ASSETS_URL_CDN } from './utils/constants.js';
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
@@ -44,6 +42,7 @@ const README_FILE = 'readme.txt';
 const FONTS_FILE = 'includes/data/fonts.json';
 const BUILD_DIR = 'build/web-stories';
 const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
+const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;
 
 program
   .command('version')
@@ -84,12 +83,8 @@ program
     'Create Composer-ready build. Does not contain PHP autoloader.'
   )
   .option(
-    '--cdn [url]',
-    'Load any static assets from CDN. With optional URL provided.'
-  )
-  .option(
     '--zip [filename]',
-    'Load any static assets from CDN. With optional URL provided.'
+    'Generate a ready-to-use ZIP file. Optionally specify a file name.'
   )
   .option(
     '--clean',
@@ -99,11 +94,8 @@ program
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
-    console.log('  # Build plugin and point assets to CDN');
-    console.log('  $ commander.js build-plugin --cdn');
-    console.log('');
     console.log('  # Create a ZIP-file ready to install in WordPress');
-    console.log('  $ commander.js build-plugin --cdn --zip');
+    console.log('  $ commander.js build-plugin --zip');
     console.log('');
     console.log('  # Remove existing ZIP files before creating one');
     console.log('  $ commander.js build-plugin --zip --clean');
@@ -115,19 +107,14 @@ program
       '  $ commander.js build-plugin --composer --zip web-stories.zip'
     );
   })
-  .action(({ composer, cdn, zip, clean }) => {
+  .action(({ composer, zip, clean }) => {
     const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
-    const pluginFilePath = `${buildDirPath}/${PLUGIN_FILE}`;
 
     // Make sure build directory exists and is empty.
     rmdirSync(BUILD_DIR, { recursive: true });
     mkdirSync(BUILD_DIR, { recursive: true });
 
-    createBuild(PLUGIN_DIR, buildDirPath, composer, cdn);
-
-    if (cdn) {
-      updateAssetsURL(pluginFilePath, cdn === true ? ASSETS_URL_CDN : cdn);
-    }
+    createBuild(PLUGIN_DIR, buildDirPath, composer);
 
     let build = BUILD_DIR;
 
@@ -178,6 +165,7 @@ program
   })
   .action(() => {
     updateTemplates(TEMPLATES_DIR);
+    updateTemplates(STORIES_DIR);
 
     console.log("Templates updated! Don't forget to run prettier!");
   });

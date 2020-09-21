@@ -23,12 +23,12 @@ import { renderToStaticMarkup } from 'react-dom/server';
  * External dependencies
  */
 import { render } from '@testing-library/react';
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-jest.mock('flagged');
-import { useFeature } from 'flagged';
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';

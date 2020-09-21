@@ -36,7 +36,7 @@ import useSettingsApi from './useSettingsApi';
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, editStoryURL, assetsURL } = useConfig();
+  const { api, editStoryURL, cdnURL } = useConfig();
 
   const { users, currentUser, api: usersApi } = useUsersApi(dataAdapter, {
     userApi: api.users,
@@ -44,7 +44,7 @@ export default function ApiProvider({ children }) {
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
-    assetsURL,
+    cdnURL,
     templateApi: api.templates,
   });
 

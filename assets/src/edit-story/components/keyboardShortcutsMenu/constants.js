@@ -34,4 +34,6 @@ export const SPECIAL_KEYS = {
   OPTION: { symbol: '⌥', title: __('Option', 'web-stories') },
   ALT: 'Alt',
   DELETE: __('Delete', 'web-stories'),
+  UP: { symbol: '⬆', title: __('Up arrow', 'web-stories') },
+  DOWN: { symbol: '⬇', title: __('Down arrow', 'web-stories') },
 };

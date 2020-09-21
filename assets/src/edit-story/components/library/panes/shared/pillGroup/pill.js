@@ -18,17 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import useRovingTabIndex from '../useRovingTabIndex';
-import { useKeyDownEffect } from '../../../../keyboard';
-
-export const PILL_HEIGHT = 36;
+import { PILL_HEIGHT } from './constants';
 
 const PillContainer = styled.button`
   border: 1px solid transparent;
@@ -54,34 +50,13 @@ const PillContainer = styled.button`
   }
 `;
 
-function Pill({
-  isSelected,
-  onClick,
-  index,
-  title,
-  categoryId,
-  isExpanded,
-  setIsExpanded,
-}) {
-  const ref = useRef();
-
-  // useRovingTabIndex and useKeyDownEffect depend on 'isExpanded' to avoid
-  // conflicting 'down' arrow handlers.
-  useRovingTabIndex({ ref }, [isExpanded]);
-
-  const expand = useCallback(() => setIsExpanded(true), [setIsExpanded]);
-  useKeyDownEffect(ref, !isExpanded ? 'down' : [], expand, [
-    isExpanded,
-    expand,
-  ]);
-
+function Pill({ itemRef, children, isSelected, onClick, index }) {
   return (
     <PillContainer
-      ref={ref}
-      className="categoryPill"
-      data-testid="mediaCategory"
-      data-category-id={categoryId}
-      role="tab"
+      ref={itemRef}
+      // @todo Get rid of data-* values.
+      data-testid="pill"
+      role="option"
       aria-selected={isSelected}
       // The first or selected category will be in focus for roving
       // (arrow-based) navigation initially.
@@ -89,18 +64,16 @@ function Pill({
       isSelected={isSelected}
       onClick={onClick}
     >
-      {title}
+      {children}
     </PillContainer>
   );
 }
 
 Pill.propTypes = {
   index: PropTypes.number,
-  categoryId: PropTypes.string,
   isSelected: PropTypes.bool,
-  isExpanded: PropTypes.bool,
-  setIsExpanded: PropTypes.func,
-  title: PropTypes.string.isRequired,
+  itemRef: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
   onClick: PropTypes.func,
 };
 

@@ -23,7 +23,6 @@ export default function reshapeStoryPreview(storyProps = {}) {
     publisher: {
       name: '',
     },
-    fallbackPoster: '',
   };
 
   return {

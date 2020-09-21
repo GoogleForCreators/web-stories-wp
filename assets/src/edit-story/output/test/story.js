@@ -57,8 +57,8 @@ describe('Story output', () => {
         {
           id: '123',
           animations: [
-            { targets: ['123'], type: 'bounce', duration: 1000 },
-            { targets: ['124'], type: 'spin', duration: 500 },
+            { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            { id: 'anim1', targets: ['124'], type: 'spin', duration: 500 },
           ],
           backgroundColor: {
             type: 'solid',
@@ -122,7 +122,6 @@ describe('Story output', () => {
           name: 'Publisher Name',
           logo: 'https://example.com/logo.png',
         },
-        fallbackPoster: 'https://example.com/logo.png',
         logoPlaceholder: 'https://example.com/logo.png',
       },
     };
@@ -159,7 +158,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          fallbackPoster: 'https://example.com/logo.png',
           logoPlaceholder: 'https://example.com/logo.png',
         },
       };
@@ -180,6 +178,7 @@ describe('Story output', () => {
           modified: '123',
           excerpt: '123',
           featuredMedia: 123,
+          featuredMediaUrl: 'https://example.com/poster.png',
           publisherLogoUrl: 'https://example.com/logo.png',
           password: '123',
           link: 'https://example.com/story',
@@ -203,7 +202,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          fallbackPoster: 'https://example.com/logo.png',
           logoPlaceholder: 'https://example.com/logo.png',
         },
       };
@@ -224,6 +222,7 @@ describe('Story output', () => {
           modified: '123',
           excerpt: '123',
           featuredMedia: 123,
+          featuredMediaUrl: 'https://example.com/poster.png',
           publisherLogoUrl: 'https://example.com/logo.png',
           password: '123',
           link: 'https://example.com/story',
@@ -267,7 +266,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          fallbackPoster: 'https://example.com/logo.png',
           logoPlaceholder: 'https://example.com/logo.png',
         },
       };
@@ -288,6 +286,7 @@ describe('Story output', () => {
           modified: '123',
           excerpt: '123',
           featuredMedia: 123,
+          featuredMediaUrl: 'https://example.com/poster.png',
           publisherLogoUrl: 'https://example.com/logo.png',
           password: '123',
           link: 'https://example.com/story',
@@ -296,7 +295,9 @@ describe('Story output', () => {
         pages: [
           {
             id: '123',
-            animations: [{ targets: ['123'], type: 'bounce', duration: 1000 }],
+            animations: [
+              { id: 'anim1', targets: ['123'], type: 'bounce', duration: 1000 },
+            ],
             backgroundColor: {
               type: 'solid',
               color: { r: 255, g: 255, b: 255 },
@@ -332,7 +333,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          fallbackPoster: 'https://example.com/logo.png',
           logoPlaceholder: 'https://example.com/logo.png',
         },
       };

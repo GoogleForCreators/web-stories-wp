@@ -104,11 +104,10 @@ class Analytics {
 	 *
 	 * @see https://github.com/ampproject/amphtml/blob/master/spec/amp-var-substitutions.md
 	 *
+	 * @param string $tracking_id Tracking ID.
 	 * @return array <amp-analytics> configuration.
 	 */
-	public function get_default_configuration() {
-		$tracking_id = $this->get_tracking_id();
-
+	public function get_default_configuration( $tracking_id ) {
 		$config = [
 			'vars'     => [
 				'gtag_id' => $tracking_id,
@@ -122,10 +121,12 @@ class Analytics {
 					'on'      => 'story-page-visible',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_progress',
-						'eventCategory' => '${title}',
-						'eventLabel'    => '${storyPageId}',
-						'eventValue'    => '${storyProgress}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_progress',
+						'event_category' => '${title}',
+						'event_label'    => '${storyPageIndex}',
+						'event_value'    => '${storyProgress}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when the last page in the story is shown to the user.
@@ -134,8 +135,11 @@ class Analytics {
 					'on'      => 'story-last-page-visible',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_complete',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_complete',
+						'event_category' => '${title}',
+						'event_label'    => '${storyPageCount}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when clicking an element that opens a tooltip (<a> or <amp-twitter>).
@@ -143,20 +147,34 @@ class Analytics {
 					'on'      => 'story-focus',
 					'tagName' => 'a',
 					'request' => 'click ',
+					'vars'    => [
+						'event_name'     => 'custom',
+						'event_action'   => 'story_focus',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
+					],
 				],
 				// Fired when clicking on a tooltip.
 				'trackClickThrough'   => [
 					'on'      => 'story-click-through',
 					'tagName' => 'a',
 					'request' => 'click ',
+					'vars'    => [
+						'event_name'     => 'custom',
+						'event_action'   => 'story_click_through',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
+					],
 				],
 				// Fired when opening a drawer or dialog inside a story (e.g. page attachment).
 				'storyOpen'           => [
 					'on'      => 'story-open',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_open',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_open',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when closing a drawer or dialog inside a story (e.g. page attachment).
@@ -164,8 +182,10 @@ class Analytics {
 					'on'      => 'story-close',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_close',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_close',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when the user initiates an interaction to mute the audio for the current story.
@@ -173,8 +193,10 @@ class Analytics {
 					'on'      => 'story-audio-muted',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_audio_muted',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_audio_muted',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when the user initiates an interaction to unmute the audio for the current story.
@@ -182,8 +204,10 @@ class Analytics {
 					'on'      => 'story-audio-unmuted',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_audio_unmuted',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_audio_unmuted',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when a page attachment is opened by the user.
@@ -191,8 +215,10 @@ class Analytics {
 					'on'      => 'story-page-attachment-enter',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_page_attachment_enter',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_page_attachment_enter',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
 					],
 				],
 				// Fired when a page attachment is dismissed by the user.
@@ -200,8 +226,10 @@ class Analytics {
 					'on'      => 'story-page-attachment-exit',
 					'request' => 'event',
 					'vars'    => [
-						'eventAction'   => 'story_page_attachment_exit',
-						'eventCategory' => '${title}',
+						'event_name'     => 'custom',
+						'event_action'   => 'story_page_attachment_exit',
+						'event_category' => '${title}',
+						'send_to'        => $tracking_id,
 					],
 				],
 			],
@@ -222,13 +250,15 @@ class Analytics {
 			return;
 		}
 
-		if ( ! $this->get_tracking_id() ) {
+		$tracking_id = $this->get_tracking_id();
+
+		if ( ! $tracking_id ) {
 			return;
 		}
 		?>
 		<amp-analytics type="gtag" data-credentials="include">
 			<script type="application/json">
-				<?php echo wp_json_encode( $this->get_default_configuration() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+				<?php echo wp_json_encode( $this->get_default_configuration( $tracking_id ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</script>
 		</amp-analytics>
 		<?php
@@ -248,7 +278,7 @@ class Analytics {
 			return $gtag_opt;
 		}
 
-		$default_config             = $this->get_default_configuration();
+		$default_config             = $this->get_default_configuration( $gtag_opt['vars']['gtag_id'] );
 		$default_config['triggers'] = isset( $default_config['triggers'] ) ? $default_config['triggers'] : [];
 
 		$gtag_opt['triggers'] = isset( $gtag_opt['triggers'] ) ? $gtag_opt['triggers'] : [];
