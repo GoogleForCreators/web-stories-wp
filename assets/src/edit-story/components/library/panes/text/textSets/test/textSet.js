@@ -175,12 +175,12 @@ const SETS = [
   },
 ];
 
-const insertElement = jest.fn();
+const insertTextSet = jest.fn();
 
 function setup(elements) {
   const libraryValue = {
     actions: {
-      insertElement,
+      insertTextSet,
     },
   };
   const transformValue = {
@@ -234,7 +234,7 @@ function setup(elements) {
 
 describe('TextSets', () => {
   beforeEach(() => {
-    insertElement.mockReset();
+    insertTextSet.mockReset();
   });
 
   it('should render', () => {
@@ -254,23 +254,17 @@ describe('TextSets', () => {
   });
 
   it('should allow inserting a text set', async () => {
-    insertElement.mockImplementation((type, element) => {
-      return {
-        type,
-        id: '123',
-        ...element,
-      };
-    });
+    insertTextSet.mockImplementation((elements) => elements);
     const { queryAllByRole } = setup(SETS);
     const sets = queryAllByRole('listitem');
     expect(sets).toHaveLength(1);
     await fireEvent.click(sets[0]);
 
-    expect(insertElement).toHaveBeenCalledTimes(2);
+    expect(insertTextSet).toHaveBeenCalledTimes(1);
 
-    const element1 = insertElement.mock.calls[0][1];
+    const element1 = insertTextSet.mock.calls[0][0][0];
     expect(element1.content).toContain('Good design is aesthetic');
-    const element2 = insertElement.mock.calls[1][1];
+    const element2 = insertTextSet.mock.calls[0][0][1];
     expect(element2.content).toContain(
       'The possibilities for innovation are not'
     );
