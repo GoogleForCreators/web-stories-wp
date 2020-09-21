@@ -182,6 +182,7 @@ class Story_Post_Type {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
+		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
