@@ -496,6 +496,32 @@ class Clipboard {
   paste() {
     return this._act(() => karmaPuppeteer.clipboard.paste());
   }
+
+  /**
+   * Paste plain text by sending fake event to current target
+   *
+   * @param {string} plainText Plain-text string to paste
+   */
+  pastePlain(plainText) {
+    const pasteEvent = Object.assign(
+      new Event('paste', { bubbles: true, cancelable: true }),
+      {
+        clipboardData: {
+          types: ['text/plain'],
+          items: {
+            length: 1,
+            0: {
+              kind: 'string',
+              type: 'text/plain',
+              getAsString: () => plainText,
+            },
+          },
+          getData: () => plainText,
+        },
+      }
+    );
+    document.activeElement.dispatchEvent(pasteEvent);
+  }
 }
 
 /**
