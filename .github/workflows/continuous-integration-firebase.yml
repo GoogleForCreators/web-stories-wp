@@ -43,7 +43,7 @@ jobs:
 
       - name: Download Web Stories
         run: |
-          cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ../public/stories/
+          cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ./public/stories/
           git checkout public/stories/**/*.html
 
       - name: Compress Images
