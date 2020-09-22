@@ -51,6 +51,17 @@ const CategoryWrapper = styled.div`
   margin-right: -${PANE_PADDING};
 `;
 
+const CATEGORIES = {
+  contact: __('Contact', 'web-stories'),
+  editorial: __('Editorial', 'web-stories'),
+  list: __('List', 'web-stories'),
+  cover: __('Cover', 'web-stories'),
+  section_header: __('Header', 'web-stories'),
+  step: __('Step', 'web-stories'),
+  table: __('Table', 'web-stories'),
+  quote: __('Quote', 'web-stories'),
+};
+
 function TextSets() {
   const [textSets, setTextSets] = useState([]);
   const [selectedCat, setSelectedCat] = useState(null);
@@ -77,7 +88,7 @@ function TextSets() {
         <PillGroup
           items={Object.keys(textSets).map((cat) => ({
             id: cat,
-            label: cat,
+            label: CATEGORIES[cat] ? CATEGORIES[cat] : cat,
           }))}
           selectedItemId={selectedCat}
           selectItem={setSelectedCat}
