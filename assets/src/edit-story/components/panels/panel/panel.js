@@ -68,18 +68,6 @@ function Panel({
   const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
-  // If supplied with a persistance key, persist height & collapsed state
-  useEffect(() => {
-    localStorage.setItem(
-      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
-      JSON.stringify({
-        height,
-        isCollapsed,
-        expandToHeight,
-      })
-    );
-  }, [height, isCollapsed, expandToHeight, name]);
-
   const confirmTitle = useCallback(() => setHasTitle(true), []);
 
   const collapse = useCallback(() => {
@@ -87,6 +75,7 @@ function Panel({
       return;
     }
     setIsCollapsed(true);
+    setManuallyChanged(true);
     if (resizeable) {
       setHeight(0);
     }
@@ -123,6 +112,23 @@ function Panel({
     setHeight(initialHeight);
     setExpandToHeight(initialHeight);
   }, [manuallyChanged, initialHeight, resizeable, persisted]);
+
+  // Persist when user collapses
+  useEffect(() => {
+    if (!manuallyChanged) {
+      return;
+    }
+
+    // Persist only when after user interacts
+    localStorage.setItem(
+      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
+      JSON.stringify({
+        height,
+        isCollapsed,
+        expandToHeight,
+      })
+    );
+  }, [name, isCollapsed, height, expandToHeight, manuallyChanged]);
 
   const manuallySetHeight = useCallback(
     (h) => {
