@@ -90,10 +90,10 @@ header .toggle:focus-visible {
   outline: 1px solid #93bcf9;
 }
 
-
-header nav a.current {
-  color: #fff
+header nav .current {
+  font-weight: bolder;
 }
+
 
 footer .links > li:after,
 header .links > li:after {
@@ -112,6 +112,8 @@ header li:last-child:after {
 }
 
 footer {
+  position: relative;
+  z-index: 3
 }
 
 nav {
@@ -211,9 +213,13 @@ header .docs_flyout {
 /* purgecss ignore */
 header .active ~ .docs_flyout {
   transition: opacity 0.2s, visibility 0s 0.3s ease-out;
-  display: grid;
+  display: flex;
   visibility: visible;
   opacity: 1
+}
+
+.docs_flyout {
+  text-align: left;
 }
 
 .docs_flyout > li {
@@ -222,7 +228,15 @@ header .active ~ .docs_flyout {
 }
 
 .docs_flyout ul {
-  padding: 0
+  padding: 0;
+}
+
+.docs_flyout span > li {
+  font-weight: bolder;
+}
+
+#accessibility_menu {
+  padding-bottom: 2rem
 }
 
 aside {
@@ -293,6 +307,10 @@ aside .docTrack i:last-child {
 .home footer a,
 .home header a {
   color: #fff
+}
+
+#docs_menu a {
+  color: #000
 }
 
 
@@ -563,7 +581,37 @@ aside .docTrack i:last-child {
 }
 
 footer .social_links {
+  flex: 1
+}
+
+footer a.social {
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+footer .social_links.links li:after {
   display: none;
+}
+
+.social {
+  height: 40px;
+  display: block;
+  width: 40px;
+}
+
+.web_creators {
+  background-image: url('/img/web_creators_logo.png');
+}
+.instagram {
+  background-image: url('/img/instagram_logo.png');
+}
+.twtiter {
+  background-image: url('/img/twitter_logo.png');
+}
+.yotube {
+  background-image: url('/img/youtube_logo.png');
 }
 
 @media screen and (max-width: 1280px) {
@@ -632,17 +680,11 @@ footer .social_links {
 
 @keyframes peekaboo {
   from {
-    clipPath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 1.75rem, 20px 1.75rem);
+    clippath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 1.75rem, 20px 1.75rem);
     transform: rotate(0deg)
   }
   to {
-    clipPath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 0, 20px 0);
+    clippath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 0, 20px 0);
     transform: rotate(360deg)
   }
-}
-
-
-
-#Installing-Web-Stories-for-WordPress {
-outline: 10px solid green;
 }

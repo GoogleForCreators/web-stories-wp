@@ -8,16 +8,19 @@
 
   <nav>
     <ul class="links">
-      <li>
+    <li {% if rootClass == 'home' %} class="current" {% endif %}>
         <a href="/" >{{$("About") }}</a>
       </li>
-      <li>
+      <li {% if rootClass == 'docs' %} class="current" {% endif %}>
         <a href="/docs">{{$("Documents") }}</a>
-        <button class="toggle" [class]="active ? 'toggle active' : 'toggle'" class="hide" on="tap:AMP.setState({active: !active})" >
-          {% include "./img/toggle.svg" %}
-          <span class="visuallyhidden">show submenu for "Documents"</span>
-        </button>
-        {% include "documentation_menu.njk" %}
+        {% if rootClass != 'docs' %}
+          <button class="toggle" [class]="active ? 'toggle active' : 'toggle'" class="hide" on="tap:AMP.setState({active: !active})" >
+            {% include "./img/toggle.svg" %}
+            <span class="visuallyhidden">show submenu for "Documents"</span>
+          </button>
+          {% include "documentation_menu.njk" %}
+        {% endif %}
+
       </li>
       <li>
         <a href="https://wordpress.org/support/plugin/amp/">{{$("Support") }}</a>
