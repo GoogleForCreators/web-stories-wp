@@ -139,7 +139,10 @@ function CardGallery({ story, isRTL, galleryLabel }) {
       const onLoadId = ++_id;
 
       if (img) {
+        const prevOnLoad =
+          typeof img.onload === 'function' ? img.onload : () => {};
         img.onload = () => {
+          prevOnLoad();
           if (onLoadId === _id) {
             setRenderPages(true);
           }
