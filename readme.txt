@@ -61,7 +61,9 @@ Web Stories are for everyone! If you are a site owner, content creator, or publi
 == Screenshots ==
 
 1. The Web Stories editor
-2. The Stories dashboard
+2. Add images using drag and drop
+3. Easily change image size and position
+4. The Web Stories dashboard
 
 == Frequently Asked Questions ==
 
