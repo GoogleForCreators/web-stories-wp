@@ -1,8 +1,9 @@
 {
-  "name": "eleventy-high-performance-blog",
-  "version": "5.0.2",
+  "name": "Web Stories WP micro site",
+  "private": "true",
+  "version": "0.0.3",
   "license": "MIT",
-  "description": "A starter repository for a blog web site using the Eleventy static site generator.",
+  "description": "A website!",
   "scripts": {
     "build": "npm run js-build && eleventy",
     "watch": "concurrently \"eleventy --serve\" \"npm run js-build-watch\" \"npm run test-watch\"",
@@ -19,12 +20,9 @@
   "pre-commit": [],
   "repository": {
     "type": "git",
-    "url": "git://github.com/11ty/eleventy-base-blog.git"
+    "url": "git://github.com/google/web-stories-wp.git"
   },
-  "bugs": {
-    "url": "https://github.com/11ty/eleventy-base-blog/issues"
-  },
-  "homepage": "https://github.com/11ty/eleventy-base-blog#readme",
+  "homepage": "https://wp.stories.google/",
   "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
     "@11ty/eleventy-navigation": "^0.1.3",
