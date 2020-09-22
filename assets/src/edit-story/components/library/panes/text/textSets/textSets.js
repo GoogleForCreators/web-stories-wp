@@ -33,7 +33,7 @@ import { Section } from '../../../common';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
-import { useRovingTabIndex } from '../../shared';
+import { PANE_PADDING, useRovingTabIndex } from '../../shared';
 import { getTextSets } from './utils';
 import TextSet from './textSet';
 
@@ -47,8 +47,8 @@ const TextSetContainer = styled.div`
 
 /* Undo the -1.5em set by the Pane */
 const CategoryWrapper = styled.div`
-  margin-left: -1.5em;
-  margin-right: -1.5em;
+  margin-left: -${PANE_PADDING};
+  margin-right: -${PANE_PADDING};
 `;
 
 function TextSets() {
