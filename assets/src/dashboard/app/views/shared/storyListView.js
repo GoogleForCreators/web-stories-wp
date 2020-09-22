@@ -35,7 +35,6 @@ import {
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
-  DateSettingsPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -74,7 +73,7 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import { getRelativeDisplayDate } from '../../../utils/';
+import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 const ListView = styled.div`
@@ -175,7 +174,6 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
-  dateSettings,
 }) {
   const {
     state: { squishContentHeight },
@@ -334,12 +332,8 @@ export default function StoryListView({
                 </TitleTableCellContainer>
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>
-                {getRelativeDisplayDate(story.created, dateSettings)}
-              </TableCell>
-              <TableCell>
-                {getRelativeDisplayDate(story.modified, dateSettings)}
-              </TableCell>
+              <TableCell>{getRelativeDisplayDate(story.created)}</TableCell>
+              <TableCell>{getRelativeDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
                   {story.status === STORY_STATUS.PUBLISH &&
@@ -367,5 +361,4 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
-  dateSettings: DateSettingsPropType,
 };

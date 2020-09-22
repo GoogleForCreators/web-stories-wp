@@ -14,9 +14,21 @@
  * limitations under the License.
  */
 
-export const fillerDateSettingsObject = {
-  dateFormat: 'F j, Y',
-  timeFormat: 'g:i A',
-  gmtOffset: -4,
-  timezone: 'America/Santo_Domingo',
-};
+/**
+ * Internal dependencies
+ */
+import is12Hour from '../is12Hour';
+
+describe('date/is12Hour', () => {
+  it('should default to true', () => {
+    expect(is12Hour()).toBeTrue();
+  });
+
+  it('should detect time format correctly', () => {
+    const is12Hour1 = is12Hour('g:i a');
+    expect(is12Hour1).toBeTrue();
+
+    const is12Hour2 = is12Hour('H:i');
+    expect(is12Hour2).toBeFalse();
+  });
+});

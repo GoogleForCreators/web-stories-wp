@@ -50,6 +50,14 @@ const DEFAULT_CONFIG = {
     hasPublishAction: true,
   },
   version: '1.0.0-alpha.9',
+  isRTL: false,
+  locale: {
+    dateFormat: 'F j, Y',
+    timeFormat: 'g:i a',
+    gmtOffset: -4,
+    timezone: 'America/New_York',
+    weekStartsOn: 0,
+  },
 };
 
 /**

@@ -15,14 +15,21 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
-export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
-export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
+import { toDate } from 'date-fns-tz';
 
-export const STORYBOOK_PAGE_SIZE = {
-  width: 212,
-  height: 318,
-  containerHeight: 376.89,
-};
+/**
+ * Parses a date as UTC date.
+ *
+ * Takes a string without timezone information and
+ * explicitly marks it as UTC.
+ *
+ * @param {Date|string} date Date object or string.
+ * @return {Date} UTC date.
+ */
+function toUTCDate(date) {
+  return toDate(date, { timeZone: '+0000' });
+}
+
+export default toUTCDate;

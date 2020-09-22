@@ -17,19 +17,27 @@
 /**
  * External dependencies
  */
-import moment from 'moment-timezone';
+import { format as _format, toDate } from 'date-fns-tz';
 
 /**
- * Checks if date is today's date.
- *
- * @param {Date} date Uses moment to find if date passed in is the same as "today".
- * If date is not an instance of moment when passed in it will create a moment from it.
- *
- * @return {boolean} If date matches today it will be true
+ * Internal dependencies
  */
-export function isToday(date) {
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
-  const today = moment().startOf('day');
+import convertFormatString from './convertFormatString';
+import getOptions from './getOptions';
 
-  return displayDate.isSame(today, 'd');
+/**
+ * Formats a date by a given format.
+ *
+ * @param {Date} date Date to format.
+ * @param {string} formatString PHP-style date format.
+ * @return {string} Formatted date.
+ */
+function format(date, formatString) {
+  if (!date) {
+    return '';
+  }
+
+  return _format(toDate(date), convertFormatString(formatString), getOptions());
 }
+
+export default format;

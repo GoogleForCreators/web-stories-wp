@@ -15,14 +15,28 @@
  */
 
 /**
+ * External dependencies
+ */
+import MockDate from 'mockdate';
+
+/**
  * Internal dependencies
  */
-export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
-export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
-export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
+import toUTCDate from '../toUTCDate';
 
-export const STORYBOOK_PAGE_SIZE = {
-  width: 212,
-  height: 318,
-  containerHeight: 376.89,
-};
+describe('date/toUTCDate', () => {
+  beforeEach(() => {
+    MockDate.set('2020-07-15T22:47:26+00:00');
+  });
+
+  afterEach(() => {
+    MockDate.reset();
+  });
+
+  it('should add UTC timezone information to date', () => {
+    const dateString = '2020-05-02T10:47:26';
+    const utcDate = toUTCDate(dateString);
+
+    expect(utcDate.toISOString()).toStrictEqual('2020-05-02T10:47:26.000Z');
+  });
+});
