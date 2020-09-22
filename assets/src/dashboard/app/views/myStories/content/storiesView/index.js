@@ -256,10 +256,29 @@ function StoriesView({
                   setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
                 }}
+                aria-label={sprintf(
+                  /* translators: %s is story title */
+                  __(
+                    'No, I do not want to delete the story titled: %s',
+                    'web-stories'
+                  ),
+                  activeStory.title
+                )}
               >
                 {__('Cancel', 'web-stories')}
               </Button>
-              <Button type={BUTTON_TYPES.DEFAULT} onClick={handleOnDeleteStory}>
+              <Button
+                type={BUTTON_TYPES.DEFAULT}
+                onClick={handleOnDeleteStory}
+                aria-label={sprintf(
+                  /* translators: %s is story title */
+                  __(
+                    'Yes, I want to delete the story titled: %s',
+                    'web-stories'
+                  ),
+                  activeStory.title
+                )}
+              >
                 {__('Delete', 'web-stories')}
               </Button>
             </>
