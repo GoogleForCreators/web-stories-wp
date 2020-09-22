@@ -3,36 +3,320 @@ title: Web Stories for WordPress - Documentation
 layout: layouts/base.njk
 rootClass: docs
 ---
-
+<aside>
+  {% include "documentation_menu.njk" %}
+</aside>
 <main>
-  <aside>
-    {% include "documentation_menu.njk" %}
-  </aside>
-
   <section id="Getting_Started">
-    <h1>Getting started</h1>
+    <h1 id="Getting-started">Getting started</h1>
+    <h2 id="Installing-Web-Stories-for-WordPress">Installing Web Stories for WordPress</h2>
+    <p>Use Web Stories for WordPress by installing it directly from the WordPress admin dashboard or <a href="https://wordpress.org/plugins/search/web-stories/" title="Offical WordPress reigstry download page" /> manually downloading the plugin via the plugin repository.</a>You must have administrative permission to install a new plugin for both methods. Follow the steps below to install the Web Stories for WordPress plugin:
+    <ol>
+      <li>Log in to your WordPress website.</li>
+      <li>In the left navigation menu, click Plugins.</li>
+      <li>Click Add new.</li>
+      <li>enter "web stories" in the search bar. you should see the <a href="https://wordpress.org/plugins/search/web-stories/" />web stories plugin</a> in a search results page.</li>
+      <li>Install and activate the Web Stories plugin.</li>
+      <li>Navigating the Dashboard</li>
+      <li>Open the Web Stories Dashboard</li>
+      <li>Select Stories from the sidebar to navigate to the Web Stories Dashboard.</li>
+    </ol>
+    <h2 id="Navigating-the-Dashboard">Navigating the Dashboard</h2>
+    <h3> Open the Web Stories Dashboard </h3>
+    <p>
+      Select Stories from the sidebar to navigate to the Web Stories Dashboard.
+    </p>
+    <p class="img-wrap"><amp-img src="./img/docs/1.png" layout="intrinsic" height="282" width="168" alt="screenshot visually indicating the location of the Stories sidebar option in WordPress"></amp-img></p>
+    <h3>Create your first Web Story</h3>
+    <p> Start creating your first Web Story from scratch by clicking the blue "Create New Story" button or select "Explore Templates" to jump start with preset layouts and styles (more coming soon!). </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="231" height="194" src="./img/docs/2.png"></amp-img></p>
+    <h3> Filter your Stories </h3>
+    <p>
+      View all your Web Stories, or filter by "draft" status and "published" status by selecting the tabs at the top of the Web Stories Dashboard. Select the drop down under the search bar to sort Stories by their name, date created, last modified, or their creator.
+    </p>
+    <p class="img-wrap"><amp-img layout="intrinsic" width="400" height="147" src="./img/docs/3.png"></amp-img></p>
+    <h3> Change view </h3>
+    <p>
+      View stories as a list by clicking the icon next to the sort drop down and switch to classic WordPress table view next to the grid icon in case you need it (for instance for certain plugin integrations).
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="400" height="183" src="./img/docs/4.png"></amp-img></p>
+    <h3> Add Google Analytics, Publisher Logo, and Uh3date Sharing Settings </h3>
+    <p>
+      Add a Google Analytics Tracking ID, a Publisher Logo, and change your Data Sharing settings by clicking Editor Settings.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="389" height="215" src="./img/docs/5.png"></amp-img></p>
+      <h2 id="Navigating-the-editor">Navigating the editor</h2>
+    <p>
+      The editor has main three panels. Starting from the left:
+    </p>
+    <ol>
+      <li>The Element Panel,
+      <li>The Workspace,
+      <li>And the Design Panel.</li>
+    </ol>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="382" height="400" src="./img/docs/6.png"></amp-img></p>
+    <p>
+      Use the Element panel on the left to upload assets and add images, text and shapes to your story pages.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="362" height="62" src="./img/docs/7.png"></amp-img></p>
+    <p>
+      Use the Workspace panel to declare a title, add and remove story pages, design your page by placing and layering assets & elements, view keyboard shortcuts, enable and disable the safe zone, and view all story pages in grid mode.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="196" height="400" src="./img/docs/8.png"></amp-img></p>
+    <p>
+      The Design panel on the right contains two tabs: Design and Document.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="278" height="i56" src="./img/docs/9.png"></amp-img></p>
+    <p>
+      Use the "Design" tab to modify properties related to the currently selected element or group of elements, such as position, size, font properties and more. Change the order of elements/layers via the Layer Panel at the bottom of the Design tab.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="74" height="400" src="./img/docs/10.png"></amp-img></p>
+    <p>
+      Use the "Document" tab to control how your story gets published, add any important metadata and control whether pages auto-advance or need to be tapped manually.
+    </p>
+    <h2 id="Creating-your-first-story">Creating your first story</h2>
+    <p>
+      It’s fun and easier to get started building your first story by selecting a premade template on the Explore Templates page. The templates demonstrate layering techniques, interesting use of assets, and playful text. Hover over a story and click "See details" to preview or "Use template" to begin editing.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="76" height="400" src="./img/docs/11.png"></amp-img></p>
+    </p>
+    <p>
+      You can also create your first Web Story from scratch by selecting the blue "Create New Story" button.
+    </p>
+    <h1 id="How-to-use-the-editor">How to use the editor</h1>
+    <h2 id="Uploading-media">Uploading media</h2>
+    <p>
+      Click on the cloud icon at the top of the Element panel to head to the media gallery, then upload media by either:
+    </p>
+    <ol>
+      <li>Clicking the blue Upload button
+      <li>Dragging media from a local folder to the media gallery or Workspace area
+      <li>Copy + paste into the editor</li>
+    </ol>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="400" height="321" src="./img/docs/12.png"></amp-img></p>
+    <p>
+      The editor currently supports most common image & video formats, with vector and audio formats coming at a later time.
+    </p>
+    <h2 id="Using-media-from-third-party-providers">Using media from third-party providers</h2>
+    <p>
+      (screenshot like the above, but on second tab)
+    </p>
+    <p>
+      Click on the picture icon in the Element panel’s tabs to switch to third-party media sources, giving you access to millions of images & videos. Currently, the following integrations are available:
+    </p>
+    <ul class="real-ul">
+      <li>Unsplash (for photos)
+      <li>Coverr (for videos)</li>
+    </ul>
+    <p>
+      <h4>Note</h4>: While these images are generally royalty free and offered free of charge, it’s your responsibility to collect potential properly & model releases and ensure you adhere to Unsplash’s <a href="https://unsplash.com/license">license</a> and <a href="https://unsplash.com/terms">Terms of Conditions</a>. Similarly, by using Coverr’s videos, you acknowledge you acknowledge their <a href="https://coverr.co/license">FAQ</a> and agree to their <a href="https://coverr.co/license">license</a> restrictions.
+    </p>
+    <h2 id="Add-a-background-image-or-video">Add a background image or video</h2>
+    <p>
+      Add a background image or video by selecting an asset and dragging it into the background drop area. Drop targets are outlined in blue (alternatively, select "Set as background" in the design panel when an image is selected).
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="358" height="264" src="./img/docs/13.png"></amp-img></p>
+    <p>
+      Change the background size and placement by double clicking the image, use the slider to increase or decrease the size and drag it to your preferred position.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="369" height="400" src="./img/docs/14.png"></amp-img></p>
+    </p>
+    <p>
+      Click outside the image to exit background placement.
+    </p>
+    <h2 id="Masking-cropping">Masking & cropping</h2>
+    <p>
+      Mask and crop images by adding shapes from the Shapes tab in the Element panel to your Web Story page, then drag and drop the image into the shape’s drop target area. Drop targets are outlined in blue.
+    </p>
+    <p>
+      <h4>Tip</h4>: Media can also be "dropped" into other images. This is very useful if you’d like to keep an images’ position and size, but want to quickly replace the contents.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="263" height="400" src="./img/docs/15.png"></amp-img></p>
+    </p>
+    <p>
+      Change image cropping and placement by double clicking the shape. Use the slider to increase or decrease the size and drag it to your preferred position.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="400" height="326" src="./img/docs/16.png"></amp-img></p>
+    <p>
+      Click outside the image to exit placement.
+    </p>
+    <h3 id="Adding-text">Adding text</h3>
+    <p>
+      Quickly add text to your Web Story page by selecting the plus icon next to the text tab icon in the Element Panel.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="255" height="400" src="./img/docs/17.png"></amp-img></p>
+    <p>
+      You may also add a preset text by clicking the desired option on the text tab.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="402" height="118" src="./img/docs/18.png"></amp-img></p>
+    </p>
+    <h2 id="Adding-links">Adding links</h2>
+    <p>
+      Add a link to any element by first selecting it on the Web Stories page. The editor will present an area to add a link on the Design tab in the Design panel. Paste the desired web address into the box to add a link to the selected text.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="400" height="379" src="./img/docs/19.png"></amp-img></p>
+    </p>
+    <p>
+      Once added, you may include an optional description and brand icon.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="265" height="291" src="./img/docs/20.png"></amp-img></p>
+      <h2 id="Add-a-page-attachment">Add a page attachment</h2>
+    <p>
+      A page attachment is a special type of ‘inline’ link, which can be accessed by swiping or clicking at the shown affordance at the bottom of the page..
+    </p>
+    <p>
+      Add a page attachment by selecting the background, then add a web address into the Page Attachment text box in the Design panel. You have the option to update the default "Learn more" text to something more fitting. You may not move the location or modify the default styling of the page attachment link.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="138" height="134" src="./img/docs/21.png"></amp-img></p>
+    </p>
+    <h2 id="#Saving-reusing-styles-and-colors">Saving & reusing styles and colors</h2>
+    <p>
+      Save the style of a selected element by clicking the plus button next to "Saved styles" on the Design tab.
+      <p class="img-wrap"><amp-img layout="intrinsic" width="344" height="282" src="./img/docs/22.png"></amp-img></p>
+    </p>
+    <p>
+      You may then apply that style to other elements by selecting them first, then selecting the saved style.
+    </p>
+    <p>
+      If you’d rather only save the foreground color, use the plus button next to the "Saved colors" panel above the "Saved styles" panel. Clicking on a color in this list will only apply the color, and not change any other styles.
+    </p>
+    <p>
+      Save your progress
+    </p>
+    <p>
+      Click the "Save draft" button in the upper right hand side of the second panel to save your progress and continue work on your Web Story later. It appears in your Web Stories Plugin Dashboard.
+    </p>
+    <p>
+      <h4>Tip</h4>: Web Stories in draft mode are automatically saved every 60 seconds, but it’s still a good idea to double check if all changes are saved when you exit the page.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="312" height="331" src="./img/docs/23.png"></amp-img></p>
+    <h1 id="SEO-Optimization">SEO & Optimization</h1>
+    <h2 id="Adding-necessary-metadata">Adding metadata</h2>
+    <p>
+      Metadata can be attached to the Web Story from the Document tab in the Design panel. This includes the cover image, author, and an excerpt or description. Adding these ensures maximum compatibility with search engines and discovery features that take advantage of that metadata.
+    </p>
+    <h2 id="Avoiding-burned-in-text-on-assets">Avoiding ‘burned-in’ text on assets</h2>
+    <p>
+      It’s tempting to reuse video and composite images you have prepared before. Oftentimes, these assets have ‘burned-in’ text, which means that the text is part of the actual image or video. This isn’t only bad for accessibility, but also makes it hard for search engines to understand your content.
+    </p>
+    <p>
+      Instead, use assets that are clean, and layer text elements on top using the element.
+    </p>
+    <p>
+      <h4>Note</h4>: Version 1.0 of Web Stories for WordPress does not yet come with soft caption support for video. Support is coming shortly.
+    </p>
+    <h2 id="Optimizing-your-images-videos">Optimizing your images & videos</h2>
+    <p>
+      Since the editor doesn’t yet have the capability to automatically optimize video & image content for optimal load times, it’s a good idea to to invest into optimizing them in advance.
+    </p>
+    <p>
+      To optimize your images:
+    </p>
+    <ul class="real-ul">
+      <li>Crop to only the visible portion of your image
+      <li>Use PNG8+alpha or WebP for images that require transparency (for example by using <a href="https://pngmini.com/">ImageAlpha</a> or <a href="https://squoosh.app/">Squoosh</a>)
+      <li>Use optimized JPEGs or WebP for all other images (easy with <a href="https://squoosh.app/">Squoosh</a>)
+      <li>Avoid GIFs (use autoplaying looping video instead)</li>
+    </ul>
+    <p>
+      To optimize videos:
+    </p>
+    <ul class="real-ul">
+      <li>Trim to the exact length you need
+      <li>Crop to only the visible portion of our video (usually vertical, 9:16)
+      <li>Encode with the highest compression yielding acceptable results. For H264, that’s often below a CRF of 23 or a bit rate below 1500kbps.</li>
+    </ul>
+    <h2 id="Adding-Analytics">Adding Analytics</h2>
+    <p>
+      There are two ways to include analytics in your Web Stories:
+    </p>
 
-    <amp-position-observer on="scroll:gettingStartedTracker.seekTo(percent=event.percent)" target="Getting_Started" layout="nodisplay" ></amp-position-observer>
+    <ul class="real-ul">
+      <li>Add your Google Analytics ID in the "Editor Settings".
+      <li>If you use the <a href="https://sitekit.withgoogle.com/">Site Kit by Google WordPress</a> plugin, you can set up Web Story analytics there.</li>
+    </ul>
 
-    <amp-animation id="gettingStartedTracker" layout="nodisplay">
+    <h2 id="Additional-SEO-advice">Additional SEO advice</h2>
+    <p>
+      For more in-depth SEO advice, read <a href="https://blog.amp.dev/2020/02/12/seo-for-amp-stories/">SEO for AMP Stories</a> on the AMP Blog.
+    </p>
+    <h1 id="Accessibility">Accessibility</h1>
+    <!--
+    <h2>Keyboard shortcuts & navigation</h2>
+    <p>
+      TBD
+    </p>
+    -->
+    <h2 id="Using-assistive-text-for-images-video">Using assistive text for images & video</h2>
+    <p>
+      Make your images and videos accessible to users of screen readers by adding assistive text.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="284" height="72" src="./img/docs/24.png"></amp-img></p>
+    <p>
+      For images, insert a description of the image in the "Accessibility" section of the Design panel.
+    </p>
+      <p class="img-wrap"><amp-img layout="intrinsic" width="268" height="148" src="./img/docs/25.png"></amp-img></p>
+    <p>
+      For videos, fill out both the "Title" and "Assistive text" text fields in the "Accessibility section of the Design panel. The title should be a description of the video itself, whereas the assistive text should describe the contents of the video.
+    </p>
+    <p>
+      <h4>Note</h4>: Ensure these text fields are empty for images and videos that are purely presentational and have no meaning to a screen reader user.
+    </p>
+    <h2 id="FAQ">FAQ</h2>
+    <p>
+      Thank you for being an early adopter of Web Stories for WordPress! We're working around the clock to improve your experience and add editing capabilities. If you find any issues, please reach out by visiting the <a href="https://wordpress.org/support/plugin/web-stories/">support forum</a> to ask any questions or file feature requests.
+    </p>
+    <!--
+    <p>
+      <h4>What browsers are supported?</h4>
+    </p>
+    -->
+    <p>
+      <h4>For an optimal Web Story creation experience, </h4>we recommend using the latest version of commonly popular web browsers (Chrome, Firefox, Safari, Edge).
+    </p>
+    <p>
+      <h4>Is Web Stories for WordPress compatible with other WordPress plugins?</h4>
+    </p>
+    <p>
+      Because the Web Story format is new to the web ecosystem, some WordPress plugins may need extra support. We are working to improve compatibility with the Web Story editor and encourage you to file any bugs and requests in the <a href="https://wordpress.org/support/plugin/web-stories/">support forum</a>.
+    </p>
+    <p>
+      <h4>Are WordPress multisite networks supported?</h4>
+    </p>
+    <p>
+      Web Stories for WordPress does not support WordPress multisite networks. Please activate the plugin for each individual site you would like to use it on.
+    </p>
+    <p>
+      <h4>Can I use Web Stories for WordPress on a touch screen?</h4>
+    </p>
+    <p>
+      The Web Story editor is not currently supported on touch screen devices, such as a smartphone or tablet.
+    </p>
+    <p>
+      <h4>How do I make Web Stories appear in Google and other search engines?</h4>
+    </p>
+    <p>
+      For better chances of being discovered, after publishing your Web Story, we encourage you to embed it into a regular article or post on your site by using the Web Stories Gutenberg block.
+    </p>
+    <p>
+      While the default sitemaps in WordPress and most popular plugins handle it automatically, we encourage you to check that your Web Stories are included in your XML sitemaps.
+    </p>
+    <p>
+      <h4>How can I optimize Web Stories to show up on search engines?</h4>
+    </p>
+    <p>
+      Web Stories created using Web Stories for WordPress use what’s provided in the Document tab inside the editor to generate schema.org and social meta-data automatically. Ensure you review and update all requested metadata, including cover image, excerpt and publisher logo. Please see <a href="https://blog.amp.dev/2020/02/12/seo-for-amp-stories/">SEO for Web Stories</a> for further SEO guidance.
+    </p>
+    <p>
+      <h4>How do I implement Analytics in my Web Stories? </h4>
+    </p>
+    <p>
+      There are two ways to include analytics in your Web Stories:
+    </p>
+    <ul class="real-ul">
+      <li>Add your Google Analytics ID in the "Editor Settings".
+      <li>If you use the <a href="https://sitekit.withgoogle.com/">Site Kit by Google </a>WordPress plugin, you can set up Google Analytics there.</li>
+    </ul>
+    <p>
+      <h4>What do I do about an AMP validation issue in Search Console?</h4>
+    </p>
+    <p>
+      Web Stories are powered by <a href="https://amp.dev/">AMP</a>, which adds some restrictions on a page’s allowed markup. In some cases, other WordPress plugins use disallowed markup. We recommend temporarily disabling these plugins and reaching out to our <a href="https://wordpress.org/plugins/web-stories/">support forum</a>.
+    </p>
 
-      <script type="application/json">
-        {
-            "duration": "1",
-            "fill": "both",
-            "animations": [
-              {
-                "selector": "#FF",
-                "keyframes": [
-                    {"clipPath": "inset(0 0 110% 0)"},
-                    {"clipPath": "inset(0 0 -10% 0)"}
-                ]
-              }
-            ]
-          }
-      </script>
-    </amp-animation>
   </section>
-
-
 </main>

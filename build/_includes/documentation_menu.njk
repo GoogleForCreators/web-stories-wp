@@ -1,37 +1,104 @@
 <!-- this should not exist -->
 <!-- change it to be generated once the content has been provided -->
 <ul id="docs_menu" class="docs_flyout">
-  <li>Getting started</li>
-  <ul>
-    <li>Installing Web Stories for WordPress</li>
-    <li>Navigating the Dashboard</li>
-    <li>Navigating the editor</li>
-    <li>Creating your first story</li>
-    <li class="docTrack" aria-hidden="true"><i></i><i id="FF"></i></li>
-  </ul>
-  <li>How to use the editor</li>
-  <ul>
-    <li>Uploading media</li>
-    <li>Using media from third-party providers</li>
-    <li>Masking &amp; cropping</li>
-    <li>Adding links &amp; page attachments</li>
-    <li>Saving &amp; reusing styles and colors</li>
-    <li class="docTrack" aria-hidden="true"><i></i><i></i></li>
-  </ul>
-  <li>SEO &amp; Optimization</li>
-  <ul>
-    <li>Adding necessary metadata</li>
-    <li>Avoiding ‘burned-in’ text on assets</li>
-    <li>Optimizing your images &amp; videos</li>
-    <li>Adding Analytics</li>
-    <li>Additional SEO advice (link to amp blog)</li>
-    <li class="docTrack" aria-hidden="true"><i></i><i></i></li>
-  </ul>
-  <li>Accessibility</li>
-  <ul>
-    <li>Keyboard shortcuts &amp; navigation</li>
-    <li>Using assistive text for images &amp; video</li>
-    <li class="docTrack" aria-hidden="true"><i></i><i></i></li>
-  </ul>
-  <li>FAQ</li>
+  <span>
+    <li><a href="#Getting-started">Getting started </a></li>
+    <ul id="getting_started_menu">
+      <li><a id="l1" href="#Installing-Web-Stories-for-WordPress">Installing Web Stories for WordPress</a></li>
+      <li><a id="l2" href="#Navigating-the-Dashboard">Navigating the Dashboard</a></li>
+      <li><a id="l3" href="#Navigating-the-editor">Navigating the editor</a></li>
+      <li><a id="l4" href="#Creating-your-first-story">Creating your first story</a></li>
+      <li id="t1" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+    <li><a href="#How-to-use-the-editor">How to use the editor</a></li>
+    <ul id="how_to_use_menu">
+      <li><a href="#Uploading-media">Uploading media </a></li>
+      <li><a href="#Using-media-from-third-party-providers">Using media from third-party providers </a></li>
+      <li><a href="#Add-a-background-image-or-video">Add a background image or video</a></li>
+      <li><a href="#Masking-cropping">Masking &amp; cropping</a></li>
+      <li><a href="#Adding-links">Adding links &amp;</a><a href="#Add-a-page-attachment"> page attachments</a></li>
+      <li><a href="#Saving-reusing-styles-and-colors">Saving &amp; reusing styles and colors </a></li>
+      <li id=-"t2" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+    <li><a href="#SEO-Optimization">SEO &amp; Optimization</a></li>
+    <ul id="seo_optimization_menu">
+      <li><a href="#Adding-necessary-metadata">Adding necessary metadata </a></li>
+      <li><a href="#Avoiding-burned-in-text-on-assets">Avoiding ‘burned-in’ text on assets </a></li>
+      <li><a href="#Optimizing-your-images-videos">Optimizing your images &amp; videos </a></li>
+      <li><a href="#Adding-Analytics">Adding Analytics </a></li>
+      <li><a href="https://blog.amp.dev/2020/02/12/seo-for-amp-stories/">Additional SEO advice</a></li>
+      <li id="t3" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <span>
+    <li><a href="#Accessibility">Accessibility</a></li>
+    <ul id="accessibility_menu">
+      <!--<li><a href="#Keyboard-shortcuts-navigation">Keyboard shortcuts &amp; navigation </a></li>-->
+      <li><a href="#Using-assistive-text-for-images-video">Using assistive text for images &amp; video </a></li>
+      <li id="t4" class="docTrack" aria-hidden="true"></li>
+    </ul>
+  </span>
+  <li><a href="#FAQ">FAQ</a></li>
 </ul>
+{% if rootClass == 'docs' %}
+      <amp-position-observer on="scroll:a1.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Installing-Web-Stories-for-WordPress">Installing Web Stories for WordPress</amp-position-observer>
+      <amp-position-observer on="scroll:a2.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Navigating-the-Dashboard">Navigating the Dashboard</amp-position-observer>
+      <amp-position-observer on="scroll:a3.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Navigating-the-editor">Navigating the editor</amp-position-observer>
+      <amp-position-observer on="scroll:a4.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Creating-your-first-story">Creating your first story</amp-position-observer>
+
+    <amp-animation id="a1" layout="nodisplay">
+      <script type="application/json">
+        {
+          "fill": "both",
+          "animations": [{
+            "selector": "#l1",
+            "keyframes": [{ "clipPath": "polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 1.75rem, 20px 1.75rem)", "opacity": 0},
+              { "clipPath": "polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 0, 20px 0)", "opacity": 1 }
+            ]
+          }]
+        }
+      </script>
+    </amp-animation>
+
+    <amp-animation id="a2" layout="nodisplay">
+      <script type="application/json">
+        {
+          "fill": "both",
+          "animations": [{
+            "selector": "#l2",
+            "keyframes": "peekaboo"
+          }]
+        }
+      </script>
+    </amp-animation>
+
+    <amp-animation id="a3" layout="nodisplay">
+      <script type="application/json">
+        {
+          "fill": "both",
+          "animations": [{
+            "selector": "#l3",
+            "keyframes": "peekaboo"
+          }]
+        }
+      </script>
+    </amp-animation>
+
+    <amp-animation id="a4" layout="nodisplay">
+      <script type="application/json">
+        {
+          "fill": "both",
+          "animations": [{
+            "selector": "#l4",
+            "keyframes": "peekaboo"
+          }]
+        }
+      </script>
+    </amp-animation>
+
+
+{% endif %}

@@ -23,6 +23,12 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+header, footer, section {
+  width: 88%;
+  margin: auto;
+}
+
+
 body {
   margin: 0;
 }
@@ -30,33 +36,41 @@ body {
 header {
   position: fixed;
   top: 0;
-  left: 6%;
-  z-index: 1;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  padding: 0 6%;
 }
 
 header, footer {
   display: flex;
   align-items: center;
   line-height: 44px;
-  height: 104px;
 }
 
 header > a {
   margin-left: 1.5rem;
 }
 
+footer .links {
+  justify-content: flex-start;
+}
+
+footer a,
 header a {
   text-decoration: none;
   color: #000;
 }
 
+footer .links,
 header .links {
   display: flex;
   justify-content: flex-end;
   align-items: center
 }
 
-header nav a {
+footer .links a,
+header .links a {
   padding: 0 1rem;
   color: #999;
 }
@@ -81,6 +95,7 @@ header nav a.current {
   color: #fff
 }
 
+footer .links > li:after,
 header .links > li:after {
     display: inline-block;
     height: 1rem;
@@ -91,8 +106,12 @@ header .links > li:after {
     vertical-align: middle
 }
 
+footer li:last-child:after,
 header li:last-child:after {
   display: none
+}
+
+footer {
 }
 
 nav {
@@ -108,7 +127,8 @@ ul {
 
 .logo_link {
   line-height: 0;
-  filter: invert(1)
+  filter: invert(1);
+  vertical-align: middle;
 }
 
 .logo_link ~ a {
@@ -121,11 +141,6 @@ ul {
 
 }
 
-header, footer, section {
-  width: 88%;
-  margin: auto;
-}
-
 .fake_button {
   color: #000;
   background-color: #CBACFF;
@@ -136,6 +151,8 @@ header, footer, section {
   -webkit-user-select: none;
   user-select: none;
   text-decoration: none;
+  padding: 0 1rem;
+  white-space: nowrap
 }
 
 .home .fake_button:hover,
@@ -211,15 +228,28 @@ header .active ~ .docs_flyout {
 aside {
   position: fixed;
   left: 6%;
-  top: 144px;
+  top: 9rem;
+  width: 25rem;
+  overflow: scroll;
+  max-height: calc(100vh - 9rem);
+}
+
+aside a {
+  text-decoration: none;
+  color: #000;
 }
 
 aside li {
   line-height: 2.5rem;
 }
 
+aside li:not(.docTrack) {
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
 aside .docs_flyout ul {
-  padding: 1rem 0 1rem 2rem;
+  padding: 1rem;
   position: relative;
 }
 
@@ -249,27 +279,22 @@ aside .docTrack i:last-child {
 }
 
 
-.docs section {
-  height: 999vh
-}
-
-
-
-
-
 .home {
   text-align: center;
   background-color: #000;
   color: #FFF;
 }
 
+.home footer,
 .home header {
   background-color: #000;
 }
 
+.home footer a,
 .home header a {
   color: #fff
 }
+
 
 .home .logo_link {
   filter: none;
@@ -277,10 +302,10 @@ aside .docTrack i:last-child {
 
 
 #hero_text {
-  font-size: 5rem;
+  font-size: 5.5rem;
   text-align: center;
   font-weight: 200;
-  margin: 250px 0 0;
+  margin: 12rem 0 0;
   line-height: 1.4;
 }
 
@@ -291,20 +316,25 @@ aside .docTrack i:last-child {
   font-weight: bold
 }
 
-.home main .fake_button {
+.home .fake_button {
   background-color: transparent;
   color: #CBACFF;
   display: inline-block;
 }
 
-.home_hero_text .fake_button {
-  background: url(/favicon.svg) no-repeat 94%/17% border-box;
-  padding: 1rem 4rem 1rem 1rem;
+.home section .fake_button {
+  margin: 2.5rem auto;
+  padding: 1rem 2rem;
+  background: #CBACFF;
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: bolder
 }
 
-.home_hero_text .fake_button:hover,
-.home_hero_text .fake_button:focus  {
-  background: url(/favicon.svg) no-repeat 94%/17% border-box #93bcf9;
+.fake_button:hover,
+.fake_button:focus,
+.home section .fake_button:hover {
+  background: #93bcf9;
 }
 
 .editor {
@@ -322,14 +352,14 @@ aside .docTrack i:last-child {
   background-size: cover;
   background-repeat: no-repeat;
   opacity: 0.7;
-  top: 750px
+  top: 42rem
 }
 
 #announcing {
   font-size: 3.5rem;
   position: fixed;
   width: 61%;
-  top: 13rem;
+  top: 8rem;
   opacity: 0;
   left: 0;
   right: 0;
@@ -340,7 +370,7 @@ aside .docTrack i:last-child {
 #wysiwygftw {
   font-size: 1.5rem;
   position: fixed;
-  top: 14rem;
+  top: 10rem;
   opacity: 0;
   left: 0;
   right: 0;
@@ -380,8 +410,8 @@ aside .docTrack i:last-child {
 
 #templates {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
+  justify-content: space-between;
   width: 65%;
   margin: auto;
 }
@@ -436,28 +466,31 @@ aside .docTrack i:last-child {
 }
 
 #final_thoughts {
-  min-height: 50vh;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   text-align: left;
   position: relative;
+  min-height: calc(100vh - 250px);
 }
 
 #final_thoughts h1 {
-  font-size: 4rem;
+  font-size: 3.5rem;
+  line-height: 1.4;
 }
 
 #final_thoughts p {
-  font-size: 1.5rem;
   line-height: 2em;
+  margin: 0
 }
 
 #final_thoughts > div {
-  flex: 0.25
+  flex: 0.25;
+  margin: 0 4rem;
+  height: min-content;
 }
 
-#tip_card {
-  background-image: url('/img/tips_card.jpg');
+#tip_card_container {
+  position: relative;
 }
 
 #tip_card, #tip_card_bg {
@@ -465,29 +498,90 @@ aside .docTrack i:last-child {
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: contain;
-  width: 100%;
-  height: 90%;
-  position: absolute;
   transform-origin: bottom left;
 }
 
-#tip_card_bg {
-  background: #CBACFF;
-  height: 85%
+#tip_card {
+  z-index: 2;
 }
 
+
+#tip_card_bg {
+  background: #CBACFF;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.docs header {
+  background: #fff
+}
+
+.docs main {
+  margin-top: 10rem;
+  margin-left: 30rem;
+}
+
+.docs main h1 {
+  font-size: 4.875rem;
+  font-weight: 100;
+}
+
+.docs main h1 {
+  font-size: 4.875rem;
+  font-weight: 100;
+}
+
+.docs main h2 {
+  font-size: 1.75rem;
+  color: #A883E5;
+  padding-top: 7rem;
+}
+
+.docs p {
+  line-height: 1.75;
+  max-width: 90%;
+}
+
+.docs amp-img {
+  margin: 1rem 0 2rem
+}
+
+.docs h1 {
+  padding-top: 5rem;
+}
+
+.docs .img-wrap {
+  text-align: center
+}
+
+.real-ul {
+  list-style: disc
+}
+
+footer .social_links {
+  display: none;
+}
 
 @media screen and (max-width: 1280px) {
   html {
     font-size: 14px
   }
 
+  #templates_screenshot {
+    display: none;
+  }
+
   #announcing {
-    width: 90%
+    width: 90%;
+    font-size: 2.75rem
   }
 
   #editor_bg {
-    max-width: 95%;
+    max-width: 90%;
   }
 
   #hero_text {
@@ -495,8 +589,10 @@ aside .docTrack i:last-child {
   }
 
   #final_thoughts > div {
-    flex: 0.45
+    flex: 0.45;
+    height: min-content
   }
+
 }
 
 
@@ -504,9 +600,49 @@ aside .docTrack i:last-child {
   #templates_screenshot {
     right: -20rem;
   }
+
+  header .links ~ .fake_button {
+    display: none
+  }
 }
 
 @media screen and (max-width: 768px) {
-#announcing {
+  header {
+    flex-direction: column;
+  }
+
+  #final_thoughts h1 {
+    font-size: 1.8rem
+  }
+
+  #final_thoughts {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+
+  #final_thoughts > div {
+    margin: 5em 0
+  }
+
+  #final_thoughts > #tip_card_container {
+    width: 50%;
+    margin: auto
+  }
 }
+
+@keyframes peekaboo {
+  from {
+    clipPath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 1.75rem, 20px 1.75rem);
+    transform: rotate(0deg)
+  }
+  to {
+    clipPath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 0, 20px 0);
+    transform: rotate(360deg)
+  }
+}
+
+
+
+#Installing-Web-Stories-for-WordPress {
+outline: 10px solid green;
 }

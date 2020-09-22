@@ -1,0 +1,37 @@
+{% set locale = locale if locale else 'en' %}
+<footer>
+
+    <a class="logo_link" href="{{ 'https://google.com' | url }}" title="Google.com">
+      {% include "./img/google.svg" %}
+    </a>
+
+    <ul class="links">
+      <li>
+        <a href="https://policies.google.com/privacy?hl={{ locale }}" >{{$("Privacy") }}</a>
+      </li>
+      <li>
+        <a href="https://policies.google.com/terms?hl={{ locale }}">{{$("Terms") }}</a>
+      </li>
+      <li>
+        <a href="https://about.google/intl/{{ locale }}">{{$("About Google") }}</a>
+      </li>
+      <li>
+        <a href="https://about.google/intl/{{ locale }}/products/?tip=autocomplete">{{$("Google Products") }}</a>
+      </li>
+    </ul>
+
+    <ul class="links social_links">
+      <li>
+        <a href="/" >{{$("Connect") }}</a>
+      </li>
+      <li>
+        <a href="/docs">{{$("Terms") }}</a>
+      </li>
+      <li>
+        <a href="https://wordpress.org/support/plugin/amp/">{{$("About Google") }}</a>
+      </li>
+      <li>
+        <a href="https://github.com/google/web-stories-wp">{{$("Google Products") }}</a>
+      </li>
+    </ul>
+</footer>
