@@ -1,0 +1,254 @@
+---
+title: Web Stories for WordPress - Download the Release Candidate
+layout: layouts/base.njk
+rootClass: home
+---
+
+<main>
+
+  <section class="home_hero_text">
+
+    <h1 id="hero_text">{{ $('Visual Storytelling') }}<br>{{ $('Has Come To WordPress.') }}</h1>
+    <p class="hero_subtitle">{{ ('Make visual stories on the web your very own') }}</p>
+    <a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-rc.1/web-stories.zip" class="fake_button">{{$("Get the Plugin")}}</a>
+
+    <amp-position-observer on="scroll:heroTextFade.seekTo(percent=event.percent)" target="hero_text" intersection-ratios="0.5" layout="nodisplay" ></amp-position-observer>
+
+    <amp-animation id="heroTextFade" layout="nodisplay">
+
+      <script type="application/json">
+        {
+            "duration": "1",
+            "fill": "both",
+            "animations": [
+              {
+                "selector": ".home_hero_text",
+                "keyframes": [
+                    {"opacity": 1, "transform": "translateY(0)"},
+                    {"opacity": 1, "transform": "translateY(0)", "offset": 0.8},
+                    {"opacity": 0.2, "offset": 0.99},
+                    {"opacity": 0, "transform": "translateY(-5vh)"}
+                ]
+              }
+            ]
+          }
+      </script>
+    </amp-animation>
+  </section>
+
+  <section class="editor">
+
+    <amp-position-observer on="scroll:editorAnimation.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.25"></amp-position-observer>
+
+    <amp-animation id="editorAnimation" layout="nodisplay">
+
+      <script type="application/json">
+        {
+            "duration": "1",
+            "fill": "both",
+            "animations": [
+              {
+                "selector": "#editor_bg",
+                "keyframes": [
+                    {"transform": "scale(1) translateY(0)", "opacity": 0.7},
+                    {"transform": "scale(1.05) translateY(-17em)", "opacity": 1, "offset": 0.1},
+                    {"transform": "scale(1.05) translateY(-17em)", "opacity": 1, "offset": 0.15},
+                    {"transform": "scale(1.05) translateY(-17em)", "opacity": 1, "offset": 0.4},
+                    {"transform": "scale(1) translateY(-29em)", "opacity": 1, "offset": 0.5},
+                    {"transform": "scale(1) translateY(-31em)", "opacity": 1, "offset": 0.6},
+                    {"transform": "scale(1) translateY(-31em)", "opacity": 1, "offset": 0.8},
+                    {"transform": "scale(1) translateY(-107em)", "opacity": 1, "offset": 1}
+                ]
+              }, {
+                "selector": "#announcing",
+                "keyframes": [
+                    {"transform": "translateY(-0.5em)", "opacity": 0},
+                    {"transform": "translateY(-0.5em)", "opacity": 0, "offset": 0.1},
+                    {"transform": "translateY(0)", "opacity": 1, "offset": 0.2},
+                    {"transform": "translateY(0)", "opacity": 1, "offset": 0.4},
+                    {"transform": "translateY(-5em)", "opacity": 0, "offset": 0.5},
+                    {"transform": "translateY(-10em)", "opacity": 0}
+                ]
+              }, {
+                "selector": "#wysiwygftw",
+                "keyframes": [
+                    {"opacity": 0},
+                    {"opacity": 0, "transform": "translateY(2rem)", "offset": 0.5},
+                    {"opacity": 1, "transform": "translateY(-2rem)", "offset": 0.6},
+                    {"opacity": 1, "transform": "translateY(-2rem)", "offset": 0.8},
+                    {"opacity": 0, "transform": "translateY(-40rem)", "offset": 0.9}
+                ]
+              }, {
+                "selector": "#templates_screenshot",
+                "keyframes": [
+                    {"opacity": 1, "transform": "rotate(-10deg)"},
+                    {"opacity": 0, "transform": "rotate(-8deg) translateX(100px)", "offset": 0.09},
+                    {"opacity": 0, "transform": "rotate(-8deg) translateX(100px)", "offset": 1}
+                ]
+              }
+            ]
+          }
+      </script>
+    </amp-animation>
+
+
+
+    <p id="announcing">{{ $("With Stories for WordPress, we're bringing first-class Web Stories support to WordPress.") }}</p>
+    <p id="wysiwygftw">{{ $("WYSIWYG all the way") }}</p>
+    <amp-video poster="/img/editor_bg.jpg" id="editor_bg" width="1920" height="1200" layout="responsive" title="Stories for WordPresf in action" loop muted>
+      <source src="./video/wysiwyg.av1.mp4" type='video/mp4; codecs="av01.0.00H.08"' />
+      <source src="./video/wysiwyg.webm" type="video/webm" />
+      <source src="./video/wysiwyg.mp4" type="video/mp4" />
+    </amp-video>
+    <amp-position-observer on="enter:editor_bg.play" layout="nodisplay" intersection-ratios="0.9"></amp-position-observer>
+    </amp-video>
+    <div id="templates_screenshot" role="img" aria-label="Screenshot of the Web Stories WordPress Plugin's template gallery"></div>
+  </section>
+
+  <section id="template_list">
+    <amp-position-observer on="scroll:templateAnimation.seekTo(percent=event.percent)" layout="nodisplay"></amp-position-observer>
+
+    <amp-animation id="templateAnimation" layout="nodisplay">
+      <script type="application/json">
+        {
+            "duration": "1",
+            "fill": "forwards",
+            "animations": [
+              {
+                "selector": "#find_callout",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(0)"},
+                    {"offset": "0.3", "transform": "translateY(-140vh)"},
+                    {"offset": "0.5", "transform": "translateY(-140vh)"},
+                    {"offset": "1", "transform": "translateY(-250vh)"}
+                ]
+              }, {
+                "selector": "#template_1",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(40vh)"},
+                    {"offset": "0.3", "transform": "translateY(0)"},
+                    {"offset": "0.5", "transform": "translateY(0)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_2",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(30vh)"},
+                    {"offset": "0.3", "transform": "translateY(10vh)"},
+                    {"offset": "0.5", "transform": "translateY(10vh)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_3",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(40vh)"},
+                    {"offset": "0.3", "transform": "translateY(10vh)"},
+                    {"offset": "0.5", "transform": "translateY(10vh)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_4",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(20vh)"},
+                    {"offset": "0.3", "transform": "translateY(0)"},
+                    {"offset": "0.5", "transform": "translateY(0)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_5",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(20vh)"},
+                    {"offset": "0.3", "transform": "translateY(5vh)"},
+                    {"offset": "0.5", "transform": "translateY(5vh)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_6",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(40vh)"},
+                    {"offset": "0.3", "transform": "translateY(5vh)"},
+                    {"offset": "0.5", "transform": "translateY(5vh)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_7",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(20vh)"},
+                    {"offset": "0.3", "transform": "translateY(-5vh)"},
+                    {"offset": "0.5", "transform": "translateY(-5vh)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }, {
+                "selector": "#template_8",
+                "keyframes": [
+                    {"offset": "0", "transform": "translateY(60vh)"},
+                    {"offset": "0.3", "transform": "translateY(5vh)"},
+                    {"offset": "0.5", "transform": "translateY(5vh)"},
+                    {"offset": "1", "transform": "translateY(-10vh)"}
+                ]
+              }
+            ]
+          }
+      </script>
+    </amp-animation>
+
+    <div id="find_callout">
+      <p>{{ $("Find your template!") }}</p>
+      <div id="templates">
+        <amp-img id="template_1" src="/img/template_1.jpg" width="239px" height="426px" layout="responsive" ></amp-img>
+        <div>
+          <amp-img id="template_2" src="/img/template_2.jpg" width="157px" height="280px"layout="responsive" ></amp-img>
+          <amp-img id="template_3" src="/img/template_3.jpg" width="157px" height="280px" layout="responsive" ></amp-img>
+        </div>
+        <amp-img id="template_4" src="/img/template_4.jpg" width="405px" height="700px" layout="responsive" ></amp-img>
+        <div>
+          <amp-img id="template_5" src="/img/template_5.jpg" width="191px" height="340px" layout="responsive" ></amp-img>
+          <amp-img id="template_6" src="/img/template_6.jpg" width="191px" height="340px" layout="responsive" ></amp-img>
+        </div>
+        <div>
+          <amp-img id="template_7" src="/img/template_7.jpg" width="144px" height="257px" layout="responsive" ></amp-img>
+          <amp-img id="template_8" src="/img/template_8.jpg" width="144px" height="257px" layout="responsive" ></amp-img>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="final_thoughts">
+
+    <amp-position-observer on="scroll:finalThoughtsAnimation.seekTo(percent=event.percent)" intersection-ratios="0" layout="nodisplay" ></amp-position-observer>
+
+    <amp-animation id="finalThoughtsAnimation" layout="nodisplay">
+
+      <script type="application/json">
+        {
+            "duration": "1",
+            "fill": "both",
+            "animations": [
+              {
+                "selector": "#tip_card_bg",
+                "keyframes": [
+                    {"transform": "rotate(0)"},
+                    {"transform": "rotate(0)", "offset": "0.4"},
+                    {"transform": "rotate(10deg)", "offset": "0.5"},
+                    {"transform": "rotate(10deg)", "offset": "1"}
+                ]
+              }
+            ]
+          }
+      </script>
+    </amp-animation>
+
+    <div>
+      <p>{{$('BEFORE YOU START')}}</p>
+      <h1>{{$('Tips to make the most of Web Stories')}}</h1>
+      <p>{{$('Welcome! Starting on a new tool can be daunting so we created a story with some tips to help you get started. It’s also an example of a Web Story! Enjoy the editor.')}}</p>
+      <a href="/tips" class="fake_button">{{$("VIEW THE PLUGIN")}}</a>
+    </div>
+    <div id="tip_card_container">
+      <amp-img id="tip_card" src="/img/tips_card.jpg" alt='Screenshots of a screen of edited photos, with the caption "Tips to make the most of Web Stories"' layout="responsive" width="350" height="620"></amp-img>
+      <div id="tip_card_bg"></div>
+    </div>
+  </section>
+
+
+</main>
