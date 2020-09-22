@@ -1,104 +1,52 @@
+{% if rootClass == "docs" %}
+  {% set DOCS_BASE = '' %}
+{% else %}
+  {% set DOCS_BASE = '/docs' %}
+{% endif %}
+
 <!-- this should not exist -->
-<!-- change it to be generated once the content has been provided -->
+<!-- change it to be generated from the docs themselves-->
 <ul id="docs_menu" class="docs_flyout">
   <span>
-    <li><a href="#Getting-started">Getting started </a></li>
+    <li><a href="{{ DOCS_BASE }}#Getting-started">Getting started </a></li>
     <ul id="getting_started_menu">
-      <li><a id="l1" href="#Installing-Web-Stories-for-WordPress">Installing Web Stories for WordPress</a></li>
-      <li><a id="l2" href="#Navigating-the-Dashboard">Navigating the Dashboard</a></li>
-      <li><a id="l3" href="#Navigating-the-editor">Navigating the editor</a></li>
-      <li><a id="l4" href="#Creating-your-first-story">Creating your first story</a></li>
+      <li><a id="l1" href="{{ DOCS_BASE }}#Installing-Web-Stories-for-WordPress">Installing Web Stories for WordPress</a></li>
+      <li><a id="l2" href="{{ DOCS_BASE }}#Navigating-the-Dashboard">Navigating the Dashboard</a></li>
+      <li><a id="l3" href="{{ DOCS_BASE }}#Navigating-the-editor">Navigating the editor</a></li>
+      <li><a id="l4" href="{{ DOCS_BASE }}#Creating-your-first-story">Creating your first story</a></li>
       <li id="t1" class="docTrack" aria-hidden="true"></li>
     </ul>
   </span>
   <span>
-    <li><a href="#How-to-use-the-editor">How to use the editor</a></li>
+    <li><a href="{{ DOCS_BASE }}#How-to-use-the-editor">How to use the editor</a></li>
     <ul id="how_to_use_menu">
-      <li><a href="#Uploading-media">Uploading media </a></li>
-      <li><a href="#Using-media-from-third-party-providers">Using media from third-party providers </a></li>
-      <li><a href="#Add-a-background-image-or-video">Add a background image or video</a></li>
-      <li><a href="#Masking-cropping">Masking &amp; cropping</a></li>
-      <li><a href="#Adding-links">Adding links &amp;</a><a href="#Add-a-page-attachment"> page attachments</a></li>
-      <li><a href="#Saving-reusing-styles-and-colors">Saving &amp; reusing styles and colors </a></li>
+      <li><a href="{{ DOCS_BASE }}#Uploading-media">Uploading media </a></li>
+      <li><a href="{{ DOCS_BASE }}#Using-media-from-third-party-providers">Using media from third-party providers </a></li>
+      <li><a href="{{ DOCS_BASE }}#Add-a-background-image-or-video">Add a background image or video</a></li>
+      <li><a href="{{ DOCS_BASE }}#Masking-cropping">Masking &amp; cropping</a></li>
+      <li><a href="{{ DOCS_BASE }}#Adding-links">Adding links &amp;</a><a href="#Add-a-page-attachment"> page attachments</a></li>
+      <li><a href="{{ DOCS_BASE }}#Saving-reusing-styles-and-colors">Saving &amp; reusing styles and colors </a></li>
       <li id=-"t2" class="docTrack" aria-hidden="true"></li>
     </ul>
   </span>
   <span>
-    <li><a href="#SEO-Optimization">SEO &amp; Optimization</a></li>
+    <li><a href="{{ DOCS_BASE }}#SEO-Optimization">SEO &amp; Optimization</a></li>
     <ul id="seo_optimization_menu">
-      <li><a href="#Adding-necessary-metadata">Adding necessary metadata </a></li>
-      <li><a href="#Avoiding-burned-in-text-on-assets">Avoiding ‘burned-in’ text on assets </a></li>
-      <li><a href="#Optimizing-your-images-videos">Optimizing your images &amp; videos </a></li>
-      <li><a href="#Adding-Analytics">Adding Analytics </a></li>
+      <li><a href="{{ DOCS_BASE }}#Adding-necessary-metadata">Adding necessary metadata </a></li>
+      <li><a href="{{ DOCS_BASE }}#Avoiding-burned-in-text-on-assets">Avoiding ‘burned-in’ text on assets </a></li>
+      <li><a href="{{ DOCS_BASE }}#Optimizing-your-images-videos">Optimizing your images &amp; videos </a></li>
+      <li><a href="{{ DOCS_BASE }}#Adding-Analytics">Adding Analytics </a></li>
       <li><a href="https://blog.amp.dev/2020/02/12/seo-for-amp-stories/">Additional SEO advice</a></li>
       <li id="t3" class="docTrack" aria-hidden="true"></li>
     </ul>
   </span>
   <span>
-    <li><a href="#Accessibility">Accessibility</a></li>
+    <li><a href="{{ DOCS_BASE }}#Accessibility">Accessibility</a></li>
     <ul id="accessibility_menu">
-      <!--<li><a href="#Keyboard-shortcuts-navigation">Keyboard shortcuts &amp; navigation </a></li>-->
-      <li><a href="#Using-assistive-text-for-images-video">Using assistive text for images &amp; video </a></li>
+      <!--<li><a href="{{ DOCS_BASE }}#Keyboard-shortcuts-navigation">Keyboard shortcuts &amp; navigation </a></li>-->
+      <li><a href="{{ DOCS_BASE }}#Using-assistive-text-for-images-video">Using assistive text for images &amp; video </a></li>
       <li id="t4" class="docTrack" aria-hidden="true"></li>
     </ul>
+  <li><a href="{{ DOCS_BASE }}#FAQ">FAQ</a></li>
   </span>
-  <li><a href="#FAQ">FAQ</a></li>
 </ul>
-{% if rootClass == 'docs' %}
-      <amp-position-observer on="scroll:a1.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Installing-Web-Stories-for-WordPress">Installing Web Stories for WordPress</amp-position-observer>
-      <amp-position-observer on="scroll:a2.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Navigating-the-Dashboard">Navigating the Dashboard</amp-position-observer>
-      <amp-position-observer on="scroll:a3.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Navigating-the-editor">Navigating the editor</amp-position-observer>
-      <amp-position-observer on="scroll:a4.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.5" target="Creating-your-first-story">Creating your first story</amp-position-observer>
-
-    <amp-animation id="a1" layout="nodisplay">
-      <script type="application/json">
-        {
-          "fill": "both",
-          "animations": [{
-            "selector": "#l1",
-            "keyframes": [{ "clipPath": "polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 1.75rem, 20px 1.75rem)", "opacity": 0},
-              { "clipPath": "polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 0, 20px 0)", "opacity": 1 }
-            ]
-          }]
-        }
-      </script>
-    </amp-animation>
-
-    <amp-animation id="a2" layout="nodisplay">
-      <script type="application/json">
-        {
-          "fill": "both",
-          "animations": [{
-            "selector": "#l2",
-            "keyframes": "peekaboo"
-          }]
-        }
-      </script>
-    </amp-animation>
-
-    <amp-animation id="a3" layout="nodisplay">
-      <script type="application/json">
-        {
-          "fill": "both",
-          "animations": [{
-            "selector": "#l3",
-            "keyframes": "peekaboo"
-          }]
-        }
-      </script>
-    </amp-animation>
-
-    <amp-animation id="a4" layout="nodisplay">
-      <script type="application/json">
-        {
-          "fill": "both",
-          "animations": [{
-            "selector": "#l4",
-            "keyframes": "peekaboo"
-          }]
-        }
-      </script>
-    </amp-animation>
-
-
-{% endif %}
