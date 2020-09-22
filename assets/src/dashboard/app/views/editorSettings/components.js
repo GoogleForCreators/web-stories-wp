@@ -214,7 +214,7 @@ export const ErrorText = styled.p`
 export const InlineForm = styled.div`
   display: flex;
 `;
-
+export const VisuallyHiddenLabel = styled.label(visuallyHiddenStyles);
 export const GoogleAnalyticsTextInput = styled(TextInput)`
   flex: 3;
   width: auto;
