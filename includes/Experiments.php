@@ -296,14 +296,15 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2097
+			 * Issue: #2094
 			 * Creation date: 2020-06-04
 			 */
 			[
-				'name'        => 'showTextSets',
-				'label'       => __( 'Text Sets', 'web-stories' ),
-				'description' => __( 'Enable text sets', 'web-stories' ),
+				'name'        => 'showKeyboardShortcutsButton',
+				'label'       => __( 'Keyboard Shortcuts', 'web-stories' ),
+				'description' => __( 'Enable keyboard shortcuts button', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy
