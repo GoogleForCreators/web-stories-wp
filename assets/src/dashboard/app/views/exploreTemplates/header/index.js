@@ -124,6 +124,7 @@ function Header({ filter, totalTemplates, search, templates, sort, view }) {
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={TEMPLATES_GALLERY_SORT_MENU_ITEMS}
+        showSortDropdown={enableInProgressTemplateActions}
         handleSortChange={enableInProgressTemplateActions ? sort.set : () => {}}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',

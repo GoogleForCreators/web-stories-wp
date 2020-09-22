@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -53,20 +48,11 @@ describe('PageMenu integration', () => {
           width: 250,
         })
       );
-      // @todo: The focusing is currently done via timeout. Find a way to
-      // make this nicer.
-      const framesLayer = fixture.querySelector('[data-testid="FramesLayer"]');
-      await waitFor(() => {
-        if (!framesLayer.contains(document.activeElement)) {
-          throw new Error('Focus is not set on the canvas yet');
-        }
-      });
+      await fixture.editor.canvas.framesLayer.waitFocusedWithin();
     });
 
     function getFrame() {
-      return fixture.querySelector(
-        `[data-element-id="${element.id}"] [data-testid="textFrame"]`
-      );
+      return fixture.editor.canvas.framesLayer.frame(element.id);
     }
 
     async function getSelection() {
@@ -75,7 +61,7 @@ describe('PageMenu integration', () => {
     }
 
     it('should render initial content and make it selected', async () => {
-      expect(getFrame().textContent).toEqual('hello world!');
+      expect(getFrame().node.textContent).toEqual('hello world!');
       expect(await getSelection()).toEqual([element.id]);
     });
 

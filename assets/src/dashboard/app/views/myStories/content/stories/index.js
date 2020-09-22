@@ -25,15 +25,19 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Layout } from '../../../../../components';
+import { Layout, ToastProvider } from '../../../../../components';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
   VIEW_STYLE,
   STORY_STATUS,
 } from '../../../../../constants';
-import formattedStoriesArray from '../../../../../storybookUtils/formattedStoriesArray';
-import formattedUsersObject from '../../../../../storybookUtils/formattedUsersObject';
+import {
+  fillerDateSettingsObject,
+  formattedStoriesArray,
+  formattedUsersObject,
+  STORYBOOK_PAGE_SIZE,
+} from '../../../../../storybookUtils';
 import Content from '../';
 import { usePagePreviewSize } from '../../../../../utils';
 import StoriesView from '../storiesView';
@@ -62,19 +66,25 @@ const search = {
 const view = {
   style: VIEW_STYLE.GRID,
   toggleStyle: action('toggle view style'),
-  pageSize: { width: 210, height: 316 },
+  pageSize: STORYBOOK_PAGE_SIZE,
 };
 const page = {
   value: 1,
   set: action('set page number'),
   requestNextPage: action('request next page clicked'),
 };
+
 const storyActions = {
   createTemplateFromStory: action('create template from story clicked'),
   duplicateStory: action('duplicate story clicked'),
   trashStory: action('trash story clicked'),
   updateStory: action('update story clicked'),
+  handlePreviewStory: action('handle preview story selected'),
 };
+
+const longerListOfStories = formattedStoriesArray
+  .concat(formattedStoriesArray)
+  .concat(formattedStoriesArray);
 
 const defaultProps = {
   allPagesFetched: false,
@@ -83,7 +93,7 @@ const defaultProps = {
   page: page,
   search: search,
   sort: sort,
-  stories: formattedStoriesArray,
+  stories: longerListOfStories,
   storyActions: storyActions,
   users: formattedUsersObject,
   view: view,
@@ -100,20 +110,24 @@ export const _default = () => {
 
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content {...defaultProps} view={{ ...view, pageSize }} />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content {...defaultProps} view={{ ...view, pageSize }} />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
     </FlagsProvider>
   );
 };
 
 export const NoStories = () => (
   <Layout.Provider>
-    <StorybookLayoutContainer>
-      <Content {...defaultProps} stories={[]} />
-    </StorybookLayoutContainer>
+    <ToastProvider>
+      <StorybookLayoutContainer>
+        <Content {...defaultProps} stories={[]} />
+      </StorybookLayoutContainer>
+    </ToastProvider>
   </Layout.Provider>
 );
 
@@ -123,15 +137,17 @@ export const AllDataFetched = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            allPagesFetched={true}
-            view={{ ...view, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content
+              {...defaultProps}
+              allPagesFetched={true}
+              view={{ ...view, pageSize }}
+            />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
     </FlagsProvider>
   );
 };
@@ -142,42 +158,50 @@ export const AllDataFetchedAsList = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            allPagesFetched={true}
-            view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content
+              {...defaultProps}
+              allPagesFetched={true}
+              view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
+            />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
     </FlagsProvider>
   );
 };
 
 export const _StoriesViewGrid = () => (
   <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <StoriesView
-      filterValue={STORY_STATUS.ALL}
-      sort={sort}
-      storyActions={storyActions}
-      stories={formattedStoriesArray}
-      users={formattedUsersObject}
-      view={view}
-    />
+    <ToastProvider>
+      <StoriesView
+        filterValue={STORY_STATUS.ALL}
+        sort={sort}
+        storyActions={storyActions}
+        stories={formattedStoriesArray}
+        users={formattedUsersObject}
+        view={view}
+        dateSettings={fillerDateSettingsObject}
+      />
+    </ToastProvider>
   </FlagsProvider>
 );
 
 export const _StoriesViewList = () => (
   <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <StoriesView
-      filterValue={STORY_STATUS.ALL}
-      sort={sort}
-      storyActions={storyActions}
-      stories={formattedStoriesArray}
-      users={formattedUsersObject}
-      view={{ ...view, style: VIEW_STYLE.LIST }}
-    />
+    <ToastProvider>
+      <StoriesView
+        filterValue={STORY_STATUS.ALL}
+        sort={sort}
+        storyActions={storyActions}
+        stories={formattedStoriesArray}
+        users={formattedUsersObject}
+        view={{ ...view, style: VIEW_STYLE.LIST }}
+        dateSettings={fillerDateSettingsObject}
+      />
+    </ToastProvider>
   </FlagsProvider>
 );
 

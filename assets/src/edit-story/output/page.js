@@ -18,20 +18,26 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { StoryAnimation } from '../../animation';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../constants';
 import generatePatternStyles from '../utils/generatePatternStyles';
+import isElementBelowLimit from '../utils/isElementBelowLimit';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const { id, elements, backgroundColor } = page;
+  const { id, animations, elements, backgroundColor } = page;
   const backgroundStyles = {
     backgroundColor: 'white',
     ...generatePatternStyles(backgroundColor),
@@ -43,38 +49,63 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
     ? `el-${longestMediaElement?.id}-media`
     : `${defaultPageDuration}s`;
 
+  const hasPageAttachment = page.pageAttachment?.url?.length > 0;
+
+  // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
+  const validElements = regularElements.map((element) =>
+    !hasPageAttachment || !isElementBelowLimit(element)
+      ? element
+      : {
+          ...element,
+          link: null,
+        }
+  );
+
   return (
     <amp-story-page
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
     >
-      {backgroundElement && (
+      <StoryAnimation.Provider animations={animations} elements={elements}>
+        <StoryAnimation.AMPAnimations />
+
+        {backgroundElement && (
+          <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+            <div className="page-fullbleed-area" style={backgroundStyles}>
+              <div className="page-safe-area">
+                <OutputElement element={backgroundElement} />
+                {backgroundElement.backgroundOverlay && (
+                  <div
+                    className="page-background-overlay-area"
+                    style={generatePatternStyles(
+                      backgroundElement.backgroundOverlay
+                    )}
+                  />
+                )}
+              </div>
+            </div>
+          </amp-story-grid-layer>
+        )}
+
         <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
-          <div className="page-fullbleed-area" style={backgroundStyles}>
+          <div className="page-fullbleed-area">
             <div className="page-safe-area">
-              <OutputElement element={backgroundElement} />
-              {backgroundElement.backgroundOverlay && (
-                <div
-                  className="page-background-overlay-area"
-                  style={generatePatternStyles(
-                    backgroundElement.backgroundOverlay
-                  )}
-                />
-              )}
+              {validElements.map((element) => (
+                <OutputElement key={element.id} element={element} />
+              ))}
             </div>
           </div>
         </amp-story-grid-layer>
+      </StoryAnimation.Provider>
+      {hasPageAttachment && (
+        <amp-story-page-attachment
+          layout="nodisplay"
+          href={page.pageAttachment.url}
+          data-cta-text={
+            page.pageAttachment.ctaText || __('Learn more', 'web-stories')
+          }
+        />
       )}
-
-      <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
-        <div className="page-fullbleed-area">
-          <div className="page-safe-area">
-            {regularElements.map((element) => (
-              <OutputElement key={'el-' + element.id} element={element} />
-            ))}
-          </div>
-        </div>
-      </amp-story-grid-layer>
     </amp-story-page>
   );
 }

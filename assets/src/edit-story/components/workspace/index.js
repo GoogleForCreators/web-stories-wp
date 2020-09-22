@@ -21,20 +21,23 @@ import Inspector from '../inspector';
 import Canvas from '../canvas';
 import CanvasProvider from '../canvas/canvasProvider';
 import RichTextProvider from '../richText/provider';
-import { WorkspaceLayout, CanvasArea, InspectorArea } from './layout';
+import ErrorBoundary from '../errorBoundary';
+import { CanvasArea, InspectorArea } from './layout';
 
 function Workspace() {
   return (
     <CanvasProvider>
       <RichTextProvider>
-        <WorkspaceLayout>
-          <CanvasArea>
+        <CanvasArea>
+          <ErrorBoundary>
             <Canvas />
-          </CanvasArea>
-          <InspectorArea>
+          </ErrorBoundary>
+        </CanvasArea>
+        <InspectorArea>
+          <ErrorBoundary>
             <Inspector />
-          </InspectorArea>
-        </WorkspaceLayout>
+          </ErrorBoundary>
+        </InspectorArea>
       </RichTextProvider>
     </CanvasProvider>
   );

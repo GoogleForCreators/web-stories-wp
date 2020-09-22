@@ -23,7 +23,7 @@
  * @param {number} right The resize delta on the right.
  * @param {number} top The resize delta on the top.
  * @param {number} bottom The resize delta on the bottom.
- * @return {!Array<number>} The offsets in a [dx, dy] array.
+ * @return {Array<number>} The offsets in a [dx, dy] array.
  */
 function calcRotatedResizeOffset(degree, left, right, top, bottom) {
   const rad = (degree * Math.PI) / 180.0;

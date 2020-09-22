@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import getGoogleFontURL from '../../utils/getGoogleFontURL';
+import getFontVariants from '../../components/richText/getFontVariants';
 
 const hasTuple = (tuples, tuple) =>
   tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
@@ -47,9 +48,8 @@ const getFontDeclarations = (pages) => {
 
   for (const { elements } of pages) {
     const textElements = elements.filter(({ type }) => type === 'text');
-
     // Prepare font objects for later use.
-    for (const { font, fontStyle, fontWeight } of textElements) {
+    for (const { font, content } of textElements) {
       const { service, family, variants = [] } = font;
       if (!service || service === 'system') {
         continue;
@@ -60,30 +60,32 @@ const getFontDeclarations = (pages) => {
 
       const fontObj = serviceMap.get(family) || { family, variants: [] };
 
+      const contentVariants = getFontVariants(content);
+
       if (variants.length > 0) {
         // A variant ("axis tuple" in Google Fonts terms) is a combination
         // of font style and weight for a given font.
         // The first item is a flag for italic.
         // The second item is the numeric font weight.
         // Example: [1, 700] for italic + bold
-        const variant = [Number(fontStyle === 'italic'), fontWeight || 400];
+        for (const variant of contentVariants) {
+          // Use closest variant as fallback and let browser do the math if needed.
+          // Examples:
+          // - If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
+          //   [ 1, 200] was requested, fall back to [ 0, 200 ].
+          // - If only [ [ 0, 400 ], [ 0, 800 ] ] exist, and
+          //   [ 1, 800] was requested, fall back to [ 0, 800 ].
+          // - If only [ [ 1, 400 ] ] exist, and
+          //   [ 0, 400] was requested, fall back to [ 1, 400 ].
 
-        // Use closest variant as fallback and let browser do the math if needed.
-        // Examples:
-        // - If only [ [ 0, 200 ], [ 0, 400 ] ] exist, and
-        //   [ 1, 200] was requested, fall back to [ 0, 200 ].
-        // - If only [ [ 0, 400 ], [ 0, 800 ] ] exist, and
-        //   [ 1, 800] was requested, fall back to [ 0, 800 ].
-        // - If only [ [ 1, 400 ] ] exist, and
-        //   [ 0, 400] was requested, fall back to [ 1, 400 ].
+          const newVariant = getNearestTuple(variants, variant);
+          const fontObjHasVariant = hasTuple(fontObj.variants, newVariant);
+          const isValidVariant = hasTuple(variants, newVariant);
 
-        const newVariant = getNearestTuple(variants, variant);
-        const fontObjHasVariant = hasTuple(fontObj.variants, newVariant);
-        const isValidVariant = hasTuple(variants, newVariant);
-
-        // Keeps list unique.
-        if (!fontObjHasVariant && isValidVariant) {
-          fontObj.variants.push(newVariant);
+          // Keeps list unique.
+          if (!fontObjHasVariant && isValidVariant) {
+            fontObj.variants.push(newVariant);
+          }
         }
       }
 
@@ -104,7 +106,6 @@ const getFontDeclarations = (pages) => {
         break;
     }
   }
-
   return fontDeclarations;
 };
 

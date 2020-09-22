@@ -36,7 +36,7 @@ import { LeftArrow, RightArrow } from '../../button';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: ${PAGE_NAV_BUTTON_WIDTH}px;
   height: ${PAGE_NAV_BUTTON_WIDTH}px;
 

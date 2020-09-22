@@ -33,13 +33,15 @@ import Context from './context';
 function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
-
   const [pageSize, setPageSize] = useState({
     width: PAGE_WIDTH,
     height: PAGE_WIDTH / PAGE_RATIO,
   });
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
+  const [showSafeZone, setShowSafeZone] = useState(true);
+  const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
+  const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
 
   const {
     nodesById,
@@ -160,7 +162,10 @@ function CanvasProvider({ children }) {
         editingElementState,
         isEditing: Boolean(editingElement),
         lastSelectionEvent,
+        showSafeZone,
         pageSize,
+        displayLinkGuidelines,
+        pageAttachmentContainer,
       },
       actions: {
         setPageContainer,
@@ -173,6 +178,9 @@ function CanvasProvider({ children }) {
         handleSelectElement,
         selectIntersection,
         setPageSize,
+        setShowSafeZone,
+        setDisplayLinkGuidelines,
+        setPageAttachmentContainer,
       },
     }),
     [
@@ -183,6 +191,7 @@ function CanvasProvider({ children }) {
       editingElementState,
       lastSelectionEvent,
       pageSize,
+      showSafeZone,
       setPageContainer,
       setFullbleedContainer,
       getNodeForElement,
@@ -193,6 +202,11 @@ function CanvasProvider({ children }) {
       handleSelectElement,
       selectIntersection,
       setPageSize,
+      setShowSafeZone,
+      displayLinkGuidelines,
+      setDisplayLinkGuidelines,
+      pageAttachmentContainer,
+      setPageAttachmentContainer,
     ]
   );
   return (

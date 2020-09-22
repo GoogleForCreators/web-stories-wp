@@ -26,8 +26,8 @@ const DndMode = {
  */
 class MouseWithDnd {
   /**
-   * @param {Object} page
-   * @param {Object} frame
+   * @param {Object} page Page.
+   * @param {Object} frame Frame.
    */
   constructor(page, frame) {
     this._page = page;
@@ -101,7 +101,7 @@ class MouseWithDnd {
  */
 class DndClientBinding {
   /**
-   * @param {Object} context
+   * @param {Object} context Context.
    */
   constructor(context) {
     this._context = context;
@@ -143,8 +143,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          * @return {boolean} Returns `true` if DND can be started at these
          * coordinates.
          */
@@ -154,8 +154,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          * @return {boolean} Returns `true` if DND has successfully started.
          */
         start(clientX, clientY) {
@@ -169,9 +169,9 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
-         * @param {boolean} canceled
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
+         * @param {boolean} canceled Whether the event is canceled.
          */
         end(clientX, clientY, canceled) {
           const dataTransfer = this._dataTransfer;
@@ -208,8 +208,8 @@ class DndClientBinding {
         }
 
         /**
-         * @param {number} clientX
-         * @param {number} clientY
+         * @param {number} clientX X coordinates.
+         * @param {number} clientY Y coordinates.
          */
         drag(clientX, clientY) {
           const dataTransfer = this._dataTransfer;
@@ -281,8 +281,8 @@ class DndClientBinding {
   }
 
   /**
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @return {Promise<boolean>} Returns `true` if DND can be started at these
    * coordinates.
    */
@@ -296,8 +296,8 @@ class DndClientBinding {
   }
 
   /**
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @return {Promise<boolean>} Returns `true` if DND has successfully started.
    */
   async start(clientX, clientY) {
@@ -310,8 +310,8 @@ class DndClientBinding {
   }
 
   /**
-   * @param {number} clientX
-   * @param {number} clientY
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
    * @return {Promise} Resolves when the event has been processed.
    */
   async drag(clientX, clientY) {
@@ -326,9 +326,9 @@ class DndClientBinding {
   /**
    * Completes the DND sequence.
    *
-   * @param {number} clientX
-   * @param {number} clientY
-   * @param {boolean} canceled
+   * @param {number} clientX X coordinates.
+   * @param {number} clientY Y coordinates.
+   * @param {boolean} canceled Whether the event is canceled.
    * @return {Promise} Resolves when the event has been processed.
    */
   async end(clientX, clientY, canceled = false) {

@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 /**
  * Class Database_Upgrader
  *
@@ -52,6 +50,8 @@ class Database_Upgrader {
 	/**
 	 * Hooked into admin_init and walks through an array of upgrade methods.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -60,6 +60,11 @@ class Database_Upgrader {
 			'2.0.0' => 'v_2_replace_conic_style_presets',
 			'2.0.1' => 'v_2_add_term',
 			'2.0.2' => 'remove_broken_text_styles',
+			'2.0.3' => 'unify_color_presets',
+			'2.0.4' => 'update_publisher_logos',
+			'3.0.0' => 'add_stories_caps',
+			'3.0.1' => 'rewrite_flush',
+			'3.0.2' => 'rewrite_flush',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -74,6 +79,8 @@ class Database_Upgrader {
 
 	/**
 	 * Runs the upgrade routine.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $routine         The method to call.
 	 * @param string $version         The new version.
@@ -90,6 +97,8 @@ class Database_Upgrader {
 	/**
 	 * First database migration.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function upgrade_1() {
@@ -99,10 +108,12 @@ class Database_Upgrader {
 	/**
 	 * Replaces conic color type with linear.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function v_2_replace_conic_style_presets() {
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! is_array( $style_presets ) ) {
 			return;
@@ -144,11 +155,13 @@ class Database_Upgrader {
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
 		];
-		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
 	}
 
 	/**
 	 * Add the editor term, to make sure it exists.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -159,10 +172,12 @@ class Database_Upgrader {
 	/**
 	 * Removes broken text styles (with color.r|g|b structure).
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function remove_broken_text_styles() {
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION, false );
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! is_array( $style_presets ) ) {
 			return;
@@ -183,11 +198,86 @@ class Database_Upgrader {
 			'textColors' => $style_presets['textColors'],
 			'textStyles' => $text_styles,
 		];
-		update_option( Stories_Controller::STYLE_PRESETS_OPTION, $updated_style_presets );
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Migration for version 2.0.3.
+	 * Color presets: Removes fillColor and textColor and unifies to one color.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function unify_color_presets() {
+		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
+		// Nothing to do if style presets don't exist.
+		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+			return;
+		}
+
+		// If either of these is not an array, something is incorrect.
+		if ( ! is_array( $style_presets['fillColors'] ) || ! is_array( $style_presets['textColors'] ) ) {
+			return;
+		}
+
+		$colors = array_merge( $style_presets['fillColors'], $style_presets['textColors'] );
+
+		// Use only one array of colors for now.
+		$updated_style_presets = [
+			'colors' => $colors,
+		];
+		update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $updated_style_presets );
+	}
+
+	/**
+	 * Split publisher logos into two options.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function update_publisher_logos() {
+		$publisher_logo_id       = 0;
+		$publisher_logo_settings = (array) get_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
+
+		if ( ! empty( $publisher_logo_settings['active'] ) ) {
+			$publisher_logo_id = $publisher_logo_settings['active'];
+		}
+
+		update_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $publisher_logo_id, false );
+		update_option( Settings::SETTING_NAME_PUBLISHER_LOGOS, array_filter( [ $publisher_logo_id ] ), false );
+	}
+
+	/**
+	 * Adds story capabilities to default user roles.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function add_stories_caps() {
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->add_caps_to_roles();
+	}
+
+	/**
+	 * Flush rewrites.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function rewrite_flush() {
+		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+			flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+		}
 	}
 
 	/**
 	 * Runs the needed cleanup after an update, setting the DB version to latest version, flushing caches etc.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $previous_version The previous version.
 	 *

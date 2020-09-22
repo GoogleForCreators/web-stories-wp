@@ -43,7 +43,7 @@ jest.mock('../wpAdapter', () => ({
 describe('useUserApi', () => {
   it('should return user in state data when the API request is fired', async () => {
     const { result } = renderHook(() =>
-      useUserApi(wpAdapter, { wpApi: 'user' })
+      useUserApi(wpAdapter, { userApi: 'user' })
     );
 
     await act(async () => {

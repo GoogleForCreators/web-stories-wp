@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -25,7 +25,7 @@ import { fireEvent } from '@testing-library/react';
 import { arrange } from './_utils';
 
 describe('<ColorPicker /> when manipulating a gradient', () => {
-  it('should have stops reversed when reverse button is clicked', () => {
+  it('should have stops reversed when reverse button is clicked', async () => {
     const { getGradientReverse, onChange } = arrange({
       color: {
         type: 'linear',
@@ -51,6 +51,9 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
 
     fireEvent.click(getGradientReverse());
 
+    // Wait for callback to have been called a second time after debounce
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(2));
+
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
@@ -61,7 +64,7 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
     });
   });
 
-  it('should have rotation changed by .25 turn when rotate button is clicked', () => {
+  it('should have rotation changed by .25 turn when rotate button is clicked', async () => {
     const { getGradientRotate, onChange } = arrange({
       color: {
         type: 'linear',
@@ -87,6 +90,9 @@ describe('<ColorPicker /> when manipulating a gradient', () => {
 
     fireEvent.click(getGradientRotate());
     fireEvent.click(getGradientRotate());
+
+    // Wait for callback to have been called a second time after debounce
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(2));
 
     // Because rotation is now at 0, it's not included
     expect(onChange).toHaveBeenCalledWith({

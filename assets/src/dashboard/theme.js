@@ -43,7 +43,6 @@ export function useTheme() {
 
 const themeFonts = {
   primary: "'Google Sans', sans-serif",
-  secondary: "'Roboto', sans-serif",
 };
 
 const colors = {
@@ -68,17 +67,30 @@ const colors = {
   action: '#47A0F4',
   danger: '#FF0000',
   selection: '#44aaff',
+  warning: '#FF9800',
+  success: '#4CAF4F',
+  // Updated design colors
+  black: '#000',
   // todo
   placeholder: '#d9dbdd',
+  storyPreviewBackground: '#202125',
+
+  foreground: {
+    gray24: '#A1A09B',
+    gray16: '#D1D1CC',
+    gray12: '#E8E8E8', // bonus shade added for side nav create story button
+  },
 };
 
 const borders = {
   gray50: `1px solid ${colors.gray50}`,
+  gray75: `1px solid ${colors.gray75}`,
   gray100: `1px solid ${colors.gray100}`,
   gray800: `1px solid ${colors.gray800}`,
   transparent: '1px solid transparent',
   bluePrimary: `1px solid ${colors.bluePrimary}`,
   action: `1px solid ${colors.action}`,
+  danger: `1px solid ${colors.danger}`,
 };
 
 const theme = {
@@ -123,7 +135,7 @@ const theme = {
     borderRadius: 100,
   },
   formatContainer: {
-    height: 44,
+    height: 76,
   },
   expandedTypeahead: {
     borderRadius: 8,
@@ -134,8 +146,6 @@ const theme = {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
   storyPreview: {
-    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
-    border: `1px solid ${colors.gray75}`,
     borderRadius: 4,
   },
   tooltip: {
@@ -173,11 +183,11 @@ const theme = {
     presets: {
       xxl: {
         family: themeFonts.primary,
-        size: 32,
+        size: 36,
         minSize: 18,
-        lineHeight: 53,
-        minLineHeight: 43,
-        letterSpacing: -0.005,
+        lineHeight: 40,
+        minLineHeight: 40,
+        letterSpacing: -0.01,
         minLetterSpacing: -0.01,
       },
       xl: {
@@ -219,27 +229,27 @@ const theme = {
     min: 10,
   },
   standardViewContentGutter: {
-    desktop: 20,
-    tablet: 20,
+    desktop: 52,
+    tablet: 52,
     largeDisplayPhone: 10,
     smallDisplayPhone: 10,
     min: 10,
   },
   grid: {
     columnGap: {
-      desktop: 10,
-      tablet: 10,
+      desktop: 20,
+      tablet: 20,
       largeDisplayPhone: 10,
       smallDisplayPhone: 10,
       min: 10,
     },
   },
   previewWidth: {
-    desktop: 221,
-    tablet: 189,
-    largeDisplayPhone: 162,
-    smallDisplayPhone: 185,
-    min: 139,
+    desktop: 232,
+    tablet: 200,
+    largeDisplayPhone: 173,
+    smallDisplayPhone: 200,
+    min: 152,
     thumbnail: 33,
   },
   breakpoint: {

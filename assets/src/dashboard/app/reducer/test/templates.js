@@ -23,7 +23,13 @@ import templateReducer, {
 } from '../templates';
 
 describe('templateReducer', () => {
-  it(`should update stories state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called`, () => {
+  const MOCK_ERROR_ID = Date.now();
+
+  beforeAll(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => MOCK_ERROR_ID);
+  });
+
+  it(`should update templates state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called`, () => {
     const result = templateReducer(initialState, {
       type: ACTION_TYPES.FETCH_TEMPLATES_SUCCESS,
       payload: {
@@ -57,7 +63,7 @@ describe('templateReducer', () => {
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: false,
+      error: {},
       templatesOrderById: [1, 2, 3, 4, 5],
       templates: {
         1: {
@@ -87,7 +93,7 @@ describe('templateReducer', () => {
     });
   });
 
-  it(`should update stories state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called and maintain order from existing state`, () => {
+  it(`should update templates state when ${ACTION_TYPES.FETCH_TEMPLATES_SUCCESS} is called and maintain order from existing state`, () => {
     const result = templateReducer(
       { ...initialState, templatesOrderById: [1, 2, 3, 8, 9] },
       {
@@ -168,27 +174,147 @@ describe('templateReducer', () => {
     });
   });
 
-  it(`should update isError when ${ACTION_TYPES.FETCH_TEMPLATES_FAILURE} is called`, () => {
+  it(`should update isLoading when ${ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY} is called`, () => {
     const result = templateReducer(
       { ...initialState },
       {
-        type: ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
+        type: ACTION_TYPES.CREATING_TEMPLATE_FROM_STORY,
         payload: true,
       }
     );
 
     expect(result).toMatchObject({
       ...initialState,
-      isError: true,
+      isLoading: true,
     });
   });
 
-  it(`should return the existing state when ${ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY} is called`, () => {
+  it(`should update error when ${ACTION_TYPES.FETCH_TEMPLATES_FAILURE} is called`, () => {
+    const result = templateReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Load Templates',
+            body: 'test error message',
+          },
+          code: 'test-error-code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Load Templates',
+          body: 'test error message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'test-error-code',
+      },
+    });
+  });
+
+  it(`should update error when ${ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE} is called`, () => {
+    const result = templateReducer(
+      { ...initialState },
+      {
+        type: ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
+        payload: {
+          message: {
+            title: 'Unable to Create Template from Story',
+            body: 'test error message',
+          },
+          code: 'test-error-code',
+        },
+      }
+    );
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {
+        message: {
+          title: 'Unable to Create Template from Story',
+          body: 'test error message',
+        },
+        id: MOCK_ERROR_ID,
+        code: 'test-error-code',
+      },
+    });
+  });
+
+  it(`should return the existing state when ${ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_SUCCESS} is called`, () => {
     const result = templateReducer(
       { ...initialState },
       { type: ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY }
     );
 
     expect(result).toMatchObject(initialState);
+  });
+
+  it(`should update savedTemplates state when ${ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS} is called`, () => {
+    const result = templateReducer(initialState, {
+      type: ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS,
+      payload: {
+        page: 1,
+        savedTemplates: [
+          {
+            id: 1,
+            title: 'Beauty',
+          },
+          {
+            id: 2,
+            title: 'Cooking',
+          },
+          {
+            id: 3,
+            title: 'DIY',
+          },
+          {
+            id: 4,
+            title: 'Cooking',
+          },
+          {
+            id: 5,
+            title: 'Entertainment',
+          },
+        ],
+        totalTemplates: 12,
+        totalPages: 2,
+      },
+    });
+
+    expect(result).toMatchObject({
+      ...initialState,
+      error: {},
+      savedTemplatesOrderById: [1, 2, 3, 4, 5],
+      savedTemplates: {
+        1: {
+          id: 1,
+          title: 'Beauty',
+        },
+        2: {
+          id: 2,
+          title: 'Cooking',
+        },
+        3: {
+          id: 3,
+          title: 'DIY',
+        },
+        4: {
+          id: 4,
+          title: 'Cooking',
+        },
+        5: {
+          id: 5,
+          title: 'Entertainment',
+        },
+      },
+      totalTemplates: 12,
+      totalPages: 2,
+      allPagesFetched: false,
+    });
   });
 });

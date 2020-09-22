@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -27,9 +22,15 @@ import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useFeature } from 'flagged';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import {
+  DateSettingsPropType,
   StoriesPropType,
   StoryActionsPropType,
   UsersPropType,
@@ -38,15 +39,17 @@ import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { Button, Dialog } from '../../../../../components';
+import { Button, Dialog, useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
   BUTTON_TYPES,
+  ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
+import { trackEvent } from '../../../../../../tracking';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -56,17 +59,43 @@ function StoriesView({
   stories,
   users,
   view,
+  dateSettings,
+  initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
   const [titleRenameId, setTitleRenameId] = useState(-1);
   const enableInProgressStoryActions = useFeature(
     'enableInProgressStoryActions'
   );
+  const enableStoryPreviews = useFeature('enableStoryPreviews');
+
   const [activeDialog, setActiveDialog] = useState('');
   const [activeStory, setActiveStory] = useState(null);
+  const [focusedStory, setFocusedStory] = useState({});
+  const [returnStoryFocusId, setReturnStoryFocusId] = useState(null);
+
+  const {
+    actions: { addToast },
+  } = useToastContext();
 
   const isActiveDeleteStoryDialog =
     activeDialog === ACTIVE_DIALOG_DELETE_STORY && activeStory;
+
+  const storiesById = useMemo(() => stories.map(({ id }) => id), [stories]);
+
+  useEffect(() => {
+    // if a dialog is opened and the keyboard used we need to return the focus of the proper grid item to ease keyboard usage
+    // focusedStory is set when activeDialog is removed
+    // then we use storiesById to find the proper index of the interacted with item and use that to decide where to move focus
+    if (focusedStory.id && !returnStoryFocusId) {
+      const storyArrayIndex = storiesById.indexOf(focusedStory.id);
+      const adjustedIndex = focusedStory.isDeleted ? -1 : 0;
+      const focusIndex = storyArrayIndex + adjustedIndex;
+      const storyIdToFocus = storiesById[focusIndex];
+
+      setReturnStoryFocusId(storyIdToFocus);
+    }
+  }, [focusedStory, returnStoryFocusId, storiesById]);
 
   useEffect(() => {
     if (!activeDialog) {
@@ -74,26 +103,43 @@ function StoriesView({
     }
   }, [activeDialog, setActiveStory]);
 
+  useEffect(() => {
+    // every time the activeDialog is truthy we want to reset our state that helps determine where to send focus back to when the dialog is closed
+    if (activeDialog) {
+      setFocusedStory({});
+      setReturnStoryFocusId(null);
+    }
+  }, [activeDialog]);
+
   const handleOnRenameStory = useCallback(
-    (story, newTitle) => {
+    async (story, newTitle) => {
       setTitleRenameId(-1);
+      await trackEvent('rename_story', 'dashboard');
       storyActions.updateStory({ ...story, title: { raw: newTitle } });
     },
     [storyActions]
   );
 
+  const handleOnDeleteStory = useCallback(async () => {
+    await trackEvent('delete_story', 'dashboard');
+    storyActions.trashStory(activeStory);
+    setFocusedStory({ id: activeStory.id, isDeleted: true });
+    setActiveDialog('');
+  }, [storyActions, activeStory]);
+
   const handleMenuItemSelected = useCallback(
-    (sender, story) => {
+    async (sender, story) => {
       setContextMenuId(-1);
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
-          window.location.href = story.bottomTargetAction;
+          await trackEvent('open_in_editor', 'dashboard');
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
           setTitleRenameId(story.id);
           break;
 
         case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+          await trackEvent('duplicate_story', 'dashboard');
           storyActions.duplicateStory(story);
           break;
 
@@ -106,11 +152,37 @@ function StoriesView({
           setActiveDialog(ACTIVE_DIALOG_DELETE_STORY);
           break;
 
+        case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
+          global.navigator.clipboard.writeText(story.link);
+
+          addToast({
+            message: {
+              title: __('URL copied', 'web-stories'),
+              body:
+                story.title.length > 0
+                  ? sprintf(
+                      /* translators: %s is the story title. */
+                      __(
+                        '%s has been copied to your clipboard.',
+                        'web-stories'
+                      ),
+                      story.title
+                    )
+                  : __(
+                      '(no title) has been copied to your clipboard.',
+                      'web-stories'
+                    ),
+            },
+            severity: ALERT_SEVERITY.SUCCESS,
+            id: Date.now(),
+          });
+          break;
+
         default:
           break;
       }
     },
-    [storyActions]
+    [addToast, storyActions]
   );
 
   const enabledMenuItems = useMemo(() => {
@@ -147,6 +219,7 @@ function StoriesView({
       <StoryListView
         handleSortChange={sort.set}
         handleSortDirectionChange={sort.setDirection}
+        pageSize={view.pageSize}
         renameStory={renameStory}
         sortDirection={sort.direction}
         stories={stories}
@@ -154,18 +227,23 @@ function StoriesView({
         storySort={sort.value}
         storyStatus={filterValue}
         users={users}
+        dateSettings={dateSettings}
       />
     ) : (
       <StoryGridView
         bottomActionLabel={__('Open in editor', 'web-stories')}
         centerActionLabelByStatus={
-          enableInProgressStoryActions && STORY_ITEM_CENTER_ACTION_LABELS
+          enableStoryPreviews && STORY_ITEM_CENTER_ACTION_LABELS
         }
         pageSize={view.pageSize}
         renameStory={renameStory}
+        previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
         users={users}
+        dateSettings={dateSettings}
+        returnStoryFocusId={returnStoryFocusId}
+        initialFocusStoryId={initialFocusStoryId}
       />
     );
 
@@ -177,22 +255,22 @@ function StoriesView({
           isOpen={true}
           contentLabel={__('Dialog to confirm deleting a story', 'web-stories')}
           title={__('Delete Story', 'web-stories')}
-          onClose={() => setActiveDialog('')}
+          onClose={() => {
+            setFocusedStory({ id: activeStory.id });
+            setActiveDialog('');
+          }}
           actions={
             <>
               <Button
                 type={BUTTON_TYPES.DEFAULT}
-                onClick={() => setActiveDialog('')}
-              >
-                {__('Cancel', 'web-stories')}
-              </Button>
-              <Button
-                type={BUTTON_TYPES.CTA}
                 onClick={() => {
-                  storyActions.trashStory(activeStory);
+                  setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
                 }}
               >
+                {__('Cancel', 'web-stories')}
+              </Button>
+              <Button type={BUTTON_TYPES.DEFAULT} onClick={handleOnDeleteStory}>
                 {__('Delete', 'web-stories')}
               </Button>
             </>
@@ -216,5 +294,7 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateSettings: DateSettingsPropType,
+  initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;

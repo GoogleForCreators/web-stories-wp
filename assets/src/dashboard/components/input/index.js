@@ -26,11 +26,14 @@ import { TypographyPresets } from '../typography';
 
 export const TextInput = styled.input`
   ${TypographyPresets.Small};
+  width: 100%;
   margin: 0;
   padding: 1px 8px;
   border-radius: 6px;
-  border: ${({ theme }) => theme.borders.gray100};
+  border: ${({ theme, error }) =>
+    error ? theme.borders.danger : theme.borders.gray100};
   &:active {
-    border: ${({ theme }) => theme.borders.action};
+    border: ${({ theme, error }) =>
+      error ? theme.borders.danger : theme.borders.action};
   }
 `;

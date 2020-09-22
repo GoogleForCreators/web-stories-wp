@@ -20,16 +20,25 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import Buttons from './buttons';
 import Title from './title';
+import HeaderProvider from './provider';
 
-const Background = styled.header`
+const Background = styled.header.attrs({
+  role: 'group',
+  'aria-label': __('Story canvas header', 'web-stories'),
+})`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
 const Head = styled.div`
@@ -43,14 +52,16 @@ const ButtonCell = styled.div`
 
 function HeaderLayout() {
   return (
-    <Background>
-      <Head>
-        <Title />
-      </Head>
-      <ButtonCell>
-        <Buttons />
-      </ButtonCell>
-    </Background>
+    <HeaderProvider>
+      <Background>
+        <Head>
+          <Title />
+        </Head>
+        <ButtonCell>
+          <Buttons />
+        </ButtonCell>
+      </Background>
+    </HeaderProvider>
   );
 }
 

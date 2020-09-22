@@ -43,8 +43,10 @@ function UnitsProvider({ pageSize, children }) {
       actions: {
         dataToEditorX: (x) => dataToEditorX(x, pageWidth),
         dataToEditorY: (y) => dataToEditorY(y, pageHeight),
-        editorToDataX: (x) => editorToDataX(x, pageWidth),
-        editorToDataY: (y) => editorToDataY(y, pageHeight),
+        editorToDataX: (x, withRounding) =>
+          editorToDataX(x, pageWidth, withRounding),
+        editorToDataY: (y, withRounding) =>
+          editorToDataY(y, pageHeight, withRounding),
         getBox: (element) => getBox(element, pageWidth, pageHeight),
       },
     }),

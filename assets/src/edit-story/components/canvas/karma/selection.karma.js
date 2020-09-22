@@ -49,12 +49,6 @@ describe('Selection integration', () => {
     fixture.restore();
   });
 
-  function getFrame(elementId) {
-    return fixture.querySelector(
-      `[data-element-id="${elementId}"] [data-testid="textFrame"]`
-    );
-  }
-
   async function getSelection() {
     const storyContext = await fixture.renderHook(() => useStory());
     return storyContext.state.selectedElementIds;
@@ -65,7 +59,7 @@ describe('Selection integration', () => {
   });
 
   it('should show the selection lines when out of page area', async () => {
-    const frame1 = getFrame(element1.id);
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame1, 5, 5),
       down(),
@@ -77,7 +71,7 @@ describe('Selection integration', () => {
   });
 
   it('should show the selection under the page menu', async () => {
-    const frame1 = getFrame(element1.id);
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
     const fbcr = frame1.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame1, 5, 5),
@@ -94,5 +88,20 @@ describe('Selection integration', () => {
     ]);
     expect(await getSelection()).toEqual([element1.id]);
     await fixture.snapshot();
+  });
+
+  it('should return focus to selection when pressing mod+alt+2', async () => {
+    // NB: We can't actually validate that the frame has focus, as that's a bit flaky,
+    // But as long as the focus moves in the shortcut press, it's fair to assume that it has
+    // Move to the canvas selection.
+
+    // Click elsewhere
+    await fixture.events.click(fixture.editor.canvas.header.title);
+    expect(fixture.editor.canvas.header.title).toHaveFocus();
+
+    // Return focus with shortcut
+    await fixture.events.keyboard.shortcut('mod+alt+2');
+    expect(fixture.editor.canvas.header.title).not.toHaveFocus();
+    await fixture.snapshot('selected element has focus');
   });
 });

@@ -60,7 +60,7 @@ describe('getFontDeclarations', () => {
                 [1, 400],
               ],
             },
-            fontStyle: 'italic',
+            content: '<span style="font-style: italic">Hello</span>',
           },
           {
             type: 'text',
@@ -72,7 +72,7 @@ describe('getFontDeclarations', () => {
                 [1, 400],
               ],
             },
-            fontStyle: 'italic',
+            content: '<span style="font-style: italic">Hello</span>',
           },
           {
             type: 'text',
@@ -112,7 +112,7 @@ describe('getFontDeclarations', () => {
               service: 'fonts.google.com',
               variants: [[0, 400]],
             },
-            fontStyle: 'italic',
+            content: '<span style="font-style: italic">Hello</span>',
           },
         ],
       },
@@ -144,8 +144,8 @@ describe('getFontDeclarations', () => {
                 [0, 800],
               ],
             },
-            fontStyle: 'italic',
-            fontWeight: 200,
+            content:
+              '<span style="font-style: italic;font-weight: 200">Hello World</span>',
           },
           {
             type: 'text',
@@ -162,8 +162,8 @@ describe('getFontDeclarations', () => {
                 [0, 800],
               ],
             },
-            fontStyle: 'italic',
-            fontWeight: 800,
+            content:
+              '<span style="font-style: italic;font-weight: 800">Hello</span>',
           },
           {
             type: 'text',
@@ -172,7 +172,7 @@ describe('getFontDeclarations', () => {
               service: 'fonts.google.com',
               variants: [[1, 400]],
             },
-            fontWeight: 400,
+            content: '<span style="font-weight: 400">Hello</span>',
           },
           {
             type: 'text',
@@ -181,7 +181,7 @@ describe('getFontDeclarations', () => {
               service: 'fonts.google.com',
               variants: [[0, 400]],
             },
-            fontWeight: 700,
+            content: '<span style="font-weight: 700">Hello</span>',
           },
           {
             type: 'text',
@@ -193,8 +193,8 @@ describe('getFontDeclarations', () => {
                 [0, 700],
               ],
             },
-            fontStyle: 'italic',
-            fontWeight: 600,
+            content:
+              '<span style="font-style: italic;font-weight: 600">Hello</span>',
           },
         ],
       },

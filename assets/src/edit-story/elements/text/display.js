@@ -40,7 +40,11 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
-import { getHighlightLineheight, generateParagraphTextStyle } from './util';
+import {
+  getHighlightLineheight,
+  generateParagraphTextStyle,
+  calcFontMetrics,
+} from './util';
 
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
@@ -48,7 +52,6 @@ const HighlightWrapperElement = styled.div`
   ${elementWithTextParagraphStyle}
   line-height: ${({ lineHeight, verticalPadding }) =>
     getHighlightLineheight(lineHeight, verticalPadding)};
-  margin: 0;
   padding: 0;
 `;
 const HighlightElement = styled.p`
@@ -61,20 +64,15 @@ const HighlightElement = styled.p`
 
 const MarginedElement = styled.span`
   position: relative;
-  display: inline-block;
+  display: block;
   top: 0;
-  margin: ${({ horizontalPadding, horizontalBuffer }) =>
-    `0 ${horizontalPadding + horizontalBuffer}px`};
-  left: ${({ horizontalPadding, horizontalBuffer }) =>
-    `-${horizontalPadding + horizontalBuffer}px`};
+  left: ${({ horizontalPadding }) => `-${horizontalPadding}px`};
 `;
 
 const Span = styled.span`
   ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
 
-  border-radius: 3px;
-  box-decoration-break: clone;
   position: relative;
 `;
 
@@ -90,13 +88,17 @@ const FillElement = styled.p`
   margin: 0;
   ${elementFillContent}
   ${elementWithFont}
-  ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
+`;
+const Background = styled.div`
+  ${elementWithBackgroundColor}
+  ${elementFillContent}
+  margin: 0;
 `;
 
 function TextDisplay({
+  element,
   element: { id, content, backgroundColor, backgroundTextMode, ...rest },
-  box: { width },
 }) {
   const ref = useRef(null);
 
@@ -115,13 +117,21 @@ function TextDisplay({
     };
   }, [content]);
 
+  const { marginOffset } = calcFontMetrics(element);
   const props = {
     font,
+    element,
+    marginOffset: dataToEditorY(marginOffset),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.NONE
       ? {}
       : { backgroundColor }),
-    ...generateParagraphTextStyle(rest, dataToEditorX, dataToEditorY),
-    horizontalBuffer: 0.02 * width,
+    ...generateParagraphTextStyle(
+      rest,
+      dataToEditorX,
+      dataToEditorY,
+      undefined,
+      element
+    ),
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };
@@ -137,6 +147,10 @@ function TextDisplay({
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
+      : '';
+    const updatedMargin = transform?.updates?.marginOffset;
+    target.style.margin = updatedMargin
+      ? `${dataToEditorY(-updatedMargin) / 2}px 0`
       : '';
   });
 
@@ -175,13 +189,19 @@ function TextDisplay({
   }
 
   return (
-    <FillElement
-      ref={ref}
-      dangerouslySetInnerHTML={{
-        __html: content,
-      }}
-      {...props}
-    />
+    <Background
+      backgroundColor={
+        backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
+      }
+    >
+      <FillElement
+        ref={ref}
+        dangerouslySetInnerHTML={{
+          __html: content,
+        }}
+        {...props}
+      />
+    </Background>
   );
 }
 

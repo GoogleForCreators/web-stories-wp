@@ -34,8 +34,7 @@ const DialogBox = styled.div(
     overflow-y: auto;
     max-width: 920px;
     max-height: calc(100% - 64px);
-    margin: 32px;
-    padding: 24px;
+    padding: 24px 0;
     flex-direction: column;
     background-color: ${colors.white};
     border-radius: 4px;
@@ -54,13 +53,14 @@ const DialogBox = styled.div(
 const DialogTitle = styled.h1`
   ${TypographyPresets.Large};
   flex: 0 0 auto;
-  margin: 0;
+  margin: 0 24px;
   font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 const DialogContent = styled.div`
   ${TypographyPresets.Medium};
   flex: 1 1 auto;
-  padding: 16px 0;
+  padding: 24px 0 16px;
+  margin: 0 24px;
   overflow-y: auto;
   color: ${({ theme }) => theme.colors.gray700};
 `;
@@ -70,7 +70,7 @@ const DialogActions = styled.div`
   align-items: flex-end;
   align-items: center;
   justify-content: flex-end;
-  padding: 0;
+  margin: 0 16px;
 
   & > button {
     margin-right: 10px;

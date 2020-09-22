@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
-import { parseToRgb } from 'polished';
+import { parseToRgb, getLuminance } from 'polished';
 
 /**
  * WordPress dependencies
@@ -30,6 +30,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
 import MULTIPLE_VALUE from '../multipleValue';
@@ -38,7 +39,7 @@ import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
-import ColorBox from './colorBox';
+import { ColorBox } from './colorBox';
 
 const Preview = styled(ColorBox)`
   display: flex;
@@ -46,6 +47,27 @@ const Preview = styled(ColorBox)`
   padding: 0;
   border: 0;
   cursor: pointer;
+`;
+
+const buttonAttrs = {
+  as: 'button',
+  type: 'button', // avoid submitting forms
+};
+
+const buttonStyle = css`
+  overflow: hidden;
+  border: 0 solid;
+  border-color: ${({ theme }) => theme.colors.whiteout} !important;
+  outline: none;
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-width: 1px;
+    box-shadow: none !important;
+  }
+`;
+
+const PreviewButton = styled(Preview).attrs(buttonAttrs)`
+  border-radius: 4px;
+  ${buttonStyle}
 `;
 
 const VisualPreview = styled.div`
@@ -59,20 +81,37 @@ const VisualPreview = styled.div`
   position: relative;
 `;
 
-const CurrentColor = styled.div`
+const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
+  ${buttonStyle}
+  border-radius: 4px 0 0 4px;
+  border-color: ${({ color, theme }) =>
+    getLuminance(color) > 0.2
+      ? theme.colors.bg.v1
+      : theme.colors.whiteout} !important;
+`;
+
+const VisualPreviewInsideButton = styled(VisualPreview)`
+  ${KEYBOARD_USER_SELECTOR} ${PreviewButton}:focus & {
+    margin-left: -1px;
+  }
+`;
+
+const colorStyles = css`
   position: absolute;
   left: 0;
   top: 0;
+  border-radius: 4px 0 0 4px;
   width: 100%;
   height: 100%;
 `;
 
+const CurrentColor = styled.div`
+  ${colorStyles}
+`;
+
 const Transparent = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  ${colorStyles}
+
   background-image: conic-gradient(
     #fff 0.25turn,
     #d3d4d4 0turn 0.5turn,
@@ -94,10 +133,10 @@ const TextualPreview = styled.div`
 const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   background: transparent;
   color: inherit;
-  border: 0;
   margin: 0;
   cursor: text;
   overflow: auto;
+  border-radius: 0 4px 4px 0;
 `;
 
 function ColorPreview({
@@ -133,8 +172,6 @@ function ColorPreview({
   const inputLabel = __('Enter', 'web-stories');
 
   const buttonProps = {
-    as: 'button',
-    type: 'button', // avoid submitting forms
     onClick: () => setPickerOpen(true),
     'aria-label': `${editLabel}: ${label}`,
   };
@@ -180,10 +217,13 @@ function ColorPreview({
         // If editable, only the visual preview component is a button
         // And the text is an input field
         <Preview ref={previewRef}>
-          <VisualPreview {...buttonProps}>
-            <Transparent />
+          <VisualPreviewButton
+            {...buttonProps}
+            color={previewStyle?.backgroundColor}
+          >
+            {value.a < 1 && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
-          </VisualPreview>
+          </VisualPreviewButton>
           <TextualInput
             type="text"
             aria-label={`${inputLabel}: ${label}`}
@@ -194,18 +234,18 @@ function ColorPreview({
         </Preview>
       ) : (
         // If not editable, the whole component is a button
-        <Preview ref={previewRef} {...buttonProps}>
-          <VisualPreview>
+        <PreviewButton ref={previewRef} {...buttonProps}>
+          <VisualPreviewInsideButton>
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
-          </VisualPreview>
+          </VisualPreviewInsideButton>
           <TextualPreview>
             {isMultiple
               ? __('Multiple', 'web-stories')
               : previewText ||
                 _x('None', 'No color or gradient selected', 'web-stories')}
           </TextualPreview>
-        </Preview>
+        </PreviewButton>
       )}
       <Popup
         anchor={previewRef}

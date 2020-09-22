@@ -30,13 +30,35 @@ export const Content = styled.div`
   flex-direction: column;
   margin: 20px 0;
   > * {
-    margin: 20px;
+    margin: 20px 28px;
   }
+  & > svg {
+    margin: 0 28px;
+    height: 64px;
+  }
+`;
+
+export const Header = styled(Content)`
+  margin-top: 42px;
+  margin-bottom: 72px;
+  align-items: flex-start;
 `;
 
 export const NavButton = styled(Button)`
   margin-bottom: 0;
   margin-top: 0;
+  background-color: ${({ theme }) => theme.colors.foreground.gray12};
+  color: ${({ theme }) => theme.colors.black};
+  border-radius: 4px;
+  border-color: ${({ theme }) => theme.colors.foreground.gray12};
+  height: 36px;
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    background-color: ${({ theme }) => theme.colors.foreground.gray16};
+    color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 export const NavList = styled.ul`
@@ -54,7 +76,7 @@ export const NavLink = styled.a`
   ${TypographyPresets.Medium};
   ${({ theme, active }) => `
     display: block;
-    padding: 4px 20px;
+    padding: 4px 28px;
     margin: 4px 0;
     font-weight: ${theme.typography.weight[active ? 'bold' : 'normal']};
     text-decoration: none;
@@ -70,29 +92,7 @@ export const NavLink = styled.a`
   `}
 `;
 
-export const Rule = styled.div(
-  ({ theme }) => `
-    height: 1px;
-    margin-left: 20px;
-    background-color: ${theme.colors.gray50};
-  `
-);
-
 export const AppInfo = styled.div`
   ${TypographyPresets.ExtraSmall};
   color: ${({ theme }) => theme.colors.gray500};
-`;
-
-export const WebStoriesHeading = styled.h1`
-  width: 100%;
-  margin-bottom: 0;
-  font-family: ${({ theme }) => theme.typography.family.secondary};
-  line-height: 1em;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-transform: uppercase;
-  font-size: 24px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.gray900};
-  align-self: center;
 `;

@@ -180,6 +180,8 @@ function VideoControls({
     setHovering(isHovering);
     setShowControls(true);
     checkShowControls();
+    const videoNode = getVideoNode();
+    setIsPlaying(!videoNode.paused);
   }, 10);
 
   useEffect(() => {
@@ -212,14 +214,13 @@ function VideoControls({
     }
   };
 
-  const buttonTitle = isPlaying
+  const buttonLabel = isPlaying
     ? __('Click to pause', 'web-stories')
     : __('Click to play', 'web-stories');
   const TransitionWrapper = isPlayAbove
     ? ({ children }) => (
         <Popup
           anchor={elementRef}
-          showOverflow
           isOpen
           placement="top"
           spacing={playAboveSpacing}
@@ -230,7 +231,7 @@ function VideoControls({
     : CSSTransition;
 
   return (
-    <Controls {...box}>
+    <Controls data-controls-id={id} {...box}>
       {showControls && (
         <TransitionWrapper
           in={hovering}
@@ -239,7 +240,7 @@ function VideoControls({
           timeout={100}
         >
           <ButtonWrapper
-            title={buttonTitle}
+            aria-label={buttonLabel}
             aria-pressed={isPlaying}
             key="wrapper"
             onMouseDown={handlePlayPause}

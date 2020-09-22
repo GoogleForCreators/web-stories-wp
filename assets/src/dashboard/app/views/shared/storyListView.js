@@ -34,6 +34,8 @@ import {
   UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
+  PageSizePropType,
+  DateSettingsPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -42,7 +44,7 @@ import {
   TableBody,
   TableCell,
   TableDateHeaderCell,
-  TableHeader,
+  StickyTableHeader,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
@@ -53,6 +55,7 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
+  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
@@ -60,14 +63,19 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '../../../constants';
-import { PAGE_RATIO } from '../../../constants/pageStructure';
+import {
+  FULLBLEED_RATIO,
+  DASHBOARD_TOP_MARGIN,
+  DEFAULT_DASHBOARD_TOP_SPACE,
+} from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import getFormattedDisplayDate from '../../../utils/getFormattedDisplayDate';
+import { getRelativeDisplayDate } from '../../../utils/';
+import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 const ListView = styled.div`
   width: 100%;
@@ -78,10 +86,10 @@ const PreviewContainer = styled.div`
   position: relative;
   overflow: hidden;
   width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / PAGE_RATIO}px;
+  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.storyPreview.border};
+  border: ${({ theme }) => theme.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
@@ -113,6 +121,18 @@ const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const SelectableParagraph = styled(Paragraph2).attrs({
+  tabIndex: 0,
+  onFocus: onFocusSelectAll,
+  onBlur: onBlurDeselectAll,
+})``;
+
+const StyledTableRow = styled(TableRow)`
+  &:hover ${MoreVerticalButton}, &:focus-within ${MoreVerticalButton} {
+    opacity: 1;
+  }
+`;
+
 const TitleTableCellContainer = styled.div`
   display: flex;
   align-items: center;
@@ -132,9 +152,22 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
+function titleFormatted(rawTitle) {
+  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+}
+
+function onFocusSelectAll(e) {
+  window.getSelection().selectAllChildren(e.target);
+}
+
+function onBlurDeselectAll() {
+  window.getSelection().removeAllRanges();
+}
+
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
+  pageSize,
   renameStory,
   sortDirection,
   stories,
@@ -142,7 +175,17 @@ export default function StoryListView({
   storySort,
   storyStatus,
   users,
+  dateSettings,
 }) {
+  const {
+    state: { squishContentHeight },
+  } = useLayoutContext();
+
+  // get sticky position from the squishContentHeight (header area),
+  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
+  const stickyTopPosition =
+    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
+
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -154,18 +197,30 @@ export default function StoryListView({
     },
     [handleSortDirectionChange, handleSortChange, storySort, sortDirection]
   );
+
+  const onKeyDownSort = useCallback(
+    ({ key }, sortBy) => {
+      if (key === 'Enter') {
+        onSortTitleSelected(sortBy);
+      }
+    },
+    [onSortTitleSelected]
+  );
+
   return (
-    <ListView>
+    <ListView data-testid="story-list-view">
       <Table>
-        <TableHeader>
+        <StickyTableHeader top={stickyTopPosition}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+              onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
             </TablePreviewHeaderCell>
             <TableTitleHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
+              onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
               <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
               <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
@@ -180,6 +235,9 @@ export default function StoryListView({
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
+                }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.CREATED_BY)
                 }
               >
                 {__('Author', 'web-stories')}
@@ -199,41 +257,47 @@ export default function StoryListView({
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.DATE_CREATED)
                 }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.DATE_CREATED)
+                }
               >
                 {__('Date Created', 'web-stories')}
-                <ArrowIconWithTitle
-                  active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
-                >
-                  <ArrowIconSvg />
-                </ArrowIconWithTitle>
               </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg />
+              </ArrowIconWithTitle>
             </TableDateHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
+                onKeyDown={(e) =>
+                  onKeyDownSort(e, STORY_SORT_OPTIONS.LAST_MODIFIED)
+                }
               >
                 {__('Last Modified', 'web-stories')}
-                <ArrowIconWithTitle
-                  active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
-                  asc={sortDirection === SORT_DIRECTION.DESC}
-                >
-                  <ArrowIconSvg />
-                </ArrowIconWithTitle>
               </SelectableTitle>
+              <ArrowIconWithTitle
+                active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
+                asc={sortDirection === SORT_DIRECTION.ASC}
+              >
+                <ArrowIconSvg />
+              </ArrowIconWithTitle>
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
-        </TableHeader>
+        </StickyTableHeader>
         <TableBody>
           {stories.map((story) => (
-            <TableRow key={`story-${story.id}`}>
+            <StyledTableRow key={`story-${story.id}`}>
               <TablePreviewCell>
                 <PreviewContainer>
                   <PreviewErrorBoundary>
-                    <PreviewPage page={story.pages[0]} />
+                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
                   </PreviewErrorBoundary>
                 </PreviewContainer>
               </TablePreviewCell>
@@ -251,13 +315,18 @@ export default function StoryListView({
                     />
                   ) : (
                     <>
-                      <Paragraph2>{story.title}</Paragraph2>
+                      <SelectableParagraph>
+                        {titleFormatted(story.title)}
+                      </SelectableParagraph>
                       <StoryMenu
                         onMoreButtonSelected={storyMenu.handleMenuToggle}
                         contextMenuId={storyMenu.contextMenuId}
                         onMenuItemSelected={storyMenu.handleMenuItemSelected}
                         story={story}
-                        menuItems={storyMenu.menuItems}
+                        menuItems={generateStoryMenu({
+                          menuItems: storyMenu.menuItems,
+                          story,
+                        })}
                         verticalAlign="center"
                       />
                     </>
@@ -265,15 +334,21 @@ export default function StoryListView({
                 </TitleTableCellContainer>
               </TableCell>
               <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.created)}</TableCell>
-              <TableCell>{getFormattedDisplayDate(story.modified)}</TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.created, dateSettings)}
+              </TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.modified, dateSettings)}
+              </TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
-                  {story.status === STORY_STATUS.PUBLISHED &&
+                  {story.status === STORY_STATUS.PUBLISH &&
                     __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.FUTURE &&
+                    __('Scheduled', 'web-stories')}
                 </TableStatusCell>
               )}
-            </TableRow>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>
@@ -284,6 +359,7 @@ export default function StoryListView({
 StoryListView.propTypes = {
   handleSortChange: PropTypes.func.isRequired,
   handleSortDirectionChange: PropTypes.func.isRequired,
+  pageSize: PageSizePropType,
   renameStory: RenameStoryPropType,
   sortDirection: PropTypes.string.isRequired,
   storyMenu: StoryMenuPropType.isRequired,
@@ -291,4 +367,5 @@ StoryListView.propTypes = {
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
   users: UsersPropType.isRequired,
+  dateSettings: DateSettingsPropType,
 };

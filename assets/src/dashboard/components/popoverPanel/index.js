@@ -15,15 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -55,9 +55,9 @@ export const Panel = styled.div(
     ${
       isNarrow
         ? `width: 260px;`
-        : ` 
+        : `
           width: ${theme.popoverPanel.desktopWidth}px;
-          
+
           @media ${theme.breakpoint.tablet} {
             width: ${theme.popoverPanel.tabletWidth}px;
           }

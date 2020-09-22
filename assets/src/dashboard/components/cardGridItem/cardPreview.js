@@ -20,15 +20,18 @@
 import PropTypes from 'prop-types';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
+
 /**
  * Internal dependencies
  */
 import { Button } from '..';
+import { STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
   DEFAULT_STORY_PAGE_ADVANCE_DURATION,
-  STORY_PAGE_STATE,
+  KEYBOARD_USER_SELECTOR,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
 import { clamp, useFocusOut } from '../../utils';
@@ -39,9 +42,8 @@ import { ActionLabel } from './types';
 const PreviewPane = styled.div`
   position: relative;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  height: ${({ cardSize }) => `${cardSize.height}px`};
-  box-shadow: ${({ theme }) => theme.storyPreview.shadow};
-  border: ${({ theme }) => theme.storyPreview.border};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
+  border: ${({ theme }) => theme.borders.gray75};
   width: 100%;
   overflow: hidden;
   z-index: -1;
@@ -51,7 +53,7 @@ PreviewPane.propTypes = {
 };
 
 const EditControls = styled.div`
-  height: ${({ cardSize }) => `${cardSize.height}px`};
+  height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
   width: ${({ cardSize }) => `${cardSize.width}px`};
   position: absolute;
   display: flex;
@@ -62,6 +64,11 @@ const EditControls = styled.div`
   background: ${({ theme }) => theme.cardItem.previewOverlay};
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)}`};
+  }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
     button,
@@ -91,7 +98,10 @@ const EmptyActionContainer = styled(ActionContainer)`
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { href: resolveRoute(targetAction), isLink: true }
+    ? {
+        href: resolveRoute(targetAction),
+        isLink: true,
+      }
     : { onClick: targetAction };
 
 const CARD_STATE = {
@@ -116,11 +126,15 @@ const cardMachine = {
 const cardReducer = (state, action) => cardMachine?.[state]?.[action] || state;
 
 const CardPreviewContainer = ({
+  tabIndex,
   centerAction,
   bottomAction,
+  topAction,
   story,
   pageSize,
+  ariaLabel,
   children,
+  containerAction = () => {},
 }) => {
   const [cardState, dispatch] = useReducer(cardReducer, CARD_STATE.IDLE);
   const [pageIndex, setPageIndex] = useState(0);
@@ -159,37 +173,63 @@ const CardPreviewContainer = ({
       <PreviewPane cardSize={pageSize}>
         <PreviewErrorBoundary>
           <PreviewPage
+            pageSize={pageSize}
             page={storyPages[pageIndex]}
             animationState={
               CARD_STATE.ACTIVE === cardState
-                ? STORY_PAGE_STATE.PLAYING
-                : STORY_PAGE_STATE.RESET
+                ? STORY_ANIMATION_STATE.PLAYING
+                : STORY_ANIMATION_STATE.RESET
             }
           />
         </PreviewErrorBoundary>
         {children}
       </PreviewPane>
       <EditControls
+        aria-label={ariaLabel}
+        data-testid="card-action-container"
         ref={containElem}
         cardSize={pageSize}
         isActive={CARD_STATE.ACTIVE === cardState}
         onFocus={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseEnter={() => dispatch(CARD_ACTION.ACTIVATE)}
         onMouseLeave={() => dispatch(CARD_ACTION.DEACTIVATE)}
+        onClick={containerAction}
+        tabIndex={tabIndex}
       >
-        <EmptyActionContainer />
+        {!topAction && <EmptyActionContainer />}
+        {topAction?.label && (
+          <ActionContainer>
+            <Button
+              tabIndex={tabIndex}
+              data-testid="card-top-action"
+              type={BUTTON_TYPES.SECONDARY}
+              {...getActionAttributes(topAction.targetAction)}
+              aria-label={topAction.ariaLabel}
+            >
+              {topAction.label}
+            </Button>
+          </ActionContainer>
+        )}
+
         {centerAction?.label && (
           <ActionContainer>
             <Button
+              tabIndex={tabIndex}
+              data-testid="card-center-action"
               type={BUTTON_TYPES.SECONDARY}
               {...getActionAttributes(centerAction.targetAction)}
+              aria-label={centerAction.ariaLabel}
             >
               {centerAction.label}
             </Button>
           </ActionContainer>
         )}
         <ActionContainer>
-          <Button {...getActionAttributes(bottomAction.targetAction)}>
+          <Button
+            {...getActionAttributes(bottomAction.targetAction)}
+            tabIndex={tabIndex}
+            aria-label={bottomAction.ariaLabel}
+          >
             {bottomAction.label}
           </Button>
         </ActionContainer>
@@ -202,14 +242,19 @@ const ActionButtonPropType = PropTypes.shape({
   targetAction: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     .isRequired,
   label: ActionLabel,
+  ariaLabel: PropTypes.string,
 });
 
 CardPreviewContainer.propTypes = {
+  ariaLabel: PropTypes.string, //TODO will be required after updating story grids
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
   bottomAction: ActionButtonPropType.isRequired,
+  topAction: ActionButtonPropType,
+  containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,
   story: StoryPropType,
+  tabIndex: PropTypes.number,
 };
 
 export default CardPreviewContainer;

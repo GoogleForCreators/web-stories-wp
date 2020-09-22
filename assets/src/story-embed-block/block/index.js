@@ -18,12 +18,11 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-// TODO: Replace with web stories icon.
-import { page as icon } from '@wordpress/icons';
 
 /**
  * Internal dependencies
  */
+import { ReactComponent as icon } from './icon.svg';
 import metadata from './block.json';
 import edit from './edit';
 import save from './save';
@@ -31,7 +30,7 @@ import save from './save';
 const { name, category, attributes } = metadata;
 
 const settings = {
-  title: __('Web Story', 'web-stories'),
+  title: __('Web Stories', 'web-stories'),
   description: __('Embed a visual story.', 'web-stories'),
   category,
   icon,

@@ -33,6 +33,11 @@ import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 
 const DEFAULT_RESOURCE = { alt: null };
+const MIN_MAX = {
+  ALT_TEXT: {
+    MAX: 1000,
+  },
+};
 
 function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
@@ -54,6 +59,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
           aria-label={__('Edit: Assistive text', 'web-stories')}
+          maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
       </Row>
       <Row>

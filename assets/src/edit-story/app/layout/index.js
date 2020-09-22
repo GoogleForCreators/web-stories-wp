@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import Library from '../../components/library';
@@ -29,24 +34,28 @@ import {
   LIBRARY_MIN_WIDTH,
   LIBRARY_MAX_WIDTH,
   INSPECTOR_MIN_WIDTH,
+  INSPECTOR_MAX_WIDTH,
 } from '../../constants';
 
-const Editor = styled.div`
+const Editor = styled.section.attrs({
+  'aria-label': __('Web Stories Editor', 'web-stories'),
+})`
   font-family: ${({ theme }) => theme.fonts.body1.family};
   font-size: ${({ theme }) => theme.fonts.body1.size};
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-  background-color: ${({ theme }) => theme.colors.bg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
 
   position: relative;
   height: 100%;
   width: 100%;
 
   display: grid;
-  grid-template-areas: 'lib main';
+  grid-template-areas: 'lib canv insp';
   grid-template-columns:
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
-    minmax(${CANVAS_MIN_WIDTH + INSPECTOR_MIN_WIDTH}px, 1fr);
+    minmax(${CANVAS_MIN_WIDTH}px, 1fr)
+    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
 `;
 
 const Area = styled.div`
@@ -62,9 +71,7 @@ function Layout() {
       <Area area="lib">
         <Library />
       </Area>
-      <Area area="main">
-        <Workspace />
-      </Area>
+      <Workspace />
     </Editor>
   );
 }

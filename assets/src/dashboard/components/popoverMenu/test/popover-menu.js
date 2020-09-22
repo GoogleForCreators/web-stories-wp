@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import PopoverMenu from '../';
 
 describe('PopoverMenu', () => {
@@ -31,11 +31,16 @@ describe('PopoverMenu', () => {
     { value: 'foo', label: 'two' },
     { value: false, label: 'invalid option' },
     { value: 'bar', label: 'three' },
+    {
+      value: 'link',
+      label: 'i am a link!',
+      url: 'https://www.google.com/',
+    },
   ];
   const onClickMock = jest.fn();
 
   it('should render a <PopoverMenu />', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -43,7 +48,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should simulate a click on one of the items', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -55,7 +60,7 @@ describe('PopoverMenu', () => {
   });
 
   it('should not allow click on item that has false value', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
@@ -64,5 +69,14 @@ describe('PopoverMenu', () => {
     fireEvent.click(menuItem);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render one anchor and 4 list items', () => {
+    const { queryAllByRole } = renderWithProviders(
+      <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
+    );
+
+    expect(queryAllByRole('listitem')).toHaveLength(4);
+    expect(queryAllByRole('link')).toHaveLength(1);
   });
 });

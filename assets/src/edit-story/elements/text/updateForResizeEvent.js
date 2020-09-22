@@ -21,7 +21,7 @@ import {
   calculateFitTextFontSize,
   calculateTextHeight,
 } from '../../utils/textMeasurements';
-import { dataPixels } from '../../units/dimensions';
+import { dataPixels } from '../../units';
 
 function updateForResizeEvent(element, direction, newWidth, newHeight) {
   const isResizingWidth = direction[0] !== 0;
@@ -29,10 +29,15 @@ function updateForResizeEvent(element, direction, newWidth, newHeight) {
 
   // Vertical or diagonal resizing w/keep ratio.
   if (isResizingHeight) {
+    const { fontSize, marginOffset } = calculateFitTextFontSize(
+      element,
+      newWidth || element.width,
+      newHeight
+    );
+
     return {
-      fontSize: dataPixels(
-        calculateFitTextFontSize(element, newWidth || element.width, newHeight)
-      ),
+      fontSize: dataPixels(fontSize),
+      marginOffset,
     };
   }
 

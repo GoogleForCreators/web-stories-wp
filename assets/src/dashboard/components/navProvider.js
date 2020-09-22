@@ -17,19 +17,18 @@
 /**
  * External dependencies
  */
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { createContext, useContextSelector, identity } from '../utils';
 
 export const NavContext = createContext({ actions: {}, state: {} });
 
-export function useNavContext() {
-  return useContext(NavContext);
+export function useNavContext(selector = identity) {
+  return useContextSelector(NavContext, selector);
 }
 
 export default function NavProvider({ children }) {

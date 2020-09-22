@@ -48,6 +48,8 @@ export const defaultAttributes = {
 
 export const hasEditMode = true;
 
+export const hasEditModeMoveable = true;
+
 export const isMedia = false;
 
 export const canFlip = false;
@@ -63,10 +65,12 @@ export const resizeRules = {
 };
 
 export const panels = [
+  PanelTypes.COLOR_PRESETS,
   PanelTypes.STYLE_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,
   PanelTypes.LINK,
+  PanelTypes.ANIMATION,
 ];

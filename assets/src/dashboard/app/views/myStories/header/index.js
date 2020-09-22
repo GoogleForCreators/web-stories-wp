@@ -15,23 +15,31 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useMemo, memo, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { useDebouncedCallback } from 'use-debounce';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import { useMemo } from 'react';
-import PropTypes from 'prop-types';
-/**
  * Internal dependencies
  */
-import { Layout, ToggleButtonGroup } from '../../../../components';
+import { trackEvent } from '../../../../../tracking';
+import {
+  Layout,
+  ToggleButtonGroup,
+  useLayoutContext,
+} from '../../../../components';
 import {
   DASHBOARD_VIEWS,
   STORY_STATUSES,
   STORY_SORT_MENU_ITEMS,
+  TEXT_INPUT_DEBOUNCE,
 } from '../../../../constants';
 import {
   StoriesPropType,
@@ -59,12 +67,27 @@ function Header({
   view,
   wpListURL,
 }) {
+  const {
+    actions: { scrollToTop },
+  } = useLayoutContext();
+
   const resultsLabel = useDashboardResultsLabel({
     currentFilter: filter.value,
     isActiveSearch: Boolean(search.keyword),
     totalResults: totalStoriesByStatus?.all,
     view: DASHBOARD_VIEWS.MY_STORIES,
   });
+
+  const handleClick = useCallback(
+    async (filterValue) => {
+      await trackEvent('filter_stories', 'dashboard', '', '', {
+        status: filterValue,
+      });
+      filter.set(filterValue);
+      scrollToTop();
+    },
+    [filter, scrollToTop]
+  );
 
   const HeaderToggleButtons = useMemo(() => {
     if (
@@ -79,7 +102,9 @@ function Header({
         <ToggleButtonGroup
           buttons={STORY_STATUSES.map((storyStatus) => {
             return {
-              handleClick: () => filter.set(storyStatus.value),
+              handleClick: () => {
+                handleClick(storyStatus.value);
+              },
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
               disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
@@ -93,7 +118,22 @@ function Header({
         />
       </HeaderToggleButtonContainer>
     );
-  }, [filter, totalStoriesByStatus]);
+  }, [filter, totalStoriesByStatus, handleClick]);
+
+  const onSortChange = useCallback(
+    (newSort) => {
+      sort.set(newSort);
+      scrollToTop();
+    },
+    [scrollToTop, sort]
+  );
+
+  const [debouncedTypeaheadChange] = useDebouncedCallback(async (value) => {
+    await trackEvent('search_stories', 'dashboard', '', '', {
+      search_term: value,
+    });
+    search.setKeyword(value);
+  }, TEXT_INPUT_DEBOUNCE);
 
   return (
     <Layout.Squishable>
@@ -101,19 +141,20 @@ function Header({
         defaultTitle={__('My Stories', 'web-stories')}
         searchPlaceholder={__('Search Stories', 'web-stories')}
         stories={stories}
-        handleTypeaheadChange={search.setKeyword}
+        handleTypeaheadChange={debouncedTypeaheadChange}
         typeaheadValue={search.keyword}
       >
         {HeaderToggleButtons}
       </PageHeading>
       <BodyViewOptions
         showGridToggle
+        showSortDropdown
         resultsLabel={resultsLabel}
         layoutStyle={view.style}
         handleLayoutSelect={view.toggleStyle}
         currentSort={sort.value}
         pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
+        handleSortChange={onSortChange}
         wpListURL={wpListURL}
         sortDropdownAriaLabel={__(
           'Choose sort option for display',
@@ -134,4 +175,4 @@ Header.propTypes = {
   wpListURL: PropTypes.string,
 };
 
-export default Header;
+export default memo(Header);

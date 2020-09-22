@@ -58,7 +58,12 @@ function Content({
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             <StandardViewContentGutter>
               {totalTemplates > 0 ? (
                 <>

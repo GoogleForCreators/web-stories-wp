@@ -74,7 +74,7 @@ TestPanel.propTypes = {
 /**
  * @param {Function} panelType The panel component function.
  * @param {Array<Object>} selectedElements The array of the selected elements.
- * @param {Function} wrapperComp An optional wrapper component.
+ * @param {Function} [wrapperComp] An optional wrapper component.
  * @return {Object} The result of rendering. Includes `pushUpdate`, `pushUpdateForObject`, and `submit` callbacks.
  */
 export function renderPanel(panelType, selectedElements, wrapperComp) {

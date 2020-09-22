@@ -22,7 +22,7 @@ import { waitFor, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import DeleteDialog from '../panes/media/deleteDialog';
+import DeleteDialog from '../panes/media/local/deleteDialog';
 import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
@@ -44,8 +44,10 @@ function setup() {
   };
 
   const mediaValue = {
-    actions: {
-      deleteMediaElement,
+    local: {
+      actions: {
+        deleteMediaElement,
+      },
     },
   };
 

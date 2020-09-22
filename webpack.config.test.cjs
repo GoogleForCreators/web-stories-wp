@@ -29,22 +29,35 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
  */
 const webpackConfigArray = require('./webpack.config.cjs');
 
-module.exports = webpackConfigArray
-  .filter((webpackConfig) => 'edit-story' in webpackConfig.entry)
-  .map((webpackConfig) => ({
-    ...webpackConfig,
-    // Karma watches the test entry points, so we don't need to specify
-    // them here. Webpack watches dependencies.
-    entry: null,
-    mode: 'development',
-    devtool: 'inline-source-map',
-    output: {
-      ...webpackConfig.output,
-      path: path.resolve(process.cwd(), 'assets', 'testjs'),
-    },
-    // WP's DependencyExtractionWebpackPlugin is not needed for tests and
-    // otherwise has some failures.
-    plugins: webpackConfig.plugins.filter(
-      (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
-    ),
-  }))[0];
+function getConfig(group, { coverage = false } = {}) {
+  const config = webpackConfigArray
+    .filter((webpackConfig) => group in webpackConfig.entry)
+    .map((webpackConfig) => ({
+      ...webpackConfig,
+      // Karma watches the test entry points, so we don't need to specify
+      // them here. Webpack watches dependencies.
+      entry: null,
+      mode: 'development',
+      devtool: 'inline-source-map',
+      output: {
+        ...webpackConfig.output,
+        path: path.resolve(process.cwd(), 'assets', 'testjs'),
+      },
+      // WP's DependencyExtractionWebpackPlugin is not needed for tests and
+      // otherwise has some failures.
+      plugins: webpackConfig.plugins.filter(
+        (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
+      ),
+    }))[0];
+  if (coverage) {
+    config.module.rules.push({
+      enforce: 'post',
+      test: /\.js$/,
+      exclude: [/\/karma\//, /\.karma\.js$/, /\.test\.js$/, /node_modules/],
+      use: '@jsdevtools/coverage-istanbul-loader',
+    });
+  }
+  return config;
+}
+
+module.exports = getConfig;

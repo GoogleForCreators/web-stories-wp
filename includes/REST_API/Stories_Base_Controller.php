@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\KSES;
+use Google\Web_Stories\Media;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -41,7 +42,22 @@ use WP_REST_Response;
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
+	 * Constructor.
+	 *
+	 * Override the namespace.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $post_type Post type.
+	 */
+	public function __construct( $post_type ) {
+		parent::__construct( $post_type );
+		$this->namespace = 'web-stories/v1';
+	}
+	/**
 	 * Prepares a single template for create or update. Add post_content_filtered field to save/insert.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Request object.
 	 *
@@ -74,6 +90,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * Adds post_content_filtered field to output.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
 	 *
@@ -91,7 +109,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( in_array( 'featured_media_url', $fields, true ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, 'medium' );
+			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
@@ -100,7 +118,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$links   = $response->get_links();
 
 		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
+		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
 			foreach ( $rel_links as $link ) {
 				$response->add_link( $rel, $link['href'], $link['attributes'] );
@@ -113,6 +131,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 	/**
 	 * Creates a single post.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
@@ -129,6 +149,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
 	 * Updates a single post.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_REST_Response|\WP_Error Response object on success, or WP_Error object on failure.
@@ -143,6 +165,8 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Item schema as an array.
 	 */

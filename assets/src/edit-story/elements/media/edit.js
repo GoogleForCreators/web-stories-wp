@@ -18,7 +18,12 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -28,10 +33,10 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import EditCropMovable from './editCropMovable';
-import { mediaWithScale } from './util';
+import EditCropMoveable from './editCropMoveable';
+import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
-import EditPanMovable from './editPanMovable';
+import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { CropBox, MEDIA_MASK_OPACITY } from './';
 
@@ -43,7 +48,9 @@ const Element = styled.div`
 const fadedMediaCSS = css`
   position: absolute;
   opacity: ${({ opacity }) =>
-    opacity ? opacity * MEDIA_MASK_OPACITY : MEDIA_MASK_OPACITY};
+    typeof opacity !== 'undefined'
+      ? opacity * MEDIA_MASK_OPACITY
+      : MEDIA_MASK_OPACITY};
   pointer-events: none;
   ${mediaWithScale}
   ${elementWithFlip}
@@ -65,8 +72,11 @@ const cropMediaCSS = css`
   ${mediaWithScale}
   ${elementWithFlip}
   position: absolute;
+  cursor: grab;
   opacity: ${({ opacity }) =>
-    opacity ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY) : null};
+    typeof opacity !== 'undefined'
+      ? 1 - (1 - opacity) / (1 - opacity * MEDIA_MASK_OPACITY)
+      : null};
 `;
 
 const CropImage = styled.img`
@@ -96,6 +106,7 @@ function MediaEdit({ element, box }) {
   const [fullMedia, setFullMedia] = useState(null);
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
+  const elementRef = useRef();
 
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
@@ -104,6 +115,9 @@ function MediaEdit({ element, box }) {
     (properties) => updateElementById({ elementId: id, properties }),
     [id, updateElementById]
   );
+
+  const isImage = 'image' === type;
+  const isVideo = 'video' === type;
 
   const mediaProps = getMediaSizePositionProps(
     resource,
@@ -126,16 +140,36 @@ function MediaEdit({ element, box }) {
     ref: setCroppedMedia,
     draggable: false,
     src: resource.src,
-    alt: resource.alt,
+    alt: __('Drag to move media element', 'web-stories'),
     opacity: opacity / 100,
+    tabIndex: 0,
     ...mediaProps,
   };
 
-  const isImage = 'image' === type;
-  const isVideo = 'video' === type;
+  useEffect(() => {
+    if (
+      croppedMedia &&
+      elementRef.current &&
+      !elementRef.current.contains(document.activeElement)
+    ) {
+      croppedMedia.focus();
+    }
+  }, [croppedMedia]);
+
+  const srcSet = calculateSrcSet(element.resource);
+  if (isImage && srcSet) {
+    cropMediaProps.srcSet = srcSet;
+  }
+
   return (
-    <Element>
-      {isImage && <FadedImage {...fadedMediaProps} src={resource.src} />}
+    <Element ref={elementRef}>
+      {isImage && (
+        <FadedImage
+          {...fadedMediaProps}
+          src={resource.src}
+          srcSet={calculateSrcSet(resource)}
+        />
+      )}
       {isVideo && (
         <FadedVideo {...fadedMediaProps}>
           <source src={resource.src} type={resource.mimeType} />
@@ -153,7 +187,7 @@ function MediaEdit({ element, box }) {
       </CropBox>
 
       {fullMedia && croppedMedia && (
-        <EditPanMovable
+        <EditPanMoveable
           setProperties={setProperties}
           fullMedia={fullMedia}
           croppedMedia={croppedMedia}
@@ -171,7 +205,7 @@ function MediaEdit({ element, box }) {
       )}
 
       {!isBackground && cropBox && croppedMedia && (
-        <EditCropMovable
+        <EditCropMoveable
           setProperties={setProperties}
           cropBox={cropBox}
           croppedMedia={croppedMedia}

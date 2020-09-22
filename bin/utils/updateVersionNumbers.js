@@ -55,7 +55,7 @@ function updateVersionNumbers(
 
   const isPrerelease = version.includes('-') || nightly;
 
-  if (!isPrerelease) {
+  if (!nightly) {
     // 'Version' plugin header must not include anything else beyond the version number,
     // i.e. no suffixes or similar.
     pluginFileContent = pluginFileContent.replace(
@@ -66,15 +66,11 @@ function updateVersionNumbers(
 
   const newVersion = nightly ? appendRevisionToVersion(version) : version;
 
-  const versionConstant = pluginFileContent.match(VERSION_CONSTANT_REGEX);
+  pluginFileContent = pluginFileContent.replace(VERSION_CONSTANT_REGEX, () => {
+    return `define( 'WEBSTORIES_VERSION', '${newVersion}' );`;
+  });
 
-  writeFileSync(
-    pluginFile,
-    pluginFileContent.replace(
-      versionConstant[0],
-      `define( 'WEBSTORIES_VERSION', '${newVersion}' );`
-    )
-  );
+  writeFileSync(pluginFile, pluginFileContent);
 
   // Update Stable tag in readme.txt if it's not a pre-release.
   if (!isPrerelease) {

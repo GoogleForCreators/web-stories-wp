@@ -89,14 +89,29 @@ describe('updateVersionNumbers', () => {
     expect(readme).toContain('Stable tag:        7.8.9');
   });
 
-  it('should not update plugin headeer for pre-release', () => {
+  it('should update plugin header for pre-release', () => {
     updateVersionNumbers('/foo/plugin.php', '/foo/readme.txt', '7.8.9-alpha');
+    const pluginFile = readFileSync('/foo/plugin.php');
+
+    expect(pluginFile).toContain('* Version: 7.8.9-alpha');
+    expect(pluginFile).toContain(
+      `define( 'WEBSTORIES_VERSION', '7.8.9-alpha' );`
+    );
+  });
+
+  it('should not update plugin header for nightly build', () => {
+    updateVersionNumbers(
+      '/foo/plugin.php',
+      '/foo/readme.txt',
+      '1.0.0-alpha',
+      true
+    );
     const pluginFile = readFileSync('/foo/plugin.php');
 
     expect(pluginFile).toContain('* Version: 1.0.0');
     expect(pluginFile).not.toContain('* Version: 7.8.9-alpha');
     expect(pluginFile).toContain(
-      `define( 'WEBSTORIES_VERSION', '7.8.9-alpha' );`
+      `define( 'WEBSTORIES_VERSION', '1.0.0-alpha+1234567' );`
     );
   });
 

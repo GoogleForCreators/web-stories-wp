@@ -74,7 +74,7 @@ function Modal({
           right: 0,
           bottom: 0,
           zIndex: 10,
-          background: rgba(theme.colors.bg.v1, 0.96),
+          background: rgba(theme.colors.bg.workspace, 0.96),
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

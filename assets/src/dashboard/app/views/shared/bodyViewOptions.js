@@ -22,12 +22,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import { trackClick } from '../../../../tracking';
 import {
   Dropdown,
   StandardViewContentGutter,
@@ -41,6 +43,7 @@ const DisplayFormatContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: -10px;
 `;
 
 const StorySortDropdownContainer = styled.div`
@@ -80,15 +83,23 @@ export default function BodyViewOptions({
   layoutStyle,
   pageSortOptions = [],
   showGridToggle,
+  showSortDropdown,
   sortDropdownAriaLabel,
   wpListURL,
 }) {
+  const handleClassicListViewClick = useCallback(
+    (evt) => {
+      trackClick(evt, 'open_classic_list_view', 'dashboard', wpListURL);
+    },
+    [wpListURL]
+  );
+
   return (
     <StandardViewContentGutter>
       <DisplayFormatContainer>
         <Label>{resultsLabel}</Label>
         <ControlsContainer>
-          {layoutStyle === VIEW_STYLE.GRID && Boolean(handleSortChange) && (
+          {layoutStyle === VIEW_STYLE.GRID && showSortDropdown && (
             <StorySortDropdownContainer>
               <SortDropdown
                 alignment="flex-end"
@@ -103,12 +114,14 @@ export default function BodyViewOptions({
           {showGridToggle && (
             <ControlsContainer>
               {layoutStyle === VIEW_STYLE.LIST && wpListURL && (
-                <ExternalLink href={wpListURL}>
+                <ExternalLink
+                  href={wpListURL}
+                  onClick={handleClassicListViewClick}
+                >
                   {__('See classic WP list view', 'web-stories')}
                 </ExternalLink>
               )}
               <ViewStyleBar
-                label={resultsLabel}
                 layoutStyle={layoutStyle}
                 onPress={handleLayoutSelect}
               />
@@ -134,5 +147,6 @@ BodyViewOptions.propTypes = {
     })
   ),
   showGridToggle: PropTypes.bool,
+  showSortDropdown: PropTypes.bool,
   sortDropdownAriaLabel: PropTypes.string.isRequired,
 };

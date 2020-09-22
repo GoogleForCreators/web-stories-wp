@@ -22,36 +22,76 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import VideoAccessibility from '../videoAccessibility';
+import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
 import { renderPanel } from './_utils';
 
 jest.mock('../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
     const image = { url: 'media1' };
-    onSelect(image);
+    return () => onSelect(image);
   },
 }));
 
 describe('Panels/VideoAccessibility', () => {
+  const defaultElement = {
+    resource: { posterId: 0, title: '', poster: '', alt: '' },
+  };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);
   }
 
   it('should render <VideoAccessibility /> panel', () => {
-    const { getByRole } = renderVideoAccessibility([
-      { resource: { posterId: 0, poster: '' } },
-    ]);
-    const element = getByRole('button', { name: 'Edit: Video poster' });
-    expect(element).toBeDefined();
+    const { getByRole } = renderVideoAccessibility([defaultElement]);
+    const imageHolder = getByRole('region', { name: /video poster/i });
+    expect(imageHolder).toBeDefined();
   });
 
   it('should simulate a click on <VideoAccessibility />', () => {
     const { getByRole, pushUpdate } = renderVideoAccessibility([
-      { resource: { posterId: 0, poster: '' } },
+      defaultElement,
     ]);
-    const element = getByRole('button', { name: 'Edit: Video poster' });
-    fireEvent.click(element);
+    const imageHolder = getByRole('region', { name: /video poster/i });
+    imageHolder.focus();
+    expect(imageHolder).toHaveFocus();
+    const menuToggle = getByRole('button', { name: 'More' });
+    fireEvent.click(menuToggle);
+    const editMenuItem = getByRole('menuitem', { name: 'Edit' });
+    fireEvent.click(editMenuItem);
     expect(pushUpdate).toHaveBeenCalledTimes(1);
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
+  });
+
+  it('should trim "alt" to maximum allowed length if exceeding', () => {
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const input = getByPlaceholderText('Assistive text');
+
+    const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
+
+    fireEvent.change(input, { target: { value: bigText } });
+    const submits = submit({
+      resource: { posterId: 0, poster: '', alt: bigText },
+    });
+    expect(submits[defaultElement.id].resource.alt).toHaveLength(
+      MIN_MAX.ALT_TEXT.MAX
+    );
+  });
+
+  it('should trim "title" to maximum allowed length if exceeding', () => {
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
+      defaultElement,
+    ]);
+    const input = getByPlaceholderText('Title');
+
+    const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
+
+    fireEvent.change(input, { target: { value: bigText } });
+    const submits = submit({
+      resource: { posterId: 0, poster: '', title: bigText },
+    });
+    expect(submits[defaultElement.id].resource.title).toHaveLength(
+      MIN_MAX.TITLE.MAX
+    );
   });
 });

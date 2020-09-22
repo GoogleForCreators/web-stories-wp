@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Numeric, Row, ToggleButton } from '../../form';
+import { Numeric, Row, ToggleButton, usePresubmitHandler } from '../../form';
 import {
   OffsetVertical,
   OffsetHorizontal,
@@ -44,7 +45,19 @@ import {
 import { getCommonValue } from '../utils';
 import { useFont } from '../../../app/font';
 import stripHTML from '../../../utils/stripHTML';
+import clamp from '../../../utils/clamp';
 import useRichTextFormatting from './useRichTextFormatting';
+
+const MIN_MAX = {
+  LINE_HEIGHT: {
+    MIN: 0.5,
+    MAX: 10,
+  },
+  LETTER_SPACING: {
+    MIN: 0,
+    MAX: 300,
+  },
+};
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -55,7 +68,7 @@ const ExpandedNumeric = styled(BoxedNumeric)`
   flex-grow: 1;
 
   svg {
-    color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.3)};
+    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
     width: 16px;
     height: 16px;
   }
@@ -82,23 +95,40 @@ function StylePanel({ selectedElements, pushUpdate }) {
     },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
+  const setLetterSpacingMinMax = useCallback(
+    (value) => handleSetLetterSpacing(clamp(value, MIN_MAX.LETTER_SPACING)),
+    [handleSetLetterSpacing]
+  );
+
+  usePresubmitHandler(({ lineHeight: newLineHeight }) => {
+    return {
+      lineHeight: clamp(newLineHeight, MIN_MAX.LINE_HEIGHT),
+    };
+  }, []);
+
   return (
     <>
       <Row>
         <ExpandedNumeric
           aria-label={__('Line-height', 'web-stories')}
           float={true}
-          value={lineHeight || 0}
+          value={lineHeight}
+          min={MIN_MAX.LINE_HEIGHT.MIN}
+          max={MIN_MAX.LINE_HEIGHT.MAX}
           suffix={<OffsetVertical />}
           onChange={(value) => pushUpdate({ lineHeight: value })}
+          canBeEmpty
         />
         <Space />
         <ExpandedNumeric
           aria-label={__('Letter-spacing', 'web-stories')}
           value={letterSpacing}
+          min={MIN_MAX.LETTER_SPACING.MIN}
+          max={MIN_MAX.LETTER_SPACING.MAX}
           suffix={<OffsetHorizontal />}
           symbol="%"
-          onChange={handleSetLetterSpacing}
+          onChange={setLetterSpacingMinMax}
+          canBeEmpty
         />
       </Row>
       <Row>

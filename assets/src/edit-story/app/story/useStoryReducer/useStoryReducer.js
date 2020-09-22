@@ -22,6 +22,7 @@ import { useReducer, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { exposedActions, internalActions } from './actions';
 import reducer from './reducer';
 
@@ -30,6 +31,7 @@ const INITIAL_STATE = {
   current: null,
   selection: [],
   story: {},
+  animationState: STORY_ANIMATION_STATE.RESET,
 };
 
 /**

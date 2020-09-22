@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useCallback, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -25,36 +25,71 @@ import { useContext, useEffect, useMemo } from 'react';
 import { ScrollToTop, Layout } from '../../../components';
 import { VIEW_STYLE, STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
-import { ApiContext } from '../../api/apiProvider';
 import { useConfig } from '../../config';
+import { PreviewStoryView } from '..';
+import useApi from '../../api/useApi';
 import Content from './content';
 import Header from './header';
 
 function MyStories() {
   const {
-    actions: {
-      storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
-      templateApi: { createTemplateFromStory },
-    },
-    state: {
-      stories: {
-        allPagesFetched,
-        isLoading,
-        stories,
-        storiesOrderById,
-        totalPages,
-        totalStoriesByStatus,
+    duplicateStory,
+    fetchStories,
+    trashStory,
+    updateStory,
+    createTemplateFromStory,
+    allPagesFetched,
+    isLoading,
+    stories,
+    storiesOrderById,
+    totalPages,
+    totalStoriesByStatus,
+    users,
+  } = useApi(
+    ({
+      actions: {
+        storyApi: { duplicateStory, fetchStories, trashStory, updateStory },
+        templateApi: { createTemplateFromStory },
       },
+      state: {
+        stories: {
+          allPagesFetched,
+          isLoading,
+          stories,
+          storiesOrderById,
+          totalPages,
+          totalStoriesByStatus,
+        },
+        users,
+      },
+    }) => ({
+      duplicateStory,
+      fetchStories,
+      trashStory,
+      updateStory,
+      createTemplateFromStory,
+      allPagesFetched,
+      isLoading,
+      stories,
+      storiesOrderById,
+      totalPages,
+      totalStoriesByStatus,
       users,
-    },
-  } = useContext(ApiContext);
+    })
+  );
 
-  const { filter, page, search, sort, view } = useStoryView({
+  const { filter, page, activePreview, search, sort, view } = useStoryView({
     filters: STORY_STATUSES,
     totalPages,
   });
 
-  const { wpListURL } = useConfig();
+  const {
+    wpListURL,
+    dateFormat,
+    timeFormat,
+    gmtOffset,
+    timezone,
+  } = useConfig();
 
   useEffect(() => {
     fetchStories({
@@ -74,11 +109,34 @@ function MyStories() {
     view.style,
   ]);
 
+  const [lastActiveStoryId, setLastActiveStoryId] = useState(null);
+
   const orderedStories = useMemo(() => {
     return storiesOrderById.map((storyId) => {
       return stories[storyId];
     });
   }, [stories, storiesOrderById]);
+
+  const handlePreviewStory = useCallback(
+    (e, story) => {
+      activePreview.set(e, story);
+      setLastActiveStoryId(story?.id);
+    },
+    [activePreview]
+  );
+
+  const handleClose = useCallback(
+    (e) => {
+      activePreview.set(e, undefined);
+    },
+    [activePreview]
+  );
+
+  if (activePreview.value) {
+    return (
+      <PreviewStoryView story={activePreview.value} handleClose={handleClose} />
+    );
+  }
 
   return (
     <Layout.Provider>
@@ -100,14 +158,17 @@ function MyStories() {
         search={search}
         sort={sort}
         stories={orderedStories}
+        dateSettings={{ dateFormat, gmtOffset, timeFormat, timezone }}
         storyActions={{
           createTemplateFromStory,
           duplicateStory,
           trashStory,
           updateStory,
+          handlePreviewStory,
         }}
         users={users}
         view={view}
+        initialFocusStoryId={lastActiveStoryId}
       />
 
       <Layout.Fixed>

@@ -15,23 +15,19 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled, { css } from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-import { rgba } from 'polished';
-/**
  * Internal dependencies
  */
 import { Lock as Locked } from '../../../icons';
-
-/**
- * Internal dependencies
- */
 import StoryPropTypes from '../../../types';
 import { getDefinitionForType } from '../../../elements';
 import { useStory } from '../../../app';
@@ -42,6 +38,8 @@ const LayerButton = styled.button.attrs({
   type: 'button',
   tabIndex: -1,
   role: 'option',
+  // Because the layer panel is aria-hidden, we need something else to select by
+  'data-testid': 'layer-option',
 })`
   display: flex;
   border: 0;
@@ -55,9 +53,9 @@ const LayerButton = styled.button.attrs({
 
   ${({ isSelected, theme }) =>
     isSelected &&
-    `
-    background: ${rgba(theme.colors.action, 0.14)};
-  `}
+    css`
+      background: ${theme.colors.fg.gray24};
+    `}
 
   &:active {
     outline: none;
@@ -76,7 +74,7 @@ const LayerIconWrapper = styled.div`
     height: 28px;
     width: 28px;
     opacity: 0.5;
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
   }
 `;
 
@@ -86,7 +84,9 @@ const LayerDescription = styled.div`
   align-items: center;
   margin-left: 0;
   text-align: left;
-  color: ${({ theme }) => theme.colors.fg.v1};
+  color: ${({ theme }) => theme.colors.fg.white};
+  font-family: ${({ theme }) => theme.fonts.description.family};
+  font-size: ${({ theme }) => theme.fonts.description.size};
 `;
 
 const LockedIcon = styled(Locked)`

@@ -17,9 +17,10 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\REST_API\Stories_Controller;
-
 class Database_Upgrader extends \WP_UnitTestCase {
+
+	use Private_Access;
+
 	public function setUp() {
 		parent::setUp();
 		delete_option( \Google\Web_Stories\Database_Upgrader::OPTION );
@@ -43,7 +44,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
-	public function test_v_2_remove_conic_style_presets() {
+	public function test_v_2_replace_conic_style_presets() {
 		$radial_preset = [
 			[
 				'color'              => [],
@@ -94,12 +95,12 @@ class Database_Upgrader extends \WP_UnitTestCase {
 				$radial_preset,
 			],
 		];
-		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$this->call_private_method( $object, 'v_2_replace_conic_style_presets' );
 
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 		$this->assertSame( $style_presets['textStyles'][1], $radial_preset );
 		$this->assertSame( $style_presets['textStyles'][0]['backgroundColor']['type'], 'linear' );
 		$this->assertSame( $style_presets['fillColors'][0]['type'], 'linear' );
@@ -112,7 +113,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			]
 		);
 
-		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 
 	public function test_remove_broken_text_styles() {
@@ -141,12 +142,12 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			'textColors' => [],
 			'fillColors' => [],
 		];
-		add_option( Stories_Controller::STYLE_PRESETS_OPTION, $presets );
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
-		$object->init();
+		$this->call_private_method( $object, 'remove_broken_text_styles' );
 
-		$style_presets = get_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 		$this->assertSame(
 			$style_presets['textStyles'],
 			[
@@ -164,6 +165,71 @@ class Database_Upgrader extends \WP_UnitTestCase {
 			]
 		);
 
-		delete_option( Stories_Controller::STYLE_PRESETS_OPTION );
+		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
+
+	public function test_unify_color_presets() {
+		$presets = [
+			'textStyles' => [],
+			'textColors' => [
+				[
+					'color' => [
+						'r' => 255,
+						'g' => 255,
+						'b' => 255,
+					],
+				],
+			],
+			'fillColors' => [
+				[
+					'color' => [
+						'r' => 1,
+						'g' => 1,
+						'b' => 1,
+					],
+				],
+			],
+		];
+		add_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION, $presets );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+		$this->call_private_method( $object, 'unify_color_presets' );
+
+		$style_presets = get_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+		$this->assertSame(
+			$style_presets['colors'],
+			[
+				[
+					'color' => [
+						'r' => 1,
+						'g' => 1,
+						'b' => 1,
+					],
+				],
+				[
+					'color' => [
+						'r' => 255,
+						'g' => 255,
+						'b' => 255,
+					],
+				],
+			]
+		);
+		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
+	}
+
+	public function test_update_publisher_logos() {
+		$object = new \Google\Web_Stories\Database_Upgrader();
+
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS, [ 'active' => 123 ] );
+
+		$this->call_private_method( $object, 'update_publisher_logos' );
+
+		$all_publisher_logos   = get_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
+		$active_publisher_logo = (int) get_option( \Google\Web_Stories\Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$this->assertEqualSets( [ 123 ], $all_publisher_logos );
+		$this->assertSame( 123, $active_publisher_logo );
+	}
+
 }

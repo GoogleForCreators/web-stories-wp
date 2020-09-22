@@ -27,47 +27,59 @@ import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app';
 import { LAYER_DIRECTIONS } from '../../constants';
 import { getPastedCoordinates } from '../../utils/copyPaste';
+import getKeyboardMovement from '../../utils/getKeyboardMovement';
+import { getDefinitionForType } from '../../elements';
+import useAddPastedElements from './useAddPastedElements';
 import useCanvas from './useCanvas';
 
-const MOVE_COARSE_STEP = 10;
-
 /**
- * @param {{current: Node}} ref
+ * @param {{current: Node}} ref Reference.
  */
 function useCanvasKeys(ref) {
+  const addPastedElements = useAddPastedElements();
+
   const {
     selectedElementIds,
     selectedElements,
-    addElements,
     arrangeSelection,
     clearSelection,
     deleteSelectedElements,
     updateSelectedElements,
+    setSelectedElementsById,
+    currentPage,
   } = useStory(
     ({
-      state: { selectedElementIds, selectedElements },
+      state: { selectedElementIds, selectedElements, currentPage },
       actions: {
-        addElements,
         arrangeSelection,
         clearSelection,
         deleteSelectedElements,
         updateSelectedElements,
+        setSelectedElementsById,
       },
     }) => {
       return {
+        currentPage,
         selectedElementIds,
         selectedElements,
-        addElements,
         arrangeSelection,
         clearSelection,
         deleteSelectedElements,
         updateSelectedElements,
+        setSelectedElementsById,
       };
     }
   );
 
-  const getNodeForElement = useCanvas(
-    ({ actions: { getNodeForElement } }) => getNodeForElement
+  const { isEditing, getNodeForElement, setEditingElement } = useCanvas(
+    ({
+      state: { isEditing },
+      actions: { getNodeForElement, setEditingElement },
+    }) => ({
+      isEditing,
+      getNodeForElement,
+      setEditingElement,
+    })
   );
   const selectedElementIdsRef = useRef(null);
   selectedElementIdsRef.current = selectedElementIds;
@@ -113,21 +125,31 @@ function useCanvasKeys(ref) {
   ]);
   useGlobalKeyDownEffect('esc', () => clearSelection(), [clearSelection]);
 
+  useGlobalKeyDownEffect(
+    { key: ['mod+a'] },
+    () => {
+      const elementIds = currentPage.elements.map(({ id }) => id);
+      setSelectedElementsById({ elementIds });
+    },
+    [currentPage, setSelectedElementsById]
+  );
+
   // Position (x/y) key handler.
   useGlobalKeyDownEffect(
     { key: ['up', 'down', 'left', 'right'], shift: true },
     ({ key, shiftKey }) => {
-      const dirX = getArrowDir(key, 'ArrowRight', 'ArrowLeft');
-      const dirY = getArrowDir(key, 'ArrowDown', 'ArrowUp');
-      const delta = shiftKey ? 1 : MOVE_COARSE_STEP;
+      if (isEditing) {
+        return;
+      }
+      const { dx, dy } = getKeyboardMovement(key, shiftKey);
       updateSelectedElements({
         properties: ({ x, y }) => ({
-          x: x + delta * dirX,
-          y: y + delta * dirY,
+          x: x + dx,
+          y: y + dy,
         }),
       });
     },
-    [updateSelectedElements]
+    [updateSelectedElements, isEditing]
   );
 
   // Layer up/down.
@@ -148,32 +170,45 @@ function useCanvasKeys(ref) {
     [arrangeSelection]
   );
 
+  // Edit mode
+  useGlobalKeyDownEffect(
+    { key: 'enter', clickable: false },
+    () => {
+      if (selectedElements.length !== 1) {
+        return;
+      }
+
+      const { type, id } = selectedElements[0];
+      const { hasEditMode } = getDefinitionForType(type);
+      // Only handle Enter key for editable elements
+      if (!hasEditMode) {
+        return;
+      }
+
+      setEditingElement(id);
+    },
+    [selectedElements, setEditingElement]
+  );
+
   const cloneHandler = useCallback(() => {
     if (selectedElements.length === 0) {
       return;
     }
-    const clonedElements = selectedElements.map(({ id, x, y, ...rest }) => {
-      return {
-        ...getPastedCoordinates(x, y),
-        id: uuidv4(),
-        basedOn: id,
-        ...rest,
-      };
-    });
-    addElements({ elements: clonedElements });
-  }, [addElements, selectedElements]);
+    const clonedElements = selectedElements
+      // Filter out the background element (never makes sense to clone that)
+      .filter(({ isBackground }) => !isBackground)
+      .map(({ id, x, y, ...rest }) => {
+        return {
+          ...getPastedCoordinates(x, y),
+          id: uuidv4(),
+          basedOn: id,
+          ...rest,
+        };
+      });
+    addPastedElements(clonedElements);
+  }, [addPastedElements, selectedElements]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
-}
-
-function getArrowDir(key, pos, neg) {
-  if (key === pos) {
-    return 1;
-  }
-  if (key === neg) {
-    return -1;
-  }
-  return 0;
 }
 
 function getLayerDirection(key, shift) {

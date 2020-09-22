@@ -41,6 +41,7 @@ import isFillDeprecate from './migrations/v0020_isFillDeprecate';
 import backgroundColorToPage from './migrations/v0021_backgroundColorToPage';
 import dataPixelTo412 from './migrations/v0022_dataPixelTo412';
 import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
+import blobsToSingleBlob from './migrations/v0024_blobsToSingleBlob';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -66,6 +67,7 @@ const MIGRATIONS = {
   21: [backgroundColorToPage],
   22: [dataPixelTo412],
   23: [convertOverlayPattern],
+  24: [blobsToSingleBlob],
 };
 
 export const DATA_VERSION = Math.max.apply(

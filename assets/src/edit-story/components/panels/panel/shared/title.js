@@ -19,11 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
-
-/**
- * Internal dependencies
- */
+import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -39,14 +35,15 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
+import { trackEvent } from '../../../../../tracking';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
   if (isPrimary) {
-    return rgba(theme.colors.bg.v0, 0.07);
+    return rgba(theme.colors.bg.black, 0.07);
   }
   if (isSecondary) {
-    return rgba(theme.colors.fg.v1, 0.07);
+    return rgba(theme.colors.fg.white, 0.07);
   }
   return 'transparent';
 }
@@ -54,10 +51,10 @@ function getBackgroundColor(isPrimary, isSecondary, theme) {
 const Header = styled.h2`
   background-color: ${({ isPrimary, isSecondary, theme }) =>
     getBackgroundColor(isPrimary, isSecondary, theme)};
-  border: 0 solid ${({ theme }) => theme.colors.bg.v9};
+  border: 0 solid ${({ theme }) => rgba(theme.colors.fg.gray16, 0.6)};
   border-top-width: ${({ isPrimary, isSecondary }) =>
     isPrimary || isSecondary ? 0 : '1px'};
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.84)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
   ${({ hasResizeHandle }) => hasResizeHandle && 'padding-top: 0;'}
   margin: 0;
   position: relative;
@@ -106,21 +103,57 @@ const Collapse = styled.button`
   }
 `;
 
+function Toggle({ children, toggle, ...rest }) {
+  return (
+    <Collapse
+      onClick={(evt) => {
+        evt.stopPropagation();
+        toggle();
+      }}
+      {...rest}
+    >
+      {children}
+    </Collapse>
+  );
+}
+
+Toggle.propTypes = {
+  children: PropTypes.node.isRequired,
+  toggle: PropTypes.func.isRequired,
+};
+
 function Title({
   children,
   isPrimary,
   isSecondary,
   secondaryAction,
   isResizable,
-  canCollapse = true,
+  canCollapse,
 }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId },
-    actions: { collapse, expand, setHeight, setExpandToHeight, resetHeight },
+    state: {
+      isCollapsed,
+      height,
+      resizeable,
+      panelContentId,
+      panelTitleId,
+      panelTitleReadable,
+      ariaHidden,
+    },
+    actions: {
+      collapse,
+      expand,
+      setHeight,
+      setExpandToHeight,
+      resetHeight,
+      confirmTitle,
+    },
   } = useContext(panelContext);
   const {
     state: { inspectorContentHeight },
   } = useInspector();
+
+  useEffect(confirmTitle, [confirmTitle]);
 
   // Max panel height is set to 70% of full available height.
   const maxHeight = Math.round(inspectorContentHeight * 0.7);
@@ -145,6 +178,15 @@ function Title({
     ? __('Expand panel', 'web-stories')
     : __('Collapse panel', 'web-stories');
 
+  const toggle = isCollapsed ? expand : collapse;
+  const onToggle = useCallback(() => {
+    toggle();
+    trackEvent('panel_toggled', 'editor', '', '', {
+      panel_id: panelTitleReadable,
+      status: isCollapsed ? 'collapsed' : 'expanded',
+    });
+  }, [panelTitleReadable, isCollapsed, toggle]);
+
   return (
     <Header
       isPrimary={isPrimary}
@@ -159,25 +201,24 @@ function Title({
           handleHeightChange={handleHeightChange}
           handleExpandToHeightChange={handleExpandToHeightChange}
           handleDoubleClick={resetHeight}
+          tabIndex={ariaHidden ? -1 : 0}
         />
       )}
-      <HeaderButton onClick={isCollapsed ? expand : collapse}>
-        <Heading>{children}</Heading>
+      <HeaderButton onClick={onToggle}>
+        <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (
-            <Collapse
+            <Toggle
               isCollapsed={isCollapsed}
-              onClick={(evt) => {
-                evt.stopPropagation();
-                isCollapsed ? expand() : collapse();
-              }}
+              toggle={onToggle}
               aria-label={titleLabel}
               aria-expanded={!isCollapsed}
               aria-controls={panelContentId}
+              tabIndex={ariaHidden ? -1 : 0}
             >
               <Arrow />
-            </Collapse>
+            </Toggle>
           )}
         </HeaderActions>
       </HeaderButton>
@@ -201,6 +242,7 @@ Title.defaultProps = {
   isPrimary: false,
   isSecondary: false,
   isResizable: false,
+  canCollapse: true,
 };
 
 export default Title;

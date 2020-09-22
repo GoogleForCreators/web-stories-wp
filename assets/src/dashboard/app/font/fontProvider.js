@@ -18,22 +18,24 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { ApiContext } from '../api/apiProvider';
 import Context from '../../../edit-story/app/font/context';
 import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFiles';
+import useApi from '../api/useApi';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
-  const {
-    actions: {
-      fontApi: { getAllFonts },
-    },
-  } = useContext(ApiContext);
+  const { getAllFonts } = useApi(
+    ({
+      actions: {
+        fontApi: { getAllFonts },
+      },
+    }) => ({ getAllFonts })
+  );
 
   const getFontBy = useCallback(
     (key, value) => {

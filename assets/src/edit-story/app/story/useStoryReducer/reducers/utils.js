@@ -91,3 +91,28 @@ export function updateElementWithUpdater(element, properties) {
   }
   return { ...element, ...allowedProperties };
 }
+
+export function updateAnimations(oldAnimations, animationUpdates) {
+  const newAnimations = oldAnimations.reduce((animations, animation) => {
+    const updatedAnimation = animationUpdates[animation.id];
+
+    // remove animation from lookup
+    delete animationUpdates[animation.id];
+
+    if (updatedAnimation?.delete) {
+      // delete animation
+      return animations;
+    } else if (updatedAnimation) {
+      // update animation
+      return [...animations, updatedAnimation];
+    } else {
+      // No updates
+      return [...animations, animation];
+    }
+  }, []);
+
+  // add animations
+  Object.values(animationUpdates).forEach((a) => newAnimations.push(a));
+
+  return newAnimations;
+}

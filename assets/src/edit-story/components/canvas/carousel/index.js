@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
-import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -35,7 +34,6 @@ import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
-  Keyboard as KeyboardShortcutsButton,
   Plain,
 } from '../../button';
 import {
@@ -57,17 +55,22 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
+import useCanvas from '../useCanvas';
+import WithTooltip from '../../tooltip';
+import KeyboardShortcutsMenu from '../../keyboardShortcutsMenu';
+import { ToggleButton } from '../../form';
+import { SafeZone } from '../../../icons';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
 const CAROUSEL_BOTTOM_SCROLL_MARGIN = 8;
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   position: relative;
   display: grid;
   grid: 'space prev-navigation carousel next-navigation menu' auto / 53px 53px 1fr 53px 53px;
-  background-color: ${({ theme }) => theme.colors.bg.v1};
-  color: ${({ theme }) => theme.colors.fg.v1};
+  background-color: ${({ theme }) => theme.colors.bg.workspace};
+  color: ${({ theme }) => theme.colors.fg.white};
   width: 100%;
   height: 100%;
 `;
@@ -86,11 +89,26 @@ const NavArea = styled(Area)`
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
 
+const EditorVersion = styled.div`
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  margin-left: 14px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  font-size: ${({ theme }) => theme.fonts.version.size};
+  font-family: ${({ theme }) => theme.fonts.version.family};
+  line-height: ${({ theme }) => theme.fonts.version.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+`;
+
 const PlainStyled = styled(Plain)`
-  background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
-  color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.86)};
+  background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.86)};
   &:hover {
-    background-color: ${({ theme }) => rgba(theme.colors.fg.v1, 0.25)};
+    background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.25)};
   }
 `;
 
@@ -114,6 +132,26 @@ const OverflowButtons = styled.div`
   }
 `;
 
+const StyledGridViewButton = styled(GridViewButton).attrs({
+  height: '24',
+  width: '24',
+})``;
+
+const SafeZoneToggle = styled(ToggleButton).attrs({
+  iconHeight: 24,
+  iconWidth: 24,
+})`
+  height: 24px;
+  width: 24px;
+  margin-bottom: 12px;
+
+  & label {
+    height: 24px;
+    width: 24px;
+    border-radius: 2px;
+  }
+`;
+
 const PageList = styled(Reorderable).attrs({
   area: 'carousel',
   role: 'listbox',
@@ -134,14 +172,14 @@ const PageList = styled(Reorderable).attrs({
    * look the same. We do this only here because this scrollbar is always visible.
    */
   scrollbar-color: ${({ theme }) => theme.colors.bg.v10}
-    ${({ theme }) => theme.colors.bg.v1} !important;
+    ${({ theme }) => theme.colors.bg.workspace} !important;
 
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v1} !important;
+    background: ${({ theme }) => theme.colors.bg.workspace} !important;
   }
 
   &::-webkit-scrollbar-thumb {
-    border: 2px solid ${({ theme }) => theme.colors.bg.v1} !important;
+    border: 2px solid ${({ theme }) => theme.colors.bg.workspace} !important;
     border-top-width: 3px !important;
   }
 `;
@@ -161,7 +199,7 @@ const PageSeparator = styled(ReorderableSeparator)`
 `;
 
 const Line = styled.div`
-  background: ${({ theme }) => theme.colors.action};
+  background: ${({ theme }) => theme.colors.accent.primary};
   height: ${({ height }) => height - THUMB_FRAME_HEIGHT}px;
   width: 4px;
   margin: 0px;
@@ -181,7 +219,9 @@ const ReorderablePage = styled(ReorderableItem).attrs({ role: 'option' })`
   }
 `;
 
-const GridViewContainer = styled.div`
+const GridViewContainer = styled.section.attrs({
+  'aria-label': __('Grid View', 'web-stories'),
+})`
   flex: 1;
   margin: 70px 170px 70px 170px;
   pointer-events: all;
@@ -215,11 +255,17 @@ function Carousel() {
       actions: { setCurrentPage, arrangePage },
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
-  const { isRTL } = useConfig();
-  const { showKeyboardShortcutsButton } = useFeatures();
+  const { isRTL, version } = useConfig();
+  const { showSafeZone, setShowSafeZone } = useCanvas(
+    ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
+      showSafeZone,
+      setShowSafeZone,
+    })
+  );
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
+
   const listRef = useRef(null);
   const pageRefs = useRef([]);
   const wrapperRef = useRef(null);
@@ -228,6 +274,7 @@ function Carousel() {
     width: COMPACT_THUMB_WIDTH,
     height: COMPACT_THUMB_HEIGHT,
   });
+  const [resizedForPages, setResizedForPages] = useState(0);
 
   const isCompact =
     calculateThumbnailHeight(carouselSize) < MIN_CAROUSEL_THUMB_HEIGHT;
@@ -243,6 +290,7 @@ function Carousel() {
       setHasHorizontalOverflow(Math.ceil(scrollWidth) > Math.ceil(offsetWidth));
       setScrollPercentage(scrollLeft / max);
       setCarouselSize(currentCarouselSize);
+      setResizedForPages(pages.length);
     },
     [pages.length]
   );
@@ -338,7 +386,12 @@ function Carousel() {
 
   return (
     <>
-      <Wrapper ref={wrapperRef} data-testid="PageCarousel">
+      <Wrapper
+        ref={wrapperRef}
+        data-testid="PageCarousel"
+        aria-label={__('Page Carousel', 'web-stories')}
+        data-ready={resizedForPages === pages.length}
+      >
         <NavArea area="space" />
         <NavArea area="prev-navigation" marginBottom={arrowsBottomMargin}>
           <PrevButton
@@ -380,9 +433,11 @@ function Carousel() {
                 )}
                 <ReorderablePage position={index}>
                   <Page
+                    tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     onClick={handleClickPage(page)}
                     role="option"
-                    ariaLabel={
+                    data-page-id={page.id}
+                    aria-label={
                       isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
@@ -425,25 +480,47 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            {showKeyboardShortcutsButton && (
-              <OverflowButtons>
-                <KeyboardShortcutsButton
-                  width="24"
-                  height="24"
-                  isDisabled
-                  aria-label={__('Keyboard Shortcuts', 'web-stories')}
-                />
-              </OverflowButtons>
-            )}
-            <GridViewButton
-              width="24"
-              height="24"
-              onClick={openModal}
-              aria-label={__('Grid View', 'web-stories')}
-            />
+            <OverflowButtons>
+              <KeyboardShortcutsMenu />
+            </OverflowButtons>
+            <WithTooltip
+              title={
+                showSafeZone
+                  ? __('Disable Safe Zone', 'web-stories')
+                  : __('Enable Safe Zone', 'web-stories')
+              }
+              placement="left"
+            >
+              <SafeZoneToggle
+                icon={<SafeZone />}
+                value={showSafeZone}
+                onChange={setShowSafeZone}
+                aria-label={
+                  showSafeZone
+                    ? __('Disable Safe Zone', 'web-stories')
+                    : __('Enable Safe Zone', 'web-stories')
+                }
+              />
+            </WithTooltip>
+            <WithTooltip
+              title={__('Grid View', 'web-stories')}
+              placement="left"
+            >
+              <StyledGridViewButton
+                onClick={openModal}
+                aria-label={__('Grid View', 'web-stories')}
+              />
+            </WithTooltip>
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
+      <EditorVersion>
+        {sprintf(
+          /* translators: %s: editor version. */
+          __('Version %s', 'web-stories'),
+          version
+        )}
+      </EditorVersion>
       <Modal
         open={isGridViewOpen}
         onClose={closeModal}
@@ -457,7 +534,7 @@ function Carousel() {
         }}
       >
         <GridViewContainer>
-          <PlainStyled onClick={() => closeModal()}>
+          <PlainStyled onClick={closeModal}>
             {__('Back', 'web-stories')}
           </PlainStyled>
           <GridView />

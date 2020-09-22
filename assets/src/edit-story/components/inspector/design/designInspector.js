@@ -17,11 +17,14 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../animation';
+import { useStory } from '../../../app';
 import { LayerPanel } from '../../panels';
 import DesignPanels from './designPanels';
 
@@ -40,9 +43,18 @@ const TopPanels = styled.div`
 const BottomPanels = styled.div``;
 
 function DesignInspector() {
+  const updateAnimationState = useStory(
+    ({ actions }) => actions.updateAnimationState
+  );
+
+  const resetStoryAnimationState = useCallback(
+    () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
+    [updateAnimationState]
+  );
+
   return (
     <Wrapper>
-      <TopPanels>
+      <TopPanels onFocus={resetStoryAnimationState}>
         <DesignPanels />
       </TopPanels>
       <BottomPanels>

@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
 import Switch from '../switch';
 
 export default {

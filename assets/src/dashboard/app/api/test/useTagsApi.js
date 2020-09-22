@@ -44,7 +44,7 @@ jest.mock('../wpAdapter', () => ({
 describe('useTagsApi', () => {
   it('should return tags in state data when the API request is fired', async () => {
     const { result } = renderHook(() =>
-      useTagsApi(wpAdapter, { wpApi: 'tags' })
+      useTagsApi(wpAdapter, { tagsApi: 'tags' })
     );
 
     await act(async () => {

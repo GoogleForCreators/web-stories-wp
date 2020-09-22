@@ -17,7 +17,14 @@
 /**
  * External dependencies
  */
+import { renderToStaticMarkup } from 'react-dom/server';
+
+/**
+ * External dependencies
+ */
 import { render } from '@testing-library/react';
+jest.mock('flagged');
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -27,6 +34,14 @@ import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 
 describe('Page output', () => {
+  useFeature.mockImplementation((feature) => {
+    const config = {
+      enableAnimation: true,
+    };
+
+    return config[feature];
+  });
+
   describe('aspect-ratio markup', () => {
     let backgroundElement;
 
@@ -135,6 +150,83 @@ describe('Page output', () => {
         '.page-background-overlay-area'
       );
       expect(overlayLayer).toBeInTheDocument();
+    });
+  });
+
+  describe('animation markup', () => {
+    it('should render animation tags for animations', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          animations: [
+            { targets: ['123', '124'], type: 'bounce', duration: 1000 },
+            { targets: ['123'], type: 'spin', duration: 1000 },
+          ],
+          elements: [
+            {
+              id: '123',
+              type: 'video',
+              mimeType: 'video/mp4',
+              scale: 1,
+              origRatio: 9 / 16,
+              x: 50,
+              y: 100,
+              height: 1920,
+              width: 1080,
+              rotationAngle: 0,
+              loop: true,
+              resource: {
+                type: 'video',
+                mimeType: 'video/mp4',
+                id: 123,
+                src: 'https://example.com/image.png',
+                poster: 'https://example.com/poster.png',
+                height: 1920,
+                width: 1080,
+                length: 99,
+              },
+            },
+            {
+              id: '124',
+              type: 'shape',
+              opacity: 100,
+              flip: {
+                vertical: false,
+                horizontal: false,
+              },
+              rotationAngle: 0,
+              lockAspectRatio: true,
+              backgroundColor: {
+                color: {
+                  r: 51,
+                  g: 51,
+                  b: 51,
+                },
+              },
+              x: 249,
+              y: 67,
+              width: 147,
+              height: 147,
+              scale: 100,
+              focalX: 50,
+              focalY: 50,
+              mask: {
+                type: 'circle',
+              },
+            },
+          ],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+
+      const storyAnimations = container.querySelectorAll('amp-story-animation');
+      expect(storyAnimations).toHaveLength(3);
+      expect(storyAnimations[0]).toHaveAttribute('trigger', `visibility`);
     });
   });
 
@@ -317,6 +409,196 @@ describe('Page output', () => {
     });
   });
 
+  describe('pageAttachment', () => {
+    const BACKGROUND_ELEMENT = {
+      isBackground: true,
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+      },
+    };
+
+    const TEXT_ELEMENT = {
+      id: 'baz',
+      type: 'text',
+      content: 'Hello, link!',
+      x: 50,
+      y: PAGE_HEIGHT,
+      height: 300,
+      width: 100,
+      rotationAngle: 10,
+      padding: {
+        vertical: 0,
+        horizontal: 0,
+      },
+      fontSize: 30,
+      font: {
+        family: 'Roboto',
+        service: 'fonts.google.com',
+      },
+      color: {
+        color: {
+          r: 255,
+          g: 255,
+          b: 255,
+          a: 0.5,
+        },
+      },
+    };
+
+    it('should output page attachment if the URL is set', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageAttachment = container.querySelector(
+        'amp-story-page-attachment'
+      );
+      await expect(pageAttachment.dataset.ctaText).toStrictEqual('Click me!');
+      await expect(pageAttachment).toHaveAttribute(
+        'href',
+        'https://example.test'
+      );
+      await expect(pageAttachment).toBeInTheDocument();
+    });
+
+    it('should not output page attachment if the URL is empty', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: '',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageAttachment = container.querySelector(
+        'amp-story-page-attachment'
+      );
+      await expect(pageAttachment).not.toBeInTheDocument();
+    });
+
+    it('should not output a link in page attachment area', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: 'http://shouldremove.com',
+              },
+            },
+          ],
+          pageAttachment: {
+            url: 'http://example.com',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, link');
+      expect(content).not.toContain('http://shouldremove.com');
+    });
+
+    it('should output a link outside of page attachment area', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: 'http://shouldoutput.com',
+              },
+              y: 0,
+              height: 100,
+            },
+          ],
+          pageAttachment: {
+            url: 'http://example.com',
+            ctaText: 'Click me!',
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, link');
+      expect(content).toContain('http://shouldoutput.com');
+    });
+
+    it('should output a link in page attachment area if page attachment is not set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...TEXT_ELEMENT,
+              link: {
+                url: 'http://shouldoutput.com',
+              },
+            },
+          ],
+          pageAttachment: null,
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('Hello, link');
+      expect(content).toContain('http://shouldoutput.com');
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {
@@ -344,6 +626,23 @@ describe('Page output', () => {
         autoAdvance: false,
       };
 
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    it('should produce valid AMP output with Page Attachment', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: true,
+        pageAttachment: {
+          url: 'http://example.com',
+          ctaText: 'Click me!',
+        },
+      };
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
@@ -376,6 +675,42 @@ describe('Page output', () => {
                   height: 1920,
                   width: 1080,
                   length: 99,
+                },
+              },
+            ],
+          },
+          autoAdvance: true,
+          defaultPageDuration: 11,
+        };
+
+        await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+      });
+
+      it('should produce valid output with animations', async () => {
+        const props = {
+          id: '123',
+          backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            animations: [{ targets: ['123'], type: 'bounce', duration: 1000 }],
+            elements: [
+              {
+                type: 'text',
+                id: '123',
+                x: 50,
+                y: 100,
+                height: 1920,
+                width: 1080,
+                rotationAngle: 0,
+                content: 'Hello World',
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                padding: {
+                  horizontal: 0,
+                  vertical: 0,
+                },
+                font: {
+                  family: 'Roboto',
+                  service: 'fonts.google.com',
                 },
               },
             ],

@@ -38,6 +38,12 @@ describe('nativeCopyPasteExpected', () => {
     numberInput.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
 
+    const contentEditable = document.createElement('div');
+    contentEditable.setAttribute('contenteditable', 'true');
+    document.body.appendChild(contentEditable);
+    contentEditable.focus();
+    expect(nativeCopyPasteExpected()).toBe(true);
+
     const originalWindow = { ...window };
     const windowSpy = jest.spyOn(global, 'window', 'get');
     windowSpy.mockImplementation(() => ({

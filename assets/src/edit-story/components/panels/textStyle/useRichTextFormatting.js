@@ -29,6 +29,7 @@ import {
   getHTMLInfo,
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
+import { useGlobalKeyDownEffect } from '../../keyboard';
 
 /**
  * Equality function for *primitives and color patterns* only.
@@ -132,6 +133,26 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleSetColor: (color) => push(htmlFormatters.setColor, color),
     };
   }, [hasCurrentEditor, selectionActions, push]);
+
+  useGlobalKeyDownEffect(
+    { key: ['mod+b', 'mod+u', 'mod+i'] },
+    ({ key }) => {
+      switch (key) {
+        case 'b':
+          handlers.handleClickBold();
+          break;
+        case 'i':
+          handlers.handleClickItalic();
+          break;
+        case 'u':
+          handlers.handleClickUnderline();
+          break;
+        default:
+          break;
+      }
+    },
+    [handlers]
+  );
 
   return {
     textInfo,

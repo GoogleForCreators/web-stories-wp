@@ -15,56 +15,38 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { sprintf, __ } from '@wordpress/i18n';
-/**
  * External dependencies
  */
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFeature } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../tracking';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import { UnitsProvider } from '../../../../edit-story/units';
-import {
-  CardGallery,
-  ColorList,
-  DetailViewContentGutter,
-  Layout,
-  PaginationButton,
-  Pill,
-  TemplateNavBar,
-} from '../../../components';
-import { clamp, usePagePreviewSize } from '../../../utils/';
-import { ApiContext } from '../../api/apiProvider';
+import { Layout, useToastContext } from '../../../components';
+import { clamp, useTemplateView, usePagePreviewSize } from '../../../utils/';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
-import { TemplateGridView } from '../shared';
-import {
-  ByLine,
-  Column,
-  ColumnContainer,
-  DetailContainer,
-  LargeDisplayPagination,
-  MetadataContainer,
-  RowContainer,
-  SmallDisplayPagination,
-  SubHeading,
-  Text,
-  Title,
-} from './components';
+import { PreviewStoryView } from '..';
+
+import useApi from '../../api/useApi';
+import { ALERT_SEVERITY } from '../../../constants';
+import Header from './header';
+import Content from './content';
 
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
   const [orderedTemplates, setOrderedTemplates] = useState([]);
-  const { pageSize } = usePagePreviewSize({ isGrid: true });
-  const { isRTL } = useConfig();
   const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
@@ -74,22 +56,61 @@ function TemplateDetails() {
     actions,
   } = useRouteHistory();
 
+  const { addToast } = useToastContext(({ actions: { addToast } }) => ({
+    addToast,
+  }));
+
   const {
-    state: {
-      templates: { templates, templatesOrderById },
-    },
-    actions: {
-      storyApi: { createStoryFromTemplate },
-      templateApi: {
-        fetchMyTemplateById,
-        fetchExternalTemplateById,
-        fetchRelatedTemplates,
+    isLoading,
+    templates,
+    templatesOrderById,
+    totalPages,
+    createStoryFromTemplate,
+    fetchMyTemplateById,
+    fetchExternalTemplates,
+    fetchExternalTemplateById,
+    fetchRelatedTemplates,
+  } = useApi(
+    ({
+      state: {
+        templates: { templates, templatesOrderById, totalPages, isLoading },
       },
-    },
-  } = useContext(ApiContext);
+      actions: {
+        storyApi: { createStoryFromTemplate },
+        templateApi: {
+          fetchExternalTemplates,
+          fetchMyTemplateById,
+          fetchExternalTemplateById,
+          fetchRelatedTemplates,
+        },
+      },
+    }) => ({
+      isLoading,
+      templates,
+      templatesOrderById,
+      totalPages,
+      createStoryFromTemplate,
+      fetchExternalTemplates,
+      fetchMyTemplateById,
+      fetchExternalTemplateById,
+      fetchRelatedTemplates,
+    })
+  );
+  const { isRTL } = useConfig();
+  const { activePreview } = useTemplateView({ totalPages });
+  const { pageSize } = usePagePreviewSize({ isGrid: true });
 
   useEffect(() => {
     if (!templateId) {
+      return;
+    }
+
+    if ((!templates || Object.values(templates).length === 0) && !isLoading) {
+      fetchExternalTemplates();
+      return;
+    }
+
+    if (isLoading) {
       return;
     }
 
@@ -99,15 +120,34 @@ function TemplateDetails() {
       ? fetchMyTemplateById
       : fetchExternalTemplateById;
 
-    templateFetchFn(id).then(setTemplate);
-  }, [fetchExternalTemplateById, fetchMyTemplateById, isLocal, templateId]);
+    templateFetchFn(id)
+      .then(setTemplate)
+      .catch(() => {
+        addToast({
+          message: { body: __('Could not load the template.', 'web-stories') },
+          severity: ALERT_SEVERITY.ERROR,
+          id: Date.now(),
+        });
+      });
+  }, [
+    isLoading,
+    fetchExternalTemplates,
+    fetchExternalTemplateById,
+    fetchMyTemplateById,
+    isLocal,
+    templateId,
+    templates,
+    addToast,
+  ]);
 
   useEffect(() => {
-    if (!template) {
+    if (!template || !templateId) {
       return;
     }
+    const id = parseInt(templateId);
+
     setRelatedTemplates(
-      fetchRelatedTemplates().map((relatedTemplate) => ({
+      fetchRelatedTemplates(id).map((relatedTemplate) => ({
         ...relatedTemplate,
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
@@ -117,21 +157,13 @@ function TemplateDetails() {
         (templateByOrderId) => templates[templateByOrderId]
       )
     );
-  }, [fetchRelatedTemplates, template, templates, templatesOrderById]);
-
-  const { byLine } = useMemo(() => {
-    if (!template) {
-      return {};
-    }
-
-    return {
-      byLine: sprintf(
-        /* translators: %s: template author  */
-        __('by %s', 'web-stories'),
-        template.createdBy
-      ),
-    };
-  }, [template]);
+  }, [
+    fetchRelatedTemplates,
+    template,
+    templates,
+    templatesOrderById,
+    templateId,
+  ]);
 
   const activeTemplateIndex = useMemo(() => {
     if (orderedTemplates.length <= 0) {
@@ -156,122 +188,55 @@ function TemplateDetails() {
     [activeTemplateIndex, orderedTemplates, actions]
   );
 
-  const { NextButton, PrevButton } = useMemo(() => {
-    const Previous = (
-      <PaginationButton
-        rotateRight={true}
-        aria-label={__('View previous template', 'web-stories')}
-        onClick={() => switchToTemplateByOffset(-1)}
-        disabled={!orderedTemplates?.length || activeTemplateIndex === 0}
-      />
-    );
-
-    const Next = (
-      <PaginationButton
-        aria-label={__('View next template', 'web-stories')}
-        onClick={() => switchToTemplateByOffset(1)}
-        disabled={
-          !orderedTemplates?.length ||
-          activeTemplateIndex === orderedTemplates?.length - 1
-        }
-      />
-    );
-
-    return isRTL
-      ? {
-          NextButton: Previous,
-          PrevButton: Next,
-        }
-      : {
-          NextButton: Next,
-          PrevButton: Previous,
-        };
-  }, [
-    orderedTemplates?.length,
-    activeTemplateIndex,
-    isRTL,
-    switchToTemplateByOffset,
-  ]);
-
   const handleBookmarkClickSelected = useCallback(() => {}, []);
 
-  if (!template) {
-    return null;
+  const onHandleCta = useCallback(async () => {
+    await trackEvent('use_template', 'dashboard', template.title, template.id);
+    createStoryFromTemplate(template);
+  }, [createStoryFromTemplate, template]);
+
+  const handlePreviewTemplate = useCallback(
+    (e, previewTemplate) => {
+      activePreview.set(e, previewTemplate);
+    },
+    [activePreview]
+  );
+
+  if (activePreview.value) {
+    return (
+      <PreviewStoryView
+        story={activePreview.value}
+        handleClose={handlePreviewTemplate}
+      />
+    );
   }
 
   return (
-    template && (
-      <FontProvider>
-        <TransformProvider>
-          <Layout.Provider>
-            <Layout.Fixed>
-              <TemplateNavBar
-                handleCta={() => createStoryFromTemplate(template)}
-                handleBookmarkClick={
-                  enableBookmarks ? handleBookmarkClickSelected : undefined
-                }
-              />
-            </Layout.Fixed>
-            <Layout.Scrollable>
-              <DetailViewContentGutter>
-                <SmallDisplayPagination>
-                  {PrevButton}
-                  {NextButton}
-                </SmallDisplayPagination>
-                <ColumnContainer>
-                  <Column>
-                    <LargeDisplayPagination>
-                      {PrevButton}
-                    </LargeDisplayPagination>
-                    <CardGallery story={template} />
-                  </Column>
-                  <Column>
-                    <DetailContainer>
-                      <Title>{template.title}</Title>
-                      <ByLine>{byLine}</ByLine>
-                      <Text>{template.description}</Text>
-                      <MetadataContainer>
-                        {template.tags.map((tag) => (
-                          <Pill
-                            name={tag}
-                            key={tag}
-                            disabled
-                            onClick={() => {}}
-                            value={tag}
-                          >
-                            {tag}
-                          </Pill>
-                        ))}
-                      </MetadataContainer>
-                      <MetadataContainer>
-                        <ColorList colors={template.colors} size={30} />
-                      </MetadataContainer>
-                    </DetailContainer>
-                    <LargeDisplayPagination>
-                      {NextButton}
-                    </LargeDisplayPagination>
-                  </Column>
-                </ColumnContainer>
-                {relatedTemplates.length > 0 && (
-                  <RowContainer>
-                    <SubHeading>
-                      {__('Related Templates', 'web-stories')}
-                    </SubHeading>
-                    <UnitsProvider pageSize={pageSize}>
-                      <TemplateGridView
-                        templates={relatedTemplates}
-                        pageSize={pageSize}
-                        templateActions={{ createStoryFromTemplate }}
-                      />
-                    </UnitsProvider>
-                  </RowContainer>
-                )}
-              </DetailViewContentGutter>
-            </Layout.Scrollable>
-          </Layout.Provider>
-        </TransformProvider>
-      </FontProvider>
-    )
+    <FontProvider>
+      <TransformProvider>
+        <Layout.Provider>
+          <Header
+            onBookmarkClick={
+              enableBookmarks ? handleBookmarkClickSelected : null
+            }
+            onHandleCtaClick={onHandleCta}
+          />
+          <Content
+            activeTemplateIndex={activeTemplateIndex}
+            isRTL={isRTL}
+            orderedTemplatesLength={orderedTemplates?.length}
+            pageSize={pageSize}
+            switchToTemplateByOffset={switchToTemplateByOffset}
+            template={template}
+            relatedTemplates={relatedTemplates}
+            templateActions={{
+              createStoryFromTemplate,
+              handlePreviewTemplate,
+            }}
+          />
+        </Layout.Provider>
+      </TransformProvider>
+    </FontProvider>
   );
 }
 

@@ -20,6 +20,11 @@
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { TypographyPresets, Paragraph2 } from '../../../components';
@@ -35,7 +40,9 @@ export const ColumnContainer = styled.section`
   `}
 `;
 
-export const DetailContainer = styled.div`
+export const DetailContainer = styled.section.attrs({
+  'aria-label': __('Template Details', 'web-stories'),
+})`
   width: 100%;
   padding: 40px 20px 0;
 `;
@@ -61,7 +68,9 @@ export const Column = styled.div`
   `}
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1.attrs({
+  'aria-label': __('Template Title', 'web-stories'),
+})`
   ${TypographyPresets.ExtraLarge};
   color: ${({ theme }) => theme.colors.gray900};
 `;
@@ -81,6 +90,7 @@ export const Text = styled(Paragraph2)`
 `;
 
 export const MetadataContainer = styled.fieldset`
+  border: 0;
   > label {
     margin: 0 10px 14px 0;
 
@@ -92,11 +102,17 @@ export const MetadataContainer = styled.fieldset`
   }
 `;
 
-export const RowContainer = styled.section`
+export const RowContainer = styled.section.attrs({
+  'aria-label': __('Related Templates', 'web-stories'),
+})`
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 40px;
   margin: 0 20px 0;
+
+  & > div {
+    width: 100%;
+  }
 `;
 
 export const SubHeading = styled.h2`

@@ -19,12 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
+import { BEZIER } from '../../../animation';
 import { Checkmark as CheckmarkIcon, Close as CloseIcon } from '../../icons';
-import { BEZIER } from '../../constants';
 import { visuallyHiddenStyles } from '../../utils/visuallyHiddenStyles';
 import { TypographyPresets } from '../typography';
 

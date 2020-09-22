@@ -73,7 +73,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalY
   );
   return (
-    <MediaDisplay element={element} mediaRef={ref}>
+    <MediaDisplay element={element} mediaRef={ref} showPlaceholder={true}>
       {previewMode ? (
         <Image
           src={poster || resource.poster}

@@ -41,6 +41,9 @@ export const TOGGLE_ELEMENT_IN_SELECTION = 'TOGGLE_ELEMENT_IN_SELECTION';
 // Manipulate story-global state.
 export const UPDATE_STORY = 'UPDATE_STORY';
 
+// Manipulate animation state.
+export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
+
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';
 

@@ -26,12 +26,14 @@ import React from 'react';
 import HistoryContext from '../../../app/history/context';
 import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
+import MediaContext from '../../../app/media/context';
 import AutoSaveHandler from '../index';
 
 function setup({
   hasNewChanges = true,
   status = 'draft',
   autoSaveInterval = 0.1,
+  isUploading = false,
 }) {
   const saveStory = jest.fn();
   const historyContextValue = { state: { hasNewChanges } };
@@ -44,11 +46,18 @@ function setup({
     },
     actions: { saveStory },
   };
+  const mediaContextValue = {
+    local: {
+      state: { isUploading },
+    },
+  };
   render(
     <ConfigContext.Provider value={configValue}>
       <HistoryContext.Provider value={historyContextValue}>
         <StoryContext.Provider value={storyContextValue}>
-          <AutoSaveHandler />
+          <MediaContext.Provider value={mediaContextValue}>
+            <AutoSaveHandler />
+          </MediaContext.Provider>
         </StoryContext.Provider>
       </HistoryContext.Provider>
     </ConfigContext.Provider>
@@ -82,6 +91,14 @@ describe('AutoSaveHandler', () => {
   it('should not trigger saving when interval is 0', () => {
     const { saveStory } = setup({
       autoSaveInterval: 0,
+    });
+    jest.runAllTimers();
+    expect(saveStory).toHaveBeenCalledTimes(0);
+  });
+
+  it('should not trigger saving when media is uploading', () => {
+    const { saveStory } = setup({
+      isUploading: true,
     });
     jest.runAllTimers();
     expect(saveStory).toHaveBeenCalledTimes(0);

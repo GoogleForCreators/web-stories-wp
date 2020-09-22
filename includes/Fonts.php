@@ -33,9 +33,11 @@ class Fonts {
 	/**
 	 * Get list of fonts used in AMP Stories.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array Fonts.
 	 */
-	public static function get_fonts() {
+	public function get_fonts() {
 		static $fonts = null;
 
 		if ( isset( $fonts ) ) {
@@ -43,7 +45,7 @@ class Fonts {
 		}
 
 		$file  = __DIR__ . '/data/fonts.json';
-		$fonts = self::get_google_fonts( $file );
+		$fonts = $this->get_google_fonts( $file );
 
 		return $fonts;
 	}
@@ -51,11 +53,13 @@ class Fonts {
 	/**
 	 * Get list of Google Fonts from a given JSON file.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $file Path to file containing Google Fonts definitions.
 	 *
 	 * @return array $fonts Fonts list.
 	 */
-	public static function get_google_fonts( $file ) {
+	public function get_google_fonts( $file ) {
 		if ( ! is_readable( $file ) ) {
 			return [];
 		}

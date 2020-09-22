@@ -29,11 +29,13 @@ export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
-  LAYOUT_SQUISHABLE: 2,
-  LAYOUT_FIXED: 3,
+  LAYOUT_SQUISHABLE: 3,
+  LAYOUT_FIXED: 5,
+  STICKY_TABLE: 2,
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
+  TOASTER: 15,
 };
 
 export const APP_ROUTES = {
@@ -52,48 +54,58 @@ export const NESTED_APP_ROUTES = {
   SAVED_TEMPLATE_DETAIL: `${APP_ROUTES.SAVED_TEMPLATES}/${APP_ROUTES.TEMPLATE_DETAIL}`,
 };
 
+export const ADMIN_TITLE = __('Web Stories', 'web-stories');
+
+export const ROUTE_TITLES = {
+  [APP_ROUTES.MY_STORIES]: __('My Stories', 'web-stories'),
+  [APP_ROUTES.SAVED_TEMPLATES]: __('Saved Templates', 'web-stories'),
+  [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),
+  [`${APP_ROUTES.TEMPLATES_GALLERY}/${APP_ROUTES.TEMPLATE_DETAIL}`]: __(
+    'Template Details',
+    'web-stories'
+  ),
+  [APP_ROUTES.EDITOR_SETTINGS]: __('Editor Settings', 'web-stories'),
+  [APP_ROUTES.SUPPORT]: __('Support', 'web-stories'),
+  DEFAULT: __('My Stories', 'web-stories'),
+};
+
 export const primaryPaths = [
-  { value: APP_ROUTES.MY_STORIES, label: __('My Stories', 'web-stories') },
+  { value: APP_ROUTES.MY_STORIES, label: ROUTE_TITLES[APP_ROUTES.MY_STORIES] },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
-    label: __('Saved Templates', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.SAVED_TEMPLATES],
     inProgress: true,
   },
   {
     value: APP_ROUTES.TEMPLATES_GALLERY,
-    label: __('Explore Templates', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
   },
-];
-
-export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
-    label: __('Editor Settings', 'web-stories'),
-    inProgress: true,
+    label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
   },
   {
     value: APP_ROUTES.SUPPORT,
-    label: __('Support', 'web-stories'),
+    label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
     inProgress: true,
   },
 ];
 
 export const VIEW_STYLE = {
-  GRID: 'GRID',
-  LIST: 'LIST',
+  GRID: 'grid',
+  LIST: 'list',
 };
 
 export const VIEW_STYLE_LABELS = {
-  [VIEW_STYLE.GRID]: __('Grid View', 'web-stories'),
-  [VIEW_STYLE.LIST]: __('List View', 'web-stories'),
+  [VIEW_STYLE.GRID]: __('Switch to List View', 'web-stories'),
+  [VIEW_STYLE.LIST]: __('Switch to Grid View', 'web-stories'),
 };
 
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
+  TELEMETRY_BANNER_EXIT: { width: 10, height: 10 },
 };
-
-export const ITEMS_PER_PAGE = 20;
 
 export const DASHBOARD_VIEWS = {
   MY_STORIES: 'MY_STORIES',
@@ -106,10 +118,22 @@ export const RESULT_LABELS = {
   [DASHBOARD_VIEWS.TEMPLATES_GALLERY]: { ...TEMPLATES_GALLERY_VIEWING_LABELS },
 };
 
-export * from './animation';
+// API Query Constants
+export const ITEMS_PER_PAGE = 24;
+export const USERS_PER_REQUEST = 100;
+export const STORIES_PER_REQUEST = 24;
+
+export const DEFAULT_DATE_FORMAT = 'Y-m-d';
+
+export const TEXT_INPUT_DEBOUNCE = 300;
+
+export const MIN_IMG_HEIGHT = 96;
+export const MIN_IMG_WIDTH = 96;
+
 export * from './components';
 export * from './direction';
 export * from './pageStructure';
 export * from './savedTemplates';
+export * from './settings';
 export * from './stories';
 export * from './templates';

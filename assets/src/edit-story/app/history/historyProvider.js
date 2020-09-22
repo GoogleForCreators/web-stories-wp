@@ -66,6 +66,7 @@ function HistoryProvider({ children, size }) {
       requestedState,
       canUndo: offset < historyLength - 1,
       canRedo: offset > 0,
+      versionNumber,
     },
     actions: {
       stateToHistory,

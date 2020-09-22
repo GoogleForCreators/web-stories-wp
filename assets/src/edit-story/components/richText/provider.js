@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import { EditorState } from 'draft-js';
 
 /**
@@ -36,6 +36,7 @@ import getStateInfo from './getStateInfo';
 import { useFauxSelection } from './fauxSelection';
 import customImport from './customImport';
 import customExport from './customExport';
+import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
 
 function RichTextProvider({ children }) {
@@ -44,6 +45,7 @@ function RichTextProvider({ children }) {
   }));
 
   const [editorState, setEditorState] = useState(null);
+  const lastKnownStyle = useRef(null);
 
   const selectionInfo = useMemo(() => {
     if (editorState) {
@@ -70,6 +72,7 @@ function RichTextProvider({ children }) {
       if (selection) {
         state = EditorState.forceSelection(state, selection);
       }
+      lastKnownStyle.current = state.getCurrentInlineStyle();
       setEditorState(state);
     },
     [editingElementState, setEditorState]
@@ -82,7 +85,17 @@ function RichTextProvider({ children }) {
   // Furthermore it also sets initial selection if relevant.
   const updateEditorState = useCallback(
     (newEditorState) => {
-      const filteredState = getFilteredState(newEditorState, editorState);
+      let filteredState = getFilteredState(newEditorState, editorState);
+      const isEmpty = filteredState.getCurrentContent().getPlainText('') === '';
+      if (isEmpty) {
+        // Copy last known current style as inline style
+        filteredState = EditorState.setInlineStyleOverride(
+          filteredState,
+          lastKnownStyle.current
+        );
+      } else {
+        lastKnownStyle.current = filteredState.getCurrentInlineStyle();
+      }
       setEditorState(filteredState);
     },
     [editorState, setEditorState]
@@ -92,6 +105,8 @@ function RichTextProvider({ children }) {
     () => getHandleKeyCommandFromState(updateEditorState),
     [updateEditorState]
   );
+
+  const handlePastedText = useHandlePastedText(setEditorState);
 
   const clearState = useCallback(() => {
     setEditorState(null);
@@ -114,6 +129,7 @@ function RichTextProvider({ children }) {
       setStateFromContent,
       updateEditorState,
       getHandleKeyCommand,
+      handlePastedText,
       clearState,
       selectionActions,
       // These actually don't work on the state at all, just pure functions

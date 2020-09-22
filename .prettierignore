@@ -30,4 +30,5 @@ includes/data/fonts.json
 *.svg
 LICENSE
 composer.lock
+package.json
 package-lock.json

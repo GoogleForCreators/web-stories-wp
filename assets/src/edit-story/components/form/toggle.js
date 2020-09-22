@@ -19,11 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Fragment } from 'react';
+import { Fragment, useRef, forwardRef, useImperativeHandle } from 'react';
 
 /**
  * Internal dependencies
  */
+import { KEYBOARD_USER_SELECTOR } from '../../utils/keyboardOnlyOutline';
+import { useKeyDownEffect } from '../keyboard';
 import WithTooltip from '../tooltip';
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
@@ -42,14 +44,22 @@ const CheckBoxInput = styled.input.attrs({
 const MarkSpan = styled.span`
   display: flex;
   align-items: center;
+  width: 28px;
+  height: 28px;
+
+  svg {
+    color: ${({ theme }) => theme.colors.mg.v2};
+    width: 16px;
+    height: 16px;
+    margin: 6px;
+  }
 `;
 
 const ContainerLabel = styled.label`
-	display: flex;
-	position: relative;
-	padding: 3;
-	cursor: pointer;
-	user-select: none;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
 
   ${({ boxed }) =>
     boxed &&
@@ -59,38 +69,54 @@ const ContainerLabel = styled.label`
     `}
   ${({ expand = false }) => expand && `flex: 1;`}
 
-	${({ disabled }) =>
+  ${({ disabled }) =>
     disabled &&
     `
-		pointer-events: none;
-		opacity: .2;
-	`}
+    pointer-events: none;
+    opacity: .2;
+  `}
 
-  svg {
-    color: ${({ theme }) => theme.colors.mg.v2};
-    width: 16px;
-    height: 16px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  ${KEYBOARD_USER_SELECTOR} &:focus-within {
+    border-color: ${({ theme }) => theme.colors.whiteout};
   }
 `;
 
-function Toggle({
-  value,
-  disabled = false,
-  icon,
-  uncheckedIcon,
-  onChange,
-  boxed,
-  expand,
-  title = null,
-  ...rest
-}) {
+function Toggle(
+  {
+    value,
+    disabled = false,
+    icon,
+    uncheckedIcon,
+    onChange,
+    boxed,
+    expand,
+    title = null,
+    className = null,
+    ...rest
+  },
+  ref
+) {
   const Wrapper = title ? WithTooltip : Fragment;
+  const inputRef = useRef();
+  useImperativeHandle(ref, () => inputRef.current);
+  const toggle = () => onChange(!value);
+  // <enter> doesn't normally toggle checkboxes, but we'd like it to
+  useKeyDownEffect(inputRef, 'enter', toggle, [toggle]);
+
   return (
     <Wrapper>
-      <ContainerLabel expand={expand} boxed={boxed} disabled={disabled}>
+      <ContainerLabel
+        className={className}
+        expand={expand}
+        boxed={boxed}
+        disabled={disabled}
+      >
         <CheckBoxInput
+          ref={inputRef}
           checked={value}
-          onChange={() => onChange(!value)}
+          onChange={toggle}
           disabled={disabled}
           title={title}
           {...rest}
@@ -101,6 +127,8 @@ function Toggle({
   );
 }
 
+const ToggleWithRef = forwardRef(Toggle);
+
 Toggle.propTypes = {
   value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
@@ -110,6 +138,7 @@ Toggle.propTypes = {
   boxed: PropTypes.bool,
   expand: PropTypes.bool,
   title: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Toggle.defaultProps = {
@@ -120,4 +149,4 @@ Toggle.defaultProps = {
   expand: false,
 };
 
-export default Toggle;
+export default ToggleWithRef;

@@ -20,11 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
+import { LOCAL_STORAGE_PREFIX } from '../../../constants';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -32,20 +33,53 @@ export const PANEL_COLLAPSED_THRESHOLD = 10;
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
-function Panel({ resizeable, initialHeight, name, children }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [expandToHeight, setExpandToHeight] = useState(initialHeight);
-  const [height, setHeight] = useState(initialHeight);
+function Panel({
+  name,
+  children,
+  resizeable = false,
+  canCollapse = true,
+  initialHeight = null,
+  ariaLabel = null,
+  ariaHidden = false,
+}) {
+  const persisted = useMemo(() => {
+    let parsed = null;
+    try {
+      const stored = localStorage.getItem(
+        `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`
+      );
+      parsed = JSON.parse(stored);
+    } catch (e) {
+      // @TODO Add some error handling.
+    }
+    return parsed;
+  }, [name]);
+  const [isCollapsed, setIsCollapsed] = useState(
+    Boolean(persisted?.isCollapsed)
+  );
+  const [expandToHeight, setExpandToHeight] = useState(
+    persisted?.expandToHeight || initialHeight
+  );
+  const [height, setHeight] = useState(persisted?.height || initialHeight);
+  const [hasTitle, setHasTitle] = useState(false);
   const [manuallyChanged, setManuallyChanged] = useState(false);
 
+  const confirmTitle = useCallback(() => setHasTitle(true), []);
+
   const collapse = useCallback(() => {
+    if (!canCollapse) {
+      return;
+    }
     setIsCollapsed(true);
+    setManuallyChanged(true);
     if (resizeable) {
       setHeight(0);
     }
-  }, [resizeable]);
+  }, [resizeable, canCollapse]);
+
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
@@ -56,23 +90,44 @@ function Panel({ resizeable, initialHeight, name, children }) {
     [resizeable, expandToHeight]
   );
 
+  // Expand panel on first mount if collapse not persisted
   useEffect(() => {
-    if (
-      resizeable &&
-      height <= PANEL_COLLAPSED_THRESHOLD &&
-      isCollapsed === false
-    ) {
+    if (persisted?.isCollapsed) {
+      return;
+    }
+    expand(true);
+  }, [canCollapse, expand, persisted]);
+
+  useEffect(() => {
+    if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
       collapse();
     }
   }, [collapse, height, resizeable, isCollapsed]);
 
   useEffect(() => {
-    if (manuallyChanged || !resizeable) {
+    if (manuallyChanged || persisted || !resizeable) {
       return;
     }
     setHeight(initialHeight);
     setExpandToHeight(initialHeight);
-  }, [manuallyChanged, initialHeight, resizeable]);
+  }, [manuallyChanged, initialHeight, resizeable, persisted]);
+
+  // Persist when user collapses
+  useEffect(() => {
+    if (!manuallyChanged) {
+      return;
+    }
+
+    // Persist only when after user interacts
+    localStorage.setItem(
+      `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
+      JSON.stringify({
+        height,
+        isCollapsed,
+        expandToHeight,
+      })
+    );
+  }, [name, isCollapsed, height, expandToHeight, manuallyChanged]);
 
   const manuallySetHeight = useCallback(
     (h) => {
@@ -96,6 +151,8 @@ function Panel({ resizeable, initialHeight, name, children }) {
   }, [expand, isCollapsed]);
 
   const panelContentId = `panel-${name}-${uuidv4()}`;
+  const panelTitleId = `panel-title-${name}-${uuidv4()}`;
+  const panelTitleReadable = `panel-title-${name}`;
 
   const contextValue = {
     state: {
@@ -103,6 +160,9 @@ function Panel({ resizeable, initialHeight, name, children }) {
       resizeable,
       isCollapsed,
       panelContentId,
+      panelTitleId,
+      panelTitleReadable,
+      ariaHidden,
     },
     actions: {
       setHeight: manuallySetHeight,
@@ -110,27 +170,36 @@ function Panel({ resizeable, initialHeight, name, children }) {
       collapse,
       expand,
       resetHeight,
+      confirmTitle,
     },
   };
 
   const ContextProvider = panelContext.Provider;
 
+  const wrapperProps = useMemo(
+    () =>
+      hasTitle
+        ? { 'aria-labelledby': panelTitleId }
+        : { 'aria-label': ariaLabel },
+    [hasTitle, panelTitleId, ariaLabel]
+  );
+
   return (
-    <Wrapper>
+    <Wrapper {...wrapperProps} aria-hidden={ariaHidden}>
       <ContextProvider value={contextValue}>{children}</ContextProvider>
     </Wrapper>
   );
 }
 
 Panel.propTypes = {
-  children: PropTypes.node,
   name: PropTypes.string.isRequired,
+  children: PropTypes.node,
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
-};
-
-Panel.defaultProps = {
-  initialHeight: null,
+  canCollapse: PropTypes.bool,
+  ariaLabel: PropTypes.string,
+  ariaHidden: PropTypes.bool,
+  isPersisted: PropTypes.bool,
 };
 
 export default Panel;

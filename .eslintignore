@@ -1,6 +1,6 @@
 **/node_modules/**
 **/vendor/**
 **/assets/js/*.js
-**/assets/src/dashboard/templates/raw/*.json
+bin/build/*
 build/*
 !.storybook

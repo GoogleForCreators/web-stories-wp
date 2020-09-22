@@ -19,26 +19,36 @@ namespace Google\Web_Stories\Tests;
 
 use WP_Block_Type_Registry;
 
+/**
+ * @coversDefaultClass \Google\Web_Stories\Embed_Block
+ */
 class Embed_Block extends \WP_UnitTestCase {
 	public function tearDown() {
-		if ( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) ) {
-			unregister_block_type( 'web-stories/embed' );
-		}
+		unregister_block_type( \Google\Web_Stories\Embed_Block::BLOCK_NAME );
 
 		parent::tearDown();
 	}
 
+	/**
+	 * @covers ::init
+	 */
 	public function test_registers_block_type() {
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
 	}
 
+	/**
+	 * @covers ::filter_kses_allowed_html
+	 */
 	public function test_adds_amp_story_player_to_list_of_allowed_html() {
 		$this->assertArrayHasKey( 'amp-story-player', wp_kses_allowed_html() );
 	}
 
+	/**
+	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
+	 */
 	public function test_render_block() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$actual = $embed_block->render_block(
 			[
@@ -54,9 +64,12 @@ class Embed_Block extends \WP_UnitTestCase {
 		$this->assertContains( '<amp-story-player', $actual );
 	}
 
+	/**
+	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
+	 */
 	public function test_render_block_missing_url() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$actual = $embed_block->render_block(
 			[
@@ -72,9 +85,12 @@ class Embed_Block extends \WP_UnitTestCase {
 		$this->assertEmpty( $actual );
 	}
 
+	/**
+	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
+	 */
 	public function test_render_block_missing_title() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$actual = $embed_block->render_block(
 			[
@@ -87,12 +103,15 @@ class Embed_Block extends \WP_UnitTestCase {
 			''
 		);
 
-		$this->assertEmpty( $actual );
+		$this->assertContains( __( 'Web Story', 'web-stories' ), $actual );
 	}
 
+	/**
+	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
+	 */
 	public function test_render_block_feed_no_poster() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
-		$embed_block->init();
 
 		$this->go_to( '/?feed=rss2' );
 
@@ -108,6 +127,10 @@ class Embed_Block extends \WP_UnitTestCase {
 		$this->assertNotContains( '<img', $actual );
 	}
 
+	/**
+	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
+	 */
 	public function test_render_block_with_poster() {
 		$embed_block = new \Google\Web_Stories\Embed_Block();
 		$embed_block->init();

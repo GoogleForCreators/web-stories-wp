@@ -48,7 +48,9 @@ function setupPanel(
   };
 
   const config = { capabilities };
+  const loadUsers = jest.fn();
   const inspectorContextValue = {
+    actions: { loadUsers },
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },

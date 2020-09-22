@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { createContext } from 'react';
+import { createContext } from '../../utils';
 
 export default createContext({ api: {} });

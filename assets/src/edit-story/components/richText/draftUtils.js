@@ -62,7 +62,10 @@ export function getAllStyleSetsInSelection(editorState) {
       offsetIndex < offsetEnd;
       offsetIndex++
     ) {
-      styleSets.push(characterList.get(offsetIndex).getStyle());
+      const styleSet = characterList.get(offsetIndex);
+      if (styleSet) {
+        styleSets.push(styleSet.getStyle());
+      }
     }
     if (!hasMoreRounds) {
       break;

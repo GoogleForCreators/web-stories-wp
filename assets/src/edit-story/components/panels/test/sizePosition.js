@@ -40,6 +40,8 @@ describe('Panels/SizePosition', () => {
     defaultElement = {
       id: '1',
       isBackground: false,
+      x: 20,
+      y: 20,
       width: 100,
       height: 80,
       rotationAngle: 0,
@@ -48,6 +50,8 @@ describe('Panels/SizePosition', () => {
     unlockAspectRatioElement = {
       id: '1',
       isBackground: false,
+      x: 20,
+      y: 20,
       width: 100,
       height: 80,
       rotationAngle: 0,
@@ -183,37 +187,19 @@ describe('Panels/SizePosition', () => {
       expect(pushUpdate).toHaveBeenCalledWith({ height: 160, width: 100 });
     });
 
-    it('should update width with lock ratio and empty value', () => {
+    it('should not update width if empty value', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: '' });
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
 
-    it('should update height with lock ratio and empty value', () => {
+    it('should not update height if empty value', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
 
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: '' });
-    });
-
-    it('should update width without lock ratio and empty value', () => {
-      const { getByRole, pushUpdate } = renderSizePosition([
-        unlockAspectRatioElement,
-      ]);
-      const input = getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ width: '', height: 80 });
-    });
-
-    it('should update height without lock ratio and empty value', () => {
-      const { getByRole, pushUpdate } = renderSizePosition([
-        unlockAspectRatioElement,
-      ]);
-      const input = getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).toHaveBeenCalledWith({ height: '', width: 100 });
+      expect(pushUpdate).not.toHaveBeenCalled();
     });
 
     it('should update lock ratio to false for element', () => {
@@ -292,16 +278,18 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: dataPixels(150 / (100 / 80)),
-      });
-      expect(submits[imageWithSameSize.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: dataPixels(150 / (100 / 80)),
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: dataPixels(150 / (100 / 80)),
+        })
+      );
+      expect(submits[imageWithSameSize.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: dataPixels(150 / (100 / 80)),
+        })
+      );
     });
 
     it('should update width with lock ratio and different size', () => {
@@ -317,16 +305,18 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ width: 150, height: MULTIPLE_VALUE });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: 150 / (100 / 80),
-      });
-      expect(submits[imageWithDifferentSize.id]).toStrictEqual({
-        rotationAngle: 0,
-        width: 150,
-        height: dataPixels(150 / (200 / 120)),
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: 150 / (100 / 80),
+        })
+      );
+      expect(submits[imageWithDifferentSize.id]).toStrictEqual(
+        expect.objectContaining({
+          width: 150,
+          height: dataPixels(150 / (200 / 120)),
+        })
+      );
     });
 
     it('should update height with lock ratio and different size', () => {
@@ -342,16 +332,18 @@ describe('Panels/SizePosition', () => {
       });
 
       const submits = submit({ height: 160, width: MULTIPLE_VALUE });
-      expect(submits[image.id]).toStrictEqual({
-        rotationAngle: 0,
-        height: 160,
-        width: 160 * (100 / 80),
-      });
-      expect(submits[imageWithDifferentSize.id]).toStrictEqual({
-        rotationAngle: 0,
-        height: 160,
-        width: dataPixels(160 * (200 / 120)),
-      });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          height: 160,
+          width: 160 * (100 / 80),
+        })
+      );
+      expect(submits[imageWithDifferentSize.id]).toStrictEqual(
+        expect.objectContaining({
+          height: 160,
+          width: dataPixels(160 * (200 / 120)),
+        })
+      );
     });
 
     it('should disable aspect ratio lock if all elements had lock enabled', () => {
@@ -385,6 +377,24 @@ describe('Panels/SizePosition', () => {
         getByRole('checkbox', { name: aspectRatioLockButtonLabel })
       );
       expect(pushUpdate).toHaveBeenCalledWith({ lockAspectRatio: true });
+    });
+
+    it('should update height with lock ratio and extrapolated size and reset to max allowed', () => {
+      const { getByRole, pushUpdate, submit } = renderSizePosition([image]);
+      const input = getByRole('textbox', { name: 'Height' });
+      fireEvent.change(input, { target: { value: '2000' } });
+      expect(pushUpdate).toHaveBeenCalledWith({
+        height: 2000,
+        width: 2000 * (100 / 80),
+      });
+
+      const submits = submit({ height: 2000, width: 2000 * (100 / 80) });
+      expect(submits[image.id]).toStrictEqual(
+        expect.objectContaining({
+          height: 1000 / (100 / 80),
+          width: 1000,
+        })
+      );
     });
   });
 });

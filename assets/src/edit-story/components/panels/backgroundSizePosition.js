@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -61,7 +62,7 @@ function BackgroundSizePositionPanel({ selectedElements, pushUpdate }) {
     >
       <Row expand={false}>
         <Button onClick={removeAsBackground} fullWidth>
-          {__('Remove as Background', 'web-stories')}
+          {__('Detach from background', 'web-stories')}
         </Button>
       </Row>
       <Row expand={false}>

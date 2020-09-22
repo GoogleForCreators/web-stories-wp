@@ -17,13 +17,14 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { TestDisplayElement } from '../../../components/canvas/test/_utils';
 import { OverlayType } from '../../../utils/backgroundOverlay';
+import resourceList from '../../../utils/resourceList';
 
 describe('MediaDisplay', () => {
   let imageElement;
@@ -49,6 +50,18 @@ describe('MediaDisplay', () => {
         src: 'https://example.com/image1',
         width: 1000,
         height: 800,
+        sizes: {
+          medium: {
+            source_url: 'https://example.com/image1-mid',
+            width: 500,
+            height: 400,
+          },
+          full: {
+            source_url: 'https://example.com/image1',
+            width: 1000,
+            height: 800,
+          },
+        },
       },
     };
     videoElement = {
@@ -84,6 +97,21 @@ describe('MediaDisplay', () => {
     refs = {};
   });
 
+  it('should render img with srcset, when fullsize resource is loaded', () => {
+    resourceList.set(imageElement.resource.id, { type: 'fullsize' });
+    const { container } = render(
+      <TestDisplayElement storyContext={storyContext} element={imageElement} />
+    );
+
+    const img = container.querySelector('img');
+
+    expect(img.srcset).toBe(
+      'https://example.com/image1 1000w,https://example.com/image1-mid 500w'
+    );
+    // Take optimized image loading into account, fullsize uses original image
+    expect(img.src).toBe(imageElement.resource.src);
+  });
+
   it('should render img with scale and focal point', () => {
     const { container } = render(
       <TestDisplayElement storyContext={storyContext} element={imageElement} />
@@ -115,12 +143,13 @@ describe('MediaDisplay', () => {
     const img = container.querySelector('img');
 
     // Start with empty style.
-    expect(img.style.cssText).toBe('');
+    expect(img.style).toMatchSnapshot('empty style before');
 
     // Resize to 100:80 (or 1:1 with the original size).
-    pushTransform(imageElement.id, { resize: [100, 80] });
-    expect(img.style.cssText).not.toBe('');
-    expect(img.style).toMatchObject({
+    act(() => {
+      pushTransform(imageElement.id, { resize: [100, 80] });
+    });
+    expect(img).toHaveStyle({
       width: '100px',
       height: '80px',
       left: '0px',
@@ -128,8 +157,10 @@ describe('MediaDisplay', () => {
     });
 
     // Reset.
-    pushTransform(imageElement.id, null);
-    expect(img.style.cssText).toBe('');
+    act(() => {
+      pushTransform(imageElement.id, null);
+    });
+    expect(img.style).toMatchSnapshot('empty style after');
   });
 
   it('should render flipped background video with overlay', () => {

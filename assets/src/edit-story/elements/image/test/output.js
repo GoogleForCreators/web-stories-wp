@@ -31,11 +31,11 @@ describe('Image output', () => {
       type: 'image',
       mimeType: 'image/png',
       scale: 1,
-      origRatio: 9 / 16,
+      origRatio: 16 / 9,
       x: 50,
       y: 100,
-      height: 1920,
-      width: 1080,
+      height: 1080,
+      width: 1920,
       rotationAngle: 0,
       resource: {
         id: 123,
@@ -43,15 +43,54 @@ describe('Image output', () => {
         mimeType: 'image/png',
         src: 'https://example.com/image.png',
         alt: 'alt text',
-        height: 1920,
-        width: 1080,
+        height: 1080,
+        width: 1920,
+        sizes: {
+          mid: {
+            source_url: 'https://example.com/image-mid.png',
+            width: 960,
+            height: 540,
+          },
+          full: {
+            source_url: 'https://example.com/image.png',
+            width: 1920,
+            height: 1080,
+          },
+        },
       },
     },
-    box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    box: { width: 1920, height: 1080, x: 50, y: 100, rotationAngle: 0 },
   };
 
   it('should produce valid AMP output', async () => {
     await expect(<ImageOutput {...baseProps} />).toBeValidAMPStoryElement();
+  });
+
+  it('should produce an AMP img with a srcset', async () => {
+    const output = <ImageOutput {...baseProps} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(output).toBeValidAMPStoryElement();
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(
+        'srcSet="https://example.com/image.png 1920w,' +
+          'https://example.com/image-mid.png 960w"'
+      )
+    );
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('src="https://example.com/image.png"')
+    );
+  });
+
+  it('should produce an AMP img with no srcset if the resource has no `sizes`', async () => {
+    const basePropsNoSrcset = { ...baseProps };
+    basePropsNoSrcset.element.resource.sizes = {};
+    const output = <ImageOutput {...basePropsNoSrcset} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(output).toBeValidAMPStoryElement();
+    await expect(outputStr).toStrictEqual(expect.not.stringMatching('srcSet='));
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('src="https://example.com/image.png"')
+    );
   });
 
   it('an undefined alt tag in the element should fall back to the resource', async () => {

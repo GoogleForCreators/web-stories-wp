@@ -47,10 +47,11 @@ export const resizeRules = {
 };
 
 export const panels = [
-  PanelTypes.STYLE_PRESETS,
+  PanelTypes.COLOR_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,
+  PanelTypes.ANIMATION,
 ];

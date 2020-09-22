@@ -15,14 +15,14 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -38,6 +38,7 @@ import {
   UsersPropType,
   StoriesPropType,
   StoryActionsPropType,
+  DateSettingsPropType,
 } from '../../../../types';
 import {
   FilterPropTypes,
@@ -60,12 +61,19 @@ function Content({
   storyActions,
   users,
   view,
+  dateSettings,
+  initialFocusStoryId,
 }) {
   return (
     <Layout.Scrollable>
       <FontProvider>
         <TransformProvider>
-          <UnitsProvider pageSize={view.pageSize}>
+          <UnitsProvider
+            pageSize={{
+              width: view.pageSize.width,
+              height: view.pageSize.height,
+            }}
+          >
             {stories.length > 0 ? (
               <StandardViewContentGutter>
                 <StoriesView
@@ -75,6 +83,8 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
+                  dateSettings={dateSettings}
+                  initialFocusStoryId={initialFocusStoryId}
                 />
                 <InfiniteScroller
                   canLoadMore={!allPagesFetched}
@@ -103,6 +113,8 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
+  dateSettings: DateSettingsPropType,
+  initialFocusStoryId: PropTypes.number,
 };
 
 export default Content;

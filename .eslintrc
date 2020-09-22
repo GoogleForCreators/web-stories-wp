@@ -1,6 +1,6 @@
 {
   "root": true,
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "extends": [
     "plugin:@wordpress/eslint-plugin/i18n",
     "eslint:recommended",
@@ -13,11 +13,13 @@
     "plugin:jsdoc/recommended"
   ],
   "plugins": [
-    "react",
-    "react-hooks",
-    "jsx-a11y",
+    "@babel",
+    "@wordpress",
     "header",
-    "@wordpress"
+    "jsdoc",
+    "jsx-a11y",
+    "react",
+    "react-hooks"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -71,6 +73,9 @@
         "target": "./assets/src/edit-story",
         "from": "./assets/src/edit-story/utils/useWhyDidYouUpdate.js"
       } ]
+    } ],
+    "import/dynamic-import-chunkname": [ "error", {
+      "webpackChunknameFormat": "[0-9a-zA-Z-_/.[\\]]+"
     } ],
     "no-restricted-properties": "error",
     "no-return-assign": "error",
@@ -167,10 +172,13 @@
         ]
       }
     ],
-    "jsdoc/require-jsdoc": "off",
-    "jsdoc/require-returns": "off",
-    "jsdoc/require-param-description": "off",
     "jsdoc/check-indentation": "error",
+    "jsdoc/check-syntax": "warn",
+    "jsdoc/require-jsdoc": ["off", {
+      "publicOnly": true
+    }],
+    "jsdoc/require-returns": "warn",
+    "jsdoc/require-param-description": "warn",
     "eslint-comments/no-unused-disable": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
@@ -191,10 +199,12 @@
     "window": true,
     "document": true,
     "wp": "readonly",
-    "process": "readonly"
+    "process": "readonly",
+    "__webpack_public_path__": true
   },
   "settings": {
     "jsdoc": {
+      "mode": "typescript",
       "preferredTypes": {
         "object": "Object"
       },
@@ -205,7 +215,15 @@
     },
     "react": {
       "version": "detect"
-    }
+    },
+    "linkComponents": [
+      "Link",
+      {"name": "Plain", "linkAttribute": "href"},
+      {"name": "Primary", "linkAttribute": "href"},
+      "PrimaryLink",
+      "SecondaryLink",
+      "ExternalLink"
+    ]
   },
   "overrides": [
     {
@@ -241,6 +259,7 @@
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
+        "jsdoc/require-jsdoc": "off",
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error"
       }
@@ -265,7 +284,21 @@
         "testing-library/no-debug": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
-        "jasmine/no-disabled-tests": "error"
+        "jasmine/no-disabled-tests": "error",
+        "jasmine/no-spec-dupes": ["error", "branch"],
+        "jasmine/no-suite-dupes": ["error", "branch"],
+        "jsdoc/require-jsdoc": "off",
+        "no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@testing-library/react-hooks",
+                "message": "Use karma fixtures instead."
+              }
+            ]
+          }
+        ]
       },
       "globals": {
         "karmaPuppeteer": "readonly",
@@ -295,18 +328,26 @@
       }
     },
     {
+      "files": ["tests/e2e/specs/**/*.js"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
       "files": [
         "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.cjs",
         "jest-puppeteer.config.cjs",
-        "karma.config.cjs",
+        "karma-*.config.cjs",
         "webpack.*.cjs",
         ".storybook/*.cjs",
         ".storybook/*.js",
         "tests/js/*.js",
         "tests/e2e/*.js",
-        "tests/e2e/config/*.js"
+        "tests/e2e/config/*.js",
+        "assets/src/dashboard/karma-tests.cjs",
+        "assets/src/edit-story/karma-tests.cjs"
       ],
       "env": {
         "node": true
@@ -321,9 +362,11 @@
         "markdown"
       ],
       "rules": {
+        "@wordpress/dependency-group": "off",
         "no-undef": "off",
         "no-unused-vars": "off",
-        "header/header": "off"
+        "header/header": "off",
+        "prettier/prettier": "off"
       }
     }
   ]

@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { Fixture } from './fixture';
+export { Fixture, MEDIA_PER_PAGE } from './fixture';

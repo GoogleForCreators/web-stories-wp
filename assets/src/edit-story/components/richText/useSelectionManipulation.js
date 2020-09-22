@@ -42,7 +42,7 @@ function useSelectionManipulation(editorState, setEditorState) {
       const oldState = lastKnownState.current;
       const selection = lastKnownSelection.current;
       const workingState = shouldForceFocus
-        ? EditorState.acceptSelection(oldState, selection)
+        ? EditorState.forceSelection(oldState, selection)
         : oldState;
       const newState = updater(workingState);
       setEditorState(newState);

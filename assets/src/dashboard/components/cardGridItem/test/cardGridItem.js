@@ -17,12 +17,12 @@
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import CardGridItem from '../';
 
 describe('CardGridItem', () => {
   it('should render CardGridItem', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <CardGridItem>
         <div>
           <p>{'Grid Item Paragraph'}</p>

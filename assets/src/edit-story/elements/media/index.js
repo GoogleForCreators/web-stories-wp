@@ -27,7 +27,7 @@ import { PanelTypes } from '../../components/panels';
 
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
-export { default as EditPanMovable } from './editPanMovable';
+export { default as EditPanMoveable } from './editPanMoveable';
 export { default as ScalePanel } from './scalePanel';
 
 export const CropBox = styled.div`
@@ -80,4 +80,5 @@ export const MEDIA_PANELS = [
   PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.SIZE_POSITION,
+  PanelTypes.ANIMATION,
 ];

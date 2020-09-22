@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
 import { useMemo } from 'react';
@@ -27,10 +22,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { STORY_STATUS } from '../../constants';
-import { getFormattedDisplayDate } from '../../utils/';
 import { DashboardStatusesPropType } from '../../types';
 import { Paragraph2 } from '../typography';
 import InlineInputForm from '../inlineInputForm';
@@ -81,23 +80,39 @@ const CardTitle = ({
   editMode,
   onEditComplete,
   onEditCancel,
+  tabIndex,
 }) => {
   const displayDateText = useMemo(() => {
     if (!displayDate) {
       return null;
     }
-    return status === STORY_STATUS.PUBLISHED
-      ? sprintf(
-          /* translators: %s: last modified date */
+
+    switch (status) {
+      case STORY_STATUS.PUBLISH:
+        return sprintf(
+          /* translators: %s: published date */
           __('Published %s', 'web-stories'),
-          getFormattedDisplayDate(displayDate)
-        )
-      : sprintf(
+          displayDate
+        );
+      case STORY_STATUS.FUTURE:
+        return sprintf(
+          /* translators: %s: future publish date */
+          __('Scheduled %s', 'web-stories'),
+          displayDate
+        );
+
+      default:
+        return sprintf(
           /* translators: %s: last modified date */
           __('Modified %s', 'web-stories'),
-          getFormattedDisplayDate(displayDate)
+          displayDate
         );
+    }
   }, [status, displayDate]);
+
+  const titleFormatted = (rawTitle) => {
+    return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+  };
 
   return (
     <StyledCardTitle>
@@ -110,7 +125,17 @@ const CardTitle = ({
           label={__('Rename story', 'web-stories')}
         />
       ) : (
-        <TitleStoryLink href={titleLink}>{title}</TitleStoryLink>
+        <TitleStoryLink
+          href={titleLink}
+          tabIndex={tabIndex}
+          aria-label={sprintf(
+            /* translators: %s: title*/
+            __('Open %s in editor', 'web-stories'),
+            title
+          )}
+        >
+          {titleFormatted(title)}
+        </TitleStoryLink>
       )}
       <TitleBodyText>
         {status === STORY_STATUS.DRAFT && (
@@ -130,9 +155,10 @@ CardTitle.propTypes = {
   secondaryTitle: PropTypes.string,
   status: DashboardStatusesPropType,
   editMode: PropTypes.bool,
-  displayDate: PropTypes.object,
+  displayDate: PropTypes.string,
   onEditComplete: PropTypes.func,
   onEditCancel: PropTypes.func,
+  tabIndex: PropTypes.number,
 };
 
 export default CardTitle;

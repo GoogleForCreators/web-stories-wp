@@ -19,20 +19,20 @@
  */
 import { useCallback, useMemo } from 'react';
 
-const useFontApi = (dataAdapter, { wpApi }) => {
+const useFontApi = (dataAdapter, { fontApi }) => {
   const getAllFonts = useCallback(() => {
-    if (!wpApi) {
+    if (!fontApi) {
       return Promise.resolve([]);
     }
 
-    return dataAdapter.get(wpApi).then((data) =>
+    return dataAdapter.get(fontApi).then((data) =>
       data.map((font) => ({
         value: font.family,
         name: font.family,
         ...font,
       }))
     );
-  }, [dataAdapter, wpApi]);
+  }, [dataAdapter, fontApi]);
 
   const api = useMemo(
     () => ({

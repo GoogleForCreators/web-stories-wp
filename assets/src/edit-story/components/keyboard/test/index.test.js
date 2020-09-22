@@ -32,13 +32,16 @@ const keys = {
   b: { key: 'b', which: 66 },
 };
 
-/*
+/** @typedef {import('@testing-library/react-hooks').HookResult} HookResult */
+
+/**
  * Runs tests simulating a key being held down for useIsKeyPressed
  * and useGlobalIsKeyPressed.
- * @param {HookResult<boolean>} keyNameOrSpec
- * @param {Node} node
- * @param {Object} key
- * @param {?boolean|true} shouldRegister Whether the key press is registered by
+ *
+ * @param {HookResult<boolean>} result Hook result.
+ * @param {Node} node Node.
+ * @param {Object<{key: string, which: number}>} key Key object.
+ * @param {boolean} [shouldRegister=true] Whether the key press is registered by
  * the hook.
  */
 function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
@@ -95,12 +98,12 @@ describe('keyboard/index.js', () => {
   describe('useGlobalIsKeyPressed', () => {
     it('should initialise and then register key up and down events', () => {
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
-      testIsKeyPressed(result, document, keys.a);
+      testIsKeyPressed(result, document.documentElement, keys.a);
     });
 
     it('should not register when other keys are pressed', () => {
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
-      testIsKeyPressed(result, document, keys.b, false);
+      testIsKeyPressed(result, document.documentElement, keys.b, false);
     });
 
     it('should register key presses on any part of the document', () => {

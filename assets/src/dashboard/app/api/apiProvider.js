@@ -18,53 +18,84 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext, useMemo } from 'react';
+import { useMemo } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../config';
+import { createContext } from '../../utils';
 import dataAdapter from './wpAdapter';
 import useFontApi from './useFontApi';
+import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
 import useUsersApi from './useUserApi';
+import useSettingsApi from './useSettingsApi';
 
 export const ApiContext = createContext({ state: {}, actions: {} });
 
 export default function ApiProvider({ children }) {
-  const { api, editStoryURL, assetsURL } = useConfig();
+  const { api, editStoryURL, cdnURL } = useConfig();
 
-  const { users, api: usersApi } = useUsersApi(dataAdapter, {
-    wpApi: api.users,
+  const { users, currentUser, api: usersApi } = useUsersApi(dataAdapter, {
+    userApi: api.users,
+    currentUserApi: api.currentUser,
   });
 
   const { templates, api: templateApi } = useTemplateApi(dataAdapter, {
-    assetsURL,
+    cdnURL,
+    templateApi: api.templates,
   });
 
   const { stories, api: storyApi } = useStoryApi(dataAdapter, {
     editStoryURL,
-    wpApi: api.stories,
+    storyApi: api.stories,
   });
 
-  const { api: fontApi } = useFontApi(dataAdapter, { wpApi: api.fonts });
+  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
+
+  const { media, api: mediaApi } = useMediaApi(dataAdapter, {
+    globalMediaApi: api.media,
+  });
+
+  const { settings, api: settingsApi } = useSettingsApi(dataAdapter, {
+    globalStoriesSettingsApi: api.settings,
+  });
 
   const value = useMemo(
     () => ({
       state: {
+        media,
+        settings,
         stories,
         templates,
         users,
+        currentUser,
       },
       actions: {
+        mediaApi,
+        settingsApi,
         storyApi,
         templateApi,
         fontApi,
         usersApi,
       },
     }),
-    [users, stories, templates, storyApi, templateApi, fontApi, usersApi]
+    [
+      media,
+      settings,
+      stories,
+      templates,
+      users,
+      currentUser,
+      mediaApi,
+      settingsApi,
+      storyApi,
+      templateApi,
+      fontApi,
+      usersApi,
+    ]
   );
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;

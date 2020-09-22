@@ -84,7 +84,7 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
     await waitFor(() => expect(getGradientStopAt(100)).toHaveFocus());
   });
 
-  it('should move stop when pressing arrow keys', () => {
+  it('should move stop when pressing arrow keys', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -115,6 +115,9 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
         })
       );
 
+    // Wait for callback to have been called a second time after debounce
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(2));
+
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
@@ -123,8 +126,6 @@ describe('<ColorPicker /> when manipulating stops using keyboard', () => {
         { color: { r: 0, g: 0, b: 255 }, position: 1 },
       ],
     });
-
-    expect(onChange).toHaveBeenCalledTimes(10);
   });
 
   it('should reorder stops when moving with arrow keys past another stop', () => {

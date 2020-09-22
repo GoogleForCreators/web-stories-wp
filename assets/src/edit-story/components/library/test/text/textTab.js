@@ -23,7 +23,7 @@ import { act, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { FontProvider } from '../../../../app/font';
-import { TextTab } from '../../panes/text';
+import { TextIcon } from '../../panes/text';
 import APIContext from '../../../../app/api/context';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
@@ -52,7 +52,7 @@ describe('TextTab', () => {
       const { getByLabelText } = renderWithTheme(
         <APIContext.Provider value={apiContextValue}>
           <FontProvider apiContextValue>
-            <TextTab />
+            <TextIcon />
           </FontProvider>
         </APIContext.Provider>
       );

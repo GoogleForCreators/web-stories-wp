@@ -19,12 +19,15 @@
  */
 import StoryPropTypes from '../../types';
 import VisibleImage from '../media/visibleImage';
+import { getSmallestUrlForWidth } from '../media/util';
 
 function ImageLayerContent({
   element: {
-    resource: { src, alt },
+    resource,
+    resource: { alt },
   },
 }) {
+  const src = getSmallestUrlForWidth(0, resource);
   return <VisibleImage src={src} alt={alt} height="20" />;
 }
 

@@ -37,12 +37,15 @@ const ACCEPTED_KEYS = [
   'ArrowLeft',
   'ArrowRight',
   'Tab',
+  'Digit1',
+  'Digit2',
+  'Digit3',
 ];
 
 const KeyboardOnlyOutline = () => {
   const [usingKeyboard, setUsingKeyboard] = useState(false);
   const handleKeydown = (e) => {
-    if (!usingKeyboard && ACCEPTED_KEYS.includes(e.key)) {
+    if (!usingKeyboard && ACCEPTED_KEYS.includes(e.code)) {
       setUsingKeyboard(true);
     }
   };
@@ -58,8 +61,8 @@ const KeyboardOnlyOutline = () => {
 
   useEffect(() => {
     return function cleanup() {
-      document.removeEventListener('keydown', handleKeydown);
-      document.removeEventListener('mousedown', handleMousedown);
+      document.removeEventListener('keydown', handleKeydown, true);
+      document.removeEventListener('mousedown', handleMousedown, true);
     };
   });
 
@@ -69,6 +72,10 @@ const KeyboardOnlyOutline = () => {
 
   return <OutlineStyles />;
 };
+
+export function isKeyboardUser() {
+  return document.body.classList.contains(KEYBOARD_USER_CLASS);
+}
 
 KeyboardOnlyOutline.propTypes = {};
 

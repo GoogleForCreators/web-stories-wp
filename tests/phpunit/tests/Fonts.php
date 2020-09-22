@@ -19,12 +19,13 @@ namespace Google\Web_Stories\Tests;
 
 class Fonts extends \WP_UnitTestCase {
 	public function test_get_fonts() {
-		$fonts = \Google\Web_Stories\Fonts::get_fonts();
-		$this->assertInternalType( 'array', $fonts );
+		$fonts     = new \Google\Web_Stories\Fonts();
+		$font_list = $fonts->get_fonts();
+		$this->assertInternalType( 'array', $font_list );
 
 		$arial_font = current(
 			array_filter(
-				$fonts,
+				$font_list,
 				static function ( $font ) {
 					return 'Arial' === $font['family'];
 				}
@@ -33,19 +34,20 @@ class Fonts extends \WP_UnitTestCase {
 
 		$roboto_font = current(
 			array_filter(
-				$fonts,
+				$font_list,
 				static function ( $font ) {
 					return 'Roboto' === $font['family'];
 				}
 			)
 		);
 
-		$this->assertCount( 5, $arial_font );
+		$this->assertCount( 6, $arial_font );
 		$this->assertArrayHasKey( 'family', $arial_font );
 		$this->assertArrayHasKey( 'fallbacks', $arial_font );
 		$this->assertArrayHasKey( 'weights', $arial_font );
 		$this->assertArrayHasKey( 'styles', $arial_font );
 		$this->assertArrayHasKey( 'service', $arial_font );
+		$this->assertArrayHasKey( 'metrics', $arial_font );
 		$this->assertEqualSetsWithIndex(
 			[
 				'family'    => 'Arial',
@@ -53,17 +55,35 @@ class Fonts extends \WP_UnitTestCase {
 				'weights'   => [ 400, 700 ],
 				'styles'    => [ 'italic', 'regular' ],
 				'service'   => 'system',
+				'metrics'   => [
+					'upm'   => 2048,
+					'asc'   => 1854,
+					'des'   => -434,
+					'tAsc'  => 1491,
+					'tDes'  => -431,
+					'tLGap' => 307,
+					'wAsc'  => 1854,
+					'wDes'  => 1854,
+					'xH'    => 1062,
+					'capH'  => 1467,
+					'yMin'  => -665,
+					'yMax'  => 2060,
+					'hAsc'  => 1854,
+					'hDes'  => -434,
+					'lGap'  => 67,
+				],
 			],
 			$arial_font
 		);
 
-		$this->assertCount( 6, $roboto_font );
+		$this->assertCount( 7, $roboto_font );
 		$this->assertArrayHasKey( 'family', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'styles', $roboto_font );
 		$this->assertArrayHasKey( 'variants', $roboto_font );
 		$this->assertArrayHasKey( 'service', $roboto_font );
+		$this->assertArrayHasKey( 'metrics', $roboto_font );
 		$this->assertSame( 'fonts.google.com', $roboto_font['service'] );
 	}
 
@@ -73,26 +93,27 @@ class Fonts extends \WP_UnitTestCase {
 		if ( ! file_exists( $fonts_file ) ) {
 			$this->markTestSkipped( 'List of Google Fonts is missing' );
 		}
-
-		$fonts = \Google\Web_Stories\Fonts::get_google_fonts( $fonts_file );
-		$this->assertInternalType( 'array', $fonts );
+		$fonts     = new \Google\Web_Stories\Fonts();
+		$font_list = $fonts->get_google_fonts( $fonts_file );
+		$this->assertInternalType( 'array', $font_list );
 
 		$roboto_font = current(
 			array_filter(
-				$fonts,
+				$font_list,
 				static function ( $font ) {
 					return 'Roboto' === $font['family'];
 				}
 			)
 		);
 
-		$this->assertCount( 6, $roboto_font );
+		$this->assertCount( 7, $roboto_font );
 		$this->assertArrayHasKey( 'family', $roboto_font );
 		$this->assertArrayHasKey( 'fallbacks', $roboto_font );
 		$this->assertArrayHasKey( 'weights', $roboto_font );
 		$this->assertArrayHasKey( 'styles', $roboto_font );
 		$this->assertArrayHasKey( 'variants', $roboto_font );
 		$this->assertArrayHasKey( 'service', $roboto_font );
+		$this->assertArrayHasKey( 'metrics', $roboto_font );
 		$this->assertEqualSetsWithIndex(
 			[
 				'family'    => 'Roboto',
@@ -113,6 +134,23 @@ class Fonts extends \WP_UnitTestCase {
 					[ 1, 700 ],
 					[ 0, 900 ],
 					[ 1, 900 ],
+				],
+				'metrics'   => [
+					'upm'   => 2048,
+					'asc'   => 1900,
+					'des'   => -500,
+					'tAsc'  => 1536,
+					'tDes'  => -512,
+					'tLGap' => 102,
+					'wAsc'  => 1946,
+					'wDes'  => 512,
+					'xH'    => 1082,
+					'capH'  => 1456,
+					'yMin'  => -555,
+					'yMax'  => 2163,
+					'hAsc'  => 1900,
+					'hDes'  => -500,
+					'lGap'  => 0,
 				],
 			],
 			$roboto_font

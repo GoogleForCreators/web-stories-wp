@@ -47,7 +47,7 @@ jest.mock('../wpAdapter', () => ({
 describe('useCategoryApi', () => {
   it('should return categories in state data when the API request is fired', async () => {
     const { result } = renderHook(() =>
-      useCategoriesApi(wpAdapter, { wpApi: 'categories' })
+      useCategoriesApi(wpAdapter, { categoryApi: 'categories' })
     );
 
     await act(async () => {

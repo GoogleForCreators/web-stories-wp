@@ -1,6 +1,6 @@
 ---
 name: Task
-about: Tasks which do not involve engineering
+about: Tasks which do not involve engineering.
 title: ''
 labels: 'Type: Task'
 assignees: ''

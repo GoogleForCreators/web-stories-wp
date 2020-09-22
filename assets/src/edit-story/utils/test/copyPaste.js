@@ -35,6 +35,9 @@ const getNodeList = (content) => {
 };
 
 describe('copyPaste utils', () => {
+  const PAGE = {
+    backgroundColor: createSolid(255, 0, 0),
+  };
   const TEXT_ELEMENT = {
     ...SHARED_DEFAULT_ATTRIBUTES,
     font: TEXT_ELEMENT_DEFAULT_FONT,
@@ -252,11 +255,38 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(elements, evt);
+      addElementsToClipboard(PAGE, elements, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
       expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
+    });
+
+    it('should add background color to any background shape to clipboard', () => {
+      const setData = jest.fn();
+      const evt = {
+        clipboardData: {
+          setData,
+        },
+      };
+
+      const elements = [
+        {
+          ...SHAPE_ELEMENT,
+          id: '1',
+          isDefaultBackground: true,
+        },
+      ];
+      addElementsToClipboard(PAGE, elements, evt);
+
+      expect(setData).toHaveBeenCalledTimes(2);
+      expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
+      expect(setData).toHaveBeenCalledWith(
+        'text/html',
+        expect.stringMatching(
+          /"backgroundColor":{"color":{"r":255,"g":0,"b":0}}/
+        )
+      );
     });
 
     it('should add elements not containing any text correctly to clipboard', () => {
@@ -273,7 +303,7 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(elements, evt);
+      addElementsToClipboard(PAGE, elements, evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -287,7 +317,7 @@ describe('copyPaste utils', () => {
           setData,
         },
       };
-      addElementsToClipboard([], evt);
+      addElementsToClipboard(PAGE, [], evt);
       expect(setData).toHaveBeenCalledTimes(0);
     });
   });

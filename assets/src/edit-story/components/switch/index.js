@@ -77,10 +77,10 @@ const Slider = styled.span`
   }
 
   ${Checkbox}:checked + & {
-    border-color: ${({ theme }) => theme.colors.action};
+    border-color: ${({ theme }) => theme.colors.accent.primary};
 
     &::after {
-      background-color: ${({ theme }) => theme.colors.action};
+      background-color: ${({ theme }) => theme.colors.accent.primary};
       left: 11px;
     }
   }

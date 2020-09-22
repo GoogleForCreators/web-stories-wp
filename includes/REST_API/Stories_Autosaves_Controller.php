@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\KSES;
+use Google\Web_Stories\Media;
 use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
@@ -56,7 +57,16 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	private $parent_base;
 
 	/**
+	 * The base namespace.
+	 *
+	 * @var string
+	 */
+	protected $rest_namespace;
+
+	/**
 	 * Constructor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $parent_post_type Post type of the parent.
 	 */
@@ -77,6 +87,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		$this->parent_controller = $parent_controller;
+		$this->rest_namespace    = 'web-stories/v1';
 	}
 
 	/**
@@ -92,7 +103,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		parent::register_routes();
 
 		register_rest_route(
-			'wp/v2',
+			$this->rest_namespace,
 			'/' . $this->parent_base . '/(?P<id>[\d]+)/autosaves',
 			[
 				'args'   => [
@@ -122,6 +133,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	/**
 	 * Creates, updates or deletes an autosave revision.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -138,6 +151,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	 * Prepares a single template output for response.
 	 *
 	 * Adds post_content_filtered field to output.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
@@ -156,7 +171,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		if ( in_array( 'featured_media_url', $fields, true ) ) {
-			$image                      = get_the_post_thumbnail_url( $post, 'medium' );
+			$image                      = get_the_post_thumbnail_url( $post, Media::POSTER_PORTRAIT_IMAGE_SIZE );
 			$data['featured_media_url'] = ! empty( $image ) ? $image : $schema['properties']['featured_media_url']['default'];
 		}
 
@@ -165,7 +180,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		$links   = $response->get_links();
 
 		// Wrap the data in a response object.
-		$response = rest_ensure_response( $data );
+		$response = new WP_REST_Response( $data );
 		foreach ( $links as $rel => $rel_links ) {
 			foreach ( $rel_links as $link ) {
 				$response->add_link( $rel, $link['href'], $link['attributes'] );
@@ -178,6 +193,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Item schema as an array.
 	 */

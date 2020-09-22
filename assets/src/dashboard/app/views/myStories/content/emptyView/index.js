@@ -15,27 +15,35 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
-import { DefaultParagraph1 } from '../../../../../components';
+import {
+  DefaultParagraph1,
+  StandardViewContentGutter,
+} from '../../../../../components';
 import { NoResults } from '../../../shared';
+
+const Text = styled(DefaultParagraph1)`
+  margin-top: 40px;
+`;
 
 function EmptyView({ searchKeyword }) {
   if (!searchKeyword) {
     return (
-      <DefaultParagraph1>
-        {__('Create a story to get started!', 'web-stories')}
-      </DefaultParagraph1>
+      <StandardViewContentGutter>
+        <Text> {__('Create a story to get started!', 'web-stories')}</Text>
+      </StandardViewContentGutter>
     );
   }
   return <NoResults typeaheadValue={searchKeyword} />;

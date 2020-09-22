@@ -23,7 +23,7 @@ import { createBrowserHistory } from 'history';
 /**
  * Internal dependencies
  */
-import { RouterProvider, Route, RouterContext } from '../index';
+import { RouterProvider, Route, useRouteHistory } from '../index';
 
 describe('RouterProvider', () => {
   it('should render the first route by default', () => {
@@ -49,19 +49,22 @@ describe('RouterProvider', () => {
 
     jest.spyOn(history, 'push').mockImplementation((sender) => {
       listeners.forEach((l) => {
-        l({ search: '', pathname: sender });
+        l({ location: { search: '', pathname: sender } });
       });
     });
 
+    const Button = () => {
+      const { actions } = useRouteHistory();
+      return (
+        <button onClick={() => actions.push('/second-route')}>
+          {'Visit Second Page'}
+        </button>
+      );
+    };
+
     const { queryByText, findByText } = render(
       <RouterProvider history={history}>
-        <RouterContext.Consumer>
-          {({ actions }) => (
-            <button onClick={() => actions.push('/second-route')}>
-              {'Visit Second Page'}
-            </button>
-          )}
-        </RouterContext.Consumer>
+        <Button />
         <Route path="/" exact component={<div>{'Home'}</div>} />
         <Route path="/second-route" component={<div>{'Second Route'}</div>} />
       </RouterProvider>
@@ -84,19 +87,22 @@ describe('RouterProvider', () => {
 
     jest.spyOn(history, 'push').mockImplementation((sender) => {
       listeners.forEach((l) => {
-        l({ search: '', pathname: sender });
+        l({ location: { search: '', pathname: sender } });
       });
     });
 
+    const Button = () => {
+      const { actions } = useRouteHistory();
+      return (
+        <button onClick={() => actions.push('/second-route/sub-entity')}>
+          {'Visit Sub Entity on Second Page'}
+        </button>
+      );
+    };
+
     const { queryByText, findByText } = render(
       <RouterProvider history={history}>
-        <RouterContext.Consumer>
-          {({ actions }) => (
-            <button onClick={() => actions.push('/second-route/sub-entity')}>
-              {'Visit Sub Entity on Second Page'}
-            </button>
-          )}
-        </RouterContext.Consumer>
+        <Button />
         <Route path="/" exact component={<div>{'Home'}</div>} />
         <Route
           path="/second-route"

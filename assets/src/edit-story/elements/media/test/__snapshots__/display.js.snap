@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MediaDisplay should apply and reset transformations: empty style after 1`] = `
+CSSStyleDeclaration {
+  "_importants": Object {},
+  "_length": 0,
+  "_onChange": [Function],
+  "_values": Object {},
+}
+`;
+
+exports[`MediaDisplay should apply and reset transformations: empty style before 1`] = `
+CSSStyleDeclaration {
+  "_importants": Object {},
+  "_length": 0,
+  "_onChange": [Function],
+  "_values": Object {},
+}
+`;

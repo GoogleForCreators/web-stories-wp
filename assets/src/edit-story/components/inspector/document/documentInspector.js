@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import PublishPanel from './publish';
+import ExcerptPanel from './excerpt';
 import SlugPanel from './slug';
 import StatusPanel from './status';
 import PageAdvancement from './pageAdvancement';
@@ -27,6 +28,7 @@ function DocumentInspector() {
     <>
       <StatusPanel />
       <PublishPanel />
+      <ExcerptPanel />
       <SlugPanel />
       <PageAdvancement />
     </>

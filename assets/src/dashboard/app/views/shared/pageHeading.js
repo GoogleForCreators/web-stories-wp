@@ -31,10 +31,7 @@ import {
   StandardViewContentGutter,
 } from '../../../components';
 import TypeaheadSearch from './typeaheadSearch';
-
-const Container = styled.div`
-  padding: 10px 0 0;
-`;
+import TelemetryBanner from './telemetryBanner';
 
 const StyledHeader = styled.h2`
   ${TypographyPresets.ExtraExtraLarge};
@@ -43,11 +40,11 @@ const StyledHeader = styled.h2`
   justify-content: flex-start;
   align-items: center;
   line-height: 1;
-  font-size: ${cssLerp('30px', '18px', '--squish-progress')};
+  font-size: ${cssLerp('36px', '30px', '--squish-progress')};
   white-space: nowrap;
 
   @media ${({ theme }) => theme.breakpoint.tablet} {
-    font-size: ${cssLerp('20px', '14px', '--squish-progress')};
+    font-size: ${cssLerp('30px', '24px', '--squish-progress')};
   }
 `;
 
@@ -106,7 +103,8 @@ const PageHeading = ({
   typeaheadValue = '',
 }) => {
   return (
-    <Container>
+    <>
+      <TelemetryBanner />
       <HeadingBodyWrapper>
         <StyledHeader>
           <NavMenuButton showOnlyOnSmallViewport />
@@ -126,7 +124,7 @@ const PageHeading = ({
           </SearchContainer>
         )}
       </HeadingBodyWrapper>
-    </Container>
+    </>
   );
 };
 

@@ -21,6 +21,7 @@
  * External dependencies
  */
 import { mkdirSync, rmdirSync } from 'fs';
+import { relative } from 'path';
 import program from 'commander';
 
 /**
@@ -29,16 +30,19 @@ import program from 'commander';
 import {
   bundlePlugin,
   buildFonts,
+  createBuild,
   getCurrentVersionNumber,
   updateVersionNumbers,
-  updateAssetsURL,
+  updateTemplates,
 } from './utils/index.js';
 
 const PLUGIN_DIR = process.cwd();
-const PLUGIN_FILE = `${PLUGIN_DIR}/web-stories.php`;
-const README_FILE = `${PLUGIN_DIR}/readme.txt`;
-const PLUGIN_BUILD_DIR = `${PLUGIN_DIR}/build/web-stories`;
-const FONTS_FILE = PLUGIN_DIR + '/includes/data/fonts.json';
+const PLUGIN_FILE = 'web-stories.php';
+const README_FILE = 'readme.txt';
+const FONTS_FILE = 'includes/data/fonts.json';
+const BUILD_DIR = 'build/web-stories';
+const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
+const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;
 
 program
   .command('version')
@@ -58,11 +62,14 @@ program
     console.log('  $ commander.js version --nightly');
   })
   .action((version, { nightly }) => {
-    const currentVersion = getCurrentVersionNumber(PLUGIN_FILE);
+    const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
+    const readmeFilePath = `${PLUGIN_DIR}/${README_FILE}`;
+
+    const currentVersion = getCurrentVersionNumber(pluginFilePath);
     const newVersion = version || currentVersion;
 
-    updateVersionNumbers(PLUGIN_FILE, README_FILE, newVersion, nightly);
-    const constantVersion = getCurrentVersionNumber(PLUGIN_FILE, true);
+    updateVersionNumbers(pluginFilePath, readmeFilePath, newVersion, nightly);
+    const constantVersion = getCurrentVersionNumber(pluginFilePath, true);
 
     console.log(
       `Version number successfully updated! New version: ${constantVersion}`
@@ -76,12 +83,8 @@ program
     'Create Composer-ready build. Does not contain PHP autoloader.'
   )
   .option(
-    '--cdn [url]',
-    'Load any static assets from CDN. With optional URL provided.'
-  )
-  .option(
     '--zip [filename]',
-    'Load any static assets from CDN. With optional URL provided.'
+    'Generate a ready-to-use ZIP file. Optionally specify a file name.'
   )
   .option(
     '--clean',
@@ -91,11 +94,8 @@ program
   .on('--help', () => {
     console.log('');
     console.log('Examples:');
-    console.log('  # Build plugin and point assets to CDN');
-    console.log('  $ commander.js build-plugin --cdn');
-    console.log('');
     console.log('  # Create a ZIP-file ready to install in WordPress');
-    console.log('  $ commander.js build-plugin --cdn --zip');
+    console.log('  $ commander.js build-plugin --zip');
     console.log('');
     console.log('  # Remove existing ZIP files before creating one');
     console.log('  $ commander.js build-plugin --zip --clean');
@@ -107,18 +107,24 @@ program
       '  $ commander.js build-plugin --composer --zip web-stories.zip'
     );
   })
-  .action(({ composer, cdn, zip, clean }) => {
-    if (cdn) {
-      updateAssetsURL(PLUGIN_FILE, cdn === true ? undefined : cdn);
-    }
+  .action(({ composer, zip, clean }) => {
+    const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
 
     // Make sure build directory exists and is empty.
-    rmdirSync(PLUGIN_BUILD_DIR, { recursive: true });
-    mkdirSync(PLUGIN_BUILD_DIR, { recursive: true });
+    rmdirSync(BUILD_DIR, { recursive: true });
+    mkdirSync(BUILD_DIR, { recursive: true });
 
-    const build = bundlePlugin(PLUGIN_DIR, composer, zip, clean, cdn);
+    createBuild(PLUGIN_DIR, buildDirPath, composer);
 
-    console.log(`Plugin successfully built! Location: ${build}`);
+    let build = BUILD_DIR;
+
+    if (zip) {
+      build = bundlePlugin(buildDirPath, composer, zip, clean);
+    }
+
+    console.log(
+      `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
+    );
   });
 
 program
@@ -136,14 +142,32 @@ program
       return;
     }
 
+    const fontsFilePath = `${PLUGIN_DIR}/${FONTS_FILE}`;
+
     try {
-      await buildFonts(FONTS_FILE);
+      await buildFonts(fontsFilePath);
     } catch (err) {
       console.error('There was an error generating the web fonts list:', err);
       return;
     }
 
     console.log('Web fonts updated!');
+  });
+
+program
+  .command('update-templates')
+  .description('Update templates by running them through migration')
+  .on('--help', () => {
+    console.log('');
+    console.log('Examples:');
+    console.log('  # Migrate templates to newest version');
+    console.log('  $ commander.js update-templates');
+  })
+  .action(() => {
+    updateTemplates(TEMPLATES_DIR);
+    updateTemplates(STORIES_DIR);
+
+    console.log("Templates updated! Don't forget to run prettier!");
   });
 
 program.parse(process.argv);

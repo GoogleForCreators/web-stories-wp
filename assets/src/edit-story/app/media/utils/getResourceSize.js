@@ -19,11 +19,12 @@
  * override the resource's size because the poster generation has a more
  * accurate data.
  *
- * @param {number} width
- * @param {number} height
- * @param {boolean} posterGenerated
- * @param {number} posterWidth
- * @param {number} posterHeight
+ * @param {number} width Width.
+ * @param {number} height Height.
+ * @param {boolean} posterGenerated Whether a poster has been generated.
+ * @param {number} posterWidth Poster width.
+ * @param {number} posterHeight Poster height.karma-puppeteer-launcher/snapshot.cjs
+ *
  * @return {Object} The resource's size (width and height).
  */
 function getResourceSize(

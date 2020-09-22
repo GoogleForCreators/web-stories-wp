@@ -42,15 +42,22 @@ const Handle = styled.div`
   align-items: center;
   cursor: row-resize;
   user-select: none;
+  position: absolute;
+  ${({ $position }) => 'top' === $position && `top: 0`};
+  ${({ $position }) => 'bottom' === $position && `bottom: 0`};
+  left: 0;
+  right: 0;
+  width: 100%;
 `;
 
-// @todo This needs blue outline when in focus.
-const Bar = styled.div.attrs({
-  tabIndex: 0,
-})`
-  width: 36px;
+const Bar = styled.div`
+  width: 100%;
   height: 4px;
-  border-radius: 2px;
+
+  &:focus {
+    height: 3px;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.whiteout};
+  }
 `;
 
 function DragHandle({
@@ -60,13 +67,15 @@ function DragHandle({
   handleHeightChange,
   handleExpandToHeightChange,
   handleDoubleClick,
+  position,
+  ...rest
 }) {
   const handle = useRef();
   useDragHandlers(handle, handleHeightChange, handleExpandToHeightChange);
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    <Handle ref={handle} onDoubleClick={handleDoubleClick}>
+    <Handle ref={handle} onDoubleClick={handleDoubleClick} $position={position}>
       <Bar
         role="slider"
         aria-orientation="vertical"
@@ -74,6 +83,7 @@ function DragHandle({
         aria-valuemin={minHeight}
         aria-valuemax={maxHeight}
         aria-label={__('Set panel height', 'web-stories')}
+        {...rest}
       />
     </Handle>
   );
@@ -86,6 +96,11 @@ DragHandle.propTypes = {
   height: PropTypes.number.isRequired,
   minHeight: PropTypes.number.isRequired,
   maxHeight: PropTypes.number.isRequired,
+  position: PropTypes.oneOf(['top', 'bottom']),
+};
+
+DragHandle.defaultProps = {
+  position: 'top',
 };
 
 export default DragHandle;

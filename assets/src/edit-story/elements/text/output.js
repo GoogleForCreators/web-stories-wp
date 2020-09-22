@@ -29,13 +29,27 @@ import { getHTMLFormatters } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import { dataToEditorX, dataToEditorY } from '../../units';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { generateParagraphTextStyle, getHighlightLineheight } from './util';
+import {
+  generateParagraphTextStyle,
+  getHighlightLineheight,
+  calcFontMetrics,
+} from './util';
 
 /**
  * Renders DOM for the text output based on the provided unit converters.
+ *
+ * @param {Object<*>} props Component props.
+ * @param {Object<*>} props.element Story element.
+ * @param {Function} props.dataToStyleX dataToStyleX function.
+ * @param {Function} props.dataToStyleY dataToStyleY function.
+ * @param {Function} props.dataToFontSizeY dataToFontSizeY function. Falls back to dataToStyleY if not provided.
+ * @param {Function} props.dataToPaddingX dataToPaddingX function. Falls back to dataToStyleX if not provided.
+ * @param {Function} props.dataToPaddingY dataToPaddingY function. Falls back to dataToStyleX if not provided.
+ * @param {string} props.className Class name.
+ * @return {*} Rendered component.
  */
 export function TextOutputWithUnits({
-  element: { content, backgroundColor, backgroundTextMode, padding, ...rest },
+  element,
   dataToStyleX,
   dataToStyleY,
   dataToFontSizeY,
@@ -43,6 +57,13 @@ export function TextOutputWithUnits({
   dataToPaddingY,
   className,
 }) {
+  const {
+    content: rawContent,
+    backgroundColor,
+    backgroundTextMode,
+    padding,
+    ...rest
+  } = element;
   if (!dataToFontSizeY) {
     dataToFontSizeY = dataToStyleY;
   }
@@ -62,16 +83,24 @@ export function TextOutputWithUnits({
       ? generatePatternStyles(backgroundColor)
       : undefined;
 
+  const {
+    dataToEditorY: _dataToEditorY,
+    font: _font,
+    ...styles
+  } = generateParagraphTextStyle(
+    rest,
+    dataToStyleX,
+    dataToStyleY,
+    dataToFontSizeY,
+    element,
+    dataToPaddingY
+  );
   const fillStyle = {
-    ...generateParagraphTextStyle(
-      rest,
-      dataToStyleX,
-      dataToStyleY,
-      dataToFontSizeY
-    ),
+    ...styles,
     ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+    overflowWrap: 'break-word',
   };
 
   const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
@@ -89,6 +118,7 @@ export function TextOutputWithUnits({
     padding: 0,
     background: 'none',
     lineHeight,
+    overflowWrap: 'break-word',
   };
 
   const highlightCloneStyle = {
@@ -97,15 +127,16 @@ export function TextOutputWithUnits({
     top: 0,
   };
 
-  const marginStyle = {
-    display: 'inline-block',
-    position: 'relative',
-    // Disable reason: style lint can't figure out an interpolated calc
-    // stylelint-disable function-calc-no-invalid
-    margin: `0 calc(${paddingStyles.horizontal} + 2%)`,
-    left: `calc(-${paddingStyles.horizontal} - 2%)`,
-    // stylelint-enable function-calc-no-invalid
-    top: '0',
+  const marginStyle = (el) => {
+    const { marginOffset } = calcFontMetrics(el);
+    return {
+      display: 'block',
+      position: 'relative',
+      // margin: `0 ${paddingStyles.horizontal}`,
+      left: `-${paddingStyles.horizontal}`,
+      top: '0',
+      margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
+    };
   };
 
   const textStyle = {
@@ -114,7 +145,6 @@ export function TextOutputWithUnits({
     WebkitBoxDecorationBreak: 'clone',
     /* stylelint-enable */
     boxDecorationBreak: 'clone',
-    borderRadius: '3px',
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
   };
@@ -129,6 +159,8 @@ export function TextOutputWithUnits({
     background: 'none',
   };
 
+  const content = rawContent.replace(/\n$/, '\n\n');
+
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.
   const contentWithoutColor = useMemo(
@@ -140,7 +172,7 @@ export function TextOutputWithUnits({
     return (
       <>
         <p className={className} style={highlightStyle}>
-          <span style={marginStyle}>
+          <span style={marginStyle(element)}>
             <span
               style={backgroundTextStyle}
               dangerouslySetInnerHTML={{
@@ -150,7 +182,7 @@ export function TextOutputWithUnits({
           </span>
         </p>
         <p className={className} style={highlightCloneStyle} aria-hidden="true">
-          <span style={marginStyle}>
+          <span style={marginStyle(element)}>
             <span
               style={foregroundTextStyle}
               dangerouslySetInnerHTML={{
@@ -162,7 +194,6 @@ export function TextOutputWithUnits({
       </>
     );
   }
-
   return (
     <p
       className={className}
@@ -173,7 +204,7 @@ export function TextOutputWithUnits({
 }
 
 TextOutputWithUnits.propTypes = {
-  element: StoryPropTypes.elements.text.isRequired,
+  element: StoryPropTypes.textContent.isRequired,
   dataToStyleX: PropTypes.func.isRequired,
   dataToStyleY: PropTypes.func.isRequired,
   dataToFontSizeY: PropTypes.func,
@@ -184,6 +215,9 @@ TextOutputWithUnits.propTypes = {
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.
+ *
+ * @param {Object<*>} props Props.
+ * @return {*} Rendered component.
  */
 function TextOutput({ element }) {
   const { width } = element;

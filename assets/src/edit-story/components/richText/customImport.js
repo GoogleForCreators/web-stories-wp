@@ -37,15 +37,12 @@ function customInlineFn(element, { Style }) {
   return Style(styleStrings);
 }
 
-function importHTML(html) {
-  const htmlWithBreaks = (html || '')
-    // Re-insert manual line-breaks for empty lines
-    .replace(/\n(?=\n)/g, '\n<br />')
+function importHTML(html = '') {
+  const htmlWithBreaks = html
     .split('\n')
-    .map((s) => {
-      return `<p>${getValidHTML(s)}</p>`;
-    })
+    .map((s) => `<p>${getValidHTML(s === '' ? '<br />' : s)}</p>`)
     .join('');
+
   return stateFromHTML(htmlWithBreaks, { customInlineFn });
 }
 

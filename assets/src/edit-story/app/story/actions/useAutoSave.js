@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
+import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
@@ -41,17 +42,18 @@ function useAutoSave({ storyId, pages, story }) {
   } = useAPI();
   const { metadata } = useConfig();
   const [isAutoSaving, setIsAutoSaving] = useState(false);
+  const flags = useFeatures();
 
   const autoSave = useCallback(
     (props) => {
       setIsAutoSaving(true);
       return autoSaveById({
         storyId,
-        ...getStoryPropsToSave({ story, pages, metadata }),
+        ...getStoryPropsToSave({ story, pages, metadata, flags }),
         ...props,
       }).finally(() => setIsAutoSaving(false));
     },
-    [story, pages, metadata, autoSaveById, storyId]
+    [story, pages, metadata, autoSaveById, storyId, flags]
   );
 
   return { autoSave, isAutoSaving };

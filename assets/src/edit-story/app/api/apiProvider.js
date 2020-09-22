@@ -106,13 +106,14 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum }) => {
+    ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
       let apiPath = media;
       const perPage = 100;
       apiPath = addQueryArgs(apiPath, {
         context: 'edit',
         per_page: perPage,
         page: pagingNum,
+        _web_stories_envelope: true,
       });
 
       if (mediaType) {
@@ -123,12 +124,18 @@ function APIProvider({ children }) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
       }
 
-      return apiFetch({ path: apiPath, parse: false }).then(
-        async (response) => {
-          const jsonArray = await response.json();
-          return { data: jsonArray, headers: response.headers };
-        }
-      );
+      // cacheBusting is due to the preloading logic preloading and caching
+      // some requests. (see preload_paths in Dashboard.php)
+      // Adding cache_bust forces the path to look different from the preloaded
+      // paths and hence skipping the cache. (cache_bust itself doesn't do
+      // anything)
+      if (cacheBust) {
+        apiPath = addQueryArgs(apiPath, { cache_bust: true });
+      }
+
+      return apiFetch({ path: apiPath }).then((response) => {
+        return { data: response.body, headers: response.headers };
+      });
     },
     [media]
   );

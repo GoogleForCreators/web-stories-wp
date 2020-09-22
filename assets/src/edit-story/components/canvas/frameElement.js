@@ -25,7 +25,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
-import { useStory, useDropTargets } from '../../app';
+import { useStory, useTransform } from '../../app';
 import {
   elementWithPosition,
   elementWithSize,
@@ -33,7 +33,7 @@ import {
 } from '../../elements/shared';
 import { useUnits } from '../../units';
 import WithMask from '../../masks/frame';
-import WithLink from '../link/frame';
+import WithLink from '../elementLink/frame';
 import { useTransformHandler } from '../transform';
 import useCanvas from './useCanvas';
 
@@ -42,17 +42,17 @@ import useCanvas from './useCanvas';
 // Pointer events are disabled in the display mode to ensure that selection
 // can be limited to the mask.
 const Wrapper = styled.div`
-	${elementWithPosition}
-	${elementWithSize}
+  ${elementWithPosition}
+  ${elementWithSize}
 	${elementWithRotation}
   pointer-events: initial;
 
-	&:focus,
-	&:active,
-	&:hover {
-		outline: ${({ theme, hasMask }) =>
+  &:focus,
+  &:active,
+  &:hover {
+    outline: ${({ theme, hasMask }) =>
       hasMask ? 'none' : `1px solid ${theme.colors.selection}`};
-	}
+  }
 `;
 
 const EmptyFrame = styled.div`
@@ -65,6 +65,13 @@ function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const [hovering, setHovering] = useState(false);
+  const {
+    state: { isAnythingTransforming },
+  } = useTransform();
+
+  const onPointerEnter = () => setHovering(true);
+  const onPointerLeave = () => setHovering(false);
 
   const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
     (state) => ({
@@ -73,16 +80,15 @@ function FrameElement({ element }) {
       isEditing: state.state.isEditing,
     })
   );
-  const { selectedElementIds, currentPage } = useStory((state) => ({
-    selectedElementIds: state.state.selectedElementIds,
-    currentPage: state.state.currentPage,
-  }));
+  const { selectedElementIds, currentPage, isAnimating } = useStory(
+    (state) => ({
+      selectedElementIds: state.state.selectedElementIds,
+      currentPage: state.state.currentPage,
+    })
+  );
   const { getBox } = useUnits((state) => ({
     getBox: state.actions.getBox,
   }));
-  const {
-    state: { activeDropTargetId },
-  } = useDropTargets();
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
@@ -105,8 +111,7 @@ function FrameElement({ element }) {
   return (
     <WithLink
       element={element}
-      active={selectedElementIds.length === 1 && isSelected}
-      dragging={Boolean(activeDropTargetId)}
+      active={!isSelected && hovering && !isAnythingTransforming}
       anchorRef={elementRef}
     >
       {Controls && (
@@ -139,9 +144,12 @@ function FrameElement({ element }) {
             handleSelectElement(id, evt);
           }
         }}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
         tabIndex="0"
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
+        isAnimating={isAnimating}
         data-testid="frameElement"
       >
         <WithMask element={element} fill={true}>

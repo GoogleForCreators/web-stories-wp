@@ -15,9 +15,14 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
-import { useContext } from 'react';
+import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
@@ -27,24 +32,47 @@ import PropTypes from 'prop-types';
  */
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
-import { APP_ROUTES, NESTED_APP_ROUTES } from '../constants';
+import {
+  APP_ROUTES,
+  NESTED_APP_ROUTES,
+  ROUTE_TITLES,
+  ADMIN_TITLE,
+} from '../constants';
 
-import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
+import {
+  AppFrame,
+  LeftRail,
+  NavProvider,
+  PageContent,
+  ToastProvider,
+} from '../components';
 import ApiProvider from './api/apiProvider';
-import { Route, RouterProvider, RouterContext, matchPath } from './router';
+import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
 import { ConfigProvider } from './config';
 import {
-  MyStoriesView,
-  TemplateDetailsView,
+  EditorSettingsView,
   ExploreTemplatesView,
+  MyStoriesView,
   SavedTemplatesView,
   StoryAnimTool,
+  TemplateDetailsView,
+  ToasterView,
 } from './views';
 
 const AppContent = () => {
   const {
     state: { currentPath },
-  } = useContext(RouterContext);
+  } = useRouteHistory();
+
+  useEffect(() => {
+    const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
+    window.document.title = sprintf(
+      /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
+      __('%1$s \u2039 %2$s \u2212 WordPress', 'web-stories'),
+      dynamicPageTitle,
+      ADMIN_TITLE
+    );
+  }, [currentPath]);
 
   const hideLeftRail =
     matchPath(currentPath, NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL) ||
@@ -78,10 +106,15 @@ const AppContent = () => {
           component={<TemplateDetailsView />}
         />
         <Route
+          path={APP_ROUTES.EDITOR_SETTINGS}
+          component={<EditorSettingsView />}
+        />
+        <Route
           path={APP_ROUTES.STORY_ANIM_TOOL}
           component={<StoryAnimTool />}
         />
       </PageContent>
+      <ToasterView />
     </AppFrame>
   );
 };
@@ -92,15 +125,17 @@ function App({ config }) {
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
       <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
-          <ApiProvider>
-            <NavProvider>
-              <RouterProvider>
-                <GlobalStyle />
-                <KeyboardOnlyOutline />
-                <AppContent />
-              </RouterProvider>
-            </NavProvider>
-          </ApiProvider>
+          <ToastProvider>
+            <ApiProvider>
+              <NavProvider>
+                <RouterProvider>
+                  <GlobalStyle />
+                  <KeyboardOnlyOutline />
+                  <AppContent />
+                </RouterProvider>
+              </NavProvider>
+            </ApiProvider>
+          </ToastProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>

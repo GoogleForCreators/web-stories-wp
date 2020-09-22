@@ -24,8 +24,11 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
+import { initializeTracking } from '../tracking';
 import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
+
+__webpack_public_path__ = global.webStoriesEditorSettings.publicPath;
 
 /**
  * Initializes the web stories editor.
@@ -39,6 +42,9 @@ const initialize = (id, config, flags) => {
 
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);
+
+  initializeTracking('Editor');
+
   render(
     <FlagsProvider features={flags}>
       <App config={config} />

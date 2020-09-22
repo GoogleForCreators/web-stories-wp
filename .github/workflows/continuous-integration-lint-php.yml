@@ -3,7 +3,7 @@ name: PHP Lints
 on:
   push:
     branches:
-      - master
+      - main
       - release/*
   pull_request:
 
@@ -26,7 +26,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v1.1.4
+        uses: pat-s/always-upload-cache@v2.1.0
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -53,5 +53,5 @@ jobs:
         # phpstan requires PHP 7.1+. Ignore version conflicts.
         run: |
           composer require --no-interaction --dev szepeviktor/phpstan-wordpress --ignore-platform-reqs
-          vendor/bin/phpstan analyse --memory-limit=256M --error-format=checkstyle | cs2pr
+          vendor/bin/phpstan analyse --memory-limit=512M --error-format=checkstyle | cs2pr
         if: always()

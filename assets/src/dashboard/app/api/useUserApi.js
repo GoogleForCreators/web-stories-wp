@@ -18,22 +18,25 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import queryString from 'query-string';
 
 /**
  * Internal dependencies
  */
-import queryString from 'query-string';
+import { USERS_PER_REQUEST } from '../../constants';
 import groupBy from '../../utils/groupBy';
 import fetchAllFromTotalPages from './fetchAllFromPages';
 
-export default function useUsersApi(dataAdapter, { wpApi }) {
+export default function useUserApi(dataAdapter, { userApi, currentUserApi }) {
   const [users, setUsers] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
+  const [isUpdating, setIsUpdating] = useState(false);
   const fetchUsers = useCallback(async () => {
     try {
       const response = await dataAdapter.get(
         queryString.stringifyUrl({
-          url: wpApi,
-          query: { per_page: 100 },
+          url: userApi,
+          query: { per_page: USERS_PER_REQUEST },
         }),
         {
           parse: false,
@@ -43,7 +46,7 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
       const usersJson = await fetchAllFromTotalPages(
         response,
         dataAdapter,
-        wpApi
+        userApi
       );
 
       setUsers(
@@ -55,7 +58,33 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
     } catch (e) {
       setUsers({});
     }
-  }, [dataAdapter, wpApi]);
+  }, [dataAdapter, userApi]);
+
+  const fetchCurrentUser = useCallback(async () => {
+    try {
+      setCurrentUser(await dataAdapter.get(currentUserApi));
+    } catch (e) {
+      setCurrentUser({});
+    }
+  }, [dataAdapter, currentUserApi]);
+
+  const toggleWebStoriesTrackingOptIn = useCallback(async () => {
+    setIsUpdating(true);
+    try {
+      setCurrentUser(
+        await dataAdapter.post(currentUserApi, {
+          data: {
+            meta: {
+              web_stories_tracking_optin: !currentUser.meta
+                .web_stories_tracking_optin,
+            },
+          },
+        })
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  }, [dataAdapter, currentUser, currentUserApi]);
 
   useEffect(() => {
     fetchUsers();
@@ -63,9 +92,17 @@ export default function useUsersApi(dataAdapter, { wpApi }) {
 
   return useMemo(
     () => ({
-      api: { fetchUsers },
+      api: { fetchUsers, fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       users,
+      currentUser: { data: currentUser, isUpdating },
     }),
-    [fetchUsers, users]
+    [
+      fetchUsers,
+      fetchCurrentUser,
+      toggleWebStoriesTrackingOptIn,
+      users,
+      currentUser,
+      isUpdating,
+    ]
   );
 }

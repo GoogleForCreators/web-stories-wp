@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, number } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -35,6 +35,14 @@ const demoItems = [
     value: 'edge_case',
     label: 'i am a very very very very very very very long label',
   },
+  { value: 'dog', label: 'dog' },
+  { value: 'bat', label: 'bat' },
+  { value: 'cat', label: 'cat' },
+  { value: 'lemur', label: 'lemur' },
+  { value: 'rabbit', label: 'rabbit' },
+  { value: 'sloth', label: 'sloth' },
+  { value: 'turtle', label: 'turtle' },
+  { value: 'horse', label: 'horse' },
 ];
 
 export default {
@@ -48,9 +56,9 @@ const TypeaheadOptionsWrapper = styled.div`
 export const _default = () => (
   <TypeaheadOptionsWrapper>
     <TypeaheadOptions
+      currentSelection={''}
       items={demoItems}
       isOpen={boolean('isOpen', true)}
-      maxItemsVisible={number('maxItemsVisible')}
       onSelect={(item) => {
         action(`clicked on dropdown item ${item.value}`)(item);
       }}

@@ -53,7 +53,7 @@ function CustomStyles() {
                 margin: auto 0;
               }
 
-              .wrapper {
+              .mask {
                 position: absolute;
                 overflow: hidden;
               }

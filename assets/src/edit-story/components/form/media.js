@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
+import { useCallback, useState, useRef } from 'react';
 
 /**
  * WordPress dependencies
@@ -30,20 +31,24 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { DefaultImage as DefaultImageIcon, EditPencil } from '../../icons';
+import DropDownMenu from '../dropDownMenu';
 import { useMediaPicker } from '../mediaPicker';
 import MULTIPLE_VALUE from './multipleValue';
 
-const Container = styled.div`
+const Container = styled.section`
   width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   min-width: ${({ circle, size }) => (size && circle ? `${size}px` : '100%')};
   height: ${({ size }) => (size ? `${size}px` : '148px')};
   min-height: ${({ size }) => (size ? `${size}px` : '148px')};
-  background-color: ${({ theme }) => rgba(theme.colors.bg.v0, 0.5)};
+  background-color: ${({ theme }) => rgba(theme.colors.bg.black, 0.5)};
   border: none;
   position: relative;
-  cursor: pointer;
 
   ${({ circle }) => circle && 'border-radius: 50%;'}
+
+  :focus {
+    outline: -webkit-focus-ring-color auto 1px;
+  }
 `;
 
 const DefaultImage = styled(DefaultImageIcon)`
@@ -64,10 +69,10 @@ const EditBtn = styled.button`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 1px solid ${({ theme }) => rgba(theme.colors.fg.v1, 0.1)};
+  border: 1px solid ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.v1};
-  background: ${({ theme }) => theme.colors.bg.v0};
+  color: ${({ theme }) => theme.colors.fg.white};
+  background: ${({ theme }) => theme.colors.bg.panel};
   left: ${({ circle }) => (circle ? 0 : 4)}px;
   bottom: ${({ circle }) => (circle ? 0 : 4)}px;
   flex-direction: column;
@@ -98,7 +103,7 @@ const LoadingDots = styled.div`
 
   &:after {
     pointer-events: none;
-    color: ${({ theme }) => theme.colors.fg.v1};
+    color: ${({ theme }) => theme.colors.fg.white};
     content: '.';
     font-weight: bold;
     animation: dots 1s steps(5, end) infinite;
@@ -116,13 +121,13 @@ const LoadingDots = styled.div`
       text-shadow: 6px 0 0 transparent, 12px 0 0 transparent;
     }
     60% {
-      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.v1},
+      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.white},
         12px 0 0 transparent;
     }
     80%,
     100% {
-      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.v1},
-        12px 0 0 ${({ theme }) => theme.colors.fg.v1};
+      text-shadow: 6px 0 0 ${({ theme }) => theme.colors.fg.white},
+        12px 0 0 ${({ theme }) => theme.colors.fg.white};
     }
   }
 `;
@@ -141,6 +146,7 @@ function MediaInput({
   circle,
   size,
   loading,
+  canReset,
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
@@ -151,13 +157,50 @@ function MediaInput({
     type,
   });
 
+  const dropdownOptions = [
+    { name: __('Edit', 'web-stories'), value: 'edit' },
+    { name: __('Reset', 'web-stories'), value: 'reset' },
+  ];
+
+  const onOption = useCallback(
+    (opt, evt) => {
+      switch (opt) {
+        case 'edit':
+          openMediaPicker(evt);
+          break;
+        case 'reset':
+          onChange(null);
+          break;
+        default:
+          break;
+      }
+    },
+    [onChange, openMediaPicker]
+  );
+
+  const ref = useRef();
+  const [isHovering, setIsHovering] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
+  const resettableProps = {
+    tabIndex: 0,
+    'aria-label': ariaLabel,
+    onFocus: () => setIsFocused(true),
+    onBlur: (evt) => setIsFocused(ref.current.contains(evt.relatedTarget)),
+    onPointerEnter: () => setIsHovering(true),
+    onPointerLeave: () => setIsHovering(false),
+  };
+
+  const isMenuVisible = isHovering || isFocused;
+
   return (
     <Container
+      ref={ref}
       className={`${className}`}
       disabled={disabled}
       circle={circle}
       size={size}
       {...rest}
+      {...(canReset && resettableProps)}
     >
       {value && !isMultiple ? (
         <Img src={value} circle={circle} />
@@ -165,9 +208,18 @@ function MediaInput({
         <DefaultImage size={size} />
       )}
       {loading && <LoadingDots />}
-      <EditBtn onClick={openMediaPicker} circle={circle} aria-label={ariaLabel}>
-        <EditIcon />
-      </EditBtn>
+      {canReset && isMenuVisible && (
+        <DropDownMenu options={dropdownOptions} onOption={onOption} />
+      )}
+      {!canReset && (
+        <EditBtn
+          onClick={openMediaPicker}
+          circle={circle}
+          aria-label={ariaLabel}
+        >
+          <EditIcon />
+        </EditBtn>
+      )}
     </Container>
   );
 }
@@ -181,11 +233,12 @@ MediaInput.propTypes = {
   disabled: PropTypes.bool,
   size: PropTypes.number,
   circle: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string,
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
   loading: PropTypes.bool,
+  canReset: PropTypes.bool,
 };
 
 MediaInput.defaultProps = {
@@ -199,6 +252,8 @@ MediaInput.defaultProps = {
   type: 'image',
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
+  ariaLabel: __('Choose an image', 'web-stories'),
+  canReset: false,
 };
 
 export default MediaInput;

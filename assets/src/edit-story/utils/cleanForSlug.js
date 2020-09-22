@@ -29,18 +29,22 @@
  * @see https://github.com/WordPress/gutenberg/blob/164d5830a9acd895dfd661b5fde1ca8b80b270ac/packages/url/src/clean-for-slug.js
  *
  * @param {string} string Title or slug to be processed.
+ * @param {boolean} isEditing Flag the user is currently editing the input
+ allowing extra hyphens (default false)
  *
  * @return {string} Processed string.
  */
-export default function cleanForSlug(string) {
+export default function cleanForSlug(string, isEditing = false) {
   if (!string) {
     return '';
   }
 
-  return string
-    .replace(/[\s./_]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase();
+  return [string]
+    .map((s) => s.replace(/[\s./_]/g, '-'))
+    .map((s) => (isEditing ? s : s.replace(/^-+|-+$/g, '')))
+    .map((s) => (isEditing ? s : s.replace(/--+/g, '-')))
+    .map((s) => s.normalize('NFD'))
+    .map((s) => s.replace(/[\u0300-\u036f]/g, ''))
+    .map((s) => s.toLowerCase())
+    .pop();
 }

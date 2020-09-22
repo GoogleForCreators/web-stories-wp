@@ -18,65 +18,54 @@
  * Internal dependencies
  */
 import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
-import beauty from './raw/beauty.json';
-import cooking from './raw/cooking.json';
-import diy from './raw/diy.json';
-import entertainment from './raw/entertainment.json';
-import fashion from './raw/fashion.json';
-import fitness from './raw/fitness.json';
-import travel from './raw/travel.json';
-import wellbeing from './raw/wellbeing.json';
 
-export function getImageFile(url) {
-  const file = (url || '').split('/').slice(-1).join('');
-  /* removes `-x` in some_file-x.jpg */
-  return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
-}
+export async function loadTemplate(title, imageBaseUrl) {
+  const data = await import(
+    /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
+  );
 
-export function loadTemplate(title, data, imageBaseUrl) {
   const template = {
     ...data,
     pages: (data.pages || []).map((page) => ({
       ...page,
       elements: page.elements?.map((elem) => {
-        if (elem.resource && elem.resource.sizes) {
+        if (elem?.resource?.sizes) {
           elem.resource.sizes = [];
         }
-        if (elem.resource && elem.resource.src) {
-          elem.resource.src = `${imageBaseUrl}/images/templates/${title}/${getImageFile(
-            elem.resource.src
-          )}`;
+        if (elem?.resource?.src) {
+          elem.resource.src = elem.resource.src.replace(
+            'https://replaceme.com/',
+            imageBaseUrl
+          );
         }
         return elem;
       }),
     })),
   };
 
-  const migratedTemplate = {
+  return {
     ...migrate(template, template.version),
     version: DATA_VERSION,
   };
-
-  return migratedTemplate;
 }
 
-export function loadTemplates(imageBaseUrl) {
-  return Object.entries({
-    beauty,
-    cooking,
-    diy,
-    entertainment,
-    fashion,
-    fitness,
-    travel,
-    wellbeing,
-  }).reduce(
-    (accum, [title, data]) => ({
-      ...accum,
-      [title]: loadTemplate(title, data, imageBaseUrl),
-    }),
-    {}
+export default async function loadTemplates(imageBaseUrl) {
+  const templates = [
+    'beauty',
+    'cooking',
+    'diy',
+    'entertainment',
+    'fashion',
+    'fitness',
+    'travel',
+    'wellbeing',
+  ];
+
+  const result = await Promise.all(
+    templates.map(async (title) => {
+      return [title, await loadTemplate(title, imageBaseUrl)];
+    })
   );
-}
 
-export default loadTemplates;
+  return Object.fromEntries(result);
+}

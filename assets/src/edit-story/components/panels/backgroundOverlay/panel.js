@@ -72,7 +72,12 @@ function BackgroundOverlayPanel({ selectedElements, pushUpdate }) {
       {overlayType !== OverlayType.NONE && (
         <Row>
           <Label>{__('Color', 'web-stories')}</Label>
-          <Color value={overlay} onChange={updateOverlay} hasGradient />
+          <Color
+            label={__('Color', 'web-stories')}
+            value={overlay}
+            onChange={updateOverlay}
+            hasGradient
+          />
         </Row>
       )}
     </SimplePanel>

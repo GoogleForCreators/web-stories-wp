@@ -84,7 +84,10 @@ export function processPastedNodeList(nodeList, content) {
 export function processPastedElements(content, currentPage) {
   let foundElements = [];
   for (let n = content.firstChild; n; n = n.nextSibling) {
-    if (n.nodeType !== /* COMMENT */ 8) {
+    if (
+      n.nodeType !== /* COMMENT */ 8 ||
+      n.nodeValue?.indexOf('Fragment') !== -1
+    ) {
       continue;
     }
     const payload = JSON.parse(
@@ -120,10 +123,11 @@ export function processPastedElements(content, currentPage) {
 /**
  * Processes copied/cut content for preparing elements to add to clipboard.
  *
+ * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
  * @param {Object} evt Copy/cut event object.
  */
-export function addElementsToClipboard(elements, evt) {
+export function addElementsToClipboard(page, elements, evt) {
   if (!elements.length || !evt) {
     return;
   }
@@ -135,6 +139,9 @@ export function addElementsToClipboard(elements, evt) {
     // in a separate property.
     items: elements.map((element) => ({
       ...element,
+      ...(element.isDefaultBackground
+        ? { backgroundColor: page.backgroundColor }
+        : null),
       basedOn: element.id,
       id: undefined,
     })),

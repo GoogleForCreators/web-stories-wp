@@ -24,17 +24,26 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import PopoverMenu from '../';
+import PopoverMenu, { PopoverMenuCard } from '../';
 
 const demoItems = [
   { value: '1', label: 'one' },
   { value: 'foo', label: 'two' },
   { value: false, label: 'invalid option' },
-  { value: 'bar', label: 'three' },
+  { value: 'bar', label: 'three', separator: 'top' },
+  {
+    value: 'link',
+    label: 'i am a link!',
+    url: 'https://www.google.com/',
+  },
   {
     value: 'edge_case',
     label: 'i am a very very very very very very very long label',
+    separator: 'bottom',
   },
+  { value: 'lions', label: 'lions' },
+  { value: 'tigers', label: 'tigers', separator: 'top' },
+  { value: 'bears', label: 'bears' },
 ];
 
 export default {
@@ -43,6 +52,12 @@ export default {
 };
 const PopoverWrapper = styled.div`
   width: 200px;
+  position: relative;
+`;
+
+const PopoverCardWrapper = styled.div`
+  width: 100px;
+  margin: 400px 0 0 200px;
   position: relative;
 `;
 
@@ -57,4 +72,16 @@ export const _default = () => (
       }}
     />
   </PopoverWrapper>
+);
+
+export const _PopoverCard = () => (
+  <PopoverCardWrapper>
+    <PopoverMenuCard
+      items={demoItems}
+      isOpen={boolean('isOpen', true)}
+      onSelect={(item) => {
+        action(`clicked on dropdown item ${item.value}`)(item);
+      }}
+    />
+  </PopoverCardWrapper>
 );

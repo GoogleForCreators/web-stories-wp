@@ -15,43 +15,37 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-
 import styled from 'styled-components';
-import { useCallback, useRef, useLayoutEffect, useMemo } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { useFeature } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { resolveRoute, useRouteHistory } from '../../app/router';
+import { BEZIER } from '../../../animation';
+import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
+import { resolveRoute, useRouteHistory } from '../../app/router';
+import { BUTTON_TYPES, primaryPaths, Z_INDEX } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
-import {
-  BEZIER,
-  BUTTON_TYPES,
-  primaryPaths,
-  secondaryPaths,
-  Z_INDEX,
-} from '../../constants';
-
+import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
 import { useNavContext } from '../navProvider';
 import {
   AppInfo,
   Content,
-  NavLink,
-  Rule,
+  Header,
   NavButton,
+  NavLink,
   NavList,
   NavListItem,
-  WebStoriesHeading,
 } from './navigationComponents';
 
 export const AppFrame = styled.div`
@@ -103,6 +97,7 @@ export function LeftRail() {
   const { newStoryURL, version } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
+
   const enableInProgressViews = useFeature('enableInProgressViews');
 
   const {
@@ -130,13 +125,6 @@ export function LeftRail() {
     return primaryPaths.filter((path) => !path.inProgress);
   }, [enableInProgressViews]);
 
-  const enabledSecondaryPaths = useMemo(() => {
-    if (enableInProgressViews) {
-      return secondaryPaths;
-    }
-    return secondaryPaths.filter((path) => !path.inProgress);
-  }, [enableInProgressViews]);
-
   const handleSideBarClose = useCallback(() => {
     if (sideBarVisible) {
       toggleSideBar();
@@ -151,6 +139,10 @@ export function LeftRail() {
     }
   }, [sideBarVisible]);
 
+  const onCreateNewStoryClick = useCallback(async () => {
+    await trackEvent('create_new_story', 'dashboard');
+  }, []);
+
   return (
     <LeftRailContainer
       onClickCapture={onContainerClickCapture}
@@ -161,13 +153,16 @@ export function LeftRail() {
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
       <div ref={upperContentRef}>
+        <Header>
+          <WebStoriesLogo title={__('Web Stories', 'web-stories')} />
+        </Header>
         <Content>
-          <WebStoriesHeading>
-            {__('Web Stories', 'web-stories')}
-          </WebStoriesHeading>
-        </Content>
-        <Content>
-          <NavButton type={BUTTON_TYPES.CTA} href={newStoryURL} isLink>
+          <NavButton
+            type={BUTTON_TYPES.CTA}
+            href={newStoryURL}
+            isLink
+            onClick={onCreateNewStoryClick}
+          >
             {__('Create New Story', 'web-stories')}
           </NavButton>
         </Content>
@@ -185,28 +180,15 @@ export function LeftRail() {
             ))}
           </NavList>
         </Content>
-        <Rule />
-        <Content>
-          <NavList>
-            {enabledSecondaryPaths.map((path) => (
-              <NavListItem key={path.value}>
-                <NavLink
-                  active={path.value === state.currentPath}
-                  href={resolveRoute(path.value)}
-                >
-                  {path.label}
-                </NavLink>
-              </NavListItem>
-            ))}
-          </NavList>
-        </Content>
       </div>
       <Content>
         <AppInfo>
-          {__('\u00A9 2020 Google', 'web-stories')}
-          <br />
-          {__('Version', 'web-stories')}&nbsp;
-          {version}
+          {sprintf(
+            /* translators: %s: Current Year, %v: App Version */
+            __('\u00A9 %s Google Version %v', 'web-stories'),
+            new Date().getFullYear(),
+            version
+          )}
         </AppInfo>
       </Content>
     </LeftRailContainer>

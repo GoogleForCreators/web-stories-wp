@@ -35,6 +35,7 @@ import TypeaheadOptions from '../typeaheadOptions';
 import { TypographyPresets } from '../typography';
 
 const SearchContainer = styled.div`
+  width: 100%;
   display: flex;
   align-items: flex-end;
   flex-direction: column;
@@ -137,7 +138,6 @@ const TypeaheadInput = ({
   className,
   disabled,
   onChange,
-  maxItemsVisible = 5,
   placeholder,
   value = '',
   ariaLabel,
@@ -173,10 +173,13 @@ const TypeaheadInput = ({
 
   const handleInputChange = useCallback(
     (item) => {
+      if (!showMenu) {
+        setShowMenu(true);
+      }
       setInputValue(item.label);
-      onChange(item.value);
+      onChange(item.value.trim());
     },
-    [onChange, setInputValue]
+    [onChange, setInputValue, setShowMenu, showMenu]
   );
 
   const handleMenuItemSelect = (item) => {
@@ -230,7 +233,7 @@ const TypeaheadInput = ({
             placeholder={placeholder}
           />
         </ControlVisibilityContainer>
-        {inputValue.length > 0 && !isMenuOpen && (
+        {inputValue.length > 0 && (
           <ClearInputButton
             data-testid="clear-search"
             onClick={handleInputClear}
@@ -243,9 +246,9 @@ const TypeaheadInput = ({
 
       {isMenuOpen && (
         <TypeaheadOptions
+          currentSelection={value}
           isOpen={isMenuOpen}
           items={items}
-          maxItemsVisible={maxItemsVisible}
           onSelect={items && handleMenuItemSelect}
         />
       )}
@@ -266,7 +269,6 @@ TypeaheadInput.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   isFiltering: PropTypes.bool,
-  maxItemsVisible: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import { LINE_LENGTH } from '../../constants';
 import { arrange, firePointerEvent } from './_utils';
 
 describe('<ColorPicker /> when moving a stop with a pointer device', () => {
-  it('should move stop when dragging a stop', () => {
+  it('should move stop when dragging a stop', async () => {
     const { getGradientStopAt, onChange } = arrange({
       color: {
         type: 'linear',
@@ -68,6 +68,9 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
       clientX: 0.4 * LINE_LENGTH,
     });
 
+    // Wait for callback to have been called after debounce
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
+
     expect(onChange).toHaveBeenCalledWith({
       type: 'linear',
       stops: [
@@ -86,6 +89,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     });
 
     // Verify no new updated position
+    // TODO: Wait for debounce, but it shouldn't be called, so debounce won't invoke anyway?
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -129,7 +133,7 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
     onChange.mockReset();
   });
 
-  it('should delete stop when dragging vertically off the line', () => {
+  it('should delete stop when dragging vertically off the line', async () => {
     const { getGradientStopAt, getGradientStops, onChange } = arrange({
       color: {
         type: 'linear',
@@ -176,6 +180,9 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
       clientX: 0.8 * LINE_LENGTH,
       clientY: 50,
     });
+
+    // Wait for callback to have been called after debounce
+    await waitFor(() => expect(onChange).toHaveBeenCalledTimes(1));
 
     // Expect middle stop to be removed
     expect(getGradientStops()).toHaveLength(2);

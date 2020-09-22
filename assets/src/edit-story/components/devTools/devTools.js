@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { useGlobalKeyDownEffect } from '../keyboard';
 import { useStory } from '../../app/story';
 import { useSnackbar } from '../../app/snackbar';
+import { DATA_VERSION } from '../../migration/migrate';
 import { dummyImage, dummyVideo } from './dummyData';
 
 const Container = styled.div`
@@ -37,15 +38,15 @@ const Container = styled.div`
   flex-direction: column;
   width: 35%;
   height: 50%;
-  border: 6px solid ${({ theme }) => theme.colors.bg.v4};
-  background: ${({ theme }) => theme.colors.bg.v1};
+  border: 6px solid ${({ theme }) => theme.colors.bg.panel};
+  background: ${({ theme }) => theme.colors.bg.workspace};
   color: ${({ theme }) => theme.colors.fg.v2};
 `;
 
 const Textarea = styled.textarea`
   flex: 1;
   border: 0;
-  background: ${({ theme }) => theme.colors.bg.v1};
+  background: ${({ theme }) => theme.colors.bg.workspace};
   color: ${({ theme }) => theme.colors.fg.v2};
   white-space: nowrap;
   overflow: auto;
@@ -114,6 +115,7 @@ function DevTools() {
     current,
     selection,
     story: { stylePresets },
+    version: DATA_VERSION,
     pages,
   };
   const storyData = isDummyResources

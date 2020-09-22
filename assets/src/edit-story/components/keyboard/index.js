@@ -39,23 +39,32 @@ const NON_EDITABLE_INPUT_TYPES = [
   'reset',
   'hidden',
 ];
+const CLICKABLE_INPUT_TYPES = [
+  'submit',
+  'button',
+  'checkbox',
+  'radio',
+  'image',
+  'file',
+  'reset',
+];
 
 const globalRef = createRef();
 
 function setGlobalRef() {
   if (!globalRef.current) {
-    globalRef.current = document;
+    globalRef.current = document.documentElement;
   }
 }
 
 /**
  * See https://craig.is/killing/mice#keys for the supported key codes.
  *
- * @param {Node|{current: Node}} refOrNode
- * @param {string|Array|Object} keyNameOrSpec
- * @param {string|undefined} type
- * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} deps
+ * @param {Node|{current: Node}} refOrNode Node or reference to one.
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {string|undefined} type Event type, either 'keydown', 'keyup', or undefined to automatically determine it.
+ * @param {function(KeyboardEvent)} callback Callback.
+ * @param {Array|undefined} deps The effect's dependencies.
  */
 function useKeyEffectInternal(
   refOrNode,
@@ -82,12 +91,17 @@ function useKeyEffectInternal(
       ) {
         throw new Error('only an element or a document node can be used');
       }
-      const mousetrap = getOrCreateMousetrap(node);
+
       const keySpec = resolveKeySpec(keys, keyNameOrSpec);
+      if (keySpec.key.length === 1 && keySpec.key[0] === '') {
+        return undefined;
+      }
+
+      const mousetrap = getOrCreateMousetrap(node);
       const handler = createKeyHandler(node, keySpec, batchingCallback);
       mousetrap.bind(keySpec.key, handler, type);
       return () => {
-        mousetrap.unbind(keySpec.key);
+        mousetrap.unbind(keySpec.key, type);
       };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,10 +116,10 @@ function useKeyEffectInternal(
  *
  * See https://craig.is/killing/mice#api.bind.
  *
- * @param {Node|{current: Node}} refOrNode
- * @param {string|Array|Object} keyNameOrSpec
- * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} deps
+ * @param {Node|{current: Node}} refOrNode Node or reference to one.
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {function(KeyboardEvent)} callback Callback.
+ * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyEffect(
   refOrNode,
@@ -118,10 +132,10 @@ export function useKeyEffect(
 }
 
 /**
- * @param {Node|{current: Node}} refOrNode
- * @param {string|Array|Object} keyNameOrSpec
- * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} deps
+ * @param {Node|{current: Node}} refOrNode Node or reference to one.
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {function(KeyboardEvent)} callback Callback.
+ * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyDownEffect(
   refOrNode,
@@ -134,10 +148,10 @@ export function useKeyDownEffect(
 }
 
 /**
- * @param {Node|{current: Node}} refOrNode
- * @param {string|Array|Object} keyNameOrSpec
- * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} deps
+ * @param {Node|{current: Node}} refOrNode Node or reference to one.
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {function(KeyboardEvent)} callback Callback.
+ * @param {Array} [deps] The effect's dependencies.
  */
 export function useKeyUpEffect(
   refOrNode,
@@ -150,9 +164,9 @@ export function useKeyUpEffect(
 }
 
 /**
- * @param {{current: Node}} refOrNode
- * @param {string|Array|Object} keyNameOrSpec
- * @param {Array|undefined} deps
+ * @param {{current: Node}} refOrNode Node or reference to one.
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {Array} [deps] The effect's dependencies.
  * @return {boolean} Stateful boolean that tracks whether key is pressed.
  */
 export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
@@ -165,9 +179,9 @@ export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
 }
 
 /**
- * @param {string|Array|Object} keyNameOrSpec
- * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} deps
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {function(KeyboardEvent)} callback Callback.
+ * @param {Array} [deps] The effect's dependencies.
  */
 export function useGlobalKeyDownEffect(
   keyNameOrSpec,
@@ -180,9 +194,9 @@ export function useGlobalKeyDownEffect(
 }
 
 /**
- * @param {string|Array|Object} keyNameOrSpec
- * @param {function(KeyboardEvent)} callback
- * @param {Array|undefined} deps
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {function(KeyboardEvent)} callback Callback.
+ * @param {Array} [deps] The effect's dependencies.
  */
 export function useGlobalKeyUpEffect(
   keyNameOrSpec,
@@ -195,8 +209,8 @@ export function useGlobalKeyUpEffect(
 }
 
 /**
- * @param {string|Array|Object} keyNameOrSpec
- * @param {Array|undefined} deps
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @param {Array} [deps] The effect's dependencies.
  * @return {boolean} Stateful boolean that tracks whether key is pressed.
  */
 export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
@@ -205,8 +219,8 @@ export function useGlobalIsKeyPressed(keyNameOrSpec, deps = undefined) {
 }
 
 /**
- * @param {{current: Node}} ref
- * @param {Array|undefined} deps
+ * @param {{current: Node}} ref Node reference.
+ * @param {Array} [deps] The effect's dependencies.
  */
 export function useEscapeToBlurEffect(ref, deps = undefined) {
   useKeyDownEffect(
@@ -234,8 +248,9 @@ function getOrCreateMousetrap(node) {
 }
 
 /**
- * @param {Object} keyDict
- * @param {string|Object} keyNameOrSpec
+ * @param {Object} keyDict Key dictionary.
+ * @param {string|Array|Object} keyNameOrSpec Single key name or key spec.
+ * @return {Object} Key object.
  */
 function resolveKeySpec(keyDict, keyNameOrSpec) {
   const keySpec =
@@ -246,6 +261,7 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     key: keyOrArray,
     shift = false,
     repeat = true,
+    clickable = true,
     editable = false,
     dialog = false,
   } = keySpec;
@@ -254,7 +270,7 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     .map((key) => keyDict[key] || key)
     .flat();
   const allKeys = addMods(mappedKeys, shift);
-  return { key: allKeys, shift, repeat, editable, dialog };
+  return { key: allKeys, shift, clickable, repeat, editable, dialog };
 }
 
 function addMods(keys, shift) {
@@ -266,7 +282,12 @@ function addMods(keys, shift) {
 
 function createKeyHandler(
   keyTarget,
-  { repeat: repeatAllowed, editable: editableAllowed, dialog: dialogAllowed },
+  {
+    repeat: repeatAllowed,
+    editable: editableAllowed,
+    clickable: clickableAllowed,
+    dialog: dialogAllowed,
+  },
   callback
 ) {
   return (evt) => {
@@ -277,6 +298,9 @@ function createKeyHandler(
     if (!editableAllowed && isEditableTarget(target)) {
       return undefined;
     }
+    if (!clickableAllowed && isClickableTarget(target)) {
+      return undefined;
+    }
     if (!dialogAllowed && crossesDialogBoundary(target, keyTarget)) {
       return undefined;
     }
@@ -285,6 +309,16 @@ function createKeyHandler(
     // and default behavior.
     return false;
   };
+}
+
+function isClickableTarget({ tagName, type }) {
+  if (['BUTTON', 'A'].includes(tagName)) {
+    return true;
+  }
+  if (tagName === 'INPUT') {
+    return CLICKABLE_INPUT_TYPES.includes(type);
+  }
+  return false;
 }
 
 function isEditableTarget({ tagName, isContentEditable, type, readOnly }) {
@@ -313,15 +347,23 @@ function crossesDialogBoundary(target, keyTarget) {
 }
 
 /**
+ * Determines if the current platform is a Mac or not.
+ *
+ * @return {boolean} True if platform is a Mac.
+ */
+export function isPlatformMacOS() {
+  const { platform } = global.navigator;
+  return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+}
+
+/**
  * Prettifies keyboard shortcuts in a platform-agnostic way.
  *
  * @param {string} shortcut Keyboard shortcut combination, e.g. 'shift+mod+z'.
  * @return {string} Prettified keyboard shortcut.
  */
 export function prettifyShortcut(shortcut) {
-  const { platform } = global.navigator;
-  const isMacOS =
-    platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+  const isMacOS = isPlatformMacOS();
 
   const replacementKeyMap = {
     alt: isMacOS ? '⌥' : 'Alt',

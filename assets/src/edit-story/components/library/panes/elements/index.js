@@ -18,4 +18,4 @@
  * Internal dependencies
  */
 export { default as ElementsPane } from './elementsPane';
-export { default as ElementsTab } from './elementsTab';
+export { default as ElementsIcon } from './elementsIcon';

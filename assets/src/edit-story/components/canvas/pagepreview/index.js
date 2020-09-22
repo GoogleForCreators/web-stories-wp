@@ -44,13 +44,18 @@ const Page = styled.button`
   border: 0;
   border-top: ${THUMB_INDICATOR_HEIGHT}px solid
     ${({ isActive, theme }) =>
-      isActive ? theme.colors.selection : theme.colors.bg.v1};
+      isActive ? theme.colors.selection : theme.colors.bg.workspace};
   height: ${({ height }) => height}px;
   background-color: transparent;
   width: ${({ width }) => width}px;
   flex: none;
   transition: width 0.2s ease, height 0.2s ease;
   outline: 0;
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+  }
+
   ${({ isActive, isInteractive, theme }) =>
     !isActive &&
     isInteractive &&
@@ -68,10 +73,11 @@ const PreviewWrapper = styled.div`
   position: relative;
   overflow: hidden;
   background-color: white;
+  border-radius: 4.5px;
   ${({ background }) => generatePatternStyles(background)}
 `;
 
-function PagePreview({ index, ...props }) {
+function PagePreview({ index, gridRef, ...props }) {
   const { pages } = useStory((state) => ({
     pages: state.state.pages,
   }));
@@ -80,6 +86,7 @@ function PagePreview({ index, ...props }) {
   const { width: thumbWidth, height: thumbHeight } = props;
   const width = thumbWidth - THUMB_FRAME_WIDTH;
   const height = thumbHeight - THUMB_FRAME_HEIGHT;
+
   return (
     <UnitsProvider pageSize={{ width, height }}>
       <TransformProvider>
@@ -105,6 +112,9 @@ PagePreview.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   isInteractive: PropTypes.bool,
+  isActive: PropTypes.bool,
+  gridRef: PropTypes.any,
+  tabIndex: PropTypes.number,
 };
 
 PagePreview.defaultProps = {
