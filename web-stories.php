@@ -9,7 +9,7 @@
  *
  * Plugin Name: Web Stories
  * Description: Visual storytelling for WordPress.
- * Plugin URI: https://github.com/google/web-stories-wp
+ * Plugin URI: https://wp.stories.google/
  * Author: Google
  * Author URI: https://opensource.google.com/
  * Version: 1.0.0
