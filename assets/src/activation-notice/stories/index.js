@@ -17,18 +17,25 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from 'react';
+import { text } from '@storybook/addon-knobs';
 
-function usePrefersDarkMode() {
-  const [prefersDarkMode, setPrefersDarkMode] = useState(false);
+/**
+ * Internal dependencies
+ */
+import App from '../app';
 
-  useEffect(() => {
-    setPrefersDarkMode(
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-    );
-  }, []);
+export default {
+  title: 'WordPress/Plugin Activation',
+};
 
-  return prefersDarkMode;
-}
+// TODO: Support RTL using something like @pxblue/storybook-rtl-addon;
+export const _default = () => {
+  const config = {
+    cdnURL: text('CDN URL', 'https://wp.stories.google/static/main/'),
+    demoStoryURL: text('Demo Story URL', 'https://example:com'),
+    dashboardURL: text('Dashboard URL', 'https://example:com'),
+    isRTL: false,
+  };
 
-export default usePrefersDarkMode;
+  return <App config={config} />;
+};

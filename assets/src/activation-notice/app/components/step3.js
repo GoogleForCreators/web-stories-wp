@@ -34,26 +34,25 @@ import { useConfig } from '../config';
 import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
+import Image from './image';
 
 const Wrapper = styled.div`
   display: none;
-  align-items: flex-end;
+  margin-left: 30px;
+  justify-content: center;
 
   @media ${({ theme }) => theme.breakpoint.desktop} {
     display: flex;
   }
 `;
 
-const Image = styled.img`
-  margin-bottom: -25px;
-`;
-
 const ParagraphWrapper = styled.div`
-  margin: 0 0 30px 25px;
+  align-self: flex-start;
+  margin: 20px 0 0 -50px;
 `;
 
 function Step3() {
-  const { cdnURL, newStoryURL } = useConfig();
+  const { newStoryURL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -66,10 +65,11 @@ function Step3() {
     <Wrapper>
       <Link href={newStoryURL} onClick={onClick}>
         <Image
-          src={`${cdnURL}images/plugin-activation/editor.png`}
-          alt=""
-          width={320}
-          height={180}
+          name="editor.png"
+          name2x="editor-2x.png"
+          width={430}
+          height={251}
+          $marginTop={70}
         />
       </Link>
       <ParagraphWrapper>
@@ -80,8 +80,12 @@ function Step3() {
           }
         </Number>
         <Paragraph>
+          {
+            /* translators: First half of "Jump into the Editor" */
+            _x('Jump into the', 'plugin activation', 'web-stories')
+          }{' '}
           <Link href={newStoryURL} onClick={onClick}>
-            {__('Jump into the editor', 'web-stories')}
+            {__('Editor', 'web-stories')}
           </Link>
         </Paragraph>
       </ParagraphWrapper>
