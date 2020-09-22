@@ -60,10 +60,10 @@ Web Stories are for everyone! If you are a site owner, content creator, or publi
 
 == Screenshots ==
 
-1. The Web Stories editor
-2. Add images using drag and drop
-3. Easily change image size and position
-4. The Web Stories dashboard
+1. Web Stories for WordPress brings a powerful editor right into your WordPress admin.
+2. Easily create Web Stories with our drag-and-drop editor.
+3. Explore our WYSIWYG editor with easy access to many editing tools (shown here: zooming and cropping media)
+4. Get started building your first story by editing one of our expressive, fully built template stories included with the editor.
 
 == Frequently Asked Questions ==
 
