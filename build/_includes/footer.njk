@@ -1,0 +1,40 @@
+{% set locale = locale if locale else 'en' %}
+<footer>
+
+    <a class="logo_link" href="{{ 'https://google.com' | url }}" title="Google.com">
+      {% include "./img/google.svg" %}
+    </a>
+
+    <ul class="links">
+      <li>
+        <a href="https://policies.google.com/privacy?hl={{ locale }}" >{{$("Privacy") }}</a>
+      </li>
+      <li>
+        <a href="https://policies.google.com/terms?hl={{ locale }}">{{$("Terms") }}</a>
+      </li>
+      <li>
+        <a href="https://about.google/intl/{{ locale }}">{{$("About Google") }}</a>
+      </li>
+      <li>
+        <a href="https://about.google/intl/{{ locale }}/products/?tip=autocomplete">{{$("Google Products") }}</a>
+      </li>
+    </ul>
+
+    <ul class="links social_links">
+      <li>
+        <a href="/" >{{$("Connect") }}</a>
+      </li>
+      <li>
+        <a class="social web_creators" href="https://blog.google/web-creators">{{$("Web Creators") }}</a>
+      </li>
+      <li>
+        <a class="social instagram" href="https://www.instagram.com/googlewebcreators/">{{$("Instagram") }}</a>
+      </li>
+      <li>
+        <a class="social twtiter" href="https://twitter.com/WebCreators">{{$("Twitter") }}</a>
+      </li>
+      <li>
+        <a class="social yotube" href="http://goo.gle/WebCreators">{{$("Youtube") }}</a>
+      </li>
+    </ul>
+</footer>
