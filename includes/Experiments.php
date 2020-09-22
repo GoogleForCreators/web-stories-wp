@@ -241,18 +241,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @brittanyirl
-			 * Issue: 3482
-			 * Creation date: 2020-08-10
-			 */
-			[
-				'name'        => 'enableSettingsView',
-				'label'       => __( 'Settings Views', 'web-stories' ),
-				'description' => __( 'Enable settings view in dashboard', 'web-stories' ),
-				'group'       => 'dashboard',
-				'default'     => true,
-			],
-			/**
-			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
 			 */

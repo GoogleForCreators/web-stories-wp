@@ -25,7 +25,6 @@ describe('Telemetry Banner', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableSettingsView: true });
 
     await fixture.render();
 
