@@ -72,7 +72,7 @@ header .links {
 footer .links a,
 header .links a {
   padding: 0 1rem;
-  color: #999;
+  color: #111;
 }
 
 header nav a:focus,
@@ -374,15 +374,22 @@ aside .docTrack i:last-child {
 }
 
 #announcing {
-  font-size: 3.5rem;
+  font-size: 3rem;
   position: fixed;
-  width: 61%;
+  min-width: 61%;
+  max-width: 88%;
   top: 8rem;
   opacity: 0;
   left: 0;
   right: 0;
   margin: auto;
   will-change: transform;
+}
+
+@media screen and (max-width: 1280px) {
+  #announcing {
+    font-size: 3.5rem;
+  }
 }
 
 #wysiwygftw {
@@ -494,17 +501,25 @@ aside .docTrack i:last-child {
 #final_thoughts h1 {
   font-size: 3.5rem;
   line-height: 1.4;
+  font-weight: 300;
 }
 
 #final_thoughts p {
+  font-size: 1.5em;
   line-height: 2em;
-  margin: 0
+  font-weight: 300;
+  margin: 0;
 }
 
 #final_thoughts > div {
-  flex: 0.25;
-  margin: 0 4rem;
+  flex: 0.35;
+  margin: 0 3rem;
   height: min-content;
+}
+
+#final_thoughts .fake_button {
+  font-size: 1.25rem;
+  padding: .5rem 1rem;
 }
 
 #tip_card_container {
