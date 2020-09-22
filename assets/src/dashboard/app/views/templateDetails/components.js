@@ -90,6 +90,7 @@ export const Text = styled(Paragraph2)`
 `;
 
 export const MetadataContainer = styled.fieldset`
+  border: 0;
   > label {
     margin: 0 10px 14px 0;
 
@@ -108,6 +109,10 @@ export const RowContainer = styled.section.attrs({
   flex-wrap: wrap;
   padding-bottom: 40px;
   margin: 0 20px 0;
+
+  & > div {
+    width: 100%;
+  }
 `;
 
 export const SubHeading = styled.h2`

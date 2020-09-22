@@ -297,6 +297,7 @@ function GridView() {
                             index + 1
                           )
                     }
+                    tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     isActive={isCurrentPage && isInteractive}
                     index={index}
                     width={width}

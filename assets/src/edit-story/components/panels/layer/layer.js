@@ -38,6 +38,8 @@ const LayerButton = styled.button.attrs({
   type: 'button',
   tabIndex: -1,
   role: 'option',
+  // Because the layer panel is aria-hidden, we need something else to select by
+  'data-testid': 'layer-option',
 })`
   display: flex;
   border: 0;

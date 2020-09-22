@@ -22,11 +22,9 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { dataPixels } from '../../../units';
-import { calculateTextHeight } from '../../../utils/textMeasurements';
-import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import { SimplePanel } from '../panel';
 import { usePresubmitHandler } from '../../form';
+import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import TextStyleControls from './textStyle';
 import ColorControls from './color';
 import PaddingControls from './padding';
@@ -34,22 +32,7 @@ import FontControls from './font';
 
 function StylePanel(props) {
   // Update size and position if relevant values have changed.
-  usePresubmitHandler((properties) => {
-    const { width, height: oldHeight, rotationAngle, x, y } = properties;
-    const newHeight = dataPixels(calculateTextHeight(properties, width));
-    const [dx, dy] = calcRotatedResizeOffset(
-      rotationAngle,
-      0,
-      0,
-      0,
-      newHeight - oldHeight
-    );
-    return {
-      height: newHeight,
-      x: dataPixels(x + dx),
-      y: dataPixels(y + dy),
-    };
-  }, []);
+  usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
   return (
     <SimplePanel name="style" title={__('Style', 'web-stories')}>

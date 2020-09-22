@@ -65,6 +65,7 @@ function InspectorLayout() {
         initialTab={tab}
         onTabChange={(id) => setTab(id)}
         getAriaControlsId={getTabId}
+        shortcut="mod+option+3"
       />
       <InspectorContainer ref={setInspectorContentNode}>
         <InspectorContent />

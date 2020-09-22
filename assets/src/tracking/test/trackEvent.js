@@ -33,18 +33,14 @@ describe('trackEvent', () => {
   it('adds a tracking event to the dataLayer', async () => {
     config.trackingAllowed = true;
     config.trackingEnabled = true;
-    config.siteUrl = 'https://www.example.com';
-    config.userIdHash = 'a1b2c3';
     config.trackingId = 'UA-12345678-1';
 
     gtag.mockImplementationOnce((type, eventName, eventData) => {
       eventData.event_callback();
     });
 
-    await trackEvent('category', 'name', 'label', 'value');
+    await trackEvent('name', 'category', 'label', 'value');
     expect(gtag).toHaveBeenCalledWith('event', 'name', {
-      dimension1: 'https://www.example.com',
-      dimension2: 'a1b2c3',
       event_callback: expect.any(Function),
       event_category: 'category',
       event_label: 'label',

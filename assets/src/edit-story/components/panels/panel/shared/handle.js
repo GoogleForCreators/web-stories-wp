@@ -50,9 +50,7 @@ const Handle = styled.div`
   width: 100%;
 `;
 
-const Bar = styled.div.attrs({
-  tabIndex: 0,
-})`
+const Bar = styled.div`
   width: 100%;
   height: 4px;
 
@@ -70,6 +68,7 @@ function DragHandle({
   handleExpandToHeightChange,
   handleDoubleClick,
   position,
+  ...rest
 }) {
   const handle = useRef();
   useDragHandlers(handle, handleHeightChange, handleExpandToHeightChange);
@@ -84,6 +83,7 @@ function DragHandle({
         aria-valuemin={minHeight}
         aria-valuemax={maxHeight}
         aria-label={__('Set panel height', 'web-stories')}
+        {...rest}
       />
     </Handle>
   );

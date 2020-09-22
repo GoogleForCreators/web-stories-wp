@@ -191,20 +191,17 @@ const categories = [
 
 describe('Media3pPane fetching', () => {
   let fixture;
-  let media3pTab;
   let unsplashSection;
   let coverrSection;
   let media3pPane;
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ media3pTab: true, showCoverrTab: true });
 
     jasmine.clock().install();
 
     await fixture.render();
 
-    media3pTab = fixture.querySelector('#library-tab-media3p');
     unsplashSection = fixture.querySelector(
       '#provider-bottom-wrapper-unsplash'
     );
@@ -268,7 +265,7 @@ describe('Media3pPane fetching', () => {
 
   it('should render no results message', async () => {
     spyOn(apiFetcher, 'listMedia').and.callFake(() => ({ media: [] }));
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     await waitFor(() => {
       expect(
@@ -281,7 +278,7 @@ describe('Media3pPane fetching', () => {
 
   it('should fetch media resources', async () => {
     mockListMedia();
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
   });
 
@@ -289,7 +286,7 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     mockListCategories();
 
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -299,10 +296,10 @@ describe('Media3pPane fetching', () => {
   it('should arrow navigate between category pills', async () => {
     mockListMedia();
     mockListCategories();
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     await fixture.events.focus(
-      fixture.querySelectorAll('[data-testid="mediaCategory"]')[0]
+      fixture.querySelectorAll('[data-testid="pill"]')[0]
     );
     expect(document.activeElement.textContent).toBe('Sustainability');
 
@@ -311,14 +308,14 @@ describe('Media3pPane fetching', () => {
 
     await fixture.events.keyboard.press('tab');
     expect(document.activeElement).toBe(
-      fixture.screen.getByTestId('category-expand-button')
+      fixture.screen.getByRole('button', { name: 'Expand' })
     );
   });
 
   it('should expand category section on arrow down', async () => {
     mockListMedia();
     mockListCategories();
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
@@ -326,13 +323,13 @@ describe('Media3pPane fetching', () => {
     expect(document.activeElement.textContent).toBe('Sustainability');
 
     await fixture.events.keyboard.press('ArrowDown');
-    const expandButton = fixture.screen.getByTestId('category-expand-button');
+    const expandButton = fixture.screen.getByRole('button', { name: 'Expand' });
     expect(expandButton.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('should fetch 2nd page', async () => {
     mockListMedia();
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     const mediaGallery = unsplashSection.querySelector(
       '[data-testid="media-gallery-container"]'
@@ -347,9 +344,42 @@ describe('Media3pPane fetching', () => {
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
   });
 
+  // The scroll position was being reset because the resize event in <Gallery>
+  // would render no images when the media pane was hidden (width->0).
+  // This was fixed by re-rendering <Gallery> whenever MediaPane/Media3pPane is
+  // re-rendered, which causes the resize event to be suppressed at exactly the
+  // right time.
+  // A more robust fix to the scroll position reset issue can be found here:
+  // https://github.com/neptunian/react-photo-gallery/pull/184
+  // If that PR be released, another option is to patch it using:
+  // https://www.npmjs.com/package/patch-package
+  it('should retain scroll position on tab change', async () => {
+    mockListMedia();
+    await fixture.events.click(fixture.editor.library.media3pTab);
+
+    const mediaGallery = unsplashSection.querySelector(
+      '[data-testid="media-gallery-container"]'
+    );
+    await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
+    mediaGallery.scrollTo(0, 10);
+    await waitFor(() => {
+      if (mediaGallery.scrollTop != 10) {
+        throw new Error('media scroll position must be initially');
+      }
+    });
+
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
+    await waitFor(() => {
+      if (mediaGallery.scrollTop != 10) {
+        throw new Error('media scroll position must be retained');
+      }
+    });
+  });
+
   it('should render the second provider', async () => {
     mockListMedia();
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     const coverrTab = fixture.querySelector('#provider-tab-coverr');
 
@@ -361,7 +391,7 @@ describe('Media3pPane fetching', () => {
     mockListMedia();
     mockListCategories();
 
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     const mediaGallery = unsplashSection.querySelector(
       '[data-testid="media-gallery-container"]'
@@ -376,7 +406,7 @@ describe('Media3pPane fetching', () => {
     await expectMediaElements(unsplashSection, MEDIA_PER_PAGE * 2);
 
     const mediaCategories = unsplashSection.querySelectorAll(
-      '[data-testid="mediaCategory"]'
+      '[data-testid="pill"]'
     );
     await fixture.events.click(mediaCategories[0]);
 
@@ -387,7 +417,7 @@ describe('Media3pPane fetching', () => {
 
   it('should have a delay before autoplaying videos', async () => {
     mockListMedia();
-    await fixture.events.click(media3pTab);
+    await fixture.events.click(fixture.editor.library.media3pTab);
 
     const coverrTab = fixture.querySelector('#provider-tab-coverr');
 
@@ -412,7 +442,7 @@ describe('Media3pPane fetching', () => {
   describe('Gallery navigation', () => {
     it('should handle pressing right when focused', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -429,7 +459,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing right when at the end of a row', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -453,7 +483,7 @@ describe('Media3pPane fetching', () => {
         throw new Error(`Unexpected pageToken: ${pageToken}`);
       });
 
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -472,7 +502,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing left when focused', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -489,7 +519,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing left at the beginning of a row', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -506,7 +536,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing left when the first element is focused', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -523,7 +553,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing down', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -540,7 +570,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing up', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -557,7 +587,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Home', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -574,7 +604,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing End', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -595,7 +625,7 @@ describe('Media3pPane fetching', () => {
   describe('Provider navigation', () => {
     it('should handle pressing Right', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -613,7 +643,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Right when no more providers', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -632,7 +662,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Left', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
@@ -651,7 +681,7 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Left when at the beginning', async () => {
       mockListMedia();
-      await fixture.events.click(media3pTab);
+      await fixture.events.click(fixture.editor.library.media3pTab);
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 

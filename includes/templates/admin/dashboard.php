@@ -29,8 +29,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+require_once __DIR__ . '/error-no-js.php';
+
 ?>
 
-<div id="web-stories-dashboard">
+<div id="web-stories-dashboard" class="hide-if-no-js">
 	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
 </div>

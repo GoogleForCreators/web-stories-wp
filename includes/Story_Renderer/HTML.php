@@ -52,7 +52,50 @@ class HTML {
 	protected $document;
 
 	/**
+	 * AMP requires the HTML markup to be encoded in UTF-8.
+	 *
+	 * @var string
+	 */
+	const AMP_ENCODING = 'utf-8';
+
+	/**
+	 * Encoding identifier to use for an unknown encoding.
+	 *
+	 * "auto" is recognized by mb_convert_encoding() as a special value.
+	 *
+	 * @var string
+	 */
+	const UNKNOWN_ENCODING = 'auto';
+
+	/**
+	 * Default document type to use.
+	 *
+	 * @var string
+	 */
+	const DEFAULT_DOCTYPE = '<!DOCTYPE html>';
+
+	/**
+	 * Encoding detection order in case we have to guess.
+	 *
+	 * This list of encoding detection order is just a wild guess and might need fine-tuning over time.
+	 * If the charset was not provided explicitly, we can really only guess, as the detection can
+	 * never be 100% accurate and reliable.
+	 *
+	 * @var string
+	 */
+	const ENCODING_DETECTION_ORDER = 'UTF-8, EUC-JP, eucJP-win, JIS, ISO-2022-JP, ISO-8859-15, ISO-8859-1, ASCII';
+
+	/**
+	 * AMP boilerplate <noscript> fallback.
+	 *
+	 * @var string
+	 */
+	const AMP_NOSCRIPT_BOILERPLATE = '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>';
+
+	/**
 	 * Story_Renderer constructor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param Story $story Post object.
 	 */
@@ -63,16 +106,21 @@ class HTML {
 	/**
 	 * Renders the story.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string The complete HTML markup for the story.
 	 */
 	public function render() {
-		$markup = '<!DOCTYPE html>' . $this->story->get_markup();
+		$markup = self::DEFAULT_DOCTYPE . $this->story->get_markup();
+		$markup = $this->adapt_encoding( $markup );
 		$markup = $this->replace_html_head( $markup );
+		$markup = $this->remove_noscript_amp_boilerplate( $markup );
 
 		$this->document = $this->load_html( $markup );
 
 		// Run all further transformations on the DOMDocument.
 
+		$this->add_noscript_amp_boilerplate();
 		$this->transform_html_start_tag();
 		$this->insert_analytics_configuration();
 
@@ -83,14 +131,41 @@ class HTML {
 	}
 
 	/**
+	 * Adapt the encoding of the content.
+	 *
+	 * @link https://github.com/ampproject/amp-wp/blob/a393acf701e8e44d80225affed99d528ee751cb9/lib/common/src/Dom/Document.php
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $markup Source content to adapt the encoding of.
+	 *
+	 * @return string Adapted content.
+	 */
+	protected function adapt_encoding( $markup ) {
+		$encoding = self::UNKNOWN_ENCODING;
+
+		if ( function_exists( 'mb_detect_encoding' ) ) {
+			$encoding = mb_detect_encoding( $markup, self::ENCODING_DETECTION_ORDER, true );
+		}
+
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$markup = mb_convert_encoding( $markup, 'HTML-ENTITIES', $encoding );
+		}
+
+		return $markup;
+	}
+
+	/**
 	 * Loads a full HTML document and returns a DOMDocument instance.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $string Input string.
 	 * @param int    $options Optional. Specify additional Libxml parameters.
 	 *
 	 * @return DOMDocument DOMDocument instance.
 	 */
-	private function load_html( $string, $options = 0 ) {
+	protected function load_html( $string, $options = 0 ) {
 		$options |= LIBXML_COMPACT;
 
 		/*
@@ -104,7 +179,7 @@ class HTML {
 
 		$libxml_previous_state = libxml_use_internal_errors( true );
 
-		$doc = new DOMDocument();
+		$doc = new DOMDocument( '1.0', self::AMP_ENCODING );
 		$doc->loadHTML( $string, $options );
 
 		libxml_clear_errors();
@@ -116,6 +191,8 @@ class HTML {
 	/**
 	 * Returns the first found element with a given tag name.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $name Tag name.
 	 *
 	 * @return DOMElement|null
@@ -126,6 +203,8 @@ class HTML {
 
 	/**
 	 * Replaces the HTML start tag to make the language attributes dynamic.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -153,12 +232,15 @@ class HTML {
 	/**
 	 * Returns the full HTML <head> markup for a given story besides boilerplate.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string Filtered content.
 	 */
 	protected function get_html_head_markup() {
 		ob_start();
 		?>
-		<meta name="generator" content="<?php printf( 'Web Stories %s', esc_attr( WEBSTORIES_VERSION ) ); ?>" />
+		<meta name="amp-story-generator-name" content="Web Stories for WordPress" />
+		<meta name="amp-story-generator-version" content="<?php echo esc_attr( WEBSTORIES_VERSION ); ?>" />
 		<?php
 
 		/**
@@ -171,6 +253,8 @@ class HTML {
 
 	/**
 	 * Replaces markers in HTML <head> with dynamic content.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Story markup.
 	 *
@@ -192,7 +276,50 @@ class HTML {
 	}
 
 	/**
+	 * Remove <noscript> AMP boilerplate fragment from the existing markup.
+	 *
+	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
+	 * That's why we temporarily remove this fragment and re-add it later.
+	 *
+	 * @see https://github.com/ampproject/amp-wp/pull/5097
+	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $content Story markup.
+	 *
+	 * @return string Filtered content.
+	 */
+	protected function remove_noscript_amp_boilerplate( $content ) {
+		return str_replace( self::AMP_NOSCRIPT_BOILERPLATE, '', $content );
+	}
+
+	/**
+	 * Re-add <noscript> AMP boilerplate using DOMDocument.
+	 *
+	 * The libxml extension prior to version 2.8.0 has issues parsing <noscript> tags in the <head>.
+	 * That's why we temporarily remove this fragment and re-add it later.
+	 *
+	 * @see https://github.com/ampproject/amp-wp/pull/5097
+	 * @see http://xmlsoft.org/news.html
+	 *
+	 * @return void
+	 */
+	protected function add_noscript_amp_boilerplate() {
+		$fragment = $this->document->createDocumentFragment();
+		$fragment->appendXml( self::AMP_NOSCRIPT_BOILERPLATE );
+
+		$head = $this->get_element_by_tag_name( 'head' );
+
+		if ( $head ) {
+			$head->appendChild( $fragment );
+		}
+	}
+
+	/**
 	 * Replaces the placeholder of publisher logo in the content.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -214,6 +341,8 @@ class HTML {
 	/**
 	 * Adds square, and landscape poster images to the <amp-story>.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	protected function add_poster_images() {
@@ -229,10 +358,24 @@ class HTML {
 		foreach ( $poster_images as $attr => $url ) {
 			$story_element->setAttribute( $attr, esc_url( $url ) );
 		}
+
+		// Without a poster, a story becomes invalid AMP.
+		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
+		// preventing errors from showing up in GSC and other tools.
+		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
+			/* @var DOMElement $html The <html> element */
+			$html = $this->get_element_by_tag_name( 'html' );
+
+			if ( $html ) {
+				$html->removeAttribute( 'amp' );
+			}
+		}
 	}
 
 	/**
 	 * Print amp-analytics script.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -245,15 +388,15 @@ class HTML {
 		/* @var DOMElement $head The <head> element. */
 		$head = $this->get_element_by_tag_name( 'head' );
 
-		if ( ! $head ) {
-			return;
+		if ( $head ) {
+			$head->appendChild( $script );
 		}
-
-		$head->appendChild( $this->document->importNode( $script, true ) );
 	}
 
 	/**
 	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -267,7 +410,7 @@ class HTML {
 
 		ob_start();
 
-		do_action( 'web_stories_insert_analytics_configuration' );
+		do_action( 'web_stories_print_analytics' );
 
 		$output = (string) ob_get_clean();
 
@@ -278,7 +421,7 @@ class HTML {
 		$fragment = $this->document->createDocumentFragment();
 		$fragment->appendXml( $output );
 
-		$story_element->appendChild( $this->document->importNode( $fragment, true ) );
+		$story_element->appendChild( $fragment );
 
 		/*
 		 * $fragment could contain anything (amp-analytics, amp-pixel, etc.).
@@ -291,6 +434,8 @@ class HTML {
 	/**
 	 * Get story meta images.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string[] Images.
 	 */
 	protected function get_poster_images() {
@@ -299,10 +444,6 @@ class HTML {
 			'poster-square-src'    => $this->story->get_poster_square(),
 			'poster-landscape-src' => $this->story->get_poster_landscape(),
 		];
-
-		if ( ! $images['poster-portrait-src'] ) {
-			$images['poster-portrait-src'] = plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE );
-		}
 
 		return array_filter( $images );
 	}

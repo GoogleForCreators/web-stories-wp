@@ -29,7 +29,7 @@
 /**
  * @typedef {Object} Category
  * @property {string} id category id
- * @property {string} displayName the name of the category
+ * @property {string} label the name of the category
  */
 
 /**

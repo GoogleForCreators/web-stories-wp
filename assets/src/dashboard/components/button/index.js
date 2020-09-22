@@ -96,6 +96,10 @@ export const DefaultButton = styled(StyledButton)`
 const CtaButton = styled(StyledButton)`
   background-color: ${({ theme }) => theme.colors.bluePrimary};
   opacity: 1;
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) => theme.borders.action};
+  }
 `;
 
 const SecondaryButton = styled(StyledButton)`

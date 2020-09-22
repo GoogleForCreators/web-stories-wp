@@ -76,7 +76,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 	 */
 	public function test_get_items_format() {
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( 'GET', '/web-stories/v1/media' );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
 		$request->set_param( 'context', 'edit' );
 		$request->set_param( '_web_stories_envelope', true );
 		$response = rest_get_server()->dispatch( $request );

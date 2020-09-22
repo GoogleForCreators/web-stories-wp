@@ -35,7 +35,7 @@ export const MoreVerticalButton = styled.button`
   border: none;
   background: transparent;
   padding: 0 8px;
-  opacity: ${({ menuOpen }) => (menuOpen ? 1 : 0)};
+  opacity: ${({ menuOpen, isVisible }) => (menuOpen || isVisible ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
   color: ${({ theme }) => theme.colors.gray900};
@@ -59,6 +59,7 @@ const MenuContainer = styled.div`
     margin: 0; /* 0 out margin that is needed by default on other instances of popover menus */
   }
 `;
+
 MenuContainer.propTypes = {
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
 };
@@ -70,6 +71,8 @@ export default function StoryMenu({
   story,
   verticalAlign,
   menuItems,
+  itemActive,
+  tabIndex,
 }) {
   const containerRef = useRef(null);
 
@@ -85,7 +88,9 @@ export default function StoryMenu({
   return (
     <MenuContainer ref={containerRef} verticalAlign={verticalAlign}>
       <MoreVerticalButton
+        tabIndex={tabIndex}
         menuOpen={isPopoverMenuOpen}
+        isVisible={itemActive}
         aria-label="More Options"
         onClick={() => onMoreButtonSelected(isPopoverMenuOpen ? -1 : story.id)}
       >
@@ -101,6 +106,8 @@ export default function StoryMenu({
 }
 
 StoryMenu.propTypes = {
+  itemActive: PropTypes.bool,
+  tabIndex: PropTypes.number,
   story: StoryPropType,
   onMoreButtonSelected: PropTypes.func.isRequired,
   onMenuItemSelected: PropTypes.func.isRequired,

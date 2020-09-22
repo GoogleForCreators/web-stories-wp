@@ -42,6 +42,8 @@ class Template_Post_Type {
 	/**
 	 * Registers the post type for story templates.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {

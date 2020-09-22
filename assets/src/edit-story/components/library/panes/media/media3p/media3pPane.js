@@ -43,7 +43,7 @@ import useLibrary from '../../../useLibrary';
 import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import resourceList from '../../../../../utils/resourceList';
-import Media3pCategories from './media3pCategories';
+import { PillGroup } from '../../shared';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -73,6 +73,7 @@ const ProviderMediaCategoriesWrapper = styled.div`
   flex-direction: column;
   height: 100%;
   min-height: 100px;
+  max-width: 100%;
   top: 0;
   left: 0;
   &.provider-selected {
@@ -102,10 +103,10 @@ function Media3pPane(props) {
    */
   const insertMediaElement = useCallback(
     (resource, thumbnailURL) => {
-      resourceList[resource.id] = {
+      resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
-      };
+      });
       insertElement(resource.type, { resource });
     },
     [insertElement]
@@ -178,11 +179,11 @@ function Media3pPane(props) {
         id={`provider-bottom-wrapper-${providerType}`}
       >
         {PROVIDERS[providerType].supportsCategories && (
-          <Media3pCategories
-            categories={state.categories.categories}
-            selectedCategoryId={state.categories.selectedCategoryId}
-            selectCategory={actions.selectCategory}
-            deselectCategory={actions.deselectCategory}
+          <PillGroup
+            items={state.categories.categories}
+            selectedItemId={state.categories.selectedCategoryId}
+            selectItem={actions.selectCategory}
+            deselectItem={actions.deselectCategory}
           />
         )}
         <MediaSubheading

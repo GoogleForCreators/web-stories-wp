@@ -17,29 +17,15 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { COMPACT_THUMB_WIDTH, COMPACT_THUMB_HEIGHT } from '../layout';
 
-function CompactIndicatorWithRef({ onClick, isActive, ariaLabel, role }, ref) {
-  return (
-    <Indicator
-      onClick={onClick}
-      isActive={isActive}
-      aria-label={ariaLabel}
-      role={role}
-      ref={ref}
-    />
-  );
-}
-
-const Indicator = styled.button`
+const CompactIndicator = styled.button`
   display: block;
   width: ${COMPACT_THUMB_WIDTH}px;
   height: ${COMPACT_THUMB_HEIGHT}px;
@@ -49,6 +35,11 @@ const Indicator = styled.button`
   border-radius: 6px;
   background: ${({ isActive, theme }) =>
     isActive ? theme.colors.selection : 'rgba(255, 255, 255, 0.28)'};
+
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.primary};
+  }
+
   ${({ isActive, isInteractive, theme }) =>
     !isActive &&
     isInteractive &&
@@ -59,16 +50,5 @@ const Indicator = styled.button`
       }
     `}
 `;
-
-const CompactIndicator = forwardRef(CompactIndicatorWithRef);
-
-CompactIndicator.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  isActive: PropTypes.bool,
-  ariaLabel: PropTypes.string.isRequired,
-  role: PropTypes.string,
-};
-
-CompactIndicatorWithRef.propTypes = CompactIndicator.propTypes;
 
 export default CompactIndicator;

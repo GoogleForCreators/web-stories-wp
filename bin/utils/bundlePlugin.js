@@ -17,19 +17,14 @@
 /**
  * External dependencies
  */
-import { execSync } from 'child_process';
+import { dirname } from 'path';
 
 /**
  * Internal dependencies
  */
 import generateZipFile from './generateZipFile.js';
-import copyFiles from './copyFiles.js';
 import deleteExistingZipFiles from './deleteExistingZipFiles.js';
 import getCurrentVersionNumber from './getCurrentVersionNumber.js';
-import getIgnoredFiles from './getIgnoredFiles.js';
-
-const composerArgs =
-  '--optimize-autoloader --no-interaction --prefer-dist --no-suggest --quiet';
 
 /**
  * Main function to bundle the plugin.
@@ -38,56 +33,22 @@ const composerArgs =
  * @param {boolean} [composer=false] Create Composer-ready ZIP file without PHP autoloader.
  * @param {string|boolean} zip Whether a ZIP file should be generated. Pass a string to set a custom file name.
  * @param {boolean} [clean] Whether to delete existing ZIP file.
- * @param {boolean} [cdn] Whether to use a CDN for assets or not.
  * @return {string} Path to the build directory or ZIP file.
  */
-function bundlePlugin(
-  source,
-  composer = false,
-  zip = false,
-  clean = false,
-  cdn = false
-) {
+function bundlePlugin(source, composer = false, zip = true, clean = false) {
   const pluginFile = `${source}/web-stories.php`;
-  const buildDir = source + '/build';
-  const pluginBuildDir = buildDir + '/web-stories';
-  const pluginBuildDirPath = 'build/web-stories';
 
-  if (!composer) {
-    execSync(`composer update --no-dev ${composerArgs}`);
+  if (clean) {
+    deleteExistingZipFiles(dirname(source));
   }
 
-  const ignoredFiles = getIgnoredFiles(source);
-  if (composer) {
-    ignoredFiles.push('vendor/');
-  }
-  if (cdn) {
-    ignoredFiles.push('assets/images/templates/');
-    ignoredFiles.push('assets/images/plugin-activation/');
-  }
-  copyFiles(source, pluginBuildDirPath, ignoredFiles);
-
-  if (!composer) {
-    execSync(
-      `composer update ${composerArgs}; git checkout composer.lock --quiet; composer install ${composerArgs}`
-    );
-  }
-
-  if (zip) {
-    if (clean) {
-      deleteExistingZipFiles(buildDir);
-    }
-
-    const currentVersion = getCurrentVersionNumber(pluginFile, true);
-    const defaultZipName = !composer
-      ? `web-stories-${currentVersion}.zip`
-      : `web-stories-${currentVersion}-composer.zip`;
-    const zipName = zip === true ? defaultZipName : zip;
-    generateZipFile(pluginBuildDir, zipName);
-    return `${pluginBuildDirPath}/${zipName}`;
-  }
-
-  return pluginBuildDirPath;
+  const currentVersion = getCurrentVersionNumber(pluginFile, true);
+  const defaultZipName = !composer
+    ? `web-stories-${currentVersion}.zip`
+    : `web-stories-${currentVersion}-composer.zip`;
+  const zipName = zip === true ? defaultZipName : zip;
+  generateZipFile(source, zipName);
+  return `${dirname(source)}/${zipName}`;
 }
 
 export default bundlePlugin;

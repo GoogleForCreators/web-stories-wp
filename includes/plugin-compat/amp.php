@@ -33,9 +33,27 @@ if ( ! function_exists( '\is_amp_endpoint' ) ) {
 	 * Polyfill to ensure compatibility with plugins checking for AMP
 	 * when the AMP plugin itself is not available.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
 	 */
 	function is_amp_endpoint() {
 		return is_singular( Story_Post_Type::POST_TYPE_SLUG );
+	}
+}
+
+if ( ! function_exists( '\amp_is_request' ) ) {
+	/**
+	 * Determine whether the current response being served as AMP.
+	 *
+	 * Polyfill to ensure compatibility with plugins checking for AMP
+	 * when the AMP plugin itself is not available.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool Whether it is singular story post (and thus an AMP endpoint).
+	 */
+	function amp_is_request() {
+		return is_amp_endpoint();
 	}
 }

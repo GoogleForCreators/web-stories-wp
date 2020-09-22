@@ -20,7 +20,6 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import { useLayoutEffect, useMemo, useRef, useState, useCallback } from 'react';
-import { useFeatures } from 'flagged';
 
 /**
  * WordPress dependencies
@@ -35,7 +34,6 @@ import {
   LeftArrow,
   RightArrow,
   GridView as GridViewButton,
-  Keyboard as KeyboardShortcutsButton,
   Plain,
 } from '../../button';
 import {
@@ -57,9 +55,9 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
-
 import useCanvas from '../useCanvas';
 import WithTooltip from '../../tooltip';
+import KeyboardShortcutsMenu from '../../keyboardShortcutsMenu';
 import { ToggleButton } from '../../form';
 import { SafeZone } from '../../../icons';
 import CompactIndicator from './compactIndicator';
@@ -90,6 +88,21 @@ const NavArea = styled(Area)`
 `;
 
 const MenuArea = styled(Area).attrs({ area: 'menu' })``;
+
+const EditorVersion = styled.div`
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  margin-left: 14px;
+  margin-bottom: 10px;
+  pointer-events: none;
+  font-size: ${({ theme }) => theme.fonts.version.size};
+  font-family: ${({ theme }) => theme.fonts.version.family};
+  line-height: ${({ theme }) => theme.fonts.version.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.version.letterSpacing};
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+`;
 
 const PlainStyled = styled(Plain)`
   background-color: ${({ theme }) => rgba(theme.colors.fg.white, 0.1)};
@@ -242,17 +255,17 @@ function Carousel() {
       actions: { setCurrentPage, arrangePage },
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
-  const { isRTL } = useConfig();
+  const { isRTL, version } = useConfig();
   const { showSafeZone, setShowSafeZone } = useCanvas(
     ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
       showSafeZone,
       setShowSafeZone,
     })
   );
-  const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
+
   const listRef = useRef(null);
   const pageRefs = useRef([]);
   const wrapperRef = useRef(null);
@@ -420,10 +433,11 @@ function Carousel() {
                 )}
                 <ReorderablePage position={index}>
                   <Page
+                    tabIndex={isCurrentPage && isInteractive ? 0 : -1}
                     onClick={handleClickPage(page)}
                     role="option"
                     data-page-id={page.id}
-                    ariaLabel={
+                    aria-label={
                       isCurrentPage
                         ? sprintf(
                             /* translators: %s: page number. */
@@ -466,16 +480,9 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            {showKeyboardShortcutsButton && (
-              <OverflowButtons>
-                <KeyboardShortcutsButton
-                  width="24"
-                  height="24"
-                  isDisabled
-                  aria-label={__('Keyboard Shortcuts', 'web-stories')}
-                />
-              </OverflowButtons>
-            )}
+            <OverflowButtons>
+              <KeyboardShortcutsMenu />
+            </OverflowButtons>
             <WithTooltip
               title={
                 showSafeZone
@@ -507,6 +514,13 @@ function Carousel() {
           </MenuIconsWrapper>
         </MenuArea>
       </Wrapper>
+      <EditorVersion>
+        {sprintf(
+          /* translators: %s: editor version. */
+          __('Version %s', 'web-stories'),
+          version
+        )}
+      </EditorVersion>
       <Modal
         open={isGridViewOpen}
         onClose={closeModal}

@@ -44,7 +44,7 @@ import {
   TableBody,
   TableCell,
   TableDateHeaderCell,
-  TableHeader,
+  StickyTableHeader,
   TablePreviewCell,
   TablePreviewHeaderCell,
   TableRow,
@@ -55,15 +55,19 @@ import {
   MoreVerticalButton,
   InlineInputForm,
   Paragraph2,
+  useLayoutContext,
 } from '../../../components';
 import {
   ORDER_BY_SORT,
   SORT_DIRECTION,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-  STORY_CONTEXT_MENU_ACTIONS,
 } from '../../../constants';
-import { FULLBLEED_RATIO } from '../../../constants/pageStructure';
+import {
+  FULLBLEED_RATIO,
+  DASHBOARD_TOP_MARGIN,
+  DEFAULT_DASHBOARD_TOP_SPACE,
+} from '../../../constants/pageStructure';
 import PreviewErrorBoundary from '../../../components/previewErrorBoundary';
 import {
   ArrowAlphaAscending as ArrowAlphaAscendingSvg,
@@ -71,6 +75,7 @@ import {
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
 import { getRelativeDisplayDate } from '../../../utils/';
+import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 const ListView = styled.div`
   width: 100%;
@@ -116,6 +121,18 @@ const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
   cursor: pointer;
 `;
 
+const SelectableParagraph = styled(Paragraph2).attrs({
+  tabIndex: 0,
+  onFocus: onFocusSelectAll,
+  onBlur: onBlurDeselectAll,
+})``;
+
+const StyledTableRow = styled(TableRow)`
+  &:hover ${MoreVerticalButton}, &:focus-within ${MoreVerticalButton} {
+    opacity: 1;
+  }
+`;
+
 const TitleTableCellContainer = styled.div`
   display: flex;
   align-items: center;
@@ -135,9 +152,18 @@ const toggleSortLookup = {
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
 
-const titleFormatted = (rawTitle) => {
+function titleFormatted(rawTitle) {
   return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-};
+}
+
+function onFocusSelectAll(e) {
+  window.getSelection().selectAllChildren(e.target);
+}
+
+function onBlurDeselectAll() {
+  window.getSelection().removeAllRanges();
+}
+
 export default function StoryListView({
   handleSortChange,
   handleSortDirectionChange,
@@ -151,6 +177,15 @@ export default function StoryListView({
   users,
   dateSettings,
 }) {
+  const {
+    state: { squishContentHeight },
+  } = useLayoutContext();
+
+  // get sticky position from the squishContentHeight (header area),
+  // subtract top margin of header which is only relevant until scrolling and the fixed table header is on scroll & add default top padding.
+  const stickyTopPosition =
+    squishContentHeight - DASHBOARD_TOP_MARGIN + DEFAULT_DASHBOARD_TOP_SPACE;
+
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
       if (newStorySort !== storySort) {
@@ -171,10 +206,11 @@ export default function StoryListView({
     },
     [onSortTitleSelected]
   );
+
   return (
     <ListView data-testid="story-list-view">
       <Table>
-        <TableHeader>
+        <StickyTableHeader top={stickyTopPosition}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
@@ -254,72 +290,66 @@ export default function StoryListView({
             </TableDateHeaderCell>
             {storyStatus !== STORY_STATUS.DRAFT && <TableStatusHeaderCell />}
           </TableRow>
-        </TableHeader>
+        </StickyTableHeader>
         <TableBody>
-          {stories.map((story) => {
-            const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
-              if (
-                menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK
-              ) {
-                return { ...menuItem, url: story.link };
-              }
-              return menuItem;
-            });
-
-            return (
-              <TableRow key={`story-${story.id}`}>
-                <TablePreviewCell>
-                  <PreviewContainer>
-                    <PreviewErrorBoundary>
-                      <PreviewPage page={story.pages[0]} pageSize={pageSize} />
-                    </PreviewErrorBoundary>
-                  </PreviewContainer>
-                </TablePreviewCell>
-                <TableCell>
-                  <TitleTableCellContainer>
-                    {renameStory.id === story.id ? (
-                      <InlineInputForm
-                        onEditComplete={(newTitle) =>
-                          renameStory.handleOnRenameStory(story, newTitle)
-                        }
-                        onEditCancel={renameStory.handleCancelRename}
-                        value={story.title}
-                        id={story.id}
-                        label={__('Rename story', 'web-stories')}
+          {stories.map((story) => (
+            <StyledTableRow key={`story-${story.id}`}>
+              <TablePreviewCell>
+                <PreviewContainer>
+                  <PreviewErrorBoundary>
+                    <PreviewPage page={story.pages[0]} pageSize={pageSize} />
+                  </PreviewErrorBoundary>
+                </PreviewContainer>
+              </TablePreviewCell>
+              <TableCell>
+                <TitleTableCellContainer>
+                  {renameStory.id === story.id ? (
+                    <InlineInputForm
+                      onEditComplete={(newTitle) =>
+                        renameStory.handleOnRenameStory(story, newTitle)
+                      }
+                      onEditCancel={renameStory.handleCancelRename}
+                      value={story.title}
+                      id={story.id}
+                      label={__('Rename story', 'web-stories')}
+                    />
+                  ) : (
+                    <>
+                      <SelectableParagraph>
+                        {titleFormatted(story.title)}
+                      </SelectableParagraph>
+                      <StoryMenu
+                        onMoreButtonSelected={storyMenu.handleMenuToggle}
+                        contextMenuId={storyMenu.contextMenuId}
+                        onMenuItemSelected={storyMenu.handleMenuItemSelected}
+                        story={story}
+                        menuItems={generateStoryMenu({
+                          menuItems: storyMenu.menuItems,
+                          story,
+                        })}
+                        verticalAlign="center"
                       />
-                    ) : (
-                      <>
-                        <Paragraph2>{titleFormatted(story.title)}</Paragraph2>
-                        <StoryMenu
-                          onMoreButtonSelected={storyMenu.handleMenuToggle}
-                          contextMenuId={storyMenu.contextMenuId}
-                          onMenuItemSelected={storyMenu.handleMenuItemSelected}
-                          story={story}
-                          menuItems={storyMenuItems}
-                          verticalAlign="center"
-                        />
-                      </>
-                    )}
-                  </TitleTableCellContainer>
-                </TableCell>
-                <TableCell>{users[story.author]?.name || '—'}</TableCell>
-                <TableCell>
-                  {getRelativeDisplayDate(story.created, dateSettings)}
-                </TableCell>
-                <TableCell>
-                  {getRelativeDisplayDate(story.modified, dateSettings)}
-                </TableCell>
-                {storyStatus !== STORY_STATUS.DRAFT && (
-                  <TableStatusCell>
-                    {story.status === STORY_STATUS.PUBLISH &&
-                      __('Published', 'web-stories')}
-                    {story.status === STORY_STATUS.FUTURE &&
-                      __('Scheduled', 'web-stories')}
-                  </TableStatusCell>
-                )}
-              </TableRow>
-            );
-          })}
+                    </>
+                  )}
+                </TitleTableCellContainer>
+              </TableCell>
+              <TableCell>{users[story.author]?.name || '—'}</TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.created, dateSettings)}
+              </TableCell>
+              <TableCell>
+                {getRelativeDisplayDate(story.modified, dateSettings)}
+              </TableCell>
+              {storyStatus !== STORY_STATUS.DRAFT && (
+                <TableStatusCell>
+                  {story.status === STORY_STATUS.PUBLISH &&
+                    __('Published', 'web-stories')}
+                  {story.status === STORY_STATUS.FUTURE &&
+                    __('Scheduled', 'web-stories')}
+                </TableStatusCell>
+              )}
+            </StyledTableRow>
+          ))}
         </TableBody>
       </Table>
     </ListView>

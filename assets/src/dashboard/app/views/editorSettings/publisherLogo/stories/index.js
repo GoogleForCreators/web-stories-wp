@@ -62,8 +62,7 @@ export const _default = () => {
     });
   }, []);
 
-  const handleRemoveLogo = useCallback((e, deleteLogo) => {
-    e.preventDefault();
+  const handleRemoveLogo = useCallback((deleteLogo) => {
     action('onDelete fired')(deleteLogo);
 
     setUploadedContent((existingUploadedContent) => {

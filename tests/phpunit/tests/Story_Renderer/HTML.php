@@ -35,8 +35,6 @@ class HTML extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render
-	 * @covers ::__construct
-	 * @covers ::string_to_doc
 	 */
 	public function test_render() {
 		$post = self::factory()->post->create_and_get(
@@ -59,7 +57,7 @@ class HTML extends \WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.png"></amp-story></body></html>',
 			]
 		);
 
@@ -90,7 +88,8 @@ class HTML extends \WP_UnitTestCase {
 		$this->assertNotContains( 'BAR', $actual );
 		$this->assertNotContains( $start_tag, $actual );
 		$this->assertNotContains( $end_tag, $actual );
-		$this->assertContains( '<meta name="generator" content="Web Stories', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-name" content="Web Stories for WordPress"', $actual );
+		$this->assertContains( '<meta name="amp-story-generator-version" content="', $actual );
 		$this->assertSame( 1, did_action( 'web_stories_story_head' ) );
 	}
 
@@ -160,7 +159,7 @@ class HTML extends \WP_UnitTestCase {
 	 * @covers ::add_poster_images
 	 * @covers ::get_poster_images
 	 */
-	public function test_add_poster_images_no_featured_image() {
+	public function test_add_poster_images_no_fallback_image_added() {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -170,9 +169,25 @@ class HTML extends \WP_UnitTestCase {
 
 		$rendered = $this->setup_renderer( $post );
 
-		$this->assertContains( 'poster-portrait-src=', $rendered );
+		$this->assertNotContains( 'poster-portrait-src=', $rendered );
 		$this->assertNotContains( 'poster-square-src=', $rendered );
 		$this->assertNotContains( 'poster-landscape-src=', $rendered );
+	}
+
+	/**
+	 * @covers ::add_poster_images
+	 */
+	public function test_add_poster_images_no_poster_no_amp() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$rendered = $this->setup_renderer( $post );
+
+		$this->assertNotContains( 'amp=', $rendered );
 	}
 
 	/**
@@ -191,11 +206,11 @@ class HTML extends \WP_UnitTestCase {
 			echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
 		};
 
-		add_action( 'web_stories_insert_analytics_configuration', $function );
+		add_action( 'web_stories_print_analytics', $function );
 
 		$actual = $this->setup_renderer( $post );
 
-		remove_action( 'web_stories_insert_analytics_configuration', $function );
+		remove_action( 'web_stories_print_analytics', $function );
 
 		$this->assertContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
 		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body>', $actual );
@@ -216,6 +231,23 @@ class HTML extends \WP_UnitTestCase {
 		$actual = $this->setup_renderer( $post );
 
 		$this->assertNotContains( '<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics">', $actual );
+	}
+
+	/**
+	 * @covers ::remove_noscript_amp_boilerplate
+	 * @covers ::add_noscript_amp_boilerplate
+	 */
+	public function test_removes_and_reinserts_noscript_amp_boilerplate() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head><noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$actual = $this->setup_renderer( $post );
+
+		$this->assertContains( '<noscript><style amp-boilerplate="">body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>', $actual );
 	}
 
 	/**

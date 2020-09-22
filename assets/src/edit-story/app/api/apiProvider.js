@@ -106,7 +106,7 @@ function APIProvider({ children }) {
   );
 
   const getMedia = useCallback(
-    ({ mediaType, searchTerm, pagingNum }) => {
+    ({ mediaType, searchTerm, pagingNum, cacheBust }) => {
       let apiPath = media;
       const perPage = 100;
       apiPath = addQueryArgs(apiPath, {
@@ -122,6 +122,15 @@ function APIProvider({ children }) {
 
       if (searchTerm) {
         apiPath = addQueryArgs(apiPath, { search: searchTerm });
+      }
+
+      // cacheBusting is due to the preloading logic preloading and caching
+      // some requests. (see preload_paths in Dashboard.php)
+      // Adding cache_bust forces the path to look different from the preloaded
+      // paths and hence skipping the cache. (cache_bust itself doesn't do
+      // anything)
+      if (cacheBust) {
+        apiPath = addQueryArgs(apiPath, { cache_bust: true });
       }
 
       return apiFetch({ path: apiPath }).then((response) => {

@@ -25,7 +25,7 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { Layout } from '../../../../../components';
+import { Layout, ToastProvider } from '../../../../../components';
 import {
   STORY_SORT_OPTIONS,
   SORT_DIRECTION,
@@ -82,6 +82,10 @@ const storyActions = {
   handlePreviewStory: action('handle preview story selected'),
 };
 
+const longerListOfStories = formattedStoriesArray
+  .concat(formattedStoriesArray)
+  .concat(formattedStoriesArray);
+
 const defaultProps = {
   allPagesFetched: false,
   filter: filter,
@@ -89,7 +93,7 @@ const defaultProps = {
   page: page,
   search: search,
   sort: sort,
-  stories: formattedStoriesArray,
+  stories: longerListOfStories,
   storyActions: storyActions,
   users: formattedUsersObject,
   view: view,
@@ -106,20 +110,24 @@ export const _default = () => {
 
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content {...defaultProps} view={{ ...view, pageSize }} />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content {...defaultProps} view={{ ...view, pageSize }} />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
     </FlagsProvider>
   );
 };
 
 export const NoStories = () => (
   <Layout.Provider>
-    <StorybookLayoutContainer>
-      <Content {...defaultProps} stories={[]} />
-    </StorybookLayoutContainer>
+    <ToastProvider>
+      <StorybookLayoutContainer>
+        <Content {...defaultProps} stories={[]} />
+      </StorybookLayoutContainer>
+    </ToastProvider>
   </Layout.Provider>
 );
 
@@ -129,15 +137,17 @@ export const AllDataFetched = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            allPagesFetched={true}
-            view={{ ...view, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content
+              {...defaultProps}
+              allPagesFetched={true}
+              view={{ ...view, pageSize }}
+            />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
     </FlagsProvider>
   );
 };
@@ -148,44 +158,50 @@ export const AllDataFetchedAsList = () => {
   });
   return (
     <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            allPagesFetched={true}
-            view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content
+              {...defaultProps}
+              allPagesFetched={true}
+              view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
+            />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
     </FlagsProvider>
   );
 };
 
 export const _StoriesViewGrid = () => (
   <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <StoriesView
-      filterValue={STORY_STATUS.ALL}
-      sort={sort}
-      storyActions={storyActions}
-      stories={formattedStoriesArray}
-      users={formattedUsersObject}
-      view={view}
-      dateSettings={fillerDateSettingsObject}
-    />
+    <ToastProvider>
+      <StoriesView
+        filterValue={STORY_STATUS.ALL}
+        sort={sort}
+        storyActions={storyActions}
+        stories={formattedStoriesArray}
+        users={formattedUsersObject}
+        view={view}
+        dateSettings={fillerDateSettingsObject}
+      />
+    </ToastProvider>
   </FlagsProvider>
 );
 
 export const _StoriesViewList = () => (
   <FlagsProvider features={{ enableInProgressStoryActions: false }}>
-    <StoriesView
-      filterValue={STORY_STATUS.ALL}
-      sort={sort}
-      storyActions={storyActions}
-      stories={formattedStoriesArray}
-      users={formattedUsersObject}
-      view={{ ...view, style: VIEW_STYLE.LIST }}
-      dateSettings={fillerDateSettingsObject}
-    />
+    <ToastProvider>
+      <StoriesView
+        filterValue={STORY_STATUS.ALL}
+        sort={sort}
+        storyActions={storyActions}
+        stories={formattedStoriesArray}
+        users={formattedUsersObject}
+        view={{ ...view, style: VIEW_STYLE.LIST }}
+        dateSettings={fillerDateSettingsObject}
+      />
+    </ToastProvider>
   </FlagsProvider>
 );
 

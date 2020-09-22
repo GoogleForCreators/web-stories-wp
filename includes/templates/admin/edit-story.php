@@ -73,9 +73,9 @@ wp_add_inline_script(
 );
 
 require_once ABSPATH . 'wp-admin/admin-header.php';
-
+require_once __DIR__ . '/error-no-js.php';
 ?>
 
-<div id="edit-story">
+<div id="edit-story" class="hide-if-no-js">
 	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
 </div>

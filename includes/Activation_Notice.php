@@ -51,6 +51,8 @@ class Activation_Notice {
 	/**
 	 * Constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Activation_Flag $activation_flag Activation flag instance.
 	 */
 	public function __construct( Activation_Flag $activation_flag ) {
@@ -59,6 +61,8 @@ class Activation_Notice {
 
 	/**
 	 * Initializes the plugin activation notice.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -71,7 +75,10 @@ class Activation_Notice {
 	/**
 	 * Enqueues assets for the plugin activation notice.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $hook_suffix The current admin page.
+	 *
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
@@ -105,6 +112,8 @@ class Activation_Notice {
 	/**
 	 * Returns script settings as an array.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array Script settings.
 	 */
 	protected function get_script_settings() {
@@ -127,13 +136,21 @@ class Activation_Notice {
 			)
 		);
 
-		$demo_story_url = 'https://google.github.io/web-stories-wp/beta/tips.html';
+		$demo_story_url = admin_url(
+			add_query_arg(
+				[
+					'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
+					'web-stories-demo' => 1,
+				],
+				'post-new.php'
+			)
+		);
 
 		return [
 			'id'         => 'web-stories-plugin-activation-notice',
 			'config'     => [
 				'isRTL'        => is_rtl(),
-				'assetsURL'    => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'       => trailingslashit( WEBSTORIES_CDN_URL ),
 				'demoStoryURL' => $demo_story_url,
 				'newStoryURL'  => $new_story_url,
 				'dashboardURL' => $dashboard_url,
@@ -144,6 +161,8 @@ class Activation_Notice {
 
 	/**
 	 * Renders the plugin activation notice.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -169,6 +188,8 @@ class Activation_Notice {
 
 	/**
 	 * Determines whether we're currently on the Plugins page or not.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix Current hook_suffix.
 	 *

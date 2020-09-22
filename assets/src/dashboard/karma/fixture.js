@@ -49,11 +49,13 @@ const defaultConfig = {
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',
   wpListURL: 'http://localhost:8899/wp-admin/edit.php?post_type=web-story',
-  assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories//assets',
+  assetsURL: 'http://localhost:8899/wp-content/plugins/web-stories/assets',
+  cdnURL: 'https://replaceme.com',
   version: '1.0.0-alpha.9',
   api: {
     stories: '/web-stories/v1/web-story',
     users: '/wp/v2/users',
+    currentUser: '/wp/v2/users/me',
     fonts: '/web-stories/v1/fonts',
     settings: '/wp/v2/settings',
   },
@@ -189,6 +191,7 @@ export default class Fixture {
 
   restore() {
     window.location.hash = '#';
+    localStorage.clear();
   }
 
   /**

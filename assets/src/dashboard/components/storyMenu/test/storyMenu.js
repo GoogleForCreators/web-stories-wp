@@ -20,13 +20,13 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
+import { renderWithProviders } from '../../../testUtils';
 import StoryMenu from '../';
 import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 
 describe('StoryMenu', () => {
   it('should render a button by default', () => {
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <StoryMenu
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}
@@ -43,7 +43,7 @@ describe('StoryMenu', () => {
   it('should get access to menu on button click', () => {
     const mockOnMoreButtonSelected = jest.fn();
 
-    const { getByRole } = renderWithTheme(
+    const { getByRole } = renderWithProviders(
       <StoryMenu
         onMoreButtonSelected={mockOnMoreButtonSelected}
         contextMenuId={1}
@@ -61,7 +61,7 @@ describe('StoryMenu', () => {
   it('should call onMenuItemSelected when menu item is clicked', () => {
     const mockMenuItemSelected = jest.fn();
 
-    const { getAllByRole } = renderWithTheme(
+    const { getAllByRole } = renderWithProviders(
       <StoryMenu
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}

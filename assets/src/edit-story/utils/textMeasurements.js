@@ -24,6 +24,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import { PAGE_HEIGHT } from '../constants';
 import { TextOutputWithUnits } from '../elements/text/output';
+import { calcFontMetrics } from '../elements/text/util';
+import { dataPixels } from '../units/dimensions';
 
 const MEASURER_STYLES = {
   boxSizing: 'border-box',
@@ -55,7 +57,7 @@ const LAST_ELEMENT = '__WEB_STORIES_LASTEL__';
 export function calculateTextHeight(element, width) {
   const measurer = getOrCreateMeasurer(element);
   setStyles(measurer, { width: `${width}px`, height: null });
-  return measurer.offsetHeight;
+  return measurer.parentNode.offsetHeight;
 }
 
 export function calculateFitTextFontSize(element, width, height) {
@@ -65,18 +67,28 @@ export function calculateFitTextFontSize(element, width, height) {
   // Binomial search for the best font size.
   let minFontSize = 1;
   let maxFontSize = PAGE_HEIGHT;
+  let margin;
   while (maxFontSize - minFontSize > 1) {
-    const mid = (minFontSize + maxFontSize) / 2;
-    setStyles(measurer, { fontSize: `${mid}px` });
-    const currentHeight = measurer.scrollHeight;
-    if (currentHeight > height) {
+    const mid = dataPixels((minFontSize + maxFontSize) / 2);
+    const { marginOffset } = calcFontMetrics({ ...element, fontSize: mid });
+    margin = marginOffset;
+    setStyles(measurer, {
+      fontSize: `${mid}px`,
+      margin: `${-marginOffset / 2}px 0`,
+    });
+    const currentHeight = measurer.offsetHeight;
+    if (currentHeight - marginOffset > height) {
       maxFontSize = mid;
     } else {
       minFontSize = mid;
     }
   }
-
-  return minFontSize;
+  // This is for keeping the debug window in sync
+  setStyles(measurer, {
+    fontSize: `${minFontSize}px`,
+    margin: `${-margin / 2}px 0`,
+  });
+  return { fontSize: minFontSize, marginOffset: margin };
 }
 
 function getOrCreateMeasurer(element) {

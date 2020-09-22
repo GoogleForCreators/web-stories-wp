@@ -26,6 +26,8 @@ import { rgba } from 'polished';
  */
 import Modal from '../modal';
 
+export const TRANSITION_DURATION = 300;
+
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div`
   border-radius: 4px;
@@ -40,7 +42,8 @@ const DialogBox = styled.div`
     0px 24px 38px 3px ${({ theme }) => rgba(theme.colors.bg.black, 0.14)},
     0px 9px 46px 8px ${({ theme }) => rgba(theme.colors.bg.black, 0.12)};
   color: ${({ theme }) => rgba(theme.colors.bg.black, 0.87)};
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  transition: box-shadow ${TRANSITION_DURATION}ms cubic-bezier(0.4, 0, 0.2, 1)
+    0ms;
   background-color: ${({ theme }) => theme.colors.fg.white};
 `;
 

@@ -47,12 +47,12 @@ function ImageDisplay({ element, box }) {
   let initialSrcType = 'smallest';
   let initialSrc = getSmallestUrlForWidth(0, resource);
 
-  if (resourceList[resource.id]?.type === 'cached') {
+  if (resourceList.get(resource.id)?.type === 'cached') {
     initialSrcType = 'cached';
-    initialSrc = resourceList[resource.id].url;
+    initialSrc = resourceList.get(resource.id).url;
   }
 
-  if (resourceList[resource.id]?.type === 'fullsize' || resource.local) {
+  if (resourceList.get(resource.id)?.type === 'fullsize' || resource.local) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;
   }
@@ -72,12 +72,12 @@ function ImageDisplay({ element, box }) {
 
   useEffect(() => {
     let timeout;
-    if (resourceList[resource.id]?.type !== 'fullsize') {
+    if (resourceList.get(resource.id)?.type !== 'fullsize') {
       timeout = setTimeout(async () => {
         const preloadedImg = await preloadImage(resource.src, srcSet);
-        resourceList[resource.id] = {
+        resourceList.set(resource.id, {
           type: 'fullsize',
-        };
+        });
         setSrc(preloadedImg.currentSrc);
         setSrcType('fullsize');
       });
@@ -86,8 +86,14 @@ function ImageDisplay({ element, box }) {
     return () => clearTimeout(timeout);
   }, [resource.id, resource.src, srcSet, srcType]);
 
+  const showPlaceholder = srcType !== 'fullsize';
+
   return (
-    <MediaDisplay element={element} mediaRef={ref}>
+    <MediaDisplay
+      element={element}
+      mediaRef={ref}
+      showPlaceholder={showPlaceholder}
+    >
       <Img
         ref={ref}
         draggable={false}

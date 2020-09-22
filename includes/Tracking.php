@@ -58,6 +58,8 @@ class Tracking {
 	 *
 	 * Registers the setting in WordPress.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -70,7 +72,7 @@ class Tracking {
 				'default'           => false,
 				'show_in_rest'      => true,
 				'auth_callback'     => static function() {
-					return current_user_can( 'manage_options' );
+					return current_user_can( 'edit_user', get_current_user_id() );
 				},
 				'single'            => true,
 			]
@@ -94,6 +96,8 @@ class Tracking {
 	/**
 	 * Returns tracking settings to pass to the inline script.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array Tracking settings.
 	 */
 	public function get_settings() {
@@ -103,8 +107,6 @@ class Tracking {
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
-			'siteUrl'         => esc_url_raw( $site_url ),
-			'userIdHash'      => md5( $site_url . '|' . $current_user->ID ),
 		];
 	}
 

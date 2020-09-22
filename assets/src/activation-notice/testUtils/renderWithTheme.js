@@ -23,11 +23,11 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { darkTheme } from '../theme';
+import { theme } from '../theme';
 
 // eslint-disable-next-line react/prop-types
 const WithThemeProvider = ({ children }) => {
-  return <ThemeProvider theme={darkTheme}>{children}</ThemeProvider>;
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
 const renderWithTheme = (ui, options) =>

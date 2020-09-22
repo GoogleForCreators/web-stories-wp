@@ -32,6 +32,15 @@ import {
 import 'jest-extended';
 
 /**
+ * Internal dependencies
+ */
+import toBeValidAMP from '../matchers/toBeValidAMP';
+
+expect.extend({
+  toBeValidAMP,
+});
+
+/**
  * Environment variables
  */
 const { PUPPETEER_TIMEOUT, EXPECT_PUPPETEER_TIMEOUT } = process.env;

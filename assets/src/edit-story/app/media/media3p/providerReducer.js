@@ -61,6 +61,7 @@ function providerReducer(state = INITIAL_STATE, { type, payload }) {
       // clears out the pageToken and nextPageToken for all providers.
       return {
         ...state,
+        isMediaLoaded: false,
         pageToken: undefined,
         nextPageToken: undefined,
       };

@@ -29,8 +29,9 @@ export const KEYBOARD_USER_CLASS = `useskeyboard`;
 export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
 export const Z_INDEX = {
-  LAYOUT_SQUISHABLE: 2,
-  LAYOUT_FIXED: 3,
+  LAYOUT_SQUISHABLE: 3,
+  LAYOUT_FIXED: 5,
+  STICKY_TABLE: 2,
   POPOVER_MENU: 10,
   TYPEAHEAD_OPTIONS: 10,
   POPOVER_PANEL: 10,
@@ -79,9 +80,6 @@ export const primaryPaths = [
     value: APP_ROUTES.TEMPLATES_GALLERY,
     label: ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY],
   },
-];
-
-export const secondaryPaths = [
   {
     value: APP_ROUTES.EDITOR_SETTINGS,
     label: ROUTE_TITLES[APP_ROUTES.EDITOR_SETTINGS],
@@ -94,8 +92,8 @@ export const secondaryPaths = [
 ];
 
 export const VIEW_STYLE = {
-  GRID: 'GRID',
-  LIST: 'LIST',
+  GRID: 'grid',
+  LIST: 'list',
 };
 
 export const VIEW_STYLE_LABELS = {
@@ -106,6 +104,7 @@ export const VIEW_STYLE_LABELS = {
 export const ICON_METRICS = {
   VIEW_STYLE: { width: 17, height: 14 },
   LEFT_RIGHT_ARROW: { width: 16, height: 16 },
+  TELEMETRY_BANNER_EXIT: { width: 10, height: 10 },
 };
 
 export const DASHBOARD_VIEWS = {
@@ -126,9 +125,15 @@ export const STORIES_PER_REQUEST = 24;
 
 export const DEFAULT_DATE_FORMAT = 'Y-m-d';
 
+export const TEXT_INPUT_DEBOUNCE = 300;
+
+export const MIN_IMG_HEIGHT = 96;
+export const MIN_IMG_WIDTH = 96;
+
 export * from './components';
 export * from './direction';
 export * from './pageStructure';
 export * from './savedTemplates';
+export * from './settings';
 export * from './stories';
 export * from './templates';

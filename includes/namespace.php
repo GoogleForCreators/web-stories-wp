@@ -33,6 +33,8 @@ if (
 	/**
 	 * Displays an admin notice about why the plugin is unable to load.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	function _print_missing_build_admin_notice() {
@@ -118,11 +120,16 @@ function activate( $network_wide = false ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
+	$database_upgrader = new Database_Upgrader();
+	$database_upgrader->init();
+
 	do_action( 'web_stories_activation', $network_wide );
 }
 
 /**
  * Hook into new site when they are created and run activation hook.
+ *
+ * @since 1.0.0
  *
  * @param int|\WP_Site $site Site ID or object.
  *

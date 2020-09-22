@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
@@ -35,7 +35,7 @@ import panelContext from '../context';
 import { Arrow } from '../../../../icons';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { useContext } from '../../../../utils/context';
-import { useKeyDownEffect } from '../../../keyboard';
+import { trackEvent } from '../../../../../tracking';
 import DragHandle from './handle';
 
 function getBackgroundColor(isPrimary, isSecondary, theme) {
@@ -104,15 +104,8 @@ const Collapse = styled.button`
 `;
 
 function Toggle({ children, toggle, ...rest }) {
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  const ref = useRef();
-  useKeyDownEffect(ref, 'enter', toggle, [toggle]);
   return (
     <Collapse
-      ref={ref}
       onClick={(evt) => {
         evt.stopPropagation();
         toggle();
@@ -138,7 +131,15 @@ function Title({
   canCollapse,
 }) {
   const {
-    state: { isCollapsed, height, resizeable, panelContentId, panelTitleId },
+    state: {
+      isCollapsed,
+      height,
+      resizeable,
+      panelContentId,
+      panelTitleId,
+      panelTitleReadable,
+      ariaHidden,
+    },
     actions: {
       collapse,
       expand,
@@ -178,6 +179,13 @@ function Title({
     : __('Collapse panel', 'web-stories');
 
   const toggle = isCollapsed ? expand : collapse;
+  const onToggle = useCallback(() => {
+    toggle();
+    trackEvent('panel_toggled', 'editor', '', '', {
+      panel_id: panelTitleReadable,
+      status: isCollapsed ? 'collapsed' : 'expanded',
+    });
+  }, [panelTitleReadable, isCollapsed, toggle]);
 
   return (
     <Header
@@ -193,19 +201,21 @@ function Title({
           handleHeightChange={handleHeightChange}
           handleExpandToHeightChange={handleExpandToHeightChange}
           handleDoubleClick={resetHeight}
+          tabIndex={ariaHidden ? -1 : 0}
         />
       )}
-      <HeaderButton onClick={toggle}>
+      <HeaderButton onClick={onToggle}>
         <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
           {canCollapse && (
             <Toggle
               isCollapsed={isCollapsed}
-              toggle={toggle}
+              toggle={onToggle}
               aria-label={titleLabel}
               aria-expanded={!isCollapsed}
               aria-controls={panelContentId}
+              tabIndex={ariaHidden ? -1 : 0}
             >
               <Arrow />
             </Toggle>

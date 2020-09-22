@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { readdirSync, readFileSync } from 'fs';
-import { resolve } from 'path';
+import { resolve, basename } from 'path';
 
 describe('Raw template files', () => {
   const templates = readdirSync(
@@ -38,6 +38,32 @@ describe('Raw template files', () => {
       );
 
       expect(templateContent).not.toContain('\u2028');
+    }
+  );
+
+  // @see https://github.com/google/web-stories-wp/pull/4516
+  it.each(templates)(
+    '%s template should contain replaceable URLs',
+    (template) => {
+      const templateName = basename(template, '.json');
+      const templateContent = readFileSync(
+        resolve(
+          process.cwd(),
+          `assets/src/dashboard/templates/raw/${template}`
+        ),
+        'utf8'
+      );
+      const templateData = JSON.parse(templateContent);
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (element?.resource?.src) {
+            expect(element?.resource?.src).toStartWith(
+              `https://replaceme.com/images/templates/${templateName}`
+            );
+          }
+        }
+      }
     }
   );
 });

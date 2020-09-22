@@ -126,6 +126,8 @@ class Plugin {
 	/**
 	 * Initialize plugin functionality.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function register() {
@@ -203,6 +205,8 @@ class Plugin {
 
 	/**
 	 * Registers REST API routes.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */

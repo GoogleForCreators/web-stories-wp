@@ -61,6 +61,8 @@ class Dashboard {
 	/**
 	 * Dashboard constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Experiments $experiments Experiments instance.
 	 */
 	public function __construct( Experiments $experiments ) {
@@ -69,6 +71,8 @@ class Dashboard {
 
 	/**
 	 * Initializes the dashboard logic.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -83,6 +87,8 @@ class Dashboard {
 	/**
 	 * Returns the admin page's hook suffix.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix() {
@@ -91,6 +97,8 @@ class Dashboard {
 
 	/**
 	 * Registers the dashboard admin menu page.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -108,6 +116,8 @@ class Dashboard {
 
 	/**
 	 * Redirects to the correct Dashboard page when clicking on the top-level "Stories" menu item.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -132,6 +142,8 @@ class Dashboard {
 	/**
 	 * Preload api requests in the dashboard.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function load_stories_dashboard() {
@@ -147,6 +159,8 @@ class Dashboard {
 		 * Preload common data by specifying an array of REST API paths that will be preloaded.
 		 *
 		 * Filters the array of paths that will be preloaded.
+		 *
+		 * @since 1.0.0
 		 *
 		 * @param string[] $preload_paths Array of paths to preload.
 		 */
@@ -168,6 +182,8 @@ class Dashboard {
 	/**
 	 * Renders the dashboard page.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function render() {
@@ -176,6 +192,8 @@ class Dashboard {
 
 	/**
 	 * Enqueues dashboard scripts and styles.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
 	 *
@@ -188,7 +206,7 @@ class Dashboard {
 
 		wp_register_style(
 			'google-fonts',
-			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500|Roboto:400',
+			'https://fonts.googleapis.com/css?family=Google+Sans|Google+Sans:b|Google+Sans:500',
 			[],
 			WEBSTORIES_VERSION
 		);
@@ -208,6 +226,8 @@ class Dashboard {
 
 	/**
 	 * Get dashboard settings as an array.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -258,14 +278,16 @@ class Dashboard {
 				'editStoryURL'       => $edit_story_url,
 				'wpListURL'          => $classic_wp_list_url,
 				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
 				'version'            => WEBSTORIES_VERSION,
 				'api'                => [
-					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'     => '/web-stories/v1/media',
-					'users'     => '/wp/v2/users',
-					'fonts'     => '/web-stories/v1/fonts',
-					'templates' => '/web-stories/v1/web-story-template',
-					'settings'  => '/wp/v2/settings',
+					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'       => '/web-stories/v1/media',
+					'currentUser' => '/wp/v2/users/me',
+					'users'       => '/wp/v2/users',
+					'fonts'       => '/web-stories/v1/fonts',
+					'templates'   => '/web-stories/v1/web-story-template',
+					'settings'    => '/wp/v2/settings',
 				],
 				'maxUpload'          => $max_upload_size,
 				'maxUploadFormatted' => size_format( $max_upload_size ),
@@ -284,6 +306,8 @@ class Dashboard {
 		/**
 		 * Filters settings passed to the web stories dashboard.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $settings Array of settings passed to web stories dashboard.
 		 */
 		return apply_filters( 'web_stories_dashboard_settings', $settings );
@@ -291,6 +315,8 @@ class Dashboard {
 
 	/**
 	 * Displays a link to the Web Stories dashboard on the WordPress list table view.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -25,9 +26,12 @@ import styled from 'styled-components';
 import {
   TypographyPresets,
   StandardViewContentGutter,
+  Button,
+  TextInput,
 } from '../../../components';
 import { visuallyHiddenStyles } from '../../../utils/visuallyHiddenStyles';
 import { Link } from '../../../components/link';
+import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../../constants';
 
 export const Wrapper = styled.div`
   margin: 0 107px;
@@ -77,6 +81,13 @@ export const HelperText = styled.p`
   color: ${({ theme }) => theme.colors.gray200};
 `;
 
+export const DefaultLogoText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  margin: 0;
+  color: ${({ theme }) => theme.colors.gray200};
+  width: 100%;
+  text-align: center;
+`;
 export const TextInputHelperText = styled(HelperText)`
   padding-top: 10px;
 `;
@@ -85,6 +96,11 @@ export const FinePrintHelperText = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-top: 10px;
   color: ${({ theme }) => theme.colors.gray200};
+`;
+
+export const FormLabel = styled.span`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.gray400};
 `;
 
 export const Error = styled.p`
@@ -100,6 +116,41 @@ export const UploadedContainer = styled.div`
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   padding-bottom: 24px;
+  border: ${({ theme }) => theme.borders.transparent};
+  border-width: 2px;
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: none;
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+  }
+`;
+
+export const GridItemContainer = styled.div`
+  position: relative;
+
+  &:hover,
+  &:focus-within {
+    button {
+      opacity: 1 !important;
+    }
+  }
+`;
+
+export const GridItemButton = styled.button`
+  display: block;
+  background-color: transparent;
+  border: ${({ theme }) => theme.borders.transparent};
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  border-width: 2px;
+  padding: 0;
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+    border-width: 2px;
+    outline: none;
+  }
 `;
 
 export const Logo = styled.img`
@@ -109,14 +160,25 @@ export const Logo = styled.img`
   border-radius: 4px;
 `;
 
-export const RemoveLogoButton = styled.button`
-  position: relative;
-  left: 2px;
-  bottom: 30px;
+export const MenuContainer = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+export const LogoMenuButton = styled.button`
+  opacity: ${({ isActive, menuOpen }) => (menuOpen || isActive ? 1 : 0)};
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 24px;
   height: 24px;
   text-align: center;
-
+  padding: 0;
   color: ${({ theme }) => theme.colors.white};
   background: ${({ theme }) => theme.colors.gray700};
   border-radius: 50%;
@@ -124,10 +186,40 @@ export const RemoveLogoButton = styled.button`
   cursor: pointer;
 
   & > svg {
-    width: 100%;
-    height: 100%;
+    margin: auto;
+    padding: 2px 2px 3px 3px;
+    width: 90%;
+    height: auto;
     display: block;
   }
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+    border-width: 2px;
+    outline: none;
+  }
+`;
+
+export const SaveButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PRIMARY,
+})``;
+
+export const ErrorText = styled.p`
+  ${TypographyPresets.ExtraSmall};
+  color: ${({ theme }) => theme.colors.danger};
+  margin-left: 1em;
+  padding-top: 0.25em;
+`;
+
+export const InlineForm = styled.div`
+  display: flex;
+`;
+
+export const GoogleAnalyticsTextInput = styled(TextInput)`
+  flex: 3;
+  width: auto;
+  display: inline-block;
+  margin-right: 5px;
 `;
 
 export const VisuallyHiddenDescription = styled.span(visuallyHiddenStyles);

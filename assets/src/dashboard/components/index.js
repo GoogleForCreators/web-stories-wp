@@ -22,6 +22,7 @@ export {
   ActionLabel,
   CardPreviewContainer,
   CardTitle,
+  FocusableGridItem,
   default as CardGridItem,
 } from './cardGridItem';
 export { default as ColorList } from './colorList';
@@ -58,6 +59,7 @@ export {
   TableBody,
   TableCell,
   TableHeader,
+  StickyTableHeader,
   TableHeaderCell,
   TablePreviewCell,
   TablePreviewHeaderCell,

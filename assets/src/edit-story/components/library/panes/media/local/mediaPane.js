@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../../../../tracking';
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { useMediaPicker } from '../../../../mediaPicker';
@@ -51,18 +52,20 @@ import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
 import { DropDown } from '../../../../form';
+import { Placement } from '../../../../popup';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
 
 const FilterArea = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-top: 30px;
   padding: 0 1.5em 0 1.5em;
 `;
 
 const FILTERS = [
-  { value: '', name: __('All', 'web-stories') },
+  { value: '', name: __('All Types', 'web-stories') },
   { value: 'image', name: __('Images', 'web-stories') },
   { value: 'video', name: __('Video', 'web-stories') },
 ];
@@ -127,7 +130,10 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     // WordPress media picker event, sizes.medium.url is the smallest image
-    insertMediaElement(resource, mediaPickerEl.sizes.medium.url);
+    insertMediaElement(
+      resource,
+      mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
+    );
   };
 
   const openMediaPicker = useMediaPicker({
@@ -143,6 +149,9 @@ function MediaPane(props) {
   const onFilter = useCallback(
     (filter) => {
       setMediaType({ mediaType: filter });
+      trackEvent('filter_media', 'editor', '', '', {
+        type: filter,
+      });
     },
     [setMediaType]
   );
@@ -155,10 +164,10 @@ function MediaPane(props) {
    */
   const insertMediaElement = useCallback(
     (resource, thumbnailURL) => {
-      resourceList[resource.id] = {
+      resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
-      };
+      });
       insertElement(resource.type, { resource });
     },
     [insertElement]
@@ -183,7 +192,12 @@ function MediaPane(props) {
 
   const resources = media.filter(filterResource);
 
-  const onSearch = (v) => setSearchTerm({ searchTerm: v });
+  const onSearch = (value) => {
+    setSearchTerm({ searchTerm: value });
+    trackEvent('search_media', 'editor', '', '', {
+      search_term: value,
+    });
+  };
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
@@ -206,6 +220,7 @@ function MediaPane(props) {
               value={mediaType?.toString() || FILTERS[0].value}
               onChange={onFilter}
               options={FILTERS}
+              placement={Placement.BOTTOM_START}
             />
             <Primary onClick={openMediaPicker}>
               {__('Upload', 'web-stories')}

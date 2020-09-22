@@ -43,7 +43,6 @@ export function useTheme() {
 
 const themeFonts = {
   primary: "'Google Sans', sans-serif",
-  secondary: "'Roboto', sans-serif",
 };
 
 const colors = {
@@ -75,6 +74,12 @@ const colors = {
   // todo
   placeholder: '#d9dbdd',
   storyPreviewBackground: '#202125',
+
+  foreground: {
+    gray24: '#A1A09B',
+    gray16: '#D1D1CC',
+    gray12: '#E8E8E8', // bonus shade added for side nav create story button
+  },
 };
 
 const borders = {
@@ -130,7 +135,7 @@ const theme = {
     borderRadius: 100,
   },
   formatContainer: {
-    height: 44,
+    height: 76,
   },
   expandedTypeahead: {
     borderRadius: 8,
@@ -141,7 +146,6 @@ const theme = {
     shadow: '0px 2px 8px rgba(0, 0, 0, 0.17)',
   },
   storyPreview: {
-    shadow: '1px 1px 5px hsla(0, 0%, 0%, 0.15)',
     borderRadius: 4,
   },
   tooltip: {
@@ -225,27 +229,27 @@ const theme = {
     min: 10,
   },
   standardViewContentGutter: {
-    desktop: 20,
-    tablet: 20,
+    desktop: 52,
+    tablet: 52,
     largeDisplayPhone: 10,
     smallDisplayPhone: 10,
     min: 10,
   },
   grid: {
     columnGap: {
-      desktop: 10,
-      tablet: 10,
+      desktop: 20,
+      tablet: 20,
       largeDisplayPhone: 10,
       smallDisplayPhone: 10,
       min: 10,
     },
   },
   previewWidth: {
-    desktop: 221,
-    tablet: 189,
-    largeDisplayPhone: 162,
-    smallDisplayPhone: 185,
-    min: 139,
+    desktop: 232,
+    tablet: 200,
+    largeDisplayPhone: 173,
+    smallDisplayPhone: 200,
+    min: 152,
     thumbnail: 33,
   },
   breakpoint: {

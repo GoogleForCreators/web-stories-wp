@@ -27,6 +27,7 @@ export { default as Row } from './row';
 export { default as Spacer } from './spacer';
 export { default as Switch } from './switch';
 export { default as TextInput } from './text';
+export { default as TextArea } from './textArea';
 export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
 export { default as usePresubmitHandler } from './usePresubmitHandler';

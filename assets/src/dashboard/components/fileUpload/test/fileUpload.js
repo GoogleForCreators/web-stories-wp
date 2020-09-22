@@ -22,12 +22,12 @@ import { fireEvent, createEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils/';
+import { renderWithProviders } from '../../../testUtils/';
 import FileUpload from '../';
 
 describe('FileUpload', () => {
   it('should render upload component by default', () => {
-    const { queryAllByTestId } = renderWithTheme(
+    const { queryAllByTestId } = renderWithProviders(
       <FileUpload
         onSubmit={jest.fn}
         id={'898989'}
@@ -39,7 +39,7 @@ describe('FileUpload', () => {
   });
 
   it('should render upload component with loading overlay when isLoading is true', () => {
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <FileUpload
         onSubmit={jest.fn}
         id={'898989'}
@@ -54,7 +54,7 @@ describe('FileUpload', () => {
   it('should trigger onSubmit when file is added through input', () => {
     const onSubmitMock = jest.fn();
 
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <FileUpload
         onSubmit={onSubmitMock}
         id={'898989'}
@@ -76,7 +76,7 @@ describe('FileUpload', () => {
     const mockFile = new File([''], 'mockfile.png', {
       type: 'image/png',
     });
-    const { getByTestId } = renderWithTheme(
+    const { getByTestId } = renderWithProviders(
       <FileUpload
         onSubmit={onSubmitMock}
         id={'898989'}

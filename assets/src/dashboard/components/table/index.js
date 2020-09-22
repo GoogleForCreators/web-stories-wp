@@ -18,10 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
 import { TypographyPresets } from '../typography';
+import { Z_INDEX } from '../../constants';
 
 export const Table = styled.table`
   ${TypographyPresets.Small};
@@ -36,6 +39,24 @@ export const TableHeader = styled.thead`
   border-top: ${({ theme }) => theme.table.border};
   border-bottom: ${({ theme }) => theme.table.border};
 `;
+
+export const StickyTableHeader = styled(TableHeader)`
+  width: 100%;
+  border-top: 0;
+  border-bottom: 0;
+  th {
+    height: 100%;
+    background: ${({ theme }) => theme.colors.gray50};
+    border-top-width: 0;
+    border-bottom: ${({ theme }) => theme.table.border};
+    position: sticky;
+    z-index: ${Z_INDEX.STICKY_TABLE};
+    top: ${({ top }) => `${top}px` || 0};
+  }
+`;
+StickyTableHeader.propTypes = {
+  top: PropTypes.number,
+};
 
 export const TableHeaderCell = styled.th`
   padding: ${({ theme }) => theme.table.headerCellPadding}px;

@@ -161,5 +161,5 @@ export const TEMPLATES_GALLERY_SORT_MENU_ITEMS = [
 ];
 
 export const TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS = {
-  template: __('View', 'web-stories'),
+  template: __('See details', 'web-stories'),
 };

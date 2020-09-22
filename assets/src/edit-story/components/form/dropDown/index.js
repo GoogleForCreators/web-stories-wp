@@ -35,14 +35,14 @@ import {
   KEYBOARD_USER_SELECTOR,
 } from '../../../utils/keyboardOnlyOutline';
 import { Dropdown as DropdownIcon } from '../../../icons';
-import Popup from '../../popup';
-import { useKeyDownEffect } from '../../keyboard';
+import Popup, { Placement } from '../../popup';
 import DropDownList from './list';
 
+/* same min-width as ListContainer */
 const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  min-width: 160px;
   color: ${({ theme }) => theme.colors.fg.black};
   font-family: ${({ theme }) => theme.fonts.body1.font};
 
@@ -103,7 +103,7 @@ function DropDown({
   options = [],
   disabled = false,
   lightMode = false,
-  placement = 'bottom-end',
+  placement = Placement.BOTTOM_END,
   placeholder = __('Select an option', 'web-stories'),
   ...rest
 }) {
@@ -123,7 +123,7 @@ function DropDown({
   );
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
-    if (isKeyboardUser) {
+    if (isKeyboardUser()) {
       // Return keyboard focus to button when closing dropdown
       selectRef.current.focus();
     }
@@ -144,12 +144,6 @@ function DropDown({
     e.preventDefault();
     setIsOpen(!isOpen);
   };
-
-  // We unfortunately have to manually assign this listener, as it would be default behaviour
-  // if it wasn't for our listener further up the stack interpreting enter as "enter edit mode"
-  // for text elements. For non-text element selection, this does nothing, that default beviour
-  // wouldn't do.
-  useKeyDownEffect(selectRef, 'enter', handleSelectClick, [isOpen]);
 
   return (
     <DropDownContainer>

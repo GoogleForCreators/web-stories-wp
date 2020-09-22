@@ -18,21 +18,18 @@
  * Internal dependencies
  */
 import { gtag } from './shared';
-import isTrackingEnabled from './isTrackingEnabled';
+
+/** @typedef {import('../typedefs.js').EventData} EventData */
 
 /**
  * Send an Analytics tracking event.
  *
  * @param {string} eventName Event name, either 'screen_view', 'timing_complete', or something custom.
- * @param {Object} eventData The event data to send.
+ * @param {EventData} eventData The event data to send.
  * @return {Promise<void>} Promise that always resolves.
  */
 //eslint-disable-next-line require-await
-async function trackEvent(eventName, eventData) {
-  if (!isTrackingEnabled()) {
-    return Promise.resolve();
-  }
-
+async function track(eventName, eventData) {
   return new Promise((resolve) => {
     // This timeout ensures a tracking event does not block the user
     // event if it is not sent (in time).
@@ -57,4 +54,4 @@ async function trackEvent(eventName, eventData) {
   });
 }
 
-export default trackEvent;
+export default track;

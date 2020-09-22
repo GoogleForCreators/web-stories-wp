@@ -28,11 +28,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { DASHBOARD_TOP_MARGIN } from '../../constants/pageStructure';
+import {
+  DASHBOARD_TOP_MARGIN,
+  DEFAULT_DASHBOARD_TOP_SPACE,
+} from '../../constants/pageStructure';
 import { clamp, throttleToAnimationFrame } from '../../utils';
 
 export const SQUISH_LENGTH = DASHBOARD_TOP_MARGIN;
 export const SQUISH_CSS_VAR = '--squish-progress';
+export const END_SQUISH_LENGTH = DEFAULT_DASHBOARD_TOP_SPACE;
 
 export const dispatchSquishEvent = (el, progress) => {
   /**
@@ -49,6 +53,21 @@ export const LayoutContext = createContext(null);
 const Provider = ({ children }) => {
   const [squishContentHeight, setSquishContentHeight] = useState(0);
   const scrollFrameRef = useRef(null);
+  const [telemetryBannerOpen, setTelemetryBannerOpen] = useState(false);
+  const [telemetryBannerHeight, setTelemetryBannerHeight] = useState();
+  const bannerHeightIncluded = useRef(false);
+
+  useLayoutEffect(() => {
+    if (telemetryBannerOpen && !bannerHeightIncluded.current) {
+      setSquishContentHeight((height) => (height += telemetryBannerHeight));
+      bannerHeightIncluded.current = true;
+    }
+
+    if (!telemetryBannerOpen && bannerHeightIncluded.current) {
+      setSquishContentHeight((height) => (height -= telemetryBannerHeight));
+      bannerHeightIncluded.current = false;
+    }
+  }, [telemetryBannerOpen, squishContentHeight, telemetryBannerHeight]);
 
   useLayoutEffect(() => {
     const scrollFrameEl = scrollFrameRef.current;
@@ -107,6 +126,7 @@ const Provider = ({ children }) => {
       state: {
         scrollFrameRef,
         squishContentHeight,
+        telemetryBannerOpen,
       },
       actions: {
         /**
@@ -124,9 +144,18 @@ const Provider = ({ children }) => {
         removeSquishListener,
         setSquishContentHeight,
         scrollToTop,
+        setTelemetryBannerOpen,
+        setTelemetryBannerHeight,
       },
     }),
-    [addSquishListener, removeSquishListener, squishContentHeight, scrollToTop]
+    [
+      setTelemetryBannerOpen,
+      telemetryBannerOpen,
+      addSquishListener,
+      removeSquishListener,
+      squishContentHeight,
+      scrollToTop,
+    ]
   );
 
   return (

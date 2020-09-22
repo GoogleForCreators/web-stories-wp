@@ -242,7 +242,6 @@ function StoryAnimTool() {
       story,
       activeStory.pages,
       {
-        fallbackPoster: '',
         logoPlaceholder: '',
         publisher: {
           name: 'Demo',

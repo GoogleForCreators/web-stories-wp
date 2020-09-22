@@ -187,7 +187,7 @@ function PageMenu() {
             <>
               <PageCount>
                 {sprintf(
-                  /* translators: %s: Page number. */
+                  /* translators: %s: page number. */
                   __('Page %s', 'web-stories'),
                   currentPageNumber
                 )}

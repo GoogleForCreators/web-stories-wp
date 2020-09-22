@@ -15,28 +15,38 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-
-/**
  * Internal dependencies
  */
-import { DefaultParagraph1 } from '../../../components';
+import {
+  DefaultParagraph1,
+  StandardViewContentGutter,
+} from '../../../components';
+
+const Text = styled(DefaultParagraph1)`
+  margin-top: 40px;
+`;
 
 const NoResults = ({ typeaheadValue }) => (
-  <DefaultParagraph1>
-    {sprintf(
-      /* translators: %s: search term. */
-      __('Sorry, we couldn\'t find any results matching "%s"', 'web-stories'),
-      typeaheadValue
-    )}
-  </DefaultParagraph1>
+  <StandardViewContentGutter>
+    <Text>
+      {sprintf(
+        /* translators: %s: search term. */
+        __('Sorry, we couldn\'t find any results matching "%s"', 'web-stories'),
+        typeaheadValue
+      )}
+    </Text>
+  </StandardViewContentGutter>
 );
 
 NoResults.propTypes = {

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -98,7 +98,7 @@ describe('MediaDisplay', () => {
   });
 
   it('should render img with srcset, when fullsize resource is loaded', () => {
-    resourceList[imageElement.resource.id] = { type: 'fullsize' };
+    resourceList.set(imageElement.resource.id, { type: 'fullsize' });
     const { container } = render(
       <TestDisplayElement storyContext={storyContext} element={imageElement} />
     );
@@ -143,12 +143,13 @@ describe('MediaDisplay', () => {
     const img = container.querySelector('img');
 
     // Start with empty style.
-    expect(img.style.cssText).toBe('');
+    expect(img.style).toMatchSnapshot('empty style before');
 
     // Resize to 100:80 (or 1:1 with the original size).
-    pushTransform(imageElement.id, { resize: [100, 80] });
-    expect(img.style.cssText).not.toBe('');
-    expect(img.style).toMatchObject({
+    act(() => {
+      pushTransform(imageElement.id, { resize: [100, 80] });
+    });
+    expect(img).toHaveStyle({
       width: '100px',
       height: '80px',
       left: '0px',
@@ -156,8 +157,10 @@ describe('MediaDisplay', () => {
     });
 
     // Reset.
-    pushTransform(imageElement.id, null);
-    expect(img.style.cssText).toBe('');
+    act(() => {
+      pushTransform(imageElement.id, null);
+    });
+    expect(img.style).toMatchSnapshot('empty style after');
   });
 
   it('should render flipped background video with overlay', () => {

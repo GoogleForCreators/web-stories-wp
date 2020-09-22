@@ -19,12 +19,6 @@
  */
 import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
 
-export function getImageFile(url) {
-  const file = (url || '').split('/').slice(-1).join('');
-  /* removes `-x` in some_file-x.jpg */
-  return file.replace(/-\d+(?=.\w{3,4}$)/g, '');
-}
-
 export async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
     /* webpackChunkName: "chunk-web-stories-template-[index]" */ `./raw/${title}.json`
@@ -35,13 +29,14 @@ export async function loadTemplate(title, imageBaseUrl) {
     pages: (data.pages || []).map((page) => ({
       ...page,
       elements: page.elements?.map((elem) => {
-        if (elem.resource && elem.resource.sizes) {
+        if (elem?.resource?.sizes) {
           elem.resource.sizes = [];
         }
-        if (elem.resource && elem.resource.src) {
-          elem.resource.src = `${imageBaseUrl}images/templates/${title}/${getImageFile(
-            elem.resource.src
-          )}`;
+        if (elem?.resource?.src) {
+          elem.resource.src = elem.resource.src.replace(
+            'https://replaceme.com/',
+            imageBaseUrl
+          );
         }
         return elem;
       }),
