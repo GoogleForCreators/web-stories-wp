@@ -40,7 +40,8 @@ describe('Raw text set files', () => {
     const data = JSON.parse(rawData);
 
     for (const { elements } of data.pages) {
-      expect(elements.length >= 2).toBeTrue();
+      // 3 since one is background element.
+      expect(elements.length >= 3).toBeTrue();
     }
   });
 });
