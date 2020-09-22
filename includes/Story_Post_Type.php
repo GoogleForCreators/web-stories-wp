@@ -755,10 +755,14 @@ class Story_Post_Type {
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
 		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
 			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
-			if ( $query->get( 'page' ) && self::POST_TYPE_SLUG === get_post_type( absint( $query->get( 'page' ) ) ) ) {
+			if (
+				$query->get( 'page' ) &&
+				is_numeric( $query->get( 'page' ) ) &&
+				self::POST_TYPE_SLUG === get_post_type( absint( $query->get( 'page' ) ) )
+			) {
 				$redirect_url = get_permalink( absint( $query->get( 'page' ) ) );
 			} elseif ( $query->get( 'feed' ) ) {
-				$feed         = ( $query->get( 'feed' ) === 'feed ' ) ? $query->get( 'feed' ) : '';
+				$feed         = ( 'feed ' === $query->get( 'feed' ) ) ? $query->get( 'feed' ) : '';
 				$redirect_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
 			}
 
