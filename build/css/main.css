@@ -46,6 +46,13 @@ header, footer {
   display: flex;
   align-items: center;
   line-height: 44px;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  header, footer {
+    flex-direction: row;
+  }
 }
 
 header > a {
@@ -66,13 +73,25 @@ footer .links,
 header .links {
   display: flex;
   justify-content: flex-end;
-  align-items: center
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 footer .links a,
 header .links a {
   padding: 0 1rem;
   color: #111;
+}
+
+header .links a {
+  padding: 0 .5rem;
+}
+
+@media screen and (min-width: 768px) {
+  header .links a {
+    padding: 0 1rem;
+  }
 }
 
 header nav a:focus,
@@ -94,9 +113,9 @@ header nav .current {
   font-weight: bolder;
 }
 
-
-footer .links > li:after,
-header .links > li:after {
+@media screen and (min-width: 768px) {
+  footer .links > li:after,
+  header .links > li:after {
     display: inline-block;
     height: 1rem;
     width: 1px;
@@ -104,11 +123,12 @@ header .links > li:after {
     background: #666;
     transition: all 0.5s ease-in-out;
     vertical-align: middle
-}
+  }
 
-footer li:last-child:after,
-header li:last-child:after {
-  display: none
+  footer li:last-child:after,
+  header li:last-child:after {
+    display: none
+  }
 }
 
 footer {
@@ -175,8 +195,14 @@ header .toggle {
   background: transparent;
   border: 0;
   outline: 0;
-  margin: 0 1em 0 -1em;
+  margin: 0 1em 0 -.5em;
   cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  header .toggle {
+    margin-left: -1em;
+  }
 }
 
 header .fake_button {
