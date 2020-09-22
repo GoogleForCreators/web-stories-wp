@@ -26,7 +26,6 @@ import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies

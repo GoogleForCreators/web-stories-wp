@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
