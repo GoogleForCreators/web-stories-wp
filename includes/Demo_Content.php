@@ -89,15 +89,8 @@ class Demo_Content {
 
 		$replacements = [
 			// Page 1.
-			'L10N_PLACEHOLDER_1_1' => addslashes(
-				wp_kses(
-					/* translators: demo content used in the "Get Started" story */
-					_x( '<span style="font-weight: 700; color: #fff">Tips </span><span style="font-weight: 100; color: #fff">to make the most of</span>', 'demo content', 'web-stories' ),
-					[
-						'span' => [ 'style' => [] ],
-					]
-				)
-			),
+			'L10N_PLACEHOLDER_1_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'Tips to make the most of the Web Stories Editor', 'demo content', 'web-stories' ),
 
 			// Page 2.
 
@@ -121,7 +114,7 @@ class Demo_Content {
 				esc_html_x( 'BACKGROUND OVERLAY', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_4_2' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'Once you\'ve set a page background, add a solid, linear or radial gradient overlay to increase text contrast or add visual styling.', 'demo content', 'web-stories' ),
+				esc_html_x( 'Once you\'ve set a page bg, add a solid, linear or radial gradient overlay to increase text contrast or add visual styling.', 'demo content', 'web-stories' ),
 
 			// Page 5.
 
@@ -129,22 +122,15 @@ class Demo_Content {
 				esc_html_x( 'SAFE ZONE', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_5_2' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'Add your designs to the page, keeping crucial elements inside the safe zone (tick marks) to ensure they are visible across most devices.', 'demo content', 'web-stories' ),
+				esc_html_x( 'Add your designs to the page, keeping crucial elements inside the safe zone to ensure they are visible across most devices.', 'demo content', 'web-stories' ),
 
 			// Page 6.
 
 			'L10N_PLACEHOLDER_6_1' => /* translators: demo content used in the "Get Started" story */
 				esc_html_x( 'STORY SYSTEM LAYER', 'demo content', 'web-stories' ),
 
-			'L10N_PLACEHOLDER_6_2' => addslashes(
-				wp_kses(
-					/* translators: demo content used in the "Get Started" story */
-					_x( '<span style="font-weight: 200; color: #fff">The story system layer is docked at the top. </span><span style="font-weight: 500; color: #fff">Preview your story</span><span style="font-weight: 200; color: #fff"> to ensure system layer icons are not blocking crucial elements.</span>', 'demo content', 'web-stories' ),
-					[
-						'span' => [ 'style' => [] ],
-					]
-				)
-			),
+			'L10N_PLACEHOLDER_6_2' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'The system layer is docked at the top. Preview your story to ensure system layer icons are not blocking crucial elements.', 'demo content', 'web-stories' ),
 
 			// Page 7.
 
@@ -164,21 +150,14 @@ class Demo_Content {
 
 			// Page 9.
 
-			'L10N_PLACEHOLDER_9_1' => addslashes(
-				wp_kses(
-					/* translators: demo content used in the "Get Started" story */
-					_x( '<span style="font-weight: 100; color: #fff">READ ABOUT </span><span style="font-weight: 600; color: #fff">BEST PRACTICES</span><span style="font-weight: 100; color: #fff"> FOR CREATING A SUCCESSFUL WEB STORY</span>', 'demo content', 'web-stories' ),
-					[
-						'span' => [ 'style' => [] ],
-					]
-				)
-			),
+			'L10N_PLACEHOLDER_9_1' => /* translators: demo content used in the "Get Started" story */
+				esc_html_x( 'READ ABOUT BEST PRACTICES FOR CREATING SUCCESSFUL WEB STORIES', 'demo content', 'web-stories' ),
 
 			'L10N_PLACEHOLDER_9_2' => /* translators: demo content used in the "Get Started" story */
 				esc_url( _x( 'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/', 'demo content', 'web-stories' ) ),
 
 			'L10N_PLACEHOLDER_9_3' => /* translators: demo content used in the "Get Started" story */
-				esc_html_x( 'Best practices for creating a successful Web Story', 'demo content', 'web-stories' ),
+				esc_html_x( 'Best Practices', 'demo content', 'web-stories' ),
 		];
 
 		foreach ( $replacements as $search => $replacement ) {
