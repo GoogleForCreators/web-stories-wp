@@ -37,8 +37,6 @@ import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
-const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
-
 const StyledInput = styled(Input)`
   width: 100%;
   flex: 1 1 auto;
@@ -79,6 +77,22 @@ const Suffix = styled.span`
     `}
 `;
 
+// If value is valid, returns parsed value, else returns null
+function validateInput(value, { float, canBeNegative, canBeEmpty }) {
+  if (`${value}`.length > 0) {
+    const valueAsNumber = float ? parseFloat(value) : parseInt(value);
+    const signedNumber = !canBeNegative
+      ? Math.abs(valueAsNumber)
+      : valueAsNumber;
+
+    return !isNaN(signedNumber) ? signedNumber : null;
+  } else if (canBeEmpty) {
+    return '';
+  }
+
+  return null;
+}
+
 function Numeric({
   className,
   onBlur,
@@ -99,11 +113,48 @@ function Numeric({
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
-  const [dot, setDot] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  const ref = useRef();
 
-  useEffect(() => setInputValue(value), [value]);
+  const inputRef = useRef();
+  const targetFormRef = useRef(null);
+
+  const { focused, handleFocus, handleBlur } = useFocusAndSelect(inputRef);
+
+  const handleChange = useCallback(
+    (event) => setInputValue(event.target.value),
+    []
+  );
+
+  const revertInput = useCallback(() => {
+    setInputValue(value);
+  }, [value]);
+
+  const validateAndSubmitInput = useCallback(() => {
+    targetFormRef.current = inputRef.current.form;
+
+    const validValue = validateInput(inputValue, {
+      canBeNegative,
+      canBeEmpty,
+      float,
+    });
+
+    setInputValue(validValue ?? value);
+    onChange(validValue ?? value);
+
+    if (onBlur) {
+      onBlur();
+    }
+    handleBlur();
+  }, [
+    inputValue,
+    canBeNegative,
+    canBeEmpty,
+    float,
+    value,
+    onBlur,
+    onChange,
+    handleBlur,
+  ]);
 
   const handleUpDown = useCallback(
     ({ key, altKey }) => {
@@ -111,34 +162,80 @@ function Numeric({
         return;
       }
 
-      let newValue;
+      const validValue = validateInput(inputValue, {
+        canBeNegative,
+        canBeEmpty,
+        float,
+      });
+
+      // The `|| 0` is to prevent newValue from being set to
+      // empty string by either validValue or value
+      let newValue = (validValue ?? value) || 0;
       const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
         // Increment value
         newValue =
           typeof max !== 'undefined'
-            ? Math.min(max, Big(value).plus(diff))
-            : Big(value).plus(diff);
+            ? Math.min(max, Big(newValue).plus(diff))
+            : Big(newValue).plus(diff);
       } else if (key === 'ArrowDown') {
         // Decrement value
         newValue =
           typeof min !== 'undefined'
-            ? Math.max(min, Big(value).minus(diff))
-            : Big(value).minus(diff);
+            ? Math.max(min, Big(newValue).minus(diff))
+            : Big(newValue).minus(diff);
       }
-      onChange(parseFloat(newValue.toString()));
+
+      setInputValue(newValue.toString());
     },
-    [isMultiple, float, onChange, max, value, min]
+    [isMultiple, float, max, inputValue, value, min, canBeNegative, canBeEmpty]
   );
+
+  const handleKeydown = useCallback(
+    ({ key, altKey }) => {
+      switch (key) {
+        case 'Enter':
+          validateAndSubmitInput();
+          break;
+        case 'Escape':
+          revertInput();
+          break;
+        default:
+          handleUpDown({ key, altKey });
+      }
+    },
+    [handleUpDown, revertInput, validateAndSubmitInput]
+  );
+
+  const submitForm = useCallback(() => {
+    if (targetFormRef.current) {
+      targetFormRef.current.dispatchEvent(
+        new window.Event('submit', { cancelable: true })
+      );
+
+      // Resetting to null after dispatch, it'll get
+      // re-assigned on component blur
+      targetFormRef.current = null;
+    }
+  }, []);
 
   useKeyDownEffect(
-    ref,
-    { key: ['up', 'alt+up', 'down', 'alt+down'], editable: true },
-    handleUpDown,
-    [handleUpDown]
+    inputRef,
+    {
+      key: ['up', 'alt+up', 'down', 'alt+down', 'esc', 'enter'],
+      editable: true,
+    },
+    handleKeydown,
+    [handleKeydown]
   );
 
-  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
+  useEffect(() => {
+    if (targetFormRef.current) {
+      submitForm();
+    }
+
+    setInputValue(value);
+  }, [submitForm, value]);
 
   return (
     <Container
@@ -152,55 +249,16 @@ function Numeric({
       {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
         type="text"
-        ref={ref}
+        ref={inputRef}
         placeholder={placeholder}
         prefix={prefix}
         suffix={suffix}
         label={label}
-        value={
-          isMultiple
-            ? ''
-            : `${inputValue}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
-        }
+        value={isMultiple ? '' : `${inputValue}${focused ? '' : symbol}`}
         disabled={disabled}
         {...rest}
-        onChange={(evt) => {
-          const newValue = evt.target.value;
-          if (newValue === '') {
-            // Allow input to be empty
-            if (canBeEmpty) {
-              // Send empty up-stream
-              onChange('', evt);
-            } else {
-              // Just update empty value internally but keep old value upstream
-              setInputValue('');
-            }
-          } else if (newValue === '-' && canBeNegative) {
-            // Allow a single "-" if negative values are allowed
-            setInputValue(newValue);
-          } else {
-            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
-            const valueAsNumber = float
-              ? parseFloat(newValue)
-              : parseInt(newValue);
-            if (!isNaN(valueAsNumber)) {
-              onChange(valueAsNumber, evt);
-            }
-          }
-        }}
-        onBlur={(evt) => {
-          if (evt.target.form) {
-            evt.target.form.dispatchEvent(
-              new window.Event('submit', { cancelable: true })
-            );
-          }
-          // Always update to latest value from upstream
-          setInputValue(value);
-          if (onBlur) {
-            onBlur();
-          }
-          handleBlur();
-        }}
+        onChange={handleChange}
+        onBlur={validateAndSubmitInput}
         onFocus={handleFocus}
       />
       {suffix && (
