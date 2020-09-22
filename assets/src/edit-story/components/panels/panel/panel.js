@@ -49,8 +49,7 @@ function Panel({
     let parsed = null;
     try {
       const stored = localStorage.getItem(
-        `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`,
-        'null'
+        `${LOCAL_STORAGE_PREFIX.PANEL}:${name}`
       );
       parsed = JSON.parse(stored);
     } catch (e) {
