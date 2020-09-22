@@ -57,7 +57,7 @@ const CATEGORIES = {
   list: __('List', 'web-stories'),
   cover: __('Cover', 'web-stories'),
   section_header: __('Header', 'web-stories'),
-  step: __('Step', 'web-stories'),
+  step: __('Steps', 'web-stories'),
   table: __('Table', 'web-stories'),
   quote: __('Quote', 'web-stories'),
 };
