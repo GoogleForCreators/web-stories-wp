@@ -31,6 +31,7 @@ use AMP_Content_Sanitizer;
 use AMP_DOM_Utils;
 use AMP_Layout_Sanitizer;
 use AMP_Script_Sanitizer;
+use AMP_Style_Sanitizer;
 use AMP_Tag_And_Attribute_Sanitizer;
 use AmpProject\Amp;
 use AmpProject\Attribute;
@@ -223,6 +224,8 @@ class Sanitization {
 		/*
 		 * "4. Use preconnect to speedup the connection to other origin where the full resource URL is not known ahead of time,
 		 * for example, when using Google Fonts."
+		 *
+		 * Note that \AMP_Style_Sanitizer::process_link_element() will ensure preconnect links for Google Fonts are present.
 		 */
 		$link_relations = [ Attribute::REL_PRECONNECT, Attribute::REL_DNS_PREFETCH, Attribute::REL_PRELOAD, Attribute::REL_PRERENDER, Attribute::REL_PREFETCH ];
 		foreach ( $link_relations as $rel ) {
@@ -362,6 +365,15 @@ class Sanitization {
 	protected function get_sanitizers() {
 		$sanitizers = [
 			AMP_Script_Sanitizer::class            => [],
+			AMP_Style_Sanitizer::class             => [
+
+				/*
+				 * @todo Enable by default and allow filtering once AMP_Style_Sanitizer does not call AMP_Options_Manager
+				 *       which in turn requires AMP__VERSION to be defined.
+				 */
+				'allow_transient_caching' => false,
+				'use_document_element'    => true,
+			],
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
 			Canonical_Sanitizer::class             => [],
@@ -408,8 +420,9 @@ class Sanitization {
 		}
 
 		// Force certain sanitizers to be at end.
+		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
 		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
-		foreach ( [ AMP_Tag_And_Attribute_Sanitizer::class ] as $class_name ) {
+		foreach ( [ AMP_Style_Sanitizer::class, AMP_Tag_And_Attribute_Sanitizer::class ] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
 				unset( $sanitizers[ $class_name ] );
