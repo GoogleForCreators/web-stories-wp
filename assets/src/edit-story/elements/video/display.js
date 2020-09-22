@@ -48,6 +48,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     id,
     poster,
     resource,
+    track,
     isBackground,
     scale,
     focalX,
@@ -72,6 +73,15 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY
   );
+
+  // @todo Change props to user defined values.
+  const trackProps = {
+    track,
+    label: 'Test',
+    kind: 'subtitles',
+    srclang: 'en',
+  };
+
   return (
     <MediaDisplay element={element} mediaRef={ref} showPlaceholder={true}>
       {previewMode ? (
@@ -93,6 +103,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           ref={ref}
         >
           <source src={resource.src} type={resource.mimeType} />
+          {track && <track {...trackProps} />}
         </Video>
       )}
     </MediaDisplay>

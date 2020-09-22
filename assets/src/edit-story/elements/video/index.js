@@ -54,6 +54,8 @@ export const defaultAttributes = {
   resource: {
     posterId: null,
     poster: null,
+    trackId: null,
+    track: null,
     id: 0,
     title: '',
   },

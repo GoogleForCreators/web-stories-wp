@@ -127,6 +127,8 @@ StoryPropTypes.videoResource = PropTypes.shape({
   height: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
+  track: PropTypes.string,
+  trackId: PropTypes.number,
   alt: PropTypes.string,
   title: PropTypes.string,
 });
@@ -184,6 +186,7 @@ StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryMediaPropTypes,
   resource: StoryPropTypes.videoResource,
   poster: PropTypes.string,
+  track: PropTypes.string,
   loop: PropTypes.bool,
 });
 

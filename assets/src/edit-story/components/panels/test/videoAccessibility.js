@@ -34,7 +34,14 @@ jest.mock('../../mediaPicker', () => ({
 
 describe('Panels/VideoAccessibility', () => {
   const defaultElement = {
-    resource: { posterId: 0, title: '', poster: '', alt: '' },
+    resource: {
+      posterId: 0,
+      title: '',
+      poster: '',
+      alt: '',
+      trackId: 0,
+      track: '',
+    },
   };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);

@@ -28,7 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Media, Row, usePresubmitHandler } from '../form';
+import { Button, Media, Row, usePresubmitHandler } from '../form';
+import { useMediaPicker } from '../mediaPicker';
 import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
@@ -51,7 +52,9 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   );
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
+  const rawTrack = getCommonValue(selectedElements, 'track');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
+  const track = getCommonValue(selectedElements, 'track', resource.track);
   const title = getCommonValue(selectedElements, 'title', resource.title);
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
@@ -65,6 +68,30 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     },
     [pushUpdate, rawPoster]
   );
+
+  // @todo Move logic it's own component and update styling.
+  const handleChangeTrack = useCallback(
+    (attachment) => {
+      const newTrack = attachment?.url;
+      const newTrackId = attachment?.id;
+      if (newTrack === rawTrack) {
+        return;
+      }
+      pushUpdate({ track: newTrack, trackId: newTrackId }, true);
+    },
+    [pushUpdate, rawTrack]
+  );
+
+  const subtitleText = !track
+    ? __('Upload subtitles', 'web-stories')
+    : __('Update subtitles', 'web-stories');
+
+  const UploadCaption = useMediaPicker({
+    onSelect: handleChangeTrack,
+    type: 'text/vtt',
+    title: subtitleText,
+    buttonInsertText: __('Select subtitle', 'web-stories'),
+  });
 
   usePresubmitHandler(
     ({ resource: newResource }) => ({
@@ -115,6 +142,11 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       </Row>
       <Row>
         <Note>{__('Text for visually impaired users.', 'web-stories')}</Note>
+      </Row>
+      <Row expand>
+        <Button onClick={UploadCaption} fullWidth>
+          {subtitleText}
+        </Button>
       </Row>
     </SimplePanel>
   );

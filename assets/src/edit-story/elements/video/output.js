@@ -42,11 +42,21 @@ function VideoOutput({ element, box }) {
     loop: loop ? 'loop' : undefined,
   };
 
+  const track = defaultForUndefined(element.track, resource.track);
+  // @todo Change props to user defined values.
+  const trackProps = {
+    track,
+    label: 'Test',
+    kind: 'subtitles',
+    srclang: 'en',
+  };
+
   // crossorigin='anonymous' is required to play videos from other domains.
   return (
     <MediaOutput element={element} box={box}>
       <amp-video {...props} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
+        {track && <track {...trackProps} />}
       </amp-video>
     </MediaOutput>
   );
