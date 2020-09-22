@@ -140,21 +140,7 @@ function Numeric({
 
     setInputValue(validValue ?? value);
     onChange(validValue ?? value);
-
-    if (onBlur) {
-      onBlur();
-    }
-    handleBlur();
-  }, [
-    inputValue,
-    canBeNegative,
-    canBeEmpty,
-    float,
-    value,
-    onBlur,
-    onChange,
-    handleBlur,
-  ]);
+  }, [inputValue, canBeNegative, canBeEmpty, float, value, onChange]);
 
   const handleUpDown = useCallback(
     ({ key, altKey }) => {
@@ -258,7 +244,14 @@ function Numeric({
         disabled={disabled}
         {...rest}
         onChange={handleChange}
-        onBlur={validateAndSubmitInput}
+        onBlur={() => {
+          validateAndSubmitInput();
+          if (onBlur) {
+            onBlur();
+          }
+
+          handleBlur();
+        }}
         onFocus={handleFocus}
       />
       {suffix && (
