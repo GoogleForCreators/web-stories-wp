@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.0.0-rc.1' );
+define( 'WEBSTORIES_VERSION', '1.0.0-rc.1+e4fce03' );
 define( 'WEBSTORIES_DB_VERSION', '3.0.2' );
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
