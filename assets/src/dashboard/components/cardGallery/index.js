@@ -47,10 +47,14 @@ const MINI_CARD_WIDTH = 75;
 const CARD_GAP = 15;
 const CARD_WRAPPER_BUFFER = 12;
 
+let _id = 0;
+
 function CardGallery({ story, isRTL, galleryLabel }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [activePageId, setActivePageId] = useState();
+  const [renderPages, setRenderPages] = useState(false);
+  const activeCardRef = useRef();
   const containerRef = useRef();
   const gridRef = useRef();
   const pageRefs = useRef({});
@@ -117,6 +121,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
     // Reset state when the story changes
     setActivePageIndex(0);
     setActivePageId(pages[0].id);
+    setRenderPages(false);
   }, [pages]);
 
   useGridViewKeys({
@@ -128,78 +133,79 @@ function CardGallery({ story, isRTL, galleryLabel }) {
     items: pages,
   });
 
-  const GalleryItems = useMemo(() => {
-    if (!metrics.miniCardSize) {
-      return null;
-    }
+  useEffect(() => {
+    if (!renderPages && activeCardRef.current) {
+      const img = activeCardRef.current.querySelector('img');
+      const onLoadId = ++_id;
 
-    const { miniCardSize, gap, miniWrapperSize } = metrics;
-    return (
-      <UnitsProvider
-        pageSize={{
-          width: miniCardSize.width,
-          height: miniCardSize.height,
-        }}
-      >
-        <MiniCardsContainer
-          rowHeight={miniWrapperSize.height}
-          gap={gap}
-          ref={gridRef}
-          aria-label={galleryLabel}
-          data-testid="mini-cards-container"
-        >
-          {pages.map((page, index) => {
-            const isCurrentPage = activePageId === page.id;
-            const isActive = isCurrentPage && isInteractive;
-            return (
-              <ItemContainer
-                key={`page-${index}`}
-                ref={(el) => {
-                  pageRefs.current[page.id] = el;
-                }}
-                width={miniWrapperSize.width}
-              >
-                <MiniCardButton
-                  isSelected={isCurrentPage}
-                  tabIndex={isActive ? 0 : -1}
-                  {...miniWrapperSize}
-                  onClick={() => handleMiniCardClick(index, page.id)}
-                  aria-label={
-                    isCurrentPage
-                      ? sprintf(
-                          /* translators: %s: page number. */
-                          __('Page %s (current page)', 'web-stories'),
-                          index + 1
-                        )
-                      : sprintf(
-                          /* translators: %s: page number. */
-                          __('Page %s', 'web-stories'),
-                          index + 1
-                        )
-                  }
-                >
-                  <MiniCard {...miniCardSize}>
-                    <PreviewPage page={page} pageSize={miniCardSize} />
-                  </MiniCard>
-                </MiniCardButton>
-              </ItemContainer>
-            );
-          })}
-        </MiniCardsContainer>
-      </UnitsProvider>
-    );
-  }, [
-    activePageId,
-    galleryLabel,
-    handleMiniCardClick,
-    isInteractive,
-    metrics,
-    pages,
-  ]);
+      if (img) {
+        img.onload = () => {
+          if (onLoadId === _id) {
+            setRenderPages(true);
+          }
+        };
+      }
+    }
+  });
+
+  const { miniCardSize, gap, miniWrapperSize } = metrics;
 
   return (
     <GalleryContainer ref={containerRef} maxWidth={MAX_WIDTH}>
-      {GalleryItems}
+      {renderPages && miniCardSize && (
+        <UnitsProvider
+          pageSize={{
+            width: miniCardSize.width,
+            height: miniCardSize.height,
+          }}
+        >
+          <MiniCardsContainer
+            rowHeight={miniWrapperSize.height}
+            gap={gap}
+            ref={gridRef}
+            aria-label={galleryLabel}
+            data-testid="mini-cards-container"
+          >
+            {pages.map((page, index) => {
+              const isCurrentPage = activePageId === page.id;
+              const isActive = isCurrentPage && isInteractive;
+              return (
+                <ItemContainer
+                  key={`page-${index}`}
+                  ref={(el) => {
+                    pageRefs.current[page.id] = el;
+                  }}
+                  width={miniWrapperSize.width}
+                >
+                  <MiniCardButton
+                    isSelected={isCurrentPage}
+                    tabIndex={isActive ? 0 : -1}
+                    {...miniWrapperSize}
+                    onClick={() => handleMiniCardClick(index, page.id)}
+                    aria-label={
+                      isCurrentPage
+                        ? sprintf(
+                            /* translators: %s: page number. */
+                            __('Page %s (current page)', 'web-stories'),
+                            index + 1
+                          )
+                        : sprintf(
+                            /* translators: %s: page number. */
+                            __('Page %s', 'web-stories'),
+                            index + 1
+                          )
+                    }
+                  >
+                    <MiniCard {...miniCardSize}>
+                      <PreviewPage page={page} pageSize={miniCardSize} />
+                    </MiniCard>
+                  </MiniCardButton>
+                </ItemContainer>
+              );
+            })}
+          </MiniCardsContainer>
+        </UnitsProvider>
+      )}
       {metrics.activeCardSize && pages[activePageIndex] && (
         <UnitsProvider
           pageSize={{
@@ -214,6 +220,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
               __('Active Page Preview - Page %s', 'web-stories'),
               activePageIndex + 1
             )}
+            ref={activeCardRef}
           >
             <PreviewPage
               page={pages[activePageIndex]}
