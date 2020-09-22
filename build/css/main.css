@@ -245,7 +245,7 @@ aside {
   top: 9rem;
   width: 25rem;
   overflow: scroll;
-  max-height: calc(100vh - 9rem);
+  max-height: calc(100vh - 9rem - 45px);
 }
 
 aside a {
