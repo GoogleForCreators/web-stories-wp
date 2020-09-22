@@ -617,16 +617,35 @@ footer .social_links.links li:after {
 }
 
 .web_creators {
-  background-image: url('/img/web_creators_logo.png');
+  background-image: url('/img/web-creators-logo-bw.svg');
 }
+
+.web_creators:hover {
+  background-image: url('/img/web-creators-logo.svg');
+}
+
 .instagram {
-  background-image: url('/img/instagram_logo.png');
+  background-image: url('/img/instagram-logo-bw.svg');
 }
-.twtiter {
-  background-image: url('/img/twitter_logo.png');
+
+.instagram:hover {
+  background-image: url('/img/instagram-logo.svg');
 }
-.yotube {
-  background-image: url('/img/youtube_logo.png');
+
+.twitter {
+  background-image: url('/img/twitter-logo-bw.svg');
+}
+
+.twitter:hover {
+  background-image: url('/img/twitter-logo.svg');
+}
+
+.youtube {
+  background-image: url('/img/youtube-logo-bw.svg');
+}
+
+.youtube:hover {
+  background-image: url('/img/youtube-logo.svg');
 }
 
 @media screen and (max-width: 1280px) {
