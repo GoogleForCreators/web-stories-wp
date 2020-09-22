@@ -1,9 +1,9 @@
 @font-face {
-  font-family: "Poppins Light";
+  font-family: "Poppins";
   font-style: normal;
   font-display: fallback;
   font-weight: 200;
-  src: local('Poppins Light'), local('Poppins-Light'), url('/fonts/Poppins.woff2') format('woff2');
+  src: local('Poppins'), url('/fonts/Poppins.woff2') format('woff2');
 }
 
 .visuallyhidden {
@@ -18,7 +18,7 @@
 }
 
 html {
-  font-family: "Poppins Light", "Segoe UI",  "Helvetica Neue", Roboto, sans-serif;
+  font-family: "Poppins", "Segoe UI",  "Helvetica Neue", Roboto, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
