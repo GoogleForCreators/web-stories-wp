@@ -263,7 +263,6 @@ function Carousel() {
       setShowSafeZone,
     })
   );
-  const { showKeyboardShortcutsButton } = useFeatures();
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -482,11 +481,9 @@ function Carousel() {
         </NavArea>
         <MenuArea>
           <MenuIconsWrapper isCompact={isCompact}>
-            {showKeyboardShortcutsButton && (
-              <OverflowButtons>
-                <KeyboardShortcutsMenu />
-              </OverflowButtons>
-            )}
+            <OverflowButtons>
+              <KeyboardShortcutsMenu />
+            </OverflowButtons>
             <WithTooltip
               title={
                 showSafeZone
