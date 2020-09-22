@@ -72,7 +72,8 @@ Thank you for being an early adopter of Web Stories for WordPress! We're working
 = What browsers are supported? =
 
 **For an optimal Web Story creation experience**, we recommend using the latest version of commonly popular web browsers (Chrome, Firefox, Safari, Edge).
-Is Web Stories for WordPress compatible with other WordPress plugins?
+
+= Is Web Stories for WordPress compatible with other WordPress plugins? =
 
 Because the Web Story format is new to the web ecosystem, some WordPress plugins may need extra support. We are working to improve compatibility with the Web Story editor and encourage you to file any bugs and requests in the [support forum](https://wordpress.org/support/plugin/web-stories/).
 
