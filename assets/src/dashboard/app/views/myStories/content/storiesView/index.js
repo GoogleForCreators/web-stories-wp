@@ -258,10 +258,7 @@ function StoriesView({
                 }}
                 aria-label={sprintf(
                   /* translators: %s is story title */
-                  __(
-                    'No, I do not want to delete the story titled: %s',
-                    'web-stories'
-                  ),
+                  __('Cancel deleting story "%s"', 'web-stories'),
                   activeStory.title
                 )}
               >
@@ -272,10 +269,7 @@ function StoriesView({
                 onClick={handleOnDeleteStory}
                 aria-label={sprintf(
                   /* translators: %s is story title */
-                  __(
-                    'Yes, I want to delete the story titled: %s',
-                    'web-stories'
-                  ),
+                  __('Confirm deleting story "%s"', 'web-stories'),
                   activeStory.title
                 )}
               >
