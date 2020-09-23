@@ -59,12 +59,16 @@ describe('Selection integration', () => {
     await fixture.events.click(fixture.editor.library.textAdd);
     await setFontSize('30');
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
-    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, 5, 5),
+    const resizeW = fixture
+      .querySelector('.moveable-w')
+      .getBoundingClientRect();
+    await fixture.events.mouse.seq(({ move, moveBy, down, up }) => [
+      move(resizeW.left + 1, resizeW.top + 1),
       down(),
-      moveBy(-20, 0, { steps: 5 }),
+      moveBy(-200, 0),
       up(),
     ]);
+
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot();
   });
@@ -116,9 +120,7 @@ describe('Selection integration', () => {
   });
 
   it('should return focus to selection when pressing mod+alt+2', async () => {
-    await fixture.events.click(
-      fixture.editor.canvas.framesLayer.pageActions().add
-    );
+    await fixture.events.click(fixture.editor.library.textAdd);
     // NB: We can't actually validate that the frame has focus, as that's a bit flaky,
     // But as long as the focus moves in the shortcut press, it's fair to assume that it has
     // Move to the canvas selection.
