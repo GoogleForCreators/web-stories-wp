@@ -54,13 +54,13 @@ const INITIAL_STATE = {
  * - New pages aren't validated for type of elements property when added.
  * - No validation of keys or values in the story object.
  *
- * @param {Object} initial A state partial to initialize with.
+ * @param {Object} partial A state partial to initialize with.
  * @return {Object} An object with keys `state`, `internal` and `api`.
  */
-function useStoryReducer(initial) {
+function useStoryReducer(partial) {
   const [state, dispatch] = useReducer(reducer, {
     ...INITIAL_STATE,
-    ...initial,
+    ...partial,
   });
 
   const { internal, api } = useMemo(() => {
