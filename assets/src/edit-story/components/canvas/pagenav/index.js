@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PAGE_NAV_BUTTON_WIDTH } from '../../../constants';
+import { PAGE_NAV_BUTTON_SIZE } from '../../../constants';
 import { useConfig, useStory } from '../../../app';
 import { LeftArrow, RightArrow } from '../../button';
 
@@ -37,8 +37,8 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.fg.white};
-  width: ${PAGE_NAV_BUTTON_WIDTH}px;
-  height: ${PAGE_NAV_BUTTON_WIDTH}px;
+  width: ${PAGE_NAV_BUTTON_SIZE}px;
+  height: ${PAGE_NAV_BUTTON_SIZE}px;
 
   & > * {
     pointer-events: initial;
@@ -90,8 +90,10 @@ function PageNav({ isNext }) {
       ? __('Next Page', 'web-stories')
       : __('Previous Page', 'web-stories'),
     onClick: handleClick,
-    width: PAGE_NAV_BUTTON_WIDTH,
-    height: PAGE_NAV_BUTTON_WIDTH,
+    // Cancel lasso.
+    onMouseDown: (evt) => evt.stopPropagation(),
+    width: PAGE_NAV_BUTTON_SIZE,
+    height: PAGE_NAV_BUTTON_SIZE,
   };
 
   const PrevButton = isRTL ? RightNavButton : LeftNavButton;
