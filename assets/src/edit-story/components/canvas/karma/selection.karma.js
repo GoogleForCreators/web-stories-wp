@@ -87,7 +87,6 @@ describe('Selection integration', () => {
       ),
       up(),
     ]);
-    await fixture.events.sleep(9000);
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot('selection and page menu');
   });
