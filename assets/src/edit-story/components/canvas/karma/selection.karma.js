@@ -91,6 +91,7 @@ describe('Selection integration', () => {
   });
 
   it('should show the selection on top of page navigation arrows', async () => {
+    // @todo Add these to fixture instead.
     await fixture.events.click(
       fixture.screen.getByRole('button', { name: 'Add New Page' })
     );
@@ -99,19 +100,22 @@ describe('Selection integration', () => {
     );
     const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
     await fixture.events.click(frame1);
-    const fbcr = frame1.getBoundingClientRect();
-    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, 10, 10),
+
+    const prevPage = fixture.screen
+      .getByRole('button', { name: 'Next Page' })
+      .getBoundingClientRect();
+    await fixture.events.mouse.seq(({ moveRel, move, down, up }) => [
+      moveRel(frame1, 100, 10),
       down(),
-      moveBy(
-        fullbleed.getBoundingClientRect().width - 20,
-        fullbleed.getBoundingClientRect().height / 2 - fbcr.height,
+      move(
+        prevPage.left + prevPage.width / 2,
+        prevPage.top + prevPage.height / 2,
         { steps: 5 }
       ),
       up(),
     ]);
     expect(await getSelection()).toEqual([element1.id]);
-    await fixture.snapshot('selection o top of page nav');
+    await fixture.snapshot('selection on top of the page nav');
   });
 
   it('should return focus to selection when pressing mod+alt+2', async () => {
