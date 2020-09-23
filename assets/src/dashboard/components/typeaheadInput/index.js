@@ -154,6 +154,7 @@ const TypeaheadInput = ({
   const menuOpened = useRef(false);
   const searchRef = useRef();
   const inputRef = useRef();
+  const searchResultsRef = useRef();
 
   const isMenuOpen = useMemo(() => {
     return showMenu && items.length > 0 && inputValue.length > 0;
@@ -235,7 +236,6 @@ const TypeaheadInput = ({
     }
   }, [isMenuOpen, items, value]);
 
-  const searchResultsRef = useRef();
   return (
     <SearchContainer
       ref={searchRef}

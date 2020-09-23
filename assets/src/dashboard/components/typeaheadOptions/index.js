@@ -19,12 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, forwardRef } from 'react';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { KEYS, Z_INDEX } from '../../constants';
+import { KEYS, Z_INDEX, KEYBOARD_USER_SELECTOR } from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { TypographyPresets } from '../typography';
 
@@ -59,6 +60,10 @@ const MenuItem = styled.li`
     color: ${theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
     width: 100%;
+
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      border: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+    }
   `}
 `;
 MenuItem.propTypes = {
@@ -75,17 +80,12 @@ const MenuItemContent = styled.span`
   text-overflow: ellipsis;
 `;
 
-const TypeaheadOptions = ({
-  currentSelection,
-  isOpen,
-  items = [],
-  onSelect,
-}) => {
+const TypeaheadOptions = forwardRef(function TypeaheadOptions(
+  { handleFocusToInput, selectedIndex, isOpen, items = [], onSelect },
+  listRef
+) {
   const [hoveredIndex, setHoveredIndex] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [isOptionMenuAlreadyOpen, setIsOptionMenuAlreadyOpen] = useState(false);
-  const listRef = useRef(null);
-
+  const [focusedIndex, setFocusedIndex] = useState(0);
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isOpen) {
@@ -93,20 +93,23 @@ const TypeaheadOptions = ({
         switch (event.key) {
           case KEYS.UP:
             event.preventDefault();
-            if (hoveredIndex > 0) {
-              setHoveredIndex(hoveredIndex - 1);
+            if (focusedIndex === 0) {
+              handleFocusToInput();
+            }
+            if (focusedIndex > 0) {
+              setFocusedIndex(focusedIndex - 1);
               if (listRef.current) {
-                listRef.current.children[hoveredIndex - 1].scrollIntoView();
+                listRef.current.children[focusedIndex - 1].focus();
               }
             }
             break;
 
           case KEYS.DOWN:
             event.preventDefault();
-            if (hoveredIndex < items.length - 1) {
-              setHoveredIndex(hoveredIndex + 1);
+            if (focusedIndex < items.length - 1) {
+              setFocusedIndex(focusedIndex + 1);
               if (listRef.current) {
-                listRef.current.children[hoveredIndex + 1].scrollIntoView();
+                listRef.current.children[focusedIndex + 1].focus();
               }
             }
             break;
@@ -114,7 +117,7 @@ const TypeaheadOptions = ({
           case KEYS.ENTER:
             event.preventDefault();
             if (onSelect) {
-              onSelect(items[hoveredIndex]);
+              onSelect(items[focusedIndex]);
             }
             break;
 
@@ -123,47 +126,21 @@ const TypeaheadOptions = ({
         }
       };
 
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      const listRefEl = listRef.current;
+      listRefEl.addEventListener('keydown', handleKeyDown);
+      return () => listRefEl.removeEventListener('keydown', handleKeyDown);
     }
-  }, [hoveredIndex, items, onSelect, isOpen]);
-
-  useEffect(() => {
-    if (listRef.current && listRef.current.children?.[0]) {
-      listRef.current.children[0].focus();
-    }
-  }, []);
-
-  // we only want to set an existing value for currentSelection when the dropdown is newly opened
-  useEffect(() => {
-    if (!isOptionMenuAlreadyOpen) {
-      setIsOptionMenuAlreadyOpen(true);
-
-      const selectionToCheckFor =
-        currentSelection && currentSelection.toLowerCase().trim();
-      const existingValueOnMenuOpen = selectionToCheckFor
-        ? items.findIndex(
-            (item) =>
-              (item.value &&
-                item.value.toLowerCase() === selectionToCheckFor) ||
-              item.label.toLowerCase() === selectionToCheckFor
-          )
-        : -1;
-
-      if (existingValueOnMenuOpen > -1) {
-        setSelectedIndex(existingValueOnMenuOpen);
-      }
-    }
-  }, [isOptionMenuAlreadyOpen, currentSelection, items]);
+  }, [items, onSelect, isOpen, listRef, handleFocusToInput, focusedIndex]);
 
   // when selectedIndex is updated above we want to scroll it into view and focus it
   useEffect(() => {
     if (listRef.current && listRef.current.children) {
-      const selectedItem = listRef.current.children[selectedIndex];
-      selectedItem?.scrollIntoView();
-      selectedItem?.focus();
+      const indexToFocus = selectedIndex > -1 ? selectedIndex : 0;
+      const focusedItem = listRef.current.children[indexToFocus];
+      setFocusedIndex(indexToFocus);
+      focusedItem?.scrollIntoView();
     }
-  }, [selectedIndex]);
+  }, [listRef, selectedIndex]);
 
   const renderMenuItem = (item, index) => {
     const itemIsDisabled = !item.value && item.value !== 0;
@@ -174,6 +151,7 @@ const TypeaheadOptions = ({
 
     return (
       <MenuItem
+        tabIndex={0}
         key={`${item.value}_${index}`}
         itemBgColor={itemBgColor}
         onClick={() => !itemIsDisabled && onSelect(item)}
@@ -192,10 +170,11 @@ const TypeaheadOptions = ({
       })}
     </Menu>
   );
-};
+});
 
 TypeaheadOptions.propTypes = {
-  currentSelection: PropTypes.string,
+  selectedIndex: PropTypes.number,
+  handleFocusToInput: PropTypes.func,
   items: PropTypes.arrayOf(DROPDOWN_ITEM_PROP_TYPE).isRequired,
   isOpen: PropTypes.bool,
   onSelect: PropTypes.func,
