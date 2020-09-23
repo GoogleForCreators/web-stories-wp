@@ -56,7 +56,7 @@ describe('Telemetry Banner', () => {
 
   it('should close the banner when the exit button is closed', async () => {
     const exitButton = await fixture.screen.getByRole('button', {
-      name: /Dismiss Notice/,
+      name: /Dismiss telemetry/,
     });
 
     await fixture.events.click(exitButton);
@@ -102,7 +102,7 @@ describe('Telemetry Banner', () => {
 
   it('should not display the banner after it has been closed with', async () => {
     const exitButton = await fixture.screen.getByRole('button', {
-      name: /Dismiss Notice/,
+      name: /Dismiss telemetry/,
     });
 
     await fixture.events.click(exitButton);
