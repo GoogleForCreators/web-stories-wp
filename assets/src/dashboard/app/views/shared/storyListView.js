@@ -287,7 +287,7 @@ export default function StoryListView({
             <TableDateHeaderCell>
               <SelectableTitle
                 aria-label={__(
-                  'Date last modified, select to sort table by date story was last modified on',
+                  'Date last modified, select to sort table by date story was last modified',
                   'web-stories'
                 )}
                 onClick={() =>
