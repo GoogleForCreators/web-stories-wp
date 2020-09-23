@@ -31,7 +31,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function hashToParams(hash) {
   return new URLSearchParams(hash.startsWith('#') ? hash.substr(1) : hash);
@@ -67,14 +67,13 @@ function useHashState(key, fallback) {
         _value = JSON.parse(decodeURI(params.get(key)));
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
+      // @TODO Add some error handling
     }
     return _value;
   });
 
   // update url param when value updates
-  useLayoutEffect(() => {
+  useEffect(() => {
     const params = hashToParams(window.location.hash);
     params.set(key, encodeURI(removeDoubleQuotes(JSON.stringify(value))));
     window.location.hash = params.toString();
