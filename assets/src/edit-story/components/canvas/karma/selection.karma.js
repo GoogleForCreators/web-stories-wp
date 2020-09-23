@@ -20,7 +20,7 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 
-describe('Selection integration', () => {
+describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   let fixture;
   let fullbleed;
 
