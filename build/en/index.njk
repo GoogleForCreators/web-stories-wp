@@ -10,7 +10,7 @@ rootClass: home
 
     <h1 id="hero_text">{{ $('Visual Storytelling') }}<br>{{ $('Has Come To WordPress.') }}</h1>
     <p class="hero_subtitle">{{ ('Make visual stories on the web your very own') }}</p>
-    <a href="https://github.com/google/web-stories-wp/releases/download/v1.0.0-rc.1/web-stories.zip" class="fake_button">{{$("Get the Plugin")}}</a>
+    <a href="https://wordpress.org/plugins/web-stories/" class="fake_button">{{$("Get the Plugin")}}</a>
 
     <amp-position-observer on="scroll:heroTextFade.seekTo(percent=event.percent)" target="hero_text" intersection-ratios="0.5" layout="nodisplay" ></amp-position-observer>
 
@@ -101,7 +101,7 @@ rootClass: home
       <source src="./video/wysiwyg.mp4" type="video/mp4" />
     </amp-video>
     <amp-position-observer on="enter:editor_bg.play" layout="nodisplay" intersection-ratios="0.9"></amp-position-observer>
-    </amp-video>
+
     <div id="templates_screenshot" role="img" aria-label="Screenshot of the Web Stories WordPress Plugin's template gallery"></div>
   </section>
 
@@ -197,7 +197,7 @@ rootClass: home
       <div id="templates">
         <amp-img id="template_1" src="/img/template_1.jpg" width="239px" height="426px" layout="responsive" ></amp-img>
         <div>
-          <amp-img id="template_2" src="/img/template_2.jpg" width="157px" height="280px"layout="responsive" ></amp-img>
+          <amp-img id="template_2" src="/img/template_2.jpg" width="157px" height="280px" layout="responsive" ></amp-img>
           <amp-img id="template_3" src="/img/template_3.jpg" width="157px" height="280px" layout="responsive" ></amp-img>
         </div>
         <amp-img id="template_4" src="/img/template_4.jpg" width="405px" height="700px" layout="responsive" ></amp-img>
@@ -242,13 +242,12 @@ rootClass: home
       <p>{{$('BEFORE YOU START')}}</p>
       <h1>{{$('Tips to make the most of Web Stories')}}</h1>
       <p>{{$('Welcome! Starting on a new tool can be daunting so we created a story with some tips to help you get started. It’s also an example of a Web Story! Enjoy the editor.')}}</p>
-      <a href="/tips" class="fake_button">{{$("VIEW THE PLUGIN")}}</a>
+      <a href="/stories/tips-web-stories-editor/" class="fake_button">{{$("View the Story")}}</a>
     </div>
     <div id="tip_card_container">
       <amp-img id="tip_card" src="/img/tips_card.jpg" alt='Screenshots of a screen of edited photos, with the caption "Tips to make the most of Web Stories"' layout="responsive" width="350" height="620"></amp-img>
       <div id="tip_card_bg"></div>
     </div>
   </section>
-
 
 </main>
