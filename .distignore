@@ -41,7 +41,6 @@ web-stories-scraper
 .travis_deploy_key.enc
 babel.config.cjs
 codecov.yml
-composer.json
 composer.lock
 CONTRIBUTING.md
 jest-puppeteer.config.cjs
