@@ -70,7 +70,7 @@ describe('Selection integration', () => {
     await fixture.snapshot();
   });
 
-  it('should show the selection under the page menu', async () => {
+  it('should show the selection on top of page menu', async () => {
     const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
     const fbcr = frame1.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
@@ -87,7 +87,31 @@ describe('Selection integration', () => {
       up(),
     ]);
     expect(await getSelection()).toEqual([element1.id]);
-    await fixture.snapshot();
+    await fixture.snapshot('selection and page menu');
+  });
+
+  it('should show the selection on top of page navigation arrows', async () => {
+    await fixture.events.click(
+      fixture.screen.getByRole('button', { name: 'Add New Page' })
+    );
+    await fixture.events.click(
+      fixture.screen.getByRole('button', { name: 'Previous Page' })
+    );
+    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+    await fixture.events.click(frame1);
+    const fbcr = frame1.getBoundingClientRect();
+    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
+      moveRel(frame1, 10, 10),
+      down(),
+      moveBy(
+        fullbleed.getBoundingClientRect().width - 20,
+        fullbleed.getBoundingClientRect().height / 2 - fbcr.height,
+        { steps: 5 }
+      ),
+      up(),
+    ]);
+    expect(await getSelection()).toEqual([element1.id]);
+    await fixture.snapshot('selection o top of page nav');
   });
 
   it('should return focus to selection when pressing mod+alt+2', async () => {
