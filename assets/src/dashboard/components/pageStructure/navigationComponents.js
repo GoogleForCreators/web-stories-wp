@@ -35,7 +35,7 @@ export const Content = styled.div`
 `;
 
 export const Header = styled.h1`
-  margin: 42px 28px 72px;
+  margin: 42px 0px 72px;
 `;
 
 export const NavButton = styled(Button)`
