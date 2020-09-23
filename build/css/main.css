@@ -1,9 +1,9 @@
 @font-face {
-  font-family: "Poppins Light";
+  font-family: "Poppins";
   font-style: normal;
   font-display: fallback;
   font-weight: 200;
-  src: local('Poppins Light'), local('Poppins-Light'), url('/fonts/Poppins.woff2') format('woff2');
+  src: local('Poppins'), local('Poppins'), url('/fonts/Poppins.woff2') format('woff2');
 }
 
 .visuallyhidden {
@@ -18,7 +18,7 @@
 }
 
 html {
-  font-family: "Poppins Light", "Segoe UI",  "Helvetica Neue", Roboto, sans-serif;
+  font-family: "Poppins", "Segoe UI",  "Helvetica Neue", Roboto, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
@@ -46,6 +46,13 @@ header, footer {
   display: flex;
   align-items: center;
   line-height: 44px;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  header, footer {
+    flex-direction: row;
+  }
 }
 
 header > a {
@@ -66,13 +73,25 @@ footer .links,
 header .links {
   display: flex;
   justify-content: flex-end;
-  align-items: center
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 footer .links a,
 header .links a {
   padding: 0 1rem;
-  color: #999;
+  color: #111;
+}
+
+header .links a {
+  padding: 0 .5rem;
+}
+
+@media screen and (min-width: 768px) {
+  header .links a {
+    padding: 0 1rem;
+  }
 }
 
 header nav a:focus,
@@ -94,9 +113,9 @@ header nav .current {
   font-weight: bolder;
 }
 
-
-footer .links > li:after,
-header .links > li:after {
+@media screen and (min-width: 768px) {
+  footer .links > li:after,
+  header .links > li:after {
     display: inline-block;
     height: 1rem;
     width: 1px;
@@ -104,11 +123,12 @@ header .links > li:after {
     background: #666;
     transition: all 0.5s ease-in-out;
     vertical-align: middle
-}
+  }
 
-footer li:last-child:after,
-header li:last-child:after {
-  display: none
+  footer li:last-child:after,
+  header li:last-child:after {
+    display: none
+  }
 }
 
 footer {
@@ -175,8 +195,14 @@ header .toggle {
   background: transparent;
   border: 0;
   outline: 0;
-  margin: 0 1em 0 -1em;
+  margin: 0 1em 0 -.5em;
   cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  header .toggle {
+    margin-left: -1em;
+  }
 }
 
 header .fake_button {
@@ -374,15 +400,22 @@ aside .docTrack i:last-child {
 }
 
 #announcing {
-  font-size: 3.5rem;
+  font-size: 3rem;
   position: fixed;
-  width: 61%;
+  min-width: 61%;
+  max-width: 88%;
   top: 8rem;
   opacity: 0;
   left: 0;
   right: 0;
   margin: auto;
   will-change: transform;
+}
+
+@media screen and (max-width: 1280px) {
+  #announcing {
+    font-size: 3.5rem;
+  }
 }
 
 #wysiwygftw {
@@ -494,17 +527,25 @@ aside .docTrack i:last-child {
 #final_thoughts h1 {
   font-size: 3.5rem;
   line-height: 1.4;
+  font-weight: 300;
 }
 
 #final_thoughts p {
+  font-size: 1.5em;
   line-height: 2em;
-  margin: 0
+  font-weight: 300;
+  margin: 0;
 }
 
 #final_thoughts > div {
-  flex: 0.25;
-  margin: 0 4rem;
+  flex: 0.35;
+  margin: 0 3rem;
   height: min-content;
+}
+
+#final_thoughts .fake_button {
+  font-size: 1.25rem;
+  padding: .5rem 1rem;
 }
 
 #tip_card_container {
@@ -602,16 +643,35 @@ footer .social_links.links li:after {
 }
 
 .web_creators {
-  background-image: url('/img/web_creators_logo.png');
+  background-image: url('/img/web-creators-logo-bw.svg');
 }
+
+.web_creators:hover {
+  background-image: url('/img/web-creators-logo.svg');
+}
+
 .instagram {
-  background-image: url('/img/instagram_logo.png');
+  background-image: url('/img/instagram-logo-bw.svg');
 }
-.twtiter {
-  background-image: url('/img/twitter_logo.png');
+
+.instagram:hover {
+  background-image: url('/img/instagram-logo.svg');
 }
-.yotube {
-  background-image: url('/img/youtube_logo.png');
+
+.twitter {
+  background-image: url('/img/twitter-logo-bw.svg');
+}
+
+.twitter:hover {
+  background-image: url('/img/twitter-logo.svg');
+}
+
+.youtube {
+  background-image: url('/img/youtube-logo-bw.svg');
+}
+
+.youtube:hover {
+  background-image: url('/img/youtube-logo.svg');
 }
 
 @media screen and (max-width: 1280px) {
