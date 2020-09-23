@@ -6,6 +6,14 @@
   src: local('Poppins'), local('Poppins'), url('/fonts/Poppins.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: "Poppins-ExtraLight";
+  font-style: normal;
+  font-display: fallback;
+  font-weight: 200;
+  src: local('Poppins-ExtraLight'), local('Poppins-ExtraLight'), url('/fonts/Poppins-ExtraLight.woff2') format('woff2');
+}
+
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -21,6 +29,7 @@ html {
   font-family: "Poppins", "Segoe UI",  "Helvetica Neue", Roboto, sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  max-width: 1920px;
 }
 
 header, footer, section {
@@ -39,13 +48,14 @@ header {
   z-index: 3;
   left: 0;
   right: 0;
-  padding: 0 6%;
+  padding: 2rem 6%;
+  max-width: 1920px;
 }
 
 header, footer {
   display: flex;
   align-items: center;
-  line-height: 44px;
+  line-height: 2.5;
   flex-direction: column;
 }
 
@@ -272,6 +282,7 @@ aside {
   width: 25rem;
   overflow: scroll;
   max-height: calc(100vh - 9rem - 45px);
+  max-width: 1920px;
 }
 
 aside a {
@@ -346,10 +357,11 @@ aside .docTrack i:last-child {
 
 
 #hero_text {
+  font-family: "Poppins-ExtraLight";
   font-size: 5.5rem;
   text-align: center;
   font-weight: 200;
-  margin: 12rem 0 0;
+  margin: 11rem 0 0;
   line-height: 1.4;
 }
 
@@ -387,24 +399,22 @@ aside .docTrack i:last-child {
 }
 
 #editor_bg {
-  border-radius: 20px;
   margin: auto;
   position: fixed;
   max-width: 80%;
+  width: 80rem;
   left: 0;
   right: 0;
-  background-size: cover;
-  background-repeat: no-repeat;
   opacity: 0.7;
-  top: 42rem
+  top: 42rem;
 }
 
 #announcing {
-  font-size: 3rem;
+  font-size: 3.5rem;
   position: fixed;
   min-width: 61%;
   max-width: 88%;
-  top: 8rem;
+  top: 11rem;
   opacity: 0;
   left: 0;
   right: 0;
@@ -420,14 +430,16 @@ aside .docTrack i:last-child {
 
 #wysiwygftw {
   font-size: 1.5rem;
+  font-weight: 700;
   position: fixed;
-  top: 10rem;
+  top: 16rem;
   opacity: 0;
   left: 0;
   right: 0;
   margin: auto;
   text-align: center;
   will-change: transform;
+  max-width: 1920px;
 }
 
 #templates_screenshot {
@@ -552,6 +564,10 @@ aside .docTrack i:last-child {
   position: relative;
 }
 
+#tip_card_container a {
+  display: inline-block;
+}
+
 #tip_card, #tip_card_bg {
   border-radius: 30px;
   background-repeat: no-repeat;
@@ -655,7 +671,7 @@ footer .social_links.links li:after {
 }
 
 .instagram:hover {
-  background-image: url('/img/instagram-logo.svg');
+  background-image: url('/img/instagram-logo.png');
 }
 
 .twitter {

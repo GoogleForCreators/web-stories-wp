@@ -4,7 +4,7 @@ layout: layouts/base.njk
 rootClass: home
 ---
 
-<main>
+<main on="tap:AMP.setState({docsMenuActive: false})">
 
   <section class="home_hero_text">
 
@@ -51,13 +51,13 @@ rootClass: home
                 "selector": "#editor_bg",
                 "keyframes": [
                     {"transform": "scale(1) translateY(0)", "opacity": 0.7},
-                    {"transform": "scale(1.05) translateY(-17em)", "opacity": 1, "offset": 0.1},
-                    {"transform": "scale(1.05) translateY(-17em)", "opacity": 1, "offset": 0.15},
-                    {"transform": "scale(1.05) translateY(-17em)", "opacity": 1, "offset": 0.4},
-                    {"transform": "scale(1) translateY(-29em)", "opacity": 1, "offset": 0.5},
-                    {"transform": "scale(1) translateY(-31em)", "opacity": 1, "offset": 0.6},
-                    {"transform": "scale(1) translateY(-31em)", "opacity": 1, "offset": 0.8},
-                    {"transform": "scale(1) translateY(-107em)", "opacity": 1, "offset": 1}
+                    {"transform": "scale(1.15) translateY(-10em)", "opacity": 1, "offset": 0.1},
+                    {"transform": "scale(1.15) translateY(-10em)", "opacity": 1, "offset": 0.15},
+                    {"transform": "scale(1.15) translateY(-10em)", "opacity": 1, "offset": 0.4},
+                    {"transform": "scale(1.15) translateY(-16em)", "opacity": 1, "offset": 0.5},
+                    {"transform": "scale(1.15) translateY(-18em)", "opacity": 1, "offset": 0.6},
+                    {"transform": "scale(1.15) translateY(-18em)", "opacity": 1, "offset": 0.8},
+                    {"transform": "scale(1.15) translateY(-127em)", "opacity": 1, "offset": 1}
                 ]
               }, {
                 "selector": "#announcing",
@@ -74,8 +74,8 @@ rootClass: home
                 "keyframes": [
                     {"opacity": 0},
                     {"opacity": 0, "transform": "translateY(2rem)", "offset": 0.5},
-                    {"opacity": 1, "transform": "translateY(-2rem)", "offset": 0.6},
-                    {"opacity": 1, "transform": "translateY(-2rem)", "offset": 0.8},
+                    {"opacity": 1, "transform": "translateY(-5rem)", "offset": 0.6},
+                    {"opacity": 1, "transform": "translateY(-5rem)", "offset": 0.8},
                     {"opacity": 0, "transform": "translateY(-40rem)", "offset": 0.9}
                 ]
               }, {
@@ -93,7 +93,7 @@ rootClass: home
 
 
 
-    <p id="announcing">{{ $("With Stories for WordPress, we're bringing first-class Web Stories support to WordPress.") }}</p>
+    <p id="announcing">{{ $("With Stories for WordPress, we're bringing<br>first-class Web Stories support to WordPress.") }}</p>
     <p id="wysiwygftw">{{ $("WYSIWYG all the way") }}</p>
     <amp-video poster="/img/editor_bg.jpg" id="editor_bg" width="1920" height="1200" layout="responsive" title="Stories for WordPresf in action" loop muted>
       <source src="./video/wysiwyg.av1.mp4" type='video/mp4; codecs="av01.0.00H.08"' />
@@ -245,8 +245,10 @@ rootClass: home
       <a href="/stories/tips-web-stories-editor/" class="fake_button">{{$("View the Story")}}</a>
     </div>
     <div id="tip_card_container">
-      <amp-img id="tip_card" src="/img/tips_card.jpg" alt='Screenshots of a screen of edited photos, with the caption "Tips to make the most of Web Stories"' layout="responsive" width="350" height="620"></amp-img>
-      <div id="tip_card_bg"></div>
+      <a href="/stories/tips-web-stories-editor/">
+        <amp-img id="tip_card" src="/img/tips_card.jpg" alt='Screenshots of a screen of edited photos, with the caption "Tips to make the most of Web Stories"' layout="intrinsic" width="350" height="620"></amp-img>
+        <div id="tip_card_bg"></div>
+      </a>
     </div>
   </section>
 

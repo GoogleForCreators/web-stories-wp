@@ -70,9 +70,9 @@ module.exports = function (eleventyConfig) {
 
     try {
       const dict = JSON.parse(fs.readFileSync(`${DATA_DIR}/${locale}/${locale}.json`))
-      return dict[str] || str
+      return new Nunjucks.runtime.SafeString(dict[str] || str)
     } catch (e) {
-      return str
+      return new Nunjucks.runtime.SafeString(str)
     }
   })
 
