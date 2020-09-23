@@ -24,11 +24,12 @@ import { __ } from '@wordpress/i18n';
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { KEYS } from '../../constants';
 import { Close as CloseIcon, Search as SearchIcon } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 import TypeaheadOptions from '../typeaheadOptions';
@@ -149,6 +150,8 @@ const TypeaheadInput = ({
 
   const [inputValue, setInputValue] = useState(value);
 
+  const [selectedValueIndex, setSelectedValueIndex] = useState(-1);
+  const menuOpened = useRef(false);
   const searchRef = useRef();
   const inputRef = useRef();
 
@@ -196,6 +199,43 @@ const TypeaheadInput = ({
     setMenuFocused(false);
   };
 
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.key === KEYS.DOWN) {
+        event.preventDefault();
+        searchResultsRef.current?.children[
+          selectedValueIndex > -1 ? selectedValueIndex : 0
+        ].focus();
+      }
+    },
+    [selectedValueIndex]
+  );
+
+  useEffect(() => {
+    if (!isMenuOpen && menuOpened.current) {
+      menuOpened.current = false;
+    }
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (isMenuOpen && !menuOpened.current) {
+      menuOpened.current = true;
+      const selectionToCheckFor = value && value.toLowerCase().trim();
+      const existingValueOnMenuOpen = selectionToCheckFor
+        ? items.findIndex(
+            (item) =>
+              (item.value &&
+                item.value.toLowerCase() === selectionToCheckFor) ||
+              item.label.toLowerCase() === selectionToCheckFor
+          )
+        : -1;
+      if (existingValueOnMenuOpen > -1) {
+        setSelectedValueIndex(existingValueOnMenuOpen);
+      }
+    }
+  }, [isMenuOpen, items, value]);
+
+  const searchResultsRef = useRef();
   return (
     <SearchContainer
       ref={searchRef}
@@ -230,6 +270,7 @@ const TypeaheadInput = ({
             onChange={({ target }) => {
               handleInputChange({ label: target.value, value: target.value });
             }}
+            onKeyDown={handleKeyDown}
             placeholder={placeholder}
           />
         </ControlVisibilityContainer>
@@ -246,7 +287,9 @@ const TypeaheadInput = ({
 
       {isMenuOpen && (
         <TypeaheadOptions
-          currentSelection={value}
+          ref={searchResultsRef}
+          handleFocusToInput={focusInput}
+          selectedIndex={selectedValueIndex}
           isOpen={isMenuOpen}
           items={items}
           onSelect={items && handleMenuItemSelect}
