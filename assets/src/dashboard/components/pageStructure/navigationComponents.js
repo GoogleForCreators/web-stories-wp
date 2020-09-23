@@ -32,16 +32,15 @@ export const Content = styled.div`
   > * {
     margin: 20px 28px;
   }
+`;
+
+export const Header = styled.h1`
+  margin: 42px 0px 72px;
+
   & > svg {
     margin: 0 28px;
     height: 64px;
   }
-`;
-
-export const Header = styled(Content)`
-  margin-top: 42px;
-  margin-bottom: 72px;
-  align-items: flex-start;
 `;
 
 export const NavButton = styled(Button)`
