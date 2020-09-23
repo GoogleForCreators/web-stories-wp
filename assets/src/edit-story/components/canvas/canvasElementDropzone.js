@@ -88,12 +88,19 @@ function CanvasElementDropzone({ children }) {
         const { grabOffsetX, grabOffsetY, elements } = JSON.parse(
           e.dataTransfer.getData('textset')
         );
-        const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
+        const { x, y, width, height } = pageContainer.getBoundingClientRect();
 
-        insertTextSetByOffset(elements, {
-          offsetX: editorToDataX(e.clientX - pageX + grabOffsetX),
-          offsetY: editorToDataY(e.clientY - pageY + grabOffsetY),
-        });
+        insertTextSetByOffset(
+          elements,
+          {
+            offsetX: editorToDataX(e.clientX - x + grabOffsetX),
+            offsetY: editorToDataY(e.clientY - y + grabOffsetY),
+          },
+          {
+            width: editorToDataX(width),
+            height: editorToDataY(height),
+          }
+        );
 
         e.stopPropagation();
         e.preventDefault();

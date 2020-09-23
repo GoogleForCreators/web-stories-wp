@@ -121,7 +121,6 @@ function useInsertElement() {
  * @param {number} props.width The element's width.
  * @param {number} props.height The element's height.
  * @param {?Object} props.mask The element's mask.
- * @param {boolean} props.ignorePageBoundary If true, an element's position will not be adjusted based on page dimensions
  * @return {Object} The element properties.
  */
 function getElementProperties(
@@ -137,7 +136,6 @@ function getElementProperties(
     scale = 100,
     focalX = 50,
     focalY = 50,
-    ignorePageBoundary = false,
     ...rest
   }
 ) {
@@ -168,8 +166,8 @@ function getElementProperties(
   if (!isNum(y)) {
     y = 0;
   }
-  x = dataPixels(ignorePageBoundary ? x : Math.min(x, PAGE_WIDTH - width));
-  y = dataPixels(ignorePageBoundary ? y : Math.min(y, PAGE_HEIGHT - height));
+  x = dataPixels(Math.min(x, PAGE_WIDTH - width));
+  y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
 
   return {
     ...attrs,

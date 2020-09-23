@@ -49,9 +49,7 @@ function useInsertTextSet() {
           'textSetWidth',
           'textSetHeight',
         ]);
-        addedElements.push(
-          insertElement(element.type, { ...toInsert, ignorePageBoundary: true })
-        );
+        addedElements.push(insertElement(element.type, toInsert));
       });
       // Select all added elements.
       setSelectedElementsById({
@@ -62,14 +60,42 @@ function useInsertTextSet() {
   );
 
   const insertTextSetByOffset = useCallback(
-    (elements, { offsetX, offsetY }) => {
+    (elements, { offsetX, offsetY }, boundary) => {
+      if (!elements.length) {
+        return;
+      }
+
+      let adjustedOffsetX = offsetX;
+      let adjustedOffsetY = offsetY;
+
+      if (boundary) {
+        const { width, height } = boundary;
+        const { textSetWidth, textSetHeight } = elements[0];
+
+        if (offsetX < 0) {
+          adjustedOffsetX = 0;
+        } else if (offsetX > width) {
+          adjustedOffsetX = width - textSetWidth;
+        } else if (offsetX + textSetWidth > width) {
+          adjustedOffsetX -= offsetX + textSetWidth - width;
+        }
+
+        if (offsetY < 0) {
+          adjustedOffsetY = 0;
+        } else if (offsetY > height) {
+          adjustedOffsetY = height - textSetHeight;
+        } else if (offsetY + textSetHeight > height) {
+          adjustedOffsetY -= offsetY + textSetHeight - height;
+        }
+      }
+
       const positionedTextSet = elements.reduce(
         (acc, element) => [
           ...acc,
           {
             ...element,
-            x: element.normalizedOffsetX + offsetX,
-            y: element.normalizedOffsetY + offsetY,
+            x: element.normalizedOffsetX + adjustedOffsetX,
+            y: element.normalizedOffsetY + adjustedOffsetY,
           },
         ],
         []

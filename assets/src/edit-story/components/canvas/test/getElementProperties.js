@@ -77,19 +77,4 @@ describe('getElementProperties', () => {
     expect(result.x).toBe(inboundsX);
     expect(result.y).toBe(inboundsY);
   });
-
-  it('should keep x,y unmodified when ignorePageBoundary is true', () => {
-    const outOfBoundsX = PAGE_WIDTH + BASIC_SHAPE.width;
-    const outOfBoundsY = PAGE_HEIGHT + BASIC_SHAPE.height;
-
-    const results = getElementProperties(BASIC_SHAPE.type, {
-      ...BASIC_SHAPE,
-      x: outOfBoundsX,
-      y: outOfBoundsY,
-      ignorePageBoundary: true,
-    });
-
-    expect(results.x).toBe(outOfBoundsX);
-    expect(results.y).toBe(outOfBoundsY);
-  });
 });
