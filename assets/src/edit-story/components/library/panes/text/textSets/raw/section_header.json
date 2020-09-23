@@ -1,8 +1,62 @@
 {
   "current": "9c5a3d04-66eb-4ff3-a5fa-440b1ca4c9cf",
-  "selection": [],
+  "selection": ["ddb38426-a6de-47b9-b783-24187c869f5a"],
   "story": {
     "stylePresets": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
       "colors": [
         {
           "color": {
@@ -94,8 +148,7 @@
             "a": 0.6
           }
         }
-      ],
-      "textStyles": []
+      ]
     }
   },
   "version": 24,
@@ -1540,47 +1593,37 @@
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Poppins",
+            "family": "Merriweather",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "fallbacks": ["serif"],
+            "weights": [300, 400, 700, 900],
             "styles": ["italic", "regular"],
             "variants": [
-              [0, 100],
-              [0, 200],
               [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
               [1, 300],
+              [0, 400],
               [1, 400],
-              [1, 500],
-              [1, 600],
+              [0, 700],
               [1, 700],
-              [1, 800],
+              [0, 900],
               [1, 900]
             ],
             "metrics": {
               "upm": 1000,
-              "asc": 1050,
-              "des": -350,
-              "tAsc": 1050,
-              "tDes": -350,
-              "tLGap": 100,
-              "wAsc": 1135,
-              "wDes": 627,
-              "xH": 548,
-              "capH": 698,
-              "yMin": -572,
-              "yMax": 1065,
-              "hAsc": 1050,
-              "hDes": -350,
-              "lGap": 100
+              "asc": 984,
+              "des": -273,
+              "tAsc": 984,
+              "tDes": -273,
+              "tLGap": 0,
+              "wAsc": 1065,
+              "wDes": 273,
+              "xH": 555,
+              "capH": 743,
+              "yMin": -272,
+              "yMax": 1055,
+              "hAsc": 984,
+              "hDes": -273,
+              "lGap": 0
             }
           },
           "fontSize": 27,
@@ -1602,7 +1645,7 @@
           "content": "Good design is aesthetic",
           "fontWeight": 400,
           "width": 337,
-          "height": 37,
+          "height": 34,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2224,7 +2267,7 @@
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Nunito Sans",
+            "family": "Nunito",
             "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [200, 300, 400, 600, 700, 800, 900],
@@ -2252,12 +2295,12 @@
               "tAsc": 1011,
               "tDes": -353,
               "tLGap": 0,
-              "wAsc": 1087,
-              "wDes": 275,
+              "wAsc": 1092,
+              "wDes": 281,
               "xH": 487,
               "capH": 705,
-              "yMin": -259,
-              "yMax": 1077,
+              "yMin": -275,
+              "yMax": 1081,
               "hAsc": 1011,
               "hDes": -353,
               "lGap": 0
@@ -2282,7 +2325,7 @@
           "content": "<span style=\"font-weight: 300\">Good design is aesthetic</span>",
           "fontWeight": 400,
           "width": 254,
-          "height": 75,
+          "height": 77,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
