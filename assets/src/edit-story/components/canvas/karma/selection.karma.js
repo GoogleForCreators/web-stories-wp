@@ -40,6 +40,15 @@ describe('Selection integration', () => {
     return storyContext.state.selectedElementIds;
   }
 
+  async function setFontSize(size) {
+    const fontSize = fixture.editor.inspector.designPanel.textStyle.fontSize;
+    await fixture.events.click(fontSize, { clickCount: 3 });
+    await fixture.events.keyboard.type(size);
+    await fixture.events.keyboard.press('tab');
+    // Give time for the font size to be applied.
+    await fixture.events.sleep(100);
+  }
+
   it('should have the last element selected by default', async () => {
     await fixture.events.click(fixture.editor.library.textAdd);
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
@@ -48,6 +57,7 @@ describe('Selection integration', () => {
 
   it('should show the selection lines when out of page area', async () => {
     await fixture.events.click(fixture.editor.library.textAdd);
+    await setFontSize('30');
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame1, 5, 5),
@@ -61,10 +71,11 @@ describe('Selection integration', () => {
 
   it('should show the selection on top of page menu', async () => {
     await fixture.events.click(fixture.editor.library.textAdd);
+    await setFontSize('30');
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     const fbcr = frame1.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, 5, 5),
+      moveRel(frame1, 15, 15),
       down(),
       moveBy(
         0,
@@ -76,6 +87,7 @@ describe('Selection integration', () => {
       ),
       up(),
     ]);
+    await fixture.events.sleep(9000);
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot('selection and page menu');
   });
@@ -86,17 +98,18 @@ describe('Selection integration', () => {
     );
 
     await fixture.events.click(fixture.editor.library.textAdd);
+    await setFontSize('30');
+
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
-    await fixture.events.click(frame1);
 
     const prevPage = fixture.editor.canvas.framesLayer.prevPage.getBoundingClientRect();
-    await fixture.events.mouse.seq(({ moveRel, move, down, up }) => [
-      moveRel(frame1, 5, 5),
+    const resizeW = fixture
+      .querySelector('.moveable-w')
+      .getBoundingClientRect();
+    await fixture.events.mouse.seq(({ move, down, up }) => [
+      move(resizeW.left + 1, resizeW.top + 1),
       down(),
-      move(
-        prevPage.left - prevPage.width / 2,
-        prevPage.top + prevPage.height / 2
-      ),
+      move(prevPage.left - prevPage.width / 2, 0),
       up(),
     ]);
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
@@ -104,6 +117,9 @@ describe('Selection integration', () => {
   });
 
   it('should return focus to selection when pressing mod+alt+2', async () => {
+    await fixture.events.click(
+      fixture.editor.canvas.framesLayer.pageActions().add
+    );
     // NB: We can't actually validate that the frame has focus, as that's a bit flaky,
     // But as long as the focus moves in the shortcut press, it's fair to assume that it has
     // Move to the canvas selection.
