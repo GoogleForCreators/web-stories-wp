@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, forwardRef } from 'react';
+import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
@@ -89,7 +89,10 @@ const CloseIcon = styled(CloseSVG)`
 `;
 
 const ToggleButton = styled.button.attrs({
-  ['aria-label']: __('Dismiss Notice', 'web-stories'),
+  ['aria-label']: __(
+    'Dismiss telemetry data sharing opt-in banner',
+    'web-stories'
+  ),
 })`
   display: flex;
   height: 16px;
@@ -122,6 +125,14 @@ export const TelemetryOptInBanner = forwardRef(
     ref
   ) => {
     const { assetsURL } = useConfig();
+    const checkboxRef = useRef();
+    const focusOnCheckbox = useRef(false);
+
+    useEffect(() => {
+      if (focusOnCheckbox.current) {
+        checkboxRef.current.focus();
+      }
+    });
 
     return visible ? (
       <Banner
@@ -142,7 +153,18 @@ export const TelemetryOptInBanner = forwardRef(
           </ToggleButton>
         </Header>
         <Label>
-          <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
+          <CheckBox
+            checked={checked}
+            disabled={disabled}
+            onChange={() => {
+              onChange();
+              focusOnCheckbox.current = true;
+            }}
+            onBlur={() => {
+              focusOnCheckbox.current = false;
+            }}
+            ref={checkboxRef}
+          />
           <LabelText aria-checked={checked}>
             {__(
               'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
@@ -153,6 +175,10 @@ export const TelemetryOptInBanner = forwardRef(
               href={__('https://policies.google.com/privacy', 'web-stories')}
               rel="noreferrer"
               target="_blank"
+              aria-label={__(
+                'Learn more by visiting https://policies.google.com/privacy',
+                'web-stories'
+              )}
             >
               {__('Learn more', 'web-stories')}
               {'.'}
