@@ -22,7 +22,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
+import { renderWithProviders } from '../../../../testUtils/';
 import TypeaheadOptions from '../';
 
 describe('TypeaheadOptions', () => {
