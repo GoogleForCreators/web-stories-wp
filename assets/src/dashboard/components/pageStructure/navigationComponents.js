@@ -36,6 +36,11 @@ export const Content = styled.div`
 
 export const Header = styled.h1`
   margin: 42px 0px 72px;
+
+  & > svg {
+    margin: 0 28px;
+    height: 64px;
+  }
 `;
 
 export const NavButton = styled(Button)`
