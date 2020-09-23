@@ -160,7 +160,6 @@ function StoryProvider({ storyId, children }) {
     },
     actions: {
       ...api,
-      // setCurrentPage: setCurrentPageAndHash,
       autoSave,
       saveStory,
     },
