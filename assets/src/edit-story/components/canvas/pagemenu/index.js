@@ -90,7 +90,7 @@ const Space = styled.div`
   width: ${({ isDouble }) => (isDouble ? 20 : 10)}px;
 `;
 
-const Icon = styled.button`
+const Icon = styled.button.attrs({ role: 'listitem' })`
   cursor: pointer;
   background: transparent;
   border: 0;
@@ -180,7 +180,7 @@ function PageMenu() {
   }
 
   return (
-    <Wrapper>
+    <Wrapper role="list" aria-label={__('Page actions', 'web-stories')}>
       <Box>
         <Options>
           {pageSize.width > 280 && (

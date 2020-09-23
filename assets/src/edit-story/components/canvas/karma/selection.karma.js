@@ -19,12 +19,9 @@
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Selection integration', () => {
   let fixture;
-  let element1;
   let fullbleed;
 
   beforeEach(async () => {
@@ -32,17 +29,6 @@ describe('Selection integration', () => {
     await fixture.render();
 
     fullbleed = fixture.container.querySelector('[data-testid="fullbleed"]');
-
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    element1 = await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'hello world!',
-        x: 0,
-        y: 40,
-        width: 250,
-      })
-    );
   });
 
   afterEach(() => {
@@ -55,23 +41,27 @@ describe('Selection integration', () => {
   }
 
   it('should have the last element selected by default', async () => {
-    expect(await getSelection()).toEqual([element1.id]);
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
   });
 
   it('should show the selection lines when out of page area', async () => {
-    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame1, 5, 5),
       down(),
       moveBy(-20, 0, { steps: 5 }),
       up(),
     ]);
-    expect(await getSelection()).toEqual([element1.id]);
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot();
   });
 
   it('should show the selection on top of page menu', async () => {
-    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     const fbcr = frame1.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame1, 5, 5),
@@ -86,35 +76,30 @@ describe('Selection integration', () => {
       ),
       up(),
     ]);
-    expect(await getSelection()).toEqual([element1.id]);
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot('selection and page menu');
   });
 
   it('should show the selection on top of page navigation arrows', async () => {
-    // @todo Add these to fixture instead.
     await fixture.events.click(
-      fixture.screen.getByRole('button', { name: 'Add New Page' })
+      fixture.editor.canvas.framesLayer.pageActions().add
     );
-    await fixture.events.click(
-      fixture.screen.getByRole('button', { name: 'Previous Page' })
-    );
-    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     await fixture.events.click(frame1);
 
-    const prevPage = fixture.screen
-      .getByRole('button', { name: 'Next Page' })
-      .getBoundingClientRect();
+    const prevPage = fixture.editor.canvas.framesLayer.prevPage.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, move, down, up }) => [
-      moveRel(frame1, 100, 10),
+      moveRel(frame1, 5, 5),
       down(),
       move(
-        prevPage.left + prevPage.width / 2,
-        prevPage.top + prevPage.height / 2,
-        { steps: 5 }
+        prevPage.left - prevPage.width / 2,
+        prevPage.top + prevPage.height / 2
       ),
       up(),
     ]);
-    expect(await getSelection()).toEqual([element1.id]);
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot('selection on top of the page nav');
   });
 

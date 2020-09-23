@@ -150,6 +150,18 @@ class FramesLayer extends Container {
       Controls
     );
   }
+
+  pageActions() {
+    return this._get(
+      this.getByRole('list', { name: 'Page actions' }),
+      'pageActions',
+      PageActions
+    );
+  }
+
+  get prevPage() {
+    return this.getByRole('button', { name: 'Previous Page' });
+  }
 }
 
 /**
@@ -254,5 +266,38 @@ class Header extends Container {
 
   get schedule() {
     return this.getByRole('button', { name: 'Schedule' });
+  }
+}
+
+/**
+ * Page actions below the page.
+ */
+class PageActions extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get add() {
+    return this.getByRole('listitem', { name: 'Add New Page' });
+  }
+
+  get duplicate() {
+    // @todo Implement.
+    return null;
+  }
+
+  get delete() {
+    // @todo Implement.
+    return null;
+  }
+
+  get undo() {
+    // @todo Implement.
+    return null;
+  }
+
+  get redo() {
+    // @todo Implement.
+    return null;
   }
 }
