@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /**
  * Internal dependencies
  */
@@ -118,5 +134,36 @@ describe('Telemetry Banner', () => {
     bannerHeader = await fixture.screen.queryByText(/Help improve the editor!/);
 
     expect(bannerHeader).toBeNull();
+  });
+
+  it('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
+    const checkbox = await fixture.querySelector('#telemetry-banner-opt-in');
+    await fixture.events.focus(checkbox);
+
+    await fixture.events.keyboard.press('Space');
+
+    let optedIn = await fixture.renderHook(() =>
+      useApi(
+        ({ state: { currentUser } }) =>
+          currentUser.data?.meta?.web_stories_tracking_optin ?? false
+      )
+    );
+
+    expect(optedIn).toBeTrue();
+
+    expect(checkbox).toEqual(document.activeElement);
+
+    await fixture.events.keyboard.press('Space');
+
+    optedIn = await fixture.renderHook(() =>
+      useApi(
+        ({ state: { currentUser } }) =>
+          currentUser.data?.meta?.web_stories_tracking_optin ?? false
+      )
+    );
+
+    expect(optedIn).toBeFalse();
+
+    expect(checkbox).toEqual(document.activeElement);
   });
 });
