@@ -8,5 +8,8 @@
   "locales": [
     "de",
     "jp"
-  ]
+  ],
+  "author": {
+    "twitterHandle": "WebCreators"
+  }
 }
