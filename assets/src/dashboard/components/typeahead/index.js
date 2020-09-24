@@ -65,7 +65,7 @@ const Typeahead = ({
 
   const searchRef = useRef();
   const inputRef = useRef();
-  const searchResultsRef = useRef();
+  const typeaheadOptionsRef = useRef();
 
   const focusInput = useCallback(() => {
     inputRef.current.focus();
@@ -111,9 +111,7 @@ const Typeahead = ({
     (event) => {
       if (event.key === KEYS.DOWN) {
         event.preventDefault();
-        searchResultsRef.current?.children[
-          selectedValueIndex.value > -1 ? selectedValueIndex.value : 0
-        ].focus();
+        typeaheadOptionsRef.current?.children[selectedValueIndex.value].focus();
       }
     },
     [selectedValueIndex]
@@ -171,7 +169,7 @@ const Typeahead = ({
 
       {isMenuOpen && (
         <TypeaheadOptions
-          ref={searchResultsRef}
+          ref={typeaheadOptionsRef}
           handleFocusToInput={focusInput}
           selectedIndex={selectedValueIndex.value}
           items={items}

@@ -52,7 +52,7 @@ export default function useTypeahead({ items, value }) {
                 item.value.toLowerCase() === selectionToCheckFor) ||
               item.label.toLowerCase() === selectionToCheckFor
           )
-        : -1;
+        : 0;
       setSelectedValueIndex(existingValueOnMenuOpen);
     }
   }, [isMenuOpen, items, value]);

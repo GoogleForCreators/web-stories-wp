@@ -77,9 +77,8 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
   }, [items, onSelect, listRef, handleFocusToInput, focusedIndex]);
 
   useEffect(() => {
-    const indexToSet = selectedIndex > -1 ? selectedIndex : 0;
-    setFocusedIndex(indexToSet);
-    setHoveredIndex(indexToSet);
+    setFocusedIndex(selectedIndex);
+    setHoveredIndex(selectedIndex);
   }, [selectedIndex]);
 
   const renderMenuItem = (item, index) => {
