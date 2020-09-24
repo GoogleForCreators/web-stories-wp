@@ -60,6 +60,14 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
+
+  span[data-text="true"] {
+    padding: ${({ textPadding }) => textPadding};
+  }
+  span {
+    box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -83,6 +91,7 @@ const Highlight = styled.span`
   * {
     color: transparent !important;
   }
+  padding: ${({ padding }) => padding};
 `;
 
 function TextEdit({
@@ -316,16 +325,22 @@ function TextEdit({
       onClick={onClick}
       data-testid="textEditor"
       backgroundColor={wrapperBackgroundColor}
+      textPadding={textProps.padding}
     >
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
-        <TextBox ref={highlightRef} {...textProps}>
+        <TextBox ref={highlightRef} {...textProps} padding={null}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
             {...textProps}
           />
         </TextBox>
       )}
-      <TextBox className="syncMargin" ref={textBoxRef} {...textProps}>
+      <TextBox
+        className="syncMargin"
+        ref={textBoxRef}
+        {...textProps}
+        padding={null}
+      >
         <RichTextEditor
           ref={editorRef}
           content={content}

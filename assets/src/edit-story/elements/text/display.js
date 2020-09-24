@@ -66,13 +66,15 @@ const MarginedElement = styled.span`
   position: relative;
   display: block;
   top: 0;
-  left: ${({ horizontalPadding }) => `-${horizontalPadding}px`};
+  left: 0;
 `;
 
 const Span = styled.span`
   ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
 
+  box-decoration-break: clone;
+  box-decoration-break: clone;
   position: relative;
 `;
 
