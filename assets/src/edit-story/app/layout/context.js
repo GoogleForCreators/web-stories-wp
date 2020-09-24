@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
-export { default } from './layout';
-export { default as useLayout } from './useLayout';
-export { default as LayoutProvider } from './layoutProvider';
+/**
+ * Internal dependencies
+ */
+import { createContext } from '../../utils/context';
+
+export default createContext({ actions: {}, state: {} });

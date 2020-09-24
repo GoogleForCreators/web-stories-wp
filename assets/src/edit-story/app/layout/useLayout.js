@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-export { default } from './layout';
-export { default as useLayout } from './useLayout';
-export { default as LayoutProvider } from './layoutProvider';
+/**
+ * Internal dependencies
+ */
+import { identity, useContextSelector } from '../../utils/context';
+import Context from './context';
+
+function useLayout(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useLayout;

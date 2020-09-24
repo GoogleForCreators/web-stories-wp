@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -30,9 +30,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useLayout } from '../../../../../app/layout';
 import DisplayElement from '../../../../canvas/displayElement';
-import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
+import { UnitsProvider } from '../../../../../units';
+import {
+  PAGE_WIDTH,
+  PAGE_RATIO,
+  TEXT_SET_SIZE,
+} from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
+import { dataToEditorX, dataToEditorY } from '../../../../../units/dimensions';
 
 const TextSetItem = styled.button`
   border: 0;
@@ -45,22 +52,39 @@ const TextSetItem = styled.button`
   cursor: pointer;
 `;
 
+const DragContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
+`;
+
 function TextSet({ elements }) {
   const { insertTextSet } = useLibrary((state) => ({
     insertTextSet: state.actions.insertTextSet,
   }));
 
+  const elementRef = useRef();
+
+  const { canvasPageSize } = useLayout(({ state }) => ({
+    canvasPageSize: state.canvasPageSize,
+  }));
+
   const handleDragStart = useCallback(
     (e) => {
       const { x, y } = e.target.getBoundingClientRect();
-      const grabOffsetX = x - e.clientX;
-      const grabOffsetY = y - e.clientY;
+      const offsetX = e.clientX - x;
+      const offsetY = e.clientY - y;
 
+      e.dataTransfer.setDragImage(elementRef.current, offsetX, offsetY);
       e.dataTransfer.setData(
         'textset',
         JSON.stringify({
-          grabOffsetX,
-          grabOffsetY,
+          grabOffsetX: -offsetX,
+          grabOffsetY: -offsetY,
           elements,
         })
       );
@@ -68,41 +92,83 @@ function TextSet({ elements }) {
     [elements]
   );
 
+  const { textSetHeight, textSetWidth } = elements[0];
+  const { width: pageWidth, height: pageHeight } = canvasPageSize;
+  const dragWidth = dataToEditorX(textSetWidth, pageWidth);
+  const dragHeight = dataToEditorY(textSetHeight, pageHeight);
+
   return (
-    <TextSetItem
-      role="listitem"
-      draggable={true}
-      onDragStart={handleDragStart}
-      aria-label={__('Insert Text Set', 'web-stories')}
-      onClick={() => insertTextSet(elements)}
-    >
-      {elements.map(
-        ({
-          id,
-          content,
-          normalizedOffsetX,
-          normalizedOffsetY,
-          textSetWidth,
-          textSetHeight,
-          ...rest
-        }) => (
-          <DisplayElement
-            previewMode
-            key={id}
-            element={{
+    <>
+      <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
+        <UnitsProvider
+          pageSize={{
+            width: pageWidth,
+            height: pageHeight,
+          }}
+        >
+          {elements.map(
+            ({
               id,
-              content: `<span style="color: #fff">${content}<span>`,
-              ...rest,
-              x: normalizedOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
-              y:
-                normalizedOffsetY +
-                (PAGE_WIDTH - textSetHeight) /
-                  2 /* Use PAGE_WIDTH here since the area is square */,
-            }}
-          />
-        )
-      )}
-    </TextSetItem>
+              content,
+              normalizedOffsetX,
+              normalizedOffsetY,
+              ...rest
+            }) => (
+              <DisplayElement
+                previewMode
+                key={id}
+                element={{
+                  id,
+                  content,
+                  ...rest,
+                  x: normalizedOffsetX,
+                  y: normalizedOffsetY,
+                }}
+              />
+            )
+          )}
+        </UnitsProvider>
+      </DragContainer>
+      <TextSetItem
+        role="listitem"
+        draggable={true}
+        onDragStart={handleDragStart}
+        aria-label={__('Insert Text Set', 'web-stories')}
+        onClick={() => insertTextSet(elements)}
+      >
+        <UnitsProvider
+          pageSize={{
+            width: TEXT_SET_SIZE,
+            height: TEXT_SET_SIZE / PAGE_RATIO,
+          }}
+        >
+          {elements.map(
+            ({
+              id,
+              content,
+              normalizedOffsetX,
+              normalizedOffsetY,
+              ...rest
+            }) => (
+              <DisplayElement
+                previewMode
+                key={id}
+                element={{
+                  id,
+                  content: `<span style="color: #fff">${content}<span>`,
+                  ...rest,
+                  x: normalizedOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
+                  y:
+                    normalizedOffsetY +
+                    (PAGE_WIDTH - textSetHeight) /
+                      2 /* Use PAGE_WIDTH here since the area is square */,
+                }}
+              />
+            )
+          )}
+        </UnitsProvider>
+      </TextSetItem>
+    </>
   );
 }
 
