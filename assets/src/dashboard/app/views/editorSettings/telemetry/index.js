@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -52,7 +52,17 @@ export default function TelemetrySettings({
   onCheckboxSelected,
   disabled,
 }) {
+  const checkboxRef = useRef();
+  const focusOnCheckbox = useRef(false);
+
   const checked = Boolean(selected);
+
+  useEffect(() => {
+    if (focusOnCheckbox.current) {
+      checkboxRef.current.focus();
+    }
+  });
+
   return (
     <SettingForm>
       <div>
@@ -63,9 +73,16 @@ export default function TelemetrySettings({
       <div>
         <Label>
           <CheckBox
+            ref={checkboxRef}
             data-testid="telemetry-settings-checkbox"
             disabled={disabled}
-            onChange={onCheckboxSelected}
+            onChange={() => {
+              onCheckboxSelected();
+              focusOnCheckbox.current = true;
+            }}
+            onBlur={() => {
+              focusOnCheckbox.current = false;
+            }}
             checked={checked}
           />
           <FormLabel aria-checked={checked}>
