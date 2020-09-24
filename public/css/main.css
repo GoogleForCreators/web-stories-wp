@@ -99,6 +99,7 @@ header .links {
   align-items: center;
   margin: 0;
   padding: 0;
+  white-space: nowrap;
 }
 
 footer .links a,
@@ -764,6 +765,14 @@ footer .social_links.links li:after {
   header .links ~ .fake_button {
     display: none
   }
+
+  .docs aside {
+    display: none;
+  }
+
+  .docs main {
+    margin-left: 0
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -790,6 +799,13 @@ footer .social_links.links li:after {
   }
 }
 
+@media screen and (max-width: 500px) {
+  footer .links a {
+    padding: 0 0.5rem;
+  }
+}
+
+
 @keyframes peekaboo {
   from {
     clippath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 1.75rem, 20px 1.75rem);
@@ -797,6 +813,6 @@ footer .social_links.links li:after {
   }
   to {
     clippath: polygon(20px 0, 100% 0, 100% 1.75rem, 20px 1.75rem, 0 1.75rem, 0 0, 20px 0);
-    transform: rotate(360deg)
+   transform: rotate(360deg)
   }
 }
