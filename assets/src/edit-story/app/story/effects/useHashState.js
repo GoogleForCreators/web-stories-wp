@@ -37,12 +37,6 @@ export function hashToParams(hash) {
   return new URLSearchParams(hash.startsWith('#') ? hash.substr(1) : hash);
 }
 
-function removeDoubleQuotes(string) {
-  return string.startsWith('"') && string.endsWith('"')
-    ? string.slice(1, -1)
-    : string;
-}
-
 /**
  * Functions like a normal `useState()` but reads initial value of of url
  * hash key and uses `fallback` if no value found. Also updates hash key on
@@ -64,7 +58,7 @@ function useHashState(key, fallback) {
     let _value = fallback;
     try {
       if (params.has(key)) {
-        _value = JSON.parse(`"${decodeURI(params.get(key))}"`);
+        _value = JSON.parse(decodeURI(params.get(key)));
       }
     } catch (e) {
       // @TODO Add some error handling
@@ -75,7 +69,7 @@ function useHashState(key, fallback) {
   // update url param when value updates
   useEffect(() => {
     const params = hashToParams(window.location.hash);
-    params.set(key, encodeURI(removeDoubleQuotes(JSON.stringify(value))));
+    params.set(key, encodeURI(JSON.stringify(value)));
     window.location.hash = params.toString();
   }, [key, value]);
 
