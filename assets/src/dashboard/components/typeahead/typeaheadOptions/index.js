@@ -105,7 +105,7 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
   };
 
   return (
-    <Menu isOpen ref={listRef}>
+    <Menu isOpen ref={listRef} data-testid="typeahead-options">
       {items.map((item, index) => {
         return renderMenuItem(item, index);
       })}
