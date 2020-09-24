@@ -242,9 +242,7 @@ class Sanitization {
 				if ( $link->parentNode ) {
 					$link->parentNode->removeChild( $link ); // So we can move it.
 				}
-				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 				if ( $previous_node && $previous_node->nextSibling ) {
-					// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 					$document->head->insertBefore( $link, $previous_node->nextSibling );
 					$previous_node = $link;
 				}
@@ -286,9 +284,7 @@ class Sanitization {
 		 * @var DOMElement $ordered_script
 		 */
 		foreach ( $ordered_scripts as $ordered_script ) {
-			// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 			if ( $previous_node && $previous_node->nextSibling ) {
-				// phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 				$document->head->insertBefore( $ordered_script, $previous_node->nextSibling );
 				$previous_node = $ordered_script;
 			}
