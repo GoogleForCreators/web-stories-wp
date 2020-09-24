@@ -61,6 +61,11 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
           }
           break;
 
+        case KEYS.ESC:
+          event.preventDefault();
+          handleFocusToInput();
+          break;
+
         default:
           break;
       }
