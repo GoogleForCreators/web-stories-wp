@@ -29,7 +29,12 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { KEYS, STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
+import { rgba } from 'polished';
+import {
+  KEYS,
+  STORY_CONTEXT_MENU_ACTIONS,
+  KEYBOARD_USER_SELECTOR,
+} from '../../constants';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
 import { TypographyPresets } from '../typography';
 
@@ -68,6 +73,8 @@ export const MenuItem = styled.li`
     background: ${isHovering && !isDisabled ? theme.colors.gray25 : 'none'};
     color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
     cursor: ${isDisabled ? 'default' : 'pointer'};
+    border: ${theme.borders.transparent};
+    border-width: 2px;
     display: flex;
     width: 100%;
 
@@ -82,6 +89,10 @@ export const MenuItem = styled.li`
     &:focus, &:active, &:hover {
       outline: none;
       color: ${isDisabled ? theme.colors.gray400 : theme.colors.gray700};
+    }
+
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      border: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
     }
 
   `}
@@ -100,8 +111,8 @@ const MenuItemContent = styled.span`
 
 const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
   const [hoveredIndex, setHoveredIndex] = useState(currentValueIndex);
+  const [focusedIndex, setFocusedIndex] = useState(currentValueIndex);
   const listRef = useRef(null);
-
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isOpen) {
@@ -110,30 +121,32 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
         switch (event.key) {
           case KEYS.UP:
             event.preventDefault();
-            if (hoveredIndex > 0) {
-              setHoveredIndex(hoveredIndex - 1);
+            if (focusedIndex > 0) {
+              setFocusedIndex(focusedIndex - 1);
               if (listRef.current) {
-                listRef.current.children[hoveredIndex - 1].focus();
+                listRef.current.children[focusedIndex - 1].focus();
               }
             }
             break;
 
           case KEYS.DOWN:
             event.preventDefault();
-            if (hoveredIndex < items.length - 1) {
-              setHoveredIndex(hoveredIndex + 1);
+            if (focusedIndex < items.length - 1) {
+              setFocusedIndex(focusedIndex + 1);
               if (listRef.current) {
-                listRef.current.children[hoveredIndex + 1].focus();
+                listRef.current.children[focusedIndex + 1].focus();
               }
             }
             break;
 
           case KEYS.ENTER:
             // let anchor items be handled natively by browser
-            if (!items[hoveredIndex].url) {
+            if (!items[focusedIndex].url) {
               event.preventDefault();
-              if (onSelect) {
-                onSelect(items[hoveredIndex]);
+              const itemIsDisabled =
+                !items[focusedIndex].value && items[focusedIndex].value !== 0;
+              if (onSelect && !itemIsDisabled) {
+                onSelect(items[focusedIndex]);
               }
             }
             break;
@@ -154,7 +167,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
       listRefEl.addEventListener('keydown', handleKeyDown);
       return () => listRefEl.removeEventListener('keydown', handleKeyDown);
     }
-  }, [hoveredIndex, items, onSelect, isOpen]);
+  }, [focusedIndex, items, onSelect, isOpen]);
 
   useEffect(() => {
     if (listRef.current && isOpen) {
@@ -186,6 +199,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
           isHovering={index === hoveredIndex}
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
+          onFocus={() => setFocusedIndex(index)}
           isDisabled={itemIsDisabled}
           aria-label={
             // allow users to know what is in menu while still telling them items are disabled
