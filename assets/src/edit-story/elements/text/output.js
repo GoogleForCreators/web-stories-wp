@@ -137,16 +137,16 @@ export function TextOutputWithUnits({
       left: 0,
       top: '0',
       margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
-      BoxDecorationBreak: 'clone',
       WebkitBoxDecorationBreak: 'clone',
+      BoxDecorationBreak: 'clone',
     };
   };
 
   const textStyle = {
     ...bgColor,
     /* stylelint-disable */
-    BoxDecorationBreak: 'clone',
     WebkitBoxDecorationBreak: 'clone',
+    BoxDecorationBreak: 'clone',
     /* stylelint-enable */
     boxDecorationBreak: 'clone',
     position: 'relative',
