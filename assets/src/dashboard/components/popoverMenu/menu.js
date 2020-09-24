@@ -22,6 +22,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { KEYS, STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
@@ -182,6 +187,16 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
           onClick={() => !itemIsDisabled && onSelect && onSelect(item)}
           onMouseEnter={() => setHoveredIndex(index)}
           isDisabled={itemIsDisabled}
+          aria-label={
+            // allow users to know what is in menu while still telling them items are disabled
+            itemIsDisabled
+              ? sprintf(
+                  /* translators: %s: item label.*/
+                  __('%s (currently unavailable)', 'web-stories'),
+                  item.label
+                )
+              : item.label
+          }
           className={
             (item.separator === 'top' && 'separatorTop') ||
             (item.separator === 'bottom' && 'separatorBottom')
