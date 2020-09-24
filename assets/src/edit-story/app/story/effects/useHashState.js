@@ -64,7 +64,7 @@ function useHashState(key, fallback) {
     let _value = fallback;
     try {
       if (params.has(key)) {
-        _value = JSON.parse(decodeURI(params.get(key)));
+        _value = JSON.parse(`"${decodeURI(params.get(key))}"`);
       }
     } catch (e) {
       // @TODO Add some error handling
