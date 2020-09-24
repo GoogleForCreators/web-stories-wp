@@ -20,11 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '../../keyboard';
 import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
@@ -43,6 +44,7 @@ function DateTime({
   onViewChange,
   is12Hour = true,
   forwardedRef,
+  onClose,
 }) {
   const selectedTime = value ? new Date(value) : new Date();
   const initialHours = selectedTime.getHours();
@@ -52,6 +54,19 @@ function DateTime({
     hours: is12Hour ? initialHours % 12 || 12 : initialHours,
     date: selectedTime,
   });
+
+  const previousFocus = useRef(document.activeElement);
+  const handleClose = useCallback(
+    (evt) => {
+      if (previousFocus.current) {
+        previousFocus.current.focus();
+      }
+      onClose(evt);
+    },
+    [onClose]
+  );
+
+  useKeyDownEffect(forwardedRef, 'esc', handleClose);
   return (
     <DateTimeWrapper ref={forwardedRef}>
       <TimePicker
@@ -72,6 +87,7 @@ function DateTime({
 DateTime.propTypes = {
   onChange: PropTypes.func.isRequired,
   onViewChange: PropTypes.func,
+  onClose: PropTypes.func,
   value: PropTypes.string,
   is12Hour: PropTypes.bool,
   forwardedRef: PropTypes.object,

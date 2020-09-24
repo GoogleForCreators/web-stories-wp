@@ -155,6 +155,7 @@ function PublishTime() {
             onViewChange={() => propagateDimensionChange()}
             is12Hour={use12HourFormat}
             forwardedRef={dateTimeNode}
+            onClose={() => setShowDatePicker(false)}
           />
         )}
       />
