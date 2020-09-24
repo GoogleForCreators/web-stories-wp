@@ -96,9 +96,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   });
 
   it('should show the selection on top of page navigation arrows', async () => {
-    await fixture.events.click(
-      fixture.editor.canvas.framesLayer.pageActions().add
-    );
+    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
 
     await fixture.events.click(fixture.editor.library.textAdd);
     await setFontSize('30');
