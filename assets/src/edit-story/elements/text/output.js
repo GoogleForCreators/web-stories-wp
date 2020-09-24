@@ -146,9 +146,8 @@ export function TextOutputWithUnits({
     ...bgColor,
     /* stylelint-disable */
     WebkitBoxDecorationBreak: 'clone',
-    BoxDecorationBreak: 'clone',
-    /* stylelint-enable */
     boxDecorationBreak: 'clone',
+    /* stylelint-enable */
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     textAlign: styles.textAlign,
