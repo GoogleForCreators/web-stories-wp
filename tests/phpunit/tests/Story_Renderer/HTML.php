@@ -200,6 +200,47 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::display_admin_bar
+	 */
+	public function test_display_admin_bar_disabled() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+			]
+		);
+
+		add_filter( 'show_admin_bar', '__return_false' );
+		_wp_admin_bar_init();
+		$actual = $this->setup_renderer( $post );
+		remove_filter( 'show_admin_bar', '__return_false' );
+
+		$this->assertNotContains( '<div id="wpadminbar"', $actual );
+		$this->assertNotContains( 'amp-story{top:32px}', $actual );
+	}
+
+	/**
+	 * @covers ::display_admin_bar
+	 */
+	public function test_display_admin_bar() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
+			]
+		);
+
+		add_filter( 'show_admin_bar', '__return_true' );
+		_wp_admin_bar_init();
+		$actual = $this->setup_renderer( $post );
+		remove_filter( 'show_admin_bar', '__return_true' );
+
+		$this->assertContains( '<div id="wpadminbar"', $actual );
+		$this->assertContains( 'amp-story{top:32px}', $actual );
+	}
+
+
+	/**
 	 * @covers ::sanitize_markup
 	 * @covers ::optimize_markup
 	 */

@@ -267,7 +267,6 @@ class HTML {
 
 		wp_admin_bar_render();
 
-
 		$output = (string) ob_get_clean();
 
 		if ( empty( $output ) ) {
@@ -298,7 +297,7 @@ class HTML {
 	 *
 	 * Does not rely on theme support for the admin bar
 	 * or the default admin bar styling callback
-	 * since Web Stories are theme-independent and requiree
+	 * since Web Stories are theme-independent and require
 	 * specific styling.
 	 *
 	 * @since 1.0.0
