@@ -45,7 +45,7 @@ const demoItems = [
 ];
 
 export default {
-  title: 'Dashboard/Components/TypeaheadOptions',
+  title: 'Dashboard/Components/Typeahead/TypeaheadOptions',
   component: TypeaheadOptions,
 };
 const TypeaheadOptionsWrapper = styled.div`

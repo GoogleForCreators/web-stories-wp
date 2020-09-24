@@ -22,10 +22,10 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../../testUtils/';
-import TypeaheadInput from '..';
+import { renderWithProviders } from '../../../testUtils/';
+import Typeahead from '..';
 
-describe('TypeaheadInput', () => {
+describe('Typeahead', () => {
   const demoItems = [
     { value: '1', label: 'one' },
     { value: 'foo', label: 'two' },
@@ -34,9 +34,9 @@ describe('TypeaheadInput', () => {
   ];
   const onClickMock = jest.fn();
 
-  it('should render a <TypeaheadInput /> by default', () => {
+  it('should render a <Typeahead /> by default', () => {
     const { getByRole } = renderWithProviders(
-      <TypeaheadInput
+      <Typeahead
         inputId={'demo-search-component'}
         placeholder="placeholder text"
         ariaLabel="my typeahead input label"
@@ -54,7 +54,7 @@ describe('TypeaheadInput', () => {
 
   it('should clear input value when button is clicked', () => {
     const { getByRole, getByTestId } = renderWithProviders(
-      <TypeaheadInput
+      <Typeahead
         inputId={'demo-search-component'}
         placeholder="placeholder text"
         ariaLabel="my typeahead input label"

@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TypographyPresets } from '../../typography';
+import { TypographyPresets } from '../typography';
 
 export const SearchContainer = styled.div`
   width: 100%;

@@ -75,7 +75,7 @@ export {
 } from './table';
 export { Toaster, ToastProvider, useToastContext } from './toaster';
 export { default as ToggleButtonGroup } from './toggleButtonGroup';
-export { TypeaheadInput, TypeaheadOptions } from './typeahead';
+export { default as Typeahead } from './typeahead';
 export {
   DefaultParagraph1,
   Heading1,
