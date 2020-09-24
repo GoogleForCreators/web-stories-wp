@@ -306,7 +306,7 @@ aside {
   top: 9rem;
   width: 25rem;
   overflow: scroll;
-  max-height: calc(100vh - 9rem - 45px);
+  max-height: calc(100vh - 9rem - 75px);
   max-width: 1920px;
 }
 
@@ -419,7 +419,7 @@ aside .docTrack i:last-child {
 }
 
 .editor {
-  min-height: 200vh;
+  min-height: 150vh;
   position: relative;
 }
 
@@ -482,8 +482,7 @@ aside .docTrack i:last-child {
 }
 
 #template_list {
-  padding-top: 40vh;
-  min-height: 60vh;
+  min-height: 100vh;
   position: relative;
 }
 
@@ -492,7 +491,7 @@ aside .docTrack i:last-child {
   left: 0;
   right: 0;
   margin: auto;
-  top: 150vh;
+  top: 130vh;
   font-size: 1.5rem;
 }
 
