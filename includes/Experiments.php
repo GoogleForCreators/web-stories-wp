@@ -360,18 +360,6 @@ class Experiments {
 				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
 				'group'       => 'editor',
 			],
-			/**
-			 * Description: Flag for showing the Gif Media3p subtab.
-			 * Author: @diegovar
-			 * Issue: #3349
-			 * Creation date: 2020-08-28
-			 */
-			[
-				'name'        => 'showGifTab',
-				'label'       => __( 'GIFs', 'web-stories' ),
-				'description' => __( 'Enable the GIF tab in the Third-party media tab.', 'web-stories' ),
-				'group'       => 'editor',
-			],
 		];
 	}
 
