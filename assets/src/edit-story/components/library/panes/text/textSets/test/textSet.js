@@ -33,6 +33,7 @@ import { renderWithTheme } from '../../../../../../testUtils';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../../constants';
 import { UnitsProvider } from '../../../../../../units';
 import StoryContext from '../../../../../../app/story/context';
+import { LayoutProvider } from '../../../../../../app/layout';
 
 const SETS = [
   {
@@ -212,17 +213,19 @@ function setup(elements) {
         <APIContext.Provider value={apiValue}>
           <StoryContext.Provider value={storyValue}>
             <FontContext.Provider value={fontsValue}>
-              <LibraryContext.Provider value={libraryValue}>
-                <UnitsProvider
-                  pageSize={{
-                    width: TEXT_SET_SIZE,
-                    height: TEXT_SET_SIZE / PAGE_RATIO,
-                  }}
-                  getBox={getBox}
-                >
-                  <TextSet elements={elements} index={0} />
-                </UnitsProvider>
-              </LibraryContext.Provider>
+              <LayoutProvider>
+                <LibraryContext.Provider value={libraryValue}>
+                  <UnitsProvider
+                    pageSize={{
+                      width: TEXT_SET_SIZE,
+                      height: TEXT_SET_SIZE / PAGE_RATIO,
+                    }}
+                    getBox={getBox}
+                  >
+                    <TextSet elements={elements} index={0} />
+                  </UnitsProvider>
+                </LibraryContext.Provider>
+              </LayoutProvider>
             </FontContext.Provider>
           </StoryContext.Provider>
         </APIContext.Provider>

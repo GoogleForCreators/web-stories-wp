@@ -67,5 +67,5 @@ export default {
     '!**/test/**',
     '!**/stories/**',
   ],
-  reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
+  // reporters: [['jest-silent-reporter', { useDots: true, showWarnings: true }]],
 };
