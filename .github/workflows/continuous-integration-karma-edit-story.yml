@@ -47,6 +47,12 @@ jobs:
         env:
           DISABLE_ERROR_BOUNDARIES: true
 
+      - name: Retry failed teststests
+        run: npm run test:karma:edit-story:retry-failed -- --headless --snapshots --viewport=1600:1000
+        env:
+          DISABLE_ERROR_BOUNDARIES: true
+        if: failure()
+
       - name: Add files for snapshotting
         run: cp -r __static__ .test_artifacts/karma_snapshots/
 
