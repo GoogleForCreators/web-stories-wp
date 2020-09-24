@@ -282,7 +282,7 @@ header .docs_flyout a {
   padding: 0;
 }
 
-.docs_flyout span {
+header .docs_flyout span {
   padding: 0 1.2rem;
   border-right: 2px solid #CBACFF;
   max-width: 13rem;
