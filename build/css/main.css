@@ -60,8 +60,12 @@ header {
   max-width: 1920px;
 }
 
-header, footer {
+header, footer, .docs {
   font-family: Roboto, sans-serif;
+}
+
+
+header, footer {
   display: flex;
   align-items: center;
   line-height: 2.5;
@@ -113,6 +117,8 @@ header .links a {
   }
 }
 
+#docs_menu > span > li a:hover,
+#docs_menu > span > li a:focus,
 header nav a:focus,
 header nav a:hover {
   color: #93bcf9
@@ -268,10 +274,6 @@ header .active ~ .docs_flyout {
   text-align: left;
 }
 
-.docs_flyout li {
-  margin-bottom: 1.3rem;
-}
-
 .docs_flyout > li {
   font-weight: bold;
   font-size: 1.2rem;
@@ -325,7 +327,7 @@ aside li:not(.docTrack) {
 }
 
 aside .docs_flyout ul {
-  padding: 1rem;
+  padding: 0 0 0 1rem;
   position: relative;
 }
 
@@ -620,6 +622,13 @@ aside .docTrack i:last-child {
 .docs main {
   margin-top: 10rem;
   margin-left: 30rem;
+
+}
+
+.docs h1,
+.docs h2,
+.docs h3 {
+  font-family: "Poppins", "Segoe UI",  "Helvetica Neue", Roboto, sans-serif;
 }
 
 .docs main h1 {
@@ -633,9 +642,12 @@ aside .docTrack i:last-child {
 }
 
 .docs main h2 {
+}
+
+.docs main h2 {
   font-size: 1.75rem;
   color: #A883E5;
-  padding-top: 7rem;
+  margin-top: 4rem;
 }
 
 .docs p {
@@ -645,10 +657,6 @@ aside .docTrack i:last-child {
 
 .docs amp-img {
   margin: 1rem 0 2rem
-}
-
-.docs h1 {
-  padding-top: 5rem;
 }
 
 .docs .img-wrap {
