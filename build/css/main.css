@@ -14,6 +14,14 @@
   src: local('Poppins-ExtraLight'), local('Poppins-ExtraLight'), url('/fonts/Poppins-ExtraLight.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-display: fallback;
+  src: local('Roboto'), local('Roboto'), url('/fonts/Roboto.woff2') format('woff2');
+}
+
+
 .visuallyhidden {
   border: 0;
   clip: rect(0 0 0 0);
@@ -53,6 +61,7 @@ header {
 }
 
 header, footer {
+  font-family: Roboto, sans-serif;
   display: flex;
   align-items: center;
   line-height: 2.5;
@@ -205,13 +214,13 @@ header .toggle {
   background: transparent;
   border: 0;
   outline: 0;
-  margin: 0 1em 0 -.5em;
+  margin: 0 1rem 0 -.5rem;
   cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
   header .toggle {
-    margin-left: -1em;
+    margin-left: -1rem;
   }
 }
 
@@ -240,10 +249,11 @@ header .docs_flyout {
   position: absolute;
   background: white;
   color: black;
-  right: 10%;
+  right: 6%;
   max-width: 80%;
-  margin-top: 22px;
-  padding: 3em 2em;
+  margin-top: 1rem;
+  padding: 3rem 1.2rem;
+  line-height: 1.4
 }
 
 /* purgecss ignore */
@@ -258,13 +268,28 @@ header .active ~ .docs_flyout {
   text-align: left;
 }
 
+.docs_flyout li {
+  margin-bottom: 1.3rem;
+}
+
 .docs_flyout > li {
   font-weight: bold;
   font-size: 1.2rem;
 }
 
-.docs_flyout ul {
+.docs_flyout ul,
+header .docs_flyout a {
   padding: 0;
+}
+
+.docs_flyout span {
+  padding: 0 1.2rem;
+  border-right: 2px solid #CBACFF;
+  max-width: 13rem;
+}
+
+.docs_flyout span:last-of-type {
+  border-right: 0;
 }
 
 .docs_flyout span > li {
@@ -543,8 +568,8 @@ aside .docTrack i:last-child {
 }
 
 #final_thoughts p {
-  font-size: 1.5em;
-  line-height: 2em;
+  font-size: 1.5rem;
+  line-height: 2rem;
   font-weight: 300;
   margin: 0;
 }
@@ -586,9 +611,7 @@ aside .docTrack i:last-child {
   z-index: 1;
   position: absolute;
   top: 0;
-  right: 0;
   left: 0;
-  bottom: 0;
 }
 
 .docs header {
@@ -745,7 +768,7 @@ footer .social_links.links li:after {
   }
 
   #final_thoughts > div {
-    margin: 5em 0
+    margin: 5rem 0
   }
 
   #final_thoughts > #tip_card_container {
