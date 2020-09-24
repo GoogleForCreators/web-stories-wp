@@ -178,7 +178,7 @@ function PublisherLogoSettings({
             tabIndex={0}
             ref={gridRef}
             role="list"
-            ariaLabel={__('Viewing existing publisher logos', 'web-stories')}
+            aria-label={__('Viewing existing publisher logos', 'web-stories')}
           >
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
@@ -207,12 +207,9 @@ function PublisherLogoSettings({
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
                     aria-label={sprintf(
-                      /* translators: %s: logo number.*/
-                      __(
-                        'Publisher Logo %s (currently selected)',
-                        'web-stories'
-                      ),
-                      idx + 1
+                      /* translators: %s: logo title.*/
+                      __('Publisher Logo %s', 'web-stories'),
+                      publisherLogo.title
                     )}
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
