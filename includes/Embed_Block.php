@@ -45,6 +45,13 @@ class Embed_Block {
 	const SCRIPT_HANDLE = 'web-stories-embed-block';
 
 	/**
+	 * Script handle for frontend assets.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_HANDLE_FRONTEND = 'web-stories-embed-block-fe';
+
+	/**
 	 * Block name.
 	 *
 	 * @var string
@@ -59,17 +66,7 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		wp_register_script( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
-		wp_register_style( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
-
-		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
-
-		wp_localize_script(
-			self::SCRIPT_HANDLE,
-			'webStoriesEmbedBlockSettings',
-			$this->get_script_settings()
-		);
+		$this->init_assets();
 
 		// todo: use register_block_type_from_metadata() once generally available.
 
@@ -109,6 +106,80 @@ class Embed_Block {
 		);
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
+	}
+
+	/**
+	 * Initializes assets needed for the block.
+	 *
+	 * Registers scripts and styles for the block itself used in the editor,
+	 * as well as the external assets used by the <amp-story-player> web component (non-AMP version).
+	 * Also registers an inline stylesheet used on the frontend to ensure correct
+	 * styling and responsiveness for the block, which is used for both the regular and the AMP version.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	private function init_assets() {
+		wp_register_script( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
+		wp_register_style( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
+
+		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
+
+		// Registering a style without a `src` allows us to just use the inline style below
+		// without needing an external stylesheet.
+		wp_register_style(
+			self::SCRIPT_HANDLE_FRONTEND,
+			'',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		$css = <<<CSS
+.wp-block-web-stories-embed.alignleft,
+.wp-block-web-stories-embed.alignright {
+	width: 100%;
+}
+
+.wp-block-web-stories-embed .wp-block-embed__wrapper {
+	position: relative;
+	max-width: var(--width);
+}
+
+.wp-block-web-stories-embed.aligncenter .wp-block-embed__wrapper {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp) .wp-block-embed__wrapper {
+	max-width: var(--width);
+}
+
+.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp) .wp-block-embed__wrapper::before {
+	content:"";
+	display: block;
+	padding-bottom: calc(var(--aspect-ratio) * 100%);
+}
+
+.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp) .wp-block-embed__wrapper amp-story-player {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+CSS;
+
+		wp_add_inline_style( self::SCRIPT_HANDLE_FRONTEND, $css );
+
+		wp_localize_script(
+			self::SCRIPT_HANDLE,
+			'webStoriesEmbedBlockSettings',
+			$this->get_script_settings()
+		);
 	}
 
 	/**
