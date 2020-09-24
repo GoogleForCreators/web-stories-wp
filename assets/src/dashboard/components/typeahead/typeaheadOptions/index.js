@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useState, forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -42,21 +42,15 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
           if (focusedIndex === 0) {
             handleFocusToInput();
           }
-          if (focusedIndex > 0) {
-            setFocusedIndex(focusedIndex - 1);
-            if (listRef.current) {
-              listRef.current.children[focusedIndex - 1].focus();
-            }
+          if (focusedIndex > 0 && listRef.current) {
+            listRef.current.children[focusedIndex - 1].focus();
           }
           break;
 
         case KEYS.DOWN:
           event.preventDefault();
-          if (focusedIndex < items.length - 1) {
-            setFocusedIndex(focusedIndex + 1);
-            if (listRef.current) {
-              listRef.current.children[focusedIndex + 1].focus();
-            }
+          if (focusedIndex < items.length - 1 && listRef.current) {
+            listRef.current.children[focusedIndex + 1].focus();
           }
           break;
 
@@ -72,20 +66,16 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
       }
     };
 
-    const listRefEl = listRef.current;
-    listRefEl.addEventListener('keydown', handleKeyDown);
-    return () => listRefEl.removeEventListener('keydown', handleKeyDown);
+    const listRefEl = listRef?.current;
+    listRefEl?.addEventListener('keydown', handleKeyDown);
+    return () => listRefEl?.removeEventListener('keydown', handleKeyDown);
   }, [items, onSelect, listRef, handleFocusToInput, focusedIndex]);
 
-  // when selectedIndex is updated above we want to scroll it into view and focus it
   useEffect(() => {
-    if (listRef.current && listRef.current.children) {
-      const indexToFocus = selectedIndex > -1 ? selectedIndex : 0;
-      const focusedItem = listRef.current.children[indexToFocus];
-      setFocusedIndex(indexToFocus);
-      focusedItem?.scrollIntoView();
-    }
-  }, [listRef, selectedIndex]);
+    const indexToSet = selectedIndex > -1 ? selectedIndex : 0;
+    setFocusedIndex(indexToSet);
+    setHoveredIndex(indexToSet);
+  }, [selectedIndex]);
 
   const renderMenuItem = (item, index) => {
     const itemIsDisabled = !item.value && item.value !== 0;
@@ -101,6 +91,11 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
         itemBgColor={itemBgColor}
         onClick={() => !itemIsDisabled && onSelect(item)}
         onMouseEnter={() => setHoveredIndex(index)}
+        onFocus={(event) => {
+          // Prevent event bubbling when we are trying to avoid the menu container gaining focus to reset the menu's focused state
+          event.stopPropagation();
+          setFocusedIndex(index);
+        }}
         isDisabled={itemIsDisabled}
         aria-disabled={Boolean(itemIsDisabled)}
       >

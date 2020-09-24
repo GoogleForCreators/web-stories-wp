@@ -42,7 +42,7 @@ describe('TypeaheadOptions', () => {
 
   it('should render a <TypeaheadOptions />', () => {
     const { getByText } = renderWithProviders(
-      <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
+      <TypeaheadOptions onSelect={onClickMock} items={demoItems} />
     );
 
     expect(getByText('one')).toBeDefined();
@@ -50,7 +50,7 @@ describe('TypeaheadOptions', () => {
 
   it('should simulate a click on one of the items', () => {
     const { getByText } = renderWithProviders(
-      <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
+      <TypeaheadOptions onSelect={onClickMock} items={demoItems} />
     );
 
     const menuItem = getByText('two');
@@ -62,7 +62,11 @@ describe('TypeaheadOptions', () => {
 
   it('should not allow click on item that has false value', () => {
     const { getByText } = renderWithProviders(
-      <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
+      <TypeaheadOptions
+        onSelect={onClickMock}
+        items={demoItems}
+        selectedIndex={-1}
+      />
     );
 
     const menuItem = getByText('invalid option');
@@ -74,7 +78,11 @@ describe('TypeaheadOptions', () => {
 
   it('should have 6 items', () => {
     const { getAllByRole } = renderWithProviders(
-      <TypeaheadOptions onSelect={onClickMock} items={demoItems} isOpen />
+      <TypeaheadOptions
+        onSelect={onClickMock}
+        items={demoItems}
+        selectedIndex={-1}
+      />
     );
 
     const menuItems = getAllByRole('listitem');
@@ -87,8 +95,7 @@ describe('TypeaheadOptions', () => {
       <TypeaheadOptions
         onSelect={onClickMock}
         items={demoItems}
-        currentSelection={demoItems[1].value}
-        isOpen
+        selectedIndex={1}
       />
     );
 
@@ -110,8 +117,7 @@ describe('TypeaheadOptions', () => {
       <TypeaheadOptions
         onSelect={onClickMock}
         items={demoItems}
-        currentSelection={'fo'}
-        isOpen
+        selectedIndex={-1}
       />
     );
 

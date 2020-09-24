@@ -58,6 +58,8 @@ export const MenuItem = styled.li`
   color: ${theme.colors.gray700};
   cursor: ${isDisabled ? 'default' : 'pointer'};
   width: 100%;
+  border: ${theme.borders.transparent};
+  border-width: 2px;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     border: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};

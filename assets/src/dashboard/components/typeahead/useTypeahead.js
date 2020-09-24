@@ -53,9 +53,7 @@ export default function useTypeahead({ items, value }) {
               item.label.toLowerCase() === selectionToCheckFor
           )
         : -1;
-      if (existingValueOnMenuOpen > -1) {
-        setSelectedValueIndex(existingValueOnMenuOpen);
-      }
+      setSelectedValueIndex(existingValueOnMenuOpen);
     }
   }, [isMenuOpen, items, value]);
 
