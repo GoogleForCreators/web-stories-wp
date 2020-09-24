@@ -6,7 +6,7 @@
 name: Clean up PR assets for closed PRs
 
 on:
-  pull_request:
+  pull_request_target:
     types: [closed]
 
 jobs:
