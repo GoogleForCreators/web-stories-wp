@@ -4,7 +4,7 @@ layout: layouts/base.njk
 rootClass: home
 ---
 
-<main on="tap:AMP.setState({docsMenuActive: false})">
+<main role="main" tabindex="0" on="tap:AMP.setState({docsMenuActive: false})">
 
   <section class="home_hero_text">
 
@@ -91,8 +91,6 @@ rootClass: home
           }
       </script>
     </amp-animation>
-
-
 
     <p id="announcing">{{ $("With Stories for WordPress, we're bringing<br>first-class Web Stories support to WordPress.") }}</p>
     <p id="wysiwygftw">{{ $("WYSIWYG all the way") }}</p>
