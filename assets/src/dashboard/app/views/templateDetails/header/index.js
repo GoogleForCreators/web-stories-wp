@@ -33,6 +33,7 @@ function Header({ onBookmarkClick, onHandleCtaClick }) {
     <Layout.Fixed>
       <DetailViewNavBar
         ctaText={__('Use template', 'web-stories')}
+        closeViewAriaLabel={__('Go to explore templates', 'web-stories')}
         handleBookmarkClick={onBookmarkClick}
         handleCta={onHandleCtaClick}
       />
