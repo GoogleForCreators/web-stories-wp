@@ -199,6 +199,8 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     hours.current.focus();
   }, []);
 
+  const isAM = localData.am === 'AM';
+  const isPM = localData.am === 'PM';
   return (
     <TimeWrapper>
       <Fieldset>
@@ -230,15 +232,17 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
           {is12Hour && (
             <InputGroup>
               <AMButton
+                aria-pressed={isAM}
                 type="button"
-                isToggled={localData.am === 'AM'}
+                isToggled={isAM}
                 onClick={updateAmPm('AM')}
               >
                 {__('AM', 'web-stories')}
               </AMButton>
               <PMButton
+                aria-pressed={isPM}
                 type="button"
-                isToggled={localData.am === 'PM'}
+                isToggled={isPM}
                 onClick={updateAmPm('PM')}
               >
                 {__('PM', 'web-stories')}
