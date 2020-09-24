@@ -62,6 +62,7 @@ export const MenuItem = styled.li`
   border-width: 2px;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: none;
     border: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
   }
 `}

@@ -97,6 +97,10 @@ const Typeahead = ({
     showMenu.set(false);
   };
 
+  const handleClearInputButtonFocus = () => {
+    showMenu.set(false);
+  };
+
   const handleInputClear = () => {
     handleInputChange({ label: '', value: '' });
     showMenu.set(false);
@@ -155,6 +159,7 @@ const Typeahead = ({
         </ControlVisibilityContainer>
         {inputValue.value.length > 0 && (
           <ClearInputButton
+            onFocus={handleClearInputButtonFocus}
             data-testid="clear-search"
             onClick={handleInputClear}
             aria-label={__('Clear Input', 'web-stories')}

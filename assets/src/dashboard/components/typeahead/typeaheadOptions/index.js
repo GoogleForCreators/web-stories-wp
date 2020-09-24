@@ -56,7 +56,6 @@ const TypeaheadOptions = forwardRef(function TypeaheadOptions(
 
         case KEYS.ENTER:
           event.preventDefault();
-          event.stopPropagation();
           if (onSelect) {
             onSelect(items[focusedIndex]);
           }
