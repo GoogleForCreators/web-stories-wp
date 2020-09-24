@@ -158,7 +158,8 @@ header nav .current {
 
 footer {
   position: relative;
-  z-index: 3
+  z-index: 3;
+  padding: 2rem 6%
 }
 
 nav {
@@ -680,6 +681,11 @@ footer a.social {
 
 footer .social_links.links li:after {
   display: none;
+}
+
+#final_thoughts, #template_list {
+  padding: 0 6%;
+  background: black
 }
 
 .social {
