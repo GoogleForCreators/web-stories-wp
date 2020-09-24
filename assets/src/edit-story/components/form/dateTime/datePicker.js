@@ -23,6 +23,11 @@ import { useRef, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 const CalendarWrapper = styled.div`
   min-height: 236px;
 `;
@@ -45,6 +50,10 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
         value={value}
         onChange={handleOnChange}
         onViewChange={onViewChange}
+        nextAriaLabel={__('Next', 'web-stories')}
+        prevAriaLabel={__('Previous', 'web-stories')}
+        next2AriaLabel={__('Jump forward', 'web-stories')}
+        prev2AriaLabel={__('Jump backwards', 'web-stories')}
       />
     </CalendarWrapper>
   );
