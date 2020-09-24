@@ -43,6 +43,7 @@ export const Main = styled(StandardViewContentGutter)`
   padding-top: 36px;
   margin-top: 20px;
   max-width: 945px;
+  width: 100%;
 `;
 
 export const SettingForm = styled.form`
