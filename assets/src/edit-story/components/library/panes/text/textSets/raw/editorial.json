@@ -1,8 +1,62 @@
 {
-  "current": "8de5a540-9aa2-4532-b1de-87f071ccdd1a",
+  "current": "7ec0f8c7-5226-4fac-bef5-82755b0d72cc",
   "selection": [],
   "story": {
     "stylePresets": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
       "colors": [
         {
           "color": {
@@ -94,8 +148,7 @@
             "a": 0.6
           }
         }
-      ],
-      "textStyles": []
+      ]
     }
   },
   "version": 24,
@@ -136,7 +189,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -193,14 +246,15 @@
           },
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
-          "x": 32,
-          "y": 403,
-          "width": 334,
+          "x": 40,
+          "y": 402,
+          "width": 332,
           "height": 183,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "b16d8411-cf94-4bb8-92ac-e7a800763005"
+          "id": "b16d8411-cf94-4bb8-92ac-e7a800763005",
+          "marginOffset": 5.90625
         },
         {
           "opacity": 100,
@@ -209,7 +263,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -249,7 +303,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 36,
+          "fontSize": 37,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -266,14 +320,15 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Good design is innovative</span>",
-          "x": 32,
-          "y": 297,
-          "width": 246,
+          "x": 40,
+          "y": 300,
+          "width": 332,
           "height": 86,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "dff0913d-9a7a-4a40-b3b2-efb2d35a6a1b"
+          "id": "dff0913d-9a7a-4a40-b3b2-efb2d35a6a1b",
+          "marginOffset": 1.0406249999999986
         }
       ],
       "backgroundColor": {
@@ -323,7 +378,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -381,10 +436,10 @@
           "type": "text",
           "content": "<span style=\"font-weight: 600\">Good design is innovative</span>",
           "fontWeight": 700,
-          "x": 42,
-          "y": 296,
-          "width": 328,
-          "height": 75,
+          "x": 40,
+          "y": 299,
+          "width": 332,
+          "height": 76,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -456,9 +511,9 @@
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
           "x": 40,
-          "y": 403,
-          "width": 333,
-          "height": 180,
+          "y": 408,
+          "width": 332,
+          "height": 179,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -481,7 +536,7 @@
           },
           "type": "shape",
           "x": 146,
-          "y": 386,
+          "y": 391,
           "width": 120,
           "height": 1,
           "scale": 100,
@@ -540,7 +595,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
@@ -604,15 +659,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 600\">GOOD DESIGN IS INNOVATIVE</span>",
           "fontWeight": 700,
-          "width": 328,
+          "width": 332,
           "height": 80,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "5866ef82-08bf-40fa-87b2-89e2270aeda6",
           "id": "6fd28db6-2c6b-46c0-ae0b-707af1d36f3f",
-          "x": 33,
-          "y": 317
+          "x": 40,
+          "y": 313,
+          "marginOffset": -6.399999999999999
         },
         {
           "opacity": 100,
@@ -621,7 +677,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -663,7 +719,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 17,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -681,15 +737,16 @@
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
-          "width": 333,
+          "width": 332,
           "height": 181,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "0706b1b6-fc33-4e21-a9a2-64ba4507ff30",
           "id": "d93c3f60-5073-4e36-9c0f-aeffe4205266",
-          "x": 33,
-          "y": 407
+          "x": 40,
+          "y": 409,
+          "marginOffset": 3.3999999999999986
         },
         {
           "opacity": 100,
@@ -717,8 +774,8 @@
           },
           "basedOn": "6596c712-bc3a-4e5b-8438-74ee1b941b65",
           "id": "87936ffe-2e44-44d5-8f4a-93f28a4e5cfc",
-          "x": 33,
-          "y": 297
+          "x": 40,
+          "y": 293
         }
       ],
       "backgroundColor": {
@@ -768,7 +825,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
@@ -826,15 +883,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.04em\">GOOD DESIGN IS INNOVATIVE</span>",
           "fontWeight": 700,
-          "width": 328,
+          "width": 332,
           "height": 67,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6fd28db6-2c6b-46c0-ae0b-707af1d36f3f",
           "id": "ad27512c-2018-404f-9cdd-007a89cb8288",
-          "x": 42,
-          "y": 315
+          "x": 33,
+          "y": 313
         },
         {
           "opacity": 100,
@@ -843,7 +900,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
@@ -897,15 +954,16 @@
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
-          "width": 333,
+          "width": 332,
           "height": 175,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "d93c3f60-5073-4e36-9c0f-aeffe4205266",
           "id": "dba6a0b2-7487-4ee4-bd05-6c6aeb6b246e",
-          "x": 39.5,
-          "y": 395
+          "x": 33,
+          "y": 396,
+          "marginOffset": 3.7399999999999984
         }
       ],
       "backgroundColor": {
@@ -955,7 +1013,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Oswald",
@@ -989,7 +1047,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 27,
+          "fontSize": 26,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1007,15 +1065,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 500\">GOOD DESIGN IS INNOVATIVE</span>",
           "fontWeight": 700,
-          "width": 328,
+          "width": 332,
           "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6fd28db6-2c6b-46c0-ae0b-707af1d36f3f",
           "id": "598702ed-bbd1-4744-8e8d-4a1f00ba41b5",
-          "x": 39,
-          "y": 349
+          "x": 40,
+          "y": 347,
+          "marginOffset": -7.614000000000004
         },
         {
           "opacity": 100,
@@ -1024,7 +1083,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -1076,15 +1135,15 @@
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
-          "width": 333,
+          "width": 332,
           "height": 153,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "d93c3f60-5073-4e36-9c0f-aeffe4205266",
           "id": "b72f7521-ac44-48be-857b-92c41b4c959d",
-          "x": 39,
-          "y": 397
+          "x": 40,
+          "y": 402
         },
         {
           "opacity": 100,
@@ -1113,7 +1172,7 @@
           "basedOn": "87936ffe-2e44-44d5-8f4a-93f28a4e5cfc",
           "id": "5708edac-534f-4341-9870-33a7688d0d5a",
           "x": 40,
-          "y": 332
+          "y": 330
         }
       ],
       "backgroundColor": {
@@ -1163,7 +1222,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -1217,15 +1276,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 700,
-          "width": 328,
-          "height": 65,
+          "width": 332,
+          "height": 60,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "5866ef82-08bf-40fa-87b2-89e2270aeda6",
           "id": "2bbf9a2d-cc99-4c08-b6d2-0662761f12bc",
-          "x": 33,
-          "y": 311
+          "x": 40,
+          "y": 318
         },
         {
           "opacity": 100,
@@ -1234,7 +1293,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -1288,15 +1347,16 @@
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
-          "width": 327,
-          "height": 173,
+          "width": 332,
+          "height": 170,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "0706b1b6-fc33-4e21-a9a2-64ba4507ff30",
           "id": "02a14cfc-5936-462f-a79e-ffca46c2dd7f",
-          "x": 33,
-          "y": 397
+          "x": 40,
+          "y": 394,
+          "marginOffset": 5.831000000000003
         }
       ],
       "backgroundColor": {
@@ -1346,7 +1406,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Titillium Web",
@@ -1403,15 +1463,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: rgba(0,0,0,0.15)\">Good design is innovative</span>",
           "fontWeight": 700,
-          "width": 328,
+          "width": 332,
           "height": 94,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "ae3d8b77-a89a-441e-a735-24d256ab1e3d",
           "id": "c05092f4-7822-416c-98a6-44858a1a9069",
-          "x": 37,
-          "y": 318
+          "x": 44,
+          "y": 312
         },
         {
           "opacity": 100,
@@ -1420,7 +1480,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Titillium Web",
@@ -1430,16 +1490,16 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 600],
-              [0, 700],
-              [0, 900],
               [1, 200],
+              [0, 300],
               [1, 300],
+              [0, 400],
               [1, 400],
+              [0, 600],
               [1, 600],
-              [1, 700]
+              [0, 700],
+              [1, 700],
+              [0, 900]
             ],
             "metrics": {
               "upm": 1000,
@@ -1477,15 +1537,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 900\">Good design is innovative</span>",
           "fontWeight": 700,
-          "width": 328,
-          "height": 101,
+          "width": 332,
+          "height": 93,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "2bbf9a2d-cc99-4c08-b6d2-0662761f12bc",
           "id": "ae3d8b77-a89a-441e-a735-24d256ab1e3d",
-          "x": 33,
-          "y": 314
+          "x": 40,
+          "y": 308
         },
         {
           "opacity": 100,
@@ -1494,7 +1554,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -1558,15 +1618,16 @@
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
-          "width": 327,
+          "width": 332,
           "height": 160,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "02a14cfc-5936-462f-a79e-ffca46c2dd7f",
           "id": "1cbbe1a0-99b7-4fac-9eb5-18dbfc50272d",
-          "x": 33,
-          "y": 414
+          "x": 40,
+          "y": 417,
+          "marginOffset": 5.5589999999999975
         }
       ],
       "backgroundColor": {
@@ -1616,7 +1677,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Nunito",
@@ -1658,7 +1719,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 31,
+          "fontSize": 30,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1676,15 +1737,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">Good design is innovative</span>",
           "fontWeight": 700,
-          "width": 328,
+          "width": 332,
           "height": 75,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "ae3d8b77-a89a-441e-a735-24d256ab1e3d",
           "id": "ee1c31cf-c782-4cd7-9bd9-7ebc08f01fed",
-          "x": 33,
-          "y": 305
+          "x": 40,
+          "y": 308,
+          "marginOffset": -7.920000000000002
         },
         {
           "opacity": 100,
@@ -1693,7 +1755,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -1725,7 +1787,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 17,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1743,15 +1805,16 @@
           "type": "text",
           "content": "The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.",
           "fontWeight": 400,
-          "width": 336,
+          "width": 332,
           "height": 179,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "1cbbe1a0-99b7-4fac-9eb5-18dbfc50272d",
           "id": "f2d01d29-e755-4634-b346-e0a2682f159d",
-          "x": 33,
-          "y": 395
+          "x": 40,
+          "y": 399,
+          "marginOffset": 5.626999999999999
         }
       ],
       "backgroundColor": {
