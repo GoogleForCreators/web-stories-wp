@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useEffect, useRef } from 'react';
 
 const TimeWrapper = styled.div`
   margin-bottom: 1em;
@@ -193,6 +194,11 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     changeDate(newDate, { am: value });
   };
 
+  const hours = useRef();
+  useEffect(() => {
+    hours.current.focus();
+  }, []);
+
   return (
     <TimeWrapper>
       <Fieldset>
@@ -200,6 +206,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
         <InputRow>
           <InputGroup>
             <NumberInput
+              ref={hours}
               aria-label={__('Hours', 'web-stories')}
               type="number"
               step={1}
