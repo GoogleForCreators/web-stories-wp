@@ -173,6 +173,15 @@ export function LeftRail() {
                 <NavLink
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
+                  aria-label={
+                    path.value === state.currentPath
+                      ? sprintf(
+                          /* translators: %s: path label.*/
+                          __('%s (active view)', 'web-stories'),
+                          path.label
+                        )
+                      : path.label
+                  }
                 >
                   {path.label}
                 </NavLink>
