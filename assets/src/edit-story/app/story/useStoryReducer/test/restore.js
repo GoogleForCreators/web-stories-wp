@@ -170,4 +170,26 @@ describe('restore', () => {
       ...currentPage,
     });
   });
+
+  it('should restore with first page as current if initialized with faulty current pageId', () => {
+    // Initialize state with a story page that does not exist
+    const currentPage = { current: 'DOES NOT EXIST' };
+    const reducer = setupReducer(currentPage);
+    const { restore } = reducer;
+
+    // Restore state to hold story
+    const storyWithNoCurrentPage = {
+      pages: [{ id: '111' }, { id: '222', elements: [{ id: '333' }] }],
+      selection: ['333'],
+      story: { a: 1 },
+    };
+    const result = restore(storyWithNoCurrentPage);
+
+    // Should set first story as current
+    expect(result).toStrictEqual({
+      animationState: STORY_ANIMATION_STATE.RESET,
+      ...storyWithNoCurrentPage,
+      current: '111',
+    });
+  });
 });
