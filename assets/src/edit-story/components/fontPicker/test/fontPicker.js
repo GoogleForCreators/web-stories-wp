@@ -23,15 +23,24 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import FontPicker from '../';
-import { FontProvider } from '../../../app/font';
+import FontContext from '../../../app/font/context';
 import { renderWithTheme } from '../../../testUtils';
 import { curatedFontNames } from '../../../app/font/curatedFonts';
 import fontsListResponse from './fontsResponse';
+
+const availableCuratedFonts = fontsListResponse.filter(
+  (font) => curatedFontNames.indexOf(font.name) > 0
+);
 
 function getFontPicker(options) {
   const fontContextValues = {
     state: {
       fonts: fontsListResponse,
+      recentFonts: [],
+      curatedFonts: availableCuratedFonts,
+    },
+    actions: {
+      ensureMenuFontsLoaded: () => {},
     },
   };
   const props = {
@@ -41,17 +50,13 @@ function getFontPicker(options) {
   };
 
   const accessors = renderWithTheme(
-    <FontProvider.Provider value={fontContextValues}>
+    <FontContext.Provider value={fontContextValues}>
       <FontPicker {...props} />
-    </FontProvider.Provider>
+    </FontContext.Provider>
   );
 
   return accessors;
 }
-
-const availableCuratedFonts = fontsListResponse.filter(
-  (font) => curatedFontNames.indexOf(font.name) > 0
-);
 
 describe('Font Picker', () => {
   // Mock scrollTo
