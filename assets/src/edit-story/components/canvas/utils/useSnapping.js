@@ -18,30 +18,57 @@
  * Internal dependencies
  */
 import { useGlobalIsKeyPressed } from '../../keyboard';
-import { useUnits } from '../../../units';
+import useCanvas from '../useCanvas';
 
 function useSnapping({ canSnap, otherNodes }) {
-  const { canvasWidth, canvasHeight } = useUnits(
+  const {
+    canvasWidth,
+    canvasHeight,
+    pageContainer,
+    canvasContainer,
+  } = useCanvas(
     ({
       state: {
         pageSize: { width: canvasWidth, height: canvasHeight },
+        pageContainer,
+        canvasContainer,
       },
-    }) => ({ canvasWidth, canvasHeight })
+    }) => ({ canvasWidth, canvasHeight, pageContainer, canvasContainer })
   );
 
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
   canSnap = canSnap && !snapDisabled;
+
+  if (!canvasContainer || !pageContainer) {
+    return {};
+  }
+
+  const canvasRect = canvasContainer.getBoundingClientRect();
+  const pageRect = pageContainer.getBoundingClientRect();
+
+  const offsetX = Math.ceil(pageRect.x - canvasRect.x);
+  const offsetY = Math.floor(pageRect.y - canvasRect.y);
+
+  const verticalGuidelines = canSnap
+    ? [offsetX, offsetX + canvasWidth / 2, offsetX + canvasWidth]
+    : [];
+
+  const horizontalGuidelines = canSnap
+    ? [offsetY, offsetY + canvasHeight / 2, offsetY + canvasHeight]
+    : [];
+
+  const elementGuidelines = canSnap ? otherNodes : [];
   return {
     snappable: canSnap,
     snapHorizontal: canSnap,
     snapVertical: canSnap,
     snapCenter: canSnap,
-    horizontalGuidelines: canSnap ? [0, canvasHeight / 2, canvasHeight] : [],
-    verticalGuidelines: canSnap ? [0, canvasWidth / 2, canvasWidth] : [],
-    elementGuidelines: canSnap ? otherNodes : [],
     snapGap: canSnap,
     isDisplaySnapDigit: false,
+    horizontalGuidelines,
+    verticalGuidelines,
+    elementGuidelines,
   };
 }
 

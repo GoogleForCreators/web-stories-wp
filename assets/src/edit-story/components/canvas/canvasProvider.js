@@ -37,6 +37,7 @@ function CanvasProvider({ children }) {
     width: PAGE_WIDTH,
     height: PAGE_WIDTH / PAGE_RATIO,
   });
+  const [canvasContainer, setCanvasContainer] = useState(null);
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
@@ -156,6 +157,7 @@ function CanvasProvider({ children }) {
     () => ({
       state: {
         pageContainer,
+        canvasContainer,
         fullbleedContainer,
         nodesById,
         editingElement,
@@ -181,6 +183,7 @@ function CanvasProvider({ children }) {
         setShowSafeZone,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
+        setCanvasContainer,
       },
     }),
     [
@@ -207,6 +210,8 @@ function CanvasProvider({ children }) {
       setDisplayLinkGuidelines,
       pageAttachmentContainer,
       setPageAttachmentContainer,
+      canvasContainer,
+      setCanvasContainer,
     ]
   );
   return (
