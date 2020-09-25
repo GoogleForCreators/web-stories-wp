@@ -34,6 +34,10 @@ jobs:
             ${{ runner.os }}-composer-
             ${{ runner.os }}-
 
+# Disable reason: https://github.com/mcaskill/composer-plugin-exclude-files/issues/8
+#      - name: Validate composer.json
+#        run: composer --no-interaction validate --no-check-all
+
       - name: Install dependencies
         run: composer install --prefer-dist --no-suggest --no-progress --no-interaction
 
