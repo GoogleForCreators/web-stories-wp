@@ -89,23 +89,26 @@ const Typeahead = ({
     [onChange, inputValue, showMenu]
   );
 
-  const handleMenuItemSelect = (item) => {
-    if (!item.value) {
-      return;
-    }
-    handleInputChange(item);
-    showMenu.set(false);
-  };
+  const handleMenuItemSelect = useCallback(
+    (item) => {
+      if (!item.value) {
+        return;
+      }
+      handleInputChange(item);
+      showMenu.set(false);
+    },
+    [handleInputChange, showMenu]
+  );
 
-  const handleClearInputButtonFocus = () => {
+  const handleClearInputButtonFocus = useCallback(() => {
     showMenu.set(false);
-  };
+  }, [showMenu]);
 
-  const handleInputClear = () => {
+  const handleInputClear = useCallback(() => {
     handleInputChange({ label: '', value: '' });
     showMenu.set(false);
     menuFocused.set(false);
-  };
+  }, [handleInputChange, menuFocused, showMenu]);
 
   const handleKeyDown = useCallback(
     (event) => {

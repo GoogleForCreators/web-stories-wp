@@ -27,13 +27,9 @@ export default function useTypeahead({ items, value }) {
 
   const menuOpened = useRef(false);
 
-  const isMenuOpen = useMemo(() => {
-    return showMenu && items.length > 0 && inputValue.length > 0;
-  }, [items, showMenu, inputValue]);
+  const isMenuOpen = showMenu && items.length > 0 && inputValue.length > 0;
 
-  const isInputExpanded = useMemo(() => {
-    return menuFocused || inputValue.length > 0;
-  }, [menuFocused, inputValue]);
+  const isInputExpanded = menuFocused || inputValue.length > 0;
 
   useEffect(() => {
     if (!isMenuOpen && menuOpened.current) {
