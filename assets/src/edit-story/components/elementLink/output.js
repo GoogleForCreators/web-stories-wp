@@ -37,6 +37,8 @@ function WithLink({ element, children, ...rest }) {
       href={urlWithProtocol}
       data-tooltip-icon={link.icon}
       data-tooltip-text={link.desc}
+      target="_blank"
+      rel="noreferrer"
       {...rest}
     >
       {children}
