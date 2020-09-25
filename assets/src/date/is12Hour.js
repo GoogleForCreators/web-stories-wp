@@ -14,7 +14,15 @@
  * limitations under the License.
  */
 
-function is12Hour(timeFormat) {
+/**
+ * Internal dependencies
+ */
+import { getSettings } from './settings';
+
+function is12Hour() {
+  const settings = getSettings();
+  const { timeFormat } = settings;
+
   if (!timeFormat) {
     return true;
   }

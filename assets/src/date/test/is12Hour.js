@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import is12Hour from '../is12Hour';
+import { updateSettings } from '../settings';
 
 describe('date/is12Hour', () => {
   it('should default to true', () => {
@@ -25,10 +26,18 @@ describe('date/is12Hour', () => {
   });
 
   it('should detect time format correctly', () => {
-    const is12Hour1 = is12Hour('g:i a');
+    updateSettings({
+      timeFormat: 'g:i A',
+    });
+
+    const is12Hour1 = is12Hour();
     expect(is12Hour1).toBeTrue();
 
-    const is12Hour2 = is12Hour('H:i');
+    updateSettings({
+      timeFormat: 'H:i',
+    });
+
+    const is12Hour2 = is12Hour();
     expect(is12Hour2).toBeFalse();
   });
 });

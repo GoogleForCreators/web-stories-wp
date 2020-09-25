@@ -89,10 +89,7 @@ function PublishTime() {
       updateStory,
     })
   );
-  const {
-    locale: { timeFormat },
-  } = useConfig();
-  const use12HourFormat = is12Hour(timeFormat);
+  const use12HourFormat = is12Hour();
 
   /* translators: Date format, see https://www.php.net/date */
   const shortDateFormat = __('d/m/Y', 'web-stories');

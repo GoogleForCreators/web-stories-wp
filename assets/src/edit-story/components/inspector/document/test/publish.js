@@ -47,7 +47,7 @@ function setupPanel(
     actions: { updateStory },
   };
 
-  const config = { capabilities, locale: { timeFormat: 'g:i a' } };
+  const config = { capabilities };
   const loadUsers = jest.fn();
   const inspectorContextValue = {
     actions: { loadUsers },
