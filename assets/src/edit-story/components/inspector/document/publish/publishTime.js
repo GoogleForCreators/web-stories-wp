@@ -31,7 +31,6 @@ import { __ } from '@wordpress/i18n';
  */
 import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
-import { useConfig } from '../../../../app/config';
 import { useStory } from '../../../../app/story';
 import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../keyboard';
