@@ -35,14 +35,14 @@ describe('date/formatTime', () => {
     resetSettings();
   });
 
-  it('should return 10:47 pm with no formatting options', () => {
+  it('should return 10:47 am with no formatting options', () => {
     const dateString = '2020-05-02T10:47:26';
     const formattedTime = formatTime(dateString);
 
     expect(formattedTime).toStrictEqual('10:47 a.m.');
   });
 
-  it('should return 10:47 PM with g:i A formatting options', () => {
+  it('should return 5:47 PM with g:i A formatting options', () => {
     updateSettings({
       dateFormat: 'F j, Y',
       gmtOffset: -7,
@@ -55,7 +55,7 @@ describe('date/formatTime', () => {
     expect(formattedTime).toStrictEqual('5:47 PM');
   });
 
-  it('should return 10:47 with H:i formatting options', () => {
+  it('should return 20:23 with H:i formatting options', () => {
     updateSettings({
       dateFormat: 'm/d/Y',
       gmtOffset: -7,
