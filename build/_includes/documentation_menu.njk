@@ -6,7 +6,7 @@
 
 <!-- this should not exist -->
 <!-- change it to be generated from the docs themselves-->
-<ul id="docs_menu" class="docs_flyout">
+<ul id="docs_menu" class="docs_flyout {% if rootClass == "docs" %}docs_page{% endif %}">
   <span>
     <li><a href="{{ DOCS_BASE }}#Getting-started">Getting started </a></li>
     <ul id="getting_started_menu">
