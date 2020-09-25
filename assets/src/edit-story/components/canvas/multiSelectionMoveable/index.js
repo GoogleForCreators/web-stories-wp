@@ -41,9 +41,14 @@ const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 function MultiSelectionMoveable({ selectedElements }) {
   const moveable = useRef();
 
-  const { updateElementsById, deleteElementsById } = useStory((state) => ({
+  const {
+    updateElementsById,
+    deleteElementsById,
+    backgroundElement,
+  } = useStory((state) => ({
     updateElementsById: state.actions.updateElementsById,
     deleteElementsById: state.actions.deleteElementsById,
+    backgroundElement: state.state.currentPage.elements[0],
   }));
   const { nodesById, fullbleedContainer } = useCanvas(
     ({ state: { nodesById, fullbleedContainer } }) => ({
@@ -75,13 +80,6 @@ function MultiSelectionMoveable({ selectedElements }) {
     updateForResizeEvent: getDefinitionForType(element.type)
       .updateForResizeEvent,
   }));
-
-  const otherNodes = Object.values(
-    objectWithout(
-      nodesById,
-      selectedElements.map((element) => element.id)
-    )
-  );
 
   /**
    * Set style to the element.
@@ -180,6 +178,14 @@ function MultiSelectionMoveable({ selectedElements }) {
     }
     resetMoveable();
   };
+
+  // Get a list of all the other non-bg nodes
+  const otherNodes = Object.values(
+    objectWithout(nodesById, [
+      ...selectedElements.map((element) => element.id),
+      backgroundElement.id,
+    ])
+  ).filter(({ isBackground }) => !isBackground);
 
   const snapProps = useSnapping({ canSnap: true, otherNodes });
   const dragProps = useDrag({

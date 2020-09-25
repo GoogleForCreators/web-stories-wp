@@ -24,7 +24,7 @@ import classnames from 'classnames';
 /**
  * Internal dependencies
  */
-import { useDropTargets } from '../../../app';
+import { useDropTargets, useStory } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
@@ -60,13 +60,13 @@ function SingleSelectionMoveable({
     state: { activeDropTargetId, draggingResource },
   } = useDropTargets();
 
-  const otherNodes = Object.values(
-    objectWithout(nodesById, [selectedElement.id])
-  );
-
   const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
+
+  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
+    backgroundElement: currentPage.elements[0],
+  }));
 
   useEffect(() => {
     latestEvent.current = pushEvent;
@@ -190,6 +190,11 @@ function SingleSelectionMoveable({
     setTransformStyle,
     resetMoveable,
   });
+
+  // Get a list of all the other non-bg nodes
+  const otherNodes = Object.values(
+    objectWithout(nodesById, [selectedElement.id, backgroundElement.id])
+  );
 
   const snapProps = useSnapping({
     otherNodes,
