@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from 'react';
+
+/**
  * Internal dependencies
  */
 import { useGlobalIsKeyPressed } from '../../keyboard';
@@ -26,19 +31,49 @@ function useSnapping({ canSnap, otherNodes }) {
     canvasHeight,
     pageContainer,
     canvasContainer,
+    designSpaceGuideline,
+    showSafeZone,
   } = useCanvas(
     ({
       state: {
         pageSize: { width: canvasWidth, height: canvasHeight },
         pageContainer,
         canvasContainer,
+        designSpaceGuideline,
+        showSafeZone,
       },
-    }) => ({ canvasWidth, canvasHeight, pageContainer, canvasContainer })
+    }) => ({
+      canvasWidth,
+      canvasHeight,
+      pageContainer,
+      canvasContainer,
+      designSpaceGuideline,
+      showSafeZone,
+    })
   );
 
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
   canSnap = canSnap && !snapDisabled;
+
+  const toggleDesignSpace = useCallback(
+    (visible) => {
+      designSpaceGuideline.style.visibility = visible ? 'visible' : 'hidden';
+    },
+    [designSpaceGuideline]
+  );
+  const handleSnap = useCallback(
+    ({ elements }) =>
+      // Show design space if we're snapping to any of its edges
+      toggleDesignSpace(
+        elements
+          .flat()
+          .some(
+            ({ center, element }) => element === designSpaceGuideline && !center
+          )
+      ),
+    [toggleDesignSpace, designSpaceGuideline]
+  );
 
   if (!canvasContainer || !pageContainer) {
     return {};
@@ -58,7 +93,10 @@ function useSnapping({ canSnap, otherNodes }) {
     ? [offsetY, offsetY + canvasHeight / 2, offsetY + canvasHeight]
     : [];
 
-  const elementGuidelines = canSnap ? otherNodes : [];
+  const elementGuidelines = canSnap
+    ? [...otherNodes, ...(showSafeZone ? [designSpaceGuideline] : [])]
+    : [];
+
   return {
     snappable: canSnap,
     snapHorizontal: canSnap,
@@ -66,6 +104,7 @@ function useSnapping({ canSnap, otherNodes }) {
     snapCenter: canSnap,
     snapGap: canSnap,
     isDisplaySnapDigit: false,
+    onSnap: handleSnap,
     horizontalGuidelines,
     verticalGuidelines,
     elementGuidelines,

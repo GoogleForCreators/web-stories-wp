@@ -67,6 +67,18 @@ const Hint = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
+const DesignSpaceGuideline = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.callout};
+  left: ${100 * (48 / 412)}%;
+  right: ${100 * (48 / 412)}%;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  visibility: hidden;
+`;
+
 function FramesLayer() {
   const { currentPage, isAnimating } = useStory((state) => ({
     currentPage: state.state.currentPage,
@@ -75,9 +87,12 @@ function FramesLayer() {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
-    showSafeZone,
-  }));
+  const { showSafeZone, setDesignSpaceGuideline } = useCanvas(
+    ({ state: { showSafeZone }, actions: { setDesignSpaceGuideline } }) => ({
+      showSafeZone,
+      setDesignSpaceGuideline,
+    })
+  );
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
@@ -116,6 +131,7 @@ function FramesLayer() {
             currentPage.elements.map(({ id, ...rest }) => {
               return <FrameElement key={id} element={{ id, ...rest }} />;
             })}
+          <DesignSpaceGuideline ref={setDesignSpaceGuideline} />
         </FramesPageArea>
       )}
       <MenuArea

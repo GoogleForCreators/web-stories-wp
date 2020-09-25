@@ -40,6 +40,7 @@ function CanvasProvider({ children }) {
   const [canvasContainer, setCanvasContainer] = useState(null);
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
+  const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
@@ -168,6 +169,7 @@ function CanvasProvider({ children }) {
         pageSize,
         displayLinkGuidelines,
         pageAttachmentContainer,
+        designSpaceGuideline,
       },
       actions: {
         setPageContainer,
@@ -184,6 +186,7 @@ function CanvasProvider({ children }) {
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
         setCanvasContainer,
+        setDesignSpaceGuideline,
       },
     }),
     [
@@ -212,6 +215,8 @@ function CanvasProvider({ children }) {
       setPageAttachmentContainer,
       canvasContainer,
       setCanvasContainer,
+      designSpaceGuideline,
+      setDesignSpaceGuideline,
     ]
   );
   return (
