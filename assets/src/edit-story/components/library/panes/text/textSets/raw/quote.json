@@ -1,5 +1,5 @@
 {
-  "current": "caf9c221-5c00-4806-ad85-fd10481ec179",
+  "current": "d1712e69-cf01-4ed6-bebb-ccd86c2066dc",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -902,196 +902,6 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 210,
-              "g": 210,
-              "b": 210,
-              "a": 1
-            }
-          },
-          "type": "shape",
-          "width": 332,
-          "height": 176,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "e85db0ca-4b51-4613-b323-debc5b799ee1",
-          "id": "84cb963f-6f66-4008-b000-3ec6b4a74cd3",
-          "x": 44,
-          "y": 85
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 150,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 210,
-              "g": 210,
-              "b": 210,
-              "a": 1
-            }
-          },
-          "type": "shape",
-          "width": 65,
-          "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "triangle"
-          },
-          "basedOn": "d246dd04-0fae-414c-8823-4e8100fb02ed",
-          "id": "08b40ef4-17b6-462c-8de1-6fb7611ec515",
-          "x": 283,
-          "y": 223
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 150,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 279,
-          "y": 219,
-          "width": 65,
-          "height": 65,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "triangle"
-          },
-          "id": "d246dd04-0fae-414c-8823-4e8100fb02ed"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 40,
-          "y": 81,
-          "width": 332,
-          "height": 176,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "e85db0ca-4b51-4613-b323-debc5b799ee1"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Titillium Web",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [200, 300, 400, 600, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 600],
-              [0, 700],
-              [0, 900],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 600],
-              [1, 700]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 1133,
-              "des": -388,
-              "tAsc": 1133,
-              "tDes": -388,
-              "tLGap": 0,
-              "wAsc": 1133,
-              "wDes": 388,
-              "xH": 500,
-              "capH": 692,
-              "yMin": -285,
-              "yMax": 1082,
-              "hAsc": 1133,
-              "hDes": -388,
-              "lGap": 0
-            }
-          },
-          "fontSize": 36,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.2,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "content": "<span style=\"font-weight: 600; color: #fff\">Good design is thorough down to the last detail</span>",
-          "fontWeight": 400,
-          "x": 64,
-          "y": 98,
-          "width": 332,
-          "height": 141,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "e7d88410-e67d-413c-8cd0-5cda3e16554c",
-          "marginOffset": -4.920999999999999,
-          "type": "text"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
@@ -1230,6 +1040,138 @@
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 2.306250000000002,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "x": 40,
+          "y": 81,
+          "width": 332,
+          "height": 205,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "chat-bubble"
+          },
+          "id": "1201353f-4af6-4186-b232-acf9934872e3"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            }
+          },
+          "type": "shape",
+          "width": 332,
+          "height": 205,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "chat-bubble"
+          },
+          "basedOn": "1201353f-4af6-4186-b232-acf9934872e3",
+          "id": "88d02ed0-25e5-4fde-9dc4-592242117448",
+          "x": 44,
+          "y": 85
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Titillium Web",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1133,
+              "des": -388,
+              "tAsc": 1133,
+              "tDes": -388,
+              "tLGap": 0,
+              "wAsc": 1133,
+              "wDes": 388,
+              "xH": 500,
+              "capH": 692,
+              "yMin": -285,
+              "yMax": 1082,
+              "hAsc": 1133,
+              "hDes": -388,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-weight: 600; color: #fff\">Good design is thorough down to the last detail</span>",
+          "fontWeight": 400,
+          "x": 64,
+          "y": 98,
+          "width": 332,
+          "height": 141,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "e7d88410-e67d-413c-8cd0-5cda3e16554c",
+          "marginOffset": -4.920999999999999,
           "type": "text"
         }
       ],
