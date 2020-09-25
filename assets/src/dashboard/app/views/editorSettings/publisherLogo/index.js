@@ -79,7 +79,7 @@ function PublisherLogoSettings({
   const gridRef = useRef();
   const itemRefs = useRef({});
 
-  const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
+  const [activePublisherLogoId, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
 
   const [contextMenuId, setContextMenuId] = useState(null);
@@ -126,23 +126,22 @@ function PublisherLogoSettings({
       return setIndexRemoved(null);
     }
     return undefined;
-  }, [
-    activePublisherLogo,
-    indexRemoved,
-    publisherLogosById,
-    setActivePublisherLogoId,
-  ]);
+  }, [indexRemoved, publisherLogosById, setActivePublisherLogoId]);
 
   useGridViewKeys({
     containerRef,
     gridRef,
     itemRefs,
     isRTL,
-    currentItemId: activePublisherLogo,
+    currentItemId: activePublisherLogoId,
     items: publisherLogos,
   });
 
   const showLogoContextMenu = !hasOnlyOneLogo;
+
+  const onMenuItemToggle = useCallback((newMenuId) => {
+    setActivePublisherLogoId(newMenuId);
+  }, []);
 
   const onMenuItemSelected = useCallback(
     (sender, logo, index) => {
@@ -164,7 +163,14 @@ function PublisherLogoSettings({
     [handleUpdateDefaultLogo, handleRemoveLogoClick]
   );
 
-  useFocusOut(containerRef, () => setActivePublisherLogoId(null), []);
+  useFocusOut(
+    containerRef,
+    () => {
+      setActivePublisherLogoId(null);
+      setContextMenuId(null);
+    },
+    []
+  );
 
   return (
     <SettingForm>
@@ -185,7 +191,7 @@ function PublisherLogoSettings({
                 return null;
               }
 
-              const isActive = activePublisherLogo === publisherLogo.id;
+              const isActive = activePublisherLogoId === publisherLogo.id;
 
               return (
                 <GridItemContainer
@@ -222,10 +228,11 @@ function PublisherLogoSettings({
                   {showLogoContextMenu && (
                     <PopoverLogoContextMenu
                       isActive={isActive}
-                      activePublisherLogo={activePublisherLogo}
+                      activePublisherLogo={activePublisherLogoId}
                       idx={idx}
                       publisherLogo={publisherLogo}
                       onMenuItemSelected={onMenuItemSelected}
+                      onMenuItemToggle={onMenuItemToggle}
                       contextMenuId={{
                         set: setContextMenuId,
                         value: contextMenuId,
