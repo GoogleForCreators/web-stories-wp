@@ -19,21 +19,25 @@
  */
 import { useEffect } from 'react';
 
-/**
- * Internal dependencies
- */
-import { useAPI } from '../../';
-
 function useLoadFonts({ fonts, setFonts }) {
-  const {
-    actions: { getAllFonts },
-  } = useAPI();
-
+  const fontsLength = fonts.length;
   useEffect(() => {
-    if (fonts.length === 0) {
-      getAllFonts({}).then(setFonts);
+    async function loadFonts() {
+      const newFonts = await import(
+        /* webpackChunkName: "chunk-fonts" */ '../../../../fonts/fonts'
+      );
+      const formattedFonts = newFonts.default.map((font) => ({
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
+
+      setFonts(formattedFonts);
     }
-  }, [fonts, getAllFonts, setFonts]);
+    if (!fontsLength) {
+      loadFonts();
+    }
+  }, [fontsLength, setFonts]);
 }
 
 export default useLoadFonts;
