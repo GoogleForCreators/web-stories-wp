@@ -146,9 +146,11 @@ function MultiSelectionMoveable({ selectedElements }) {
       // Update position in all cases.
       const frame = frames[i];
       const { direction } = frame;
+
+      const roundToZero = (num) => (Math.abs(num) <= 1 ? 0 : num);
       const properties = {
-        x: element.x + editorToDataX(frame.translate[0]),
-        y: element.y + editorToDataY(frame.translate[1]),
+        x: roundToZero(element.x + editorToDataX(frame.translate[0])),
+        y: roundToZero(element.y + editorToDataY(frame.translate[1])),
       };
       if (isRotate) {
         properties.rotationAngle = frame.rotate;
