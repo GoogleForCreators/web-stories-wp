@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-import { fillerDateSettingsObject } from '../../../../../dataUtils/dateSettings';
 import { renderWithProviders } from '../../../../../testUtils';
 import { ToastProvider } from '../../../../../components';
 import {
@@ -73,7 +72,6 @@ describe('My Stories <StoriesView />', function () {
             trashStory: jest.fn,
             updateStory: jest.fn,
           }}
-          dateSettings={fillerDateSettingsObject}
           stories={fakeStories}
           users={{}}
           view={{

@@ -17,12 +17,19 @@
 /**
  * Internal dependencies
  */
-export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
-export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
-export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
+import convertFormatString from '../convertFormatString';
+import format from '../format';
 
-export const STORYBOOK_PAGE_SIZE = {
-  width: 212,
-  height: 318,
-  containerHeight: 376.89,
-};
+describe('date/convertFormatString', () => {
+  it.each([
+    ['d-m-Y H:i', 'dd-MM-yyyy HH:mm'],
+    ['F j, Y', 'MMMM d, yyyy'],
+    ['F M l D', 'MMMM MMM EEEE EEE'],
+  ])(
+    'converts PHP date format string to its date-fns equivalent',
+    (formatString, expectedOutput) => {
+      expect(convertFormatString(formatString)).toStrictEqual(expectedOutput);
+      expect(() => () => format(new Date(), formatString)).not.toThrow();
+    }
+  );
+});

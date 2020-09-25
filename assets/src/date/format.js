@@ -14,9 +14,30 @@
  * limitations under the License.
  */
 
-export const fillerDateSettingsObject = {
-  dateFormat: 'F j, Y',
-  timeFormat: 'g:i A',
-  gmtOffset: -4,
-  timezone: 'America/Santo_Domingo',
-};
+/**
+ * External dependencies
+ */
+import { format as _format, toDate } from 'date-fns-tz';
+
+/**
+ * Internal dependencies
+ */
+import convertFormatString from './convertFormatString';
+import getOptions from './getOptions';
+
+/**
+ * Formats a date by a given format.
+ *
+ * @param {Date} date Date to format.
+ * @param {string} formatString PHP-style date format.
+ * @return {string} Formatted date.
+ */
+function format(date, formatString) {
+  if (!date) {
+    return '';
+  }
+
+  return _format(toDate(date), convertFormatString(formatString), getOptions());
+}
+
+export default format;

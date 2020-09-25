@@ -15,21 +15,22 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import moment from 'moment-timezone';
+import format from './format';
+import { getSettings } from './settings';
 
 /**
- * Checks if date is today's date.
+ * Formats a date by dateSettings.timeFormat.
  *
- * @param {Date} date Uses moment to find if date passed in is the same as "today".
- * If date is not an instance of moment when passed in it will create a moment from it.
+ * @param {Date|string} date Date to format.
  *
- * @return {boolean} If date matches today it will be true
+ * @return {string} Displayable relative date string
  */
-export function isToday(date) {
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
-  const today = moment().startOf('day');
-
-  return displayDate.isSame(today, 'd');
+function formatTime(date) {
+  const settings = getSettings();
+  const { timeFormat } = settings;
+  return format(date, timeFormat);
 }
+
+export default formatTime;

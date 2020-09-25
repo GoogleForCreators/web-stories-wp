@@ -17,12 +17,24 @@
 /**
  * Internal dependencies
  */
-export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
-export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
-export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
+import { getSettings } from './settings';
 
-export const STORYBOOK_PAGE_SIZE = {
-  width: 212,
-  height: 318,
-  containerHeight: 376.89,
-};
+function is12Hour() {
+  const settings = getSettings();
+  const { timeFormat } = settings;
+
+  if (!timeFormat) {
+    return true;
+  }
+
+  return /a(?!\\)/.test(
+    timeFormat
+      .toLowerCase() // Test only for the lower case "a".
+      .replace(/\\\\/g, '') // Replace "//" with empty strings.
+      .split('')
+      .reverse()
+      .join('') // Reverse the string and test for "a" not followed by a slash.
+  );
+}
+
+export default is12Hour;
