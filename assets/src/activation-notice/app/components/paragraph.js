@@ -23,6 +23,7 @@ const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.body.family};
   font-size: ${({ theme }) => theme.fonts.body.size};
   line-height: ${({ theme }) => theme.fonts.body.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.body.fontWeight};
   color: ${({ theme, $secondary }) =>
     $secondary ? theme.colors.secondary : theme.colors.primary};
   margin: 0 !important;

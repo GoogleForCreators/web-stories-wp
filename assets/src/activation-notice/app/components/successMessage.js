@@ -36,7 +36,6 @@ import SecondaryLink from './link';
 
 const Message = styled.div`
   min-width: 260px;
-  margin-right: 30px;
   padding: 30px 0 30px;
 
   ${SecondaryLink} {
@@ -50,7 +49,7 @@ const Title = styled.h2`
   font-family: ${({ theme }) => theme.fonts.title.family};
   font-size: ${({ theme }) => theme.fonts.title.size};
   line-height: ${({ theme }) => theme.fonts.title.lineHeight};
-  font-weight: normal;
+  font-weight: ${({ theme }) => theme.fonts.title.fontWeight};
   color: ${({ theme }) => theme.colors.primary};
   margin: 0 0 10px;
 `;
@@ -59,12 +58,13 @@ const PrimaryLink = styled.a`
   font-family: ${({ theme }) => theme.fonts.button.family};
   font-size: ${({ theme }) => theme.fonts.button.size};
   line-height: ${({ theme }) => theme.fonts.button.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.button.fontWeight};
   background: ${({ theme }) => theme.colors.action.bg};
   color: ${({ theme }) => theme.colors.action.fg};
   padding: 5px 8px;
   cursor: pointer;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 2px;
 
   &:focus,
   &:hover {
@@ -78,13 +78,13 @@ const ParagraphWithSpace = styled(Paragraph)`
 `;
 
 function SuccessMessage() {
-  const { newStoryURL, demoStoryURL } = useConfig();
+  const { dashboardURL, demoStoryURL } = useConfig();
 
   const onClickPrimary = useCallback(
     (evt) => {
-      trackClick(evt, 'open_story_editor', 'activation-notice', newStoryURL);
+      trackClick(evt, 'open_dashboard', 'activation-notice', dashboardURL);
     },
-    [newStoryURL]
+    [dashboardURL]
   );
   const onClickSecondary = useCallback(
     (evt) => {
@@ -100,17 +100,17 @@ function SuccessMessage() {
         <br />
         {__('Tell some stories.', 'web-stories')}
       </Title>
-      <ParagraphWithSpace>
-        {__('Welcome to the Web Stories for WordPress beta.', 'web-stories')}
+      <ParagraphWithSpace $secondary>
+        {__('Welcome to Web Stories for WordPress.', 'web-stories')}
       </ParagraphWithSpace>
       <ParagraphWithSpace>
-        <PrimaryLink href={newStoryURL} onClick={onClickPrimary}>
-          {__('Launch the editor', 'web-stories')}
+        <PrimaryLink href={dashboardURL} onClick={onClickPrimary}>
+          {__('Go to Stories Dashboard', 'web-stories')}
         </PrimaryLink>
       </ParagraphWithSpace>
       <Paragraph>
         <SecondaryLink href={demoStoryURL} onClick={onClickSecondary}>
-          {__('See sample story', 'web-stories')}
+          {__('Read the Get Started story', 'web-stories')}
         </SecondaryLink>
       </Paragraph>
     </Message>

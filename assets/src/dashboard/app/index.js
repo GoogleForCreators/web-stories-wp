@@ -26,7 +26,6 @@ import { useEffect } from 'react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -64,8 +63,6 @@ const AppContent = () => {
   const {
     state: { currentPath },
   } = useRouteHistory();
-
-  const enableSettingsView = useFeature('enableSettingsView');
 
   useEffect(() => {
     const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
@@ -108,12 +105,10 @@ const AppContent = () => {
           path={NESTED_APP_ROUTES.SAVED_TEMPLATE_DETAIL}
           component={<TemplateDetailsView />}
         />
-        {enableSettingsView && (
-          <Route
-            path={APP_ROUTES.EDITOR_SETTINGS}
-            component={<EditorSettingsView />}
-          />
-        )}
+        <Route
+          path={APP_ROUTES.EDITOR_SETTINGS}
+          component={<EditorSettingsView />}
+        />
         <Route
           path={APP_ROUTES.STORY_ANIM_TOOL}
           component={<StoryAnimTool />}

@@ -241,18 +241,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @brittanyirl
-			 * Issue: 3482
-			 * Creation date: 2020-08-10
-			 */
-			[
-				'name'        => 'enableSettingsView',
-				'label'       => __( 'Settings Views', 'web-stories' ),
-				'description' => __( 'Enable settings view in dashboard', 'web-stories' ),
-				'group'       => 'dashboard',
-				'default'     => true,
-			],
-			/**
-			 * Author: @brittanyirl
 			 * Issue: 2381
 			 * Creation date: 2020-06-11
 			 */
@@ -305,18 +293,6 @@ class Experiments {
 				'label'       => __( 'Animations', 'web-stories' ),
 				'description' => __( 'Enable animations tab', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
-			 * Issue: #2094
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showKeyboardShortcutsButton',
-				'label'       => __( 'Keyboard Shortcuts', 'web-stories' ),
-				'description' => __( 'Enable keyboard shortcuts button', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy

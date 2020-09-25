@@ -51,16 +51,12 @@ function CardGallery({ story, isRTL, galleryLabel }) {
   const [dimensionMultiplier, setDimensionMultiplier] = useState(null);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [activePageId, setActivePageId] = useState();
-  const [pages, setPages] = useState([]);
   const containerRef = useRef();
   const gridRef = useRef();
   const pageRefs = useRef({});
+  const { pages = [] } = story;
 
   const isInteractive = pages.length > 1;
-
-  useEffect(() => {
-    setPages(story.pages || []);
-  }, [story]);
 
   const metrics = useMemo(() => {
     if (!dimensionMultiplier) {
@@ -118,12 +114,10 @@ function CardGallery({ story, isRTL, galleryLabel }) {
   }, [updateContainerSize]);
 
   useEffect(() => {
+    // Reset state when the story changes
     setActivePageIndex(0);
-  }, [story]);
-
-  useEffect(() => {
-    setActivePageId(story.pages[0].id);
-  }, [story]);
+    setActivePageId(pages[0].id);
+  }, [pages]);
 
   useGridViewKeys({
     containerRef,
@@ -140,7 +134,6 @@ function CardGallery({ story, isRTL, galleryLabel }) {
     }
 
     const { miniCardSize, gap, miniWrapperSize } = metrics;
-
     return (
       <UnitsProvider
         pageSize={{

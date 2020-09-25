@@ -132,7 +132,7 @@ function PresetPanel({
 
   return (
     <Panel
-      name="stylepreset"
+      name={`stylepreset-${presetType}`}
       initialHeight={Math.min(initialHeight, window.innerHeight / 3)}
       resizeable={resizeable}
       canCollapse={canCollapse}

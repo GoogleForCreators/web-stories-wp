@@ -34,26 +34,27 @@ import { useConfig } from '../config';
 import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
+import Image from './image';
 
 const Wrapper = styled.div`
   display: none;
-  flex-direction: column;
-  align-items: center;
+  margin-left: 20px;
+  justify-content: center;
 
   @media ${({ theme }) => theme.breakpoint.tabletLarge} {
     display: flex;
   }
 `;
 
-const Image = styled.img``;
-
 const ParagraphWrapper = styled.div`
-  margin-top: -40px;
+  align-self: flex-start;
+  margin: 20px 0 0 -50px;
+  min-width: 100px;
 `;
 
 // @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step2() {
-  const { cdnURL, dashboardURL } = useConfig();
+  const { dashboardURL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -64,6 +65,15 @@ function Step2() {
 
   return (
     <Wrapper>
+      <Link href={dashboardURL} onClick={onClick}>
+        <Image
+          name="dashboard.png"
+          name2x="dashboard-2x.png"
+          width={420}
+          height={246}
+          $marginTop={60}
+        />
+      </Link>
       <ParagraphWrapper>
         <Number>
           {
@@ -73,8 +83,8 @@ function Step2() {
         </Number>
         <Paragraph $secondary>
           {
-            /* translators: First half of Head to the Dashboard" */
-            _x('Head to', 'plugin activation', 'web-stories')
+            /* translators: First half of "Head to the Dashboard" */
+            _x('Head to the', 'plugin activation', 'web-stories')
           }
           <br />
           <Link href={dashboardURL} onClick={onClick}>
@@ -82,14 +92,6 @@ function Step2() {
           </Link>
         </Paragraph>
       </ParagraphWrapper>
-      <Link href={dashboardURL} onClick={onClick}>
-        <Image
-          src={`${cdnURL}images/plugin-activation/dashboard.png`}
-          alt=""
-          width={320}
-          height={190}
-        />
-      </Link>
     </Wrapper>
   );
 }

@@ -41,7 +41,6 @@ describe('Keyboard Shortcuts Menu', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ showKeyboardShortcutsButton: true });
 
     await fixture.render();
   });

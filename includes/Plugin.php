@@ -61,13 +61,6 @@ class Plugin {
 	public $template;
 
 	/**
-	 * Beta version updater.
-	 *
-	 * @var Updater
-	 */
-	public $updater;
-
-	/**
 	 * Dashboard.
 	 *
 	 * @var Dashboard
@@ -148,10 +141,6 @@ class Plugin {
 
 		$this->experiments = new Experiments();
 		add_action( 'init', [ $this->experiments, 'init' ], 7 );
-
-		// Beta version updater.
-		$this->updater = new Updater();
-		add_action( 'init', [ $this->updater, 'init' ], 9 );
 
 		// Admin-related functionality.
 
