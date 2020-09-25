@@ -8,100 +8,18 @@ rootClass: home
 <main role="main" tabindex="0" on="tap:AMP.setState({docsMenuActive: false})">
 
   <section class="home_hero_text">
-
     <h1 id="hero_text">{{ $('Visual Storytelling') }}<br>{{ $('Has Come To WordPress.') }}</h1>
     <p class="hero_subtitle">{{ ('Make visual stories on the web your very own') }}</p>
     <a href="https://wordpress.org/plugins/web-stories/" class="fake_button">{{$("Get the Plugin")}}</a>
-
-    <amp-position-observer on="scroll:heroTextFade.seekTo(percent=event.percent)" target="hero_text" intersection-ratios="0.5" layout="nodisplay" ></amp-position-observer>
-
-    <amp-animation id="heroTextFade" layout="nodisplay">
-
-      <script type="application/json">
-        {
-            "duration": "1",
-            "fill": "both",
-            "animations": [
-              {
-                "selector": ".home_hero_text",
-                "keyframes": [
-                    {"opacity": 1, "transform": "translateY(0)"},
-                    {"opacity": 1, "transform": "translateY(0)", "offset": 0.8},
-                    {"opacity": 0.2, "offset": 0.99},
-                    {"opacity": 0, "transform": "translateY(-5vh)"}
-                ]
-              }
-            ]
-          }
-      </script>
-    </amp-animation>
   </section>
 
   <section class="editor">
-
-    <amp-position-observer on="scroll:editorAnimation.seekTo(percent=event.percent)" layout="nodisplay" intersection-ratios="0.3"></amp-position-observer>
-
-    <amp-animation id="editorAnimation" layout="nodisplay">
-
-      <script type="application/json">
-        {
-            "duration": "1",
-            "fill": "both",
-            "animations": [
-              {
-                "selector": "#editor_bg",
-                "keyframes": [
-                    {"transform": "scale(1) translateY(0)", "opacity": 0.7},
-                    {"transform": "scale(1.15) translateY(-10em)", "opacity": 1, "offset": 0.1},
-                    {"transform": "scale(1.15) translateY(-10em)", "opacity": 1, "offset": 0.2},
-                    {"transform": "scale(1.15) translateY(-10em)", "opacity": 1, "offset": 0.4},
-                    {"transform": "scale(1.15) translateY(-16em)", "opacity": 1, "offset": 0.5},
-                    {"transform": "scale(1.15) translateY(-18em)", "opacity": 1, "offset": 0.6},
-                    {"transform": "scale(1.15) translateY(-18em)", "opacity": 1, "offset": 0.65},
-                    {"transform": "scale(1.15) translateY(-50em)", "opacity": 1, "offset": 0.73},
-                    {"transform": "scale(1.15) translateY(-87em)", "opacity": 1, "offset": 1}
-                ]
-              }, {
-                "selector": "#announcing",
-                "keyframes": [
-                    {"transform": "translateY(-0.5em)", "opacity": 0},
-                    {"transform": "translateY(-0.5em)", "opacity": 0, "offset": 0.15},
-                    {"transform": "translateY(0)", "opacity": 1, "offset": 0.2},
-                    {"transform": "translateY(0)", "opacity": 1, "offset": 0.4},
-                    {"transform": "translateY(-5em)", "opacity": 0, "offset": 0.5},
-                    {"transform": "translateY(-10em)", "opacity": 0}
-                ]
-              }, {
-                "selector": "#wysiwygftw",
-                "keyframes": [
-                    {"opacity": 0},
-                    {"opacity": 0, "transform": "translateY(2rem)", "offset": 0.5},
-                    {"opacity": 1, "transform": "translateY(-5rem)", "offset": 0.6},
-                    {"opacity": 1, "transform": "translateY(-5rem)", "offset": 0.65},
-                    {"opacity": 0, "transform": "translateY(-100rem)", "offset": 0.9}
-                ]
-              }, {
-                "selector": "#templates_screenshot",
-                "keyframes": [
-                    {"opacity": 1, "transform": "rotate(-10deg)"},
-                    {"opacity": 0, "transform": "rotate(-8deg) translateX(100px)", "offset": 0.09},
-                    {"opacity": 0, "transform": "rotate(-8deg) translateX(100px)", "offset": 1}
-                ]
-              }
-            ]
-          }
-      </script>
-    </amp-animation>
-
-    <p id="announcing">{{ $("With Stories for WordPress, we're bringing<br>first-class Web Stories support to WordPress.") }}</p>
-    <p id="wysiwygftw">{{ $("WYSIWYG all the way") }}</p>
     <amp-video poster="/img/editor_bg.jpg" id="editor_bg" width="1920" height="1200" layout="responsive" title="Stories for WordPresf in action" loop muted>
       <source src="./video/wysiwyg.av1.mp4" type='video/mp4; codecs="av01.0.00H.08"' />
       <source src="./video/wysiwyg.webm" type="video/webm" />
       <source src="./video/wysiwyg.mp4" type="video/mp4" />
     </amp-video>
     <amp-position-observer on="enter:editor_bg.play" layout="nodisplay" intersection-ratios="0.9"></amp-position-observer>
-
     <div id="templates_screenshot" role="img" aria-label="Screenshot of the Web Stories WordPress Plugin's template gallery"></div>
   </section>
 
@@ -115,13 +33,6 @@ rootClass: home
             "fill": "forwards",
             "animations": [
               {
-                "selector": "#find_callout",
-                "keyframes": [
-                    {"offset": "0", "transform": "translateY(0)"},
-                    {"offset": "0.5", "transform": "translateY(-140vh)"},
-                    {"offset": "1", "transform": "translateY(-250vh)"}
-                ]
-              }, {
                 "selector": "#template_1",
                 "keyframes": [
                     {"offset": "0", "transform": "translateY(40vh)"},
@@ -191,7 +102,9 @@ rootClass: home
           <amp-img id="template_2" src="/img/template_2.jpg" width="157px" height="280px" layout="responsive" ></amp-img>
           <amp-img id="template_3" src="/img/template_3.jpg" width="157px" height="280px" layout="responsive" ></amp-img>
         </div>
-        <amp-img id="template_4" src="/img/template_4.jpg" width="405px" height="700px" layout="responsive" ></amp-img>
+        <amp-video poster="/img/template_4.jpg" id="template_4" width="405" height="700" layout="responsive" title="A template in action" loop autoplay>
+          <source src="./video/template.mp4" type="video/mp4" />
+        </amp-video>        
         <div>
           <amp-img id="template_5" src="/img/template_5.jpg" width="191px" height="340px" layout="responsive" ></amp-img>
           <amp-img id="template_6" src="/img/template_6.jpg" width="191px" height="340px" layout="responsive" ></amp-img>

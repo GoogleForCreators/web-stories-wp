@@ -260,7 +260,7 @@ header .docs_flyout {
   right: 6%;
   max-width: 80%;
   margin-top: 1rem;
-  padding: 3rem 1.2rem;
+  padding: 3rem 1.2rem 2.2rem;
   line-height: 1.4
 }
 
@@ -288,7 +288,7 @@ header .docs_flyout a {
 
 header .docs_flyout span {
   padding: 0 1.2rem;
-  border-right: 2px solid #CBACFF;
+  border-right: 2px solid #e8e8e8;
   max-width: 13rem;
 }
 
@@ -375,8 +375,20 @@ aside .docTrack i:last-child {
   color: #fff
 }
 
+#docs_menu li {
+  white-space: normal;
+  margin-bottom: 1.5rem;
+}
+
+#docs_menu ul li:nth-last-child(1),
+#docs_menu ul li:nth-last-child(2) {
+  margin-bottom: 0;
+}
+
 #docs_menu a {
-  color: #000
+  color: #000;
+  white-space: normal;
+  display: inline-block;
 }
 
 
@@ -384,6 +396,8 @@ aside .docTrack i:last-child {
   filter: none;
 }
 
+
+/* HERO */
 
 #hero_text {
   font-family: "Poppins-ExtraLight";
@@ -395,10 +409,14 @@ aside .docTrack i:last-child {
 }
 
 .hero_subtitle {
-  font-size: 1.4rem;
-  color: #ADADAD;
+  font-size: 1.375rem;
   margin-top: 0;
-  font-weight: bold
+  margin-bottom: 0.8rem;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 66px;
+  opacity: 0.68;
 }
 
 .home .fake_button {
@@ -423,79 +441,71 @@ aside .docTrack i:last-child {
 }
 
 .editor {
-  min-height: 150vh;
+  padding-bottom: 4rem;
   position: relative;
+  margin-top: 3.8rem;
 }
 
 #editor_bg {
   margin: auto;
-  position: fixed;
-  max-width: 80%;
-  width: 80rem;
-  left: 0;
-  right: 0;
-  opacity: 0.7;
-  top: 42rem;
+  position: relative;
+  max-width: 1290px;
+  width: 100%;
+  border-radius: 20px;
 }
 
-#announcing {
-  font-size: 3.5rem;
-  position: fixed;
-  min-width: 61%;
-  max-width: 88%;
-  top: 11rem;
-  opacity: 0;
-  left: 0;
+#editor_bg::before {
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: 0;
   right: 0;
-  margin: auto;
-  will-change: transform;
-}
-
-@media screen and (max-width: 1280px) {
-  #announcing {
-    font-size: 3.5rem;
-  }
-}
-
-#wysiwygftw {
-  font-size: 1.5rem;
-  font-weight: 700;
-  position: fixed;
-  top: 16rem;
-  opacity: 0;
   left: 0;
-  right: 0;
-  margin: auto;
-  text-align: center;
-  will-change: transform;
-  max-width: 1920px;
+  height: 17vw;
+  z-index: 1;
+  background: linear-gradient(0deg, #000 37.25%, rgba(28, 6, 25, 0) 100%);
 }
 
 #templates_screenshot {
   background-image: url("/img/template_gallery.jpg");
-  position: fixed;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  right: -25rem;
-  bottom: -10rem;
+  position: absolute;
+  right: -19rem;
+  top: 10rem;
   width: 50rem;
-  height: 28.125rem;
-  transform: rotate(-10deg);
-  border-radius: 20px 0 0 0;
+  height: 42.125rem;
+  transform: rotate(-15deg);
+  border-radius: 20px;
   max-width: 50%;
+  z-index: 2;
+  opacity: 0;
+  animation: 3s rotateIn;
+  animation-fill-mode: forwards;
+  box-shadow: 0 0 40px #00000047;
+}
+
+@keyframes rotateIn {
+  from {
+      transform: rotate(-15deg) translate(100px, 0px);
+      opacity: 0;
+  }
+
+  to {
+      transform: rotate(-9.6deg);
+      opacity: 1;
+  }
 }
 
 #template_list {
-  min-height: 100vh;
   position: relative;
+  margin-top: 16rem;
+  margin-bottom: 18rem;
 }
 
 #find_callout {
-  position: fixed;
-  left: 0;
-  right: 0;
+  position: relative;
   margin: auto;
-  top: 130vh;
   font-size: 1.5rem;
 }
 
@@ -503,15 +513,17 @@ aside .docTrack i:last-child {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  width: 65%;
+  width: 73%;
   margin: auto;
 }
 
 #find_callout p {
   margin: 3rem 0;
+  font-size: 1.625rem;
 }
 
-#templates amp-img {
+#templates amp-img,
+#templates amp-video {
   border-radius: 20px;
   margin-bottom: 2rem;
 }
@@ -565,16 +577,25 @@ aside .docTrack i:last-child {
 }
 
 #final_thoughts h1 {
-  font-size: 3.5rem;
-  line-height: 1.4;
+  font-size: 58px;
+  line-height: 76px;
   font-weight: 300;
+  opacity: 0.84;
+  margin: 0.7em 0 0.4em 0;
 }
 
 #final_thoughts p {
-  font-size: 1.5rem;
-  line-height: 2rem;
-  font-weight: 300;
+  font-size: 23px;
+  line-height: 44px;
+  opacity: 0.64;
+  font-weight: 400;
   margin: 0;
+}
+
+#final_thoughts p:first-child {
+  font-size: 16px;
+  line-height: 20px;
+  opacity: 0.54;
 }
 
 #final_thoughts > div {
@@ -585,7 +606,6 @@ aside .docTrack i:last-child {
 
 #final_thoughts .fake_button {
   font-size: 1.25rem;
-  padding: .5rem 1rem;
 }
 
 #tip_card_container {
@@ -597,7 +617,7 @@ aside .docTrack i:last-child {
 }
 
 #tip_card, #tip_card_bg {
-  border-radius: 30px;
+  border-radius: 20px;
   background-repeat: no-repeat;
   background-position: 50%;
   background-size: contain;
