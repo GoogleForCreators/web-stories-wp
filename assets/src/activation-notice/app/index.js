@@ -24,19 +24,16 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { lightTheme, darkTheme, GlobalStyle } from '../theme';
+import { theme, GlobalStyle } from '../theme';
 import MessageContent from './components/messageContent';
 import { ConfigProvider } from './config';
-import usePrefersDarkMode from './utils/usePrefersDarkMode';
 
 function App({ config }) {
   const { isRTL } = config;
 
-  const prefersDarkMode = usePrefersDarkMode();
-
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={prefersDarkMode ? darkTheme : lightTheme}>
+      <ThemeProvider theme={theme}>
         <ConfigProvider config={config}>
           <GlobalStyle />
           <MessageContent />

@@ -60,7 +60,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page1_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -339,7 +339,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page2_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page2_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
@@ -590,7 +590,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page3_image1.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page3_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -1004,7 +1004,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page4_page5_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -1287,7 +1287,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page4_page5_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
@@ -1690,7 +1690,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page6_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page6_bg.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -2124,7 +2124,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page7_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page7_bg.jpg",
             "width": 330,
             "height": 442,
             "id": 1563,
@@ -2538,7 +2538,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page8_image1.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page8_image1.jpg",
             "width": 220,
             "height": 131,
             "posterId": 0,
@@ -2578,7 +2578,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page8_image2.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page8_image2.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -2621,7 +2621,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page8_image3.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page8_image3.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
@@ -3150,7 +3150,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T16:42:02",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page7_bg.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page7_bg.jpg",
             "width": 330,
             "height": 442,
             "posterId": 0,
@@ -3719,7 +3719,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_icon_fb.png",
+            "src": "https://replaceme.com/images/templates/diy/diy_icon_fb.png",
             "width": 150,
             "height": 300,
             "posterId": 0,
@@ -3756,7 +3756,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_icon_insta.png",
+            "src": "https://replaceme.com/images/templates/diy/diy_icon_insta.png",
             "width": 150,
             "height": 150,
             "posterId": 0,
@@ -3793,7 +3793,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_icon_yt.png",
+            "src": "https://replaceme.com/images/templates/diy/diy_icon_yt.png",
             "width": 150,
             "height": 102,
             "posterId": 0,
@@ -3830,7 +3830,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_icon_tw.png",
+            "src": "https://replaceme.com/images/templates/diy/diy_icon_tw.png",
             "width": 151,
             "height": 119,
             "posterId": 0,
@@ -4043,7 +4043,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:23",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page10_image1.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page10_image1.jpg",
             "width": 330,
             "height": 235,
             "posterId": 0,
@@ -4086,7 +4086,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:21",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page10_image2.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page10_image2.jpg",
             "width": 330,
             "height": 498,
             "posterId": 0,
@@ -4129,7 +4129,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:19",
-            "src": "http://localhost:8899/wp-content/plugins/web-stories//assets/images/templates/diy/diy_page10_image3.jpg",
+            "src": "https://replaceme.com/images/templates/diy/diy_page10_image3.jpg",
             "width": 330,
             "height": 220,
             "posterId": 0,

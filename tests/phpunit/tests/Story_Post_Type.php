@@ -44,6 +44,9 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 */
 	protected static $story_id;
 
+	/**
+	 * @param \WP_UnitTest_Factory $factory
+	 */
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$admin_id      = $factory->user->create(
 			[ 'role' => 'administrator' ]
@@ -304,6 +307,96 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		}
 	}
 
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_true() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( true, $query );
+		$this->assertTrue( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_no_permalink() {
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_permalinks() {
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$query           = new \WP_Query();
+		$result          = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_page() {
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+
+		$query = new \WP_Query();
+		$query->set( 'name', 'stories' );
+		$query->set( 'page', self::$story_id );
+
+		add_filter( 'post_type_link', '__return_false' );
+		add_filter( 'post_type_archive_link', '__return_false' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		remove_filter( 'post_type_link', '__return_false' );
+		remove_filter( 'post_type_archive_link', '__return_false' );
+
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_pagename_set() {
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+
+		$query = new \WP_Query();
+		$query->set( 'pagename', 'stories' );
+
+		add_filter( 'post_type_archive_link', '__return_false' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		remove_filter( 'post_type_archive_link', '__return_false' );
+
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_pagename_feed() {
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$story_post_type->init();
+
+		$query = new \WP_Query();
+		$query->set( 'pagename', 'stories' );
+		$query->set( 'feed', 'feed' );
+
+		add_filter( 'post_type_archive_feed_link', '__return_false' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		remove_filter( 'post_type_archive_feed_link', '__return_false' );
+
+		$this->assertFalse( $result );
+	}
 
 	/**
 	 * @covers ::remove_caps_from_roles
@@ -327,7 +420,6 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::add_caps_to_roles
-	 * @covers \Google\Web_Stories\new_site
 	 * @group ms-required
 	 */
 	public function test_add_caps_to_roles_multisite() {

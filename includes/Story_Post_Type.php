@@ -37,6 +37,7 @@ use WP_Post;
 use WP_Role;
 use WP_Post_Type;
 use WP_Screen;
+use WP_Rewrite;
 
 /**
  * Class Story_Post_Type.
@@ -72,7 +73,7 @@ class Story_Post_Type {
 	 *
 	 * @var string
 	 */
-	const REWRITE_SLUG = 'stories';
+	const REWRITE_SLUG = 'web-stories';
 
 	/**
 	 * Style Present options name.
@@ -91,6 +92,8 @@ class Story_Post_Type {
 	/**
 	 * Dashboard constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param Experiments $experiments Experiments instance.
 	 */
 	public function __construct( Experiments $experiments ) {
@@ -101,6 +104,8 @@ class Story_Post_Type {
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -150,7 +155,8 @@ class Story_Post_Type {
 					'revisions', // Without this, the REST API will return 404 for an autosave request.
 				],
 				'rewrite'               => [
-					'slug' => self::REWRITE_SLUG,
+					'slug'       => self::REWRITE_SLUG,
+					'with_front' => false,
 				],
 				'public'                => true,
 				'has_archive'           => true,
@@ -171,9 +177,11 @@ class Story_Post_Type {
 
 		// Select the single-web-story.php template for Stories.
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
+		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
+		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
@@ -200,6 +208,8 @@ class Story_Post_Type {
 	 *
 	 * This gives WordPress site owners more granular control over story management,
 	 * as they can customize this to their liking.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -247,6 +257,8 @@ class Story_Post_Type {
 		 *
 		 * Can be used to add the capabilities to other, custom roles.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
 		do_action( 'web_stories_add_capabilities', $all_capabilities );
@@ -254,6 +266,8 @@ class Story_Post_Type {
 
 	/**
 	 * Removes story capabilities from all user roles.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -280,6 +294,8 @@ class Story_Post_Type {
 		 *
 		 * Can be used to remove the capabilities from other, custom roles.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $all_capabilities List of all post type capabilities, for reference.
 		 */
 		do_action( 'web_stories_remove_capabilities', $all_capabilities );
@@ -287,6 +303,8 @@ class Story_Post_Type {
 
 	/**
 	 * Base64 encoded svg icon.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string Base64-encoded SVG icon.
 	 */
@@ -296,6 +314,8 @@ class Story_Post_Type {
 
 	/**
 	 * Get the post type for the current request.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return string|null
 	 */
@@ -350,7 +370,10 @@ class Story_Post_Type {
 	/**
 	 * Get the singular post type which is the queried object for the given validated URL post.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param int $post_id Post ID for Validated URL Post.
+	 *
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
 	protected function get_validated_url_post_type( $post_id ) {
@@ -380,7 +403,10 @@ class Story_Post_Type {
 	/**
 	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $options Options.
+	 *
 	 * @return array Filtered options.
 	 */
 	public function filter_amp_options( $options ) {
@@ -398,7 +424,10 @@ class Story_Post_Type {
 	 * Remove web-stories from the list unless the currently requested post type is for a web-story. This is done in
 	 * order to hide stories from the list of supportable post types on the AMP Settings screen.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string[] $post_types Post types.
+	 *
 	 * @return array Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
@@ -412,10 +441,44 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Filter amp_validation_error_sanitized to prevent invalid markup removal for the amp-story element.
+	 *
+	 * Since the amp-story element requires the poster-portrait-src attribute to be valid, when this attribute is absent
+	 * the AMP plugin will try to remove the amp-story element altogether. This is not the preferred resolution! So
+	 * instead, this will force the invalid markup to be kept. When this is done, the AMP plugin in Standard mode
+	 * (which Web Stories enforces while serving singular web-story posts) will remove the amp attribute from the html
+	 * element so that the page will not be advertised as AMP. This prevents GSC from complaining about a validation
+	 * issue which we already know about.
+	 *
+	 * @since 1.0.0
+	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
+	 *
+	 * @param null|bool $sanitized Whether sanitized. Null means sanitization is not overridden.
+	 * @param array     $error Validation error being sanitized.
+	 * @return null|bool Whether sanitized.
+	 */
+	public function filter_amp_story_element_validation_error_sanitized( $sanitized, $error ) {
+		if (
+			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
+			(
+				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
+				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
+			)
+		) {
+			return false;
+		}
+
+		return $sanitized;
+	}
+
+	/**
 	 * Add story_author as allowed orderby value for REST API.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array        $query_params Array of allowed query params.
 	 * @param WP_Post_Type $post_type Post type.
+	 *
 	 * @return array Array of query params.
 	 */
 	public function filter_rest_collection_params( $query_params, $post_type ) {
@@ -433,8 +496,11 @@ class Story_Post_Type {
 	/**
 	 * Filters the revision fields to ensure that JSON representation gets saved to Story revisions.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param array $fields Array of allowed revision fields.
 	 * @param array $story Story post array.
+	 *
 	 * @return array Array of allowed fields.
 	 */
 	public function filter_revision_fields( $fields, $story ) {
@@ -446,6 +512,8 @@ class Story_Post_Type {
 
 	/**
 	 * Filter if show admin bar on single post type.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param boolean $show Current value of filter.
 	 *
@@ -463,6 +531,8 @@ class Story_Post_Type {
 	 * Replace default post editor with our own implementation.
 	 *
 	 * @codeCoverageIgnore
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param bool    $replace Bool if to replace editor or not.
 	 * @param WP_Post $post    Current post object.
@@ -491,8 +561,11 @@ class Story_Post_Type {
 	 * Disables the block editor and associated logic (like enqueueing assets)
 	 * for the story post type.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param bool   $use_block_editor  Whether the post type can be edited or not. Default true.
 	 * @param string $post_type         The post type being checked.
+	 *
 	 * @return bool Whether to use the block editor.
 	 */
 	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
@@ -506,6 +579,8 @@ class Story_Post_Type {
 	/**
 	 *
 	 * Enqueue scripts for the element editor.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $hook The current admin page.
 	 *
@@ -553,6 +628,8 @@ class Story_Post_Type {
 	/**
 	 * Get editor settings as an array.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array
 	 */
 	public function get_editor_settings() {
@@ -591,8 +668,7 @@ class Story_Post_Type {
 			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
-				'dateFormat'       => get_option( 'date_format' ),
-				'timeFormat'       => get_option( 'time_format' ),
+				'locale'           => ( new Locale() )->get_locale_settings(),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
@@ -614,7 +690,6 @@ class Story_Post_Type {
 				'metadata'         => [
 					'publisher'       => $this->get_publisher_data(),
 					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
-					'fallbackPoster'  => plugins_url( 'assets/images/fallback-poster.png', WEBSTORIES_PLUGIN_FILE ),
 				],
 				'version'          => WEBSTORIES_VERSION,
 			],
@@ -628,6 +703,8 @@ class Story_Post_Type {
 		/**
 		 * Filters settings passed to the web stories editor.
 		 *
+		 * @since 1.0.0
+		 *
 		 * @param array $settings Array of settings passed to web stories editor.
 		 */
 		return apply_filters( 'web_stories_editor_settings', $settings );
@@ -635,6 +712,8 @@ class Story_Post_Type {
 
 	/**
 	 * Set template for web-story post type.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $template Template.
 	 *
@@ -649,9 +728,60 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Handles redirects to the post type archive.
+	 *
+	 * Redirects requests to `/stories` (old) to `/web-stories` (new).
+	 * Redirects requests to `/stories/1234` (old) to `/web-stories/1234` (new).
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool      $bypass Pass-through of the pre_handle_404 filter value.
+	 * @param \WP_Query $query The WP_Query object.
+	 * @return bool Whether to pass-through or not.
+	 */
+	public function redirect_post_type_archive_urls( $bypass, $query ) {
+		global $wp_rewrite;
+
+		// If a plugin has already utilized the pre_handle_404 function, return without action to avoid conflicts.
+		if ( $bypass ) {
+			return $bypass;
+		}
+
+		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
+			return $bypass;
+		}
+
+		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
+		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
+			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
+			if (
+				$query->get( 'page' ) &&
+				is_numeric( $query->get( 'page' ) ) &&
+				self::POST_TYPE_SLUG === get_post_type( absint( $query->get( 'page' ) ) )
+			) {
+				$redirect_url = get_permalink( absint( $query->get( 'page' ) ) );
+			} elseif ( $query->get( 'feed' ) ) {
+				$feed         = ( 'feed ' === $query->get( 'feed' ) ) ? $query->get( 'feed' ) : '';
+				$redirect_url = get_post_type_archive_feed_link( self::POST_TYPE_SLUG, $feed );
+			}
+
+			if ( ! $redirect_url ) {
+				return $bypass;
+			}
+
+			wp_safe_redirect( $redirect_url, 301 );
+			exit;
+		}
+
+		return $bypass;
+	}
+
+	/**
 	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
 	 *
 	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $post_types Array of post types.
 	 *
@@ -665,6 +795,8 @@ class Story_Post_Type {
 
 	/**
 	 * Filter feed content for stories to render as an image.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Feed content.
 	 *
@@ -686,6 +818,8 @@ class Story_Post_Type {
 
 	/**
 	 * Change the content to an embedded player
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $content Current content of filter.
 	 *
@@ -716,6 +850,8 @@ class Story_Post_Type {
 
 	/**
 	 * Reset default title to empty string for auto-drafts.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array $data Array of data to save.
 	 *

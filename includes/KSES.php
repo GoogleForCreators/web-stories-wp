@@ -35,6 +35,8 @@ class KSES {
 	/**
 	 * Initializes KSES filters for stories.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return void
 	 */
 	public function init() {
@@ -49,6 +51,8 @@ class KSES {
 
 	/**
 	 * Restores original KSES behavior.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return void
 	 */
@@ -65,6 +69,8 @@ class KSES {
 	/**
 	 * Filters list of allowed CSS attributes.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string[] $attr Array of allowed CSS attributes.
 	 *
 	 * @return array Filtered list of CSS attributes.
@@ -78,6 +84,9 @@ class KSES {
 			'left',
 			'transform',
 			'white-space',
+			'clip-path',
+			'-webkit-clip-path',
+			'pointer-events',
 		];
 
 		array_push( $attr, ...$additional );
@@ -95,6 +104,8 @@ class KSES {
 	 *
 	 * @see safecss_filter_attr()
 	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param string $css A string of CSS rules.
 	 *
@@ -240,6 +251,9 @@ class KSES {
 
 			'list-style',
 			'list-style-image',
+
+			'clip-path',
+			'-webkit-clip-path',
 		];
 
 		/*
@@ -290,7 +304,7 @@ class KSES {
 
 			$parts = explode( ':', $css_item, 2 );
 
-			if ( strpos( $css_item, ':' ) === false ) {
+			if ( false === strpos( $css_item, ':' ) ) {
 				$found = true;
 			} else {
 				$css_selector = trim( $parts[0] );
@@ -322,10 +336,10 @@ class KSES {
 					if ( empty( $url ) || wp_kses_bad_protocol( $url, $allowed_protocols ) !== $url ) {
 						$found = false;
 						break;
-					} else {
-						// Remove the whole `url(*)` bit that was matched above from the CSS.
-						$css_test_string = str_replace( $url_match, '', $css_test_string );
 					}
+
+					// Remove the whole `url(*)` bit that was matched above from the CSS.
+					$css_test_string = str_replace( $url_match, '', $css_test_string );
 				}
 			}
 
@@ -376,6 +390,8 @@ class KSES {
 
 	/**
 	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
 	 *
@@ -499,6 +515,10 @@ class KSES {
 				'rotate-to-fullscreen'       => true,
 				'src'                        => true,
 			],
+			'source'                    => [
+				'type' => true,
+				'src'  => true,
+			],
 			'img'                       => [
 				'alt'           => true,
 				'attribution'   => true,
@@ -515,26 +535,69 @@ class KSES {
 				'srcset'        => true,
 				'srcwidth'      => true,
 			],
+			'svg'                       => [
+				'width'  => true,
+				'height' => true,
+			],
+			'defs'                      => [],
+			'clippath'                  => [
+				'transform'     => true,
+				'clippathunits' => true,
+				'path'          => true,
+			],
+			'path'                      => [
+				'd' => true,
+			],
 		];
 
 		$allowed_tags = array_merge( $allowed_tags, $story_components );
 
-		foreach ( $allowed_tags as &$allowed_tag ) {
-			$allowed_tag['animate-in']          = true;
-			$allowed_tag['animate-in-duration'] = true;
-			$allowed_tag['animate-in-delay']    = true;
-			$allowed_tag['animate-in-after']    = true;
-			$allowed_tag['layout']              = true;
-		}
+		$allowed_tags = array_map( [ $this, 'add_global_attributes' ], $allowed_tags );
 
 		return $allowed_tags;
 	}
 
+	/**
+	 * Helper function to add global attributes to a tag in the allowed HTML list.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @see _wp_add_global_attributes
+	 *
+	 * @param array $value An array of attributes.
+	 * @return array The array of attributes with global attributes added.
+	 */
+	protected function add_global_attributes( $value ) {
+		$global_attributes = [
+			'aria-describedby'    => true,
+			'aria-details'        => true,
+			'aria-label'          => true,
+			'aria-labelledby'     => true,
+			'aria-hidden'         => true,
+			'class'               => true,
+			'id'                  => true,
+			'style'               => true,
+			'title'               => true,
+			'role'                => true,
+			'data-*'              => true,
+			'animate-in'          => true,
+			'animate-in-duration' => true,
+			'animate-in-delay'    => true,
+			'animate-in-after'    => true,
+			'animate-in-layout'   => true,
+			'layout'              => true,
+		];
+
+		return array_merge( $value, $global_attributes );
+	}
 
 	/**
 	 * Temporarily renames the style attribute to data-temp-style in full story markup.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $post_content Post content.
+	 *
 	 * @return string Filtered post content.
 	 */
 	public function filter_content_save_pre_before_kses( $post_content ) {
@@ -550,7 +613,10 @@ class KSES {
 	/**
 	 * Renames data-temp-style back to style in full story markup.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $post_content Post content.
+	 *
 	 * @return string Filtered post content.
 	 */
 	public function filter_content_save_pre_after_kses( $post_content ) {

@@ -24,7 +24,7 @@ jobs:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
 
       - name: Setup npm cache
-        uses: pat-s/always-upload-cache@v1.1.4
+        uses: pat-s/always-upload-cache@v2.1.0
         with:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
@@ -34,7 +34,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Setup Jest cache
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         id: cache-jest-cache
         with:
           path: .jest-cache
@@ -49,13 +49,6 @@ jobs:
 
       - name: Run JavaScript unit tests
         run: npm run test:js -- --runInBand --ci --cacheDirectory="$HOME/.jest-cache" --collectCoverage
-
-      - name: Upload mismatched image snapshots if found
-        uses: actions/upload-artifact@v2
-        with:
-          name: Image Snapshots Diff Output.zip
-          path: assets/src/**/__image_snapshots__/__diff_output__/*
-        if: failure()
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v1

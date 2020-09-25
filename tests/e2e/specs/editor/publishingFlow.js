@@ -17,18 +17,16 @@
 /**
  * WordPress dependencies
  */
-import {
-  getEditedPostContent,
-  publishPostWithPrePublishChecksDisabled,
-  arePrePublishChecksEnabled,
-  disablePrePublishChecks,
-  enablePrePublishChecks,
-} from '@wordpress/e2e-test-utils';
+import { getEditedPostContent } from '@wordpress/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
-import { createNewStory, addRequestInterception } from '../../utils';
+import {
+  createNewStory,
+  addRequestInterception,
+  publishPost,
+} from '../../utils';
 
 describe('Publishing Flow', () => {
   let stopRequestInterception;
@@ -82,18 +80,10 @@ describe('Publishing Flow', () => {
 
     expect(await getEditedPostContent()).toMatchSnapshot();
 
-    const werePrePublishChecksEnabled = await arePrePublishChecksEnabled();
+    const postPermalink = await publishPost();
 
-    if (werePrePublishChecksEnabled) {
-      await disablePrePublishChecks();
-    }
-
-    await publishPostWithPrePublishChecksDisabled();
-    await enablePrePublishChecks();
-
-    const postPermalink = await page.evaluate(() =>
-      wp.data.select('core/editor').getPermalink()
-    );
+    expect(postPermalink).not.toBeNull();
+    expect(postPermalink).toStrictEqual(expect.any(String));
 
     await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
 

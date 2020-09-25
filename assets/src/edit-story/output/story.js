@@ -32,7 +32,7 @@ import OutputPage from './page';
 function OutputStory({
   story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
   pages,
-  metadata: { publisher, fallbackPoster, logoPlaceholder },
+  metadata: { publisher, logoPlaceholder },
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const fontDeclarations = getFontDeclarations(pages);
@@ -65,7 +65,7 @@ function OutputStory({
           publisher={publisher.name}
           publisher-logo-src={logoPlaceholder}
           title={title}
-          poster-portrait-src={featuredMediaUrl || fallbackPoster}
+          poster-portrait-src={featuredMediaUrl}
         >
           {pages.map((page) => (
             <OutputPage
@@ -88,7 +88,6 @@ OutputStory.propTypes = {
     publisher: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
-    fallbackPoster: PropTypes.string.isRequired,
     logoPlaceholder: PropTypes.string,
   }).isRequired,
 };

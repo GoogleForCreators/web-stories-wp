@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -32,16 +33,40 @@ const Wrapper = styled.div`
   font-family: ${({ theme }) => theme.fonts.body.family};
   font-size: ${({ theme }) => theme.fonts.body.size};
   line-height: ${({ theme }) => theme.fonts.body.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.body.fontWeight};
   color: ${({ theme }) => theme.colors.primary};
-  background: ${({ theme }) => theme.colors.bg};
+
+  background: ${({ theme }) => `linear-gradient(
+      115.54deg,
+      ${rgba(theme.colors.bg.start, 0.2)} 9.27%,
+      ${rgba(theme.colors.bg.end, 0.2)} 47.82%,
+      ${rgba(theme.colors.bg.end, 0)} 66.64%
+    ),
+    linear-gradient(
+      158.59deg,
+      ${rgba(theme.colors.bg.start, 0.3)} 13.24%,
+      ${rgba(theme.colors.bg.end, 0.3)} 86.01%
+    ),
+    linear-gradient(
+      115.54deg,
+      ${rgba(theme.colors.bg.start, 0.2)} 9.27%,
+      ${rgba(theme.colors.bg.end, 0.2)} 47.82%,
+      ${rgba(theme.colors.bg.end, 0)} 66.64%
+    ),
+    linear-gradient(70.23deg, #010218 -28.03%, #1b0418 95.56%)`};
+
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
   overflow: hidden;
   padding: 0 30px 0 45px;
+  justify-content: center;
 
   @media ${({ theme }) => theme.breakpoint.tabletSmall} {
     max-height: 245px;
+  }
+
+  @media ${({ theme }) => theme.breakpoint.tabletLarge} {
+    justify-content: space-around;
   }
 `;
 

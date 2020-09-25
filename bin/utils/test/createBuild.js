@@ -52,16 +52,7 @@ describe('createBuild', () => {
     expect(copyFiles).toHaveBeenCalledWith('/foo', '/foo/build/web-stories', [
       'bar.txt',
       'baz/',
-    ]);
-  });
-
-  it('should ignore assets folder if using CDN', () => {
-    createBuild('/foo', '/foo/build/web-stories', false, true);
-    expect(copyFiles).toHaveBeenCalledWith('/foo', '/foo/build/web-stories', [
-      'bar.txt',
-      'baz/',
-      'assets/images/templates/',
-      'assets/images/plugin-activation/',
+      'composer.json',
     ]);
   });
 

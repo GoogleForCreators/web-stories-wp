@@ -31,22 +31,47 @@ export function useTheme() {
   return useContext(ThemeContext);
 }
 
-const baseTheme = {
+export const theme = {
+  colors: {
+    bg: {
+      start: '#CBACFF',
+      end: '#79B3FF',
+    },
+    primary: 'rgba(255, 255, 255, 0.84)',
+    secondary: 'rgba(255, 255, 255, 0.64)',
+    tertiary: 'rgba(255, 255, 255, 0.54)',
+    link: {
+      fg: '#B99DEA',
+      hover: {
+        fg: 'rgba(255, 255, 255, 0.84)',
+      },
+    },
+    action: {
+      bg: '#619CE8',
+      fg: '#ffffff',
+      hover: {
+        bg: '#010218',
+      },
+    },
+  },
   fonts: {
     body: {
       family: 'Roboto',
       size: '16px',
       lineHeight: '24px',
+      fontWeight: 400,
     },
     title: {
       family: 'Roboto',
       size: '32px',
       lineHeight: '40px',
+      fontWeight: 400,
     },
     button: {
       family: 'Roboto',
       size: '16px',
       lineHeight: '32px',
+      fontWeight: 400,
     },
     stepNumber: {
       family: 'Roboto',
@@ -57,55 +82,7 @@ const baseTheme = {
   },
   breakpoint: {
     tabletSmall: 'screen and (min-width: 700px)',
-    tabletLarge: 'screen and (min-width: 1100px)',
-    desktop: 'screen and (min-width: 1600px)',
+    tabletLarge: 'screen and (min-width: 1300px)',
+    desktop: 'screen and (min-width: 1800px)',
   },
 };
-
-const lightTheme = {
-  ...baseTheme,
-  colors: {
-    bg: '#ffffff',
-    primary: 'rgba(0, 0, 0, 0.84)',
-    secondary: 'rgba(0, 0, 0, 0.64)',
-    tertiary: 'rgba(0, 0, 0, 0.14)',
-    link: {
-      fg: '#1A73E8',
-      hover: {
-        fg: '#1A1D1F',
-      },
-    },
-    action: {
-      bg: '#1A73E8',
-      fg: '#ffffff',
-      hover: {
-        bg: '#1A1D1F',
-      },
-    },
-  },
-};
-
-const darkTheme = {
-  ...baseTheme,
-  colors: {
-    bg: 'linear-gradient(21.97deg, #010218 -28.03%, #1B0418 95.56%)',
-    primary: 'rgba(255, 255, 255, 0.84)',
-    secondary: 'rgba(255, 255, 255, 0.64)',
-    tertiary: 'rgba(255, 255, 255, 0.38)',
-    link: {
-      fg: '#1A73E8',
-      hover: {
-        fg: '#44aaff',
-      },
-    },
-    action: {
-      bg: '#1A73E8',
-      fg: '#ffffff',
-      hover: {
-        bg: '#44aaff',
-      },
-    },
-  },
-};
-
-export { lightTheme, darkTheme };

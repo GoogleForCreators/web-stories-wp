@@ -38,7 +38,6 @@ import {
   UsersPropType,
   StoriesPropType,
   StoryActionsPropType,
-  DateSettingsPropType,
 } from '../../../../types';
 import {
   FilterPropTypes,
@@ -61,7 +60,6 @@ function Content({
   storyActions,
   users,
   view,
-  dateSettings,
   initialFocusStoryId,
 }) {
   return (
@@ -83,7 +81,6 @@ function Content({
                   stories={stories}
                   users={users}
                   view={view}
-                  dateSettings={dateSettings}
                   initialFocusStoryId={initialFocusStoryId}
                 />
                 <InfiniteScroller
@@ -113,7 +110,6 @@ Content.propTypes = {
   storyActions: StoryActionsPropType,
   users: UsersPropType,
   view: ViewPropTypes,
-  dateSettings: DateSettingsPropType,
   initialFocusStoryId: PropTypes.number,
 };
 

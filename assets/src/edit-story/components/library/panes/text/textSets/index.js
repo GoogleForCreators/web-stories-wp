@@ -13,13 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
-import getTextSets from './getTextSets';
-
-export default async function () {
-  const textSetLibrary = await getTextSets();
-  return Object.values(textSetLibrary).flat();
-}
+export { default } from './textSets';

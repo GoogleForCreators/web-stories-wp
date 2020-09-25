@@ -23,7 +23,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { getRelativeDisplayDate } from '../../../../utils';
+import { getRelativeDisplayDate } from '../../../../../date';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
@@ -35,7 +35,6 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
-import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
 import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
@@ -821,7 +820,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].created)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -861,7 +860,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].modified)
       );
 
       // Last Modified is the fifth column
@@ -990,7 +989,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].created)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -1031,7 +1030,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].modified)
       );
 
       // Last Modified is the fifth column

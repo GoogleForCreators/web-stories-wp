@@ -161,12 +161,16 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
   const renderMenuItem = useCallback(
     (item, index) => {
       const itemIsDisabled = !item.value && item.value !== 0;
-      const MenuItemPropsAsLink = item.url
+      const menuItemPropsAsLink = item.url
         ? {
-            target: '_blank',
-            rel: 'noreferrer',
             href: item.url,
             as: 'a',
+            ...(item.newTab
+              ? {
+                  target: '_blank',
+                  rel: 'noreferrer',
+                }
+              : {}),
           }
         : {};
 
@@ -182,7 +186,7 @@ const Menu = ({ isOpen, currentValueIndex = 0, items, onSelect, ...rest }) => {
             (item.separator === 'top' && 'separatorTop') ||
             (item.separator === 'bottom' && 'separatorBottom')
           }
-          {...MenuItemPropsAsLink}
+          {...menuItemPropsAsLink}
         >
           <MenuItemContent>{item.label}</MenuItemContent>
         </MenuItem>

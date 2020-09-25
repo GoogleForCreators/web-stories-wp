@@ -370,4 +370,48 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(getDisplayTextStyles().lineHeight).not.toBe(initialLineHeight);
     });
   });
+
+  describe('when copy-pasting', () => {
+    beforeEach(async () => {
+      // Enter edit-mode
+      await data.fixture.events.keyboard.press('Enter');
+
+      // Select everything and make bold
+      await setSelection(0, 17);
+      const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
+      await data.fixture.events.click(bold.button);
+    });
+
+    it('should paste and match styles on collapsed selection', async () => {
+      // Select nothing and paste
+      await setSelection(12, 12);
+      await data.fixture.events.clipboard.pastePlain(' extra');
+
+      // Exit edit-mode
+      await data.fixture.events.keyboard.press('Escape');
+
+      // Expect text content to have style and content
+      expect(getTextContent()).toBe(
+        '<span style="font-weight: 700">Fill in some extra text</span>'
+      );
+
+      await data.fixture.snapshot('Pasting between text');
+    });
+
+    it('should paste and match styles on non-empty selection', async () => {
+      // Select "some" and paste
+      await setSelection(8, 12);
+      await data.fixture.events.clipboard.pastePlain('extra');
+
+      // Exit edit-mode
+      await data.fixture.events.keyboard.press('Escape');
+
+      // Expect text content to have style and content
+      expect(getTextContent()).toBe(
+        '<span style="font-weight: 700">Fill in extra text</span>'
+      );
+
+      await data.fixture.snapshot('Pasting and replacing text');
+    });
+  });
 });

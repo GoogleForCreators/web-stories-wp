@@ -43,7 +43,6 @@ const PreviewPane = styled.div`
   position: relative;
   border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
   height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
-  box-shadow: ${({ theme }) => theme.storyPreview.shadow};
   border: ${({ theme }) => theme.borders.gray75};
   width: 100%;
   overflow: hidden;
@@ -99,7 +98,10 @@ const EmptyActionContainer = styled(ActionContainer)`
 
 const getActionAttributes = (targetAction) =>
   typeof targetAction === 'string'
-    ? { href: resolveRoute(targetAction), isLink: true }
+    ? {
+        href: resolveRoute(targetAction),
+        isLink: true,
+      }
     : { onClick: targetAction };
 
 const CARD_STATE = {

@@ -127,8 +127,30 @@ function getKeyboardShortcuts() {
             ],
           },
           {
+            label: __('Move forward or backward', 'web-stories'),
+            shortcut: [
+              cmdOrCtrl,
+              SPECIAL_KEYS.UP,
+              { label: __('or', 'web-stories') },
+              SPECIAL_KEYS.DOWN,
+            ],
+          },
+          {
+            label: __('Move to front or back', 'web-stories'),
+            shortcut: [
+              cmdOrCtrl,
+              SPECIAL_KEYS.SHIFT,
+              SPECIAL_KEYS.UP,
+              { label: __('or', 'web-stories') },
+              SPECIAL_KEYS.DOWN,
+            ],
+          },
+          {
             label: __('Enter crop/edit mode', 'web-stories'),
-            shortcut: [SPECIAL_KEYS.ENTER],
+            shortcut: [
+              SPECIAL_KEYS.ENTER,
+              { label: __('or double-click', 'web-stories') },
+            ],
           },
           {
             label: __('Delete', 'web-stories'),
@@ -141,10 +163,7 @@ function getKeyboardShortcuts() {
             shortcut: [cmdOrCtrl, 'K'],
           },
           {
-            label: __(
-              'Disable snapping during move/rotate/resize',
-              'web-stories'
-            ),
+            label: __('Disable snapping while moving', 'web-stories'),
             shortcut: [cmdOrCtrl],
           },
         ],

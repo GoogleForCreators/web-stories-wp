@@ -30,7 +30,6 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
-  DateSettingsPropType,
   StoriesPropType,
   StoryActionsPropType,
   UsersPropType,
@@ -59,7 +58,6 @@ function StoriesView({
   stories,
   users,
   view,
-  dateSettings,
   initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
@@ -133,7 +131,6 @@ function StoriesView({
       switch (sender.value) {
         case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
           await trackEvent('open_in_editor', 'dashboard');
-          window.location.href = story.bottomTargetAction;
           break;
         case STORY_CONTEXT_MENU_ACTIONS.RENAME:
           setTitleRenameId(story.id);
@@ -228,7 +225,6 @@ function StoriesView({
         storySort={sort.value}
         storyStatus={filterValue}
         users={users}
-        dateSettings={dateSettings}
       />
     ) : (
       <StoryGridView
@@ -242,7 +238,6 @@ function StoriesView({
         storyMenu={storyMenu}
         stories={stories}
         users={users}
-        dateSettings={dateSettings}
         returnStoryFocusId={returnStoryFocusId}
         initialFocusStoryId={initialFocusStoryId}
       />
@@ -295,7 +290,6 @@ StoriesView.propTypes = {
   stories: StoriesPropType,
   users: UsersPropType,
   view: ViewPropTypes,
-  dateSettings: DateSettingsPropType,
   initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;

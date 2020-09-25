@@ -37,6 +37,7 @@ function RichTextEditor({ content, onChange }, ref) {
       updateEditorState,
       getHandleKeyCommand,
       getContentFromState,
+      handlePastedText,
       clearState,
     },
   } = useRichText();
@@ -85,6 +86,7 @@ function RichTextEditor({ content, onChange }, ref) {
       onChange={updateEditorState}
       editorState={editorState}
       handleKeyCommand={handleKeyCommand}
+      handlePastedText={handlePastedText}
       customStyleFn={customInlineDisplay}
       stripPastedStyles
     />

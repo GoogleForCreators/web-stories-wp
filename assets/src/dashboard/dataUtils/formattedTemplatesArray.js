@@ -15,9 +15,9 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import moment from 'moment-timezone';
+import { toUTCDate } from '../../date';
 
 const formattedTemplatesArray = [
   {
@@ -28,7 +28,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 10,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -1282,7 +1282,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 9,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -1480,7 +1480,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 3,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -1678,7 +1678,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 4,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -1876,7 +1876,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 5,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -2074,7 +2074,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 6,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -2272,7 +2272,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 7,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [
@@ -2470,7 +2470,7 @@ const formattedTemplatesArray = [
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
     id: 8,
     isLocal: false,
-    modified: moment('04-04-2020', 'MM-DD-YYYY'),
+    modified: toUTCDate('04-04-2020'),
     pages: [
       {
         elements: [

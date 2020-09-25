@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
  */
-import { useMemo, useState } from 'react';
+import { differenceInSeconds } from '../../date';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import {
@@ -248,7 +248,7 @@ function updateSettings(updates, currentState) {
 
 function getStoriesState() {
   const copiedStories = [...formattedStoriesArray];
-  copiedStories.sort((a, b) => b.modified.diff(a.modified)); // initial sort is desc by modified
+  copiedStories.sort((a, b) => differenceInSeconds(b.modified, a.modified)); // initial sort is desc by modified
   return {
     ...defaultStoriesState,
     stories: copiedStories.reduce((acc, curr) => {
@@ -301,7 +301,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.LAST_MODIFIED: {
-          value = a[sortOption].diff(b[sortOption]);
+          value = differenceInSeconds(a[sortOption], b[sortOption]);
           break;
         }
         case STORY_SORT_OPTIONS.NAME: {
@@ -332,8 +332,9 @@ function fetchStories(
 
 function updateStory(story, currentState) {
   const copy = { ...story };
+
   copy.title = copy.title.raw;
-  copy.modified = moment(new Date(), 'MM-DD-YYYY');
+  copy.modified = new Date();
   return {
     ...currentState,
     stories: {
@@ -351,7 +352,7 @@ function duplicateStory(story, currenState) {
   copiedStory.id = Math.round(Math.random() * 1000);
   copiedStory.title = copiedStory.title + ' (Copy)';
   copiedStory.created = new Date().toISOString();
-  copiedStory.modified = moment(copiedStory.created, 'MM-DD-YYYY');
+  copiedStory.modified = copiedStory.created;
   copiedStory.bottomTargetAction = copiedStory.bottomTargetAction.replace(
     story.id,
     copiedStory.id

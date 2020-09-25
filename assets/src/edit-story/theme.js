@@ -230,6 +230,13 @@ const theme = {
       lineHeight: '20px',
       letterSpacing: '0.0133em',
     },
+    paragraph: {
+      small: {
+        family: 'Roboto',
+        size: '14px',
+        lineHeight: '20px',
+      },
+    },
   },
   border: {
     radius: {

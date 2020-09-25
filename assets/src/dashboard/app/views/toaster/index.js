@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useEffect } from 'react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -44,8 +43,6 @@ function ToasterView() {
     state: { activeToasts },
   } = useToastContext();
 
-  const enableSettingsView = useFeature('enableSettingsView');
-
   useEffect(() => {
     if (storyError?.id) {
       addToast({
@@ -67,14 +64,14 @@ function ToasterView() {
   }, [templateError, addToast]);
 
   useEffect(() => {
-    if (enableSettingsView && settingsError?.id) {
+    if (settingsError?.id) {
       addToast({
         message: settingsError.message,
         severity: ALERT_SEVERITY.ERROR,
         id: settingsError.id,
       });
     }
-  }, [settingsError, addToast, enableSettingsView]);
+  }, [settingsError, addToast]);
 
   useEffect(() => {
     if (mediaError?.id) {

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import moment from 'moment-timezone';
 import queryString from 'query-string';
 
 /**
@@ -29,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { toUTCDate } from '../../../date';
 import getAllTemplates from '../../templates';
 import { APP_ROUTES } from '../../constants';
 import templateReducer, {
@@ -54,7 +54,7 @@ export function reshapeTemplateObject(isLocal) {
     createdBy,
     description,
     status: 'template',
-    modified: moment.parseZone(modified),
+    modified: toUTCDate(modified),
     tags,
     colors,
     pages,
@@ -85,7 +85,7 @@ export function reshapeSavedTemplates({
     createdBy,
     description,
     status: 'template',
-    modified: moment(modified),
+    modified: toUTCDate(modified),
     tags,
     colors,
     pages,
@@ -97,7 +97,7 @@ export function reshapeSavedTemplates({
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { assetsURL, templateApi } = config;
+  const { cdnURL, templateApi } = config;
 
   const fetchSavedTemplates = useCallback(() => {
     // Saved Templates = Bookmarked Templates + My Templates
@@ -213,7 +213,7 @@ const useTemplateApi = (dataAdapter, config) => {
         payload: true,
       });
 
-      const reshapedTemplates = (await getAllTemplates({ assetsURL })).map(
+      const reshapedTemplates = (await getAllTemplates({ cdnURL })).map(
         reshapeTemplateObject(false)
       );
       dispatch({
@@ -226,7 +226,7 @@ const useTemplateApi = (dataAdapter, config) => {
         },
       });
     },
-    [assetsURL]
+    [cdnURL]
   );
 
   const fetchExternalTemplateById = useCallback(

@@ -42,15 +42,12 @@ import {
   UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
-  DateSettingsPropType,
 } from '../../../types';
-import { STORY_STATUS, STORY_CONTEXT_MENU_ACTIONS } from '../../../constants';
-import {
-  getRelativeDisplayDate,
-  useGridViewKeys,
-  useFocusOut,
-} from '../../../utils';
+import { STORY_STATUS } from '../../../constants';
+import { getRelativeDisplayDate } from '../../../../date';
+import { useGridViewKeys, useFocusOut } from '../../../utils';
 import { useConfig } from '../../config';
+import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 export const DetailRow = styled.div`
   display: flex;
@@ -77,7 +74,6 @@ const StoryGridView = ({
   pageSize,
   storyMenu,
   renameStory,
-  dateSettings,
   previewStory,
   returnStoryFocusId,
   initialFocusStoryId = null,
@@ -132,13 +128,6 @@ const StoryGridView = ({
               }
             : {};
 
-          const storyMenuItems = storyMenu.menuItems.map((menuItem) => {
-            if (menuItem.value === STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK) {
-              return { ...menuItem, url: story.link };
-            }
-            return menuItem;
-          });
-
           return (
             <CardGridItem
               key={story.id}
@@ -162,7 +151,7 @@ const StoryGridView = ({
               />
               <CardPreviewContainer
                 ariaLabel={sprintf(
-                  /* translators: %s: story title.*/
+                  /* translators: %s: story title. */
                   __('preview of %s', 'web-stories'),
                   story.title
                 )}
@@ -192,8 +181,8 @@ const StoryGridView = ({
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
-                      ? getRelativeDisplayDate(story?.modified, dateSettings)
-                      : getRelativeDisplayDate(story?.created, dateSettings)
+                      ? getRelativeDisplayDate(story?.modified)
+                      : getRelativeDisplayDate(story?.created)
                   }
                   {...titleRenameProps}
                 />
@@ -205,7 +194,10 @@ const StoryGridView = ({
                   contextMenuId={storyMenu.contextMenuId}
                   onMenuItemSelected={storyMenu.handleMenuItemSelected}
                   story={story}
-                  menuItems={storyMenuItems}
+                  menuItems={generateStoryMenu({
+                    menuItems: storyMenu.menuItems,
+                    story,
+                  })}
                 />
               </DetailRow>
             </CardGridItem>
@@ -230,7 +222,6 @@ StoryGridView.propTypes = {
   previewStory: PropTypes.func,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  dateSettings: DateSettingsPropType,
   returnStoryFocusId: PropTypes.number,
   initialFocusStoryId: PropTypes.number,
 };

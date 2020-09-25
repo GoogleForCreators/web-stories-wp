@@ -23,6 +23,7 @@ const Link = styled.a`
   font-family: ${({ theme }) => theme.fonts.body.family};
   font-size: ${({ theme }) => theme.fonts.body.size};
   line-height: ${({ theme }) => theme.fonts.body.lineHeight};
+  font-weight: ${({ theme }) => theme.fonts.body.fontWeight};
   color: ${({ theme }) => theme.colors.link.fg};
   text-decoration: none;
   cursor: pointer;

@@ -66,6 +66,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	/**
 	 * Constructor.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param string $parent_post_type Post type of the parent.
 	 */
 	public function __construct( $parent_post_type ) {
@@ -131,6 +133,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	/**
 	 * Creates, updates or deletes an autosave revision.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
@@ -147,6 +151,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 	 * Prepares a single template output for response.
 	 *
 	 * Adds post_content_filtered field to output.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
@@ -187,6 +193,8 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 
 	/**
 	 * Retrieves the story's schema, conforming to JSON Schema.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array Item schema as an array.
 	 */
