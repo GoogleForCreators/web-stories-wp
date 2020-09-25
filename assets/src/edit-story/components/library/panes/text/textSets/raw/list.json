@@ -3,6 +3,60 @@
   "selection": [],
   "story": {
     "stylePresets": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
       "colors": [
         {
           "color": {
@@ -94,8 +148,7 @@
             "a": 0.6
           }
         }
-      ],
-      "textStyles": []
+      ]
     }
   },
   "version": 24,
@@ -136,7 +189,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -194,9 +247,9 @@
           "type": "text",
           "id": "a1621ecf-3b3f-4072-8e44-6bf2892eb0a6",
           "content": "<span style=\"font-weight: 700\">The principles</span>",
-          "x": 34,
-          "y": 210,
-          "width": 204,
+          "x": 41,
+          "y": 214,
+          "width": 331,
           "height": 31,
           "scale": 100,
           "focalX": 50,
@@ -210,7 +263,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -268,14 +321,15 @@
           "type": "text",
           "content": "Good design is innovative",
           "fontWeight": 400,
-          "x": 52,
-          "y": 258,
-          "width": 232,
+          "x": 59,
+          "y": 261,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "6dbe785d-0d5f-4a74-a796-3ba20950acbc"
+          "id": "6dbe785d-0d5f-4a74-a796-3ba20950acbc",
+          "marginOffset": 5.90625
         },
         {
           "opacity": 100,
@@ -284,7 +338,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -342,15 +396,16 @@
           "type": "text",
           "content": "Good design makes a product useful",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6dbe785d-0d5f-4a74-a796-3ba20950acbc",
           "id": "23bf647b-1367-4703-b5e3-2be7cb857281",
-          "x": 52,
-          "y": 289
+          "x": 59,
+          "y": 292,
+          "marginOffset": 5.90625
         },
         {
           "opacity": 100,
@@ -359,7 +414,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -417,15 +472,15 @@
           "type": "text",
           "content": "Good design is unobtrusive",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6dbe785d-0d5f-4a74-a796-3ba20950acbc",
           "id": "b21e7e88-2b19-4c1a-991d-43e3cb017f6c",
-          "x": 52,
-          "y": 351
+          "x": 59,
+          "y": 354
         },
         {
           "opacity": 100,
@@ -434,7 +489,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -492,15 +547,16 @@
           "type": "text",
           "content": "Good design is aesthetic",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6dbe785d-0d5f-4a74-a796-3ba20950acbc",
           "id": "df4f466a-320a-42c7-a460-7fab1a788c66",
-          "x": 52,
-          "y": 320
+          "x": 59,
+          "y": 323,
+          "marginOffset": 5.90625
         },
         {
           "opacity": 100,
@@ -509,7 +565,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto",
@@ -567,15 +623,15 @@
           "type": "text",
           "content": "Good design is honest",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6dbe785d-0d5f-4a74-a796-3ba20950acbc",
           "id": "ab60497a-5f5c-4073-83e9-7b56df31c71f",
-          "x": 52,
-          "y": 382
+          "x": 59,
+          "y": 385
         },
         {
           "opacity": 100,
@@ -593,8 +649,8 @@
             }
           },
           "type": "shape",
-          "x": 35,
-          "y": 266.5,
+          "x": 42,
+          "y": 269.5,
           "width": 4,
           "height": 4,
           "scale": 100,
@@ -631,8 +687,8 @@
           },
           "basedOn": "a41f331f-29b5-40ca-b13f-eb02ae2634d4",
           "id": "3487e6a4-35e6-4158-ac09-74ffdbf06f05",
-          "x": 35,
-          "y": 297.5
+          "x": 42,
+          "y": 300.5
         },
         {
           "opacity": 100,
@@ -660,8 +716,8 @@
           },
           "basedOn": "a41f331f-29b5-40ca-b13f-eb02ae2634d4",
           "id": "822ccb27-1692-4d54-9cd7-8114202d440f",
-          "x": 35,
-          "y": 328.5
+          "x": 42,
+          "y": 331.5
         },
         {
           "opacity": 100,
@@ -689,8 +745,8 @@
           },
           "basedOn": "822ccb27-1692-4d54-9cd7-8114202d440f",
           "id": "0bf25e9e-c30c-4513-a6b3-600984b89c08",
-          "x": 35,
-          "y": 359.5
+          "x": 42,
+          "y": 362.5
         },
         {
           "opacity": 100,
@@ -718,8 +774,8 @@
           },
           "basedOn": "0bf25e9e-c30c-4513-a6b3-600984b89c08",
           "id": "083cd063-ec51-48f0-8553-23b244b1f2fa",
-          "x": 35,
-          "y": 390.5
+          "x": 42,
+          "y": 393.5
         }
       ],
       "backgroundColor": {
@@ -769,7 +825,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -826,16 +882,16 @@
           },
           "type": "text",
           "content": "<span style=\"font-weight: 600\">The principles</span>",
-          "width": 204,
-          "height": 34,
+          "width": 331,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 3.84375,
           "basedOn": "a1621ecf-3b3f-4072-8e44-6bf2892eb0a6",
           "id": "25cdb4d5-9a90-47fd-9dc0-e42adf6cf46d",
-          "x": 34,
-          "y": 202
+          "x": 41,
+          "y": 206
         },
         {
           "opacity": 100,
@@ -844,7 +900,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -902,15 +958,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6dbe785d-0d5f-4a74-a796-3ba20950acbc",
           "id": "506b1f2a-64cf-4f8d-ad2e-0d585db3de84",
-          "x": 52,
-          "y": 251
+          "x": 59,
+          "y": 254
         },
         {
           "opacity": 100,
@@ -919,7 +975,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -977,15 +1033,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "23bf647b-1367-4703-b5e3-2be7cb857281",
           "id": "069d0034-9e43-4305-8c19-6a91ec2007f2",
-          "x": 52,
-          "y": 288
+          "x": 59,
+          "y": 291
         },
         {
           "opacity": 100,
@@ -994,7 +1050,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -1052,15 +1108,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "b21e7e88-2b19-4c1a-991d-43e3cb017f6c",
           "id": "3d3a2a32-4a26-4231-9365-b8b03b34482e",
-          "x": 52,
-          "y": 357
+          "x": 59,
+          "y": 360
         },
         {
           "opacity": 100,
@@ -1069,7 +1125,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -1127,15 +1183,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "df4f466a-320a-42c7-a460-7fab1a788c66",
           "id": "550f7450-1280-4bf0-a5be-791adeb2e39b",
-          "x": 52,
-          "y": 322
+          "x": 59,
+          "y": 325
         },
         {
           "opacity": 100,
@@ -1144,7 +1200,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -1202,15 +1258,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "ab60497a-5f5c-4073-83e9-7b56df31c71f",
           "id": "afa0aaf9-c202-4ed1-bc72-a89ad7cb1d05",
-          "x": 52,
-          "y": 391
+          "x": 59,
+          "y": 394
         },
         {
           "opacity": 100,
@@ -1238,8 +1294,8 @@
           },
           "basedOn": "a41f331f-29b5-40ca-b13f-eb02ae2634d4",
           "id": "0964be69-8ad0-4823-b6cf-98a5885e32b6",
-          "x": 35,
-          "y": 258.5
+          "x": 42,
+          "y": 261.5
         },
         {
           "opacity": 100,
@@ -1267,8 +1323,8 @@
           },
           "basedOn": "3487e6a4-35e6-4158-ac09-74ffdbf06f05",
           "id": "403a4895-6d52-47f6-9d91-708e6cfd39e9",
-          "x": 35,
-          "y": 401
+          "x": 42,
+          "y": 404
         },
         {
           "opacity": 100,
@@ -1296,8 +1352,8 @@
           },
           "basedOn": "822ccb27-1692-4d54-9cd7-8114202d440f",
           "id": "bf08a5a1-a064-4e61-8581-564eecfeaca9",
-          "x": 35,
-          "y": 366
+          "x": 42,
+          "y": 369
         },
         {
           "opacity": 100,
@@ -1325,8 +1381,8 @@
           },
           "basedOn": "0bf25e9e-c30c-4513-a6b3-600984b89c08",
           "id": "14473a90-f95f-45ef-96f7-18103948af83",
-          "x": 35,
-          "y": 331
+          "x": 42,
+          "y": 334
         },
         {
           "opacity": 100,
@@ -1354,123 +1410,8 @@
           },
           "basedOn": "083cd063-ec51-48f0-8553-23b244b1f2fa",
           "id": "ffb2856e-9edf-4827-8aa2-08b77283c868",
-          "x": 35,
-          "y": 296
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 34,
-          "y": 281,
-          "width": 331,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "6f6a705e-b363-488d-8b92-5b7bbef8d172"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 331,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "6f6a705e-b363-488d-8b92-5b7bbef8d172",
-          "id": "2bafda2e-d4b8-40d9-82c6-58943763e63c",
-          "x": 34,
-          "y": 386
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 331,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "6f6a705e-b363-488d-8b92-5b7bbef8d172",
-          "id": "84a735fd-ddb9-4209-b19e-d09f0fc78993",
-          "x": 34,
-          "y": 351
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 331,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "6f6a705e-b363-488d-8b92-5b7bbef8d172",
-          "id": "67084d51-c345-4467-9060-89950b4e8db1",
-          "x": 34,
-          "y": 316
+          "x": 42,
+          "y": 299
         }
       ],
       "backgroundColor": {
@@ -1529,7 +1470,7 @@
             }
           },
           "type": "shape",
-          "x": 34,
+          "x": 41,
           "y": 198,
           "width": 32,
           "height": 4,
@@ -1548,7 +1489,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
@@ -1612,10 +1553,10 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">THE PRINCIPLES</span>",
           "fontWeight": 400,
-          "x": 34,
+          "x": 41,
           "y": 218,
-          "width": 258,
-          "height": 44,
+          "width": 331,
+          "height": 43,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1628,7 +1569,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -1688,15 +1629,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "506b1f2a-64cf-4f8d-ad2e-0d585db3de84",
           "id": "a91708d3-d694-4ee8-a970-614f89cc03b8",
-          "x": 52,
-          "y": 273
+          "x": 59,
+          "y": 277
         },
         {
           "opacity": 100,
@@ -1705,7 +1646,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -1765,15 +1706,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "069d0034-9e43-4305-8c19-6a91ec2007f2",
           "id": "c5e3dba4-d89a-4c1a-b825-59bb5ce2de63",
-          "x": 52,
-          "y": 304
+          "x": 59,
+          "y": 308
         },
         {
           "opacity": 100,
@@ -1782,7 +1723,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -1842,15 +1783,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "3d3a2a32-4a26-4231-9365-b8b03b34482e",
           "id": "2a5ca2e1-7f72-4051-ba5f-3b9c3b1acdaa",
-          "x": 52,
-          "y": 366
+          "x": 59,
+          "y": 370
         },
         {
           "opacity": 100,
@@ -1859,7 +1800,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -1919,15 +1860,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "550f7450-1280-4bf0-a5be-791adeb2e39b",
           "id": "e6e625c5-0bd8-487f-9f42-23df549ede83",
-          "x": 52,
-          "y": 335
+          "x": 59,
+          "y": 339
         },
         {
           "opacity": 100,
@@ -1936,7 +1877,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -1996,15 +1937,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "afa0aaf9-c202-4ed1-bc72-a89ad7cb1d05",
           "id": "a23d31ee-6b31-4947-a9f3-0f8526b83d29",
-          "x": 52,
-          "y": 397
+          "x": 59,
+          "y": 401
         },
         {
           "opacity": 100,
@@ -2032,8 +1973,8 @@
           },
           "basedOn": "6522a49f-ceba-421a-9900-b9f265cd63f3",
           "id": "e198bccf-09f7-4dbb-8c9f-770865247239",
-          "x": 35,
-          "y": 284
+          "x": 42,
+          "y": 288
         },
         {
           "opacity": 100,
@@ -2061,8 +2002,8 @@
           },
           "basedOn": "e198bccf-09f7-4dbb-8c9f-770865247239",
           "id": "f07e0d64-5372-4e51-86a6-0c3da7607dd4",
-          "x": 35,
-          "y": 315
+          "x": 42,
+          "y": 319
         },
         {
           "opacity": 100,
@@ -2090,8 +2031,8 @@
           },
           "basedOn": "e198bccf-09f7-4dbb-8c9f-770865247239",
           "id": "077d4e05-7c75-4d9c-9feb-f191deea147f",
-          "x": 35,
-          "y": 346
+          "x": 42,
+          "y": 350
         },
         {
           "opacity": 100,
@@ -2119,8 +2060,8 @@
           },
           "basedOn": "e198bccf-09f7-4dbb-8c9f-770865247239",
           "id": "a94e39bf-2c23-4e6d-b409-9647b5f8bd98",
-          "x": 35,
-          "y": 377
+          "x": 42,
+          "y": 381
         },
         {
           "opacity": 100,
@@ -2148,8 +2089,8 @@
           },
           "basedOn": "e198bccf-09f7-4dbb-8c9f-770865247239",
           "id": "fd9e9ae6-2d67-4973-8783-2128787a59a6",
-          "x": 35,
-          "y": 408
+          "x": 42,
+          "y": 412
         }
       ],
       "backgroundColor": {
@@ -2199,7 +2140,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
@@ -2253,15 +2194,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "a91708d3-d694-4ee8-a970-614f89cc03b8",
           "id": "5ee0db06-85f4-4ba9-94e8-7cdcd73fbfc8",
-          "x": 52,
-          "y": 262
+          "x": 59,
+          "y": 260,
+          "marginOffset": 3.7399999999999984
         },
         {
           "opacity": 100,
@@ -2270,7 +2212,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
@@ -2324,15 +2266,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "c5e3dba4-d89a-4c1a-b825-59bb5ce2de63",
           "id": "9cf80e40-7ea6-437c-a0e6-72370e0463ee",
-          "x": 52,
-          "y": 293
+          "x": 59,
+          "y": 291,
+          "marginOffset": 3.7399999999999984
         },
         {
           "opacity": 100,
@@ -2341,7 +2284,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
@@ -2395,15 +2338,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "2a5ca2e1-7f72-4051-ba5f-3b9c3b1acdaa",
           "id": "2a306a0d-afc5-419a-b28c-d6bb3dbc100c",
-          "x": 52,
-          "y": 355
+          "x": 59,
+          "y": 353,
+          "marginOffset": 3.7399999999999984
         },
         {
           "opacity": 100,
@@ -2412,7 +2356,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
@@ -2466,15 +2410,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "e6e625c5-0bd8-487f-9f42-23df549ede83",
           "id": "bea9fcf7-ccc9-45f6-b3b3-607eeeb07c31",
-          "x": 52,
-          "y": 324
+          "x": 59,
+          "y": 322,
+          "marginOffset": 3.7399999999999984
         },
         {
           "opacity": 100,
@@ -2483,7 +2428,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Lora",
@@ -2537,15 +2482,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "a23d31ee-6b31-4947-a9f3-0f8526b83d29",
           "id": "6decd8bd-7f19-43cd-a035-7029629e9a22",
-          "x": 52,
-          "y": 386
+          "x": 59,
+          "y": 384,
+          "marginOffset": 3.7399999999999984
         },
         {
           "opacity": 100,
@@ -2554,7 +2500,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
@@ -2612,15 +2558,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em\">THE PRINCIPLES</span>",
           "fontWeight": 400,
-          "width": 265,
+          "width": 234,
           "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "a7d0b1de-d0d4-4fa6-8970-9dca2c40f3b5",
           "id": "a1b69a5a-0d61-49b9-8ba4-44daa7581e86",
-          "x": 64,
-          "y": 211
+          "x": 89,
+          "y": 209
         },
         {
           "opacity": 100,
@@ -2648,8 +2594,8 @@
           },
           "basedOn": "6522a49f-ceba-421a-9900-b9f265cd63f3",
           "id": "71bc3869-8369-449e-b577-507e044b1eb3",
-          "x": 326.5,
-          "y": 226.5
+          "x": 338,
+          "y": 224.5
         },
         {
           "opacity": 100,
@@ -2677,8 +2623,8 @@
           },
           "basedOn": "71bc3869-8369-449e-b577-507e044b1eb3",
           "id": "7e373de9-463f-4f8d-b496-f37b6fba4ab4",
-          "x": 34,
-          "y": 226.5
+          "x": 43,
+          "y": 224.5
         },
         {
           "opacity": 100,
@@ -2706,8 +2652,8 @@
           },
           "basedOn": "0964be69-8ad0-4823-b6cf-98a5885e32b6",
           "id": "e9380652-0931-43b3-b9cf-0119bb879e3d",
-          "x": 34,
-          "y": 270.5
+          "x": 42,
+          "y": 268.5
         },
         {
           "opacity": 100,
@@ -2735,8 +2681,8 @@
           },
           "basedOn": "403a4895-6d52-47f6-9d91-708e6cfd39e9",
           "id": "67090ebe-b763-4a7c-b6ed-fb515f82dc46",
-          "x": 34,
-          "y": 394.5
+          "x": 42,
+          "y": 392.5
         },
         {
           "opacity": 100,
@@ -2764,8 +2710,8 @@
           },
           "basedOn": "bf08a5a1-a064-4e61-8581-564eecfeaca9",
           "id": "519ad94e-4b2d-45d1-a6cb-dc469a986ffd",
-          "x": 34,
-          "y": 363.5
+          "x": 42,
+          "y": 361.5
         },
         {
           "opacity": 100,
@@ -2793,8 +2739,8 @@
           },
           "basedOn": "14473a90-f95f-45ef-96f7-18103948af83",
           "id": "9eb352a6-9245-46fc-881e-225dbae11c73",
-          "x": 34,
-          "y": 332.5
+          "x": 42,
+          "y": 330.5
         },
         {
           "opacity": 100,
@@ -2822,8 +2768,8 @@
           },
           "basedOn": "ffb2856e-9edf-4827-8aa2-08b77283c868",
           "id": "1da2f2f4-26ce-4a4c-9c9a-af090d99b757",
-          "x": 34,
-          "y": 301.5
+          "x": 42,
+          "y": 299.5
         }
       ],
       "backgroundColor": {
@@ -2873,7 +2819,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -2925,15 +2871,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "5ee0db06-85f4-4ba9-94e8-7cdcd73fbfc8",
           "id": "857cd7a6-8d25-433b-bf16-df9a0d9689d3",
-          "x": 52,
-          "y": 262
+          "x": 59,
+          "y": 265
         },
         {
           "opacity": 100,
@@ -2942,7 +2888,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -2994,15 +2940,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "9cf80e40-7ea6-437c-a0e6-72370e0463ee",
           "id": "47987511-94e3-4057-8741-6a333d5510df",
-          "x": 52,
-          "y": 293
+          "x": 59,
+          "y": 296
         },
         {
           "opacity": 100,
@@ -3011,7 +2957,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -3063,15 +3009,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "2a306a0d-afc5-419a-b28c-d6bb3dbc100c",
           "id": "8a36bc28-894b-43a7-a3e0-74f81c439233",
-          "x": 52,
-          "y": 355
+          "x": 59,
+          "y": 358
         },
         {
           "opacity": 100,
@@ -3080,7 +3026,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -3132,15 +3078,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "bea9fcf7-ccc9-45f6-b3b3-607eeeb07c31",
           "id": "9b20ab27-a660-491f-951b-232f6e095405",
-          "x": 52,
-          "y": 324
+          "x": 59,
+          "y": 327
         },
         {
           "opacity": 100,
@@ -3149,7 +3095,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -3201,15 +3147,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6decd8bd-7f19-43cd-a035-7029629e9a22",
           "id": "0f939067-5ee0-4fcf-9c42-bf5ec90b3896",
-          "x": 52,
-          "y": 386
+          "x": 59,
+          "y": 389
         },
         {
           "opacity": 100,
@@ -3218,7 +3164,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Oswald",
@@ -3270,15 +3216,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">THE PRINCIPLES</span>",
           "fontWeight": 400,
-          "width": 265,
+          "width": 331,
           "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "a1b69a5a-0d61-49b9-8ba4-44daa7581e86",
           "id": "d7666a19-5643-406b-bc02-f5d9fd4b06a1",
-          "x": 34,
-          "y": 212
+          "x": 41,
+          "y": 210
         },
         {
           "opacity": 100,
@@ -3306,8 +3252,8 @@
           },
           "basedOn": "e9380652-0931-43b3-b9cf-0119bb879e3d",
           "id": "9ae7cf81-c809-442a-b187-c7b6fef2c6a2",
-          "x": 35,
-          "y": 270.5
+          "x": 42,
+          "y": 273.5
         },
         {
           "opacity": 100,
@@ -3335,8 +3281,8 @@
           },
           "basedOn": "67090ebe-b763-4a7c-b6ed-fb515f82dc46",
           "id": "e61a76a3-dc95-4dc4-be65-b5fa98447ebd",
-          "x": 35,
-          "y": 394.5
+          "x": 42,
+          "y": 397.5
         },
         {
           "opacity": 100,
@@ -3364,8 +3310,8 @@
           },
           "basedOn": "519ad94e-4b2d-45d1-a6cb-dc469a986ffd",
           "id": "c0adee60-3c32-4cbc-9f77-5a6cdc0caaa5",
-          "x": 35,
-          "y": 363.5
+          "x": 42,
+          "y": 366.5
         },
         {
           "opacity": 100,
@@ -3393,8 +3339,8 @@
           },
           "basedOn": "9eb352a6-9245-46fc-881e-225dbae11c73",
           "id": "672d5a3a-1d48-427d-932b-4867b104c0f8",
-          "x": 35,
-          "y": 332.5
+          "x": 42,
+          "y": 335.5
         },
         {
           "opacity": 100,
@@ -3422,8 +3368,8 @@
           },
           "basedOn": "1da2f2f4-26ce-4a4c-9c9a-af090d99b757",
           "id": "c953b818-f7ff-4555-8caa-5faec28e800d",
-          "x": 35,
-          "y": 301.5
+          "x": 42,
+          "y": 304.5
         }
       ],
       "backgroundColor": {
@@ -3473,7 +3419,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -3509,7 +3455,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 17,
+          "fontSize": 18,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3527,15 +3473,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "857cd7a6-8d25-433b-bf16-df9a0d9689d3",
           "id": "b0d4bec7-761e-49e4-9287-9b0ebed6a8bc",
-          "x": 52,
-          "y": 258
+          "x": 59,
+          "y": 259,
+          "marginOffset": 4.374000000000002
         },
         {
           "opacity": 100,
@@ -3544,7 +3491,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -3598,15 +3545,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "47987511-94e3-4057-8741-6a333d5510df",
           "id": "d7cc69d2-833e-4fcb-9a18-e4ccc143b2b3",
-          "x": 52,
-          "y": 289
+          "x": 59,
+          "y": 290,
+          "marginOffset": 4.131
         },
         {
           "opacity": 100,
@@ -3615,7 +3563,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -3651,7 +3599,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 17,
+          "fontSize": 18,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3669,15 +3617,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "8a36bc28-894b-43a7-a3e0-74f81c439233",
           "id": "7b51d5a2-9a71-4335-b366-eb5a32080022",
-          "x": 52,
-          "y": 351
+          "x": 59,
+          "y": 352,
+          "marginOffset": 4.374000000000002
         },
         {
           "opacity": 100,
@@ -3686,7 +3635,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -3722,7 +3671,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 17,
+          "fontSize": 18,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3740,15 +3689,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 250,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "9b20ab27-a660-491f-951b-232f6e095405",
           "id": "3c6710e1-9212-4d0c-b2fb-dc69ce227cfd",
-          "x": 52,
-          "y": 320
+          "x": 59,
+          "y": 321,
+          "marginOffset": 4.374000000000002
         },
         {
           "opacity": 100,
@@ -3757,7 +3707,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -3793,7 +3743,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 17,
+          "fontSize": 18,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -3811,15 +3761,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "0f939067-5ee0-4fcf-9c42-bf5ec90b3896",
           "id": "0c94bdfd-fd68-464d-b26a-33b2bc8f3c85",
-          "x": 52,
-          "y": 382
+          "x": 59,
+          "y": 383,
+          "marginOffset": 4.374000000000002
         },
         {
           "opacity": 100,
@@ -3828,7 +3779,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -3882,14 +3833,14 @@
           "type": "text",
           "content": "The principles",
           "fontWeight": 400,
-          "width": 265,
+          "width": 331,
           "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "d7666a19-5643-406b-bc02-f5d9fd4b06a1",
           "id": "b5b41d0f-51fe-477c-8dab-761c066762d4",
-          "x": 34,
+          "x": 41,
           "y": 210
         },
         {
@@ -3918,8 +3869,8 @@
           },
           "basedOn": "9ae7cf81-c809-442a-b187-c7b6fef2c6a2",
           "id": "0a5df081-89db-4e49-87fe-95c3d841011d",
-          "x": 35,
-          "y": 266.5
+          "x": 42,
+          "y": 267.5
         },
         {
           "opacity": 100,
@@ -3947,8 +3898,8 @@
           },
           "basedOn": "e61a76a3-dc95-4dc4-be65-b5fa98447ebd",
           "id": "6cc27d85-0735-4d11-bcc1-958f9d046ec9",
-          "x": 35,
-          "y": 390.5
+          "x": 42,
+          "y": 391.5
         },
         {
           "opacity": 100,
@@ -3976,8 +3927,8 @@
           },
           "basedOn": "c0adee60-3c32-4cbc-9f77-5a6cdc0caaa5",
           "id": "55901f15-39ac-4a22-adf5-063e23158c9a",
-          "x": 35,
-          "y": 359.5
+          "x": 42,
+          "y": 360.5
         },
         {
           "opacity": 100,
@@ -4005,8 +3956,8 @@
           },
           "basedOn": "672d5a3a-1d48-427d-932b-4867b104c0f8",
           "id": "3decaf02-890b-49ef-b433-8ceddd32434a",
-          "x": 35,
-          "y": 328.5
+          "x": 42,
+          "y": 329.5
         },
         {
           "opacity": 100,
@@ -4034,8 +3985,8 @@
           },
           "basedOn": "c953b818-f7ff-4555-8caa-5faec28e800d",
           "id": "e44c5bd9-5c39-4602-ae60-4e2c67bef3f5",
-          "x": 35,
-          "y": 297.5
+          "x": 42,
+          "y": 298.5
         }
       ],
       "backgroundColor": {
@@ -4085,7 +4036,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -4149,15 +4100,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "b0d4bec7-761e-49e4-9287-9b0ebed6a8bc",
           "id": "6f6367c6-438a-4398-880d-28b474d5fd4f",
-          "x": 52,
-          "y": 263
+          "x": 59,
+          "y": 263,
+          "marginOffset": 5.5589999999999975
         },
         {
           "opacity": 100,
@@ -4166,7 +4118,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -4230,15 +4182,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "d7cc69d2-833e-4fcb-9a18-e4ccc143b2b3",
           "id": "5eca2380-50ff-4075-a511-7af1e968a8d9",
-          "x": 52,
-          "y": 294
+          "x": 59,
+          "y": 294,
+          "marginOffset": 5.5589999999999975
         },
         {
           "opacity": 100,
@@ -4247,7 +4200,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -4311,15 +4264,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "7b51d5a2-9a71-4335-b366-eb5a32080022",
           "id": "0a67dc94-8db8-4b0c-bfb1-0d0172f2cd1c",
-          "x": 52,
-          "y": 356
+          "x": 59,
+          "y": 356,
+          "marginOffset": 5.5589999999999975
         },
         {
           "opacity": 100,
@@ -4328,7 +4282,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -4392,15 +4346,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 250,
+          "width": 313,
           "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "3c6710e1-9212-4d0c-b2fb-dc69ce227cfd",
           "id": "90adf5cc-d567-428f-9bcb-b16a17fb52dc",
-          "x": 52,
-          "y": 325
+          "x": 59,
+          "y": 325,
+          "marginOffset": 5.5589999999999975
         },
         {
           "opacity": 100,
@@ -4409,7 +4364,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -4473,89 +4428,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "0c94bdfd-fd68-464d-b26a-33b2bc8f3c85",
           "id": "440d1bf0-37d6-4638-a095-e74bbc6c00a2",
-          "x": 52,
-          "y": 387
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Titillium Web",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [200, 300, 400, 600, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 200],
-              [1, 200],
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 600],
-              [1, 600],
-              [0, 700],
-              [1, 700],
-              [0, 900]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 1133,
-              "des": -388,
-              "tAsc": 1133,
-              "tDes": -388,
-              "tLGap": 0,
-              "wAsc": 1133,
-              "wDes": 388,
-              "xH": 500,
-              "capH": 692,
-              "yMin": -285,
-              "yMax": 1082,
-              "hAsc": 1133,
-              "hDes": -388,
-              "lGap": 0
-            }
-          },
-          "fontSize": 27,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 700\">The principles</span>",
-          "fontWeight": 400,
-          "width": 265,
-          "height": 41,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "b5b41d0f-51fe-477c-8dab-761c066762d4",
-          "id": "23a2eebf-b6e0-4b03-adb8-4a9a4e015a6d",
-          "x": 34,
-          "y": 215
+          "x": 59,
+          "y": 387,
+          "marginOffset": 5.5589999999999975
         },
         {
           "opacity": 100,
@@ -4603,7 +4485,82 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 26,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">The principles</span>",
+          "fontWeight": 400,
+          "width": 331,
+          "height": 39,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "b5b41d0f-51fe-477c-8dab-761c066762d4",
+          "id": "23a2eebf-b6e0-4b03-adb8-4a9a4e015a6d",
+          "x": 41,
+          "y": 208,
+          "marginOffset": -11.366999999999997
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Titillium Web",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1133,
+              "des": -388,
+              "tAsc": 1133,
+              "tDes": -388,
+              "tLGap": 0,
+              "wAsc": 1133,
+              "wDes": 388,
+              "xH": 500,
+              "capH": 692,
+              "yMin": -285,
+              "yMax": 1082,
+              "hAsc": 1133,
+              "hDes": -388,
+              "lGap": 0
+            }
+          },
+          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4628,7 +4585,7 @@
           "focalY": 50,
           "basedOn": "23a2eebf-b6e0-4b03-adb8-4a9a4e015a6d",
           "id": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
-          "x": 34,
+          "x": 46,
           "y": 260
         },
         {
@@ -4677,7 +4634,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4702,8 +4659,8 @@
           "focalY": 50,
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "98381e2f-b4b0-43dd-9b51-fa073ba77610",
-          "x": 34,
-          "y": 290
+          "x": 46,
+          "y": 291
         },
         {
           "opacity": 100,
@@ -4751,7 +4708,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4776,8 +4733,8 @@
           "focalY": 50,
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "02cd45b1-c37b-4da2-a326-161947df271f",
-          "x": 34,
-          "y": 321
+          "x": 46,
+          "y": 322
         },
         {
           "opacity": 100,
@@ -4825,7 +4782,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4850,8 +4807,8 @@
           "focalY": 50,
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "3bb4786e-ceac-44e5-8b4b-e716bf6fb349",
-          "x": 34,
-          "y": 352
+          "x": 46,
+          "y": 353
         },
         {
           "opacity": 100,
@@ -4899,7 +4856,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 16,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -4924,8 +4881,8 @@
           "focalY": 50,
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "af90d4a8-fc72-4035-b4ce-2351b7c981d7",
-          "x": 34,
-          "y": 382
+          "x": 46,
+          "y": 385
         }
       ],
       "backgroundColor": {
@@ -4975,7 +4932,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -5025,15 +4982,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
           "fontWeight": 400,
-          "width": 232,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6f6367c6-438a-4398-880d-28b474d5fd4f",
           "id": "25ea0169-cbc3-4777-bdfd-4036ce372057",
-          "x": 52,
-          "y": 263
+          "x": 59,
+          "y": 264,
+          "marginOffset": 5.957999999999998
         },
         {
           "opacity": 100,
@@ -5042,7 +5000,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -5092,15 +5050,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
           "fontWeight": 400,
-          "width": 330,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "5eca2380-50ff-4075-a511-7af1e968a8d9",
           "id": "23f270b7-9614-4444-aa3b-58e46bd8aaea",
-          "x": 52,
-          "y": 294
+          "x": 59,
+          "y": 295,
+          "marginOffset": 5.957999999999998
         },
         {
           "opacity": 100,
@@ -5109,7 +5068,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -5159,15 +5118,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
           "fontWeight": 400,
-          "width": 258,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "0a67dc94-8db8-4b0c-bfb1-0d0172f2cd1c",
           "id": "89a797e9-dc77-4003-ad93-5e0f34250e5f",
-          "x": 52,
-          "y": 356
+          "x": 59,
+          "y": 357,
+          "marginOffset": 5.957999999999998
         },
         {
           "opacity": 100,
@@ -5176,7 +5136,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -5226,15 +5186,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
           "fontWeight": 400,
-          "width": 250,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "90adf5cc-d567-428f-9bcb-b16a17fb52dc",
           "id": "7b3c9d38-2000-48cb-b3bd-dcb64b76a5d8",
-          "x": 52,
-          "y": 325
+          "x": 59,
+          "y": 326,
+          "marginOffset": 5.957999999999998
         },
         {
           "opacity": 100,
@@ -5243,7 +5204,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -5293,15 +5254,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 204,
+          "width": 313,
           "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "440d1bf0-37d6-4638-a095-e74bbc6c00a2",
           "id": "a899dfcc-41d8-470c-9575-fa6d1e2f4e84",
-          "x": 52,
-          "y": 387
+          "x": 59,
+          "y": 388,
+          "marginOffset": 5.957999999999998
         },
         {
           "opacity": 100,
@@ -5310,7 +5272,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Nunito",
@@ -5352,7 +5314,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 31,
+          "fontSize": 30,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -5370,15 +5332,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">The principles</span>",
           "fontWeight": 400,
-          "width": 265,
-          "height": 42,
+          "width": 331,
+          "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "23a2eebf-b6e0-4b03-adb8-4a9a4e015a6d",
           "id": "dd313427-1c45-4a93-a82f-555d1701d7b6",
-          "x": 34,
-          "y": 211
+          "x": 41,
+          "y": 209,
+          "marginOffset": -7.920000000000002
         },
         {
           "opacity": 100,
@@ -5406,8 +5369,8 @@
           },
           "basedOn": "e198bccf-09f7-4dbb-8c9f-770865247239",
           "id": "eb045b80-4896-49c8-8535-0dd29e70d960",
-          "x": 34,
-          "y": 272
+          "x": 41,
+          "y": 273
         },
         {
           "opacity": 100,
@@ -5435,8 +5398,8 @@
           },
           "basedOn": "f07e0d64-5372-4e51-86a6-0c3da7607dd4",
           "id": "fd781603-76a2-43a3-8737-ec42188eef40",
-          "x": 34,
-          "y": 303
+          "x": 41,
+          "y": 304
         },
         {
           "opacity": 100,
@@ -5464,8 +5427,8 @@
           },
           "basedOn": "077d4e05-7c75-4d9c-9feb-f191deea147f",
           "id": "756d51fe-7610-408e-8c12-49f666bfd820",
-          "x": 34,
-          "y": 334
+          "x": 41,
+          "y": 335
         },
         {
           "opacity": 100,
@@ -5493,8 +5456,8 @@
           },
           "basedOn": "a94e39bf-2c23-4e6d-b409-9647b5f8bd98",
           "id": "dc3c9237-a672-454b-8899-94e15402cc2d",
-          "x": 34,
-          "y": 365
+          "x": 41,
+          "y": 366
         },
         {
           "opacity": 100,
@@ -5522,8 +5485,8 @@
           },
           "basedOn": "fd9e9ae6-2d67-4973-8783-2128787a59a6",
           "id": "703aeb65-ae9e-4c5a-9874-81566b3bc712",
-          "x": 34,
-          "y": 396
+          "x": 41,
+          "y": 397
         }
       ],
       "backgroundColor": {
