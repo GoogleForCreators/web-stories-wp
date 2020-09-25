@@ -24,16 +24,14 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
  */
 import FontPicker from '../';
 import { FontProvider } from '../../../app/font';
-import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
 import { curatedFontNames } from '../../../app/font/curatedFonts';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker(options) {
-  const getAllFontsPromise = Promise.resolve(fontsListResponse);
-  const apiContextValue = {
-    actions: {
-      getAllFonts: () => getAllFontsPromise,
+function getFontPicker(options) {
+  const fontContextValues = {
+    state: {
+      fonts: fontsListResponse,
     },
   };
   const props = {
@@ -43,14 +41,10 @@ async function getFontPicker(options) {
   };
 
   const accessors = renderWithTheme(
-    <APIContext.Provider value={apiContextValue}>
-      <FontProvider>
-        <FontPicker {...props} />
-      </FontProvider>
-    </APIContext.Provider>
+    <FontProvider.Provider value={fontContextValues}>
+      <FontPicker {...props} />
+    </FontProvider.Provider>
   );
-
-  await act(() => getAllFontsPromise);
 
   return accessors;
 }
