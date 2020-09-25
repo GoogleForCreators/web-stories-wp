@@ -20,13 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../keyboard';
-import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
@@ -67,23 +66,7 @@ function DateTime({
     [onClose]
   );
 
-  useEffect(() => {
-    // Set tabIndex to -1 for every except for the first button.
-    if (forwardedRef.current) {
-      const buttons = forwardedRef.current.querySelectorAll(
-        '.react-calendar__viewContainer button'
-      );
-      for (const btn of buttons) {
-        // Skip the first.
-        if (buttons[0] !== btn) {
-          btn.tabIndex = '-1';
-        }
-      }
-    }
-  }, [forwardedRef]);
-
   useKeyDownEffect(forwardedRef, 'esc', handleClose);
-  useRovingTabIndex({ ref: forwardedRef });
 
   return (
     <DateTimeWrapper ref={forwardedRef}>

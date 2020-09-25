@@ -19,7 +19,7 @@
  */
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useRef, useCallback, useMemo } from 'react';
+import { useRef, useCallback, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -27,6 +27,11 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
@@ -43,6 +48,23 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
     },
     [value, onChange]
   );
+
+  useEffect(() => {
+    // Set tabIndex to -1 for every except for the first button.
+    if (nodeRef.current) {
+      const buttons = nodeRef.current.querySelectorAll(
+        '.react-calendar__viewContainer button'
+      );
+      for (const btn of buttons) {
+        // Skip the first.
+        if (buttons[0] !== btn) {
+          btn.tabIndex = '-1';
+        }
+      }
+    }
+  }, [nodeRef]);
+
+  useRovingTabIndex({ ref: nodeRef });
 
   return (
     <CalendarWrapper ref={nodeRef}>
