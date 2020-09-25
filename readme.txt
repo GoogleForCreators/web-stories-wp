@@ -13,7 +13,7 @@ Web Stories are a visual storytelling format for the open web which immerses you
 
 == Description ==
 
-[Web Stories](https://amp.dev/about/stories/) are a free, open-web, visual storytelling format for the web, enabling you to easily create visual narratives with engaging animations and tappable interactions, and  immerse your readers in great and fast-loading full-screen experiences. Web Stories are a free, open-web, visual storytelling format for the web, enabling you to easily create visual narratives with engaging animations and tappable interactions, and  immerse your readers in great and fast-loading full-screen experiences.
+[Web Stories](https://amp.dev/about/stories/) are a free, open-web, visual storytelling format for the web, enabling you to easily create visual narratives with engaging animations and tappable interactions, and  immerse your readers in great and fast-loading full-screen experiences.
 
 === Benefits of Web Stories ===
 
