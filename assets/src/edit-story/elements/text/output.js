@@ -144,10 +144,8 @@ export function TextOutputWithUnits({
 
   const textStyle = {
     ...bgColor,
-    /* stylelint-disable */
-    WebkitBoxDecorationBreak: 'clone',
     boxDecorationBreak: 'clone',
-    /* stylelint-enable */
+    boxDecorationBreak: 'clone',
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     textAlign: styles.textAlign,

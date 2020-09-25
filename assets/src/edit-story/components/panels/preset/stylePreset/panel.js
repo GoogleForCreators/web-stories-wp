@@ -62,8 +62,6 @@ const PresetButton = styled.button`
 const HighLight = styled.span`
   padding: 0 2px;
   ${({ background }) => generatePatternStyles(background)}
-  /* stylelint-disable-next-line */
-  -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 `;
 

@@ -73,8 +73,6 @@ const Span = styled.span`
   ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
 
-  /* stylelint-disable-next-line */
-  -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   position: relative;
 `;

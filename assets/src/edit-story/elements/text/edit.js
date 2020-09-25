@@ -65,8 +65,6 @@ const Wrapper = styled.div`
     padding: ${({ textPadding }) => textPadding};
   }
   span {
-    /* stylelint-disable-next-line */
-    -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
 `;
