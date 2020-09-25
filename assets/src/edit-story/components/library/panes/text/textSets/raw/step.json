@@ -3,6 +3,60 @@
   "selection": [],
   "story": {
     "stylePresets": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
       "colors": [
         {
           "color": {
@@ -94,8 +148,7 @@
             "a": 0.6
           }
         }
-      ],
-      "textStyles": []
+      ]
     }
   },
   "version": 24,
@@ -194,8 +247,8 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Good design is honest</span>",
           "fontWeight": 400,
-          "x": 85,
-          "y": 370,
+          "x": 86,
+          "y": 359.5,
           "width": 254,
           "height": 25,
           "scale": 100,
@@ -210,26 +263,73 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
             }
           },
-          "type": "shape",
-          "x": 37.5,
-          "y": 367,
-          "width": 32,
-          "height": 32,
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
+          "fontWeight": 400,
+          "x": 40,
+          "y": 405,
+          "width": 332,
+          "height": 126,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "8a791aa3-d105-4597-ae1e-7964b1a3efa9"
+          "id": "25dc99de-cd5f-4589-a654-80a1d4ae9fcb",
+          "marginOffset": 5.578125
         },
         {
           "opacity": 100,
@@ -239,7 +339,7 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "backgroundTextMode": "FILL",
           "font": {
             "family": "Roboto",
             "weights": [100, 300, 400, 500, 700, 900],
@@ -281,104 +381,31 @@
           "fontSize": 20,
           "backgroundColor": {
             "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
+              "r": 0,
+              "g": 0,
+              "b": 0
             }
           },
           "lineHeight": 1.5,
           "textAlign": "center",
           "padding": {
             "locked": true,
-            "horizontal": 0,
-            "vertical": 0
+            "horizontal": 5,
+            "vertical": 5
           },
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #fff\">2</span>",
           "fontWeight": 400,
-          "x": 34,
-          "y": 371,
-          "width": 39,
-          "height": 24,
+          "width": 35,
+          "height": 34,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "aeb95c22-6cac-46fe-91c5-909e97fad173",
-          "marginOffset": 10.5
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto",
-            "weights": [100, 300, 400, 500, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [1, 100],
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700],
-              [0, 900],
-              [1, 900]
-            ],
-            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
-            "service": "fonts.google.com",
-            "metrics": {
-              "upm": 2048,
-              "asc": 1900,
-              "des": -500,
-              "tAsc": 1536,
-              "tDes": -512,
-              "tLGap": 102,
-              "wAsc": 1946,
-              "wDes": 512,
-              "xH": 1082,
-              "capH": 1456,
-              "yMin": -555,
-              "yMax": 2163,
-              "hAsc": 1900,
-              "hDes": -500,
-              "lGap": 0
-            }
-          },
-          "fontSize": 18,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.5,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "type": "text",
-          "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
-          "fontWeight": 400,
-          "x": 37,
-          "y": 416,
-          "width": 326,
-          "height": 126,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "25dc99de-cd5f-4589-a654-80a1d4ae9fcb"
+          "marginOffset": 10.5,
+          "basedOn": "aeb95c22-6cac-46fe-91c5-909e97fad173",
+          "id": "e38c860f-ac6a-430b-a615-43be6d2ccbdb",
+          "x": 40,
+          "y": 355
         }
       ],
       "backgroundColor": {
@@ -428,7 +455,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -486,15 +513,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 600\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 254,
-          "height": 27,
+          "width": 284,
+          "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "19240e57-e3d3-4974-80a5-c45381f162de",
           "id": "da1954aa-db03-473d-92a9-87c906083942",
-          "x": 81,
-          "y": 361
+          "x": 88,
+          "y": 358.5
         },
         {
           "opacity": 100,
@@ -569,8 +596,8 @@
           "marginOffset": 10.5,
           "basedOn": "aeb95c22-6cac-46fe-91c5-909e97fad173",
           "id": "973e1776-967c-4be9-8c40-67ea0a7073ce",
-          "x": 33,
-          "y": 361
+          "x": 40,
+          "y": 358
         },
         {
           "opacity": 100,
@@ -579,7 +606,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -637,15 +664,15 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 287,
+          "width": 284,
           "height": 127,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "25dc99de-cd5f-4589-a654-80a1d4ae9fcb",
           "id": "2c3dd807-05dd-432c-9c91-cecee9b175d1",
-          "x": 81,
-          "y": 397
+          "x": 88,
+          "y": 392
         }
       ],
       "backgroundColor": {
@@ -695,7 +722,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Poppins",
@@ -759,15 +786,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">GOOD DESIGN IS HONEST</span>",
           "fontWeight": 400,
-          "width": 300,
+          "width": 276,
           "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "19240e57-e3d3-4974-80a5-c45381f162de",
           "id": "8909982a-9b45-435d-b833-c5d865b19ca5",
-          "x": 89,
-          "y": 349
+          "x": 96,
+          "y": 347
         },
         {
           "opacity": 100,
@@ -844,8 +871,8 @@
           "marginOffset": 10.5,
           "basedOn": "aeb95c22-6cac-46fe-91c5-909e97fad173",
           "id": "1f559bf2-dc73-466c-9884-f2d2f5d10b6a",
-          "x": 33,
-          "y": 349
+          "x": 40,
+          "y": 347
         },
         {
           "opacity": 100,
@@ -854,7 +881,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "IBM Plex Sans",
@@ -914,15 +941,16 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 268,
+          "width": 276,
           "height": 155,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "25dc99de-cd5f-4589-a654-80a1d4ae9fcb",
           "id": "21723eac-86c9-40e8-8fdc-67d9e30c893c",
-          "x": 89,
-          "y": 381
+          "x": 96,
+          "y": 382,
+          "marginOffset": 3.599999999999998
         }
       ],
       "backgroundColor": {
@@ -972,7 +1000,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
@@ -1030,15 +1058,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 300,
+          "width": 284,
           "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "id": "7fc212fd-8dca-4e45-8f2c-1bd4b7d3402d",
-          "x": 71,
-          "y": 364
+          "x": 88,
+          "y": 366
         },
         {
           "opacity": 100,
@@ -1047,7 +1075,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Playfair Display",
@@ -1087,7 +1115,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 20,
+          "fontSize": 19,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1096,7 +1124,7 @@
             }
           },
           "lineHeight": 1.5,
-          "textAlign": "left",
+          "textAlign": "right",
           "padding": {
             "locked": true,
             "horizontal": 0,
@@ -1105,16 +1133,16 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">II</span>",
           "fontWeight": 400,
-          "width": 57,
-          "height": 26,
+          "width": 32,
+          "height": 25,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 11.857,
+          "marginOffset": 3.34,
           "basedOn": "1f559bf2-dc73-466c-9884-f2d2f5d10b6a",
           "id": "8b20a587-4c93-4910-acc3-bc5dc061e94f",
-          "x": 33,
-          "y": 364
+          "x": 40,
+          "y": 366
         },
         {
           "opacity": 100,
@@ -1123,7 +1151,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -1163,7 +1191,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 18,
+          "fontSize": 17,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1181,15 +1209,16 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 286,
+          "width": 284,
           "height": 127,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "21723eac-86c9-40e8-8fdc-67d9e30c893c",
           "id": "c26327a3-7df0-4d77-afa3-5cd3ef6ea069",
-          "x": 71,
-          "y": 394
+          "x": 88,
+          "y": 392,
+          "marginOffset": 4.199000000000002
         }
       ],
       "backgroundColor": {
@@ -1239,7 +1268,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Oswald",
@@ -1291,7 +1320,7 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">02</span>",
           "fontWeight": 400,
-          "width": 39,
+          "width": 28,
           "height": 39,
           "scale": 100,
           "focalX": 50,
@@ -1299,8 +1328,8 @@
           "marginOffset": 10.5,
           "basedOn": "973e1776-967c-4be9-8c40-67ea0a7073ce",
           "id": "449e1d3f-e38d-483a-af21-c8843ff10ee4",
-          "x": 33,
-          "y": 359
+          "x": 40,
+          "y": 355
         },
         {
           "opacity": 100,
@@ -1309,7 +1338,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -1361,15 +1390,15 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 287,
+          "width": 284,
           "height": 126,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "2c3dd807-05dd-432c-9c91-cecee9b175d1",
           "id": "317fba41-6497-4a49-a31e-4160cb8492fa",
-          "x": 81,
-          "y": 400
+          "x": 88,
+          "y": 403
         },
         {
           "opacity": 100,
@@ -1378,7 +1407,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Oswald",
@@ -1430,15 +1459,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">GOOD DESIGN IS HONEST</span>",
           "fontWeight": 400,
-          "width": 300,
+          "width": 284,
           "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "id": "f6a78147-8b58-4236-a7e3-4e1fe1737fb2",
-          "x": 81,
-          "y": 359
+          "x": 88,
+          "y": 355
         }
       ],
       "backgroundColor": {
@@ -1488,7 +1517,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -1542,15 +1571,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 254,
+          "width": 290,
           "height": 25,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "da1954aa-db03-473d-92a9-87c906083942",
           "id": "bbbf66b2-75e8-4e0f-96bf-ed06a1c0c6f9",
-          "x": 75,
-          "y": 364
+          "x": 82,
+          "y": 362.5
         },
         {
           "opacity": 100,
@@ -1559,7 +1588,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Raleway",
@@ -1623,7 +1652,7 @@
           "type": "text",
           "content": "<span style=\"font-weight: 600\">02.</span>",
           "fontWeight": 400,
-          "width": 39,
+          "width": 34,
           "height": 28,
           "scale": 100,
           "focalX": 50,
@@ -1631,7 +1660,7 @@
           "marginOffset": 10.5,
           "basedOn": "973e1776-967c-4be9-8c40-67ea0a7073ce",
           "id": "8be77026-0a06-4a30-a392-3c272589d477",
-          "x": 33,
+          "x": 40,
           "y": 361
         },
         {
@@ -1641,7 +1670,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Merriweather",
@@ -1695,15 +1724,15 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 341,
+          "width": 332,
           "height": 126,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "2c3dd807-05dd-432c-9c91-cecee9b175d1",
           "id": "aaa3dbb0-9520-4446-8273-e07b705dc311",
-          "x": 33,
-          "y": 399
+          "x": 40,
+          "y": 397
         }
       ],
       "backgroundColor": {
@@ -1753,7 +1782,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Titillium Web",
@@ -1810,15 +1839,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 300,
-          "height": 41,
+          "width": 284,
+          "height": 40,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "8909982a-9b45-435d-b833-c5d865b19ca5",
           "id": "12573e26-0ff2-426a-9244-810b189786b2",
-          "x": 87,
-          "y": 350
+          "x": 88,
+          "y": 349
         },
         {
           "opacity": 100,
@@ -1847,8 +1876,8 @@
           },
           "basedOn": "518ab49d-c5ec-426e-bbd2-e06feb8d6755",
           "id": "ea30dc49-eda0-49b2-a0b5-eed876a6a8f6",
-          "x": 35,
-          "y": 353
+          "x": 36,
+          "y": 349
         },
         {
           "opacity": 100,
@@ -1866,8 +1895,8 @@
             }
           },
           "type": "shape",
-          "x": 31,
-          "y": 349,
+          "x": 32,
+          "y": 345,
           "width": 40,
           "height": 40,
           "scale": 100,
@@ -1957,8 +1986,8 @@
           "marginOffset": 10.5,
           "basedOn": "1f559bf2-dc73-466c-9884-f2d2f5d10b6a",
           "id": "41dad828-61eb-42a3-b2c5-9b77ff8c34c7",
-          "x": 38,
-          "y": 355
+          "x": 39,
+          "y": 351
         },
         {
           "opacity": 100,
@@ -1967,7 +1996,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Work Sans",
@@ -2031,15 +2060,15 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 283,
+          "width": 284,
           "height": 147,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "21723eac-86c9-40e8-8fdc-67d9e30c893c",
           "id": "db4af893-534a-49ee-8f07-5ff834627bcf",
-          "x": 87,
-          "y": 389
+          "x": 88,
+          "y": 392
         }
       ],
       "backgroundColor": {
@@ -2108,7 +2137,7 @@
           },
           "basedOn": "5fcead31-df1a-4fda-8f96-e467bf1da6fd",
           "id": "e2d89223-1625-4e60-913b-49f1f6e3222f",
-          "x": 32.5,
+          "x": 39.5,
           "y": 379.5
         },
         {
@@ -2137,7 +2166,7 @@
           },
           "basedOn": "e2d89223-1625-4e60-913b-49f1f6e3222f",
           "id": "8bff60f7-0b7b-4725-9d55-73746f44543b",
-          "x": 32.5,
+          "x": 39.5,
           "y": 340.5
         },
         {
@@ -2166,7 +2195,7 @@
           },
           "basedOn": "5fcead31-df1a-4fda-8f96-e467bf1da6fd",
           "id": "b1218f3f-b7d9-41bc-b803-b36452cb3dd9",
-          "x": 32.5,
+          "x": 39.5,
           "y": 340.5
         },
         {
@@ -2195,7 +2224,7 @@
           },
           "basedOn": "b1218f3f-b7d9-41bc-b803-b36452cb3dd9",
           "id": "b77923f6-920e-4134-bb5f-3bd3d124532d",
-          "x": 71.5,
+          "x": 78.5,
           "y": 340.5
         },
         {
@@ -2265,7 +2294,7 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">2</span>",
           "fontWeight": 400,
-          "x": 33,
+          "x": 40,
           "y": 349,
           "width": 40,
           "height": 24,
@@ -2282,7 +2311,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Nunito",
@@ -2342,14 +2371,14 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300\">Good design is honest</span>",
           "fontWeight": 400,
-          "width": 300,
+          "width": 276,
           "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "12573e26-0ff2-426a-9244-810b189786b2",
           "id": "78190b80-771a-443b-a30e-744e8ceb500a",
-          "x": 89,
+          "x": 96,
           "y": 346
         },
         {
@@ -2359,7 +2388,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Karla",
@@ -2409,15 +2438,16 @@
           "type": "text",
           "content": "It does not make a product more innovative, powerful or valuable than it really is. It does not attempt to manipulate the consumer with promises that cannot be kept.",
           "fontWeight": 400,
-          "width": 283,
+          "width": 276,
           "height": 153,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "db4af893-534a-49ee-8f07-5ff834627bcf",
           "id": "019520da-e6c9-4a42-ab0d-eb3a81e5d4e4",
-          "x": 89,
-          "y": 389
+          "x": 96,
+          "y": 392,
+          "marginOffset": 5.957999999999998
         }
       ],
       "backgroundColor": {
