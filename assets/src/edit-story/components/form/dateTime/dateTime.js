@@ -26,6 +26,8 @@ import { useCallback, useRef, useState } from 'react';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../keyboard';
+import useFocusTrapping from '../../../utils/useFocusTrapping';
+import useRovingTabIndex from '../../../utils/useRovingTabIndex';
 import TimePicker from './timePicker';
 import DatePicker from './datePicker';
 
@@ -66,7 +68,9 @@ function DateTime({
     [onClose]
   );
 
-  useKeyDownEffect(forwardedRef, 'esc', handleClose);
+  useKeyDownEffect(forwardedRef, { key: ['esc'], editable: true }, handleClose);
+  useRovingTabIndex({ ref: forwardedRef });
+  useFocusTrapping({ ref: forwardedRef });
 
   return (
     <DateTimeWrapper ref={forwardedRef}>

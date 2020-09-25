@@ -243,6 +243,8 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
                 aria-pressed={isPM}
                 type="button"
                 isToggled={isPM}
+                // Handled by arrow keys.
+                tabIndex="-1"
                 onClick={updateAmPm('PM')}
               >
                 {__('PM', 'web-stories')}

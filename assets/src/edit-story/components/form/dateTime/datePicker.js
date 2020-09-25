@@ -28,11 +28,6 @@ import PropTypes from 'prop-types';
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import useRovingTabIndex from '../../../utils/useRovingTabIndex';
-
 const CalendarWrapper = styled.div`
   min-height: 236px;
 `;
@@ -52,19 +47,27 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
   useEffect(() => {
     // Set tabIndex to -1 for every except for the first button.
     if (nodeRef.current) {
-      const buttons = nodeRef.current.querySelectorAll(
-        '.react-calendar__viewContainer button'
-      );
+      // Allow tabbing to sections inside the calendar.
+      const navButtons = [
+        ...nodeRef.current.querySelectorAll(
+          '.react-calendar__navigation button'
+        ),
+      ];
+      navButtons.shift();
+      for (const btn of navButtons) {
+        btn.tabIndex = '-1';
+      }
+      const buttons = [
+        ...nodeRef.current.querySelectorAll(
+          '.react-calendar__viewContainer button'
+        ),
+      ];
+      buttons.shift();
       for (const btn of buttons) {
-        // Skip the first.
-        if (buttons[0] !== btn) {
-          btn.tabIndex = '-1';
-        }
+        btn.tabIndex = '-1';
       }
     }
   }, [nodeRef]);
-
-  useRovingTabIndex({ ref: nodeRef });
 
   return (
     <CalendarWrapper ref={nodeRef}>
