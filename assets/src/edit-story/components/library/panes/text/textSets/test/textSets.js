@@ -55,7 +55,7 @@ function setup() {
     },
   };
 
-  const { queryByText, queryAllByRole } = renderWithTheme(
+  const { getByText, queryAllByRole } = renderWithTheme(
     <TransformContext.Provider value={transformValue}>
       <ConfigContext.Provider value={configValue}>
         <APIContext.Provider value={apiValue}>
@@ -70,13 +70,13 @@ function setup() {
       </ConfigContext.Provider>
     </TransformContext.Provider>
   );
-  return { queryByText, queryAllByRole };
+  return { getByText, queryAllByRole };
 }
 
 describe('TextSets Panel', () => {
   it('should render the Panel', () => {
-    const { queryByText } = setup();
-    const h1 = queryByText('Text Sets');
+    const { getByText } = setup();
+    const h1 = getByText('Text Sets');
     expect(h1).not.toBeNull();
   });
 });
