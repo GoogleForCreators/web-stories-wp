@@ -68,7 +68,7 @@ function FontProvider({ children }) {
     return () => {
       mounted = false;
     };
-  }, [setFonts]);
+  }, []);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 
