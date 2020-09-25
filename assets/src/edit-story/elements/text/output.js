@@ -137,6 +137,7 @@ export function TextOutputWithUnits({
       left: 0,
       top: '0',
       margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
+      /* stylelint-disable-next-line */
       WebkitBoxDecorationBreak: 'clone',
       boxDecorationBreak: 'clone',
     };
@@ -144,7 +145,8 @@ export function TextOutputWithUnits({
 
   const textStyle = {
     ...bgColor,
-    boxDecorationBreak: 'clone',
+    /* stylelint-disable-next-line */
+    WebkitBoxDecorationBreak: 'clone',
     boxDecorationBreak: 'clone',
     position: 'relative',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
