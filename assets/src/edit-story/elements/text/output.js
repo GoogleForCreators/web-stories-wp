@@ -138,7 +138,7 @@ export function TextOutputWithUnits({
       top: '0',
       margin: `${dataToPaddingY(-marginOffset / 2)} 0`,
       WebkitBoxDecorationBreak: 'clone',
-      BoxDecorationBreak: 'clone',
+      boxDecorationBreak: 'clone',
     };
   };
 
