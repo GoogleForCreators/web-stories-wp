@@ -17,9 +17,6 @@
 /**
  * External dependencies
  */
-/**
- * External dependencies
- */
 import { render } from '@testing-library/react';
 
 /**
