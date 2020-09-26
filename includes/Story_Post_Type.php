@@ -169,6 +169,7 @@ class Story_Post_Type {
 		);
 
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
@@ -508,6 +509,24 @@ class Story_Post_Type {
 			$fields['post_content_filtered'] = __( 'Story data', 'web-stories' );
 		}
 		return $fields;
+	}
+
+	/**
+	 * Filter if show admin bar on single story template and we're not in an amp-story-player.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool $show Current value of filter.
+	 *
+	 * @return bool
+	 */
+	public function show_admin_bar( $show ) {
+		// Note that the amp_js_v query param is an indication that the story is inside an amp-story-player.
+		if ( is_singular( self::POST_TYPE_SLUG ) && isset( $_GET['amp_js_v'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$show = false;
+		}
+
+		return $show;
 	}
 
 	/**
