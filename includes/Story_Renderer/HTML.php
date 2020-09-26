@@ -309,7 +309,11 @@ class HTML {
 	protected function add_admin_bar_styles() {
 		ob_start();
 
-		wp_styles()->do_items( 'admin-bar' );
+		$styles = [ 'admin-bar' ];
+		if ( wp_style_is( 'amp-icons', 'registered' ) ) {
+			$styles[] = 'amp-icons';
+		}
+		wp_styles()->do_items( $styles );
 
 		?>
 		<style media="screen" id="admin-bar-inline-css">
