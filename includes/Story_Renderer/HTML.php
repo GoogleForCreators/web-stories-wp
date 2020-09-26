@@ -326,10 +326,13 @@ class HTML {
 			return;
 		}
 
-		$fragment = $this->document->createDocumentFragment();
-		$fragment->appendXml( $output );
+		$fragment_document = Document::fromHtmlFragment( "<html><head>$output</head><body></body></html>" );
 
-		$this->document->head->appendChild( $fragment );
+		while ( $fragment_document->head->firstChild ) {
+			$node = $fragment_document->head->removeChild( $fragment_document->head->firstChild );
+			$node = $this->document->importNode( $node, true );
+			$this->document->head->appendChild( $node );
+		}
 	}
 
 	/**
