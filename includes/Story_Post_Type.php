@@ -484,7 +484,7 @@ class Story_Post_Type {
 	 * @return bool Whether AMP-to-AMP is excluded.
 	 */
 	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
-		if ( $element instanceof DOMElement && $element->parentNode && 'amp-story-player' === $element->parentNode->tagName ) {
+		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
 			return true;
 		}
 
