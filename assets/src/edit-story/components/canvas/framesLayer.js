@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
+import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -67,10 +68,11 @@ const Hint = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
+const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 const DesignSpaceGuideline = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.callout};
-  left: ${100 * (48 / 412)}%;
-  right: ${100 * (48 / 412)}%;
+  left: ${marginRatio}%;
+  right: ${marginRatio}%;
   top: 0;
   bottom: 0;
   position: absolute;
