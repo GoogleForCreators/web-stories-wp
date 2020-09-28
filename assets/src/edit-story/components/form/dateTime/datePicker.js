@@ -66,16 +66,25 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
             '.react-calendar__viewContainer button'
           ),
         ];
-        // Allow tabbing to first.
-        buttons[0].tabIndex = '0';
-        if (setFocus) {
-          // When changing view we need to explicitly set focus again,
-          // It seems to not be happening by default.
-          buttons[0].focus();
-        }
-        buttons.shift();
+
+        let foundActive = false;
         for (const btn of buttons) {
-          btn.tabIndex = '-1';
+          if (!btn.className.includes('react-calendar__tile--now')) {
+            btn.tabIndex = '-1';
+          } else {
+            btn.tabIndex = '0';
+            if (setFocus) {
+              // When changing view we need to explicitly set focus again,
+              // It seems to not be happening by default.
+              btn.focus();
+            }
+            foundActive = true;
+          }
+        }
+        if (!foundActive) {
+          // Assume first as active.
+          buttons[0].tabIndex = '0';
+          buttons[0].focus();
         }
       }
     },
