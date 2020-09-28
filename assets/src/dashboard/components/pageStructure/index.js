@@ -176,7 +176,7 @@ export function LeftRail() {
                   aria-label={
                     path.value === state.currentPath
                       ? sprintf(
-                          /* translators: %s: path label.*/
+                          /* translators: %s: the current page, for example "My Stories". */
                           __('%s (active view)', 'web-stories'),
                           path.label
                         )
