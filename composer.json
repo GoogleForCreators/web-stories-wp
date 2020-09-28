@@ -51,7 +51,7 @@
       "ampproject/amp-wp/includes/admin/functions.php",
       "ampproject/amp-wp/includes/deprecated.php",
       "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
-    ]    
+    ]
   },
   "autoload": {
     "psr-4": {
@@ -63,7 +63,8 @@
   "autoload-dev": {
     "psr-4": {
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
-      "PHPStan\\WordPress\\": "tests/phpstan/src"
+      "PHPStan\\WordPress\\": "tests/phpstan/src",
+      "AmpProject\\Optimizer\\Tests\\": "vendor/ampproject/amp-wp/lib/optimizer/tests/src"
     }
   },
   "repositories": [

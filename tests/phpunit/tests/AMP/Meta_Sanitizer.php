@@ -17,11 +17,11 @@
 
 namespace Google\Web_Stories\Tests\AMP;
 
-use Google\Web_Stories\Tests\MarkupComparison;
-use Google\Web_Stories\Tests\ScriptHash;
+use AmpProject\Optimizer\Tests\MarkupComparison;
 use AMP_Tag_And_Attribute_Sanitizer;
 use AmpProject\Dom\Document;
 use AMP_Allowed_Tags_Generated;
+use Google\Web_Stories\Tests\ScriptHash;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer.
