@@ -57,22 +57,6 @@ class Sanitization {
 	 */
 	public function sanitize_document( Document $document ) {
 		$sanitizers = $this->get_sanitizers();
-		/**
-		 * Class name.
-		 *
-		 * @var string $sanitizer_class
-		 */
-		foreach ( $sanitizers as $sanitizer_class => $args ) {
-			/**
-			 * The add_buffering_hooks callable.
-			 *
-			 * @var callable $callable
-			 */
-			$callable = [ $sanitizer_class, 'add_buffering_hooks' ];
-			if ( is_callable( $callable ) ) {
-				call_user_func( $callable, $args );
-			}
-		}
 
 		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
 
