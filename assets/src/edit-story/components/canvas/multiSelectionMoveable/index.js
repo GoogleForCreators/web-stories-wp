@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -80,6 +80,8 @@ function MultiSelectionMoveable({ selectedElements }) {
     updateForResizeEvent: getDefinitionForType(element.type)
       .updateForResizeEvent,
   }));
+
+  const [isDragging, setIsDragging] = useState(false);
 
   /**
    * Set style to the element.
@@ -189,13 +191,19 @@ function MultiSelectionMoveable({ selectedElements }) {
     ])
   ).filter(({ isBackground }) => !isBackground);
 
-  const snapProps = useSnapping({ canSnap: true, otherNodes });
+  const snapProps = useSnapping({
+    isDragging,
+    canSnap: true,
+    otherNodes,
+  });
   const dragProps = useDrag({
     targetList,
     frames,
     setTransformStyle,
     onGroupEventStart,
     onGroupEventEnd,
+    isDragging,
+    setIsDragging,
   });
   const resizeProps = useResize({
     onGroupEventEnd,

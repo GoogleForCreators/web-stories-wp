@@ -17,16 +17,17 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * Internal dependencies
  */
+import { FULLBLEED_RATIO } from '../../../constants';
 import { useGlobalIsKeyPressed } from '../../keyboard';
 import { useDropTargets } from '../../dropTargets';
 import useCanvas from '../useCanvas';
 
-function useSnapping({ canSnap, otherNodes }) {
+function useSnapping({ isDragging, canSnap, otherNodes }) {
   const {
     canvasWidth,
     canvasHeight,
@@ -79,6 +80,13 @@ function useSnapping({ canSnap, otherNodes }) {
     [toggleDesignSpace, designSpaceGuideline]
   );
 
+  // Always hide design space guideline when dragging stops
+  useEffect(() => {
+    if (!isDragging) {
+      toggleDesignSpace(false);
+    }
+  }, [isDragging, toggleDesignSpace]);
+
   if (!canvasContainer || !pageContainer) {
     return {};
   }
@@ -93,8 +101,16 @@ function useSnapping({ canSnap, otherNodes }) {
     ? [offsetX, offsetX + canvasWidth / 2, offsetX + canvasWidth]
     : [];
 
+  const fullBleedOffset = (canvasWidth / FULLBLEED_RATIO - canvasHeight) / 2;
+
   const horizontalGuidelines = canSnap
-    ? [offsetY, offsetY + canvasHeight / 2, offsetY + canvasHeight]
+    ? [
+        offsetY - fullBleedOffset,
+        offsetY,
+        offsetY + canvasHeight / 2,
+        offsetY + canvasHeight,
+        offsetY + canvasHeight + fullBleedOffset,
+      ]
     : [];
 
   const elementGuidelines = canSnap

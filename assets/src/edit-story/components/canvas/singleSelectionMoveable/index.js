@@ -24,7 +24,7 @@ import classnames from 'classnames';
 /**
  * Internal dependencies
  */
-import { useDropTargets, useStory } from '../../../app';
+import { useStory } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
@@ -56,9 +56,6 @@ function SingleSelectionMoveable({
   const {
     actions: { pushTransform },
   } = useTransform();
-  const {
-    state: { activeDropTargetId, draggingResource },
-  } = useDropTargets();
 
   const actionsEnabled = !selectedElement.isBackground;
 
@@ -148,9 +145,8 @@ function SingleSelectionMoveable({
     [frame, pushTransform, selectedElement.id]
   );
 
-  const canSnap =
-    !isEditMode && (!isDragging || (isDragging && !activeDropTargetId));
-  const hideHandles = isDragging || Boolean(draggingResource);
+  const canSnap = !isEditMode;
+  const hideHandles = isDragging;
 
   const classNames = classnames('default-moveable', {
     'hide-handles': hideHandles,
@@ -197,6 +193,7 @@ function SingleSelectionMoveable({
   );
 
   const snapProps = useSnapping({
+    isDragging,
     otherNodes,
     canSnap: canSnap && actionsEnabled,
   });

@@ -75,6 +75,7 @@ function useSingleSelectionDrag({
 
   const onDragStart = ({ set }) => {
     set(frame.translate);
+    setIsDragging(true);
     return undefined;
   };
 
