@@ -14,29 +14,24 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { useCallback } from 'react';
-/**
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../components/keyboard';
 
+const getFocusableElements = (node) => {
+  if (!node) {
+    return [];
+  }
+  return [
+    ...node.querySelectorAll(
+      'a[href], button, textarea, input[type]:not([type="hidden"]), select'
+    ),
+  ].filter(
+    (el) => !el.hasAttribute('disabled') && el.getAttribute('tabindex') !== '-1'
+  );
+};
+
 function useFocusTrapping({ ref }) {
-  const getFocusableElements = useCallback((node) => {
-    if (!node) {
-      return [];
-    }
-    return [
-      ...node.querySelectorAll(
-        'a[href], button, textarea, input[type]:not([type="hidden"]), select'
-      ),
-    ].filter((el) => {
-      return (
-        !el.hasAttribute('disabled') && el.getAttribute('tabindex') !== '-1'
-      );
-    });
-  }, []);
   const handleTab = (e) => {
     const focusableElements = getFocusableElements(ref.current);
     const firstEl = focusableElements[0];
