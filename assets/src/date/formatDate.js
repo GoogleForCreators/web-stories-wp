@@ -17,12 +17,21 @@
 /**
  * Internal dependencies
  */
-export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
-export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
-export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';
+import format from './format';
+import { getSettings } from './settings';
 
-export const STORYBOOK_PAGE_SIZE = {
-  width: 212,
-  height: 318,
-  containerHeight: 376.89,
-};
+/**
+ * Formats a date by dateSettings.dateFormat (no time).
+ *
+ * @param {Date|string} date Date to format.
+ *
+ * @return {string} Displayable relative date string
+ */
+function formatDate(date) {
+  const settings = getSettings();
+  const { dateFormat } = settings;
+
+  return format(date, dateFormat);
+}
+
+export default formatDate;

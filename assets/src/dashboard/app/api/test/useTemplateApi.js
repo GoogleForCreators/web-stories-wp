@@ -15,20 +15,16 @@
  */
 
 /**
- * External dependencies
- */
-import moment from 'moment-timezone';
-
-/**
  * Internal dependencies
  */
+import { toUTCDate } from '../../../../date';
 import { reshapeTemplateObject } from '../useTemplateApi';
 
 describe('reshapeTemplateObject', () => {
   const templateData = {
     id: 1,
     title: 'Beauty',
-    createdBy: 'Google AMP',
+    createdBy: 'Google',
     modified: '2020-04-21T07:00:00.000Z',
     tags: ['Health', 'Bold', 'Joy'],
     colors: [
@@ -46,10 +42,10 @@ describe('reshapeTemplateObject', () => {
     expect(reshapedObject).toMatchSnapshot();
   });
 
-  it('should reshape template object with Moment date', () => {
+  it('should reshape template object with a date object', () => {
     const reshapedObject = reshapeTemplateObject(true)(templateData);
     expect(reshapedObject.modified).toMatchObject(
-      moment.parseZone('2020-04-21T07:00:00.000Z')
+      toUTCDate('2020-04-21T07:00:00.000Z')
     );
   });
 
