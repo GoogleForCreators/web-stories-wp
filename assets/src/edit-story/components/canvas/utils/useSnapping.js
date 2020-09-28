@@ -23,6 +23,7 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import { useGlobalIsKeyPressed } from '../../keyboard';
+import { useDropTargets } from '../../dropTargets';
 import useCanvas from '../useCanvas';
 
 function useSnapping({ canSnap, otherNodes }) {
@@ -51,10 +52,13 @@ function useSnapping({ canSnap, otherNodes }) {
       showSafeZone,
     })
   );
+  const { activeDropTargetId } = useDropTargets((state) => ({
+    activeDropTargetId: state.state.activeDropTargetId,
+  }));
 
   // ⌘ key disables snapping
   const snapDisabled = useGlobalIsKeyPressed('meta');
-  canSnap = canSnap && !snapDisabled;
+  canSnap = canSnap && !snapDisabled && !activeDropTargetId;
 
   const toggleDesignSpace = useCallback(
     (visible) => {
