@@ -34,18 +34,18 @@ function setup() {
   };
   const transformValue = {
     actions: {
-      registerTransformHandler: () => {},
+      registerTransformHandler: jest.fn(),
     },
   };
   const configValue = { api: { stories: [] } };
   const fontsValue = {
     actions: {
-      maybeEnqueueFontStyle: () => {},
+      maybeEnqueueFontStyle: jest.fn(),
     },
   };
   const apiValue = {
     actions: {
-      getAllFonts: () => [],
+      getAllFonts: jest.fn(),
     },
   };
 

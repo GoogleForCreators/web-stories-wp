@@ -28,20 +28,23 @@ describe('Raw text set files', () => {
     )
   );
 
-  it.each(textSets)('%s text set should at least two elements', (textSet) => {
-    const category = basename(textSet, '.json');
-    const rawData = readFileSync(
-      resolve(
-        process.cwd(),
-        `assets/src/edit-story/components/library/panes/text/textSets/raw/${category}.json`
-      ),
-      'utf8'
-    );
-    const data = JSON.parse(rawData);
+  it.each(textSets)(
+    '%s text set should contain at least two non-background elements',
+    (textSet) => {
+      const category = basename(textSet, '.json');
+      const rawData = readFileSync(
+        resolve(
+          process.cwd(),
+          `assets/src/edit-story/components/library/panes/text/textSets/raw/${category}.json`
+        ),
+        'utf8'
+      );
+      const data = JSON.parse(rawData);
 
-    for (const { elements } of data.pages) {
-      // 3 since one is background element.
-      expect(elements.length >= 3).toBeTrue();
+      for (const { elements } of data.pages) {
+        // 3 since one is background element.
+        expect(elements.length >= 3).toBeTrue();
+      }
     }
-  });
+  );
 });
