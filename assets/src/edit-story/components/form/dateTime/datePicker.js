@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { _x } from '@wordpress/i18n';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
@@ -75,10 +75,26 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
         value={value}
         onChange={handleOnChange}
         onViewChange={onViewChange}
-        nextAriaLabel={__('Next', 'web-stories')}
-        prevAriaLabel={__('Previous', 'web-stories')}
-        next2AriaLabel={__('Jump forward', 'web-stories')}
-        prev2AriaLabel={__('Jump backwards', 'web-stories')}
+        nextAriaLabel={_x(
+          'Next',
+          'This label can apply to next month, year and/or decade',
+          'web-stories'
+        )}
+        prevAriaLabel={_x(
+          'Previous',
+          'This label can apply to previous month, year and/or decade',
+          'web-stories'
+        )}
+        next2AriaLabel={_x(
+          'Jump forward',
+          'This label can apply to month, year and/or decade',
+          'web-stories'
+        )}
+        prev2AriaLabel={_x(
+          'Jump backwards',
+          'This label can apply to month, year and/or decade',
+          'web-stories'
+        )}
       />
     </CalendarWrapper>
   );
