@@ -544,7 +544,14 @@ class FontProviderFixture {
           curatedFonts: availableCuratedFonts,
         },
         actions: {
-          ensureMenuFontsLoaded: () => {},
+          getFontByName: () => jasmine.createSpy('getFontByName'),
+          maybeEnqueueFontStyle: () =>
+            jasmine.createSpy('maybeEnqueueFontStyle'),
+          getFontWeight: () => jasmine.createSpy('getFontWeight'),
+          getFontFallback: () => jasmine.createSpy('getFontFallback'),
+          ensureMenuFontsLoaded: () =>
+            jasmine.createSpy('ensureMenuFontsLoaded'),
+          addRecentFont: () => jasmine.createSpy('addRecentFont'),
         },
       };
 
