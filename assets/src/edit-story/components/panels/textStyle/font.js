@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -44,6 +44,7 @@ import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
 import useRichTextFormatting from './useRichTextFormatting';
+import getClosestFontWeight from './getClosestFontWeight';
 import getFontWeights from './getFontWeights';
 
 const MIN_MAX = {
@@ -94,6 +95,24 @@ function FontControls({ selectedElements, pushUpdate }) {
     getFontByName,
     fontFamily,
   ]);
+
+  useEffect(() => {
+    if (isNaN(parseInt(fontWeight)) && fontWeights.length > 1) {
+      return;
+    }
+    const currentWeightExists = fontWeights.filter((weight) =>
+      weight.value.includes(fontWeight)
+    ).length;
+
+    if (!currentWeightExists) {
+      const updatedFontWeight = getClosestFontWeight(
+        fontWeight,
+        fontWeights.map((weight) => weight.value)
+      );
+      handleSelectFontWeight(updatedFontWeight);
+    }
+  }, [fontWeight, fontWeights, handleSelectFontWeight]);
+
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontPickerChange = useCallback(
