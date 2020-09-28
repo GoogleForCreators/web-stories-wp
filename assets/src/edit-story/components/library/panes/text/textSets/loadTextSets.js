@@ -69,8 +69,7 @@ async function loadTextSet(name) {
 }
 
 export default async function loadTextSets() {
-  // const textSets = ['editorial', 'cover', 'quote'];
-  const textSets = ['quote'];
+  const textSets = ['editorial', 'cover', 'quote'];
 
   const results = await Promise.all(
     textSets.map(async (name) => {
