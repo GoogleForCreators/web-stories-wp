@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import moment from 'moment-timezone';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { toUTCDate } from '../../../../date';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
@@ -96,8 +96,8 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
         author: 1,
         link: 'https://www.story-link.com',
         originalStoryData: {
@@ -151,7 +151,7 @@ describe('ApiProvider', () => {
     await act(async () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
         pages: [
           {
             elements: [],
@@ -170,8 +170,8 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
         author: 1,
         link: 'https://www.story-link.com',
         originalStoryData: {
@@ -258,8 +258,8 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
         author: 1,
         link: 'https://www.story-link.com',
         originalStoryData: {
@@ -296,8 +296,8 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',
         id: 456,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
         author: 1,
         link: 'https://www.story-link.com',
         originalStoryData: {

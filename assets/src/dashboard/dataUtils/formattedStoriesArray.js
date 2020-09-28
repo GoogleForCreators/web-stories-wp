@@ -15,17 +15,17 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import moment from 'moment-timezone';
+import { toUTCDate } from '../../date';
 
 const formattedStoriesArray = [
   {
     id: 167,
     status: 'publish',
     title: 'ORANGE SHAPES',
-    modified: moment.parseZone('2020-05-21T23:25:51.000Z'),
-    created: moment.parseZone('2020-05-21T23:25:51.000Z'),
+    modified: toUTCDate('2020-05-21T23:25:51.000Z'),
+    created: toUTCDate('2020-05-21T23:25:51.000Z'),
     pages: [
       {
         elements: [
@@ -314,8 +314,8 @@ const formattedStoriesArray = [
     id: 165,
     status: 'draft',
     title: 'GREEN SHAPES',
-    modified: moment.parseZone('2020-05-21T23:25:22.000Z'),
-    created: moment.parseZone('2020-05-21T23:25:22.000Z'),
+    modified: toUTCDate('2020-05-21T23:25:22.000Z'),
+    created: toUTCDate('2020-05-21T23:25:22.000Z'),
     pages: [
       {
         elements: [
@@ -604,8 +604,8 @@ const formattedStoriesArray = [
     id: 163,
     status: 'draft',
     title: 'RED SHAPES',
-    modified: moment('2020-05-21T23:24:47.000Z'),
-    created: moment('2020-05-21T23:24:47.000Z'),
+    modified: toUTCDate('2020-05-21T23:24:47.000Z'),
+    created: toUTCDate('2020-05-21T23:24:47.000Z'),
     pages: [
       {
         elements: [
@@ -1186,8 +1186,8 @@ const formattedStoriesArray = [
     id: 161,
     status: 'draft',
     title: 'BLUE SHAPES',
-    modified: moment.parseZone('2020-05-21T23:24:06.000Z'),
-    created: moment.parseZone('2020-05-21T23:24:06.000Z'),
+    modified: toUTCDate('2020-05-21T23:24:06.000Z'),
+    created: toUTCDate('2020-05-21T23:24:06.000Z'),
     pages: [
       {
         elements: [
