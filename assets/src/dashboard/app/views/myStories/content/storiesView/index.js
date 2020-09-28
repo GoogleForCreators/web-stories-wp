@@ -154,7 +154,7 @@ function StoriesView({
               body:
                 story.title.length > 0
                   ? sprintf(
-                      /* translators: %s is the story title. */
+                      /* translators: %s: story title. */
                       __(
                         '%s has been copied to your clipboard.',
                         'web-stories'
@@ -257,7 +257,7 @@ function StoriesView({
                   setActiveDialog('');
                 }}
                 aria-label={sprintf(
-                  /* translators: %s is story title */
+                  /* translators: %s: story title */
                   __('Cancel deleting story "%s"', 'web-stories'),
                   activeStory.title
                 )}
@@ -268,7 +268,7 @@ function StoriesView({
                 type={BUTTON_TYPES.DEFAULT}
                 onClick={handleOnDeleteStory}
                 aria-label={sprintf(
-                  /* translators: %s is story title */
+                  /* translators: %s: story title */
                   __('Confirm deleting story "%s"', 'web-stories'),
                   activeStory.title
                 )}
