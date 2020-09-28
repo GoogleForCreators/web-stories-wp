@@ -21,19 +21,24 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { DetailViewNavBar, Layout } from '../../../../components';
+import { APP_ROUTES, ROUTE_TITLES } from '../../../../constants';
 
 function Header({ onBookmarkClick, onHandleCtaClick }) {
   return (
     <Layout.Fixed>
       <DetailViewNavBar
         ctaText={__('Use template', 'web-stories')}
-        closeViewAriaLabel={__('Go to explore templates', 'web-stories')}
+        closeViewAriaLabel={sprintf(
+          /* translators: %s: page title of link */
+          __('Go to %s', 'web-stories'),
+          ROUTE_TITLES[APP_ROUTES.TEMPLATES_GALLERY]
+        )}
         handleBookmarkClick={onBookmarkClick}
         handleCta={onHandleCtaClick}
       />
