@@ -28,10 +28,14 @@ import Modal from 'react-modal';
 import App from '../../app/index';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
+import FontContext from '../../app/font/context';
+import FontProvider from '../../app/font/fontProvider';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import Layout from '../../app/layout';
 import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
 import FixtureEvents from '../../../../../karma/fixture/events';
+import { curatedFontNames } from '../../app/font/curatedFonts';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
@@ -98,6 +102,11 @@ export class Fixture {
     this.apiProviderFixture_ = new APIProviderFixture();
     this.stubComponent(APIProvider).callFake(
       this.apiProviderFixture_.Component
+    );
+
+    this.fontProviderFixture_ = new FontProviderFixture();
+    this.stubComponent(FontProvider).callFake(
+      this.fontProviderFixture_.Component
     );
 
     this._layoutStub = this.stubComponent(Layout);
@@ -426,6 +435,131 @@ function HookExecutor({ hooks }) {
 }
 /* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
+class FontProviderFixture {
+  constructor() {
+    // eslint-disable-next-line react/prop-types
+    const Comp = ({ children }) => {
+      const fontsListResponse = [
+        {
+          name: 'Abel',
+          value: 'Abel',
+          family: 'Abel',
+          fallbacks: ['sans-serif'],
+          service: 'fonts.google.com',
+          weights: [400],
+          styles: ['regular'],
+          variants: [[0, 400]],
+        },
+        {
+          name: 'Abhaya Libre',
+          value: 'Abhaya Libre',
+          family: 'Abhaya Libre',
+          fallbacks: ['serif'],
+          service: 'fonts.google.com',
+          weights: [400, 500, 600, 700, 800],
+          styles: ['regular'],
+          variants: [
+            [0, 400],
+            [0, 500],
+            [0, 600],
+            [0, 700],
+            [0, 800],
+          ],
+        },
+        ...[TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
+          name: font.family,
+          value: font.family,
+          ...font,
+        })),
+        {
+          name: 'Source Serif Pro',
+          value: 'Source Serif Pro',
+          family: 'Source Serif Pro',
+          fallbacks: ['serif'],
+          service: 'fonts.google.com',
+          weights: [400, 600, 700],
+          styles: ['regular'],
+          variants: [
+            [0, 400],
+            [0, 600],
+            [0, 700],
+          ],
+        },
+        {
+          name: 'Space Mono',
+          value: 'Space Mono',
+          family: 'Space Mono',
+          fallbacks: ['monospace'],
+          service: 'fonts.google.com',
+          weights: [400, 700],
+          styles: ['regular', 'italic'],
+          variants: [
+            [0, 400],
+            [1, 400],
+            [0, 700],
+            [1, 700],
+          ],
+        },
+        {
+          name: 'Ubuntu',
+          value: 'Ubuntu',
+          family: 'Ubuntu',
+          fallbacks: ['monospace'],
+          service: 'fonts.google.com',
+          weights: [400, 700],
+          styles: ['regular', 'italic'],
+          variants: [
+            [0, 400],
+            [1, 400],
+            [0, 700],
+            [1, 700],
+          ],
+        },
+        {
+          name: 'Yrsa',
+          value: 'Yrsa',
+          family: 'Yrsa',
+          fallbacks: ['serif'],
+          service: 'fonts.google.com',
+          weights: [300, 400, 500, 600, 700],
+          styles: ['regular'],
+          variants: [
+            [0, 300],
+            [0, 400],
+            [0, 500],
+            [0, 600],
+            [0, 700],
+          ],
+        },
+      ];
+
+      const availableCuratedFonts = fontsListResponse.filter(
+        (font) => curatedFontNames.indexOf(font.name) > 0
+      );
+
+      const state = {
+        state: {
+          fonts: fontsListResponse,
+          recentFonts: [],
+          curatedFonts: availableCuratedFonts,
+        },
+        actions: {
+          ensureMenuFontsLoaded: () => {},
+        },
+      };
+
+      return (
+        <FontContext.Provider value={state}>{children}</FontContext.Provider>
+      );
+    };
+    Comp.displayName = 'Fixture(FontProvider)';
+    this._comp = Comp;
+  }
+
+  get Component() {
+    return this._comp;
+  }
+}
 /* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   constructor() {
