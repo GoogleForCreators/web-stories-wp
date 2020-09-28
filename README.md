@@ -45,7 +45,8 @@ just a few small guidelines you need to follow. Please check out our [Contributi
 
 ## Product Spec
 
-* [Product spec](https://docs.google.com/document/d/18gjAOvAf2TCWpFy_9mr1V9a2VZrM4Ty7Mfry5zdL31k/edit)
-* [Critical User Journeys](https://docs.google.com/spreadsheets/d/1zE3rdJykQY1YOQUHoczyzPNLa5_bhtv-2wfTE1-NOn0/edit)  
+* [Product spec](https://docs.google.com/document/d/18gjAOvAf2TCWpFy_9mr1V9a2VZrM4Ty7Mfry5zdL31k/view)
+* [Roadmap](https://docs.google.com/spreadsheets/d/10DZZrWJdkjcJXD1vL0VG0PqRhsIqaHkacF_ujOdEwJc/view)
+* [Critical User Journeys](https://docs.google.com/spreadsheets/d/1zE3rdJykQY1YOQUHoczyzPNLa5_bhtv-2wfTE1-NOn0/view)  
     * [CUJ Coverage: Dashboard](https://google.github.io/web-stories-wp/critical-user-journeys/dashboard)
     * [CUJ Coverage: Editor](https://google.github.io/web-stories-wp/critical-user-journeys/editor)
