@@ -22,11 +22,16 @@ import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
   const fullToSafeRatio = 1 / safeToFullRatio;
+  const pageBackgroundColor = '#1b1d1c'; /* theme.colors.bg.workspace */
   return (
     <style
       amp-custom=""
       dangerouslySetInnerHTML={{
         __html: `
+              amp-story-page {
+                background-color: ${pageBackgroundColor};
+              }
+
               amp-story-grid-layer {
                 overflow: visible;
               }
