@@ -297,10 +297,10 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         // Exit edit-mode
         await data.fixture.events.keyboard.press('Escape');
 
-        // Assume text content to be correctly formatted
-        const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
-        expect(actual).toBe(expected);
+        // Assume visual match (actual HTML might vary, but visual must be similar)
+        await data.fixture.snapshot(
+          'First letter black, next two bold, rest regular'
+        );
       });
 
       it('should make black+bold+regular selection black when toggling', async () => {
@@ -326,10 +326,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         // Exit edit-mode
         await data.fixture.events.keyboard.press('Escape');
 
-        // Assume text content to be correctly formatted
-        const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
-        expect(actual).toBe(expected);
+        // Assume visual match (actual HTML might vary, but visual must be similar)
+        await data.fixture.snapshot('First three letters black, rest regular');
       });
     });
   });
