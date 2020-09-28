@@ -33,7 +33,6 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import {
-  fillerDateSettingsObject,
   formattedStoriesArray,
   formattedUsersObject,
   STORYBOOK_PAGE_SIZE,
@@ -183,7 +182,6 @@ export const _StoriesViewGrid = () => (
         stories={formattedStoriesArray}
         users={formattedUsersObject}
         view={view}
-        dateSettings={fillerDateSettingsObject}
       />
     </ToastProvider>
   </FlagsProvider>
@@ -199,7 +197,6 @@ export const _StoriesViewList = () => (
         stories={formattedStoriesArray}
         users={formattedUsersObject}
         view={{ ...view, style: VIEW_STYLE.LIST }}
-        dateSettings={fillerDateSettingsObject}
       />
     </ToastProvider>
   </FlagsProvider>

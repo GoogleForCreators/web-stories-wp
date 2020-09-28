@@ -41,10 +41,13 @@ const defaultConfig = {
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',
   isRTL: false,
-  dateFormat: 'F j, Y',
-  timeFormat: 'g:i a',
-  gmtOffset: -4,
-  timezone: 'America/New_York',
+  locale: {
+    dateFormat: 'F j, Y',
+    timeFormat: 'g:i a',
+    gmtOffset: -4,
+    timezone: 'America/New_York',
+    weekStartsOn: 0,
+  },
   newStoryURL:
     'http://localhost:8899/wp-admin/post-new.php?post_type=web-story',
   editStoryURL: 'http://localhost:8899/wp-admin/post.php?action=edit',

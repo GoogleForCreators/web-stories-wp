@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3051b14fd2d1ed4f930923089c1c319",
+    "content-hash": "14596ade65b7d4509b99f4e95f398345",
     "packages": [
         {
             "name": "ampproject/amp-wp",
-            "version": "2.0.3",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "c42478a87dc10f3edc7d41a8348812dbae55b0e1"
+                "reference": "823ae999158fcd1ae0b2c5c93736103a23fecae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/c42478a87dc10f3edc7d41a8348812dbae55b0e1",
-                "reference": "c42478a87dc10f3edc7d41a8348812dbae55b0e1",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/823ae999158fcd1ae0b2c5c93736103a23fecae9",
+                "reference": "823ae999158fcd1ae0b2c5c93736103a23fecae9",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +105,58 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2020-09-18T19:47:16+00:00"
+            "time": "2020-09-22T23:15:54+00:00"
+        },
+        {
+            "name": "civicrm/composer-downloads-plugin",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/civicrm/composer-downloads-plugin.git",
+                "reference": "8722bc7d547315be39397a3078bb51ee053ca269"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/civicrm/composer-downloads-plugin/zipball/8722bc7d547315be39397a3078bb51ee053ca269",
+                "reference": "8722bc7d547315be39397a3078bb51ee053ca269",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1",
+                "php": ">=5.6",
+                "togos/gitignore": "~1.1.1"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0",
+                "friendsofphp/php-cs-fixer": "^2.3",
+                "phpunit/phpunit": "^5.7",
+                "totten/process-helper": "^1.0.1"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "LastCall\\DownloadsPlugin\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "LastCall\\DownloadsPlugin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Bayliss",
+                    "email": "rob@lastcallmedia.com"
+                },
+                {
+                    "name": "Tim Otten",
+                    "email": "totten@civicrm.org"
+                }
+            ],
+            "description": "Composer plugin for downloading additional files within any composer package.",
+            "time": "2019-08-28T00:33:51+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -208,16 +259,16 @@
         },
         {
             "name": "mcaskill/composer-exclude-files",
-            "version": "v1.2.0",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
-                "reference": "658b03e705e91aa0509b43491b755e5471d5aae9"
+                "reference": "ae6069973d9ff1aee58409b38ae0aff44544d896"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/658b03e705e91aa0509b43491b755e5471d5aae9",
-                "reference": "658b03e705e91aa0509b43491b755e5471d5aae9",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/ae6069973d9ff1aee58409b38ae0aff44544d896",
+                "reference": "ae6069973d9ff1aee58409b38ae0aff44544d896",
                 "shasum": ""
             },
             "require": {
@@ -254,7 +305,7 @@
                 }
             ],
             "description": "Exclude files from autoload_files.php",
-            "time": "2020-05-05T05:25:21+00:00"
+            "time": "2020-09-25T21:50:29+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -278,12 +329,6 @@
                 "phpunit/phpunit": "^4.8.36"
             },
             "type": "library",
-            "extra": {
-                "patches_applied": {
-                    "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
-                    "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
@@ -306,6 +351,39 @@
                 "stylesheet"
             ],
             "time": "2020-08-03T15:45:50+00:00"
+        },
+        {
+            "name": "togos/gitignore",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TOGoS/PHPGitIgnore.git",
+                "reference": "32bc0830e4123f670adcbf5ddda5bef362f4f4d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TOGoS/PHPGitIgnore/zipball/32bc0830e4123f670adcbf5ddda5bef362f4f4d4",
+                "reference": "32bc0830e4123f670adcbf5ddda5bef362f4f4d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "require-dev": {
+                "togos/simpler-test": "1.1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TOGoS_GitIgnore_": "src/main/php/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Parser for .gitignore (and sparse-checkout, and anything else using the same format) files",
+            "time": "2019-04-19T19:16:58+00:00"
         },
         {
             "name": "willwashburn/stream",
@@ -567,6 +645,46 @@
                 "object graph"
             ],
             "time": "2017-10-19T19:58:43+00:00"
+        },
+        {
+            "name": "php-stubs/wordpress-stubs",
+            "version": "v5.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-stubs/wordpress-stubs.git",
+                "reference": "5b62027b3f3b9de4994da627898599460f054584"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/5b62027b3f3b9de4994da627898599460f054584",
+                "reference": "5b62027b3f3b9de4994da627898599460f054584",
+                "shasum": ""
+            },
+            "replace": {
+                "giacocorsiglia/wordpress-stubs": "*"
+            },
+            "require-dev": {
+                "giacocorsiglia/stubs-generator": "^0.5.0",
+                "php": "~7.1"
+            },
+            "suggest": {
+                "paragonie/sodium_compat": "Pure PHP implementation of libsodium",
+                "symfony/polyfill-php73": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
+                "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "WordPress function and class declaration stubs for static analysis.",
+            "homepage": "https://github.com/php-stubs/wordpress-stubs",
+            "keywords": [
+                "PHPStan",
+                "static analysis",
+                "wordpress"
+            ],
+            "time": "2020-09-02T05:31:36+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -1335,12 +1453,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "81cb95735a719403eddb77fc78e21362b56d9ea9"
+                "reference": "0749ceaf15c136d085b722a5bb88141398a54142"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/81cb95735a719403eddb77fc78e21362b56d9ea9",
-                "reference": "81cb95735a719403eddb77fc78e21362b56d9ea9",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0749ceaf15c136d085b722a5bb88141398a54142",
+                "reference": "0749ceaf15c136d085b722a5bb88141398a54142",
                 "shasum": ""
             },
             "conflict": {
@@ -1370,7 +1488,7 @@
                 "composer/composer": "<=1-alpha.11",
                 "contao-components/mediaelement": ">=2.14.2,<2.21.1",
                 "contao/core": ">=2,<3.5.39",
-                "contao/core-bundle": ">=4,<4.4.46|>=4.5,<4.8.6",
+                "contao/core-bundle": ">=4,<4.4.52|>=4.5,<4.9.6|= 4.10.0",
                 "contao/listing-bundle": ">=4,<4.4.8",
                 "datadog/dd-trace": ">=0.30,<0.30.2",
                 "david-garcia/phpwhois": "<=4.3.1",
@@ -1434,6 +1552,7 @@
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
                 "league/commonmark": "<0.18.3",
                 "librenms/librenms": "<1.53",
+                "livewire/livewire": ">2.2.4,<2.2.6",
                 "magento/community-edition": ">=2,<2.2.10|>=2.3,<2.3.3",
                 "magento/magento1ce": "<1.9.4.3",
                 "magento/magento1ee": ">=1,<1.14.4.3",
@@ -1485,6 +1604,8 @@
                 "scheb/two-factor-bundle": ">=0,<3.26|>=4,<4.11",
                 "sensiolabs/connect": "<4.2.3",
                 "serluck/phpwhois": "<=4.2.6",
+                "shopware/core": "<=6.3.1",
+                "shopware/platform": "<=6.3.1",
                 "shopware/shopware": "<5.3.7",
                 "silverstripe/admin": ">=1.0.3,<1.0.4|>=1.1,<1.1.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
@@ -1629,7 +1750,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-18T13:01:53+00:00"
+            "time": "2020-09-24T17:02:11+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -2321,16 +2442,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.44",
+            "version": "v3.4.45",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "4152e36b0f305c2a57aa0233dee56ec27bca4f06"
+                "reference": "ec3c2ac4d881a4684c1f0317d2107f1a4152bad9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/4152e36b0f305c2a57aa0233dee56ec27bca4f06",
-                "reference": "4152e36b0f305c2a57aa0233dee56ec27bca4f06",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/ec3c2ac4d881a4684c1f0317d2107f1a4152bad9",
+                "reference": "ec3c2ac4d881a4684c1f0317d2107f1a4152bad9",
                 "shasum": ""
             },
             "require": {
@@ -2390,7 +2511,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-08-26T06:32:27+00:00"
+            "time": "2020-09-18T15:58:55+00:00"
         },
         {
             "name": "webmozart/assert",
