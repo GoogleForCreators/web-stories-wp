@@ -115,21 +115,6 @@ export default function ApiProviderFixture({ children }) {
     [currentUser]
   );
 
-  const fontApi = useMemo(
-    () => ({
-      getAllFonts: () => {
-        return Promise.resolve(
-          [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
-            name: font.family,
-            value: font.family,
-            ...font,
-          }))
-        );
-      },
-    }),
-    []
-  );
-
   const value = useMemo(
     () => ({
       state: {
@@ -145,7 +130,6 @@ export default function ApiProviderFixture({ children }) {
         settingsApi,
         storyApi,
         templateApi,
-        fontApi,
         usersApi,
       },
     }),
@@ -160,7 +144,6 @@ export default function ApiProviderFixture({ children }) {
       settingsApi,
       storyApi,
       templateApi,
-      fontApi,
       usersApi,
     ]
   );
