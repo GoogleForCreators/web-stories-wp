@@ -231,7 +231,7 @@
     "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
     "workflow:version": "./assets/src/commander/index.js version",
     "workflow:build-plugin": "./assets/src/commander/index.js build-plugin",
-    "workflow:fonts": "./assets/src/fonts/index.js assets/src/fonts/fonts.json",
+    "workflow:fonts": "./assets/src/fonts/cli.js assets/src/fonts/fonts.json",
     "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
     "workflow:migrate:templates": "./assets/src/migration/cli.js assets/src/dashboard/templates/raw",
     "postworkflow:migrate:templates": "npx prettier --write assets/src/dashboard/templates/raw",
