@@ -69,7 +69,7 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
 
         let foundActive = false;
         for (const btn of buttons) {
-          if (!btn.className.includes('react-calendar__tile--now')) {
+          if (!btn.classList.contains('react-calendar__tile--now')) {
             btn.tabIndex = '-1';
           } else {
             btn.tabIndex = '0';
