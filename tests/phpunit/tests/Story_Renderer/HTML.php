@@ -67,6 +67,23 @@ class HTML extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::transform_a_tags
+	 */
+	public function test_transform_a_tags() {
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story><a href="https://www.google.com">Google</a></amp-story></body></html>',
+			]
+		);
+
+		$actual = $this->setup_renderer( $post );
+
+		$this->assertContains( 'rel="noreferrer"', $actual );
+		$this->assertContains( 'target="_blank"', $actual );
+	}
+
+	/**
 	 * @covers ::replace_html_head
 	 * @covers ::get_html_head_markup
 	 */
