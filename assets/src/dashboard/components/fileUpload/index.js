@@ -155,12 +155,14 @@ const FileUpload = ({
 
   useEffect(() => {
     if (!fileInputRef?.current) {
-      return;
+      return () => {};
     }
 
-    fileInputRef.current.addEventListener('change', handleChange);
-    () => {
-      fileInputRef.current.removeEventListener('change', handleChange);
+    const input = fileInputRef.current;
+
+    input.addEventListener('change', handleChange);
+    return () => {
+      input.removeEventListener('change', handleChange);
     };
   }, [handleChange]);
 
