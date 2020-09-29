@@ -20,7 +20,7 @@
 /**
  * Internal dependencies
  */
-import updateTemplates from './utils/updateTemplates';
+import updateTemplates from './utils/updateTemplates.js';
 
 const args = process.argv.slice(2);
 const dir = args[0] ? args[0] : undefined;

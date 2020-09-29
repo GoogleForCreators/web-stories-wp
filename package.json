@@ -232,9 +232,11 @@
     "workflow:version": "./assets/src/commander/index.js version",
     "workflow:build-plugin": "./assets/src/commander/index.js build-plugin",
     "workflow:fonts": "./assets/src/fonts/index.js assets/src/fonts/fonts.json",
-    "workflow:migrate": "npm-run-all --parallel workflow:templates:*",
+    "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
     "workflow:migrate:templates": "./assets/src/migration/cli.js assets/src/dashboard/templates/raw",
-    "workflow:migrate:ftue-story": "./assets/src/migration/cli.js includes/data/stories"
+    "postworkflow:migrate:templates": "npx prettier --write assets/src/dashboard/templates/raw",
+    "workflow:migrate:ftue-story": "./assets/src/migration/cli.js includes/data/stories",
+    "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories"
   },
   "husky": {
     "hooks": {
