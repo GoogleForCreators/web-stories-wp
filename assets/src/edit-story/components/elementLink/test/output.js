@@ -48,7 +48,6 @@ describe('WithLink', () => {
           url: 'https://example.com/',
           icon: 'https://example.com/image.png',
           desc: 'Lorem ipsum dolor',
-          type: 2,
         },
       },
     };
@@ -70,10 +69,6 @@ describe('WithLink', () => {
 
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
-      await expect(withLink()).toBeValidAMPStoryElement();
-    });
-
-    it('should produce valid AMP output for one-tap links', async () => {
       await expect(withLink()).toBeValidAMPStoryElement();
     });
   });
