@@ -27,7 +27,10 @@ import Context from './context';
 
 function FileProvider({ children }) {
   const getFonts = useCallback(
-    () => import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts'),
+    () =>
+      import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts').then(
+        (res) => res.default
+      ),
     []
   );
   const state = {
