@@ -22,6 +22,7 @@ import { readdirSync, readFileSync, writeFileSync } from 'fs';
 /**
  * Internal dependencies
  */
+// eslint-disable-next-line import/no-unresolved
 import { migrate, DATA_VERSION } from '../module.js';
 
 function updateTemplates(templatesDir) {

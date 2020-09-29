@@ -359,6 +359,14 @@
     },
     {
       "files": [
+        "assets/src/migration/utils/updateTemplates.js"
+      ],
+      "rules": {
+        "eslint-comments/no-unused-disable": "off"
+      }
+    },
+    {
+      "files": [
         "*.md",
         "**/*.md"
       ],
