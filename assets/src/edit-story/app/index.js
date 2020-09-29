@@ -41,6 +41,7 @@ import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
 import { useFont, FontProvider } from './font';
+import { FileProvider } from './file';
 import { useLocalMedia, useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
@@ -55,30 +56,32 @@ function App({ config }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
-              <Media3pApiProvider>
-                <HistoryProvider size={50}>
-                  <SnackbarProvider>
-                    <StoryProvider storyId={storyId}>
-                      <FontProvider>
-                        <MediaProvider>
-                          <AutoSaveHandler />
-                          <TransformProvider>
-                            <DropTargetsProvider>
-                              <GlobalStyle />
-                              <DevTools />
-                              <DefaultMoveableGlobalStyle />
-                              <CropMoveableGlobalStyle />
-                              <ModalGlobalStyle />
-                              <KeyboardOnlyOutlines />
-                              <Layout />
-                            </DropTargetsProvider>
-                          </TransformProvider>
-                        </MediaProvider>
-                      </FontProvider>
-                    </StoryProvider>
-                  </SnackbarProvider>
-                </HistoryProvider>
-              </Media3pApiProvider>
+              <FileProvider>
+                <Media3pApiProvider>
+                  <HistoryProvider size={50}>
+                    <SnackbarProvider>
+                      <StoryProvider storyId={storyId}>
+                        <FontProvider>
+                          <MediaProvider>
+                            <AutoSaveHandler />
+                            <TransformProvider>
+                              <DropTargetsProvider>
+                                <GlobalStyle />
+                                <DevTools />
+                                <DefaultMoveableGlobalStyle />
+                                <CropMoveableGlobalStyle />
+                                <ModalGlobalStyle />
+                                <KeyboardOnlyOutlines />
+                                <Layout />
+                              </DropTargetsProvider>
+                            </TransformProvider>
+                          </MediaProvider>
+                        </FontProvider>
+                      </StoryProvider>
+                    </SnackbarProvider>
+                  </HistoryProvider>
+                </Media3pApiProvider>
+              </FileProvider>
             </APIProvider>
           </ConfigProvider>
         </ErrorBoundary>

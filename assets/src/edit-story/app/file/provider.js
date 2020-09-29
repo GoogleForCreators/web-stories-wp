@@ -17,33 +17,31 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useFile } from '../../file';
+import Context from './context';
 
-function useLoadFonts({ fonts, setFonts }) {
-  const fontsLength = fonts.length;
-  const {
-    actions: { getFonts },
-  } = useFile();
-  useEffect(() => {
-    async function loadFonts() {
-      const newFonts = await getFonts();
-      const formattedFonts = newFonts.map((font) => ({
-        name: font.family,
-        value: font.family,
-        ...font,
-      }));
+function FileProvider({ children }) {
+  const getFonts = useCallback(
+    () => import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts'),
+    []
+  );
+  const state = {
+    state: {},
+    actions: {
+      getFonts,
+    },
+  };
 
-      setFonts(formattedFonts);
-    }
-    if (!fontsLength) {
-      loadFonts();
-    }
-  }, [fontsLength, setFonts, getFonts]);
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-export default useLoadFonts;
+FileProvider.propTypes = {
+  children: PropTypes.node,
+};
+
+export default FileProvider;
