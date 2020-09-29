@@ -14,8 +14,22 @@
  * limitations under the License.
  */
 
-export { default as bundlePlugin } from './bundlePlugin.js';
-export { default as createBuild } from './createBuild.js';
-export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
-export { default as updateVersionNumbers } from './updateVersionNumbers.js';
-export { default as updateTemplates } from './updateTemplates.js';
+import {resolve} from 'path';
+import buildFonts from './utils/buildFonts.js';
+
+if (!process.env.GOOGLE_FONTS_API_KEY) {
+  console.error('Google Fonts API key missing!');
+  process.exit(1);
+}
+
+const FONTS_FILE = 'fonts.json';
+const fontsFilePath = resolve(process.cwd(), FONTS_FILE);
+
+try {
+  await buildFonts(fontsFilePath);
+} catch (err) {
+  console.error('There was an error generating the web fonts list:', err);
+  process.exit(1);
+}
+
+console.log('Web fonts updated!');

@@ -29,7 +29,6 @@ import program from 'commander';
  */
 import {
   bundlePlugin,
-  buildFonts,
   createBuild,
   getCurrentVersionNumber,
   updateVersionNumbers,
@@ -39,7 +38,6 @@ import {
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
 const README_FILE = 'readme.txt';
-const FONTS_FILE = 'includes/data/fonts.json';
 const BUILD_DIR = 'build/web-stories';
 const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
 const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;
@@ -125,33 +123,6 @@ program
     console.log(
       `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
     );
-  });
-
-program
-  .command('build-fonts')
-  .description('Download latest set of fonts from Google Fonts')
-  .on('--help', () => {
-    console.log('');
-    console.log('Examples:');
-    console.log('  # Generate the web fonts list');
-    console.log('  $ commander.js build-fonts');
-  })
-  .action(async () => {
-    if (!process.env.GOOGLE_FONTS_API_KEY) {
-      console.error('Google Fonts API key missing!');
-      return;
-    }
-
-    const fontsFilePath = `${PLUGIN_DIR}/${FONTS_FILE}`;
-
-    try {
-      await buildFonts(fontsFilePath);
-    } catch (err) {
-      console.error('There was an error generating the web fonts list:', err);
-      return;
-    }
-
-    console.log('Web fonts updated!');
   });
 
 program

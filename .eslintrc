@@ -348,7 +348,8 @@
         "tests/e2e/config/*.js",
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs",
-        "assets/src/migration/**/*.js"
+        "assets/src/migration/**/*.js",
+        "assets/src/fonts/**/*.js"
       ],
       "env": {
         "node": true
