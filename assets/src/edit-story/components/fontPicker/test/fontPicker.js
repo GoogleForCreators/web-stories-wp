@@ -26,7 +26,7 @@ import FontPicker from '../';
 import { FontProvider } from '../../../app/font';
 import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
-import { curatedFontNames } from '../../../app/font/curatedFonts';
+import { curatedFontNames } from '../../../../fonts/curatedFonts';
 import fontsListResponse from './fontsResponse';
 
 async function getFontPicker(options) {

@@ -28,11 +28,11 @@ import { useCallback, useState, useRef, useMemo } from 'react';
 /**
  * Internal dependencies
  */
+import { curatedFontNames } from '../../../fonts';
 import loadStylesheet from '../../utils/loadStylesheet';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
-import { curatedFontNames } from './curatedFonts';
 
 const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
