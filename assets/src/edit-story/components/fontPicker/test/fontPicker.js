@@ -22,11 +22,11 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import FontPicker from '../';
+import { curatedFontNames } from '../../../../fonts';
 import { FontProvider } from '../../../app/font';
 import APIContext from '../../../app/api/context';
 import { renderWithTheme } from '../../../testUtils';
-import { curatedFontNames } from '../../../../fonts/curatedFonts';
+import FontPicker from '../';
 import fontsListResponse from './fontsResponse';
 
 async function getFontPicker(options) {
