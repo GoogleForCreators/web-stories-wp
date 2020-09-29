@@ -15,80 +15,61 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import WithLink from '../output';
 
 describe('WithLink', () => {
+  function withLink() {
+    const props = {
+      element: {
+        id: '123',
+        type: 'image',
+        mimeType: 'image/png',
+        scale: 1,
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          src: 'https://example.com/image.png',
+          height: 1920,
+          width: 1080,
+        },
+        link: {
+          url: 'https://example.com/',
+          icon: 'https://example.com/image.png',
+          desc: 'Lorem ipsum dolor',
+        },
+      },
+    };
+    return (
+      <WithLink {...props}>
+        <amp-img src="https://example.com/image.png" layout="fill" />
+      </WithLink>
+    );
+  }
+
+  describe('a[target]', () => {
+    it('should use target=_blank', async () => {
+      const { container } = render(withLink());
+      const a = container.querySelector('a');
+      await expect(a.target).toBe('_blank');
+      await expect(a.rel).toBe('noreferrer');
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
-      const props = {
-        element: {
-          id: '123',
-          type: 'image',
-          mimeType: 'image/png',
-          scale: 1,
-          x: 50,
-          y: 100,
-          height: 1920,
-          width: 1080,
-          rotationAngle: 0,
-          resource: {
-            type: 'image',
-            mimeType: 'image/png',
-            src: 'https://example.com/image.png',
-            height: 1920,
-            width: 1080,
-          },
-          link: {
-            url: 'https://example.com/',
-            icon: 'https://example.com/image.png',
-            desc: 'Lorem ipsum dolor',
-            type: 2,
-          },
-        },
-      };
-
-      await expect(
-        <WithLink {...props}>
-          <amp-img src="https://example.com/image.png" layout="fill" />
-        </WithLink>
-      ).toBeValidAMPStoryElement();
-    });
-
-    it('should produce valid AMP output for one-tap links', async () => {
-      const props = {
-        element: {
-          id: '123',
-          type: 'image',
-          mimeType: 'image/png',
-          scale: 1,
-          x: 50,
-          y: 100,
-          height: 1920,
-          width: 1080,
-          rotationAngle: 0,
-          resource: {
-            type: 'image',
-            mimeType: 'image/png',
-            src: 'https://example.com/image.png',
-            height: 1920,
-            width: 1080,
-          },
-          link: {
-            url: 'https://example.com/',
-            icon: 'https://example.com/image.png',
-            desc: 'Lorem ipsum dolor',
-            type: 1,
-          },
-        },
-      };
-
-      await expect(
-        <WithLink {...props}>
-          <amp-img src="https://example.com/image.png" layout="fill" />
-        </WithLink>
-      ).toBeValidAMPStoryElement();
+      await expect(withLink()).toBeValidAMPStoryElement();
     });
   });
 });

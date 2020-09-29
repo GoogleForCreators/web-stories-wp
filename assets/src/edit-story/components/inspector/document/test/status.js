@@ -34,7 +34,7 @@ function setupPanel(
 ) {
   const updateStory = jest.fn();
 
-  const config = { timeFormat: 'g:i a', capabilities };
+  const config = { capabilities };
   const storyContextValue = {
     state: {
       story: { status: 'draft', password: '' },

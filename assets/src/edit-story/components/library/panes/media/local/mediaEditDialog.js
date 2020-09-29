@@ -20,13 +20,11 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from 'react';
-import moment from 'moment';
 
 /**
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { format } from '@wordpress/date';
 
 /**
  * Internal dependencies
@@ -37,8 +35,8 @@ import { Plain } from '../../../../button';
 import { useLocalMedia } from '../../../../../app/media';
 import { useSnackbar } from '../../../../../app/snackbar';
 import StoryPropTypes from '../../../../../types';
-import { useConfig } from '../../../../../app';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
+import { formatDate, toDate, isValid } from '../../../../../../date';
 
 const THUMBNAIL_WIDTH = 152;
 
@@ -145,7 +143,6 @@ function MediaEditDialog({ resource, onClose }) {
     poster,
     mimeType,
   } = resource;
-  const { dateFormat = 'Y-m-d' } = useConfig();
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -154,7 +151,7 @@ function MediaEditDialog({ resource, onClose }) {
   }));
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
-  const parsedDate = moment(creationDate);
+  const parsedDate = toDate(creationDate);
 
   const handleAltTextChange = useCallback((evt) => {
     setAltText(evt.target.value);
@@ -200,12 +197,12 @@ function MediaEditDialog({ resource, onClose }) {
           </Video>
         )}
         <MetadataTextContainer>
-          {parsedDate.isValid() && (
+          {isValid(parsedDate) && (
             <MediaDateText>
               {sprintf(
                 /* translators: %s: upload date of media item. */
                 __('Uploaded: %s', 'web-stories'),
-                format(dateFormat, parsedDate)
+                formatDate(creationDate)
               )}
             </MediaDateText>
           )}

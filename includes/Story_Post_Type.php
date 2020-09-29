@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use DOMElement;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -37,7 +38,6 @@ use WP_Post;
 use WP_Role;
 use WP_Post_Type;
 use WP_Screen;
-use WP_Rewrite;
 
 /**
  * Class Story_Post_Type.
@@ -182,6 +182,7 @@ class Story_Post_Type {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
+		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
 
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
@@ -472,6 +473,26 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Filters whether AMP-to-AMP is excluded for an element.
+	 *
+	 * The element may be either a link (`a` or `area`) or a `form`.
+	 *
+	 * @param bool       $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
+	 * @param string     $url      URL considered for exclusion.
+	 * @param string[]   $rel      Link relations.
+	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
+	 * @return bool Whether AMP-to-AMP is excluded.
+	 */
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
+		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
+			return true;
+		}
+
+		return $excluded;
+
+	}
+
+	/**
 	 * Add story_author as allowed orderby value for REST API.
 	 *
 	 * @since 1.0.0
@@ -668,8 +689,7 @@ class Story_Post_Type {
 			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
-				'dateFormat'       => get_option( 'date_format' ),
-				'timeFormat'       => get_option( 'time_format' ),
+				'locale'           => ( new Locale() )->get_locale_settings(),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,

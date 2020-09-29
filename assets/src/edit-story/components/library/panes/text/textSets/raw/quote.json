@@ -1,0 +1,2134 @@
+{
+  "current": "c4f1db91-77a8-4da7-bc03-3b05024cf4f0",
+  "selection": [],
+  "story": {
+    "stylePresets": {
+      "colors": [],
+      "textStyles": []
+    }
+  },
+  "version": 24,
+  "pages": [
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "d77b50ca-78bb-458c-a042-1bb336d647e0"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 300; font-style: italic\">Good design is thorough down to the last detail</span>",
+          "fontWeight": 400,
+          "x": 41,
+          "y": 212,
+          "width": 330,
+          "height": 128,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "da9e3eef-d675-4f61-bac0-8eb3f24dadd7",
+          "marginOffset": 9.84375
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "id": "cd4f0b0c-92f9-4376-8fe1-6f1829d1b3c6",
+          "content": "— Dieter Rams",
+          "x": 41,
+          "y": 357,
+          "width": 117,
+          "height": 21,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "caf9c221-5c00-4806-ad85-fd10481ec179"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "e00b707a-99ba-4684-98e6-518655024b89",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 918,
+              "des": -335,
+              "tAsc": 918,
+              "tDes": -335,
+              "tLGap": 0,
+              "wAsc": 1036,
+              "wDes": 335,
+              "xH": 475,
+              "capH": 670,
+              "yMin": -335,
+              "yMax": 1002,
+              "hAsc": 918,
+              "hDes": -335,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "Good design is thorough down to the last detail",
+          "fontWeight": 400,
+          "x": 40,
+          "y": 229,
+          "width": 330,
+          "height": 123,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "d8ff89a6-fd2f-45a8-8b8f-9d590c8cb8ca",
+          "marginOffset": 9.84375,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 918,
+              "des": -335,
+              "tAsc": 918,
+              "tDes": -335,
+              "tLGap": 0,
+              "wAsc": 1036,
+              "wDes": 335,
+              "xH": 475,
+              "capH": 670,
+              "yMin": -335,
+              "yMax": 1002,
+              "hAsc": 918,
+              "hDes": -335,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "3843cc85-b25e-4ec8-af90-207a933070ae",
+          "content": "— Dieter Rams",
+          "x": 147,
+          "y": 382,
+          "width": 119,
+          "height": 23,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "x": 146,
+          "y": 212,
+          "width": 120,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "a3dee1ed-18f9-4aac-ab97-b323a7848a58"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 120,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "a3dee1ed-18f9-4aac-ab97-b323a7848a58",
+          "id": "19b38048-ae83-49be-a5e9-0f9b584698bd",
+          "x": 146,
+          "y": 365
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "d90cb406-1e58-4cd7-a383-b6004e6f4820"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "87c1e295-11d9-48a4-b3bf-2efb6442b372",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1050,
+              "des": -350,
+              "tAsc": 1050,
+              "tDes": -350,
+              "tLGap": 100,
+              "wAsc": 1135,
+              "wDes": 627,
+              "xH": 548,
+              "capH": 698,
+              "yMin": -572,
+              "yMax": 1065,
+              "hAsc": 1050,
+              "hDes": -350,
+              "lGap": 100
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "GOOD DESIGN IS THOROUGH DOWN TO THE LAST DETAIL",
+          "fontWeight": 400,
+          "x": 69,
+          "y": 205,
+          "width": 287,
+          "height": 167,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "5f3639b5-b9e9-4eab-b297-b1520f0c25f1",
+          "marginOffset": -10.5,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1050,
+              "des": -350,
+              "tAsc": 1050,
+              "tDes": -350,
+              "tLGap": 100,
+              "wAsc": 1135,
+              "wDes": 627,
+              "xH": 548,
+              "capH": 698,
+              "yMin": -572,
+              "yMax": 1065,
+              "hAsc": 1050,
+              "hDes": -350,
+              "lGap": 100
+            }
+          },
+          "fontSize": 19,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "f2009226-7d88-472c-b581-3dc92340b70f",
+          "content": "— Dieter Rams",
+          "x": 244,
+          "y": 385,
+          "width": 142,
+          "height": 26,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "x": 49,
+          "y": 209,
+          "width": 4,
+          "height": 160,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "f8a7d5a8-3169-4409-b873-90e7e076166f",
+          "type": "shape"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "e71dd731-7c3e-4afc-86f2-3572340b7e40"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "f20d5c48-53ac-445b-b1c1-f9820ff0954e",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-style: italic\">Good design is thorough down to the last detail</span>",
+          "fontWeight": 400,
+          "x": 40,
+          "y": 224,
+          "width": 332,
+          "height": 134,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "335f56de-a74e-459e-9750-d90f3aab7ad7",
+          "marginOffset": -4.920999999999999,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "f1d0589c-51d4-4cda-8b00-8c913f3a01b0",
+          "content": "— Dieter Rams",
+          "x": 146,
+          "y": 369,
+          "width": 120,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "4dd351dd-b9bd-4e05-a9b5-84b03badd4fc"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "804cd388-762a-4f2c-8485-872bf55114dc",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 43,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-weight: 500\">GOOD DESIGN IS THOROUGH DOWN TO THE LAST DETAIL</span>",
+          "fontWeight": 400,
+          "x": 41,
+          "y": 215,
+          "width": 332,
+          "height": 157,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "7054d719-80e4-4cbd-878e-2bee646be1ad",
+          "marginOffset": -4.920999999999999,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "5ece36ab-a60a-4f63-adf7-25f8b8351aae",
+          "content": "— Dieter Rams",
+          "x": 148,
+          "y": 375,
+          "width": 120,
+          "height": 27,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "cf26c8a1-632b-4463-811b-019ba353cb8e"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "dca458bd-be63-42a4-8814-3ac8e9c8a882",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Merriweather",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 700],
+              [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 984,
+              "des": -273,
+              "tAsc": 984,
+              "tDes": -273,
+              "tLGap": 0,
+              "wAsc": 1065,
+              "wDes": 273,
+              "xH": 555,
+              "capH": 743,
+              "yMin": -272,
+              "yMax": 1055,
+              "hAsc": 984,
+              "hDes": -273,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-weight: 300\">Good design is thorough down to the last detail</span>",
+          "fontWeight": 400,
+          "x": 41,
+          "y": 253,
+          "width": 332,
+          "height": 131,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "10cc54be-d529-4a8d-9c92-b065bf43e9bb",
+          "marginOffset": -4.920999999999999,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 940,
+              "des": -234,
+              "tAsc": 940,
+              "tDes": -234,
+              "tLGap": 0,
+              "wAsc": 1154,
+              "wDes": 234,
+              "xH": 519,
+              "capH": 710,
+              "yMin": -223,
+              "yMax": 1151,
+              "hAsc": 940,
+              "hDes": -234,
+              "lGap": 0
+            }
+          },
+          "fontSize": 19,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.25,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "3eb5080f-d463-425c-82d0-9fbcae68f6f1",
+          "content": "— Dieter Rams",
+          "x": 142,
+          "y": 398,
+          "width": 131,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "x": 187,
+          "y": 197,
+          "width": 40,
+          "height": 40,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "circle"
+          },
+          "id": "d579a240-06b8-411a-ac08-f061bb3714d8"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 918,
+              "des": -335,
+              "tAsc": 918,
+              "tDes": -335,
+              "tLGap": 0,
+              "wAsc": 1036,
+              "wDes": 335,
+              "xH": 475,
+              "capH": 670,
+              "yMin": -335,
+              "yMax": 1002,
+              "hAsc": 918,
+              "hDes": -335,
+              "lGap": 0
+            }
+          },
+          "fontSize": 47,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700; color: #fff\">“</span>",
+          "fontWeight": 400,
+          "x": 197,
+          "y": 202,
+          "width": 100,
+          "height": 59,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "3e2a7770-7a62-4d94-b30e-f43830dc373a",
+          "marginOffset": -11.890999999999998
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "c4f1db91-77a8-4da7-bc03-3b05024cf4f0"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "a0d130b9-985c-4d8d-8645-6a68e88fc5d4",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Titillium Web",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1133,
+              "des": -388,
+              "tAsc": 1133,
+              "tDes": -388,
+              "tLGap": 0,
+              "wAsc": 1133,
+              "wDes": 388,
+              "xH": 500,
+              "capH": 692,
+              "yMin": -285,
+              "yMax": 1082,
+              "hAsc": 1133,
+              "hDes": -388,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-weight: 900; color: #d2d2d2\">DIETER RAMS</span>",
+          "width": 221,
+          "height": 54,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text",
+          "basedOn": "9f76b112-152b-4b38-8e43-a898b8ec82ed",
+          "id": "5e91fc9f-0e01-475e-b4d1-7940cbef4879",
+          "x": 156,
+          "y": 389
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Titillium Web",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1133,
+              "des": -388,
+              "tAsc": 1133,
+              "tDes": -388,
+              "tLGap": 0,
+              "wAsc": 1133,
+              "wDes": 388,
+              "xH": 500,
+              "capH": 692,
+              "yMin": -285,
+              "yMax": 1082,
+              "hAsc": 1133,
+              "hDes": -388,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "9f76b112-152b-4b38-8e43-a898b8ec82ed",
+          "content": "<span style=\"font-weight: 900\">DIETER RAMS</span>",
+          "x": 153,
+          "y": 386,
+          "width": 221,
+          "height": 54,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "x": 40,
+          "y": 175,
+          "width": 332,
+          "height": 205,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "chat-bubble"
+          },
+          "id": "1201353f-4af6-4186-b232-acf9934872e3"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.2
+            }
+          },
+          "type": "shape",
+          "width": 332,
+          "height": 205,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "chat-bubble"
+          },
+          "basedOn": "1201353f-4af6-4186-b232-acf9934872e3",
+          "id": "88d02ed0-25e5-4fde-9dc4-592242117448",
+          "x": 44,
+          "y": 179
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Titillium Web",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1133,
+              "des": -388,
+              "tAsc": 1133,
+              "tDes": -388,
+              "tLGap": 0,
+              "wAsc": 1133,
+              "wDes": 388,
+              "xH": 500,
+              "capH": 692,
+              "yMin": -285,
+              "yMax": 1082,
+              "hAsc": 1133,
+              "hDes": -388,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-weight: 600; color: #fff\">Good design is thorough down to the last detail</span>",
+          "fontWeight": 400,
+          "x": 64,
+          "y": 192,
+          "width": 332,
+          "height": 141,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "e7d88410-e67d-413c-8cd0-5cda3e16554c",
+          "marginOffset": -4.920999999999999,
+          "type": "text"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "d1712e69-cf01-4ed6-bebb-ccd86c2066dc"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "id": "bd17d36f-7808-4a92-a8ab-7a070df30f9a",
+          "type": "shape"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Nunito",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1011,
+              "des": -353,
+              "tAsc": 1011,
+              "tDes": -353,
+              "tLGap": 0,
+              "wAsc": 1092,
+              "wDes": 281,
+              "xH": 487,
+              "capH": 705,
+              "yMin": -275,
+              "yMax": 1081,
+              "hAsc": 1011,
+              "hDes": -353,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "content": "<span style=\"font-weight: 200\">Good design is thorough down to the last detail</span>",
+          "fontWeight": 400,
+          "x": 40,
+          "y": 230,
+          "width": 330,
+          "height": 135,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "131be467-11b8-4dba-b9e6-2f05d7c56583",
+          "marginOffset": 9.84375,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Karla",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 700],
+              [1, 400],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 917,
+              "des": -252,
+              "tAsc": 917,
+              "tDes": -252,
+              "tLGap": 0,
+              "wAsc": 917,
+              "wDes": 252,
+              "xH": 478,
+              "capH": 629,
+              "yMin": -246,
+              "yMax": 879,
+              "hAsc": 917,
+              "hDes": -252,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "id": "86d1f6ed-f67b-4902-b5ec-260276900ecb",
+          "content": "Dieter Rams",
+          "x": 154,
+          "y": 375,
+          "width": 102,
+          "height": 21,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.306250000000002,
+          "type": "text"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "x": 130,
+          "y": 385,
+          "width": 16,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "2f859f95-cde1-462d-b58e-5d28e8756140"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 16,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "2f859f95-cde1-462d-b58e-5d28e8756140",
+          "id": "7b0205e6-eaf5-4ef4-9ab4-82125cd652f3",
+          "x": 264,
+          "y": 385
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "x": 39,
+          "y": 191,
+          "width": 1,
+          "height": 23,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "e0a31608-20da-44ba-8e9e-ef9e6e189f05"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 24,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "e0a31608-20da-44ba-8e9e-ef9e6e189f05",
+          "id": "c96e46f2-3976-412e-8764-839dd6ca6cb0",
+          "x": 39,
+          "y": 191
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 1,
+          "height": 23,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "e0a31608-20da-44ba-8e9e-ef9e6e189f05",
+          "id": "0332455e-0c85-4606-a027-bec28b73f0b4",
+          "x": 39,
+          "y": 402
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 24,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "c96e46f2-3976-412e-8764-839dd6ca6cb0",
+          "id": "56dd064c-6783-4993-8623-1a223e94f6d9",
+          "x": 39,
+          "y": 425
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 1,
+          "height": 23,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "0332455e-0c85-4606-a027-bec28b73f0b4",
+          "id": "4c0139c2-e0e0-4f22-9141-30abf25da2da",
+          "x": 370,
+          "y": 402
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 24,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "56dd064c-6783-4993-8623-1a223e94f6d9",
+          "id": "9e708319-80f2-4680-98f4-ef09c57b0084",
+          "x": 347,
+          "y": 424
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 1,
+          "height": 23,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "0332455e-0c85-4606-a027-bec28b73f0b4",
+          "id": "e62b92cd-99c2-48b2-95e4-c95ab084ed9e",
+          "x": 370,
+          "y": 191
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 24,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "56dd064c-6783-4993-8623-1a223e94f6d9",
+          "id": "f82868ec-9318-4409-b1ce-8e19d1baaf98",
+          "x": 347,
+          "y": 191
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "f56a6f8f-d152-4ef6-a2b4-b22237618995"
+    }
+  ]
+}
