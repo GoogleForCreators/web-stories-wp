@@ -60,7 +60,7 @@ class Sanitization {
 
 		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
 
-		$this->add_missing_scripts( $document, $result['scripts'] );
+		$this->ensure_required_markup( $document, $result['scripts'] );
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Sanitization {
 	 *
 	 * @return void
 	 */
-	protected function add_missing_scripts( $document, $scripts ) {
+	protected function ensure_required_markup( $document, $scripts ) {
 		// Gather all links.
 		$links = [
 			Attribute::REL_PRECONNECT => [
@@ -111,13 +111,16 @@ class Sanitization {
 				continue;
 			}
 
-			if ( 0 === stripos( strrev( $src ), 'v0.js' ) ) {
+			if ( 'v0.js' === substr( $src, - strlen( 'v0.js' ) ) ) {
 				$amp_scripts[ Amp::RUNTIME ] = $script;
 			} elseif ( $script->hasAttribute( Attribute::CUSTOM_ELEMENT ) ) {
 				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_ELEMENT ) ] = $script;
 			} elseif ( $script->hasAttribute( Attribute::CUSTOM_TEMPLATE ) ) {
 				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_TEMPLATE ) ] = $script;
 			}
+
+			// It will be added back further down.
+			$document->head->removeChild( $script );
 		}
 
 		$specs = $this->get_extension_sources();
@@ -391,7 +394,7 @@ class Sanitization {
 
 			$sanitizers = array_merge(
 				[
-					'AMP_Dev_Mode_Sanitizer' => [
+					\AMP_Dev_Mode_Sanitizer::class => [
 						'element_xpaths' => $dev_mode_xpaths,
 					],
 				],
@@ -402,7 +405,7 @@ class Sanitization {
 		// Force certain sanitizers to be at end.
 		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
 		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
-		foreach ( [ AMP_Style_Sanitizer::class, AMP_Tag_And_Attribute_Sanitizer::class ] as $class_name ) {
+		foreach ( [ AMP_Style_Sanitizer::class, Meta_Sanitizer::class, AMP_Tag_And_Attribute_Sanitizer::class ] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
 				unset( $sanitizers[ $class_name ] );
