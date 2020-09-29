@@ -266,7 +266,8 @@
     },
     {
       "files": [
-        "**/karma/**/*.js"
+        "**/karma/**/*.js",
+        "assets/src/karma-*/**/*.js"
       ],
       "extends": [
         "plugin:jasmine/recommended"

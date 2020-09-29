@@ -1,6 +1,7 @@
 **/node_modules/**
 **/vendor/**
 **/assets/js/*.js
+**/assets/src/migration/module.js
 bin/build/*
 build/*
 !.storybook

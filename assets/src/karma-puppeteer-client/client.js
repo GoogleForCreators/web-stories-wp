@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-;(function (global) {
-  'use strict'
+(function (global) {
+  'use strict';
 
   function noCleanup() {}
 
@@ -27,7 +27,7 @@
    * @return {*} Function result.
    */
   function puppeteerFunction(methodName) {
-    return function() {
+    return function () {
       var args = Array.prototype.slice.call(arguments, 0);
       var name = '__karma_puppeteer_' + methodName;
       if (!global[name]) {
@@ -49,7 +49,7 @@
    */
   function withSelector(methodName) {
     var func = puppeteerFunction(methodName);
-    return function() {
+    return function () {
       var args = Array.prototype.slice.call(arguments, 0);
       var node = args[0] && args[0].nodeType ? args[0] : null;
       var cleanup = noCleanup;
@@ -57,17 +57,20 @@
         var uniqueId = Math.random();
         node.setAttribute('karma_puppeteer_id', uniqueId);
         args[0] = '[karma_puppeteer_id="' + uniqueId + '"]';
-        cleanup = function() {
+        cleanup = function () {
           node.removeAttribute('karma_puppeteer_id');
         };
       }
-      return func.apply(null, args).then(function(value) {
-        cleanup();
-        return value;
-      }, function(reason) {
-        cleanup();
-        throw reason;
-      });
+      return func.apply(null, args).then(
+        function (value) {
+          cleanup();
+          return value;
+        },
+        function (reason) {
+          cleanup();
+          throw reason;
+        }
+      );
     };
   }
 
@@ -121,4 +124,4 @@
     // See https://github.com/puppeteer/puppeteer/blob/master/docs/api.md#frameselectselector-values
     select: withSelector('select'),
   };
-}(typeof window !== 'undefined' ? window : global))
+})(typeof window !== 'undefined' ? window : global);
