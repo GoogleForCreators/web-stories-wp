@@ -26,14 +26,18 @@ import { Numeric } from '../';
 import { renderWithTheme } from '../../../testUtils';
 
 describe('Form/Numeric', () => {
-  const arrowUp = (node) =>
+  const arrowUp = (node) => {
     fireEvent.keyDown(node, { key: 'ArrowUp', which: 38 });
-  const altArrowUp = (node) =>
+  };
+  const altArrowUp = (node) => {
     fireEvent.keyDown(node, { key: 'ArrowUp', which: 38, altKey: true });
-  const arrowDown = (node) =>
+  };
+  const arrowDown = (node) => {
     fireEvent.keyDown(node, { key: 'ArrowDown', which: 40 });
-  const altArrowDown = (node) =>
+  };
+  const altArrowDown = (node) => {
     fireEvent.keyDown(node, { key: 'ArrowDown', which: 40, altKey: true });
+  };
 
   it('should render <Numeric /> form', () => {
     const onChangeMock = jest.fn();

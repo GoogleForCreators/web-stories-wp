@@ -78,19 +78,22 @@ const Suffix = styled.span`
 `;
 
 // If value is valid, returns parsed value, else returns null
-function validateInput(value, { float, canBeNegative, canBeEmpty }) {
+function validateInput(
+  value,
+  { float, canBeNegative, canBeEmpty, defaultValue }
+) {
   if (`${value}`.length > 0) {
     const valueAsNumber = float ? parseFloat(value) : parseInt(value);
     const signedNumber = !canBeNegative
       ? Math.abs(valueAsNumber)
       : valueAsNumber;
 
-    return !isNaN(signedNumber) ? signedNumber : null;
+    return !isNaN(signedNumber) ? signedNumber : defaultValue;
   } else if (canBeEmpty) {
     return '';
   }
 
-  return null;
+  return defaultValue;
 }
 
 function Numeric({
@@ -111,36 +114,45 @@ function Numeric({
   canBeEmpty,
   ...rest
 }) {
-  const isMultiple = value === MULTIPLE_VALUE;
-  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
   const [inputValue, setInputValue] = useState(value);
 
   const inputRef = useRef();
   const targetFormRef = useRef(null);
+  const skipValidationRef = useRef(false);
+  const selectInputContents = useRef(false);
+  const selectContentsTimeout = useRef(-1);
 
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(inputRef);
 
-  const handleChange = useCallback(
-    (event) => setInputValue(event.target.value),
-    []
+  const isMultiple = inputValue === MULTIPLE_VALUE;
+  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+
+  const handleChange = useCallback((event) => {
+    setInputValue(event.target.value);
+  }, []);
+
+  const validateAndSubmitInput = useCallback(
+    (val, { ignoreValidation, selectContentOnUpdate } = {}) => {
+      targetFormRef.current = inputRef.current.form;
+
+      // If validatedValue is defined, assume it's good
+      // and pass through
+      const validValue = ignoreValidation
+        ? val
+        : validateInput(val, {
+            canBeNegative,
+            canBeEmpty,
+            float,
+            defaultValue: value,
+          });
+
+      setInputValue(validValue);
+      onChange(validValue);
+
+      selectInputContents.current = selectContentOnUpdate;
+    },
+    [canBeNegative, canBeEmpty, float, value, onChange]
   );
-
-  const revertInput = useCallback(() => {
-    setInputValue(value);
-  }, [value]);
-
-  const validateAndSubmitInput = useCallback(() => {
-    targetFormRef.current = inputRef.current.form;
-
-    const validValue = validateInput(inputValue, {
-      canBeNegative,
-      canBeEmpty,
-      float,
-    });
-
-    setInputValue(validValue ?? value);
-    onChange(validValue ?? value);
-  }, [inputValue, canBeNegative, canBeEmpty, float, value, onChange]);
 
   const handleUpDown = useCallback(
     ({ key, altKey }) => {
@@ -152,11 +164,12 @@ function Numeric({
         canBeNegative,
         canBeEmpty,
         float,
+        defaultValue: value,
       });
 
       // The `|| 0` is to prevent newValue from being set to
-      // empty string by either validValue or value
-      let newValue = (validValue ?? value) || 0;
+      // empty string which could be a validValue
+      let newValue = validValue || 0;
       const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
         // Increment value
@@ -172,26 +185,35 @@ function Numeric({
             : Big(newValue).minus(diff);
       }
 
-      setInputValue(newValue.toString());
+      validateAndSubmitInput(Number(newValue), {
+        ignoreValidation: true,
+        selectContentOnUpdate: true,
+      });
     },
-    [isMultiple, float, max, inputValue, value, min, canBeNegative, canBeEmpty]
+    [
+      isMultiple,
+      float,
+      max,
+      inputValue,
+      value,
+      min,
+      canBeNegative,
+      canBeEmpty,
+      validateAndSubmitInput,
+    ]
   );
 
-  const handleKeydown = useCallback(
-    ({ key, altKey }) => {
-      switch (key) {
-        case 'Enter':
-          validateAndSubmitInput();
-          break;
-        case 'Escape':
-          revertInput();
-          break;
-        default:
-          handleUpDown({ key, altKey });
-      }
-    },
-    [handleUpDown, revertInput, validateAndSubmitInput]
-  );
+  const handleEsc = useCallback(() => {
+    // Revert input value and exit input focus without
+    // triggering blur validation
+    setInputValue(value);
+    skipValidationRef.current = true;
+    inputRef.current.blur();
+  }, [value]);
+
+  const handleEnter = useCallback(() => {
+    validateAndSubmitInput(inputValue, { selectContentOnUpdate: true });
+  }, [validateAndSubmitInput, inputValue]);
 
   const submitForm = useCallback(() => {
     if (targetFormRef.current) {
@@ -208,11 +230,31 @@ function Numeric({
   useKeyDownEffect(
     inputRef,
     {
-      key: ['up', 'alt+up', 'down', 'alt+down', 'esc', 'enter'],
+      key: ['up', 'alt+up', 'down', 'alt+down'],
       editable: true,
     },
-    handleKeydown,
-    [handleKeydown]
+    handleUpDown,
+    [handleUpDown]
+  );
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['escape'],
+      editable: true,
+    },
+    handleEsc,
+    [handleEsc]
+  );
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['enter'],
+      editable: true,
+    },
+    handleEnter,
+    [handleEnter]
   );
 
   useEffect(() => {
@@ -222,6 +264,27 @@ function Numeric({
 
     setInputValue(value);
   }, [submitForm, value]);
+
+  useEffect(() => {
+    if (selectInputContents.current) {
+      inputRef.current.select();
+
+      // When we want to select the content of the input
+      // we hold open the door for a slight moment to allow
+      // all the data to flush down the pipeline.
+      window.clearTimeout(selectContentsTimeout.current);
+      selectContentsTimeout.current = window.setTimeout(() => {
+        selectInputContents.current = false;
+      }, 10);
+    }
+  }, [inputValue]);
+
+  useEffect(() => {
+    return () => {
+      // Make sure we clearout any remaining timeouts on unmount
+      window.clearTimeout(selectContentsTimeout.current);
+    };
+  }, []);
 
   return (
     <Container
@@ -245,7 +308,13 @@ function Numeric({
         {...rest}
         onChange={handleChange}
         onBlur={() => {
-          validateAndSubmitInput();
+          if (!skipValidationRef.current) {
+            validateAndSubmitInput(inputValue);
+          }
+
+          // Reset flag after use
+          skipValidationRef.current = false;
+
           if (onBlur) {
             onBlur();
           }
