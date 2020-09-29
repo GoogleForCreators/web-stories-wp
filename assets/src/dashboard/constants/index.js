@@ -45,7 +45,7 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 
   EDITOR_SETTINGS: '/editor-settings',
-  SUPPORT: '/support',
+  SUPPORT: 'https://wordpress.org/support/plugin/web-stories/',
   STORY_ANIM_TOOL: '/story-anim-tool',
 };
 
@@ -87,7 +87,6 @@ export const primaryPaths = [
   {
     value: APP_ROUTES.SUPPORT,
     label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
-    inProgress: true,
   },
 ];
 
