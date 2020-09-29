@@ -242,10 +242,10 @@ class HTML {
 		$hyperlinks = $this->document->getElementsByTagName( 'a' );
 		foreach ( $hyperlinks as $hyperlink ) {
 			if ( ! $hyperlink->getAttribute( 'target' ) ) {
-				$hyperlink->setAttribute( 'target', esc_attr( '_blank' ) );
+				$hyperlink->setAttribute( 'target', '_blank' );
 			}
 			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
-				$hyperlink->setAttribute( 'rel', esc_attr( 'noreferrer' ) );
+				$hyperlink->setAttribute( 'rel', 'noreferrer' );
 			}
 		}
 	}
