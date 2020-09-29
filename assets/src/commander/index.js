@@ -32,15 +32,12 @@ import {
   createBuild,
   getCurrentVersionNumber,
   updateVersionNumbers,
-  updateTemplates,
 } from './utils/index.js';
 
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
 const README_FILE = 'readme.txt';
 const BUILD_DIR = 'build/web-stories';
-const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
-const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;
 
 program
   .command('version')
@@ -54,10 +51,10 @@ program
     console.log('');
     console.log('Examples:');
     console.log('  # Prepare stable release');
-    console.log('  $ commander.js version 1.2.3');
+    console.log('  $ index.js version 1.2.3');
     console.log('');
     console.log('  # Nightly build');
-    console.log('  $ commander.js version --nightly');
+    console.log('  $ index.js version --nightly');
   })
   .action((version, { nightly }) => {
     const pluginFilePath = `${PLUGIN_DIR}/${PLUGIN_FILE}`;
@@ -93,17 +90,15 @@ program
     console.log('');
     console.log('Examples:');
     console.log('  # Create a ZIP-file ready to install in WordPress');
-    console.log('  $ commander.js build-plugin --zip');
+    console.log('  $ index.js build-plugin --zip');
     console.log('');
     console.log('  # Remove existing ZIP files before creating one');
-    console.log('  $ commander.js build-plugin --zip --clean');
+    console.log('  $ index.js build-plugin --zip --clean');
     console.log('');
     console.log(
       '  # Create a custom-named ZIP-file ready to use with Composer'
     );
-    console.log(
-      '  $ commander.js build-plugin --composer --zip web-stories.zip'
-    );
+    console.log('  $ index.js build-plugin --composer --zip web-stories.zip');
   })
   .action(({ composer, zip, clean }) => {
     const buildDirPath = `${PLUGIN_DIR}/${BUILD_DIR}`;
@@ -123,22 +118,6 @@ program
     console.log(
       `Plugin successfully built! Location: ${relative(process.cwd(), build)}`
     );
-  });
-
-program
-  .command('update-templates')
-  .description('Update templates by running them through migration')
-  .on('--help', () => {
-    console.log('');
-    console.log('Examples:');
-    console.log('  # Migrate templates to newest version');
-    console.log('  $ commander.js update-templates');
-  })
-  .action(() => {
-    updateTemplates(TEMPLATES_DIR);
-    updateTemplates(STORIES_DIR);
-
-    console.log("Templates updated! Don't forget to run prettier!");
   });
 
 program.parse(process.argv);

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*
  * Copyright 2020 Google LLC
  *
@@ -14,7 +15,11 @@
  * limitations under the License.
  */
 
-import {resolve} from 'path';
+/* eslint-disable no-console */
+
+/**
+ * Internal dependencies
+ */
 import buildFonts from './utils/buildFonts.js';
 
 if (!process.env.GOOGLE_FONTS_API_KEY) {
@@ -22,14 +27,21 @@ if (!process.env.GOOGLE_FONTS_API_KEY) {
   process.exit(1);
 }
 
-const FONTS_FILE = 'fonts.json';
-const fontsFilePath = resolve(process.cwd(), FONTS_FILE);
+const args = process.argv.slice(2);
+const file = args[0] ? args[0] : undefined;
+
+if (!file) {
+  console.log('File path was not provided');
+  process.exit(1);
+}
 
 try {
-  await buildFonts(fontsFilePath);
+  await buildFonts(file);
 } catch (err) {
   console.error('There was an error generating the web fonts list:', err);
   process.exit(1);
 }
 
 console.log('Web fonts updated!');
+
+/* eslint-enable no-console */

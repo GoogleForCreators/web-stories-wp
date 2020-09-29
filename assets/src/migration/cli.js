@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*
  * Copyright 2020 Google LLC
  *
@@ -14,8 +15,23 @@
  * limitations under the License.
  */
 
-export { default as bundlePlugin } from './bundlePlugin.js';
-export { default as createBuild } from './createBuild.js';
-export { default as getCurrentVersionNumber } from './getCurrentVersionNumber.js';
-export { default as updateVersionNumbers } from './updateVersionNumbers.js';
-export { default as updateTemplates } from './updateTemplates.js';
+/* eslint-disable no-console */
+
+/**
+ * Internal dependencies
+ */
+import updateTemplates from './utils/updateTemplates';
+
+const args = process.argv.slice(2);
+const dir = args[0] ? args[0] : undefined;
+
+if (!dir) {
+  console.log('Directory path was not provided');
+  process.exit(1);
+}
+
+updateTemplates(dir);
+
+console.log("Files updated! Don't forget to run prettier!");
+
+/* eslint-enable no-console */

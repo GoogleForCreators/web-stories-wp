@@ -38,10 +38,11 @@ jobs:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      - name: Update templates
+      - name: Update templates and FTUE story
         run: |
-          npm run workflow:templates
+          npm run workflow:mirate
           npx prettier --write assets/src/dashboard/templates/raw/*.json
+          npx prettier --write includes/data/stories/*.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3

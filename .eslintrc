@@ -349,7 +349,8 @@
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs",
         "assets/src/migration/**/*.js",
-        "assets/src/fonts/**/*.js"
+        "assets/src/fonts/**/*.js",
+        "assets/src/commander/**/*.js"
       ],
       "env": {
         "node": true
