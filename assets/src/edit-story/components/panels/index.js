@@ -90,15 +90,13 @@ export function getPanels(elements, options = {}) {
   }
 
   const isBackground = elements.length === 1 && elements[0].isBackground;
+  const isBackgroundMedia = isBackground && !elements[0].isDefaultBackground;
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: PAGE_STYLE, Panel: PageStylePanel },
-      { type: PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
-    ];
+    const panels = [{ type: PAGE_ATTACHMENT, Panel: PageAttachmentPanel }];
 
-    if (!elements[0].isDefaultBackground) {
+    if (isBackgroundMedia) {
       panels.push({
         type: BACKGROUND_SIZE_POSITION,
         Panel: BackgroundSizePositionPanel,
@@ -119,8 +117,11 @@ export function getPanels(elements, options = {}) {
         Panel: ImageAccessibilityPanel,
       });
     }
-    // Always display Presets as the first panel for background.
-    panels.unshift({ type: STYLE_PRESETS, Panel: ColorPresetPanel });
+    if (!isBackgroundMedia) {
+      panels.unshift({ type: PAGE_STYLE, Panel: PageStylePanel });
+      // Always display Presets as the first panel for background.
+      panels.unshift({ type: STYLE_PRESETS, Panel: ColorPresetPanel });
+    }
     return panels;
   }
 
