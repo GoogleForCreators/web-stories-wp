@@ -94,8 +94,10 @@
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
       "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",
       "@composer dump-autoload --working-dir ./third-party --no-dev --classmap-authoritative",
+      "sed -i'.bak' -e 's/Composer\\\\Autoload/Google_Web_Stories_Composer\\\\Autoload/' third-party/vendor/composer/*.php && rm -rf third-party/vendor/composer/*.php.bak",
       "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./includes/composer.json",
-      "@composer dump-autoload --working-dir ./includes --no-dev --classmap-authoritative"
+      "@composer dump-autoload --working-dir ./includes --no-dev --classmap-authoritative",
+      "sed -i'.bak' -e 's/Composer\\\\Autoload/Google_Web_Stories_Composer\\\\Autoload/' includes/vendor/composer/*.php && rm -rf includes/vendor/composer/*.php.bak"
     ]
   }
 }
