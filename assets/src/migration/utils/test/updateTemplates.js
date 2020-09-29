@@ -25,7 +25,7 @@ import { __setMockFiles, readFileSync } from 'fs';
 import updateTemplates from '../updateTemplates';
 
 jest.mock('fs');
-jest.mock('../../build/migrate', () => ({
+jest.mock('../../module', () => ({
   migrate: jest.fn(() => ({ migratedkey: 'migratedvalue' })),
   DATA_VERSION: 9999,
 }));
