@@ -44,7 +44,7 @@ class Fonts {
 			return $fonts;
 		}
 
-		$file  = __DIR__ . '/data/fonts.json';
+		$file  = __DIR__ . '/../assets/src/fonts/fonts.json';
 		$fonts = $this->get_google_fonts( $file );
 
 		return $fonts;

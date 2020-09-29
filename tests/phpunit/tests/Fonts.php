@@ -88,7 +88,7 @@ class Fonts extends \WP_UnitTestCase {
 	}
 
 	public function test_get_google_fonts() {
-		$fonts_file = dirname( dirname( dirname( __DIR__ ) ) ) . '/includes/data/fonts.json';
+		$fonts_file = dirname( dirname( dirname( __DIR__ ) ) ) . '/assets/src/fonts/fonts.json';
 
 		if ( ! file_exists( $fonts_file ) ) {
 			$this->markTestSkipped( 'List of Google Fonts is missing' );
