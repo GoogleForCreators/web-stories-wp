@@ -155,8 +155,9 @@ function FontList({
       if (key === 'Escape') {
         onClose();
       } else if (key === 'Enter') {
-        filteredOptions[focusIndex] &&
+        if (filteredOptions[focusIndex]) {
           onSelect(filteredOptions[focusIndex].name);
+        }
       } else if (key === 'ArrowUp') {
         setFocusIndex((index) => Math.max(0, index - 1));
       } else if (key === 'ArrowDown') {
