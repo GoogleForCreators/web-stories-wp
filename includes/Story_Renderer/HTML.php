@@ -238,8 +238,8 @@ class HTML {
 	 * @return void
 	 */
 	protected function transform_a_tags() {
-		/* @var DOMElement $html The <a> element */
 		$hyperlinks = $this->document->getElementsByTagName( 'a' );
+		/* @var DOMElement $hyperlink The <a> element */
 		foreach ( $hyperlinks as $hyperlink ) {
 			if ( ! $hyperlink->getAttribute( 'target' ) ) {
 				$hyperlink->setAttribute( 'target', '_blank' );
