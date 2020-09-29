@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+<!-- NOTE: For help requests, support questions, or general feedback, please use the WordPress.org forums instead: https://wordpress.org/support/plugin/web-stories/ -->
+
 ## Bug Description
 
 <!-- A clear and concise description of what the bug is. -->
