@@ -93,6 +93,7 @@ class HTML {
 		// Run all further transformations on the Document instance.
 
 		$this->transform_html_start_tag();
+		$this->transform_a_tags();
 		$this->insert_analytics_configuration();
 
 		$this->add_poster_images();
@@ -136,6 +137,26 @@ class HTML {
 		$lang = get_bloginfo( 'language' );
 		if ( $lang ) {
 			$this->document->html->setAttribute( 'lang', esc_attr( $lang ) );
+		}
+	}
+
+	/**
+	 * Transform all a tags to add target and rel attributes.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	protected function transform_a_tags() {
+		/* @var DOMElement $html The <a> element */
+		$hyperlinks = $this->document->getElementsByTagName( 'a' );
+		foreach ( $hyperlinks as $hyperlink ) {
+			if ( ! $hyperlink->getAttribute( 'target' ) ) {
+				$hyperlink->setAttribute( 'target', '_blank' );
+			}
+			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
+				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			}
 		}
 	}
 
