@@ -17,12 +17,8 @@
 /**
  * External dependencies
  */
-import { resolve as resolvePath, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { resolve as resolvePath } from 'path';
 import resolve from '@rollup/plugin-node-resolve';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export default {
   input: resolvePath(__dirname, 'index.js'),
