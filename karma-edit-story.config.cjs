@@ -48,10 +48,10 @@ module.exports = function (config) {
       'karma-webpack',
       'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
-      require('./karma/karma-puppeteer-launcher/index.cjs'),
-      require('./karma/karma-puppeteer-client/index.cjs'),
-      require('./karma/karma-cuj-reporter/index.cjs'),
-      require('./karma/karma-failed-tests-reporter/index.cjs'),
+      require('./assets/src/karma-puppeteer-launcher/index.cjs'),
+      require('./assets/src/karma-puppeteer-client/index.cjs'),
+      require('./assets/src/karma-cuj-reporter/index.cjs'),
+      require('./assets/src/karma-failed-tests-reporter/index.cjs'),
     ],
 
     // Frameworks to use.
@@ -61,7 +61,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       { pattern: 'assets/src/edit-story/karma-tests.cjs', watched: false },
-      { pattern: 'karma/fixture/init.js', watched: false },
+      { pattern: 'assets/src/karma-fixture/init.js', watched: false },
       {
         pattern: '__static__/**/*',
         watched: false,

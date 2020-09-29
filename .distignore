@@ -10,7 +10,6 @@ assets/testjs
 bin
 build
 docs
-karma
 node_modules
 patches
 plugin-assets
