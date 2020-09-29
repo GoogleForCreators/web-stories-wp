@@ -28,8 +28,8 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import { DATA_VERSION } from '../../../migration';
 import addQueryArgs from '../../utils/addQueryArgs';
-import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
 

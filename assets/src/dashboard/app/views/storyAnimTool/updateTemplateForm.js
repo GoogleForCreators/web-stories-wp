@@ -26,7 +26,7 @@ import styled from 'styled-components';
 import {
   migrate,
   DATA_VERSION,
-} from '../../../../edit-story/migration/migrate';
+} from '../../../../migration/migrate';
 import { StoryPropType } from '../../../types';
 
 const Title = styled.h2`

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { DATA_VERSION, migrate } from '../../edit-story/migration/migrate';
+import { DATA_VERSION, migrate } from '../../migration/migrate';
 
 export async function loadTemplate(title, imageBaseUrl) {
   const data = await import(
