@@ -22,6 +22,7 @@
 * [Manual Testing (QA)](./testing-qa.md)
 * [End-to-End Tests](./e2e-tests.md)
 * [Unit Tests](./unit-tests.md)
+* [Integration Tests (Karma)](./integration-tests.md)
 * [Testing Environments](./testing-environments.md)
 
 ## Tooling & Infrastructure
