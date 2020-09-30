@@ -37,6 +37,9 @@ import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
+const ONCHANGE_DEBOUNCE_DELAY = 500;
+const SELECT_CONTENTS_DELAY = 10;
+
 const StyledInput = styled(Input)`
   width: 100%;
   flex: 1 1 auto;
@@ -120,7 +123,7 @@ function Numeric({
   const targetFormRef = useRef(null);
   const skipValidationRef = useRef(false);
   const selectInputContents = useRef(false);
-  const selectContentsTimeout = useRef(-1);
+  const submitOnChangeTimeout = useRef(-1);
 
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(inputRef);
 
@@ -131,12 +134,21 @@ function Numeric({
     setInputValue(event.target.value);
   }, []);
 
+  const submitOnChange = useCallback(
+    (val, { selectContentOnUpdate }) => {
+      selectInputContents.current = selectContentOnUpdate;
+      onChange(val);
+    },
+    [onChange]
+  );
+
   const validateAndSubmitInput = useCallback(
-    (val, { ignoreValidation, selectContentOnUpdate } = {}) => {
+    (
+      val,
+      { ignoreValidation, selectContentOnUpdate, debounceOnChange } = {}
+    ) => {
       targetFormRef.current = inputRef.current.form;
 
-      // If validatedValue is defined, assume it's good
-      // and pass through
       const validValue = ignoreValidation
         ? val
         : validateInput(val, {
@@ -147,11 +159,17 @@ function Numeric({
           });
 
       setInputValue(validValue);
-      onChange(validValue);
 
-      selectInputContents.current = selectContentOnUpdate;
+      window.clearTimeout(submitOnChangeTimeout.current);
+      if (debounceOnChange) {
+        submitOnChangeTimeout.current = window.setTimeout(() => {
+          submitOnChange(validValue, { selectContentOnUpdate });
+        }, ONCHANGE_DEBOUNCE_DELAY);
+      } else {
+        submitOnChange(validValue, { selectContentOnUpdate });
+      }
     },
-    [canBeNegative, canBeEmpty, float, value, onChange]
+    [canBeNegative, canBeEmpty, float, value, submitOnChange]
   );
 
   const handleUpDown = useCallback(
@@ -168,7 +186,7 @@ function Numeric({
       });
 
       // The `|| 0` is to prevent newValue from being set to
-      // empty string which could be a validValue
+      // empty string which could be a valid value
       let newValue = validValue || 0;
       const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
@@ -188,6 +206,7 @@ function Numeric({
       validateAndSubmitInput(Number(newValue), {
         ignoreValidation: true,
         selectContentOnUpdate: true,
+        debounceOnChange: true,
       });
     },
     [
@@ -266,23 +285,28 @@ function Numeric({
   }, [submitForm, value]);
 
   useEffect(() => {
+    let selectContentsTimeout = -1;
+
     if (selectInputContents.current) {
       inputRef.current.select();
 
       // When we want to select the content of the input
       // we hold open the door for a slight moment to allow
       // all the data to flush down the pipeline.
-      window.clearTimeout(selectContentsTimeout.current);
-      selectContentsTimeout.current = window.setTimeout(() => {
+      selectContentsTimeout = window.setTimeout(() => {
         selectInputContents.current = false;
-      }, 10);
+      }, SELECT_CONTENTS_DELAY);
     }
+
+    return () => {
+      window.clearTimeout(selectContentsTimeout);
+    };
   }, [inputValue]);
 
   useEffect(() => {
     return () => {
       // Make sure we clearout any remaining timeouts on unmount
-      window.clearTimeout(selectContentsTimeout.current);
+      window.clearTimeout(submitOnChangeTimeout.current);
     };
   }, []);
 
