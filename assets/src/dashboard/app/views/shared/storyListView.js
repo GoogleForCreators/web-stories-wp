@@ -331,7 +331,7 @@ export default function StoryListView({
                   )}
                 </TitleTableCellContainer>
               </TableCell>
-              <TableCell>{users[story.author]?.name || '—'}</TableCell>
+              <TableCell>{story.author || '—'}</TableCell>
               <TableCell>{getRelativeDisplayDate(story.created)}</TableCell>
               <TableCell>{getRelativeDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (

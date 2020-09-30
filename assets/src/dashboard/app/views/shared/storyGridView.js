@@ -175,9 +175,7 @@ const StoryGridView = ({
                   status={story?.status}
                   id={story.id}
                   secondaryTitle={
-                    isSavedTemplate
-                      ? __('Google', 'web-stories')
-                      : users[story.author]?.name
+                    isSavedTemplate ? __('Google', 'web-stories') : story.author
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
