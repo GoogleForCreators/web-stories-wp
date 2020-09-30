@@ -41,10 +41,10 @@ export function getMediaBaseColor(type, resource, onBaseColor) {
       onBaseColor([255, 255, 255]);
     }
   };
-  setOrCreateImage(resource, onLoad);
+  setOrCreateImage('video' === type ? resource.poster : resource.src, onLoad);
 }
 
-function setOrCreateImage(element, onLoad) {
+function setOrCreateImage(src, onLoad) {
   let imgNode = document.body[BASE_COLOR_NODE];
   if (!imgNode) {
     imgNode = document.createElement('div');
@@ -55,7 +55,7 @@ function setOrCreateImage(element, onLoad) {
   }
   imgNode.innerHTML = '';
   const img = document.createElement('img');
-  img.src = element.src;
+  img.src = src;
   img.width = 10;
   img.height = 'auto';
   img.onload = onLoad;
