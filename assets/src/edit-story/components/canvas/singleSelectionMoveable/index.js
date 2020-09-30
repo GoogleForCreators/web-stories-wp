@@ -62,7 +62,7 @@ function SingleSelectionMoveable({
   const latestEvent = useRef();
 
   const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage.elements[0],
+    backgroundElement: currentPage.elements[0] ?? {},
   }));
 
   useEffect(() => {

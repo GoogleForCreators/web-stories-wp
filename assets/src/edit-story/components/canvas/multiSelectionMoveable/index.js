@@ -48,7 +48,7 @@ function MultiSelectionMoveable({ selectedElements }) {
   } = useStory((state) => ({
     updateElementsById: state.actions.updateElementsById,
     deleteElementsById: state.actions.deleteElementsById,
-    backgroundElement: state.state.currentPage.elements[0],
+    backgroundElement: state.state.currentPage.elements[0] ?? {},
   }));
   const { nodesById, fullbleedContainer } = useCanvas(
     ({ state: { nodesById, fullbleedContainer } }) => ({

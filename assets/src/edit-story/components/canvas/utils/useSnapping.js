@@ -63,7 +63,9 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
 
   const toggleDesignSpace = useCallback(
     (visible) => {
-      designSpaceGuideline.style.visibility = visible ? 'visible' : 'hidden';
+      if (designSpaceGuideline) {
+        designSpaceGuideline.style.visibility = visible ? 'visible' : 'hidden';
+      }
     },
     [designSpaceGuideline]
   );
