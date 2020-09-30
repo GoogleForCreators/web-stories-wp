@@ -215,7 +215,6 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/web-stories/v1/fonts',
 			'/wp/v2/settings',
 			'/web-stories/v1/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
@@ -347,7 +346,6 @@ class Dashboard {
 					'media'       => '/web-stories/v1/media',
 					'currentUser' => '/wp/v2/users/me',
 					'users'       => '/wp/v2/users',
-					'fonts'       => '/web-stories/v1/fonts',
 					'templates'   => '/web-stories/v1/web-story-template',
 					'settings'    => '/wp/v2/settings',
 				],

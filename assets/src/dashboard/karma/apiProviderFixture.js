@@ -33,7 +33,6 @@ import {
 import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
@@ -115,21 +114,6 @@ export default function ApiProviderFixture({ children }) {
     [currentUser]
   );
 
-  const fontApi = useMemo(
-    () => ({
-      getAllFonts: () => {
-        return Promise.resolve(
-          [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
-            name: font.family,
-            value: font.family,
-            ...font,
-          }))
-        );
-      },
-    }),
-    []
-  );
-
   const value = useMemo(
     () => ({
       state: {
@@ -145,7 +129,6 @@ export default function ApiProviderFixture({ children }) {
         settingsApi,
         storyApi,
         templateApi,
-        fontApi,
         usersApi,
       },
     }),
@@ -160,7 +143,6 @@ export default function ApiProviderFixture({ children }) {
       settingsApi,
       storyApi,
       templateApi,
-      fontApi,
       usersApi,
     ]
   );

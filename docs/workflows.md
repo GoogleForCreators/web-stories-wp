@@ -29,4 +29,4 @@ This script does the following:
 
 1. Downloads all available fonts from Google Fonts
 1. Merges font list with a set of system fonts and prepares them for usage in the editor.
-1. Saves changes to `includes/data/fonts.json`.
+1. Saves changes to `assets/src/fonts/fonts.json`.

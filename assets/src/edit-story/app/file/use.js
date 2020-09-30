@@ -15,27 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-
-/**
  * Internal dependencies
  */
-import { curatedFontNames } from '../curatedFonts';
+import { identity, useContextSelector } from '../../utils/context';
+import Context from './context';
 
-describe('Curated fonts', () => {
-  const fonts = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'assets/src/fonts/fonts.json'), 'utf8')
-  );
-  const fontNames = fonts.map(({ family }) => family);
+function useFile(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
 
-  // @see https://github.com/google/web-stories-wp/issues/3880
-  it.each(curatedFontNames)(
-    '%s font should exist in global fonts list',
-    (fontName) => {
-      expect(fontNames).toContain(fontName);
-    }
-  );
-});
+export default useFile;
