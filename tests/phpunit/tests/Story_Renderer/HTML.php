@@ -63,13 +63,13 @@ class HTML extends WP_UnitTestCase {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.png"></amp-story></body></html>',
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		$actual = $this->setup_renderer( $post );
 
-		$this->assertContains( '<html amp="" lang="en-US">', $actual );
+		$this->assertContains( 'lang="en-US">', $actual );
 	}
 
 	/**
@@ -182,6 +182,28 @@ class HTML extends WP_UnitTestCase {
 	 * @covers ::add_poster_images
 	 * @covers ::get_poster_images
 	 */
+	public function test_add_poster_images_overrides_existing_poster() {
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.jpg"></amp-story></body></html>',
+			]
+		);
+
+		set_post_thumbnail( $post->ID, $attachment_id );
+
+		$rendered = $this->setup_renderer( $post );
+
+		$this->assertNotContains( 'https://example.com/poster.jpg', $rendered );
+		$this->assertContains( 'poster-portrait-src=', $rendered );
+	}
+
+	/**
+	 * @covers ::add_poster_images
+	 * @covers ::get_poster_images
+	 */
 	public function test_add_poster_images_no_fallback_image_added() {
 		$post = self::factory()->post->create_and_get(
 			[
@@ -192,9 +214,9 @@ class HTML extends WP_UnitTestCase {
 
 		$rendered = $this->setup_renderer( $post );
 
-		$this->assertNotContains( 'poster-portrait-src=', $rendered );
-		$this->assertNotContains( 'poster-square-src=', $rendered );
-		$this->assertNotContains( 'poster-landscape-src=', $rendered );
+		$this->assertContains( 'poster-portrait-src=""', $rendered );
+		$this->assertContains( 'poster-square-src=""', $rendered );
+		$this->assertContains( 'poster-landscape-src=""', $rendered );
 	}
 
 	/**
