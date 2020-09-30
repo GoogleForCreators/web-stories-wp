@@ -1,5 +1,5 @@
 {
-  "current": "0f742c94-5b7f-4cca-8512-bea1304f6edb",
+  "current": "0bdd1849-0470-40fa-b0b0-35cbeb26c7f5",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -104,7 +104,7 @@
           "content": "<span style=\"font-weight: 700\">Contact us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 478,
+          "y": 457,
           "width": 332,
           "height": 25,
           "scale": 100,
@@ -179,7 +179,7 @@
           "content": "<span style=\"text-decoration: underline\">example@google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 510,
+          "y": 489,
           "width": 332,
           "height": 21,
           "scale": 100,
@@ -254,7 +254,7 @@
           "content": "<span style=\"font-weight: 700\">Visit us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 565,
+          "y": 544,
           "width": 332,
           "height": 25,
           "scale": 100,
@@ -336,7 +336,7 @@
           "basedOn": "eba27b94-462b-4a9b-9a61-ee63545ebf9d",
           "id": "f69b6c0b-214d-4095-848f-740099738cf2",
           "x": 40,
-          "y": 597,
+          "y": 576,
           "marginOffset": 2.306250000000002
         }
       ],
@@ -445,7 +445,7 @@
           "content": "<span style=\"font-weight: 700\">Contact us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 539,
+          "y": 492,
           "width": 165,
           "height": 23,
           "scale": 100,
@@ -520,7 +520,7 @@
           "content": "mailaddress@google.com",
           "fontWeight": 400,
           "x": 167,
-          "y": 539,
+          "y": 492,
           "width": 205,
           "height": 23,
           "scale": 100,
@@ -595,7 +595,7 @@
           "content": "<span style=\"font-weight: 700\">Visit us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 582,
+          "y": 535,
           "width": 61,
           "height": 23,
           "scale": 100,
@@ -677,7 +677,7 @@
           "basedOn": "eba27b94-462b-4a9b-9a61-ee63545ebf9d",
           "id": "e7683265-53c8-41b6-8792-3acd203f5740",
           "x": 192,
-          "y": 582,
+          "y": 535,
           "type": "text",
           "marginOffset": 0.799000000000003
         },
@@ -698,7 +698,7 @@
           },
           "type": "shape",
           "x": 40,
-          "y": 530,
+          "y": 483,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -736,7 +736,7 @@
           "basedOn": "5408eb73-2617-46de-8cd6-5726c0faf63f",
           "id": "cad358d9-7622-4887-9f36-b8d494b182aa",
           "x": 40,
-          "y": 617
+          "y": 570
         },
         {
           "opacity": 100,
@@ -765,7 +765,7 @@
           "basedOn": "5408eb73-2617-46de-8cd6-5726c0faf63f",
           "id": "38194ae6-7e3b-4545-9cd2-011d829f5f51",
           "x": 40,
-          "y": 574
+          "y": 527
         }
       ],
       "backgroundColor": {
@@ -825,7 +825,7 @@
           },
           "type": "shape",
           "x": 119,
-          "y": 563,
+          "y": 534,
           "width": 174,
           "height": 55,
           "scale": 100,
@@ -904,7 +904,7 @@
           "content": "<span style=\"text-decoration: underline\">example.google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 516,
+          "y": 487,
           "width": 332,
           "height": 20,
           "scale": 100,
@@ -985,7 +985,7 @@
           "content": "<span style=\"font-weight: 700\">VISIT OUR WEBSITE</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 485,
+          "y": 456,
           "width": 332,
           "height": 26,
           "scale": 100,
@@ -1066,7 +1066,7 @@
           "content": "<span style=\"font-weight: 700; color: #fff\">CONTACT US</span>",
           "fontWeight": 400,
           "x": 143,
-          "y": 580,
+          "y": 551,
           "width": 126,
           "height": 26,
           "scale": 100,
@@ -1133,7 +1133,7 @@
           },
           "type": "shape",
           "x": 108,
-          "y": 568,
+          "y": 538,
           "width": 202,
           "height": 49,
           "scale": 100,
@@ -1210,7 +1210,7 @@
           "content": "Contact us",
           "fontWeight": 400,
           "x": 109,
-          "y": 569,
+          "y": 539,
           "width": 200,
           "height": 47,
           "scale": 100,
@@ -1293,7 +1293,7 @@
           "basedOn": "fbbd3873-668c-4515-a153-25275df890d7",
           "id": "56f6ce55-6bcb-44fa-a362-48c778aec15d",
           "x": 109,
-          "y": 505
+          "y": 475
         }
       ],
       "backgroundColor": {
@@ -1782,8 +1782,8 @@
           "content": "<span style=\"font-weight: 600; letter-spacing: 0.05em\">CONTACT US</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 453,
-          "width": 122,
+          "y": 440,
+          "width": 332,
           "height": 21,
           "scale": 100,
           "focalX": 50,
@@ -1846,21 +1846,21 @@
           "textAlign": "left",
           "padding": {
             "locked": true,
-            "horizontal": 0,
-            "vertical": 0
+            "horizontal": 3,
+            "vertical": 3
           },
           "type": "text",
           "content": "<span style=\"text-decoration: underline\">twitter.com/accountname</span>\n<span style=\"text-decoration: underline\">example.google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 572,
+          "y": 559,
           "width": 331,
-          "height": 48,
+          "height": 54,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "id": "6933960f-8912-448b-a1ba-d1c42fd10f62",
-          "marginOffset": 5.831000000000003
+          "marginOffset": 6.860000000000003
         },
         {
           "opacity": 100,
@@ -1924,7 +1924,7 @@
           "content": "111 8th Avenue New York, NY 10011",
           "fontWeight": 400,
           "x": 40,
-          "y": 486,
+          "y": 473,
           "width": 331,
           "height": 73,
           "scale": 100,
@@ -2039,7 +2039,7 @@
           "content": "<span style=\"text-decoration: underline\">example.google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 577,
+          "y": 566,
           "width": 332,
           "height": 41,
           "scale": 100,
@@ -2120,7 +2120,7 @@
           "content": "or visit us at",
           "fontWeight": 400,
           "x": 40,
-          "y": 550,
+          "y": 539,
           "width": 332,
           "height": 19,
           "scale": 100,
@@ -2156,7 +2156,7 @@
           "basedOn": "e6908d7a-298a-4ed3-b590-4bfaf9317238",
           "id": "7dcf128c-2666-44b3-bc3d-0c28223b8ebf",
           "x": 69,
-          "y": 464
+          "y": 453
         },
         {
           "opacity": 100,
@@ -2223,7 +2223,7 @@
           "content": "<span style=\"font-weight: 900; color: #fff\">LIKE &amp; SUBSCRIBE!</span>",
           "fontWeight": 400,
           "x": 93,
-          "y": 475,
+          "y": 464,
           "width": 226,
           "height": 41,
           "scale": 100,
@@ -2290,7 +2290,7 @@
           },
           "type": "shape",
           "x": 40,
-          "y": 617,
+          "y": 612,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -2328,7 +2328,7 @@
           "basedOn": "9eb5564d-2f79-4398-b3c3-a1128658176b",
           "id": "7e6cc1a9-a466-4633-ad90-c5567d94572c",
           "x": 40,
-          "y": 445
+          "y": 440
         },
         {
           "opacity": 100,
@@ -2347,7 +2347,7 @@
           },
           "type": "shape",
           "x": 40,
-          "y": 445,
+          "y": 440,
           "width": 1,
           "height": 172,
           "scale": 100,
@@ -2385,7 +2385,7 @@
           "basedOn": "a518e5a8-e8bf-4017-8520-de561b744c0e",
           "id": "33ce341c-a24a-4ae5-b4c6-d49ae5838931",
           "x": 372,
-          "y": 445
+          "y": 440
         },
         {
           "opacity": 100,
@@ -2445,7 +2445,7 @@
           "content": "<span style=\"font-weight: 700\">Follow us</span>",
           "fontWeight": 400,
           "x": 65,
-          "y": 469,
+          "y": 457,
           "width": 283,
           "height": 21,
           "scale": 100,
@@ -2512,7 +2512,7 @@
           "content": "<span style=\"text-decoration: underline\">twitter.com/accountname</span>",
           "fontWeight": 400,
           "x": 65,
-          "y": 496,
+          "y": 484,
           "width": 283,
           "height": 21,
           "scale": 100,
@@ -2587,7 +2587,7 @@
           "basedOn": "bd71e156-4d59-40e7-af8f-b048be9cd5eb",
           "id": "0a3c4ad6-4543-4cde-9355-6945986a6f14",
           "x": 65,
-          "y": 539
+          "y": 527
         },
         {
           "opacity": 100,
@@ -2655,7 +2655,7 @@
           "basedOn": "85fe81ae-8b7b-44dd-8094-518e6d539e90",
           "id": "d8e1d2cb-ec70-4f2b-ac29-38b76a5a90a5",
           "x": 65,
-          "y": 566
+          "y": 554
         }
       ],
       "backgroundColor": {
