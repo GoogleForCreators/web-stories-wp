@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { ArrowDown } from '../../../../button';
 import { useKeyDownEffect } from '../../../../keyboard';
-import useRovingTabIndex from '../useRovingTabIndex';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import Pill from './pill';
 
 /**

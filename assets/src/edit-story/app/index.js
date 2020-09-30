@@ -32,6 +32,7 @@ import theme, { GlobalStyle } from '../theme';
 import { GlobalStyle as CropMoveableGlobalStyle } from '../components/moveable/cropStyle';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from '../components/moveable/moveStyle';
 import { GlobalStyle as ModalGlobalStyle } from '../components/modal';
+import { GlobalStyle as CalendarStyle } from '../components/form/dateTime/calendarStyle';
 import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
 import { useTransform, TransformProvider } from '../components/transform';
 import DevTools from '../components/devTools';
@@ -69,6 +70,7 @@ function App({ config }) {
                               <DefaultMoveableGlobalStyle />
                               <CropMoveableGlobalStyle />
                               <ModalGlobalStyle />
+                              <CalendarStyle />
                               <KeyboardOnlyOutlines />
                               <Layout />
                             </DropTargetsProvider>

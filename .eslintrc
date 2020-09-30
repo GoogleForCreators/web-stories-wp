@@ -188,7 +188,13 @@
     "@wordpress/i18n-text-domain": ["error", {
       "allowedTextDomain": "web-stories"
     }],
-    "@wordpress/valid-sprintf": "error"
+    "@wordpress/valid-sprintf": "error",
+    "@babel/no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true
+      }
+    ]
   },
   "env": {
     "browser": true,

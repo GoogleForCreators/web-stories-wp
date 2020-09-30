@@ -214,6 +214,23 @@ beforeAll(() => {
         };
       },
     }),
+    toBeOneOf: (util, customEqualityTesters) => ({
+      compare: function (actual, expecteds) {
+        const passer = (expected) =>
+          util.equals(actual, expected, customEqualityTesters);
+        const pass = expecteds.some(passer);
+        return {
+          pass,
+          message: pass
+            ? `Expected value to not be in list: ${expecteds.join(
+                ', '
+              )}, received: ${actual}"`
+            : `Expected value to be in list: ${expecteds.join(
+                ', '
+              )}, received: ${actual}"`,
+        };
+      },
+    }),
   });
 
   // Virtual cursor.
