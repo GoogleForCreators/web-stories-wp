@@ -47,7 +47,7 @@ class Dashboard {
 	/**
 	 * Admin page hook suffix.
 	 *
-	 * @var string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @var array|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	private $hook_suffix;
 
@@ -89,10 +89,19 @@ class Dashboard {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param string $key The current admin page key.
+	 *
 	 * @return string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
-	public function get_hook_suffix() {
-		return $this->hook_suffix;
+	public function get_hook_suffix( $key ) {
+		if ( ! is_array( $this->hook_suffix ) ) {
+			return false;
+		}
+		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
+			return false;
+		}
+
+		return $this->hook_suffix[ $key ];
 	}
 
 	/**
@@ -105,7 +114,9 @@ class Dashboard {
 	public function add_menu_page() {
 		$parent = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
 
-		$this->hook_suffix = add_submenu_page(
+		$this->hook_suffix = [];
+
+		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
 			__( 'My Stories', 'web-stories' ),
@@ -115,7 +126,7 @@ class Dashboard {
 			0
 		);
 
-		add_submenu_page(
+		$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
 			$parent,
 			__( 'Explore Templates', 'web-stories' ),
 			__( 'Explore Templates', 'web-stories' ),
@@ -125,7 +136,7 @@ class Dashboard {
 			1
 		);
 
-		add_submenu_page(
+		$this->hook_suffix['stories-dashboard-settings'] = add_submenu_page(
 			$parent,
 			__( 'Settings', 'web-stories' ),
 			__( 'Settings', 'web-stories' ),
@@ -145,7 +156,6 @@ class Dashboard {
 	 */
 	public function redirect_menu_page() {
 		global $pagenow;
-
 
 		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
@@ -255,7 +265,7 @@ class Dashboard {
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
-		if ( $this->hook_suffix !== $hook_suffix ) {
+		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}
 

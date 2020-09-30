@@ -41,9 +41,13 @@ class Dashboard extends \WP_UnitTestCase {
 	 */
 	public function test_add_menu_page_no_user() {
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
-		$this->assertNull( $dashboard->get_hook_suffix() );
+		$this->assertNull( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNull( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNull( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
 		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix() );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
@@ -54,7 +58,9 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix() );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
@@ -66,8 +72,12 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$dashboard->add_menu_page();
-		$this->assertNotFalse( $dashboard->get_hook_suffix() );
-		$this->assertNotEmpty( $dashboard->get_hook_suffix() );
+		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
+		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
