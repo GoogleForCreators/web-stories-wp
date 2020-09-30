@@ -64,7 +64,7 @@ const ABEZEE_FONT_AFTER = {
 
 describe('buildFonts', () => {
   const MOCK_FILE_INFO = {
-    '/includes/data/fonts.json': '',
+    '/assets/src/fonts/fonts.json': '',
   };
 
   beforeEach(() => {
@@ -94,9 +94,11 @@ describe('buildFonts', () => {
 
     getFontMetrics.mockImplementationOnce(() => ABEZEE_FONT_METRICS);
 
-    await buildFonts('/includes/data/fonts.json');
+    await buildFonts('/assets/src/fonts/fonts.json');
 
-    const contentAfter = JSON.parse(readFileSync('/includes/data/fonts.json'));
+    const contentAfter = JSON.parse(
+      readFileSync('/assets/src/fonts/fonts.json')
+    );
     expect(getFontMetrics).toHaveBeenCalledWith(
       'http://fonts.gstatic.com/s/abeezee/v13/esDR31xSG-6AGleN6tKukbcHCpE.ttf'
     );
@@ -107,9 +109,9 @@ describe('buildFonts', () => {
   it('should bail on empty response', async () => {
     got.mockImplementationOnce(() => ({ body: '' }));
 
-    await buildFonts('/includes/data/fonts.json');
+    await buildFonts('/assets/src/fonts/fonts.json');
 
-    const contentAfter = readFileSync('/includes/data/fonts.json');
+    const contentAfter = readFileSync('/assets/src/fonts/fonts.json');
     expect(contentAfter).toStrictEqual('');
   });
 });
