@@ -63,8 +63,7 @@
   "autoload-dev": {
     "psr-4": {
       "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
-      "PHPStan\\WordPress\\": "tests/phpstan/src",
-      "AmpProject\\Optimizer\\Tests\\": "vendor/ampproject/amp-wp/lib/optimizer/tests/src"
+      "PHPStan\\WordPress\\": "tests/phpstan/src"
     }
   },
   "repositories": [
