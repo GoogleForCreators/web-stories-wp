@@ -264,13 +264,22 @@ function resolveKeySpec(keyDict, keyNameOrSpec) {
     clickable = true,
     editable = false,
     dialog = false,
+    allowDefault = false,
   } = keySpec;
   const mappedKeys = []
     .concat(keyOrArray)
     .map((key) => keyDict[key] || key)
     .flat();
   const allKeys = addMods(mappedKeys, shift);
-  return { key: allKeys, shift, clickable, repeat, editable, dialog };
+  return {
+    key: allKeys,
+    shift,
+    clickable,
+    repeat,
+    editable,
+    dialog,
+    allowDefault,
+  };
 }
 
 function addMods(keys, shift) {
@@ -287,6 +296,7 @@ function createKeyHandler(
     editable: editableAllowed,
     clickable: clickableAllowed,
     dialog: dialogAllowed,
+    allowDefault = false,
   },
   callback
 ) {
@@ -305,9 +315,9 @@ function createKeyHandler(
       return undefined;
     }
     callback(evt);
-    // The `false` value instructs Mousetrap to cancel event propagation
+    // The default `false` value instructs Mousetrap to cancel event propagation
     // and default behavior.
-    return false;
+    return allowDefault;
   };
 }
 

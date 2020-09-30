@@ -17,24 +17,34 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { useCallback } from 'react';
+import PropTypes from 'prop-types';
 
-const Pane = styled.section.attrs(({ isActive }) => ({
-  role: 'tabpanel',
-  'aria-expanded': isActive,
-  hidden: !isActive,
-}))`
-  padding: 1.5em;
-`;
+/**
+ * Internal dependencies
+ */
+import Context from './context';
 
-function getPaneId(tab) {
-  return `library-pane-${tab}`;
+function FileProvider({ children }) {
+  const getFonts = useCallback(
+    () =>
+      import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts').then(
+        (res) => res.default
+      ),
+    []
+  );
+  const state = {
+    state: {},
+    actions: {
+      getFonts,
+    },
+  };
+
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-function getTabId(tab) {
-  return `library-tab-${tab}`;
-}
+FileProvider.propTypes = {
+  children: PropTypes.node,
+};
 
-export { Pane, getPaneId, getTabId };
-
-export { default as PillGroup } from './pillGroup';
+export default FileProvider;

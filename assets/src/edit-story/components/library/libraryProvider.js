@@ -24,7 +24,7 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useInsertElement } from '../canvas';
+import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { AnimationPane, AnimationIcon } from './panes/animation';
 import { MediaPane, MediaIcon } from './panes/media/local';
@@ -44,6 +44,7 @@ function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
   const [tab, setTab] = useState(initialTab);
   const insertElement = useInsertElement();
+  const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showAnimationTab, showElementsTab } = useFeatures();
 
@@ -69,12 +70,14 @@ function LibraryProvider({ children }) {
       actions: {
         setTab,
         insertElement,
+        insertTextSet,
+        insertTextSetByOffset,
       },
       data: {
         tabs: tabs,
       },
     }),
-    [tab, insertElement, initialTab, tabs]
+    [tab, insertElement, insertTextSet, insertTextSetByOffset, initialTab, tabs]
   );
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

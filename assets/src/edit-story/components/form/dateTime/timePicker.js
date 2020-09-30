@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useEffect, useRef } from 'react';
 
 const TimeWrapper = styled.div`
   margin-bottom: 1em;
@@ -162,9 +163,11 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     if (isNaN(value) || value < 0 || value > 59) {
       return;
     }
-    const newDate = date;
-    newDate.setMinutes(minutes);
-    changeDate(newDate);
+    if (date.getMinutes() !== minutes) {
+      const newDate = date;
+      newDate.setMinutes(minutes);
+      changeDate(newDate);
+    }
   };
 
   const updateHours = () => {
@@ -174,9 +177,11 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
       return;
     }
 
-    const newDate = date;
-    newDate.setHours(getHours(hours));
-    changeDate(newDate);
+    if (date.getHours() !== getHours(hours)) {
+      const newDate = date;
+      newDate.setHours(getHours(hours));
+      changeDate(newDate);
+    }
   };
 
   const updateAmPm = (value) => () => {
@@ -193,6 +198,13 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     changeDate(newDate, { am: value });
   };
 
+  const hours = useRef();
+  useEffect(() => {
+    hours.current.focus();
+  }, []);
+
+  const isAM = localData.am === 'AM';
+  const isPM = localData.am === 'PM';
   return (
     <TimeWrapper>
       <Fieldset>
@@ -200,6 +212,7 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
         <InputRow>
           <InputGroup>
             <NumberInput
+              ref={hours}
               aria-label={__('Hours', 'web-stories')}
               type="number"
               step={1}
@@ -223,15 +236,19 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
           {is12Hour && (
             <InputGroup>
               <AMButton
+                aria-pressed={isAM}
                 type="button"
-                isToggled={localData.am === 'AM'}
+                isToggled={isAM}
                 onClick={updateAmPm('AM')}
               >
                 {__('AM', 'web-stories')}
               </AMButton>
               <PMButton
+                aria-pressed={isPM}
                 type="button"
-                isToggled={localData.am === 'PM'}
+                isToggled={isPM}
+                // Handled by arrow keys.
+                tabIndex="-1"
                 onClick={updateAmPm('PM')}
               >
                 {__('PM', 'web-stories')}

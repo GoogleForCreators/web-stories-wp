@@ -18,37 +18,37 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
-import { withProtocol } from '../../utils/url';
-import { getLinkFromElement } from './index';
+import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
+import Context from './context';
 
-function WithLink({ element, children, ...rest }) {
-  const link = getLinkFromElement(element);
-  if (!link) {
-    return children;
-  }
-  const urlWithProtocol = withProtocol(link.url);
-  return (
-    <a
-      href={urlWithProtocol}
-      data-tooltip-icon={link.icon}
-      data-tooltip-text={link.desc}
-      target="_blank"
-      rel="noreferrer"
-      {...rest}
-    >
-      {children}
-    </a>
+function LayoutProvider({ children }) {
+  const [canvasPageSize, setCanvasPageSize] = useState({
+    width: PAGE_WIDTH,
+    height: PAGE_WIDTH / PAGE_RATIO,
+  });
+
+  const state = useMemo(
+    () => ({
+      state: {
+        canvasPageSize,
+      },
+      actions: {
+        setCanvasPageSize,
+      },
+    }),
+    [canvasPageSize]
   );
+
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-WithLink.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-  children: PropTypes.node.isRequired,
+LayoutProvider.propTypes = {
+  children: PropTypes.node,
 };
 
-export default WithLink;
+export default LayoutProvider;

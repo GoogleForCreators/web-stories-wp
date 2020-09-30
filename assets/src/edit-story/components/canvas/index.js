@@ -17,3 +17,4 @@
 export { default } from './canvas';
 export { default as useCanvas } from './useCanvas';
 export { default as useInsertElement } from './useInsertElement';
+export { default as useInsertTextSet } from './useInsertTextSet';

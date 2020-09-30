@@ -26,6 +26,7 @@ import PropTypes from 'prop-types';
 import FrameElement from '../frameElement';
 import DisplayElement from '../displayElement';
 import CanvasProvider from '../canvasProvider';
+import { LayoutProvider } from '../../../app/layout';
 import ConfigProvider from '../../../app/config/configProvider';
 import StoryContext from '../../../app/story/context';
 import { TransformProvider, useTransform } from '../../transform';
@@ -73,13 +74,15 @@ export function TestFrameElement({
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
-          <CanvasProvider>
-            <TransformProvider>
-              <WithRefs refs={refs}>
-                <FrameElement element={element} />
-              </WithRefs>
-            </TransformProvider>
-          </CanvasProvider>
+          <LayoutProvider>
+            <CanvasProvider>
+              <TransformProvider>
+                <WithRefs refs={refs}>
+                  <FrameElement element={element} />
+                </WithRefs>
+              </TransformProvider>
+            </CanvasProvider>
+          </LayoutProvider>
         </StoryContext.Provider>
       </ConfigProvider>
     </ThemeProvider>
@@ -131,13 +134,15 @@ export function TestDisplayElement({
     <ThemeProvider theme={theme}>
       <ConfigProvider config={configContext}>
         <StoryContext.Provider value={storyContext}>
-          <CanvasProvider>
-            <TransformProvider>
-              <WithRefs refs={refs}>
-                <DisplayElement element={element} page={null} />
-              </WithRefs>
-            </TransformProvider>
-          </CanvasProvider>
+          <LayoutProvider>
+            <CanvasProvider>
+              <TransformProvider>
+                <WithRefs refs={refs}>
+                  <DisplayElement element={element} page={null} />
+                </WithRefs>
+              </TransformProvider>
+            </CanvasProvider>
+          </LayoutProvider>
         </StoryContext.Provider>
       </ConfigProvider>
     </ThemeProvider>
