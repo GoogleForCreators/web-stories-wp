@@ -103,7 +103,6 @@ class Dashboard {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		global $submenu, $menu;
 		$link = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
 
 		$this->hook_suffix = add_submenu_page(
