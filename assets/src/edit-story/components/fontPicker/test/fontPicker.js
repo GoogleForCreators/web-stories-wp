@@ -23,17 +23,24 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import FontPicker from '../';
-import { FontProvider } from '../../../app/font';
-import APIContext from '../../../app/api/context';
+import FontContext from '../../../app/font/context';
 import { renderWithTheme } from '../../../testUtils';
 import { curatedFontNames } from '../../../app/font/curatedFonts';
 import fontsListResponse from './fontsResponse';
 
-async function getFontPicker(options) {
-  const getAllFontsPromise = Promise.resolve(fontsListResponse);
-  const apiContextValue = {
+const availableCuratedFonts = fontsListResponse.filter(
+  (font) => curatedFontNames.indexOf(font.name) > 0
+);
+
+function getFontPicker(options) {
+  const fontContextValues = {
+    state: {
+      fonts: fontsListResponse,
+      recentFonts: [],
+      curatedFonts: availableCuratedFonts,
+    },
     actions: {
-      getAllFonts: () => getAllFontsPromise,
+      ensureMenuFontsLoaded: () => {},
     },
   };
   const props = {
@@ -43,21 +50,13 @@ async function getFontPicker(options) {
   };
 
   const accessors = renderWithTheme(
-    <APIContext.Provider value={apiContextValue}>
-      <FontProvider>
-        <FontPicker {...props} />
-      </FontProvider>
-    </APIContext.Provider>
+    <FontContext.Provider value={fontContextValues}>
+      <FontPicker {...props} />
+    </FontContext.Provider>
   );
-
-  await act(() => getAllFontsPromise);
 
   return accessors;
 }
-
-const availableCuratedFonts = fontsListResponse.filter(
-  (font) => curatedFontNames.indexOf(font.name) > 0
-);
 
 describe('Font Picker', () => {
   // Mock scrollTo

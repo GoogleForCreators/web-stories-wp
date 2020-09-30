@@ -37,7 +37,6 @@ $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_b
 $preload_paths = [
 	sprintf( '/web-stories/v1/%s/%s?context=edit', $rest_base, $post->ID ),
 	'/web-stories/v1/media?context=edit&per_page=100&page=1&_web_stories_envelope=true',
-	'/web-stories/v1/fonts',
 ];
 
 /**
