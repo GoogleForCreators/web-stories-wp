@@ -130,7 +130,7 @@ class Dashboard {
 			$link,
 			__( 'Settings', 'web-stories' ),
 			__( 'Settings', 'web-stories' ),
-			'manage_options',
+			'edit_web-stories',
 			'stories-dashboard-settings',
 			'__return_null',
 			20
