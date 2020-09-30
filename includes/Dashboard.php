@@ -91,11 +91,11 @@ class Dashboard {
 	 *
 	 * @param string $key The current admin page key.
 	 *
-	 * @return string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix( $key ) {
 		if ( ! is_array( $this->hook_suffix ) ) {
-			return false;
+			return null;
 		}
 		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
 			return false;
