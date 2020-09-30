@@ -9,11 +9,13 @@
     "ext-dom": "*",
     "ext-json": "*",
     "ext-libxml": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "civicrm/composer-downloads-plugin": "^2.1"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
@@ -26,6 +28,15 @@
     },
     "sort-packages": true
   },
+  "extra": {
+    "downloads": {
+      "phpstan": {
+        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
+        "path": "vendor/bin/phpstan",
+        "type": "phar"
+      }
+    }
+  },
   "autoload": {
     "psr-4": {
       "Google\\Web_Stories\\": "includes"
@@ -33,8 +44,13 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes"
+      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
+      "PHPStan\\WordPress\\": "tests/phpstan/src"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "phpcs": "phpcs",
+    "phpstan": "phpstan analyse --memory-limit=512M"
+  }
 }
