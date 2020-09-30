@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 
-export { default } from './canvas';
-export { default as useCanvas } from './useCanvas';
-export { default as useInsertElement } from './useInsertElement';
-export { default as useInsertTextSet } from './useInsertTextSet';
+/**
+ * Internal dependencies
+ */
+import { identity, useContextSelector } from '../../utils/context';
+import Context from './context';
+
+function useLayout(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useLayout;
