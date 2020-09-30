@@ -83,3 +83,6 @@ ignore:
   - includes/namespace.php
   - includes/plugin-compat
   - includes/templates
+  - assets/src/fonts/cli.js
+  - assets/src/migration/cli.js
+  - assets/src/karma-*/**/*
