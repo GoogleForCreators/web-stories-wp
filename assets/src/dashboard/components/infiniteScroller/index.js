@@ -34,7 +34,8 @@ import { TypographyPresets } from '../typography';
 const ScrollMessage = styled.div`
   ${TypographyPresets.Small};
   width: 100%;
-  margin: 40px auto;
+  padding: 140px 0 40px;
+  margin: -100px auto 0;
   text-align: center;
   color: ${({ theme }) => theme.colors.gray500};
 `;
@@ -150,7 +151,7 @@ const InfiniteScroller = ({
       },
       {
         rootMargin: '0px',
-        threshold: 1,
+        threshold: 0,
       }
     );
 
@@ -163,7 +164,9 @@ const InfiniteScroller = ({
 
   return (
     <ScrollMessage data-testid="load-more-on-scroll" ref={loadingRef}>
-      {loadingAlert && <AriaOnlyAlert>{loadingAlert}</AriaOnlyAlert>}
+      {loadingAlert && (
+        <AriaOnlyAlert role="status">{loadingAlert}</AriaOnlyAlert>
+      )}
       {!canLoadMore ? allDataLoadedMessage : loadingMessage}
     </ScrollMessage>
   );
