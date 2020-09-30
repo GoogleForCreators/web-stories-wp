@@ -107,7 +107,7 @@ const InfiniteScroller = ({
     if (loadState === STATE.loading_internal) {
       onLoadMoreRef.current();
     }
-  }, [loadState, loadingAriaMessage]);
+  }, [loadState]);
 
   useEffect(() => {
     if (isLoading) {
