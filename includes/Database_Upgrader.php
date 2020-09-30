@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use Yoast\WP\SEO\Actions\Indexation\Indexable_Prepare_Indexation_Action;
-
 /**
  * Class Database_Upgrader
  *
