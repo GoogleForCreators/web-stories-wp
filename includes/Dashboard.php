@@ -103,10 +103,10 @@ class Dashboard {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$link = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
+		$parent = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
 
 		$this->hook_suffix = add_submenu_page(
-			$link,
+			$parent,
 			__( 'Dashboard', 'web-stories' ),
 			__( 'My Stories', 'web-stories' ),
 			'edit_web-stories',
@@ -116,7 +116,7 @@ class Dashboard {
 		);
 
 		add_submenu_page(
-			$link,
+			$parent,
 			__( 'Explore Templates', 'web-stories' ),
 			__( 'Explore Templates', 'web-stories' ),
 			'edit_web-stories',
@@ -126,7 +126,7 @@ class Dashboard {
 		);
 
 		add_submenu_page(
-			$link,
+			$parent,
 			__( 'Settings', 'web-stories' ),
 			__( 'Settings', 'web-stories' ),
 			'edit_web-stories',
