@@ -23,25 +23,27 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { useLayout } from '../../app/layout';
 import { useStory } from '../../app';
-import { PAGE_WIDTH, PAGE_RATIO } from '../../constants';
 import { UnitsProvider } from '../../units';
 import useEditingElement from './useEditingElement';
 import useCanvasCopyPaste from './useCanvasCopyPaste';
+
 import Context from './context';
 
 function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
-  const [pageSize, setPageSize] = useState({
-    width: PAGE_WIDTH,
-    height: PAGE_WIDTH / PAGE_RATIO,
-  });
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
+
+  const { pageSize, setPageSize } = useLayout(({ state, actions }) => ({
+    pageSize: state.canvasPageSize,
+    setPageSize: actions.setCanvasPageSize,
+  }));
 
   const {
     nodesById,
