@@ -39,7 +39,6 @@ import {
 import {
   StoriesPropType,
   StoryMenuPropType,
-  UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
 } from '../../../types';
@@ -67,7 +66,6 @@ const StoryGrid = styled(CardGrid)`
 
 const StoryGridView = ({
   stories,
-  users,
   centerActionLabelByStatus,
   bottomActionLabel,
   isSavedTemplate,
@@ -210,7 +208,6 @@ StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
-  users: UsersPropType,
   centerActionLabelByStatus: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.string),
     PropTypes.bool,

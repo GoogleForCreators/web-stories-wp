@@ -31,7 +31,6 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import {
   StoriesPropType,
-  UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
@@ -173,7 +172,6 @@ export default function StoryListView({
   storyMenu,
   storySort,
   storyStatus,
-  users,
 }) {
   const {
     state: { squishContentHeight },
@@ -360,5 +358,4 @@ StoryListView.propTypes = {
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
-  users: UsersPropType.isRequired,
 };

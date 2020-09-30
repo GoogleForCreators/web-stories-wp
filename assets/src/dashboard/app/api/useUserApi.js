@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import queryString from 'query-string';
 
 /**
@@ -85,10 +85,6 @@ export default function useUserApi(dataAdapter, { userApi, currentUserApi }) {
       setIsUpdating(false);
     }
   }, [dataAdapter, currentUser, currentUserApi]);
-
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
 
   return useMemo(
     () => ({

@@ -26,7 +26,6 @@ import { action } from '@storybook/addon-actions';
 
 import {
   formattedStoriesArray,
-  formattedUsersObject,
   STORYBOOK_PAGE_SIZE,
 } from '../../../../storybookUtils';
 import {
@@ -44,7 +43,6 @@ export const _default = () => {
   return (
     <StoryGridView
       stories={formattedStoriesArray}
-      users={formattedUsersObject}
       centerActionLabelByStatus={STORY_ITEM_CENTER_ACTION_LABELS}
       bottomActionLabel={text('bottomActionLabel', 'MY CTA')}
       storyMenu={{
