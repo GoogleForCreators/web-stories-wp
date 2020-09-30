@@ -109,6 +109,11 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     ...(secondElement.isBackground ? positionProps : {}),
   };
 
+  // If we mutated the first element while combining,
+  // we might have passed the new object instead of just ID.
+  if (!firstId && firstElement.id) {
+    firstId = firstElement.id;
+  }
   // Elements are now
   const elements = page.elements
     // Remove first element if combining from existing id

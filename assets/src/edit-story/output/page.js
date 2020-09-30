@@ -46,7 +46,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const baseColor = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
     ? {
-        backgroundColor: `rgb(${baseColor[0]},${baseColor[1]},${baseColor[2]}`,
+        backgroundColor: `rgb(${baseColor[0]},${baseColor[1]},${baseColor[2]})`,
       }
     : {
         backgroundColor: 'white',

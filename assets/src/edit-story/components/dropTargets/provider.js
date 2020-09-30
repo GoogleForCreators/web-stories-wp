@@ -27,6 +27,7 @@ import { useStory } from '../../app';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
 import { getDefinitionForType } from '../../elements';
+import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
@@ -174,27 +175,45 @@ function DropTargetsProvider({ children }) {
           resource,
         });
       }
-      combineElements(combineArgs);
-
-      // Reset styles on visisble elements
-      elements
-        .filter(({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId)
-        .forEach((el) => {
-          pushTransform(el.id, {
-            dropTargets: {
-              active: false,
-              replacement: null,
+      const finalizeDrop = (baseColor) => {
+        if (baseColor && !combineArgs.firstElement) {
+          const firstElement = elements.find(
+            ({ id }) => id === combineArgs.firstId
+          );
+          combineArgs.firstElement = {
+            ...firstElement,
+            resource: {
+              ...firstElement.resource,
+              baseColor,
             },
+          };
+          delete combineArgs.firstId;
+        }
+        combineElements(combineArgs);
+
+        // Reset styles on visible elements
+        elements
+          .filter(
+            ({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId
+          )
+          .forEach((el) => {
+            pushTransform(el.id, {
+              dropTargets: {
+                active: false,
+                replacement: null,
+              },
+            });
+            pushTransform(el.id, null);
           });
-          pushTransform(el.id, null);
-        });
 
-      setActiveDropTargetId(null);
+        setActiveDropTargetId(null);
 
-      const { onDropHandler } = getDefinitionForType(resource.type);
-      if (onDropHandler) {
-        onDropHandler(activeDropTargetId);
-      }
+        const { onDropHandler } = getDefinitionForType(resource.type);
+        if (onDropHandler) {
+          onDropHandler(activeDropTargetId);
+        }
+      };
+      getMediaBaseColor(resource.type, resource, finalizeDrop);
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
