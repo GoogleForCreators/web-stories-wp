@@ -40,13 +40,23 @@ class Dashboard extends \WP_UnitTestCase {
 	/**
 	 * @covers ::get_hook_suffix
 	 */
-	public function test_get_hook_suffix() {
+	public function test_get_no_hook_suffix() {
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$this->assertNull( $dashboard->get_hook_suffix( 'nothing' ) );
 	}
 
 	/**
+	 * @covers ::get_hook_suffix
+	 */
+	public function test_get_not_set_hook_suffix() {
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$dashboard->add_menu_page();
+		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
+	}
+
+	/**
 	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page_no_user() {
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
@@ -61,6 +71,7 @@ class Dashboard extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page_user_without_permission() {
 		wp_set_current_user( self::$user_id );
@@ -74,6 +85,7 @@ class Dashboard extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page() {
 		wp_set_current_user( self::$user_id );
