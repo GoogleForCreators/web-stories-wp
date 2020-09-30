@@ -36,6 +36,15 @@ class Dashboard extends \WP_UnitTestCase {
 		self::delete_user( self::$user_id );
 	}
 
+
+	/**
+	 * @covers ::get_hook_suffix
+	 */
+	public function test_get_hook_suffix() {
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
+	}
+
 	/**
 	 * @covers ::add_menu_page
 	 */
@@ -105,7 +114,7 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard( $experiments );
 		$dashboard->add_menu_page();
-		$dashboard->enqueue_assets( $dashboard->get_hook_suffix() );
+		$dashboard->enqueue_assets( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
 		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
 		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::SCRIPT_HANDLE ]->textdomain );
