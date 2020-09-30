@@ -163,9 +163,11 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
     if (isNaN(value) || value < 0 || value > 59) {
       return;
     }
-    const newDate = date;
-    newDate.setMinutes(minutes);
-    changeDate(newDate);
+    if (date.getMinutes() !== minutes) {
+      const newDate = date;
+      newDate.setMinutes(minutes);
+      changeDate(newDate);
+    }
   };
 
   const updateHours = () => {
@@ -175,9 +177,11 @@ function TimePicker({ onChange, is12Hour, localData, setLocalData }) {
       return;
     }
 
-    const newDate = date;
-    newDate.setHours(getHours(hours));
-    changeDate(newDate);
+    if (date.getHours() !== getHours(hours)) {
+      const newDate = date;
+      newDate.setHours(getHours(hours));
+      changeDate(newDate);
+    }
   };
 
   const updateAmPm = (value) => () => {
