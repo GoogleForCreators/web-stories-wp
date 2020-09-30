@@ -260,8 +260,8 @@ describe('TextSets', () => {
     insertTextSet.mockImplementation((elements) => elements);
     const { queryAllByRole } = setup(SETS);
     const sets = queryAllByRole('listitem');
-    expect(sets).toHaveLength(1);
-    await fireEvent.click(sets[0]);
+    expect(sets).toHaveLength(2);
+    await fireEvent.click(sets[1]);
 
     expect(insertTextSet).toHaveBeenCalledTimes(1);
 

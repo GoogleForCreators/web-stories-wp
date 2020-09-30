@@ -31,15 +31,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useLayout } from '../../../../../app/layout';
-import DisplayElement from '../../../../canvas/displayElement';
-import { UnitsProvider } from '../../../../../units';
-import {
-  PAGE_WIDTH,
-  PAGE_RATIO,
-  TEXT_SET_SIZE,
-} from '../../../../../constants';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units/dimensions';
+import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.button`
   border: 0;
@@ -51,6 +46,10 @@ const TextSetItem = styled.button`
   border-radius: 4px;
   cursor: pointer;
 `;
+
+const DragWrapper = styled.div.attrs({
+  role: 'listitem',
+})``;
 
 const DragContainer = styled.div`
   position: absolute;
@@ -98,36 +97,15 @@ function TextSet({ elements }) {
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
 
   return (
-    <>
+    <DragWrapper>
       <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
-        <UnitsProvider
+        <TextSetElements
+          elements={elements}
           pageSize={{
             width: pageWidth,
             height: pageHeight,
           }}
-        >
-          {elements.map(
-            ({
-              id,
-              content,
-              normalizedOffsetX,
-              normalizedOffsetY,
-              ...rest
-            }) => (
-              <DisplayElement
-                previewMode
-                key={id}
-                element={{
-                  id,
-                  content,
-                  ...rest,
-                  x: normalizedOffsetX,
-                  y: normalizedOffsetY,
-                }}
-              />
-            )
-          )}
-        </UnitsProvider>
+        />
       </DragContainer>
       <TextSetItem
         role="listitem"
@@ -136,39 +114,16 @@ function TextSet({ elements }) {
         aria-label={__('Insert Text Set', 'web-stories')}
         onClick={() => insertTextSet(elements)}
       >
-        <UnitsProvider
+        <TextSetElements
+          isForDisplay
+          elements={elements}
           pageSize={{
             width: TEXT_SET_SIZE,
             height: TEXT_SET_SIZE / PAGE_RATIO,
           }}
-        >
-          {elements.map(
-            ({
-              id,
-              content,
-              normalizedOffsetX,
-              normalizedOffsetY,
-              ...rest
-            }) => (
-              <DisplayElement
-                previewMode
-                key={id}
-                element={{
-                  id,
-                  content: `<span style="color: #fff">${content}<span>`,
-                  ...rest,
-                  x: normalizedOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
-                  y:
-                    normalizedOffsetY +
-                    (PAGE_WIDTH - textSetHeight) /
-                      2 /* Use PAGE_WIDTH here since the area is square */,
-                }}
-              />
-            )
-          )}
-        </UnitsProvider>
+        />
       </TextSetItem>
-    </>
+    </DragWrapper>
   );
 }
 

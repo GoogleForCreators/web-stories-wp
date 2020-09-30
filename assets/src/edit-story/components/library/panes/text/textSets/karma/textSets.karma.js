@@ -83,9 +83,11 @@ describe('Text Sets Library Panel', () => {
       await fixture.events.mouse.down();
 
       await fixture.events.mouse.moveRel(page, 50, 100);
+      await fixture.snapshot('Text set dragged');
       await fixture.events.mouse.up();
 
       // After text set has been added, there should some text elements
+      await fixture.snapshot('Text set added');
       expect((await getTextElements()).length).toBeGreaterThan(0);
     });
   });

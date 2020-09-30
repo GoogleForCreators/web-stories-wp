@@ -89,17 +89,11 @@ function useInsertTextSet() {
         }
       }
 
-      const positionedTextSet = elements.reduce(
-        (acc, element) => [
-          ...acc,
-          {
-            ...element,
-            x: element.normalizedOffsetX + adjustedOffsetX,
-            y: element.normalizedOffsetY + adjustedOffsetY,
-          },
-        ],
-        []
-      );
+      const positionedTextSet = elements.map((element) => ({
+        ...element,
+        x: element.normalizedOffsetX + adjustedOffsetX,
+        y: element.normalizedOffsetY + adjustedOffsetY,
+      }));
 
       insertTextSet(positionedTextSet);
     },

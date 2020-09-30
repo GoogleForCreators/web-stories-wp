@@ -59,10 +59,9 @@ function TextSets() {
             height: TEXT_SET_SIZE / PAGE_RATIO,
           }}
         >
-          {textSets.map((elements, index) =>
-            elements.length > 0 ? (
-              <TextSet key={index} elements={elements} />
-            ) : null
+          {textSets.map(
+            (elements, index) =>
+              elements.length > 0 && <TextSet key={index} elements={elements} />
           )}
         </UnitsProvider>
       </TextSetContainer>
