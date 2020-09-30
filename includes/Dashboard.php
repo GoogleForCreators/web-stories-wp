@@ -103,14 +103,37 @@ class Dashboard {
 	 * @return void
 	 */
 	public function add_menu_page() {
+		global $submenu, $menu;
+		$link = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
+
 		$this->hook_suffix = add_submenu_page(
-			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
+			$link,
 			__( 'Dashboard', 'web-stories' ),
-			__( 'Dashboard', 'web-stories' ),
+			__( 'My Stories', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
+		);
+
+		add_submenu_page(
+			$link,
+			__( 'Explore templates', 'web-stories' ),
+			__( 'Explore templates', 'web-stories' ),
+			'edit_web-stories',
+			'stories-dashboard-explore',
+			'__return_null',
+			1
+		);
+
+		add_submenu_page(
+			$link,
+			__( 'Settings', 'web-stories' ),
+			__( 'Settings', 'web-stories' ),
+			'manage_options',
+			'stories-dashboard-settings',
+			'__return_null',
+			20
 		);
 	}
 
@@ -124,13 +147,46 @@ class Dashboard {
 	public function redirect_menu_page() {
 		global $pagenow;
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'stories-dashboard' === $_GET['page'] ) {
+
+		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		$page = sanitize_text_field( (string) wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( 'admin.php' === $pagenow && 'stories-dashboard' === $page ) {
 			wp_safe_redirect(
 				add_query_arg(
 					[
 						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 						'page'      => 'stories-dashboard',
+					],
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
+
+
+		if ( 'edit.php' === $pagenow && 'stories-dashboard-settings' === $page ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[
+						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+						'page'      => 'stories-dashboard#/editor-settings',
+					],
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
+
+		if ( 'edit.php' === $pagenow && 'stories-dashboard-explore' === $page ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[
+						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+						'page'      => 'stories-dashboard#/templates-gallery',
 					],
 					admin_url( 'edit.php' )
 				)
