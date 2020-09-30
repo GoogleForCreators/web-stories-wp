@@ -1,6 +1,11 @@
 {
-  "current": "e21ff914-108e-4f32-9dbd-b3c8a276aa13",
-  "selection": [],
+  "current": "e4331b1e-a2cf-42fc-ace6-c3f4dda22808",
+  "selection": [
+    "bb39a121-bc3a-49c6-8880-2afe0a964e62",
+    "3dbe1aa3-a8ca-4313-8170-83958567437d",
+    "75962323-124b-40c4-8f48-361f31b39316",
+    "a0fbe4da-4624-4a5c-b46d-4318558b9194"
+  ],
   "story": {
     "stylePresets": {
       "textStyles": [
@@ -11328,7 +11333,7 @@
           },
           "basedOn": "eb045b80-4896-49c8-8535-0dd29e70d960",
           "id": "15a07370-f01a-4db9-85ad-3c6b9e4298cc",
-          "x": 41.5,
+          "x": 41,
           "y": 261.5
         },
         {
@@ -11640,9 +11645,10 @@
           "fontSize": 18,
           "backgroundColor": {
             "color": {
-              "r": 242,
-              "g": 242,
-              "b": 242
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05
             }
           },
           "lineHeight": 1.5,
@@ -11656,7 +11662,7 @@
           "content": "<span style=\"font-weight: 700\">2. &nbsp;Good design makes a product &nbsp;&nbsp;&nbsp;&nbsp;</span>\n<span style=\"font-weight: 700\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; useful</span>",
           "fontWeight": 400,
           "width": 316,
-          "height": 71,
+          "height": 69,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11715,9 +11721,10 @@
           "fontSize": 18,
           "backgroundColor": {
             "color": {
-              "r": 242,
-              "g": 242,
-              "b": 242
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05
             }
           },
           "lineHeight": 1.5,
@@ -11731,7 +11738,7 @@
           "content": "<span style=\"font-weight: 700\">4. &nbsp;Good design is unobtrusive</span>",
           "fontWeight": 400,
           "width": 316,
-          "height": 45,
+          "height": 43,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11790,9 +11797,10 @@
           "fontSize": 18,
           "backgroundColor": {
             "color": {
-              "r": 242,
-              "g": 242,
-              "b": 242
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05
             }
           },
           "lineHeight": 1.5,
@@ -11806,7 +11814,7 @@
           "content": "<span style=\"font-weight: 700\">3. &nbsp;Good design is aesthetic</span>",
           "fontWeight": 400,
           "width": 316,
-          "height": 45,
+          "height": 43,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11865,9 +11873,10 @@
           "fontSize": 18,
           "backgroundColor": {
             "color": {
-              "r": 242,
-              "g": 242,
-              "b": 242
+              "r": 0,
+              "g": 0,
+              "b": 0,
+              "a": 0.05
             }
           },
           "lineHeight": 1.5,
@@ -11881,7 +11890,7 @@
           "content": "<span style=\"font-weight: 700\">5. &nbsp;Good design is honest</span>",
           "fontWeight": 400,
           "width": 316,
-          "height": 45,
+          "height": 43,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
