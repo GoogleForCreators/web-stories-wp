@@ -42,7 +42,7 @@ class Dashboard extends \WP_UnitTestCase {
 	 */
 	public function test_get_hook_suffix() {
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
-		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
+		$this->assertNull( $dashboard->get_hook_suffix( 'nothing' ) );
 	}
 
 	/**
