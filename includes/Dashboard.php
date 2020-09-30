@@ -117,8 +117,8 @@ class Dashboard {
 
 		add_submenu_page(
 			$link,
-			__( 'Explore templates', 'web-stories' ),
-			__( 'Explore templates', 'web-stories' ),
+			__( 'Explore Templates', 'web-stories' ),
+			__( 'Explore Templates', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard-explore',
 			'__return_null',
