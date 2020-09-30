@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useEffect, useRef, useReducer, useState } from 'react';
+import { useEffect, useRef, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -93,21 +93,18 @@ const InfiniteScroller = ({
   onLoadMoreRef.current = onLoadMore;
 
   const [loadState, dispatch] = useReducer(loadReducer, STATE.loadable);
-  const [loadingAlert, setLoadingAlert] = useState(null);
 
-  useEffect(() => {
-    if (!loadingAlert) {
-      return () => {};
+  const loadingAlert = useMemo(() => {
+    if (loadState === STATE.loading_internal) {
+      return loadingAriaMessage;
+    } else if (!canLoadMore) {
+      return allDataLoadedAriaMessage;
     }
-
-    const dismissLoadingAlert = setTimeout(() => setLoadingAlert(null), 1000);
-
-    return () => clearTimeout(dismissLoadingAlert);
-  }, [loadingAlert]);
+    return null;
+  }, [allDataLoadedAriaMessage, loadingAriaMessage, loadState, canLoadMore]);
 
   useEffect(() => {
     if (loadState === STATE.loading_internal) {
-      setLoadingAlert(loadingAriaMessage);
       onLoadMoreRef.current();
     }
   }, [loadState, loadingAriaMessage]);
@@ -129,12 +126,6 @@ const InfiniteScroller = ({
       dispatch(ACTION.ON_CAN_LOAD_MORE);
     }
   }, [canLoadMore]);
-
-  useEffect(() => {
-    if (!canLoadMore) {
-      setLoadingAlert(allDataLoadedAriaMessage);
-    }
-  }, [allDataLoadedAriaMessage, canLoadMore]);
 
   useEffect(() => {
     if (!loadingRef.current) {
