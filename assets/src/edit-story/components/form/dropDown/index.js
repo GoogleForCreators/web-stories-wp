@@ -36,13 +36,13 @@ import {
 } from '../../../utils/keyboardOnlyOutline';
 import { Dropdown as DropdownIcon } from '../../../icons';
 import Popup, { Placement } from '../../popup';
-import DropDownList from './list';
+import DropDownList, { DEFAULT_MIN_WIDTH } from './list';
 
 /* same min-width as ListContainer */
 const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 160px;
+  min-width: ${({ minWidth }) => minWidth || DEFAULT_MIN_WIDTH}px;
   color: ${({ theme }) => theme.colors.fg.black};
   font-family: ${({ theme }) => theme.fonts.body1.font};
 
@@ -105,6 +105,7 @@ function DropDown({
   lightMode = false,
   placement = Placement.BOTTOM_END,
   placeholder = __('Select an option', 'web-stories'),
+  minWidth,
   ...rest
 }) {
   const selectRef = useRef();
@@ -146,7 +147,7 @@ function DropDown({
   };
 
   return (
-    <DropDownContainer>
+    <DropDownContainer minWidth={minWidth}>
       <DropDownSelect
         onClick={handleSelectClick}
         aria-pressed={isOpen}
@@ -174,6 +175,7 @@ function DropDown({
           value={activeItem && activeItem.value}
           options={options}
           toggleOptions={toggleOptions}
+          minWidth={minWidth}
           {...rest}
         />
       </Popup>
@@ -190,6 +192,7 @@ DropDown.propTypes = {
   placeholder: PropTypes.string,
   labelledBy: PropTypes.string,
   placement: PropTypes.string,
+  minWidth: PropTypes.number,
 };
 
 export default DropDown;

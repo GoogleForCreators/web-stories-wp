@@ -29,12 +29,14 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useKeyDownEffect } from '../../keyboard';
 import useFocusOut from '../../../utils/useFocusOut';
 
+export const DEFAULT_MIN_WIDTH = 160;
+
 const ListContainer = styled.div`
   float: right;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  min-width: 160px;
+  min-width: ${({ minWidth }) => minWidth || DEFAULT_MIN_WIDTH}px;
   max-height: 370px;
   overflow-x: hidden;
   overflow-y: auto;
@@ -79,6 +81,7 @@ function DropDownList({
   options,
   toggleOptions,
   hasMenuRole = false,
+  minWidth,
   ...rest
 }) {
   const listContainerRef = useRef();
@@ -197,7 +200,7 @@ function DropDownList({
   };
 
   return (
-    <ListContainer ref={listContainerRef}>
+    <ListContainer ref={listContainerRef} minWidth={minWidth}>
       <List
         {...rest}
         aria-activedescendant={value || ''}
@@ -225,6 +228,7 @@ DropDownList.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   options: PropTypes.array.isRequired,
   hasMenuRole: PropTypes.bool,
+  minWidth: PropTypes.number,
 };
 
 export default DropDownList;
