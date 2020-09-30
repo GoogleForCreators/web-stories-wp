@@ -18,14 +18,15 @@
 namespace Google\Web_Stories\Tests\Story_Renderer;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Settings;
+use Google\Web_Stories\Story_Post_Type;
+use WP_Post;
+use WP_UnitTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
-class HTML extends \WP_UnitTestCase {
-	use Publisher;
-
+class HTML extends WP_UnitTestCase {
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -44,7 +45,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_render() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<!DOCTYPE html><html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -61,14 +62,14 @@ class HTML extends \WP_UnitTestCase {
 	public function test_transform_html_start_tag() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.png"></amp-story></body></html>',
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
 
 		$actual = $this->setup_renderer( $post );
 
-		$this->assertContains( '<html amp="" lang="en-US"', $actual );
+		$this->assertContains( ' lang="en-US" ', $actual );
 	}
 
 	/**
@@ -77,7 +78,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_transform_a_tags() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story><a href="https://www.google.com">Google</a></amp-story></body></html>',
 			]
 		);
@@ -98,7 +99,7 @@ class HTML extends \WP_UnitTestCase {
 
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => "<html><head>FOO{$start_tag}BAR{$end_tag}BAZ</head><body><amp-story></amp-story></body></html>",
 			]
 		);
@@ -125,7 +126,7 @@ class HTML extends \WP_UnitTestCase {
 
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
@@ -143,19 +144,41 @@ class HTML extends \WP_UnitTestCase {
 	 * @covers ::add_poster_images
 	 * @covers ::get_poster_images
 	 */
+	public function test_add_poster_images_overrides_existing_poster() {
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story poster-portrait-src="https://example.com/poster.jpg"></amp-story></body></html>',
+			]
+		);
+
+		set_post_thumbnail( $post->ID, $attachment_id );
+
+		$rendered = $this->setup_renderer( $post );
+
+		$this->assertNotContains( 'https://example.com/poster.jpg', $rendered );
+		$this->assertContains( 'poster-portrait-src=', $rendered );
+	}
+
+	/**
+	 * @covers ::add_poster_images
+	 * @covers ::get_poster_images
+	 */
 	public function test_add_poster_images_no_fallback_image_added() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
 
 		$rendered = $this->setup_renderer( $post );
 
-		$this->assertNotContains( 'poster-portrait-src=', $rendered );
-		$this->assertNotContains( 'poster-square-src=', $rendered );
-		$this->assertNotContains( 'poster-landscape-src=', $rendered );
+		$this->assertContains( 'poster-portrait-src=""', $rendered );
+		$this->assertContains( 'poster-square-src=""', $rendered );
+		$this->assertContains( 'poster-landscape-src=""', $rendered );
 	}
 
 	/**
@@ -164,7 +187,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_add_poster_images_no_poster_no_amp() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
 			]
 		);
@@ -181,7 +204,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_insert_analytics_configuration() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
@@ -206,7 +229,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_insert_analytics_configuration_no_output() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
@@ -223,7 +246,7 @@ class HTML extends \WP_UnitTestCase {
 	public function test_sanitizes_and_optimizes_markup() {
 		$post = self::factory()->post->create_and_get(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
 				'post_content' => '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>',
 			]
 		);
@@ -237,12 +260,12 @@ class HTML extends \WP_UnitTestCase {
 	/**
 	 * Helper to setup renderer.
 	 *
-	 * @param \WP_Post $post Post Object.
+	 * @param WP_Post $post Post Object.
 	 *
 	 * @return string
 	 */
 	protected function setup_renderer( $post ) {
-		$story = new \Google\Web_Stories\Model\Story();
+		$story = new Story();
 		$story->load_from_post( $post );
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		return $renderer->render();
