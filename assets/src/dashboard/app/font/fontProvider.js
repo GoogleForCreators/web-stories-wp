@@ -47,28 +47,35 @@ function FontProvider({ children }) {
     [getFontBy]
   );
 
+  const getFonts = useCallback(
+    () =>
+      import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts').then(
+        (res) => res.default
+      ),
+    []
+  );
+
   useEffect(() => {
     let mounted = true;
     async function loadFonts() {
-      const newFonts = await import(
-        /* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts'
-      );
-      const formattedFonts = newFonts.default.map((font) => ({
+      const newFonts = await getFonts();
+      const formattedFonts = newFonts.map((font) => ({
         name: font.family,
         value: font.family,
         ...font,
       }));
 
-      setFonts(formattedFonts);
+      if (mounted) {
+        setFonts(formattedFonts);
+      }
     }
-    if (mounted) {
-      loadFonts();
-    }
+
+    loadFonts();
 
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [getFonts]);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 
