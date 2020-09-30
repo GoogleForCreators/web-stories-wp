@@ -113,8 +113,15 @@ class Embed_Block {
 	 *
 	 * Registers scripts and styles for the block itself used in the editor,
 	 * as well as the external assets used by the <amp-story-player> web component (non-AMP version).
+	 *
 	 * Also registers an inline stylesheet used on the frontend to ensure correct
 	 * styling and responsiveness for the block, which is used for both the regular and the AMP version.
+	 *
+	 * This CSS is added as inline style as we don't yet have CSS processing in place to have this as an external stylesheet.
+	 * Plus, it saves an extra network request.
+	 *
+	 * @todo Consider moving inline CSS to external stylesheet.
+	 * @todo Consider moving style registration to third class.
 	 *
 	 * @since 1.1.0
 	 *
