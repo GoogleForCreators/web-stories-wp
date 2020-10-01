@@ -20,6 +20,13 @@
   "bugs": {
     "url": "https://github.com/google/web-stories-wp/issues"
   },
+  "engines": {
+    "node": ">= 14",
+    "npm": "~6.14"
+  },
+  "bin": {
+    "commander": "./bin/commander.js"
+  },
   "dependencies": {
     "@wordpress/api-fetch": "^3.19.1",
     "@wordpress/block-editor": "^4.5.0",
@@ -121,9 +128,11 @@
     "eslint-plugin-jsdoc": "^30.6.2",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-markdown": "^1.0.2",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^4.1.2",
+    "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-testing-library": "^3.9.0",
     "got": "^11.7.0",
     "husky": "^4.3.0",

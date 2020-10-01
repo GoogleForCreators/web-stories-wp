@@ -359,8 +359,20 @@
         "assets/src/fonts/**/*.js",
         "assets/src/commander/**/*.js"
       ],
+      "extends": [
+        "plugin:node/recommended",
+        "plugin:security/recommended"
+      ],
+      "plugins": [
+        "security"
+      ],
       "env": {
         "node": true
+      },
+      "rules": {
+        "node/no-extraneous-import": "off",
+        "node/no-unpublished-import": "off",
+        "node/no-unpublished-require": "off"
       }
     },
     {

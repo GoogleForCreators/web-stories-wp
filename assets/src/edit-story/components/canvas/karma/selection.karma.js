@@ -19,12 +19,9 @@
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('Selection integration', () => {
+describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   let fixture;
-  let element1;
   let fullbleed;
 
   beforeEach(async () => {
@@ -32,17 +29,6 @@ describe('Selection integration', () => {
     await fixture.render();
 
     fullbleed = fixture.container.querySelector('[data-testid="fullbleed"]');
-
-    const insertElement = await fixture.renderHook(() => useInsertElement());
-    element1 = await fixture.act(() =>
-      insertElement('text', {
-        font: TEXT_ELEMENT_DEFAULT_FONT,
-        content: 'hello world!',
-        x: 0,
-        y: 40,
-        width: 250,
-      })
-    );
   });
 
   afterEach(() => {
@@ -54,27 +40,46 @@ describe('Selection integration', () => {
     return storyContext.state.selectedElementIds;
   }
 
+  async function setFontSize(size) {
+    const fontSize = fixture.editor.inspector.designPanel.textStyle.fontSize;
+    await fixture.events.click(fontSize, { clickCount: 3 });
+    await fixture.events.keyboard.type(size);
+    await fixture.events.keyboard.press('tab');
+    // Give time for the font size to be applied.
+    await fixture.events.sleep(100);
+  }
+
   it('should have the last element selected by default', async () => {
-    expect(await getSelection()).toEqual([element1.id]);
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
   });
 
   it('should show the selection lines when out of page area', async () => {
-    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
-    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, 5, 5),
+    await fixture.events.click(fixture.editor.library.textAdd);
+    await setFontSize('30');
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+    const resizeW = fixture
+      .querySelector('.moveable-w')
+      .getBoundingClientRect();
+    await fixture.events.mouse.seq(({ move, moveBy, down, up }) => [
+      move(resizeW.left + 1, resizeW.top + 1),
       down(),
-      moveBy(-20, 0, { steps: 5 }),
+      moveBy(-200, 0),
       up(),
     ]);
-    expect(await getSelection()).toEqual([element1.id]);
+
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot();
   });
 
-  it('should show the selection under the page menu', async () => {
-    const frame1 = fixture.editor.canvas.framesLayer.frame(element1.id).node;
+  it('should show the selection on top of page menu', async () => {
+    await fixture.events.click(fixture.editor.library.textAdd);
+    await setFontSize('30');
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     const fbcr = frame1.getBoundingClientRect();
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, 5, 5),
+      moveRel(frame1, 15, 15),
       down(),
       moveBy(
         0,
@@ -86,11 +91,34 @@ describe('Selection integration', () => {
       ),
       up(),
     ]);
-    expect(await getSelection()).toEqual([element1.id]);
-    await fixture.snapshot();
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
+    await fixture.snapshot('selection and page menu');
+  });
+
+  it('should show the selection on top of page navigation arrows', async () => {
+    await fixture.events.click(fixture.editor.canvas.framesLayer.addPage);
+
+    await fixture.events.click(fixture.editor.library.textAdd);
+    await setFontSize('30');
+
+    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+
+    const prevPage = fixture.editor.canvas.framesLayer.prevPage.getBoundingClientRect();
+    const resizeW = fixture
+      .querySelector('.moveable-w')
+      .getBoundingClientRect();
+    await fixture.events.mouse.seq(({ move, down, up }) => [
+      move(resizeW.left + 1, resizeW.top + 1),
+      down(),
+      move(prevPage.left - prevPage.width / 2, 0),
+      up(),
+    ]);
+    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
+    await fixture.snapshot('selection on top of the page nav');
   });
 
   it('should return focus to selection when pressing mod+alt+2', async () => {
+    await fixture.events.click(fixture.editor.library.textAdd);
     // NB: We can't actually validate that the frame has focus, as that's a bit flaky,
     // But as long as the focus moves in the shortcut press, it's fair to assume that it has
     // Move to the canvas selection.
