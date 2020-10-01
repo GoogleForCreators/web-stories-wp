@@ -34,8 +34,8 @@ const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
 
 export function getMediaBaseColor(type, resource, onBaseColor) {
   const onLoad = () => {
+    const node = document.body[BASE_COLOR_NODE];
     try {
-      const node = document.body[BASE_COLOR_NODE];
       onBaseColor(thief.getColor(node.firstElementChild));
     } catch (e) {
       onBaseColor([255, 255, 255]);
@@ -59,6 +59,8 @@ function setOrCreateImage(src, onLoad) {
   img.width = 10;
   img.height = 'auto';
   img.onload = onLoad;
+  // For 3rd-party media.
+  img.crossOrigin = 'anonymous';
   imgNode.appendChild(img);
 }
 
