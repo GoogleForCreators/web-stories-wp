@@ -97,6 +97,13 @@ class Plugin {
 	public $embed_shortcode;
 
 	/**
+	 * Embed base
+	 *
+	 * @var Embed_Base
+	 */
+	public $embed_base;
+
+	/**
 	 * Frontend.
 	 *
 	 * @var Discovery
@@ -177,6 +184,10 @@ class Plugin {
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
+
+		// Embed base.
+		$this->embed_base = new Embed_Base();
+		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
 
 		// Gutenberg Blocks.
 		$this->embed_block = new Embed_Block();

@@ -27,6 +27,7 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
+use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
 
 /**
@@ -97,8 +98,8 @@ class Embed {
 			return (string) ob_get_clean();
 		}
 
-		wp_enqueue_style( 'standalone-amp-story-player' );
-		wp_enqueue_script( 'standalone-amp-story-player' );
+		wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
+		wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
 		?>
 		<div class="<?php echo esc_attr( $class ); ?> <?php echo esc_attr( $align ); ?>">
 			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>">

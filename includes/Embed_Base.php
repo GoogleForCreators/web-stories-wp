@@ -45,17 +45,9 @@ class Embed_Base {
 	const STORY_PLAYER_HANDLE = 'standalone-amp-story-player';
 
 	/**
-	 * Script handle.
-	 *
-	 * @var string
-	 */
-	const SCRIPT_HANDLE = 'web-stories-embed';
-
-
-	/**
 	 * Initializes the Web Stories embed block.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -63,33 +55,36 @@ class Embed_Base {
 		wp_register_script( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$this->register_script( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE ] );
-
-		wp_localize_script(
-			self::SCRIPT_HANDLE,
-			'webStoriesEmbedBlockSettings',
-			$this->get_script_settings()
-		);
+		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
-	 * Returns script settings.
+	 * Filter the allowed tags for KSES to allow for amp-story children.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return array Script settings.
+	 * @param array|string $allowed_tags Allowed tags.
+	 *
+	 * @return array|string Allowed tags.
 	 */
-	private function get_script_settings() {
-		return [
-			'publicPath' => WEBSTORIES_PLUGIN_DIR_URL . 'assets/js/',
+	public function filter_kses_allowed_html( $allowed_tags ) {
+		if ( ! is_array( $allowed_tags ) ) {
+			return $allowed_tags;
+		}
+
+		$story_player_components = [
+			'amp-story-player' => [],
 		];
+
+		$allowed_tags = array_merge( $allowed_tags, $story_player_components );
+
+		return $allowed_tags;
 	}
 
 	/**
 	 * Renders the block type output for given attributes.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param array  $attributes Block attributes.
 	 * @param string $content    Block content.
