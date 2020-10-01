@@ -20,6 +20,10 @@
   "bugs": {
     "url": "https://github.com/google/web-stories-wp/issues"
   },
+  "engines": {
+    "node": ">= 14",
+    "npm": "~6.14"
+  },
   "dependencies": {
     "@wordpress/api-fetch": "^3.19.1",
     "@wordpress/block-editor": "^4.5.0",
