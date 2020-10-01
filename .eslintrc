@@ -362,6 +362,7 @@
         "node": true
       },
       "rules": {
+        "node/no-extraneous-import": "off",
         "node/no-unpublished-import": "off",
         "node/no-unpublished-require": "off"
       }
