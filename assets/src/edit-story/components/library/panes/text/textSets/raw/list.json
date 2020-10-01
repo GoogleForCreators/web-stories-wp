@@ -1,11 +1,6 @@
 {
-  "current": "e4331b1e-a2cf-42fc-ace6-c3f4dda22808",
-  "selection": [
-    "bb39a121-bc3a-49c6-8880-2afe0a964e62",
-    "3dbe1aa3-a8ca-4313-8170-83958567437d",
-    "75962323-124b-40c4-8f48-361f31b39316",
-    "a0fbe4da-4624-4a5c-b46d-4318558b9194"
-  ],
+  "current": "7fee5f83-94b7-40ed-ad0b-a503bab0e1de",
+  "selection": [],
   "story": {
     "stylePresets": {
       "textStyles": [
@@ -11294,10 +11289,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 300\">The principles</span>",
+          "content": "<span style=\"font-weight: 400\">The principles</span>",
           "fontWeight": 400,
           "width": 331,
-          "height": 33,
+          "height": 34,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11334,7 +11329,7 @@
           "basedOn": "eb045b80-4896-49c8-8535-0dd29e70d960",
           "id": "15a07370-f01a-4db9-85ad-3c6b9e4298cc",
           "x": 41,
-          "y": 261.5
+          "y": 260.5
         },
         {
           "opacity": 100,
@@ -11363,7 +11358,7 @@
           "basedOn": "fd781603-76a2-43a3-8737-ec42188eef40",
           "id": "740431de-71d9-4f12-89cd-a2395be8743c",
           "x": 41,
-          "y": 287
+          "y": 286
         },
         {
           "opacity": 100,
@@ -11392,7 +11387,7 @@
           "basedOn": "756d51fe-7610-408e-8c12-49f666bfd820",
           "id": "8e8f383c-1f89-4c41-ac76-48b0d0a6f4d8",
           "x": 41,
-          "y": 313
+          "y": 312
         },
         {
           "opacity": 100,
@@ -11421,7 +11416,7 @@
           "basedOn": "dc3c9237-a672-454b-8899-94e15402cc2d",
           "id": "9e48b1b3-e3cb-4d29-bab3-8f4ee805b3fc",
           "x": 41,
-          "y": 339
+          "y": 338
         },
         {
           "opacity": 100,
@@ -11450,7 +11445,7 @@
           "basedOn": "703aeb65-ae9e-4c5a-9874-81566b3bc712",
           "id": "73a14ced-21d4-40c7-b18a-98823b49e5c5",
           "x": 41,
-          "y": 365
+          "y": 364
         },
         {
           "opacity": 100,
@@ -11469,7 +11464,7 @@
           },
           "type": "shape",
           "x": 44.5,
-          "y": 266,
+          "y": 265,
           "width": 10,
           "height": 8,
           "scale": 100,
