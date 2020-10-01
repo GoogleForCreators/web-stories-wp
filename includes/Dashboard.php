@@ -213,7 +213,7 @@ class Dashboard {
 		// TODO Preload templates.
 		$preload_paths = [
 			'/wp/v2/settings',
-			'/web-stories/v1/web-story?embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
+			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
 		/**
@@ -227,11 +227,16 @@ class Dashboard {
 		 */
 		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
+		$_GET['_embed'] = 1;
+
 		$preload_data = array_reduce(
 			$preload_paths,
 			'rest_preload_api_request',
 			[]
 		);
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		unset( $_GET['_embed'] );
 
 		wp_add_inline_script(
 			'wp-api-fetch',

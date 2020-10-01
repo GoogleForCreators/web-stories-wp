@@ -361,8 +361,10 @@ class Stories_Controller extends Stories_Base_Controller {
 		if ( $encoded_statuses ) {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
+
 		if ( $request['_web_stories_envelope'] ) {
-			$response = rest_get_server()->envelope_response( $response, true );
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$response = rest_get_server()->envelope_response( $response, isset( $_GET['_embed'] ) );
 		}
 		return $response;
 	}
