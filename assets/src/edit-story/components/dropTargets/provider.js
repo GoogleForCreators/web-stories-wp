@@ -165,10 +165,8 @@ function DropTargetsProvider({ children }) {
         secondId: activeDropTargetId,
       };
 
-      const firstElement = elements.find(
-        ({ id }) => id === combineArgs.firstId
-      );
-      if (selfId) {
+      const firstElement = elements.find(({ id }) => id === selfId);
+      if (firstElement) {
         combineArgs.firstElement = firstElement;
       } else {
         // Create properties as you'd create them for a new element to be added
