@@ -356,7 +356,11 @@
         "assets/src/edit-story/karma-tests.cjs"
       ],
       "extends": [
-        "plugin:node/recommended"
+        "plugin:node/recommended",
+        "plugin:security/recommended"
+      ],
+      "plugins": [
+        "security"
       ],
       "env": {
         "node": true
