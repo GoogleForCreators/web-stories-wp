@@ -23,8 +23,8 @@
 |                                                                   | Set kerning                                      | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | Set line height                                  | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Set text color                                   | 🚨 **0.00%** *(0 / 5)*   |
-|                                                                   | Use font picker                                  | 🚨 **7.69%** *(1 / 13)*  |
-|                                                                   | *[total]*                                        | 🚨 **2.86%** *(1 / 35)*  |
+|                                                                   | Use font picker                                  | 🚨 **0.00%** *(0 / 13)*  |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 35)*  |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Adding link to element in Attachment area        | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Remove Page Attachment                           | 🚨 **0.00%** *(0 / 1)*   |
@@ -53,8 +53,8 @@
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 26)*  |
 | Creator can View and Modify Document Settings                     | Navigating without changes                       | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*   |
-| Text Sets (Text and Shape Combinations)                           | Inserting Text Sets                              | 🛴 **66.67%** *(2 / 3)*  |
-|                                                                   | *[total]*                                        | 🛴 **66.67%** *(2 / 3)*  |
+| Text Sets (Text and Shape Combinations)                           | Inserting Text Sets                              | 🚨 **33.33%** *(1 / 3)*  |
+|                                                                   | *[total]*                                        | 🚨 **33.33%** *(1 / 3)*  |
 | User can interact with menu using keyboard                        | Tab to menu                                      | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | enter to open                                    | 🚨 **0.00%** *(0 / 5)*   |
@@ -62,4 +62,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **1.75%** *(6 / 342)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.58%** *(2 / 342)* |
