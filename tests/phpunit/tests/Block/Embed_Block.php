@@ -15,16 +15,16 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Block;
 
 use WP_Block_Type_Registry;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Embed_Block
+ * @coversDefaultClass \Google\Web_Stories\Block\Embed_Block
  */
 class Embed_Block extends \WP_UnitTestCase {
 	public function tearDown() {
-		unregister_block_type( \Google\Web_Stories\Embed_Block::BLOCK_NAME );
+		unregister_block_type( \Google\Web_Stories\Block\Embed_Block::BLOCK_NAME );
 
 		parent::tearDown();
 	}
@@ -45,10 +45,11 @@ class Embed_Block extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
 	 */
 	public function test_render_block() {
-		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block = new \Google\Web_Stories\Block\Embed_Block();
 
 		$actual = $embed_block->render_block(
 			[
@@ -66,10 +67,11 @@ class Embed_Block extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
 	 */
 	public function test_render_block_missing_url() {
-		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block = new \Google\Web_Stories\Block\Embed_Block();
 
 		$actual = $embed_block->render_block(
 			[
@@ -87,10 +89,11 @@ class Embed_Block extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
 	 */
 	public function test_render_block_missing_title() {
-		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block = new \Google\Web_Stories\Block\Embed_Block();
 
 		$actual = $embed_block->render_block(
 			[
@@ -108,10 +111,11 @@ class Embed_Block extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
 	 */
 	public function test_render_block_feed_no_poster() {
-		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block = new \Google\Web_Stories\Block\Embed_Block();
 
 		$this->go_to( '/?feed=rss2' );
 
@@ -129,10 +133,11 @@ class Embed_Block extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::render_block
+	 * @covers \Google\Web_Stories\Embed_Base::render
 	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
 	 */
 	public function test_render_block_with_poster() {
-		$embed_block = new \Google\Web_Stories\Embed_Block();
+		$embed_block = new \Google\Web_Stories\Block\Embed_Block();
 		$embed_block->init();
 
 		$this->go_to( '/?feed=rss2' );

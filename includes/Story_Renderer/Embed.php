@@ -65,11 +65,13 @@ class Embed {
 	public function render( array $args = [] ) {
 		$defaults     = [
 			'align'  => 'none',
+			'class'  => 'wp-block-web-stories-embed',
 			'height' => 600,
 			'width'  => 360,
 		];
 		$args         = wp_parse_args( $args, $defaults );
 		$align        = sprintf( 'align%s', $args['align'] );
+		$class        = $args['class'];
 		$url          = $this->story->get_url();
 		$title        = $this->story->get_title();
 		$poster       = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
@@ -85,7 +87,7 @@ class Embed {
 		) {
 			$player_style = sprintf( 'margin: %s', esc_attr( $margin ) );
 			?>
-			<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
+			<div class="<?php echo esc_attr( $class ); ?> <?php echo esc_attr( $align ); ?>">
 				<amp-story-player width="<?php echo esc_attr( $args['width'] ); ?>" height="<?php echo esc_attr( $args['height'] ); ?>" style="<?php echo esc_attr( $player_style ); ?>">
 					<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
 				</amp-story-player>
@@ -98,7 +100,7 @@ class Embed {
 		wp_enqueue_style( 'standalone-amp-story-player' );
 		wp_enqueue_script( 'standalone-amp-story-player' );
 		?>
-		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
+		<div class="<?php echo esc_attr( $class ); ?> <?php echo esc_attr( $align ); ?>">
 			<amp-story-player style="<?php echo esc_attr( $player_style ); ?>">
 				<a href="<?php echo esc_url( $url ); ?>" style="<?php echo esc_attr( $poster_style ); ?>"><?php echo esc_html( $title ); ?></a>
 			</amp-story-player>

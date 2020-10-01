@@ -66,15 +66,17 @@ class Image {
 	public function render( array $args = [] ) {
 		$defaults = [
 			'align'  => 'none',
+			'class'  => 'wp-block-web-stories-embed',
 			'height' => 600,
 			'width'  => 360,
 		];
 		$args     = wp_parse_args( $args, $defaults );
 		$align    = sprintf( 'align%s', $args['align'] );
+		$class    = $args['class'];
 
 		ob_start();
 		?>
-		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
+		<div class="<?php echo esc_attr( $class ); ?> <?php echo esc_attr( $align ); ?>">
 			<a href="<?php echo esc_url( $this->story->get_url() ); ?>">
 				<?php
 				if ( ! empty( $this->story->get_poster_portrait() ) ) {

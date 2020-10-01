@@ -34,22 +34,21 @@ use Google\Web_Stories\Traits\Assets;
 /**
  * Embed block class.
  */
-class Embed_Block {
+class Embed_Base {
 	use Assets;
+
+	/**
+	 *
+	 */
+	CONST STORY_PLAYER_HANDLE = 'standalone-amp-story-player';
 
 	/**
 	 * Script handle.
 	 *
 	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'web-stories-embed-block';
+	const SCRIPT_HANDLE = 'web-stories-embed';
 
-	/**
-	 * Block name.
-	 *
-	 * @var string
-	 */
-	const BLOCK_NAME = 'web-stories/embed';
 
 	/**
 	 * Initializes the Web Stories embed block.
@@ -59,56 +58,17 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		wp_register_script( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
-		wp_register_style( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
+		wp_register_script( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
+		wp_register_style( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
 
-		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
+		$this->register_script( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
 			'webStoriesEmbedBlockSettings',
 			$this->get_script_settings()
 		);
-
-		// todo: use register_block_type_from_metadata() once generally available.
-
-		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
-		// to enqueue these assets only when needed.
-		register_block_type(
-			self::BLOCK_NAME,
-			[
-				'attributes'      => [
-					'url'    => [
-						'type' => 'string',
-					],
-					'title'  => [
-						'type'    => 'string',
-						'default' => __( 'Web Story', 'web-stories' ),
-					],
-					'poster' => [
-						'type' => 'string',
-					],
-					'width'  => [
-						'type'    => 'number',
-						'default' => 360,
-					],
-					'height' => [
-						'type'    => 'number',
-						'default' => 600,
-					],
-					'align'  => [
-						'type'    => 'string',
-						'default' => 'none',
-					],
-				],
-				'render_callback' => [ $this, 'render_block' ],
-				'editor_script'   => self::SCRIPT_HANDLE,
-				'editor_style'    => self::SCRIPT_HANDLE,
-			]
-		);
-
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
@@ -125,29 +85,6 @@ class Embed_Block {
 	}
 
 	/**
-	 * Filter the allowed tags for KSES to allow for amp-story children.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array|string $allowed_tags Allowed tags.
-	 *
-	 * @return array|string Allowed tags.
-	 */
-	public function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
-			return $allowed_tags;
-		}
-
-		$story_player_components = [
-			'amp-story-player' => [],
-		];
-
-		$allowed_tags = array_merge( $allowed_tags, $story_player_components );
-
-		return $allowed_tags;
-	}
-
-	/**
 	 * Renders the block type output for given attributes.
 	 *
 	 * @since 1.0.0
@@ -157,7 +94,7 @@ class Embed_Block {
 	 *
 	 * @return string Rendered block type output.
 	 */
-	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+	public function render( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		// The only mandatory attribute.
 		if ( empty( $attributes['url'] ) ) {
 			return '';
