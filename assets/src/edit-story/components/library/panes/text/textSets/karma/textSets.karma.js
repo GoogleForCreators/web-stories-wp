@@ -40,11 +40,6 @@ describe('Text Sets Library Panel', () => {
     });
 
     await fixture.events.mouse.clickOn(textTab, 10, 20);
-    await waitFor(() =>
-      fixture.editor.library.getAllByRole('listitem', {
-        name: /^Insert Text Set$/,
-      })
-    );
   });
 
   afterEach(() => {
