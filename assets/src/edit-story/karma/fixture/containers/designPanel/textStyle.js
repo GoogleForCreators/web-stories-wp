@@ -61,6 +61,10 @@ export class TextStyle extends AbstractPanel {
     );
   }
 
+  get fontFamily() {
+    return this.getByRole('button', { name: /Edit: Font family/ });
+  }
+
   get letterSpacing() {
     return this.getByRole('textbox', { name: /Letter-spacing/ });
   }
@@ -82,7 +86,8 @@ export class TextStyle extends AbstractPanel {
   }
 
   // @todo: add remaining input options:
-  // * font family and size
+  // * font family needs combobox added to common layer to handle search, currently just the button is available
+  // * font size
   // * justify toggles
   // * fill style
   // * background color

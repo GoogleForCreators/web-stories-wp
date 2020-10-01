@@ -339,6 +339,7 @@ describe('Styling single text field', () => {
     it('should replace Bold Roboto with normal weight font for Abel since Bold is not an option', async () => {
       const {
         fontWeight,
+        fontFamily,
       } = data.fixture.editor.inspector.designPanel.textStyle;
       expect(fontWeight.value).toBe('Regular');
 
@@ -346,11 +347,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(fontWeight.option('Bold'));
       expect(fontWeight.value).toBe('Bold');
 
-      const input = await data.fixture.screen.getByLabelText(
-        'Edit: Font family'
-      );
-      expect(input).toBeTruthy();
-      await data.fixture.events.click(input);
+      await data.fixture.events.click(fontFamily);
 
       await data.fixture.events.keyboard.type('Ab');
       // Ensure the debounced callback has taken effect.
