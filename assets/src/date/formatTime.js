@@ -15,33 +15,22 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { useCallback, useMemo } from 'react';
+import format from './format';
+import { getSettings } from './settings';
 
-const useFontApi = (dataAdapter, { fontApi }) => {
-  const getAllFonts = useCallback(() => {
-    if (!fontApi) {
-      return Promise.resolve([]);
-    }
+/**
+ * Formats a date by dateSettings.timeFormat.
+ *
+ * @param {Date|string} date Date to format.
+ *
+ * @return {string} Displayable relative date string
+ */
+function formatTime(date) {
+  const settings = getSettings();
+  const { timeFormat } = settings;
+  return format(date, timeFormat);
+}
 
-    return dataAdapter.get(fontApi).then((data) =>
-      data.map((font) => ({
-        value: font.family,
-        name: font.family,
-        ...font,
-      }))
-    );
-  }, [dataAdapter, fontApi]);
-
-  const api = useMemo(
-    () => ({
-      getAllFonts,
-    }),
-    [getAllFonts]
-  );
-
-  return { api };
-};
-
-export default useFontApi;
+export default formatTime;

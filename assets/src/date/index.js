@@ -23,15 +23,13 @@
  * @param {*} dateSettings
  */
 
-export const DEFAULT_DATE_SETTINGS = {
-  dateFormat: 'Y-m-d',
-  timeFormat: 'g:i a',
-  gmtOffset: null,
-  timezone: '',
-};
+export { subMinutes, isValid, differenceInSeconds } from 'date-fns';
+export { toDate } from 'date-fns-tz';
 
-export { isToday } from './isToday';
-export { isYesterday } from './isYesterday';
-export { getDateObjectWithTimezone } from './getDateObjectWithTimezone';
-export { getTimeFromNow } from './getTimeFromNow';
-export { getRelativeDisplayDate } from './getRelativeDisplayDate';
+export { getSettings, updateSettings } from './settings';
+export { default as format } from './format';
+export { default as getRelativeDisplayDate } from './getRelativeDisplayDate';
+export { default as formatDate } from './formatDate';
+export { default as formatTime } from './formatTime';
+export { default as toUTCDate } from './toUTCDate';
+export { default as is12Hour } from './is12Hour';

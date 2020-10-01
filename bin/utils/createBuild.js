@@ -43,6 +43,8 @@ function createBuild(source, target, composer = false) {
   const ignoredFiles = getIgnoredFiles(source);
   if (composer) {
     ignoredFiles.push('vendor/');
+  } else {
+    ignoredFiles.push('composer.json');
   }
   copyFiles(source, target, ignoredFiles);
 

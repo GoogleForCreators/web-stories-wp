@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import moment from 'moment-timezone';
-
-/**
  * Internal dependencies
  */
 import CardTitle from '../cardTitle';
@@ -31,7 +26,7 @@ describe('CardTitle', () => {
     const { getByText, queryByTestId } = renderWithProviders(
       <CardTitle
         title="Sample Story"
-        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        displayDate="01/20/2020"
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={false}
@@ -47,7 +42,7 @@ describe('CardTitle', () => {
     const { getByDisplayValue, getByLabelText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
-        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        displayDate="01/20/2020"
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         editMode={true}
@@ -66,7 +61,7 @@ describe('CardTitle', () => {
     const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
-        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
+        displayDate="04/23/2020"
         status={STORY_STATUS.DRAFT}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
@@ -82,7 +77,7 @@ describe('CardTitle', () => {
     const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
-        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
+        displayDate="04/23/2020"
         status={STORY_STATUS.FUTURE}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
@@ -98,7 +93,7 @@ describe('CardTitle', () => {
     const { getByText } = renderWithProviders(
       <CardTitle
         title="Sample Story"
-        displayDate={moment('04/23/2020', 'MM/DD/YYYY')}
+        displayDate="04/23/2020"
         status={STORY_STATUS.PUBLISH}
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
@@ -115,7 +110,7 @@ describe('CardTitle', () => {
       <CardTitle
         title="Sample Story"
         secondaryTitle="Harry Potter"
-        displayDate={moment('01/20/2020', 'MM/DD/YYYY')}
+        displayDate="01/20/2020"
         onEditCancel={jest.fn}
         onEditComplete={jest.fn}
         tabIndex={0}

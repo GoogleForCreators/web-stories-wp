@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-export { fillerDateSettingsObject } from '../dataUtils/dateSettings';
 export { default as formattedStoriesArray } from '../dataUtils/formattedStoriesArray';
 export { default as formattedTemplatesArray } from '../dataUtils/formattedTemplatesArray';
 export { default as formattedUsersObject } from '../dataUtils/formattedUsersObject';

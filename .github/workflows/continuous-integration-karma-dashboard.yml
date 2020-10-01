@@ -42,8 +42,8 @@ jobs:
       - name: Increase max number of file watchers
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Run dashboard integration tests
-        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage
+      - name: Run integration tests
+        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --coverage
         env:
           DISABLE_ERROR_BOUNDARIES: true
 

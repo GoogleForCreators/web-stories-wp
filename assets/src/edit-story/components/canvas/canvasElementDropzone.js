@@ -29,6 +29,7 @@ import { useUnits } from '../../units';
 import { isDragType } from '../../utils/dragEvent';
 import useCanvas from './useCanvas';
 import useInsertElement from './useInsertElement';
+import useInsertTextSet from './useInsertTextSet';
 
 const Container = styled.div`
   width: 100%;
@@ -37,6 +38,8 @@ const Container = styled.div`
 
 function CanvasElementDropzone({ children }) {
   const insertElement = useInsertElement();
+  const { insertTextSetByOffset } = useInsertTextSet();
+
   const { activeDropTargetId } = useDropTargets((state) => ({
     activeDropTargetId: state.state.activeDropTargetId,
   }));
@@ -80,11 +83,34 @@ function CanvasElementDropzone({ children }) {
         e.stopPropagation();
         e.preventDefault();
       }
+      // Handles onDrop for text sets.
+      else if (isDragType(e, 'textset') && !activeDropTargetId) {
+        const { grabOffsetX, grabOffsetY, elements } = JSON.parse(
+          e.dataTransfer.getData('textset')
+        );
+        const { x, y, width, height } = pageContainer.getBoundingClientRect();
+
+        insertTextSetByOffset(
+          elements,
+          {
+            offsetX: editorToDataX(e.clientX - x + grabOffsetX),
+            offsetY: editorToDataY(e.clientY - y + grabOffsetY),
+          },
+          {
+            width: editorToDataX(width),
+            height: editorToDataY(height),
+          }
+        );
+
+        e.stopPropagation();
+        e.preventDefault();
+      }
     },
     [
       activeDropTargetId,
       pageContainer,
       insertElement,
+      insertTextSetByOffset,
       editorToDataX,
       editorToDataY,
     ]

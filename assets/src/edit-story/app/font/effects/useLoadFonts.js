@@ -22,18 +22,28 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../';
+import { useFile } from '../../file';
 
 function useLoadFonts({ fonts, setFonts }) {
+  const fontsLength = fonts.length;
   const {
-    actions: { getAllFonts },
-  } = useAPI();
-
+    actions: { getFonts },
+  } = useFile();
   useEffect(() => {
-    if (fonts.length === 0) {
-      getAllFonts({}).then(setFonts);
+    async function loadFonts() {
+      const newFonts = await getFonts();
+      const formattedFonts = newFonts.map((font) => ({
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
+
+      setFonts(formattedFonts);
     }
-  }, [fonts, getAllFonts, setFonts]);
+    if (!fontsLength) {
+      loadFonts();
+    }
+  }, [fontsLength, setFonts, getFonts]);
 }
 
 export default useLoadFonts;

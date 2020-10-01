@@ -46,7 +46,6 @@ import Content from './content';
 function TemplateDetails() {
   const [template, setTemplate] = useState(null);
   const [relatedTemplates, setRelatedTemplates] = useState([]);
-  const [orderedTemplates, setOrderedTemplates] = useState([]);
   const enableBookmarks = useFeature('enableBookmarkActions');
 
   const {
@@ -140,6 +139,8 @@ function TemplateDetails() {
     addToast,
   ]);
 
+  const templatedId = template?.id;
+
   useEffect(() => {
     if (!template || !templateId) {
       return;
@@ -152,11 +153,6 @@ function TemplateDetails() {
         centerTargetAction: resolveRelatedTemplateRoute(relatedTemplate),
       }))
     );
-    setOrderedTemplates(
-      templatesOrderById.map(
-        (templateByOrderId) => templates[templateByOrderId]
-      )
-    );
   }, [
     fetchRelatedTemplates,
     template,
@@ -166,26 +162,27 @@ function TemplateDetails() {
   ]);
 
   const activeTemplateIndex = useMemo(() => {
-    if (orderedTemplates.length <= 0) {
+    if (templatesOrderById.length <= 0) {
       return 0;
     }
 
-    return orderedTemplates.findIndex((t) => t.id === template?.id);
-  }, [orderedTemplates, template?.id]);
+    return templatesOrderById.findIndex((id) => id === templatedId);
+  }, [templatesOrderById, templatedId]);
 
   const switchToTemplateByOffset = useCallback(
     (offset) => {
       const index = clamp(activeTemplateIndex + offset, [
         0,
-        orderedTemplates.length - 1,
+        templatesOrderById.length - 1,
       ]);
-      const selectedTemplate = orderedTemplates[index];
+      const selectedTemplateId = templatesOrderById[index];
+      const selectedTemplate = templates[selectedTemplateId];
 
       actions.push(
         `?id=${selectedTemplate.id}&isLocal=${selectedTemplate.isLocal}`
       );
     },
-    [activeTemplateIndex, orderedTemplates, actions]
+    [activeTemplateIndex, templatesOrderById, actions, templates]
   );
 
   const handleBookmarkClickSelected = useCallback(() => {}, []);
@@ -224,7 +221,7 @@ function TemplateDetails() {
           <Content
             activeTemplateIndex={activeTemplateIndex}
             isRTL={isRTL}
-            orderedTemplatesLength={orderedTemplates?.length}
+            orderedTemplatesLength={templatesOrderById.length}
             pageSize={pageSize}
             switchToTemplateByOffset={switchToTemplateByOffset}
             template={template}

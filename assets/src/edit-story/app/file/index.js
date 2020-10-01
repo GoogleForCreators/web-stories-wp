@@ -14,22 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import moment from 'moment-timezone';
-
-/**
- * Checks if date is yesterday
- *
- * @param {Date} date Uses moment to find if date passed in is the same as "yesterday".
- * If date is not an instance of moment when passed in it will create a moment from it.
- *
- * @return {boolean} If date matches yesterday it will be true
- */
-export function isYesterday(date) {
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
-  const yesterday = moment().subtract(1, 'days').startOf('day');
-
-  return displayDate.isSame(yesterday, 'd');
-}
+export { default as FileProvider } from './provider';
+export { default as useFile } from './use';

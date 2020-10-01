@@ -15,21 +15,29 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import moment from 'moment-timezone';
+import is12Hour from '../is12Hour';
+import { updateSettings } from '../settings';
 
-/**
- * Checks if date is today's date.
- *
- * @param {Date} date Uses moment to find if date passed in is the same as "today".
- * If date is not an instance of moment when passed in it will create a moment from it.
- *
- * @return {boolean} If date matches today it will be true
- */
-export function isToday(date) {
-  const displayDate = moment.isMoment(date) ? date : moment.parseZone(date);
-  const today = moment().startOf('day');
+describe('date/is12Hour', () => {
+  it('should default to true', () => {
+    expect(is12Hour()).toBeTrue();
+  });
 
-  return displayDate.isSame(today, 'd');
-}
+  it('should detect time format correctly', () => {
+    updateSettings({
+      timeFormat: 'g:i A',
+    });
+
+    const is12Hour1 = is12Hour();
+    expect(is12Hour1).toBeTrue();
+
+    updateSettings({
+      timeFormat: 'H:i',
+    });
+
+    const is12Hour2 = is12Hour();
+    expect(is12Hour2).toBeFalse();
+  });
+});
