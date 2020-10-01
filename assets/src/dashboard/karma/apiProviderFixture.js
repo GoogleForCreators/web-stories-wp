@@ -291,9 +291,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
-          value = formattedUsersObject[a.author].name.localeCompare(
-            formattedUsersObject[b.author].name
-          );
+          value = a.author.localeCompare(b.author);
           break;
         }
         default: {
@@ -326,8 +324,8 @@ function updateStory(story, currentState) {
   };
 }
 
-function duplicateStory(story, currenState) {
-  const copiedState = { ...currenState };
+function duplicateStory(story, currentState) {
+  const copiedState = { ...currentState };
   const copiedStory = { ...story };
 
   // Update fields on copy
