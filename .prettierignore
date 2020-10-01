@@ -3,7 +3,7 @@
 /bin/local-env/data
 /build
 /docs
-includes/data/fonts.json
+assets/src/fonts/fonts.json
 /node_modules
 /vendor
 /assets/css

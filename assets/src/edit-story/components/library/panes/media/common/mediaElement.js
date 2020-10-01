@@ -29,7 +29,7 @@ import { rgba } from 'polished';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import { useKeyDownEffect } from '../../../../keyboard';
-import { useRovingTabIndex } from '../../shared';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 

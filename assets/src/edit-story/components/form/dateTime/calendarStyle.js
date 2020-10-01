@@ -17,24 +17,10 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 
-const Pane = styled.section.attrs(({ isActive }) => ({
-  role: 'tabpanel',
-  'aria-expanded': isActive,
-  hidden: !isActive,
-}))`
-  padding: 1.5em;
+export const GlobalStyle = createGlobalStyle`
+	.react-calendar__tile--now.react-calendar__month-view__days__day:focus {
+    background-color: #eeeec1;
+	}
 `;
-
-function getPaneId(tab) {
-  return `library-pane-${tab}`;
-}
-
-function getTabId(tab) {
-  return `library-tab-${tab}`;
-}
-
-export { Pane, getPaneId, getTabId };
-
-export { default as PillGroup } from './pillGroup';
