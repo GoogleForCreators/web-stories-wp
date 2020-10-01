@@ -131,6 +131,11 @@ function Numeric({
   const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
 
   const handleChange = useCallback((event) => {
+    // If the user types something in, clear timeout
+    // so onChange doesn't get triggered with possibly
+    // old value.
+    window.clearTimeout(submitOnChangeTimeout.current);
+
     setInputValue(event.target.value);
   }, []);
 
