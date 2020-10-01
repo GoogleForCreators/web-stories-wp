@@ -1,5 +1,5 @@
 {
-  "current": "64a7810a-b11c-48ae-b8f9-4820af17bf84",
+  "current": "46255a97-3e9e-444a-acb4-59be70044ac6",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -4553,7 +4553,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">$5.00</span>",
+          "content": "<span style=\"font-weight: 400\">$5.00</span>",
           "fontWeight": 400,
           "width": 100,
           "height": 21,
@@ -4622,10 +4622,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">$5.00</span>",
+          "content": "<span style=\"font-weight: 400\">$5.00</span>",
           "fontWeight": 400,
           "width": 100,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4691,10 +4691,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">$5.00</span>",
+          "content": "<span style=\"font-weight: 400\">$5.00</span>",
           "fontWeight": 400,
           "width": 100,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4760,10 +4760,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">$5.00</span>",
+          "content": "<span style=\"font-weight: 400\">$5.00</span>",
           "fontWeight": 400,
           "width": 100,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4829,10 +4829,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">$5.00</span>",
+          "content": "<span style=\"font-weight: 400\">$5.00</span>",
           "fontWeight": 400,
           "width": 100,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
