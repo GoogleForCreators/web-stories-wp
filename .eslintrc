@@ -355,6 +355,9 @@
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs"
       ],
+      "extends": [
+        "plugin:node/recommended"
+      ],
       "env": {
         "node": true
       }
