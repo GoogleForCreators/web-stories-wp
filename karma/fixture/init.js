@@ -233,6 +233,44 @@ beforeAll(() => {
     }),
   });
 
+  jasmine.addAsyncMatchers({
+    toHaveNoViolations: () => ({
+      compare: async function (element, options) {
+        const result = await window.axe.run(element, options);
+        const pass = result.violations.length === 0;
+
+        const formattedViolations = result.violations.map((violation) => {
+          const { id, impact, description, help, helpUrl } = violation;
+
+          const message = [];
+
+          message.push(`[ ${id}] ${description}`);
+          message.push(helpUrl ? `${help} (${helpUrl}` : help);
+          message.push(`Impact: ${impact}`);
+          message.push('\n');
+
+          for (const { html, failureSummary } of violation.nodes) {
+            message.push(`HTML: ${html}`);
+            message.push(failureSummary);
+            message.push('\n');
+          }
+
+          return message.join('\n');
+        });
+
+        const message = !pass
+          ? `Expected element to pass aXe accessibility tests. Violations found:
+            ${formattedViolations.join('\n')}`
+          : 'Expected element to contain aXe accessibility test violations. No violations found.';
+
+        return {
+          pass,
+          message: () => message,
+        };
+      },
+    }),
+  });
+
   // Virtual cursor.
   withCleanupAll(() => {
     const el = document.createElement('div');

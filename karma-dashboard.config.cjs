@@ -34,6 +34,7 @@ module.exports = function (config) {
       'build/karma-dashboard-failed-tests.txt',
       'utf-8'
     )
+      .replace(/\s+$/g, '')
       .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
       .replace(/-/g, '\\x2d')
       .split('\n')
@@ -69,6 +70,7 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      'node_modules/axe-core/axe.js',
     ],
 
     // list of files / patterns to exclude
@@ -116,7 +118,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
