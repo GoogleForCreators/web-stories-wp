@@ -34,10 +34,13 @@ describe('combineElements', () => {
   it('should do nothing if second element is missing', () => {
     const { restore, combineElements } = setupReducer();
 
-    const initial = restore(getDefaultState1());
+    const state = getDefaultState1();
+    const initial = restore(state);
 
     // Combine 456 into nothing
-    const result = combineElements({ firstId: '456' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+    });
 
     expect(result).toStrictEqual(initial);
   });
@@ -47,7 +50,10 @@ describe('combineElements', () => {
     const initial = restore(getDefaultState1());
 
     // Combine non-existing element abc into 789
-    const result = combineElements({ firstId: 'abc', secondId: '789' });
+    const result = combineElements({
+      firstElement: { id: 'abc', type: 'image' },
+      secondId: '789',
+    });
 
     expect(result).toStrictEqual(initial);
   });
@@ -55,10 +61,14 @@ describe('combineElements', () => {
   it('should do nothing if second element does not exist', () => {
     const { restore, combineElements } = setupReducer();
 
-    const initial = restore(getDefaultState1());
+    const state = getDefaultState1();
+    const initial = restore(state);
 
     // Combine 456 into non-existing element abc
-    const result = combineElements({ firstId: '456', secondId: 'abc' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: 'abc',
+    });
 
     expect(result).toStrictEqual(initial);
   });
@@ -66,10 +76,14 @@ describe('combineElements', () => {
   it('should do nothing if first element does not have a resource', () => {
     const { restore, combineElements } = setupReducer();
 
-    const initial = restore(getDefaultState1());
+    const state = getDefaultState1();
+    const initial = restore(state);
 
     // Combine element 789 into 456 (789 does not have a resource)
-    const result = combineElements({ firstId: '789', secondId: '456' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[2],
+      secondId: '456',
+    });
 
     expect(result).toStrictEqual(initial);
   });
@@ -77,10 +91,14 @@ describe('combineElements', () => {
   it('should add the relevant properties from first to second', () => {
     const { restore, combineElements } = setupReducer();
 
-    restore(getDefaultState1());
+    const state = getDefaultState1();
+    restore(state);
 
     // Combine element 456 into 789
-    const result = combineElements({ firstId: '456', secondId: '789' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '789',
+    });
 
     expect(result.pages[0].elements).toStrictEqual([
       {
@@ -113,10 +131,14 @@ describe('combineElements', () => {
   it('should remove background overlay if present on second element', () => {
     const { restore, combineElements } = setupReducer();
 
+    const state = getDefaultState3();
     restore(getDefaultState3());
 
     // Combine element 456 into 123
-    const result = combineElements({ firstId: '456', secondId: '123' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
 
     expect(result.pages[0].elements).toStrictEqual([
       {
@@ -139,10 +161,14 @@ describe('combineElements', () => {
   it('should copy dimensions too if combining with background element', () => {
     const { restore, combineElements } = setupReducer();
 
-    restore(getDefaultState2());
+    const state = getDefaultState2();
+    restore(state);
 
     // Combine element 456 into 123
-    const result = combineElements({ firstId: '456', secondId: '123' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
 
     expect(result.pages[0].elements).toStrictEqual([
       {
@@ -210,10 +236,14 @@ describe('combineElements', () => {
   it('should create default background element when combining into that', () => {
     const { restore, combineElements } = setupReducer();
 
-    restore(getDefaultState1());
+    const state = getDefaultState1();
+    restore(state);
 
     // Combine element 456 into 123
-    const result = combineElements({ firstId: '456', secondId: '123' });
+    const result = combineElements({
+      firstElement: state.pages[0].elements[1],
+      secondId: '123',
+    });
 
     expect(result.pages[0].defaultBackgroundElement).toStrictEqual({
       // Note that id is regenerated. It doesn't matter what it is, just

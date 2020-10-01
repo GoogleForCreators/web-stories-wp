@@ -135,7 +135,7 @@ function SizePositionPanel({
     const setBackground = (baseColor) => {
       if (!baseColor) {
         combineElements({
-          firstId: selectedElements[0].id,
+          firstElement: selectedElements[0],
           secondId: currentBackgroundId,
         });
       } else {

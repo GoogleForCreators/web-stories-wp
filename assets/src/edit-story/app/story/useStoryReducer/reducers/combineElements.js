@@ -46,15 +46,15 @@ import objectWithout from '../../../../utils/objectWithout';
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {string} payload.firstId Element to take properties from
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
  * @return {Object} New state
  */
-function combineElements(state, { firstId, firstElement, secondId }) {
-  if ((!firstId && !firstElement) || !secondId) {
+function combineElements(state, { firstElement, secondId }) {
+  if (!firstElement || !secondId) {
     return state;
   }
+  const firstId = firstElement.id;
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const page = state.pages[pageIndex];
@@ -109,11 +109,6 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     ...(secondElement.isBackground ? positionProps : {}),
   };
 
-  // If we mutated the first element while combining,
-  // we might have passed the new object instead of just ID.
-  if (!firstId && firstElement.id) {
-    firstId = firstElement.id;
-  }
   // Elements are now
   const elements = page.elements
     // Remove first element if combining from existing id

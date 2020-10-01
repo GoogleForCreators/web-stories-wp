@@ -165,8 +165,11 @@ function DropTargetsProvider({ children }) {
         secondId: activeDropTargetId,
       };
 
+      const firstElement = elements.find(
+        ({ id }) => id === combineArgs.firstId
+      );
       if (selfId) {
-        combineArgs.firstId = selfId;
+        combineArgs.firstElement = firstElement;
       } else {
         // Create properties as you'd create them for a new element to be added
         // Then merge these into the existing element using the same logic as
@@ -175,19 +178,15 @@ function DropTargetsProvider({ children }) {
           resource,
         });
       }
-      const firstElement = elements.find(
-        ({ id }) => id === combineArgs.firstId
-      );
       const finalizeDrop = (baseColor = null) => {
-        if (baseColor && !combineArgs.firstElement) {
+        if (baseColor) {
           combineArgs.firstElement = {
-            ...firstElement,
+            ...combineArgs.firstElement,
             resource: {
-              ...firstElement.resource,
+              ...combineArgs.firstElement.resource,
               baseColor,
             },
           };
-          delete combineArgs.firstId;
         }
         combineElements(combineArgs);
 
