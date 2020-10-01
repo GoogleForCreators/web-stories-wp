@@ -58,7 +58,7 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array $attributes Shortcode attributes.
+	 * @param array  $attributes Shortcode attributes.
 	 * @param string $content Shortcode content.
 	 *
 	 * @return string Rendered Shortcode

@@ -38,9 +38,11 @@ class Embed_Base {
 	use Assets;
 
 	/**
+	 * Player script handle.
 	 *
+	 * @var string
 	 */
-	CONST STORY_PLAYER_HANDLE = 'standalone-amp-story-player';
+	const STORY_PLAYER_HANDLE = 'standalone-amp-story-player';
 
 	/**
 	 * Script handle.

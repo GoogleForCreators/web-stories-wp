@@ -43,9 +43,9 @@ class Embed_Block extends Embed_Base {
 	/**
 	 * Initializes the Web Stories embed block.
 	 *
-	 * @return void
 	 * @since 1.0.0
 	 *
+	 * @return void
 	 */
 	public function init() {
 		parent::init();
@@ -118,7 +118,7 @@ class Embed_Block extends Embed_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param array $attributes Block attributes.
+	 * @param array  $attributes Block attributes.
 	 * @param string $content Block content.
 	 *
 	 * @return string Rendered block type output.*
