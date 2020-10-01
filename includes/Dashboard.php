@@ -213,7 +213,7 @@ class Dashboard {
 		// TODO Preload templates.
 		$preload_paths = [
 			'/wp/v2/settings',
-			'/web-stories/v1/web-story?context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
+			'/web-stories/v1/web-story?embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft&_web_stories_envelope=true',
 		];
 
 		/**

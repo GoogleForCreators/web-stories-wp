@@ -362,7 +362,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$response->header( 'X-WP-TotalByStatus', $encoded_statuses );
 		}
 		if ( $request['_web_stories_envelope'] ) {
-			$response = rest_get_server()->envelope_response( $response, false );
+			$response = rest_get_server()->envelope_response( $response, true );
 		}
 		return $response;
 	}
