@@ -24,6 +24,9 @@
     "node": ">= 14",
     "npm": "~6.14"
   },
+  "bin": {
+    "commander": "./bin/commander.js"
+  },
   "dependencies": {
     "@wordpress/api-fetch": "^3.19.1",
     "@wordpress/block-editor": "^4.5.0",
