@@ -154,11 +154,7 @@ function SizePositionPanel({
     if (selectedElements[0].resource?.baseColor) {
       setBackground();
     } else {
-      getMediaBaseColor(
-        selectedElements[0].type,
-        selectedElements[0].resource,
-        setBackground
-      );
+      getMediaBaseColor(selectedElements[0].resource, setBackground);
     }
   }, [selectedElements, combineElements, currentBackgroundId]);
 

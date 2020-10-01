@@ -32,7 +32,8 @@ const STYLES = {
 
 const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
 
-export function getMediaBaseColor(type, resource, onBaseColor) {
+export function getMediaBaseColor(resource, onBaseColor) {
+  const { type, poster, src } = resource;
   const onLoad = () => {
     const node = document.body[BASE_COLOR_NODE];
     try {
@@ -41,7 +42,7 @@ export function getMediaBaseColor(type, resource, onBaseColor) {
       onBaseColor([255, 255, 255]);
     }
   };
-  setOrCreateImage('video' === type ? resource.poster : resource.src, onLoad);
+  setOrCreateImage('video' === type ? poster : src, onLoad);
 }
 
 function setOrCreateImage(src, onLoad) {
@@ -49,7 +50,7 @@ function setOrCreateImage(src, onLoad) {
   if (!imgNode) {
     imgNode = document.createElement('div');
     imgNode.id = '__web-stories-base-color';
-    setStyles(imgNode, STYLES);
+    Object.assign(imgNode, STYLES);
     document.body.appendChild(imgNode);
     document.body[BASE_COLOR_NODE] = imgNode;
   }
@@ -62,17 +63,4 @@ function setOrCreateImage(src, onLoad) {
   // For 3rd-party media.
   img.crossOrigin = 'anonymous';
   imgNode.appendChild(img);
-}
-
-function setStyles(node, styles) {
-  for (const k in styles) {
-    if (Object.prototype.hasOwnProperty.call(styles, k)) {
-      const v = styles[k];
-      if (v === null) {
-        node.style[k] = '';
-      } else {
-        node.style[k] = v;
-      }
-    }
-  }
 }

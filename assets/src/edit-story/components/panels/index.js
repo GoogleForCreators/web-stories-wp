@@ -116,8 +116,8 @@ export function getPanels(elements, options = {}) {
         type: IMAGE_ACCESSIBILITY,
         Panel: ImageAccessibilityPanel,
       });
-    }
-    if (!isBackgroundMedia) {
+      // In case of default background without media:
+    } else {
       panels.unshift({ type: PAGE_STYLE, Panel: PageStylePanel });
       // Always display Presets as the first panel for background.
       panels.unshift({ type: STYLE_PRESETS, Panel: ColorPresetPanel });

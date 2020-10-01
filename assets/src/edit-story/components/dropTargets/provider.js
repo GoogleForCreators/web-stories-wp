@@ -178,7 +178,7 @@ function DropTargetsProvider({ children }) {
       const firstElement = elements.find(
         ({ id }) => id === combineArgs.firstId
       );
-      const finalizeDrop = (baseColor) => {
+      const finalizeDrop = (baseColor = null) => {
         if (baseColor && !combineArgs.firstElement) {
           combineArgs.firstElement = {
             ...firstElement,
@@ -214,10 +214,10 @@ function DropTargetsProvider({ children }) {
         }
       };
       // Skip if we already have the color.
-      if (firstElement.baseColor) {
+      if (firstElement?.baseColor) {
         finalizeDrop();
       } else {
-        getMediaBaseColor(resource.type, resource, finalizeDrop);
+        getMediaBaseColor(resource, finalizeDrop);
       }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
