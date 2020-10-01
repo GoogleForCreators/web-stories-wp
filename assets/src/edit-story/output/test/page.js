@@ -599,6 +599,73 @@ describe('Page output', () => {
     });
   });
 
+  describe('background color', () => {
+    const BACKGROUND_ELEMENT = {
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+        baseColor: [0, 55, 155],
+      },
+    };
+
+    it('should output background media base color if available', () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          id: '123',
+          elements: [BACKGROUND_ELEMENT],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('background-color:rgb(0,55,155)');
+    });
+
+    it('should output the page background color in case of default background element', () => {
+      const props = {
+        page: {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255, a: 0.5 } },
+          elements: [
+            {
+              id: '123',
+              type: 'shape',
+              isBackground: true,
+              isDefaultBackground: true,
+              x: 1,
+              y: 1,
+              width: 1,
+              height: 1,
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('background-color:rgba(255,255,255,0.5)');
+    });
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {
       const props = {

@@ -33,6 +33,11 @@ describe('Background Drop-Target integration', () => {
     fixture.restore();
   });
 
+  const getBackgroundElement = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.currentPage.elements[0];
+  };
+
   describe('when there is nothing on the canvas', () => {
     it('should by default have transparent background', async () => {
       const bgElement = await getCanvasBackgroundElement(fixture);
@@ -77,6 +82,10 @@ describe('Background Drop-Target integration', () => {
       // And verify that we no longer have a replacement element
       const rep2 = await getCanvasBackgroundReplacement(fixture);
       expect(rep2).toBeEmpty();
+
+      // Verify the background base color is handled as expected.
+      const bgElement = await getBackgroundElement();
+      expect(bgElement.resource.baseColor).toEqual([201, 201, 219]);
     });
   });
 
@@ -282,6 +291,10 @@ describe('Background Drop-Target integration', () => {
         const bg2 = await getCanvasBackgroundElement(fixture);
         const bgImg2 = bg2.querySelector('img');
         expect(bgImg2).toHaveProperty('src', imageData.resource.src);
+
+        // Verify the page average color is assigned as expected.
+        const bgElement = await getBackgroundElement();
+        expect(bgElement.resource.baseColor).toEqual([169, 132, 102]);
       });
 
       describe('when the background is flipped', () => {
