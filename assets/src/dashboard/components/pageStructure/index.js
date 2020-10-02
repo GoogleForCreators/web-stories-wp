@@ -173,7 +173,12 @@ export function LeftRail() {
         <Content>
           <NavList>
             {enabledPaths.map((path) => (
-              <NavListItem key={path.value}>
+              <NavListItem
+                key={path.value}
+                onClick={(evt) =>
+                  path.isExternal ? onExternalLinkClick(evt, path) : () => {}
+                }
+              >
                 <NavLink
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
@@ -189,7 +194,6 @@ export function LeftRail() {
                   {...(path.isExternal && {
                     rel: 'noreferrer',
                     target: '_blank',
-                    onClick: (evt) => onExternalLinkClick(evt, path),
                   })}
                 >
                   {path.label}
