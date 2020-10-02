@@ -32,7 +32,6 @@ use Google\Web_Stories\Embed_Base;
  * Embed shortcode class.
  */
 class Embed_Shortcode extends Embed_Base {
-
 	/**
 	 * Shortcode name.
 	 *
@@ -48,8 +47,6 @@ class Embed_Shortcode extends Embed_Base {
 	 * @return void
 	 */
 	public function init() {
-		parent::init();
-
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_shortcode' ] );
 	}
 
