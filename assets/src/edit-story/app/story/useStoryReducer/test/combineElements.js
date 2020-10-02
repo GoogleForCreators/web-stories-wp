@@ -287,6 +287,37 @@ describe('combineElements', () => {
         y: 10,
       });
     });
+
+    it('should preserve the target element link if the origin is without link', () => {
+      const { restore, combineElements } = setupReducer();
+
+      restore(getDefaultState4());
+
+      // Combine element 456 into 789
+      const result = combineElements({ firstId: '007', secondId: '789' });
+
+      expect(result.pages[0].elements[2]).toStrictEqual({
+        height: 10,
+        id: '789',
+        link: {
+          url: 'https://link789.com/',
+          icon: 'https://link789.com/image.png',
+          desc: 'Lorem ipsum dolor',
+        },
+        resource: {
+          src: '3',
+          type: 'video',
+        },
+        scale: 100,
+        type: 'video',
+        width: 10,
+        x: 10,
+        y: 10,
+        flip: {},
+        focalX: 50,
+        focalY: 50,
+      });
+    });
   });
 });
 
@@ -396,7 +427,7 @@ function getDefaultState3() {
   };
 }
 
-// State with background element, 2 elements with links.
+// State with background element, 2 elements with links, 1 without.
 function getDefaultState4() {
   return {
     pages: [
@@ -440,6 +471,15 @@ function getDefaultState4() {
               icon: 'https://link789.com/image.png',
               desc: 'Lorem ipsum dolor',
             },
+          },
+          {
+            id: '007',
+            type: 'video',
+            resource: { type: 'video', src: '3' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
           },
         ],
       },
