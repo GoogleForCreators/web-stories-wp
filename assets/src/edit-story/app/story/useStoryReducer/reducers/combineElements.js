@@ -81,7 +81,7 @@ function combineElements(state, { firstId, firstElement, secondId }) {
       }
     : {};
 
-  const mediaProps = objectPick(element, [
+  const propsFromFirst = [
     'type',
     'resource',
     'scale',
@@ -89,7 +89,12 @@ function combineElements(state, { firstId, firstElement, secondId }) {
     'focalY',
     'flip',
     'backgroundOverlay',
-  ]);
+  ];
+  // If the element we're dropping into is not background, maintain link, too.
+  if (secondElementPosition !== 0) {
+    propsFromFirst.push('link');
+  }
+  const mediaProps = objectPick(element, propsFromFirst);
 
   const positionProps = objectPick(element, ['width', 'height', 'x', 'y']);
 
