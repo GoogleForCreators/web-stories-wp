@@ -76,7 +76,7 @@ export default async function loadTextSets() {
     'editorial',
     'table',
     'quote',
-    'funkySeasonalEvent',
+    'funkySeasonalShopping',
   ];
 
   const results = await Promise.all(
