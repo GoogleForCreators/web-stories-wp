@@ -228,13 +228,11 @@ class HTML {
 			return;
 		}
 
-		if ( $story_element ) {
-			// Add a publisher logo if missing or just a placeholder.
-			$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
+		// Add a publisher logo if missing or just a placeholder.
+		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
-			if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-				$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
-			}
+		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
+			$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
 		}
 	}
 
