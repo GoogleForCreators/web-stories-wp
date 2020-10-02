@@ -26,19 +26,19 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AmpProject\AmpWP\RemoteRequest\CachedRemoteGetRequest;
-use AmpProject\AmpWP\RemoteRequest\WpHttpRemoteGetRequest;
-use AmpProject\Dom\Document;
-use AmpProject\Optimizer\Configuration;
-use AmpProject\Optimizer\Error;
-use AmpProject\Optimizer\ErrorCollection;
-use AmpProject\Optimizer\LocalFallback;
-use AmpProject\Optimizer\TransformationEngine;
-use AmpProject\Optimizer\Transformer\AmpRuntimeCss;
-use AmpProject\Optimizer\Transformer\ServerSideRendering;
-use AmpProject\Optimizer\Transformer\TransformedIdentifier;
-use AmpProject\RemoteRequest\FallbackRemoteGetRequest;
-use AmpProject\RemoteRequest\FilesystemRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\CachedRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\WpHttpRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Error;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ServerSideRendering;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\TransformedIdentifier;
+use Google\Web_Stories_Dependencies\AmpProject\RemoteRequest\FallbackRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\RemoteRequest\FilesystemRemoteGetRequest;
 
 /**
  * Optimization class.

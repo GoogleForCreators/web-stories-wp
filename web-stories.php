@@ -60,8 +60,14 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-	include __DIR__ . '/vendor/autoload.php';
+// Autoloader for dependencies.
+if ( file_exists( __DIR__ . '/third-party/vendor/scoper-autoload.php' ) ) {
+	require __DIR__ . '/third-party/vendor/scoper-autoload.php';
+}
+
+// Autoloader for plugin itself.
+if ( file_exists( __DIR__ . '/includes/vendor/autoload.php' ) ) {
+	require __DIR__ . '/includes/vendor/autoload.php';
 }
 
 // Main plugin initialization happens there so that this file is still parsable in PHP < 5.6.

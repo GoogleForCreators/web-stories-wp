@@ -26,9 +26,9 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AmpProject\Attribute;
-use AmpProject\Tag;
-use AMP_Meta_Sanitizer;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AMP_Meta_Sanitizer;
 
 /**
  * Meta sanitizer.

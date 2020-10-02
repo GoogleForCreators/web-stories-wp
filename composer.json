@@ -21,6 +21,7 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
+    "civicrm/composer-downloads-plugin": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
@@ -41,6 +42,11 @@
       "phpstan": {
         "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
         "path": "vendor/bin/phpstan",
+        "type": "phar"
+      },
+      "php-scoper": {
+        "url": "https://github.com/humbug/php-scoper/releases/latest/download/php-scoper.phar",
+        "path": "vendor/bin/php-scoper",
         "type": "phar"
       }
     },
@@ -76,7 +82,20 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
+    "post-install-cmd": [
+      "@prefix-dependencies"
+    ],
+    "post-update-cmd": [
+      "@prefix-dependencies"
+    ],
     "phpcs": "phpcs",
-    "phpstan": "phpstan analyse --memory-limit=512M"
+    "phpstan": "phpstan analyse --memory-limit=512M",
+    "prefix-dependencies": [
+      "php-scoper add-prefix --output-dir=./third-party --force --quiet",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",
+      "@composer dump-autoload --working-dir ./third-party --no-dev --classmap-authoritative",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./includes/composer.json",
+      "@composer dump-autoload --working-dir ./includes --no-dev --classmap-authoritative"
+    ]
   }
 }
