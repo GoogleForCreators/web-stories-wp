@@ -352,10 +352,14 @@ class HTML {
 			return;
 		}
 
-		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
+		$publisher_logo_src = $story_element->getAttribute( 'publisher-logo-src' );
+		if ( empty( $publisher_logo_src ) || $publisher_logo_src === $this->get_publisher_logo_placeholder() ) {
+			$story_element->removeAttribute( 'publisher-logo-src' );
+		}
 
-		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-			$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
+		$publisher_logo = $this->get_publisher_logo();
+		if ( ! empty( $publisher_logo ) ) {
+			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
 		}
 	}
 

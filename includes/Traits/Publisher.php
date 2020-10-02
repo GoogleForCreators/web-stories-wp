@@ -125,26 +125,8 @@ trait Publisher {
 			$logo_image_url = $this->get_valid_publisher_image( $active_publisher_logo );
 		}
 
-		// @todo Once we are enforcing setting publisher logo in the editor, we shouldn't need the fallback options.
-		// Currently, it's marked as required but that's not actually enforced.
-
-		// Finding fallback image.
-		$custom_logo_id = get_theme_mod( 'custom_logo' );
-		if ( empty( $logo_image_url ) && has_custom_logo() && $custom_logo_id ) {
-			$logo_image_url = $this->get_valid_publisher_image( $custom_logo_id );
-		}
-
-		// Try Site Icon, though it is not ideal for non-Story because it should be square.
-		$site_icon_id = get_option( 'site_icon' );
-		if ( empty( $logo_image_url ) && $site_icon_id ) {
-			$logo_image_url = $this->get_valid_publisher_image( $site_icon_id );
-		}
-
 		// Fallback to serving the WordPress logo.
 		$placeholder = $this->get_publisher_logo_placeholder();
-		if ( empty( $logo_image_url ) ) {
-			$logo_image_url = $placeholder;
-		}
 
 		/**
 		 * Filters the publisher's logo.
