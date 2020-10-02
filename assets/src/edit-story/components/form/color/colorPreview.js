@@ -32,14 +32,19 @@ import { __, _x } from '@wordpress/i18n';
  */
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
+import useFocusAndSelect from '../../../utils/useFocusAndSelect';
 import { PatternPropType } from '../../../types';
 import MULTIPLE_VALUE from '../multipleValue';
 import Popup from '../../popup';
+import { useKeyDownEffect } from '../../keyboard';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import getPreviewText from './getPreviewText';
 import getPreviewStyle from './getPreviewStyle';
+import getHexFromValue from './getHexFromValue';
 import { ColorBox } from './colorBox';
+
+const SELECT_CONTENTS_DELAY = 10;
 
 const Preview = styled(ColorBox)`
   display: flex;
@@ -137,6 +142,7 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   cursor: text;
   overflow: auto;
   border-radius: 0 4px 4px 0;
+  text-transform: uppercase;
 `;
 
 function ColorPreview({
@@ -149,18 +155,24 @@ function ColorPreview({
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
+
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
 
-  const [hexInputValue, setHexInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
+
   const previewRef = useRef(null);
+  const inputRef = useRef(null);
+  const skipValidationRef = useRef(false);
+  const selectInputContents = useRef(false);
 
   const {
     refs: { inspector },
   } = useInspector();
 
-  useEffect(() => setHexInputValue(previewText), [previewText]);
+  const { handleFocus, handleBlur } = useFocusAndSelect(inputRef);
+  useEffect(() => setInputValue(previewText), [previewText]);
 
   const colorType = value?.type;
   const isEditable =
@@ -176,40 +188,99 @@ function ColorPreview({
     'aria-label': `${editLabel}: ${label}`,
   };
 
-  const handleInputChange = useCallback(
-    (evt) => {
-      // Trim and strip initial '#' (might very well be pasted in)
-      const val = evt.target.value.trim().replace(/^#/, '');
-      setHexInputValue(val);
-      const hasNonHex = /[^0-9a-f]/i.test(val);
-      const hasValidLength = val.length === 6;
-      if (hasNonHex || !hasValidLength) {
-        // Invalid color hex, just allow it for now
-        // but don't pass it upstream
-        return;
-      }
+  const validateAndSubmitInput = useCallback(
+    ({ selectContentOnUpdate } = {}) => {
+      const hex = getHexFromValue(inputValue) ?? previewText;
+      setInputValue(hex);
 
       // Update actual color, which will in turn update hex input from value
-      const { red: r, green: g, blue: b } = parseToRgb(`#${val}`);
+      const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
+
       // Keep same opacity as before though
       const {
         color: { a },
       } = value;
+
       onChange({ color: { r, g, b, a } });
+
+      selectInputContents.current = selectContentOnUpdate;
     },
-    [value, onChange]
+    [inputValue, previewText, onChange, value]
   );
 
-  // Reset to last known "valid" color on blur
-  const handleInputBlur = useCallback(() => setHexInputValue(previewText), [
-    previewText,
-  ]);
+  const handleInputChange = useCallback((evt) => {
+    // Trim and strip initial '#' (might very well be pasted in)
+    const val = evt.target.value.trim().replace(/^#/, '');
+    setInputValue(val);
+  }, []);
+
+  const handleInputBlur = useCallback(() => {
+    if (!skipValidationRef.current) {
+      validateAndSubmitInput();
+    }
+
+    // Reset flag after use
+    skipValidationRef.current = false;
+
+    handleBlur();
+  }, [handleBlur, validateAndSubmitInput]);
+
+  const handleEsc = useCallback(() => {
+    // Revert input value and exit input focus without
+    // triggering blur validation
+    setInputValue(previewText);
+    skipValidationRef.current = true;
+    inputRef.current.blur();
+  }, [previewText]);
+
+  const handleEnter = useCallback(() => {
+    validateAndSubmitInput({ selectContentOnUpdate: true });
+  }, [validateAndSubmitInput]);
 
   // Always hide color picker on unmount - note the double arrows
   useUnmount(() => () => setPickerOpen(false));
 
   const onClose = useCallback(() => setPickerOpen(false), []);
   const spacing = useMemo(() => ({ x: 20 }), []);
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['escape'],
+      editable: true,
+    },
+    handleEsc,
+    [handleEsc]
+  );
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['enter'],
+      editable: true,
+    },
+    handleEnter,
+    [handleEnter]
+  );
+
+  useEffect(() => {
+    let selectContentsTimeout = -1;
+
+    if (selectInputContents.current) {
+      inputRef.current.select();
+
+      // When we want to select the content of the input
+      // we hold open the door for a slight moment to allow
+      // all the data to flush down the pipeline.
+      selectContentsTimeout = window.setTimeout(() => {
+        selectInputContents.current = false;
+      }, SELECT_CONTENTS_DELAY);
+    }
+
+    return () => {
+      window.clearTimeout(selectContentsTimeout);
+    };
+  }, [inputValue]);
 
   return (
     <>
@@ -225,11 +296,13 @@ function ColorPreview({
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewButton>
           <TextualInput
+            ref={inputRef}
             type="text"
             aria-label={`${inputLabel}: ${label}`}
-            value={hexInputValue ?? ''}
+            value={inputValue}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
+            onFocus={handleFocus}
           />
         </Preview>
       ) : (
