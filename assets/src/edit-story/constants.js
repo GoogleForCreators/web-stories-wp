@@ -25,8 +25,8 @@ export const LIBRARY_MAX_WIDTH = 360;
 export const INSPECTOR_MIN_WIDTH = 220;
 export const INSPECTOR_MAX_WIDTH = 280;
 export const PAGE_NAV_PADDING = 60;
-export const PAGE_NAV_BUTTON_WIDTH = 40;
-export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_WIDTH;
+export const PAGE_NAV_BUTTON_SIZE = 40;
+export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
 
 export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 412;
@@ -80,4 +80,8 @@ export const BACKGROUND_TEXT_MODE = {
 export const FONT_WEIGHT = {
   NORMAL: 400,
   BOLD: 700,
+};
+
+export const LOCAL_STORAGE_PREFIX = {
+  PANEL: 'web_stories_ui_panel_settings',
 };

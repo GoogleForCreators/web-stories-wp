@@ -19,6 +19,7 @@
  */
 import getFontFallback from './getFontFallback.js';
 
+//eslint-disable-next-line security/detect-unsafe-regex
 const FONT_VARIANT_PATTERN = /(?<weight>\d+)?(?<style>\D+)?/;
 
 /**

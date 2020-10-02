@@ -120,6 +120,9 @@ function activate( $network_wide = false ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
 	}
 
+	$database_upgrader = new Database_Upgrader();
+	$database_upgrader->init();
+
 	do_action( 'web_stories_activation', $network_wide );
 }
 

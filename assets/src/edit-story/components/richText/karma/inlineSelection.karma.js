@@ -298,9 +298,15 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         await data.fixture.events.keyboard.press('Escape');
 
         // Assume text content to be correctly formatted
+        // NOTE: Sometimes returned HTML has two single-letter bold spans, sometimes they're joined into one:
         const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
-        expect(actual).toBe(expected);
+        const expectedDouble = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
+        const expectedSingle = `<span style="font-weight: 900">F</span><span style="font-weight: 700">il</span>l in some text`;
+        expect(actual).toBeOneOf([expectedDouble, expectedSingle]);
+
+        await data.fixture.snapshot(
+          'First letter black, next two bold, rest regular'
+        );
       });
 
       it('should make black+bold+regular selection black when toggling', async () => {
@@ -326,10 +332,13 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         // Exit edit-mode
         await data.fixture.events.keyboard.press('Escape');
 
-        // Assume text content to be correctly formatted
+        // NOTE: Sometimes returned HTML has two black spans, sometimes they're joined into one:
         const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
-        expect(actual).toBe(expected);
+        const expectedDouble = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
+        const expectedSingle = `<span style="font-weight: 900">Fil</span>l in some text`;
+        expect(actual).toBeOneOf([expectedDouble, expectedSingle]);
+
+        await data.fixture.snapshot('First three letters black, rest regular');
       });
     });
   });

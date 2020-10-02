@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
  */
 import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
+import { toUTCDate } from '../../../date';
 
 export default function reshapeStoryObject(editStoryURL) {
   return function (originalStoryData) {
@@ -53,8 +53,8 @@ export default function reshapeStoryObject(editStoryURL) {
       id,
       status,
       title: title.raw,
-      modified: moment.parseZone(modified_gmt),
-      created: moment.parseZone(date_gmt),
+      modified: toUTCDate(modified_gmt),
+      created: toUTCDate(date_gmt),
       pages: updatedStoryData.pages,
       author,
       centerTargetAction: '',
