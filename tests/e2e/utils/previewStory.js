@@ -42,7 +42,7 @@ async function previewStory(editorPage) {
       throw new Error('There was an error previewing the story');
     }
     /* eslint-disable no-await-in-loop */
-    await editorPage.waitFor(1);
+    await editorPage.waitForTimeout(1);
     openTabs = await browser.pages();
     /* eslint-enable no-await-in-loop */
   }

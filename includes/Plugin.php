@@ -211,8 +211,6 @@ class Plugin {
 	 * @return void
 	 */
 	public function register_rest_routes() {
-		$fonts_controller = new Fonts_Controller();
-		$fonts_controller->register_routes();
 
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();

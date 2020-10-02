@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { dirname, basename } from 'path';
-import { execSync } from 'child_process';
+import { dirname, basename, join } from 'path';
+import { execFileSync } from 'child_process';
 import { existsSync, unlinkSync } from 'fs';
 
 /**
@@ -31,11 +31,14 @@ import { existsSync, unlinkSync } from 'fs';
  */
 function generateZipFile(source, zipName) {
   const cwd = dirname(source); // /full/path/to/build
+  const fullPath = join(source, zipName);
 
-  if (existsSync(`${source}/${zipName}`)) {
-    unlinkSync(`${source}/${zipName}`);
+  if (existsSync(fullPath)) {
+    unlinkSync(fullPath);
   }
-  execSync(`zip -rT ${zipName} ${basename(source)}`, {
+
+  const args = ['-rT', zipName, basename(source)];
+  execFileSync('zip', args, {
     cwd,
     stdio: ['pipe', 'pipe', 'ignore'],
   });

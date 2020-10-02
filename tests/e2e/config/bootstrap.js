@@ -157,6 +157,7 @@ function observeConsoleLogging() {
       return;
     }
 
+    //eslint-disable-next-line security/detect-object-injection
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
     // As of Puppeteer 1.6.1, `message.text()` wrongly returns an object of
@@ -177,7 +178,7 @@ function observeConsoleLogging() {
     // @wordpress/jest-console matchers, will cause the intended test
     // failure.
 
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console, security/detect-object-injection
     console[logFunction](text);
   });
 }
