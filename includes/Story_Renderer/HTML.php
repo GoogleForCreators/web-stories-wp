@@ -98,7 +98,9 @@ class HTML {
 
 		$this->add_poster_images();
 
-		if ( ! defined( '\AMP__VERSION' ) ) {
+		// If the AMP plugin is installed and available in a version >= than ours,
+		// all sanitization and optimization should be delegated to the AMP plugin.
+		if ( ! defined( '\AMP__VERSION' ) || version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) ) {
 			$this->sanitize_markup();
 			$this->optimize_markup();
 		}

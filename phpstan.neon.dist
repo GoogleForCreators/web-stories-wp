@@ -32,6 +32,7 @@ parameters:
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
+    - AMP__VERSION
   earlyTerminatingFunctionCalls:
     - wp_die
     - wp_send_json
