@@ -69,7 +69,7 @@ export const ROUTE_TITLES = {
   DEFAULT: __('My Stories', 'web-stories'),
 };
 
-export const primaryPaths = [
+export const PRIMARY_PATHS = [
   { value: APP_ROUTES.MY_STORIES, label: ROUTE_TITLES[APP_ROUTES.MY_STORIES] },
   {
     value: APP_ROUTES.SAVED_TEMPLATES,
@@ -87,6 +87,8 @@ export const primaryPaths = [
   {
     value: APP_ROUTES.SUPPORT,
     label: ROUTE_TITLES[APP_ROUTES.SUPPORT],
+    isExternal: true,
+    trackingEvent: 'open_support_page',
   },
 ];
 

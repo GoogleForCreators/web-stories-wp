@@ -30,10 +30,10 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BEZIER } from '../../../animation';
-import { trackEvent } from '../../../tracking';
+import { trackClick, trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { BUTTON_TYPES, primaryPaths, Z_INDEX } from '../../constants';
+import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
@@ -120,9 +120,9 @@ export function LeftRail() {
 
   const enabledPaths = useMemo(() => {
     if (enableInProgressViews) {
-      return primaryPaths;
+      return PRIMARY_PATHS;
     }
-    return primaryPaths.filter((path) => !path.inProgress);
+    return PRIMARY_PATHS.filter((path) => !path.inProgress);
   }, [enableInProgressViews]);
 
   const handleSideBarClose = useCallback(() => {
@@ -141,6 +141,10 @@ export function LeftRail() {
 
   const onCreateNewStoryClick = useCallback(async () => {
     await trackEvent('create_new_story', 'dashboard');
+  }, []);
+
+  const onExternalLinkClick = useCallback((evt, path) => {
+    trackClick(evt, path.trackingEvent, 'dashboard', path.value);
   }, []);
 
   return (
@@ -182,6 +186,11 @@ export function LeftRail() {
                         )
                       : path.label
                   }
+                  {...(path.isExternal && {
+                    rel: 'noreferrer',
+                    target: '_blank',
+                    onClick: (evt) => onExternalLinkClick(evt, path),
+                  })}
                 >
                   {path.label}
                 </NavLink>
