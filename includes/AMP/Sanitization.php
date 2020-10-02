@@ -281,7 +281,7 @@ class Sanitization {
 	/**
 	 * Returns AMP extension URLs, keyed by extension name.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return array List of extensions and their URLs.
 	 */

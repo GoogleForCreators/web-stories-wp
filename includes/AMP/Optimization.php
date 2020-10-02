@@ -43,7 +43,7 @@ use AmpProject\RemoteRequest\FilesystemRemoteGetRequest;
 /**
  * Optimization class.
  *
- * @since 1.0.0
+ * @since 1.1.0
  */
 class Optimization {
 	/**
@@ -75,6 +75,8 @@ class Optimization {
 	/**
 	 * Optimizer instance to use.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @return TransformationEngine Optimizer transformation engine to use.
 	 */
 	private function get_optimizer() {
@@ -95,6 +97,8 @@ class Optimization {
 
 	/**
 	 * Get the AmpProject\Optimizer configuration object to use.
+	 *
+	 * @since 1.1.0
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
