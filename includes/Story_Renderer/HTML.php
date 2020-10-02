@@ -82,8 +82,8 @@ class HTML {
 				esc_html__( 'Web Stories', 'web-stories' ),
 				[
 					'response'  => 500,
-					'link_url'  => esc_url( __( 'https://wp.stories.google/', 'web-stories' ) ),
-					'link_text' => esc_html__( 'Contact Support', 'web-stories' ),
+					'link_url'  => esc_url( __( 'https://wordpress.org/support/plugin/web-stories/', 'web-stories' ) ),
+					'link_text' => esc_html__( 'Visit Support Forums', 'web-stories' ),
 				]
 			);
 		}
