@@ -237,21 +237,36 @@ describe('Panels/TextStyle', () => {
     });
 
     it('should update horizontal padding with lock', () => {
-      const { getByRole, pushUpdateForObject } = renderTextStyle([textElement]);
+      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
+        textElement,
+      ]);
       const input = getByRole('textbox', {
         name: 'Edit: Horizontal & Vertical padding',
       });
-      fireEvent.change(input, { target: { value: '11' } });
+      fireEvent.change(input, { target: { value: '20' } });
       expect(pushUpdateForObject).toHaveBeenCalledWith(
         'padding',
-        { horizontal: 11, vertical: 11 },
+        { horizontal: 20, vertical: 20 },
         DEFAULT_PADDING,
         false
       );
+      const updaterFunction = pushUpdate.mock.calls[0][0];
+      const updatedContent = updaterFunction({
+        x: 40,
+        y: 40,
+        width: 100,
+        height: 100,
+      });
+      expect(updatedContent).toStrictEqual({
+        x: 20,
+        y: 20,
+        width: 140,
+        height: 140,
+      });
     });
 
     it('should update horizontal padding without lock', () => {
-      const { getByRole, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
         unlockPaddingTextElement,
       ]);
       const input = getByRole('textbox', { name: 'Edit: Horizontal padding' });
@@ -262,10 +277,21 @@ describe('Panels/TextStyle', () => {
         DEFAULT_PADDING,
         false
       );
+      const updaterFunction = pushUpdate.mock.calls[0][0];
+      const updatedContent = updaterFunction({
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100,
+      });
+      expect(updatedContent).toStrictEqual({
+        x: 39,
+        width: 122,
+      });
     });
 
     it('should update vertical padding without lock', () => {
-      const { getByRole, pushUpdateForObject } = renderTextStyle([
+      const { getByRole, pushUpdateForObject, pushUpdate } = renderTextStyle([
         unlockPaddingTextElement,
       ]);
       const input = getByRole('textbox', { name: 'Edit: Vertical padding' });
@@ -276,6 +302,17 @@ describe('Panels/TextStyle', () => {
         DEFAULT_PADDING,
         false
       );
+      const updaterFunction = pushUpdate.mock.calls[0][0];
+      const updatedContent = updaterFunction({
+        x: 50,
+        y: 50,
+        width: 100,
+        height: 100,
+      });
+      expect(updatedContent).toStrictEqual({
+        y: 38,
+        height: 124,
+      });
     });
 
     it('should not update if empty padding', () => {
