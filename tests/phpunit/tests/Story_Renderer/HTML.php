@@ -159,6 +159,7 @@ class HTML extends WP_UnitTestCase {
 
 		$this->assertNotContains( 'publisher-logo-src', $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
+		$this->assertNotContains( 'amp=', $rendered );
 	}
 
 	/**
@@ -227,6 +228,7 @@ class HTML extends WP_UnitTestCase {
 
 	/**
 	 * @covers ::add_poster_images
+	 * @covers ::remove_amp_attr
 	 */
 	public function test_add_poster_images_no_poster_no_amp() {
 		$post = self::factory()->post->create_and_get(
