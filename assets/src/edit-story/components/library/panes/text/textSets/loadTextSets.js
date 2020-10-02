@@ -76,6 +76,7 @@ export default async function loadTextSets() {
     'editorial',
     'table',
     'quote',
+    'funkyTravelReport',
   ];
 
   const results = await Promise.all(

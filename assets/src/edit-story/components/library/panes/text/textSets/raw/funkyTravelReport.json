@@ -1,0 +1,661 @@
+{
+  "current": "f57683dc-9f26-4cf0-a76b-4c87793d7457",
+  "selection": [],
+  "story": {
+    "stylePresets": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
+      "colors": [
+        {
+          "color": {
+            "r": 33,
+            "g": 33,
+            "b": 33
+          }
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 92,
+            "b": 255
+          }
+        },
+        {
+          "color": {
+            "r": 61,
+            "g": 46,
+            "b": 255
+          }
+        },
+        {
+          "color": {
+            "r": 200,
+            "g": 122,
+            "b": 255
+          }
+        },
+        {
+          "color": {
+            "r": 255,
+            "g": 163,
+            "b": 214
+          }
+        },
+        {
+          "color": {
+            "r": 255,
+            "g": 187,
+            "b": 196
+          }
+        },
+        {
+          "color": {
+            "r": 255,
+            "g": 187,
+            "b": 196,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 246,
+            "g": 147,
+            "b": 147,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 240,
+            "g": 176,
+            "b": 119,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 220,
+            "g": 211,
+            "b": 67,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 153,
+            "g": 199,
+            "b": 39,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 119,
+            "g": 151,
+            "b": 18,
+            "a": 0.6
+          }
+        }
+      ]
+    }
+  },
+  "version": 24,
+  "pages": [
+    {
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "b92e3bfc-326d-45ad-aa61-eed31302cb83"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Nunito",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 800],
+              [1, 800],
+              [0, 900],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1011,
+              "des": -353,
+              "tAsc": 1011,
+              "tDes": -353,
+              "tLGap": 0,
+              "wAsc": 1092,
+              "wDes": 281,
+              "xH": 487,
+              "capH": 705,
+              "yMin": -275,
+              "yMax": 1081,
+              "hAsc": 1011,
+              "hDes": -353,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "id": "4e5aa208-81a2-4318-b039-87a16cbaef6b",
+          "content": "<span style=\"letter-spacing: 0.02em\">A QUICK RECAP TO OUR</span>",
+          "x": 45,
+          "y": 334,
+          "width": 322,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 54,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 900\">Week Trip to Hawaii</span>",
+          "fontWeight": 400,
+          "x": 45,
+          "y": 366,
+          "width": 322,
+          "height": 131,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "50188b2a-4f7a-47f8-8211-928159e8a67c"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Nothing You Could Do",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 1024,
+              "asc": 959,
+              "des": -407,
+              "tAsc": 962,
+              "tDes": -407,
+              "tLGap": 0,
+              "wAsc": 959,
+              "wDes": 407,
+              "xH": 462,
+              "capH": 758,
+              "yMin": -407,
+              "yMax": 959,
+              "hAsc": 959,
+              "hDes": -407,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Surf all day!",
+          "fontWeight": 400,
+          "x": 45,
+          "y": 505,
+          "width": 322,
+          "height": 47,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "e88ab169-10ba-450f-87a7-1502eaa8ca69"
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "34a757a7-8b5b-4aae-b1e6-2a23e93d9d2b"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "969d2a3d-6031-4e5e-94e9-6f2a65fd0645"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Nunito",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 800],
+              [1, 800],
+              [0, 900],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1011,
+              "des": -353,
+              "tAsc": 1011,
+              "tDes": -353,
+              "tLGap": 0,
+              "wAsc": 1092,
+              "wDes": 281,
+              "xH": 487,
+              "capH": 705,
+              "yMin": -275,
+              "yMax": 1081,
+              "hAsc": 1011,
+              "hDes": -353,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #4dbd58; letter-spacing: 0.02em\">A QUICK RECAP TO OUR</span>",
+          "width": 322,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "4e5aa208-81a2-4318-b039-87a16cbaef6b",
+          "id": "98e01366-1087-47d7-a7ad-e33746d41b04",
+          "x": 45,
+          "y": 334
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 54,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 900; color: #ffd600\">Week Trip to Hawaii</span>",
+          "fontWeight": 400,
+          "width": 322,
+          "height": 131,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "50188b2a-4f7a-47f8-8211-928159e8a67c",
+          "id": "e72af25f-1743-41d6-8e1b-482fdbc6aca2",
+          "x": 45,
+          "y": 366
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Nothing You Could Do",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 1024,
+              "asc": 959,
+              "des": -407,
+              "tAsc": 962,
+              "tDes": -407,
+              "tLGap": 0,
+              "wAsc": 959,
+              "wDes": 407,
+              "xH": 462,
+              "capH": 758,
+              "yMin": -407,
+              "yMax": 959,
+              "hAsc": 959,
+              "hDes": -407,
+              "lGap": 0
+            }
+          },
+          "fontSize": 36,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #39999f\">Surf all day!</span>",
+          "fontWeight": 400,
+          "width": 322,
+          "height": 47,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "e88ab169-10ba-450f-87a7-1502eaa8ca69",
+          "id": "95ecf4ee-4cec-48a5-b18b-11a657d6d942",
+          "x": 45,
+          "y": 505
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "f57683dc-9f26-4cf0-a76b-4c87793d7457"
+    }
+  ]
+}
