@@ -41,12 +41,14 @@ use DOMElement;
  *
  * @see \AMP_Theme_Support::ensure_required_markup()
  * @see https://github.com/google/web-stories-wp/issues/4193
+ *
+ * @since 1.0.0
  */
 class Canonical_Sanitizer extends \AMP_Base_Sanitizer {
 	/**
 	 * Sanitize the HTML contained in the DOMDocument received by the constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */

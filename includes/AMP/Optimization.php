@@ -42,12 +42,14 @@ use AmpProject\RemoteRequest\FilesystemRemoteGetRequest;
 
 /**
  * Optimization class.
+ *
+ * @since 1.0.0
  */
 class Optimization {
 	/**
 	 * Optimizes a document.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
 	 *
@@ -102,7 +104,7 @@ class Optimization {
 		/**
 		 * Filter whether the AMP Optimizer should use server-side rendering or not.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param bool $enable_ssr Whether the AMP Optimizer should use server-side rendering or not.
 		 */
@@ -123,7 +125,7 @@ class Optimization {
 		/**
 		 * Filter the configuration to be used for the AMP Optimizer.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param array $configuration Associative array of configuration data.
 		 */

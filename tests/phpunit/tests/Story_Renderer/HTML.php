@@ -117,6 +117,45 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Tests that publisher logo is correctly replaced.
+	 *
+	 * @covers \Google\Web_Stories\Story_Renderer\HTML::add_publisher_logo
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo_placeholder
+	 * @covers \Google\Web_Stories\Traits\Publisher::get_publisher_logo
+	 * @covers ::add_publisher_logo
+	 */
+	public function test_add_publisher_logo() {
+		$attachment_id = self::factory()->attachment->create_upload_object( __DIR__ . '/../../data/attachment.jpg', 0 );
+		add_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $attachment_id );
+
+		$post = self::factory()->post->create_and_get(
+			[
+				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
+				'post_content' => '<html><head></head><body><amp-story></amp-story></body></html>',
+			]
+		);
+
+		$story = new Story();
+		$story->load_from_post( $post );
+		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+		$placeholder = $renderer->get_publisher_logo_placeholder();
+
+		wp_update_post(
+			[
+				'ID'           => $post->ID,
+				'post_content' => '<html><head></head><body><amp-story publisher-logo-src="' . $placeholder . '"></amp-story></body></html>',
+			]
+		);
+
+		$rendered = $renderer->render();
+
+		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+
+		$this->assertContains( 'attachment', $rendered );
+		$this->assertNotContains( $placeholder, $rendered );
+	}
+
+	/**
 	 * @covers ::add_poster_images
 	 * @covers ::get_poster_images
 	 * @covers ::get_element_by_tag_name

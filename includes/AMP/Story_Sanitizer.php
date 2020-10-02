@@ -27,8 +27,6 @@
 namespace Google\Web_Stories\AMP;
 
 use AMP_Base_Sanitizer;
-use DOMElement;
-use Google\Web_Stories\Traits\Publisher;
 
 /**
  * Story sanitizer.
@@ -37,15 +35,13 @@ use Google\Web_Stories\Traits\Publisher;
  *
  * @see AMP_Story_Sanitizer
  *
- * @since 1.0.0
+ * @since 1.1.0
  */
 class Story_Sanitizer extends AMP_Base_Sanitizer {
-	use Publisher;
-
 	/**
 	 * Sanitize the HTML contained in the DOMDocument received by the constructor.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -53,17 +49,13 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 		$story_element = $this->dom->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
 		if ( $story_element ) {
-			// Add a publisher logo if missing or just a placeholder.
-			$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
-
-			if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-				$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
-			}
-
-			// Without a poster, a story becomes invalid AMP.
+			// Without a poster or a publisher logo, a story becomes invalid AMP.
 			// Remove the 'amp' attribute to not mark it as an AMP document anymore,
 			// preventing errors from showing up in GSC and other tools.
-			if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
+			if (
+				! $story_element->getAttribute( 'poster-portrait-src' ) ||
+				! $story_element->getAttribute( 'publisher-logo-src' )
+			) {
 				$this->dom->html->removeAttribute( 'amp' );
 			}
 		}

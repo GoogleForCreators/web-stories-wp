@@ -43,13 +43,13 @@ use DOMElement;
 /**
  * Sanitization class.
  *
- * @since 1.0.0
+ * @since 1.1.0
  */
 class Sanitization {
 	/**
 	 * Sanitizes a document.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
 	 *
@@ -66,7 +66,7 @@ class Sanitization {
 	/**
 	 * Adds missing scripts.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
 	 * @param array    $scripts List of found scripts.
@@ -281,6 +281,8 @@ class Sanitization {
 	/**
 	 * Returns AMP extension URLs, keyed by extension name.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return array List of extensions and their URLs.
 	 */
 	protected function get_extension_sources() {
@@ -306,7 +308,7 @@ class Sanitization {
 	 * to elements associated with the admin bar and other elements that are provided by the `amp_dev_mode_element_xpaths`
 	 * filter.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
@@ -318,7 +320,7 @@ class Sanitization {
 		 * attributes to be added to the admin bar. It will also add the attribute to all elements which match the
 		 * queries for the expressions returned by the 'web_stories_amp_dev_mode_element_xpaths' filter.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param bool Whether AMP dev mode is enabled.
 		 */
@@ -341,7 +343,7 @@ class Sanitization {
 	 * accessing options from the database, requiring AMP__VERSION,
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return array Sanitizers.
 	 */
@@ -367,7 +369,7 @@ class Sanitization {
 		/**
 		 * Filters the content sanitizers.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param array  $sanitizers Sanitizers.
 		 */
@@ -425,7 +427,7 @@ class Sanitization {
 	/**
 	 * Validation error callback.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param array $error Error info, especially code.
 	 * @param array $data Additional data, including the node.
@@ -446,7 +448,7 @@ class Sanitization {
 		 * validation request and so they are not suitable for plugins to vary
 		 * sanitization by.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
 		 *
 		 * @param null|bool $sanitized Whether sanitized; this is initially null, and changing it to bool causes the validation error to be forced.

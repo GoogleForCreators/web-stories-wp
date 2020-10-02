@@ -24,44 +24,19 @@ use Google\Web_Stories\Traits\Publisher;
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
  */
 class Story_Sanitizer extends \WP_UnitTestCase {
-	use Publisher;
-
-	public function setUp() {
-		parent::setUp();
-
-		add_filter(
-			'web_stories_publisher_logo',
-			static function() {
-				return 'https://example.com/publisher-logo.png';
-			}
-		);
-	}
-
-	public function tearDown() {
-		remove_all_filters( 'web_stories_publisher_logo' );
-
-		parent::tearDown();
-	}
-
 	public function get_publisher_logo_data() {
-		$placeholder = $this->get_publisher_logo_placeholder();
-
 		return [
-			'publisher_logo_kept'        => [
+			'publisher_logo_exists'  => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp=""><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
-			'publisher_logo_missing'     => [
+			'publisher_logo_missing' => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png" publisher-logo-src="https://example.com/publisher-logo.png"></amp-story>',
+				'<html><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
-			'publisher_logo_empty'       => [
+			'publisher_logo_empty'   => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/publisher-logo.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
-			],
-			'publisher_logo_placeholder' => [
-				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="' . $placeholder . '" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/publisher-logo.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
 		];
 	}
@@ -75,11 +50,12 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	 */
 	public function test_sanitize_publisher_logo( $source, $expected ) {
 		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
+		$dom->documentElement->setAttribute( 'amp', '' );
 
 		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom );
 		$sanitizer->sanitize();
 
-		$actual = AMP_DOM_Utils::get_content_from_dom( $dom );
+		$actual = $dom->saveHTML( $dom->documentElement );
 		$this->assertEquals( $expected, $actual );
 	}
 

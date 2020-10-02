@@ -31,11 +31,14 @@ use DOMElement;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Traits\Publisher;
 
 /**
  * Class Story_Renderer
  */
 class HTML {
+	use Publisher;
+
 	/**
 	 * Current post.
 	 *
@@ -91,11 +94,13 @@ class HTML {
 		$this->document = $document;
 
 		// Run all further transformations on the Document instance.
+		// These need to run before sanitization so it works even when
+		// sanitization is done by the AMP plugin.
 
 		$this->transform_html_start_tag();
 		$this->transform_a_tags();
 		$this->insert_analytics_configuration();
-
+		$this->add_publisher_logo();
 		$this->add_poster_images();
 
 		// If the AMP plugin is installed and available in a version >= than ours,
@@ -209,6 +214,31 @@ class HTML {
 	}
 
 	/**
+	 * Replaces the placeholder of publisher logo in the content.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return void
+	 */
+	protected function add_publisher_logo() {
+		/* @var DOMElement $story_element The <amp-story> element. */
+		$story_element = $this->get_element_by_tag_name( 'amp-story' );
+
+		if ( ! $story_element ) {
+			return;
+		}
+
+		if ( $story_element ) {
+			// Add a publisher logo if missing or just a placeholder.
+			$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
+
+			if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
+				$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
+			}
+		}
+	}
+
+	/**
 	 * Adds square, and landscape poster images to the <amp-story>.
 	 *
 	 * @since 1.0.0
@@ -279,7 +309,7 @@ class HTML {
 	/**
 	 * Sanitizes markup to be valid AMP.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -291,7 +321,7 @@ class HTML {
 	/**
 	 * Optimizes AMP markup.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
