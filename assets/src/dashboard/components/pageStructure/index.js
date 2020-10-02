@@ -30,7 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { BEZIER } from '../../../animation';
-import { trackClick, trackEvent } from '../../../tracking';
+import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
 import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';
@@ -143,8 +143,8 @@ export function LeftRail() {
     await trackEvent('create_new_story', 'dashboard');
   }, []);
 
-  const onExternalLinkClick = useCallback((evt, path) => {
-    trackClick(evt, path.trackingEvent, 'dashboard', path.value);
+  const onExternalLinkClick = useCallback((path) => {
+    trackEvent(path.trackingEvent, 'dashboard');
   }, []);
 
   return (
@@ -173,12 +173,7 @@ export function LeftRail() {
         <Content>
           <NavList>
             {enabledPaths.map((path) => (
-              <NavListItem
-                key={path.value}
-                onClick={(evt) =>
-                  path.isExternal ? onExternalLinkClick(evt, path) : () => {}
-                }
-              >
+              <NavListItem key={path.value}>
                 <NavLink
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
@@ -194,6 +189,7 @@ export function LeftRail() {
                   {...(path.isExternal && {
                     rel: 'noreferrer',
                     target: '_blank',
+                    onClick: () => onExternalLinkClick(path),
                   })}
                 >
                   {path.label}
