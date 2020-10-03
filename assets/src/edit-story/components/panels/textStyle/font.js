@@ -168,7 +168,6 @@ function FontControls({ selectedElements, pushUpdate }) {
         {fontWeights && (
           <>
             <DropDown
-              minWidth={140}
               data-testid="font.weight"
               aria-label={__('Font weight', 'web-stories')}
               placeholder={__('(multiple)', 'web-stories')}
