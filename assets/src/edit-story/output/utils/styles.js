@@ -18,11 +18,13 @@
  * Internal dependencies
  */
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
+import theme from '../../theme';
 
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
   const fullToSafeRatio = 1 / safeToFullRatio;
-  const pageBackgroundColor = '#1b1d1c'; /* theme.colors.bg.workspace */
+  // Match page background color to the workspace background color.
+  const pageBackgroundColor = theme.colors.bg.workspace;
   return (
     <style
       amp-custom=""
