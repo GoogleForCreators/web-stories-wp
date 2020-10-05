@@ -1,5 +1,5 @@
 {
-  "current": "cb1c61cb-d9d4-4a76-ae62-af05252f80bd",
+  "current": "f7804ed0-0cec-4d0e-9273-c2462cd9297f",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -1421,7 +1421,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"color: #fff\">CONTACT</span>",
+          "content": "<span style=\"font-weight: 500; color: #fff\">CONTACT</span>",
           "fontWeight": 400,
           "x": 41,
           "y": 388,
