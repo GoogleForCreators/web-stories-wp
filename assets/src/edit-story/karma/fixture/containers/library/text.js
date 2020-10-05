@@ -32,7 +32,7 @@ export default class Text extends Container {
     return this.getByRole('list', { name: /Text Sets/ });
   }
 
-  textSets() {
+  get textSets() {
     return this.getAllByRole('listitem');
   }
 
