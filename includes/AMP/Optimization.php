@@ -126,6 +126,10 @@ class Optimization {
 			);
 		}
 
+		$configuration = [
+			Configuration::KEY_TRANSFORMERS => $transformers,
+		];
+
 		/**
 		 * Filter the configuration to be used for the AMP Optimizer.
 		 *
@@ -133,12 +137,7 @@ class Optimization {
 		 *
 		 * @param array $configuration Associative array of configuration data.
 		 */
-		$configuration = apply_filters(
-			'web_stories_amp_optimizer_config',
-			[
-				Configuration::KEY_TRANSFORMERS => $transformers,
-			]
-		);
+		$configuration = apply_filters( 'web_stories_amp_optimizer_config', $configuration );
 
 		return new Configuration( $configuration );
 	}

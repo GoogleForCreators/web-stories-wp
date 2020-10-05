@@ -313,6 +313,11 @@ class Sanitization {
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
 	protected function is_amp_dev_mode() {
+		// For the few sites that forcibly show the admin bar even when the user is logged out, only enable dev
+		// mode if the user is actually logged in. This prevents the dev mode from being served to crawlers
+		// when they index the AMP version.
+		$dev_mode_enabled = ( is_admin_bar_showing() && is_user_logged_in() );
+
 		/**
 		 * Filters whether AMP dev mode is enabled.
 		 *
@@ -324,15 +329,7 @@ class Sanitization {
 		 *
 		 * @param bool Whether AMP dev mode is enabled.
 		 */
-		return apply_filters(
-			'web_stories_amp_dev_mode_enabled',
-			(
-				// For the few sites that forcibly show the admin bar even when the user is logged out, only enable dev
-				// mode if the user is actually logged in. This prevents the dev mode from being served to crawlers
-				// when they index the AMP version.
-				( is_admin_bar_showing() && is_user_logged_in() )
-			)
-		);
+		return apply_filters( 'web_stories_amp_dev_mode_enabled', $dev_mode_enabled );
 	}
 
 	/**
