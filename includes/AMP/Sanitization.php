@@ -298,6 +298,14 @@ class Sanitization {
 			$specs[ $extension_name ] = $src;
 		}
 
+		if ( isset( $specs['amp-experiment'] ) ) {
+			/*
+			 * Version 1.0 of amp-experiment is still experimental and requires the user to enable it.
+			 * @todo Revisit once amp-experiment is no longer experimental.
+			 */
+			$specs['amp-experiment'] = 'https://cdn.ampproject.org/v0/amp-experiment-0.1.js';
+		}
+
 		return $specs;
 	}
 
