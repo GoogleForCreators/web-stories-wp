@@ -122,6 +122,7 @@ class HTML {
 
 		$this->add_noscript_amp_boilerplate();
 		$this->transform_html_start_tag();
+		$this->transform_a_tags();
 		$this->insert_analytics_configuration();
 
 		$this->add_poster_images();
@@ -226,6 +227,26 @@ class HTML {
 		$lang = get_bloginfo( 'language' );
 		if ( $lang ) {
 			$html->setAttribute( 'lang', esc_attr( $lang ) );
+		}
+	}
+
+	/**
+	 * Transform all a tags to add target and rel attributes.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	protected function transform_a_tags() {
+		$hyperlinks = $this->document->getElementsByTagName( 'a' );
+		/* @var DOMElement $hyperlink The <a> element */
+		foreach ( $hyperlinks as $hyperlink ) {
+			if ( ! $hyperlink->getAttribute( 'target' ) ) {
+				$hyperlink->setAttribute( 'target', '_blank' );
+			}
+			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
+				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			}
 		}
 	}
 
@@ -439,12 +460,10 @@ class HTML {
 	 * @return string[] Images.
 	 */
 	protected function get_poster_images() {
-		$images = [
+		return [
 			'poster-portrait-src'  => $this->story->get_poster_portrait(),
 			'poster-square-src'    => $this->story->get_poster_square(),
 			'poster-landscape-src' => $this->story->get_poster_landscape(),
 		];
-
-		return array_filter( $images );
 	}
 }

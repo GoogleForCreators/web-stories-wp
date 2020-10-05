@@ -33,7 +33,8 @@ import { Section } from '../../../common';
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
-import { PANE_PADDING, useRovingTabIndex } from '../../shared';
+import { PANE_PADDING } from '../../shared';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { getTextSets } from './utils';
 import TextSet from './textSet';
 
@@ -106,9 +107,10 @@ function TextSets() {
             height: TEXT_SET_SIZE / PAGE_RATIO,
           }}
         >
-          {filteredTextSets.map((elements, index) => (
-            <TextSet key={index} elements={elements} />
-          ))}
+          {filteredTextSets.map(
+            (elements, index) =>
+              elements.length > 0 && <TextSet key={index} elements={elements} />
+          )}
         </UnitsProvider>
       </TextSetContainer>
     </Section>

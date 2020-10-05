@@ -35,6 +35,7 @@ import { PatternPropType } from '../../types';
 import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
+import useFocusTrapping from '../../utils/useFocusTrapping';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
@@ -135,6 +136,7 @@ function ColorPicker({
   );
 
   useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
+  useFocusTrapping({ ref: containerRef });
 
   return (
     <CSSTransition in appear={true} classNames="picker" timeout={300}>

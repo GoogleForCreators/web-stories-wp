@@ -22,14 +22,15 @@ import { act, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { FontProvider } from '../../../../app/font';
-import { TextIcon } from '../../panes/text';
-import APIContext from '../../../../app/api/context';
+import TextIcon from '../../panes/text/textIcon';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
 
 jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';
+import FontContext from '../../../../app/font/context';
+import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
+import { curatedFontNames } from '../../../../app/font/curatedFonts';
 
 describe('TextTab', () => {
   const insertElement = jest.fn();
@@ -42,22 +43,26 @@ describe('TextTab', () => {
   });
 
   it('should insert text with default text style on shortcut click', async () => {
-    const getAllFontsPromise = Promise.resolve([]);
-    const apiContextValue = {
+    const availableCuratedFonts = fontsListResponse.filter(
+      (font) => curatedFontNames.indexOf(font.name) > 0
+    );
+
+    const fontContextValues = {
+      state: {
+        fonts: fontsListResponse,
+        recentFonts: [],
+        curatedFonts: availableCuratedFonts,
+      },
       actions: {
-        getAllFonts: () => getAllFontsPromise,
+        ensureMenuFontsLoaded: () => {},
       },
     };
-    await act(async () => {
+    await act(() => {
       const { getByLabelText } = renderWithTheme(
-        <APIContext.Provider value={apiContextValue}>
-          <FontProvider apiContextValue>
-            <TextIcon />
-          </FontProvider>
-        </APIContext.Provider>
+        <FontContext.Provider value={fontContextValues}>
+          <TextIcon />
+        </FontContext.Provider>
       );
-
-      await getAllFontsPromise;
 
       fireEvent.click(getByLabelText('Add new text element'));
     });

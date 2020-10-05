@@ -26,7 +26,6 @@ import { useMemo } from 'react';
 import { useConfig } from '../config';
 import { createContext } from '../../utils';
 import dataAdapter from './wpAdapter';
-import useFontApi from './useFontApi';
 import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
@@ -53,8 +52,6 @@ export default function ApiProvider({ children }) {
     storyApi: api.stories,
   });
 
-  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
-
   const { media, api: mediaApi } = useMediaApi(dataAdapter, {
     globalMediaApi: api.media,
   });
@@ -78,7 +75,6 @@ export default function ApiProvider({ children }) {
         settingsApi,
         storyApi,
         templateApi,
-        fontApi,
         usersApi,
       },
     }),
@@ -93,7 +89,6 @@ export default function ApiProvider({ children }) {
       settingsApi,
       storyApi,
       templateApi,
-      fontApi,
       usersApi,
     ]
   );

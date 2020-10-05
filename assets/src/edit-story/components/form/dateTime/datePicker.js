@@ -19,9 +19,14 @@
  */
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import { useRef, useCallback, useMemo } from 'react';
+import { useRef, useCallback, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { _x } from '@wordpress/i18n';
 
 const CalendarWrapper = styled.div`
   min-height: 236px;
@@ -39,12 +44,84 @@ function DatePicker({ currentDate, onChange, onViewChange }) {
     [value, onChange]
   );
 
+  const updateTabIndexes = useCallback(
+    (setFocus = false) => {
+      // Set tabIndex to -1 for every except for the first button.
+      if (nodeRef.current) {
+        // Allow tabbing to sections inside the calendar.
+        const navButtons = [
+          ...nodeRef.current.querySelectorAll(
+            '.react-calendar__navigation button'
+          ),
+        ];
+        navButtons[0].tabIndex = '0';
+        navButtons.shift();
+        for (const btn of navButtons) {
+          btn.tabIndex = '-1';
+        }
+
+        // Dates / days.
+        const buttons = [
+          ...nodeRef.current.querySelectorAll(
+            '.react-calendar__viewContainer button'
+          ),
+        ];
+
+        let foundActive = false;
+        for (const btn of buttons) {
+          if (!btn.classList.contains('react-calendar__tile--now')) {
+            btn.tabIndex = '-1';
+          } else {
+            btn.tabIndex = '0';
+            if (setFocus) {
+              // When changing view we need to explicitly set focus again,
+              // It seems to not be happening by default.
+              btn.focus();
+            }
+            foundActive = true;
+          }
+        }
+        if (!foundActive) {
+          // Assume first as active.
+          buttons[0].tabIndex = '0';
+          buttons[0].focus();
+        }
+      }
+    },
+    [nodeRef]
+  );
+
+  useEffect(() => {
+    updateTabIndexes();
+  }, [updateTabIndexes]);
+
   return (
     <CalendarWrapper ref={nodeRef}>
       <Calendar
         value={value}
         onChange={handleOnChange}
         onViewChange={onViewChange}
+        onActiveStartDateChange={() => updateTabIndexes(true /* Set focus */)}
+        nextAriaLabel={_x(
+          'Next',
+          'This label can apply to next month, year and/or decade',
+          'web-stories'
+        )}
+        prevAriaLabel={_x(
+          'Previous',
+          'This label can apply to previous month, year and/or decade',
+          'web-stories'
+        )}
+        next2AriaLabel={_x(
+          'Jump forward',
+          'This label can apply to month, year and/or decade',
+          'web-stories'
+        )}
+        prev2AriaLabel={_x(
+          'Jump backwards',
+          'This label can apply to month, year and/or decade',
+          'web-stories'
+        )}
       />
     </CalendarWrapper>
   );

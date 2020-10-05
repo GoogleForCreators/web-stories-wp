@@ -25,17 +25,9 @@ import { useCallback, useEffect, useState } from 'react';
  */
 import Context from '../../../edit-story/app/font/context';
 import useLoadFontFiles from '../../../edit-story/app/font/actions/useLoadFontFiles';
-import useApi from '../api/useApi';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);
-  const { getAllFonts } = useApi(
-    ({
-      actions: {
-        fontApi: { getAllFonts },
-      },
-    }) => ({ getAllFonts })
-  );
 
   const getFontBy = useCallback(
     (key, value) => {
@@ -55,17 +47,35 @@ function FontProvider({ children }) {
     [getFontBy]
   );
 
+  const getFonts = useCallback(
+    () =>
+      import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts').then(
+        (res) => res.default
+      ),
+    []
+  );
+
   useEffect(() => {
     let mounted = true;
-    getAllFonts().then((newFonts) => {
+    async function loadFonts() {
+      const newFonts = await getFonts();
+      const formattedFonts = newFonts.map((font) => ({
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
+
       if (mounted) {
-        setFonts(newFonts);
+        setFonts(formattedFonts);
       }
-    });
+    }
+
+    loadFonts();
+
     return () => {
       mounted = false;
     };
-  }, [getAllFonts]);
+  }, [getFonts]);
 
   const maybeEnqueueFontStyle = useLoadFontFiles({ getFontByName });
 

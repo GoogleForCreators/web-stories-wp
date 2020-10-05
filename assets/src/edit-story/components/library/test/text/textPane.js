@@ -23,17 +23,21 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { FontProvider } from '../../../../app/font';
-import { TextPane } from '../../panes/text';
-import APIContext from '../../../../app/api/context';
+import TextPane from '../../panes/text/textPane';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
 
 jest.mock('../../useLibrary');
+jest.mock('../../../../app/font/useFont');
+import useFont from '../../../../app/font/useFont';
 import useLibrary from '../../useLibrary';
+import FontContext from '../../../../app/font/context';
+import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
+import { curatedFontNames } from '../../../../app/font/curatedFonts';
 
 describe('TextPane', () => {
   const insertElement = jest.fn();
+  const maybeEnqueueFontStyle = jest.fn();
   beforeAll(() => {
     useLibrary.mockImplementation((selector) =>
       selector({
@@ -42,16 +46,30 @@ describe('TextPane', () => {
         },
       })
     );
+
+    useFont.mockImplementation(() => ({
+      actions: {
+        maybeEnqueueFontStyle: maybeEnqueueFontStyle,
+      },
+    }));
   });
 
   it('should insert text with default text style on pressing quick action', async () => {
-    const getAllFontsPromise = Promise.resolve([]);
-    const apiContextValue = {
+    const availableCuratedFonts = fontsListResponse.filter(
+      (font) => curatedFontNames.indexOf(font.name) > 0
+    );
+
+    const fontContextValues = {
+      state: {
+        fonts: fontsListResponse,
+        recentFonts: [],
+        curatedFonts: availableCuratedFonts,
+      },
       actions: {
-        getAllFonts: () => getAllFontsPromise,
+        ensureMenuFontsLoaded: () => {},
       },
     };
-    await act(async () => {
+    await act(() => {
       const { getByRole } = renderWithTheme(
         <FlagsProvider
           features={{
@@ -59,15 +77,11 @@ describe('TextPane', () => {
             showTextAndShapesSearchInput: false,
           }}
         >
-          <APIContext.Provider value={apiContextValue}>
-            <FontProvider apiContextValue>
-              <TextPane isActive={true} />
-            </FontProvider>
-          </APIContext.Provider>
+          <FontContext.Provider value={fontContextValues}>
+            <TextPane isActive={true} />
+          </FontContext.Provider>
         </FlagsProvider>
       );
-
-      await getAllFontsPromise;
 
       fireEvent.click(getByRole('button', { name: 'Add new text' }));
     });
