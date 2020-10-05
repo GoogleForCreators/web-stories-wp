@@ -86,7 +86,7 @@ class Embed_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array  $attributes Embed render attributes.
+	 * @param array $attributes Embed render attributes.
 	 *
 	 * @return string Rendered embed output.
 	 */
