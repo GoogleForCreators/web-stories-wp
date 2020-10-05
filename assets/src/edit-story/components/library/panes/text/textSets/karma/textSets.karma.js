@@ -60,7 +60,9 @@ describe('Text Sets Library Panel', () => {
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should display text sets', async () => {});
 
-    it('should allow inserting text sets', async () => {
+    // Disable reason: will be implemented with enabling the feature flag.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow inserting text sets', async () => {
       const textSet = await waitFor(
         () =>
           fixture.editor.library.getAllByRole('listitem', {
