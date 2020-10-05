@@ -1,5 +1,5 @@
 {
-  "current": "0bdd1849-0470-40fa-b0b0-35cbeb26c7f5",
+  "current": "d16fadad-a391-4a23-ad12-1c918b49c63b",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -104,7 +104,7 @@
           "content": "<span style=\"font-weight: 700\">Contact us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 457,
+          "y": 399,
           "width": 332,
           "height": 25,
           "scale": 100,
@@ -172,16 +172,16 @@
           "textAlign": "left",
           "padding": {
             "locked": true,
-            "horizontal": 0,
-            "vertical": 0
+            "horizontal": 1,
+            "vertical": 1
           },
           "type": "text",
           "content": "<span style=\"text-decoration: underline\">example@google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 489,
+          "y": 429,
           "width": 332,
-          "height": 21,
+          "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -254,7 +254,7 @@
           "content": "<span style=\"font-weight: 700\">Visit us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 544,
+          "y": 486,
           "width": 332,
           "height": 25,
           "scale": 100,
@@ -322,21 +322,21 @@
           "textAlign": "left",
           "padding": {
             "locked": true,
-            "horizontal": 0,
-            "vertical": 0
+            "horizontal": 1,
+            "vertical": 1
           },
           "type": "text",
           "content": "<span style=\"text-decoration: underline\">example@google.com</span>",
           "fontWeight": 400,
           "width": 332,
-          "height": 21,
+          "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "eba27b94-462b-4a9b-9a61-ee63545ebf9d",
           "id": "f69b6c0b-214d-4095-848f-740099738cf2",
           "x": 40,
-          "y": 576,
+          "y": 516,
           "marginOffset": 2.306250000000002
         }
       ],
@@ -445,7 +445,7 @@
           "content": "<span style=\"font-weight: 700\">Contact us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 492,
+          "y": 434,
           "width": 165,
           "height": 23,
           "scale": 100,
@@ -520,7 +520,7 @@
           "content": "mailaddress@google.com",
           "fontWeight": 400,
           "x": 167,
-          "y": 492,
+          "y": 434,
           "width": 205,
           "height": 23,
           "scale": 100,
@@ -595,7 +595,7 @@
           "content": "<span style=\"font-weight: 700\">Visit us</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 535,
+          "y": 477,
           "width": 61,
           "height": 23,
           "scale": 100,
@@ -677,7 +677,7 @@
           "basedOn": "eba27b94-462b-4a9b-9a61-ee63545ebf9d",
           "id": "e7683265-53c8-41b6-8792-3acd203f5740",
           "x": 192,
-          "y": 535,
+          "y": 477,
           "type": "text",
           "marginOffset": 0.799000000000003
         },
@@ -698,7 +698,7 @@
           },
           "type": "shape",
           "x": 40,
-          "y": 483,
+          "y": 425,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -736,7 +736,7 @@
           "basedOn": "5408eb73-2617-46de-8cd6-5726c0faf63f",
           "id": "cad358d9-7622-4887-9f36-b8d494b182aa",
           "x": 40,
-          "y": 570
+          "y": 512
         },
         {
           "opacity": 100,
@@ -765,7 +765,7 @@
           "basedOn": "5408eb73-2617-46de-8cd6-5726c0faf63f",
           "id": "38194ae6-7e3b-4545-9cd2-011d829f5f51",
           "x": 40,
-          "y": 527
+          "y": 469
         }
       ],
       "backgroundColor": {
@@ -825,7 +825,7 @@
           },
           "type": "shape",
           "x": 119,
-          "y": 534,
+          "y": 476,
           "width": 174,
           "height": 55,
           "scale": 100,
@@ -904,7 +904,7 @@
           "content": "<span style=\"text-decoration: underline\">example.google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 487,
+          "y": 429,
           "width": 332,
           "height": 20,
           "scale": 100,
@@ -985,7 +985,7 @@
           "content": "<span style=\"font-weight: 700\">VISIT OUR WEBSITE</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 456,
+          "y": 398,
           "width": 332,
           "height": 26,
           "scale": 100,
@@ -1066,7 +1066,7 @@
           "content": "<span style=\"font-weight: 700; color: #fff\">CONTACT US</span>",
           "fontWeight": 400,
           "x": 143,
-          "y": 551,
+          "y": 493,
           "width": 126,
           "height": 26,
           "scale": 100,
@@ -1133,7 +1133,7 @@
           },
           "type": "shape",
           "x": 108,
-          "y": 538,
+          "y": 481,
           "width": 202,
           "height": 49,
           "scale": 100,
@@ -1210,7 +1210,7 @@
           "content": "Contact us",
           "fontWeight": 400,
           "x": 109,
-          "y": 539,
+          "y": 482,
           "width": 200,
           "height": 47,
           "scale": 100,
@@ -1293,7 +1293,7 @@
           "basedOn": "fbbd3873-668c-4515-a153-25275df890d7",
           "id": "56f6ce55-6bcb-44fa-a362-48c778aec15d",
           "x": 109,
-          "y": 475
+          "y": 418
         }
       ],
       "backgroundColor": {
@@ -1353,7 +1353,7 @@
           },
           "type": "shape",
           "x": 24,
-          "y": 429,
+          "y": 373,
           "width": 364,
           "height": 189,
           "scale": 100,
@@ -1424,7 +1424,7 @@
           "content": "<span style=\"color: #fff\">CONTACT</span>",
           "fontWeight": 400,
           "x": 41,
-          "y": 444,
+          "y": 388,
           "width": 160,
           "height": 40,
           "scale": 100,
@@ -1449,7 +1449,7 @@
           },
           "type": "shape",
           "x": 41,
-          "y": 484,
+          "y": 428,
           "width": 331,
           "height": 1,
           "scale": 100,
@@ -1520,7 +1520,7 @@
           "content": "<span style=\"color: #fff\">111 8th Avenue New York, NY 10011</span>",
           "fontWeight": 400,
           "x": 41,
-          "y": 493,
+          "y": 437,
           "width": 332,
           "height": 21,
           "scale": 100,
@@ -1597,7 +1597,7 @@
           "basedOn": "7c045ddb-dfab-4495-9a49-4f20f902399d",
           "id": "8a01bb90-1aed-442f-9ccf-e68ab46015fb",
           "x": 41,
-          "y": 520
+          "y": 464
         },
         {
           "opacity": 100,
@@ -1667,7 +1667,7 @@
           "basedOn": "8a01bb90-1aed-442f-9ccf-e68ab46015fb",
           "id": "75e398d5-879b-40d3-b017-925badae2d5e",
           "x": 41,
-          "y": 547
+          "y": 491
         }
       ],
       "backgroundColor": {
@@ -1782,7 +1782,7 @@
           "content": "<span style=\"font-weight: 600; letter-spacing: 0.05em\">CONTACT US</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 440,
+          "y": 382,
           "width": 332,
           "height": 21,
           "scale": 100,
@@ -1853,7 +1853,7 @@
           "content": "<span style=\"text-decoration: underline\">twitter.com/accountname</span>\n<span style=\"text-decoration: underline\">example.google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 559,
+          "y": 501,
           "width": 331,
           "height": 54,
           "scale": 100,
@@ -1924,7 +1924,7 @@
           "content": "111 8th Avenue New York, NY 10011",
           "fontWeight": 400,
           "x": 40,
-          "y": 473,
+          "y": 415,
           "width": 331,
           "height": 73,
           "scale": 100,
@@ -2039,7 +2039,7 @@
           "content": "<span style=\"text-decoration: underline\">example.google.com</span>",
           "fontWeight": 400,
           "x": 40,
-          "y": 566,
+          "y": 533,
           "width": 332,
           "height": 41,
           "scale": 100,
@@ -2120,7 +2120,7 @@
           "content": "or visit us at",
           "fontWeight": 400,
           "x": 40,
-          "y": 539,
+          "y": 506,
           "width": 332,
           "height": 19,
           "scale": 100,
@@ -2156,7 +2156,7 @@
           "basedOn": "e6908d7a-298a-4ed3-b590-4bfaf9317238",
           "id": "7dcf128c-2666-44b3-bc3d-0c28223b8ebf",
           "x": 69,
-          "y": 453
+          "y": 420
         },
         {
           "opacity": 100,
@@ -2223,7 +2223,7 @@
           "content": "<span style=\"font-weight: 900; color: #fff\">LIKE &amp; SUBSCRIBE!</span>",
           "fontWeight": 400,
           "x": 93,
-          "y": 464,
+          "y": 431,
           "width": 226,
           "height": 41,
           "scale": 100,
@@ -2290,7 +2290,7 @@
           },
           "type": "shape",
           "x": 40,
-          "y": 612,
+          "y": 554,
           "width": 332,
           "height": 1,
           "scale": 100,
@@ -2328,7 +2328,7 @@
           "basedOn": "9eb5564d-2f79-4398-b3c3-a1128658176b",
           "id": "7e6cc1a9-a466-4633-ad90-c5567d94572c",
           "x": 40,
-          "y": 440
+          "y": 382
         },
         {
           "opacity": 100,
@@ -2347,7 +2347,7 @@
           },
           "type": "shape",
           "x": 40,
-          "y": 440,
+          "y": 382,
           "width": 1,
           "height": 172,
           "scale": 100,
@@ -2385,7 +2385,7 @@
           "basedOn": "a518e5a8-e8bf-4017-8520-de561b744c0e",
           "id": "33ce341c-a24a-4ae5-b4c6-d49ae5838931",
           "x": 372,
-          "y": 440
+          "y": 382
         },
         {
           "opacity": 100,
@@ -2445,7 +2445,7 @@
           "content": "<span style=\"font-weight: 700\">Follow us</span>",
           "fontWeight": 400,
           "x": 65,
-          "y": 457,
+          "y": 410,
           "width": 283,
           "height": 21,
           "scale": 100,
@@ -2512,7 +2512,7 @@
           "content": "<span style=\"text-decoration: underline\">twitter.com/accountname</span>",
           "fontWeight": 400,
           "x": 65,
-          "y": 484,
+          "y": 437,
           "width": 283,
           "height": 21,
           "scale": 100,
@@ -2587,7 +2587,7 @@
           "basedOn": "bd71e156-4d59-40e7-af8f-b048be9cd5eb",
           "id": "0a3c4ad6-4543-4cde-9355-6945986a6f14",
           "x": 65,
-          "y": 527
+          "y": 480
         },
         {
           "opacity": 100,
@@ -2655,7 +2655,7 @@
           "basedOn": "85fe81ae-8b7b-44dd-8094-518e6d539e90",
           "id": "d8e1d2cb-ec70-4f2b-ac29-38b76a5a90a5",
           "x": 65,
-          "y": 554
+          "y": 507
         }
       ],
       "backgroundColor": {
