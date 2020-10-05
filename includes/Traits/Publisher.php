@@ -137,7 +137,7 @@ trait Publisher {
 		 * @since 1.1.0 $placeholder Is deprecated.
 		 *
 		 * @param string $logo_image_url URL to the publisher's logo.
-		 * @param string $placeholder    URL to the placeholder logo.
+		 * @param string $placeholder    Deprecated.
 		 */
 		return apply_filters( 'web_stories_publisher_logo', $logo_image_url, $placeholder );
 	}
