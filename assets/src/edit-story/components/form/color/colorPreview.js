@@ -267,7 +267,9 @@ function ColorPreview({
     let selectContentsTimeout = -1;
 
     if (selectInputContents.current) {
-      inputRef.current.select();
+      if (inputRef.current) {
+        inputRef.current.select();
+      }
 
       // When we want to select the content of the input
       // we hold open the door for a slight moment to allow
@@ -299,7 +301,7 @@ function ColorPreview({
             ref={inputRef}
             type="text"
             aria-label={`${inputLabel}: ${label}`}
-            value={inputValue}
+            value={inputValue ?? ''}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleFocus}

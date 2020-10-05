@@ -15,7 +15,7 @@
  */
 
 function getHexFromValue(value) {
-  const val = value.trim().replace(/^#/, '');
+  const val = (value || '').toUpperCase().trim().replace(/^#/, '');
 
   const hasNonHex = /[^0-9a-f]/i.test(val);
   if (hasNonHex) {

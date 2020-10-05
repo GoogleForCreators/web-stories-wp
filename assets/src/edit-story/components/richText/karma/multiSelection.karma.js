@@ -87,6 +87,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.press('Tab');
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles, now expected to be updated
@@ -131,6 +132,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.press('Tab');
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);

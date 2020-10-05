@@ -98,6 +98,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Set color using hex input
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.press('Tab');
+
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
       // */
@@ -126,11 +128,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);
-      await richTextHasFocus();
       await data.fixture.events.click(underline.button);
-      await richTextHasFocus();
       await data.fixture.events.click(bold.button);
-      await richTextHasFocus();
 
       // We have to open the color picker, as there's no direct hex input when "multiple"
       await data.fixture.events.click(fontColor.button);

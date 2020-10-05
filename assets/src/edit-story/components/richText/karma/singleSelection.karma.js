@@ -88,6 +88,7 @@ describe('Styling single text field', () => {
       // Set color using hex input
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.press('Tab');
       // Press escape to leave input field (does not unselect element)
       await data.fixture.events.keyboard.press('Escape');
 
@@ -131,6 +132,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.press('Tab');
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(italic.button);
       await richTextHasFocus();
