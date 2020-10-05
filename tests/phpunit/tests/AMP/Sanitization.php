@@ -17,11 +17,11 @@
 
 namespace Google\Web_Stories\Tests\AMP;
 
-use AMP_DOM_Utils;
-use AmpProject\Dom\Document;
 use DOMElement;
+use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Tests\Private_Access;
-use Google\Web_Stories\Traits\Publisher;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
@@ -253,9 +253,9 @@ class Sanitization extends \WP_UnitTestCase {
 
 		$ordered_sanitizers = array_keys( $sanitizers );
 		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 4 ] );
-		$this->assertEquals( 'AMP_Style_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 3 ] );
+		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 3 ] );
 		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 2 ] );
-		$this->assertEquals( 'AMP_Tag_And_Attribute_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 1 ] );
+		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 1 ] );
 	}
 
 	/**

@@ -26,8 +26,9 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AmpProject\Attribute;
-use AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
 
 /**
@@ -44,7 +45,7 @@ use DOMElement;
  *
  * @since 1.1.0
  */
-class Canonical_Sanitizer extends \AMP_Base_Sanitizer {
+class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	/**
 	 * Sanitize the HTML contained in the DOMDocument received by the constructor.
 	 *
