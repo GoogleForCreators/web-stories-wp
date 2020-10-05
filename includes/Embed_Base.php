@@ -82,7 +82,7 @@ class Embed_Base {
 	}
 
 	/**
-	 * Renders the block type output for given attributes.
+	 * Renders an embed with given attributes.
 	 *
 	 * @since 1.1.0
 	 *
