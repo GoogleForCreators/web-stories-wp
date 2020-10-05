@@ -20,11 +20,29 @@
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 import theme from '../../theme';
 
+const HEX_CHARS = '1234567890ABCDEF';
+
+function isHexColorString(s) {
+  return (
+    s[0] == '#' &&
+    s
+      .substr(1)
+      .split('')
+      .every((char) => HEX_CHARS.includes(char))
+  );
+}
+
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
   const fullToSafeRatio = 1 / safeToFullRatio;
+
   // Match page background color to the workspace background color.
-  const pageBackgroundColor = theme.colors.bg.workspace;
+  // Validate since we're using dangerouslySetInnerHTML with imported variable.
+  const workspaceColor = theme.colors.bg.workspace;
+  let pageBackgroundColor = isHexColorString(workspaceColor)
+    ? workspaceColor
+    : '#1B1D1C';
+
   return (
     <style
       amp-custom=""
