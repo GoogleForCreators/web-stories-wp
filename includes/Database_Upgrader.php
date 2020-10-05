@@ -306,16 +306,18 @@ class Database_Upgrader {
 
 		$indexable_before = $repository->find_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, false );
 
-		if ( ! $indexable_before || false === strpos( $indexable_before->permalink, '/web-stories//' ) ) {
+		if ( ! $indexable_before || false === strpos( $indexable_before->permalink, '/web-stories/' ) ) {
 			$builder->build_for_post_type_archive( Story_Post_Type::POST_TYPE_SLUG, $indexable_before );
 		}
 
 		$all_stories = get_posts(
 			[
-				'fields'           => 'ids',
-				'suppress_filters' => false,
-				'post_type'        => [ Story_Post_Type::POST_TYPE_SLUG ],
-				'posts_per_page'   => - 1,
+				'fields'                 => 'ids',
+				'suppress_filters'       => false,
+				'post_type'              => [ Story_Post_Type::POST_TYPE_SLUG ],
+				'posts_per_page'         => 100,
+				'update_post_meta_cache' => false,
+				'update_post_term_cache' => false,
 			]
 		);
 
