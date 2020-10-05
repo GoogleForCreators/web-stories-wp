@@ -18,48 +18,10 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from 'react';
-import queryString from 'query-string';
 
-/**
- * Internal dependencies
- */
-import { USERS_PER_REQUEST } from '../../constants';
-import groupBy from '../../utils/groupBy';
-import fetchAllFromTotalPages from './fetchAllFromPages';
-
-export default function useUserApi(dataAdapter, { userApi, currentUserApi }) {
-  const [users, setUsers] = useState({});
+export default function useUserApi(dataAdapter, { currentUserApi }) {
   const [currentUser, setCurrentUser] = useState({});
   const [isUpdating, setIsUpdating] = useState(false);
-  const fetchUsers = useCallback(async () => {
-    try {
-      const response = await dataAdapter.get(
-        queryString.stringifyUrl({
-          url: userApi,
-          query: { per_page: USERS_PER_REQUEST },
-        }),
-        {
-          parse: false,
-        }
-      );
-
-      const usersJson = await fetchAllFromTotalPages(
-        response,
-        dataAdapter,
-        userApi
-      );
-
-      setUsers(
-        groupBy(
-          usersJson.map(({ _links, ...user }) => user),
-          'id'
-        )
-      );
-    } catch (e) {
-      setUsers({});
-    }
-  }, [dataAdapter, userApi]);
-
   const fetchCurrentUser = useCallback(async () => {
     try {
       setCurrentUser(await dataAdapter.get(currentUserApi));
@@ -88,17 +50,9 @@ export default function useUserApi(dataAdapter, { userApi, currentUserApi }) {
 
   return useMemo(
     () => ({
-      api: { fetchUsers, fetchCurrentUser, toggleWebStoriesTrackingOptIn },
-      users,
+      api: { fetchCurrentUser, toggleWebStoriesTrackingOptIn },
       currentUser: { data: currentUser, isUpdating },
     }),
-    [
-      fetchUsers,
-      fetchCurrentUser,
-      toggleWebStoriesTrackingOptIn,
-      users,
-      currentUser,
-      isUpdating,
-    ]
+    [fetchCurrentUser, toggleWebStoriesTrackingOptIn, currentUser, isUpdating]
   );
 }

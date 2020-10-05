@@ -30,7 +30,6 @@ import {
   publisherLogoIds as fillerPublisherLogoIds,
   rawPublisherLogos,
 } from '../dataUtils/formattedPublisherLogos';
-import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
@@ -41,7 +40,6 @@ export default function ApiProviderFixture({ children }) {
   const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
-  const [users] = useState(formattedUsersObject);
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
 
   const settingsApi = useMemo(
@@ -106,7 +104,6 @@ export default function ApiProviderFixture({ children }) {
 
   const usersApi = useMemo(
     () => ({
-      fetchUsers: jasmine.createSpy('fetchUsers'),
       fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),
@@ -121,7 +118,6 @@ export default function ApiProviderFixture({ children }) {
         settings,
         stories,
         templates,
-        users,
         currentUser,
       },
       actions: {
@@ -137,7 +133,6 @@ export default function ApiProviderFixture({ children }) {
       settings,
       stories,
       templates,
-      users,
       currentUser,
       mediaApi,
       settingsApi,
