@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 
 /**
  * Internal dependencies
@@ -32,8 +32,9 @@ describe('generateZipFile', () => {
       '/full/path/to/build/web-stories',
       'web-stories-stable.zip'
     );
-    expect(execSync).toHaveBeenLastCalledWith(
-      'zip -rT web-stories-stable.zip web-stories',
+    expect(execFileSync).toHaveBeenLastCalledWith(
+      'zip',
+      ['-rT', 'web-stories-stable.zip', 'web-stories'],
       expect.objectContaining({
         cwd: '/full/path/to/build',
       })

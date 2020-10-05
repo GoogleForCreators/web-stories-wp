@@ -59,9 +59,9 @@ const Tools = styled.div`
   margin-left: 8px;
 `;
 
-export default function Section({ title, titleTools, children }) {
+export default function Section({ title, titleTools, children, ...rest }) {
   return (
-    <Container>
+    <Container {...rest}>
       {(title || titleTools) && (
         <TitleAndTools>
           {title && <Title>{title}</Title>}
