@@ -86,12 +86,11 @@ class Embed_Base {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param array  $attributes Embed render attributes.
 	 *
 	 * @return string Rendered embed output.
 	 */
-	public function render( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
+	public function render( array $attributes ) {
 		// The only mandatory attribute.
 		if ( empty( $attributes['url'] ) ) {
 			return '';

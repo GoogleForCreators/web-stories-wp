@@ -70,6 +70,6 @@ class Embed_Shortcode extends Embed_Base {
 
 		$attributes['class'] = 'wp-shortcode-web-stories-embed';
 
-		return $this->render( $attributes, $content );
+		return $this->render( $attributes );
 	}
 }

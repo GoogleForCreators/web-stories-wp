@@ -128,6 +128,6 @@ class Embed_Block extends Embed_Base {
 	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
 		$attributes['class'] = 'wp-block-web-stories-embed';
 
-		return $this->render( $attributes, $content );
+		return $this->render( $attributes );
 	}
 }
