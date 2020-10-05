@@ -1,5 +1,5 @@
 {
-  "current": "d16fadad-a391-4a23-ad12-1c918b49c63b",
+  "current": "cb1c61cb-d9d4-4a76-ae62-af05252f80bd",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -885,7 +885,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 16,
+          "fontSize": 18,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -906,7 +906,7 @@
           "x": 40,
           "y": 429,
           "width": 332,
-          "height": 20,
+          "height": 23,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1440,34 +1440,6 @@
           },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": 41,
-          "y": 428,
-          "width": 331,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "b502c3f3-26a1-4e30-ae3b-db720bfc6563"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Roboto Condensed",
@@ -1668,6 +1640,34 @@
           "id": "75e398d5-879b-40d3-b017-925badae2d5e",
           "x": 41,
           "y": 491
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "x": 41,
+          "y": 428,
+          "width": 331,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "id": "b502c3f3-26a1-4e30-ae3b-db720bfc6563"
         }
       ],
       "backgroundColor": {
