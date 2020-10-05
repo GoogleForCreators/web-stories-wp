@@ -412,7 +412,12 @@ class Sanitization {
 		// Force certain sanitizers to be at end.
 		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
 		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
-		foreach ( [ AMP_Style_Sanitizer::class, Meta_Sanitizer::class, AMP_Tag_And_Attribute_Sanitizer::class ] as $class_name ) {
+		foreach ( [
+			AMP_Layout_Sanitizer::class,
+			AMP_Style_Sanitizer::class,
+			Meta_Sanitizer::class,
+			AMP_Tag_And_Attribute_Sanitizer::class,
+		] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
 				unset( $sanitizers[ $class_name ] );
