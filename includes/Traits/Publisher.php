@@ -40,6 +40,7 @@ trait Publisher {
 	 * Uses a fallback logo to always create valid AMP in FE.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.1.0
 	 *
 	 * @return string
 	 */
@@ -125,7 +126,6 @@ trait Publisher {
 			$logo_image_url = $this->get_valid_publisher_image( $active_publisher_logo );
 		}
 
-		// Fallback to serving the WordPress logo.
 		$placeholder = $this->get_publisher_logo_placeholder();
 
 		/**
@@ -134,6 +134,7 @@ trait Publisher {
 		 * This should point to a square image.
 		 *
 		 * @since 1.0.0
+		 * @since 1.1.0 $placeholder Is deprecated.
 		 *
 		 * @param string $logo_image_url URL to the publisher's logo.
 		 * @param string $placeholder    URL to the placeholder logo.
