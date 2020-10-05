@@ -345,6 +345,7 @@
         "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.cjs",
+        "rollup.config.migrate.cjs",
         "jest-puppeteer.config.cjs",
         "karma-*.config.cjs",
         "webpack.*.cjs",
@@ -371,6 +372,7 @@
       },
       "rules": {
         "node/no-extraneous-import": "off",
+        "node/no-missing-import": "off",
         "node/no-unpublished-import": "off",
         "node/no-unpublished-require": "off"
       }

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console */
+/* eslint-disable no-console, node/shebang */
 
 /**
  * Internal dependencies
@@ -26,12 +26,11 @@ const args = process.argv.slice(2);
 const dir = args[0] ? args[0] : undefined;
 
 if (!dir) {
-  console.log('Directory path was not provided');
-  process.exit(1);
+  throw new Error('Directory path was not provided');
 }
 
 updateTemplates(dir);
 
 console.log("Files updated! Don't forget to run prettier!");
 
-/* eslint-enable no-console */
+/* eslint-enable no-console, node/shebang */

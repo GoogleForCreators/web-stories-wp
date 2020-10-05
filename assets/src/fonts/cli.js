@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-console */
+/* eslint-disable no-console, node/shebang */
 
 /**
  * Internal dependencies
@@ -23,25 +23,18 @@
 import buildFonts from './utils/buildFonts.js';
 
 if (!process.env.GOOGLE_FONTS_API_KEY) {
-  console.error('Google Fonts API key missing!');
-  process.exit(1);
+  throw new Error('Google Fonts API key missing!');
 }
 
 const args = process.argv.slice(2);
 const file = args[0] ? args[0] : undefined;
 
 if (!file) {
-  console.log('File path was not provided');
-  process.exit(1);
+  throw new Error('File path was not provided');
 }
 
-try {
-  await buildFonts(file);
-} catch (err) {
-  console.error('There was an error generating the web fonts list:', err);
-  process.exit(1);
-}
+await buildFonts(file);
 
 console.log('Web fonts updated!');
 
-/* eslint-enable no-console */
+/* eslint-enable no-console, node/shebang */

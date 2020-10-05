@@ -61,7 +61,7 @@ function updateTextContent({
 function convertInlineBold(content, isBold, fontWeight) {
   // Do we have a specific global weight to apply for entire text field?
   const globalWeight =
-    typeof fontWeight === 'number' && fontWeight != 400
+    typeof fontWeight === 'number' && fontWeight !== 400
       ? fontWeight
       : isBold === true
       ? 700
@@ -71,8 +71,7 @@ function convertInlineBold(content, isBold, fontWeight) {
     // In that case, strip any inline bold from the text and wrap everything in a span with correct style
     const stripped = stripTag(content, 'strong');
     const fancyBold = `font-weight: ${globalWeight}`;
-    const wrapped = wrapWithSpan(stripped, fancyBold);
-    return wrapped;
+    return wrapWithSpan(stripped, fancyBold);
   }
 
   const justBold = 'font-weight: 700';
@@ -87,8 +86,7 @@ function convertInlineItalic(content, fontStyle) {
   if (globalFontStyle) {
     // In that case, strip any inline em from the text and wrap everything in a span with correct style
     const stripped = stripTag(content, 'em');
-    const wrapped = wrapWithSpan(stripped, italicStyle);
-    return wrapped;
+    return wrapWithSpan(stripped, italicStyle);
   }
 
   return replaceTagWithSpan(content, 'em', italicStyle);
@@ -103,8 +101,7 @@ function convertInlineUnderline(content, textDecoration) {
   if (globalDecoration) {
     // In that case, strip any inline underline from the text and wrap everything in a span with correct style
     const stripped = stripTag(content, 'u');
-    const wrapped = wrapWithSpan(stripped, underlineStyle);
-    return wrapped;
+    return wrapWithSpan(stripped, underlineStyle);
   }
 
   return replaceTagWithSpan(content, 'u', underlineStyle);
