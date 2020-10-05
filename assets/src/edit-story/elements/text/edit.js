@@ -61,9 +61,6 @@ const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
 
-  span[data-text="true"] {
-    padding: ${({ textPadding }) => textPadding};
-  }
   span {
     box-decoration-break: clone;
   }
@@ -90,7 +87,6 @@ const Highlight = styled.span`
   * {
     color: transparent !important;
   }
-  padding: ${({ padding }) => padding};
 `;
 
 function TextEdit({
@@ -324,22 +320,16 @@ function TextEdit({
       onClick={onClick}
       data-testid="textEditor"
       backgroundColor={wrapperBackgroundColor}
-      textPadding={textProps.padding}
     >
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
-        <TextBox ref={highlightRef} {...textProps} padding={null}>
+        <TextBox ref={highlightRef} {...textProps}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
             {...textProps}
           />
         </TextBox>
       )}
-      <TextBox
-        className="syncMargin"
-        ref={textBoxRef}
-        {...textProps}
-        padding={null}
-      >
+      <TextBox className="syncMargin" ref={textBoxRef} {...textProps}>
         <RichTextEditor
           ref={editorRef}
           content={content}
