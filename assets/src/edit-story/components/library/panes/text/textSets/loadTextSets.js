@@ -74,8 +74,9 @@ export default async function loadTextSets() {
     'step',
     'section_header',
     'editorial',
-    'quote',
     'contact',
+    'table',
+    'quote',
   ];
 
   const results = await Promise.all(
