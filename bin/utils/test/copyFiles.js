@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 
 /**
  * Internal dependencies
@@ -29,8 +29,17 @@ jest.mock('child_process');
 describe('copyFiles', () => {
   it('should sync source files to target', () => {
     copyFiles('foo', 'foo/target', ['bar.txt', 'baz/']);
-    expect(execSync).toHaveBeenLastCalledWith(
-      `rsync -a --exclude 'bar.txt' --exclude 'baz/' foo/ foo/target/`,
+    expect(execFileSync).toHaveBeenLastCalledWith(
+      'rsync',
+      [
+        '-a',
+        '--exclude',
+        'bar.txt',
+        '--exclude',
+        'baz/',
+        'foo/',
+        'foo/target/',
+      ],
       expect.anything()
     );
   });
