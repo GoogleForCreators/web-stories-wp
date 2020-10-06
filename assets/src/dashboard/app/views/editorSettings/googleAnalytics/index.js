@@ -103,7 +103,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
       </SettingHeading>
       <FormContainer>
         <InlineForm>
-          <VisuallyHiddenLabel for="gaTrackingId">
+          <VisuallyHiddenLabel htmlFor="gaTrackingId">
             {TEXT.ARIA_LABEL}
           </VisuallyHiddenLabel>
           <GoogleAnalyticsTextInput
