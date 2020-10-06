@@ -9,7 +9,8 @@
     "ext-dom": "*",
     "ext-json": "*",
     "ext-libxml": "*",
-    "ext-mbstring": "*"
+    "ext-mbstring": "*",
+    "civicrm/composer-downloads-plugin": "^2.1"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
