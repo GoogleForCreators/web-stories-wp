@@ -37,6 +37,7 @@ import {
   InfiniteScroller,
 } from '../../../../components';
 import {
+  SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS,
   SAVED_TEMPLATE_CONTEXT_MENU_ITEMS,
   TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS,
 } from '../../../../constants';
@@ -44,6 +45,7 @@ import { TemplateActionsPropType, TemplatesPropType } from '../../../../types';
 import { PagePropTypes, ViewPropTypes } from '../../../../utils/useStoryView';
 import FontProvider from '../../../font/fontProvider';
 import { SavedTemplateGridView, EmptyContentMessage } from '../../shared';
+import { trackEvent } from '../../../../../tracking';
 
 function Content({
   allPagesFetched,
@@ -60,10 +62,32 @@ function Content({
     'enableInProgressStoryActions'
   );
 
-  const handleMenuItemSelected = useCallback(() => {
-    setContextMenuId(-1);
-    // TODO add context menu actions
-  }, []);
+  const handleMenuItemSelected = useCallback(
+    async (sender, template) => {
+      setContextMenuId(-1);
+
+      switch (sender.value) {
+        case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
+          await trackEvent(
+            'use_saved_template_from_menu',
+            'dashboard',
+            template.title,
+            template.id
+          );
+          actions.createStoryFromTemplate(template);
+          break;
+
+        case SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.PREVIEW:
+          actions.previewTemplate(null, template);
+          break;
+
+        default:
+          break;
+      }
+      // TODO add context menu actions
+    },
+    [actions]
+  );
 
   const enabledMenuItems = useMemo(() => {
     if (enableInProgressStoryActions) {
