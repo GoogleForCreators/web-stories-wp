@@ -271,6 +271,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::filter_template_include
 	 */
 	public function test_filter_template_include() {
+		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 		$story_post_type  = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$template_include = $story_post_type->filter_template_include( 'current' );
@@ -281,10 +282,12 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 * @covers ::show_admin_bar
 	 */
 	public function test_show_admin_bar() {
+		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$show_admin_bar  = $story_post_type->show_admin_bar( 'current' );
 		$this->assertFalse( $show_admin_bar );
+		$this->assertTrue( is_singular( $story_post_type::POST_TYPE_SLUG ) );
 	}
 
 	/**

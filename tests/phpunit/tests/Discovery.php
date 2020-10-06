@@ -85,6 +85,7 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
+		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 	}
 

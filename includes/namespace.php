@@ -156,7 +156,7 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  *
  * @since 1.1.0
  *
- * @param \WP_Error     $error Unused.
+ * @param \WP_Error    $error Unused.
  * @param int|\WP_Site $site Site ID or object.
  *
  * @return void
