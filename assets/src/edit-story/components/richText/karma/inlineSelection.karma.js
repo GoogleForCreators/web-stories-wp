@@ -95,9 +95,16 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
 
-      // Set color using hex input
+      // Set color using 3 digit hex input
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
-      await data.fixture.events.keyboard.type('F60');
+      await data.fixture.events.keyboard.type('A1F');
+      await data.fixture.events.keyboard.press('Tab');
+
+      expect(fontColor.hex.value).toBe('AA11FF');
+
+      // Set color using 6 digit hex input
+      await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
+      await data.fixture.events.keyboard.type('FF6600');
       await data.fixture.events.keyboard.press('Tab');
 
       // Press escape to leave input field (does not leave edit-mode)

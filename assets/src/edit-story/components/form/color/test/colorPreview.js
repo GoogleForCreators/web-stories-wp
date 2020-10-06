@@ -177,36 +177,45 @@ describe('<ColorPreview />', () => {
     // Only 2 digits can't be valid
     fireEvent.change(input, { target: { value: 'AF' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // should be called with original value
-    expect(onChange).toHaveBeenCalledWith(value);
+    // Since saved value didn't change shouldn't trigger onChagne
+    expect(onChange).not.toHaveBeenCalled();
+    // Input should revert to saved value
+    expect(input).toHaveValue('FF0000');
 
     // Only 5 digits can't be valid
     fireEvent.change(input, { target: { value: '0FF00' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // should be called with original value
-    expect(onChange).toHaveBeenCalledWith(value);
+    // Since saved value didn't change shouldn't trigger onChagne
+    expect(onChange).not.toHaveBeenCalled();
+    // Input should revert to saved value
+    expect(input).toHaveValue('FF0000');
 
     // Non-hex can't be valid
     fireEvent.change(input, { target: { value: 'COFFEE' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    // should be called with original value
-    expect(onChange).toHaveBeenCalledWith(value);
+    // Since saved value didn't change shouldn't trigger onChagne
+    expect(onChange).not.toHaveBeenCalled();
+    // Input should revert to saved value
+    expect(input).toHaveValue('FF0000');
 
     // Exactly 6 hex digits is good
     fireEvent.change(input, { target: { value: '00FF00' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 255, 0));
+    expect(input).toHaveValue('00FF00');
 
     // Allow shorthand 3 digit hex
     fireEvent.change(input, { target: { value: 'F60' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     expect(onChange).toHaveBeenCalledWith(createSolid(255, 102, 0));
+    expect(input).toHaveValue('FF6600');
 
     // Also validate that it'll ignore the first #
     fireEvent.change(input, { target: { value: '#0000FF' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-    expect(onChange).toHaveBeenCalledTimes(6);
+    expect(onChange).toHaveBeenCalledTimes(3);
     expect(onChange).toHaveBeenCalledWith(createSolid(0, 0, 255));
+    expect(input).toHaveValue('0000FF');
   });
 
   it('should revert to last known value when blurring invalid input', () => {
@@ -220,9 +229,8 @@ describe('<ColorPreview />', () => {
     fireEvent.change(input, { target: { value: '0FF00' } });
     fireEvent.blur(input);
 
-    // should be called with original value
-    expect(onChange).toHaveBeenCalledWith(value);
-
+    // Reverting to already saved value, shouldn't trigger onChange
+    expect(onChange).toHaveBeenCalledTimes(0);
     expect(input).toHaveValue('FF0000');
   });
 });

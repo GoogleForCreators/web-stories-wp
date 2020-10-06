@@ -193,15 +193,18 @@ function ColorPreview({
       const hex = getHexFromValue(inputValue) ?? previewText;
       setInputValue(hex);
 
-      // Update actual color, which will in turn update hex input from value
-      const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
+      // Only trigger onChange when hex has been changed
+      if (hex !== previewText) {
+        // Update actual color, which will in turn update hex input from value
+        const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
 
-      // Keep same opacity as before though
-      const {
-        color: { a },
-      } = value;
+        // Keep same opacity as before though
+        const {
+          color: { a },
+        } = value;
 
-      onChange({ color: { r, g, b, a } });
+        onChange({ color: { r, g, b, a } });
+      }
 
       selectInputContents.current = selectContentOnUpdate;
     },

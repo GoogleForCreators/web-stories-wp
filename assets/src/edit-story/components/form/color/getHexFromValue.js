@@ -25,9 +25,11 @@ function getHexFromValue(value) {
   // Normal Hex
   if (val.length === 6) {
     return val;
-  } else if (val.length === 3) {
+  }
+
+  if (val.length === 3) {
     // Shorthand hex
-    return val.split('').reduce((hex, char) => `${hex}${char}${char}`, '');
+    return val.replace(/./g, '$&$&');
   }
 
   return null;
