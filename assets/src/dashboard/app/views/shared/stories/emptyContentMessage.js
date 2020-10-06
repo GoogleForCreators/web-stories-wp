@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as EmptyContentMessage } from './emptyContentMessage';
-export {
-  default as PageHeading,
-  HeaderToggleButtonContainer,
-} from './pageHeading';
-export { default as StoryGridView } from './storyGridView';
-export { default as StoryListView } from './storyListView';
-export { default as TemplateGridView } from './templateGridView';
-export { default as TypeaheadSearch } from './typeaheadSearch';
+/**
+ * External dependencies
+ */
+import { text } from '@storybook/addon-knobs';
+
+/**
+ * Internal dependencies
+ */
+import { EmptyContentMessage } from '../';
+
+export default {
+  title: 'Dashboard/Views/Shared/EmptyContentMessage',
+};
+
+export const _default = () => {
+  const message = text('display message', 'default content to display');
+  return <EmptyContentMessage>{message}</EmptyContentMessage>;
+};
