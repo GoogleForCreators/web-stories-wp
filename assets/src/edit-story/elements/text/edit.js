@@ -79,8 +79,11 @@ const TextBox = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
+
+const TextBoxPadded = styled(TextBox)(({ verticalPadding }) => ({
+  width: `calc(100% - ${verticalPadding}px)`,
+}));
 
 const Highlight = styled.span`
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
@@ -329,12 +332,12 @@ function TextEdit({
       backgroundColor={wrapperBackgroundColor}
     >
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
-        <TextBox ref={highlightRef} {...highlightTextProps}>
+        <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
             {...textProps}
           />
-        </TextBox>
+        </TextBoxPadded>
       )}
       <TextBox className="syncMargin" ref={textBoxRef} {...textProps}>
         <RichTextEditor
