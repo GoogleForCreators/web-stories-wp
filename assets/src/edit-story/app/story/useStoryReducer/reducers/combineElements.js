@@ -55,12 +55,10 @@ function combineElements(state, { firstElement, secondId }) {
     return state;
   }
   const firstId = firstElement.id;
+  const element = firstElement;
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const page = state.pages[pageIndex];
-  const elementPosition = page.elements.findIndex(({ id }) => id === firstId);
-  const element =
-    elementPosition > -1 ? page.elements[elementPosition] : firstElement;
 
   const secondElementPosition = page.elements.findIndex(
     ({ id }) => id === secondId

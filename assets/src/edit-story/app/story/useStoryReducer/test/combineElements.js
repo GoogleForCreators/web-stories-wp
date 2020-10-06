@@ -44,19 +44,6 @@ describe('combineElements', () => {
 
     expect(result).toStrictEqual(initial);
   });
-  it('should do nothing if first element does not exist', () => {
-    const { restore, combineElements } = setupReducer();
-
-    const initial = restore(getDefaultState1());
-
-    // Combine non-existing element abc into 789
-    const result = combineElements({
-      firstElement: { id: 'abc', type: 'image' },
-      secondId: '789',
-    });
-
-    expect(result).toStrictEqual(initial);
-  });
 
   it('should do nothing if second element does not exist', () => {
     const { restore, combineElements } = setupReducer();
@@ -86,6 +73,65 @@ describe('combineElements', () => {
     });
 
     expect(result).toStrictEqual(initial);
+  });
+
+  it('should combine elements when the origin does not exist as an element', () => {
+    const { restore, combineElements } = setupReducer();
+
+    const state = getDefaultState1();
+    restore(state);
+
+    // Combine non-existing element into 789
+    const result = combineElements({
+      firstElement: {
+        id: 'abc',
+        type: 'video',
+        focalX: 20,
+        resource: { type: 'video', src: '1' },
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+      },
+      secondId: '789',
+    });
+
+    expect(result.pages[0].elements).toStrictEqual([
+      {
+        id: '123',
+        type: 'shape',
+        isBackground: true,
+        isDefaultBackground: true,
+        x: 1,
+        y: 1,
+        width: 1,
+        height: 1,
+      },
+      {
+        id: '456',
+        type: 'image',
+        focalX: 20,
+        resource: { type: 'image', src: '1' },
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
+      },
+      {
+        id: '789',
+        resource: { type: 'video', src: '1' },
+        type: 'video',
+        // Note that focalX is copied and focalY is reset to 50
+        focalX: 20,
+        focalY: 50,
+        scale: 100,
+        flip: {},
+        x: 20,
+        y: 20,
+        width: 20,
+        height: 20,
+      },
+    ]);
   });
 
   it('should add the relevant properties from first to second', () => {
