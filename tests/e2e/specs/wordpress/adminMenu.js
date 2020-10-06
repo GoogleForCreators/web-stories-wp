@@ -32,11 +32,21 @@ describe('Admin Menu', () => {
       '#menu-posts-web-story'
     );
 
-    await expect(adminMenuItem).toMatch('My Stories');
-    await expect(adminMenuItem).toMatch('Explore Templates');
-    await expect(adminMenuItem).toMatch('Settings');
+    await page.hover('#menu-posts-web-story a');
+    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
-    await page.hover('#menu-posts-web-story');
+    await expect(adminMenuItem).toMatchElement('a', {
+      text: 'My Stories',
+      visible: true,
+    });
+    await expect(adminMenuItem).toMatchElement('a', {
+      text: 'Explore Templates',
+      visible: true,
+    });
+    await expect(adminMenuItem).toMatchElement('a', {
+      text: 'Settings',
+      visible: true,
+    });
 
     await percySnapshot(page, 'Admin Menu');
   });
@@ -47,7 +57,8 @@ describe('Admin Menu', () => {
     const adminMenuItem = await expect(page).toMatchElement(
       '#menu-posts-web-story'
     );
-    await page.hover('#menu-posts-web-story');
+    await page.hover('#menu-posts-web-story a');
+    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(adminMenuItem).toClick('a', {
       text: 'My Stories',
@@ -63,7 +74,8 @@ describe('Admin Menu', () => {
     const adminMenuItem = await expect(page).toMatchElement(
       '#menu-posts-web-story'
     );
-    await page.hover('#menu-posts-web-story');
+    await page.hover('#menu-posts-web-story a');
+    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(adminMenuItem).toClick('a', {
       text: 'Explore Templates',
@@ -79,7 +91,8 @@ describe('Admin Menu', () => {
     const adminMenuItem = await expect(page).toMatchElement(
       '#menu-posts-web-story'
     );
-    await page.hover('#menu-posts-web-story');
+    await page.hover('#menu-posts-web-story a');
+    await expect(page).toMatchElement('#menu-posts-web-story.opensub');
 
     await expect(adminMenuItem).toClick('a', {
       text: 'Settings',
