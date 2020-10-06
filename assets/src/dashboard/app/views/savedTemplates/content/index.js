@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -43,7 +43,7 @@ import {
 import { TemplateActionsPropType, TemplatesPropType } from '../../../../types';
 import { PagePropTypes, ViewPropTypes } from '../../../../utils/useStoryView';
 import FontProvider from '../../../font/fontProvider';
-import { SavedTemplateGridView } from '../../shared';
+import { SavedTemplateGridView, EmptyContentMessage } from '../../shared';
 
 function Content({
   allPagesFetched,
@@ -98,23 +98,46 @@ function Content({
           >
             <StandardViewContentGutter>
               {/* Add empty view from task/clean-up-repeat-dashboard-text-components */}
-              <SavedTemplateGridView
-                bottomActionLabel={__('Use template', 'web-stories')}
-                centerActionLabelByStatus={
-                  TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
-                }
-                actions={actions}
-                pageSize={view.pageSize}
-                templateMenu={templateMenu}
-                templates={templates}
-                returnFocusId={initialFocusId}
-              />
-              <InfiniteScroller
-                allDataLoadedMessage={__('No more templates', 'web-stories')}
-                isLoading={isLoading}
-                canLoadMore={!allPagesFetched}
-                onLoadMore={page.requestNextPage}
-              />
+              {templates.length > 0 ? (
+                <>
+                  <SavedTemplateGridView
+                    bottomActionLabel={__('Use template', 'web-stories')}
+                    centerActionLabelByStatus={
+                      TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS
+                    }
+                    actions={actions}
+                    pageSize={view.pageSize}
+                    templateMenu={templateMenu}
+                    templates={templates}
+                    returnFocusId={initialFocusId}
+                  />
+                  <InfiniteScroller
+                    allDataLoadedMessage={__(
+                      'No more templates',
+                      'web-stories'
+                    )}
+                    isLoading={isLoading}
+                    canLoadMore={!allPagesFetched}
+                    onLoadMore={page.requestNextPage}
+                  />
+                </>
+              ) : (
+                <EmptyContentMessage>
+                  {search?.keyword
+                    ? sprintf(
+                        /* translators: %s: search term. */
+                        __(
+                          'Sorry, we couldn\'t find any results matching "%s"',
+                          'web-stories'
+                        ),
+                        search.keyword
+                      )
+                    : __(
+                        'Bookmark a story or template to get started!',
+                        'web-stories'
+                      )}
+                </EmptyContentMessage>
+              )}
             </StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
