@@ -79,6 +79,7 @@ const TextBox = styled.div`
   top: 0;
   left: 0;
   right: 0;
+  width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
 
 const Highlight = styled.span`
@@ -144,6 +145,7 @@ function TextEdit({
     element,
     backgroundColor,
     opacity,
+    verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
       lineHeight: getHighlightLineheight(
         rest.lineHeight,
