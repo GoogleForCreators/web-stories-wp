@@ -156,7 +156,7 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  *
  * @since 1.1.0
  *
- * @param WP_Error $error Unused.
+ * @param WP_Error     $error Unused.
  * @param int|\WP_Site $site Site ID or object.
  *
  * @return void
@@ -170,7 +170,7 @@ function remove_site( $error, $site ) {
 		return;
 	}
 	$site_id = (int) $site->blog_id;
-	$story = new Story_Post_Type( new Experiments() );
+	$story   = new Story_Post_Type( new Experiments() );
 	switch_to_blog( $site_id );
 	$story->remove_caps_from_roles();
 	restore_current_blog();
