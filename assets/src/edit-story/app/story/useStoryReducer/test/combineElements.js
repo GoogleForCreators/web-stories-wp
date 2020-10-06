@@ -272,8 +272,8 @@ describe('combineElements', () => {
         height: 10,
         id: '789',
         link: {
-          url: 'https://link456.com/',
-          icon: 'https://link456.com/image.png',
+          url: 'https://link456.example/',
+          icon: 'https://link456.example/image.png',
           desc: 'Lorem ipsum dolor',
         },
         resource: {
@@ -300,8 +300,8 @@ describe('combineElements', () => {
         height: 10,
         id: '789',
         link: {
-          url: 'https://link789.com/',
-          icon: 'https://link789.com/image.png',
+          url: 'https://link789.example/',
+          icon: 'https://link789.example/image.png',
           desc: 'Lorem ipsum dolor',
         },
         resource: {
@@ -453,8 +453,8 @@ function getDefaultState4() {
             width: 10,
             height: 10,
             link: {
-              url: 'https://link456.com/',
-              icon: 'https://link456.com/image.png',
+              url: 'https://link456.example/',
+              icon: 'https://link456.example/image.png',
               desc: 'Lorem ipsum dolor',
             },
           },
@@ -467,8 +467,8 @@ function getDefaultState4() {
             width: 10,
             height: 10,
             link: {
-              url: 'https://link789.com/',
-              icon: 'https://link789.com/image.png',
+              url: 'https://link789.example/',
+              icon: 'https://link789.example/image.png',
               desc: 'Lorem ipsum dolor',
             },
           },
