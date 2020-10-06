@@ -47,10 +47,11 @@ describe('Settings View', () => {
     );
 
     expect(publisherLogosContainer).toBeTruthy();
+    await fixture.events.click(publisherLogosContainer);
 
     while (
       !publisherLogosContainer.contains(document.activeElement) &&
-      limit < 8
+      limit < 10
     ) {
       // eslint-disable-next-line no-await-in-loop
       await fixture.events.keyboard.press('tab');
