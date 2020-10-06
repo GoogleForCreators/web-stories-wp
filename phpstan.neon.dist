@@ -1,17 +1,7 @@
-services:
-  -
-    class: PHPStan\WordPress\IsWpErrorFunctionTypeSpecifyingExtension
-    tags:
-      - phpstan.typeSpecifier.functionTypeSpecifyingExtension
-  -
-    class: PHPStan\WordPress\GetPostDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
-    class: PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
+# Start: composer run-script phpstan
 
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: 8
   inferPrivatePropertyTypeFromConstructor: true
@@ -19,9 +9,8 @@ parameters:
   paths:
     - includes/
   bootstrapFiles:
-    - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
-    - tests/phpstan/stubs/wordpress-defines.php
     - tests/phpstan/bootstrap.php
+  scanFiles:
     - includes/namespace.php
   dynamicConstantNames:
     - WEBSTORIES_DEV_MODE
@@ -33,4 +22,4 @@ parameters:
     # Uses func_get_args()
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
     # False positive for wp_unslash()
-    - '#^Cannot cast array<string>\|string to string.$#'
+    - '#^Cannot cast array<string>\|string to string\.$#'

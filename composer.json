@@ -9,8 +9,7 @@
     "ext-dom": "*",
     "ext-json": "*",
     "ext-libxml": "*",
-    "ext-mbstring": "*",
-    "civicrm/composer-downloads-plugin": "^2.1"
+    "ext-mbstring": "*"
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
@@ -20,6 +19,7 @@
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
+    "szepeviktor/phpstan-wordpress": "^0.6.5",
     "wp-coding-standards/wpcs": "^2.2"
   },
   "config": {
@@ -28,15 +28,6 @@
     },
     "sort-packages": true
   },
-  "extra": {
-    "downloads": {
-      "phpstan": {
-        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
-        "path": "vendor/bin/phpstan",
-        "type": "phar"
-      }
-    }
-  },
   "autoload": {
     "psr-4": {
       "Google\\Web_Stories\\": "includes"
@@ -44,13 +35,15 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
-      "PHPStan\\WordPress\\": "tests/phpstan/src"
+      "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes"
     }
   },
   "prefer-stable": true,
   "scripts": {
     "phpcs": "phpcs",
-    "phpstan": "phpstan analyse --memory-limit=512M"
+    "phpstan": [
+      "composer show --path szepeviktor/phpstan-wordpress || composer require --dev --ignore-platform-reqs szepeviktor/phpstan-wordpress",
+      "vendor/bin/phpstan analyze --memory-limit=2G"
+    ]
   }
 }
