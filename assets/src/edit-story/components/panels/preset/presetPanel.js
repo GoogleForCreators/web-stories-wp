@@ -150,6 +150,7 @@ function PresetPanel({
         isEditMode={isEditMode}
         presets={presets}
         handleOnClick={handlePresetClick}
+        handleAddPreset={handleAddPreset}
         itemRenderer={itemRenderer}
         type={presetType}
       />

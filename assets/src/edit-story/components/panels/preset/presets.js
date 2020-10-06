@@ -25,7 +25,14 @@ import PropTypes from 'prop-types';
 import { PanelContent } from '../panel';
 import PresetGroup from './presetGroup';
 
-function Presets({ presets, handleOnClick, itemRenderer, isEditMode, type }) {
+function Presets({
+  presets,
+  handleOnClick,
+  itemRenderer,
+  isEditMode,
+  type,
+  handleAddPreset,
+}) {
   const hasPresets = presets.length > 0;
 
   return (
@@ -37,6 +44,7 @@ function Presets({ presets, handleOnClick, itemRenderer, isEditMode, type }) {
           type={type}
           isEditMode={isEditMode}
           handleClick={handleOnClick}
+          handleAddPreset={handleAddPreset}
         />
       )}
     </PanelContent>
@@ -49,6 +57,7 @@ Presets.propTypes = {
   type: PropTypes.string.isRequired,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  handleAddPreset: PropTypes.func.isRequired,
 };
 
 export default Presets;
