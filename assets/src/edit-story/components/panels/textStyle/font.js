@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback, useEffect, useRef } from 'react';
+import { useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -64,7 +64,6 @@ const BoxedNumeric = styled(Numeric)`
 `;
 
 function FontControls({ selectedElements, pushUpdate }) {
-  const fontWeightRef = useRef();
   const fontFamily = getCommonValue(
     selectedElements,
     ({ font }) => font?.family
@@ -100,47 +99,23 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const fontStyle = isItalic ? 'italic' : 'normal';
 
-  useEffect(() => {
-    // only check if the current fontWeight is supported when it has changed to avoid unnecessary rechecks
-    if (fontWeight !== fontWeightRef?.current) {
-      fontWeightRef.current = fontWeight;
-      if (isNaN(parseInt(fontWeight))) {
-        // if the currently selected fontWeight is not a singular font weight we want to leave the selection as is
-        return;
-      }
-
-      const currentWeightExists = fontWeights.filter((weight) =>
-        weight.value.includes(fontWeight)
+  const maybeUpdateCurrentWeight = useCallback(
+    (currentWeight, availableWeights) => {
+      const currentWeightExists = availableWeights.filter((weight) =>
+        weight.toString().includes(currentWeight)
       ).length;
 
       if (!currentWeightExists) {
         const updatedFontWeight = getClosestFontWeight(
-          fontWeight,
-          fontWeights.map((weight) => weight.value)
+          currentWeight,
+          availableWeights
         );
-        (async () => {
-          await maybeEnqueueFontStyle(
-            selectedElements.map(({ font, content }) => {
-              return {
-                font,
-                fontStyle,
-                fontWeight: parseInt(updatedFontWeight),
-                content: stripHTML(content),
-              };
-            })
-          );
-          handleSelectFontWeight(updatedFontWeight);
-        })();
+
+        handleSelectFontWeight(updatedFontWeight);
       }
-    }
-  }, [
-    fontWeight,
-    fontWeights,
-    selectedElements,
-    handleSelectFontWeight,
-    maybeEnqueueFontStyle,
-    fontStyle,
-  ]);
+    },
+    [handleSelectFontWeight]
+  );
 
   const handleFontPickerChange = useCallback(
     async (value) => {
@@ -166,6 +141,7 @@ function FontControls({ selectedElements, pushUpdate }) {
           };
         })
       );
+      maybeUpdateCurrentWeight(fontWeight, fontObj.weights);
       addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
     },
@@ -177,6 +153,7 @@ function FontControls({ selectedElements, pushUpdate }) {
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
+      maybeUpdateCurrentWeight,
     ]
   );
 
