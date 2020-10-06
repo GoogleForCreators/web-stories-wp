@@ -54,7 +54,11 @@ const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function PaddingControls({ selectedElements, pushUpdateForObject }) {
+function PaddingControls({
+  selectedElements,
+  pushUpdateForObject,
+  pushUpdate,
+}) {
   const padding = useCommonObjectValue(
     selectedElements,
     'padding',
@@ -67,9 +71,26 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
 
   const handleChange = useCallback(
     (newPadding, submit = false) => {
+      pushUpdate(({ x, y, width, height }) => {
+        const updates = {};
+
+        if ('horizontal' in newPadding) {
+          updates.x = x - (newPadding.horizontal - padding.horizontal || 0);
+          updates.width =
+            width + (newPadding.horizontal - padding.horizontal || 0) * 2;
+        }
+
+        if ('vertical' in newPadding) {
+          updates.y = y - (newPadding.vertical - padding.vertical || 0);
+          updates.height =
+            height + (newPadding.vertical - padding.vertical || 0) * 2;
+        }
+
+        return updates;
+      });
       pushUpdateForObject('padding', newPadding, DEFAULT_PADDING, submit);
     },
-    [pushUpdateForObject]
+    [pushUpdate, pushUpdateForObject, padding]
   );
 
   usePresubmitHandler(
@@ -157,6 +178,7 @@ function PaddingControls({ selectedElements, pushUpdateForObject }) {
 PaddingControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
+  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default PaddingControls;
