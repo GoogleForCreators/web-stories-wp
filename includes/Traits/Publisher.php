@@ -134,7 +134,7 @@ trait Publisher {
 		 * This should point to a square image.
 		 *
 		 * @since 1.0.0
-		 * @since 1.1.0 $placeholder Is deprecated.
+		 * @since 1.1.0 The $placeholder parameter was deprecated.
 		 *
 		 * @param string $logo_image_url URL to the publisher's logo.
 		 * @param string $placeholder    Deprecated.
