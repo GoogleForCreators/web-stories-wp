@@ -35,7 +35,13 @@ describe('Template', () => {
   it('should be able use existing template for new story', async () => {
     await visitDashboard();
 
-    await expect(page).toClick('a', { text: 'Explore Templates' });
+    const dashboardNavigation = await expect(page).toMatchElement(
+      '[aria-label="Main dashboard navigation"]'
+    );
+
+    await expect(dashboardNavigation).toClick('a', {
+      text: 'Explore Templates',
+    });
 
     await expect(page).toMatch('Viewing all templates');
 
