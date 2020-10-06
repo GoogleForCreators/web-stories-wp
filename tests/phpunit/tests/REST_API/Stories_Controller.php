@@ -321,6 +321,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @covers ::update_item
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::update_item
+	 * @group ms-excluded
 	 */
 	public function test_update_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
@@ -350,6 +351,7 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 
 	/**
 	 * @covers ::update_item
+	 * @group ms-excluded
 	 */
 	public function test_update_item_publisher_id() {
 		wp_set_current_user( self::$user_id );
