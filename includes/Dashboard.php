@@ -45,11 +45,11 @@ class Dashboard {
 	const SCRIPT_HANDLE = 'stories-dashboard';
 
 	/**
-	 * Admin page hook suffix.
+	 * Admin page hook suffixes.
 	 *
-	 * @var array|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @var array List of the admin pages' hook_suffix values.
 	 */
-	private $hook_suffix;
+	private $hook_suffix = [];
 
 	/**
 	 * Experiments instance.
@@ -94,9 +94,6 @@ class Dashboard {
 	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix( $key ) {
-		if ( ! is_array( $this->hook_suffix ) ) {
-			return null;
-		}
 		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
 			return false;
 		}
@@ -113,8 +110,6 @@ class Dashboard {
 	 */
 	public function add_menu_page() {
 		$parent = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
-
-		$this->hook_suffix = [];
 
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
@@ -149,6 +144,8 @@ class Dashboard {
 
 	/**
 	 * Redirects to the correct Dashboard page when clicking on the top-level "Stories" menu item.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @since 1.0.0
 	 *
