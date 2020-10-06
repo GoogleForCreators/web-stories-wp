@@ -36,7 +36,7 @@ import { useStory } from '../../../../app/story';
 import generatePatternStyles from '../../../../utils/generatePatternStyles';
 
 const PRESET_SIZE = 30;
-const REMOVE_ICON_SIZE = 18;
+const REMOVE_ICON_SIZE = 16;
 
 const Transparent = styled.div`
   width: 100%;
