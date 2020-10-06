@@ -167,13 +167,4 @@ class Discovery extends \WP_UnitTestCase {
 		$this->assertContains( 'twitter:card', $output );
 		$this->assertContains( 'twitter:image', $output );
 	}
-
-	/**
-	 * @covers ::get_valid_publisher_image
-	 */
-	public function test_get_valid_publisher_image() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_valid_publisher_image', [ self::$attachment_id ] );
-		$this->assertNotFalse( $result );
-	}
 }

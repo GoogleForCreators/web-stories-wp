@@ -85,7 +85,6 @@ class Stories_Controller extends Stories_Base_Controller {
 			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
-
 		$data  = $this->filter_response_by_context( $data, $context );
 		$links = $response->get_links();
 

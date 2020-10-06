@@ -104,6 +104,7 @@ class HTML extends WP_UnitTestCase {
 		$story->load_from_post( $post );
 		$renderer    = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 		$placeholder = $renderer->get_publisher_logo_placeholder();
+		$logo        = $renderer->get_publisher_logo();
 
 		wp_update_post(
 			[
@@ -114,10 +115,16 @@ class HTML extends WP_UnitTestCase {
 
 		$rendered = $renderer->render();
 
-		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
-
+		$this->assertContains( 'publisher-logo-src="http', $rendered );
+		$this->assertContains( $logo, $rendered );
 		$this->assertNotContains( $placeholder, $rendered );
-		$this->assertContains( 'attachment', $rendered );
+
+		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
+		$rendered = $renderer->render();
+
+		$this->assertContains( 'publisher-logo-src=""', $rendered );
+		$this->assertNotContains( $placeholder, $rendered );
+		$this->assertNotContains( 'amp=', $rendered );
 	}
 
 	/**
@@ -186,6 +193,7 @@ class HTML extends WP_UnitTestCase {
 
 	/**
 	 * @covers ::add_poster_images
+	 * @covers ::remove_amp_attr
 	 */
 	public function test_add_poster_images_no_poster_no_amp() {
 		$post = self::factory()->post->create_and_get(

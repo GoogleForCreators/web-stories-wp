@@ -28,6 +28,7 @@ namespace Google\Web_Stories\AMP\Traits;
 
 use DOMElement;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use \AmpProject\Dom\Document as AMP_Document;
 
 /**
  * Trait Sanitization_Utils
@@ -40,7 +41,7 @@ trait Sanitization_Utils {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param Document $document Document instance.
+	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
 	private function transform_html_start_tag( &$document ) {
@@ -62,7 +63,7 @@ trait Sanitization_Utils {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param Document $document Document instance.
+	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
 	private function transform_a_tags( &$document ) {
@@ -83,7 +84,7 @@ trait Sanitization_Utils {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param Document $document Document instance.
+	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
 	private function insert_analytics_configuration( &$document ) {
@@ -122,9 +123,9 @@ trait Sanitization_Utils {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param Document $document       Document instance.
-	 * @param string   $publisher_logo Publisher logo.
-	 * @param string   $placeholder    Placeholder publisher logo.
+	 * @param Document|AMP_Document $document       Document instance.
+	 * @param string                $publisher_logo Publisher logo.
+	 * @param string                $placeholder    Placeholder publisher logo.
 	 * @return void
 	 */
 	private function add_publisher_logo( &$document, $publisher_logo, $placeholder ) {
@@ -138,8 +139,15 @@ trait Sanitization_Utils {
 		// Add a publisher logo if missing or just a placeholder.
 		$existing_publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
 
-		if ( empty( $existing_publisher_logo ) || $existing_publisher_logo === $placeholder ) {
+		if ( ! $existing_publisher_logo || $existing_publisher_logo === $placeholder ) {
 			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
+		}
+
+		// Without a publisher logo, a story becomes invalid AMP.
+		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
+		// preventing errors from showing up in GSC and other tools.
+		if ( ! $story_element->getAttribute( 'publisher-logo-src' ) ) {
+			$document->html->removeAttribute( 'amp' );
 		}
 	}
 
@@ -148,8 +156,8 @@ trait Sanitization_Utils {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param Document $document      Document instance.
-	 * @param string[] $poster_images List of poster images, keyed by type.
+	 * @param Document|AMP_Document $document      Document instance.
+	 * @param string[]              $poster_images List of poster images, keyed by type.
 	 * @return void
 	 */
 	private function add_poster_images( &$document, $poster_images ) {
@@ -163,31 +171,11 @@ trait Sanitization_Utils {
 		foreach ( $poster_images as $attr => $url ) {
 			$story_element->setAttribute( $attr, esc_url( $url ) );
 		}
-	}
 
-	/**
-	 * Sanitize the HTML contained in the Document received by the constructor.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param Document $document Document instance.
-	 * @return void
-	 */
-	private function sanitize_poster_portrait( &$document ) {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		// Without a poster or a publisher logo, a story becomes invalid AMP.
+		// Without a poster, a story becomes invalid AMP.
 		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
 		// preventing errors from showing up in GSC and other tools.
-		if (
-			! $story_element->getAttribute( 'poster-portrait-src' ) ||
-			! $story_element->getAttribute( 'publisher-logo-src' )
-		) {
+		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
 			$document->html->removeAttribute( 'amp' );
 		}
 	}

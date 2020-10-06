@@ -119,6 +119,8 @@ const Provider = ({ children }) => {
       top: 0,
       behavior: 'smooth',
     });
+    // bring focus back to area getting scrolled instead of it jumping to wordpress menus
+    scrollFrameEl.children[0]?.focus();
   }, []);
 
   const value = useMemo(
