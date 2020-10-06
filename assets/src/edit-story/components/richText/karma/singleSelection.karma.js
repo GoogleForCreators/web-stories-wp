@@ -334,33 +334,4 @@ describe('Styling single text field', () => {
       expect(actual).toBe(expected);
     });
   });
-
-  describe('CUJ: Creator Can Style Text: When a font without weight support replaces font, default font weight to closest match', () => {
-    it('should replace Bold Roboto with normal weight font for Abel since Bold is not an option', async () => {
-      const {
-        fontWeight,
-        fontFamily,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
-      expect(fontWeight.value).toBe('Regular');
-
-      await data.fixture.events.click(fontWeight.select);
-      await data.fixture.events.click(fontWeight.option('Bold'));
-      expect(fontWeight.value).toBe('Bold');
-
-      await data.fixture.events.click(fontFamily);
-
-      await data.fixture.events.keyboard.type('Ab');
-      // Ensure the debounced callback has taken effect.
-      await data.fixture.events.sleep(300);
-
-      let options = document
-        .getElementById('editor-font-picker-list')
-        .querySelectorAll('li[role="option"]');
-      expect(options.length).toBe(2);
-
-      await data.fixture.events.click(options[0]);
-
-      expect(fontWeight.value).toBe('Regular');
-    });
-  });
 });

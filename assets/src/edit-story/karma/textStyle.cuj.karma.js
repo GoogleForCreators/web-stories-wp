@@ -307,5 +307,32 @@ describe('Element: Text', () => {
         );
       });
     });
+
+    it('should replace non 400 font weights with 400 when font family is updated', async () => {
+      await fixture.events.keyboard.type('Yrsa');
+      // Ensure the debounced callback has taken effect.
+      fixture.events.sleep(TIMEOUT);
+      const option = fixture.screen.getByText('Yrsa');
+      await fixture.events.click(option);
+      fixture.events.sleep(TIMEOUT);
+
+      const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
+      expect(fontWeight.value).toBe('Regular');
+
+      await fixture.events.click(fontWeight.select);
+      await fixture.events.click(fontWeight.option('Bold'));
+      expect(fontWeight.value).toBe('Bold');
+
+      await openFontPicker();
+
+      await fixture.events.keyboard.type('Roboto');
+      // Ensure the debounced callback has taken effect.
+      fixture.events.sleep(TIMEOUT);
+      const option2 = fixture.screen.getByText('Roboto');
+      await fixture.events.click(option2);
+      fixture.events.sleep(TIMEOUT);
+
+      expect(fontWeight.value).toBe('Regular');
+    });
   });
 });
