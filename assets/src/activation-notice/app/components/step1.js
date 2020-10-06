@@ -31,6 +31,7 @@ import { __, _x } from '@wordpress/i18n';
 import { trackClick } from '../../../tracking';
 import { useConfig } from '../config';
 
+import TranslateWithMarkup from '../../../i18n/translateWithMarkup';
 import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
@@ -57,7 +58,6 @@ const ParagraphWrapper = styled.div`
   }
 `;
 
-// @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step1() {
   const { demoStoryURL } = useConfig();
 
@@ -92,19 +92,20 @@ function Step1() {
           }
         </Number>
         <Paragraph $secondary>
-          {
-            /* translators: First half of "Read the Get Started story" */
-            _x('Read the', 'plugin activation', 'web-stories')
-          }
-          <br />
-          <Link
-            href={demoStoryURL}
-            onClick={onClick}
-            target="_blank"
-            rel="noreferrer"
+          <TranslateWithMarkup
+            mapping={{
+              a: (
+                <Link
+                  href={demoStoryURL}
+                  onClick={onClick}
+                  target="_blank"
+                  rel="noreferrer"
+                />
+              ),
+            }}
           >
-            {__('Get Started story', 'web-stories')}
-          </Link>
+            {__('Read the<br/><a>Get Started story</a>', 'web-stories')}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>
