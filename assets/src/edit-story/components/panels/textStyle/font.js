@@ -101,24 +101,17 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const fontStyle = isItalic ? 'italic' : 'normal';
 
-  const maybeUpdateCurrentWeight = useCallback(
-    (currentFontWeight, availableWeights) => {
+  const resetCurrentWeight = useCallback(
+    (availableWeights) => {
       const defaultWeightExists = availableWeights.filter((weight) =>
         weight.toString().includes(DEFAULT_FONT_WEIGHT)
       ).length;
 
-      if (currentFontWeight === DEFAULT_FONT_WEIGHT && defaultWeightExists) {
-        return () => {};
-      }
-
-      if (!defaultWeightExists) {
-        const updatedFontWeight = getClosestFontWeight(
-          DEFAULT_FONT_WEIGHT,
-          availableWeights
-        );
-        return handleSelectFontWeight(updatedFontWeight);
-      }
-      return handleSelectFontWeight(DEFAULT_FONT_WEIGHT);
+      const updatedFontWeight =
+        defaultWeightExists < 0
+          ? getClosestFontWeight(DEFAULT_FONT_WEIGHT, availableWeights)
+          : DEFAULT_FONT_WEIGHT;
+      handleSelectFontWeight(updatedFontWeight);
     },
     [handleSelectFontWeight]
   );
@@ -147,19 +140,19 @@ function FontControls({ selectedElements, pushUpdate }) {
           };
         })
       );
-      maybeUpdateCurrentWeight(fontWeight, fontObj.weights);
+      resetCurrentWeight(fontObj.weights);
       addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
     },
     [
-      addRecentFont,
-      fontStyle,
-      fontWeight,
       fonts,
       maybeEnqueueFontStyle,
-      maybeUpdateCurrentWeight,
-      pushUpdate,
       selectedElements,
+      resetCurrentWeight,
+      addRecentFont,
+      pushUpdate,
+      fontStyle,
+      fontWeight,
     ]
   );
 
@@ -179,7 +172,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     },
     [fontStyle, handleSelectFontWeight, maybeEnqueueFontStyle, selectedElements]
   );
-
   usePresubmitHandler(
     ({ fontSize: newFontSize }) => ({
       fontSize: clamp(newFontSize, MIN_MAX.FONT_SIZE),
