@@ -21,7 +21,7 @@ parameters:
   excludes_analyse:
     - includes/vendor/*
   scanDirectories:
-    - third-party
+    - third-party/
   scanFiles:
     - web-stories.php
   bootstrapFiles:

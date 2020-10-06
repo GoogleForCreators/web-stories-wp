@@ -18,25 +18,46 @@
 namespace Google\Web_Stories\Tests\AMP;
 
 use AMP_DOM_Utils;
+use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
  */
 class Story_Sanitizer extends \WP_UnitTestCase {
+	/**
+	 * Helper method for tests.
+	 * @param string $source
+	 * @param array $sanitizer_args
+	 * @return string Sanitized HTML.
+	 */
+	protected function sanitize_and_get( $source, $sanitizer_args ) {
+		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
+		$dom->documentElement->setAttribute( 'amp', '' );
+
+		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom, $sanitizer_args );
+		$sanitizer->sanitize();
+
+		return $dom->saveHTML( $dom->documentElement );
+	}
+
 	public function get_publisher_logo_data() {
 		return [
-			'publisher_logo_exists'  => [
+			'publisher_logo_exists'      => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<html amp=""><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
-			'publisher_logo_missing' => [
+			'publisher_logo_missing'     => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<html><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" poster-portrait-src="https://example.com/image.png" publisher-logo-src="https://example.com/publisher_logo.png"></amp-story></body></html>',
 			],
-			'publisher_logo_empty'   => [
+			'publisher_logo_empty'       => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<html><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/publisher_logo.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+			],
+			'publisher_logo_placeholder' => [
+				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/placeholder_logo.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/publisher_logo.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
 		];
 	}
@@ -44,18 +65,20 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	/**
 	 * @dataProvider get_publisher_logo_data
 	 * @covers ::sanitize
+	 * @covers Sanitization_Utils::add_publisher_logo
 	 *
 	 * @param string   $source   Source.
 	 * @param string   $expected Expected.
 	 */
 	public function test_sanitize_publisher_logo( $source, $expected ) {
-		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
-		$dom->documentElement->setAttribute( 'amp', '' );
+		$args = [
+			'publisher_logo'             => 'https://example.com/publisher_logo.png',
+			'publisher_logo_placeholder' => 'https://example.com/placeholder_logo.png',
+			'poster_images'              => [],
+		];
 
-		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom );
-		$sanitizer->sanitize();
+		$actual = $this->sanitize_and_get( $source, $args );
 
-		$actual = $dom->saveHTML( $dom->documentElement );
 		$this->assertEquals( $expected, $actual );
 	}
 
@@ -63,15 +86,15 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 		return [
 			'poster_image_exists'  => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story>',
-				'<html amp=""><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
+				'<html amp="" lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"></amp-story></body></html>',
 			],
 			'poster_image_missing' => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"></amp-story>',
-				'<html><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"></amp-story></body></html>',
+				'<html lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png"></amp-story></body></html>',
 			],
 			'poster_image_empty'   => [
 				'<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src=""></amp-story>',
-				'<html><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src=""></amp-story></body></html>',
+				'<html lang="en-US"><head><meta charset="utf-8"></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src=""></amp-story></body></html>',
 			],
 		];
 	}
@@ -79,18 +102,99 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	/**
 	 * @dataProvider get_poster_image_data
 	 * @covers ::sanitize
+	 * @covers Sanitization_Utils::sanitize_poster_portrait
 	 *
 	 * @param string   $source   Source.
 	 * @param string   $expected Expected.
 	 */
 	public function test_sanitize_poster_image( $source, $expected ) {
-		$dom = AMP_DOM_Utils::get_dom_from_content( $source );
-		$dom->documentElement->setAttribute( 'amp', '' );
+		$args = [
+			'publisher_logo'             => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+		];
 
-		$sanitizer = new \Google\Web_Stories\AMP\Story_Sanitizer( $dom );
-		$sanitizer->sanitize();
+		$actual = $this->sanitize_and_get( $source, $args );
 
-		$actual = $dom->saveHTML( $dom->documentElement );
 		$this->assertEquals( $expected, $actual );
+	}
+
+	/**
+	 * @covers Sanitization_Utils::transform_html_start_tag
+	 */
+	public function test_transform_html_start_tag() {
+		$source = '<html><head></head><body><amp-story></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertContains( ' lang="en-US"', $actual );
+	}
+
+	/**
+	 * @covers Sanitization_Utils::transform_a_tags
+	 */
+	public function test_transform_a_tags() {
+		$source = '<html><head></head><body><amp-story><a href="https://www.google.com">Google</a></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertContains( 'rel="noreferrer"', $actual );
+		$this->assertContains( 'target="_blank"', $actual );
+	}
+
+	/**
+	 * @covers ::insert_analytics_configuration
+	 * @covers ::get_element_by_tag_name
+	 */
+	public function test_insert_analytics_configuration() {
+		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		add_action(
+			'web_stories_print_analytics',
+			static function() {
+				echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
+			}
+		);
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		remove_all_actions( 'web_stories_print_analytics' );
+
+		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+	}
+
+	/**
+	 * @covers ::insert_analytics_configuration
+	 */
+	public function test_insert_analytics_configuration_no_output() {
+		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		$args = [
+			'publisher_logo'             => '',
+			'publisher_logo_placeholder' => '',
+			'poster_images'              => [],
+		];
+
+		$actual = $this->sanitize_and_get( $source, $args );
+
+		$this->assertNotContains( 'https://cdn.ampproject.org/v0/amp-analytics-0.1.js', $actual );
 	}
 }

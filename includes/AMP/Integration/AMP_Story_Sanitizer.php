@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Story_Sanitizer.
+ * Class AMP_Story_Sanitizer.
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -24,19 +24,20 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\AMP;
+namespace Google\Web_Stories\AMP\Integration;
 
-use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories\AMP\Traits\Sanitization_Utils;
 
 /**
- * Story sanitizer.
+ * AMP Story sanitizer.
  *
- * Sanitizer for Web Stories related features.
+ * Like Story_Sanitizer, but for use with the AMP WordPress plugin.
+ *
+ * @see Story_Sanitizer
  *
  * @since 1.1.0
  */
-class Story_Sanitizer extends AMP_Base_Sanitizer {
+class AMP_Story_Sanitizer extends \AMP_Base_Sanitizer {
 	use Sanitization_Utils;
 
 	/**

@@ -367,7 +367,6 @@ class Sanitization {
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
 			Canonical_Sanitizer::class             => [],
-			Story_Sanitizer::class                 => [],
 			AMP_Tag_And_Attribute_Sanitizer::class => [],
 		];
 

@@ -27,11 +27,12 @@
 namespace Google\Web_Stories\Story_Renderer;
 
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use DOMElement;
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\AMP\Story_Sanitizer;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
-use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Traits\Publisher;
 
 /**
  * Class Story_Renderer
@@ -54,11 +55,11 @@ class HTML {
 	protected $document;
 
 	/**
-	 * Story_Renderer constructor.
+	 * HTML constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story $story Post object.
+	 * @param Story $story Story object.
 	 */
 	public function __construct( Story $story ) {
 		$this->story = $story;
@@ -75,7 +76,14 @@ class HTML {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 
-		// TODO: What if transformation failed?
+		// If the AMP plugin is installed and available in a version >= than ours,
+		// all sanitization and optimization should be delegated to the AMP plugin.
+		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
+			add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
+
+			return $markup;
+		}
+
 		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
 
 		// This  should never actually happen.
@@ -91,6 +99,8 @@ class HTML {
 			);
 		}
 
+		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
+
 		/**
 		 * Document instance.
 		 *
@@ -98,78 +108,61 @@ class HTML {
 		 */
 		$this->document = $document;
 
-		// Run all further transformations on the Document instance.
-		// These need to run before sanitization so it works even when
-		// sanitization is done by the AMP plugin.
-
-		$this->transform_html_start_tag();
-		$this->transform_a_tags();
-		$this->insert_analytics_configuration();
-		$this->add_publisher_logo();
-		$this->add_poster_images();
-
-		// If the AMP plugin is installed and available in a version >= than ours,
-		// all sanitization and optimization should be delegated to the AMP plugin.
-		if ( ! defined( '\AMP__VERSION' ) || version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) ) {
-			$this->sanitize_markup();
-			$this->optimize_markup();
-		}
+		$this->sanitize_markup();
+		$this->optimize_markup();
 
 		return trim( (string) $this->document->saveHTML() );
 	}
 
 	/**
-	 * Returns the first found element with a given tag name.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string $name Tag name.
-	 *
-	 * @return DOMElement|null
-	 */
-	protected function get_element_by_tag_name( $name ) {
-		return $this->document->getElementsByTagName( $name )->item( 0 );
-	}
-
-	/**
-	 * Replaces the HTML start tag to make the language attributes dynamic.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function transform_html_start_tag() {
-		$this->document->html->setAttribute( 'amp', '' );
-
-		// See get_language_attributes().
-		if ( is_rtl() ) {
-			$this->document->html->setAttribute( 'dir', 'rtl' );
-		}
-
-		$lang = get_bloginfo( 'language' );
-		if ( $lang ) {
-			$this->document->html->setAttribute( 'lang', esc_attr( $lang ) );
-		}
-	}
-
-	/**
-	 * Transform all a tags to add target and rel attributes.
+	 * Filters the Web Stories AMP sanitizers.
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return void
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
 	 */
-	protected function transform_a_tags() {
-		$hyperlinks = $this->document->getElementsByTagName( 'a' );
-		/* @var DOMElement $hyperlink The <a> element */
-		foreach ( $hyperlinks as $hyperlink ) {
-			if ( ! $hyperlink->getAttribute( 'target' ) ) {
-				$hyperlink->setAttribute( 'target', '_blank' );
-			}
-			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
-				$hyperlink->setAttribute( 'rel', 'noreferrer' );
-			}
-		}
+	public function add_web_stories_amp_content_sanitizers( $sanitizers ) {
+		$sanitizers[ Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => $this->get_poster_images(),
+		];
+
+		return $sanitizers;
+	}
+
+	/**
+	 * Filters the AMP plugin's sanitizers.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
+	 */
+	public function add_amp_content_sanitizers( $sanitizers ) {
+		$sanitizers[ AMP_Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => $this->get_poster_images(),
+		];
+
+		return $sanitizers;
+	}
+
+	/**
+	 * Get story meta images.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return string[] Images.
+	 */
+	protected function get_poster_images() {
+		return [
+			'poster-portrait-src'  => $this->story->get_poster_portrait(),
+			'poster-square-src'    => $this->story->get_poster_square(),
+			'poster-landscape-src' => $this->story->get_poster_landscape(),
+		];
 	}
 
 	/**
@@ -216,97 +209,6 @@ class HTML {
 		}
 
 		return $content;
-	}
-
-	/**
-	 * Replaces the placeholder of publisher logo in the content.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function add_publisher_logo() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		// Add a publisher logo if missing or just a placeholder.
-		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
-
-		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-			$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
-		}
-	}
-
-	/**
-	 * Adds square, and landscape poster images to the <amp-story>.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function add_poster_images() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		$poster_images = $this->get_poster_images();
-
-		foreach ( $poster_images as $attr => $url ) {
-			$story_element->setAttribute( $attr, esc_url( $url ) );
-		}
-	}
-
-	/**
-	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function insert_analytics_configuration() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		ob_start();
-
-		do_action( 'web_stories_print_analytics' );
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$fragment = $this->document->createDocumentFragment();
-		$fragment->appendXml( $output );
-
-		$story_element->appendChild( $fragment );
-	}
-
-	/**
-	 * Get story meta images.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string[] Images.
-	 */
-	protected function get_poster_images() {
-		return [
-			'poster-portrait-src'  => $this->story->get_poster_portrait(),
-			'poster-square-src'    => $this->story->get_poster_square(),
-			'poster-landscape-src' => $this->story->get_poster_landscape(),
-		];
 	}
 
 	/**

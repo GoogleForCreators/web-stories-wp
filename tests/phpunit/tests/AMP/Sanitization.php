@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\AMP;
 
 use DOMElement;
+use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
@@ -178,6 +179,54 @@ class Sanitization extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::ensure_required_markup()
+	 */
+	public function test_missing_scripts_get_added() {
+		ob_start();
+		?>
+		<html>
+		<head></head>
+		<body>
+		<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png">
+			<amp-story-page id="foo">
+				<amp-story-grid-layer template="fill">
+				</amp-story-grid-layer>
+			</amp-story-page>
+			<amp-analytics type="gtag" data-credentials="include">
+				<script type="application/json">{}</script>
+			</amp-analytics>
+		</amp-story>
+		<script async="" src="https://cdn.ampproject.org/v0.js"></script>
+		<script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>
+		</body>
+		</html>
+		<?php
+		$original_html = ob_get_clean();
+
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
+
+		$document = Document::fromHtml( $original_html );
+		$sanitization->sanitize_document( $document );
+
+		/** @var DOMElement $script Script. */
+		$actual_script_srcs = [];
+		foreach ( $document->xpath->query( '//script[ not( @type ) or @type = "text/javascript" ]' ) as $script ) {
+			$actual_script_srcs[] = $script->getAttribute( 'src' );
+		}
+
+		$expected_script_srcs = [
+			'https://cdn.ampproject.org/v0.js',
+			'https://cdn.ampproject.org/v0/amp-story-1.0.js',
+			'https://cdn.ampproject.org/v0/amp-analytics-0.1.js',
+		];
+
+		$this->assertEqualSets(
+			$expected_script_srcs,
+			$actual_script_srcs
+		);
+	}
+
+	/**
 	 * @covers ::get_extension_sources
 	 */
 	public function test_get_extension_sources() {
@@ -252,7 +301,8 @@ class Sanitization extends \WP_UnitTestCase {
 		$sanitizers   = $this->call_private_method( $sanitization, 'get_sanitizers' );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
-		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 4 ] );
+		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 5 ] );
+		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 4 ] );
 		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 3 ] );
 		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 2 ] );
 		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 1 ] );
