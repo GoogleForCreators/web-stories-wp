@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Tests\Capability;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -24,6 +25,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */
 class Stories_Media_Controller extends \WP_Test_REST_TestCase {
+	use Capability;
 	/**
 	 * @var int
 	 */
@@ -48,6 +50,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 				'display_name' => 'Andrea Adams',
 			]
 		);
+		self::add_capability( self::$user_id );
 	}
 
 	public static function wpTearDownAfterClass() {

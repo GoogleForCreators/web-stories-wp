@@ -17,11 +17,13 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Tests\Capability;
 use Google\Web_Stories\Tests\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
 
 class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
+	use Capability;
 	protected $server;
 
 	protected static $author_id;
@@ -32,6 +34,8 @@ class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
 				'role' => 'author',
 			]
 		);
+
+		self::add_capability( self::$author_id );
 	}
 
 	public static function wpTearDownAfterClass() {

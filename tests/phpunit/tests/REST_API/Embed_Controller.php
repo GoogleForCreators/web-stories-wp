@@ -17,10 +17,14 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Tests\Capability;
 use Spy_REST_Server;
 use WP_REST_Request;
 
 class Embed_Controller extends \WP_Test_REST_TestCase {
+
+	use Capability;
+
 	/**
 	 * @var \WP_REST_Server
 	 */
@@ -52,6 +56,8 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 				'user_email' => 'editor@example.com',
 			]
 		);
+
+		self::add_capability( self::$editor );
 	}
 
 	public static function wpTearDownAfterClass() {

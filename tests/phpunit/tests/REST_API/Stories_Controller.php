@@ -18,6 +18,7 @@
 namespace Google\Web_Stories\Tests\REST_API;
 
 use Google\Web_Stories\Settings;
+use Google\Web_Stories\Tests\Capability;
 use Google\Web_Stories\Tests\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -26,6 +27,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
 class Stories_Controller extends \WP_Test_REST_TestCase {
+	use Capability;
 	protected $server;
 
 	protected static $user_id;
@@ -111,6 +113,10 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 				'post_type'   => $post_type,
 			]
 		);
+		self::add_capability( self::$user_id );
+		self::add_capability( self::$user2_id );
+		self::add_capability( self::$user3_id );
+		self::add_capability( self::$author_id );
 	}
 
 	public static function wpTearDownAfterClass() {
