@@ -74,6 +74,7 @@ export default async function loadTextSets() {
     'step',
     'section_header',
     'editorial',
+    'contact',
     'table',
     'quote',
   ];
