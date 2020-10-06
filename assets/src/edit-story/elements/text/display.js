@@ -59,7 +59,7 @@ const HighlightElement = styled.p`
   line-height: inherit;
   margin: 0;
   position: absolute;
-  width: 100%;
+  width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
 
 const MarginedElement = styled.span`

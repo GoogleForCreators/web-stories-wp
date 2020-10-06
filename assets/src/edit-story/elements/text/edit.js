@@ -87,6 +87,8 @@ const Highlight = styled.span`
   * {
     color: transparent !important;
   }
+  padding: ${({ padding }) => padding};
+  width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
 
 function TextEdit({
@@ -154,6 +156,9 @@ function TextEdit({
       backgroundColor: null,
     }),
   };
+
+  const { padding: _, ...highlightTextProps } = textProps;
+
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -322,7 +327,7 @@ function TextEdit({
       backgroundColor={wrapperBackgroundColor}
     >
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
-        <TextBox ref={highlightRef} {...textProps}>
+        <TextBox ref={highlightRef} {...highlightTextProps}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
             {...textProps}
