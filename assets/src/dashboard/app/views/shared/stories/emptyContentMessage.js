@@ -17,32 +17,18 @@
 /**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
-import addQueryArgs from './addQueryArgs';
+import { EmptyContentMessage } from '../';
 
-/**
- * Update page URL in browser.
- *
- * @param {number} postId Current story id.
- * @return {Function} Function to refresh the post edit URL.
- */
-function useRefreshPostEditURL(postId) {
-  const refreshPostEditURL = useCallback(() => {
-    const getPostEditURL = addQueryArgs('post.php', {
-      post: postId,
-      action: 'edit',
-    });
-    window.history.replaceState(
-      { id: postId },
-      'Post ' + postId,
-      getPostEditURL + window.location.hash
-    );
-  }, [postId]);
-  return refreshPostEditURL;
-}
+export default {
+  title: 'Dashboard/Views/Shared/EmptyContentMessage',
+};
 
-export default useRefreshPostEditURL;
+export const _default = () => {
+  const message = text('display message', 'default content to display');
+  return <EmptyContentMessage>{message}</EmptyContentMessage>;
+};
