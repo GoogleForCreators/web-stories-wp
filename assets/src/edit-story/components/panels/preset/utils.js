@@ -215,7 +215,7 @@ export function getOpaqueColor(preset) {
       },
     };
   }
-  const opaqueSteps = stops;
+  const opaqueSteps = [];
   stops.forEach((colorStop, i) => {
     opaqueSteps[i] = {
       ...colorStop,
@@ -225,6 +225,7 @@ export function getOpaqueColor(preset) {
       },
     };
   });
+
   return {
     ...preset,
     stops: opaqueSteps,

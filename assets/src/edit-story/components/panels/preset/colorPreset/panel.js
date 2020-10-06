@@ -53,7 +53,7 @@ const Transparent = styled.div`
     #fff 0turn 0.75turn,
     #d3d4d4 0turn 1turn
   );
-  background-size: 50% 50%;
+  background-size: 35% 35%;
 `;
 
 const ColorWrapper = styled.div`
@@ -99,12 +99,21 @@ const Color = styled.button.attrs({ type: 'button' })`
   }
 `;
 
+const OpaqueColorWrapper = styled.div`
+  height: ${PRESET_SIZE}px;
+  width: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
 const OpaqueColor = styled.div`
-  height: 100%;
-  width: 100%;
+  height: ${PRESET_SIZE}px;
+  width: ${PRESET_SIZE}px;
   position: absolute;
   top: 0;
-  right: 50%;
+  left: 0;
   ${({ color }) => generatePatternStyles(color)}
 `;
 
@@ -131,12 +140,12 @@ function ColorPresetPanel({ pushUpdate }) {
       return null;
     }
     const hasTransparency = presetHasOpacity(color);
-    console.log(color, hasTransparency);
+    // @todo Confirm if gradients need split presets or not.
+    const hasGradient = presetHasGradient(color);
     const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
     const disabled =
       !isEditMode &&
-      ((isBackground && hasTransparency) ||
-        (isText && presetHasGradient(color)));
+      ((isBackground && hasTransparency) || (isText && hasGradient));
     let tooltip = null;
     if (disabled) {
       tooltip = isBackground
@@ -158,7 +167,11 @@ function ColorPresetPanel({ pushUpdate }) {
                 : __('Apply color preset', 'web-stories')
             }
           >
-            {hasTransparency && <OpaqueColor color={opaqueColor} />}
+            {hasTransparency && !hasGradient && (
+              <OpaqueColorWrapper>
+                <OpaqueColor color={opaqueColor} />
+              </OpaqueColorWrapper>
+            )}
             {isEditMode && <Remove />}
           </Color>
         </ColorWrapper>
