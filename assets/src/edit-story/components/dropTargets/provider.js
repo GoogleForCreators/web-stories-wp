@@ -184,9 +184,7 @@ function DropTargetsProvider({ children }) {
 
         // Reset styles on visible elements
         elements
-          .filter(
-            ({ id }) => !(id in Object.keys(dropTargets)) && id !== selfId
-          )
+          .filter(({ id }) => dropTargets[id] && id !== selfId)
           .forEach((el) => {
             pushTransform(el.id, {
               dropTargets: {
