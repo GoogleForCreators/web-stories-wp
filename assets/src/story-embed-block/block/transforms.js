@@ -21,14 +21,12 @@ const transforms = {
       attributes: {
         align: {
           type: 'string',
-          default: 'none',
           shortcode: ({ named: { align } }) => {
             return align;
           },
         },
         height: {
           type: 'number',
-          default: 600,
           shortcode: ({ named: { height } }) => {
             return height;
           },
@@ -53,7 +51,6 @@ const transforms = {
         },
         width: {
           type: 'number',
-          default: 360,
           shortcode: ({ named: { width } }) => {
             return width;
           },
