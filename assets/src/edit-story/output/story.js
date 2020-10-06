@@ -32,7 +32,7 @@ import OutputPage from './page';
 function OutputStory({
   story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
   pages,
-  metadata: { publisher, logoPlaceholder },
+  metadata: { publisher },
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const fontDeclarations = getFontDeclarations(pages);
@@ -63,7 +63,7 @@ function OutputStory({
         <amp-story
           standalone=""
           publisher={publisher.name}
-          publisher-logo-src={logoPlaceholder}
+          publisher-logo-src={publisher.logo}
           title={title}
           poster-portrait-src={featuredMediaUrl}
         >
@@ -87,8 +87,8 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.shape({
       name: PropTypes.string.isRequired,
+      logo: PropTypes.string,
     }),
-    logoPlaceholder: PropTypes.string,
   }).isRequired,
 };
 
