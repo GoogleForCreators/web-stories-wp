@@ -1,7 +1,7 @@
 # Start: composer run-script phpstan
 
 includes:
-    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+    - php7/vendor/szepeviktor/phpstan-wordpress/extension.neon
 parameters:
   level: 8
   inferPrivatePropertyTypeFromConstructor: true

@@ -14,6 +14,7 @@ node_modules
 /public
 /static
 /vendor
+/php7
 phpcs.xml
 phpunit.xml
 phpunit-multisite.xml

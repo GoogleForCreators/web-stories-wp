@@ -42,8 +42,9 @@
   "scripts": {
     "phpcs": "phpcs",
     "phpstan": [
-      "composer show --path szepeviktor/phpstan-wordpress || composer require --dev --ignore-platform-reqs szepeviktor/phpstan-wordpress",
-      "vendor/bin/phpstan analyze --memory-limit=2G"
+      "mkdir php7 || echo",
+      "composer --working-dir=php7 show --path szepeviktor/phpstan-wordpress || composer --working-dir=php7 require --dev --ignore-platform-reqs szepeviktor/phpstan-wordpress",
+      "php7/vendor/bin/phpstan analyze --memory-limit=2G"
     ]
   }
 }
