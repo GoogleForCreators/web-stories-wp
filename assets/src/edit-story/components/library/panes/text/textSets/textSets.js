@@ -40,7 +40,8 @@ import TextSet from './textSet';
 
 const TextSetContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-template-columns: 1fr;
   row-gap: 12px;
   column-gap: 12px;
   margin-top: 28px;
