@@ -34,11 +34,12 @@ import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
-import { Layer, MenuArea, PageArea } from './layout';
+import { Layer, MenuArea, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import useCanvasKeys from './useCanvasKeys';
 import Selection from './selection';
 import useCanvas from './useCanvas';
+import PageNav from './pagenav';
 
 const FramesPageArea = withOverlay(
   styled(PageArea).attrs({
@@ -145,6 +146,12 @@ function FramesLayer() {
       >
         <PageMenu />
       </MenuArea>
+      <NavPrevArea>
+        <PageNav isNext={false} />
+      </NavPrevArea>
+      <NavNextArea>
+        <PageNav />
+      </NavNextArea>
       <Selection />
     </Layer>
   );

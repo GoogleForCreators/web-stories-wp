@@ -31,6 +31,7 @@ jest.mock('got');
 describe('getFontMetrics', () => {
   it('should return font metrics', async () => {
     got.mockImplementationOnce(() => {
+      // eslint-disable-next-line no-undef
       return { rawBody: readFileSync(join(__dirname, '/fixtures/abezee.ttf')) };
     });
 

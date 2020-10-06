@@ -27,7 +27,6 @@ describe('Clone element integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    jasmine.addMatchers(customMatchers);
 
     bg = await getElementByIndex(1);
     const bgRect = (
@@ -212,49 +211,3 @@ describe('Clone element integration', () => {
     );
   }
 });
-
-const customMatchers = {
-  toBeEmpty: () => ({
-    compare: function (actual) {
-      const innerHTML = actual?.innerHTML ?? '';
-      const pass = innerHTML === '';
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not be empty`
-          : `Expected element to be empty`,
-      };
-    },
-  }),
-  toHaveStyle: (util, customEqualityTesters) => ({
-    compare: function (element, property, expected) {
-      const actual = getComputedStyle(element)[property];
-      const pass = util.equals(actual, expected, customEqualityTesters);
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not have style "${property}: ${expected}"`
-          : `Expected element to have style "${property}: ${expected}" but found "${actual}"`,
-      };
-    },
-  }),
-  toHaveProperty: (util, customEqualityTesters) => ({
-    compare: function (element, property, expected) {
-      const actual = element?.[property] ?? '';
-      const pass =
-        typeof expected === 'string'
-          ? util.equals(actual, expected, customEqualityTesters)
-          : expected.test(actual);
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not have src "${expected}"`
-          : `Expected element to have src "${expected}" but found "${actual}"`,
-      };
-    },
-  }),
-};
-
-function getComputedStyle(element) {
-  return element ? window.getComputedStyle(element) : {};
-}

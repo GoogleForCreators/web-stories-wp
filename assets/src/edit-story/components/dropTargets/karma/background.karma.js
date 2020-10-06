@@ -26,7 +26,6 @@ describe('Background Drop-Target integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-    jasmine.addMatchers(customMatchers);
   });
 
   afterEach(() => {
@@ -474,45 +473,6 @@ async function dragToDropTarget(fixture, from, toId) {
     move(toRect.x + 3, toRect.y + 103, { steps: 5 }),
   ]);
 }
-
-const customMatchers = {
-  toBeEmpty: () => ({
-    compare: function (actual) {
-      const innerHTML = actual?.innerHTML ?? '';
-      const pass = innerHTML === '';
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not be empty`
-          : `Expected element to be empty`,
-      };
-    },
-  }),
-  toHaveStyle: (util, customEqualityTesters) => ({
-    compare: function (element, property, expected) {
-      const actual = getComputedStyle(element)[property];
-      const pass = util.equals(actual, expected, customEqualityTesters);
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not have background color "${expected}"`
-          : `Expected element to have background color "${expected}" but found "${actual}"`,
-      };
-    },
-  }),
-  toHaveProperty: (util, customEqualityTesters) => ({
-    compare: function (element, property, expected) {
-      const actual = element?.[property] ?? '';
-      const pass = util.equals(actual, expected, customEqualityTesters);
-      return {
-        pass,
-        message: pass
-          ? `Expected element to not have src "${expected}"`
-          : `Expected element to have src "${expected}" but found "${actual}"`,
-      };
-    },
-  }),
-};
 
 function getButtonByText(fixture, buttonText) {
   return Array.from(fixture.querySelectorAll('button')).find(
