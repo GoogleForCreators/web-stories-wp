@@ -43,7 +43,11 @@ use DOMElement;
 /**
  * Sanitization class.
  *
+ * Largely copied from AMP_Theme_Support.
+ *
  * @since 1.1.0
+ *
+ * @see \AMP_Theme_Support
  */
 class Sanitization {
 	/**
@@ -67,6 +71,9 @@ class Sanitization {
 	 * Adds missing scripts.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @see \AMP_Theme_Support::ensure_required_markup
+	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L1543-L1770
 	 *
 	 * @param Document $document Document instance.
 	 * @param array    $scripts List of found scripts.
@@ -283,6 +290,9 @@ class Sanitization {
 	 *
 	 * @since 1.1.0
 	 *
+	 * @see amp_register_default_scripts
+	 * @link https://github.com/ampproject/amp-wp/blob/d96052ed76a92f43b70e0a52cf8e952cf46301af/includes/amp-helper-functions.php#L1011-L1074
+	 *
 	 * @return array List of extensions and their URLs.
 	 */
 	protected function get_extension_sources() {
@@ -318,6 +328,9 @@ class Sanitization {
 	 *
 	 * @since 1.1.0
 	 *
+	 * @see amp_is_dev_mode
+	 * @link https://github.com/ampproject/amp-wp/blob/d96052ed76a92f43b70e0a52cf8e952cf46301af/includes/amp-helper-functions.php#L1429-L1463
+	 *
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
 	protected function is_amp_dev_mode() {
@@ -349,6 +362,11 @@ class Sanitization {
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @see amp_get_content_sanitizers
+	 * @see AMP_Validation_Manager::filter_sanitizer_args
+	 * @link https://github.com/ampproject/amp-wp/blob/d96052ed76a92f43b70e0a52cf8e952cf46301af/includes/amp-helper-functions.php#L1465-L1653
+	 * @link https://github.com/ampproject/amp-wp/blob/244a1a4e2c118ad70fe352beb5a34cd0d4b18705/includes/validation/class-amp-validation-manager.php#L2033-L2071
 	 *
 	 * @return array Sanitizers.
 	 */
@@ -437,6 +455,8 @@ class Sanitization {
 	 * Validation error callback.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
 	 *
 	 * @param array $error Error info, especially code.
 	 * @param array $data Additional data, including the node.

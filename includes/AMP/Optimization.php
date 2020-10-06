@@ -77,6 +77,9 @@ class Optimization {
 	 *
 	 * @since 1.1.0
 	 *
+	 * @see AMP_Theme_Support::get_optimizer
+	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L2235-L2255
+	 *
 	 * @return TransformationEngine Optimizer transformation engine to use.
 	 */
 	private function get_optimizer() {
@@ -99,6 +102,9 @@ class Optimization {
 	 * Get the AmpProject\Optimizer configuration object to use.
 	 *
 	 * @since 1.1.0
+	 *
+	 * @see AMP_Theme_Support::get_optimizer_configuration()
+	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L2257-L2315
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
