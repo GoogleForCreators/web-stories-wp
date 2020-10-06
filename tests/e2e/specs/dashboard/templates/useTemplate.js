@@ -39,7 +39,9 @@ describe('Template', () => {
       '[aria-label="Main dashboard navigation"]'
     );
 
-    await expect(dashboardNavigation).toClick('a', { text: 'Explore Templates' });
+    await expect(dashboardNavigation).toClick('a', {
+      text: 'Explore Templates',
+    });
 
     await expect(page).toMatch('Viewing all templates');
 
