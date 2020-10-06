@@ -54,6 +54,8 @@ const MIN_MAX = {
   },
 };
 
+const DEFAULT_FONT_WEIGHT = 400;
+
 const Space = styled.div`
   flex: 0 0 10px;
 `;
@@ -100,19 +102,23 @@ function FontControls({ selectedElements, pushUpdate }) {
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const maybeUpdateCurrentWeight = useCallback(
-    (currentWeight, availableWeights) => {
-      const currentWeightExists = availableWeights.filter((weight) =>
-        weight.toString().includes(currentWeight)
+    (currentFontWeight, availableWeights) => {
+      const defaultWeightExists = availableWeights.filter((weight) =>
+        weight.toString().includes(DEFAULT_FONT_WEIGHT)
       ).length;
 
-      if (!currentWeightExists) {
+      if (currentFontWeight === DEFAULT_FONT_WEIGHT && defaultWeightExists) {
+        return () => {};
+      }
+
+      if (!defaultWeightExists) {
         const updatedFontWeight = getClosestFontWeight(
-          currentWeight,
+          DEFAULT_FONT_WEIGHT,
           availableWeights
         );
-
-        handleSelectFontWeight(updatedFontWeight);
+        return handleSelectFontWeight(updatedFontWeight);
       }
+      return handleSelectFontWeight(DEFAULT_FONT_WEIGHT);
     },
     [handleSelectFontWeight]
   );
@@ -151,9 +157,9 @@ function FontControls({ selectedElements, pushUpdate }) {
       fontWeight,
       fonts,
       maybeEnqueueFontStyle,
+      maybeUpdateCurrentWeight,
       pushUpdate,
       selectedElements,
-      maybeUpdateCurrentWeight,
     ]
   );
 
