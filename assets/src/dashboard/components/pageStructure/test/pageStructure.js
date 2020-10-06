@@ -27,7 +27,7 @@ import { FlagsProvider } from 'flagged';
 import { renderWithProviders } from '../../../testUtils';
 import { LeftRail } from '../index';
 import NavProvider, { NavContext } from '../../navProvider';
-import { primaryPaths } from '../../../constants';
+import { PRIMARY_PATHS } from '../../../constants';
 
 describe('<LeftRail />', () => {
   it('should be visible by default in a regular viewport.', () => {
@@ -72,7 +72,7 @@ describe('<LeftRail />', () => {
 
     expect(toggleSideBarFn).not.toHaveBeenCalled();
 
-    const firstLink = wrapper.getByText(primaryPaths[0].label);
+    const firstLink = wrapper.getByText(PRIMARY_PATHS[0].label);
     fireEvent.click(firstLink);
 
     expect(toggleSideBarFn).toHaveBeenCalledWith();

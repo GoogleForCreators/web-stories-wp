@@ -60,7 +60,9 @@ describe('Text Sets Library Panel', () => {
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should display text sets', async () => {});
 
-    it('should allow inserting text sets', async () => {
+    // Disable reason: will be implemented with enabling the feature flag.
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow inserting text sets', async () => {
       const textSet = await waitFor(
         () =>
           fixture.editor.library.getAllByRole('listitem', {
@@ -77,7 +79,9 @@ describe('Text Sets Library Panel', () => {
       expect((await getTextElements()).length).toBeGreaterThan(0);
     });
 
-    it('should allow user to drag and drop text set onto page', async () => {
+    // Disable reason: timing out in CI, need investigation into async loading of text sets
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should allow user to drag and drop text set onto page', async () => {
       const textSet = await waitFor(
         () =>
           fixture.editor.library.getAllByRole('listitem', {

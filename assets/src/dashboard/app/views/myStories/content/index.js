@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -46,8 +46,8 @@ import {
   SortPropTypes,
 } from '../../../../utils/useStoryView';
 import FontProvider from '../../../font/fontProvider';
+import { EmptyContentMessage } from '../../shared';
 import StoriesView from './storiesView';
-import EmptyView from './emptyView';
 
 function Content({
   allPagesFetched,
@@ -72,27 +72,40 @@ function Content({
               height: view.pageSize.height,
             }}
           >
-            {stories.length > 0 ? (
-              <StandardViewContentGutter>
-                <StoriesView
-                  filterValue={filter.value}
-                  sort={sort}
-                  storyActions={storyActions}
-                  stories={stories}
-                  users={users}
-                  view={view}
-                  initialFocusStoryId={initialFocusStoryId}
-                />
-                <InfiniteScroller
-                  canLoadMore={!allPagesFetched}
-                  isLoading={isLoading}
-                  allDataLoadedMessage={__('No more stories', 'web-stories')}
-                  onLoadMore={page.requestNextPage}
-                />
-              </StandardViewContentGutter>
-            ) : (
-              <EmptyView searchKeyword={search.keyword} />
-            )}
+            <StandardViewContentGutter>
+              {stories.length > 0 ? (
+                <>
+                  <StoriesView
+                    filterValue={filter.value}
+                    sort={sort}
+                    storyActions={storyActions}
+                    stories={stories}
+                    users={users}
+                    view={view}
+                    initialFocusStoryId={initialFocusStoryId}
+                  />
+                  <InfiniteScroller
+                    canLoadMore={!allPagesFetched}
+                    isLoading={isLoading}
+                    allDataLoadedMessage={__('No more stories', 'web-stories')}
+                    onLoadMore={page.requestNextPage}
+                  />
+                </>
+              ) : (
+                <EmptyContentMessage>
+                  {search?.keyword
+                    ? sprintf(
+                        /* translators: %s: search term. */
+                        __(
+                          'Sorry, we couldn\'t find any results matching "%s"',
+                          'web-stories'
+                        ),
+                        search.keyword
+                      )
+                    : __('Create a story to get started!', 'web-stories')}
+                </EmptyContentMessage>
+              )}
+            </StandardViewContentGutter>
           </UnitsProvider>
         </TransformProvider>
       </FontProvider>
