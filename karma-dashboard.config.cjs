@@ -103,6 +103,7 @@ module.exports = function (config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
       'spec',
+      'failed-tests',
       config.coverage && 'cuj',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
