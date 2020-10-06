@@ -22,6 +22,11 @@ import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../keyboard';
@@ -132,7 +137,10 @@ function PresetGroup({
       ))}
       {displayAddIcon && (
         <ButtonWrapper type={type}>
-          <AddColorAction onClick={handleAddPreset}>
+          <AddColorAction
+            onClick={handleAddPreset}
+            aria-label={__('Add color preset', 'web-stories')}
+          >
             <AddColor />
           </AddColorAction>
         </ButtonWrapper>

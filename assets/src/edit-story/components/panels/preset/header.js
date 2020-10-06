@@ -84,14 +84,10 @@ function PresetsHeader({
 }) {
   const hasPresets = presets.length > 0;
 
-  const addLabel =
-    'style' === presetType
-      ? __('Add style preset', 'web-stories')
-      : __('Add color preset', 'web-stories');
-  const editLabel =
-    'style' === presetType
-      ? __('Edit style presets', 'web-stories')
-      : __('Edit color presets', 'web-stories');
+  const isColor = 'color' === presetType;
+  const editLabel = isColor
+    ? __('Edit color presets', 'web-stories')
+    : __('Edit style presets', 'web-stories');
   const getActions = () => {
     return (
       <>
@@ -106,11 +102,14 @@ function PresetsHeader({
             }
             isEditMode={isEditMode}
           >
-            {isEditMode ? __('Exit', 'web-stories') : <EditPencil />}
+            {isEditMode ? __('Done', 'web-stories') : <EditPencil />}
           </EditMode>
         )}
-        {!isEditMode && (
-          <AddPresetButton onClick={handleAddPreset} aria-label={addLabel}>
+        {!isEditMode && !isColor && (
+          <AddPresetButton
+            onClick={handleAddPreset}
+            aria-label={__('Add style preset', 'web-stories')}
+          >
             <Add />
           </AddPresetButton>
         )}
