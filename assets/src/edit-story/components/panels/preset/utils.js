@@ -21,7 +21,11 @@ import isPatternEqual from '../../../utils/isPatternEqual';
 import convertToCSS from '../../../utils/convertToCSS';
 import generatePatternStyles from '../../../utils/generatePatternStyles';
 import { generateFontFamily } from '../../../elements/text/util';
-import { BACKGROUND_TEXT_MODE } from '../../../constants';
+import {
+  BACKGROUND_TEXT_MODE,
+  COLOR_PRESETS_PER_ROW,
+  STYLE_PRESETS_PER_ROW,
+} from '../../../constants';
 import { MULTIPLE_VALUE } from '../../form';
 import { getHTMLInfo } from '../../richText/htmlManipulation';
 import objectPick from '../../../utils/objectPick';
@@ -230,4 +234,20 @@ export function getOpaqueColor(preset) {
     ...preset,
     stops: opaqueSteps,
   };
+}
+
+export function getPanelInitialHeight(isColor, presets) {
+  const rowHeight = isColor ? 35 : 48;
+  const emptyColorsHeight = 140;
+  const presetsCount = presets.length;
+  let initialHeight = 0;
+  if (presetsCount > 0) {
+    const presetsPerRow = isColor
+      ? COLOR_PRESETS_PER_ROW
+      : STYLE_PRESETS_PER_ROW;
+    initialHeight = Math.max(1.5, presets.length / presetsPerRow) * rowHeight;
+  } else if (isColor) {
+    initialHeight = emptyColorsHeight;
+  }
+  return Math.min(initialHeight, window.innerHeight / 3);
 }

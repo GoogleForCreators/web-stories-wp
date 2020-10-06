@@ -18,12 +18,26 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import { PanelContent } from '../panel';
 import PresetGroup from './presetGroup';
+import ColorAdd from './colorAdd';
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  padding: 0px 30px 10px;
+  text-align: center;
+  line-height: 20px;
+`;
 
 function Presets({
   presets,
@@ -46,6 +60,17 @@ function Presets({
           handleClick={handleOnClick}
           handleAddPreset={handleAddPreset}
         />
+      )}
+      {!hasPresets && 'color' === type && (
+        <ButtonWrapper>
+          <ColorAdd
+            handleAddPreset={handleAddPreset}
+            helper={__(
+              'Click on the + icon to save a color to all stories',
+              'web-stories'
+            )}
+          />
+        </ButtonWrapper>
       )}
     </PanelContent>
   );

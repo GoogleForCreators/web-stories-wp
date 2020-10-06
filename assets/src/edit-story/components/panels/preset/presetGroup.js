@@ -22,11 +22,6 @@ import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { useKeyDownEffect } from '../../keyboard';
@@ -34,7 +29,7 @@ import {
   COLOR_PRESETS_PER_ROW,
   STYLE_PRESETS_PER_ROW,
 } from '../../../constants';
-import { AddColor } from '../../../icons';
+import ColorAdd from './colorAdd';
 
 const COLOR_SIZE = 30;
 const STYLE_HEIGHT = 48;
@@ -54,20 +49,6 @@ const ButtonWrapper = styled.div`
   height: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_HEIGHT)}px;
   width: ${({ type }) => (type === 'color' ? COLOR_SIZE : STYLE_WIDTH)}px;
   margin: auto;
-`;
-
-const AddColorAction = styled.button`
-  cursor: pointer;
-  background-color: transparent;
-  border-color: transparent;
-  border-width: 0;
-  height: ${COLOR_SIZE}px;
-  width: ${COLOR_SIZE}px;
-  padding: 0;
-  svg {
-    height: 100%;
-    width: 100%;
-  }
 `;
 
 function PresetGroup({
@@ -137,12 +118,7 @@ function PresetGroup({
       ))}
       {displayAddIcon && (
         <ButtonWrapper type={type}>
-          <AddColorAction
-            onClick={handleAddPreset}
-            aria-label={__('Add color preset', 'web-stories')}
-          >
-            <AddColor />
-          </AddColorAction>
+          <ColorAdd handleAddPreset={handleAddPreset} />
         </ButtonWrapper>
       )}
     </Group>
