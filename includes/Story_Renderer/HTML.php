@@ -88,6 +88,7 @@ class HTML {
 
 		// This  should never actually happen.
 		if ( ! $document ) {
+			ob_start();
 			wp_die(
 				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
 				esc_html__( 'Web Stories', 'web-stories' ),
@@ -95,8 +96,11 @@ class HTML {
 					'response'  => 500,
 					'link_url'  => esc_url( __( 'https://wordpress.org/support/plugin/web-stories/', 'web-stories' ) ),
 					'link_text' => esc_html__( 'Visit Support Forums', 'web-stories' ),
+					'exit'      => false,
 				]
 			);
+
+			return (string) ob_get_clean();
 		}
 
 		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
