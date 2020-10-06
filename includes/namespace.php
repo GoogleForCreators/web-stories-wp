@@ -150,6 +150,33 @@ function new_site( $site ) {
 }
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
 
+
+/**
+ * Hook into delete site.
+ *
+ * @since 1.1.0
+ *
+ * @param WP_Error $error Unused.
+ * @param int|\WP_Site $site Site ID or object.
+ *
+ * @return void
+ */
+function remove_site( $error, $site ) {
+	if ( ! is_multisite() ) {
+		return;
+	}
+	$site = get_site( $site );
+	if ( ! $site ) {
+		return;
+	}
+	$site_id = (int) $site->blog_id;
+	$story = new Story_Post_Type( new Experiments() );
+	switch_to_blog( $site_id );
+	$story->remove_caps_from_roles();
+	restore_current_blog();
+}
+add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT_MAX, 2 );
+
 /**
  * Handles plugin deactivation.
  *
