@@ -1,6 +1,6 @@
 {
-  "current": "e21ff914-108e-4f32-9dbd-b3c8a276aa13",
-  "selection": ["6f6367c6-438a-4398-880d-28b474d5fd4f"],
+  "current": "2c847372-cd79-456e-a6e0-fb837487fa0d",
+  "selection": [],
   "story": {
     "stylePresets": {
       "textStyles": [
@@ -12761,6 +12761,248 @@
       },
       "type": "page",
       "id": "e5746627-7cb7-4249-9129-32ac0e614176"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "4259217b-228c-44bc-80b4-9eb2855c02e3"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 26,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 300; color: #ff8e25; letter-spacing: 0.08em\">QUICK RECIPE</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 38,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": -7.614000000000004,
+          "basedOn": "70308d6c-bcc6-4cf6-8b64-ba6f0da32c3f",
+          "id": "917f87d6-a606-4f82-80aa-8ec8fb345d17",
+          "x": 40,
+          "y": 199
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Cookie",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 1000,
+              "asc": 789,
+              "des": -320,
+              "tAsc": 789,
+              "tDes": -320,
+              "tLGap": 0,
+              "wAsc": 789,
+              "wDes": 320,
+              "xH": 115,
+              "capH": 312,
+              "yMin": -320,
+              "yMax": 789,
+              "hAsc": 789,
+              "hDes": -320,
+              "lGap": 0
+            }
+          },
+          "fontSize": 72,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #ff8e25\">Apple Pie</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 80,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "1163f4f8-3f27-48ae-bde8-9385bf100880",
+          "id": "ed560175-6684-4c8b-8379-64690b9d6e01",
+          "x": 40,
+          "y": 249
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto Condensed",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #666\">Easy to follow, this guide will get you to bake a delicious crusty apple pie right off the bat.</span>",
+          "fontWeight": 400,
+          "width": 250,
+          "height": 74,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "672389ef-9275-4f01-9ace-a1c787c8d7b4",
+          "id": "3341605e-2bad-4827-87fa-e65797d198b6",
+          "x": 81,
+          "y": 343
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "2c847372-cd79-456e-a6e0-fb837487fa0d"
     }
   ]
 }
