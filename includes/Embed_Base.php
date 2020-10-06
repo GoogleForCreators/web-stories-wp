@@ -82,6 +82,24 @@ class Embed_Base {
 	}
 
 	/**
+	 * Return an array of default attributes.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return array
+	 */
+	protected function default_attrs() {
+		return [
+			'align'  => 'none',
+			'height' => 600,
+			'poster' => '',
+			'url'    => '',
+			'title'  => '',
+			'width'  => 360,
+		];
+	}
+
+	/**
 	 * Renders an embed with given attributes.
 	 *
 	 * @since 1.1.0
@@ -99,15 +117,6 @@ class Embed_Base {
 		if ( empty( $attributes['title'] ) ) {
 			$attributes['title'] = __( 'Web Story', 'web-stories' );
 		}
-
-		$defaults = [
-			'align'  => 'none',
-			'height' => 0,
-			'poster' => '',
-			'width'  => 0,
-		];
-
-		$attributes = wp_parse_args( $attributes, $defaults );
 
 		$data = [
 			'title'           => $attributes['title'],

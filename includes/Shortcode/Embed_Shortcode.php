@@ -61,12 +61,7 @@ class Embed_Shortcode extends Embed_Base {
 	 * @return string Rendered Shortcode
 	 */
 	public function render_shortcode( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		$defaults = [
-			'height' => 600,
-			'width'  => 360,
-		];
-
-		$attributes = wp_parse_args( $attributes, $defaults );
+		$attributes = shortcode_atts( $this->default_attrs(), $attributes, self::SHORTCODE_NAME );
 
 		$attributes['class'] = 'wp-shortcode-web-stories-embed';
 

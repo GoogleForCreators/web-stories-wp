@@ -39,6 +39,7 @@ class Embed_Block extends \WP_UnitTestCase {
 	/**
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
+	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
 	 */
 	public function test_render_block() {
@@ -61,6 +62,7 @@ class Embed_Block extends \WP_UnitTestCase {
 	/**
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
+	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
 	 */
 	public function test_render_block_missing_url() {
@@ -83,6 +85,7 @@ class Embed_Block extends \WP_UnitTestCase {
 	/**
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
+	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Story_Renderer\Embed::render
 	 */
 	public function test_render_block_missing_title() {
@@ -105,6 +108,7 @@ class Embed_Block extends \WP_UnitTestCase {
 	/**
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
+	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
 	 */
 	public function test_render_block_feed_no_poster() {
@@ -127,6 +131,7 @@ class Embed_Block extends \WP_UnitTestCase {
 	/**
 	 * @covers ::render_block
 	 * @covers \Google\Web_Stories\Embed_Base::render
+	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Story_Renderer\Image::render
 	 */
 	public function test_render_block_with_poster() {
