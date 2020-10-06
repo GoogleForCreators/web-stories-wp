@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Traits;
 
+use Google\Web_Stories\Media;
 use Google\Web_Stories\Settings;
 
 /**
@@ -36,8 +37,6 @@ use Google\Web_Stories\Settings;
 trait Publisher {
 	/**
 	 * Publisher logo placeholder for static content output which will be replaced server-side.
-	 *
-	 * Uses a fallback logo to always create valid AMP in FE.
 	 *
 	 * @since 1.0.0
 	 * @deprecated 1.1.0
@@ -66,48 +65,6 @@ trait Publisher {
 	}
 
 	/**
-	 * Gets a valid publisher logo URL. Loops through sizes and looks for a square image.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param integer $image_id Attachment ID.
-	 *
-	 * @return string|false Either the URL or false if error.
-	 */
-	private function get_valid_publisher_image( $image_id ) {
-		$logo_image_url = false;
-
-		// Get metadata for finding a square image.
-		$metadata = wp_get_attachment_metadata( $image_id );
-		if ( empty( $metadata ) ) {
-			return $logo_image_url;
-		}
-		// First lets check if the image is square by default.
-		$fullsize_img = wp_get_attachment_image_src( $image_id, 'full', false );
-		if ( $metadata['width'] === $metadata['height'] && is_array( $fullsize_img ) ) {
-			return array_shift( $fullsize_img );
-		}
-
-		if ( empty( $metadata['sizes'] ) ) {
-			return $logo_image_url;
-		}
-
-		// Loop through other size to find a square image.
-		foreach ( $metadata['sizes'] as $size ) {
-			if ( $size['width'] === $size['height'] && $size['width'] >= 96 ) {
-				$logo_img = wp_get_attachment_image_src( $image_id, [ $size['width'], $size['height'] ], false );
-				if ( is_array( $logo_img ) ) {
-					return array_shift( $logo_img );
-				}
-			}
-		}
-
-		// If a square image was not found, return the full size nevertheless,
-		// the editor should take care of warning about incorrect size.
-		return is_array( $fullsize_img ) ? array_shift( $fullsize_img ) : false;
-	}
-
-	/**
 	 * Get the publisher logo.
 	 *
 	 * @since 1.0.0
@@ -115,7 +72,7 @@ trait Publisher {
 	 * @link https://developers.google.com/search/docs/data-types/article#logo-guidelines
 	 * @link https://amp.dev/documentation/components/amp-story/#publisher-logo-src-guidelines
 	 *
-	 * @return string Publisher logo image URL. WordPress logo if no site icon or custom logo defined, and no logo provided via 'amp_site_icon_url' filter.
+	 * @return string|null Publisher logo image URL, or null if no publisher logos are available.
 	 */
 	public function get_publisher_logo() {
 		$logo_image_url = null;
@@ -123,7 +80,11 @@ trait Publisher {
 		$active_publisher_logo = absint( get_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 
 		if ( $active_publisher_logo ) {
-			$logo_image_url = $this->get_valid_publisher_image( $active_publisher_logo );
+			$logo_image_url = wp_get_attachment_image_url( $active_publisher_logo, Media::PUBLISHER_LOGO_IMAGE_SIZE );
+
+			if ( ! $logo_image_url ) {
+				$logo_image_url = null;
+			}
 		}
 
 		$placeholder = $this->get_publisher_logo_placeholder();
@@ -136,8 +97,8 @@ trait Publisher {
 		 * @since 1.0.0
 		 * @since 1.1.0 The $placeholder parameter was deprecated.
 		 *
-		 * @param string $logo_image_url URL to the publisher's logo.
-		 * @param string $placeholder    Deprecated.
+		 * @param string|null $logo_image_url URL to the publisher's logo if set.
+		 * @param string      $placeholder    Deprecated.
 		 */
 		return apply_filters( 'web_stories_publisher_logo', $logo_image_url, $placeholder );
 	}
