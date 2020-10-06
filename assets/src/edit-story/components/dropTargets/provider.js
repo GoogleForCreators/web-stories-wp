@@ -203,7 +203,7 @@ function DropTargetsProvider({ children }) {
         }
       };
       // Skip if we already have the color.
-      if (firstElement?.baseColor) {
+      if (firstElement.resource?.baseColor) {
         finalizeDrop();
       } else {
         getMediaBaseColor(resource, finalizeDrop);
