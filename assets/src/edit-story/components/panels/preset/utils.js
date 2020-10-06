@@ -204,3 +204,29 @@ export function areAllType(elType, selectedElements) {
     selectedElements.every(({ type }) => elType === type)
   );
 }
+
+export function getOpaqueColor(preset) {
+  const { color, stops } = preset;
+  if (color) {
+    return {
+      color: {
+        ...color,
+        a: 1,
+      },
+    };
+  }
+  const opaqueSteps = stops;
+  stops.forEach((colorStop, i) => {
+    opaqueSteps[i] = {
+      ...colorStop,
+      color: {
+        ...colorStop.color,
+        a: 1,
+      },
+    };
+  });
+  return {
+    ...preset,
+    stops: opaqueSteps,
+  };
+}

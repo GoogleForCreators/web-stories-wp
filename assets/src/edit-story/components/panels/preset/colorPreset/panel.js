@@ -29,7 +29,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import PresetPanel from '../presetPanel';
-import { areAllType, presetHasGradient, presetHasOpacity } from '../utils';
+import {
+  areAllType,
+  getOpaqueColor,
+  presetHasGradient,
+  presetHasOpacity,
+} from '../utils';
 import WithTooltip from '../../../tooltip';
 import { Remove } from '../../../../icons';
 import { useStory } from '../../../../app/story';
@@ -55,7 +60,6 @@ const ColorWrapper = styled.div`
   display: block;
   width: ${PRESET_SIZE}px;
   height: ${PRESET_SIZE}px;
-  border: 1px solid ${({ theme }) => theme.colors.whiteout};
   border-radius: 100%;
   overflow: hidden;
   position: relative;
@@ -83,15 +87,25 @@ const presetCSS = css`
     position: absolute;
     top: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
     left: calc(50% - ${REMOVE_ICON_SIZE / 2}px);
+    transform: rotate(45deg);
   }
 `;
 const Color = styled.button.attrs({ type: 'button' })`
   ${presetCSS}
   ${({ color }) => generatePatternStyles(color)}
-
+  transform: rotate(-45deg);
   &:focus {
     outline: none !important;
   }
+`;
+
+const OpaqueColor = styled.div`
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 50%;
+  ${({ color }) => generatePatternStyles(color)}
 `;
 
 function ColorPresetPanel({ pushUpdate }) {
@@ -116,9 +130,12 @@ function ColorPresetPanel({ pushUpdate }) {
     if (!color) {
       return null;
     }
+    const hasTransparency = presetHasOpacity(color);
+    console.log(color, hasTransparency);
+    const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
     const disabled =
       !isEditMode &&
-      ((isBackground && presetHasOpacity(color)) ||
+      ((isBackground && hasTransparency) ||
         (isText && presetHasGradient(color)));
     let tooltip = null;
     if (disabled) {
@@ -141,6 +158,7 @@ function ColorPresetPanel({ pushUpdate }) {
                 : __('Apply color preset', 'web-stories')
             }
           >
+            {hasTransparency && <OpaqueColor color={opaqueColor} />}
             {isEditMode && <Remove />}
           </Color>
         </ColorWrapper>
