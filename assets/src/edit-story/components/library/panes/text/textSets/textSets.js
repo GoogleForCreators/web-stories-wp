@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -35,7 +35,7 @@ import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { getTextSets } from './utils';
+import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
 
 const TextSetContainer = styled.div`
@@ -64,9 +64,9 @@ const CATEGORIES = {
 };
 
 function TextSets() {
-  const [textSets, setTextSets] = useState([]);
   const [selectedCat, setSelectedCat] = useState(null);
   const ref = useRef();
+  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const filteredTextSets = useMemo(
@@ -81,10 +81,6 @@ function TextSets() {
       })),
     [textSets]
   );
-
-  useEffect(() => {
-    getTextSets().then(setTextSets);
-  }, []);
 
   useRovingTabIndex({ ref });
 

@@ -25,9 +25,10 @@ function LibraryPanes() {
     tab: state.state.tab,
     tabs: state.data.tabs,
   }));
-  return tabs.map(({ id, Pane }) => (
-    <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-  ));
+
+  const { Pane } = tabs.find(({ id }) => id === tab);
+
+  return Pane ? <Pane isActive={true} aria-labelledby={getTabId(tab)} /> : null;
 }
 
 export default LibraryPanes;
