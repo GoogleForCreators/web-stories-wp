@@ -178,13 +178,7 @@ function DropTargetsProvider({ children }) {
       }
       const finalizeDrop = (baseColor = null) => {
         if (baseColor) {
-          combineArgs.firstElement = {
-            ...combineArgs.firstElement,
-            resource: {
-              ...combineArgs.firstElement.resource,
-              baseColor,
-            },
-          };
+          combineArgs.firstElement.resource.baseColor = baseColor;
         }
         combineElements(combineArgs);
 

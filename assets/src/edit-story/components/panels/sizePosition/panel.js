@@ -151,7 +151,7 @@ function SizePositionPanel({
         });
       }
     };
-    if (selectedElements[0].resource?.baseColor) {
+    if (selectedElements[0].resource.baseColor) {
       setBackground();
     } else {
       getMediaBaseColor(selectedElements[0].resource, setBackground);
