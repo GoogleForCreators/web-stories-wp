@@ -19,7 +19,6 @@
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
-    "szepeviktor/phpstan-wordpress": "^0.6.5",
     "wp-coding-standards/wpcs": "^2.2"
   },
   "config": {
