@@ -145,7 +145,9 @@ class Embed_Block {
 
 		$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
 
-		wp_add_inline_style( self::SCRIPT_HANDLE_FRONTEND, $css );
+		if ( $css ) {
+			wp_add_inline_style( self::SCRIPT_HANDLE_FRONTEND, $css );
+		}
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
