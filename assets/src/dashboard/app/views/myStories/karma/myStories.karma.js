@@ -27,7 +27,7 @@ import { getRelativeDisplayDate } from '../../../../../date';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
-  primaryPaths,
+  PRIMARY_PATHS,
   STORY_STATUS,
   STORY_STATUSES,
   STORY_VIEWING_LABELS,
@@ -71,7 +71,7 @@ describe('Grid view', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: new RegExp('^' + primaryPaths[2].label + '$'),
+      name: new RegExp('^' + PRIMARY_PATHS[2].label + '$'),
     });
 
     await fixture.events.click(exploreTemplatesMenuItem);

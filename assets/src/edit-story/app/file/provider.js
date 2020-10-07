@@ -17,40 +17,34 @@
 /**
  * External dependencies
  */
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import {
-  DefaultParagraph1,
-  StandardViewContentGutter,
-} from '../../../../../components';
-import { NoResults } from '../../../shared';
+import Context from './context';
 
-const Text = styled(DefaultParagraph1)`
-  margin-top: 40px;
-`;
+function FileProvider({ children }) {
+  const getFonts = useCallback(
+    () =>
+      import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts').then(
+        (res) => res.default
+      ),
+    []
+  );
+  const state = {
+    state: {},
+    actions: {
+      getFonts,
+    },
+  };
 
-function EmptyView({ searchKeyword }) {
-  if (!searchKeyword) {
-    return (
-      <StandardViewContentGutter>
-        <Text> {__('Create a story to get started!', 'web-stories')}</Text>
-      </StandardViewContentGutter>
-    );
-  }
-  return <NoResults typeaheadValue={searchKeyword} />;
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-EmptyView.propTypes = {
-  searchKeyword: PropTypes.string,
+FileProvider.propTypes = {
+  children: PropTypes.node,
 };
 
-export default EmptyView;
+export default FileProvider;

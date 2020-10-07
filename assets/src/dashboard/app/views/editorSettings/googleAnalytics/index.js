@@ -30,15 +30,16 @@ import { __ } from '@wordpress/i18n';
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
 import {
+  ErrorText,
   FormContainer,
+  GoogleAnalyticsTextInput,
   InlineLink,
+  InlineForm,
+  SaveButton,
   SettingForm,
   SettingHeading,
   TextInputHelperText,
-  SaveButton,
-  ErrorText,
-  InlineForm,
-  GoogleAnalyticsTextInput,
+  VisuallyHiddenLabel,
 } from '../components';
 
 export const TEXT = {
@@ -50,9 +51,10 @@ export const TEXT = {
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
   CONTEXT_ARTICLE: __('Analytics for your Web Stories', 'web-stories'),
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
-  PLACEHOLDER: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
-  ARIA_LABEL: __('Enter your Google Analtyics Tracking ID', 'web-stories'),
+  PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
+  ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
+  SUBMIT_BUTTON: __('Save', 'web-stories'),
 };
 
 function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
@@ -101,6 +103,9 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
       </SettingHeading>
       <FormContainer>
         <InlineForm>
+          <VisuallyHiddenLabel for="gaTrackingId">
+            {TEXT.ARIA_LABEL}
+          </VisuallyHiddenLabel>
           <GoogleAnalyticsTextInput
             label={TEXT.ARIA_LABEL}
             id="gaTrackingId"
@@ -111,7 +116,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
             error={inputError}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
-            {__('Save', 'web-stories')}
+            {TEXT.SUBMIT_BUTTON}
           </SaveButton>
         </InlineForm>
         {inputError && <ErrorText>{inputError}</ErrorText>}

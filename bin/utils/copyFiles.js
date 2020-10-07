@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 
 /**
  * Copies all files minuses ignored ones from source to target directory.
@@ -27,12 +27,15 @@ import { execSync } from 'child_process';
  * @param {Array<string>} ignoredFiles List of ignored files.
  */
 function copyFiles(source, target, ignoredFiles) {
-  const excludeList = ignoredFiles
-    .map((file) => `--exclude '${file}'`)
-    .join(' ');
+  const excludeList = ignoredFiles.reduce((acc, file) => {
+    acc.push('--exclude');
+    acc.push(file);
+    return acc;
+  }, []);
 
   // Copy plugin folder to temporary location.
-  execSync(`rsync -a ${excludeList} ${source}/ ${target}/`, {
+  const args = ['-a', ...excludeList, `${source}/`, `${target}/`];
+  execFileSync('rsync', args, {
     stdio: ['pipe', 'pipe', 'ignore'],
   });
 }

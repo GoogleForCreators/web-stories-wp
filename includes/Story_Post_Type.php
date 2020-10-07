@@ -705,12 +705,10 @@ class Story_Post_Type {
 					'users'   => '/wp/v2/users',
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'   => '/web-stories/v1/media',
-					'fonts'   => '/web-stories/v1/fonts',
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => $this->get_publisher_data(),
-					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
+					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 			],
