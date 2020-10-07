@@ -121,10 +121,11 @@ function generatePatternStyles(pattern = null, property = 'background') {
     );
   }
 
+  if (pattern === MULTIPLE_VALUE) {
+    return '';
+  }
+
   if (type === 'solid') {
-    if (pattern === MULTIPLE_VALUE) {
-      return '';
-    }
     const {
       color: { r, g, b, a = 1 },
     } = pattern;
