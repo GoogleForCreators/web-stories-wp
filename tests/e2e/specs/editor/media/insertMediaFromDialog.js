@@ -31,7 +31,7 @@ describe('Inserting Media from Dialog', () => {
   it('should insert an image by clicking on it', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="uploadButton"]');
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="uploadButton"]');
