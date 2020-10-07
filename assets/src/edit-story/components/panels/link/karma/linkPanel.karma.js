@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
@@ -127,7 +132,9 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 5, 5);
 
-      expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
+      await waitFor(() => {
+        expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
+      });
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
