@@ -35,6 +35,10 @@ export const GlobalStyle = createGlobalStyle`
 		display: none !important;
 	}
 
+  .default-moveable .moveable-line {
+    background: ${({ theme }) => theme.colors.callout} !important;
+  }
+
 	.default-moveable .moveable-control.moveable-s,
 	.default-moveable .moveable-control.moveable-e,
 	.default-moveable .moveable-control.moveable-w {
