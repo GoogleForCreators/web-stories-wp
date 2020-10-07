@@ -92,6 +92,8 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
+  const hasText = selectedElements.find(({ type }) => 'text' === type);
+
   const actualDimensions = useMemo(() => {
     if (isSingleElement) {
       return calcRotatedObjectPositionAndSize(
@@ -199,7 +201,10 @@ function SizePositionPanel({
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={height}
+          value={
+            !lockAspectRatio && hasText ? __('auto', 'web-stories') : height
+          }
+          disabled={!lockAspectRatio && hasText}
           min={MIN_MAX.HEIGHT.MIN}
           max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {
