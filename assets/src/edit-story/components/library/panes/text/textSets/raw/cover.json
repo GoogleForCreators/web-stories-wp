@@ -1,5 +1,5 @@
 {
-  "current": "e8f0424f-1545-4f97-951b-82acd0a94707",
+  "current": "0dd3de0f-7828-4c0d-9f62-b910a7bcacc7",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -3484,16 +3484,16 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"color: #fff\">TEAM PRESENTS</span>",
+          "content": "<span style=\"color: #fff; letter-spacing: 0.08em\">TEAM PRESENTS</span>",
           "fontWeight": 400,
-          "width": 110,
+          "width": 114,
           "height": 17,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "e666b825-d7f9-4c10-9c43-a4e31379f1f7",
           "id": "47e743ab-fd08-481e-bdac-25ce29189aac",
-          "x": 152,
+          "x": 149,
           "y": 383
         },
         {
