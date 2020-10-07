@@ -143,42 +143,7 @@ class Embed_Block {
 			WEBSTORIES_VERSION
 		);
 
-		$css = <<<CSS
-.wp-block-web-stories-embed.alignleft,
-.wp-block-web-stories-embed.alignright {
-	width: 100%;
-}
-
-.wp-block-web-stories-embed .wp-block-embed__wrapper {
-	position: relative;
-	max-width: var(--width);
-}
-
-.wp-block-web-stories-embed.aligncenter .wp-block-embed__wrapper {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp) .wp-block-embed__wrapper {
-	max-width: var(--width);
-}
-
-.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp) .wp-block-embed__wrapper::before {
-	content:"";
-	display: block;
-	padding-bottom: calc(var(--aspect-ratio) * 100%);
-}
-
-.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp) .wp-block-embed__wrapper amp-story-player {
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-CSS;
+		$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
 
 		wp_add_inline_style( self::SCRIPT_HANDLE_FRONTEND, $css );
 
