@@ -86,7 +86,7 @@ function WithLink({ element, active, children, anchorRef }) {
         placement={'top'}
         spacing={spacing}
       >
-        {link?.url && (
+        {link && (
           <Tooltip>
             <BrandIcon src={link.icon} />
             <LinkDesc>{link.desc || link.url}</LinkDesc>

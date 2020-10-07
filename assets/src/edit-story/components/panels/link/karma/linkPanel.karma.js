@@ -108,6 +108,40 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
+    it('should display the link tooltip correctly', async () => {
+      await fixture.events.click(linkPanel.address);
+      await fixture.events.keyboard.type('example.com');
+
+      await fixture.events.click(linkPanel.description, { clickCount: 3 });
+      await fixture.events.keyboard.type('Example description');
+
+      // Unselect element.
+      const fullbleed = fixture.container.querySelector(
+        '[data-testid="fullbleed"]'
+      );
+      const { left, top } = fullbleed.getBoundingClientRect();
+      await fixture.events.mouse.click(left - 1, top - 1);
+
+      // Move mouse to hover over the element.
+      const frame = fixture.editor.canvas.framesLayer.frames[1].node;
+      await fixture.events.mouse.moveRel(frame, 5, 5);
+
+      expect(fixture.screen.getByText('Example description')).toBeTruthy();
+
+      // Select the element again.
+      await fixture.events.click(frame);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.link.address,
+        { clickCount: 3 }
+      );
+      await fixture.events.keyboard.press('del');
+
+      // Verify that the description is not displayed when hovering without url.
+      await fixture.events.mouse.click(left - 1, top - 1);
+      await fixture.events.mouse.moveRel(frame, 5, 5);
+      expect(fixture.screen.getByText('Example description')).toBeFalsy();
+    });
+
     // Disable reason: tests not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should invoke API when looking up link');
@@ -119,10 +153,6 @@ describe('Link Panel', () => {
     // Disable reason: tests not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should display link details when API succeeds');
-
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should be able to apply a link to a text element');
 
     // Disable reason: tests not implemented yet
     // eslint-disable-next-line jasmine/no-disabled-tests
