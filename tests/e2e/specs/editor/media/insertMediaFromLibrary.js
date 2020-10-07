@@ -50,12 +50,12 @@ describe('Inserting Media from Media Library', () => {
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement"]');
 
-    await expect(page).toMatchElement('#media-search-input');
-    await page.type('#media-search-input', 'video');
+    await expect(page).toMatchElement('input[placeholder="Search"]');
+    await page.type('input[placeholder="Search"]', 'video');
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
-      '[data-testid="frameElement"]:nth-of-type(2)'
+      '[data-testid="frameElement"]:nth-of-type(1)'
     );
 
     await percySnapshot(page, 'Inserting Media from Media Library');
