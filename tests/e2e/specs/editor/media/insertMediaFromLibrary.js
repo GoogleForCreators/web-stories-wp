@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-//import { percySnapshot } from '@percy/puppeteer';
+import { percySnapshot } from '@percy/puppeteer';
 
 /**
  * Internal dependencies
@@ -39,7 +39,6 @@ describe('Inserting Media from Media Library', () => {
       '[data-testid="frameElement"]:nth-of-type(2)'
     );
 
-    // TODO: Enable once https://github.com/google/web-stories-wp/issues/1206 is merged.
-    //await percySnapshot(page, 'Inserting Media from Media Library');
+    await percySnapshot(page, 'Inserting Media from Media Library');
   });
 });
