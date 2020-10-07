@@ -125,7 +125,10 @@ export class Fixture {
     this._editor = null;
   }
 
-  restore() {}
+  restore() {
+    window.location.hash = '#';
+    localStorage.clear();
+  }
 
   get container() {
     return this._container;

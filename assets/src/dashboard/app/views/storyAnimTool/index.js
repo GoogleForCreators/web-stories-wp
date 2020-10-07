@@ -242,7 +242,6 @@ function StoryAnimTool() {
       story,
       activeStory.pages,
       {
-        logoPlaceholder: '',
         publisher: {
           name: 'Demo',
         },
