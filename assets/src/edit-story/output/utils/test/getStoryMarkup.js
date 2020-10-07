@@ -50,8 +50,6 @@ describe('getStoryMarkup', () => {
         name: 'AMP',
         logo: 'https://example.com/fallback-wordpress-publisher-logo.png',
       },
-      logoPlaceholder:
-        'https://example.com/fallback-wordpress-publisher-logo.png',
     };
     const pages = [
       {

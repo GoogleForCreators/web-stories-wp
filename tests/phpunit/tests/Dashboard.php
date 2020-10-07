@@ -37,28 +37,43 @@ class Dashboard extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
 	 */
-	public function test_add_menu_page_no_user() {
+	public function test_get_not_set_hook_suffix() {
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
-		$this->assertNull( $dashboard->get_hook_suffix() );
 		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix() );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'nothing' ) );
 	}
 
 	/**
 	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
+	 */
+	public function test_add_menu_page_no_user() {
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$dashboard->add_menu_page();
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
+	}
+
+	/**
+	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page_user_without_permission() {
 		wp_set_current_user( self::$user_id );
 
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$dashboard->add_menu_page();
-		$this->assertFalse( $dashboard->get_hook_suffix() );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
 	 * @covers ::add_menu_page
+	 * @covers ::get_hook_suffix
 	 */
 	public function test_add_menu_page() {
 		wp_set_current_user( self::$user_id );
@@ -66,8 +81,12 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$dashboard->add_menu_page();
-		$this->assertNotFalse( $dashboard->get_hook_suffix() );
-		$this->assertNotEmpty( $dashboard->get_hook_suffix() );
+		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
+		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard-explore' ) );
+		$this->assertNotFalse( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
+		$this->assertNotEmpty( $dashboard->get_hook_suffix( 'stories-dashboard-settings' ) );
 	}
 
 	/**
@@ -95,7 +114,7 @@ class Dashboard extends \WP_UnitTestCase {
 
 		$dashboard = new \Google\Web_Stories\Dashboard( $experiments );
 		$dashboard->add_menu_page();
-		$dashboard->enqueue_assets( $dashboard->get_hook_suffix() );
+		$dashboard->enqueue_assets( $dashboard->get_hook_suffix( 'stories-dashboard' ) );
 		$this->assertTrue( wp_script_is( $dashboard::SCRIPT_HANDLE ) );
 		$this->assertTrue( wp_style_is( $dashboard::SCRIPT_HANDLE ) );
 		$this->assertSame( 'web-stories', wp_scripts()->registered[ $dashboard::SCRIPT_HANDLE ]->textdomain );

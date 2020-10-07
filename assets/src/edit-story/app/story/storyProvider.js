@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -27,17 +27,21 @@ import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';
 import useSaveStory from './actions/useSaveStory';
+import useHashState from './effects/useHashState';
 import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 
 function StoryProvider({ storyId, children }) {
+  const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
     state: reducerState,
     api,
     internal: { restore },
-  } = useStoryReducer();
+  } = useStoryReducer({
+    current: hashPageId,
+  });
   const {
     pages,
     current,
@@ -46,6 +50,8 @@ function StoryProvider({ storyId, children }) {
     animationState,
     capabilities,
   } = reducerState;
+
+  useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
   // Generate current page info.
   const {

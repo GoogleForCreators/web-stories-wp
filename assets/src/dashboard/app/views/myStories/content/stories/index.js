@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { FlagsProvider } from 'flagged';
@@ -40,7 +39,6 @@ import {
 import Content from '../';
 import { usePagePreviewSize } from '../../../../../utils';
 import StoriesView from '../storiesView';
-import EmptyView from '../emptyView';
 
 export default {
   title: 'Dashboard/Views/MyStories/Content',
@@ -202,6 +200,27 @@ export const _StoriesViewList = () => (
   </FlagsProvider>
 );
 
-export const _EmptyView = () => (
-  <EmptyView searchKeyword={text('searchKeyword', '')} />
-);
+export const NoSearchResults = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
+  return (
+    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content
+              {...defaultProps}
+              stories={[]}
+              search={{
+                keyword: 'koalas',
+              }}
+              allPagesFetched={true}
+              view={{ ...view, pageSize }}
+            />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
+    </FlagsProvider>
+  );
+};

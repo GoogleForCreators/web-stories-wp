@@ -708,8 +708,7 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => $this->get_publisher_data(),
-					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
+					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 			],
