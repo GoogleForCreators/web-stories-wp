@@ -15,7 +15,7 @@
  */
 
 export { default as BodyViewOptions } from './bodyViewOptions';
-export { default as NoResults } from './noResults';
+export { default as EmptyContentMessage } from './emptyContentMessage';
 export {
   default as PageHeading,
   HeaderToggleButtonContainer,

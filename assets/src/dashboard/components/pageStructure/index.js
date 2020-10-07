@@ -33,7 +33,7 @@ import { BEZIER } from '../../../animation';
 import { trackEvent } from '../../../tracking';
 import { useConfig } from '../../app/config';
 import { resolveRoute, useRouteHistory } from '../../app/router';
-import { BUTTON_TYPES, primaryPaths, Z_INDEX } from '../../constants';
+import { BUTTON_TYPES, PRIMARY_PATHS, Z_INDEX } from '../../constants';
 import { DASHBOARD_LEFT_NAV_WIDTH } from '../../constants/pageStructure';
 import { ReactComponent as WebStoriesLogo } from '../../images/webStoriesFullLogo.svg';
 import useFocusOut from '../../utils/useFocusOut';
@@ -120,9 +120,9 @@ export function LeftRail() {
 
   const enabledPaths = useMemo(() => {
     if (enableInProgressViews) {
-      return primaryPaths;
+      return PRIMARY_PATHS;
     }
-    return primaryPaths.filter((path) => !path.inProgress);
+    return PRIMARY_PATHS.filter((path) => !path.inProgress);
   }, [enableInProgressViews]);
 
   const handleSideBarClose = useCallback(() => {
@@ -141,6 +141,10 @@ export function LeftRail() {
 
   const onCreateNewStoryClick = useCallback(async () => {
     await trackEvent('create_new_story', 'dashboard');
+  }, []);
+
+  const onExternalLinkClick = useCallback((path) => {
+    trackEvent(path.trackingEvent, 'dashboard');
   }, []);
 
   return (
@@ -173,6 +177,20 @@ export function LeftRail() {
                 <NavLink
                   active={path.value === state.currentPath}
                   href={resolveRoute(path.value)}
+                  aria-label={
+                    path.value === state.currentPath
+                      ? sprintf(
+                          /* translators: %s: the current page, for example "My Stories". */
+                          __('%s (active view)', 'web-stories'),
+                          path.label
+                        )
+                      : path.label
+                  }
+                  {...(path.isExternal && {
+                    rel: 'noreferrer',
+                    target: '_blank',
+                    onClick: () => onExternalLinkClick(path),
+                  })}
                 >
                   {path.label}
                 </NavLink>

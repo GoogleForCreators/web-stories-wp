@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitForElementToBeRemoved } from '@testing-library/react';
+import { waitForElementToBeRemoved, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -75,8 +75,10 @@ describe('Drop-Target order', () => {
       .display(backgroundId)
       .node.querySelector('img');
     // TODO: improve with custom matchers
-    expect(topImageImg.src).toBe(replacementImage.resource.src);
-    expect(backgroundImg.src).toBe(bgImage.resource.src);
+    await waitFor(() => {
+      expect(topImageImg.src).toBe(replacementImage.resource.src);
+      expect(backgroundImg.src).toBe(bgImage.resource.src);
+    });
   });
 
   it('should replace the top image when two images are in the same place on canvas', async () => {

@@ -21,35 +21,22 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { NoResults } from '../../shared';
-import {
-  DefaultParagraph1,
-  StandardViewContentGutter,
-} from '../../../../components';
+import { TypographyPresets } from '../../../components';
 
-const Text = styled(DefaultParagraph1)`
+const Message = styled.p`
+  ${TypographyPresets.Medium};
   margin-top: 40px;
+  color: ${({ theme }) => theme.colors.gray200};
 `;
-function EmptyView({ searchKeyword }) {
-  if (!searchKeyword) {
-    return (
-      <StandardViewContentGutter>
-        <Text>{__('No templates currently available', 'web-stories')}</Text>
-      </StandardViewContentGutter>
-    );
-  }
-  return <NoResults typeaheadValue={searchKeyword} />;
+
+function EmptyContentMessage({ children }) {
+  return <Message>{children}</Message>;
 }
 
-EmptyView.propTypes = {
-  searchKeyword: PropTypes.string,
+EmptyContentMessage.propTypes = {
+  children: PropTypes.node,
 };
 
-export default EmptyView;
+export default EmptyContentMessage;

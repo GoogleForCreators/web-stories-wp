@@ -19,9 +19,12 @@
 /**
  * External dependencies
  */
+// eslint-disable-next-line no-undef
 const path = require('path');
 
 const fs = jest.genMockFromModule('fs');
+
+/* eslint-disable security/detect-object-injection */
 
 // This is a custom function that our tests can use during setup to specify
 // what the files on the "mock" filesystem should look like when any of the
@@ -101,4 +104,7 @@ fs.lstatSync = lstatSync;
 fs.rmdirSync = rmdirSync;
 fs.unlinkSync = unlinkSync;
 
+// eslint-disable-next-line no-undef
 module.exports = fs;
+
+/* eslint-enable security/detect-object-injection */

@@ -23,10 +23,16 @@ describe('Document Title', () => {
   it('should update the document title during navigation', async () => {
     await visitDashboard();
 
+    const dashboardNavigation = await expect(page).toMatchElement(
+      '[aria-label="Main dashboard navigation"]'
+    );
+
     await expect(page).toMatch('My Stories');
     await expect(await page.title()).toStartWith('My Stories');
 
-    await expect(page).toClick('a', { text: 'Explore Templates' });
+    await expect(dashboardNavigation).toClick('a', {
+      text: 'Explore Templates',
+    });
 
     await expect(page).toMatch('Viewing all templates');
     await expect(await page.title()).toStartWith('Explore Templates');

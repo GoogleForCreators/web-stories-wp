@@ -38,8 +38,9 @@ function restore(state, { pages, current, selection, story }) {
   }
 
   const newStory = typeof story === 'object' ? story : {};
-  const newCurrent = pages.some(({ id }) => id === current)
-    ? current
+  const oldCurrent = current ?? state.current;
+  const newCurrent = pages.some(({ id }) => id === oldCurrent)
+    ? oldCurrent
     : pages[0].id;
   const newSelection = Array.isArray(selection) ? selection : [];
 

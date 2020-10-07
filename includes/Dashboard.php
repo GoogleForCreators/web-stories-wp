@@ -45,11 +45,11 @@ class Dashboard {
 	const SCRIPT_HANDLE = 'stories-dashboard';
 
 	/**
-	 * Admin page hook suffix.
+	 * Admin page hook suffixes.
 	 *
-	 * @var string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @var array List of the admin pages' hook_suffix values.
 	 */
-	private $hook_suffix;
+	private $hook_suffix = [];
 
 	/**
 	 * Experiments instance.
@@ -89,10 +89,16 @@ class Dashboard {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return string|false The dashboard page's hook_suffix, or false if the user does not have the capability required.
+	 * @param string $key The current admin page key.
+	 *
+	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
-	public function get_hook_suffix() {
-		return $this->hook_suffix;
+	public function get_hook_suffix( $key ) {
+		if ( ! isset( $this->hook_suffix[ $key ] ) ) {
+			return false;
+		}
+
+		return $this->hook_suffix[ $key ];
 	}
 
 	/**
@@ -103,19 +109,43 @@ class Dashboard {
 	 * @return void
 	 */
 	public function add_menu_page() {
-		$this->hook_suffix = add_submenu_page(
-			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
+		$parent = 'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG;
+
+		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
+			$parent,
 			__( 'Dashboard', 'web-stories' ),
-			__( 'Dashboard', 'web-stories' ),
+			__( 'My Stories', 'web-stories' ),
 			'edit_web-stories',
 			'stories-dashboard',
 			[ $this, 'render' ],
 			0
 		);
+
+		$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
+			$parent,
+			__( 'Explore Templates', 'web-stories' ),
+			__( 'Explore Templates', 'web-stories' ),
+			'edit_web-stories',
+			'stories-dashboard-explore',
+			'__return_null',
+			1
+		);
+
+		$this->hook_suffix['stories-dashboard-settings'] = add_submenu_page(
+			$parent,
+			__( 'Settings', 'web-stories' ),
+			__( 'Settings', 'web-stories' ),
+			'edit_web-stories',
+			'stories-dashboard-settings',
+			'__return_null',
+			20
+		);
 	}
 
 	/**
 	 * Redirects to the correct Dashboard page when clicking on the top-level "Stories" menu item.
+	 *
+	 * @codeCoverageIgnore
 	 *
 	 * @since 1.0.0
 	 *
@@ -124,13 +154,45 @@ class Dashboard {
 	public function redirect_menu_page() {
 		global $pagenow;
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'stories-dashboard' === $_GET['page'] ) {
+		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		$page = sanitize_text_field( (string) wp_unslash( $_GET['page'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( 'admin.php' === $pagenow && 'stories-dashboard' === $page ) {
 			wp_safe_redirect(
 				add_query_arg(
 					[
 						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 						'page'      => 'stories-dashboard',
+					],
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
+
+
+		if ( 'edit.php' === $pagenow && 'stories-dashboard-settings' === $page ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[
+						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+						'page'      => 'stories-dashboard#/editor-settings',
+					],
+					admin_url( 'edit.php' )
+				)
+			);
+			exit;
+		}
+
+		if ( 'edit.php' === $pagenow && 'stories-dashboard-explore' === $page ) {
+			wp_safe_redirect(
+				add_query_arg(
+					[
+						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
+						'page'      => 'stories-dashboard#/templates-gallery',
 					],
 					admin_url( 'edit.php' )
 				)
@@ -199,7 +261,7 @@ class Dashboard {
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {
-		if ( $this->hook_suffix !== $hook_suffix ) {
+		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}
 
