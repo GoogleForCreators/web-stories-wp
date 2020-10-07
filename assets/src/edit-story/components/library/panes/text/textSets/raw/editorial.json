@@ -1,5 +1,5 @@
 {
-  "current": "95970834-7a29-4066-9a8f-54f682868d64",
+  "current": "6825bee0-5867-4aee-8230-f3b73a6979c2",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -2507,16 +2507,16 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #00c2ff; letter-spacing: 0.02em\">TV SHOW</span>",
+          "content": "<span style=\"font-weight: 700; color: #00c2ff; letter-spacing: 0.04em\">TV SHOW</span>",
           "fontWeight": 400,
-          "width": 176,
+          "width": 180,
           "height": 50,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "18e0cf3d-5bbb-48de-bc8c-c2eae97b7a13",
           "id": "31551cfe-d34a-465b-bd2d-1395c0916edc",
-          "x": 118,
+          "x": 116,
           "y": 294
         },
         {
@@ -2714,82 +2714,6 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Nunito",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [200, 300, 400, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ],
-            "metrics": {
-              "upm": 1000,
-              "asc": 1011,
-              "des": -353,
-              "tAsc": 1011,
-              "tDes": -353,
-              "tLGap": 0,
-              "wAsc": 1092,
-              "wDes": 281,
-              "xH": 487,
-              "capH": 705,
-              "yMin": -275,
-              "yMax": 1081,
-              "hAsc": 1011,
-              "hDes": -353,
-              "lGap": 0
-            }
-          },
-          "fontSize": 18,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "center",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #4dbd58; letter-spacing: 0.02em\">A QUICK RECAP TO OUR</span>",
-          "width": 322,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "a0baa814-5743-4cf2-9cb7-46196ae8c3c8",
-          "id": "de3317df-e660-4d45-80aa-942e2a30d1b2",
-          "x": 45,
-          "y": 334
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
             "family": "Playfair Display",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
@@ -2916,6 +2840,82 @@
           "id": "beeac3d7-6f8e-48bf-920d-2fa25861fb54",
           "x": 45,
           "y": 505
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Nunito",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1011,
+              "des": -353,
+              "tAsc": 1011,
+              "tDes": -353,
+              "tLGap": 0,
+              "wAsc": 1092,
+              "wDes": 281,
+              "xH": 487,
+              "capH": 705,
+              "yMin": -275,
+              "yMax": 1081,
+              "hAsc": 1011,
+              "hDes": -353,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700; color: #4dbd58; letter-spacing: 0.02em\">A QUICK RECAP TO OUR</span>",
+          "width": 322,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "a0baa814-5743-4cf2-9cb7-46196ae8c3c8",
+          "id": "de3317df-e660-4d45-80aa-942e2a30d1b2",
+          "x": 45,
+          "y": 334
         }
       ],
       "backgroundColor": {
