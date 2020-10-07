@@ -223,7 +223,7 @@ function MediaPane(props) {
               options={FILTERS}
               placement={Placement.BOTTOM_START}
             />
-            <Primary onClick={openMediaPicker}>
+            <Primary onClick={openMediaPicker} data-testid="uploadButton">
               {__('Upload', 'web-stories')}
             </Primary>
           </FilterArea>

@@ -24,21 +24,37 @@ import { percySnapshot } from '@percy/puppeteer';
  */
 import { createNewStory } from '../../../utils';
 
-describe('Inserting Media from Media Library', () => {
+const MODAL = '.media-modal';
+
+describe('Inserting Media from Dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   it('should insert an image by clicking on it', async () => {
     await createNewStory();
 
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+    await expect(page).not.toMatchElement('[data-testid="uploadButton"]');
 
     // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement"]');
+    await expect(page).toClick('[data-testid="uploadButton"]');
 
-    // First match is for the background element, second for the image.
-    await expect(page).toMatchElement(
-      '[data-testid="frameElement"]:nth-of-type(3)'
-    );
+    await page.waitForSelector(MODAL, {
+      visible: true,
+    });
+    const btnTab = '#menu-item-browse';
+    await page.waitForSelector(btnTab);
+    await page.evaluate((selector) => {
+      document.querySelector(selector).click();
+    }, btnTab);
+    const btnSelector =
+      '.attachments-browser .attachments .attachment:first-of-type';
+    await page.waitForSelector(btnSelector);
+    await page.evaluate((selector) => {
+      document.querySelector(selector).click();
+    }, btnSelector);
+    const btnSelect = '.media-button-select';
+    await page.evaluate((selector) => {
+      document.querySelector(selector).click();
+    }, btnSelect);
 
-    await percySnapshot(page, 'Inserting Image from Media Library');
+    await percySnapshot(page, 'Inserting Image from Dialog');
   });
 });
