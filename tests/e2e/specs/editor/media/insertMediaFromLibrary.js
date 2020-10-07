@@ -39,7 +39,7 @@ describe('Inserting Media from Media Library', () => {
       '[data-testid="frameElement"]:nth-of-type(3)'
     );
 
-    await percySnapshot(page, 'Inserting Media from Media Library');
+    await percySnapshot(page, 'Inserting Image from Media Library');
   });
 
   it('should video an image by clicking on it', async () => {
@@ -58,6 +58,6 @@ describe('Inserting Media from Media Library', () => {
       '[data-testid="frameElement"]:nth-of-type(1)'
     );
 
-    await percySnapshot(page, 'Inserting Media from Media Library');
+    await percySnapshot(page, 'Inserting Video from Media Library');
   });
 });
