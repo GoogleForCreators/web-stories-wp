@@ -109,11 +109,12 @@ describe('Link Panel', () => {
     });
 
     it('should display the link tooltip correctly', async () => {
+      const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
-      await fixture.events.keyboard.type('Example description');
+      await fixture.events.keyboard.type(linkDescription);
 
       // Unselect element.
       const fullbleed = fixture.container.querySelector(
@@ -126,7 +127,10 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 5, 5);
 
-      expect(fixture.screen.getByText('Example description')).toBeTruthy();
+      expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
+      await fixture.snapshot(
+        'Element is hovered on. The link tooltip is visible'
+      );
 
       // Select the element again.
       await fixture.events.click(frame);
@@ -139,7 +143,11 @@ describe('Link Panel', () => {
       // Verify that the description is not displayed when hovering without url.
       await fixture.events.mouse.click(left - 1, top - 1);
       await fixture.events.mouse.moveRel(frame, 5, 5);
-      expect(fixture.screen.queryByText('Example description')).toBeFalsy();
+      const removedDescription = fixture.screen.queryByText(linkDescription);
+      expect(removedDescription).toBeNull();
+      await fixture.snapshot(
+        'Element is hovered on. The link tooltip is not visible'
+      );
     });
 
     // Disable reason: tests not implemented yet
