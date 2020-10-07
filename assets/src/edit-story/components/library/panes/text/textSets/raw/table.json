@@ -8171,10 +8171,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "$5.00",
+          "content": "<span style=\"font-style: italic\">$5.00</span>",
           "fontWeight": 400,
           "width": 44,
-          "height": 20,
+          "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8388,10 +8388,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "$5.00",
+          "content": "<span style=\"font-style: italic\">$5.00</span>",
           "fontWeight": 400,
           "width": 44,
-          "height": 20,
+          "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8605,10 +8605,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "$5.00",
+          "content": "<span style=\"font-style: italic\">$5.00</span>",
           "fontWeight": 400,
           "width": 44,
-          "height": 20,
+          "height": 22,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8984,7 +8984,7 @@
           },
           "type": "shape",
           "width": 1,
-          "height": 12,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8994,7 +8994,7 @@
           "basedOn": "a201813a-06d4-4207-a4c5-b2e4fb223e38",
           "id": "ee7ff455-be0f-40d3-81d9-9e6d66d7d6ca",
           "x": 118,
-          "y": 245
+          "y": 244
         },
         {
           "opacity": 100,
@@ -9224,7 +9224,7 @@
           },
           "type": "shape",
           "width": 1,
-          "height": 12,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9234,7 +9234,7 @@
           "basedOn": "6bce9854-06aa-464a-b68d-d172ad3ce736",
           "id": "c560cae9-d49e-43d6-8dc8-d7323169995b",
           "x": 118,
-          "y": 337
+          "y": 336
         },
         {
           "opacity": 100,
@@ -9464,7 +9464,7 @@
           },
           "type": "shape",
           "width": 1,
-          "height": 12,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9474,7 +9474,7 @@
           "basedOn": "010ccff8-acb1-4be6-ae53-b61d979bbeca",
           "id": "fb272342-dfb8-4eb8-9498-189121f50b08",
           "x": 118,
-          "y": 429
+          "y": 428
         }
       ],
       "backgroundColor": {
