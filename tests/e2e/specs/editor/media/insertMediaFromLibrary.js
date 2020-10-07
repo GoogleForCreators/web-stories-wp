@@ -36,7 +36,7 @@ describe('Inserting Media from Media Library', () => {
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
-      '[data-testid="frameElement"]:nth-of-type(2)'
+      '[data-testid="frameElement"]:nth-of-type(3)'
     );
 
     await percySnapshot(page, 'Inserting Media from Media Library');
@@ -47,11 +47,11 @@ describe('Inserting Media from Media Library', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    await expect(page).toMatchElement('#media-search-input');
-    await page.type('#media-search-input', 'video');
-
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement"]');
+
+    await expect(page).toMatchElement('#media-search-input');
+    await page.type('#media-search-input', 'video');
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
