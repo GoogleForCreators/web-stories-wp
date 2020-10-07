@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import generatePatternStyles from '../generatePatternStyles';
-import { MULTIPLE_VALUE } from '../../components/form';
 
 describe('generatePatternStyles', () => {
   describe('given null', () => {
@@ -60,10 +59,6 @@ describe('generatePatternStyles', () => {
       expect(
         generatePatternStyles({ color: { r: 255, g: 0, b: 0 } }, 'fill')
       ).toStrictEqual({ fill: '#f00' });
-    });
-
-    it('should return an empty string for multiple values', () => {
-      expect(generatePatternStyles(MULTIPLE_VALUE)).toStrictEqual('');
     });
   });
 

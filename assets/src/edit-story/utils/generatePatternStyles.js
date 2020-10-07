@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { rgba } from 'polished';
-/**
- * Internal dependencies
- */
-import { MULTIPLE_VALUE } from '../components/form';
 
 /**
  * Truncate a number to a given number of decimals.
@@ -119,10 +115,6 @@ function generatePatternStyles(pattern = null, property = 'background') {
     throw new Error(
       `Can only generate solid colors for property '${property}'`
     );
-  }
-
-  if (pattern === MULTIPLE_VALUE) {
-    return '';
   }
 
   if (type === 'solid') {

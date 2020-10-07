@@ -43,6 +43,11 @@ function isEqual(a, b) {
   // Note: `null` is a falsy object, that would cause an error if first
   // check is removed.
   const isPattern = a && typeof a === 'object' && (a.type || a.color);
+
+  if (isPattern && (a === MULTIPLE_VALUE || b === MULTIPLE_VALUE)) {
+    return false;
+  }
+
   return !isPattern ? a === b : isPatternEqual(a, b);
 }
 
