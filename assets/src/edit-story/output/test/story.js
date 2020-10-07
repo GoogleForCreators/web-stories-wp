@@ -122,7 +122,6 @@ describe('Story output', () => {
           name: 'Publisher Name',
           logo: 'https://example.com/logo.png',
         },
-        logoPlaceholder: 'https://example.com/logo.png',
       },
     };
 
@@ -158,7 +157,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          logoPlaceholder: 'https://example.com/logo.png',
         },
       };
 
@@ -202,7 +200,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          logoPlaceholder: 'https://example.com/logo.png',
         },
       };
 
@@ -266,7 +263,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          logoPlaceholder: 'https://example.com/logo.png',
         },
       };
 
@@ -333,7 +329,6 @@ describe('Story output', () => {
             name: 'Publisher Name',
             logo: 'https://example.com/logo.png',
           },
-          logoPlaceholder: 'https://example.com/logo.png',
         },
       };
 
