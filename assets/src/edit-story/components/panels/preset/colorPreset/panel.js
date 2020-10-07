@@ -54,6 +54,7 @@ const Transparent = styled.div`
     #d3d4d4 0turn 1turn
   );
   background-size: 35% 35%;
+  border-radius: 100%;
 `;
 
 const ColorWrapper = styled.div`
@@ -140,7 +141,6 @@ function ColorPresetPanel({ pushUpdate }) {
       return null;
     }
     const hasTransparency = presetHasOpacity(color);
-    // @todo Confirm if gradients need split presets or not.
     const hasGradient = presetHasGradient(color);
     const opaqueColor = hasTransparency ? getOpaqueColor(color) : color;
     const disabled =
@@ -155,7 +155,7 @@ function ColorPresetPanel({ pushUpdate }) {
     return (
       <WithTooltip title={tooltip}>
         <ColorWrapper disabled={disabled}>
-          <Transparent />
+          {hasTransparency && <Transparent />}
           <Color
             tabIndex={activeIndex === i ? 0 : -1}
             color={color}

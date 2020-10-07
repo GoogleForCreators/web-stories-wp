@@ -210,29 +210,12 @@ export function areAllType(elType, selectedElements) {
 }
 
 export function getOpaqueColor(preset) {
-  const { color, stops } = preset;
-  if (color) {
-    return {
-      color: {
-        ...color,
-        a: 1,
-      },
-    };
-  }
-  const opaqueSteps = [];
-  stops.forEach((colorStop, i) => {
-    opaqueSteps[i] = {
-      ...colorStop,
-      color: {
-        ...colorStop.color,
-        a: 1,
-      },
-    };
-  });
-
+  const { color } = preset;
   return {
-    ...preset,
-    stops: opaqueSteps,
+    color: {
+      ...color,
+      a: 1,
+    },
   };
 }
 
