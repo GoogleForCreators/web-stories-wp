@@ -139,7 +139,7 @@ describe('Link Panel', () => {
       // Verify that the description is not displayed when hovering without url.
       await fixture.events.mouse.click(left - 1, top - 1);
       await fixture.events.mouse.moveRel(frame, 5, 5);
-      expect(fixture.screen.getByText('Example description')).toBeFalsy();
+      expect(fixture.screen.queryByText('Example description')).toBeFalsy();
     });
 
     // Disable reason: tests not implemented yet
