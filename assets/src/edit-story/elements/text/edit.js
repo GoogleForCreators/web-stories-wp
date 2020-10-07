@@ -85,6 +85,14 @@ const TextBoxPadded = styled(TextBox)(({ verticalPadding }) => ({
   width: `calc(100% - ${verticalPadding}px)`,
 }));
 
+const EditTextBox = styled(TextBox)(
+  ({ hasHighlightBackgroundTextMode }) =>
+    hasHighlightBackgroundTextMode && {
+      paddingTop: 0,
+      paddingBottom: 0,
+    }
+);
+
 const Highlight = styled.span`
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
   color: transparent !important;
@@ -324,6 +332,9 @@ function TextEdit({
   const wrapperBackgroundColor =
     backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor;
 
+  const hasHighlightBackgroundTextMode =
+    backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+
   return (
     <Wrapper
       ref={wrapperRef}
@@ -331,7 +342,7 @@ function TextEdit({
       data-testid="textEditor"
       backgroundColor={wrapperBackgroundColor}
     >
-      {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
+      {editorContent && hasHighlightBackgroundTextMode && (
         <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
@@ -339,13 +350,18 @@ function TextEdit({
           />
         </TextBoxPadded>
       )}
-      <TextBox className="syncMargin" ref={textBoxRef} {...textProps}>
+      <EditTextBox
+        hasHighlightBackgroundTextMode={hasHighlightBackgroundTextMode}
+        className="syncMargin"
+        ref={textBoxRef}
+        {...textProps}
+      >
         <RichTextEditor
           ref={editorRef}
           content={content}
           onChange={handleUpdate}
         />
-      </TextBox>
+      </EditTextBox>
     </Wrapper>
   );
 }
