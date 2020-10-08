@@ -139,7 +139,7 @@ function SizePositionPanel({
     });
   }, [selectedElements, combineElements, currentBackgroundId]);
 
-  const disableHeight = !lockAspectRatio && hasText;
+  const disableHeight = Boolean(!lockAspectRatio && hasText);
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       {isMedia && isSingleElement && (
