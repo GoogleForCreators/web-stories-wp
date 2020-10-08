@@ -121,7 +121,6 @@ function Content({
             }}
           >
             <StandardViewContentGutter>
-              {/* Add empty view from task/clean-up-repeat-dashboard-text-components */}
               {templates.length > 0 ? (
                 <>
                   <SavedTemplateGridView
