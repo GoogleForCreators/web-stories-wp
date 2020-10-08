@@ -26,6 +26,9 @@
 
 namespace Google\Web_Stories;
 
+use WP_Error;
+use WP_Site;
+
 if (
 	! class_exists( '\Google\Web_Stories\Plugin' ) ||
 	! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' )
@@ -131,7 +134,7 @@ function activate( $network_wide = false ) {
  *
  * @since 1.0.0
  *
- * @param int|\WP_Site $site Site ID or object.
+ * @param int|WP_Site $site Site ID or object.
  *
  * @return void
  */
@@ -156,8 +159,8 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  *
  * @since 1.1.0
  *
- * @param \WP_Error    $error Unused.
- * @param int|\WP_Site $site Site ID or object.
+ * @param WP_Error    $error Unused.
+ * @param int|WP_Site $site Site ID or object.
  *
  * @return void
  */

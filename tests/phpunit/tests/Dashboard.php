@@ -49,6 +49,17 @@ class Dashboard extends \WP_UnitTestCase {
 	/**
 	 * @covers ::add_menu_page
 	 */
+	public function test_add_menu_page_user_without_permission() {
+		wp_set_current_user( self::$user_id );
+
+		$dashboard = new \Google\Web_Stories\Dashboard( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$dashboard->add_menu_page();
+		$this->assertFalse( $dashboard->get_hook_suffix() );
+	}
+
+	/**
+	 * @covers ::add_menu_page
+	 */
 	public function test_add_menu_page() {
 		wp_set_current_user( self::$user_id );
 		wp_get_current_user()->add_cap( 'edit_web-stories' );

@@ -50,9 +50,7 @@ class Discovery extends \WP_UnitTestCase {
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
-			[
-				'role' => 'administrator',
-			]
+			[ 'role' => 'administrator' ]
 		);
 
 		self::$story_id      = $factory->post->create(
