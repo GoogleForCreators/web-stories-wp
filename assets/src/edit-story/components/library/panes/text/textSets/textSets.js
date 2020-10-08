@@ -66,13 +66,13 @@ const CATEGORIES = {
 function TextSets() {
   const [textSets, setTextSets] = useState([]);
   const [selectedCat, setSelectedCat] = useState(null);
+  const [filteredTextSets, setFilteredTextSets] = useState([]);
+  const [renderedTextSets, setRenderedTextSets] = useState([]);
   const ref = useRef();
+  const isLoadingRef = useRef(false);
+  const loadingTimeoutRef = useRef(-1);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
-  const filteredTextSets = useMemo(
-    () => (selectedCat ? textSets[selectedCat] : allTextSets),
-    [selectedCat, textSets, allTextSets]
-  );
   const categories = useMemo(
     () =>
       Object.keys(textSets).map((cat) => ({
@@ -84,6 +84,37 @@ function TextSets() {
 
   useEffect(() => {
     getTextSets().then(setTextSets);
+  }, []);
+
+  useEffect(() => {
+    window.clearTimeout(loadingTimeoutRef.current);
+    isLoadingRef.current = false;
+
+    setFilteredTextSets(selectedCat ? textSets[selectedCat] : allTextSets);
+    setRenderedTextSets([]);
+  }, [selectedCat, textSets, allTextSets]);
+
+  useEffect(() => {
+    if (isLoadingRef.current) {
+      return;
+    }
+
+    if (renderedTextSets.length < filteredTextSets.length) {
+      isLoadingRef.current = true;
+
+      loadingTimeoutRef.current = window.setTimeout(() => {
+        isLoadingRef.current = false;
+        setRenderedTextSets([
+          ...renderedTextSets,
+          filteredTextSets[renderedTextSets.length],
+        ]);
+      }, 10);
+    }
+  }, [renderedTextSets, filteredTextSets]);
+
+  useEffect(() => {
+    window.clearTimeout(loadingTimeoutRef.current);
+    isLoadingRef.current = false;
   }, []);
 
   useRovingTabIndex({ ref });
@@ -107,9 +138,11 @@ function TextSets() {
             height: TEXT_SET_SIZE / PAGE_RATIO,
           }}
         >
-          {filteredTextSets.map(
-            (elements, index) =>
-              elements.length > 0 && <TextSet key={index} elements={elements} />
+          {renderedTextSets.map(
+            (elements) =>
+              elements.length > 0 && (
+                <TextSet key={elements[0].id} elements={elements} />
+              )
           )}
         </UnitsProvider>
       </TextSetContainer>
