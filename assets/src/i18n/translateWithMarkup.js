@@ -60,7 +60,7 @@ export function transformNode(
     ? [...childNodes].map((child) => transform(child, mapping))
     : textContent || null;
 
-  if (Object.keys(mapping).includes(localName)) {
+  if (localName in mapping) {
     return cloneElement(mapping[localName], null, children);
   }
 
