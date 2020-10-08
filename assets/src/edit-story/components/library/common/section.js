@@ -36,7 +36,7 @@ const TitleAndTools = styled.div`
   flex-wrap: no-wrap;
   align-items: center;
   height: 30px;
-  margin-bottom: 8px;
+  margin-bottom: 28px;
 `;
 
 const Title = styled.h2`

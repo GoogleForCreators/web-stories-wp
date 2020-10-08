@@ -81,6 +81,7 @@ export const BACKGROUND_TEXT_MODE = {
 
 export const FONT_WEIGHT = {
   NORMAL: 400,
+  MEDIUM: 500,
   BOLD: 700,
 };
 
