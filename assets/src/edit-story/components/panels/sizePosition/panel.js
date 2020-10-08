@@ -139,6 +139,7 @@ function SizePositionPanel({
     });
   }, [selectedElements, combineElements, currentBackgroundId]);
 
+  const disableHeight = !lockAspectRatio && hasText;
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       {isMedia && isSingleElement && (
@@ -201,10 +202,8 @@ function SizePositionPanel({
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={
-            !lockAspectRatio && hasText ? __('auto', 'web-stories') : height
-          }
-          disabled={!lockAspectRatio && hasText}
+          value={disableHeight ? __('AUTO', 'web-stories') : height}
+          disabled={disableHeight}
           min={MIN_MAX.HEIGHT.MIN}
           max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {
