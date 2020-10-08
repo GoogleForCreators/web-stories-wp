@@ -30,8 +30,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Section } from '../../../common';
-import { UnitsProvider } from '../../../../../units';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
@@ -132,19 +130,12 @@ function TextSets() {
         />
       </CategoryWrapper>
       <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
-        <UnitsProvider
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-        >
-          {renderedTextSets.map(
-            (elements) =>
-              elements.length > 0 && (
-                <TextSet key={elements[0].id} elements={elements} />
-              )
-          )}
-        </UnitsProvider>
+        {renderedTextSets.map(
+          (elements) =>
+            elements.length > 0 && (
+              <TextSet key={elements[0].id} elements={elements} />
+            )
+        )}
       </TextSetContainer>
     </Section>
   );
