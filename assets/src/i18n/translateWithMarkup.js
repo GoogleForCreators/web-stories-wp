@@ -23,6 +23,24 @@ import PropTypes from 'prop-types';
 /** @typedef {import('react').React.ReactNode} ReactNode */
 /** @typedef {import('react').React.ReactElement} ReactElement */
 
+// See https://html.spec.whatwg.org/multipage/syntax.html#void-elements
+const VOID_ELEMENTS = [
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr',
+];
+
 /**
  * Recursively traverses through a DOM node and its children and transforms them
  * to React elements.
@@ -69,10 +87,22 @@ function transform(node, mapping) {
  * @return {ReactNode[]} Transformed children.
  */
 function TranslateWithMarkup({ mapping, children }) {
-  //Ensure all Object keys are lowercase.
+  //Ensure all Object keys are lowercase as the DOMParser converts tag names to lowercase.
   mapping = Object.fromEntries(
     Object.entries(mapping).map(([k, v]) => [k.toLowerCase(), v])
   );
+
+  // Disallow void elements in mapping because it will lead to unexpected behavior
+  // because a void element cannot have contents under any circumstances.
+  // See https://www.w3.org/TR/2011/WD-html-markup-20110113/syntax.html#void-element
+  const foundVoidElements = Object.keys(mapping)
+    .filter((tag) => VOID_ELEMENTS.includes(tag))
+    .join(' ');
+  if (foundVoidElements.length > 0) {
+    throw new Error(
+      `Found disallowed void elements in TranslateWithMarkup map: ${foundVoidElements}`
+    );
+  }
 
   return transform(
     new DOMParser().parseFromString(children, 'text/html').body.firstChild,

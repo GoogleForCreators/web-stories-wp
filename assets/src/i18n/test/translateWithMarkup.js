@@ -132,4 +132,19 @@ describe('TranslateWithMarkup component', () => {
       'This is a <a href="https://example.com">link</a>!'
     );
   });
+
+  it('throws error when accidentally using void elements', () => {
+    const component = (
+      <TranslateWithMarkup
+        //eslint-disable-next-line jsx-a11y/anchor-has-content
+        mapping={{ link: <a href="https://example.com" /> }}
+      >
+        {'This is a <link>link</link>!'}
+      </TranslateWithMarkup>
+    );
+
+    expect(() => renderToStaticMarkup(component)).toThrow(
+      'Found disallowed void elements in TranslateWithMarkup map: link'
+    );
+  });
 });
