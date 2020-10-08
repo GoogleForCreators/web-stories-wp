@@ -202,7 +202,8 @@ function SizePositionPanel({
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={disableHeight ? __('AUTO', 'web-stories') : height}
+          value={disableHeight ? '' : height}
+          placeholder={disableHeight ? __('AUTO', 'web-stories') : ''}
           disabled={disableHeight}
           min={MIN_MAX.HEIGHT.MIN}
           max={MIN_MAX.HEIGHT.MAX}
