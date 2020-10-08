@@ -36,7 +36,7 @@ describe('Inserting Media from Media Library', () => {
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
-      '[data-testid="frameElement"]:nth-of-type(3)'
+      '[data-testid="frameElement"]:nth-of-type(2)'
     );
 
     await percySnapshot(page, 'Inserting Image from Media Library');
