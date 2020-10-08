@@ -39,6 +39,8 @@ describe('Inserting Media from Media Library', () => {
       '[data-testid="frameElement"]:nth-of-type(2)'
     );
 
+    await expect(page).toMatchElement('[data-testid="imageElement"]');
+
     await percySnapshot(page, 'Inserting Image from Media Library');
   });
 });

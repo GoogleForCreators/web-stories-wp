@@ -55,6 +55,8 @@ describe('Inserting Media from Dialog', () => {
       document.querySelector(selector).click();
     }, btnSelect);
 
+    await expect(page).toMatchElement('[data-testid="imageElement"]');
+
     await percySnapshot(page, 'Inserting Image from Dialog');
   });
 });
