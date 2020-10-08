@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
@@ -27,7 +22,7 @@ import useInsertElement from '../../../canvas/useInsertElement';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
-fdescribe('Link Panel', () => {
+describe('Link Panel', () => {
   let fixture;
   let linkPanel;
   let safezone;
@@ -113,7 +108,7 @@ fdescribe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    fit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
