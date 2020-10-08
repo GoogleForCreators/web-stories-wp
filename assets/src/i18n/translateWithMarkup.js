@@ -48,17 +48,15 @@ const VOID_ELEMENTS = [
  * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
  * @return {ReactNode} Transformed node.
  */
-export function transformNode(
-  { childNodes, localName, nodeType, textContent },
-  mapping = {}
-) {
+export function transformNode(node, mapping = {}) {
+  const { childNodes, localName, nodeType, textContent } = node;
   if (Node.TEXT_NODE === nodeType) {
     return textContent;
   }
 
-  const children = childNodes?.length
+  const children = node.hasChildNodes()
     ? [...childNodes].map((child) => transform(child, mapping))
-    : textContent || null;
+    : null;
 
   if (localName in mapping) {
     return cloneElement(mapping[localName], null, children);
