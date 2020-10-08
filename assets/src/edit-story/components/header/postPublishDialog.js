@@ -33,6 +33,7 @@ import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
 import { trackClick } from '../../../tracking';
+import { TranslateWithMarkup } from '../../../i18n';
 
 const Paragraph = styled.p`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -71,15 +72,23 @@ function PostPublishDialog({ open, onClose, confirmURL, storyURL }) {
       }
     >
       <Paragraph>
-        {__('Your story has been successfully published!', 'web-stories')}{' '}
-        <Link
-          href={storyURL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={onViewStoryClick}
+        <TranslateWithMarkup
+          mapping={{
+            a: (
+              <Link
+                href={storyURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onViewStoryClick}
+              />
+            ),
+          }}
         >
-          {__('View story.', 'web-stories')}
-        </Link>
+          {__(
+            'Your story has been successfully published! <a>View story</a>.',
+            'web-stories'
+          )}
+        </TranslateWithMarkup>
       </Paragraph>
       <Paragraph>
         {__('Would you like to include it on a new post?', 'web-stories')}
