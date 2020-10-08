@@ -132,9 +132,7 @@ fdescribe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 5, 5);
 
-      /*await waitFor(() => {
-        expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
-      });*/
+      expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
