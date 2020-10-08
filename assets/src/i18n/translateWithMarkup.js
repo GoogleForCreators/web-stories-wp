@@ -42,28 +42,44 @@ const VOID_ELEMENTS = [
 ];
 
 /**
+ * Transforms a single DOM node.
+ *
+ * @param {Node} node DOM node.
+ * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
+ * @return {ReactNode} Transformed node.
+ */
+export function transformNode(
+  { childNodes, localName, nodeType, textContent },
+  mapping = {}
+) {
+  if (Node.TEXT_NODE === nodeType) {
+    return textContent;
+  }
+
+  const children = childNodes?.length
+    ? [...childNodes].map((child) => transform(child, mapping))
+    : textContent || null;
+
+  if (Object.keys(mapping).includes(localName)) {
+    return cloneElement(mapping[localName], null, children);
+  }
+
+  return createElement(localName, null, children);
+}
+
+/**
  * Recursively traverses through a DOM node and its children and transforms them
  * to React elements.
  *
  * @param {Node} node DOM node.
- * @param {Object.<string, ReactElement>} mapping Map of tag names to React components.
+ * @param {?Object.<string, ReactElement>} mapping Map of tag names to React components.
  * @return {ReactNode[]} List of transformed nodes.
  */
-function transform(node, mapping) {
+function transform(node, mapping = {}) {
   const result = [];
 
   do {
-    const children = node.childNodes?.length
-      ? [...node.childNodes].map((child) => transform(child, mapping))
-      : node.textContent || null;
-
-    if (Node.TEXT_NODE === node.nodeType) {
-      result.push(node.textContent);
-    } else if (Object.keys(mapping).includes(node.localName)) {
-      result.push(cloneElement(mapping[node.localName], null, children));
-    } else {
-      result.push(createElement(node.localName, null, children));
-    }
+    result.push(transformNode(node, mapping));
 
     node = node.nextSibling;
   } while (node !== null);
@@ -82,7 +98,7 @@ function transform(node, mapping) {
  * @see https://github.com/google/web-stories-wp/issues/1578
  *
  * @param {Object} props Component props.
- * @param {Object.<string, ReactElement>} props.mapping Map of tag names to React components.
+ * @param {?Object.<string, ReactElement>} props.mapping Map of tag names to React components.
  * @param {ReactNode[]|string} props.children Children / string to parse.
  * @return {ReactNode[]} Transformed children.
  */
