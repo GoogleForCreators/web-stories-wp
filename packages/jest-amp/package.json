@@ -1,0 +1,14 @@
+{
+  "name": "@web-stories-wp/jest-amp",
+  "engines": {
+    "node": ">= 14",
+    "npm": "~7"
+  },
+  "main": "src",
+  "dependencies": {
+    "@ampproject/toolbox-optimizer": "^2.6.0",
+    "amphtml-validator": "^1.0.33",
+    "prop-types": "^15.7.2",
+    "react-dom": "^16.13.1"
+  }
+}

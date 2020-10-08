@@ -1,0 +1,11 @@
+{
+  "name": "@web-stories-wp/jest-puppeteer-amp",
+  "engines": {
+    "node": ">= 14",
+    "npm": "~7"
+  },
+  "main": "src",
+  "dependencies": {
+    "@web-stories-wp/jest-amp": "*"
+  }
+}

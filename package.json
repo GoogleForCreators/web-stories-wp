@@ -22,7 +22,12 @@
   },
   "engines": {
     "node": ">= 14",
-    "npm": "~6.14"
+    "npm": "~7"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "dependencies": {
     "@wordpress/api-fetch": "^3.19.1",
@@ -68,7 +73,6 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.6.0",
     "@babel/core": "^7.11.6",
     "@babel/eslint-parser": "^7.11.5",
     "@babel/eslint-plugin": "^7.11.5",
@@ -103,7 +107,6 @@
     "@wordpress/eslint-plugin": "^7.2.1",
     "@wordpress/jest-console": "^3.8.0",
     "@wordpress/jest-puppeteer-axe": "^1.9.0",
-    "amphtml-validator": "^1.0.33",
     "axe-core": "^4.0.2",
     "babel-jest": "^26.3.0",
     "babel-loader": "^8.1.0",
@@ -132,7 +135,6 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-testing-library": "^3.9.0",
-    "got": "^11.7.0",
     "husky": "^4.3.0",
     "jasmine-core": "^3.6.0",
     "jest": "^25.5.4",
@@ -151,12 +153,10 @@
     "karma-spec-reporter": "0.0.32",
     "karma-webpack": "^4.0.2",
     "lint-staged": "^10.4.0",
-    "markdown-table": "^2.0.0",
     "markdownlint-cli": "^0.23.2",
     "mini-css-extract-plugin": "^0.11.2",
     "mockdate": "^3.0.2",
     "npm-run-all": "^4.1.5",
-    "opentype.js": "^1.3.3",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "percy": "^0.28.2",
     "prettier": "^2.1.2",
@@ -238,7 +238,7 @@
     "percy": "percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots/",
     "workflow:version": "./assets/src/commander/index.js version",
     "workflow:build-plugin": "./assets/src/commander/index.js build-plugin",
-    "workflow:fonts": "./assets/src/fonts/cli.js assets/src/fonts/fonts.json",
+    "workflow:fonts": "packages/fonts/src/cli.js packages/fonts/src/fonts.json",
     "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
     "workflow:migrate:templates": "./assets/src/migration/cli.js assets/src/dashboard/templates/raw",
     "postworkflow:migrate:templates": "npx prettier --write assets/src/dashboard/templates/raw",

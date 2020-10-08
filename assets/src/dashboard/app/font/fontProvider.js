@@ -49,9 +49,9 @@ function FontProvider({ children }) {
 
   const getFonts = useCallback(
     () =>
-      import(/* webpackChunkName: "chunk-fonts" */ '../../../fonts/fonts').then(
-        (res) => res.default
-      ),
+      import(
+        /* webpackChunkName: "chunk-fonts" */ '../../../../../packages/fonts/src/fonts.json'
+      ).then((res) => res.default),
     []
   );
 

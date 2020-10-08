@@ -19,6 +19,8 @@
  */
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { setDefaultOptions } from 'expect-puppeteer';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { toBeValidAMP } from '@web-stories-wp/jest-puppeteer-amp';
 
 /**
  * WordPress dependencies
@@ -30,11 +32,6 @@ import {
 
 // Extend Jest matchers.
 import 'jest-extended';
-
-/**
- * Internal dependencies
- */
-import toBeValidAMP from '../matchers/toBeValidAMP';
 
 expect.extend({
   toBeValidAMP,

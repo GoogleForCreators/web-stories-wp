@@ -1,0 +1,11 @@
+{
+  "name": "karma-puppeteer-launcher",
+  "engines": {
+    "node": ">= 14",
+    "npm": "~7"
+  },
+  "main": "src",
+  "dependencies": {
+    "karma": "^5.2.3"
+  }
+}

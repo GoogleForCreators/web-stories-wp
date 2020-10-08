@@ -14,24 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-
-// Extend Jest matchers.
-// See https://github.com/testing-library/jest-dom.
-import 'jest-extended';
-import '@testing-library/jest-dom';
-import 'jest-axe/extend-expect';
-import {
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-  //eslint-disable-next-line import/no-extraneous-dependencies
-} from '@web-stories-wp/jest-amp';
-
-expect.extend({
-  toBeValidAMP,
-  toBeValidAMPStoryElement,
-  toBeValidAMPStoryPage,
-});
+export { default as toBeValidAMP } from './toBeValidAMP';

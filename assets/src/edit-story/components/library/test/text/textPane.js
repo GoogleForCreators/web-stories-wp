@@ -24,7 +24,7 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../../testUtils/index';
-import { curatedFontNames } from '../../../../../fonts';
+import { curatedFontNames } from '../../../../../../../packages/fonts/src';
 import useFont from '../../../../app/font/useFont';
 import FontContext from '../../../../app/font/context';
 import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';

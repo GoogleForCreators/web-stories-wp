@@ -23,11 +23,14 @@ import { resolve } from 'path';
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '../';
+import { curatedFontNames } from '../index';
 
 describe('Curated fonts', () => {
   const fonts = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'assets/src/fonts/fonts.json'), 'utf8')
+    readFileSync(
+      resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
+      'utf8'
+    )
   );
   const fontNames = fonts.map(({ family }) => family);
 

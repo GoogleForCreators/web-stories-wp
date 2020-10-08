@@ -23,7 +23,7 @@ import { act, fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../../testUtils/index';
-import { curatedFontNames } from '../../../../../fonts';
+import { curatedFontNames } from '../../../../../../../packages/fonts/src';
 import FontContext from '../../../../app/font/context';
 import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
 import TextIcon from '../../panes/text/textIcon';

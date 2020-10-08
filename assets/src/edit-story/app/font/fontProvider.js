@@ -28,7 +28,7 @@ import { useCallback, useState, useRef, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '../../../fonts';
+import { curatedFontNames } from '../../../../../packages/fonts/src';
 import loadStylesheet from '../../utils/loadStylesheet';
 import Context from './context';
 import useLoadFonts from './effects/useLoadFonts';

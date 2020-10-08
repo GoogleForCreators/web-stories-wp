@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { getAMPValidationErrors } from '../../js/matchers/utils';
+import { getAMPValidationErrors } from '@web-stories-wp/jest-amp';
 
 /** @typedef {import('puppeteer').Page} Page */
 /** @typedef {import('jest').CustomMatcherResult} CustomMatcherResult */

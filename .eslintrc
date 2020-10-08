@@ -273,7 +273,8 @@
     {
       "files": [
         "**/karma/**/*.js",
-        "assets/src/karma-*/**/*.js"
+        "assets/src/karma-*/**/*.js",
+        "packages/karma-*/**/*.js"
       ],
       "extends": [
         "plugin:jasmine/recommended"
@@ -357,7 +358,7 @@
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs",
         "assets/src/migration/**/*.js",
-        "assets/src/fonts/**/*.js",
+        "packages/fonts/**/*.js",
         "assets/src/commander/**/*.js"
       ],
       "extends": [

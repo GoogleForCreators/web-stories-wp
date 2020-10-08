@@ -22,7 +22,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '../../../../fonts';
+import { curatedFontNames } from '../../../../../../packages/fonts/src';
 import FontContext from '../../../app/font/context';
 import { renderWithTheme } from '../../../testUtils';
 import FontPicker from '../';
