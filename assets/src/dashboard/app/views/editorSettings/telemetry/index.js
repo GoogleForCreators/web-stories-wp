@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import TranslateWithMarkup from '../../../../../i18n/translateWithMarkup';
+import { TranslateWithMarkup } from '../../../../../i18n';
 import { SettingForm, SettingHeading, FormLabel } from '../components';
 
 const CheckBox = styled.input.attrs({

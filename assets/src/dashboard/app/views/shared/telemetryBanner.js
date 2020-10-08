@@ -26,7 +26,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import TranslateWithMarkup from '../../../../i18n/translateWithMarkup';
+import { TranslateWithMarkup } from '../../../../i18n';
 import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { useConfig } from '../../config';

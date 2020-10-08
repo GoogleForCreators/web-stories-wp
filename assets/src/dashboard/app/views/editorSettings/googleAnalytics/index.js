@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
+import { TranslateWithMarkup } from '../../../../../i18n';
 import {
   ErrorText,
   FormContainer,
@@ -41,7 +42,6 @@ import {
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
-import TranslateWithMarkup from '../../../../../i18n/translateWithMarkup';
 
 export const TEXT = {
   CONTEXT: __(

@@ -29,9 +29,9 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackClick } from '../../../tracking';
+import { TranslateWithMarkup } from '../../../i18n';
 import { useConfig } from '../config';
 
-import TranslateWithMarkup from '../../../i18n/translateWithMarkup';
 import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
