@@ -113,6 +113,8 @@ fdescribe('Link Panel', () => {
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
 
+      // Debounce time for populating meta-data.
+      await fixture.events.sleep(1200);
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
 
