@@ -45,7 +45,7 @@ describe('TranslateWithMarkup component', () => {
     expect(result).toStrictEqual('This is a <span></span> string');
   });
 
-  it('returns expected react element for component', () => {
+  it('returns expected React element for component', () => {
     const result = renderToStaticMarkup(
       //eslint-disable-next-line jsx-a11y/anchor-has-content
       <TranslateWithMarkup mapping={{ a: <a href="https://example.com" /> }}>
@@ -58,7 +58,7 @@ describe('TranslateWithMarkup component', () => {
     );
   });
 
-  it('returns expected react element for custom component', () => {
+  it('returns expected React element for custom component', () => {
     const string = 'This is a <a>link</a>!';
 
     const Link = (props) => {
@@ -77,7 +77,7 @@ describe('TranslateWithMarkup component', () => {
     );
   });
 
-  it('returns expected react element for multiple components', () => {
+  it('returns expected React element for multiple components', () => {
     const Link = (props) => {
       //eslint-disable-next-line react/prop-types
       return <a {...props}>{props.children}</a>;
@@ -89,14 +89,47 @@ describe('TranslateWithMarkup component', () => {
           a: (
             <Link href="https://example.com" target="_blank" rel="noreferrer" />
           ),
+          a2: (
+            <Link href="https://example.org" target="_blank" rel="noreferrer" />
+          ),
         }}
       >
-        {'Read the<br/><a>Get Started story</a>!'}
+        {'Read the<br/><a>Get Started story</a>, or <a2>this blog post</a2>!'}
       </TranslateWithMarkup>
     );
 
     expect(result).toStrictEqual(
-      'Read the<br/><a href="https://example.com" target="_blank" rel="noreferrer">Get Started story</a>!'
+      'Read the<br/><a href="https://example.com" target="_blank" rel="noreferrer">Get Started story</a>, or <a href="https://example.org" target="_blank" rel="noreferrer">this blog post</a>!'
+    );
+  });
+
+  it('does not preserve HTML attributes', () => {
+    const result = renderToStaticMarkup(
+      //eslint-disable-next-line jsx-a11y/anchor-has-content
+      <TranslateWithMarkup mapping={{ a: <a href="https://example.com" /> }}>
+        {
+          'This is a <a href="https://example.org" target="_blank" rel="noreferrer">link</a>!'
+        }
+      </TranslateWithMarkup>
+    );
+
+    expect(result).toStrictEqual(
+      'This is a <a href="https://example.com">link</a>!'
+    );
+  });
+
+  it('converts mapping keys to lowercase', () => {
+    const result = renderToStaticMarkup(
+      <TranslateWithMarkup
+        //eslint-disable-next-line jsx-a11y/anchor-has-content
+        mapping={{ CustomLink: <a href="https://example.com" /> }}
+      >
+        {'This is a <CustomLink>link</CustomLink>!'}
+      </TranslateWithMarkup>
+    );
+
+    expect(result).toStrictEqual(
+      'This is a <a href="https://example.com">link</a>!'
     );
   });
 });
