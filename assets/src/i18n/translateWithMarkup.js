@@ -86,7 +86,7 @@ function transform(node, mapping) {
  * @param {ReactNode[]|string} props.children Children / string to parse.
  * @return {ReactNode[]} Transformed children.
  */
-function TranslateWithMarkup({ mapping, children }) {
+function TranslateWithMarkup({ mapping = {}, children }) {
   //Ensure all Object keys are lowercase as the DOMParser converts tag names to lowercase.
   mapping = Object.fromEntries(
     Object.entries(mapping).map(([k, v]) => [k.toLowerCase(), v])

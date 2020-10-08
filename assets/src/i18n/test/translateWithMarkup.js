@@ -25,6 +25,20 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import TranslateWithMarkup from '../translateWithMarkup';
 
 describe('TranslateWithMarkup component', () => {
+  it('returns same string when not passing mapping', () => {
+    const result = renderToStaticMarkup(
+      <TranslateWithMarkup>
+        {
+          'This is a <b>bold</b> move!<br/>Look at all these <em>line breaks</em>!'
+        }
+      </TranslateWithMarkup>
+    );
+
+    expect(result).toStrictEqual(
+      'This is a <b>bold</b> move!<br/>Look at all these <em>line breaks</em>!'
+    );
+  });
+
   it('returns same string when it contains no tokens', () => {
     const result = renderToStaticMarkup(
       <TranslateWithMarkup mapping={{ foo: <strong /> }}>
