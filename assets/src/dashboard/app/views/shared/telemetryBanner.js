@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, forwardRef } from 'react';
+import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
@@ -90,7 +90,10 @@ const CloseIcon = styled(CloseSVG)`
 `;
 
 const ToggleButton = styled.button.attrs({
-  ['aria-label']: __('Dismiss Notice', 'web-stories'),
+  ['aria-label']: __(
+    'Dismiss telemetry data sharing opt-in banner',
+    'web-stories'
+  ),
 })`
   display: flex;
   height: 16px;
@@ -123,6 +126,14 @@ export const TelemetryOptInBanner = forwardRef(
     ref
   ) => {
     const { assetsURL } = useConfig();
+    const checkboxRef = useRef();
+    const focusOnCheckbox = useRef(false);
+
+    useEffect(() => {
+      if (focusOnCheckbox.current) {
+        checkboxRef.current.focus();
+      }
+    });
 
     return visible ? (
       <Banner
@@ -143,7 +154,18 @@ export const TelemetryOptInBanner = forwardRef(
           </ToggleButton>
         </Header>
         <Label>
-          <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
+          <CheckBox
+            checked={checked}
+            disabled={disabled}
+            onChange={() => {
+              onChange();
+              focusOnCheckbox.current = true;
+            }}
+            onBlur={() => {
+              focusOnCheckbox.current = false;
+            }}
+            ref={checkboxRef}
+          />
           <LabelText aria-checked={checked}>
             <TranslateWithMarkup
               mapping={{
@@ -156,6 +178,10 @@ export const TelemetryOptInBanner = forwardRef(
                     )}
                     rel="noreferrer"
                     target="_blank"
+                    aria-label={__(
+                      'Learn more by visiting Google Privacy Policy',
+                      'web-stories'
+                    )}
                   />
                 ),
               }}
