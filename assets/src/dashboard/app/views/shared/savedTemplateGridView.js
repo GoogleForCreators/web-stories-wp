@@ -80,6 +80,7 @@ const SavedTemplateGridView = ({
   const itemRefs = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState(initialFocusId);
 
+  // eslint-disable-next-line no-unused-vars
   const bottomTargetAction = useCallback(
     (template) => {
       return async () => {
@@ -160,7 +161,7 @@ const SavedTemplateGridView = ({
                   label: centerActionLabelByStatus[template.status],
                 }}
                 bottomAction={{
-                  targetAction: bottomTargetAction(template),
+                  targetAction: false, // bottomTargetAction(template), this doesn't work yet and will throw an error in the editor, commenting out to prevent headaches while testing UI but leaving code in so that we know where things attach
                   label: bottomActionLabel,
                 }}
               />

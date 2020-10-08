@@ -64,7 +64,7 @@ export const SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS = {
 export const SAVED_TEMPLATE_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),
-    value: SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
+    value: false, // SAVED_TEMPLATE_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
   },
   {
     label: __('Preview', 'web-stories'),

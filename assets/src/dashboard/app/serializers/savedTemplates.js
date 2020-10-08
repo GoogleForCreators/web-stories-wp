@@ -24,7 +24,7 @@ import { __ } from '@wordpress/i18n';
 import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
 import { toUTCDate } from '../../../date';
 
-// TODO: this is mostly placeholder to generally lend shape to saved templates that matches stories. We do no have working template APIs yet
+// TODO: this is mostly placeholder to generally lend shape to saved templates that matches stories. We do no have stories formatted and returned in saved template API yet
 export default function reshapeSavedTemplateObject(originalSavedTemplateData) {
   const {
     id,
@@ -35,9 +35,12 @@ export default function reshapeSavedTemplateObject(originalSavedTemplateData) {
     link,
     story_data: storyData = {},
   } = originalSavedTemplateData;
+
   if (!Array.isArray(storyData?.pages) || !id || storyData.pages.length === 0) {
     storyData.pages = [];
-    // return null;
+    // the saved template API as it stands now does not bring back story page data.
+    // We need this to exist for the page to render.
+    // Normally if a story had no pages we'd just return null and move on, but i want to be able to test out the rest of the UI.
   }
 
   const updatedStoryData = {
@@ -52,7 +55,7 @@ export default function reshapeSavedTemplateObject(originalSavedTemplateData) {
     modified: toUTCDate(modified_gmt || new Date()),
     created: toUTCDate(date_gmt || new Date()),
     pages: updatedStoryData?.pages,
-    author: __('Google', 'web-stories'), // TODO update after users refactor is merged
+    author: __('Google', 'web-stories'),
     link,
     originalSavedTemplateData,
   };

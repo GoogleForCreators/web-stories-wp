@@ -229,6 +229,7 @@ const CardPreviewContainer = ({
             {...getActionAttributes(bottomAction.targetAction)}
             tabIndex={tabIndex}
             aria-label={bottomAction.ariaLabel}
+            isDisabled={!bottomAction.targetAction}
           >
             {bottomAction.label}
           </Button>

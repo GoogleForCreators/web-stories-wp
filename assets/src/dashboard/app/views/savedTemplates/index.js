@@ -107,7 +107,7 @@ function SavedTemplates() {
         page={page}
         sort={sort}
         templates={orderedSavedTemplates}
-        initialFocusId={lastActiveTemplateId} // prep for preview
+        initialFocusId={lastActiveTemplateId}
         search={search}
         actions={{
           previewTemplate,
