@@ -22,7 +22,7 @@ import useInsertElement from '../../../canvas/useInsertElement';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
-fdescribe('Link Panel', () => {
+describe('Link Panel', () => {
   let fixture;
   let linkPanel;
   let safezone;
@@ -129,7 +129,6 @@ fdescribe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 10, 10);
 
-      console.log('DOCUMENT!!!', document.body);
       expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
