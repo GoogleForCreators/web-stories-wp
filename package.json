@@ -218,7 +218,7 @@
     "test:js:watch": "npm run test:js -- --watch",
     "test:karma": "npm-run-all --parallel test:karma:*",
     "pretest:karma:edit-story": "rm -rf build/karma-edit-story-failed-tests.txt",
-    "test:karma:edit-story": "DEBUG_PRINT_LIMIT=1000000 karma start karma-edit-story.config.cjs --single-run",
+    "test:karma:edit-story": "karma start karma-edit-story.config.cjs --single-run",
     "test:karma:edit-story:retry-failed": "karma start karma-edit-story.config.cjs --single-run --retry-failed",
     "test:karma:edit-story:watch": "karma start karma-edit-story.config.cjs",
     "pretest:karma:dashboard": "rm -rf build/karma-dashboard-failed-tests.txt",

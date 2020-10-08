@@ -121,11 +121,11 @@ describe('Link Panel', () => {
         '[data-testid="fullbleed"]'
       );
       const { left, top } = fullbleed.getBoundingClientRect();
-      await fixture.events.mouse.click(left - 1, top - 1);
+      await fixture.events.mouse.click(left - 5, top - 5);
 
       // Move mouse to hover over the element.
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
-      await fixture.events.mouse.moveRel(frame, 5, 5);
+      await fixture.events.mouse.moveRel(frame, 10, 10);
 
       expect(fixture.screen.getByText(linkDescription)).toBeTruthy();
       await fixture.snapshot(
@@ -141,8 +141,8 @@ describe('Link Panel', () => {
       await fixture.events.keyboard.press('del');
 
       // Verify that the description is not displayed when hovering without url.
-      await fixture.events.mouse.click(left - 1, top - 1);
-      await fixture.events.mouse.moveRel(frame, 5, 5);
+      await fixture.events.mouse.click(left - 5, top - 5);
+      await fixture.events.mouse.moveRel(frame, 10, 10);
       const removedDescription = fixture.screen.queryByText(linkDescription);
       expect(removedDescription).toBeNull();
       await fixture.snapshot(
