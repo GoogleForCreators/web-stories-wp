@@ -113,7 +113,13 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Publishing Flow Test');
 
-    const postPermalink = await publishPost();
+    await expect(page).toClick('#publish', { text: 'Publish' });
+
+    await expect(page).toMatchElement('#message a');
+
+    const postPermalink = await page.$eval('#message a', (a) =>
+      a.getAttribute('href')
+    );
 
     expect(postPermalink).not.toBeNull();
     expect(postPermalink).toStrictEqual(expect.any(String));
