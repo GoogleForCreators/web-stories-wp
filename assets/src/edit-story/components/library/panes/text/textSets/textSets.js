@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useMemo, useEffect } from 'react';
+import { useRef, useState, useMemo, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,6 +33,11 @@ import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import {
+  LOCAL_STORAGE_PREFIX,
+  getItemByKey,
+  setItemByKey,
+} from '../../../../../utils/localStore';
 import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
 
@@ -64,7 +69,9 @@ const CATEGORIES = {
 function TextSets() {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
-  const [selectedCat, setSelectedCat] = useState(null);
+  const [selectedCat, setSelectedCat] = useState(
+    getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)?.selectedCategory
+  );
   const [filteredTextSets, setFilteredTextSets] = useState([]);
   const [renderedTextSets, setRenderedTextSets] = useState([]);
   const ref = useRef();
@@ -80,6 +87,13 @@ function TextSets() {
       })),
     [textSets]
   );
+
+  const handleSelectedCategory = useCallback((selectedCategory) => {
+    setSelectedCat(selectedCategory);
+    setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+      selectedCategory,
+    });
+  }, []);
 
   useEffect(() => {
     window.clearTimeout(loadingTimeoutRef.current);
@@ -122,8 +136,8 @@ function TextSets() {
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
-          selectItem={setSelectedCat}
-          deselectItem={() => setSelectedCat(null)}
+          selectItem={handleSelectedCategory}
+          deselectItem={() => handleSelectedCategory(null)}
         />
       </CategoryWrapper>
       <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
