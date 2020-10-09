@@ -113,7 +113,7 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Publishing Flow Test');
 
-    await expect(page).toClick('#publish', { text: 'Publish' });
+    await expect(page).toClick('#publish');
 
     await expect(page).toMatchElement('#message a');
 
