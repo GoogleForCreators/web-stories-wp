@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 
-window.webStoriesEditorSettings = {};
-window.webStoriesDashboardSettings = {};
+/**
+ * External dependencies
+ */
+import { TextEncoder, TextDecoder } from 'util';
+
+global.webStoriesEditorSettings = {};
+global.webStoriesDashboardSettings = {};
 
 global.wp = {
   media: {
@@ -66,3 +71,9 @@ global.matchMedia = jest.fn().mockImplementation((query) => ({
   removeEventListener: jest.fn(),
   dispatchEvent: jest.fn(),
 }));
+
+// These are not yet available in jsdom environment.
+// See https://github.com/facebook/jest/issues/9983.
+// See https://github.com/jsdom/jsdom/issues/2524.
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
