@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,7 +33,7 @@ import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { getTextSets } from './utils';
+import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
 
 const TextSetContainer = styled.div`
@@ -62,7 +62,8 @@ const CATEGORIES = {
 };
 
 function TextSets() {
-  const [textSets, setTextSets] = useState([]);
+  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+
   const [selectedCat, setSelectedCat] = useState(null);
   const [filteredTextSets, setFilteredTextSets] = useState([]);
   const [renderedTextSets, setRenderedTextSets] = useState([]);
@@ -79,10 +80,6 @@ function TextSets() {
       })),
     [textSets]
   );
-
-  useEffect(() => {
-    getTextSets().then(setTextSets);
-  }, []);
 
   useEffect(() => {
     window.clearTimeout(loadingTimeoutRef.current);
