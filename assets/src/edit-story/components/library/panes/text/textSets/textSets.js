@@ -66,6 +66,8 @@ const CATEGORIES = {
   quote: __('Quote', 'web-stories'),
 };
 
+const RENDER_TEXT_SET_DELAY = 10;
+
 function TextSets() {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
@@ -75,8 +77,6 @@ function TextSets() {
   const [filteredTextSets, setFilteredTextSets] = useState([]);
   const [renderedTextSets, setRenderedTextSets] = useState([]);
   const ref = useRef();
-  const isLoadingRef = useRef(false);
-  const loadingTimeoutRef = useRef(-1);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const categories = useMemo(
@@ -96,35 +96,26 @@ function TextSets() {
   }, []);
 
   useEffect(() => {
-    window.clearTimeout(loadingTimeoutRef.current);
-    isLoadingRef.current = false;
-
     setFilteredTextSets(selectedCat ? textSets[selectedCat] : allTextSets);
     setRenderedTextSets([]);
   }, [selectedCat, textSets, allTextSets]);
 
   useEffect(() => {
-    if (isLoadingRef.current) {
-      return;
+    if (renderedTextSets.length >= filteredTextSets.length) {
+      return () => {};
     }
 
-    if (renderedTextSets.length < filteredTextSets.length) {
-      isLoadingRef.current = true;
+    const loadingTimeoutId = window.setTimeout(() => {
+      setRenderedTextSets((rendered) => [
+        ...rendered,
+        filteredTextSets[rendered.length],
+      ]);
+    }, RENDER_TEXT_SET_DELAY);
 
-      loadingTimeoutRef.current = window.setTimeout(() => {
-        isLoadingRef.current = false;
-        setRenderedTextSets([
-          ...renderedTextSets,
-          filteredTextSets[renderedTextSets.length],
-        ]);
-      }, 10);
-    }
+    return () => {
+      window.clearTimeout(loadingTimeoutId);
+    };
   }, [renderedTextSets, filteredTextSets]);
-
-  useEffect(() => {
-    window.clearTimeout(loadingTimeoutRef.current);
-    isLoadingRef.current = false;
-  }, []);
 
   useRovingTabIndex({ ref });
 
