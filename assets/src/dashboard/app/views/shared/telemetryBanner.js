@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useLayoutEffect, useRef, forwardRef } from 'react';
+import { useLayoutEffect, useRef, forwardRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
@@ -26,6 +26,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { TranslateWithMarkup } from '../../../../i18n';
 import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { useConfig } from '../../config';
@@ -89,7 +90,10 @@ const CloseIcon = styled(CloseSVG)`
 `;
 
 const ToggleButton = styled.button.attrs({
-  ['aria-label']: __('Dismiss Notice', 'web-stories'),
+  ['aria-label']: __(
+    'Dismiss telemetry data sharing opt-in banner',
+    'web-stories'
+  ),
 })`
   display: flex;
   height: 16px;
@@ -122,6 +126,14 @@ export const TelemetryOptInBanner = forwardRef(
     ref
   ) => {
     const { assetsURL } = useConfig();
+    const checkboxRef = useRef();
+    const focusOnCheckbox = useRef(false);
+
+    useEffect(() => {
+      if (focusOnCheckbox.current) {
+        checkboxRef.current.focus();
+      }
+    });
 
     return visible ? (
       <Banner
@@ -142,21 +154,43 @@ export const TelemetryOptInBanner = forwardRef(
           </ToggleButton>
         </Header>
         <Label>
-          <CheckBox checked={checked} disabled={disabled} onChange={onChange} />
+          <CheckBox
+            checked={checked}
+            disabled={disabled}
+            onChange={() => {
+              onChange();
+              focusOnCheckbox.current = true;
+            }}
+            onBlur={() => {
+              focusOnCheckbox.current = false;
+            }}
+            ref={checkboxRef}
+          />
           <LabelText aria-checked={checked}>
-            {__(
-              'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
-              'web-stories'
-            )}
-            &nbsp;
-            <a
-              href={__('https://policies.google.com/privacy', 'web-stories')}
-              rel="noreferrer"
-              target="_blank"
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  //eslint-disable-next-line jsx-a11y/anchor-has-content
+                  <a
+                    href={__(
+                      'https://policies.google.com/privacy',
+                      'web-stories'
+                    )}
+                    rel="noreferrer"
+                    target="_blank"
+                    aria-label={__(
+                      'Learn more by visiting Google Privacy Policy',
+                      'web-stories'
+                    )}
+                  />
+                ),
+              }}
             >
-              {__('Learn more', 'web-stories')}
-              {'.'}
-            </a>
+              {__(
+                'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with <a>Google Privacy Policy</a>.',
+                'web-stories'
+              )}
+            </TranslateWithMarkup>
           </LabelText>
         </Label>
         <VisitSettingsText>

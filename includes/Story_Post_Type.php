@@ -202,6 +202,8 @@ class Story_Post_Type {
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
+
+		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 	}
 
 	/**
@@ -708,8 +710,7 @@ class Story_Post_Type {
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => $this->get_publisher_data(),
-					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
+					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 			],
@@ -811,6 +812,35 @@ class Story_Post_Type {
 		$post_types[] = self::POST_TYPE_SLUG;
 
 		return $post_types;
+	}
+
+	/**
+	 * Filters the bulk action updated messages.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array[] $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
+	 *                               keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
+	 * @param int[]   $bulk_counts   Array of item counts for each message, used to build internationalized strings.
+	 *
+	 * @return array Bulk counts.
+	 */
+	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ) {
+		$bulk_messages[ self::POST_TYPE_SLUG ] = [
+			/* translators: %s: Number of stories. */
+			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
+			'locked'    => ( 1 === $bulk_counts['locked'] ) ? __( '1 story not updated, somebody is editing it.', 'web-stories' ) :
+				/* translators: %s: Number of stories. */
+				_n( '%s story not updated, somebody is editing it.', '%s stories not updated, somebody is editing them.', $bulk_counts['locked'], 'web-stories' ),
+			/* translators: %s: Number of stories. */
+			'deleted'   => _n( '%s story permanently deleted.', '%s stories permanently deleted.', $bulk_counts['deleted'], 'web-stories' ),
+			/* translators: %s: Number of stories. */
+			'trashed'   => _n( '%s story moved to the Trash.', '%s stories moved to the Trash.', $bulk_counts['trashed'], 'web-stories' ),
+			/* translators: %s: Number of stories. */
+			'untrashed' => _n( '%s story restored from the Trash.', '%s stories restored from the Trash.', $bulk_counts['untrashed'], 'web-stories' ),
+		];
+
+		return $bulk_messages;
 	}
 
 	/**

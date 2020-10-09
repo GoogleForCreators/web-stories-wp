@@ -29,6 +29,7 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackClick } from '../../../tracking';
+import { TranslateWithMarkup } from '../../../i18n';
 import { useConfig } from '../config';
 
 import Paragraph from './paragraph';
@@ -52,7 +53,6 @@ const ParagraphWrapper = styled.div`
   min-width: 100px;
 `;
 
-// @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step2() {
   const { dashboardURL } = useConfig();
 
@@ -82,14 +82,13 @@ function Step2() {
           }
         </Number>
         <Paragraph $secondary>
-          {
-            /* translators: First half of "Head to the Dashboard" */
-            _x('Head to the', 'plugin activation', 'web-stories')
-          }
-          <br />
-          <Link href={dashboardURL} onClick={onClick}>
-            {__('Dashboard', 'web-stories')}
-          </Link>
+          <TranslateWithMarkup
+            mapping={{
+              a: <Link href={dashboardURL} onClick={onClick} />,
+            }}
+          >
+            {__('Head to the<br/><a>Dashboard</a>', 'web-stories')}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>

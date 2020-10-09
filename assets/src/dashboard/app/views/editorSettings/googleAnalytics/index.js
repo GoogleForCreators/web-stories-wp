@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { validateGoogleAnalyticsIdFormat } from '../../../../utils';
+import { TranslateWithMarkup } from '../../../../../i18n';
 import {
   ErrorText,
   FormContainer,
@@ -44,12 +45,11 @@ import {
 
 export const TEXT = {
   CONTEXT: __(
-    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article:",
+    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on <a>analytics for your Web Stories</a>.",
     'web-stories'
   ),
-  CONTEXT_ARTICLE_LINK:
+  CONTEXT_LINK:
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
-  CONTEXT_ARTICLE: __('Analytics for your Web Stories', 'web-stories'),
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
   ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
@@ -103,7 +103,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
       </SettingHeading>
       <FormContainer>
         <InlineForm>
-          <VisuallyHiddenLabel for="gaTrackingId">
+          <VisuallyHiddenLabel htmlFor="gaTrackingId">
             {TEXT.ARIA_LABEL}
           </VisuallyHiddenLabel>
           <GoogleAnalyticsTextInput
@@ -121,10 +121,13 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
         </InlineForm>
         {inputError && <ErrorText>{inputError}</ErrorText>}
         <TextInputHelperText>
-          {TEXT.CONTEXT}
-          <InlineLink href={TEXT.CONTEXT_ARTICLE_LINK}>
-            {TEXT.CONTEXT_ARTICLE}
-          </InlineLink>
+          <TranslateWithMarkup
+            mapping={{
+              a: <InlineLink href={TEXT.CONTEXT_LINK} />,
+            }}
+          >
+            {TEXT.CONTEXT}
+          </TranslateWithMarkup>
         </TextInputHelperText>
       </FormContainer>
     </SettingForm>

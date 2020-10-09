@@ -39,7 +39,7 @@ function useRefreshPostEditURL(postId) {
     window.history.replaceState(
       { id: postId },
       'Post ' + postId,
-      getPostEditURL
+      getPostEditURL + window.location.hash
     );
   }, [postId]);
   return refreshPostEditURL;
