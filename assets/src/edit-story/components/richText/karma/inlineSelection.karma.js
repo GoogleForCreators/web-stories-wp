@@ -91,6 +91,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Set letter spacing
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
+      await data.fixture.events.keyboard.press('Enter');
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
 
@@ -141,6 +142,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles again
@@ -367,6 +369,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Change line height to 5
       await data.fixture.events.click(lineHeight, { clickCount: 3 });
       await data.fixture.events.keyboard.type('5');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Exit edit-mode
