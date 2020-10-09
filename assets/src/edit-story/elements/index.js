@@ -32,9 +32,10 @@ import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
 import * as videoElement from './video';
+const gifElement = { ...imageElement };
 
 export const createNewElement = (type, attributes = {}) => {
-  const element = elementTypes.find((el) => el.type === type);
+  const element = getDefinitionForType(type);
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
   }
@@ -96,6 +97,7 @@ export const elementTypes = [
   { type: 'image', name: __('Image', 'web-stories'), ...imageElement },
   { type: 'shape', name: __('Shape', 'web-stories'), ...shapeElement },
   { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
+  { type: 'gif', name: __('Gif', 'web-stories'), ...gifElement },
 ];
 
 export const getDefinitionForType = (type) =>
