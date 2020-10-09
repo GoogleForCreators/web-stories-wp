@@ -115,11 +115,11 @@ describe('Publishing Flow', () => {
 
     await expect(page).toClick('#publish');
 
-    await expect(page).toMatchElement('#message a');
-
-    const postPermalink = await page.$eval('#message a', (a) =>
-      a.getAttribute('href')
-    );
+    const btnTab = '#message a';
+    await page.waitForSelector(btnTab);
+    const postPermalink = await page.evaluate((selector) => {
+      return document.querySelector(selector).getAttribute('href');
+    }, btnTab);
 
     expect(postPermalink).not.toBeNull();
     expect(postPermalink).toStrictEqual(expect.any(String));
