@@ -151,6 +151,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
         height: 150 / (100 / 80),
@@ -161,6 +162,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 160,
         width: 160 * (100 / 80),
@@ -174,6 +176,7 @@ describe('Panels/SizePosition', () => {
 
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ width: 150, height: 80 });
     });
 
@@ -207,19 +210,32 @@ describe('Panels/SizePosition', () => {
       expect(input).toHaveValue('AUTO');
     });
 
-    it('should not update width if empty value', () => {
+    it('should not update width if empty value is submitted', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
-      const input = getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      const inputWidth = getByRole('textbox', { name: 'Width' });
+      const inputHeight = getByRole('textbox', { name: 'Height' });
+      const originalWidth = parseInt(inputWidth.value);
+      const originalHeight = parseInt(inputHeight.value);
+      fireEvent.change(inputWidth, { target: { value: '' } });
+      fireEvent.keyDown(inputWidth, { key: 'Enter', which: 13 });
+      expect(pushUpdate).toHaveBeenCalledWith({
+        width: originalWidth,
+        height: originalHeight,
+      });
     });
 
-    it('should not update height if empty value', () => {
+    it('should not update height if empty value is submitted', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
-
-      const input = getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      const inputWidth = getByRole('textbox', { name: 'Width' });
+      const inputHeight = getByRole('textbox', { name: 'Height' });
+      const originalWidth = parseInt(inputWidth.value);
+      const originalHeight = parseInt(inputHeight.value);
+      fireEvent.change(inputHeight, { target: { value: '' } });
+      fireEvent.keyDown(inputHeight, { key: 'Enter', which: 13 });
+      expect(pushUpdate).toHaveBeenCalledWith({
+        width: originalWidth,
+        height: originalHeight,
+      });
     });
 
     it('should update lock ratio to false for element', () => {
@@ -292,6 +308,7 @@ describe('Panels/SizePosition', () => {
       ]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
         height: dataPixels(150 / (100 / 80)),
@@ -319,6 +336,7 @@ describe('Panels/SizePosition', () => {
       ]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
         height: MULTIPLE_VALUE,
@@ -346,6 +364,7 @@ describe('Panels/SizePosition', () => {
       ]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 160,
         width: MULTIPLE_VALUE,
@@ -403,6 +422,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdate, submit } = renderSizePosition([image]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '2000' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 2000,
         width: 2000 * (100 / 80),
