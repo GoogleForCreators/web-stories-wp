@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { initHelpers } from './_utils';
 
 describe('Styling single text field', () => {
@@ -145,10 +146,10 @@ describe('Styling single text field', () => {
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('Mixed');
-      expect(fontColor.output).toBe('Mixed');
+      expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle all styles
       await data.fixture.events.click(italic.button);
@@ -244,9 +245,9 @@ describe('Styling single text field', () => {
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
 
-      // Check that bold toggle is on but font weight is "multiple"
+      // Check that bold toggle is on but font weight is "mixed"
       expect(bold.checked).toBe(true);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle it by pressing the bold button
       await data.fixture.events.click(bold.button);
@@ -275,9 +276,9 @@ describe('Styling single text field', () => {
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
 
-      // Check that bold toggle is on but font weight is "multiple"
+      // Check that bold toggle is on but font weight is "mixed"
       expect(bold.checked).toBe(false);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle it by pressing the bold button
       await data.fixture.events.click(bold.button);
@@ -316,9 +317,9 @@ describe('Styling single text field', () => {
       await richTextHasFocus();
       await data.fixture.events.keyboard.press('Escape');
 
-      // Check that bold toggle is off but font weight is "multiple"
+      // Check that bold toggle is off but font weight is "mixed"
       expect(bold.checked).toBe(false);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle it by pressing the bold button
       await data.fixture.events.click(bold.button);
