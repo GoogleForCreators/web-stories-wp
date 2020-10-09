@@ -54,21 +54,20 @@ function renderLinkPanel(selectedElements) {
 }
 
 describe('Panels/Link', () => {
+  const DEFAULT_ELEMENT = {
+    id: '1',
+    isBackground: false,
+    x: 10,
+    y: 10,
+    width: 100,
+    height: 80,
+    rotationAngle: 0,
+    link: {
+      url: '',
+    },
+  };
   it('should not display metadata fields if URL is missing', () => {
-    const defaultElement = {
-      id: '1',
-      isBackground: false,
-      x: 10,
-      y: 10,
-      width: 100,
-      height: 80,
-      rotationAngle: 0,
-      link: {
-        url: '',
-      },
-    };
-
-    renderLinkPanel([defaultElement]);
+    renderLinkPanel([DEFAULT_ELEMENT]);
     expect(
       screen.getByRole('textbox', {
         name: 'Edit: Element link',
@@ -87,38 +86,26 @@ describe('Panels/Link', () => {
   });
 
   it('should display an error message for invalid URLs', () => {
-    const defaultElement = {
-      id: '1',
-      isBackground: false,
-      x: 10,
-      y: 10,
-      width: 100,
-      height: 80,
-      rotationAngle: 0,
-      link: {
-        url: 'http://',
+    renderLinkPanel([
+      {
+        ...DEFAULT_ELEMENT,
+        link: {
+          url: 'http://',
+        },
       },
-    };
-
-    renderLinkPanel([defaultElement]);
+    ]);
     expect(screen.getByText('Invalid web address.')).toBeInTheDocument();
   });
 
   it('should not display metadata fields if URL is invalid', () => {
-    const defaultElement = {
-      id: '1',
-      isBackground: false,
-      x: 10,
-      y: 10,
-      width: 100,
-      height: 80,
-      rotationAngle: 0,
-      link: {
-        url: 'http://',
+    renderLinkPanel([
+      {
+        ...DEFAULT_ELEMENT,
+        link: {
+          url: 'http://',
+        },
       },
-    };
-
-    renderLinkPanel([defaultElement]);
+    ]);
     expect(
       screen.queryByRole('textbox', {
         name: 'Edit: Link description',
@@ -129,5 +116,33 @@ describe('Panels/Link', () => {
         name: 'Edit link icon',
       })
     ).toBeNull();
+  });
+
+  it('should display Mixed placeholder in case of mixed values multi-selection', () => {
+    renderLinkPanel([
+      {
+        ...DEFAULT_ELEMENT,
+        link: {
+          url: 'http://example.com',
+          desc: 'Example',
+        },
+      },
+      {
+        ...DEFAULT_ELEMENT,
+        id: 2,
+      },
+    ]);
+
+    const linkInput = screen.getByRole('textbox', {
+      name: 'Edit: Element link',
+    });
+    expect(linkInput.placeholder).toStrictEqual('Mixed');
+    expect(linkInput.value).toStrictEqual('');
+
+    const descInput = screen.queryByRole('textbox', {
+      name: 'Edit: Link description',
+    });
+    expect(descInput.placeholder).toStrictEqual('Mixed');
+    expect(descInput.value).toStrictEqual('');
   });
 });
