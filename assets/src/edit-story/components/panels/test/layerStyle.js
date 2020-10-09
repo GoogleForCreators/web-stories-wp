@@ -66,6 +66,7 @@ describe('Panels/LayerStyle', () => {
     ]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: '23' } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     expect(pushUpdate).toHaveBeenCalledWith({ opacity: 23 });
   });
 
@@ -75,6 +76,7 @@ describe('Panels/LayerStyle', () => {
     ]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: null } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     const submits = submit({ opacity: null });
     expect(submits[defaultElement.id]).toStrictEqual({
       opacity: 0,
@@ -87,6 +89,7 @@ describe('Panels/LayerStyle', () => {
     ]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: 101 } });
+    fireEvent.keyDown(input, { key: 'Enter', which: 13 });
     const submits = submit({ opacity: 101 });
     expect(submits[defaultElement.id]).toStrictEqual({
       opacity: 100,
