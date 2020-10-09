@@ -32,6 +32,7 @@ import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
+import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
@@ -53,6 +54,7 @@ function APIProvider({ children }) {
     publisherLogo,
     autoAdvance,
     defaultPageDuration,
+    content,
     ...rest
   }) => {
     return {
@@ -65,6 +67,7 @@ function APIProvider({ children }) {
       featured_media: featuredMedia,
       style_presets: stylePresets,
       publisher_logo: publisherLogo,
+      content: base64Encode(content),
       ...rest,
     };
   };
