@@ -17,7 +17,14 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useMemo, useEffect, useCallback } from 'react';
+import {
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+  useReducer,
+} from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,13 +40,14 @@ import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import {
+import localStore, {
   LOCAL_STORAGE_PREFIX,
-  getItemByKey,
-  setItemByKey,
 } from '../../../../../utils/localStore';
+import { UnitsProvider } from '../../../../../units';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
+import { TEXT_SET_ACTIONS, getTextSetReducer } from './getTextSetReducer';
 
 const TextSetContainer = styled.div`
   display: grid;
@@ -72,10 +80,10 @@ function TextSets() {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
   const [selectedCat, setSelectedCat] = useState(
-    getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)?.selectedCategory
+    localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
+      ?.selectedCategory
   );
-  const [filteredTextSets, setFilteredTextSets] = useState([]);
-  const [renderedTextSets, setRenderedTextSets] = useState([]);
+
   const ref = useRef();
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
@@ -88,16 +96,28 @@ function TextSets() {
     [textSets]
   );
 
+  const textSetReducer = useMemo(
+    () => getTextSetReducer(textSets, allTextSets),
+    [textSets, allTextSets]
+  );
+
+  const [{ filteredTextSets, renderedTextSets }, dispatch] = useReducer(
+    textSetReducer,
+    {
+      filteredTextSets: [],
+      renderedTextSets: [],
+    }
+  );
+
   const handleSelectedCategory = useCallback((selectedCategory) => {
     setSelectedCat(selectedCategory);
-    setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
       selectedCategory,
     });
   }, []);
 
   useEffect(() => {
-    setFilteredTextSets(selectedCat ? textSets[selectedCat] : allTextSets);
-    setRenderedTextSets([]);
+    dispatch({ type: TEXT_SET_ACTIONS.RESET, payload: selectedCat });
   }, [selectedCat, textSets, allTextSets]);
 
   useEffect(() => {
@@ -106,10 +126,9 @@ function TextSets() {
     }
 
     const loadingTimeoutId = window.setTimeout(() => {
-      setRenderedTextSets((rendered) => [
-        ...rendered,
-        filteredTextSets[rendered.length],
-      ]);
+      dispatch({
+        type: TEXT_SET_ACTIONS.RENDER_NEXT_TEXT_SET,
+      });
     }, RENDER_TEXT_SET_DELAY);
 
     return () => {
@@ -131,14 +150,21 @@ function TextSets() {
           deselectItem={() => handleSelectedCategory(null)}
         />
       </CategoryWrapper>
-      <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
-        {renderedTextSets.map(
-          (elements) =>
-            elements.length > 0 && (
-              <TextSet key={elements[0].id} elements={elements} />
-            )
-        )}
-      </TextSetContainer>
+      <UnitsProvider
+        pageSize={{
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE / PAGE_RATIO,
+        }}
+      >
+        <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
+          {renderedTextSets.map(
+            (elements) =>
+              elements.length > 0 && (
+                <TextSet key={elements[0].id} elements={elements} />
+              )
+          )}
+        </TextSetContainer>
+      </UnitsProvider>
     </Section>
   );
 }

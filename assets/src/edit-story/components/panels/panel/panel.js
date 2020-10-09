@@ -25,11 +25,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
 /**
  * Internal dependencies
  */
-import {
-  LOCAL_STORAGE_PREFIX,
-  getItemByKey,
-  setItemByKey,
-} from '../../../utils/localStore';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -50,7 +46,7 @@ function Panel({
   ariaHidden = false,
 }) {
   const persisted = useMemo(
-    () => getItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`),
+    () => localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`),
     [name]
   );
   const [isCollapsed, setIsCollapsed] = useState(
@@ -115,7 +111,7 @@ function Panel({
     }
 
     // Persist only when after user interacts
-    setItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`, {
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`, {
       height,
       isCollapsed,
       expandToHeight,

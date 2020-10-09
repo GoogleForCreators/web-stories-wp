@@ -19,7 +19,7 @@ export const LOCAL_STORAGE_PREFIX = {
   TEXT_SET_SETTINGS: 'web_stores_text_set_settings',
 };
 
-export function getItemByKey(key) {
+function getItemByKey(key) {
   let parsed = null;
   try {
     const stored = localStorage.getItem(key);
@@ -30,6 +30,11 @@ export function getItemByKey(key) {
   return parsed;
 }
 
-export function setItemByKey(key, data) {
+function setItemByKey(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
+export default {
+  getItemByKey,
+  setItemByKey,
+};
