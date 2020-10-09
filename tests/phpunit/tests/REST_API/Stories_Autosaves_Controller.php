@@ -61,7 +61,7 @@ class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
 
 		parent::tearDown();
 	}
-	
+
 	public function test_create_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
 

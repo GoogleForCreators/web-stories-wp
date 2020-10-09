@@ -50,7 +50,9 @@ class Discovery extends \WP_UnitTestCase {
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
 		self::$user_id = $factory->user->create(
-			[ 'role' => 'administrator' ]
+			[
+				'role' => 'administrator',
+			]
 		);
 
 		self::$story_id      = $factory->post->create(
@@ -125,7 +127,6 @@ class Discovery extends \WP_UnitTestCase {
 	public function test_get_schemaorg_metadata() {
 		$object = new \Google\Web_Stories\Discovery();
 		$result = $this->call_private_method( $object, 'get_schemaorg_metadata' );
-
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
 		$this->assertArrayHasKey( 'datePublished', $result );
