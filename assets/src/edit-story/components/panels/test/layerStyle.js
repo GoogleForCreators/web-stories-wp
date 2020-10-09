@@ -95,4 +95,14 @@ describe('Panels/LayerStyle', () => {
       opacity: 100,
     });
   });
+
+  it('should display mixed in case of multi-selection with different values', () => {
+    const { getByRole } = renderLayerStyle([
+      { ...defaultElement, opacity: 50 },
+      { id: 2, opacity: 80 },
+    ]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
+    expect(input.placeholder).toStrictEqual('Mixed');
+    expect(input.value).toStrictEqual('');
+  });
 });
