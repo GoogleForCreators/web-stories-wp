@@ -32,7 +32,7 @@ import {
   CardGridItem,
   CardTitle,
   CardPreviewContainer,
-  ActionLabel,
+  // ActionLabel,
   StoryMenu,
   FocusableGridItem,
 } from '../../../components';
@@ -68,7 +68,7 @@ const StoryGrid = styled(CardGrid)`
 const SavedTemplateGridView = ({
   templates,
   centerActionLabelByStatus,
-  bottomActionLabel,
+  // bottomActionLabel,
   pageSize,
   templateMenu,
   actions,
@@ -160,10 +160,11 @@ const SavedTemplateGridView = ({
                   targetAction: (e) => actions.previewTemplate(e, template),
                   label: centerActionLabelByStatus[template.status],
                 }}
-                bottomAction={{
-                  targetAction: false, // bottomTargetAction(template), this doesn't work yet and will throw an error in the editor, commenting out to prevent headaches while testing UI but leaving code in so that we know where things attach
-                  label: bottomActionLabel,
-                }}
+                // this doesn't work yet and will throw an error in the editor, commenting out to prevent headaches while testing UI but leaving code in so that we know where things attach
+                // bottomAction={{
+                //   targetAction: bottomTargetAction(template),
+                //   label: bottomActionLabel,
+                // }}
               />
               <DetailRow>
                 <CardTitle
@@ -208,7 +209,7 @@ SavedTemplateGridView.propTypes = {
     PropTypes.objectOf(PropTypes.string),
     PropTypes.bool,
   ]),
-  bottomActionLabel: ActionLabel,
+  // bottomActionLabel: ActionLabel,
   pageSize: PageSizePropType.isRequired,
   templateMenu: StoryMenuPropType,
   initialFocusId: PropTypes.number,

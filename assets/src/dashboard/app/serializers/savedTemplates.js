@@ -37,7 +37,13 @@ export default function reshapeSavedTemplateObject(originalSavedTemplateData) {
   } = originalSavedTemplateData;
 
   if (!Array.isArray(storyData?.pages) || !id || storyData.pages.length === 0) {
-    storyData.pages = [];
+    storyData.pages = [
+      {
+        id: 'placeholder-id',
+        animations: [],
+        elements: [],
+      },
+    ];
     // the saved template API as it stands now does not bring back story page data.
     // We need this to exist for the page to render.
     // Normally if a story had no pages we'd just return null and move on, but i want to be able to test out the rest of the UI.
