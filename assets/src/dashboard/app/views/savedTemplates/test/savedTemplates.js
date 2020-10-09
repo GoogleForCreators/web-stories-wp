@@ -84,7 +84,7 @@ describe('<SavedTemplates />', function () {
       { features: { enableInProgressStoryActions: false } }
     );
 
-    expect(getAllByText('Use template')).toHaveLength(
+    expect(getAllByText('See details')).toHaveLength(
       formattedTemplatesArray.length
     );
   });
