@@ -144,8 +144,8 @@ describe('Styling multiple text fields', () => {
       expect(underline.checked).toBe(false);
       expect(fontWeight.value).toBe('(multiple)');
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('multiple');
-      expect(fontColor.output).toBe('Multiple');
+      expect(letterSpacing.placeholder).toBe('Mixed');
+      expect(fontColor.output).toBe('Mixed');
 
       // Toggle all styles
       await data.fixture.events.click(italic.button);

@@ -24,18 +24,13 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
-import MULTIPLE_VALUE from './multipleValue';
+import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 
 const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
 
@@ -98,7 +93,7 @@ function Numeric({
   ...rest
 }) {
   const isMultiple = value === MULTIPLE_VALUE;
-  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+  const placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : '';
   const [dot, setDot] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   const ref = useRef();

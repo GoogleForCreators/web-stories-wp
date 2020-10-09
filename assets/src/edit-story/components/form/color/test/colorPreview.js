@@ -110,7 +110,7 @@ describe('<ColorPreview />', () => {
       <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
 
-    expect(button).toHaveTextContent('Multiple');
+    expect(button).toHaveTextContent('Mixed');
   });
 
   it('should render none if applicable', () => {

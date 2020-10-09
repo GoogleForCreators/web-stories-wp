@@ -120,8 +120,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Expect font weight, letter spacing and font color to be "multiple"
       expect(fontWeight.value).toBe('(multiple)');
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('multiple');
-      expect(fontColor.output).toBe('Multiple');
+      expect(letterSpacing.placeholder).toBe('Mixed');
+      expect(fontColor.output).toBe('Mixed');
 
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);
