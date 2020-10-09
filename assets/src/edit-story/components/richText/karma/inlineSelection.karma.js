@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { initHelpers } from './_utils';
 
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
@@ -119,10 +120,10 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(underline.checked).toBe(false);
 
       // Expect font weight, letter spacing and font color to be "multiple"
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('Mixed');
-      expect(fontColor.output).toBe('Mixed');
+      expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);
@@ -258,7 +259,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is on but font weight is "multiple"
         expect(bold.checked).toBe(true);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -287,7 +288,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is off but font weight is "multiple"
         expect(bold.checked).toBe(false);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -322,7 +323,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is off but font weight is "multiple"
         expect(bold.checked).toBe(false);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);

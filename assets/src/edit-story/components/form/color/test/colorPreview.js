@@ -26,7 +26,7 @@ import createSolid from '../../../../utils/createSolid';
 import ColorPreview from '../colorPreview';
 import getPreviewStyleMock from '../getPreviewStyle';
 import getPreviewTextMock from '../getPreviewText';
-import MULTIPLE_VALUE from '../../multipleValue';
+import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../../multipleValue';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
@@ -110,7 +110,7 @@ describe('<ColorPreview />', () => {
       <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
 
-    expect(button).toHaveTextContent('Mixed');
+    expect(button).toHaveTextContent(MULTIPLE_DISPLAY_VALUE);
   });
 
   it('should render none if applicable', () => {
