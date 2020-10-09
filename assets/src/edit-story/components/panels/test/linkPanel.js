@@ -25,6 +25,7 @@ import { screen } from '@testing-library/react';
 import ConfigContext from '../../../app/config/context';
 import LinkPanel from '../link';
 import StoryContext from '../../../app/story/context';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form/multipleValue';
 import { renderPanel } from './_utils';
 
 jest.mock('../../../elements');
@@ -136,13 +137,13 @@ describe('Panels/Link', () => {
     const linkInput = screen.getByRole('textbox', {
       name: 'Edit: Element link',
     });
-    expect(linkInput.placeholder).toStrictEqual('Mixed');
+    expect(linkInput.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(linkInput.value).toStrictEqual('');
 
     const descInput = screen.queryByRole('textbox', {
       name: 'Edit: Link description',
     });
-    expect(descInput.placeholder).toStrictEqual('Mixed');
+    expect(descInput.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(descInput.value).toStrictEqual('');
   });
 });
