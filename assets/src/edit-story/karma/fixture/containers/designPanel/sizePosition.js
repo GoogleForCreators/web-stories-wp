@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { Toggle } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -36,7 +37,11 @@ export class SizePosition extends AbstractPanel {
   }
 
   get lockAspectRatio() {
-    return this.getByRole('checkbox', { name: /Aspect ratio lock/i });
+    return this._get(
+      this.getByRole('checkbox', { name: /Aspect ratio lock/ }),
+      'italic',
+      Toggle
+    );
   }
 
   get rotate() {
