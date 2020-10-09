@@ -61,11 +61,7 @@ class Stories_Autosaves_Controller extends \WP_Test_REST_TestCase {
 
 		parent::tearDown();
 	}
-
-	/**
-	 * @group ms-excluded
-	 * @todo This test is broken in multisite, because of unfiltered_html capability.
-	 */
+	
 	public function test_create_item_as_author_should_not_strip_markup() {
 		wp_set_current_user( self::$author_id );
 
