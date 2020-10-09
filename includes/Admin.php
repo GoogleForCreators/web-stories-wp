@@ -92,7 +92,7 @@ class Admin {
 	 * @since 1.0.0
 	 *
 	 * @param string   $content Default post content.
-	 * @param \WP_Post $post Post object.
+	 * @param \WP_Post $post    Post object.
 	 *
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
