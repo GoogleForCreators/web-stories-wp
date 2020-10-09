@@ -43,7 +43,7 @@ describe('useTypeahead()', function () {
     expect(result.current.inputValue.value).toBe('');
     expect(result.current.showMenu.value).toBe(false);
     expect(result.current.menuFocused.value).toBe(false);
-    expect(result.current.selectedValueIndex.value).toBe(0);
+    expect(result.current.selectedValueIndex.value).toBe(-1);
   });
 
   it('should set isMenuOpen to true when input value updates.', () => {
@@ -57,5 +57,6 @@ describe('useTypeahead()', function () {
     });
     expect(result.current.showMenu.value).toBe(true);
     expect(result.current.isMenuOpen).toBe(true);
+    expect(result.current.selectedValueIndex.value).toBe(0);
   });
 });
