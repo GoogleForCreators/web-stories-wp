@@ -23,7 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import LayerStyle from '../layerStyle';
-import { MULTIPLE_DISPLAY_VALUE } from '../../form/multipleValue';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
 describe('Panels/LayerStyle', () => {

@@ -24,9 +24,9 @@ import { fireEvent } from '@testing-library/react';
  */
 import SizePosition from '../sizePosition';
 import { getDefinitionForType } from '../../../elements';
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { dataPixels } from '../../../units';
-import { MULTIPLE_DISPLAY_VALUE } from '../../form/multipleValue';
+
 import { renderPanel } from './_utils';
 
 jest.mock('../../../elements');
