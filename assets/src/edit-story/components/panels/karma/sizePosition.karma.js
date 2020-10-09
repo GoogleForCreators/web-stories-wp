@@ -40,11 +40,9 @@ describe('Size & Position Panel', () => {
     await fixture.events.keyboard.up('Shift');
   };
 
-  const getSelection = async (first = true) => {
+  const getSelection = async () => {
     const storyContext = await fixture.renderHook(() => useStory());
-    return first
-      ? storyContext.state.selectedElements[0]
-      : storyContext.state.selectedElements;
+    return storyContext.state.selectedElements;
   };
 
   describe('CUJ: Creator can Transform an Element: Set height and width', () => {
@@ -61,7 +59,7 @@ describe('Size & Position Panel', () => {
       await fixture.events.keyboard.type('300');
       await fixture.events.keyboard.press('tab');
 
-      const element = await getSelection();
+      const [element] = await getSelection();
       expect(element.width).toBe(300);
       const newHeight = element.height;
       expect(Math.round(newHeight)).toBe(Math.round(300 / ratio));
@@ -69,6 +67,7 @@ describe('Size & Position Panel', () => {
       // Take off lock ratio by clicking on the visible part of the lock aspect ratio checkbox.
       await fixture.events.click(panel.lockAspectRatio.nextSibling);
       expect(panel.height.placeholder).toBe('AUTO');
+      expect(panel.height).toBeDisabled();
 
       await fixture.snapshot('Unlocked element with height disabled');
 
@@ -76,7 +75,7 @@ describe('Size & Position Panel', () => {
       await fixture.events.keyboard.type('100');
       await fixture.events.keyboard.press('tab');
 
-      const updatedElement = await getSelection();
+      const [updatedElement] = await getSelection();
       expect(updatedElement.height).toBe(newHeight);
     });
 
@@ -89,7 +88,7 @@ describe('Size & Position Panel', () => {
       // Select the text, too.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
-      const elements = await getSelection(false);
+      const elements = await getSelection();
       const oHeight1 = elements[0].height;
       const oHeight2 = elements[1].height;
 
@@ -100,11 +99,13 @@ describe('Size & Position Panel', () => {
       await fixture.snapshot('Unlocked multi-selection with height disabled');
 
       expect(panel.height.value).toBe('');
+      expect(panel.height.placeholder).toBe('AUTO');
+      expect(panel.height).toBeDisabled();
       await fixture.events.click(panel.width);
       await fixture.events.keyboard.type('100');
       await fixture.events.keyboard.press('tab');
 
-      const updatedElements = await getSelection(false);
+      const updatedElements = await getSelection();
       expect(updatedElements[0].height).toBe(oHeight1);
       expect(updatedElements[1].height).toBe(oHeight2);
     });

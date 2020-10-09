@@ -20,7 +20,7 @@
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The video accessibility panel containing inputs for adding poster and title.
+ * The size position panel containing inputs for adding managing the size, position and rotationAngle.
  */
 export class SizePosition extends AbstractPanel {
   constructor(node, path) {

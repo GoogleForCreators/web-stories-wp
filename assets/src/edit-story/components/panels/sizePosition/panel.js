@@ -92,7 +92,7 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
-  const hasText = selectedElements.find(({ type }) => 'text' === type);
+  const hasText = selectedElements.some(({ type }) => 'text' === type);
 
   const actualDimensions = useMemo(() => {
     if (isSingleElement) {
@@ -139,7 +139,7 @@ function SizePositionPanel({
     });
   }, [selectedElements, combineElements, currentBackgroundId]);
 
-  const disableHeight = Boolean(!lockAspectRatio && hasText);
+  const disableHeight = !lockAspectRatio && hasText;
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       {isMedia && isSingleElement && (
