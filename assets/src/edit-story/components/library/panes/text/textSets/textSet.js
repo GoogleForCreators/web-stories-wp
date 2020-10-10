@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useLayout } from '../../../../../app/layout';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { TEXT_SET_SIZE } from '../../../../../constants';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units';
@@ -118,14 +118,7 @@ function TextSet({ elements }) {
         aria-label={__('Insert Text Set', 'web-stories')}
         onClick={() => insertTextSet(elements)}
       >
-        <TextSetElements
-          isForDisplay
-          elements={elements}
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-        />
+        <TextSetElements isForDisplay elements={elements} />
       </TextSetItem>
     </DragWrapper>
   );
