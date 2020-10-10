@@ -19,12 +19,14 @@
  */
 import styled from 'styled-components';
 
+export const PANE_PADDING = '1.5em';
+
 const Pane = styled.section.attrs(({ isActive }) => ({
   role: 'tabpanel',
   'aria-expanded': isActive,
   hidden: !isActive,
 }))`
-  padding: 1.5em;
+  padding: ${PANE_PADDING};
 `;
 
 function getPaneId(tab) {

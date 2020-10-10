@@ -34,6 +34,7 @@ module.exports = function (config) {
       'build/karma-dashboard-failed-tests.txt',
       'utf-8'
     )
+      .replace(/\s+$/g, '')
       .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
       .replace(/-/g, '\\x2d')
       .split('\n')
@@ -69,6 +70,7 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      'node_modules/axe-core/axe.js',
     ],
 
     // list of files / patterns to exclude
@@ -101,6 +103,7 @@ module.exports = function (config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
       'spec',
+      'failed-tests',
       config.coverage && 'cuj',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),

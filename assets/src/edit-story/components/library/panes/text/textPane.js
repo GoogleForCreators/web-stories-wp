@@ -38,7 +38,7 @@ import useInsertPreset from './useInsertPreset';
 import TextSets from './textSets';
 
 const Pane = styled(SharedPane)`
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: 100%;
 `;
 
