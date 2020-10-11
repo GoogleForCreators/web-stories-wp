@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { cloneElement, createElement } from 'react';
+import { cloneElement, createElement, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 /** @typedef {import('react').React.ReactNode} ReactNode */
@@ -121,7 +121,7 @@ function TranslateWithMarkup({ mapping = {}, children }) {
   return transform(
     new DOMParser().parseFromString(children, 'text/html').body.firstChild,
     mapping
-  );
+  ).map((element, index) => <Fragment key={index}>{element}</Fragment>);
 }
 
 TranslateWithMarkup.propTypes = {
