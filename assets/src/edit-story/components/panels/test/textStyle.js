@@ -32,7 +32,7 @@ import DropDown from '../../form/dropDown';
 import FontPicker from '../../fontPicker';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
@@ -707,6 +707,73 @@ describe('Panels/TextStyle', () => {
       };
       renderTextStyle([textWithColor1, textWithColor2]);
       expect(controls['text.color'].value).toStrictEqual(MULTIPLE_VALUE);
+    });
+  });
+
+  describe('Mixed value multi-selection', () => {
+    it('should display Mixed value in case of mixed value multi-selection', () => {
+      const textElement1 = {
+        ...textElement,
+        font: {
+          family: 'Neu Font',
+          service: 'foo.bar.baz',
+          styles: ['italic', 'regular'],
+          weights: [400],
+          variants: [
+            [0, 400],
+            [1, 400],
+          ],
+          fallbacks: ['fallback1'],
+        },
+      };
+      const textElement2 = {
+        ...textElement,
+        font: {
+          name: 'ABeeZee',
+          value: 'ABeeZee',
+          service: 'foo.bar.baz',
+          weights: [400, 700],
+          styles: ['italic', 'regular'],
+          variants: [
+            [0, 400],
+            [1, 400],
+            [0, 700],
+          ],
+          fallbacks: ['serif'],
+        },
+        fontSize: 36,
+        padding: {
+          vertical: 1,
+          horizontal: 1,
+        },
+        lineHeight: 2.2,
+        content:
+          '<span style="font-weight: 700; letter-spacing: 0.2em">Hello world</span>',
+      };
+
+      const { getByRole } = renderTextStyle([textElement1, textElement2]);
+
+      const letterSpacing = getByRole('textbox', { name: 'Letter-spacing' });
+      expect(letterSpacing.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+
+      const lineHeight = getByRole('textbox', { name: 'Line-height' });
+      expect(lineHeight.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+
+      const fontSize = getByRole('textbox', { name: 'Font size' });
+      expect(fontSize.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+
+      const paddingH = getByRole('textbox', {
+        name: 'Edit: Horizontal padding',
+      });
+      expect(paddingH.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+
+      const paddingV = getByRole('textbox', { name: 'Edit: Vertical padding' });
+      expect(paddingV.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+
+      expect(controls.font.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(controls['font.weight'].placeholder).toStrictEqual(
+        MULTIPLE_DISPLAY_VALUE
+      );
     });
   });
 });

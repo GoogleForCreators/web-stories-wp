@@ -33,7 +33,7 @@ import { __, _x } from '@wordpress/i18n';
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useUnmount from '../../../utils/useUnmount';
 import { PatternPropType } from '../../../types';
-import MULTIPLE_VALUE from '../multipleValue';
+import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from '../multipleValue';
 import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
@@ -241,7 +241,7 @@ function ColorPreview({
           </VisualPreviewInsideButton>
           <TextualPreview>
             {isMultiple
-              ? __('Multiple', 'web-stories')
+              ? MULTIPLE_DISPLAY_VALUE
               : previewText ||
                 _x('None', 'No color or gradient selected', 'web-stories')}
           </TextualPreview>
