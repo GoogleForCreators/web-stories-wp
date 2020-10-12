@@ -52,6 +52,7 @@ module.exports = function (api) {
       ['@babel/plugin-proposal-private-methods', { loose: true }],
       'babel-plugin-inline-json-import',
       '@babel/plugin-proposal-optional-chaining',
+      '@babel/plugin-proposal-nullish-coalescing-operator',
     ],
     sourceMaps: true,
     env: {
