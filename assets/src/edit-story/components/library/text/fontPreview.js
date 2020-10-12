@@ -68,7 +68,7 @@ function FontPreview({ title, element, onClick }) {
   }, [font, fontWeight, content, maybeEnqueueFontStyle]);
 
   return (
-    <Preview onClick={onClick} fontSize={fontSize}>
+    <Preview onClick={onClick}>
       <Text
         fontSize={fontSize}
         fontWeight={fontWeight}

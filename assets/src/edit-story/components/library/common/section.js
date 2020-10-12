@@ -43,7 +43,7 @@ const Title = styled.h2`
 export default function Section({ title, children, ...rest }) {
   return (
     <Container {...rest}>
-      {title && <Title>{title}</Title>}
+      <Title>{title}</Title>
       {children}
     </Container>
   );
