@@ -51,6 +51,7 @@ const PRESETS = [
         'Heading 1',
         'web-stories'
       )}</span>`,
+      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2.7),
       lineHeight: 1.1,
       x: DEFAULT_LEFT_MARGIN,
@@ -66,6 +67,7 @@ const PRESETS = [
         'Heading 2',
         'web-stories'
       )}</span>`,
+      fontWeight: FONT_WEIGHT.MEDIUM,
       fontSize: dataFontEm(2),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -77,10 +79,11 @@ const PRESETS = [
   {
     title: __('Heading 3', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${__(
         'Heading 3',
         'web-stories'
       )}</span>`,
+      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1.6),
       lineHeight: 1.3,
       x: DEFAULT_LEFT_MARGIN,
@@ -96,6 +99,7 @@ const PRESETS = [
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         'web-stories'
       ),
+      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1.3),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
@@ -108,6 +112,7 @@ const PRESETS = [
     title: __('Caption', 'web-stories'),
     element: {
       content: __('Caption', 'web-stories'),
+      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
@@ -120,6 +125,7 @@ const PRESETS = [
     title: __('OVERLINE', 'web-stories'),
     element: {
       content: __('OVERLINE', 'web-stories'),
+      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(0.9),
       lineHeight: 1.5,
       x: DEFAULT_LEFT_MARGIN,
