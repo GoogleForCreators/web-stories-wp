@@ -32,28 +32,6 @@ import createSolidFromString from '../../../../utils/createSolidFromString';
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
-// const createGrid = ({ maxColumns, gap, minWidth }) =>
-//   Array.from({ length: maxColumns - 1 }, (_, i) => i + 1)
-//     .map(
-//       (columns) => `
-//         @media only screen and (min-width: ${
-//           minWidth * columns + gap * (columns - 1)
-//         }px) {
-//           min-width: ${minWidth}px;
-//           width: calc(${100 / columns}% - ${(gap * (columns - 1)) / columns}px);
-//           margin-top: 0px;
-//           margin-left: ${gap}px;
-//           &:nth-of-type(n + ${columns + 1}) {
-//             margin-top: ${gap}px;
-//           }
-//           &:nth-of-type(${columns}n + 1) {
-//             margin-left: 0;
-//           }
-//         }
-//       `
-//     )
-//     .reverse()
-//     .join(' ');
 const createGrid = ({ columns, gap, minWidth }) => css`
   min-width: ${minWidth}px;
   width: calc(${100 / columns}% - ${(gap * (columns - 1)) / columns}px);
