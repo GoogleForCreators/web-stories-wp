@@ -19,7 +19,7 @@
  */
 import { Fixture } from '../../../../karma/fixture';
 
-describe('TextEdit integration', () => {
+describe('Shape library integration', () => {
   let fixture;
 
   beforeEach(async () => {
