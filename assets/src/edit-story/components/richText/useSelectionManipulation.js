@@ -39,8 +39,14 @@ function useSelectionManipulation(editorState, setEditorState) {
 
   const updateWhileUnfocused = useCallback(
     (updater, shouldForceFocus = true) => {
-      const oldState = lastKnownState.current;
-      const selection = lastKnownSelection.current;
+      const oldState = lastKnownState?.current;
+      const selection = lastKnownSelection?.current;
+
+      // if there is no oldState to force selection onto it means something is still loading
+      if (!oldState) {
+        return;
+      }
+
       const workingState = shouldForceFocus
         ? EditorState.forceSelection(oldState, selection)
         : oldState;
