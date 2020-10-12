@@ -39,10 +39,6 @@ const SectionContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  /* display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  row-gap: 12px;
-  column-gap: 12px; */
 `;
 
 function ShapesPane(props) {
