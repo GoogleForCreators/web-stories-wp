@@ -24,6 +24,7 @@ import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 
 function useSingleSelectionDrag({
+  isDragging,
   setIsDragging,
   resetMoveable,
   selectedElement,
@@ -57,6 +58,9 @@ function useSingleSelectionDrag({
   );
 
   const onDrag = ({ target, beforeTranslate, clientX, clientY }) => {
+    if (!isDragging) {
+      setIsDragging(true);
+    }
     if (isDropSource(selectedElement.type)) {
       setDraggingResource(selectedElement.resource);
     }
@@ -74,8 +78,8 @@ function useSingleSelectionDrag({
   };
 
   const onDragStart = ({ set }) => {
+    // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
-    setIsDragging(true);
     return undefined;
   };
 
