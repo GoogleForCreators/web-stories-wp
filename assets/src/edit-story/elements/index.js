@@ -32,7 +32,7 @@ import * as textElement from './text';
 import * as imageElement from './image';
 import * as shapeElement from './shape';
 import * as videoElement from './video';
-const gifElement = { ...imageElement };
+import * as gifElement from './gif';
 
 export const createNewElement = (type, attributes = {}) => {
   const element = getDefinitionForType(type);

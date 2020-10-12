@@ -82,8 +82,10 @@ import createResource from './createResource';
  * of image mime types to include.
  * @return {Object} The array of "sizes"-type objects.
  */
-function getImageUrls(m, mimeTypeSelector = () => true) {
-  if (!['image', 'gif'].includes(m.type.toLowerCase())) {
+function getImageUrls(m) {
+  const type = m.type.toLowerCase();
+
+  if (type !== 'image') {
     throw new Error('Invalid media type.');
   }
 
@@ -95,13 +97,7 @@ function getImageUrls(m, mimeTypeSelector = () => true) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
   }
 
-  const sortedImages = m.imageUrls
-    .filter((i) => mimeTypeSelector(i.mimeType))
-    .sort((x, y) => (y.width ?? 0) - (x.width ?? 0));
-  const originalSize = getOriginalSize(sortedImages);
-  const sizesFromBiggest = sortedImages.map((u) =>
-    mediaUrlToImageSizeDescription(m, u, originalSize)
-  );
+  const sizesFromBiggest = sortMediaBySize(m, m.imageUrls);
 
   const namedSizes = [
     ['full', sizesFromBiggest[0]],
@@ -111,7 +107,66 @@ function getImageUrls(m, mimeTypeSelector = () => true) {
       .map((u) => [u.width + '_' + u.height, u]),
     ['web_stories_thumbnail', sizesFromBiggest[sizesFromBiggest.length - 1]],
   ];
+
   return Object.fromEntries(new Map(namedSizes));
+}
+
+/**
+ * Converts the gif urls in a Media3P Media object to the "sizes"
+ * object required for a resource
+ *
+ * @param {Media3pMedia} m The Media3P Media object
+ * @return {Object} the array of ""
+ */
+
+function getGifUrls(m) {
+  if (m.type.toLowerCase() !== 'gif') {
+    throw new Error('Invalid media type');
+  }
+
+  // The rest of the application expects 3 named "sizes": "full", "large" and
+  // "web_stories_thumbnail". We use the biggest as "full", the next biggest
+  // as "large", and the smallest as "web_stories_thumbnail". The rest are
+  // named according to their size.
+  if (m.imageUrls?.length < 3) {
+    throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
+  }
+
+  const imageSizesFromBiggest = sortMediaBySize(m, m.imageUrls);
+  const webmSizes = sortMediaBySize(
+    m,
+    m.videoUrls.filter(({ mimeType }) => mimeType === 'image/webm')
+  );
+  const mp4Sizes = sortMediaBySize(
+    m,
+    m.videoUrls.filter(({ mimeType }) => mimeType === 'video/mp4')
+  );
+
+  const namedSizes = [
+    ['full', imageSizesFromBiggest[0]],
+    ['large', imageSizesFromBiggest[1]],
+    ...imageSizesFromBiggest
+      .slice(2, imageSizesFromBiggest.length - 1)
+      .map((u) => [u.width + '_' + u.height, u]),
+    [
+      'web_stories_thumbnail',
+      imageSizesFromBiggest[imageSizesFromBiggest.length - 1],
+    ],
+  ];
+
+  return {
+    imageUrls: Object.fromEntries(new Map(namedSizes)),
+    videoUrls: {
+      webm: {
+        full: webmSizes[0],
+        preview: webmSizes[webmSizes.length - 1],
+      },
+      mp4: {
+        full: mp4Sizes[0],
+        preview: mp4Sizes[webmSizes.length - 1],
+      },
+    },
+  };
 }
 
 /**
@@ -133,18 +188,21 @@ function getVideoUrls(m) {
     throw new Error('Invalid number of urls for asset. Need at least 2: ' + m);
   }
 
-  const sortedVideos = m.videoUrls.sort(
-    (x, y) => (y.width ?? 0) - (x.width ?? 0)
-  );
-  const originalSize = getOriginalSize(sortedVideos);
-  const sizesFromBiggest = sortedVideos.map((u) =>
-    mediaUrlToImageSizeDescription(m, u, originalSize)
-  );
+  const sizesFromBiggest = sortMediaBySize(m, m.videoUrls);
 
   return {
     full: sizesFromBiggest[0],
     preview: sizesFromBiggest[sizesFromBiggest.length - 1],
   };
+}
+
+function sortMediaBySize(m, mediaUrls) {
+  const sortedUrls = mediaUrls.sort((x, y) => (y.width ?? 0) - (x.width ?? 0));
+  const originalSize = getOriginalSize(sortedUrls);
+  const sizesFromBiggest = sortedUrls.map((u) =>
+    mediaUrlToImageSizeDescription(m, u, originalSize)
+  );
+  return sizesFromBiggest;
 }
 
 function getOriginalSize(mediaUrls) {
@@ -233,8 +291,8 @@ function getVideoResourceFromMedia3p(m) {
 }
 
 function getGifResourceFromMedia3p(m) {
-  const imageUrls = getImageUrls(m, (mime) => mime.includes('gif'));
-  return createResource({
+  const { imageUrls, videoUrls } = getGifUrls(m);
+  const resource = createResource({
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
@@ -245,8 +303,14 @@ function getGifResourceFromMedia3p(m) {
     alt: null,
     local: false,
     sizes: imageUrls,
+    output: {
+      mimeType: videoUrls.mp4.full.mime_type,
+      sizes: videoUrls,
+      src: videoUrls.mp4.full.source_url,
+    },
     attribution: getAttributionFromMedia3p(m),
   });
+  return resource;
 }
 
 /**
