@@ -74,7 +74,6 @@ const ShapePreviewContainer = styled.button`
   background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
   border-radius: 4px;
-  /* margin: 12px 10px; */
   display: flex;
   justify-content: center;
   align-items: center;
