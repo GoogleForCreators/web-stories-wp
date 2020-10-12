@@ -18,6 +18,11 @@ parameters:
   checkMissingIterableValueType: false
   paths:
     - includes/
+  scanFiles:
+    - tests/phpstan/stubs/amp.php
+    - tests/phpstan/stubs/wordpress-seo.php
+    - tests/phpstan/stubs/wp-cli.php
+    - tests/phpstan/stubs/wpdotcom.php
   bootstrapFiles:
     - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
     - tests/phpstan/stubs/wordpress-defines.php

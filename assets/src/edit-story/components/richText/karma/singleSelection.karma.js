@@ -81,6 +81,7 @@ describe('Styling single text field', () => {
       // Set letter spacing
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
+      await data.fixture.events.keyboard.press('Enter');
       // Press escape to leave input field (does not unselect element)
       await data.fixture.events.keyboard.press('Escape');
 
@@ -126,6 +127,7 @@ describe('Styling single text field', () => {
       await setSelection(5, 7);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
@@ -161,6 +163,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.sleep(100);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles, now expected to be updated

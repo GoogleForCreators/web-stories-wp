@@ -14,24 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import useLibrary from './useLibrary';
-import { getTabId } from './panes/shared';
-
-function LibraryPanes() {
-  const { tab, tabs } = useLibrary((state) => ({
-    tab: state.state.tab,
-    tabs: state.data.tabs,
-  }));
-
-  return tabs.map(
-    ({ id, Pane }) =>
-      Pane && (
-        <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-      )
-  );
-}
-
-export default LibraryPanes;
+export { default as TranslateWithMarkup } from './translateWithMarkup';

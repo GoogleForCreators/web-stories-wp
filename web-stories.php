@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 define( 'WEBSTORIES_VERSION', '1.1.0-alpha+e4b9af3' );
-define( 'WEBSTORIES_DB_VERSION', '3.0.2' );
+define( 'WEBSTORIES_DB_VERSION', '3.0.3' );
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );

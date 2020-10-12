@@ -37,7 +37,8 @@ import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
 import MULTIPLE_VALUE from './multipleValue';
 
-const DECIMAL_POINT = (1.1).toLocaleString().substring(1, 2);
+const ONCHANGE_DEBOUNCE_DELAY = 500;
+const SELECT_CONTENTS_DELAY = 10;
 
 const StyledInput = styled(Input)`
   width: 100%;
@@ -79,6 +80,25 @@ const Suffix = styled.span`
     `}
 `;
 
+// If value is valid, returns parsed value, else returns null
+function validateInput(
+  value,
+  { float, canBeNegative, canBeEmpty, defaultValue }
+) {
+  if (`${value}`.length > 0) {
+    const valueAsNumber = float ? parseFloat(value) : parseInt(value);
+    const signedNumber = !canBeNegative
+      ? Math.abs(valueAsNumber)
+      : valueAsNumber;
+
+    return !isNaN(signedNumber) ? signedNumber : defaultValue;
+  } else if (canBeEmpty) {
+    return '';
+  }
+
+  return defaultValue;
+}
+
 function Numeric({
   className,
   onBlur,
@@ -97,13 +117,65 @@ function Numeric({
   canBeEmpty,
   ...rest
 }) {
-  const isMultiple = value === MULTIPLE_VALUE;
-  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
-  const [dot, setDot] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  const ref = useRef();
 
-  useEffect(() => setInputValue(value), [value]);
+  const inputRef = useRef();
+  const targetFormRef = useRef(null);
+  const skipValidationRef = useRef(false);
+  const selectInputContents = useRef(false);
+  const submitOnChangeTimeout = useRef(-1);
+
+  const { focused, handleFocus, handleBlur } = useFocusAndSelect(inputRef);
+
+  const isMultiple = inputValue === MULTIPLE_VALUE;
+  const placeholder = isMultiple ? __('multiple', 'web-stories') : '';
+
+  const handleChange = useCallback((event) => {
+    // If the user types something in, clear timeout
+    // so onChange doesn't get triggered with possibly
+    // old value.
+    window.clearTimeout(submitOnChangeTimeout.current);
+
+    setInputValue(event.target.value);
+  }, []);
+
+  const submitOnChange = useCallback(
+    (val, { selectContentOnUpdate }) => {
+      selectInputContents.current = selectContentOnUpdate;
+      onChange(val);
+    },
+    [onChange]
+  );
+
+  const validateAndSubmitInput = useCallback(
+    (
+      val,
+      { ignoreValidation, selectContentOnUpdate, debounceOnChange } = {}
+    ) => {
+      targetFormRef.current = inputRef.current.form;
+
+      const validValue = ignoreValidation
+        ? val
+        : validateInput(val, {
+            canBeNegative,
+            canBeEmpty,
+            float,
+            defaultValue: value,
+          });
+
+      setInputValue(validValue);
+
+      window.clearTimeout(submitOnChangeTimeout.current);
+      if (debounceOnChange) {
+        submitOnChangeTimeout.current = window.setTimeout(() => {
+          submitOnChange(validValue, { selectContentOnUpdate });
+        }, ONCHANGE_DEBOUNCE_DELAY);
+      } else {
+        submitOnChange(validValue, { selectContentOnUpdate });
+      }
+    },
+    [canBeNegative, canBeEmpty, float, value, submitOnChange]
+  );
 
   const handleUpDown = useCallback(
     ({ key, altKey }) => {
@@ -111,34 +183,139 @@ function Numeric({
         return;
       }
 
-      let newValue;
+      const validValue = validateInput(inputValue, {
+        canBeNegative,
+        canBeEmpty,
+        float,
+        defaultValue: value,
+      });
+
+      // The `|| 0` is to prevent newValue from being set to
+      // empty string which could be a valid value
+      let newValue = validValue || 0;
       const diff = Big(float && altKey ? 0.1 : 1);
       if (key === 'ArrowUp') {
         // Increment value
         newValue =
           typeof max !== 'undefined'
-            ? Math.min(max, Big(value).plus(diff))
-            : Big(value).plus(diff);
+            ? Math.min(max, Big(newValue).plus(diff))
+            : Big(newValue).plus(diff);
       } else if (key === 'ArrowDown') {
         // Decrement value
         newValue =
           typeof min !== 'undefined'
-            ? Math.max(min, Big(value).minus(diff))
-            : Big(value).minus(diff);
+            ? Math.max(min, Big(newValue).minus(diff))
+            : Big(newValue).minus(diff);
       }
-      onChange(parseFloat(newValue.toString()));
+
+      validateAndSubmitInput(Number(newValue), {
+        ignoreValidation: true,
+        selectContentOnUpdate: true,
+        debounceOnChange: true,
+      });
     },
-    [isMultiple, float, onChange, max, value, min]
+    [
+      isMultiple,
+      float,
+      max,
+      inputValue,
+      value,
+      min,
+      canBeNegative,
+      canBeEmpty,
+      validateAndSubmitInput,
+    ]
   );
 
+  const handleEsc = useCallback(() => {
+    // Revert input value and exit input focus without
+    // triggering blur validation
+    setInputValue(value);
+    skipValidationRef.current = true;
+    inputRef.current.blur();
+  }, [value]);
+
+  const handleEnter = useCallback(() => {
+    validateAndSubmitInput(inputValue, { selectContentOnUpdate: true });
+  }, [validateAndSubmitInput, inputValue]);
+
+  const submitForm = useCallback(() => {
+    if (targetFormRef.current) {
+      targetFormRef.current.dispatchEvent(
+        new window.Event('submit', { cancelable: true })
+      );
+
+      // Resetting to null after dispatch, it'll get
+      // re-assigned on component blur
+      targetFormRef.current = null;
+    }
+  }, []);
+
   useKeyDownEffect(
-    ref,
-    { key: ['up', 'alt+up', 'down', 'alt+down'], editable: true },
+    inputRef,
+    {
+      key: ['up', 'alt+up', 'down', 'alt+down'],
+      editable: true,
+    },
     handleUpDown,
     [handleUpDown]
   );
 
-  const { focused, handleFocus, handleBlur } = useFocusAndSelect(ref);
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['escape'],
+      editable: true,
+    },
+    handleEsc,
+    [handleEsc]
+  );
+
+  useKeyDownEffect(
+    inputRef,
+    {
+      key: ['enter'],
+      editable: true,
+    },
+    handleEnter,
+    [handleEnter]
+  );
+
+  useEffect(() => {
+    if (targetFormRef.current) {
+      submitForm();
+    }
+
+    setInputValue(value);
+  }, [submitForm, value]);
+
+  useEffect(() => {
+    let selectContentsTimeout = -1;
+
+    if (selectInputContents.current) {
+      if (inputRef.current) {
+        inputRef.current.select();
+      }
+
+      // When we want to select the content of the input
+      // we hold open the door for a slight moment to allow
+      // all the data to flush down the pipeline.
+      selectContentsTimeout = window.setTimeout(() => {
+        selectInputContents.current = false;
+      }, SELECT_CONTENTS_DELAY);
+    }
+
+    return () => {
+      window.clearTimeout(selectContentsTimeout);
+    };
+  }, [inputValue]);
+
+  useEffect(() => {
+    return () => {
+      // Make sure we clearout any remaining timeouts on unmount
+      window.clearTimeout(submitOnChangeTimeout.current);
+    };
+  }, []);
 
   return (
     <Container
@@ -152,53 +329,27 @@ function Numeric({
       {/* type="text" is default but added here due to an a11y-related bug. See https://github.com/A11yance/aria-query/pull/42 */}
       <StyledInput
         type="text"
-        ref={ref}
+        ref={inputRef}
         placeholder={placeholder}
         prefix={prefix}
         suffix={suffix}
         label={label}
-        value={
-          isMultiple
-            ? ''
-            : `${inputValue}${dot ? DECIMAL_POINT : ''}${focused ? '' : symbol}`
-        }
+        value={isMultiple ? '' : `${inputValue}${focused ? '' : symbol}`}
         disabled={disabled}
         {...rest}
-        onChange={(evt) => {
-          const newValue = evt.target.value;
-          if (newValue === '') {
-            // Allow input to be empty
-            if (canBeEmpty) {
-              // Send empty up-stream
-              onChange('', evt);
-            } else {
-              // Just update empty value internally but keep old value upstream
-              setInputValue('');
-            }
-          } else if (newValue === '-' && canBeNegative) {
-            // Allow a single "-" if negative values are allowed
-            setInputValue(newValue);
-          } else {
-            setDot(float && newValue[newValue.length - 1] === DECIMAL_POINT);
-            const valueAsNumber = float
-              ? parseFloat(newValue)
-              : parseInt(newValue);
-            if (!isNaN(valueAsNumber)) {
-              onChange(valueAsNumber, evt);
-            }
+        onChange={handleChange}
+        onBlur={() => {
+          if (!skipValidationRef.current) {
+            validateAndSubmitInput(inputValue);
           }
-        }}
-        onBlur={(evt) => {
-          if (evt.target.form) {
-            evt.target.form.dispatchEvent(
-              new window.Event('submit', { cancelable: true })
-            );
-          }
-          // Always update to latest value from upstream
-          setInputValue(value);
+
+          // Reset flag after use
+          skipValidationRef.current = false;
+
           if (onBlur) {
             onBlur();
           }
+
           handleBlur();
         }}
         onFocus={handleFocus}
