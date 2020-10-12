@@ -202,9 +202,10 @@ function TextEdit({
     wrapperRef.current.style.height = '';
     if (contentRef.current) {
       // Remove manual line breaks and remember to trim any trailing non-breaking space.
-      const properties = { content: contentRef.current };
+      const properties =
+        content !== contentRef.current ? { content: contentRef.current } : {};
       // Recalculate the new height and offset.
-      if (newHeight) {
+      if (newHeight && newHeight !== height) {
         const [dx, dy] = calcRotatedResizeOffset(
           boxRef.current.rotationAngle,
           0,
@@ -216,9 +217,11 @@ function TextEdit({
         properties.x = editorToDataX(boxRef.current.x + dx);
         properties.y = editorToDataY(boxRef.current.y + dy);
       }
-      setProperties(properties);
+      if (Object.keys(properties).length !== 0) {
+        setProperties(properties);
+      }
     }
-  }, [editorToDataX, editorToDataY, setProperties]);
+  }, [editorToDataX, editorToDataY, setProperties, height, content]);
 
   // Update content for element on unmount.
   useUnmount(updateContent);
