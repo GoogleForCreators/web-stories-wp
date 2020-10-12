@@ -152,6 +152,11 @@ function FontControls({ selectedElements, pushUpdate }) {
     if (fontWeight !== newWeight) {
       fontWeightRef.current = newWeight;
       handleSelectFontWeight(newWeight);
+      return;
+    }
+
+    if (fontWeight !== fontWeightRef.current) {
+      fontWeightRef.current = fontWeight;
     }
 
     return;
@@ -221,6 +226,19 @@ function FontControls({ selectedElements, pushUpdate }) {
     []
   );
 
+  const visibleFontWeightSelectedValue = useMemo(() => {
+    if (fontFamily !== fontFamilyRef.current) {
+      return fontWeight;
+    }
+    if (MULTIPLE_VALUE === fontWeight) {
+      if (fontWeights.length <= 1) {
+        return fontWeights[0].value;
+      }
+      return '';
+    }
+    return fontWeight;
+  }, [fontFamily, fontWeight, fontWeights]);
+
   return (
     <>
       {fonts && (
@@ -236,16 +254,15 @@ function FontControls({ selectedElements, pushUpdate }) {
         </Row>
       )}
       <Row>
-        {fontWeights && (
+        {fontWeights && fontFamily && (
           <>
             <DropDown
               data-testid="font.weight"
               aria-label={__('Font weight', 'web-stories')}
               placeholder={MULTIPLE_DISPLAY_VALUE}
               options={fontWeights}
-              value={MULTIPLE_VALUE === fontWeight ? '' : fontWeight}
+              value={visibleFontWeightSelectedValue}
               onChange={handleFontWeightPickerChange}
-              disabled={fontWeights.length <= 1}
             />
             <Space />
           </>
