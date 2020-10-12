@@ -308,7 +308,7 @@ describe('Element: Text', () => {
       });
     });
 
-    it('should replace non 400 font weights with 400 when font family is updated', async () => {
+    it('should respect chosen font weights when font family is updated', async () => {
       await fixture.events.keyboard.type('Yrsa');
       // Ensure the debounced callback has taken effect.
       await fixture.events.sleep(TIMEOUT);
@@ -329,6 +329,26 @@ describe('Element: Text', () => {
       // Ensure the debounced callback has taken effect.
       await fixture.events.sleep(TIMEOUT);
       const option2 = fixture.screen.getByText('Roboto');
+      await fixture.events.click(option2);
+      await fixture.events.sleep(TIMEOUT);
+
+      expect(fontWeight.value).toBe('Bold');
+    });
+
+    it('should update chosen font weight to closest option when font family is updated and the existing weight is unavailable', async () => {
+      const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
+      expect(fontWeight.value).toBe('Regular');
+
+      await fixture.events.click(fontWeight.select);
+      await fixture.events.click(fontWeight.option('Thin'));
+      expect(fontWeight.value).toBe('Thin');
+
+      await openFontPicker();
+
+      await fixture.events.keyboard.type('bun');
+      // Ensure the debounced callback has taken effect.
+      await fixture.events.sleep(TIMEOUT);
+      const option2 = fixture.screen.getByText('Ubuntu');
       await fixture.events.click(option2);
       await fixture.events.sleep(TIMEOUT);
 
