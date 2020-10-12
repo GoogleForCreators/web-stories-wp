@@ -35,10 +35,14 @@ import ShapePreview from './shapePreview';
 import paneId from './paneId';
 
 const SectionContent = styled.div`
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: -12px;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  row-gap: 12px;
+  column-gap: 12px; */
 `;
 
 function ShapesPane(props) {
