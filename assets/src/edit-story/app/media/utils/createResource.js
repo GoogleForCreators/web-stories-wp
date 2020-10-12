@@ -99,7 +99,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the
  * resource.
- * @property {output|null} output An optional object of video sizes for rendering gifs as videos
+ * @property {Object|null} output An optional object of video sizes for rendering gifs as videos
  */
 
 /**
