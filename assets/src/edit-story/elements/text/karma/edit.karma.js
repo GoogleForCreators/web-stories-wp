@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitForElementToBeRemoved } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -22,7 +27,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-describe('TextEdit integration', () => {
+fdescribe('TextEdit integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -39,6 +44,23 @@ describe('TextEdit integration', () => {
     expect(
       fixture.container.querySelector('[data-testid="fullbleed"]')
     ).toBeTruthy();
+  });
+
+  describe('history', () => {
+    fit('should not create a history entry without any changes when exiting edit mode', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+      const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
+      // Enter into editing the text
+      await fixture.events.click(frame1);
+      // Exit edit mode using the Esc key
+      await fixture.events.keyboard.press('Esc');
+      // Verify that clicking the Undo button removes the Text element.
+      const undo = fixture.screen.getByRole('button', {
+        name: 'Undo Changes',
+      });
+      await fixture.events.click(undo);
+      await waitForElementToBeRemoved(frame1);
+    });
   });
 
   describe('add a text', () => {
