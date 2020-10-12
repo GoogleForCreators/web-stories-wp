@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import useLibrary from './useLibrary';
-import { getTabId } from './panes/shared';
+export const LOCAL_STORAGE_PREFIX = {
+  PANEL: 'web_stories_ui_panel_settings',
+  TEXT_SET_SETTINGS: 'web_stores_text_set_settings',
+};
 
-function LibraryPanes() {
-  const { tab, tabs } = useLibrary((state) => ({
-    tab: state.state.tab,
-    tabs: state.data.tabs,
-  }));
-
-  return tabs.map(
-    ({ id, Pane }) =>
-      Pane && (
-        <Pane key={id} isActive={id === tab} aria-labelledby={getTabId(id)} />
-      )
-  );
+function getItemByKey(key) {
+  let parsed = null;
+  try {
+    const stored = localStorage.getItem(key);
+    parsed = JSON.parse(stored);
+  } catch (e) {
+    // @TODO Add some error handling.
+  }
+  return parsed;
 }
 
-export default LibraryPanes;
+function setItemByKey(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+export default {
+  getItemByKey,
+  setItemByKey,
+};

@@ -39,6 +39,19 @@ function getElementContent(content, isForDisplay) {
   };
 }
 
+function TextSetContainer({ pageSize, children }) {
+  return pageSize ? (
+    <UnitsProvider pageSize={pageSize}>{children}</UnitsProvider>
+  ) : (
+    children
+  );
+}
+
+TextSetContainer.propTypes = {
+  pageSize: StoryPropTypes.size,
+  children: PropTypes.node.isRequired,
+};
+
 function TextSetElements({ elements, isForDisplay, pageSize }) {
   const { textSetHeight, textSetWidth } = elements[0];
 
@@ -46,7 +59,7 @@ function TextSetElements({ elements, isForDisplay, pageSize }) {
   const yOffset = isForDisplay ? (PAGE_WIDTH - textSetHeight) / 2 : 0;
 
   return (
-    <UnitsProvider pageSize={pageSize}>
+    <TextSetContainer pageSize={pageSize}>
       {elements.map(
         ({ id, content, normalizedOffsetX, normalizedOffsetY, ...rest }) => (
           <DisplayElement
@@ -62,13 +75,13 @@ function TextSetElements({ elements, isForDisplay, pageSize }) {
           />
         )
       )}
-    </UnitsProvider>
+    </TextSetContainer>
   );
 }
 
 TextSetElements.propTypes = {
   elements: PropTypes.array.isRequired,
-  pageSize: StoryPropTypes.size.isRequired,
+  pageSize: StoryPropTypes.size,
   isForDisplay: PropTypes.bool,
 };
 

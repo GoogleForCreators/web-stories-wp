@@ -17,8 +17,9 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
-use Google\Web_Stories\Tests\Story_Post_Type;
+use Google\Web_Stories\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
 
@@ -127,14 +128,20 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
+
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->add_caps_to_roles();
 	}
 
 	public function tearDown() {
-		parent::tearDown();
-
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
+
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->remove_caps_from_roles();
+
+		parent::tearDown();
 	}
 
 	/**
@@ -155,19 +162,22 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'status', [ 'draft' ] );
 		$request->set_param( 'context', 'edit' );
-		$response       = rest_get_server()->dispatch( $request );
-		$headers        = $response->get_headers();
-		$statues        = $headers['X-WP-TotalByStatus'];
-		$statues_decode = json_decode( $statues, true );
+		$response = rest_get_server()->dispatch( $request );
+		$headers  = $response->get_headers();
 
-		$this->assertArrayHasKey( 'all', $statues_decode );
-		$this->assertArrayHasKey( 'publish', $statues_decode );
-		$this->assertArrayHasKey( 'draft', $statues_decode );
+		$this->assertFalse( $response->is_error() );
+		$this->assertArrayHasKey( 'X-WP-TotalByStatus', $headers );
 
-		$this->assertEquals( 13, $statues_decode['all'] );
-		$this->assertEquals( 7, $statues_decode['publish'] );
-		$this->assertEquals( 3, $statues_decode['future'] );
-		$this->assertEquals( 3, $statues_decode['draft'] );
+		$statuses = json_decode( $headers['X-WP-TotalByStatus'], true );
+
+		$this->assertArrayHasKey( 'all', $statuses );
+		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'draft', $statuses );
+
+		$this->assertEquals( 13, $statuses['all'] );
+		$this->assertEquals( 7, $statuses['publish'] );
+		$this->assertEquals( 3, $statuses['future'] );
+		$this->assertEquals( 3, $statuses['draft'] );
 
 		$this->assertEquals( 3, $headers['X-WP-Total'] );
 	}
@@ -189,13 +199,13 @@ class Stories_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
 
-		$statues        = $data['headers']['X-WP-TotalByStatus'];
-		$statues_decode = json_decode( $statues, true );
+		$statues  = $data['headers']['X-WP-TotalByStatus'];
+		$statuses = json_decode( $statues, true );
 
 		// Headers.
-		$this->assertArrayHasKey( 'all', $statues_decode );
-		$this->assertArrayHasKey( 'publish', $statues_decode );
-		$this->assertArrayHasKey( 'draft', $statues_decode );
+		$this->assertArrayHasKey( 'all', $statuses );
+		$this->assertArrayHasKey( 'publish', $statuses );
+		$this->assertArrayHasKey( 'draft', $statuses );
 
 		$this->assertEquals( 3, $data['headers']['X-WP-Total'] );
 	}

@@ -46,21 +46,19 @@ import objectWithout from '../../../../utils/objectWithout';
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {string} payload.firstId Element to take properties from
  * @param {string} payload.firstElement Element with properties to merge
  * @param {string} payload.secondId Element to add properties to
  * @return {Object} New state
  */
-function combineElements(state, { firstId, firstElement, secondId }) {
-  if ((!firstId && !firstElement) || !secondId) {
+function combineElements(state, { firstElement, secondId }) {
+  if (!firstElement || !secondId) {
     return state;
   }
+  const firstId = firstElement.id;
+  const element = firstElement;
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const page = state.pages[pageIndex];
-  const elementPosition = page.elements.findIndex(({ id }) => id === firstId);
-  const element =
-    elementPosition > -1 ? page.elements[elementPosition] : firstElement;
 
   const secondElementPosition = page.elements.findIndex(
     ({ id }) => id === secondId
