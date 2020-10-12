@@ -76,6 +76,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       }
 
       const query = {
+        _embed: 'author',
         context: 'edit',
         _web_stories_envelope: true,
         search: searchTerm || undefined,

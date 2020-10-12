@@ -31,7 +31,6 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import {
   StoriesPropType,
-  UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
@@ -173,7 +172,6 @@ export default function StoryListView({
   storyMenu,
   storySort,
   storyStatus,
-  users,
 }) {
   const {
     state: { squishContentHeight },
@@ -331,7 +329,7 @@ export default function StoryListView({
                   )}
                 </TitleTableCellContainer>
               </TableCell>
-              <TableCell>{users[story.author]?.name || '—'}</TableCell>
+              <TableCell>{story.author || '—'}</TableCell>
               <TableCell>{getRelativeDisplayDate(story.created)}</TableCell>
               <TableCell>{getRelativeDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
@@ -360,5 +358,4 @@ StoryListView.propTypes = {
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
-  users: UsersPropType.isRequired,
 };

@@ -34,11 +34,7 @@ import {
   Layout,
   StandardViewContentGutter,
 } from '../../../../components';
-import {
-  UsersPropType,
-  StoriesPropType,
-  StoryActionsPropType,
-} from '../../../../types';
+import { StoriesPropType, StoryActionsPropType } from '../../../../types';
 import {
   FilterPropTypes,
   ViewPropTypes,
@@ -58,7 +54,6 @@ function Content({
   sort,
   stories,
   storyActions,
-  users,
   view,
   initialFocusStoryId,
 }) {
@@ -80,7 +75,6 @@ function Content({
                     sort={sort}
                     storyActions={storyActions}
                     stories={stories}
-                    users={users}
                     view={view}
                     initialFocusStoryId={initialFocusStoryId}
                   />
@@ -121,7 +115,6 @@ Content.propTypes = {
   sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
-  users: UsersPropType,
   view: ViewPropTypes,
   initialFocusStoryId: PropTypes.number,
 };

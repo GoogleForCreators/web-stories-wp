@@ -40,6 +40,7 @@ export const StoryPropType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.object,
+  author: PropTypes.string,
 });
 
 export const TemplatePropType = PropTypes.shape({
