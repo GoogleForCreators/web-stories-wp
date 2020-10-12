@@ -1,10 +1,154 @@
 {
-  "current": "c4f1db91-77a8-4da7-bc03-3b05024cf4f0",
+  "current": "7da9face-3152-4482-aba2-82fce4114901",
   "selection": [],
   "story": {
     "stylePresets": {
-      "colors": [],
-      "textStyles": []
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
+      "colors": [
+        {
+          "color": {
+            "r": 33,
+            "g": 33,
+            "b": 33
+          }
+        },
+        {
+          "color": {
+            "r": 0,
+            "g": 92,
+            "b": 255
+          }
+        },
+        {
+          "color": {
+            "r": 61,
+            "g": 46,
+            "b": 255
+          }
+        },
+        {
+          "color": {
+            "r": 200,
+            "g": 122,
+            "b": 255
+          }
+        },
+        {
+          "color": {
+            "r": 255,
+            "g": 163,
+            "b": 214
+          }
+        },
+        {
+          "color": {
+            "r": 255,
+            "g": 187,
+            "b": 196
+          }
+        },
+        {
+          "color": {
+            "r": 255,
+            "g": 187,
+            "b": 196,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 246,
+            "g": 147,
+            "b": 147,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 240,
+            "g": 176,
+            "b": 119,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 220,
+            "g": 211,
+            "b": 67,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 153,
+            "g": 199,
+            "b": 39,
+            "a": 0.6
+          }
+        },
+        {
+          "color": {
+            "r": 119,
+            "g": 151,
+            "b": 18,
+            "a": 0.6
+          }
+        }
+      ]
     }
   },
   "version": 24,
@@ -36,7 +180,7 @@
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
-          "id": "d77b50ca-78bb-458c-a042-1bb336d647e0"
+          "id": "d3931551-599c-4f56-9fc4-0d840cb2abbd"
         },
         {
           "opacity": 100,
@@ -103,6 +247,7 @@
           "type": "text",
           "content": "<span style=\"font-weight: 300; font-style: italic\">Good design is thorough down to the last detail</span>",
           "fontWeight": 400,
+          "marginOffset": 9.84375,
           "x": 41,
           "y": 212,
           "width": 330,
@@ -110,8 +255,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "da9e3eef-d675-4f61-bac0-8eb3f24dadd7",
-          "marginOffset": 9.84375
+          "id": "3ba10c6c-92e9-41f6-8bb2-9fa271f4c999"
         },
         {
           "opacity": 100,
@@ -176,8 +320,8 @@
             "vertical": 0
           },
           "type": "text",
-          "id": "cd4f0b0c-92f9-4376-8fe1-6f1829d1b3c6",
           "content": "— Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 41,
           "y": 357,
           "width": 117,
@@ -185,7 +329,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002
+          "id": "7f0b5ab5-e076-47c4-843d-1960734980a9"
         }
       ],
       "backgroundColor": {
@@ -196,7 +340,7 @@
         }
       },
       "type": "page",
-      "id": "caf9c221-5c00-4806-ad85-fd10481ec179"
+      "id": "28518eb9-7c09-4e5a-9c80-87d61cba8622"
     },
     {
       "backgroundOverlay": "none",
@@ -225,8 +369,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "e00b707a-99ba-4684-98e6-518655024b89",
-          "type": "shape"
+          "type": "shape",
+          "id": "f1d6b05b-2e30-4c1f-a4b9-ede74455a306"
         },
         {
           "opacity": 100,
@@ -290,8 +434,10 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "Good design is thorough down to the last detail",
           "fontWeight": 400,
+          "marginOffset": 9.84375,
           "x": 40,
           "y": 229,
           "width": 330,
@@ -299,9 +445,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "d8ff89a6-fd2f-45a8-8b8f-9d590c8cb8ca",
-          "marginOffset": 9.84375,
-          "type": "text"
+          "id": "773e33c5-e58b-45c3-ba2f-a11ecac17e4d"
         },
         {
           "opacity": 100,
@@ -365,8 +509,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "3843cc85-b25e-4ec8-af90-207a933070ae",
+          "type": "text",
           "content": "— Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 147,
           "y": 382,
           "width": 119,
@@ -374,8 +519,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "30512f4c-15e6-4da5-bd28-02bc101ca768"
         },
         {
           "opacity": 100,
@@ -403,7 +547,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "id": "a3dee1ed-18f9-4aac-ab97-b323a7848a58"
+          "id": "d2f56f7c-b011-4282-aa3f-97658fd61527"
         },
         {
           "opacity": 100,
@@ -421,6 +565,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "a3dee1ed-18f9-4aac-ab97-b323a7848a58",
+          "x": 146,
+          "y": 365,
           "width": 120,
           "height": 1,
           "scale": 100,
@@ -429,10 +576,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "a3dee1ed-18f9-4aac-ab97-b323a7848a58",
-          "id": "19b38048-ae83-49be-a5e9-0f9b584698bd",
-          "x": 146,
-          "y": 365
+          "id": "71b5b0da-5d94-401d-b188-e2db311c9cba"
         }
       ],
       "backgroundColor": {
@@ -443,7 +587,7 @@
         }
       },
       "type": "page",
-      "id": "d90cb406-1e58-4cd7-a383-b6004e6f4820"
+      "id": "8d36c287-78bb-4825-beb3-1427f30523bd"
     },
     {
       "backgroundOverlay": "none",
@@ -472,8 +616,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "87c1e295-11d9-48a4-b3bf-2efb6442b372",
-          "type": "shape"
+          "type": "shape",
+          "id": "c75c14ae-de70-40ee-a284-8b088c5a4e8b"
         },
         {
           "opacity": 100,
@@ -543,8 +687,10 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "GOOD DESIGN IS THOROUGH DOWN TO THE LAST DETAIL",
           "fontWeight": 400,
+          "marginOffset": -10.5,
           "x": 69,
           "y": 205,
           "width": 287,
@@ -552,9 +698,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "5f3639b5-b9e9-4eab-b297-b1520f0c25f1",
-          "marginOffset": -10.5,
-          "type": "text"
+          "id": "b96c283b-0608-4b23-b050-a096508cdf41"
         },
         {
           "opacity": 100,
@@ -624,8 +768,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "f2009226-7d88-472c-b581-3dc92340b70f",
+          "type": "text",
           "content": "— Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 244,
           "y": 385,
           "width": 142,
@@ -633,8 +778,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "fb736e78-7220-427f-9792-3ac6bc133ca2"
         },
         {
           "opacity": 100,
@@ -651,6 +795,7 @@
               "b": 0
             }
           },
+          "type": "shape",
           "x": 49,
           "y": 209,
           "width": 4,
@@ -661,8 +806,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "id": "f8a7d5a8-3169-4409-b873-90e7e076166f",
-          "type": "shape"
+          "id": "ff09eeab-8607-4bf3-b657-8db968d40a1c"
         }
       ],
       "backgroundColor": {
@@ -673,7 +817,7 @@
         }
       },
       "type": "page",
-      "id": "e71dd731-7c3e-4afc-86f2-3572340b7e40"
+      "id": "95e1a6a4-7e60-4d6d-84fc-921e76dee243"
     },
     {
       "backgroundOverlay": "none",
@@ -702,8 +846,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "f20d5c48-53ac-445b-b1c1-f9820ff0954e",
-          "type": "shape"
+          "type": "shape",
+          "id": "bd6e5771-a62b-469e-8da2-ab6caa53899f"
         },
         {
           "opacity": 100,
@@ -767,8 +911,10 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "<span style=\"font-style: italic\">Good design is thorough down to the last detail</span>",
           "fontWeight": 400,
+          "marginOffset": -4.920999999999999,
           "x": 40,
           "y": 224,
           "width": 332,
@@ -776,9 +922,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "335f56de-a74e-459e-9750-d90f3aab7ad7",
-          "marginOffset": -4.920999999999999,
-          "type": "text"
+          "id": "96783563-d957-4a76-b7ba-e045001a1601"
         },
         {
           "opacity": 100,
@@ -842,8 +986,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "f1d0589c-51d4-4cda-8b00-8c913f3a01b0",
+          "type": "text",
           "content": "— Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 146,
           "y": 369,
           "width": 120,
@@ -851,8 +996,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "f2e8f4cc-ac67-49ef-b9d7-0dda9fc672ee"
         }
       ],
       "backgroundColor": {
@@ -863,7 +1007,7 @@
         }
       },
       "type": "page",
-      "id": "4dd351dd-b9bd-4e05-a9b5-84b03badd4fc"
+      "id": "21619959-7a77-42f2-a84d-71c958b254c6"
     },
     {
       "backgroundOverlay": "none",
@@ -892,8 +1036,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "804cd388-762a-4f2c-8485-872bf55114dc",
-          "type": "shape"
+          "type": "shape",
+          "id": "90cc863f-92fd-4266-b238-5b18e4ee0a20"
         },
         {
           "opacity": 100,
@@ -951,8 +1095,10 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "<span style=\"font-weight: 500\">GOOD DESIGN IS THOROUGH DOWN TO THE LAST DETAIL</span>",
           "fontWeight": 400,
+          "marginOffset": -4.920999999999999,
           "x": 41,
           "y": 215,
           "width": 332,
@@ -960,9 +1106,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "7054d719-80e4-4cbd-878e-2bee646be1ad",
-          "marginOffset": -4.920999999999999,
-          "type": "text"
+          "id": "177372d5-853d-45b6-8760-f334a5d641f7"
         },
         {
           "opacity": 100,
@@ -1020,8 +1164,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "5ece36ab-a60a-4f63-adf7-25f8b8351aae",
+          "type": "text",
           "content": "— Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 148,
           "y": 375,
           "width": 120,
@@ -1029,8 +1174,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "81fe5f78-3b28-4e09-8777-115619be7e7b"
         }
       ],
       "backgroundColor": {
@@ -1041,7 +1185,7 @@
         }
       },
       "type": "page",
-      "id": "cf26c8a1-632b-4463-811b-019ba353cb8e"
+      "id": "34cd2863-6711-48d0-a28a-d5ad7fa61700"
     },
     {
       "backgroundOverlay": "none",
@@ -1070,8 +1214,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "dca458bd-be63-42a4-8814-3ac8e9c8a882",
-          "type": "shape"
+          "type": "shape",
+          "id": "81b87a79-dac6-4d11-9089-be45ddc5af7c"
         },
         {
           "opacity": 100,
@@ -1131,8 +1275,10 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "<span style=\"font-weight: 300\">Good design is thorough down to the last detail</span>",
           "fontWeight": 400,
+          "marginOffset": -4.920999999999999,
           "x": 41,
           "y": 253,
           "width": 332,
@@ -1140,9 +1286,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "10cc54be-d529-4a8d-9c92-b065bf43e9bb",
-          "marginOffset": -4.920999999999999,
-          "type": "text"
+          "id": "46c02eae-19bf-4ecd-a9e1-3276c64d1abb"
         },
         {
           "opacity": 100,
@@ -1212,8 +1356,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "3eb5080f-d463-425c-82d0-9fbcae68f6f1",
+          "type": "text",
           "content": "— Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 142,
           "y": 398,
           "width": 131,
@@ -1221,8 +1366,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "765b2982-21f0-4b59-a379-32caa230f497"
         },
         {
           "opacity": 100,
@@ -1250,7 +1394,7 @@
           "mask": {
             "type": "circle"
           },
-          "id": "d579a240-06b8-411a-ac08-f061bb3714d8"
+          "id": "32e21adc-45f0-4b0b-b9ba-c1c7697d5481"
         },
         {
           "opacity": 100,
@@ -1259,7 +1403,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Source Serif Pro",
@@ -1317,15 +1461,15 @@
           "type": "text",
           "content": "<span style=\"font-weight: 700; color: #fff\">“</span>",
           "fontWeight": 400,
+          "marginOffset": -11.890999999999998,
           "x": 197,
           "y": 202,
-          "width": 100,
-          "height": 59,
+          "width": 18,
+          "height": 58,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "3e2a7770-7a62-4d94-b30e-f43830dc373a",
-          "marginOffset": -11.890999999999998
+          "id": "b645062a-a2f6-46c1-9fca-6265614494c8"
         }
       ],
       "backgroundColor": {
@@ -1336,7 +1480,7 @@
         }
       },
       "type": "page",
-      "id": "c4f1db91-77a8-4da7-bc03-3b05024cf4f0"
+      "id": "35854c63-b7f5-4637-99dc-f26dec385321"
     },
     {
       "backgroundOverlay": "none",
@@ -1365,8 +1509,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "a0d130b9-985c-4d8d-8645-6a68e88fc5d4",
-          "type": "shape"
+          "type": "shape",
+          "id": "1db60d3b-edf9-47da-b87f-676e41179958"
         },
         {
           "opacity": 100,
@@ -1429,18 +1573,18 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "<span style=\"font-weight: 900; color: #d2d2d2\">DIETER RAMS</span>",
+          "marginOffset": 2.306250000000002,
+          "basedOn": "9f76b112-152b-4b38-8e43-a898b8ec82ed",
+          "x": 156,
+          "y": 389,
           "width": 221,
           "height": 54,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text",
-          "basedOn": "9f76b112-152b-4b38-8e43-a898b8ec82ed",
-          "id": "5e91fc9f-0e01-475e-b4d1-7940cbef4879",
-          "x": 156,
-          "y": 389
+          "id": "42f83867-682c-4547-9011-a606e55d9b0a"
         },
         {
           "opacity": 100,
@@ -1503,8 +1647,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "9f76b112-152b-4b38-8e43-a898b8ec82ed",
+          "type": "text",
           "content": "<span style=\"font-weight: 900\">DIETER RAMS</span>",
+          "marginOffset": 2.306250000000002,
           "x": 153,
           "y": 386,
           "width": 221,
@@ -1512,8 +1657,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "8304683d-4da5-471a-90b7-0146592286a3"
         },
         {
           "opacity": 100,
@@ -1541,7 +1685,7 @@
           "mask": {
             "type": "chat-bubble"
           },
-          "id": "1201353f-4af6-4186-b232-acf9934872e3"
+          "id": "1362a62e-5729-4fcc-b05f-38bd4a6f991f"
         },
         {
           "opacity": 100,
@@ -1560,6 +1704,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "1201353f-4af6-4186-b232-acf9934872e3",
+          "x": 44,
+          "y": 179,
           "width": 332,
           "height": 205,
           "scale": 100,
@@ -1568,10 +1715,7 @@
           "mask": {
             "type": "chat-bubble"
           },
-          "basedOn": "1201353f-4af6-4186-b232-acf9934872e3",
-          "id": "88d02ed0-25e5-4fde-9dc4-592242117448",
-          "x": 44,
-          "y": 179
+          "id": "dca26230-09aa-4b84-9cec-33b6ce885588"
         },
         {
           "opacity": 100,
@@ -1580,7 +1724,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Titillium Web",
@@ -1634,18 +1778,18 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "<span style=\"font-weight: 600; color: #fff\">Good design is thorough down to the last detail</span>",
           "fontWeight": 400,
+          "marginOffset": -4.920999999999999,
           "x": 64,
           "y": 192,
-          "width": 332,
-          "height": 141,
+          "width": 284,
+          "height": 137,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "e7d88410-e67d-413c-8cd0-5cda3e16554c",
-          "marginOffset": -4.920999999999999,
-          "type": "text"
+          "id": "a6de316b-e55c-4aa7-9e16-a5b9f351e88e"
         }
       ],
       "backgroundColor": {
@@ -1656,7 +1800,7 @@
         }
       },
       "type": "page",
-      "id": "d1712e69-cf01-4ed6-bebb-ccd86c2066dc"
+      "id": "60dfcbbd-6bc2-4535-9f3d-1770db7e4147"
     },
     {
       "backgroundOverlay": "none",
@@ -1685,8 +1829,8 @@
           },
           "isBackground": true,
           "isDefaultBackground": true,
-          "id": "bd17d36f-7808-4a92-a8ab-7a070df30f9a",
-          "type": "shape"
+          "type": "shape",
+          "id": "74d5cfba-edc0-4db6-9a8b-729623c64aab"
         },
         {
           "opacity": 100,
@@ -1752,18 +1896,18 @@
             "horizontal": 0,
             "vertical": 0
           },
+          "type": "text",
           "content": "<span style=\"font-weight: 200\">Good design is thorough down to the last detail</span>",
           "fontWeight": 400,
+          "marginOffset": 9.84375,
           "x": 40,
           "y": 230,
           "width": 330,
-          "height": 135,
+          "height": 132,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "131be467-11b8-4dba-b9e6-2f05d7c56583",
-          "marginOffset": 9.84375,
-          "type": "text"
+          "id": "5526674b-2f67-4ec8-b34e-611965f4a090"
         },
         {
           "opacity": 100,
@@ -1819,8 +1963,9 @@
             "horizontal": 0,
             "vertical": 0
           },
-          "id": "86d1f6ed-f67b-4902-b5ec-260276900ecb",
+          "type": "text",
           "content": "Dieter Rams",
+          "marginOffset": 2.306250000000002,
           "x": 154,
           "y": 375,
           "width": 102,
@@ -1828,8 +1973,7 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "marginOffset": 2.306250000000002,
-          "type": "text"
+          "id": "6b96ea1d-a465-4800-bb26-35258a0fa0f9"
         },
         {
           "opacity": 100,
@@ -1857,7 +2001,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "id": "2f859f95-cde1-462d-b58e-5d28e8756140"
+          "id": "2c09cf58-9287-4e54-b2d5-658db44212e2"
         },
         {
           "opacity": 100,
@@ -1875,6 +2019,9 @@
             }
           },
           "type": "shape",
+          "basedOn": "2f859f95-cde1-462d-b58e-5d28e8756140",
+          "x": 264,
+          "y": 385,
           "width": 16,
           "height": 1,
           "scale": 100,
@@ -1883,241 +2030,7 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "2f859f95-cde1-462d-b58e-5d28e8756140",
-          "id": "7b0205e6-eaf5-4ef4-9ab4-82125cd652f3",
-          "x": 264,
-          "y": 385
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "x": 39,
-          "y": 191,
-          "width": 1,
-          "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "e0a31608-20da-44ba-8e9e-ef9e6e189f05"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "e0a31608-20da-44ba-8e9e-ef9e6e189f05",
-          "id": "c96e46f2-3976-412e-8764-839dd6ca6cb0",
-          "x": 39,
-          "y": 191
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 1,
-          "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "e0a31608-20da-44ba-8e9e-ef9e6e189f05",
-          "id": "0332455e-0c85-4606-a027-bec28b73f0b4",
-          "x": 39,
-          "y": 402
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "c96e46f2-3976-412e-8764-839dd6ca6cb0",
-          "id": "56dd064c-6783-4993-8623-1a223e94f6d9",
-          "x": 39,
-          "y": 425
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 1,
-          "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "0332455e-0c85-4606-a027-bec28b73f0b4",
-          "id": "4c0139c2-e0e0-4f22-9141-30abf25da2da",
-          "x": 370,
-          "y": 402
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "56dd064c-6783-4993-8623-1a223e94f6d9",
-          "id": "9e708319-80f2-4680-98f4-ef09c57b0084",
-          "x": 347,
-          "y": 424
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 1,
-          "height": 23,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "0332455e-0c85-4606-a027-bec28b73f0b4",
-          "id": "e62b92cd-99c2-48b2-95e4-c95ab084ed9e",
-          "x": 370,
-          "y": 191
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "56dd064c-6783-4993-8623-1a223e94f6d9",
-          "id": "f82868ec-9318-4409-b1ce-8e19d1baaf98",
-          "x": 347,
-          "y": 191
+          "id": "feca60f0-b3d3-4afe-8de0-3a553849557e"
         }
       ],
       "backgroundColor": {
@@ -2128,7 +2041,7 @@
         }
       },
       "type": "page",
-      "id": "f56a6f8f-d152-4ef6-a2b4-b22237618995"
+      "id": "7da9face-3152-4482-aba2-82fce4114901"
     }
   ]
 }

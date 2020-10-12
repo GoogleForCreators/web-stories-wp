@@ -17,7 +17,14 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState, useMemo } from 'react';
+import {
+  useRef,
+  useState,
+  useMemo,
+  useEffect,
+  useCallback,
+  useReducer,
+} from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,13 +37,17 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Section } from '../../../common';
-import { UnitsProvider } from '../../../../../units';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { getTextSets } from './utils';
+import localStore, {
+  LOCAL_STORAGE_PREFIX,
+} from '../../../../../utils/localStore';
+import { UnitsProvider } from '../../../../../units';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
+import { TEXT_SET_ACTIONS, getTextSetReducer } from './getTextSetReducer';
 
 const TextSetContainer = styled.div`
   display: grid;
@@ -63,16 +74,19 @@ const CATEGORIES = {
   quote: __('Quote', 'web-stories'),
 };
 
+const RENDER_TEXT_SET_DELAY = 10;
+
 function TextSets() {
-  const [textSets, setTextSets] = useState([]);
-  const [selectedCat, setSelectedCat] = useState(null);
+  const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+
+  const [selectedCat, setSelectedCat] = useState(
+    localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
+      ?.selectedCategory
+  );
+
   const ref = useRef();
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
-  const filteredTextSets = useMemo(
-    () => (selectedCat ? textSets[selectedCat] : allTextSets),
-    [selectedCat, textSets, allTextSets]
-  );
   const categories = useMemo(
     () =>
       Object.keys(textSets).map((cat) => ({
@@ -82,9 +96,45 @@ function TextSets() {
     [textSets]
   );
 
-  useEffect(() => {
-    getTextSets().then(setTextSets);
+  const textSetReducer = useMemo(
+    () => getTextSetReducer(textSets, allTextSets),
+    [textSets, allTextSets]
+  );
+
+  const [{ filteredTextSets, renderedTextSets }, dispatch] = useReducer(
+    textSetReducer,
+    {
+      filteredTextSets: [],
+      renderedTextSets: [],
+    }
+  );
+
+  const handleSelectedCategory = useCallback((selectedCategory) => {
+    setSelectedCat(selectedCategory);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+      selectedCategory,
+    });
   }, []);
+
+  useEffect(() => {
+    dispatch({ type: TEXT_SET_ACTIONS.RESET, payload: selectedCat });
+  }, [selectedCat, textSets, allTextSets]);
+
+  useEffect(() => {
+    if (renderedTextSets.length >= filteredTextSets.length) {
+      return () => {};
+    }
+
+    const loadingTimeoutId = window.setTimeout(() => {
+      dispatch({
+        type: TEXT_SET_ACTIONS.RENDER_NEXT_TEXT_SET,
+      });
+    }, RENDER_TEXT_SET_DELAY);
+
+    return () => {
+      window.clearTimeout(loadingTimeoutId);
+    };
+  }, [renderedTextSets, filteredTextSets]);
 
   useRovingTabIndex({ ref });
 
@@ -96,23 +146,25 @@ function TextSets() {
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
-          selectItem={setSelectedCat}
-          deselectItem={() => setSelectedCat(null)}
+          selectItem={handleSelectedCategory}
+          deselectItem={() => handleSelectedCategory(null)}
         />
       </CategoryWrapper>
-      <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
-        <UnitsProvider
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-        >
-          {filteredTextSets.map(
-            (elements, index) =>
-              elements.length > 0 && <TextSet key={index} elements={elements} />
+      <UnitsProvider
+        pageSize={{
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE / PAGE_RATIO,
+        }}
+      >
+        <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
+          {renderedTextSets.map(
+            (elements) =>
+              elements.length > 0 && (
+                <TextSet key={elements[0].id} elements={elements} />
+              )
           )}
-        </UnitsProvider>
-      </TextSetContainer>
+        </TextSetContainer>
+      </UnitsProvider>
     </Section>
   );
 }
