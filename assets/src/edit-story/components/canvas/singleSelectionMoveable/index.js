@@ -153,7 +153,6 @@ function SingleSelectionMoveable({
     'type-text': selectedElement.type === 'text',
   });
   const _dragProps = useDrag({
-    isDragging,
     setIsDragging,
     resetMoveable,
     selectedElement,
