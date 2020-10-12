@@ -309,10 +309,14 @@ describe('combineElements', () => {
     it('should not preserve link if combining with background element', () => {
       const { restore, combineElements } = setupReducer();
 
-      restore(getDefaultState4());
+      const state = getDefaultState4();
+      restore(state);
 
       // Combine element 456 into 123
-      const result = combineElements({ firstId: '456', secondId: '123' });
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '123',
+      });
 
       expect(result.pages[0].elements[0]).toStrictEqual({
         id: '123',
@@ -336,10 +340,14 @@ describe('combineElements', () => {
     it('should preserve the origin element link if combining with another', () => {
       const { restore, combineElements } = setupReducer();
 
-      restore(getDefaultState4());
+      const state = getDefaultState4();
+      restore(state);
 
       // Combine element 456 into 789
-      const result = combineElements({ firstId: '456', secondId: '789' });
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
 
       expect(result.pages[0].elements[1]).toStrictEqual({
         flip: {},
@@ -367,10 +375,14 @@ describe('combineElements', () => {
     it('should preserve the target element link if the origin is without link', () => {
       const { restore, combineElements } = setupReducer();
 
-      restore(getDefaultState4());
+      const state = getDefaultState4();
+      restore(state);
 
       // Combine element 456 into 789
-      const result = combineElements({ firstId: '007', secondId: '789' });
+      const result = combineElements({
+        firstElement: state.pages[0].elements[3],
+        secondId: '789',
+      });
 
       expect(result.pages[0].elements[2]).toStrictEqual({
         height: 10,
