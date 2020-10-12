@@ -194,8 +194,8 @@ const MediaElement = ({
     return resetHoverTime;
   }, [isMenuOpen, active, type, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = (thumbnailUrl) => () => {
-    onInsert(resource, thumbnailUrl);
+  const onClick = (thumbnailUrl, baseColor) => () => {
+    onInsert({ ...resource, baseColor }, thumbnailUrl);
   };
 
   const attribution = active &&
