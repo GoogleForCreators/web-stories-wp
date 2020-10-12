@@ -99,6 +99,7 @@ import getTypeFromMime from './getTypeFromMime';
  * @property {Object.<string, ResourceSize>} sizes Object of image sizes.
  * @property {Attribution|null} attribution An optional attribution for the
  * resource.
+ * @property {output|null} output An optional object of video sizes for rendering gifs as videos
  */
 
 /**
@@ -124,6 +125,7 @@ function createResource({
   local,
   sizes,
   attribution,
+  output,
 }) {
   return {
     type: type || getTypeFromMime(mimeType),
@@ -142,6 +144,7 @@ function createResource({
     local,
     sizes,
     attribution,
+    output,
   };
 }
 

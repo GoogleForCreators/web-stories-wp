@@ -101,6 +101,7 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
+      output: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
       expectedStoryEditorResource
@@ -184,6 +185,7 @@ describe('getResourceFromMedia3p', () => {
         },
       },
       attribution: undefined,
+      output: undefined,
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
       expectedStoryEditorResource
@@ -251,4 +253,6 @@ describe('getResourceFromMedia3p', () => {
       'Missing width and height for: ' + media3pResource
     );
   });
+
+  it.todo('should return image and video resources for gifs');
 });
