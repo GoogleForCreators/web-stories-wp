@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { FlagsProvider } from 'flagged';
 import { act, render, screen } from '@testing-library/react';
 import Modal from 'react-modal';
@@ -174,9 +174,7 @@ export default class Fixture {
 
     const { container } = render(
       <FlagsProvider features={this._flags}>
-        <StrictMode>
-          <App key={Math.random()} config={this._config} />
-        </StrictMode>
+        <App key={Math.random()} config={this._config} />
       </FlagsProvider>,
       {
         container: root,
