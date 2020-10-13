@@ -17,16 +17,70 @@
 /**
  * External dependencies
  */
-// import { renderToStaticMarkup } from 'react-dom/server';
+import { renderToStaticMarkup } from 'react-dom/server';
 
 /**
  * Internal dependencies
  */
-// import GifOutput from '../output';
+import GifOutput from '../output';
 
 describe('Gif Output', () => {
-  it.todo('should produce valid AMP output');
-  it.todo(
-    'should produce an AMP video with autoplay, no controls, no audio, and loop'
-  );
+  const baseProps = {
+    element: {
+      id: '048426c8-69ae-4e04-80f1-8f3fd4434261',
+      type: 'gif',
+      opacity: 100,
+      x: 65,
+      y: 196,
+      width: 281,
+      height: 223,
+      scale: 100,
+      rotationAngle: 0,
+      resource: {
+        type: 'gif',
+        mimeType: 'image/gif',
+        creationDate: '2016-02-04T18:16:22Z',
+        src: 'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah.gif',
+        width: 281,
+        height: 223,
+        alt: '',
+        local: false,
+        attribution: {
+          author: [],
+          registerUsageUrl:
+            'https://media3p.googleapis.com/v1/media:registerUsage?token=AX7RMSdePGQBB3c/QAOBJ20QC%2BZNp2A549gSosisUYOjIC71nkvySPH5yj%2BqDBOVBmmFZ89azzUAN9x2GjkNbq3OXauUMho%3D',
+        },
+        output: {
+          mimeType: 'video/mp4',
+          src: 'https://c.tenor.com/4F2m7BWP6KYAAAPo/flying-kiss-muah.mp4',
+        },
+      },
+    },
+    box: {
+      x: 15.7767,
+      y: 31.71521,
+      width: 68.20388,
+      height: 36.08414,
+      rotationAngle: 0,
+    },
+  };
+  it('should produce valid AMP output', async () => {
+    await expect(<GifOutput {...baseProps} />).toBeValidAMPStoryElement();
+  });
+  it('should produce an AMP video with autoplay, no controls, no audio, and loop', async () => {
+    const output = <GifOutput {...baseProps} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(
+        'src="https://c.tenor.com/4F2m7BWP6KYAAAPo/flying-kiss-muah.mp4"'
+      )
+    );
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('autoPlay="autoplay"')
+    );
+    await expect(outputStr).toStrictEqual(expect.stringMatching('loop="loop"'));
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching('noaudio="noaudio"')
+    );
+  });
 });

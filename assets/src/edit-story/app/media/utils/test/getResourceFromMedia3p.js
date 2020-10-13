@@ -254,5 +254,192 @@ describe('getResourceFromMedia3p', () => {
     );
   });
 
-  it.todo('should return image and video resources for gifs');
+  it('should return image and video resources for tenor gifs', () => {
+    const media3pResource = {
+      name: 'media/tenor:6669065364376864993',
+      provider: 'TENOR',
+      type: 'GIF',
+      author: {},
+      createTime: '2020-06-01T03:08:24Z',
+      registerUsageUrl:
+        'https://media3p.googleapis.com/v1/media:registerUsage?token=AX7RMSfLAN8%2B70jpJTvTsQaIeuf5MlhFyWIq54rLC3vULzHC8OeNIaaEreXEvbUkaevy61VVi4LYPLLjhmgIjHZfkHCv3Q%3D%3D',
+      imageUrls: [
+        {
+          url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAAC/still-here-are-you-still-here.gif',
+          imageName: 'gif',
+          mimeType: 'image/gif',
+          width: 498,
+          height: 371,
+        },
+        {
+          url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAAM/still-here-are-you-still-here.gif',
+          imageName: 'tinygif',
+          mimeType: 'image/gif',
+          width: 220,
+          height: 164,
+        },
+        {
+          url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAAS/still-here-are-you-still-here.gif',
+          imageName: 'nanogif',
+          mimeType: 'image/gif',
+          width: 121,
+          height: 90,
+        },
+      ],
+      videoUrls: [
+        {
+          url:
+            'https://media.tenor.com/videos/e2f95cb962325e9cf058bec8ec565476/webm',
+          videoName: 'webm',
+          mimeType: 'image/webm',
+          width: 640,
+          height: 478,
+        },
+        {
+          url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAPo/still-here-are-you-still-here.mp4',
+          videoName: 'mp4',
+          mimeType: 'video/mp4',
+          width: 640,
+          height: 478,
+        },
+        {
+          url:
+            'https://media.tenor.com/videos/317ba641fbe9731c70e49eb5dfbf23f3/webm',
+          videoName: 'tinywebm',
+          mimeType: 'image/webm',
+          width: 320,
+          height: 238,
+        },
+        {
+          url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAP1/still-here-are-you-still-here.mp4',
+          videoName: 'tinymp4',
+          mimeType: 'video/mp4',
+          width: 320,
+          height: 238,
+        },
+        {
+          url:
+            'https://media.tenor.com/videos/1511f3558f31d1ea13231b2be3b44b6c/webm',
+          videoName: 'nanowebm',
+          mimeType: 'image/webm',
+          width: 150,
+          height: 112,
+        },
+        {
+          url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAP2/still-here-are-you-still-here.mp4',
+          videoName: 'nanomp4',
+          mimeType: 'video/mp4',
+          width: 150,
+          height: 112,
+        },
+      ],
+      videoMetadata: {
+        duration: '0s',
+      },
+    };
+
+    const expectedStoryEditorResource = {
+      id: undefined,
+      length: undefined,
+      lengthFormatted: undefined,
+      type: 'gif',
+      mimeType: 'image/gif',
+      creationDate: '2020-06-01T03:08:24Z',
+      src:
+        'https://c.tenor.com/XI1HnVuLSOEAAAAC/still-here-are-you-still-here.gif',
+      width: 498,
+      height: 371,
+      title: undefined,
+      alt: null,
+      local: false,
+      poster: undefined,
+      posterId: undefined,
+      sizes: {
+        full: {
+          file: 'media/tenor:6669065364376864993',
+          height: 371,
+          mime_type: 'image/gif',
+          source_url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAAC/still-here-are-you-still-here.gif',
+          width: 498,
+        },
+        large: {
+          file: 'media/tenor:6669065364376864993',
+          height: 164,
+          mime_type: 'image/gif',
+          source_url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAAM/still-here-are-you-still-here.gif',
+          width: 220,
+        },
+        web_stories_thumbnail: {
+          file: 'media/tenor:6669065364376864993',
+          height: 90,
+          mime_type: 'image/gif',
+          source_url:
+            'https://c.tenor.com/XI1HnVuLSOEAAAAS/still-here-are-you-still-here.gif',
+          width: 121,
+        },
+      },
+      output: {
+        mimeType: 'video/mp4',
+        sizes: {
+          mp4: {
+            full: {
+              file: 'media/tenor:6669065364376864993',
+              height: 478,
+              mime_type: 'video/mp4',
+              source_url:
+                'https://c.tenor.com/XI1HnVuLSOEAAAPo/still-here-are-you-still-here.mp4',
+              width: 640,
+            },
+            preview: {
+              file: 'media/tenor:6669065364376864993',
+              height: 112,
+              mime_type: 'video/mp4',
+              source_url:
+                'https://c.tenor.com/XI1HnVuLSOEAAAP2/still-here-are-you-still-here.mp4',
+              width: 150,
+            },
+          },
+          webm: {
+            full: {
+              file: 'media/tenor:6669065364376864993',
+              height: 478,
+              mime_type: 'image/webm',
+              source_url:
+                'https://media.tenor.com/videos/e2f95cb962325e9cf058bec8ec565476/webm',
+              width: 640,
+            },
+            preview: {
+              file: 'media/tenor:6669065364376864993',
+              height: 112,
+              mime_type: 'image/webm',
+              source_url:
+                'https://media.tenor.com/videos/1511f3558f31d1ea13231b2be3b44b6c/webm',
+              width: 150,
+            },
+          },
+        },
+        src:
+          'https://c.tenor.com/XI1HnVuLSOEAAAPo/still-here-are-you-still-here.mp4',
+      },
+      attribution: {
+        author: {
+          displayName: undefined,
+          url: undefined,
+        },
+        registerUsageUrl:
+          'https://media3p.googleapis.com/v1/media:registerUsage?token=AX7RMSfLAN8%2B70jpJTvTsQaIeuf5MlhFyWIq54rLC3vULzHC8OeNIaaEreXEvbUkaevy61VVi4LYPLLjhmgIjHZfkHCv3Q%3D%3D',
+      },
+    };
+    expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
+      expectedStoryEditorResource
+    );
+  });
 });

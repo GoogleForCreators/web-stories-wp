@@ -142,10 +142,26 @@ StoryPropTypes.videoResource = PropTypes.shape({
   title: PropTypes.string,
 });
 
+StoryPropTypes.gifResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  id: PropTypes.number,
+  mimeType: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  alt: PropTypes.string,
+  title: PropTypes.string,
+  output: PropTypes.shape({
+    mimeType: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+  }),
+});
+
 StoryPropTypes.resource = PropTypes.oneOfType([
   StoryPropTypes.imageResource,
   StoryPropTypes.videoResource,
   StoryPropTypes.trackResource,
+  StoryPropTypes.gifResource,
 ]);
 
 const StoryLayerPropTypes = {
@@ -200,9 +216,16 @@ StoryPropTypes.elements.video = PropTypes.shape({
   loop: PropTypes.bool,
 });
 
+StoryPropTypes.elements.gif = PropTypes.shape({
+  ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
+  resource: StoryPropTypes.gifResource,
+});
+
 StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.image,
   StoryPropTypes.elements.video,
+  StoryPropTypes.elements.gif,
 ]);
 
 export const AnimationPropType = PropTypes.shape(AnimationProps);

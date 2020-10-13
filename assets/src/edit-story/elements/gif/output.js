@@ -24,9 +24,7 @@ function defaultForUndefined(value, def) {
   return value === undefined ? def : value;
 }
 
-function GifOutput(props) {
-  const { element, box } = props;
-
+function GifOutput({ element, box }) {
   const { resource } = element;
 
   const sourceProps = {
@@ -34,19 +32,20 @@ function GifOutput(props) {
     src: resource.output.src,
   };
 
-  const otherProps = {
+  const props = {
     autoPlay: 'autoplay',
+    poster: '',
     title: defaultForUndefined(element.title, resource.title),
     alt: defaultForUndefined(element.alt, resource.alt),
     layout: 'fill',
-    loop: true,
-    noaudio: true,
+    loop: 'loop',
+    noaudio: 'noaudio',
   };
 
   // crossorigin='anonymous' is required to play videos from other domains.
   return (
     <MediaOutput element={element} box={box}>
-      <amp-video {...otherProps} id={`el-${element.id}-media`}>
+      <amp-video {...props} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
       </amp-video>
     </MediaOutput>
@@ -54,7 +53,7 @@ function GifOutput(props) {
 }
 
 GifOutput.propTypes = {
-  element: StoryPropTypes.elements.video.isRequired,
+  element: StoryPropTypes.elements.gif.isRequired,
   box: StoryPropTypes.box.isRequired,
 };
 
