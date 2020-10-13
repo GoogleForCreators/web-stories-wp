@@ -34,9 +34,8 @@ namespace Google\Web_Stories\Traits;
 trait Decoder {
 	/**
 	 * Determines whether encoding and decoding of story markup is supported.
-	 * 
-	 * Checks whether one of the required PHP extensions - mbstring and iconv -
-	 * is available.
+	 *
+	 * Checks whether the required mbstring PHP extension is available.
 	 *
 	 * The `WEBSTORIES_DEV_MODE` constant can be used to disable this functionality.
 	 *
@@ -47,7 +46,7 @@ trait Decoder {
 			return false;
 		}
 
-		return function_exists( 'mb_convert_encoding' ) || function_exists( 'iconv' );
+		return function_exists( 'mb_convert_encoding' );
 	}
 
 	/**
@@ -62,10 +61,6 @@ trait Decoder {
 
 			if ( function_exists( 'mb_convert_encoding' ) ) {
 				return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
-			}
-
-			if ( function_exists( 'iconv' ) ) {
-				return iconv( 'UTF-16LE', 'UTF-8', base64_decode( $string ) );
 			}
 		}
 
