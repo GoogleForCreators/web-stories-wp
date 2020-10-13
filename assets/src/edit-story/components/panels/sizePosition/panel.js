@@ -37,6 +37,7 @@ import { getDefinitionForType } from '../../../elements';
 import { calcRotatedObjectPositionAndSize } from '../../../utils/getBoundRect';
 import { SimplePanel } from '../panel';
 import FlipControls from '../shared/flipControls';
+import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
 import { getCommonValue, useCommonObjectValue } from './../utils';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
@@ -131,10 +132,30 @@ function SizePositionPanel({
   usePresubmitHandlers(lockAspectRatio, height, width);
 
   const handleSetBackground = useCallback(() => {
-    combineElements({
-      firstId: selectedElements[0].id,
-      secondId: currentBackgroundId,
-    });
+    const setBackground = (baseColor) => {
+      if (!baseColor) {
+        combineElements({
+          firstElement: selectedElements[0],
+          secondId: currentBackgroundId,
+        });
+      } else {
+        combineElements({
+          firstElement: {
+            ...selectedElements[0],
+            resource: {
+              ...selectedElements[0].resource,
+              baseColor,
+            },
+          },
+          secondId: currentBackgroundId,
+        });
+      }
+    };
+    if (selectedElements[0].resource.baseColor) {
+      setBackground();
+    } else {
+      getMediaBaseColor(selectedElements[0].resource, setBackground);
+    }
   }, [selectedElements, combineElements, currentBackgroundId]);
 
   return (

@@ -1,5 +1,5 @@
 {
-  "current": "46255a97-3e9e-444a-acb4-59be70044ac6",
+  "current": "07f4168e-3c83-4319-aefe-9cfd8ab39624",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -7802,6 +7802,1690 @@
       },
       "type": "page",
       "id": "a2150663-53dc-4475-91b0-80ab58f2b2fb"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "369c5cf1-b3ee-4487-836f-f564e24e6994"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em\">MENU TITLE</span>",
+          "fontWeight": 400,
+          "width": 172,
+          "height": 31,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "ee073dbf-aaf8-4366-8465-fc2a94d5feaa",
+          "id": "1154a9bb-09d5-4050-ab79-83d3b22eb0f8",
+          "x": 120,
+          "y": 151
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 32,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "ded6b91f-abda-41aa-aa69-dfb2bb0f8858",
+          "id": "a77a4d5d-f2c8-49d9-86d8-c5a759caa08e",
+          "x": 72,
+          "y": 166
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 32,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "1e42b863-6112-4606-afd3-8e3ba731c95d",
+          "id": "f14195f1-40a5-42d0-ace9-2b5963a3a554",
+          "x": 308,
+          "y": 166
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lora",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1006,
+              "des": -274,
+              "tAsc": 1006,
+              "tDes": -274,
+              "tLGap": 0,
+              "wAsc": 1206,
+              "wDes": 294,
+              "xH": 500,
+              "capH": 700,
+              "yMin": -271,
+              "yMax": 1114,
+              "hAsc": 1006,
+              "hDes": -274,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">List item</span>",
+          "fontWeight": 400,
+          "width": 73,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "9b069c50-a694-40c3-9a59-246e661b5717",
+          "id": "0fd9c2d5-f3ee-4d77-93af-5e21333ff62c",
+          "x": 40,
+          "y": 206
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Caption: Web Stories immerse your readers in fast-loading full-screen experiences.",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 41,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "9161a53f-d083-4b7e-8aad-4422028cfbb6",
+          "id": "7843f10c-b4a9-490a-a63e-87939c68838b",
+          "x": 40,
+          "y": 236
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lora",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1006,
+              "des": -274,
+              "tAsc": 1006,
+              "tDes": -274,
+              "tLGap": 0,
+              "wAsc": 1206,
+              "wDes": 294,
+              "xH": 500,
+              "capH": 700,
+              "yMin": -271,
+              "yMax": 1114,
+              "hAsc": 1006,
+              "hDes": -274,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "right",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-style: italic\">$5.00</span>",
+          "fontWeight": 400,
+          "width": 44,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "f32675c1-3d3c-4275-a9f1-61db3f5303d2",
+          "id": "b310e54d-b91f-47d5-9877-26ab4d7687aa",
+          "x": 328,
+          "y": 206
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lora",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1006,
+              "des": -274,
+              "tAsc": 1006,
+              "tDes": -274,
+              "tLGap": 0,
+              "wAsc": 1206,
+              "wDes": 294,
+              "xH": 500,
+              "capH": 700,
+              "yMin": -271,
+              "yMax": 1114,
+              "hAsc": 1006,
+              "hDes": -274,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">List item</span>",
+          "fontWeight": 400,
+          "width": 73,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "66c0b4fa-401a-4ff5-80b4-26b377fce471",
+          "id": "4aaea416-7d2a-4e44-92b1-781f4b5ee950",
+          "x": 40,
+          "y": 301
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Caption: Web Stories immerse your readers in fast-loading full-screen experiences.",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 41,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "3ae7c0ed-8597-44f2-8619-5240c432dcca",
+          "id": "ffab1e28-686e-4c67-bd9c-a25450166b6b",
+          "x": 40,
+          "y": 331
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lora",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1006,
+              "des": -274,
+              "tAsc": 1006,
+              "tDes": -274,
+              "tLGap": 0,
+              "wAsc": 1206,
+              "wDes": 294,
+              "xH": 500,
+              "capH": 700,
+              "yMin": -271,
+              "yMax": 1114,
+              "hAsc": 1006,
+              "hDes": -274,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "right",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-style: italic\">$5.00</span>",
+          "fontWeight": 400,
+          "width": 44,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "4e17d569-dda6-4659-a1c1-86c156c4106d",
+          "id": "4c80f92d-33fe-42d3-9e70-9cfe8f52dbc7",
+          "x": 328,
+          "y": 301
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lora",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1006,
+              "des": -274,
+              "tAsc": 1006,
+              "tDes": -274,
+              "tLGap": 0,
+              "wAsc": 1206,
+              "wDes": 294,
+              "xH": 500,
+              "capH": 700,
+              "yMin": -271,
+              "yMax": 1114,
+              "hAsc": 1006,
+              "hDes": -274,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">List item</span>",
+          "fontWeight": 400,
+          "width": 73,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "2ac459d2-751c-40bc-8a67-aa99bc42d53b",
+          "id": "cfefbb8b-8f2a-454c-9291-782a0b77f7f4",
+          "x": 40,
+          "y": 396
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Caption: Web Stories immerse your readers in fast-loading full-screen experiences.",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 41,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "f9246c33-a674-4837-a770-f83c3bc9bffd",
+          "id": "2679a442-aaec-448a-936c-85da286dab9e",
+          "x": 40,
+          "y": 426
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lora",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1006,
+              "des": -274,
+              "tAsc": 1006,
+              "tDes": -274,
+              "tLGap": 0,
+              "wAsc": 1206,
+              "wDes": 294,
+              "xH": 500,
+              "capH": 700,
+              "yMin": -271,
+              "yMax": 1114,
+              "hAsc": 1006,
+              "hDes": -274,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "right",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-style: italic\">$5.00</span>",
+          "fontWeight": 400,
+          "width": 44,
+          "height": 22,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "82b968b6-04ea-4589-96da-0e28485bc937",
+          "id": "91b604b2-c113-44f9-a13b-a40e5243b6b2",
+          "x": 328,
+          "y": 396
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "aca0d2aa-cd54-455f-aee6-eba7ffa3b226"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "55ad5d21-4fba-48fb-b5e3-244ed045c92e"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 332,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "340a1537-b10a-4397-80df-4177a11edf69",
+          "id": "4a97f45a-d45f-46dd-bc9e-60d030145e35",
+          "x": 40,
+          "y": 152
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 27,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 500\">MENU TITLE</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 39,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "318cd7fa-5846-44d6-8f66-4a02375483ca",
+          "id": "13014c4f-15b3-4768-ac5c-d8a4b4c71d24",
+          "x": 40,
+          "y": 177
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lato",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 2000,
+              "asc": 1974,
+              "des": -426,
+              "tAsc": 1610,
+              "tDes": -390,
+              "tLGap": 400,
+              "wAsc": 1974,
+              "wDes": 426,
+              "xH": 1013,
+              "capH": 1433,
+              "yMin": -365,
+              "yMax": 1837,
+              "hAsc": 1974,
+              "hDes": -426,
+              "lGap": 0
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.4,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Caption: Web Stories immerse your readers in fast-loading full-screen experiences.",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 34,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "3a8001e4-59a7-4217-b4fb-c9b0923499fc",
+          "id": "824b92b2-8efc-484f-9ac0-94b49bb37d56",
+          "x": 40,
+          "y": 274
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "$5.00",
+          "fontWeight": 400,
+          "width": 44,
+          "height": 25,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "243d42bc-3dfd-446b-b10d-a8771fa29204",
+          "id": "18585253-eb18-4b16-b1df-6bd7ad284eda",
+          "x": 131,
+          "y": 240
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">LIST ITEM</span>",
+          "fontWeight": 400,
+          "width": 66,
+          "height": 26,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "4da3b1a7-bdd4-4f88-9d6b-587a1defadcd",
+          "id": "0ad1b759-52b8-4509-9ebe-c980286b4ad6",
+          "x": 40,
+          "y": 240
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 1,
+          "height": 18,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "a201813a-06d4-4207-a4c5-b2e4fb223e38",
+          "id": "ee7ff455-be0f-40d3-81d9-9e6d66d7d6ca",
+          "x": 118,
+          "y": 244
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lato",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 2000,
+              "asc": 1974,
+              "des": -426,
+              "tAsc": 1610,
+              "tDes": -390,
+              "tLGap": 400,
+              "wAsc": 1974,
+              "wDes": 426,
+              "xH": 1013,
+              "capH": 1433,
+              "yMin": -365,
+              "yMax": 1837,
+              "hAsc": 1974,
+              "hDes": -426,
+              "lGap": 0
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.4,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Caption: Web Stories immerse your readers in fast-loading full-screen experiences.",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 34,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "22b2b0ea-653c-44f8-bc29-1ff13aac88d6",
+          "id": "c09e2e28-2ac5-45cb-987f-dedd25e78a5c",
+          "x": 40,
+          "y": 366
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "$5.00",
+          "fontWeight": 400,
+          "width": 44,
+          "height": 25,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "bbe6d3c4-f3d6-4c65-999a-6ca7cf77e029",
+          "id": "07966784-5fee-4faf-a9f2-f5b806b1afc9",
+          "x": 131,
+          "y": 332
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">LIST ITEM</span>",
+          "fontWeight": 400,
+          "width": 66,
+          "height": 26,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "468115c3-c81d-4cb2-8714-d26a3febbedd",
+          "id": "27511f18-fdab-4af0-86c9-596d40bc83f1",
+          "x": 40,
+          "y": 332
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 1,
+          "height": 18,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "6bce9854-06aa-464a-b68d-d172ad3ce736",
+          "id": "c560cae9-d49e-43d6-8dc8-d7323169995b",
+          "x": 118,
+          "y": 336
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Lato",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 300, 400, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 2000,
+              "asc": 1974,
+              "des": -426,
+              "tAsc": 1610,
+              "tDes": -390,
+              "tLGap": 400,
+              "wAsc": 1974,
+              "wDes": 426,
+              "xH": 1013,
+              "capH": 1433,
+              "yMin": -365,
+              "yMax": 1837,
+              "hAsc": 1974,
+              "hDes": -426,
+              "lGap": 0
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.4,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Caption: Web Stories immerse your readers in fast-loading full-screen experiences.",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 34,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "ea72de7e-fbb4-497f-8c1b-1285b68e72a9",
+          "id": "91e9c338-5e93-4e04-ae2f-926915d4e9f6",
+          "x": 40,
+          "y": 458
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "$5.00",
+          "fontWeight": 400,
+          "width": 44,
+          "height": 25,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "868eba40-fc77-4cc9-a46e-7a1f99b43c86",
+          "id": "73fcca5f-9b69-4e4f-8632-67ca9a5446bc",
+          "x": 131,
+          "y": 424
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Oswald",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [200, 300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1193,
+              "des": -289,
+              "tAsc": 1193,
+              "tDes": -289,
+              "tLGap": 0,
+              "wAsc": 1325,
+              "wDes": 377,
+              "xH": 578,
+              "capH": 810,
+              "yMin": -287,
+              "yMax": 1297,
+              "hAsc": 1193,
+              "hDes": -289,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">LIST ITEM</span>",
+          "fontWeight": 400,
+          "width": 66,
+          "height": 26,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "0710f60a-c222-4e14-8440-ae3111e8a4ca",
+          "id": "4d2c9e2b-17a6-4271-b505-671cf2ada8b5",
+          "x": 40,
+          "y": 424
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 1,
+          "height": 18,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "010ccff8-acb1-4be6-ae53-b61d979bbeca",
+          "id": "fb272342-dfb8-4eb8-9498-189121f50b08",
+          "x": 118,
+          "y": 428
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "07f4168e-3c83-4319-aefe-9cfd8ab39624"
     }
   ]
 }

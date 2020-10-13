@@ -26,6 +26,7 @@ import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
+import useAverageColor from '../../../../../elements/media/useAverageColor';
 
 const styledTiles = css`
   width: 100%;
@@ -75,6 +76,19 @@ function InnerElement({
   mediaElement,
 }) {
   const newVideoPosterRef = useRef(null);
+  const hiddenPoster = useRef(null);
+  const mediaBaseColor = useRef(null);
+
+  // Get the base color of the media for using when adding a new image,
+  // needed for example when droptargeting to bg.
+  const setAverageColor = (color) => {
+    mediaBaseColor.current = color;
+  };
+
+  useAverageColor(
+    type === 'video' ? hiddenPoster : mediaElement,
+    setAverageColor
+  );
 
   useEffect(() => {
     if (resource.poster && resource.poster.includes('blob')) {
@@ -118,7 +132,10 @@ function InnerElement({
       onDragEnd: (e) => {
         e.preventDefault();
         setDraggingResource(null);
-        handleDrop(resource);
+        handleDrop({
+          ...resource,
+          baseColor: mediaBaseColor.current,
+        });
       },
     }),
     [
@@ -148,7 +165,7 @@ function InnerElement({
         alt={alt}
         aria-label={alt}
         loading={'lazy'}
-        onClick={onClick(thumbnailURL)}
+        onClick={onClick(thumbnailURL, mediaBaseColor.current)}
         onLoad={makeMediaVisible}
         {...dropTargetsBindings(thumbnailURL)}
       />
@@ -167,7 +184,7 @@ function InnerElement({
           preload="none"
           aria-label={alt}
           muted
-          onClick={onClick(poster)}
+          onClick={onClick(poster, mediaBaseColor.current)}
           showWithoutDelay={newVideoPosterRef.current}
           {...dropTargetsBindings(poster)}
         >
@@ -179,7 +196,11 @@ function InnerElement({
         {/* This hidden image allows us to fade in the poster image in the
         gallery as there's no event when a video's poster loads. */}
         {!newVideoPosterRef.current && (
-          <HiddenPosterImage src={poster} onLoad={makeMediaVisible} />
+          <HiddenPosterImage
+            ref={hiddenPoster}
+            src={poster}
+            onLoad={makeMediaVisible}
+          />
         )}
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>

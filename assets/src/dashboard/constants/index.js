@@ -121,7 +121,6 @@ export const RESULT_LABELS = {
 
 // API Query Constants
 export const ITEMS_PER_PAGE = 24;
-export const USERS_PER_REQUEST = 100;
 export const STORIES_PER_REQUEST = 24;
 
 export const DEFAULT_DATE_FORMAT = 'Y-m-d';

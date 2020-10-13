@@ -27,6 +27,7 @@ web-stories-scraper
 .editorconfig
 .eslintignore
 .eslintrc
+.gitattributes
 .gitignore
 .imgbotconfig
 .markdownlint.json

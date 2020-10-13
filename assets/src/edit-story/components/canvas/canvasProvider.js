@@ -34,8 +34,10 @@ import Context from './context';
 function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
+  const [canvasContainer, setCanvasContainer] = useState(null);
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
+  const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
   const [showSafeZone, setShowSafeZone] = useState(true);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
@@ -158,6 +160,7 @@ function CanvasProvider({ children }) {
     () => ({
       state: {
         pageContainer,
+        canvasContainer,
         fullbleedContainer,
         nodesById,
         editingElement,
@@ -168,6 +171,7 @@ function CanvasProvider({ children }) {
         pageSize,
         displayLinkGuidelines,
         pageAttachmentContainer,
+        designSpaceGuideline,
       },
       actions: {
         setPageContainer,
@@ -183,6 +187,8 @@ function CanvasProvider({ children }) {
         setShowSafeZone,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
+        setCanvasContainer,
+        setDesignSpaceGuideline,
       },
     }),
     [
@@ -209,6 +215,10 @@ function CanvasProvider({ children }) {
       setDisplayLinkGuidelines,
       pageAttachmentContainer,
       setPageAttachmentContainer,
+      canvasContainer,
+      setCanvasContainer,
+      designSpaceGuideline,
+      setDesignSpaceGuideline,
     ]
   );
   return (

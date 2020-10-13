@@ -48,6 +48,7 @@ describe('reshapeStoryObject', () => {
       tags: [],
       featured_media_url: '',
       story_data: { pages: [{ id: 0, elements: [] }] },
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
@@ -56,6 +57,7 @@ describe('reshapeStoryObject', () => {
 
     expect(reshapedObj).toMatchObject({
       id: 27,
+      author: 'admin',
       title: 'Carlos Draft',
       status: 'draft',
       modified: toUTCDate('2020-03-26T21:42:14'),
@@ -92,6 +94,7 @@ describe('reshapeStoryObject', () => {
       tags: [],
       featured_media_url: '',
       story_data: { pages: [{ id: 0, elements: [] }] },
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
@@ -127,6 +130,7 @@ describe('reshapeStoryObject', () => {
       tags: [],
       featured_media_url: '',
       story_data: { pages: [] },
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(

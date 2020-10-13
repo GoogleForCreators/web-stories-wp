@@ -33,7 +33,6 @@ export default function MockApiProvider({ children, value }) {
 
   const usersApi = useMemo(
     () => ({
-      fetchUsers: noop,
       fetchCurrentUser: noop,
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),

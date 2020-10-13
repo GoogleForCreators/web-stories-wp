@@ -1,4 +1,7 @@
 <?php
+/*
+ * Global constants used in the analysed code need to be defined in bootstrap files.
+ */
 
 define( 'WEBSTORIES_VERSION', '0.0.0' );
 define( 'WEBSTORIES_DB_VERSION', '0.0.0' );
@@ -12,58 +15,6 @@ define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.3' );
 define( 'WEBSTORIES_DEV_MODE', true );
 
-// WordPress.com VIP compatibility
 define( 'WPCOM_IS_VIP_ENV', true );
-function wpcom_vip_url_to_postid( $url ) {
-	return 123;
-}
-
-class WP_CLI {
-	public static function warning( $text ) {
-	}
-}
 
 define( 'AMP__VERSION', '1.2.3' );
-
-function is_amp_endpoint() {
-	return false;
-}
-
-class Document extends \DOMDocument {
-	/**
-	 * @var DOMXPath
-	 */
-	protected $xpath;
-
-	/**
-	 * @var DOMElement
-	 */
-	protected $html;
-
-	/**
-	 * @var DOMElement
-	 */
-	protected $head;
-
-	/**
-	 * @var DOMElement
-	 */
-	protected $body;
-
-	/**
-	 * @var DOMNodeList
-	 */
-	protected $ampElements;
-}
-
-class AMP_Base_Sanitizer {
-	/**
-	 * @var Document
-	 */
-	protected $dom;
-
-	/**
-	 * @var array
-	 */
-	protected $args;
-}

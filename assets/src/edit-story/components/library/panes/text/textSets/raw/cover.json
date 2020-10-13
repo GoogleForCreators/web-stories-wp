@@ -1,8 +1,62 @@
 {
-  "current": "7cf5cb87-0090-4ef4-b047-a745f8f6bfbe",
+  "current": "0dd3de0f-7828-4c0d-9f62-b910a7bcacc7",
   "selection": [],
   "story": {
     "stylePresets": {
+      "textStyles": [
+        {
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "IBM Plex Serif",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700]
+            ]
+          },
+          "fontSize": 37,
+          "lineHeight": 1.2,
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "textAlign": "initial",
+          "color": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "fontWeight": 600,
+          "isItalic": false,
+          "isUnderline": false,
+          "letterSpacing": 0
+        }
+      ],
       "colors": [
         {
           "color": {
@@ -94,8 +148,7 @@
             "a": 0.6
           }
         }
-      ],
-      "textStyles": []
+      ]
     }
   },
   "version": 24,
@@ -3000,6 +3053,597 @@
       },
       "type": "page",
       "id": "7cf5cb87-0090-4ef4-b047-a745f8f6bfbe"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "392995ee-cc81-4cbf-91c2-840f0af3b2a7"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "FILL",
+          "font": {
+            "family": "Anton",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1138,
+              "des": -329,
+              "tAsc": 1138,
+              "tDes": -329,
+              "tLGap": 0,
+              "wAsc": 1176,
+              "wDes": 329,
+              "xH": 732,
+              "capH": 859,
+              "yMin": -326,
+              "yMax": 1404,
+              "hAsc": 1138,
+              "hDes": -329,
+              "lGap": 0
+            }
+          },
+          "fontSize": 19,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 0,
+              "b": 153
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 4,
+            "vertical": 4
+          },
+          "type": "text",
+          "content": "<span style=\"color: #fff; letter-spacing: 0.02em\">HOT GOSSIP ARTICLE</span>",
+          "width": 159,
+          "height": 35,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": -9.340000000000003,
+          "basedOn": "76231c03-8fa7-4106-b010-bc53c65e5fad",
+          "id": "4ae5259b-cf6f-457d-ad0c-409111d9951e",
+          "x": 40,
+          "y": 328
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Anton",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1138,
+              "des": -329,
+              "tAsc": 1138,
+              "tDes": -329,
+              "tLGap": 0,
+              "wAsc": 1176,
+              "wDes": 329,
+              "xH": 732,
+              "capH": 859,
+              "yMin": -326,
+              "yMax": 1404,
+              "hAsc": 1138,
+              "hDes": -329,
+              "lGap": 0
+            }
+          },
+          "fontSize": 54,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #f09; letter-spacing: 0.02em\">CELEBRITIES WHO LOVE PIZZA</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 186,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "7f196d61-bc4a-45fd-bd22-95986d303feb",
+          "id": "f462a23e-9576-45f3-b449-2e13e087d496",
+          "x": 40,
+          "y": 371
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "e8f0424f-1545-4f97-951b-82acd0a94707"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "fb2e9804-a40b-4576-afd1-033b484e60b2"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 332,
+          "height": 272,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "d99103e2-b50a-4987-ac0f-f777c07c130f",
+          "id": "d238f35b-059d-4000-be60-20efa6d1e7db",
+          "x": 40,
+          "y": 308
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 298,
+          "height": 4,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "97002b98-b29b-4352-9b0c-86e9f2e30d42",
+          "id": "5f61d2b1-6a87-4fe3-9d38-f496aee557c1",
+          "x": 58,
+          "y": 376
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 298,
+          "height": 4,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "0d318915-a7aa-4283-a85c-d434b23e1dd1",
+          "id": "55f97950-aefb-4910-9fe4-759dacf8a24c",
+          "x": 57,
+          "y": 506
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 139,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "22c352e3-c3e6-42b2-9ac2-77270913082a",
+          "id": "fdd8c8d1-aefd-4000-be60-84f1bc780fe5",
+          "x": 58,
+          "y": 403
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 139,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "92f1ee6c-a819-4409-9dbd-82a5a52281ff",
+          "id": "887d3cf7-fba4-4e30-a68a-81f78bb36b39",
+          "x": 217,
+          "y": 403
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "type": "shape",
+          "width": 5,
+          "height": 5,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "circle"
+          },
+          "basedOn": "1360b44a-cf4c-49cd-b241-a6687887e9aa",
+          "id": "472ebca1-21a5-4a22-9b36-85a7bc9b27f9",
+          "x": 204.5,
+          "y": 401
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Open Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 600, 700, 800],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 800]
+            ],
+            "metrics": {
+              "upm": 2048,
+              "asc": 2189,
+              "des": -600,
+              "tAsc": 1567,
+              "tDes": -492,
+              "tLGap": 132,
+              "wAsc": 2189,
+              "wDes": 600,
+              "xH": 1096,
+              "capH": 1462,
+              "yMin": -555,
+              "yMax": 2146,
+              "hAsc": 2189,
+              "hDes": -600,
+              "lGap": 0
+            }
+          },
+          "fontSize": 13,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #fff; letter-spacing: 0.08em\">TEAM PRESENTS</span>",
+          "fontWeight": 400,
+          "width": 114,
+          "height": 17,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "e666b825-d7f9-4c10-9c43-a4e31379f1f7",
+          "id": "47e743ab-fd08-481e-bdac-25ce29189aac",
+          "x": 149,
+          "y": 383
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "UnifrakturMaguntia",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400],
+            "styles": ["regular"],
+            "variants": [[0, 400]],
+            "metrics": {
+              "upm": 2048,
+              "asc": 1607,
+              "des": -513,
+              "tAsc": 1607,
+              "tDes": -514,
+              "tLGap": 0,
+              "wAsc": 1607,
+              "wDes": 512,
+              "xH": 1095,
+              "capH": 1409,
+              "yMin": -496,
+              "yMax": 1906,
+              "hAsc": 1607,
+              "hDes": -513,
+              "lGap": 0
+            }
+          },
+          "fontSize": 54,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #d9b24d\">Rock Festival</span>",
+          "fontWeight": 400,
+          "width": 302,
+          "height": 55,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "35d1fe06-206b-4633-a73d-3b5ceee841f4",
+          "id": "932899a3-8ee2-4fa4-a80d-672be86f219d",
+          "x": 55,
+          "y": 419
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1082,
+              "des": -251,
+              "tAsc": 1082,
+              "tDes": -251,
+              "tLGap": 0,
+              "wAsc": 1159,
+              "wDes": 251,
+              "xH": 514,
+              "capH": 708,
+              "yMin": -241,
+              "yMax": 1159,
+              "hAsc": 1082,
+              "hDes": -251,
+              "lGap": 0
+            }
+          },
+          "fontSize": 18,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #fff\">MARVIN MCKINNEY</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 2.504999999999999,
+          "basedOn": "9ddcc7df-8c81-432f-bd21-77ed9d773a6b",
+          "id": "101b113a-32b4-4e87-956a-127daa286e2f",
+          "x": 40,
+          "y": 474
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "0dd3de0f-7828-4c0d-9f62-b910a7bcacc7"
     }
   ]
 }

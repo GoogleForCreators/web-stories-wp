@@ -84,3 +84,4 @@ ignore:
   - includes/namespace.php
   - includes/plugin-compat
   - includes/templates
+  - AMP/Integration/AMP_Story_Sanitizer.php

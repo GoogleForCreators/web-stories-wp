@@ -28,6 +28,9 @@ import TextSets from '../textSets';
 
 function setup() {
   const libraryValue = {
+    state: {
+      textSets: [],
+    },
     actions: {
       insertElement: jest.fn(),
     },
