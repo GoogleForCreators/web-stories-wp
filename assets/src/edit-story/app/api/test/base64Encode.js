@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
 import { TextDecoder, TextEncoder } from 'util';
 
 /**

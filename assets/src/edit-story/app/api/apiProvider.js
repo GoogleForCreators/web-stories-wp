@@ -48,30 +48,33 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const getStorySaveData = ({
-    pages,
-    featuredMedia,
-    stylePresets,
-    publisherLogo,
-    autoAdvance,
-    defaultPageDuration,
-    content,
-    ...rest
-  }) => {
-    return {
-      story_data: {
-        version: DATA_VERSION,
-        pages,
-        autoAdvance,
-        defaultPageDuration,
-      },
-      featured_media: featuredMedia,
-      style_presets: stylePresets,
-      publisher_logo: publisherLogo,
-      content: encodeMarkup ? base64Encode(content) : content,
-      ...rest,
-    };
-  };
+  const getStorySaveData = useCallback(
+    ({
+      pages,
+      featuredMedia,
+      stylePresets,
+      publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
+      content,
+      ...rest
+    }) => {
+      return {
+        story_data: {
+          version: DATA_VERSION,
+          pages,
+          autoAdvance,
+          defaultPageDuration,
+        },
+        featured_media: featuredMedia,
+        style_presets: stylePresets,
+        publisher_logo: publisherLogo,
+        content: encodeMarkup ? base64Encode(content) : content,
+        ...rest,
+      };
+    },
+    [encodeMarkup]
+  );
 
   const saveStoryById = useCallback(
     /**
@@ -88,7 +91,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [stories]
+    [stories, getStorySaveData]
   );
 
   const autoSaveById = useCallback(
@@ -106,7 +109,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [stories]
+    [stories, getStorySaveData]
   );
 
   const getMedia = useCallback(
