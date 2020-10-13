@@ -24,8 +24,9 @@ import { fireEvent } from '@testing-library/react';
  */
 import SizePosition from '../sizePosition';
 import { getDefinitionForType } from '../../../elements';
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { dataPixels } from '../../../units';
+
 import { renderPanel } from './_utils';
 
 jest.mock('../../../elements');
@@ -416,6 +417,30 @@ describe('Panels/SizePosition', () => {
           width: 1000,
         })
       );
+    });
+
+    it('should display Mixed as placeholder in case of mixed values multi-selectio', () => {
+      const { getByRole } = renderSizePosition([
+        defaultText,
+        {
+          ...defaultImage,
+          width: 200,
+          height: 200,
+          rotationAngle: 20,
+        },
+      ]);
+
+      const height = getByRole('textbox', { name: 'Height' });
+      expect(height.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(height.value).toStrictEqual('');
+
+      const width = getByRole('textbox', { name: 'Width' });
+      expect(width.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(width.value).toStrictEqual('');
+
+      const rotationAngle = getByRole('textbox', { name: 'Rotation' });
+      expect(rotationAngle.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(rotationAngle.value).toStrictEqual('');
     });
   });
 });

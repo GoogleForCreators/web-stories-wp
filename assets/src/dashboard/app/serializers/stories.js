@@ -32,9 +32,9 @@ export default function reshapeStoryObject(editStoryURL) {
       modified_gmt,
       status,
       date_gmt,
-      author,
       link,
       story_data: storyData,
+      _embedded: { author = [] },
     } = originalStoryData;
     if (
       !Array.isArray(storyData.pages) ||
@@ -56,7 +56,7 @@ export default function reshapeStoryObject(editStoryURL) {
       modified: toUTCDate(modified_gmt),
       created: toUTCDate(date_gmt),
       pages: updatedStoryData.pages,
-      author,
+      author: author[0]?.name || '',
       centerTargetAction: '',
       bottomTargetAction: `${editStoryURL}&post=${id}`,
       editStoryLink: `${editStoryURL}&post=${id}`,

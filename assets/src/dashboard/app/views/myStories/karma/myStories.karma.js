@@ -467,14 +467,6 @@ describe('List view', () => {
     return stories;
   }
 
-  async function getUsers() {
-    const {
-      state: { users },
-    } = await fixture.renderHook(() => useApi());
-
-    return users;
-  }
-
   function isElementVisible(element) {
     return Boolean(
       element.offsetWidth ||
@@ -777,16 +769,14 @@ describe('List view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const users = await getUsers();
-
-      const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => users[stories[id].author].name
+      const storiesAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => stories[id].author
       );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor);
 
       // sort by descending
       await fixture.events.click(authorHeader);
@@ -798,7 +788,7 @@ describe('List view', () => {
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor.reverse());
     });
 
     it('should sort by Date Created in List View', async () => {
@@ -944,16 +934,14 @@ describe('List view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const users = await getUsers();
-
-      const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => users[stories[id].author].name
+      const storiesAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => stories[id].author
       );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor);
 
       // sort by descending
       await fixture.events.keyboard.press('Enter');
@@ -965,7 +953,7 @@ describe('List view', () => {
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor.reverse());
     });
 
     it('should sort by Date Created in List View with keyboard', async () => {
