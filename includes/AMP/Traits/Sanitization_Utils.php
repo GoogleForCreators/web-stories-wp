@@ -122,10 +122,13 @@ trait Sanitization_Utils {
 
 		$fragment          = $document->createDocumentFragment();
 		$fragment_document = Document::fromHtmlFragment( $output );
-		while ( $fragment_document->body->firstChild ) {
-			$node = $fragment_document->body->removeChild( $fragment_document->body->firstChild );
-			$node = $document->importNode( $node, true );
-			$fragment->appendChild( $node );
+
+		if ( $fragment_document ) {
+			while ( $fragment_document->body->firstChild ) {
+				$node = $fragment_document->body->removeChild( $fragment_document->body->firstChild );
+				$node = $document->importNode( $node, true );
+				$fragment->appendChild( $node );
+			}
 		}
 
 		$story_element->appendChild( $fragment );
