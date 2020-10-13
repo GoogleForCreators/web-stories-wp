@@ -37,6 +37,7 @@ import base64Encode from './base64Encode';
 function APIProvider({ children }) {
   const {
     api: { stories, media, link, users },
+    encodeMarkup,
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -67,7 +68,7 @@ function APIProvider({ children }) {
       featured_media: featuredMedia,
       style_presets: stylePresets,
       publisher_logo: publisherLogo,
-      content: base64Encode(content),
+      content: encodeMarkup ? base64Encode(content) : content,
       ...rest,
     };
   };

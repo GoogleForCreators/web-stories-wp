@@ -32,6 +32,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Decoder;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
@@ -46,6 +47,7 @@ class Story_Post_Type {
 	use Publisher;
 	use Types;
 	use Assets;
+	use Decoder;
 
 	/**
 	 * The slug of the stories post type.
@@ -713,6 +715,7 @@ class Story_Post_Type {
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
+				'encodeMarkup'     => $this->supports_decoding(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
