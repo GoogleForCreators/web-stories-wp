@@ -165,7 +165,7 @@ describe('Grid view', () => {
     await fixture.events.click(deleteStory);
 
     const confirmDeleteButton = fixture.screen.getByRole('button', {
-      name: /^Delete$/,
+      name: /^Confirm deleting story/,
     });
 
     await fixture.events.click(confirmDeleteButton);
@@ -195,7 +195,7 @@ describe('Grid view', () => {
     await fixture.events.click(deleteStory);
 
     const cancel = fixture.screen.getByRole('button', {
-      name: /^Cancel$/,
+      name: /^Cancel deleting story/,
     });
 
     await fixture.events.click(cancel);
@@ -215,7 +215,7 @@ describe('Grid view', () => {
       expect(numDrafts).toBeGreaterThan(0);
 
       const draftsTabButton = fixture.screen.getByRole('button', {
-        name: new RegExp('^' + STORY_STATUSES[1].label),
+        name: new RegExp('^Filter stories by ' + STORY_STATUSES[1].label),
       });
 
       await fixture.events.click(draftsTabButton);
@@ -240,7 +240,7 @@ describe('Grid view', () => {
       expect(numPublished).toBeGreaterThan(0);
 
       const publishedTabButton = fixture.screen.getByRole('button', {
-        name: new RegExp('^' + STORY_STATUSES[2].label),
+        name: new RegExp('^Filter stories by ' + STORY_STATUSES[2].label),
       });
 
       expect(publishedTabButton).toBeTruthy();
@@ -652,7 +652,7 @@ describe('List view', () => {
       await fixture.events.click(deleteButton);
 
       const confirmDeleteButton = fixture.screen.getByRole('button', {
-        name: /^Delete$/,
+        name: /^Confirm deleting/,
       });
 
       await fixture.events.click(confirmDeleteButton);
@@ -697,7 +697,7 @@ describe('List view', () => {
       await fixture.events.click(deleteButton);
 
       const cancel = fixture.screen.getByRole('button', {
-        name: /^Cancel$/,
+        name: /^Cancel deleting story/,
       });
 
       await fixture.events.click(cancel);
