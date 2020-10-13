@@ -24,7 +24,7 @@ import classnames from 'classnames';
  * Internal dependencies
  */
 import { useUnits } from '../../../units';
-import { useStory } from '../../../app';
+import { useConfig, useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 
@@ -71,6 +71,8 @@ function useSingleSelectionResize({
       dataToEditorX,
     })
   );
+
+  const { isRTL } = useConfig();
 
   const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
     selectedElement.type
@@ -157,7 +159,9 @@ function useSingleSelectionResize({
       const properties = {
         width: newWidth,
         height: newHeight,
-        x: selectedElement.x + editorToDataX(deltaX),
+        x: isRTL
+          ? selectedElement.x - editorToDataX(deltaX)
+          : selectedElement.x + editorToDataX(deltaX),
         y: selectedElement.y + editorToDataY(deltaY),
       };
       if (updateForResizeEvent) {

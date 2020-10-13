@@ -24,7 +24,7 @@ import { useRef, useEffect, useState } from 'react';
  * Internal dependencies
  */
 import Moveable from '../../moveable';
-import { useStory } from '../../../app';
+import { useConfig, useStory } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { useTransform } from '../../transform';
 import { useUnits } from '../../../units';
@@ -64,6 +64,8 @@ function MultiSelectionMoveable({ selectedElements }) {
   const {
     actions: { pushTransform },
   } = useTransform();
+
+  const { isRTL } = useConfig();
 
   // Update moveable with whatever properties could be updated outside moveable
   // itself.
@@ -151,7 +153,11 @@ function MultiSelectionMoveable({ selectedElements }) {
 
       const roundToZero = (num) => (Math.abs(num) <= 1 ? 0 : num);
       const properties = {
-        x: roundToZero(element.x + editorToDataX(frame.translate[0])),
+        x: roundToZero(
+          isRTL
+            ? element.x - editorToDataX(frame.translate[0])
+            : element.x + editorToDataX(frame.translate[0])
+        ),
         y: roundToZero(element.y + editorToDataY(frame.translate[1])),
       };
       if (isRotate) {
