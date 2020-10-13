@@ -28,7 +28,7 @@ import { getLinkFromElement } from './index';
 
 function WithLink({ element, children, ...rest }) {
   const link = getLinkFromElement(element);
-  if (!link) {
+  if (!link?.url?.length) {
     return children;
   }
   const urlWithProtocol = withProtocol(link.url);
@@ -37,6 +37,8 @@ function WithLink({ element, children, ...rest }) {
       href={urlWithProtocol}
       data-tooltip-icon={link.icon}
       data-tooltip-text={link.desc}
+      target="_blank"
+      rel="noreferrer"
       {...rest}
     >
       {children}

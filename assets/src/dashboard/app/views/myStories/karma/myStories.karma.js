@@ -23,11 +23,11 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import Fixture from '../../../../karma/fixture';
-import { getRelativeDisplayDate } from '../../../../utils';
+import { getRelativeDisplayDate } from '../../../../../date';
 import {
   TEMPLATES_GALLERY_VIEWING_LABELS,
   TEMPLATES_GALLERY_STATUS,
-  primaryPaths,
+  PRIMARY_PATHS,
   STORY_STATUS,
   STORY_STATUSES,
   STORY_VIEWING_LABELS,
@@ -35,7 +35,6 @@ import {
   VIEW_STYLE_LABELS,
   VIEW_STYLE,
 } from '../../../../constants';
-import { fillerDateSettingsObject } from '../../../../dataUtils/dateSettings';
 import useApi from '../../../api/useApi';
 
 describe('Grid view', () => {
@@ -72,7 +71,7 @@ describe('Grid view', () => {
 
   it('should navigate to Explore Templates', async () => {
     const exploreTemplatesMenuItem = fixture.screen.queryByRole('link', {
-      name: new RegExp('^' + primaryPaths[2].label + '$'),
+      name: new RegExp('^' + PRIMARY_PATHS[2].label + '$'),
     });
 
     await fixture.events.click(exploreTemplatesMenuItem);
@@ -468,14 +467,6 @@ describe('List view', () => {
     return stories;
   }
 
-  async function getUsers() {
-    const {
-      state: { users },
-    } = await fixture.renderHook(() => useApi());
-
-    return users;
-  }
-
   function isElementVisible(element) {
     return Boolean(
       element.offsetWidth ||
@@ -778,16 +769,14 @@ describe('List view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const users = await getUsers();
-
-      const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => users[stories[id].author].name
+      const storiesAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => stories[id].author
       );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor);
 
       // sort by descending
       await fixture.events.click(authorHeader);
@@ -799,7 +788,7 @@ describe('List view', () => {
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor.reverse());
     });
 
     it('should sort by Date Created in List View', async () => {
@@ -821,7 +810,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].created)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -861,7 +850,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].modified)
       );
 
       // Last Modified is the fifth column
@@ -945,16 +934,14 @@ describe('List view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const users = await getUsers();
-
-      const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => users[stories[id].author].name
+      const storiesAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => stories[id].author
       );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor);
 
       // sort by descending
       await fixture.events.keyboard.press('Enter');
@@ -966,7 +953,7 @@ describe('List view', () => {
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor.reverse());
     });
 
     it('should sort by Date Created in List View with keyboard', async () => {
@@ -990,7 +977,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storiesDateCreatedSortedByDateCreated = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].created, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].created)
       );
 
       let rowDateCreatedValues = rows.map((row) => row.children[3].innerText);
@@ -1031,7 +1018,7 @@ describe('List view', () => {
       expect(rows.length).toEqual(storiesOrderById.length);
 
       const storieModifiedSortedByModified = storiesOrderById.map((id) =>
-        getRelativeDisplayDate(stories[id].modified, fillerDateSettingsObject)
+        getRelativeDisplayDate(stories[id].modified)
       );
 
       // Last Modified is the fifth column

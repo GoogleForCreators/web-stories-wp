@@ -15,17 +15,13 @@
  */
 
 /**
- * External dependencies
- */
-import moment from 'moment-timezone';
-
-/**
  * Internal dependencies
  */
+import { toUTCDate } from '../../../../date';
 import reshapeStoryObject from '../../serializers/stories';
 
 describe('reshapeStoryObject', () => {
-  it('should reshape the response object with a Moment date', () => {
+  it('should reshape the response object with a date object', () => {
     const responseObj = {
       id: 27,
       date: '2020-03-26T20:57:24',
@@ -52,6 +48,7 @@ describe('reshapeStoryObject', () => {
       tags: [],
       featured_media_url: '',
       story_data: { pages: [{ id: 0, elements: [] }] },
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
@@ -60,9 +57,10 @@ describe('reshapeStoryObject', () => {
 
     expect(reshapedObj).toMatchObject({
       id: 27,
+      author: 'admin',
       title: 'Carlos Draft',
       status: 'draft',
-      modified: moment.parseZone('2020-03-26T21:42:14'),
+      modified: toUTCDate('2020-03-26T21:42:14'),
       pages: [{ id: 0, elements: [] }],
       centerTargetAction: '',
       bottomTargetAction: 'http://editstory.com?action=edit&post=27',
@@ -96,6 +94,7 @@ describe('reshapeStoryObject', () => {
       tags: [],
       featured_media_url: '',
       story_data: { pages: [{ id: 0, elements: [] }] },
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
@@ -131,6 +130,7 @@ describe('reshapeStoryObject', () => {
       tags: [],
       featured_media_url: '',
       story_data: { pages: [] },
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(

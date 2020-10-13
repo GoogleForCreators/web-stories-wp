@@ -1,4 +1,7 @@
 <?php
+/*
+ * Global constants used in the analysed code need to be defined in bootstrap files.
+ */
 
 define( 'WEBSTORIES_VERSION', '0.0.0' );
 define( 'WEBSTORIES_DB_VERSION', '0.0.0' );
@@ -13,15 +16,3 @@ define( 'WEBSTORIES_DEV_MODE', true );
 
 // WordPress.com VIP compatibility
 define( 'WPCOM_IS_VIP_ENV', true );
-function wpcom_vip_url_to_postid( $url ) {
-	return 123;
-}
-
-class WP_CLI {
-	public static function warning( $text ) {
-	}
-}
-
-function is_amp_endpoint() {
-	return false;
-}

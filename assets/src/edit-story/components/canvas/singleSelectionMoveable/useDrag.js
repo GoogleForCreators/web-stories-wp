@@ -75,6 +75,7 @@ function useSingleSelectionDrag({
 
   const onDragStart = ({ set }) => {
     set(frame.translate);
+    setIsDragging(true);
     return undefined;
   };
 
@@ -87,12 +88,15 @@ function useSingleSelectionDrag({
       setDraggingResource(null);
       return undefined;
     }
+
+    const roundToZero = (num) => (Math.abs(num) <= 1 ? 0 : num);
+
     // When dragging finishes, set the new properties based on the original + what moved meanwhile.
     const [deltaX, deltaY] = frame.translate;
     if (deltaX !== 0 || deltaY !== 0 || isDropSource(selectedElement.type)) {
       const properties = {
-        x: selectedElement.x + editorToDataX(deltaX),
-        y: selectedElement.y + editorToDataY(deltaY),
+        x: roundToZero(selectedElement.x + editorToDataX(deltaX)),
+        y: roundToZero(selectedElement.y + editorToDataY(deltaY)),
       };
       updateSelectedElements({ properties });
       if (isDropSource(selectedElement.type)) {

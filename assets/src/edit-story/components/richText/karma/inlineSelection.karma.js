@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { initHelpers } from './_utils';
 
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
@@ -91,6 +92,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Set letter spacing
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
+      await data.fixture.events.keyboard.press('Enter');
       // Press escape to leave input field (does not leave edit-mode)
       await data.fixture.events.keyboard.press('Escape');
 
@@ -118,10 +120,10 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(underline.checked).toBe(false);
 
       // Expect font weight, letter spacing and font color to be "multiple"
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('multiple');
-      expect(fontColor.output).toBe('Multiple');
+      expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Now toggle all toggles, and set new color and letter spacing
       await data.fixture.events.click(italic.button);
@@ -141,6 +143,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles again
@@ -256,7 +259,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is on but font weight is "multiple"
         expect(bold.checked).toBe(true);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -285,7 +288,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is off but font weight is "multiple"
         expect(bold.checked).toBe(false);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -298,9 +301,15 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         await data.fixture.events.keyboard.press('Escape');
 
         // Assume text content to be correctly formatted
+        // NOTE: Sometimes returned HTML has two single-letter bold spans, sometimes they're joined into one:
         const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
-        expect(actual).toBe(expected);
+        const expectedDouble = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
+        const expectedSingle = `<span style="font-weight: 900">F</span><span style="font-weight: 700">il</span>l in some text`;
+        expect(actual).toBeOneOf([expectedDouble, expectedSingle]);
+
+        await data.fixture.snapshot(
+          'First letter black, next two bold, rest regular'
+        );
       });
 
       it('should make black+bold+regular selection black when toggling', async () => {
@@ -314,7 +323,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Check that bold toggle is off but font weight is "multiple"
         expect(bold.checked).toBe(false);
-        expect(fontWeight.value).toBe('(multiple)');
+        expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
         // Toggle it by pressing the bold button
         await data.fixture.events.click(bold.button);
@@ -326,10 +335,13 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         // Exit edit-mode
         await data.fixture.events.keyboard.press('Escape');
 
-        // Assume text content to be correctly formatted
+        // NOTE: Sometimes returned HTML has two black spans, sometimes they're joined into one:
         const actual = getTextContent();
-        const expected = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
-        expect(actual).toBe(expected);
+        const expectedDouble = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
+        const expectedSingle = `<span style="font-weight: 900">Fil</span>l in some text`;
+        expect(actual).toBeOneOf([expectedDouble, expectedSingle]);
+
+        await data.fixture.snapshot('First three letters black, rest regular');
       });
     });
   });
@@ -358,6 +370,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Change line height to 5
       await data.fixture.events.click(lineHeight, { clickCount: 3 });
       await data.fixture.events.keyboard.type('5');
+      await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
 
       // Exit edit-mode

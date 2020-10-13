@@ -122,6 +122,7 @@ class HTML {
 
 		$this->add_noscript_amp_boilerplate();
 		$this->transform_html_start_tag();
+		$this->transform_a_tags();
 		$this->insert_analytics_configuration();
 
 		$this->add_poster_images();
@@ -230,6 +231,26 @@ class HTML {
 	}
 
 	/**
+	 * Transform all a tags to add target and rel attributes.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	protected function transform_a_tags() {
+		$hyperlinks = $this->document->getElementsByTagName( 'a' );
+		/* @var DOMElement $hyperlink The <a> element */
+		foreach ( $hyperlinks as $hyperlink ) {
+			if ( ! $hyperlink->getAttribute( 'target' ) ) {
+				$hyperlink->setAttribute( 'target', '_blank' );
+			}
+			if ( ! $hyperlink->getAttribute( 'rel' ) ) {
+				$hyperlink->setAttribute( 'rel', 'noreferrer' );
+			}
+		}
+	}
+
+	/**
 	 * Returns the full HTML <head> markup for a given story besides boilerplate.
 	 *
 	 * @since 1.0.0
@@ -331,10 +352,36 @@ class HTML {
 			return;
 		}
 
-		$publisher_logo = $story_element->getAttribute( 'publisher-logo-src' );
+		$publisher_logo_src = $story_element->getAttribute( 'publisher-logo-src' );
+		if ( empty( $publisher_logo_src ) || $publisher_logo_src === $this->get_publisher_logo_placeholder() ) {
+			$story_element->removeAttribute( 'publisher-logo-src' );
+		}
 
-		if ( empty( $publisher_logo ) || $publisher_logo === $this->get_publisher_logo_placeholder() ) {
-			$story_element->setAttribute( 'publisher-logo-src', $this->get_publisher_logo() );
+		$publisher_logo = $this->get_publisher_logo();
+		if ( ! empty( $publisher_logo ) ) {
+			$story_element->setAttribute( 'publisher-logo-src', $publisher_logo );
+		}
+
+		if ( ! $story_element->getAttribute( 'publisher-logo-src' ) ) {
+			$this->remove_amp_attr();
+		}
+	}
+
+	/**
+	 * If there is a missing attribute a story becomes invalid AMP.
+	 * Remove the 'amp' attribute to not mark it as an AMP document anymore,
+	 * preventing errors from showing up in GSC and other tools.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return void
+	 */
+	protected function remove_amp_attr() {
+		/* @var DOMElement $html The <html> element */
+		$html = $this->get_element_by_tag_name( 'html' );
+
+		if ( $html ) {
+			$html->removeAttribute( 'amp' );
 		}
 	}
 
@@ -359,16 +406,8 @@ class HTML {
 			$story_element->setAttribute( $attr, esc_url( $url ) );
 		}
 
-		// Without a poster, a story becomes invalid AMP.
-		// Remove the 'amp' attribute to not mark it as an AMP document anymore,
-		// preventing errors from showing up in GSC and other tools.
 		if ( ! $story_element->getAttribute( 'poster-portrait-src' ) ) {
-			/* @var DOMElement $html The <html> element */
-			$html = $this->get_element_by_tag_name( 'html' );
-
-			if ( $html ) {
-				$html->removeAttribute( 'amp' );
-			}
+			$this->remove_amp_attr();
 		}
 	}
 
@@ -439,12 +478,10 @@ class HTML {
 	 * @return string[] Images.
 	 */
 	protected function get_poster_images() {
-		$images = [
+		return [
 			'poster-portrait-src'  => $this->story->get_poster_portrait(),
 			'poster-square-src'    => $this->story->get_poster_square(),
 			'poster-landscape-src' => $this->story->get_poster_landscape(),
 		];
-
-		return array_filter( $images );
 	}
 }

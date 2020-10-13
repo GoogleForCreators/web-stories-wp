@@ -28,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { TranslateWithMarkup } from '../../../i18n';
 import { Plain } from '../button';
 import Dialog from '../dialog';
 import Link from '../link';
@@ -59,13 +60,16 @@ function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
       }
     >
       <Paragraph>
-        {__(
-          'We recommend adding a title to the story prior to publishing.',
-          'web-stories'
-        )}{' '}
-        <Link href={link} target="_blank" rel="noopener noreferrer">
-          {__('Learn more.', 'web-stories')}
-        </Link>
+        <TranslateWithMarkup
+          mapping={{
+            a: <Link href={link} target="_blank" rel="noopener noreferrer" />,
+          }}
+        >
+          {__(
+            'We recommend adding a title to the story prior to publishing. <a>Learn more</a>.',
+            'web-stories'
+          )}
+        </TranslateWithMarkup>
       </Paragraph>
     </Dialog>
   );

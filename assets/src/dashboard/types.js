@@ -40,6 +40,7 @@ export const StoryPropType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page),
   modified: PropTypes.object,
+  author: PropTypes.string,
 });
 
 export const TemplatePropType = PropTypes.shape({
@@ -145,10 +146,3 @@ export const ToastMessagePropType = PropTypes.shape({
 });
 
 export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
-
-export const DateSettingsPropType = PropTypes.shape({
-  dateFormat: PropTypes.string,
-  timeFormat: PropTypes.string,
-  gmtOffset: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  timezone: PropTypes.string,
-});

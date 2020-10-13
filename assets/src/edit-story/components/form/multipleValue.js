@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 const MULTIPLE_VALUE = '((MULTIPLE))';
+export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');
 
 export default MULTIPLE_VALUE;

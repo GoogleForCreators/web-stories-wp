@@ -53,16 +53,16 @@ describe('Plugin Activation', () => {
     await expect(page).not.toMatch('Tell some stories.');
   });
 
-  it('should lead to the editor in success message', async () => {
-    await expect(page).toClick('a', { text: 'Launch the editor' });
+  it('should lead to the dashboard in success message', async () => {
+    await expect(page).toClick('a', { text: 'Go to Stories Dashboard' });
     await page.waitForNavigation();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await expect(page).toMatch('My Stories');
   });
 
   it('should lead to the dashboard in step 2', async () => {
     const dashboardStep = await expect(page).toMatchElement('p', {
-      text: /Head to\s?Dashboard/i,
+      text: /Head to the\s?Dashboard/i,
     });
     await expect(dashboardStep).toClick('a', { text: 'Dashboard' });
     await page.waitForNavigation();
@@ -70,8 +70,14 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch('My Stories');
   });
 
-  it('should lead to the editor in step 3', async () => {
-    await expect(page).toClick('a', { text: 'Jump into the editor' });
+  // Disable reason: Step 3 is not visible on the screen size used in E2E tests.
+  // This might change in the future though.
+  //eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should lead to the editor in step 3', async () => {
+    const editorStep = await expect(page).toMatchElement('p', {
+      text: /Jump into the\s?Editor/i,
+    });
+    await expect(editorStep).toClick('a', { text: 'Editor' });
     await page.waitForNavigation();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');

@@ -54,6 +54,18 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
+  it('should render a visually hidden label for google analytics input', function () {
+    const { getByLabelText } = renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdate={mockUpdate}
+      />
+    );
+
+    const label = getByLabelText(TEXT.ARIA_LABEL);
+    expect(label).toBeInTheDocument();
+  });
+
   it('should call mockUpdate when enter is keyed on input', function () {
     let { getByRole, rerender } = renderWithProviders(
       <GoogleAnalyticsSettings

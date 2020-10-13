@@ -214,6 +214,61 @@ beforeAll(() => {
         };
       },
     }),
+    toBeOneOf: (util, customEqualityTesters) => ({
+      compare: function (actual, expecteds) {
+        const passer = (expected) =>
+          util.equals(actual, expected, customEqualityTesters);
+        const pass = expecteds.some(passer);
+        return {
+          pass,
+          message: pass
+            ? `Expected value to not be in list: ${expecteds.join(
+                ', '
+              )}, received: ${actual}"`
+            : `Expected value to be in list: ${expecteds.join(
+                ', '
+              )}, received: ${actual}"`,
+        };
+      },
+    }),
+  });
+
+  jasmine.addAsyncMatchers({
+    toHaveNoViolations: () => ({
+      compare: async function (element, options) {
+        const result = await window.axe.run(element, options);
+        const pass = result.violations.length === 0;
+
+        const formattedViolations = result.violations.map((violation) => {
+          const { id, impact, description, help, helpUrl } = violation;
+
+          const message = [];
+
+          message.push(`[ ${id}] ${description}`);
+          message.push(helpUrl ? `${help} (${helpUrl}` : help);
+          message.push(`Impact: ${impact}`);
+          message.push('\n');
+
+          for (const { html, failureSummary } of violation.nodes) {
+            message.push(`HTML: ${html}`);
+            message.push(failureSummary);
+            message.push('\n');
+          }
+
+          return message.join('\n');
+        });
+
+        const message = !pass
+          ? `Expected element to pass aXe accessibility tests. Violations found:
+            ${formattedViolations.join('\n')}`
+          : 'Expected element to contain aXe accessibility test violations. No violations found.';
+
+        return {
+          pass,
+          message: () => message,
+        };
+      },
+    }),
   });
 
   // Virtual cursor.

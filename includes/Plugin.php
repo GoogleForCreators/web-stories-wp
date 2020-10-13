@@ -61,13 +61,6 @@ class Plugin {
 	public $template;
 
 	/**
-	 * Beta version updater.
-	 *
-	 * @var Updater
-	 */
-	public $updater;
-
-	/**
 	 * Dashboard.
 	 *
 	 * @var Dashboard
@@ -149,10 +142,6 @@ class Plugin {
 		$this->experiments = new Experiments();
 		add_action( 'init', [ $this->experiments, 'init' ], 7 );
 
-		// Beta version updater.
-		$this->updater = new Updater();
-		add_action( 'init', [ $this->updater, 'init' ], 9 );
-
 		// Admin-related functionality.
 
 		// Migrations.
@@ -222,8 +211,6 @@ class Plugin {
 	 * @return void
 	 */
 	public function register_rest_routes() {
-		$fonts_controller = new Fonts_Controller();
-		$fonts_controller->register_routes();
 
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();

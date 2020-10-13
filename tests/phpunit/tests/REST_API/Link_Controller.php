@@ -2,6 +2,8 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
+use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Story_Post_Type;
 use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Request;
@@ -60,16 +62,22 @@ class Link_Controller extends \WP_Test_REST_TestCase {
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
 
 		$this->request_count = 0;
+
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->add_caps_to_roles();
 	}
 
 	public function tearDown() {
-		parent::tearDown();
-
 		/** @var WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
+
+		$story_post_type = new Story_Post_Type( new Experiments() );
+		$story_post_type->remove_caps_from_roles();
+
+		parent::tearDown();
 	}
 
 	/**

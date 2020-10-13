@@ -29,12 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import {
-  DateSettingsPropType,
-  StoriesPropType,
-  StoryActionsPropType,
-  UsersPropType,
-} from '../../../../../types';
+import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import {
   SortPropTypes,
   ViewPropTypes,
@@ -57,9 +52,7 @@ function StoriesView({
   sort,
   storyActions,
   stories,
-  users,
   view,
-  dateSettings,
   initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
@@ -226,8 +219,6 @@ function StoriesView({
         storyMenu={storyMenu}
         storySort={sort.value}
         storyStatus={filterValue}
-        users={users}
-        dateSettings={dateSettings}
       />
     ) : (
       <StoryGridView
@@ -240,8 +231,6 @@ function StoriesView({
         previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
-        users={users}
-        dateSettings={dateSettings}
         returnStoryFocusId={returnStoryFocusId}
         initialFocusStoryId={initialFocusStoryId}
       />
@@ -292,9 +281,7 @@ StoriesView.propTypes = {
   sort: SortPropTypes,
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,
-  users: UsersPropType,
   view: ViewPropTypes,
-  dateSettings: DateSettingsPropType,
   initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;

@@ -55,8 +55,8 @@ async function loadTextSet(name) {
         ...e,
         // Offset elements so the text set's
         // default position is (0,0)
-        previewOffsetX: e.x - minMax.minX,
-        previewOffsetY: e.y - minMax.minY,
+        normalizedOffsetX: e.x - minMax.minX,
+        normalizedOffsetY: e.y - minMax.minY,
         // The overall text set width & height
         // is the delta between the max/mins
         textSetWidth: minMax.maxX - minMax.minX,
@@ -69,7 +69,16 @@ async function loadTextSet(name) {
 }
 
 export default async function loadTextSets() {
-  const textSets = ['editorial'];
+  const textSets = [
+    'cover',
+    'step',
+    'section_header',
+    'editorial',
+    'contact',
+    'table',
+    'list',
+    'quote',
+  ];
 
   const results = await Promise.all(
     textSets.map(async (name) => {

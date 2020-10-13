@@ -76,6 +76,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
       }
 
       const query = {
+        _embed: 'author',
         context: 'edit',
         _web_stories_envelope: true,
         search: searchTerm || undefined,
@@ -220,8 +221,8 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
             title: title,
             author: author || 1,
             slug: title,
-            date: created ? created.format() : Date.now().toString(),
-            modified: modified ? modified.format() : Date.now().toString(),
+            date: created || Date.now().toString(),
+            modified: modified || Date.now().toString(),
             featuredMedia: 0,
             password: password || '',
             excerpt: excerpt || '',

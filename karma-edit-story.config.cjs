@@ -17,11 +17,30 @@
 'use strict';
 
 /**
+ * External dependencies
+ */
+const { readFileSync } = require('fs');
+
+/**
  * Internal dependencies
  */
 const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
+  let specsToRetry;
+  if (config.retryFailed) {
+    // Loads names of failed specs and prepares them for use in a regex.
+    specsToRetry = readFileSync(
+      'build/karma-edit-story-failed-tests.txt',
+      'utf-8'
+    )
+      .replace(/\s+$/g, '')
+      .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
+      .replace(/-/g, '\\x2d')
+      .split('\n')
+      .join('|');
+  }
+
   config.set({
     plugins: [
       'karma-chrome-launcher',
@@ -33,6 +52,7 @@ module.exports = function (config) {
       require('./karma/karma-puppeteer-launcher/index.cjs'),
       require('./karma/karma-puppeteer-client/index.cjs'),
       require('./karma/karma-cuj-reporter/index.cjs'),
+      require('./karma/karma-failed-tests-reporter/index.cjs'),
     ],
 
     // Frameworks to use.
@@ -50,6 +70,7 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      'node_modules/axe-core/axe.js',
     ],
 
     // list of files / patterns to exclude
@@ -82,6 +103,7 @@ module.exports = function (config) {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
       'spec',
+      'failed-tests',
       config.coverage && 'cuj',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
@@ -114,6 +136,10 @@ module.exports = function (config) {
     },
 
     client: {
+      args: [
+        specsToRetry && '--grep',
+        specsToRetry && `/${specsToRetry}/`,
+      ].filter(Boolean),
       jasmine: {
         timeoutInterval: 10000,
       },
@@ -126,6 +152,10 @@ module.exports = function (config) {
 
     cujReporter: {
       outputFile: 'build/cuj-coverage-edit-story.md',
+    },
+
+    failedTestsReporter: {
+      outputFile: 'build/karma-edit-story-failed-tests.txt',
     },
 
     // Continuous Integration mode

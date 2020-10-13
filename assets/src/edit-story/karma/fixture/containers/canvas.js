@@ -150,6 +150,14 @@ class FramesLayer extends Container {
       Controls
     );
   }
+
+  get addPage() {
+    return this.getByRole('button', { name: 'Add New Page' });
+  }
+
+  get prevPage() {
+    return this.getByRole('button', { name: 'Previous Page' });
+  }
 }
 
 /**

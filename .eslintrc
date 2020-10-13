@@ -101,6 +101,9 @@
     "radix": ["error", "as-needed"],
     "require-await": "error",
     "rest-spread-spacing": ["error", "never"],
+    "react/forbid-component-props": ["error", {
+      "forbid": ["for"]
+    }],
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
@@ -188,7 +191,13 @@
     "@wordpress/i18n-text-domain": ["error", {
       "allowedTextDomain": "web-stories"
     }],
-    "@wordpress/valid-sprintf": "error"
+    "@wordpress/valid-sprintf": "error",
+    "@babel/no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true
+      }
+    ]
   },
   "env": {
     "browser": true,
@@ -349,8 +358,20 @@
         "assets/src/dashboard/karma-tests.cjs",
         "assets/src/edit-story/karma-tests.cjs"
       ],
+      "extends": [
+        "plugin:node/recommended",
+        "plugin:security/recommended"
+      ],
+      "plugins": [
+        "security"
+      ],
       "env": {
         "node": true
+      },
+      "rules": {
+        "node/no-extraneous-import": "off",
+        "node/no-unpublished-import": "off",
+        "node/no-unpublished-require": "off"
       }
     },
     {

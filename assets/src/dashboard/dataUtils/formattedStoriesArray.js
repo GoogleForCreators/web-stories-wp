@@ -15,17 +15,17 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import moment from 'moment-timezone';
+import { toUTCDate } from '../../date';
 
 const formattedStoriesArray = [
   {
     id: 167,
     status: 'publish',
     title: 'ORANGE SHAPES',
-    modified: moment.parseZone('2020-05-21T23:25:51.000Z'),
-    created: moment.parseZone('2020-05-21T23:25:51.000Z'),
+    modified: toUTCDate('2020-05-21T23:25:51.000Z'),
+    created: toUTCDate('2020-05-21T23:25:51.000Z'),
     pages: [
       {
         elements: [
@@ -91,7 +91,7 @@ const formattedStoriesArray = [
     ],
     tags: [],
     categories: [],
-    author: 2,
+    author: 'Jango Fett',
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
@@ -129,7 +129,7 @@ const formattedStoriesArray = [
         rendered: '',
         protected: false,
       },
-      author: 1,
+      author: 'Jango Fett',
       featured_media: 0,
       template: '',
       categories: [],
@@ -211,6 +211,7 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
+      _embedded: { author: [{ id: 3, name: 'Jango Fett' }] },
       _links: {
         self: [
           {
@@ -230,7 +231,7 @@ const formattedStoriesArray = [
         author: [
           {
             embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
+            href: 'http://localhost:8899/wp-json/wp/v2/users/3',
           },
         ],
         'version-history': [
@@ -314,8 +315,8 @@ const formattedStoriesArray = [
     id: 165,
     status: 'draft',
     title: 'GREEN SHAPES',
-    modified: moment.parseZone('2020-05-21T23:25:22.000Z'),
-    created: moment.parseZone('2020-05-21T23:25:22.000Z'),
+    modified: toUTCDate('2020-05-21T23:25:22.000Z'),
+    created: toUTCDate('2020-05-21T23:25:22.000Z'),
     pages: [
       {
         elements: [
@@ -381,7 +382,7 @@ const formattedStoriesArray = [
     ],
     tags: [],
     categories: [],
-    author: 1,
+    author: 'Chewbacca',
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=165',
@@ -419,7 +420,7 @@ const formattedStoriesArray = [
         rendered: '',
         protected: false,
       },
-      author: 1,
+      author: 'Chewbacca',
       featured_media: 0,
       template: '',
       categories: [],
@@ -501,6 +502,7 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
+      _embedded: { author: [{ id: 21, name: 'Chewbacca' }] },
       _links: {
         self: [
           {
@@ -604,8 +606,8 @@ const formattedStoriesArray = [
     id: 163,
     status: 'draft',
     title: 'RED SHAPES',
-    modified: moment('2020-05-21T23:24:47.000Z'),
-    created: moment('2020-05-21T23:24:47.000Z'),
+    modified: toUTCDate('2020-05-21T23:24:47.000Z'),
+    created: toUTCDate('2020-05-21T23:24:47.000Z'),
     pages: [
       {
         elements: [
@@ -817,7 +819,7 @@ const formattedStoriesArray = [
     ],
     tags: [],
     categories: [],
-    author: 1,
+    author: 'Luke Skywalker',
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=163',
@@ -855,7 +857,7 @@ const formattedStoriesArray = [
         rendered: '',
         protected: false,
       },
-      author: 1,
+      author: 'Luke Skywalker',
       featured_media: 0,
       template: '',
       categories: [],
@@ -1083,6 +1085,7 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
+      _embedded: { author: [{ id: 4, name: 'Luke Skywalker' }] },
       _links: {
         self: [
           {
@@ -1102,7 +1105,7 @@ const formattedStoriesArray = [
         author: [
           {
             embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
+            href: 'http://localhost:8899/wp-json/wp/v2/users/4',
           },
         ],
         'version-history': [
@@ -1186,8 +1189,8 @@ const formattedStoriesArray = [
     id: 161,
     status: 'draft',
     title: 'BLUE SHAPES',
-    modified: moment.parseZone('2020-05-21T23:24:06.000Z'),
-    created: moment.parseZone('2020-05-21T23:24:06.000Z'),
+    modified: toUTCDate('2020-05-21T23:24:06.000Z'),
+    created: toUTCDate('2020-05-21T23:24:06.000Z'),
     pages: [
       {
         elements: [
@@ -1310,7 +1313,7 @@ const formattedStoriesArray = [
     ],
     tags: [],
     categories: [],
-    author: 1,
+    author: 'Lando-Calrissian',
     centerTargetAction: '',
     bottomTargetAction:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=161',
@@ -1348,7 +1351,7 @@ const formattedStoriesArray = [
         rendered: '',
         protected: false,
       },
-      author: 1,
+      author: 'Lando-Calrissian',
       featured_media: 0,
       template: '',
       categories: [],
@@ -1487,6 +1490,7 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
+      _embedded: { author: [{ id: 2, name: 'Lando-Calrissian' }] },
       _links: {
         self: [
           {
@@ -1503,12 +1507,7 @@ const formattedStoriesArray = [
             href: 'http://localhost:8899/wp-json/wp/v2/types/web-story',
           },
         ],
-        author: [
-          {
-            embeddable: true,
-            href: 'http://localhost:8899/wp-json/wp/v2/users/1',
-          },
-        ],
+        author: 'Lando-Calrissian',
         'version-history': [
           {
             count: 1,

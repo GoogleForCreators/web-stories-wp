@@ -15,26 +15,106 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../../karma/fixture';
+import { useStory } from '../../../../../../app/story';
+import localStore from '../../../../../../utils/localStore';
 
-describe('CUJ: Text Sets (Text and Shape Combinations): Inserting Text Sets', () => {
+describe('Text Sets Library Panel', () => {
   let fixture;
+
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ showTextSets: true });
+
     await fixture.render();
+
+    // Filtering text sets to 'cover' so karma
+    // doesn't have to load all text sets to perform tests
+    spyOn(localStore, 'getItemByKey').and.returnValue({
+      selectedCategory: 'cover',
+    });
+
+    // Make Text tab active in library panels
+    const textTab = fixture.editor.library.getByRole('tab', {
+      name: /^Text library$/,
+    });
+
+    await fixture.events.mouse.clickOn(textTab, 10, 20);
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
-  // Disable reason: not implemented yet.
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should display text sets', async () => {});
+  async function getTextElements() {
+    const {
+      state: {
+        currentPage: { elements },
+      },
+    } = await fixture.renderHook(() => useStory());
+    return elements.filter((e) => e.type === 'text');
+  }
 
-  // Disable reason: not implemented yet.
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should allow inserting text sets', () => {});
+  describe('CUJ: Text Sets (Text and Shape Combinations): Inserting Text Sets', () => {
+    it('should display text sets', async () => {
+      // Should find at least one
+      const textSet = await waitFor(
+        () =>
+          fixture.editor.library.getAllByRole('listitem', {
+            name: /^Insert Text Set$/,
+          })[0]
+      );
+
+      expect(textSet).toBeDefined();
+    });
+
+    it('should allow inserting text sets', async () => {
+      const textSet = await waitFor(
+        () =>
+          fixture.editor.library.getAllByRole('listitem', {
+            name: /^Insert Text Set$/,
+          })[0]
+      );
+
+      // The page should start off with no text elements
+      expect((await getTextElements()).length).toBe(0);
+
+      await fixture.events.mouse.clickOn(textSet, 25, 25);
+
+      // After text set has been added, there should some text elements
+      expect((await getTextElements()).length).toBeGreaterThan(0);
+    });
+
+    it('should allow user to drag and drop text set onto page', async () => {
+      const textSet = await waitFor(
+        () =>
+          fixture.editor.library.getAllByRole('listitem', {
+            name: /^Insert Text Set$/,
+          })[0]
+      );
+
+      const page = fixture.editor.canvas.fullbleed.container;
+
+      // The page should start off with no text elements
+      expect((await getTextElements()).length).toBe(0);
+
+      await fixture.events.mouse.moveRel(textSet, 50, 50);
+      await fixture.events.mouse.down();
+
+      await fixture.events.mouse.moveRel(page, 50, 100);
+      await fixture.snapshot('Text set dragged');
+      await fixture.events.mouse.up();
+
+      // After text set has been added, there should some text elements
+      await fixture.snapshot('Text set added');
+      expect((await getTextElements()).length).toBeGreaterThan(0);
+    });
+  });
 });

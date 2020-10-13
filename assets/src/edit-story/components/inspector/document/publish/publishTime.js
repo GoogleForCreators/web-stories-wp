@@ -31,12 +31,11 @@ import { __ } from '@wordpress/i18n';
  */
 import { DateTime, Label, Row } from '../../../form';
 import Popup from '../../../popup';
-import { useConfig } from '../../../../app/config';
 import { useStory } from '../../../../app/story';
 import { Dropdown as ToggleIcon } from '../../../../icons';
 import { useKeyDownEffect } from '../../../keyboard';
 import useFocusOut from '../../../../utils/useFocusOut';
-import { getReadableDate, getReadableTime, is12Hour } from './utils';
+import { format, formatTime, is12Hour } from '../../../../../date';
 
 const StyledButton = styled.button`
   color: ${({ theme }) => theme.colors.fg.white};
@@ -89,8 +88,10 @@ function PublishTime() {
       updateStory,
     })
   );
-  const { timeFormat } = useConfig();
-  const use12HourFormat = is12Hour(timeFormat);
+  const use12HourFormat = is12Hour();
+
+  /* translators: Date format, see https://www.php.net/date */
+  const shortDateFormat = __('d/m/Y', 'web-stories');
 
   const [showDatePicker, setShowDatePicker] = useState(false);
   const dateTimeNode = useRef();
@@ -136,8 +137,8 @@ function PublishTime() {
           ref={dateFieldRef}
         >
           <DateWrapper>
-            <Date>{getReadableDate(date, use12HourFormat)}</Date>{' '}
-            <Time>{getReadableTime(date, use12HourFormat)}</Time>
+            <Date>{format(date, shortDateFormat)}</Date>{' '}
+            <Time>{formatTime(date)}</Time>
           </DateWrapper>
           <StyledToggleIcon />
         </StyledButton>
@@ -155,6 +156,7 @@ function PublishTime() {
             onViewChange={() => propagateDimensionChange()}
             is12Hour={use12HourFormat}
             forwardedRef={dateTimeNode}
+            onClose={() => setShowDatePicker(false)}
           />
         )}
       />

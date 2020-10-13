@@ -27,7 +27,7 @@ import { curatedFontNames } from '../curatedFonts';
 
 describe('Curated fonts', () => {
   const fonts = JSON.parse(
-    readFileSync(resolve(process.cwd(), 'includes/data/fonts.json'), 'utf8')
+    readFileSync(resolve(process.cwd(), 'assets/src/fonts/fonts.json'), 'utf8')
   );
   const fontNames = fonts.map(({ family }) => family);
 

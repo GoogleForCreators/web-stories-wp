@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import moment from 'moment-timezone';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
  */
-import { renderHook, act } from '@testing-library/react-hooks';
+import { toUTCDate } from '../../../../date';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 import useApi from '../useApi';
@@ -45,6 +45,7 @@ jest.mock('../wpAdapter', () => ({
           story_data: { pages: [{ id: 1, elements: [] }] },
           modified_gmt: '1970-01-01T00:00:00.000Z',
           date_gmt: '1970-01-01T00:00:00.000Z',
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
       ],
     }),
@@ -59,6 +60,7 @@ jest.mock('../wpAdapter', () => ({
       modified_gmt: '1970-01-01T00:00:00.000Z',
       date_gmt: '1970-01-01T00:00:00.000Z',
       link: 'https://www.story-link.com',
+      _embedded: { author: [{ id: 1, name: 'admin' }] },
     });
   },
   deleteRequest: (path, { data }) =>
@@ -96,9 +98,9 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
@@ -119,6 +121,7 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -151,7 +154,7 @@ describe('ApiProvider', () => {
     await act(async () => {
       await result.current.actions.storyApi.updateStory({
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
         pages: [
           {
             elements: [],
@@ -170,9 +173,9 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
@@ -193,6 +196,7 @@ describe('ApiProvider', () => {
             raw: 'New Title',
             rendered: 'New Title',
           },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -258,9 +262,9 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=123',
         id: 123,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 123,
@@ -281,6 +285,7 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -296,9 +301,9 @@ describe('ApiProvider', () => {
         centerTargetAction: '',
         editStoryLink: 'editStory&post=456',
         id: 456,
-        modified: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        created: moment.parseZone('1970-01-01T00:00:00.000Z'),
-        author: 1,
+        modified: toUTCDate('1970-01-01T00:00:00.000Z'),
+        created: toUTCDate('1970-01-01T00:00:00.000Z'),
+        author: 'admin',
         link: 'https://www.story-link.com',
         originalStoryData: {
           id: 456,
@@ -319,6 +324,7 @@ describe('ApiProvider', () => {
             raw: 'Carlos (Copy)',
             rendered: 'Carlos (Copy)',
           },
+          _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
           {
@@ -326,6 +332,7 @@ describe('ApiProvider', () => {
             id: 1,
           },
         ],
+
         status: 'publish',
         title: 'Carlos (Copy)',
       },

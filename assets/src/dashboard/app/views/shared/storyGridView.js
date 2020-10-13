@@ -39,17 +39,12 @@ import {
 import {
   StoriesPropType,
   StoryMenuPropType,
-  UsersPropType,
   PageSizePropType,
   RenameStoryPropType,
-  DateSettingsPropType,
 } from '../../../types';
 import { STORY_STATUS } from '../../../constants';
-import {
-  getRelativeDisplayDate,
-  useGridViewKeys,
-  useFocusOut,
-} from '../../../utils';
+import { getRelativeDisplayDate } from '../../../../date';
+import { useGridViewKeys, useFocusOut } from '../../../utils';
 import { useConfig } from '../../config';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
@@ -71,14 +66,12 @@ const StoryGrid = styled(CardGrid)`
 
 const StoryGridView = ({
   stories,
-  users,
   centerActionLabelByStatus,
   bottomActionLabel,
   isSavedTemplate,
   pageSize,
   storyMenu,
   renameStory,
-  dateSettings,
   previewStory,
   returnStoryFocusId,
   initialFocusStoryId = null,
@@ -180,14 +173,12 @@ const StoryGridView = ({
                   status={story?.status}
                   id={story.id}
                   secondaryTitle={
-                    isSavedTemplate
-                      ? __('Google', 'web-stories')
-                      : users[story.author]?.name
+                    isSavedTemplate ? __('Google', 'web-stories') : story.author
                   }
                   displayDate={
                     story?.status === STORY_STATUS.DRAFT
-                      ? getRelativeDisplayDate(story?.modified, dateSettings)
-                      : getRelativeDisplayDate(story?.created, dateSettings)
+                      ? getRelativeDisplayDate(story?.modified)
+                      : getRelativeDisplayDate(story?.created)
                   }
                   {...titleRenameProps}
                 />
@@ -217,7 +208,6 @@ StoryGridView.propTypes = {
   isTemplate: PropTypes.bool,
   isSavedTemplate: PropTypes.bool,
   stories: StoriesPropType,
-  users: UsersPropType,
   centerActionLabelByStatus: PropTypes.oneOfType([
     PropTypes.objectOf(PropTypes.string),
     PropTypes.bool,
@@ -227,7 +217,6 @@ StoryGridView.propTypes = {
   previewStory: PropTypes.func,
   storyMenu: StoryMenuPropType,
   renameStory: RenameStoryPropType,
-  dateSettings: DateSettingsPropType,
   returnStoryFocusId: PropTypes.number,
   initialFocusStoryId: PropTypes.number,
 };

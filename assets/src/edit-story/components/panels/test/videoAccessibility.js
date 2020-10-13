@@ -23,6 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
 jest.mock('../../mediaPicker', () => ({
@@ -34,14 +35,8 @@ jest.mock('../../mediaPicker', () => ({
 
 describe('Panels/VideoAccessibility', () => {
   const defaultElement = {
-    resource: {
-      posterId: 0,
-      title: '',
-      poster: '',
-      alt: '',
-      trackId: 0,
-      track: '',
-    },
+    type: 'video',
+    resource: { posterId: 0, title: '', poster: '', alt: '' },
   };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);
@@ -100,5 +95,26 @@ describe('Panels/VideoAccessibility', () => {
     expect(submits[defaultElement.id].resource.title).toHaveLength(
       MIN_MAX.TITLE.MAX
     );
+  });
+
+  it('should display Mixed as placeholder in case of mixed value multi-selection', () => {
+    const { getByRole } = renderVideoAccessibility([
+      defaultElement,
+      {
+        resource: {
+          posterId: 0,
+          title: 'Hello, video!',
+          poster: '',
+          alt: 'Hello!',
+        },
+      },
+    ]);
+    const title = getByRole('textbox', { name: 'Edit: Video title' });
+    expect(title.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+    expect(title).toHaveValue('');
+
+    const alt = getByRole('textbox', { name: 'Edit: Assistive text' });
+    expect(alt.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+    expect(alt).toHaveValue('');
   });
 });

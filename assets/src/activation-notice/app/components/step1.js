@@ -29,34 +29,37 @@ import { __, _x } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { trackClick } from '../../../tracking';
+import { TranslateWithMarkup } from '../../../i18n';
 import { useConfig } from '../config';
 
 import Paragraph from './paragraph';
 import Link from './link';
 import Number from './number';
+import Image from './image';
 
 const Wrapper = styled.div`
   display: none;
   min-width: 300px;
+  justify-content: center;
 
   @media ${({ theme }) => theme.breakpoint.tabletSmall} {
     display: flex;
   }
 `;
 
-const Image = styled.img`
-  transform: rotate(${(props) => props.$rotationAngle});
-  margin-top: -35px;
-`;
-
 const ParagraphWrapper = styled.div`
-  align-self: flex-end;
-  margin-bottom: 15px;
+  align-self: flex-start;
+  margin: 20px 0 0 70px;
+  text-align: right;
+  min-width: 100px;
+
+  @media ${({ theme }) => theme.breakpoint.desktop} {
+    margin-left: 30px;
+  }
 `;
 
-// @todo Support markup in translated strings - https://github.com/google/web-stories-wp/issues/1578
 function Step1() {
-  const { cdnURL, demoStoryURL, isRTL } = useConfig();
+  const { demoStoryURL } = useConfig();
 
   const onClick = useCallback(
     (evt) => {
@@ -74,11 +77,11 @@ function Step1() {
         rel="noreferrer"
       >
         <Image
-          src={`${cdnURL}images/plugin-activation/tips.png`}
-          alt=""
-          width={170}
-          height={300}
-          $rotationAngle={isRTL ? '-10.57deg' : '10.57deg'}
+          name="tips.png"
+          name2x="tips-2x.png"
+          width={150}
+          height={245}
+          $marginTop={60}
         />
       </Link>
       <ParagraphWrapper>
@@ -89,19 +92,20 @@ function Step1() {
           }
         </Number>
         <Paragraph $secondary>
-          {
-            /* translators: First half of "Read the Get Started story" */
-            _x('Read the', 'plugin activation', 'web-stories')
-          }
-          <br />
-          <Link
-            href={demoStoryURL}
-            onClick={onClick}
-            target="_blank"
-            rel="noreferrer"
+          <TranslateWithMarkup
+            mapping={{
+              a: (
+                <Link
+                  href={demoStoryURL}
+                  onClick={onClick}
+                  target="_blank"
+                  rel="noreferrer"
+                />
+              ),
+            }}
           >
-            {__('Get Started story', 'web-stories')}
-          </Link>
+            {__('Read the<br/><a>Get Started story</a>', 'web-stories')}
+          </TranslateWithMarkup>
         </Paragraph>
       </ParagraphWrapper>
     </Wrapper>

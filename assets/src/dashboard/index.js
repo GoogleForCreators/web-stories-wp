@@ -17,15 +17,17 @@
 /**
  * External dependencies
  */
+import Modal from 'react-modal';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
-import Modal from 'react-modal';
 import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
  */
 import { initializeTracking } from '../tracking';
+import { updateSettings } from '../date';
 import App from './app';
 import './style.css'; // This way the general dashboard styles are loaded before all the component styles.
 
@@ -44,11 +46,15 @@ const initialize = (id, config, flags) => {
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);
 
+  updateSettings(config.locale);
+
   initializeTracking('Dashboard');
 
   render(
     <FlagsProvider features={flags}>
-      <App config={config} />
+      <StrictMode>
+        <App config={config} />
+      </StrictMode>
     </FlagsProvider>,
     appElement
   );

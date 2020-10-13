@@ -17,23 +17,21 @@
 /**
  * External dependencies
  */
+import { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-timezone';
 
 /**
  * Internal dependencies
  */
-import { useMemo, useState } from 'react';
+import { differenceInSeconds } from '../../date';
 import { ApiContext } from '../app/api/apiProvider';
 import { defaultStoriesState } from '../app/reducer/stories';
 import {
   publisherLogoIds as fillerPublisherLogoIds,
   rawPublisherLogos,
 } from '../dataUtils/formattedPublisherLogos';
-import formattedUsersObject from '../dataUtils/formattedUsersObject';
 import formattedStoriesArray from '../dataUtils/formattedStoriesArray';
 import formattedTemplatesArray from '../dataUtils/formattedTemplatesArray';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../edit-story/app/font/defaultFonts';
 import { STORY_STATUSES, STORY_SORT_OPTIONS } from '../constants/stories';
 
 /* eslint-disable jasmine/no-unsafe-spy */
@@ -42,7 +40,6 @@ export default function ApiProviderFixture({ children }) {
   const [settings, setSettingsState] = useState(getSettingsState());
   const [stories, setStoriesState] = useState(getStoriesState());
   const [templates, setTemplatesState] = useState(getTemplatesState());
-  const [users] = useState(formattedUsersObject);
   const [currentUser, setCurrentUser] = useState(getCurrentUserState());
 
   const settingsApi = useMemo(
@@ -107,27 +104,11 @@ export default function ApiProviderFixture({ children }) {
 
   const usersApi = useMemo(
     () => ({
-      fetchUsers: jasmine.createSpy('fetchUsers'),
       fetchCurrentUser: jasmine.createSpy('fetchCurrentUser'),
       toggleWebStoriesTrackingOptIn: () =>
         setCurrentUser(toggleOptInTracking(currentUser)),
     }),
     [currentUser]
-  );
-
-  const fontApi = useMemo(
-    () => ({
-      getAllFonts: () => {
-        return Promise.resolve(
-          [TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
-            name: font.family,
-            value: font.family,
-            ...font,
-          }))
-        );
-      },
-    }),
-    []
   );
 
   const value = useMemo(
@@ -137,7 +118,6 @@ export default function ApiProviderFixture({ children }) {
         settings,
         stories,
         templates,
-        users,
         currentUser,
       },
       actions: {
@@ -145,7 +125,6 @@ export default function ApiProviderFixture({ children }) {
         settingsApi,
         storyApi,
         templateApi,
-        fontApi,
         usersApi,
       },
     }),
@@ -154,13 +133,11 @@ export default function ApiProviderFixture({ children }) {
       settings,
       stories,
       templates,
-      users,
       currentUser,
       mediaApi,
       settingsApi,
       storyApi,
       templateApi,
-      fontApi,
       usersApi,
     ]
   );
@@ -248,7 +225,7 @@ function updateSettings(updates, currentState) {
 
 function getStoriesState() {
   const copiedStories = [...formattedStoriesArray];
-  copiedStories.sort((a, b) => b.modified.diff(a.modified)); // initial sort is desc by modified
+  copiedStories.sort((a, b) => differenceInSeconds(b.modified, a.modified)); // initial sort is desc by modified
   return {
     ...defaultStoriesState,
     stories: copiedStories.reduce((acc, curr) => {
@@ -301,7 +278,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.LAST_MODIFIED: {
-          value = a[sortOption].diff(b[sortOption]);
+          value = differenceInSeconds(a[sortOption], b[sortOption]);
           break;
         }
         case STORY_SORT_OPTIONS.NAME: {
@@ -309,9 +286,7 @@ function fetchStories(
           break;
         }
         case STORY_SORT_OPTIONS.CREATED_BY: {
-          value = formattedUsersObject[a.author].name.localeCompare(
-            formattedUsersObject[b.author].name
-          );
+          value = a.author.localeCompare(b.author);
           break;
         }
         default: {
@@ -332,8 +307,9 @@ function fetchStories(
 
 function updateStory(story, currentState) {
   const copy = { ...story };
+
   copy.title = copy.title.raw;
-  copy.modified = moment(new Date(), 'MM-DD-YYYY');
+  copy.modified = new Date();
   return {
     ...currentState,
     stories: {
@@ -343,15 +319,15 @@ function updateStory(story, currentState) {
   };
 }
 
-function duplicateStory(story, currenState) {
-  const copiedState = { ...currenState };
+function duplicateStory(story, currentState) {
+  const copiedState = { ...currentState };
   const copiedStory = { ...story };
 
   // Update fields on copy
   copiedStory.id = Math.round(Math.random() * 1000);
   copiedStory.title = copiedStory.title + ' (Copy)';
   copiedStory.created = new Date().toISOString();
-  copiedStory.modified = moment(copiedStory.created, 'MM-DD-YYYY');
+  copiedStory.modified = copiedStory.created;
   copiedStory.bottomTargetAction = copiedStory.bottomTargetAction.replace(
     story.id,
     copiedStory.id

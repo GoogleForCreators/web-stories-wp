@@ -52,6 +52,7 @@ describe('createBuild', () => {
     expect(copyFiles).toHaveBeenCalledWith('/foo', '/foo/build/web-stories', [
       'bar.txt',
       'baz/',
+      'composer.json',
     ]);
   });
 
