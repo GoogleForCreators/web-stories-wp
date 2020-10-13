@@ -63,6 +63,7 @@ const DragContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
+  visibility: hidden;
 `;
 
 function TextSet({ elements }) {

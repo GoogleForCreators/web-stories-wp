@@ -28,6 +28,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useEffect, useRef, useState } from 'react';
+import ResizeObserver from 'resize-observer-polyfill';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
@@ -45,6 +47,8 @@ const Pane = styled(SharedPane)`
 const TYPE = 'text';
 
 function TextPane(props) {
+  const paneRef = useRef();
+  const [, forceUpdate] = useState();
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -53,8 +57,18 @@ function TextPane(props) {
 
   const insertPreset = useInsertPreset();
 
+  useEffect(() => {
+    const ro = new ResizeObserver(() => {
+      forceUpdate(Date.now());
+    });
+
+    ro.observe(paneRef.current);
+
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <Pane id={paneId} {...props}>
+    <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
         <SearchInput
           initialValue={''}
@@ -81,7 +95,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && <TextSets />}
+      {showTextSets && paneRef.current && <TextSets paneRef={paneRef} />}
     </Pane>
   );
 }
