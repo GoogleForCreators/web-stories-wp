@@ -68,7 +68,11 @@ trait Sanitization_Utils {
 	 */
 	private function transform_a_tags( &$document ) {
 		$hyperlinks = $document->getElementsByTagName( 'a' );
-		/* @var DOMElement $hyperlink The <a> element */
+		/**
+		 * The <a> element
+		 *
+		 * @var DOMElement $hyperlink The <a> element
+		 */
 		foreach ( $hyperlinks as $hyperlink ) {
 			if ( ! $hyperlink->getAttribute( 'target' ) ) {
 				$hyperlink->setAttribute( 'target', '_blank' );
@@ -88,7 +92,11 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function insert_analytics_configuration( &$document ) {
-		/* @var DOMElement $story_element The <amp-story> element. */
+		/**
+		 * The <amp-story> element.
+		 *
+		 * @var DOMElement $story_element The <amp-story> element.
+		 */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
 		if ( ! $story_element instanceof DOMElement ) {
@@ -129,7 +137,11 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function add_publisher_logo( &$document, $publisher_logo, $placeholder ) {
-		/* @var DOMElement $story_element The <amp-story> element. */
+		/**
+		 * The <amp-story> element.
+		 *
+		 * @var DOMElement $story_element The <amp-story> element.
+		 */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
 		if ( ! $story_element instanceof DOMElement ) {
@@ -161,7 +173,11 @@ trait Sanitization_Utils {
 	 * @return void
 	 */
 	private function add_poster_images( &$document, $poster_images ) {
-		/* @var DOMElement $story_element The <amp-story> element. */
+		/**
+		 * The <amp-story> element.
+		 *
+		 * @var DOMElement $story_element The <amp-story> element.
+		 */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
 		if ( ! $story_element instanceof DOMElement ) {
