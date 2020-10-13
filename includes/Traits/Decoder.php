@@ -41,7 +41,14 @@ trait Decoder {
 	protected function base64_decode( $string ) {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
-			return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
+
+			if ( function_exists( 'mb_convert_encoding' ) ) {
+				return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
+			}
+
+			if ( function_exists( 'iconv' ) ) {
+				return iconv( 'UTF-16LE', 'UTF-8', base64_decode( $string ) );
+			}
 		}
 
 		return $string;
