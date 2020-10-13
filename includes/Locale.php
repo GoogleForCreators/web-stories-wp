@@ -42,8 +42,13 @@ class Locale {
 	public function get_locale_settings() {
 		global $wp_locale;
 
+		$locale        = str_replace( '_', '-', get_user_locale() );
+		$locale_pieces = explode( '-', $locale );
+		$locale_short  = $locale_pieces[0];
+
 		return [
-			'locale'           => str_replace( '_', '-', get_user_locale() ),
+			'locale'           => $locale,
+			'localeShort'      => $locale_short,
 			'dateFormat'       => get_option( 'date_format' ),
 			'timeFormat'       => get_option( 'time_format' ),
 			'gmtOffset'        => get_option( 'gmt_offset' ),

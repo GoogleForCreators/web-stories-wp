@@ -54,8 +54,7 @@ export const defaultAttributes = {
   resource: {
     posterId: null,
     poster: null,
-    trackId: null,
-    track: null,
+    tracks: [],
     id: 0,
     title: '',
   },
@@ -66,5 +65,6 @@ export const panels = [
   ...MEDIA_PANELS,
   PanelTypes.LINK,
   PanelTypes.VIDEO_OPTIONS,
+  PanelTypes.CAPTIONS,
   PanelTypes.VIDEO_ACCESSIBILITY,
 ];

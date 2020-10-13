@@ -118,6 +118,16 @@ StoryPropTypes.imageResource = PropTypes.shape({
   title: PropTypes.string,
 });
 
+StoryPropTypes.trackResource = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  track: PropTypes.string.isRequired,
+  trackId: PropTypes.number,
+  trackName: PropTypes.string.isRequired,
+  kind: PropTypes.string,
+  srclang: PropTypes.string,
+  label: PropTypes.string,
+});
+
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
   id: PropTypes.number,
@@ -127,8 +137,7 @@ StoryPropTypes.videoResource = PropTypes.shape({
   height: PropTypes.number.isRequired,
   poster: PropTypes.string,
   posterId: PropTypes.number,
-  track: PropTypes.string,
-  trackId: PropTypes.number,
+  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
   alt: PropTypes.string,
   title: PropTypes.string,
 });
@@ -136,6 +145,7 @@ StoryPropTypes.videoResource = PropTypes.shape({
 StoryPropTypes.resource = PropTypes.oneOfType([
   StoryPropTypes.imageResource,
   StoryPropTypes.videoResource,
+  StoryPropTypes.trackResource,
 ]);
 
 const StoryLayerPropTypes = {
@@ -186,7 +196,7 @@ StoryPropTypes.elements.video = PropTypes.shape({
   ...StoryMediaPropTypes,
   resource: StoryPropTypes.videoResource,
   poster: PropTypes.string,
-  track: PropTypes.string,
+  tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
   loop: PropTypes.bool,
 });
 

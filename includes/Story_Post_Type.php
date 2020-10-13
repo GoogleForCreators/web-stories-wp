@@ -712,6 +712,29 @@ class Story_Post_Type {
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
 				],
+				// @todo Hardcoded list for now.
+				'languages'        => [
+					[
+						'name'  => __( 'English', 'web-stories' ),
+						'value' => 'en',
+					],
+					[
+						'name'  => __( 'Spanish', 'web-stories' ),
+						'value' => 'es',
+					],
+					[
+						'name'  => __( 'German', 'web-stories' ),
+						'value' => 'de',
+					],
+					[
+						'name'  => __( 'French', 'web-stories' ),
+						'value' => 'fr',
+					],
+					[
+						'name'  => __( 'Italian', 'web-stories' ),
+						'value' => 'it',
+					],
+				],
 				'version'          => WEBSTORIES_VERSION,
 			],
 			'flags'      => array_merge(
