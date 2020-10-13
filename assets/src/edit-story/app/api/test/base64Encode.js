@@ -54,7 +54,9 @@ describe('base64Encode', () => {
 
   it('converts Unicode characters', () => {
     // eslint-disable-next-line jest/prefer-spy-on
-    global.btoa = jest.fn().mockImplementation(() => 'SABlAGwAbABvACAAPNgN3w==');
+    global.btoa = jest
+      .fn()
+      .mockImplementation(() => 'SABlAGwAbABvACAAPNgN3w==');
 
     const actual = base64Encode('Hello 🌍');
     expect(actual).toStrictEqual(
