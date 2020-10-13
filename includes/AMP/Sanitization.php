@@ -272,6 +272,7 @@ class Sanitization {
 		 */
 		ksort( $amp_scripts );
 		$ordered_scripts = array_merge( $ordered_scripts, $amp_scripts );
+
 		/**
 		 * Script element.
 		 *
