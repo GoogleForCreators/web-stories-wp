@@ -42,7 +42,7 @@ trait Decoder {
 	 * @return bool Whether decoding is supported.
 	 */
 	protected function supports_decoding() {
-		if ( defined( '\WEBSTORIES_DEV_MODE' ) && ! WEBSTORIES_DEV_MODE ) {
+		if ( defined( '\WEBSTORIES_DEV_MODE' ) && WEBSTORIES_DEV_MODE ) {
 			return false;
 		}
 
