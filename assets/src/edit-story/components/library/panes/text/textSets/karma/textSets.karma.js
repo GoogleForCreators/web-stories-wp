@@ -24,6 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../../karma/fixture';
 import { useStory } from '../../../../../../app/story';
+import localStore from '../../../../../../utils/localStore';
 
 describe('Text Sets Library Panel', () => {
   let fixture;
@@ -33,6 +34,12 @@ describe('Text Sets Library Panel', () => {
     fixture.setFlags({ showTextSets: true });
 
     await fixture.render();
+
+    // Filtering text sets to 'cover' so karma
+    // doesn't have to load all text sets to perform tests
+    spyOn(localStore, 'getItemByKey').and.returnValue({
+      selectedCategory: 'cover',
+    });
 
     // Make Text tab active in library panels
     const textTab = fixture.editor.library.getByRole('tab', {
@@ -56,13 +63,19 @@ describe('Text Sets Library Panel', () => {
   }
 
   describe('CUJ: Text Sets (Text and Shape Combinations): Inserting Text Sets', () => {
-    // Disable reason: not implemented yet.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display text sets', async () => {});
+    it('should display text sets', async () => {
+      // Should find at least one
+      const textSet = await waitFor(
+        () =>
+          fixture.editor.library.getAllByRole('listitem', {
+            name: /^Insert Text Set$/,
+          })[0]
+      );
 
-    // Disable reason: will be implemented with enabling the feature flag.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow inserting text sets', async () => {
+      expect(textSet).toBeDefined();
+    });
+
+    it('should allow inserting text sets', async () => {
       const textSet = await waitFor(
         () =>
           fixture.editor.library.getAllByRole('listitem', {
@@ -92,7 +105,7 @@ describe('Text Sets Library Panel', () => {
       // The page should start off with no text elements
       expect((await getTextElements()).length).toBe(0);
 
-      await fixture.events.mouse.moveRel(textSet, 25, 25);
+      await fixture.events.mouse.moveRel(textSet, 50, 50);
       await fixture.events.mouse.down();
 
       await fixture.events.mouse.moveRel(page, 50, 100);

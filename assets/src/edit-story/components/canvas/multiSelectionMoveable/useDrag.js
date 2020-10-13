@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -32,6 +32,8 @@ function useMultiSelectionDrag({
   setTransformStyle,
   onGroupEventStart,
   onGroupEventEnd,
+  isDragging,
+  setIsDragging,
 }) {
   const {
     state: { draggingResource },
@@ -44,7 +46,6 @@ function useMultiSelectionDrag({
   );
 
   const eventTracker = useRef({});
-  const [isDragging, setIsDragging] = useState(false);
 
   // Let's check if we consider this a drag or a click, In case of a click handle click instead.
   // We are doing this here in Moveable selection since it takes over the mouseup event

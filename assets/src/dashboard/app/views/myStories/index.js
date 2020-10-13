@@ -44,7 +44,6 @@ function MyStories() {
     storiesOrderById,
     totalPages,
     totalStoriesByStatus,
-    users,
   } = useApi(
     ({
       actions: {
@@ -60,7 +59,6 @@ function MyStories() {
           totalPages,
           totalStoriesByStatus,
         },
-        users,
       },
     }) => ({
       duplicateStory,
@@ -74,7 +72,6 @@ function MyStories() {
       storiesOrderById,
       totalPages,
       totalStoriesByStatus,
-      users,
     })
   );
 
@@ -159,7 +156,6 @@ function MyStories() {
           updateStory,
           handlePreviewStory,
         }}
-        users={users}
         view={view}
         initialFocusStoryId={lastActiveStoryId}
       />

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { FlagsProvider } from 'flagged';
@@ -34,13 +33,11 @@ import {
 } from '../../../../../constants';
 import {
   formattedStoriesArray,
-  formattedUsersObject,
   STORYBOOK_PAGE_SIZE,
 } from '../../../../../storybookUtils';
 import Content from '../';
 import { usePagePreviewSize } from '../../../../../utils';
 import StoriesView from '../storiesView';
-import EmptyView from '../emptyView';
 
 export default {
   title: 'Dashboard/Views/MyStories/Content',
@@ -94,7 +91,6 @@ const defaultProps = {
   sort: sort,
   stories: longerListOfStories,
   storyActions: storyActions,
-  users: formattedUsersObject,
   view: view,
 };
 
@@ -180,7 +176,6 @@ export const _StoriesViewGrid = () => (
         sort={sort}
         storyActions={storyActions}
         stories={formattedStoriesArray}
-        users={formattedUsersObject}
         view={view}
       />
     </ToastProvider>
@@ -195,13 +190,33 @@ export const _StoriesViewList = () => (
         sort={sort}
         storyActions={storyActions}
         stories={formattedStoriesArray}
-        users={formattedUsersObject}
         view={{ ...view, style: VIEW_STYLE.LIST }}
       />
     </ToastProvider>
   </FlagsProvider>
 );
 
-export const _EmptyView = () => (
-  <EmptyView searchKeyword={text('searchKeyword', '')} />
-);
+export const NoSearchResults = () => {
+  const { pageSize } = usePagePreviewSize({
+    isGrid: true,
+  });
+  return (
+    <FlagsProvider features={{ enableInProgressStoryActions: false }}>
+      <ToastProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content
+              {...defaultProps}
+              stories={[]}
+              search={{
+                keyword: 'koalas',
+              }}
+              allPagesFetched={true}
+              view={{ ...view, pageSize }}
+            />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </ToastProvider>
+    </FlagsProvider>
+  );
+};

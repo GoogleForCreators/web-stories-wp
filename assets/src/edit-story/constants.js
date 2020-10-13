@@ -36,6 +36,8 @@ export const ALLOWED_EDITOR_PAGE_WIDTHS = [412, 268, 223];
 
 export const FULLBLEED_RATIO = 9 / 16;
 
+export const DESIGN_SPACE_MARGIN = 48;
+
 export const PAGE_ATTACHMENT_HEIGHT_RATIO = 0.2;
 
 export const COLOR_PRESETS_PER_ROW = 6;
@@ -80,8 +82,4 @@ export const BACKGROUND_TEXT_MODE = {
 export const FONT_WEIGHT = {
   NORMAL: 400,
   BOLD: 700,
-};
-
-export const LOCAL_STORAGE_PREFIX = {
-  PANEL: 'web_stories_ui_panel_settings',
 };

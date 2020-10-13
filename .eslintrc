@@ -101,6 +101,9 @@
     "radix": ["error", "as-needed"],
     "require-await": "error",
     "rest-spread-spacing": ["error", "never"],
+    "react/forbid-component-props": ["error", {
+      "forbid": ["for"]
+    }],
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [

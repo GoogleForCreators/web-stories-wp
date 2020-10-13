@@ -37,8 +37,7 @@ export const ApiContext = createContext({ state: {}, actions: {} });
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, cdnURL } = useConfig();
 
-  const { users, currentUser, api: usersApi } = useUsersApi(dataAdapter, {
-    userApi: api.users,
+  const { currentUser, api: usersApi } = useUsersApi(dataAdapter, {
     currentUserApi: api.currentUser,
   });
 
@@ -67,7 +66,6 @@ export default function ApiProvider({ children }) {
         settings,
         stories,
         templates,
-        users,
         currentUser,
       },
       actions: {
@@ -83,7 +81,6 @@ export default function ApiProvider({ children }) {
       settings,
       stories,
       templates,
-      users,
       currentUser,
       mediaApi,
       settingsApi,
