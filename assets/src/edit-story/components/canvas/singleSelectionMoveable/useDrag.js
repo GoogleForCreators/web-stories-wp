@@ -20,7 +20,7 @@
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useDropTargets } from '../../dropTargets';
 import { useUnits } from '../../../units';
-import { useConfig, useStory } from '../../../app';
+import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 
 function useSingleSelectionDrag({
@@ -33,8 +33,6 @@ function useSingleSelectionDrag({
   const {
     actions: { handleDrag, handleDrop, setDraggingResource, isDropSource },
   } = useDropTargets();
-
-  const { isRTL } = useConfig();
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 
@@ -97,11 +95,7 @@ function useSingleSelectionDrag({
     const [deltaX, deltaY] = frame.translate;
     if (deltaX !== 0 || deltaY !== 0 || isDropSource(selectedElement.type)) {
       const properties = {
-        x: roundToZero(
-          isRTL
-            ? selectedElement.x - editorToDataX(deltaX)
-            : selectedElement.x + editorToDataX(deltaX)
-        ),
+        x: roundToZero(selectedElement.x + editorToDataX(deltaX)),
         y: roundToZero(selectedElement.y + editorToDataY(deltaY)),
       };
       updateSelectedElements({ properties });

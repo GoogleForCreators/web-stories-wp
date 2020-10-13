@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from 'react';
 
 /**
@@ -67,18 +67,20 @@ function CanvasLayout() {
   const layoutParamsCss = useLayoutParamsCssVars();
 
   return (
-    <Background ref={setBackgroundRef} style={layoutParamsCss}>
-      <CanvasUploadDropTarget>
-        <CanvasElementDropzone>
-          <SelectionCanvas>
-            <DisplayLayer />
-            <FramesLayer />
-            <NavLayer />
-          </SelectionCanvas>
-          <EditLayer />
-        </CanvasElementDropzone>
-      </CanvasUploadDropTarget>
-    </Background>
+    <StyleSheetManager stylisPlugins={[]}>
+      <Background ref={setBackgroundRef} style={layoutParamsCss}>
+        <CanvasUploadDropTarget>
+          <CanvasElementDropzone>
+            <SelectionCanvas>
+              <DisplayLayer />
+              <FramesLayer />
+              <NavLayer />
+            </SelectionCanvas>
+            <EditLayer />
+          </CanvasElementDropzone>
+        </CanvasUploadDropTarget>
+      </Background>
+    </StyleSheetManager>
   );
 }
 
