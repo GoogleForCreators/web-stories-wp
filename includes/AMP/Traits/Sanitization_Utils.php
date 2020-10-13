@@ -91,7 +91,7 @@ trait Sanitization_Utils {
 		/* @var DOMElement $story_element The <amp-story> element. */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
-		if ( ! $story_element ) {
+		if ( ! $story_element instanceof DOMElement ) {
 			return;
 		}
 
@@ -132,7 +132,7 @@ trait Sanitization_Utils {
 		/* @var DOMElement $story_element The <amp-story> element. */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
-		if ( ! $story_element ) {
+		if ( ! $story_element instanceof DOMElement ) {
 			return;
 		}
 
@@ -164,12 +164,12 @@ trait Sanitization_Utils {
 		/* @var DOMElement $story_element The <amp-story> element. */
 		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
 
-		if ( ! $story_element ) {
+		if ( ! $story_element instanceof DOMElement ) {
 			return;
 		}
 
 		foreach ( $poster_images as $attr => $url ) {
-			$story_element->setAttribute( $attr, esc_url( $url ) );
+			$story_element->setAttribute( $attr, esc_url_raw( $url ) );
 		}
 
 		// Without a poster, a story becomes invalid AMP.
