@@ -78,8 +78,6 @@ import createResource from './createResource';
  * object required for a Resource.
  *
  * @param {Media3pMedia} m The Media3P Media object.
- * @param {?function(string):boolean} mimeTypeSelector An optional selector
- * of image mime types to include.
  * @return {Object} The array of "sizes"-type objects.
  */
 function getImageUrls(m) {
@@ -116,7 +114,7 @@ function getImageUrls(m) {
  * object required for a resource
  *
  * @param {Media3pMedia} m The Media3P Media object
- * @return {Object} the array of ""
+ * @return {Object} The array of "sizes"-type objects.
  */
 
 function getGifUrls(m) {
