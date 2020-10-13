@@ -2,9 +2,6 @@
 <html
     amp
     lang="{{ locale }}"
-    {% if googleanalytics %}
-    ga-id="{{ googleanalytics }}"
-    {% endif %}
     id="root"
     class="{{rootClass}}"
   >
@@ -48,11 +45,16 @@
 
     <link rel="preconnect" href="/" crossorigin>
     {% if googleanalytics %}
-    <script async defer src="{{ "/js/cached.js" | addHash }}"></script>
+    <script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async="async" custom-element="amp-analytics"></script>
     {% endif %}
     <!-- css is inserted by optimize-html custom plugin -->
   </head>
   <body>
+  {% if googleanalytics %}
+  <amp-analytics  type="gtag" data-credentials="include">
+    <script type="application/json">{"vars": {"config": {"{{ googleanalytics }}": {"groups": "default"}}, "gtag_id": "{{ googleanalytics }}"}}</script>
+  </amp-analytics>
+  {% endif %}
 
   {% include "header.njk" %}
 
