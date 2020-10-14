@@ -24,19 +24,15 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
+namespace Google\Web_Stories\Block;
 
-use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Story_Renderer\Image;
-use Google\Web_Stories\Story_Renderer\Embed;
-use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Tracking;
 
 /**
  * Embed block class.
  */
-class Embed_Block {
-	use Assets;
-
+class Embed_Block extends Embed_Base {
 	/**
 	 * Script handle.
 	 *
@@ -59,11 +55,8 @@ class Embed_Block {
 	 * @return void
 	 */
 	public function init() {
-		wp_register_script( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
-		wp_register_style( 'standalone-amp-story-player', 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
-
-		$this->register_script( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player', Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ 'standalone-amp-story-player' ] );
+		$this->register_script( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
@@ -107,8 +100,6 @@ class Embed_Block {
 				'editor_style'    => self::SCRIPT_HANDLE,
 			]
 		);
-
-		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
 
 	/**
@@ -125,72 +116,20 @@ class Embed_Block {
 	}
 
 	/**
-	 * Filter the allowed tags for KSES to allow for amp-story children.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array|string $allowed_tags Allowed tags.
-	 *
-	 * @return array|string Allowed tags.
-	 */
-	public function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
-			return $allowed_tags;
-		}
-
-		$story_player_components = [
-			'amp-story-player' => [],
-		];
-
-		$allowed_tags = array_merge( $allowed_tags, $story_player_components );
-
-		return $allowed_tags;
-	}
-
-	/**
 	 * Renders the block type output for given attributes.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param array  $attributes Block attributes.
-	 * @param string $content    Block content.
+	 * @param string $content Block content.
 	 *
-	 * @return string Rendered block type output.
+	 * @return string Rendered block type output.*
 	 */
 	public function render_block( array $attributes, $content ) { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable
-		// The only mandatory attribute.
-		if ( empty( $attributes['url'] ) ) {
-			return '';
-		}
+		$attributes = wp_parse_args( $attributes, $this->default_attrs() );
 
-		if ( empty( $attributes['title'] ) ) {
-			$attributes['title'] = __( 'Web Story', 'web-stories' );
-		}
+		$attributes['class'] = 'wp-block-web-stories-embed';
 
-		$defaults = [
-			'align'  => 'none',
-			'height' => 0,
-			'poster' => '',
-			'width'  => 0,
-		];
-
-		$attributes = wp_parse_args( $attributes, $defaults );
-
-		$data = [
-			'title'           => $attributes['title'],
-			'url'             => $attributes['url'],
-			'poster_portrait' => $attributes['poster'],
-		];
-
-		$story = new Story( $data );
-
-		if ( is_feed() ) {
-			$renderer = new Image( $story );
-		} else {
-			$renderer = new Embed( $story );
-		}
-
-		return $renderer->render( $attributes );
+		return $this->render( $attributes );
 	}
-
 }
