@@ -24,23 +24,14 @@ import styled from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import clamp from '../../../utils/clamp';
 import { Row, Numeric, Toggle } from '../../form';
 import { Lock, Unlock } from '../../../icons';
 import { useCommonObjectValue } from '../utils';
-
-// @todo Confirm.
-const MIN_MAX = {
-  BORDER: {
-    MIN: 0,
-    MAX: 15,
-  },
-};
 
 const DEFAULT_BORDER = {
   left: 0,
@@ -53,19 +44,13 @@ const DEFAULT_BORDER = {
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
-
-  ${({ stretch }) => stretch && `flex-basis: auto;`}
 `;
 
 const Space = styled.div`
   flex: 0 0 10px;
 `;
 
-function BorderWidthControls({
-   selectedElements,
-   pushUpdateForObject,
-   pushUpdate,
- }) {
+function BorderWidthControls({ selectedElements, pushUpdateForObject }) {
   const border = useCommonObjectValue(
     selectedElements,
     'border',
@@ -138,7 +123,6 @@ function BorderWidthControls({
 BorderWidthControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
-  pushUpdate: PropTypes.func.isRequired,
 };
 
 export default BorderWidthControls;

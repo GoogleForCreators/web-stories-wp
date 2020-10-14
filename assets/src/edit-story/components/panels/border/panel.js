@@ -18,6 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { useCallback } from 'react';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -28,19 +30,73 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { SimplePanel } from '../panel';
+import { Color, Numeric, Row } from '../../form';
+import { getCommonValue, useCommonColorValue } from '../utils';
 import BorderWidthControls from './borderWidth';
 
 // @todo Only display for square shapes.
 
+const BoxedNumeric = styled(Numeric)`
+  padding: 6px 6px;
+  border-radius: 4px;
+`;
+
+const Space = styled.div`
+  flex: 0 0 10px;
+`;
+
 function BorderStylePanel(props) {
-  // @todo Should keep all in the same param?
-  const borderColor = '';
-  const borderDash = '';
-  const borderGap = '';
+  const { selectedElements, pushUpdate } = props;
+  const borderColor = useCommonColorValue(selectedElements, 'borderColor');
+  const borderDash = getCommonValue(selectedElements, 'borderDash', 0);
+  const borderGap = getCommonValue(selectedElements, 'borderGap', 0);
+
+  const handleColorChange = useCallback(
+    (value) => pushUpdate({ borderColor: value }, true),
+    [pushUpdate]
+  );
+
+  const handleStyleChange = useCallback(
+    (value, name) => pushUpdate({ [name]: value }, true),
+    [pushUpdate]
+  );
 
   return (
     <SimplePanel name="borderStyle" title={__('Border', 'web-stories')}>
       <BorderWidthControls {...props} />
+      <Row>
+        <Color
+          value={borderColor}
+          onChange={handleColorChange}
+          label={__('Border color', 'web-stories')}
+          labelId="border-color-label"
+        />
+      </Row>
+      <Row>
+        <BoxedNumeric
+          aria-label={__('Border dash', 'web-stories')}
+          value={borderDash}
+          min={0}
+          max={100}
+          suffix={__('Dash', 'web-stories')}
+          onChange={(value) => {
+            handleStyleChange(value, 'borderDash');
+          }}
+          canBeEmpty
+        />
+        <Space />
+        <BoxedNumeric
+          aria-label={__('Border gap', 'web-stories')}
+          value={borderGap}
+          min={0}
+          max={100}
+          suffix={__('Gap', 'web-stories')}
+          onChange={(value) => {
+            handleStyleChange(value, 'borderGap');
+          }}
+          canBeEmpty
+        />
+      </Row>
     </SimplePanel>
   );
 }
