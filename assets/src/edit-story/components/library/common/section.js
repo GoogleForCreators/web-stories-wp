@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -73,20 +72,6 @@ export default function Section({ title, titleTools, children, ...rest }) {
     </Container>
   );
 }
-
-export const SectionWithRef = forwardRef(
-  ({ title, titleTools, children, ...rest }, ref) => (
-    <Container {...rest}>
-      {(title || titleTools) && (
-        <TitleAndTools>
-          {title && <Title>{title}</Title>}
-          {titleTools && <Tools>{titleTools}</Tools>}
-        </TitleAndTools>
-      )}
-      {children}
-    </Container>
-  )
-);
 
 Section.propTypes = {
   title: PropTypes.string.isRequired,

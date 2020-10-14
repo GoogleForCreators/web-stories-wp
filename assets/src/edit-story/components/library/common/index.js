@@ -23,7 +23,7 @@ import styled from 'styled-components';
  * Exports
  */
 export { default as SearchInput } from './searchInput';
-export { default as Section, SectionWithRef } from './section';
+export { default as Section } from './section';
 
 export const Title = styled.h3`
   color: ${({ theme }) => theme.colors.fg.white};

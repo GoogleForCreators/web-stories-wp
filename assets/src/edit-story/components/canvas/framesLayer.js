@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
+import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -68,6 +69,19 @@ const Hint = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.workspace};
 `;
 
+const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
+const DesignSpaceGuideline = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.callout};
+  left: ${marginRatio}%;
+  right: ${marginRatio}%;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+  visibility: hidden;
+`;
+
 function FramesLayer() {
   const { currentPage, isAnimating } = useStory((state) => ({
     currentPage: state.state.currentPage,
@@ -76,9 +90,12 @@ function FramesLayer() {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { showSafeZone } = useCanvas(({ state: { showSafeZone } }) => ({
-    showSafeZone,
-  }));
+  const { showSafeZone, setDesignSpaceGuideline } = useCanvas(
+    ({ state: { showSafeZone }, actions: { setDesignSpaceGuideline } }) => ({
+      showSafeZone,
+      setDesignSpaceGuideline,
+    })
+  );
   const {
     state: { draggingResource, dropTargets },
     actions: { isDropSource },
@@ -117,6 +134,7 @@ function FramesLayer() {
             currentPage.elements.map(({ id, ...rest }) => {
               return <FrameElement key={id} element={{ id, ...rest }} />;
             })}
+          <DesignSpaceGuideline ref={setDesignSpaceGuideline} />
         </FramesPageArea>
       )}
       <MenuArea

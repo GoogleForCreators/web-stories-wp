@@ -76,6 +76,7 @@ export default async function loadTextSets() {
     'editorial',
     'contact',
     'table',
+    'list',
     'quote',
   ];
 

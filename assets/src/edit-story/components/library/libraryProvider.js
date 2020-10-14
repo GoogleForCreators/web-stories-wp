@@ -55,12 +55,12 @@ function LibraryProvider({ children }) {
     () => [
       MEDIA,
       MEDIA3P,
-      TEXT,
+      ...(tab === TEXT.id ? [TEXT] : [{ icon: TextIcon, id: 'text' }]),
       SHAPES,
       ...(showElementsTab ? [ELEMS] : []),
       ...(showAnimationTab ? [ANIM] : []),
     ],
-    [showAnimationTab, showElementsTab]
+    [showAnimationTab, showElementsTab, tab]
   );
 
   const state = useMemo(

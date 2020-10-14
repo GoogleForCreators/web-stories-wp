@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useRef } from 'react';
+import { memo, useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,6 +33,7 @@ import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
 import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
+import useCanvas from './useCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
@@ -48,13 +49,25 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout() {
+  const { setCanvasContainer } = useCanvas((state) => ({
+    setCanvasContainer: state.actions.setCanvasContainer,
+  }));
+
   const backgroundRef = useRef(null);
+
+  const setBackgroundRef = useCallback(
+    (ref) => {
+      backgroundRef.current = ref;
+      setCanvasContainer(ref);
+    },
+    [setCanvasContainer]
+  );
 
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
   return (
-    <Background ref={backgroundRef} style={layoutParamsCss}>
+    <Background ref={setBackgroundRef} style={layoutParamsCss}>
       <CanvasUploadDropTarget>
         <CanvasElementDropzone>
           <SelectionCanvas>

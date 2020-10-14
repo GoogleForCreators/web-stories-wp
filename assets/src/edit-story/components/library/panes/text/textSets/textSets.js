@@ -31,13 +31,17 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SectionWithRef as Section } from '../../../common';
-import { UnitsProvider } from '../../../../../units';
-import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
+import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
+import localStore, {
+  LOCAL_STORAGE_PREFIX,
+} from '../../../../../utils/localStore';
+import { UnitsProvider } from '../../../../../units';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
+// import { TEXT_SET_ACTIONS, getTextSetReducer } from './getTextSetReducer';
 
 const TEXT_SET_ROW_GAP = 12;
 
@@ -78,13 +82,18 @@ const CATEGORIES = {
 };
 
 function TextSets({ paneRef }) {
-  const [selectedCat, setSelectedCat] = useState(null);
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
+
   const filteredTextSets = useMemo(
     () => (selectedCat ? textSets[selectedCat] : allTextSets),
     [selectedCat, textSets, allTextSets]
+  );
+
+  const [selectedCat, setSelectedCat] = useState(
+    localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
+      ?.selectedCategory
   );
 
   const categories = useMemo(
@@ -106,14 +115,21 @@ function TextSets({ paneRef }) {
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
+  const handleSelectedCategory = useCallback((selectedCategory) => {
+    setSelectedCat(selectedCategory);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
+      selectedCategory,
+    });
+  }, []);
+
   return (
     <Section id={sectionId} title={title}>
       <CategoryWrapper>
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
-          selectItem={setSelectedCat}
-          deselectItem={() => setSelectedCat(null)}
+          selectItem={handleSelectedCategory}
+          deselectItem={() => handleSelectedCategory(null)}
         />
       </CategoryWrapper>
       <UnitsProvider

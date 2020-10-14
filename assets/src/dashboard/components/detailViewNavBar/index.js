@@ -79,11 +79,18 @@ const CapitalizedButton = styled(Button)`
   text-transform: uppercase;
 `;
 
-export function DetailViewNavBar({ handleCta, handleBookmarkClick, ctaText }) {
+export function DetailViewNavBar({
+  closeViewAriaLabel = __('Close', 'web-stories'),
+  handleCta,
+  handleBookmarkClick,
+  ctaText,
+}) {
   return (
     <Nav>
       <Container>
-        <CloseLink href={parentRoute()}>{__('Close', 'web-stories')}</CloseLink>
+        <CloseLink aria-label={closeViewAriaLabel} href={parentRoute()}>
+          {__('Close', 'web-stories')}
+        </CloseLink>
       </Container>
       <Container>
         {handleBookmarkClick && (
@@ -100,6 +107,7 @@ export function DetailViewNavBar({ handleCta, handleBookmarkClick, ctaText }) {
 }
 
 DetailViewNavBar.propTypes = {
+  closeViewAriaLabel: PropTypes.string,
   ctaText: PropTypes.string,
   handleBookmarkClick: PropTypes.func,
   handleCta: PropTypes.func.isRequired,
