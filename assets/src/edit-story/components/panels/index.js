@@ -21,6 +21,7 @@ import { elementTypes } from '../../elements';
 import AnimationPanel from './animation';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
+import BorderStylePanel from './border';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
@@ -40,6 +41,7 @@ export { default as LayerPanel } from './layer';
 const ANIMATION = 'animation';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
+const BORDER = 'borderStyle';
 const STYLE_PRESETS = 'stylePresets';
 const COLOR_PRESETS = 'colorPresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
@@ -69,6 +71,7 @@ export const PanelTypes = {
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
+  BORDER,
   LINK,
   VIDEO_OPTIONS,
   IMAGE_ACCESSIBILITY,
@@ -155,6 +158,8 @@ export function getPanels(elements, options = {}) {
           return { type, Panel: TextStylePanel };
         case SHAPE_STYLE:
           return { type, Panel: ShapeStylePanel };
+        case BORDER:
+          return { type, Panel: BorderStylePanel };
         case VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
         case VIDEO_ACCESSIBILITY:
