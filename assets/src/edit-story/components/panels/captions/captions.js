@@ -36,7 +36,25 @@ import { getCommonValue } from '../utils';
 import { useConfig } from '../../../app';
 import { useMediaPicker } from '../../mediaPicker';
 
-const Section = styled.div``;
+const Section = styled.div`
+  display: grid;
+  grid-template-areas: 'Options Remove';
+  grid-template-columns: auto 30px;
+`;
+const Options = styled.div`
+  grid-area: Options;
+`;
+const Remove = styled.div`
+  grid-area: Remove;
+  justify-self: center;
+  align-self: center;
+`;
+const RemoveButton = styled.button`
+  border: 0px;
+  background: none;
+  padding: 0;
+  color: ${({ theme }) => theme.colors.fg.white};
+`;
 
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
@@ -107,27 +125,33 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
       {tracks &&
         tracks.map(({ id, srclang, trackName }) => (
           <Section key={`section-${id}`}>
-            <Row>
-              <ExpandedTextInput
-                value={trackName}
-                onChange={() => {}}
-                readonly
-                aria-label={__('Filename', 'web-stories')}
-                key={`filename-${id}`}
-              />
-            </Row>
-            <Row>
-              <DropDown
-                options={languages}
-                value={srclang}
-                onChange={(value) => handleChangeLanguage(value, id)}
-                lightMode={true}
-                key={`dropdown-${id}`}
-              />
-            </Row>
-            <Row>
-              <Button onClick={() => handleRemoveTrack(id)}>{'X'}</Button>
-            </Row>
+            <Options>
+              <Row>
+                <ExpandedTextInput
+                  value={trackName}
+                  onChange={() => {}}
+                  readonly
+                  aria-label={__('Filename', 'web-stories')}
+                  key={`filename-${id}`}
+                />
+              </Row>
+              <Row>
+                <DropDown
+                  options={languages}
+                  value={srclang}
+                  onChange={(value) => handleChangeLanguage(value, id)}
+                  lightMode={true}
+                  key={`dropdown-${id}`}
+                />
+              </Row>
+            </Options>
+            <Remove>
+              <Row>
+                <RemoveButton onClick={() => handleRemoveTrack(id)}>
+                  {'x'}
+                </RemoveButton>
+              </Row>
+            </Remove>
           </Section>
         ))}
 
