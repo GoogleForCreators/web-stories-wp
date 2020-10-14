@@ -28,12 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Section, MainButton, SearchInput } from '../../common';
+import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
-import useLibrary from '../../useLibrary';
 import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
-import { PRESETS, DEFAULT_PRESET } from './textPresets';
+import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSets from './textSets';
 
@@ -42,13 +41,7 @@ const Pane = styled(SharedPane)`
   max-height: 100%;
 `;
 
-const TYPE = 'text';
-
 function TextPane(props) {
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
@@ -64,14 +57,7 @@ function TextPane(props) {
         />
       )}
 
-      <Section
-        title={__('Presets', 'web-stories')}
-        titleTools={
-          <MainButton onClick={() => insertElement(TYPE, DEFAULT_PRESET)}>
-            {__('Add new text', 'web-stories')}
-          </MainButton>
-        }
-      >
+      <Section title={__('Presets', 'web-stories')}>
         {PRESETS.map(({ title, element }, i) => (
           <FontPreview
             key={i}
