@@ -13,17 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
+import { css } from 'styled-components';
 
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode };
+export const defaultTypographyStyle = ({ theme }) => css`
+  font-family: ${theme.typography.family.primary};
+  color: ${theme.colors.fg.primary};
+  margin: 0;
+  padding: 0;
+`;

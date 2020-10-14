@@ -24,6 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { dark, light } from '../theme/colors';
+import { Headline, Text, THEME_CONSTANTS } from '../';
 
 export default {
   title: 'DesignSystem/Colors',
@@ -60,7 +61,7 @@ export const _default = () => {
   const activeTheme = useMemo(() => (isDarkTheme ? dark : light), [
     isDarkTheme,
   ]);
-
+  const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES;
   return (
     <div>
       <button onClick={() => setIsDarkTheme(!isDarkTheme)}>{`Toggle to ${
@@ -68,11 +69,13 @@ export const _default = () => {
       } theme`}</button>
       {Object.keys(activeTheme).map((themeSection) => (
         <Row key={themeSection}>
-          <h2>{themeSection}</h2>
+          <Headline as="h2">{themeSection}</Headline>
           {Object.keys(activeTheme[themeSection]).map((sectionValue) => (
             <Container key={`${themeSection}_${sectionValue}`}>
               <ColorBlock color={activeTheme[themeSection][sectionValue]} />
-              <p>{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</p>
+              <Text
+                size={SMALL}
+              >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text>
             </Container>
           ))}
         </Row>
