@@ -23,6 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { dark, light } from '../theme/colors';
+import { Headline, Text, THEME_CONSTANTS } from '../';
 
 export default {
   title: 'DesignSystem/Colors',
@@ -52,10 +53,12 @@ const ColorBlock = styled.span`
 
 export const _default = () => {
   const { brandColors, standard, accent, status } = dark;
+  const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES;
+
   const getColorSet = (color, idx) => (
     <Container key={idx}>
       <ColorBlock color={color} />
-      <p>{color}</p>
+      <Text size={SMALL}>{color}</Text>
     </Container>
   );
 
@@ -85,19 +88,19 @@ export const _default = () => {
 
   return (
     <>
-      <h2>{'Standard Colors'}</h2>
+      <Headline as="h2">{'Standard Colors'}</Headline>
       <Row>{StandardColors}</Row>
-      <h2>{'Accent Colors'}</h2>
+      <Headline as="h2">{'Accent Colors'}</Headline>
       <Row>{AccentColors}</Row>
-      <h2>{'Status Colors'}</h2>
+      <Headline as="h2">{'Status Colors'}</Headline>
       <Row>{StatusColors}</Row>
-      <h2>{'Dark Mode (default) - Foreground'}</h2>
+      <Headline as="h2">{'Dark Mode (default) - Foreground'}</Headline>
       <Row>{fgDarkColors}</Row>
-      <h2>{'Dark Mode (default) - Background'}</h2>
+      <Headline as="h2">{'Dark Mode (default) - Background'}</Headline>
       <Row>{bgDarkColors}</Row>
-      <h2>{'Light Mode (dashboard) - Foreground'}</h2>
+      <Headline as="h2">{'Light Mode (dashboard) - Foreground'}</Headline>
       <Row>{fgLightColors}</Row>
-      <h2>{'Light Mode (dashboard) - Background'}</h2>
+      <Headline as="h2">{'Light Mode (dashboard) - Background'}</Headline>
       <Row>{bgLightColors}</Row>
       <h2>{'Brand Colors - Gray'}</h2>
       <Row>{brandColorsGray}</Row>

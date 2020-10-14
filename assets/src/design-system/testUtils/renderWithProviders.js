@@ -15,15 +15,20 @@
  */
 
 /**
+ * External dependencies
+ */
+import { render } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
+import { lightMode, theme } from '../theme';
 
-export const theme = {
-  typography,
-  colors: { ...darkMode },
+export const renderWithProviders = (children) => {
+  return render(
+    <ThemeProvider theme={{ ...theme, colors: { ...lightMode } }}>
+      {children}
+    </ThemeProvider>
+  );
 };
-
-export { lightMode };
