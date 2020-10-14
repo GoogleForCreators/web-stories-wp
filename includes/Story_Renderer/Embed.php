@@ -27,7 +27,7 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
-use Google\Web_Stories\Embed_Block;
+use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
 
 /**
@@ -66,12 +66,14 @@ class Embed {
 	public function render( array $args = [] ) {
 		$defaults = [
 			'align'  => 'none',
+			'class'  => 'wp-block-web-stories-embed',
 			'height' => 600,
 			'width'  => 360,
 		];
 
 		$args   = wp_parse_args( $args, $defaults );
 		$align  = sprintf( 'align%s', $args['align'] );
+		$class  = $args['class'];
 		$url    = $this->story->get_url();
 		$title  = $this->story->get_title();
 		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
@@ -85,21 +87,16 @@ class Embed {
 		);
 
 		// This CSS is used for AMP and non-AMP.
-		wp_enqueue_style( Embed_Block::SCRIPT_HANDLE_FRONTEND );
+		wp_enqueue_style( Embed_Base::SCRIPT_HANDLE );
 
 		if (
 			( function_exists( 'amp_is_request' ) && amp_is_request() ) ||
 			( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() )
 		) {
-			$wrapper_style = sprintf(
-				'--width: %dpx;',
-				absint( $args['width'] )
-			);
-
 			ob_start();
 			?>
-			<div class="wp-block-web-stories-embed wp-block-web-stories-embed-amp <?php echo esc_attr( $align ); ?>">
-				<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
+			<div class="<?php echo esc_attr( $class ); ?> web-stories-embed web-stories-embed-amp <?php echo esc_attr( $align ); ?>">
+				<div class="wp-block-embed__wrapper">
 					<amp-story-player
 						width="<?php echo esc_attr( $args['width'] ); ?>"
 						height="<?php echo esc_attr( $args['height'] ); ?>"
@@ -117,12 +114,12 @@ class Embed {
 			return (string) ob_get_clean();
 		}
 
-		wp_enqueue_style( 'standalone-amp-story-player' );
-		wp_enqueue_script( 'standalone-amp-story-player' );
+		wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
+		wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
 
 		ob_start();
 		?>
-		<div class="wp-block-web-stories-embed <?php echo esc_attr( $align ); ?>">
+		<div class="<?php echo esc_attr( $class ); ?> web-stories-embed <?php echo esc_attr( $align ); ?>">
 			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
 				<amp-story-player>
 					<a

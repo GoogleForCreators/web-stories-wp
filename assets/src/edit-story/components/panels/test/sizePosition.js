@@ -24,8 +24,9 @@ import { fireEvent } from '@testing-library/react';
  */
 import SizePosition from '../sizePosition';
 import { getDefinitionForType } from '../../../elements';
-import { MULTIPLE_VALUE } from '../../form';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { dataPixels } from '../../../units';
+
 import { renderPanel } from './_utils';
 
 jest.mock('../../../elements');
@@ -151,6 +152,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
         height: 150 / (100 / 80),
@@ -161,6 +163,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 160,
         width: 160 * (100 / 80),
@@ -174,6 +177,7 @@ describe('Panels/SizePosition', () => {
 
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ width: 150, height: 80 });
     });
 
@@ -184,22 +188,36 @@ describe('Panels/SizePosition', () => {
 
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ height: 160, width: 100 });
     });
 
-    it('should not update width if empty value', () => {
+    it('should not update width if empty value is submitted', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
-      const input = getByRole('textbox', { name: 'Width' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      const inputWidth = getByRole('textbox', { name: 'Width' });
+      const inputHeight = getByRole('textbox', { name: 'Height' });
+      const originalWidth = parseInt(inputWidth.value);
+      const originalHeight = parseInt(inputHeight.value);
+      fireEvent.change(inputWidth, { target: { value: '' } });
+      fireEvent.keyDown(inputWidth, { key: 'Enter', which: 13 });
+      expect(pushUpdate).toHaveBeenCalledWith({
+        width: originalWidth,
+        height: originalHeight,
+      });
     });
 
-    it('should not update height if empty value', () => {
+    it('should not update height if empty value is submitted', () => {
       const { getByRole, pushUpdate } = renderSizePosition([defaultImage]);
-
-      const input = getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '' } });
-      expect(pushUpdate).not.toHaveBeenCalled();
+      const inputWidth = getByRole('textbox', { name: 'Width' });
+      const inputHeight = getByRole('textbox', { name: 'Height' });
+      const originalWidth = parseInt(inputWidth.value);
+      const originalHeight = parseInt(inputHeight.value);
+      fireEvent.change(inputHeight, { target: { value: '' } });
+      fireEvent.keyDown(inputHeight, { key: 'Enter', which: 13 });
+      expect(pushUpdate).toHaveBeenCalledWith({
+        width: originalWidth,
+        height: originalHeight,
+      });
     });
 
     it('should update lock ratio to false for element', () => {
@@ -272,6 +290,7 @@ describe('Panels/SizePosition', () => {
       ]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
         height: dataPixels(150 / (100 / 80)),
@@ -299,6 +318,7 @@ describe('Panels/SizePosition', () => {
       ]);
       const input = getByRole('textbox', { name: 'Width' });
       fireEvent.change(input, { target: { value: '150' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         width: 150,
         height: MULTIPLE_VALUE,
@@ -326,6 +346,7 @@ describe('Panels/SizePosition', () => {
       ]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '160' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 160,
         width: MULTIPLE_VALUE,
@@ -383,6 +404,7 @@ describe('Panels/SizePosition', () => {
       const { getByRole, pushUpdate, submit } = renderSizePosition([image]);
       const input = getByRole('textbox', { name: 'Height' });
       fireEvent.change(input, { target: { value: '2000' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         height: 2000,
         width: 2000 * (100 / 80),
@@ -395,6 +417,30 @@ describe('Panels/SizePosition', () => {
           width: 1000,
         })
       );
+    });
+
+    it('should display Mixed as placeholder in case of mixed values multi-selectio', () => {
+      const { getByRole } = renderSizePosition([
+        defaultText,
+        {
+          ...defaultImage,
+          width: 200,
+          height: 200,
+          rotationAngle: 20,
+        },
+      ]);
+
+      const height = getByRole('textbox', { name: 'Height' });
+      expect(height.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(height.value).toStrictEqual('');
+
+      const width = getByRole('textbox', { name: 'Width' });
+      expect(width.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(width.value).toStrictEqual('');
+
+      const rotationAngle = getByRole('textbox', { name: 'Rotation' });
+      expect(rotationAngle.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+      expect(rotationAngle.value).toStrictEqual('');
     });
   });
 });

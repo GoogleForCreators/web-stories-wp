@@ -14,34 +14,32 @@
  * limitations under the License.
  */
 
-.wp-block-web-stories-embed.alignleft,
-.wp-block-web-stories-embed.alignright {
+.web-stories-embed.alignleft,
+.web-stories-embed.alignright {
   width: 100%;
 }
 
-.wp-block-web-stories-embed .wp-block-embed__wrapper {
+.web-stories-embed .wp-block-embed__wrapper {
   position: relative;
-  max-width: var(--width);
 }
 
-.wp-block-web-stories-embed.aligncenter .wp-block-embed__wrapper {
+.web-stories-embed.aligncenter .wp-block-embed__wrapper {
   margin-left: auto;
   margin-right: auto;
 }
 
-.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp)
-  .wp-block-embed__wrapper {
+.web-stories-embed:not(.web-stories-embed-amp) .wp-block-embed__wrapper {
   max-width: var(--width);
 }
 
-.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp)
+.web-stories-embed:not(.web-stories-embed-amp)
   .wp-block-embed__wrapper::before {
   content: '';
   display: block;
   padding-bottom: calc(var(--aspect-ratio) * 100%);
 }
 
-.wp-block-web-stories-embed:not(.wp-block-web-stories-embed-amp)
+.web-stories-embed:not(.web-stories-embed-amp)
   .wp-block-embed__wrapper
   amp-story-player {
   position: absolute;

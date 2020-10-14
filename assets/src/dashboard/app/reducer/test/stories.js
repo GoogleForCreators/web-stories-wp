@@ -195,6 +195,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 65,
@@ -203,6 +204,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 78,
@@ -211,6 +213,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
           {
             id: 12,
@@ -219,6 +222,7 @@ describe('storyReducer', () => {
             story_data: {
               pages: [{}],
             },
+            _embedded: { author: [{ id: 1, name: 'admin' }] },
           },
         ],
         totalStoriesByStatus: {
@@ -265,6 +269,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 65,
@@ -273,6 +278,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 78,
@@ -281,6 +287,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
             {
               id: 12,
@@ -289,6 +296,7 @@ describe('storyReducer', () => {
               story_data: {
                 pages: [{}],
               },
+              _embedded: { author: [{ id: 1, name: 'admin' }] },
             },
           ],
           totalStoriesByStatus: {

@@ -108,8 +108,10 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
   }
 
   describe('Action: See pre-built template details page', () => {
-    it('should navigate to "Explore Templates" when "Close" is clicked', async () => {
-      const closeLink = fixture.screen.getByRole('link', { name: /^Close$/ });
+    it('should navigate to "Explore Templates" when "Go to Explore Templates" is clicked', async () => {
+      const closeLink = fixture.screen.getByRole('link', {
+        name: /^Go to Explore Templates$/,
+      });
 
       await fixture.events.click(closeLink);
 

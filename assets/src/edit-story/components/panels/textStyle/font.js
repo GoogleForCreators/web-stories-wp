@@ -29,7 +29,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Numeric, Row, DropDown, usePresubmitHandler } from '../../form';
+import {
+  Numeric,
+  Row,
+  DropDown,
+  usePresubmitHandler,
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '../../form';
 import FontPicker from '../../fontPicker';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
@@ -159,7 +166,8 @@ function FontControls({ selectedElements, pushUpdate }) {
             data-testid="font"
             aria-label={__('Font family', 'web-stories')}
             options={fonts}
-            value={fontFamily}
+            value={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
+            placeholder={MULTIPLE_DISPLAY_VALUE}
             onChange={handleFontPickerChange}
           />
         </Row>
@@ -170,9 +178,9 @@ function FontControls({ selectedElements, pushUpdate }) {
             <DropDown
               data-testid="font.weight"
               aria-label={__('Font weight', 'web-stories')}
-              placeholder={__('(multiple)', 'web-stories')}
+              placeholder={MULTIPLE_DISPLAY_VALUE}
               options={fontWeights}
-              value={fontWeight}
+              value={MULTIPLE_VALUE === fontWeight ? '' : fontWeight}
               onChange={handleFontWeightPickerChange}
             />
             <Space />

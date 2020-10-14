@@ -1,5 +1,5 @@
 {
-  "current": "6074e40e-c120-498b-81d4-dc6337166914",
+  "current": "f3ff9526-189a-4eb5-8e5b-1b38228a562b",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -2459,6 +2459,181 @@
       },
       "type": "page",
       "id": "6074e40e-c120-498b-81d4-dc6337166914"
+    },
+    {
+      "backgroundOverlay": "none",
+      "elements": [
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "mask": {
+            "type": "rectangle"
+          },
+          "isBackground": true,
+          "isDefaultBackground": true,
+          "type": "shape",
+          "id": "6ce84846-af53-42c0-af00-a60dce067cd0"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Dancing Script",
+            "service": "fonts.google.com",
+            "fallbacks": ["cursive"],
+            "weights": [400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 920,
+              "des": -280,
+              "tAsc": 920,
+              "tDes": -280,
+              "tLGap": 0,
+              "wAsc": 1096,
+              "wDes": 306,
+              "xH": 332,
+              "capH": 720,
+              "yMin": -284,
+              "yMax": 1095,
+              "hAsc": 920,
+              "hDes": -280,
+              "lGap": 0
+            }
+          },
+          "fontSize": 65,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.2,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #ff96b5\">Eyeshadow</span>\n<span style=\"color: #ff96b5\">Makeup</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 155,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 21.65625,
+          "basedOn": "2325e812-ac61-41b5-84b6-b307f7638e63",
+          "id": "a4c10384-278e-48a5-a16c-ccb9a2002dba",
+          "x": 40,
+          "y": 342
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Open Sans Condensed",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 700],
+            "styles": ["italic"],
+            "variants": [
+              [0, 300],
+              [0, 700],
+              [1, 300]
+            ],
+            "metrics": {
+              "upm": 2048,
+              "asc": 2189,
+              "des": -600,
+              "tAsc": 1567,
+              "tDes": -492,
+              "tLGap": 132,
+              "wAsc": 2189,
+              "wDes": 600,
+              "xH": 1085,
+              "capH": 1462,
+              "yMin": -512,
+              "yMax": 2132,
+              "hAsc": 2189,
+              "hDes": -600,
+              "lGap": 0
+            }
+          },
+          "fontSize": 24,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"color: #444; letter-spacing: 0.04em\">Quick Tutorial for Beginners</span>",
+          "fontWeight": 400,
+          "width": 332,
+          "height": 33,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "be70352c-fbed-4b24-90f0-330e03e8beff",
+          "id": "c6758347-f6c5-4225-a276-e1853ecff8eb",
+          "x": 40,
+          "y": 513
+        }
+      ],
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 255,
+          "b": 255
+        }
+      },
+      "type": "page",
+      "id": "f3ff9526-189a-4eb5-8e5b-1b38228a562b"
     }
   ]
 }
