@@ -30,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useState } from 'react';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
@@ -54,24 +53,24 @@ const TextSetItem = styled.button`
 
 const DragWrapper = styled.div.attrs({
   role: 'listitem',
-})``;
+})`
+  contain: content;
+`;
 
 const DragContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  left: -9999px;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
-  visibility: ${({ dragging }) => (dragging ? 'visible' : 'visible')};
 `;
 
 function TextSet({ elements }) {
   const { insertTextSet } = useLibrary((state) => ({
     insertTextSet: state.actions.insertTextSet,
   }));
-  const [isDragging, setIsDragging] = useState(false);
 
   const elementRef = useRef();
 
@@ -81,7 +80,6 @@ function TextSet({ elements }) {
 
   const handleDragStart = useCallback(
     (e) => {
-      setIsDragging(true);
       const { x, y } = e.target.getBoundingClientRect();
       const offsetX = e.clientX - x;
       const offsetY = e.clientY - y;
@@ -106,12 +104,7 @@ function TextSet({ elements }) {
 
   return (
     <DragWrapper>
-      <DragContainer
-        ref={elementRef}
-        width={dragWidth}
-        height={dragHeight}
-        dragging={isDragging}
-      >
+      <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
         <TextSetElements
           elements={elements}
           pageSize={{
@@ -120,11 +113,11 @@ function TextSet({ elements }) {
           }}
         />
       </DragContainer>
+
       <TextSetItem
         role="listitem"
         draggable={true}
         onDragStart={handleDragStart}
-        onDragEnd={() => setIsDragging(false)}
         aria-label={__('Insert Text Set', 'web-stories')}
         onClick={() => insertTextSet(elements)}
       >
