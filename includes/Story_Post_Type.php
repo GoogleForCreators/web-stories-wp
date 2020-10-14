@@ -712,29 +712,7 @@ class Story_Post_Type {
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
 				],
-				// @todo Hardcoded list for now.
-				'languages'        => [
-					[
-						'name'  => __( 'English', 'web-stories' ),
-						'value' => 'en',
-					],
-					[
-						'name'  => __( 'Spanish', 'web-stories' ),
-						'value' => 'es',
-					],
-					[
-						'name'  => __( 'German', 'web-stories' ),
-						'value' => 'de',
-					],
-					[
-						'name'  => __( 'French', 'web-stories' ),
-						'value' => 'fr',
-					],
-					[
-						'name'  => __( 'Italian', 'web-stories' ),
-						'value' => 'it',
-					],
-				],
+				'languages'        => $this->get_languages(),
 				'version'          => WEBSTORIES_VERSION,
 			],
 			'flags'      => array_merge(
@@ -935,5 +913,30 @@ class Story_Post_Type {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Get a list of available.
+	 *
+	 * @return array Array of languages.
+	 */
+	protected function get_languages() {
+		if ( ! function_exists( 'wp_get_available_translations' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+		}
+		$languages = [];
+		$available_translations = wp_get_available_translations();
+		foreach ( $available_translations as $slug => $available_translation ) {
+			$language = $available_translation['native_name'];
+			if ( $available_translation['native_name'] !== $available_translation['english_name'] ) {
+				$language = sprintf( '%s (%s)', $available_translation['native_name'], $available_translation['english_name'] );
+			}
+			$languages[] = [
+				'name'  => $language,
+				'value' => $slug,
+			];
+		}
+
+		return $languages;
 	}
 }

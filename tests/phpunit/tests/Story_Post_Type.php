@@ -539,6 +539,69 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::get_languages
+	 */
+	public function test_get_languages() {
+		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$languages       = $this->call_private_method( $story_post_type, 'get_languages' );
+		$this->assertEquals( 4, count( $languages ) );
+		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
+	}
+
+	/**
+	 * Mock data.
+	 *
+	 * @return array
+	 */
+	public function mock_available_translations() {
+		return [
+			'af'  =>
+				[
+					'language'     => 'af',
+					'version'      => '5.5.1',
+					'updated'      => '2020-09-20 19:59:25',
+					'english_name' => 'Afrikaans',
+					'native_name'  => 'Afrikaans',
+					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/af.zip',
+					'iso'          => [ 'af', 'afr' ],
+				],
+			'ar'  =>
+				[
+					'language'     => 'ar',
+					'version'      => '5.5.1',
+					'updated'      => '2020-09-24 06:56:02',
+					'english_name' => 'Arabic',
+					'native_name'  => 'العربية',
+					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/ar.zip',
+					'iso'          => [ 'ar', 'ara' ],
+				],
+
+			'ary' =>
+				[
+					'language'     => 'ary',
+					'version'      => '4.7.7',
+					'updated'      => '2020-09-24 06:56:02',
+					'english_name' => 'Moroccan Arabic',
+					'native_name'  => 'العربية المغربية',
+					'package'      => 'https://downloads.wordpress.org/translation/core/4.7.7/ary.zip',
+					'iso'          => [ 'ar', 'ary' ],
+				],
+			'as'  =>
+				[
+					'language'     => 'ar',
+					'version'      => '5.5.1',
+					'updated'      => '2020-09-24 06:56:02',
+					'english_name' => 'Assamese',
+					'native_name'  => 'অসমীয়া',
+					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/arszip',
+					'iso'          => [ 'as', 'asm' ],
+				],
+		];
+	}
+
+
+	/**
 	 * This is a bit of a hack used to buffer feed content.
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
