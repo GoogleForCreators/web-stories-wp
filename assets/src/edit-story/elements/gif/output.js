@@ -42,7 +42,6 @@ function GifOutput({ element, box }) {
     noaudio: 'noaudio',
   };
 
-  // crossorigin='anonymous' is required to play videos from other domains.
   return (
     <MediaOutput element={element} box={box}>
       <amp-video {...props} id={`el-${element.id}-media`}>
