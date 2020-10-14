@@ -33,8 +33,8 @@ describe('RTL support', () => {
     fixture.restore();
   });
 
-  it('should display the editor in RTL mode', () => {
-    fixture.snapshot('Direction: RTL');
+  it('should display the editor in RTL mode', async () => {
+    await fixture.snapshot('Direction: RTL');
   });
 
   async function getSelectedElements() {
@@ -59,7 +59,7 @@ describe('RTL support', () => {
       const changedElements = await getSelectedElements();
       // We moved it to the right so the X should be more than before if it works as expected.
       expect(changedElements[0].width).toBeGreaterThan(originX);
-      fixture.snapshot(
+      await fixture.snapshot(
         'Direction: RTL. Default Text element moved to the right.'
       );
     });
@@ -81,7 +81,9 @@ describe('RTL support', () => {
       const changedElements = await getSelectedElements();
       // We resized it from the right handle so the width should be higher than before.
       expect(changedElements[0].width).toBeGreaterThan(originWidth);
-      fixture.snapshot('Direction: RTL. Default Text element resized wider.');
+      await fixture.snapshot(
+        'Direction: RTL. Default Text element resized wider.'
+      );
     });
   });
 });
