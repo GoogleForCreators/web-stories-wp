@@ -35,6 +35,7 @@ import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
+import WithBorder from './withBorder';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -137,7 +138,9 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           }}
           previewMode={previewMode}
         >
-          <Display element={element} previewMode={previewMode} box={box} />
+          <WithBorder element={element}>
+            <Display element={element} previewMode={previewMode} box={box} />
+          </WithBorder>
         </WithMask>
         {!previewMode && (
           <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
