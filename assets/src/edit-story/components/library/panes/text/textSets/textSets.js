@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
@@ -35,16 +36,28 @@ import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
-import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
 
+const TEXT_SET_ROW_GAP = 12;
+
 const TextSetContainer = styled.div`
+  height: ${({ height }) => `${height}px`};
+  width: 100%;
+  position: relative;
+  margin-top: 28px;
+`;
+
+const TextSetRow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${({ height }) => `${height}px`};
+  transform: ${({ translateY }) => `translateY(${translateY}px)`};
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 12px;
   column-gap: 12px;
-  margin-top: 28px;
 `;
 
 /* Undo the -1.5em set by the Pane */
@@ -66,8 +79,6 @@ const CATEGORIES = {
 
 function TextSets({ paneRef }) {
   const [selectedCat, setSelectedCat] = useState(null);
-  // const ref = useRef();
-  // const sectionRef = useRef();
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
@@ -75,6 +86,7 @@ function TextSets({ paneRef }) {
     () => (selectedCat ? textSets[selectedCat] : allTextSets),
     [selectedCat, textSets, allTextSets]
   );
+
   const categories = useMemo(
     () =>
       Object.keys(textSets).map((cat) => ({
@@ -83,21 +95,17 @@ function TextSets({ paneRef }) {
       })),
     [textSets]
   );
-  // debugger;
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil(filteredTextSets.length / 2),
     parentRef: paneRef,
-    estimateSize: useCallback(() => TEXT_SET_SIZE + 12, []),
+    estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
   });
 
-  // console.log(rowVirtualizer);
+  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
+  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
-  // useRovingTabIndex({ ref });
-
-  const sectionId = `section-${uuidv4()}`;
-  const title = __('Text Sets', 'web-stories');
   return (
     <Section id={sectionId} title={title}>
       <CategoryWrapper>
@@ -114,31 +122,9 @@ function TextSets({ paneRef }) {
           height: TEXT_SET_SIZE / PAGE_RATIO,
         }}
       >
-        <div
-          id="outer"
-          style={{
-            height: `${rowVirtualizer.totalSize}px`,
-            width: '100%',
-            position: 'relative',
-            marginTop: '28px',
-          }}
-        >
+        <TextSetContainer height={rowVirtualizer.totalSize}>
           {rowVirtualizer.virtualItems.map((virtualRow) => (
-            <div
-              id={`row-${virtualRow.index}`}
-              key={virtualRow.index}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: `${virtualRow.size}px`,
-                transform: `translateY(${virtualRow.start}px)`,
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                columnGap: '12px',
-              }}
-            >
+            <TextSetRow key={virtualRow.index} translateY={virtualRow.start}>
               {filteredTextSets[virtualRow.index * 2].length > 0 && (
                 <TextSet
                   key={virtualRow.index * 2}
@@ -152,25 +138,16 @@ function TextSets({ paneRef }) {
                     elements={filteredTextSets[virtualRow.index * 2 + 1]}
                   />
                 )}
-            </div>
+            </TextSetRow>
           ))}
-        </div>
+        </TextSetContainer>
       </UnitsProvider>
-      {/* <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
-        <UnitsProvider
-          pageSize={{
-            width: TEXT_SET_SIZE,
-            height: TEXT_SET_SIZE / PAGE_RATIO,
-          }}
-        >
-          {filteredTextSets.map(
-            (elements, index) =>
-              elements.length > 0 && <TextSet key={index} elements={elements} />
-          )}
-        </UnitsProvider>
-      </TextSetContainer> */}
     </Section>
   );
 }
+
+TextSets.propTypes = {
+  paneRef: PropTypes.object,
+};
 
 export default TextSets;
