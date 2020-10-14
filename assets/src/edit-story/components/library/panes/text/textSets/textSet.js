@@ -30,6 +30,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { useState } from 'react';
 import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
@@ -63,13 +64,14 @@ const DragContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
-  visibility: hidden;
+  visibility: ${({ dragging }) => (dragging ? 'visible' : 'visible')};
 `;
 
 function TextSet({ elements }) {
   const { insertTextSet } = useLibrary((state) => ({
     insertTextSet: state.actions.insertTextSet,
   }));
+  const [isDragging, setIsDragging] = useState(false);
 
   const elementRef = useRef();
 
@@ -79,6 +81,7 @@ function TextSet({ elements }) {
 
   const handleDragStart = useCallback(
     (e) => {
+      setIsDragging(true);
       const { x, y } = e.target.getBoundingClientRect();
       const offsetX = e.clientX - x;
       const offsetY = e.clientY - y;
@@ -103,7 +106,12 @@ function TextSet({ elements }) {
 
   return (
     <DragWrapper>
-      <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
+      <DragContainer
+        ref={elementRef}
+        width={dragWidth}
+        height={dragHeight}
+        dragging={isDragging}
+      >
         <TextSetElements
           elements={elements}
           pageSize={{
@@ -116,6 +124,7 @@ function TextSet({ elements }) {
         role="listitem"
         draggable={true}
         onDragStart={handleDragStart}
+        onDragEnd={() => setIsDragging(false)}
         aria-label={__('Insert Text Set', 'web-stories')}
         onClick={() => insertTextSet(elements)}
       >

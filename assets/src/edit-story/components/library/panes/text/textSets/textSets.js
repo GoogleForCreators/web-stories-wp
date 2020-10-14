@@ -86,14 +86,14 @@ function TextSets({ paneRef }) {
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
 
-  const filteredTextSets = useMemo(
-    () => (selectedCat ? textSets[selectedCat] : allTextSets),
-    [selectedCat, textSets, allTextSets]
-  );
-
   const [selectedCat, setSelectedCat] = useState(
     localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
       ?.selectedCategory
+  );
+
+  const filteredTextSets = useMemo(
+    () => (selectedCat ? textSets[selectedCat] : allTextSets),
+    [selectedCat, textSets, allTextSets]
   );
 
   const categories = useMemo(
@@ -106,7 +106,8 @@ function TextSets({ paneRef }) {
   );
 
   const rowVirtualizer = useVirtual({
-    size: Math.ceil(filteredTextSets.length / 2),
+    // size: Math.ceil(filteredTextSets.length / 2),
+    size: 1,
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
@@ -140,20 +141,24 @@ function TextSets({ paneRef }) {
       >
         <TextSetContainer height={rowVirtualizer.totalSize}>
           {rowVirtualizer.virtualItems.map((virtualRow) => (
-            <TextSetRow key={virtualRow.index} translateY={virtualRow.start}>
+            <TextSetRow
+              key={virtualRow.index}
+              height={virtualRow.size}
+              translateY={virtualRow.start}
+            >
               {filteredTextSets[virtualRow.index * 2].length > 0 && (
                 <TextSet
                   key={virtualRow.index * 2}
                   elements={filteredTextSets[virtualRow.index * 2]}
                 />
               )}
-              {filteredTextSets[virtualRow.index * 2 + 1] &&
+              {/* {filteredTextSets[virtualRow.index * 2 + 1] &&
                 filteredTextSets[virtualRow.index * 2 + 1].length > 0 && (
                   <TextSet
                     key={virtualRow.index * 2 + 1}
                     elements={filteredTextSets[virtualRow.index * 2 + 1]}
                   />
-                )}
+                )} */}
             </TextSetRow>
           ))}
         </TextSetContainer>

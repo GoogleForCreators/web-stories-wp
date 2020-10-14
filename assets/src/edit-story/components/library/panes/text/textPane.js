@@ -34,6 +34,7 @@ import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane as SharedPane } from '../shared';
+import useResizeEffect from '../../../../utils/useResizeEffect';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 import useInsertPreset from './useInsertPreset';
@@ -67,11 +68,13 @@ function TextPane(props) {
     return () => ro.disconnect();
   }, []);
 
+  // useResizeEffect(paneRef, () => forceUpdate(Date.now()), []);
+
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
         <SearchInput
-          initialValue={''}
+          initialValue={'test'}
           placeholder={__('Search', 'web-stories')}
           onSearch={() => {}}
           disabled
