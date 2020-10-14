@@ -10,6 +10,7 @@ assets/testjs
 bin
 build
 docs
+includes/composer.json
 karma
 node_modules
 patches
@@ -17,6 +18,8 @@ plugin-assets
 public
 static
 tests
+third-party/composer.json
+/vendor
 web-stories-scraper
 .browserslistrc
 .DS_Store
@@ -58,6 +61,7 @@ phpunit.xml.dist
 phpunit-multisite.xml
 phpunit-multisite.xml.dist
 README.md
+scoper.inc.php
 SECURITY.md
 webpack.config.cjs
 webpack.config.test.cjs
