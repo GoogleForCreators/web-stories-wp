@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -53,15 +53,13 @@ const TextSetItem = styled.button`
 
 const DragWrapper = styled.div.attrs({
   role: 'listitem',
-})`
-  contain: content;
-`;
+})``;
 
 const DragContainer = styled.div`
   position: absolute;
-  top: 0;
+  top: -9999px;
   left: 0;
-  left: -9999px;
+  z-index: -1;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};

@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
 
@@ -28,13 +29,10 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useEffect, useRef, useState } from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
 import { Section, MainButton, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import useLibrary from '../../useLibrary';
 import { Pane as SharedPane } from '../shared';
-import useResizeEffect from '../../../../utils/useResizeEffect';
 import paneId from './paneId';
 import { PRESETS, DEFAULT_PRESET } from './textPresets';
 import useInsertPreset from './useInsertPreset';

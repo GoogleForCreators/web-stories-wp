@@ -106,8 +106,7 @@ function TextSets({ paneRef }) {
   );
 
   const rowVirtualizer = useVirtual({
-    // size: Math.ceil(filteredTextSets.length / 2),
-    size: 4,
+    size: Math.ceil(filteredTextSets.length / 2),
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
