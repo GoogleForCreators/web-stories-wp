@@ -10,9 +10,12 @@ node_modules
 /build
 /bin/build
 /bin/local-env/data
+/includes/vendor
+/includes/composer.json
 /plugin-assets
 /public
 /static
+/third-party
 /vendor
 phpcs.xml
 phpunit.xml
