@@ -75,12 +75,6 @@ describe('Gif Output', () => {
         'src="https://c.tenor.com/4F2m7BWP6KYAAAPo/flying-kiss-muah.mp4"'
       )
     );
-    await expect(outputStr).toStrictEqual(
-      expect.stringMatching('autoplay="autoplay"')
-    );
-    await expect(outputStr).toStrictEqual(expect.stringMatching('loop="loop"'));
-    await expect(outputStr).toStrictEqual(
-      expect.stringMatching('noaudio="noaudio"')
-    );
+    await expect(outputStr).toMatchSnapshot();
   });
 });
