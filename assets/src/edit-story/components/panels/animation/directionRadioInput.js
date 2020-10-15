@@ -53,16 +53,24 @@ const Icon = styled.div`
   }};
 `;
 
+const RotationIcon = () => (
+  <Svg size="19px" viewBox="0 0 19 18">
+    <path d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9" />
+  </Svg>
+);
+
+const DirectionIcon = () => (
+  <Svg size="10px" viewBox="0 0 10 11">
+    <path d="M5 11L5 1M5 1L9 5M5 1L1 5" />
+  </Svg>
+);
+
 const Direction = ({ className, direction }) => (
   <Icon className={className} direction={direction}>
     {Object.values(DIRECTION).includes(direction) ? (
-      <Svg size="10px" viewBox="0 0 10 11">
-        <path d="M5 11L5 1M5 1L9 5M5 1L1 5" />
-      </Svg>
+      <DirectionIcon />
     ) : (
-      <Svg size="19px" viewBox="0 0 19 18">
-        <path d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9" />
-      </Svg>
+      <RotationIcon />
     )}
   </Icon>
 );
