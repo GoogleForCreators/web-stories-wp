@@ -25,6 +25,7 @@ import PropTypes from 'prop-types';
  */
 import { getElementMask, MaskTypes } from '../../masks';
 import StoryPropTypes from '../../types';
+import generatePatternStyles from '../../utils/generatePatternStyles';
 
 const borderElementCSS = css`
   top: 0;
@@ -34,19 +35,35 @@ const borderElementCSS = css`
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: 1;
 `;
 
-const Border = styled.div`
-  ${borderElementCSS}
-  border: ${({ color }) => `solid ${color}`};
+const solidBorderCSS = css`
+  ${({ color }) => generatePatternStyles(color, 'border-color')}
+  border-style: solid;
   border-width: ${({ left, top, right, bottom }) =>
     `${left}px ${top}px ${right}px ${bottom}px`};
-  box-sizing: border-box;
 `;
 
-const DashedBorder = styled.div`
+const innerSolidBorderCSS = css`
+  &:after {
+    content: ' ';
+    ${borderElementCSS}
+    ${solidBorderCSS}
+  }
+`;
+
+const outerSolidBorderCSS = css`
+  box-sizing: border-box;
+  ${solidBorderCSS}
+`;
+
+// @todo Confirm inner / outer for different elements.
+const Border = styled.div`
   ${borderElementCSS}
+  ${innerSolidBorderCSS}
+`;
+
+const dashedBorderCSS = css`
   background-image: ${({ dash, gap, color }) =>
     `repeating-linear-gradient(0deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
       dash + gap
@@ -69,6 +86,24 @@ const DashedBorder = styled.div`
   background-repeat: no-repeat;
 `;
 
+const innerDashedBorderCSS = css`
+  &:after {
+    content: ' ';
+    ${borderElementCSS}
+    ${dashedBorderCSS}
+  }
+`;
+
+const outerDashedBorderCSS = css`
+  box-sizing: border-box;
+  ${dashedBorderCSS}
+`;
+
+const DashedBorder = styled.div`
+  ${borderElementCSS}
+  ${innerDashedBorderCSS}
+`;
+
 export default function WithBorder({ element, children }) {
   const { border, borderColor, borderDash, borderGap } = element;
   // If we have no border-width / -color, let's short-circuit.
@@ -87,17 +122,17 @@ export default function WithBorder({ element, children }) {
     return children;
   }
 
-  const {
-    color: { r, g, b, a },
-  } = borderColor;
-  const color = `rgba(${r},${g},${b},${a || 1})`;
   if (!borderGap || !borderDash) {
     return (
-      <Border {...border} color={color}>
+      <Border {...border} color={borderColor}>
         {children}
       </Border>
     );
   }
+  const {
+    color: { r, g, b, a },
+  } = borderColor;
+  const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
   return (
     <DashedBorder color={color} {...border} dash={borderDash} gap={borderGap}>
       {children}
