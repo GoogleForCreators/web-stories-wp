@@ -76,7 +76,7 @@ describe('Gif Output', () => {
       )
     );
     await expect(outputStr).toStrictEqual(
-      expect.stringMatching('autoPlay="autoplay"')
+      expect.stringMatching('autoplay="autoplay"')
     );
     await expect(outputStr).toStrictEqual(expect.stringMatching('loop="loop"'));
     await expect(outputStr).toStrictEqual(
