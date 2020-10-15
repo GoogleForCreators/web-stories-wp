@@ -32,6 +32,7 @@ import { __ } from '@wordpress/i18n';
 import { SimplePanel } from '../panel';
 import { Color, Numeric, Row } from '../../form';
 import { getCommonValue, useCommonColorValue } from '../utils';
+import { MaskTypes } from '../../../masks';
 import BorderWidthControls from './borderWidth';
 
 // @todo Only display for square shapes.
@@ -48,8 +49,10 @@ const Space = styled.div`
 function BorderStylePanel(props) {
   const { selectedElements, pushUpdate } = props;
   const borderColor = useCommonColorValue(selectedElements, 'borderColor');
-  const borderDash = getCommonValue(selectedElements, 'borderDash', 0);
-  const borderGap = getCommonValue(selectedElements, 'borderGap', 0);
+
+  const notAllRectangle = selectedElements.some(
+    ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
+  );
 
   const handleColorChange = useCallback(
     (value) => pushUpdate({ borderColor: value }, true),
@@ -60,6 +63,14 @@ function BorderStylePanel(props) {
     (value, name) => pushUpdate({ [name]: value }, true),
     [pushUpdate]
   );
+
+  // If any of the elements doesn't have rectangle mask, don't display.
+  if (notAllRectangle) {
+    return null;
+  }
+
+  const borderDash = getCommonValue(selectedElements, 'borderDash', 0);
+  const borderGap = getCommonValue(selectedElements, 'borderGap', 0);
 
   return (
     <SimplePanel name="borderStyle" title={__('Border', 'web-stories')}>
