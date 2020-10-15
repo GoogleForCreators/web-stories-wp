@@ -30,6 +30,7 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
+  elementWithBorderRadius,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -93,6 +94,7 @@ const FillElement = styled.p`
 const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
+  ${elementWithBorderRadius}
   margin: 0;
 `;
 
@@ -107,7 +109,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { font } = rest;
+  const { borderRadius, font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -193,6 +195,7 @@ function TextDisplay({
       backgroundColor={
         backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
       }
+      borderRadius={borderRadius}
     >
       <FillElement
         ref={ref}

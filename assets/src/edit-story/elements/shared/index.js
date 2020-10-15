@@ -50,6 +50,13 @@ export const elementWithRotation = css`
   transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
 `;
 
+export const elementWithBorderRadius = css`
+  border-radius: ${({ borderRadius }) =>
+    borderRadius
+      ? `${borderRadius.left}px ${borderRadius.top}px ${borderRadius.right}px ${borderRadius.bottom}px`
+      : ''};
+`;
+
 export const elementWithBackgroundColor = css`
   ${({ backgroundColor }) =>
     backgroundColor && generatePatternStyles(backgroundColor)};

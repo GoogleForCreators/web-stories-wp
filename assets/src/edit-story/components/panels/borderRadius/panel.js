@@ -71,7 +71,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     [pushUpdateForObject]
   );
 
-  if (!foundNonRectangles) {
+  if (foundNonRectangles) {
     return null;
   }
 

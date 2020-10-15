@@ -24,20 +24,21 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { elementFillContent } from '../shared';
+import { elementFillContent, elementWithBorderRadius } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
+  ${elementWithBorderRadius}
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
 `;
 
 function MediaDisplay({
-  element: { id, resource, scale, focalX, focalY },
+  element: { id, resource, scale, focalX, focalY, borderRadius },
   mediaRef,
   children,
   showPlaceholder = false,
@@ -63,7 +64,11 @@ function MediaDisplay({
       }
     }
   });
-  return <Element showPlaceholder={showPlaceholder}>{children}</Element>;
+  return (
+    <Element borderRadius={borderRadius} showPlaceholder={showPlaceholder}>
+      {children}
+    </Element>
+  );
 }
 
 MediaDisplay.propTypes = {
