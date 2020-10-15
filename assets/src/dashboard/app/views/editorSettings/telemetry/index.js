@@ -97,6 +97,10 @@ export default function TelemetrySettings({
                     )}
                     rel="noreferrer"
                     target="_blank"
+                    aria-label={__(
+                      'Learn more by visiting Google Privacy Policy',
+                      'web-stories'
+                    )}
                   />
                 ),
               }}
