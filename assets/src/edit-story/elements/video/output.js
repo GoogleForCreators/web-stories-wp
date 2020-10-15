@@ -25,7 +25,7 @@ function defaultForUndefined(value, def) {
 }
 
 function VideoOutput({ element, box }) {
-  const { resource, loop } = element;
+  const { resource, loop, tracks } = element;
 
   const sourceProps = {
     type: resource.mimeType,
@@ -41,8 +41,6 @@ function VideoOutput({ element, box }) {
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
   };
-
-  const tracks = defaultForUndefined(element.tracks, resource.tracks);
 
   // crossorigin='anonymous' is required to play videos from other domains.
   return (
