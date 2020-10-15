@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -40,6 +40,8 @@ import localStore, {
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
+import useStory from '../../../../../app/story/useStory';
+import getInUseFontsForPages from '../../../../../utils/getInUseFonts';
 import TextSet from './textSet';
 
 const TEXT_SET_ROW_GAP = 12;
@@ -95,6 +97,9 @@ function TextSets({ paneRef }) {
     () => (selectedCat ? textSets[selectedCat] : allTextSets),
     [selectedCat, textSets, allTextSets]
   );
+  const storyPages = useStory(({ state: { pages } }) => pages);
+
+  const ref = useRef();
 
   const categories = useMemo(
     () =>
@@ -112,15 +117,41 @@ function TextSets({ paneRef }) {
     overscan: 5,
   });
 
-  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
-  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
-
   const handleSelectedCategory = useCallback((selectedCategory) => {
     setSelectedCat(selectedCategory);
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
       selectedCategory,
     });
   }, []);
+
+  useEffect(() => {
+    getInUseFontsForPages(storyPages);
+  }, [storyPages]);
+
+  useEffect(() => {
+    dispatch({ type: TEXT_SET_ACTIONS.RESET, payload: selectedCat });
+  }, [selectedCat, textSets, allTextSets]);
+
+  useEffect(() => {
+    if (renderedTextSets.length >= filteredTextSets.length) {
+      return () => {};
+    }
+
+    const loadingTimeoutId = window.setTimeout(() => {
+      dispatch({
+        type: TEXT_SET_ACTIONS.RENDER_NEXT_TEXT_SET,
+      });
+    }, RENDER_TEXT_SET_DELAY);
+
+    return () => {
+      window.clearTimeout(loadingTimeoutId);
+    };
+  }, [renderedTextSets, filteredTextSets]);
+
+  useRovingTabIndex({ ref });
+
+  const sectionId = `section-${uuidv4()}`;
+  const title = __('Text Sets', 'web-stories');
 
   return (
     <Section id={sectionId} title={title}>
