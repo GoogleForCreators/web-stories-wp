@@ -27,10 +27,11 @@ class Locale extends \WP_UnitTestCase {
 	public function test_get_locale_settings() {
 		$actual = ( new \Google\Web_Stories\Locale() )->get_locale_settings();
 
-		$this->assertCount( 11, $actual );
+		$this->assertCount( 12, $actual );
 		$this->assertEqualSets(
 			[
 				'locale',
+				'localeFormatted',
 				'dateFormat',
 				'timeFormat',
 				'gmtOffset',

@@ -943,7 +943,7 @@ class Story_Post_Type {
 		}
 		$languages              = [
 			[
-				'name'  => 'English (United States)',
+				'name'  => __( 'English (United States)', 'web-stories' ),
 				'value' => 'en-us',
 			],
 		];

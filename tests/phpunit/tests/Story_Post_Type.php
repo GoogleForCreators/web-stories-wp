@@ -545,7 +545,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$languages       = $this->call_private_method( $story_post_type, 'get_languages' );
-		$this->assertEquals( 4, count( $languages ) );
+		$this->assertEquals( 5, count( $languages ) );
 		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
 	}
 
