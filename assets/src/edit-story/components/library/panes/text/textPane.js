@@ -53,7 +53,11 @@ function TextPane(props) {
 
   useEffect(() => {
     const ro = new ResizeObserver(() => {
-      forceUpdate(Date.now());
+      // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
+      // https://stackoverflow.com/a/58701523/13078978
+      window.requestAnimationFrame(() => {
+        forceUpdate(Date.now());
+      });
     });
 
     ro.observe(paneRef.current);
