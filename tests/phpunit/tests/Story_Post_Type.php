@@ -550,7 +550,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::add_tracks_files_ms
+	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required
 	 */
 	public function test_add_tracks_files_ms() {

@@ -204,7 +204,7 @@ class Story_Post_Type {
 		}
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
-		add_filter( 'site_option_upload_filetypes', [ $this, 'add_tracks_files_ms' ] );
+		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
 	}
 
 	/**
@@ -922,7 +922,7 @@ class Story_Post_Type {
 	 * @param string $value List of allowed file types.
 	 * @return string List of allowed file types.
 	 */
-	public function add_tracks_files_ms( $value ) {
+	public function filter_list_of_allowed_filetypes( $value ) {
 		$filetypes = explode( ' ', $value );
 		if ( ! in_array( 'vtt', $filetypes, true ) ) {
 			$filetypes[] = 'vtt';
@@ -933,7 +933,7 @@ class Story_Post_Type {
 	}
 
 	/**
-	 * Get a list of available.
+	 * Get a list of available languages.
 	 *
 	 * @return array Array of languages.
 	 */
