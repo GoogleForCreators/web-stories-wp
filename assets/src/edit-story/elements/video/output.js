@@ -55,7 +55,7 @@ function VideoOutput({ element, box }) {
               srcLang={srclang}
               label={label}
               kind={kind}
-              track={track}
+              src={track}
               key={id}
             />
           ))}

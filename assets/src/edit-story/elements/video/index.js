@@ -51,10 +51,10 @@ export const defaultAttributes = {
   controls: false,
   loop: false,
   autoPlay: true,
+  tracks: [],
   resource: {
     posterId: null,
     poster: null,
-    tracks: [],
     id: 0,
     title: '',
   },

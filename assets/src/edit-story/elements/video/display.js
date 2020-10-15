@@ -101,7 +101,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
                 srcLang={srclang}
                 label={label}
                 kind={kind}
-                track={track}
+                src={track}
                 key={trackId}
               />
             ))}
