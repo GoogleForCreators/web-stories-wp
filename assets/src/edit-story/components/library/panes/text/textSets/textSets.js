@@ -43,6 +43,7 @@ import useLibrary from '../../../useLibrary';
 import useStory from '../../../../../app/story/useStory';
 import getInUseFontsForPages from '../../../../../utils/getInUseFonts';
 import TextSet from './textSet';
+import { TEXT_SET_ACTIONS, textSetReducerFn } from './getTextSetReducer';
 
 const TEXT_SET_ROW_GAP = 12;
 
@@ -81,6 +82,7 @@ const CATEGORIES = {
   step: __('Steps', 'web-stories'),
   table: __('Table', 'web-stories'),
   quote: __('Quote', 'web-stories'),
+  inUse: __('Fonts In Use', 'web-stories'),
 };
 
 function TextSets({ paneRef }) {
@@ -102,11 +104,13 @@ function TextSets({ paneRef }) {
   const ref = useRef();
 
   const categories = useMemo(
-    () =>
-      Object.keys(textSets).map((cat) => ({
+    () => [
+      ...Object.keys(textSets).map((cat) => ({
         id: cat,
         label: CATEGORIES[cat] ?? cat,
       })),
+      { id: 'inUse', label: CATEGORIES.inUse },
+    ],
     [textSets]
   );
 
@@ -116,6 +120,17 @@ function TextSets({ paneRef }) {
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
   });
+
+  const [{ filteredTextSets, renderedTextSets }, dispatch] = useReducer(
+    textSetReducerFn,
+    {
+      filteredTextSets:
+        selectedCat && selectedCat !== 'inUse'
+          ? textSets[selectedCat]
+          : allTextSets,
+      renderedTextSets: [],
+    }
+  );
 
   const handleSelectedCategory = useCallback((selectedCategory) => {
     setSelectedCat(selectedCategory);
@@ -129,7 +144,14 @@ function TextSets({ paneRef }) {
   }, [storyPages]);
 
   useEffect(() => {
-    dispatch({ type: TEXT_SET_ACTIONS.RESET, payload: selectedCat });
+    if (selectedCat === 'inUse') {
+      console.log(allTextSets);
+      return;
+    }
+    dispatch({
+      type: TEXT_SET_ACTIONS.RESET,
+      payload: selectedCat ? textSets[selectedCat] : allTextSets,
+    });
   }, [selectedCat, textSets, allTextSets]);
 
   useEffect(() => {
