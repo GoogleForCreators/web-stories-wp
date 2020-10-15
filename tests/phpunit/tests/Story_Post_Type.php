@@ -550,6 +550,15 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::add_tracks_files_ms
+	 * @group ms-required
+	 */
+	public function test_add_tracks_files_ms() {
+		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
+		$this->assertContains( 'vtt', $site_exts );
+	}
+
+	/**
 	 * Mock data.
 	 *
 	 * @return array

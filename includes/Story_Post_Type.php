@@ -204,6 +204,7 @@ class Story_Post_Type {
 		}
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_filter( 'site_option_upload_filetypes', [ $this, 'add_tracks_files_ms' ] );
 	}
 
 	/**
@@ -916,6 +917,22 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Add VTT file type to allow file in multisite.
+	 *
+	 * @param string $value List of allowed file types.
+	 * @return string List of allowed file types.
+	 */
+	public function add_tracks_files_ms( $value ) {
+		$filetypes = explode( ' ', $value );
+		if ( ! in_array( 'vtt', $filetypes, true ) ) {
+			$filetypes[] = 'vtt';
+			$value       = implode( ' ', $filetypes );
+		}
+
+		return $value;
+	}
+
+	/**
 	 * Get a list of available.
 	 *
 	 * @return array Array of languages.
@@ -924,7 +941,7 @@ class Story_Post_Type {
 		if ( ! function_exists( 'wp_get_available_translations' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 		}
-		$languages = [];
+		$languages              = [];
 		$available_translations = wp_get_available_translations();
 		foreach ( $available_translations as $slug => $available_translation ) {
 			$language = $available_translation['native_name'];
