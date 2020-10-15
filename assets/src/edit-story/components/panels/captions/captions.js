@@ -156,7 +156,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
             </Options>
             <Remove>
               <Row>
-                <RemoveButton onClick={() => handleRemoveTrack(id)}>
+                <RemoveButton onClick={() => handleRemoveTrack(id)} key={`remove-${id}`}>
                   {'x'}
                 </RemoveButton>
               </Row>
