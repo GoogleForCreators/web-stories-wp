@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getInUseFontsForPages } from '../getInUseFonts';
+import { getInUseFontsForPages, getTextSetsForFonts } from '../getInUseFonts';
 
 describe('getInUseFontsForPages', function () {
   it('should return nothing for empty pages', function () {
@@ -67,5 +67,34 @@ describe('getInUseFontsForPages', function () {
         },
       ])
     ).toStrictEqual(['Google Sans']);
+  });
+
+  it('should return text sets for the fonts.', function () {
+    expect(
+      getTextSetsForFonts({
+        fonts: ['Google Sans', 'Helvetica'],
+        textSets: [
+          [{ type: 'text', font: { family: 'Google Sans' } }],
+          [{ type: 'text', font: { family: 'Helvetica' } }],
+          [{ type: 'text', font: { family: 'Times New Roman' } }],
+        ],
+      })
+    ).toStrictEqual([
+      [{ type: 'text', font: { family: 'Google Sans' } }],
+      [{ type: 'text', font: { family: 'Helvetica' } }],
+    ]);
+  });
+
+  it('should return an empty array if there are no matches.', function () {
+    expect(
+      getTextSetsForFonts({
+        fonts: ['New York', 'San Francisco'],
+        textSets: [
+          [{ type: 'text', font: { family: 'Google Sans' } }],
+          [{ type: 'text', font: { family: 'Helvetica' } }],
+          [{ type: 'text', font: { family: 'Times New Roman' } }],
+        ],
+      })
+    ).toStrictEqual([]);
   });
 });
