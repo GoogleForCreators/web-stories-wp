@@ -82,8 +82,12 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-install-cmd": ["@prefix-dependencies"],
-    "post-update-cmd": ["@prefix-dependencies"],
+    "post-install-cmd": [
+      "@prefix-dependencies"
+    ],
+    "post-update-cmd": [
+      "@prefix-dependencies"
+    ],
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",
     "phpstan": "phpstan analyse --memory-limit=512M",
