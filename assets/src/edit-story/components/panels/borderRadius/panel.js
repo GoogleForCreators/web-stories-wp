@@ -33,6 +33,7 @@ import { Row, Toggle, Numeric } from '../../form';
 import { SimplePanel } from '../panel';
 import { useCommonObjectValue } from '../utils';
 import { Lock, Unlock } from '../../../icons';
+import { MaskTypes } from '../../../masks';
 
 const DEFAULT_BORDER_RADIUS = {
   left: 0,
@@ -54,6 +55,10 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     DEFAULT_BORDER_RADIUS
   );
 
+  const foundNonRectangles = selectedElements.some(
+    ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
+  );
+
   const handleChange = useCallback(
     (newRadius, submit = false) => {
       pushUpdateForObject(
@@ -65,6 +70,10 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     },
     [pushUpdateForObject]
   );
+
+  if (!foundNonRectangles) {
+    return null;
+  }
 
   return (
     <SimplePanel name="borderRadius" title={__('Corner radius', 'web-stories')}>
