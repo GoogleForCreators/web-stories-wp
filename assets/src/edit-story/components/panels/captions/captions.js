@@ -59,7 +59,10 @@ const RemoveButton = styled.button`
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
 
-  const { languages } = useConfig();
+  const {
+    languages,
+    locale: { localeFormatted },
+  } = useConfig();
 
   const handleChangeLanguage = useCallback(
     (inputValue, idToUpdate) => {
@@ -81,19 +84,25 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   const handleChangeTrack = useCallback(
     (attachment) => {
+      const languagesIndex = languages.findIndex(
+        ({ value }) => value === localeFormatted
+      );
+
+      const language = languages[languagesIndex];
+
       const newTracks = {
         track: attachment?.url,
         trackId: attachment?.id,
         trackName: attachment?.filename,
         id: uuidv4(),
         kind: 'subtitles',
-        srclang: 'en',
-        label: __('English', 'web-stories'),
+        srclang: language.value,
+        label: language.name,
       };
 
       pushUpdate({ tracks: [...tracks, newTracks] }, true);
     },
-    [tracks, pushUpdate]
+    [tracks, pushUpdate, languages, localeFormatted]
   );
 
   const handleRemoveTrack = useCallback(

@@ -941,18 +941,33 @@ class Story_Post_Type {
 		if ( ! function_exists( 'wp_get_available_translations' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
 		}
-		$languages              = [];
+		$languages              = [
+			[
+				'name'  => 'English (United States)',
+				'value' => 'en-us',
+			],
+		];
 		$available_translations = wp_get_available_translations();
 		foreach ( $available_translations as $slug => $available_translation ) {
-			$language = $available_translation['native_name'];
-			if ( $available_translation['native_name'] !== $available_translation['english_name'] ) {
-				$language = sprintf( '%s (%s)', $available_translation['native_name'], $available_translation['english_name'] );
+			$pieces = explode( '_', $slug );
+			if ( count( $pieces ) > 2 ) {
+				continue;
 			}
+			$language = trim( $available_translation['native_name'] );
+			if ( $available_translation['native_name'] !== $available_translation['english_name'] ) {
+				$language = sprintf( '%s (%s)', $language, trim( $available_translation['english_name'] ) );
+			}
+			$language_code = implode( '-', $pieces );
+			$language_code = strtolower( $language_code );
+
 			$languages[] = [
 				'name'  => $language,
-				'value' => $slug,
+				'value' => $language_code,
 			];
 		}
+
+		$columns = array_column( $languages, 'name' );
+		array_multisort( $columns, SORT_ASC, $languages );
 
 		return $languages;
 	}
