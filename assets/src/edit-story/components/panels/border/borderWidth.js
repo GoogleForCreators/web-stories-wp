@@ -33,14 +33,7 @@ import { __ } from '@wordpress/i18n';
 import { Row, Numeric, Toggle } from '../../form';
 import { Lock, Unlock } from '../../../icons';
 import { useCommonObjectValue } from '../utils';
-
-const DEFAULT_BORDER = {
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-  locked: true,
-};
+import { DEFAULT_BORDER } from './shared';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -79,7 +72,7 @@ function BorderWidthControls({ selectedElements, pushUpdateForObject }) {
   );
 
   // Only if true for all selected elements.
-  const lockBorder = border.locked === true;
+  const lockBorder = border.lockedWidth === true;
 
   const handleChange = useCallback(
     (newBorder, submit = false) => {
@@ -147,7 +140,7 @@ function BorderWidthControls({ selectedElements, pushUpdateForObject }) {
           icon={<Lock />}
           uncheckedIcon={<Unlock />}
           value={lockBorder}
-          onChange={() => handleChange({ locked: !lockBorder })}
+          onChange={() => handleChange({ lockedWidth: !lockBorder })}
           aria-label={__('Toggle border ratio lock', 'web-stories')}
         />
       </ToggleWrapper>

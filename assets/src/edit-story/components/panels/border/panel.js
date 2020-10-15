@@ -31,11 +31,10 @@ import { __ } from '@wordpress/i18n';
  */
 import { SimplePanel } from '../panel';
 import { Color, Numeric, Row } from '../../form';
-import { getCommonValue, useCommonColorValue } from '../utils';
+import { useCommonObjectValue } from '../utils';
 import { MaskTypes } from '../../../masks';
+import { DEFAULT_BORDER } from './shared';
 import BorderWidthControls from './borderWidth';
-
-// @todo Only display for square shapes.
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -48,20 +47,29 @@ const Space = styled.div`
 
 function BorderStylePanel(props) {
   const { selectedElements, pushUpdate } = props;
-  const borderColor = useCommonColorValue(selectedElements, 'borderColor');
+  const border = useCommonObjectValue(
+    selectedElements,
+    'border',
+    DEFAULT_BORDER
+  );
+  const { color, gap, dash } = border;
 
   const notAllRectangle = selectedElements.some(
     ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
   );
 
-  const handleColorChange = useCallback(
-    (value) => pushUpdate({ borderColor: value }, true),
-    [pushUpdate]
-  );
-
-  const handleStyleChange = useCallback(
-    (value, name) => pushUpdate({ [name]: value }, true),
-    [pushUpdate]
+  const handleChange = useCallback(
+    (value, name) =>
+      pushUpdate(
+        {
+          border: {
+            ...border,
+            [name]: value,
+          },
+        },
+        true
+      ),
+    [border, pushUpdate]
   );
 
   // If any of the elements doesn't have rectangle mask, don't display.
@@ -69,16 +77,15 @@ function BorderStylePanel(props) {
     return null;
   }
 
-  const borderDash = getCommonValue(selectedElements, 'borderDash', 0);
-  const borderGap = getCommonValue(selectedElements, 'borderGap', 0);
-
   return (
     <SimplePanel name="borderStyle" title={__('Border', 'web-stories')}>
       <BorderWidthControls {...props} />
       <Row>
         <Color
-          value={borderColor}
-          onChange={handleColorChange}
+          value={color}
+          onChange={(value) => {
+            handleChange(value, 'color');
+          }}
           label={__('Border color', 'web-stories')}
           labelId="border-color-label"
         />
@@ -86,24 +93,24 @@ function BorderStylePanel(props) {
       <Row>
         <BoxedNumeric
           aria-label={__('Border dash', 'web-stories')}
-          value={borderDash}
+          value={dash}
           min={0}
           max={100}
           suffix={__('Dash', 'web-stories')}
           onChange={(value) => {
-            handleStyleChange(value, 'borderDash');
+            handleChange(value, 'dash');
           }}
           canBeEmpty
         />
         <Space />
         <BoxedNumeric
           aria-label={__('Border gap', 'web-stories')}
-          value={borderGap}
+          value={gap}
           min={0}
           max={100}
           suffix={__('Gap', 'web-stories')}
           onChange={(value) => {
-            handleStyleChange(value, 'borderGap');
+            handleChange(value, 'gap');
           }}
           canBeEmpty
         />

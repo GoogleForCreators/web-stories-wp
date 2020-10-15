@@ -105,12 +105,15 @@ const DashedBorder = styled.div`
 `;
 
 export default function WithBorder({ element, children }) {
-  const { border, borderColor, borderDash, borderGap } = element;
-  // If we have no border-width / -color, let's short-circuit.
-  if (!border || !borderColor) {
+  const { border } = element;
+  if (!border) {
     return children;
   }
-  const { left, top, right, bottom } = border;
+  const { left, top, right, bottom, dash, gap, color } = border;
+  // If we have no color, let's short-circuit.
+  if (!color) {
+    return children;
+  }
   // If we have no border set either, let's short-circuit.
   if (!left && !top && !right && !bottom) {
     return children;
@@ -122,19 +125,19 @@ export default function WithBorder({ element, children }) {
     return children;
   }
 
-  if (!borderGap || !borderDash) {
+  if (!gap || !dash) {
     return (
-      <Border {...border} color={borderColor}>
+      <Border {...border} color={color}>
         {children}
       </Border>
     );
   }
   const {
     color: { r, g, b, a },
-  } = borderColor;
-  const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
+  } = color;
+  const solidColor = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
   return (
-    <DashedBorder color={color} {...border} dash={borderDash} gap={borderGap}>
+    <DashedBorder {...border} color={solidColor}>
       {children}
     </DashedBorder>
   );
