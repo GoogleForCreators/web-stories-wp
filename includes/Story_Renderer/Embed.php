@@ -76,14 +76,14 @@ class Embed {
 		$class  = $args['class'];
 		$url    = $this->story->get_url();
 		$title  = $this->story->get_title();
-		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url( $this->story->get_poster_portrait() ) : '';
+		$poster = ! empty( $this->story->get_poster_portrait() ) ? esc_url_raw( $this->story->get_poster_portrait() ) : '';
 
 		$poster_style  = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
 			$args['height'] / $args['width'],
-			absint( $args['width'] ),
-			absint( $args['height'] )
+			(int) $args['width'],
+			(int) $args['height']
 		);
 
 		// This CSS is used for AMP and non-AMP.
@@ -95,7 +95,7 @@ class Embed {
 		) {
 			ob_start();
 			?>
-			<div class="<?php echo esc_attr( $class ); ?> web-stories-embed web-stories-embed-amp <?php echo esc_attr( $align ); ?>">
+			<div class="<?php echo esc_attr( "$class web-stories-embed web-stories-embed-amp $align" ); ?>">
 				<div class="wp-block-embed__wrapper">
 					<amp-story-player
 						width="<?php echo esc_attr( $args['width'] ); ?>"
@@ -119,7 +119,7 @@ class Embed {
 
 		ob_start();
 		?>
-		<div class="<?php echo esc_attr( $class ); ?> web-stories-embed <?php echo esc_attr( $align ); ?>">
+		<div class="<?php echo esc_attr( "$class web-stories-embed $align" ); ?>">
 			<div class="wp-block-embed__wrapper" style="<?php echo esc_attr( $wrapper_style ); ?>">
 				<amp-story-player>
 					<a

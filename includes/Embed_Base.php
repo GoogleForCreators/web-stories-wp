@@ -71,10 +71,12 @@ class Embed_Base {
 			WEBSTORIES_VERSION
 		);
 
-		$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
+		if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' ) ) {
+			$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
 
-		if ( $css ) {
-			wp_add_inline_style( self::SCRIPT_HANDLE, $css );
+			if ( $css ) {
+				wp_add_inline_style( self::SCRIPT_HANDLE, $css );
+			}
 		}
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
