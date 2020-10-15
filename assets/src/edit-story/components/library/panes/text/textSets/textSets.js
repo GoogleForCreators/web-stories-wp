@@ -41,7 +41,6 @@ import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
-// import { TEXT_SET_ACTIONS, getTextSetReducer } from './getTextSetReducer';
 
 const TEXT_SET_ROW_GAP = 12;
 
