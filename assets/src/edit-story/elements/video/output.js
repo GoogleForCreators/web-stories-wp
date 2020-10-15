@@ -48,12 +48,13 @@ function VideoOutput({ element, box }) {
       <amp-video {...props} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
         {tracks &&
-          tracks.map(({ srclang, label, kind, track, id }) => (
+          tracks.map(({ srclang, label, kind, track, id }, i) => (
             <track
               srcLang={srclang}
               label={label}
               kind={kind}
               src={track}
+              default={i == 0}
               key={id}
             />
           ))}

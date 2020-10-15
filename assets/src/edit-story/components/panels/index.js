@@ -111,6 +111,10 @@ export function getPanels(elements, options = {}) {
     if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
       panels.push({
+        type: CAPTIONS,
+        Panel: CaptionsPanel,
+      });
+      panels.push({
         type: VIDEO_ACCESSIBILITY,
         Panel: VideoAccessibilityPanel,
       });

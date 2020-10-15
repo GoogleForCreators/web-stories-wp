@@ -53,6 +53,7 @@ const RemoveButton = styled.button`
   border: 0px;
   background: none;
   padding: 0;
+  cursor: pointer;
   color: ${({ theme }) => theme.colors.fg.white};
 `;
 
@@ -95,7 +96,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         trackId: attachment?.id,
         trackName: attachment?.filename,
         id: uuidv4(),
-        kind: 'subtitles',
+        kind: 'captions',
         srclang: language.value,
         label: language.name,
       };
@@ -127,10 +128,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   });
 
   return (
-    <SimplePanel
-      name="caption"
-      title={__('Caption and subtitles', 'web-stories')}
-    >
+    <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
       {tracks &&
         tracks.map(({ id, srclang, trackName }) => (
           <Section key={`section-${id}`}>
