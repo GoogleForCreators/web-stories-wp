@@ -545,7 +545,24 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$languages       = $this->call_private_method( $story_post_type, 'get_languages' );
-		$this->assertEquals( 5, count( $languages ) );
+		$this->assertEquals( 6, count( $languages ) );
+		$values = array_column( $languages, 'value' );
+		$names  = array_column( $languages, 'name' );
+		$this->assertEqualSets(
+			[ 'af', 'ar', 'ary', 'as', 'en-gb', 'en-us' ],
+			$values
+		);
+		$this->assertEqualSets(
+			[
+				'Afrikaans',
+				'English (UK)',
+				'English (United States)',
+				'العربية (Arabic)',
+				'العربية المغربية (Moroccan Arabic)',
+				'অসমীয়া (Assamese)',
+			],
+			$names
+		);
 		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
 	}
 
@@ -565,7 +582,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	 */
 	public function mock_available_translations() {
 		return [
-			'af'  =>
+			'af'             =>
 				[
 					'language'     => 'af',
 					'version'      => '5.5.1',
@@ -575,7 +592,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/af.zip',
 					'iso'          => [ 'af', 'afr' ],
 				],
-			'ar'  =>
+			'ar'             =>
 				[
 					'language'     => 'ar',
 					'version'      => '5.5.1',
@@ -586,7 +603,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 					'iso'          => [ 'ar', 'ara' ],
 				],
 
-			'ary' =>
+			'ary'            =>
 				[
 					'language'     => 'ary',
 					'version'      => '4.7.7',
@@ -596,7 +613,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 					'package'      => 'https://downloads.wordpress.org/translation/core/4.7.7/ary.zip',
 					'iso'          => [ 'ar', 'ary' ],
 				],
-			'as'  =>
+			'as'             =>
 				[
 					'language'     => 'ar',
 					'version'      => '5.5.1',
@@ -605,6 +622,37 @@ class Story_Post_Type extends \WP_UnitTestCase {
 					'native_name'  => 'অসমীয়া',
 					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/arszip',
 					'iso'          => [ 'as', 'asm' ],
+				],
+			'de_DE_formal'   =>
+				[
+					'language'     => 'de_DE_formal',
+					'version'      => '5.5.1',
+					'updated'      => '2020-09-23 11:21:07',
+					'english_name' => 'German (Formal)',
+					'native_name'  => 'Deutsch (Sie)',
+					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/de_DE_formal.zip',
+					'iso'          => [ 'de' ],
+				],
+			'de_CH_informal' =>
+				[
+					'language'     => 'de_CH_informal',
+					'version'      => '5.5.1',
+					'updated'      => '2020-09-09 20:03:47',
+					'english_name' => 'German (Switzerland, Informal)',
+					'native_name'  => 'Deutsch (Schweiz, Du)',
+					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/de_CH_informal.zip',
+					'iso'          => [ 'de' ],
+				],
+			'en_GB'          =>
+
+				[
+					'language'     => 'en_GB',
+					'version'      => '5.5.1',
+					'updated'      => '2020-09-01 19:35:42',
+					'english_name' => 'English (UK)',
+					'native_name'  => 'English (UK)',
+					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/en_GB.zip',
+					'iso'          => [ 'en', 'eng' ],
 				],
 		];
 	}
