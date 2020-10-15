@@ -20,32 +20,22 @@
 import StoryPropTypes from '../../types';
 import MediaOutput from '../media/output';
 
-function defaultForUndefined(value, def) {
-  return value === undefined ? def : value;
-}
-
 function GifOutput({ element, box }) {
   const { resource } = element;
 
-  const sourceProps = {
-    type: resource.output.mimeType,
-    src: resource.output.src,
-  };
-
-  const props = {
-    autoPlay: 'autoplay',
-    poster: '',
-    title: defaultForUndefined(element.title, resource.title),
-    alt: defaultForUndefined(element.alt, resource.alt),
-    layout: 'fill',
-    loop: 'loop',
-    noaudio: 'noaudio',
-  };
-
   return (
     <MediaOutput element={element} box={box}>
-      <amp-video {...props} id={`el-${element.id}-media`}>
-        <source {...sourceProps} />
+      <amp-video
+        id={`el-${element.id}-media`}
+        autoplay="autoplay"
+        loop="loop"
+        noaudio="noaudio"
+        poster=""
+        layout="fill"
+        title={element.title ?? resource.title}
+        alt={element.alt ?? resource.alt}
+      >
+        <source type={resource.output.mimeType} src={resource.output.src} />
       </amp-video>
     </MediaOutput>
   );
