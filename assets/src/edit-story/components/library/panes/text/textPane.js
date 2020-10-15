@@ -20,6 +20,7 @@
 import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
+import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * WordPress dependencies
@@ -29,7 +30,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import ResizeObserver from 'resize-observer-polyfill';
 import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
 import { Pane as SharedPane } from '../shared';
