@@ -17,6 +17,10 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import { useRef } from 'react';
 import LibraryContext from '../../../../context';
 import TransformContext from '../../../../../transform/context';
 import FontContext from '../../../../../../app/font/context';
@@ -65,7 +69,9 @@ function setup() {
           <StoryContext.Provider value={storyValue}>
             <FontContext.Provider value={fontsValue}>
               <LibraryContext.Provider value={libraryValue}>
-                <TextSets />
+                <MockPane>
+                  {(paneRef) => <TextSets paneRef={paneRef} />}
+                </MockPane>
               </LibraryContext.Provider>
             </FontContext.Provider>
           </StoryContext.Provider>
@@ -74,6 +80,12 @@ function setup() {
     </TransformContext.Provider>
   );
   return { getByText, queryAllByRole };
+}
+
+// eslint-disable-next-line react/prop-types
+function MockPane({ children }) {
+  const ref = useRef();
+  return <div ref={ref}>{children(ref)}</div>;
 }
 
 describe('TextSets Panel', () => {
