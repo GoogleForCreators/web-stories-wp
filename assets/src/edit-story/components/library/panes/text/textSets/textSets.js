@@ -139,27 +139,32 @@ function TextSets({ paneRef }) {
         }}
       >
         <TextSetContainer height={rowVirtualizer.totalSize}>
-          {rowVirtualizer.virtualItems.map((virtualRow) => (
-            <TextSetRow
-              key={virtualRow.index}
-              height={virtualRow.size}
-              translateY={virtualRow.start}
-            >
-              {filteredTextSets[virtualRow.index * 2].length > 0 && (
-                <TextSet
-                  key={virtualRow.index * 2}
-                  elements={filteredTextSets[virtualRow.index * 2]}
-                />
-              )}
-              {filteredTextSets[virtualRow.index * 2 + 1] &&
-                filteredTextSets[virtualRow.index * 2 + 1].length > 0 && (
+          {rowVirtualizer.virtualItems.map((virtualRow) => {
+            const firstColumnIndex = virtualRow.index * 2;
+            const secondColumnIndex = firstColumnIndex + 1;
+
+            return (
+              <TextSetRow
+                key={virtualRow.index}
+                height={virtualRow.size}
+                translateY={virtualRow.start}
+              >
+                {filteredTextSets[firstColumnIndex].length > 0 && (
                   <TextSet
-                    key={virtualRow.index * 2 + 1}
-                    elements={filteredTextSets[virtualRow.index * 2 + 1]}
+                    key={firstColumnIndex}
+                    elements={filteredTextSets[firstColumnIndex]}
                   />
                 )}
-            </TextSetRow>
-          ))}
+                {filteredTextSets[secondColumnIndex] &&
+                  filteredTextSets[secondColumnIndex].length > 0 && (
+                    <TextSet
+                      key={secondColumnIndex}
+                      elements={filteredTextSets[secondColumnIndex]}
+                    />
+                  )}
+              </TextSetRow>
+            );
+          })}
         </TextSetContainer>
       </UnitsProvider>
     </Section>
