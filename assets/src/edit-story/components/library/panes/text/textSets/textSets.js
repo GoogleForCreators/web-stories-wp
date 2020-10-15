@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -46,7 +46,6 @@ import {
   getTextSetsForFonts,
 } from '../../../../../utils/getInUseFonts';
 import TextSet from './textSet';
-import { TEXT_SET_ACTIONS, textSetReducerFn } from './getTextSetReducer';
 
 const TEXT_SET_ROW_GAP = 12;
 
@@ -92,20 +91,28 @@ function TextSets({ paneRef }) {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
+  const storyPages = useStory(({ state: { pages } }) => pages);
 
   const [selectedCat, setSelectedCat] = useState(
     localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
       ?.selectedCategory
   );
 
-  const filteredTextSets = useMemo(
-    () => (selectedCat ? textSets[selectedCat] : allTextSets),
-    [selectedCat, textSets, allTextSets]
+  const getTextSetsForInUseFonts = useCallback(
+    () =>
+      getTextSetsForFonts({
+        fonts: getInUseFontsForPages(storyPages),
+        textSets: allTextSets,
+      }),
+    [allTextSets, storyPages]
   );
-  const storyPages = useStory(({ state: { pages } }) => pages);
 
-  const ref = useRef();
-  const inUseFonts = useRef([]);
+  const filteredTextSets = useMemo(() => {
+    if (selectedCat === 'inUse') {
+      return getTextSetsForInUseFonts();
+    }
+    return selectedCat ? textSets[selectedCat] : allTextSets;
+  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts]);
 
   const categories = useMemo(
     () => [
@@ -118,37 +125,12 @@ function TextSets({ paneRef }) {
     [textSets]
   );
 
-<<<<<<< HEAD
   const rowVirtualizer = useVirtual({
     size: Math.ceil(filteredTextSets.length / 2),
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
   });
-=======
-  const getTextSetsForInUseFonts = useCallback(() => {
-    const updatedInUseFonts = getInUseFontsForPages(storyPages);
-    if (
-      updatedInUseFonts.length === inUseFonts.current.length &&
-      updatedInUseFonts.every((font, idx) => font === inUseFonts.current[idx])
-    ) {
-      return null;
-    }
-    inUseFonts.current = updatedInUseFonts;
-    return getTextSetsForFonts({
-      fonts: inUseFonts.current,
-      textSets: allTextSets,
-    });
-  }, [allTextSets, storyPages]);
->>>>>>> a9928a3e8... Render text sets as they are used by the story.
-
-  const [{ filteredTextSets, renderedTextSets }, dispatch] = useReducer(
-    textSetReducerFn,
-    {
-      filteredTextSets: [],
-      renderedTextSets: [],
-    }
-  );
 
   const handleSelectedCategory = useCallback((selectedCategory) => {
     setSelectedCat(selectedCategory);
@@ -156,44 +138,6 @@ function TextSets({ paneRef }) {
       selectedCategory,
     });
   }, []);
-
-  useEffect(() => {
-    if (selectedCat === 'inUse') {
-      const inUseTextSets = getTextSetsForInUseFonts();
-      if (!inUseTextSets) {
-        return;
-      }
-      dispatch({
-        type: TEXT_SET_ACTIONS.RESET,
-        payload: inUseTextSets,
-      });
-      return;
-    } else {
-      inUseFonts.current = [];
-    }
-    dispatch({
-      type: TEXT_SET_ACTIONS.RESET,
-      payload: selectedCat ? textSets[selectedCat] : allTextSets,
-    });
-  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts]);
-
-  useEffect(() => {
-    if (renderedTextSets.length >= filteredTextSets.length) {
-      return () => {};
-    }
-
-    const loadingTimeoutId = window.setTimeout(() => {
-      dispatch({
-        type: TEXT_SET_ACTIONS.RENDER_NEXT_TEXT_SET,
-      });
-    }, RENDER_TEXT_SET_DELAY);
-
-    return () => {
-      window.clearTimeout(loadingTimeoutId);
-    };
-  }, [renderedTextSets, filteredTextSets]);
-
-  useRovingTabIndex({ ref });
 
   const sectionId = `section-${uuidv4()}`;
   const title = __('Text Sets', 'web-stories');
