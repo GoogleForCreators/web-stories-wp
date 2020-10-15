@@ -63,11 +63,11 @@ const PRESETS = [
   {
     title: __('Heading 2', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.MEDIUM}">${__(
         'Heading 2',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
+      fontWeight: FONT_WEIGHT.MEDIUM,
       fontSize: dataFontEm(2),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -79,11 +79,11 @@ const PRESETS = [
   {
     title: __('Heading 3', 'web-stories'),
     element: {
-      content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${__(
+      content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${__(
         'Heading 3',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
+      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1.6),
       lineHeight: 1.3,
       x: DEFAULT_LEFT_MARGIN,
