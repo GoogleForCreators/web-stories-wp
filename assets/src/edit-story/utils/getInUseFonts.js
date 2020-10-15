@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export default function getInUseFontsForPages(pages) {
+export function getInUseFontsForPages(pages) {
   return [
     ...new Set(
       pages
@@ -32,4 +32,26 @@ export default function getInUseFontsForPages(pages) {
         .filter(Boolean)
     ),
   ];
+}
+
+export function getTextSetsForFonts({ fonts, textSets }) {
+  return textSets
+    .reduce((textSetMemo, currentTextSet) => {
+      const hasFontInUse = currentTextSet.reduce(
+        (elementMemo, currentElement) => {
+          if (
+            currentElement.type === 'text' &&
+            Boolean(currentElement.font?.family)
+          ) {
+            return (
+              elementMemo | (fonts.indexOf(currentElement.font?.family) !== -1)
+            );
+          }
+          return elementMemo;
+        },
+        false
+      );
+      return [...textSetMemo, hasFontInUse && currentTextSet];
+    }, [])
+    .filter(Boolean);
 }

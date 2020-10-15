@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import getInUseFontsForPages from '../getInUseFonts';
+import { getInUseFontsForPages } from '../getInUseFonts';
 
 describe('getInUseFontsForPages', function () {
   it('should return nothing for empty pages', function () {

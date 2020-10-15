@@ -41,7 +41,10 @@ import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import useStory from '../../../../../app/story/useStory';
-import getInUseFontsForPages from '../../../../../utils/getInUseFonts';
+import {
+  getInUseFontsForPages,
+  getTextSetsForFonts,
+} from '../../../../../utils/getInUseFonts';
 import TextSet from './textSet';
 import { TEXT_SET_ACTIONS, textSetReducerFn } from './getTextSetReducer';
 
@@ -102,6 +105,7 @@ function TextSets({ paneRef }) {
   const storyPages = useStory(({ state: { pages } }) => pages);
 
   const ref = useRef();
+  const inUseFonts = useRef([]);
 
   const categories = useMemo(
     () => [
@@ -114,20 +118,34 @@ function TextSets({ paneRef }) {
     [textSets]
   );
 
+<<<<<<< HEAD
   const rowVirtualizer = useVirtual({
     size: Math.ceil(filteredTextSets.length / 2),
     parentRef: paneRef,
     estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
     overscan: 5,
   });
+=======
+  const getTextSetsForInUseFonts = useCallback(() => {
+    const updatedInUseFonts = getInUseFontsForPages(storyPages);
+    if (
+      updatedInUseFonts.length === inUseFonts.current.length &&
+      updatedInUseFonts.every((font, idx) => font === inUseFonts.current[idx])
+    ) {
+      return null;
+    }
+    inUseFonts.current = updatedInUseFonts;
+    return getTextSetsForFonts({
+      fonts: inUseFonts.current,
+      textSets: allTextSets,
+    });
+  }, [allTextSets, storyPages]);
+>>>>>>> a9928a3e8... Render text sets as they are used by the story.
 
   const [{ filteredTextSets, renderedTextSets }, dispatch] = useReducer(
     textSetReducerFn,
     {
-      filteredTextSets:
-        selectedCat && selectedCat !== 'inUse'
-          ? textSets[selectedCat]
-          : allTextSets,
+      filteredTextSets: [],
       renderedTextSets: [],
     }
   );
@@ -140,19 +158,24 @@ function TextSets({ paneRef }) {
   }, []);
 
   useEffect(() => {
-    getInUseFontsForPages(storyPages);
-  }, [storyPages]);
-
-  useEffect(() => {
     if (selectedCat === 'inUse') {
-      console.log(allTextSets);
+      const inUseTextSets = getTextSetsForInUseFonts();
+      if (!inUseTextSets) {
+        return;
+      }
+      dispatch({
+        type: TEXT_SET_ACTIONS.RESET,
+        payload: inUseTextSets,
+      });
       return;
+    } else {
+      inUseFonts.current = [];
     }
     dispatch({
       type: TEXT_SET_ACTIONS.RESET,
       payload: selectedCat ? textSets[selectedCat] : allTextSets,
     });
-  }, [selectedCat, textSets, allTextSets]);
+  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts]);
 
   useEffect(() => {
     if (renderedTextSets.length >= filteredTextSets.length) {
