@@ -57,6 +57,7 @@ function useSingleSelectionDrag({
   );
 
   const onDrag = ({ target, beforeTranslate, clientX, clientY }) => {
+    setIsDragging(true);
     if (isDropSource(selectedElement.type)) {
       setDraggingResource(selectedElement.resource);
     }
@@ -74,8 +75,8 @@ function useSingleSelectionDrag({
   };
 
   const onDragStart = ({ set }) => {
+    // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
-    setIsDragging(true);
     return undefined;
   };
 
