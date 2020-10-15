@@ -49,6 +49,7 @@ const TextSetContainer = styled.div`
   width: 100%;
   position: relative;
   margin-top: 28px;
+  overflow-x: hidden;
 `;
 
 const TextSetRow = styled.div`
