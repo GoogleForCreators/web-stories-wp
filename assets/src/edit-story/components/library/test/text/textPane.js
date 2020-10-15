@@ -24,7 +24,7 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import TextPane from '../../panes/text/textPane';
-import { DEFAULT_PRESET } from '../../panes/text/textPresets';
+import { PRESETS } from '../../panes/text/textPresets';
 import { renderWithTheme } from '../../../../testUtils/index';
 
 jest.mock('../../useLibrary');
@@ -54,7 +54,7 @@ describe('TextPane', () => {
     }));
   });
 
-  it('should insert text with default text style on pressing quick action', async () => {
+  it('should insert text with preset text style on pressing a preset', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
       (font) => curatedFontNames.indexOf(font.name) > 0
     );
@@ -83,10 +83,10 @@ describe('TextPane', () => {
         </FlagsProvider>
       );
 
-      fireEvent.click(getByRole('button', { name: 'Add new text' }));
+      fireEvent.click(getByRole('button', { name: 'Heading 1' }));
     });
 
     expect(insertElement).toHaveBeenCalledTimes(1);
-    expect(insertElement).toHaveBeenCalledWith('text', DEFAULT_PRESET);
+    expect(insertElement).toHaveBeenCalledWith('text', PRESETS[0].element);
   });
 });

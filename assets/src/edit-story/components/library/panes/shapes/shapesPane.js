@@ -35,10 +35,10 @@ import ShapePreview from './shapePreview';
 import paneId from './paneId';
 
 const SectionContent = styled.div`
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: -12px;
 `;
 
 function ShapesPane(props) {

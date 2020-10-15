@@ -17,16 +17,11 @@
 /**
  * External dependencies
  */
-import {
-  useRef,
-  useState,
-  useMemo,
-  useEffect,
-  useCallback,
-  useReducer,
-} from 'react';
+import { useState, useMemo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+import { useVirtual } from 'react-virtual';
 
 /**
  * WordPress dependencies
@@ -39,7 +34,6 @@ import { __ } from '@wordpress/i18n';
 import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
 import { PANE_PADDING } from '../../shared';
-import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -47,14 +41,27 @@ import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import TextSet from './textSet';
-import { TEXT_SET_ACTIONS, getTextSetReducer } from './getTextSetReducer';
+
+const TEXT_SET_ROW_GAP = 12;
 
 const TextSetContainer = styled.div`
+  height: ${({ height }) => `${height}px`};
+  width: 100%;
+  position: relative;
+  margin-top: 28px;
+  overflow-x: hidden;
+`;
+
+const TextSetRow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: ${({ height }) => `${height}px`};
+  transform: ${({ translateY }) => `translateY(${translateY}px)`};
   display: grid;
   grid-template-columns: 1fr 1fr;
-  row-gap: 12px;
   column-gap: 12px;
-  margin-top: 28px;
 `;
 
 /* Undo the -1.5em set by the Pane */
@@ -74,19 +81,21 @@ const CATEGORIES = {
   quote: __('Quote', 'web-stories'),
 };
 
-const RENDER_TEXT_SET_DELAY = 10;
-
-function TextSets() {
+function TextSets({ paneRef }) {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+
+  const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
 
   const [selectedCat, setSelectedCat] = useState(
     localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
       ?.selectedCategory
   );
 
-  const ref = useRef();
+  const filteredTextSets = useMemo(
+    () => (selectedCat ? textSets[selectedCat] : allTextSets),
+    [selectedCat, textSets, allTextSets]
+  );
 
-  const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const categories = useMemo(
     () =>
       Object.keys(textSets).map((cat) => ({
@@ -96,18 +105,15 @@ function TextSets() {
     [textSets]
   );
 
-  const textSetReducer = useMemo(
-    () => getTextSetReducer(textSets, allTextSets),
-    [textSets, allTextSets]
-  );
+  const rowVirtualizer = useVirtual({
+    size: Math.ceil(filteredTextSets.length / 2),
+    parentRef: paneRef,
+    estimateSize: useCallback(() => TEXT_SET_SIZE + TEXT_SET_ROW_GAP, []),
+    overscan: 5,
+  });
 
-  const [{ filteredTextSets, renderedTextSets }, dispatch] = useReducer(
-    textSetReducer,
-    {
-      filteredTextSets: [],
-      renderedTextSets: [],
-    }
-  );
+  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
+  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
   const handleSelectedCategory = useCallback((selectedCategory) => {
     setSelectedCat(selectedCategory);
@@ -116,30 +122,6 @@ function TextSets() {
     });
   }, []);
 
-  useEffect(() => {
-    dispatch({ type: TEXT_SET_ACTIONS.RESET, payload: selectedCat });
-  }, [selectedCat, textSets, allTextSets]);
-
-  useEffect(() => {
-    if (renderedTextSets.length >= filteredTextSets.length) {
-      return () => {};
-    }
-
-    const loadingTimeoutId = window.setTimeout(() => {
-      dispatch({
-        type: TEXT_SET_ACTIONS.RENDER_NEXT_TEXT_SET,
-      });
-    }, RENDER_TEXT_SET_DELAY);
-
-    return () => {
-      window.clearTimeout(loadingTimeoutId);
-    };
-  }, [renderedTextSets, filteredTextSets]);
-
-  useRovingTabIndex({ ref });
-
-  const sectionId = `section-${uuidv4()}`;
-  const title = __('Text Sets', 'web-stories');
   return (
     <Section id={sectionId} title={title}>
       <CategoryWrapper>
@@ -156,17 +138,41 @@ function TextSets() {
           height: TEXT_SET_SIZE / PAGE_RATIO,
         }}
       >
-        <TextSetContainer ref={ref} role="list" aria-labelledby={sectionId}>
-          {renderedTextSets.map(
-            (elements) =>
-              elements.length > 0 && (
-                <TextSet key={elements[0].id} elements={elements} />
-              )
-          )}
+        <TextSetContainer height={rowVirtualizer.totalSize}>
+          {rowVirtualizer.virtualItems.map((virtualRow) => {
+            const firstColumnIndex = virtualRow.index * 2;
+            const secondColumnIndex = firstColumnIndex + 1;
+
+            return (
+              <TextSetRow
+                key={virtualRow.index}
+                height={virtualRow.size}
+                translateY={virtualRow.start}
+              >
+                {filteredTextSets[firstColumnIndex].length > 0 && (
+                  <TextSet
+                    key={firstColumnIndex}
+                    elements={filteredTextSets[firstColumnIndex]}
+                  />
+                )}
+                {filteredTextSets[secondColumnIndex] &&
+                  filteredTextSets[secondColumnIndex].length > 0 && (
+                    <TextSet
+                      key={secondColumnIndex}
+                      elements={filteredTextSets[secondColumnIndex]}
+                    />
+                  )}
+              </TextSetRow>
+            );
+          })}
         </TextSetContainer>
       </UnitsProvider>
     </Section>
   );
 }
+
+TextSets.propTypes = {
+  paneRef: PropTypes.object,
+};
 
 export default TextSets;
