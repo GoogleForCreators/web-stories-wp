@@ -128,9 +128,8 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
 
     return {
       handleClickBold: (flag) => push(htmlFormatters.toggleBold, flag),
-      handleSelectFontWeight: (weight) => {
-        push(htmlFormatters.setFontWeight, weight);
-      },
+      handleSelectFontWeight: (weight) =>
+        push(htmlFormatters.setFontWeight, weight),
       handleClickItalic: (flag) => push(htmlFormatters.toggleItalic, flag),
       handleClickUnderline: (flag) =>
         push(htmlFormatters.toggleUnderline, flag),
