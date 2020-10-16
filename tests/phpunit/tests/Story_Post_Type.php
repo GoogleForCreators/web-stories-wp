@@ -539,124 +539,13 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::get_languages
-	 */
-	public function test_get_languages() {
-		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
-		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
-		$languages       = $this->call_private_method( $story_post_type, 'get_languages' );
-		$this->assertEquals( 6, count( $languages ) );
-		$values = array_column( $languages, 'value' );
-		$names  = array_column( $languages, 'name' );
-		$this->assertEqualSets(
-			[ 'af', 'ar', 'ary', 'as', 'en-gb', 'en-us' ],
-			$values
-		);
-		$this->assertEqualSets(
-			[
-				'Afrikaans',
-				'English (UK)',
-				'English (United States)',
-				'العربية (Arabic)',
-				'العربية المغربية (Moroccan Arabic)',
-				'অসমীয়া (Assamese)',
-			],
-			$names
-		);
-		add_filter( 'pre_site_transient_available_translations', [ $this, 'mock_available_translations' ] );
-	}
-
-	/**
 	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required
 	 */
-	public function test_add_tracks_files_ms() {
+	public function test_filter_list_of_allowed_filetypes() {
 		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
 		$this->assertContains( 'vtt', $site_exts );
 	}
-
-	/**
-	 * Mock data.
-	 *
-	 * @return array
-	 */
-	public function mock_available_translations() {
-		return [
-			'af'             =>
-				[
-					'language'     => 'af',
-					'version'      => '5.5.1',
-					'updated'      => '2020-09-20 19:59:25',
-					'english_name' => 'Afrikaans',
-					'native_name'  => 'Afrikaans',
-					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/af.zip',
-					'iso'          => [ 'af', 'afr' ],
-				],
-			'ar'             =>
-				[
-					'language'     => 'ar',
-					'version'      => '5.5.1',
-					'updated'      => '2020-09-24 06:56:02',
-					'english_name' => 'Arabic',
-					'native_name'  => 'العربية',
-					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/ar.zip',
-					'iso'          => [ 'ar', 'ara' ],
-				],
-
-			'ary'            =>
-				[
-					'language'     => 'ary',
-					'version'      => '4.7.7',
-					'updated'      => '2020-09-24 06:56:02',
-					'english_name' => 'Moroccan Arabic',
-					'native_name'  => 'العربية المغربية',
-					'package'      => 'https://downloads.wordpress.org/translation/core/4.7.7/ary.zip',
-					'iso'          => [ 'ar', 'ary' ],
-				],
-			'as'             =>
-				[
-					'language'     => 'ar',
-					'version'      => '5.5.1',
-					'updated'      => '2020-09-24 06:56:02',
-					'english_name' => 'Assamese',
-					'native_name'  => 'অসমীয়া',
-					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/arszip',
-					'iso'          => [ 'as', 'asm' ],
-				],
-			'de_DE_formal'   =>
-				[
-					'language'     => 'de_DE_formal',
-					'version'      => '5.5.1',
-					'updated'      => '2020-09-23 11:21:07',
-					'english_name' => 'German (Formal)',
-					'native_name'  => 'Deutsch (Sie)',
-					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/de_DE_formal.zip',
-					'iso'          => [ 'de' ],
-				],
-			'de_CH_informal' =>
-				[
-					'language'     => 'de_CH_informal',
-					'version'      => '5.5.1',
-					'updated'      => '2020-09-09 20:03:47',
-					'english_name' => 'German (Switzerland, Informal)',
-					'native_name'  => 'Deutsch (Schweiz, Du)',
-					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/de_CH_informal.zip',
-					'iso'          => [ 'de' ],
-				],
-			'en_GB'          =>
-
-				[
-					'language'     => 'en_GB',
-					'version'      => '5.5.1',
-					'updated'      => '2020-09-01 19:35:42',
-					'english_name' => 'English (UK)',
-					'native_name'  => 'English (UK)',
-					'package'      => 'https://downloads.wordpress.org/translation/core/5.5.1/en_GB.zip',
-					'iso'          => [ 'en', 'eng' ],
-				],
-		];
-	}
-
 
 	/**
 	 * This is a bit of a hack used to buffer feed content.
