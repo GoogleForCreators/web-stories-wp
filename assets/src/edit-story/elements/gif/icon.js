@@ -25,7 +25,7 @@ import { __ } from '@wordpress/i18n';
 import { Media } from '../../icons';
 
 function GifIcon() {
-  const alt = __('Image element', 'web-stories');
+  const alt = __('GIF element', 'web-stories');
   return <Media aria-label={alt} />;
 }
 
