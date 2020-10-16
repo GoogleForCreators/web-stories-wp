@@ -34,7 +34,7 @@ describe('Inserting Media from Dialog', () => {
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="uploadButton"]');
+    await expect(page).toClick('button', { text: 'Upload' });
 
     await page.waitForSelector(MODAL, {
       visible: true,
