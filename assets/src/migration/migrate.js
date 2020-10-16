@@ -82,8 +82,10 @@ export function migrate(storyData, version) {
     if (!migrations) {
       continue;
     }
-    for (let i = 0; i < migrations.length; i++) {
-      result = migrations[i](result);
+    for (const i in migrations) {
+      if (Object.prototype.hasOwnProperty.call(migrations, i)) {
+        result = migrations[Number(i)](result);
+      }
     }
   }
   return result;
