@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import React, { createRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
@@ -32,14 +32,48 @@ import createSolidFromString from '../../../../utils/createSolidFromString';
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
 const PREVIEW_SIZE = 36;
 
+const createGrid = ({ columns, gap, minWidth }) => css`
+  min-width: ${minWidth}px;
+  width: calc(${100 / columns}% - ${(gap * (columns - 1)) / columns}px);
+  margin-top: 0px;
+  margin-left: ${gap}px;
+  &:nth-of-type(n + ${columns + 1}) {
+    margin-top: ${gap}px;
+  }
+  &:nth-of-type(${columns}n + 1) {
+    margin-left: 0;
+  }
+`;
+
+const Aspect = styled.div`
+  position: relative;
+  flex-grow: 0;
+  flex-shrink: 0;
+  @media screen and (min-width: 1220px) {
+    ${createGrid({ columns: 4, gap: 12, minWidth: 50 })}
+  }
+  @media screen and (min-width: 1100px) and (max-width: 1220px) {
+    ${createGrid({ columns: 3, gap: 12, minWidth: 50 })}
+  }
+  @media screen and (max-width: 1100px) {
+    ${createGrid({ columns: 2, gap: 12, minWidth: 50 })}
+  }
+`;
+
+const AspectInner = styled.div`
+  position: relative;
+  padding-bottom: 95.5%;
+`;
+
 const ShapePreviewContainer = styled.button`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
   background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
   border-radius: 4px;
-  position: relative;
-  margin: 12px 10px;
-  flex: 0 0 64px;
-  height: 67px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,19 +145,23 @@ function ShapePreview({ mask, isPreview }) {
   };
 
   return (
-    <ShapePreviewContainer
-      key={mask.type}
-      draggable={true}
-      aria-label={mask.name}
-      onClick={() => {
-        // Shapes inserted with a specific size.
-        insertElement('shape', shapeData);
-      }}
-      onDragStart={onDragStart}
-    >
-      <ShapePreviewSizer />
-      {svg}
-    </ShapePreviewContainer>
+    <Aspect>
+      <AspectInner>
+        <ShapePreviewContainer
+          key={mask.type}
+          draggable={true}
+          aria-label={mask.name}
+          onClick={() => {
+            // Shapes inserted with a specific size.
+            insertElement('shape', shapeData);
+          }}
+          onDragStart={onDragStart}
+        >
+          <ShapePreviewSizer />
+          {svg}
+        </ShapePreviewContainer>
+      </AspectInner>
+    </Aspect>
   );
 }
 ShapePreview.propTypes = {

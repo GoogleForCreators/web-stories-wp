@@ -4,8 +4,109 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d0dc82a779f069a2f2bbd1b4519f9854",
+    "content-hash": "3f4ae95bd05b42e789735da2e57121a6",
     "packages": [
+        {
+            "name": "ampproject/amp-wp",
+            "version": "2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ampproject/amp-wp",
+                "reference": "823ae999158fcd1ae0b2c5c93736103a23fecae9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/823ae999158fcd1ae0b2c5c93736103a23fecae9",
+                "reference": "823ae999158fcd1ae0b2c5c93736103a23fecae9",
+                "shasum": ""
+            },
+            "require": {
+                "ampproject/common": "*",
+                "ampproject/optimizer": "*",
+                "cweagans/composer-patches": "1.6.7",
+                "ext-curl": "*",
+                "ext-date": "*",
+                "ext-dom": "*",
+                "ext-iconv": "*",
+                "ext-json": "*",
+                "ext-libxml": "*",
+                "ext-spl": "*",
+                "fasterimage/fasterimage": "1.5.0",
+                "php": "^5.6 || ^7.0",
+                "sabberworm/php-css-parser": "dev-master#bfdd976"
+            },
+            "require-dev": {
+                "civicrm/composer-downloads-plugin": "^2.1",
+                "dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
+                "mikey179/vfsstream": "1.6.8",
+                "mustache/mustache": "^2",
+                "php-stubs/wordpress-stubs": "^5.3.2",
+                "phpcompatibility/phpcompatibility-wp": "2.1.0",
+                "phpdocumentor/reflection": "~3.0",
+                "roave/security-advisories": "dev-master",
+                "sirbrillig/phpcs-variable-analysis": "2.8.3",
+                "wp-coding-standards/wpcs": "2.3.0",
+                "xwp/wp-dev-lib": "1.6.4"
+            },
+            "suggest": {
+                "ext-intl": "Enables use of idn_to_utf8() to convert punycode domains to UTF-8 for use with an AMP Cache.",
+                "ext-mbstring": "Used by PHP-CSS-Parser when working with stylesheets."
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "downloads": {
+                    "phpstan": {
+                        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
+                        "path": "vendor/bin/phpstan",
+                        "type": "phar"
+                    }
+                },
+                "patches": {
+                    "sabberworm/php-css-parser": {
+                        "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
+                        "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "patches/php-css-parser-pull-185.patch",
+                        "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "AmpProject\\AmpWP\\": "src/"
+                },
+                "classmap": [
+                    "includes/"
+                ],
+                "files": [
+                    "back-compat/back-compat.php",
+                    "includes/amp-helper-functions.php",
+                    "includes/admin/functions.php",
+                    "includes/deprecated.php"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "AmpProject\\AmpWP\\Documentation\\": "docs/src/",
+                    "AmpProject\\AmpWP\\Tests\\": "tests/php/src/"
+                },
+                "classmap": [
+                    "tests/php/validation/"
+                ],
+                "files": [
+                    "docs/includes/register-wp-cli-commands.php"
+                ]
+            },
+            "scripts": {
+                "analyze": [
+                    "if [ -z $TEST_SKIP_PHPSTAN ]; then phpstan --version; phpstan analyze --ansi; fi"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "WordPress plugin for adding AMP support.",
+            "homepage": "https://github.com/ampproject/amp-wp",
+            "time": "2020-09-22T23:15:54+00:00"
+        },
         {
             "name": "civicrm/composer-downloads-plugin",
             "version": "v2.1.1",
@@ -58,6 +159,197 @@
             "time": "2019-08-28T00:33:51+00:00"
         },
         {
+            "name": "cweagans/composer-patches",
+            "version": "1.6.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cweagans/composer-patches.git",
+                "reference": "2e6f72a2ad8d59cd7e2b729f218bf42adb14f590"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cweagans/composer-patches/zipball/2e6f72a2ad8d59cd7e2b729f218bf42adb14f590",
+                "reference": "2e6f72a2ad8d59cd7e2b729f218bf42adb14f590",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "composer/composer": "~1.0",
+                "phpunit/phpunit": "~4.6"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "cweagans\\Composer\\Patches"
+            },
+            "autoload": {
+                "psr-4": {
+                    "cweagans\\Composer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Cameron Eagans",
+                    "email": "me@cweagans.net"
+                }
+            ],
+            "description": "Provides a way to patch Composer packages.",
+            "time": "2019-08-29T20:11:49+00:00"
+        },
+        {
+            "name": "fasterimage/fasterimage",
+            "version": "v1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willwashburn/fasterimage.git",
+                "reference": "42d125a15dc124520aff2157bbed9a4b2d4f310a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willwashburn/fasterimage/zipball/42d125a15dc124520aff2157bbed9a4b2d4f310a",
+                "reference": "42d125a15dc124520aff2157bbed9a4b2d4f310a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "willwashburn/stream": ">=1.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "php-mock/php-mock-phpunit": "^2.3",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Will Washburn",
+                    "email": "will@tailwindapp.com"
+                },
+                {
+                    "name": "Weston Ruter"
+                }
+            ],
+            "description": "FasterImage finds the size or type of a set of images given their uris by fetching as little as needed, in parallel. Originally ported by Tom Moor.",
+            "homepage": "https://github.com/willwashburn/fasterimage",
+            "keywords": [
+                "fast image",
+                "faster image",
+                "fasterimage",
+                "fastimage",
+                "getimagesize",
+                "image size",
+                "parallel"
+            ],
+            "time": "2019-05-25T14:33:33+00:00"
+        },
+        {
+            "name": "mcaskill/composer-exclude-files",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
+                "reference": "2bf916ab1ec9959b3a58ba3652bad6ffedf0e10e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/2bf916ab1ec9959b3a58ba3652bad6ffedf0e10e",
+                "reference": "2bf916ab1ec9959b3a58ba3652bad6ffedf0e10e",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0 || ^2.0",
+                "php": "^5.3.2 || ^7.0 || ^8.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.0 || ^2.0",
+                "symfony/phpunit-bridge": "^4.2 || ^5.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                },
+                "class": "McAskill\\Composer\\ExcludeFilePlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "McAskill\\Composer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chauncey McAskill",
+                    "email": "chauncey@mcaskill.ca"
+                }
+            ],
+            "description": "Exclude files from autoload_files.php",
+            "time": "2020-09-25T22:01:23+00:00"
+        },
+        {
+            "name": "sabberworm/php-css-parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
+                "reference": "a525c75db322fd295371ba75df2aece58b70b895"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sabberworm/PHP-CSS-Parser/zipball/a525c75db322fd295371ba75df2aece58b70b895",
+                "reference": "a525c75db322fd295371ba75df2aece58b70b895",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "codacy/coverage": "^1.4",
+                "phpunit/phpunit": "^4.8.36"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raphael Schweikert"
+                }
+            ],
+            "description": "Parser for CSS Files written in PHP",
+            "homepage": "http://www.sabberworm.com/blog/2010/6/10/php-css-parser",
+            "keywords": [
+                "css",
+                "parser",
+                "stylesheet"
+            ],
+            "time": "2020-08-03T15:45:50+00:00"
+        },
+        {
             "name": "togos/gitignore",
             "version": "1.1.1",
             "source": {
@@ -89,6 +381,53 @@
             ],
             "description": "Parser for .gitignore (and sparse-checkout, and anything else using the same format) files",
             "time": "2019-04-19T19:16:58+00:00"
+        },
+        {
+            "name": "willwashburn/stream",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willwashburn/stream.git",
+                "reference": "345b3062493e3899d987dbdd1fec1c13ee28c903"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willwashburn/stream/zipball/345b3062493e3899d987dbdd1fec1c13ee28c903",
+                "reference": "345b3062493e3899d987dbdd1fec1c13ee28c903",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WillWashburn\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Will Washburn",
+                    "email": "will.washburn@gmail.com"
+                }
+            ],
+            "description": "model a sequence of data elements made available over time ",
+            "homepage": "https://github.com/willwashburn/stream",
+            "keywords": [
+                "peek",
+                "read",
+                "stream",
+                "streamable"
+            ],
+            "time": "2016-03-15T10:54:35+00:00"
         }
     ],
     "packages-dev": [
@@ -1111,12 +1450,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "0749ceaf15c136d085b722a5bb88141398a54142"
+                "reference": "ba5d234b3a1559321b816b64aafc2ce6728799ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/0749ceaf15c136d085b722a5bb88141398a54142",
-                "reference": "0749ceaf15c136d085b722a5bb88141398a54142",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ba5d234b3a1559321b816b64aafc2ce6728799ff",
+                "reference": "ba5d234b3a1559321b816b64aafc2ce6728799ff",
                 "shasum": ""
             },
             "conflict": {
@@ -1176,7 +1515,7 @@
                 "ezsystems/ezplatform-kernel": ">=1,<1.0.2.1",
                 "ezsystems/ezplatform-user": ">=1,<1.0.1",
                 "ezsystems/ezpublish-kernel": ">=5.3,<5.3.12.1|>=5.4,<5.4.14.2|>=6,<6.7.9.1|>=6.8,<6.13.6.3|>=7,<7.2.4.1|>=7.3,<7.3.2.1|>=7.5,<7.5.7.1",
-                "ezsystems/ezpublish-legacy": ">=5.3,<5.3.12.6|>=5.4,<5.4.14.1|>=2011,<2017.12.7.2|>=2018.6,<2018.6.1.4|>=2018.9,<2018.9.1.3|>=2019.3,<2019.3.4.2",
+                "ezsystems/ezpublish-legacy": ">=5.3,<5.3.12.6|>=5.4,<5.4.14.2|>=2011,<2017.12.7.3|>=2018.6,<2018.6.1.4|>=2018.9,<2018.9.1.3|>=2019.3,<2019.3.5.1",
                 "ezsystems/platform-ui-assets-bundle": ">=4.2,<4.2.3",
                 "ezsystems/repository-forms": ">=2.3,<2.3.2.1",
                 "ezyang/htmlpurifier": "<4.1.1",
@@ -1219,6 +1558,8 @@
                 "mittwald/typo3_forum": "<1.2.1",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
+                "nette/application": ">=2,<2.0.19|>=2.1,<2.1.13|>=2.2,<2.2.10|>=2.3,<2.3.14|>=2.4,<2.4.16|>=3,<3.0.6",
+                "nette/nette": ">=2,<2.0.19|>=2.1,<2.1.13",
                 "nystudio107/craft-seomatic": "<3.3",
                 "nzo/url-encryptor-bundle": ">=4,<4.3.2|>=5,<5.0.1",
                 "october/backend": ">=1.0.319,<1.0.467",
@@ -1254,6 +1595,7 @@
                 "privatebin/privatebin": "<1.2.2|>=1.3,<1.3.2",
                 "propel/propel": ">=2-alpha.1,<=2-alpha.7",
                 "propel/propel1": ">=1,<=1.7.1",
+                "pterodactyl/panel": "<0.7.19|>=1-rc.0,<=1-rc.6",
                 "pusher/pusher-php-server": "<2.2.1",
                 "rainlab/debugbar-plugin": "<3.1",
                 "robrichards/xmlseclibs": "<3.0.4",
@@ -1339,6 +1681,7 @@
                 "typo3/flow": ">=1,<1.0.4|>=1.1,<1.1.1|>=2,<2.0.1|>=2.3,<2.3.16|>=3,<3.0.10|>=3.1,<3.1.7|>=3.2,<3.2.7|>=3.3,<3.3.5",
                 "typo3/neos": ">=1.1,<1.1.3|>=1.2,<1.2.13|>=2,<2.0.4",
                 "typo3/phar-stream-wrapper": ">=1,<2.1.1|>=3,<3.1.1",
+                "typo3fluid/fluid": ">=2,<2.0.5|>=2.1,<2.1.4|>=2.2,<2.2.1|>=2.3,<2.3.5|>=2.4,<2.4.1|>=2.5,<2.5.5|>=2.6,<2.6.1",
                 "ua-parser/uap-php": "<3.8",
                 "usmanhalalit/pixie": "<1.0.3|>=2,<2.0.2",
                 "verot/class.upload.php": "<=1.0.3|>=2,<=2.0.4",
@@ -1408,7 +1751,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-09-24T17:02:11+00:00"
+            "time": "2020-10-08T21:02:27+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -1925,16 +2268,16 @@
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
-            "version": "v2.8.3",
+            "version": "v2.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-                "reference": "00b4fa3130faa26762c929989e3d958086c627f1"
+                "reference": "ff54d4ec7f2bd152d526fdabfeff639aa9b8be01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/00b4fa3130faa26762c929989e3d958086c627f1",
-                "reference": "00b4fa3130faa26762c929989e3d958086c627f1",
+                "url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/ff54d4ec7f2bd152d526fdabfeff639aa9b8be01",
+                "reference": "ff54d4ec7f2bd152d526fdabfeff639aa9b8be01",
                 "shasum": ""
             },
             "require": {
@@ -1969,7 +2312,7 @@
                 }
             ],
             "description": "A PHPCS sniff to detect problems with variables.",
-            "time": "2020-07-11T23:32:06+00:00"
+            "time": "2020-10-07T23:32:29+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
@@ -2268,7 +2611,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "roave/security-advisories": 20
     },

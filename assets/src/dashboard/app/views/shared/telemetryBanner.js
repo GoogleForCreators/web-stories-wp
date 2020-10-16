@@ -26,6 +26,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { TranslateWithMarkup } from '../../../../i18n';
 import { TypographyPresets, useLayoutContext } from '../../../components';
 import { Close as CloseSVG } from '../../../icons';
 import { useConfig } from '../../config';
@@ -166,23 +167,30 @@ export const TelemetryOptInBanner = forwardRef(
             ref={checkboxRef}
           />
           <LabelText aria-checked={checked}>
-            {__(
-              'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with Google Privacy Policy.',
-              'web-stories'
-            )}
-            &nbsp;
-            <a
-              href={__('https://policies.google.com/privacy', 'web-stories')}
-              rel="noreferrer"
-              target="_blank"
-              aria-label={__(
-                'Learn more by visiting Google Privacy Policy',
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  //eslint-disable-next-line jsx-a11y/anchor-has-content
+                  <a
+                    href={__(
+                      'https://policies.google.com/privacy',
+                      'web-stories'
+                    )}
+                    rel="noreferrer"
+                    target="_blank"
+                    aria-label={__(
+                      'Learn more by visiting Google Privacy Policy',
+                      'web-stories'
+                    )}
+                  />
+                ),
+              }}
+            >
+              {__(
+                'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with <a>Google Privacy Policy</a>.',
                 'web-stories'
               )}
-            >
-              {__('Learn more', 'web-stories')}
-              {'.'}
-            </a>
+            </TranslateWithMarkup>
           </LabelText>
         </Label>
         <VisitSettingsText>

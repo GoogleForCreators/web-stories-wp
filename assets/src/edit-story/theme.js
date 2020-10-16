@@ -83,6 +83,7 @@ export function useTheme(selector) {
 const theme = {
   colors: {
     bg: {
+      // Note: amp-story-page background color matches workspace background color.
       workspace: '#1B1D1C',
       panel: '#282A2A',
       white: '#FFFFFF',

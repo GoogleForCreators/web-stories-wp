@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __setMockFiles } from 'fs';
-import { execSync } from 'child_process';
 
 /**
  * Internal dependencies
@@ -27,7 +26,6 @@ import createBuild from '../createBuild';
 import copyFiles from '../copyFiles';
 
 jest.mock('fs');
-jest.mock('child_process');
 
 jest.mock('../getIgnoredFiles', () => jest.fn(() => ['bar.txt', 'baz/']));
 jest.mock('../copyFiles');
@@ -56,24 +54,12 @@ describe('createBuild', () => {
     ]);
   });
 
-  it('should ignore vendor folder for composer builds', () => {
+  it('should ignore third-party folder for composer builds', () => {
     createBuild('/foo', '/foo/build/web-stories', true);
     expect(copyFiles).toHaveBeenCalledWith('/foo', '/foo/build/web-stories', [
       'bar.txt',
       'baz/',
-      'vendor/',
+      'includes/vendor/',
     ]);
-  });
-
-  it('should run composer update for non-composer builds', () => {
-    createBuild('/foo', '/foo/build', false);
-    expect(execSync).toHaveBeenNthCalledWith(
-      1,
-      expect.stringContaining('composer update --no-dev')
-    );
-    expect(execSync).toHaveBeenNthCalledWith(
-      2,
-      expect.stringContaining('composer update')
-    );
   });
 });

@@ -38,12 +38,20 @@ const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, animations, elements, backgroundColor } = page;
-  const backgroundStyles = {
-    backgroundColor: 'white',
-    ...generatePatternStyles(backgroundColor),
-  };
+
   const [backgroundElement, ...regularElements] = elements;
   const longestMediaElement = getLongestMediaElement(elements);
+
+  // If the background element has base color set, it's media, use that.
+  const baseColor = backgroundElement?.resource?.baseColor;
+  const backgroundStyles = baseColor
+    ? {
+        backgroundColor: `rgb(${baseColor[0]},${baseColor[1]},${baseColor[2]})`,
+      }
+    : {
+        backgroundColor: 'white',
+        ...generatePatternStyles(backgroundColor),
+      };
 
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`

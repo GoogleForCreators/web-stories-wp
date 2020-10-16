@@ -32,7 +32,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { CloseAlt as Close } from '../../icons';
 import { useKeyDownEffect } from '../keyboard';
-import MULTIPLE_VALUE from './multipleValue';
+import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 import { Input } from '.';
 
 const INPUT_PADDING = 6;
@@ -125,7 +125,7 @@ function TextInput({
   const inputRef = useRef();
   const isMultiple = value === MULTIPLE_VALUE;
   value = isMultiple ? '' : value;
-  placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
+  placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : placeholder;
 
   const onClear = useCallback(() => {
     onChange('');

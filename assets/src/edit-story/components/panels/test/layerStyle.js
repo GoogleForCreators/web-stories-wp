@@ -23,6 +23,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import LayerStyle from '../layerStyle';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
 describe('Panels/LayerStyle', () => {
@@ -94,5 +95,15 @@ describe('Panels/LayerStyle', () => {
     expect(submits[defaultElement.id]).toStrictEqual({
       opacity: 100,
     });
+  });
+
+  it('should display mixed in case of multi-selection with different values', () => {
+    const { getByRole } = renderLayerStyle([
+      { ...defaultElement, opacity: 50 },
+      { id: 2, opacity: 80 },
+    ]);
+    const input = getByRole('textbox', { name: 'Opacity in percentage' });
+    expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+    expect(input.value).toStrictEqual('');
   });
 });

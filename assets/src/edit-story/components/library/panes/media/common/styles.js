@@ -23,7 +23,7 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { Pane } from '../../shared';
+import { Pane, PANE_PADDING } from '../../shared';
 
 export const PaneInner = styled.div`
   height: 100%;
@@ -38,7 +38,7 @@ export const PaneHeader = styled.div`
 export const MediaGalleryContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: 0 24px;
+  padding: 0 ${PANE_PADDING};
   margin-top: 1em;
   position: relative;
   width: 100%;
@@ -92,5 +92,5 @@ export const StyledPane = styled(Pane)`
 `;
 
 export const SearchInputContainer = styled.div`
-  padding: 0 24px;
+  padding: 0 ${PANE_PADDING};
 `;
