@@ -20,13 +20,16 @@
 import { PanelTypes } from '../../components/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
-export { default as Display } from '../image/display';
-export { default as Edit } from '../image/edit';
-export { default as Frame } from '../image/frame';
+
+export { default as Edit } from './edit';
+export { default as Frame } from './frame';
+export { default as LayerContent } from './layer';
 export { default as Output } from './output';
-export { default as TextContent } from '../image/textContent';
-export { default as LayerContent } from '../image/layer';
-export { default as LayerIcon } from '../image/icon';
+export { default as LayerIcon } from './icon';
+
+export { default as TextContent } from '../media/textContent';
+export { default as Display } from '../media/imageDisplay';
+
 export {
   canFlip,
   isMaskable,
