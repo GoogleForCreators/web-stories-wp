@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g npm@next-7
+          npm install -g npm@7
           npm ci
           npx patch-package
         env:
