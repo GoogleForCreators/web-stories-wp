@@ -100,6 +100,7 @@ function ImageDisplay({ element, box }) {
         src={src}
         srcSet={srcSet}
         alt={resource.alt}
+        data-testid="imageElement"
         {...imgProps}
       />
     </MediaDisplay>
