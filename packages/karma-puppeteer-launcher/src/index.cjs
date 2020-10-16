@@ -101,7 +101,12 @@ async function exposeFunctions(page, config) {
         // Do nothing unless snapshots are enabled.
         return;
       }
-      await extractAndSaveSnapshot(frame, testName, snapshotName, config.snapshotsDir);
+      await extractAndSaveSnapshot(
+        frame,
+        testName,
+        snapshotName,
+        config.snapshotsDir
+      );
     }
   );
 
