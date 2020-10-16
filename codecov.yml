@@ -84,7 +84,7 @@ ignore:
   - includes/namespace.php
   - includes/plugin-compat
   - includes/templates
-  - assets/src/fonts/cli.js
   - assets/src/migration/cli.js
   - assets/src/karma-*/**/*
-  - AMP/Integration/AMP_Story_Sanitizer.php
+  - includes/AMP/Integration/AMP_Story_Sanitizer.php
+  - packages/fonts/src/cli.js
