@@ -113,6 +113,16 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Publishing Flow Test');
 
+    // Switch to HTML mode
+    await expect(page).toClick('#content-html');
+
+    const textEditorContent = await page.$eval(
+      '.wp-editor-area',
+      (element) => element.value
+    );
+
+    expect(textEditorContent).toMatchSnapshot();
+
     await expect(page).toClick('#publish');
 
     const btnTab = '#message a';
