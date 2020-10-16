@@ -142,6 +142,20 @@ return [
 			->in( 'vendor/sabberworm/php-css-parser' )
 			->append( [ 'vendor/sabberworm/php-css-parser/composer.json' ] ),
 
+		// Symfony mbstring polyfill.
+		Finder::create()
+			->files()
+			->ignoreVCS( true )
+			->ignoreDotFiles( true )
+			->name( '*.php' )
+			->in( 'vendor/symfony/polyfill-mbstring/Resources' )
+			->append(
+				[
+					'vendor/symfony/polyfill-mbstring/Mbstring.php',
+					'vendor/symfony/polyfill-mbstring/composer.json',
+				]
+			),
+
 		// Main composer.json file so that we can build a classmap.
 		Finder::create()
 			->append( [ 'composer.json' ] ),
