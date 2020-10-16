@@ -81,7 +81,7 @@ class Embed {
 		$poster_style  = ! empty( $poster ) ? sprintf( '--story-player-poster: url(%s)', $poster ) : '';
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
-			$args['height'] / $args['width'],
+			0 !== $args['width'] ? $args['height'] / $args['width'] : 1,
 			(int) $args['width'],
 			(int) $args['height']
 		);
