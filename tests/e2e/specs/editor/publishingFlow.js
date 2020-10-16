@@ -100,7 +100,10 @@ describe('Publishing Flow', () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type('input[placeholder="Add title"]', 'Publishing Flow Test');
+    await page.type(
+      'input[placeholder="Add title"]',
+      'Publishing Flow Test (Shortcode)'
+    );
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });

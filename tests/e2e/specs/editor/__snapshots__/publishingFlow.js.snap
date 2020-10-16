@@ -5,3 +5,5 @@ exports[`Publishing Flow should guide me towards creating a new post to embed my
 <div class=\\"wp-block-web-stories-embed alignnone\\"><amp-story-player style=\\"width:360px;height:600px\\" data-testid=\\"amp-story-player\\"><a href=\\"http://localhost:8899/web-stories/publishing-flow-test\\">Publishing Flow Test</a></amp-story-player></div>
 <!-- /wp:web-stories/embed -->"
 `;
+
+exports[`Publishing Flow should guide me towards creating a new post to embed my story in classic editor 1`] = `"[web_stories_embed url=\\"http://localhost:8899/web-stories/publishing-flow-test-shortcode\\" title=\\"Publishing Flow Test (Shortcode)\\" width=\\"360\\" height=\\"600\\"]"`;
