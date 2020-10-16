@@ -41,7 +41,9 @@ env:
 
 install:
   - nvm install
+  - npm install -g npm@7
   - npm ci
+  - npx patch-package
   - composer install --no-interaction
 
 script:
