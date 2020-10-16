@@ -19,11 +19,6 @@
  */
 import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import StoryPlayer from './storyPlayer';
-
 const blockAttributes = {
   url: {
     type: 'string',
@@ -71,13 +66,22 @@ function save({ attributes }) {
 
   return (
     <div className={`wp-block-web-stories-embed align${align}`}>
-      <StoryPlayer
-        url={url}
-        title={title}
-        poster={poster}
-        width={width}
-        height={height}
-      />
+      <amp-story-player
+        style={{
+          width: width ? `${width}px` : undefined,
+          height: height ? `${height}px` : undefined,
+        }}
+        data-testid="amp-story-player"
+      >
+        <a
+          href={url}
+          style={{
+            ['--story-player-poster']: poster ? `url('${poster}')` : undefined,
+          }}
+        >
+          {title}
+        </a>
+      </amp-story-player>
     </div>
   );
 }
