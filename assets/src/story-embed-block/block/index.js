@@ -24,6 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { ReactComponent as icon } from './icon.svg';
 import metadata from './block.json';
+import deprecated from './deprecated';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';
@@ -58,6 +59,7 @@ const settings = {
   },
   edit,
   save,
+  deprecated,
   transforms,
 };
 
