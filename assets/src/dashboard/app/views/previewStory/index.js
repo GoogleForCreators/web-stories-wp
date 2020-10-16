@@ -145,8 +145,7 @@ const PreviewStory = ({ story, handleClose }) => {
     if (localStorage.getItem(AMP_LOCAL_STORAGE)) {
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     }
-
-    if (!story) {
+    if (!story || !story.pages.length) {
       setPreviewError(__('Unable to Render Preview', 'web-stories'));
     } else {
       createStoryPreview(story);
