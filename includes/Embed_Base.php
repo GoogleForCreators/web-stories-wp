@@ -71,7 +71,7 @@ class Embed_Base {
 			WEBSTORIES_VERSION
 		);
 
-		if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' ) ) {
+		if ( is_readable( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' ) ) {
 			$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
 
 			if ( $css ) {
