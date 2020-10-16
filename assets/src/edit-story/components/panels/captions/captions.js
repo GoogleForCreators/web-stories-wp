@@ -29,81 +29,36 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DropDown, Row, Button } from '../../form';
-import { ExpandedTextInput } from '../shared';
+import { Row, Button, TextInput } from '../../form';
 import { SimplePanel } from '../panel';
 import { getCommonValue } from '../utils';
-import { useConfig } from '../../../app';
 import { useMediaPicker } from '../../mediaPicker';
 
-const Section = styled.div`
-  display: grid;
-  grid-template-areas: 'Options Remove';
-  grid-template-columns: auto 30px;
-`;
-const Options = styled.div`
-  grid-area: Options;
-`;
-const Remove = styled.div`
-  grid-area: Remove;
-  justify-self: center;
-  align-self: center;
-`;
-const RemoveButton = styled.button`
-  border: 0px;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.fg.white};
+const BoxedTextInput = styled(TextInput)`
+  padding: 6px 6px;
+  border-radius: 4px;
+  flex-grow: 1;
+  opacity: 1;
 `;
 
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
 
-  const {
-    languages,
-    locale: { localeFormatted },
-  } = useConfig();
-
-  const handleChangeLanguage = useCallback(
-    (inputValue, idToUpdate) => {
-      const trackIndex = tracks.findIndex(({ id }) => id === idToUpdate);
-      const languagesIndex = languages.findIndex(
-        ({ value }) => value === inputValue
-      );
-      const language = languages[languagesIndex];
-      const currentTrack = tracks[trackIndex];
-      const newTracks = [
-        ...tracks.slice(0, trackIndex),
-        { ...currentTrack, srclang: language.value, label: language.name },
-        ...tracks.slice(trackIndex + 1),
-      ];
-      pushUpdate({ tracks: newTracks }, true);
-    },
-    [tracks, pushUpdate, languages]
-  );
-
   const handleChangeTrack = useCallback(
     (attachment) => {
-      const languagesIndex = languages.findIndex(
-        ({ value }) => value === localeFormatted
-      );
-
-      const language = languages[languagesIndex];
-
       const newTracks = {
         track: attachment?.url,
         trackId: attachment?.id,
         trackName: attachment?.filename,
         id: uuidv4(),
         kind: 'captions',
-        srclang: language.value,
-        label: language.name,
+        srclang: '',
+        label: '',
       };
 
       pushUpdate({ tracks: [...tracks, newTracks] }, true);
     },
-    [tracks, pushUpdate, languages, localeFormatted]
+    [tracks, pushUpdate]
   );
 
   const handleRemoveTrack = useCallback(
@@ -118,58 +73,37 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     [tracks, pushUpdate]
   );
 
-  const subtitleText = __('Upload subtitles', 'web-stories');
+  const captionText = __('Upload captions', 'web-stories');
 
   const UploadCaption = useMediaPicker({
     onSelect: handleChangeTrack,
     type: 'text/vtt',
-    title: subtitleText,
-    buttonInsertText: __('Select subtitle', 'web-stories'),
+    title: captionText,
+    buttonInsertText: __('Select caption', 'web-stories'),
   });
 
   return (
     <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
       {tracks &&
-        tracks.map(({ id, srclang, trackName }) => (
-          <Section key={`section-${id}`}>
-            <Options>
-              <Row>
-                <ExpandedTextInput
-                  value={trackName}
-                  onChange={() => {}}
-                  readonly
-                  aria-label={__('Filename', 'web-stories')}
-                  key={`filename-${id}`}
-                />
-              </Row>
-              <Row>
-                <DropDown
-                  options={languages}
-                  value={srclang}
-                  onChange={(value) => handleChangeLanguage(value, id)}
-                  lightMode={true}
-                  key={`dropdown-${id}`}
-                />
-              </Row>
-            </Options>
-            <Remove>
-              <Row>
-                <RemoveButton
-                  onClick={() => handleRemoveTrack(id)}
-                  key={`remove-${id}`}
-                >
-                  {'x'}
-                </RemoveButton>
-              </Row>
-            </Remove>
-          </Section>
+        tracks.map(({ id, trackName }) => (
+          <Row key={`row-filename-${id}`}>
+            <BoxedTextInput
+              value={trackName}
+              disabled
+              aria-label={__('Filename', 'web-stories')}
+              clear
+              onChange={() => handleRemoveTrack(id)}
+              key={`filename-${id}`}
+            />
+          </Row>
         ))}
-
-      <Row expand>
-        <Button onClick={UploadCaption} fullWidth>
-          {subtitleText}
-        </Button>
-      </Row>
+      {!tracks.length && (
+        <Row expand>
+          <Button onClick={UploadCaption} fullWidth>
+            {captionText}
+          </Button>
+        </Row>
+      )}
     </SimplePanel>
   );
 }
