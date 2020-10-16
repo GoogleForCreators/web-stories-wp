@@ -362,7 +362,7 @@
         "assets/src/edit-story/karma-tests.cjs",
         "assets/src/migration/**/*.js",
         "packages/fonts/**/*.js",
-        "assets/src/commander/**/*.js"
+        "packages/commander/**/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
