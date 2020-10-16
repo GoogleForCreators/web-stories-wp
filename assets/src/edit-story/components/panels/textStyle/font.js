@@ -75,7 +75,9 @@ function FontControls({ selectedElements, pushUpdate }) {
     handlers: { handleSelectFontWeight, handleResetFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({ clearEditing }));
+  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
+    clearEditing,
+  }));
 
   const {
     fonts,
