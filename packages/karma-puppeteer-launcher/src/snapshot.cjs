@@ -29,8 +29,14 @@ const STATE_CSS_RE = new RegExp(`\\:(${STATES.join('|')})\\b`, 'ig');
  * @param {Object} frame Frame.
  * @param {string} testName Test name.
  * @param {string} snapshotName Snapshot name.
+ * @param {string} targetDir Destination path for snapshots.
  */
-async function extractAndSaveSnapshot(frame, testName, snapshotName) {
+async function extractAndSaveSnapshot(
+  frame,
+  testName,
+  snapshotName,
+  targetDir
+) {
   if (!testName) {
     testName = '_';
   }
@@ -42,9 +48,8 @@ async function extractAndSaveSnapshot(frame, testName, snapshotName) {
 
   const snapshot = await extractSnapshot(frame, testName, snapshotName);
 
-  const dir = path.resolve(process.cwd(), '.test_artifacts', 'karma_snapshots');
   try {
-    await fs.mkdir(dir, { recursive: true });
+    await fs.mkdir(targetDir, { recursive: true });
   } catch (e) {
     // Ignore. Let the file write fail instead.
   }
@@ -61,7 +66,7 @@ async function extractAndSaveSnapshot(frame, testName, snapshotName) {
       : snapshotName.substring(0, maxFileName)
   }`;
   fileName = fileName.replace(/[^a-z0-9]/gi, '_');
-  const filePath = path.resolve(dir, fileName + '.html');
+  const filePath = path.resolve(targetDir, fileName + '.html');
   await fs.writeFile(filePath, snapshot);
 }
 

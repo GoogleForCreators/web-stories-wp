@@ -131,6 +131,7 @@ module.exports = function (config) {
         slowMo: config.slowMo || 0,
         devtools: config.devtools || false,
         snapshots: config.snapshots || false,
+        snapshotsDir: '.test_artifacts/karma_snapshots',
         defaultViewport: getViewport(config.viewport),
       },
     },
