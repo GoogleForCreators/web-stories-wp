@@ -96,14 +96,14 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
         >
           <source src={resource.src} type={resource.mimeType} />
           {tracks &&
-            tracks.map(({ srclang, label, kind, track, id: trackId }, i) => (
+            tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
               <track
                 srcLang={srclang}
                 label={label}
                 kind={kind}
-                src={track}
+                src={src}
+                key={key}
                 default={i == 0}
-                key={trackId}
               />
             ))}
         </Video>

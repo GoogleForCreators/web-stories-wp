@@ -65,9 +65,9 @@ describe('Video output', () => {
           trackId: 123,
           trackName: 'track.vtt',
           id: 'rersd-fdfd-fdfd-fdfd',
-          srcLang: 'en',
-          label: 'test',
-          kind: 'subtitle',
+          srcLang: '',
+          label: '',
+          kind: 'caption',
         },
       ],
     };
