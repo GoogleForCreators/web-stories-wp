@@ -107,6 +107,8 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
 
   const handlers = useMemo(() => {
     const htmlFormatters = getHTMLFormatters();
+    const handleResetFontWeight = (weight) =>
+      push(htmlFormatters.setFontWeight, weight);
 
     if (hasCurrentEditor) {
       return {
@@ -116,30 +118,25 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickBold: () => selectionActions.toggleBoldInSelection(),
         // All these keep their arguments:
         handleSelectFontWeight: selectionActions.setFontWeightInSelection,
-        handleResetFontWeight: (weight) => {
-          push(htmlFormatters.setFontWeight, weight);
-        },
         handleClickItalic: selectionActions.toggleItalicInSelection,
         handleClickUnderline: selectionActions.toggleUnderlineInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
+        handleResetFontWeight,
       };
     }
 
     return {
       handleClickBold: (flag) => push(htmlFormatters.toggleBold, flag),
-      handleSelectFontWeight: (weight) => {
-        push(htmlFormatters.setFontWeight, weight);
-      },
-      handleResetFontWeight: (weight) => {
-        push(htmlFormatters.setFontWeight, weight);
-      },
+      handleSelectFontWeight: (weight) =>
+        push(htmlFormatters.setFontWeight, weight),
       handleClickItalic: (flag) => push(htmlFormatters.toggleItalic, flag),
       handleClickUnderline: (flag) =>
         push(htmlFormatters.toggleUnderline, flag),
       handleSetLetterSpacing: (letterSpacing) =>
         push(htmlFormatters.setLetterSpacing, letterSpacing),
       handleSetColor: (color) => push(htmlFormatters.setColor, color),
+      handleResetFontWeight,
     };
   }, [hasCurrentEditor, selectionActions, push]);
 
