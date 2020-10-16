@@ -22,23 +22,23 @@
  * @return {Array<string>} Font names.
  */
 export function getInUseFontsForPages(pages) {
-  return [
-    ...new Set(
-      pages
-        .reduce((storyMemo, { elements = [] }) => {
-          return [
-            ...storyMemo,
-            ...elements.reduce((pageMemo, element) => {
+  return (
+    Array.from(
+      new Set(
+        pages
+          .map(({ elements = [] }) =>
+            elements.map((element) => {
               if (element.type === 'text' && Boolean(element.font?.family)) {
-                return [...pageMemo, element.font?.family];
+                return element.font?.family;
               }
-              return pageMemo;
-            }, []),
-          ];
-        }, [])
-        .filter(Boolean)
-    ),
-  ];
+              return null;
+            })
+          )
+          .flat()
+          .filter(Boolean)
+      )
+    ) || []
+  );
 }
 
 /**
@@ -50,7 +50,7 @@ export function getInUseFontsForPages(pages) {
  */
 export function getTextSetsForFonts({ fonts, textSets }) {
   return textSets
-    .reduce((textSetMemo, currentTextSet) => {
+    .map((currentTextSet) => {
       const hasFontInUse = currentTextSet.reduce(
         (elementMemo, currentElement) => {
           if (
@@ -65,7 +65,7 @@ export function getTextSetsForFonts({ fonts, textSets }) {
         },
         false
       );
-      return [...textSetMemo, hasFontInUse && currentTextSet];
-    }, [])
+      return hasFontInUse && currentTextSet;
+    })
     .filter(Boolean);
 }
