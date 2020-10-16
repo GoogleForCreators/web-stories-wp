@@ -13,7 +13,8 @@
     "ampproject/amp-wp": "^2.0.4",
     "civicrm/composer-downloads-plugin": "^2.1",
     "cweagans/composer-patches": "^1.6",
-    "mcaskill/composer-exclude-files": "^2.0"
+    "mcaskill/composer-exclude-files": "^2.0",
+    "symfony/polyfill-mbstring": "^1.18"
   },
   "provide": {
     "ampproject/common": "dev-develop",
@@ -64,7 +65,10 @@
       "Google\\Web_Stories\\": "includes",
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
       "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
-    }
+    },
+    "files": [
+      "includes/polyfills/mbstring.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
