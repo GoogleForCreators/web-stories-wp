@@ -57,7 +57,7 @@ const DragWrapper = styled.div.attrs({
 
 const DragContainer = styled.div`
   position: absolute;
-  top: 0;
+  top: -9999px;
   left: 0;
   z-index: -1;
   width: ${({ width }) => width}px;
@@ -111,6 +111,7 @@ function TextSet({ elements }) {
           }}
         />
       </DragContainer>
+
       <TextSetItem
         role="listitem"
         draggable={true}

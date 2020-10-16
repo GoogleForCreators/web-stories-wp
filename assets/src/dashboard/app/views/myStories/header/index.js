@@ -24,7 +24,7 @@ import { useDebouncedCallback } from 'use-debounce';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -108,6 +108,11 @@ function Header({
               key: storyStatus.value,
               isActive: filter.value === storyStatus.value,
               disabled: totalStoriesByStatus?.[storyStatus.status] <= 0,
+              ['aria-label']: sprintf(
+                /* translators: %s is story status */
+                __('Filter stories by %s', 'web-stories'),
+                storyStatus.label
+              ),
               text: `${storyStatus.label} ${
                 totalStoriesByStatus?.[storyStatus.status]
                   ? `(${totalStoriesByStatus?.[storyStatus.status]})`

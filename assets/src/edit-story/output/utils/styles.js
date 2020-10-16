@@ -18,15 +18,32 @@
  * Internal dependencies
  */
 import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
+import theme from '../../theme';
+
+function isHexColorString(s) {
+  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
+}
 
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
   const fullToSafeRatio = 1 / safeToFullRatio;
+
+  // Match page background color to the workspace background color.
+  // Validate since we're using dangerouslySetInnerHTML with imported variable.
+  const workspaceColor = theme.colors.bg.workspace;
+  const pageBackgroundColor = isHexColorString(workspaceColor)
+    ? workspaceColor
+    : '#1B1D1C';
+
   return (
     <style
       amp-custom=""
       dangerouslySetInnerHTML={{
         __html: `
+              amp-story-page {
+                background-color: ${pageBackgroundColor};
+              }
+
               amp-story-grid-layer {
                 overflow: visible;
               }
