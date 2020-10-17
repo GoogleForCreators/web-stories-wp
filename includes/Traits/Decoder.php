@@ -42,11 +42,7 @@ trait Decoder {
 	 * @return bool Whether decoding is supported.
 	 */
 	protected function supports_decoding() {
-		if ( defined( '\WEBSTORIES_DEV_MODE' ) && WEBSTORIES_DEV_MODE ) {
-			return false;
-		}
-
-		return function_exists( 'mb_convert_encoding' );
+		return ( ! defined( '\WEBSTORIES_DEV_MODE' ) || ! WEBSTORIES_DEV_MODE );
 	}
 
 	/**
@@ -59,9 +55,7 @@ trait Decoder {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 
-			if ( function_exists( 'mb_convert_encoding' ) ) {
-				return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
-			}
+			return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
 		}
 
 		return $string;
