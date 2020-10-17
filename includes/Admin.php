@@ -28,8 +28,11 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Story_Renderer\Image;
 use WP_Post;
 use WP_Screen;
+
 
 /**
  * Admin class.
@@ -110,49 +113,28 @@ class Admin {
 			return $content;
 		}
 
-		$block_markup_with_poster = <<<BLOCK
-<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":"%3\$s"} -->
-<div class="wp-block-web-stories-embed alignnone">
-	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-			href="%1\$s"
-			style="--story-player-poster:url('%3\$s')">%4\$s</a>
-	</amp-story-player>
-</div>
-<!-- /wp:web-stories/embed -->
-BLOCK;
-
-		$block_markup_without_poster = <<<BLOCK
-<!-- wp:web-stories/embed {"url":"%1\$s","title":"%2\$s","poster":""} -->
-<div class="wp-block-web-stories-embed alignnone">
-	<amp-story-player style="width:360px;height:600px" data-testid="amp-story-player"><a
-			href="%1\$s"
-			>%3\$s</a>
-	</amp-story-player>
-</div>
-<!-- /wp:web-stories/embed -->
-BLOCK;
-
-		$url        = (string) get_the_permalink( $post_id );
-		$title      = (string) get_the_title( $post_id );
-		$has_poster = has_post_thumbnail( $post_id );
-
-		if ( $has_poster ) {
-			$poster = (string) wp_get_attachment_image_url( (int) get_post_thumbnail_id( $post_id ), Media::POSTER_PORTRAIT_IMAGE_SIZE );
-
-			return sprintf(
-				$block_markup_with_poster,
-				esc_url( $url ),
-				esc_js( $title ),
-				esc_url( $poster ),
-				esc_html( $title )
-			);
+		$story = new Story();
+		if ( ! $story->load_from_post( $post_id ) ) {
+			return $content;
 		}
 
+		$renderer = new Image( $story );
+		$args     = [
+			'align'  => 'none',
+			'height' => 600,
+			'width'  => 360,
+		];
+
+		$html = $renderer->render( $args );
+
+		$block_markup = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s"} -->%4$s<!-- /wp:web-stories/embed -->';
+
 		return sprintf(
-			$block_markup_without_poster,
-			esc_url( $url ),
-			esc_js( $title ),
-			esc_html( $title )
+			$block_markup,
+			esc_url( $story->get_url() ),
+			esc_js( $story->get_title() ),
+			esc_url( $story->get_poster_portrait() ),
+			$html
 		);
 	}
 

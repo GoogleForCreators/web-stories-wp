@@ -39,7 +39,7 @@ export const StoryPropType = PropTypes.shape({
   status: DashboardStatusesPropType,
   title: PropTypes.string.isRequired,
   pages: PropTypes.arrayOf(StoryPropTypes.page),
-  modified: PropTypes.object,
+  modified: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   author: PropTypes.string,
 });
 
