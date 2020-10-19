@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -65,7 +69,9 @@ function setup() {
           <StoryContext.Provider value={storyValue}>
             <FontContext.Provider value={fontsValue}>
               <LibraryContext.Provider value={libraryValue}>
-                <TextSets />
+                <MockPane>
+                  {(paneRef) => <TextSets paneRef={paneRef} />}
+                </MockPane>
               </LibraryContext.Provider>
             </FontContext.Provider>
           </StoryContext.Provider>
@@ -74,6 +80,12 @@ function setup() {
     </TransformContext.Provider>
   );
   return { getByText, queryAllByRole };
+}
+
+// eslint-disable-next-line react/prop-types
+function MockPane({ children }) {
+  const ref = useRef();
+  return <div ref={ref}>{children(ref)}</div>;
 }
 
 describe('TextSets Panel', () => {

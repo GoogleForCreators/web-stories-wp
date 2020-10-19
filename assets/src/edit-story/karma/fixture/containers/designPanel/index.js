@@ -31,6 +31,7 @@ import { VideoAccessibility } from './videoAccessibility';
 import { Layers } from './layers';
 import { TextStylePreset } from './textStylePreset';
 import { ColorPreset } from './colorPreset';
+import { SizePosition } from './sizePosition';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -124,8 +125,11 @@ export class DesignPanel extends Container {
   }
 
   get sizePosition() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Size & position/i }),
+      'sizePosition',
+      SizePosition
+    );
   }
 
   get videoOptions() {
