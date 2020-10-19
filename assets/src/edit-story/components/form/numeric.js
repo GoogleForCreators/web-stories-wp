@@ -339,7 +339,7 @@ function Numeric({
         {...rest}
         onChange={handleChange}
         onBlur={() => {
-          if (!skipValidationRef.current) {
+          if (!skipValidationRef.current && inputValue !== value) {
             validateAndSubmitInput(inputValue);
           }
 

@@ -15,25 +15,21 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import useDesignPanels from './useDesignPanels';
-import DesignPanel from './designPanel';
+import { SimplePanel } from '../../../panel';
 
-function DesignPanels() {
-  const {
-    panels,
-    createSubmitHandlerForPanel,
-    panelProperties,
-  } = useDesignPanels();
-  return panels.map(({ Panel, type }) => (
-    <DesignPanel
-      key={type}
-      panelType={Panel}
-      registerSubmitHandler={createSubmitHandlerForPanel(type)}
-      {...panelProperties}
-    />
-  ));
+function PresetStylePanel() {
+  return (
+    <SimplePanel name="presetstyle" title={__('Style Presets', 'web-stories')}>
+      <h2>{'TBD'}</h2>
+    </SimplePanel>
+  );
 }
 
-export default DesignPanels;
+export default PresetStylePanel;

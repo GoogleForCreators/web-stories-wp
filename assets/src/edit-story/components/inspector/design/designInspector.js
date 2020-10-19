@@ -25,8 +25,8 @@ import styled from 'styled-components';
  */
 import { STORY_ANIMATION_STATE } from '../../../../animation';
 import { useStory } from '../../../app';
-import { LayerPanel } from '../../panels';
-import DesignPanels from './designPanels';
+import DesignPanel from '../../designPanel';
+import LayerPanel from './layer';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -35,12 +35,12 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const TopPanels = styled.div`
+const Top = styled.div`
   overflow: auto;
   flex: 1;
 `;
 
-const BottomPanels = styled.div``;
+const Bottom = styled.div``;
 
 function DesignInspector() {
   const updateAnimationState = useStory(
@@ -54,12 +54,12 @@ function DesignInspector() {
 
   return (
     <Wrapper>
-      <TopPanels onFocus={resetStoryAnimationState}>
-        <DesignPanels />
-      </TopPanels>
-      <BottomPanels>
+      <Top onFocus={resetStoryAnimationState}>
+        <DesignPanel />
+      </Top>
+      <Bottom>
         <LayerPanel />
-      </BottomPanels>
+      </Bottom>
     </Wrapper>
   );
 }
