@@ -20,7 +20,12 @@
 import useCommonValue from '../../useCommonValue';
 
 function useCommonAspectRatio() {
-  return useCommonValue(['lockAspectRatio'], (a, b) => a || b, false);
+  // If any element has lock enabled, show lock as enabled
+  return useCommonValue(
+    ['lockAspectRatio'],
+    (aggr, el) => aggr || el.lockAspectRatio,
+    false
+  );
 }
 
 export default useCommonAspectRatio;
