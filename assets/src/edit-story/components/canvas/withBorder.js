@@ -26,6 +26,7 @@ import PropTypes from 'prop-types';
 import { getElementMask, MaskTypes } from '../../masks';
 import StoryPropTypes from '../../types';
 import generatePatternStyles from '../../utils/generatePatternStyles';
+import { BORDER_POSITION } from '../../constants';
 
 const borderElementCSS = css`
   top: 0;
@@ -102,6 +103,15 @@ const outerDashedBorderCSS = css`
 const DashedBorder = styled.div`
   ${borderElementCSS}
   ${innerDashedBorderCSS}
+  ${({ position, left, top, right, bottom }) =>
+    BORDER_POSITION.OUTSIDE === position &&
+    `
+    &:after {
+      top: ${-top}px;
+      height: calc(100% + ${top + bottom}px);
+      left: ${-left}px;
+      width: calc(100% + ${left + right}px);
+    }`}
 `;
 
 export default function WithBorder({ element, children }) {
@@ -109,7 +119,7 @@ export default function WithBorder({ element, children }) {
   if (!border) {
     return children;
   }
-  const { left, top, right, bottom, dash, gap, color } = border;
+  const { left, top, right, bottom, dash, gap, color, position } = border;
   // If we have no color, let's short-circuit.
   if (!color) {
     return children;
@@ -125,13 +135,13 @@ export default function WithBorder({ element, children }) {
     return children;
   }
 
-  if (!gap || !dash) {
+  /*if (!gap || !dash) {
     return (
       <Border {...border} color={color}>
         {children}
       </Border>
     );
-  }
+  }*/
   const {
     color: { r, g, b, a },
   } = color;
