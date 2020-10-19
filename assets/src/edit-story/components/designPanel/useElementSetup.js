@@ -15,16 +15,27 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+
+/**
  * Internal dependencies
  */
 import useDesignPanel from './useDesignPanel';
 
-function useElementSetup(property, setup) {
+function useElementSetup(property, setup, dependencies) {
   const { setSetup } = useDesignPanel(({ actions }) => ({
     setSetup: actions.setSetup,
   }));
 
-  setSetup(property, setup);
+  useEffect(
+    () => setSetup(property, setup),
+    // Disable-reason: `property` and `setSetup` are stable, and dependencies
+    // for `setup` must be explicitly given.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [dependencies]
+  );
 }
 
 export default useElementSetup;
