@@ -26,10 +26,10 @@ import { SimplePanel } from '../../../panel';
 import { Row } from '../../parts/rows';
 import { ToggleSpace, HorizontalPadding } from '../../parts/spacers';
 import { X, Y, Width, Height, LockAspectRatio, Rotation } from './controls';
-import useControls from './useControls';
+import useSetup from './useSetup';
 
 function SizePositionPanel() {
-  useControls();
+  useSetup();
 
   return (
     <SimplePanel
