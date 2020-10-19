@@ -110,7 +110,7 @@ class Status_Check extends \WP_Test_REST_TestCase {
 
 		// Test with a user that does not have edit_posts capability.
 		wp_set_current_user( self::$subscriber );
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
 		$response = rest_get_server()->dispatch( $request );
 
 		$this->assertEquals( 403, $response->get_status() );
@@ -122,9 +122,9 @@ class Status_Check extends \WP_Test_REST_TestCase {
 	 * @covers ::status_check_permissions_check
 	 * @covers ::status_check
 	 */
-	public function test_status_check(){
+	public function test_status_check() {
 		wp_set_current_user( self::$editor );
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
