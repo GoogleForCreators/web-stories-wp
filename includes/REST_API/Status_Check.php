@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Story_Post_Type;
 use WP_REST_Server;
 use WP_REST_Controller;
 use WP_Post_Type;
@@ -61,14 +60,13 @@ class Status_Check extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::ALLMETHODS,
 					'callback'            => [ $this, 'status_check' ],
 					'permission_callback' => [ $this, 'status_check_permissions_check' ],
-					'args'                => [],
 				],
 			]
 		);
 	}
 
 	/**
-	 * Status check.
+	 * Status check, return true for now.
 	 *
 	 * @since 1.1.0
 	 *
@@ -77,24 +75,8 @@ class Status_Check extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function status_check( $request ) {
-		$has_upload_media_action  = current_user_can( 'upload_files' );
-		$has_publish_action       = false;
-		$has_assign_author_action = false;
-		$post_type_object         = get_post_type_object( Story_Post_Type::POST_TYPE_SLUG );
-
-		if ( $post_type_object instanceof WP_Post_Type ) {
-			if ( property_exists( $post_type_object->cap, 'publish_posts' ) ) {
-				$has_publish_action = current_user_can( $post_type_object->cap->publish_posts );
-			}
-			if ( property_exists( $post_type_object->cap, 'edit_others_posts' ) ) {
-				$has_assign_author_action = current_user_can( $post_type_object->cap->edit_others_posts );
-			}
-		}
-
 		$capabilities = [
-			'hasPublishAction'      => $has_publish_action,
-			'hasAssignAuthorAction' => $has_assign_author_action,
-			'hasUploadMediaAction'  => $has_upload_media_action,
+			'success'  => true,
 		];
 
 		return rest_ensure_response( $capabilities );
