@@ -38,9 +38,8 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   it('should display text sets', async () => {
-    expect(fixture.editor.library.text.textSetList).toBeTruthy();
     await waitFor(() =>
-      expect(fixture.editor.library.text.textSets().length).toEqual(3)
+      expect(fixture.editor.library.text.textSets.length).toBeGreaterThan(1)
     );
   });
 
@@ -59,14 +58,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   it('should allow user to drag and drop text set onto page', async () => {
     await waitFor(() =>
-      expect(fixture.editor.library.text.textSets).toBeTruthy()
+      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
     );
+
     const textSet = fixture.editor.library.text.textSets[0];
-
     const page = fixture.editor.canvas.fullbleed.container;
-
-    // The page should start off with no text elements
-    expect((await getTextElements()).length).toBe(0);
 
     await fixture.events.mouse.moveRel(textSet, 25, 25);
     await fixture.events.mouse.down();
@@ -75,11 +71,13 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.snapshot('Text set dragged');
     await fixture.events.mouse.up();
 
+    await fixture.renderHook(() => useStory());
+
     // After text set has been added, there should some text elements
     await fixture.snapshot('Text set added');
-    await waitFor(() => {
-      expect(getTextElements().length).toBeGreaterThan(0);
-    });
+
+    const storyContext = await fixture.renderHook(() => useStory());
+    expect(storyContext.state.selectedElements.length).toBeGreaterThan(1);
   });
 
   it('should allow filtering text sets by category', async () => {
@@ -91,10 +89,14 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Editorial')
     );
-    expect(fixture.editor.library.text.textSets.length).toBe(16);
+    expect(fixture.editor.library.text.textSets.length).toBe(30);
   });
 
   it('should position the text sets as expected by category', async () => {
+    await waitFor(() =>
+      expect(fixture.editor.library.text.textSets.length).toBeTruthy()
+    );
+
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Editorial')
     );
