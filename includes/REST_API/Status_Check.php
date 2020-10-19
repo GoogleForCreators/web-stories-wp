@@ -28,6 +28,9 @@ namespace Google\Web_Stories\REST_API;
 
 use WP_REST_Server;
 use WP_REST_Controller;
+use WP_REST_Request;
+use WP_REST_Response;
+use WP_Error;
 use WP_Post_Type;
 
 /**
@@ -76,7 +79,7 @@ class Status_Check extends WP_REST_Controller {
 	 */
 	public function status_check( $request ) {
 		$capabilities = [
-			'success'  => true,
+			'success' => true,
 		];
 
 		return rest_ensure_response( $capabilities );
