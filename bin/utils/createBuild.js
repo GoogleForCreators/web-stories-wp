@@ -15,18 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { execSync } from 'child_process';
-
-/**
  * Internal dependencies
  */
 import copyFiles from './copyFiles.js';
 import getIgnoredFiles from './getIgnoredFiles.js';
-
-const composerArgs =
-  '--optimize-autoloader --no-interaction --prefer-dist --no-suggest --quiet';
 
 /**
  * Main function to bundle the plugin.
@@ -36,23 +28,15 @@ const composerArgs =
  * @param {boolean} [composer=false] Create Composer-ready ZIP file without PHP autoloader.
  */
 function createBuild(source, target, composer = false) {
-  if (!composer) {
-    execSync(`composer update --no-dev ${composerArgs}`);
-  }
-
   const ignoredFiles = getIgnoredFiles(source);
+
   if (composer) {
-    ignoredFiles.push('vendor/');
+    ignoredFiles.push('includes/vendor/');
   } else {
     ignoredFiles.push('composer.json');
   }
-  copyFiles(source, target, ignoredFiles);
 
-  if (!composer) {
-    execSync(
-      `composer update ${composerArgs}; git checkout composer.lock --quiet; composer install ${composerArgs}`
-    );
-  }
+  copyFiles(source, target, ignoredFiles);
 }
 
 export default createBuild;

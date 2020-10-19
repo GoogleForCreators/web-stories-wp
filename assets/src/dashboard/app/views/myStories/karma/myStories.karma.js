@@ -165,7 +165,7 @@ describe('Grid view', () => {
     await fixture.events.click(deleteStory);
 
     const confirmDeleteButton = fixture.screen.getByRole('button', {
-      name: /^Delete$/,
+      name: /^Confirm deleting story/,
     });
 
     await fixture.events.click(confirmDeleteButton);
@@ -195,7 +195,7 @@ describe('Grid view', () => {
     await fixture.events.click(deleteStory);
 
     const cancel = fixture.screen.getByRole('button', {
-      name: /^Cancel$/,
+      name: /^Cancel deleting story/,
     });
 
     await fixture.events.click(cancel);
@@ -215,7 +215,7 @@ describe('Grid view', () => {
       expect(numDrafts).toBeGreaterThan(0);
 
       const draftsTabButton = fixture.screen.getByRole('button', {
-        name: new RegExp('^' + STORY_STATUSES[1].label),
+        name: new RegExp('^Filter stories by ' + STORY_STATUSES[1].label),
       });
 
       await fixture.events.click(draftsTabButton);
@@ -240,7 +240,7 @@ describe('Grid view', () => {
       expect(numPublished).toBeGreaterThan(0);
 
       const publishedTabButton = fixture.screen.getByRole('button', {
-        name: new RegExp('^' + STORY_STATUSES[2].label),
+        name: new RegExp('^Filter stories by ' + STORY_STATUSES[2].label),
       });
 
       expect(publishedTabButton).toBeTruthy();
@@ -467,14 +467,6 @@ describe('List view', () => {
     return stories;
   }
 
-  async function getUsers() {
-    const {
-      state: { users },
-    } = await fixture.renderHook(() => useApi());
-
-    return users;
-  }
-
   function isElementVisible(element) {
     return Boolean(
       element.offsetWidth ||
@@ -660,7 +652,7 @@ describe('List view', () => {
       await fixture.events.click(deleteButton);
 
       const confirmDeleteButton = fixture.screen.getByRole('button', {
-        name: /^Delete$/,
+        name: /^Confirm deleting/,
       });
 
       await fixture.events.click(confirmDeleteButton);
@@ -705,7 +697,7 @@ describe('List view', () => {
       await fixture.events.click(deleteButton);
 
       const cancel = fixture.screen.getByRole('button', {
-        name: /^Cancel$/,
+        name: /^Cancel deleting story/,
       });
 
       await fixture.events.click(cancel);
@@ -777,16 +769,14 @@ describe('List view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const users = await getUsers();
-
-      const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => users[stories[id].author].name
+      const storiesAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => stories[id].author
       );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor);
 
       // sort by descending
       await fixture.events.click(authorHeader);
@@ -798,7 +788,7 @@ describe('List view', () => {
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor.reverse());
     });
 
     it('should sort by Date Created in List View', async () => {
@@ -944,16 +934,14 @@ describe('List view', () => {
 
       expect(rows.length).toEqual(storiesOrderById.length);
 
-      const users = await getUsers();
-
-      const storieAuthorsSortedByAuthor = storiesOrderById.map(
-        (id) => users[stories[id].author].name
+      const storiesAuthorsSortedByAuthor = storiesOrderById.map(
+        (id) => stories[id].author
       );
 
       // author is the third column
       let rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor);
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor);
 
       // sort by descending
       await fixture.events.keyboard.press('Enter');
@@ -965,7 +953,7 @@ describe('List view', () => {
       // author is the third column
       rowAuthors = rows.map((row) => row.children[2].innerText);
 
-      expect(rowAuthors).toEqual(storieAuthorsSortedByAuthor.reverse());
+      expect(rowAuthors).toEqual(storiesAuthorsSortedByAuthor.reverse());
     });
 
     it('should sort by Date Created in List View with keyboard', async () => {

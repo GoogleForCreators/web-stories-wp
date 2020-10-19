@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { initHelpers } from './_utils';
 
 describe('Styling multiple text fields', () => {
@@ -86,7 +87,8 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
-      await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.type('F54');
+      await data.fixture.events.keyboard.press('Tab');
       await data.fixture.events.keyboard.press('Escape');
 
       // Verify all styles, now expected to be updated
@@ -95,14 +97,14 @@ describe('Styling multiple text fields', () => {
       expect(underline.checked).toBe(true);
       expect(fontWeight.value).toBe('Black');
       expect(letterSpacing.value).toBe('50%');
-      expect(fontColor.hex.value).toBe('FF00FF');
+      expect(fontColor.hex.value).toBe('FF5544');
 
       // Assume text contents to match expectation
       const css = [
         'font-weight: 900',
         'font-style: italic',
         'text-decoration: underline',
-        'color: #f0f',
+        'color: #f54',
         'letter-spacing: 0.5em',
       ].join('; ');
       const getExpected = (content) => `<span style="${css}">${content}</span>`;
@@ -131,6 +133,7 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
       await data.fixture.events.keyboard.type('FF00FF');
+      await data.fixture.events.keyboard.press('Tab');
       await data.fixture.events.keyboard.press('Escape');
       await data.fixture.events.click(italic.button);
       await data.fixture.events.click(underline.button);
@@ -144,10 +147,10 @@ describe('Styling multiple text fields', () => {
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
-      expect(letterSpacing.placeholder).toBe('multiple');
-      expect(fontColor.output).toBe('Multiple');
+      expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle all styles
       await data.fixture.events.click(italic.button);
@@ -211,7 +214,7 @@ describe('Styling multiple text fields', () => {
 
       // Check that bold toggle is on but font weight is "multiple"
       expect(bold.checked).toBe(true);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle it by pressing the bold button
       await data.fixture.events.click(bold.button);
@@ -248,7 +251,7 @@ describe('Styling multiple text fields', () => {
 
       // Check that bold toggle is off but font weight is "multiple"
       expect(bold.checked).toBe(false);
-      expect(fontWeight.value).toBe('(multiple)');
+      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
 
       // Toggle it by pressing the bold button
       await data.fixture.events.click(bold.button);

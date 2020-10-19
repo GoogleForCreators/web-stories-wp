@@ -24,18 +24,13 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 import Big from 'big.js';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { defaultUnit } from '../../../animation/utils/defaultUnit';
 import useFocusAndSelect from '../../utils/useFocusAndSelect';
 import { useKeyDownEffect } from '../keyboard';
 import Input from './input';
-import MULTIPLE_VALUE from './multipleValue';
+import MULTIPLE_VALUE, { MULTIPLE_DISPLAY_VALUE } from './multipleValue';
 
 const ONCHANGE_DEBOUNCE_DELAY = 500;
 const SELECT_CONTENTS_DELAY = 10;
@@ -129,7 +124,7 @@ function Numeric({
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(inputRef);
 
   const isMultiple = inputValue === MULTIPLE_VALUE;
-  placeholder = isMultiple ? __('multiple', 'web-stories') : placeholder;
+  placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : placeholder;
 
   const handleChange = useCallback((event) => {
     // If the user types something in, clear timeout

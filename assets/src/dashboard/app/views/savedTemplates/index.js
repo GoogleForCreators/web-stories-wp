@@ -17,115 +17,43 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo } from 'react';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * Internal dependencies
  */
-import { TransformProvider } from '../../../../edit-story/components/transform';
-import { UnitsProvider } from '../../../../edit-story/units';
-import {
-  InfiniteScroller,
-  Layout,
-  StandardViewContentGutter,
-} from '../../../components';
-import {
-  DASHBOARD_VIEWS,
-  SAVED_TEMPLATES_STATUSES,
-  STORY_SORT_MENU_ITEMS,
-} from '../../../constants';
-import useDashboardResultsLabel from '../../../utils/useDashboardResultsLabel';
-import useStoryView, {
-  FilterPropTypes,
-  PagePropTypes,
-  SearchPropTypes,
-  SortPropTypes,
-  ViewPropTypes,
-} from '../../../utils/useStoryView';
-import { StoriesPropType } from '../../../types';
-import FontProvider from '../../font/fontProvider';
-import { BodyViewOptions, PageHeading } from '../shared';
+import { Layout, ScrollToTop } from '../../../components';
+import { SAVED_TEMPLATES_STATUSES } from '../../../constants';
+import useStoryView from '../../../utils/useStoryView';
 import useApi from '../../api/useApi';
-import SavedTemplatesGridView from './savedTemplatesGridView';
-
-function Header({ filter, search, sort, stories, view }) {
-  const resultsLabel = useDashboardResultsLabel({
-    isActiveSearch: Boolean(search.keyword),
-    currentFilter: filter.value,
-    totalResults: stories.length,
-    view: DASHBOARD_VIEWS.SAVED_TEMPLATES,
-  });
-
-  return (
-    <Layout.Squishable>
-      <PageHeading
-        defaultTitle={__('Saved Templates', 'web-stories')}
-        searchPlaceholder={__('Search Templates', 'web-stories')}
-        stories={stories}
-        handleTypeaheadChange={search.setKeyword}
-        typeaheadValue={search.keyword}
-      />
-      <BodyViewOptions
-        showSortDropdown
-        resultsLabel={resultsLabel}
-        layoutStyle={view.style}
-        currentSort={sort.value}
-        pageSortOptions={STORY_SORT_MENU_ITEMS}
-        handleSortChange={sort.set}
-        sortDropdownAriaLabel={__(
-          'Choose sort option for display',
-          'web-stories'
-        )}
-      />
-    </Layout.Squishable>
-  );
-}
-
-function Content({ stories, view, page }) {
-  return (
-    <Layout.Scrollable>
-      <FontProvider>
-        <TransformProvider>
-          <UnitsProvider
-            pageSize={{
-              width: view.pageSize.width,
-              height: view.pageSize.height,
-            }}
-          >
-            <StandardViewContentGutter>
-              <SavedTemplatesGridView view={view} stories={stories} />
-              <InfiniteScroller
-                allDataLoadedMessage={__('No more templates.', 'web-stories')}
-                isLoading={false}
-                canLoadMore={false}
-                onLoadMore={page.requestNextPage}
-              />
-            </StandardViewContentGutter>
-          </UnitsProvider>
-        </TransformProvider>
-      </FontProvider>
-    </Layout.Scrollable>
-  );
-}
+import PreviewStory from '../previewStory';
+import Header from './header';
+import Content from './content';
 
 function SavedTemplates() {
-  const { fetchMyTemplates, savedTemplates, savedTemplatesOrderById } = useApi(
+  const {
+    createStoryFromTemplate,
+    fetchMyTemplates,
+    savedTemplates,
+    savedTemplatesOrderById,
+  } = useApi(
     ({
       actions: {
         templateApi: { fetchMyTemplates },
+        storyApi: { createStoryFromTemplate },
       },
       state: {
         templates: { savedTemplates, savedTemplatesOrderById },
       },
-    }) => ({ fetchMyTemplates, savedTemplates, savedTemplatesOrderById })
+    }) => ({
+      createStoryFromTemplate,
+      fetchMyTemplates,
+      savedTemplates,
+      savedTemplatesOrderById,
+    })
   );
 
-  const { filter, page, sort, search, view } = useStoryView({
+  const { activePreview, filter, page, sort, search, view } = useStoryView({
     filters: SAVED_TEMPLATES_STATUSES,
     totalPages: 1,
   });
@@ -140,38 +68,59 @@ function SavedTemplates() {
     fetchMyTemplates({ page: 1 });
   }, [fetchMyTemplates]);
 
+  const [lastActiveTemplateId, setLastActiveTemplateId] = useState(null);
+
+  const previewTemplate = useCallback(
+    (e, template) => {
+      activePreview.set(e, template);
+      setLastActiveTemplateId(template?.id);
+    },
+    [activePreview]
+  );
+
+  const handleClose = useCallback(
+    (e) => {
+      activePreview.set(e, undefined);
+    },
+    [activePreview]
+  );
+
+  if (activePreview.value) {
+    return (
+      <PreviewStory story={activePreview.value} handleClose={handleClose} />
+    );
+  }
+
   return (
     <Layout.Provider>
       <Header
         filter={filter}
         view={view}
         search={search}
-        stories={orderedSavedTemplates}
+        templates={orderedSavedTemplates}
         sort={sort}
       />
       <Content
+        allPagesFetched={true}
+        isLoading={false}
         view={view}
         page={page}
         sort={sort}
-        stories={orderedSavedTemplates}
+        templates={orderedSavedTemplates}
+        initialFocusId={lastActiveTemplateId}
+        search={search}
+        actions={{
+          previewTemplate,
+          createStoryFromTemplate,
+        }}
       />
+
+      <Layout.Fixed>
+        <ScrollToTop />
+      </Layout.Fixed>
     </Layout.Provider>
   );
 }
-
-Header.propTypes = {
-  filter: FilterPropTypes.isRequired,
-  view: ViewPropTypes.isRequired,
-  search: SearchPropTypes.isRequired,
-  sort: SortPropTypes.isRequired,
-  stories: StoriesPropType,
-};
-
-Content.propTypes = {
-  view: ViewPropTypes.isRequired,
-  page: PagePropTypes.isRequired,
-  stories: StoriesPropType,
-};
 
 export default SavedTemplates;
 export { Header as SavedTemplatesHeader, Content as SavedTemplatesContent };
