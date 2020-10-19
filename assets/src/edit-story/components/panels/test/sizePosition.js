@@ -181,15 +181,36 @@ describe('Panels/SizePosition', () => {
       expect(pushUpdate).toHaveBeenCalledWith({ width: 150, height: 80 });
     });
 
-    it('should update height without lock ratio', () => {
-      const { getByRole, pushUpdate } = renderSizePosition([
-        unlockAspectRatioElement,
+    it('should disable height without lock ratio for text element', () => {
+      const { getByRole } = renderSizePosition([
+        {
+          ...unlockAspectRatioElement,
+          type: 'text',
+        },
       ]);
 
       const input = getByRole('textbox', { name: 'Height' });
-      fireEvent.change(input, { target: { value: '160' } });
-      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
-      expect(pushUpdate).toHaveBeenCalledWith({ height: 160, width: 100 });
+      expect(input).toBeDisabled();
+      expect(input).toHaveValue('');
+      expect(input.placeholder).toStrictEqual('AUTO');
+    });
+
+    it('should disable height without lock ratio for multi-selection with text', () => {
+      const { getByRole } = renderSizePosition([
+        {
+          ...unlockAspectRatioElement,
+          type: 'text',
+        },
+        {
+          ...defaultImage,
+          lockAspectRatio: false,
+        },
+      ]);
+
+      const input = getByRole('textbox', { name: 'Height' });
+      expect(input).toBeDisabled();
+      expect(input).toHaveValue('');
+      expect(input.placeholder).toStrictEqual('AUTO');
     });
 
     it('should not update width if empty value is submitted', () => {
