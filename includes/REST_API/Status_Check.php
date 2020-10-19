@@ -78,11 +78,11 @@ class Status_Check extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function status_check( $request ) {
-		$capabilities = [
+		$data = [
 			'success' => true,
 		];
 
-		return rest_ensure_response( $capabilities );
+		return rest_ensure_response( $data );
 	}
 
 	/**
