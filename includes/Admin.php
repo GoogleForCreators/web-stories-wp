@@ -134,8 +134,8 @@ class Admin {
 				esc_url( $story->get_url() ),
 				esc_attr( $story->get_title() ),
 				esc_url( $story->get_poster_portrait() ),
-				esc_attr( $args['width'] ),
-				esc_attr( $args['height'] ),
+				absint( $args['width'] ),
+				absint( $args['height'] ),
 				esc_attr( $args['align'] )
 			);
 		}
@@ -150,8 +150,8 @@ class Admin {
 			esc_url( $story->get_url() ),
 			esc_js( $story->get_title() ),
 			esc_url( $story->get_poster_portrait() ),
-			esc_js( $args['width'] ),
-			esc_js( $args['height'] ),
+			absint( $args['width'] ),
+			absint( $args['height'] ),
 			esc_js( $args['align'] ),
 			$html
 		);
