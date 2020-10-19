@@ -75,72 +75,101 @@ function BorderWidthControls({ selectedElements, pushUpdateForObject }) {
   const lockBorder = border.lockedWidth === true;
 
   const handleChange = useCallback(
-    (newBorder, submit = false) => {
-      pushUpdateForObject('border', newBorder, DEFAULT_BORDER, submit);
+    (newBorder) => {
+      pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
     },
     [pushUpdateForObject]
   );
 
+  const firstInputProperties = lockBorder
+    ? {
+        'aria-label': __('Edit: Border width', 'web-stories'),
+        onChange: (value) =>
+          handleChange({
+            left: value,
+            top: value,
+            right: value,
+            bottom: value,
+          }),
+      }
+    : {
+        'aria-label': __('Edit: Left border', 'web-stories'),
+        onChange: (value) =>
+          handleChange({
+            left: value,
+          }),
+      };
+
   return (
     <Row>
       <Label>
-        <BoxedNumeric
-          value={border.left}
-          onChange={(value) =>
-            handleChange({
-              left: value,
-            })
-          }
-          aria-label={__('Edit: Left border', 'web-stories')}
-        />
-        <span>{__('Left', 'web-stories')}</span>
+        <BoxedNumeric value={border.left} {...firstInputProperties} />
+        {!lockBorder && <span>{__('Left', 'web-stories')}</span>}
       </Label>
-      <Space />
-      <Label>
-        <BoxedNumeric
-          value={border.top}
-          onChange={(value) =>
-            handleChange({
-              top: value,
-            })
-          }
-          aria-label={__('Edit: Top border', 'web-stories')}
-        />
-        <span>{__('Top', 'web-stories')}</span>
-      </Label>
-      <Space />
-      <Label>
-        <BoxedNumeric
-          value={border.right}
-          onChange={(value) =>
-            handleChange({
-              right: value,
-            })
-          }
-          aria-label={__('Edit: Right border', 'web-stories')}
-        />
-        <span>{__('Right', 'web-stories')}</span>
-      </Label>
-      <Space />
-      <Label>
-        <BoxedNumeric
-          value={border.bottom}
-          onChange={(value) =>
-            handleChange({
-              bottom: value,
-            })
-          }
-          aria-label={__('Edit: Bottom border', 'web-stories')}
-        />
-        <span>{__('Bottom', 'web-stories')}</span>
-      </Label>
-      <Space />
+      {!lockBorder && (
+        <>
+          <Space />
+          <Label>
+            <BoxedNumeric
+              value={border.top}
+              onChange={(value) =>
+                handleChange({
+                  top: value,
+                })
+              }
+              aria-label={__('Edit: Top border', 'web-stories')}
+            />
+            <span>{__('Top', 'web-stories')}</span>
+          </Label>
+          <Space />
+          <Label>
+            <BoxedNumeric
+              value={border.right}
+              onChange={(value) =>
+                handleChange({
+                  right: value,
+                })
+              }
+              aria-label={__('Edit: Right border', 'web-stories')}
+            />
+            <span>{__('Right', 'web-stories')}</span>
+          </Label>
+          <Space />
+          <Label>
+            <BoxedNumeric
+              value={border.bottom}
+              onChange={(value) =>
+                handleChange({
+                  bottom: value,
+                })
+              }
+              aria-label={__('Edit: Bottom border', 'web-stories')}
+            />
+            <span>{__('Bottom', 'web-stories')}</span>
+          </Label>
+          <Space />
+        </>
+      )}
       <ToggleWrapper>
         <Toggle
           icon={<Lock />}
           uncheckedIcon={<Unlock />}
           value={lockBorder}
-          onChange={() => handleChange({ lockedWidth: !lockBorder })}
+          onChange={() => {
+            let args = {
+              lockedWidth: !lockBorder,
+            };
+            // If the border width wasn't locked before (and is now), unify all the values.
+            if (!lockBorder) {
+              args = {
+                ...args,
+                top: border.left,
+                right: border.left,
+                bottom: border.left,
+              };
+            }
+            handleChange(args);
+          }}
           aria-label={__('Toggle border ratio lock', 'web-stories')}
         />
       </ToggleWrapper>

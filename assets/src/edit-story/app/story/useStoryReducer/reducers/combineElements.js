@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
-import {MaskTypes} from "../../../../masks";
+import { MaskTypes } from '../../../../masks';
 
 /**
  * Combine elements by taking properties from a first item and
