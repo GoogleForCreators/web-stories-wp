@@ -17,54 +17,29 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../app';
-import Dialog from '../dialog';
-import { Plain } from '../button';
-import { __ } from '@wordpress/i18n';
 
 function StatusCheck() {
   const {
     actions: { getStatusCheck },
   } = useAPI();
 
-  const [isStatusLoaded, setIsStatusLoaded] = useState(false);
-  const [isStatusError, setIsStatusError] = useState(false);
-
-  const onClose = useCallback(() => {
-    setIsStatusError(false);
-  },[]);
-
   const doStatusCheck = useCallback(() => {
-    if (!isStatusLoaded) {
-      getStatusCheck()
-        .catch(() => {
-          setIsStatusError(true);
-        })
-        .finally(() => {
-          setIsStatusLoaded(true);
-        });
-    }
+    getStatusCheck()
+      .catch(() => {
+        // @todo, show error message.
+      })
+      .finally(() => {
+        // @todo, set final state.
+      });
   }, [getStatusCheck]);
 
   useEffect(doStatusCheck, [doStatusCheck]);
 
-  return (
-    <Dialog
-      open={ isStatusError }
-      onClose={ onClose }
-      title={ __( 'Error', 'web-stories' ) }
-      actions={
-        <>
-          <Plain onClick={ onClose }>{ __( 'Close', 'web-stories' ) }</Plain>
-        </>
-      }
-    >
-      <strong>{ __( 'Unable to connect to server. ', 'web-stories' ) }</strong>
-    </Dialog>
-  );
+  return null;
 }
 export default StatusCheck;
