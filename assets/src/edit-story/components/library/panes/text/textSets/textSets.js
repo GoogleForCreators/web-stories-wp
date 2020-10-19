@@ -139,8 +139,8 @@ function TextSets({ paneRef }) {
     });
   }, []);
 
-  const sectionId = `section-${uuidv4()}`;
-  const title = __('Text Sets', 'web-stories');
+  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
+  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
   return (
     <Section id={sectionId} title={title}>
