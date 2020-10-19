@@ -125,35 +125,35 @@ class Admin {
 			'width'  => 360,
 		];
 
-		if ( use_block_editor_for_post( $post ) ) {
+		if ( ! use_block_editor_for_post( $post ) ) {
 
-			$renderer = new Image( $story );
-			$html     = $renderer->render( $args );
-
-			$content = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s", "width":"%4$s", "height":"%5$s", "align":"%6$s"} -->%7$s<!-- /wp:web-stories/embed -->';
+			$content = '[web_stories_embed url="%1$s" title="%2$s" poster="%3$s" width="%4$s" height="%5$s" align="%6$s"]';
 
 			return sprintf(
 				$content,
 				esc_url( $story->get_url() ),
-				esc_js( $story->get_title() ),
+				esc_attr( $story->get_title() ),
 				esc_url( $story->get_poster_portrait() ),
-				esc_js( $args['width'] ),
-				esc_js( $args['height'] ),
-				esc_js( $args['align'] ),
-				$html
+				esc_attr( $args['width'] ),
+				esc_attr( $args['height'] ),
+				esc_attr( $args['align'] )
 			);
 		}
 
-		$content = '[web_stories_embed url="%1$s" title="%2$s" poster="%3$s" width="%4$s" height="%5$s" align="%6$s"]';
+		$renderer = new Image( $story );
+		$html     = $renderer->render( $args );
+
+		$content = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s"} -->%7$s<!-- /wp:web-stories/embed -->';
 
 		return sprintf(
 			$content,
 			esc_url( $story->get_url() ),
-			esc_attr( $story->get_title() ),
+			esc_js( $story->get_title() ),
 			esc_url( $story->get_poster_portrait() ),
-			esc_attr( $args['width'] ),
-			esc_attr( $args['height'] ),
-			esc_attr( $args['align'] )
+			esc_js( $args['width'] ),
+			esc_js( $args['height'] ),
+			esc_js( $args['align'] ),
+			$html
 		);
 	}
 
