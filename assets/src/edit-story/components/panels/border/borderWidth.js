@@ -64,7 +64,7 @@ const ToggleWrapper = styled.div`
   height: 60px;
 `;
 
-function BorderWidthControls({ selectedElements, pushUpdateForObject }) {
+function WidthControls({ selectedElements, pushUpdateForObject }) {
   const border = useCommonObjectValue(
     selectedElements,
     'border',
@@ -177,9 +177,9 @@ function BorderWidthControls({ selectedElements, pushUpdateForObject }) {
   );
 }
 
-BorderWidthControls.propTypes = {
+WidthControls.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdateForObject: PropTypes.func.isRequired,
 };
 
-export default BorderWidthControls;
+export default WidthControls;

@@ -107,6 +107,7 @@ function ToggleButton({
   iconHeight,
   label,
   className,
+  children,
   ...rest
 }) {
   const toggle = () => onChange(!value);
@@ -131,6 +132,7 @@ function ToggleButton({
           {...rest}
         />
         <MarkSpan>{value ? icon : uncheckedIcon || icon}</MarkSpan>
+        {children}
       </ContainerLabel>
       {Boolean(label) && <Label>{label}</Label>}
     </Container>

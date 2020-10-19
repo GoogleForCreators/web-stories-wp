@@ -34,7 +34,8 @@ import { Color, Numeric, Row } from '../../form';
 import { useCommonObjectValue } from '../utils';
 import { MaskTypes } from '../../../masks';
 import { DEFAULT_BORDER } from './shared';
-import BorderWidthControls from './borderWidth';
+import WidthControls from './borderWidth';
+import Position from './position';
 
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
@@ -52,7 +53,7 @@ function BorderStylePanel(props) {
     'border',
     DEFAULT_BORDER
   );
-  const { color, gap, dash } = border;
+  const { color, gap, dash, left, top, right, bottom } = border;
 
   const notAllRectangle = selectedElements.some(
     ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
@@ -77,44 +78,50 @@ function BorderStylePanel(props) {
     return null;
   }
 
+  const hasBorder = [left, top, right, bottom].some((value) => value > 0);
   return (
     <SimplePanel name="borderStyle" title={__('Border', 'web-stories')}>
-      <BorderWidthControls {...props} />
-      <Row>
-        <Color
-          value={color}
-          onChange={(value) => {
-            handleChange(value, 'color');
-          }}
-          label={__('Border color', 'web-stories')}
-          labelId="border-color-label"
-        />
-      </Row>
-      <Row>
-        <BoxedNumeric
-          aria-label={__('Border dash', 'web-stories')}
-          value={dash}
-          min={0}
-          max={100}
-          suffix={__('Dash', 'web-stories')}
-          onChange={(value) => {
-            handleChange(value, 'dash');
-          }}
-          canBeEmpty
-        />
-        <Space />
-        <BoxedNumeric
-          aria-label={__('Border gap', 'web-stories')}
-          value={gap}
-          min={0}
-          max={100}
-          suffix={__('Gap', 'web-stories')}
-          onChange={(value) => {
-            handleChange(value, 'gap');
-          }}
-          canBeEmpty
-        />
-      </Row>
+      <WidthControls {...props} />
+      {hasBorder && (
+        <>
+          <Position {...props} />
+          <Row>
+            <Color
+              value={color}
+              onChange={(value) => {
+                handleChange(value, 'color');
+              }}
+              label={__('Border color', 'web-stories')}
+              labelId="border-color-label"
+            />
+          </Row>
+          <Row>
+            <BoxedNumeric
+              aria-label={__('Border dash', 'web-stories')}
+              value={dash}
+              min={0}
+              max={100}
+              suffix={__('Dash', 'web-stories')}
+              onChange={(value) => {
+                handleChange(value, 'dash');
+              }}
+              canBeEmpty
+            />
+            <Space />
+            <BoxedNumeric
+              aria-label={__('Border gap', 'web-stories')}
+              value={gap}
+              min={0}
+              max={100}
+              suffix={__('Gap', 'web-stories')}
+              onChange={(value) => {
+                handleChange(value, 'gap');
+              }}
+              canBeEmpty
+            />
+          </Row>
+        </>
+      )}
     </SimplePanel>
   );
 }

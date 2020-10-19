@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import createSolid from '../../../utils/createSolid';
+import { BORDER_POSITION } from '../../../constants';
 
 export const DEFAULT_BORDER = {
   left: 0,
@@ -28,4 +29,5 @@ export const DEFAULT_BORDER = {
   color: createSolid(0, 0, 0),
   gap: 0,
   dash: 0,
+  position: BORDER_POSITION.INSIDE,
 };
