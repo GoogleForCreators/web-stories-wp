@@ -15,6 +15,35 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-export { BoxedNumeric as Numeric } from '../../form';
+import { BoxedNumeric } from '../../form';
+import useSetupFor from '../useSetupFor';
+
+export function SimpleNumeric({ className, property, ...rest }) {
+  const { value, min, max } = useSetupFor(property);
+  return (
+    <BoxedNumeric
+      className={className}
+      value={value}
+      min={min}
+      max={max}
+      {...rest}
+    />
+  );
+}
+
+SimpleNumeric.propTypes = {
+  property: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+export const GrowNumeric = styled(SimpleNumeric)`
+  flex-grow: 1;
+`;

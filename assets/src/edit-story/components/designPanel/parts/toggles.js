@@ -15,6 +15,37 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-export { default as Toggle } from '../../form/toggle';
+import { Lock, Unlock } from '../../../icons';
+import Toggle from '../../form/toggle';
+import ToggleButton from '../../form/toggleButton';
+import useSetupFor from '../useSetupFor';
+
+export function IconToggle({ property, ...rest }) {
+  const { value } = useSetupFor(property);
+  return <Toggle value={value} {...rest} />;
+}
+
+IconToggle.propTypes = {
+  property: PropTypes.string.isRequired,
+};
+
+export function LockToggle({ ...rest }) {
+  return <IconToggle icon={<Lock />} uncheckedIcon={<Unlock />} {...rest} />;
+}
+
+export function StateToggle({ property, value = true, ...rest }) {
+  const { value: currentValue } = useSetupFor(property);
+  return <ToggleButton value={value === currentValue} {...rest} />;
+}
+
+StateToggle.propTypes = {
+  property: PropTypes.string.isRequired,
+  value: PropTypes.string,
+};

@@ -22,8 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Lock, Unlock } from '../../../../../icons';
-import { IconToggle } from '../../../parts/controls';
+import { LockToggle } from '../../../parts/toggles';
 import CONFIG from '../config';
 import useUpdateLockAspectRatio from './useUpdateLockAspectRatio';
 
@@ -31,11 +30,9 @@ function LockAspectRatio() {
   const updateLockAspectRatio = useUpdateLockAspectRatio();
 
   return (
-    <IconToggle
+    <LockToggle
       aria-label={__('Aspect ratio lock', 'web-stories')}
       title={__('Constrain proportions', 'web-stories')}
-      icon={<Lock />}
-      uncheckedIcon={<Unlock />}
       property={CONFIG.LOCKASPECTRATIO.PROPERTY}
       onChange={updateLockAspectRatio}
     />

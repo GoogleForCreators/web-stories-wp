@@ -24,7 +24,7 @@ import useCommonExtremes from './useCommonExtremes';
 
 import CONFIG from './config';
 
-function useControls() {
+function useSetup() {
   const width = useCommonProperty('width');
   const height = useCommonProperty('height');
   const x = useCommonProperty('x');
@@ -89,4 +89,4 @@ function useControls() {
   );
 }
 
-export default useControls;
+export default useSetup;

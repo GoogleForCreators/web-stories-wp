@@ -22,7 +22,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SimpleNumeric } from '../../../parts/controls';
+import { SimpleNumeric } from '../../../parts/inputs';
 import CONFIG from '../config';
 import useUpdateRotation from './useUpdateRotation';
 
