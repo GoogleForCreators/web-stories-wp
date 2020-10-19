@@ -35,7 +35,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users },
+    api: { stories, media, link, users, status },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -223,6 +223,10 @@ function APIProvider({ children }) {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
+  const getStatusCheck = useCallback(() => {
+    return apiFetch({ path: status, method: 'POST' });
+  }, [status]);
+
   const state = {
     actions: {
       autoSaveById,
@@ -234,6 +238,7 @@ function APIProvider({ children }) {
       uploadMedia,
       updateMedia,
       deleteMedia,
+      getStatusCheck,
     },
   };
 

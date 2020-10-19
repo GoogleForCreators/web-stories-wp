@@ -710,6 +710,7 @@ class Story_Post_Type {
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'   => '/web-stories/v1/media',
 					'link'    => '/web-stories/v1/link',
+					'status'  => '/web-stories/v1/status-check',
 				],
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
