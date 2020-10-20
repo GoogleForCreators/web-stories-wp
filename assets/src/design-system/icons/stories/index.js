@@ -260,7 +260,9 @@ export const Action = () => {
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -268,16 +270,18 @@ export const Action = () => {
   );
 };
 
-export const Add = () => {
+export const Alert = () => {
   return (
     <IconsList>
-      {Object.keys(AddIcons).map((iconName) => {
+      {Object.keys(AlertIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = AddIcons[iconName];
+        const Icon = AlertIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -285,16 +289,18 @@ export const Add = () => {
   );
 };
 
-export const Align = () => {
+export const Av = () => {
   return (
     <IconsList>
-      {Object.keys(AlignIcons).map((iconName) => {
+      {Object.keys(AvIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = AlignIcons[iconName];
+        const Icon = AvIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -302,16 +308,18 @@ export const Align = () => {
   );
 };
 
-export const Animation = () => {
+export const Content = () => {
   return (
     <IconsList>
-      {Object.keys(AnimationIcons).map((iconName) => {
+      {Object.keys(ContentIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = AnimationIcons[iconName];
+        const Icon = ContentIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -319,16 +327,18 @@ export const Animation = () => {
   );
 };
 
-export const Arrow = () => {
+export const Editor = () => {
   return (
     <IconsList>
-      {Object.keys(ArrowIcons).map((iconName) => {
+      {Object.keys(EditorIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = ArrowIcons[iconName];
+        const Icon = EditorIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -345,7 +355,9 @@ export const Dashboard = () => {
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -353,16 +365,18 @@ export const Dashboard = () => {
   );
 };
 
-export const Distribute = () => {
+export const File = () => {
   return (
     <IconsList>
-      {Object.keys(DistributeIcons).map((iconName) => {
+      {Object.keys(FileIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = DistributeIcons[iconName];
+        const Icon = FileIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -370,16 +384,18 @@ export const Distribute = () => {
   );
 };
 
-export const Drag = () => {
+export const Navigation = () => {
   return (
     <IconsList>
-      {Object.keys(DragIcons).map((iconName) => {
+      {Object.keys(NavigationIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = DragIcons[iconName];
+        const Icon = NavigationIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
@@ -387,220 +403,18 @@ export const Drag = () => {
   );
 };
 
-export const General = () => {
+export const Social = () => {
   return (
     <IconsList>
-      {Object.keys(GeneralIcons).map((iconName) => {
+      {Object.keys(SocialIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = GeneralIcons[iconName];
+        const Icon = SocialIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Status = () => {
-  return (
-    <IconsList>
-      {Object.keys(StatusIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = StatusIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Layout = () => {
-  return (
-    <IconsList>
-      {Object.keys(LayoutIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = LayoutIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Lock = () => {
-  return (
-    <IconsList>
-      {Object.keys(LockIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = LockIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Media = () => {
-  return (
-    <IconsList>
-      {Object.keys(MediaIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = MediaIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const More = () => {
-  return (
-    <IconsList>
-      {Object.keys(MoreIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = MoreIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Shapes = () => {
-  return (
-    <IconsList>
-      {Object.keys(ShapesIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = ShapesIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Text = () => {
-  return (
-    <IconsList>
-      {Object.keys(TextIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = TextIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const TextAlign = () => {
-  return (
-    <IconsList>
-      {Object.keys(TextAlignIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = TextAlignIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const TextStyle = () => {
-  return (
-    <IconsList>
-      {Object.keys(TextStyleIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = TextStyleIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Upload = () => {
-  return (
-    <IconsList>
-      {Object.keys(UploadIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = UploadIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const View = () => {
-  return (
-    <IconsList>
-      {Object.keys(ViewIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = ViewIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
-          </li>
-        );
-      })}
-    </IconsList>
-  );
-};
-
-export const Zoom = () => {
-  return (
-    <IconsList>
-      {Object.keys(ZoomIcons).map((iconName) => {
-        // eslint-disable-next-line import/namespace
-        const Icon = ZoomIcons[iconName];
-        return (
-          <li key={iconName}>
-            <Icon />
-            {iconName}
+            <Text as="span" isBold>
+              {iconName}
+            </Text>
           </li>
         );
       })}
