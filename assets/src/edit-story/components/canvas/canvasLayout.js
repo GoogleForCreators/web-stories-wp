@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCallback } from 'react';
 
 /**
@@ -66,19 +66,25 @@ function CanvasLayout() {
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
+  // Elsewhere we use stylisRTLPlugin in case of RTL, however, since we're
+  // forcing the canvas to always be LTR due to problems that otherwise come up
+  // with Moveable and left-right direction, for this subtree, we are not using any plugin.
+  // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
-    <Background ref={setBackgroundRef} style={layoutParamsCss}>
-      <CanvasUploadDropTarget>
-        <CanvasElementDropzone>
-          <SelectionCanvas>
-            <DisplayLayer />
-            <FramesLayer />
-            <NavLayer />
-          </SelectionCanvas>
-          <EditLayer />
-        </CanvasElementDropzone>
-      </CanvasUploadDropTarget>
-    </Background>
+    <StyleSheetManager stylisPlugins={[]}>
+      <Background ref={setBackgroundRef} style={layoutParamsCss}>
+        <CanvasUploadDropTarget>
+          <CanvasElementDropzone>
+            <SelectionCanvas>
+              <DisplayLayer />
+              <FramesLayer />
+              <NavLayer />
+            </SelectionCanvas>
+            <EditLayer />
+          </CanvasElementDropzone>
+        </CanvasUploadDropTarget>
+      </Background>
+    </StyleSheetManager>
   );
 }
 
