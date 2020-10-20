@@ -43,12 +43,58 @@ class Compatibility {
 	protected $error;
 
 	/**
+	 * WordPress version.
+	 *
+	 * @var string
+	 */
+	protected $wp_version;
+
+	/**
+	 * PHP version.
+	 *
+	 * @var string
+	 */
+	protected $php_version;
+
+	/**
+	 * Array of extensions.
+	 *
+	 * @var array
+	 */
+	protected $extensions;
+
+	/**
+	 * Path to JS file.
+	 *
+	 * @var string
+	 */
+	protected $js_path;
+
+	/**
+	 * Class name.
+	 *
+	 * @var string
+	 */
+	protected $class_name;
+
+
+	/**
 	 * Compatibility constructor.
 	 *
-	 * @param WP_Error $error WP_Error object passed back.
+	 * @param WP_Error $error       WP_Error object passed back.
+	 * @param array    $extensions  Array of extensions.
+	 * @param string   $wp_version  Min required WordPress version.
+	 * @param string   $php_version Min required PHP version.
+	 * @param string   $js_path     Path to Javascript to test.
+	 * @param string   $class_name  Class name to check.
 	 */
-	public function __construct( WP_Error $error ) {
-		$this->error = $error;
+	public function __construct( WP_Error $error, array $extensions, $wp_version, $php_version, $js_path, $class_name ) {
+		$this->error       = $error;
+		$this->extensions  = $extensions;
+		$this->wp_version  = $wp_version;
+		$this->php_version = $php_version;
+		$this->js_path     = $js_path;
+		$this->class_name  = $class_name;
 	}
 
 	/**
@@ -57,7 +103,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_php_version() {
-		if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
+		if ( version_compare( PHP_VERSION, $this->get_php_version(), '<' ) ) {
 			/* translators: %s: PHP version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_PHP_VERSION ) );
 			$data    = [
@@ -77,7 +123,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_wp_version() {
-		if ( version_compare( get_bloginfo( 'version', 'display' ), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
+		if ( version_compare( get_bloginfo( 'version' ), $this->get_wp_version(), '<' ) ) {
 			/* translators: %s: WordPress version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) );
 			$data    = [
@@ -91,14 +137,13 @@ class Compatibility {
 		return true;
 	}
 
-
 	/**
 	 * Check to see PHP has been built with composer.
 	 *
 	 * @return bool
 	 */
 	public function check_php_built() {
-		if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
+		if ( ! class_exists( $this->get_class_name() ) ) {
 			$message =
 				sprintf(
 				/* translators: %s: build commands. */
@@ -122,7 +167,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_js_built() {
-		if ( ! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' ) ) {
+		if ( ! file_exists( $this->get_js_path() ) ) {
 			$message =
 				sprintf(
 				/* translators: %s: build commands. */
@@ -147,7 +192,7 @@ class Compatibility {
 	 */
 	public function check_extensions() {
 		$_web_stories_missing_extensions = [];
-		foreach ( $this->get_required_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
+		foreach ( $this->get_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
 			if ( ! extension_loaded( $_web_stories_required_extension ) ) {
 				$_web_stories_missing_extensions[] = "<code>$_web_stories_required_extension</code>";
 			}
@@ -181,7 +226,7 @@ class Compatibility {
 	 */
 	public function check_classes() {
 		$_web_stories_missing_classes = [];
-		foreach ( $this->get_required_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
+		foreach ( $this->get_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
 			foreach ( $_web_stories_required_constructs as $_web_stories_construct_type => $_web_stories_constructs ) {
 				if ( 'classes' !== $_web_stories_construct_type ) {
 					continue;
@@ -223,7 +268,7 @@ class Compatibility {
 	 */
 	public function check_functions() {
 		$_web_stories_missing_functions = [];
-		foreach ( $this->get_required_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
+		foreach ( $this->get_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
 			foreach ( $_web_stories_required_constructs as $_web_stories_construct_type => $_web_stories_constructs ) {
 				if ( 'functions' !== $_web_stories_construct_type ) {
 					continue;
@@ -259,48 +304,59 @@ class Compatibility {
 	}
 
 	/**
-	 * Helper to return a list of extensions, functions and classes that are required.
+	 * Get min WP version.
 	 *
+	 * @codeCoverageIgnore
+	 * @return string
+	 */
+	public function get_wp_version() {
+		return $this->wp_version;
+	}
+
+	/**
+	 * Get min PHP version.
+	 *
+	 * @codeCoverageIgnore
+	 * @return string
+	 */
+	public function get_php_version() {
+		return $this->php_version;
+	}
+
+	/**
+	 * Array of extensions.
+	 *
+	 * @codeCoverageIgnore
 	 * @return array
 	 */
-	protected function get_required_extensions() {
-		$extensions = [
-			'date'   => [
-				'classes' => [
-					'DateTimeImmutable',
-				],
-			],
-			'dom'    => [
-				'classes' => [
-					'DOMAttr',
-					'DOMComment',
-					'DOMDocument',
-					'DOMElement',
-					'DOMNode',
-					'DOMNodeList',
-					'DOMText',
-					'DOMXPath',
-				],
-			],
-			'libxml' => [
-				'functions' => [ 'libxml_use_internal_errors' ],
-			],
-			'spl'    => [
-				'functions' => [ 'spl_autoload_register' ],
-			],
-		];
+	public function get_extensions() {
+		return $this->extensions;
+	}
 
-		/**
-		 * Filters array of required extensions, classes and functions.
-		 *
-		 * @param array $extensions Array of extensions, classes and functions.
-		 */
-		return apply_filters( 'web_stories_required_extensions', $extensions );
+	/**
+	 * Get JavaScript path.
+	 *
+	 * @codeCoverageIgnore
+	 * @return string
+	 */
+	public function get_js_path() {
+		return $this->js_path;
+	}
+
+	/**
+	 * Get class name.
+	 *
+	 * @codeCoverageIgnore
+	 * @return string
+	 */
+	public function get_class_name() {
+		return $this->class_name;
 	}
 
 	/**
 	 * Getter to get the error object.
 	 *
+	 * @codeCoverageIgnore
 	 * @return WP_Error
 	 */
 	public function get_error() {

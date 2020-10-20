@@ -24,24 +24,15 @@ use WP_Error;
  * @coversDefaultClass \Google\Web_Stories\Compatibility
  */
 class Compatibility extends \WP_UnitTestCase {
-	public function setUp() {
-		parent::setUp();
-		add_filter( 'web_stories_required_extensions', [ $this, 'mock_web_stories_required_extensions' ] );
-		add_filter( 'bloginfo', [ $this, 'mock_bloginfo' ], 20, 2 );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
-		remove_filter( 'bloginfo', [ $this, 'mock_bloginfo' ], 20 );
-	}
-
 
 	/**
 	 * @covers ::check_extensions
 	 */
 	public function test_check_extensions() {
 		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
+		$class_name        = '\Google\Web_Stories\Plugin';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
 		$results           = $compatibility->check_extensions();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -56,7 +47,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_classes() {
 		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
+		$class_name        = '\Google\Web_Stories\Plugin';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
 		$results           = $compatibility->check_classes();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -71,7 +64,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_functions() {
 		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
+		$class_name        = '\Google\Web_Stories\Plugin';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
 		$results           = $compatibility->check_functions();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -86,7 +81,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_wp_version() {
 		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
+		$class_name        = '\Google\Web_Stories\Plugin';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), '10.0.0', WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
 		$results           = $compatibility->check_wp_version();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -97,11 +94,63 @@ class Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::get_php_version
+	 */
+	public function test_check_php_version() {
+		$web_stories_error = new WP_Error();
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
+		$class_name        = '\Google\Web_Stories\Plugin';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, '10.0.0', $js_path, $class_name );
+		$results           = $compatibility->check_php_version();
+		$this->assertFalse( $results );
+		$error       = $compatibility->get_error();
+		$error_codes = $error->get_error_codes();
+		$this->assertContains( 'failed_check_php_version', $error_codes );
+		$error_message = $error->get_error_message();
+		$this->assertContains( WEBSTORIES_MINIMUM_PHP_VERSION, $error_message );
+	}
+
+	/**
+	 * @covers ::check_js_built
+	 */
+	public function test_check_js_built() {
+		$web_stories_error = new WP_Error();
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js';
+		$class_name        = '\Google\Web_Stories\Plugin';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, '10.0.0', $js_path, $class_name );
+		$results           = $compatibility->check_js_built();
+		$this->assertFalse( $results );
+		$error       = $compatibility->get_error();
+		$error_codes = $error->get_error_codes();
+		$this->assertContains( 'failed_check_js_built', $error_codes );
+		$error_message = $error->get_error_message();
+		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
+	}
+
+
+	/**
+	 * @covers ::check_php_built
+	 */
+	public function test_check_php_built() {
+		$web_stories_error = new WP_Error();
+		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
+		$class_name        = '\Google\Web_Stories\Fake';
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
+		$results           = $compatibility->check_php_built();
+		$this->assertFalse( $results );
+		$error       = $compatibility->get_error();
+		$error_codes = $error->get_error_codes();
+		$this->assertContains( 'failed_check_php_built', $error_codes );
+		$error_message = $error->get_error_message();
+		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
+	}
+
+	/**
 	 * Mock extensions, classes and functions.
 	 *
 	 * @return array
 	 */
-	public function mock_web_stories_required_extensions() {
+	protected function get_web_stories_required_extensions() {
 		return [
 			'fake_extension' => [
 				'classes'   => [
@@ -112,21 +161,5 @@ class Compatibility extends \WP_UnitTestCase {
 				],
 			],
 		];
-	}
-
-	/**
-	 * Mock the version to 1.5.0.
-	 *
-	 * @param $output
-	 * @param $show
-	 *
-	 * @return string
-	 */
-	public function mock_bloginfo( $output, $show ) {
-		if ( 'version' !== $show ) {
-			return $output;
-		}
-
-		return '1.5.0';
 	}
 }

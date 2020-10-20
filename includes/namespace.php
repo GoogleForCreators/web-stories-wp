@@ -36,8 +36,41 @@ if ( ! class_exists( 'Compatibility' ) ) {
 
 global $web_stories_compatibility;
 
-$web_stories_error         = new WP_Error();
-$web_stories_compatibility = new Compatibility( $web_stories_error );
+$web_stories_error = new WP_Error();
+$extensions        = [
+	'date'   => [
+		'classes' => [
+			'DateTimeImmutable',
+		],
+	],
+	'dom'    => [
+		'classes' => [
+			'DOMAttr',
+			'DOMComment',
+			'DOMDocument',
+			'DOMElement',
+			'DOMNode',
+			'DOMNodeList',
+			'DOMText',
+			'DOMXPath',
+		],
+	],
+	'libxml' => [
+		'functions' => [ 'libxml_use_internal_errors' ],
+	],
+	'spl'    => [
+		'functions' => [ 'spl_autoload_register' ],
+	],
+];
+
+$web_stories_compatibility = new Compatibility(
+	$web_stories_error,
+	$extensions,
+	WEBSTORIES_MINIMUM_WP_VERSION,
+	WEBSTORIES_MINIMUM_PHP_VERSION,
+	WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
+	'\Google\Web_Stories\Plugin'
+);
 
 /**
  * Displays an admin notice about why the plugin is unable to load.
