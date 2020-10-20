@@ -48,31 +48,22 @@ function getVariants(editorState) {
     return [getFontStylesForCharacter(editorState.getCurrentInlineStyle())];
   }
 
-  const styles = [];
-  const hasStyle = (style) =>
-    styles.some((val) => val[0] === style[0] && val[1] === style[1]);
-  styleSets.forEach((styleSet) => {
-    const styleArray = getFontStylesForCharacter(styleSet);
-
-    if (!hasStyle(styleArray)) {
-      styles.push(styleArray);
-    }
+  const styles = styleSets.map((styleSet) => {
+    const [style = ''] = getFontStylesForCharacter(styleSet);
+    return style;
   });
-
-  return [...styles];
+  return [...new Set(styles)];
 }
 
 export default function getFontVariants(html) {
   const htmlState = getSelectAllStateFromHTML(html);
-  const variants = getVariants(htmlState)
-    .filter((variant) => variant.length)
-    .map((variant) => {
-      const weight = variant.find((val) => val.startsWith(WEIGHT));
-      return [
-        Number(variant.includes(ITALIC)),
-        weight ? styleToNumeric(WEIGHT, weight) : 400,
-      ];
-    });
+  const variants = getVariants(htmlState).map((variant) => {
+    return [
+      variant.startsWith(ITALIC) ? 1 : 0,
+      variant.startsWith(WEIGHT) ? styleToNumeric(WEIGHT, variant) : 400,
+    ];
+  });
+
   // Return default variant or the found variants.
   return variants.length > 0 ? variants : [[0, 400]];
 }
