@@ -45,6 +45,8 @@
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*   |
 | Creator can Preview & Publish Their Story                         | Publish story                                    | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*   |
+| Creator can Select an Element                                     | Transforming element                             | 🚨 **0.00%** *(0 / 2)*   |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*   |
 | Creator can Transform an Element                                  | Align element to on another                      | 🚨 **0.00%** *(0 / 10)*  |
 |                                                                   | Align element to page                            | 🚨 **0.00%** *(0 / 9)*   |
 |                                                                   | Resize                                           | 🚨 **0.00%** *(0 / 1)*   |
@@ -65,4 +67,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.57%** *(2 / 350)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.56%** *(2 / 354)* |
