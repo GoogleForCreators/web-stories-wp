@@ -100,11 +100,14 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           }),
       };
 
+  // @todo Max values?
+  // @todo Confirm the design for then the border width is locked.
   return (
     <Row>
       <Label>
         <BoxedNumeric value={border.left} {...firstInputProperties} />
         {!lockBorder && <span>{__('Left', 'web-stories')}</span>}
+        {lockBorder && <span>{__('Border Width', 'web-stories')}</span>}
       </Label>
       {!lockBorder && (
         <>

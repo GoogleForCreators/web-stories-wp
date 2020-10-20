@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 /**
  * WordPress dependencies
@@ -35,6 +36,7 @@ import { DEFAULT_BORDER } from './shared';
 
 const PositionButton = styled(ToggleButton)`
   flex: 1;
+  margin-right: 5px;
   label {
     width: 100%;
     background-color: transparent !important;
@@ -108,5 +110,10 @@ function Position({ selectedElements, pushUpdateForObject }) {
     </Row>
   );
 }
+
+Position.propTypes = {
+  selectedElements: PropTypes.array.isRequired,
+  pushUpdateForObject: PropTypes.func.isRequired,
+};
 
 export default Position;
