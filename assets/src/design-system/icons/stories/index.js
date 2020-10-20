@@ -330,9 +330,9 @@ export const Content = () => {
 export const Editor = () => {
   return (
     <IconsList>
-      {Object.keys(EditorIcons).map((iconName) => {
+      {Object.keys(DashboardIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = EditorIcons[iconName];
+        const Icon = DashboardIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
@@ -346,12 +346,12 @@ export const Editor = () => {
   );
 };
 
-export const Dashboard = () => {
+export const Editor = () => {
   return (
     <IconsList>
-      {Object.keys(DashboardIcons).map((iconName) => {
+      {Object.keys(EditorIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = DashboardIcons[iconName];
+        const Icon = EditorIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
