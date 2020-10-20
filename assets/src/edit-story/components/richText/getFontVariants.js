@@ -45,7 +45,7 @@ function getFontStylesForCharacter(styles) {
 function getVariants(editorState) {
   const styleSets = getAllStyleSetsInSelection(editorState);
   if (styleSets.length === 0) {
-    return [...getFontStylesForCharacter(editorState.getCurrentInlineStyle())];
+    return getFontStylesForCharacter(editorState.getCurrentInlineStyle());
   }
   const styles = styleSets.map((styleSet) => {
     const [style = ''] = getFontStylesForCharacter(styleSet);
