@@ -65,6 +65,10 @@ Web Stories are for everyone! If you are a site owner, content creator, or publi
 3. Explore our WYSIWYG editor with easy access to many editing tools (shown here: zooming and cropping media)
 4. Get started building your first story by editing one of our expressive, fully built template stories included with the editor.
 
+== Terms of Service ==
+
+By using this plugin, you agree to [Google's Terms of Service](https://policies.google.com/terms). By using third-party imagery and video provided by [Unsplash](https://unsplash.com/terms) and [Coverr](https://coverr.co/license), you agree to adhere to their ToS and licensing terms."
+
 == Frequently Asked Questions ==
 
 Thank you for being an early adopter of Web Stories for WordPress! We're working around the clock to improve your experience and add editing capabilities. If you find any issues, please reach out by visiting the [support forum](https://wordpress.org/support/plugin/web-stories/) to ask any questions or file feature requests.
