@@ -55,7 +55,6 @@ const IconsList = styled.ul`
     height: 40px;
     width: 40px;
     margin-bottom: 10px;
-    border: 1px solid red;
   }
 `;
 
