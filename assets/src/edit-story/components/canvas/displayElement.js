@@ -35,7 +35,7 @@ import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
-import WithBorder from './withBorder';
+import WithBorder from '../elementBorder';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
