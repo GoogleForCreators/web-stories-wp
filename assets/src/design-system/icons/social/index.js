@@ -17,7 +17,4 @@
 /**
  * Internal dependencies
  */
-
-export { ReactComponent as Center } from './center.svg';
-export { ReactComponent as Left } from './left.svg';
-export { ReactComponent as Right } from './right.svg';
+export { ReactComponent as Share } from './share.svg';

@@ -17,11 +17,10 @@
 /**
  * Internal dependencies
  */
-export { ReactComponent as Bookmark } from './bookmark.svg';
-export { ReactComponent as Checkmark } from './checkmark.svg';
+export { ReactComponent as Arrow } from './arrow.svg';
+export { ReactComponent as ArrowAlt } from './arrowAlt.svg';
 export { ReactComponent as Chevron } from './chevron.svg';
-export { ReactComponent as Edit } from './edit.svg';
-export { ReactComponent as Info } from './info.svg';
-export { ReactComponent as Search } from './search.svg';
-export { ReactComponent as Settings } from './settings.svg';
-export { ReactComponent as Trash } from './trash.svg';
+export { ReactComponent as Close } from './close.svg';
+export { ReactComponent as CloseAlt } from './closeAlt.svg';
+export { ReactComponent as More } from './more.svg';
+export { ReactComponent as MoreFilled } from './moreFilled.svg';

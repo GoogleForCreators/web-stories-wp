@@ -17,9 +17,8 @@
 /**
  * Internal dependencies
  */
-export { ReactComponent as Bold } from './bold.svg';
-export { ReactComponent as Italic } from './italic.svg';
-export { ReactComponent as LetterSpacing } from './letterSpacing.svg';
-export { ReactComponent as LineHeight } from './lineHeight.svg';
-export { ReactComponent as StrikeThrough } from './strikeThrough.svg';
-export { ReactComponent as Underline } from './underline.svg';
+export { ReactComponent as Duplicate } from './duplicate.svg';
+export { ReactComponent as Flip } from './flip.svg';
+export { ReactComponent as Redo } from './redo.svg';
+export { ReactComponent as Rotate } from './rotate.svg';
+export { ReactComponent as Undo } from './undo.svg';

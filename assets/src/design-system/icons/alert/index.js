@@ -17,6 +17,5 @@
 /**
  * Internal dependencies
  */
-
-export { ReactComponent as Lock } from './lock.svg';
-export { ReactComponent as Unlock } from './unlock.svg';
+export { ReactComponent as Error } from './error.svg';
+export { ReactComponent as Warning } from './warning.svg';
