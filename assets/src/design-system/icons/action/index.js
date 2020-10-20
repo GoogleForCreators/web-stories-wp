@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-<<<<<<< HEAD
 export { ReactComponent as Add } from './add.svg';
 export { ReactComponent as AddFilled } from './addFilled.svg';
 export { ReactComponent as AddOutlined } from './addOutlined.svg';
@@ -36,10 +35,3 @@ export { ReactComponent as Search } from './search.svg';
 export { ReactComponent as Settings } from './settings.svg';
 export { ReactComponent as Trash } from './trash.svg';
 export { ReactComponent as Unlock } from './unlock.svg';
-=======
-export { ReactComponent as Duplicate } from './duplicate.svg';
-export { ReactComponent as Flip } from './flip.svg';
-export { ReactComponent as Redo } from './redo.svg';
-export { ReactComponent as Rotate } from './rotate.svg';
-export { ReactComponent as Undo } from './undo.svg';
->>>>>>> try out subdirectories to group icons
