@@ -94,13 +94,13 @@ function _print_missing_build_admin_notice() {
 	<div class="notice notice-error">
 		<p><strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong></p>
 		<ul>
-			<?php foreach ( array_keys( $_error->errors ) as $error_code ) : ?>
-				<?php foreach ( $_error->get_error_messages( $error_code ) as $message ) : ?>
-					<li>
-						<?php echo wp_kses( $message, [ 'code' => [] ] ); ?>
-					</li>
-				<?php endforeach; ?>
-			<?php endforeach; ?>
+			<?php
+				foreach ( array_keys( $_error->errors ) as $error_code ) {
+					foreach ( $_error->get_error_messages( $error_code ) as $message ) {
+						printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ));
+					}
+				}
+			?>
 		</ul>
 	</div>
 	<?php
@@ -114,7 +114,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 		$_error = $web_stories_compatibility->get_error();
 
 		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
-		$body    = wp_strip_all_tags( $_error->get_error_message() );
+		$body    = htmlspecialchars_decode( wp_strip_all_tags( $_error->get_error_message() ) );
 
 		if ( class_exists( '\WP_CLI' ) ) {
 			\WP_CLI::warning( "$heading\n$body" );
