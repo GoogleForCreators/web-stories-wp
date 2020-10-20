@@ -95,7 +95,7 @@ class Compatibility {
 	public function check_php_version() {
 		if ( version_compare( PHP_VERSION, $this->get_php_version(), '<' ) ) {
 			/* translators: %s: PHP version number */
-			$message = esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_PHP_VERSION ) );
+			$message = esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), $this->get_php_version() ) );
 			$data    = [
 				'title' => $message,
 			];
@@ -115,7 +115,7 @@ class Compatibility {
 	public function check_wp_version() {
 		if ( version_compare( get_bloginfo( 'version' ), $this->get_wp_version(), '<' ) ) {
 			/* translators: %s: WordPress version number */
-			$message = esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) );
+			$message = esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), $this->get_wp_version() ) );
 			$data    = [
 				'title' => $message,
 			];

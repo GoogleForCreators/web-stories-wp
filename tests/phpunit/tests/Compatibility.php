@@ -86,7 +86,7 @@ class Compatibility extends \WP_UnitTestCase {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'failed_check_wp_version', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( WEBSTORIES_MINIMUM_WP_VERSION, $error_message );
+		$this->assertContains( $compatibility->get_wp_version(), $error_message );
 	}
 
 	/**
@@ -102,7 +102,7 @@ class Compatibility extends \WP_UnitTestCase {
 		$error_codes = $error->get_error_codes();
 		$this->assertContains( 'failed_check_php_version', $error_codes );
 		$error_message = $error->get_error_message();
-		$this->assertContains( WEBSTORIES_MINIMUM_PHP_VERSION, $error_message );
+		$this->assertContains( $compatibility->get_php_version(), $error_message );
 	}
 
 	/**
