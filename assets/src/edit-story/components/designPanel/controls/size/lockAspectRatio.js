@@ -15,18 +15,28 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import Row from '../../form/row';
+import { LockToggle } from '../../parts/toggles';
+import CONFIG from './config';
+import useUpdateLockAspectRatio from './useUpdateLockAspectRatio';
 
-export const LeftRow = styled(Row)`
-  align-items: flex-start;
-  justify-content: flex-start;
-`;
+function LockAspectRatio() {
+  const updateLockAspectRatio = useUpdateLockAspectRatio();
 
-export { Row };
+  return (
+    <LockToggle
+      aria-label={__('Aspect ratio lock', 'web-stories')}
+      title={__('Constrain proportions', 'web-stories')}
+      property={CONFIG.LOCKASPECTRATIO.PROPERTY}
+      onChange={updateLockAspectRatio}
+    />
+  );
+}
+
+export default LockAspectRatio;

@@ -22,22 +22,26 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SimpleNumeric } from '../../../parts/inputs';
-import CONFIG from '../config';
-import useUpdateY from './useUpdateY';
+import { SimpleNumeric } from '../../parts/inputs';
+import CONFIG from './config';
+import useUpdateRotation from './useUpdateRotation';
+import useSetup from './useSetup';
 
-function Y() {
-  const updateY = useUpdateY();
+function Rotation() {
+  useSetup();
+
+  const updateRotation = useUpdateRotation();
 
   return (
     <SimpleNumeric
-      property={CONFIG.Y.PROPERTY}
-      suffix={_x('Y', 'Position on Y axis', 'web-stories')}
-      aria-label={__('Y position', 'web-stories')}
+      property={CONFIG.ROTATION.PROPERTY}
+      suffix={__('Rotate', 'web-stories')}
+      symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
+      aria-label={__('Rotation', 'web-stories')}
       canBeNegative
-      onChange={updateY}
+      onChange={updateRotation}
     />
   );
 }
 
-export default Y;
+export default Rotation;

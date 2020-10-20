@@ -15,30 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimpleNumeric } from '../../../parts/inputs';
-import CONFIG from '../config';
-import useUpdateRotation from './useUpdateRotation';
-
-function Rotation() {
-  const updateRotation = useUpdateRotation();
-
-  return (
-    <SimpleNumeric
-      property={CONFIG.ROTATION.PROPERTY}
-      suffix={__('Rotate', 'web-stories')}
-      symbol={_x('°', 'Degrees, 0 - 360. ', 'web-stories')}
-      aria-label={__('Rotation', 'web-stories')}
-      canBeNegative
-      onChange={updateRotation}
-    />
-  );
-}
-
-export default Rotation;
+export { default } from './rotation';

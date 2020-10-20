@@ -15,29 +15,31 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { SimpleNumeric } from '../../../parts/inputs';
-import CONFIG from '../config';
-import useUpdateX from './useUpdateX';
+import Width from './width';
+import Height from './height';
+import LockAspectRatio from './lockAspectRatio';
 
-function X() {
-  const updateX = useUpdateX();
+import useSetup from './useSetup';
 
-  return (
-    <SimpleNumeric
-      property={CONFIG.X.PROPERTY}
-      suffix={_x('X', 'Position on X axis', 'web-stories')}
-      aria-label={__('X position', 'web-stories')}
-      canBeNegative
-      onChange={updateX}
-    />
-  );
+function Position({ children }) {
+  useSetup();
+
+  return children;
 }
 
-export default X;
+Position.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+Position.Width = Width;
+Position.Height = Height;
+Position.LockAspectRatio = LockAspectRatio;
+
+export default Position;

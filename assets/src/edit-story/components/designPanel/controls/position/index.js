@@ -15,38 +15,28 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
-import { DANGER_ZONE_HEIGHT } from '../../../../units/dimensions';
+import X from './x';
+import Y from './y';
+import useSetup from './useSetup';
 
-export default {
-  ROTATION: {
-    PROPERTY: 'rotation',
-    MIN: -360,
-    MAX: 360,
-  },
-  LOCKASPECTRATIO: {
-    PROPERTY: 'lockAspectRatio',
-  },
-  WIDTH: {
-    PROPERTY: 'width',
-    MIN: 1,
-    MAX: 1000,
-  },
-  HEIGHT: {
-    PROPERTY: 'height',
-    MIN: 1,
-    MAX: 1000,
-  },
-  X: {
-    PROPERTY: 'x',
-    MIN: 1,
-    MAX: PAGE_WIDTH - 1,
-  },
-  Y: {
-    PROPERTY: 'y',
-    MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
-    MAX: PAGE_HEIGHT + Math.floor(DANGER_ZONE_HEIGHT) - 1,
-  },
+function Size({ children }) {
+  useSetup();
+
+  return children;
+}
+
+Size.propTypes = {
+  children: PropTypes.node.isRequired,
 };
+
+Size.X = X;
+Size.Y = Y;
+
+export default Size;

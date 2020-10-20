@@ -13,3 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import FontPickerDropdown from '../../fontPicker';
+import DropDown from '../../form/dropDown';
+import useSetupFor from '../useSetupFor';
+
+export function FontPicker({ property, ...rest }) {
+  const { value, options } = useSetupFor(property);
+  return <FontPickerDropdown options={options} value={value} {...rest} />;
+}
+
+FontPicker.propTypes = {
+  property: PropTypes.string.isRequired,
+};
+
+export function Select({ property, ...rest }) {
+  const { value, options } = useSetupFor(property);
+  return (
+    <DropDown
+      options={options}
+      value={value}
+      placeholder={__('(multiple)', 'web-stories')}
+      {...rest}
+    />
+  );
+}
+
+Select.propTypes = {
+  property: PropTypes.string.isRequired,
+};

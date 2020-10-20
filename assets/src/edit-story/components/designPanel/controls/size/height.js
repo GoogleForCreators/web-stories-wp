@@ -15,18 +15,28 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __, _x } from '@wordpress/i18n';
 
-export const HorizontalPadding = styled.div`
-  margin: 0 10px;
-`;
+/**
+ * Internal dependencies
+ */
+import { SimpleNumeric } from '../../parts/inputs';
+import CONFIG from './config';
+import useUpdateHeight from './useUpdateHeight';
 
-export const ToggleSpace = styled.div`
-  width: 30px;
-`;
+function Height() {
+  const updateHeight = useUpdateHeight();
 
-export const NarrowSpace = styled.div`
-  width: 10px;
-`;
+  return (
+    <SimpleNumeric
+      property={CONFIG.HEIGHT.PROPERTY}
+      suffix={_x('H', 'The height dimension', 'web-stories')}
+      aria-label={__('Height', 'web-stories')}
+      onChange={updateHeight}
+    />
+  );
+}
+
+export default Height;

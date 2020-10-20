@@ -19,44 +19,14 @@
  */
 import useElementSetup from '../../useElementSetup';
 import useCommonProperty from '../../useCommonProperty';
-import useCommonAspectRatio from './useCommonAspectRatio';
 import useCommonExtremes from './useCommonExtremes';
 
 import CONFIG from './config';
 
 function useSetup() {
-  const width = useCommonProperty('width');
-  const height = useCommonProperty('height');
   const x = useCommonProperty('x');
   const y = useCommonProperty('y');
-  const rotation = useCommonProperty('rotationAngle');
-
-  const lockAspectRatio = useCommonAspectRatio();
   const extremes = useCommonExtremes();
-
-  useElementSetup(
-    CONFIG.WIDTH.PROPERTY,
-    {
-      value: width,
-      min: CONFIG.WIDTH.MIN,
-      max: CONFIG.WIDTH.MAX,
-    },
-    [width]
-  );
-
-  useElementSetup(
-    CONFIG.HEIGHT.PROPERTY,
-    {
-      value: height,
-      min: CONFIG.HEIGHT.MIN,
-      max: CONFIG.HEIGHT.MAX,
-    },
-    [height]
-  );
-
-  useElementSetup(CONFIG.LOCKASPECTRATIO.PROPERTY, { value: lockAspectRatio }, [
-    height,
-  ]);
 
   useElementSetup(
     CONFIG.X.PROPERTY,
@@ -76,16 +46,6 @@ function useSetup() {
       max: CONFIG.Y.MAX + extremes.maxY,
     },
     [x, extremes]
-  );
-
-  useElementSetup(
-    CONFIG.ROTATION.PROPERTY,
-    {
-      value: rotation,
-      min: CONFIG.ROTATION.MIN,
-      max: CONFIG.ROTATION.MAX,
-    },
-    [rotation]
   );
 }
 

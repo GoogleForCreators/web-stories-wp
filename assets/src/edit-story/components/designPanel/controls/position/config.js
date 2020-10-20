@@ -15,18 +15,20 @@
  */
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import styled from 'styled-components';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
+import { DANGER_ZONE_HEIGHT } from '../../../../units/dimensions';
 
-export const HorizontalPadding = styled.div`
-  margin: 0 10px;
-`;
-
-export const ToggleSpace = styled.div`
-  width: 30px;
-`;
-
-export const NarrowSpace = styled.div`
-  width: 10px;
-`;
+export default {
+  X: {
+    PROPERTY: 'x',
+    MIN: 1,
+    MAX: PAGE_WIDTH - 1,
+  },
+  Y: {
+    PROPERTY: 'y',
+    MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
+    MAX: PAGE_HEIGHT + Math.floor(DANGER_ZONE_HEIGHT) - 1,
+  },
+};

@@ -14,29 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
-
-/**
- * Internal dependencies
- */
-import { SimpleNumeric } from '../../../parts/inputs';
-import CONFIG from '../config';
-import useUpdateWidth from './useUpdateWidth';
-
-function Width() {
-  const updateWidth = useUpdateWidth();
-
-  return (
-    <SimpleNumeric
-      property={CONFIG.WIDTH.PROPERTY}
-      suffix={_x('W', 'The width dimension', 'web-stories')}
-      aria-label={__('Width', 'web-stories')}
-      onChange={updateWidth}
-    />
-  );
-}
-
-export default Width;
+export default {
+  LOCKASPECTRATIO: {
+    PROPERTY: 'lockAspectRatio',
+  },
+  WIDTH: {
+    PROPERTY: 'width',
+    MIN: 1,
+    MAX: 1000,
+  },
+  HEIGHT: {
+    PROPERTY: 'height',
+    MIN: 1,
+    MAX: 1000,
+  },
+};

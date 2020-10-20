@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import styled from 'styled-components';
-
-export const HorizontalPadding = styled.div`
-  margin: 0 10px;
-`;
-
-export const ToggleSpace = styled.div`
-  width: 30px;
-`;
-
-export const NarrowSpace = styled.div`
-  width: 10px;
-`;
+export default {
+  ROTATION: {
+    PROPERTY: 'rotation',
+    MIN: -360,
+    MAX: 360,
+  },
+};

@@ -17,11 +17,11 @@
 /**
  * Internal dependencies
  */
-import clamp from '../../../../../utils/clamp';
-import { calcRotatedObjectPositionAndSize } from '../../../../../utils/getBoundRect';
-import useUpdateSelection from '../../../useUpdateSelection';
+import clamp from '../../../../utils/clamp';
+import { calcRotatedObjectPositionAndSize } from '../../../../utils/getBoundRect';
+import useUpdateSelection from '../../useUpdateSelection';
 
-import CONFIG from '../config';
+import CONFIG from './config';
 
 function useUpdatePosition(isHorizontal) {
   const handleUpdatePosition = useUpdateSelection(

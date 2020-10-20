@@ -15,28 +15,19 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { LockToggle } from '../../../parts/toggles';
-import CONFIG from '../config';
-import useUpdateLockAspectRatio from './useUpdateLockAspectRatio';
+import useUpdateSelection from '../../useUpdateSelection';
 
-function LockAspectRatio() {
-  const updateLockAspectRatio = useUpdateLockAspectRatio();
-
-  return (
-    <LockToggle
-      aria-label={__('Aspect ratio lock', 'web-stories')}
-      title={__('Constrain proportions', 'web-stories')}
-      property={CONFIG.LOCKASPECTRATIO.PROPERTY}
-      onChange={updateLockAspectRatio}
-    />
+function useUpdateLockAspectRatio() {
+  const handleUpdateLockAspectRatio = useUpdateSelection(
+    (value) => ({
+      lockAspectRatio: value,
+    }),
+    []
   );
+
+  return handleUpdateLockAspectRatio;
 }
 
-export default LockAspectRatio;
+export default useUpdateLockAspectRatio;

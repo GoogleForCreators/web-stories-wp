@@ -47,5 +47,9 @@ export function StateToggle({ property, value = true, ...rest }) {
 
 StateToggle.propTypes = {
   property: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool,
+  ]),
 };

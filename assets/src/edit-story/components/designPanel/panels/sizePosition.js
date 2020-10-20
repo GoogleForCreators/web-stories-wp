@@ -22,33 +22,36 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
-import { Row } from '../../parts/rows';
-import { ToggleSpace, HorizontalPadding } from '../../parts/spacers';
-import { X, Y, Width, Height, LockAspectRatio, Rotation } from './controls';
-import useSetup from './useSetup';
+import { SimplePanel } from '../../panel';
+import { Row } from '../parts/rows';
+import { ToggleSpace, NarrowSpace } from '../parts/spacers';
+import Size from '../controls/size';
+import Position from '../controls/position';
+import Rotation from '../controls/rotation';
 
 function SizePositionPanel() {
-  useSetup();
-
   return (
     <SimplePanel
       name="sizeposition"
       title={__('Size & Position', 'web-stories')}
     >
       <Row>
-        <X />
-        <HorizontalPadding>
+        <Position>
+          <Position.X />
+          <NarrowSpace />
           <ToggleSpace />
-        </HorizontalPadding>
-        <Y />
+          <NarrowSpace />
+          <Position.Y />
+        </Position>
       </Row>
       <Row>
-        <Width />
-        <HorizontalPadding>
-          <LockAspectRatio />
-        </HorizontalPadding>
-        <Height />
+        <Size>
+          <Size.Width />
+          <NarrowSpace />
+          <Size.LockAspectRatio />
+          <NarrowSpace />
+          <Size.Height />
+        </Size>
       </Row>
       <Row expand={false}>
         <Rotation />

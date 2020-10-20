@@ -15,19 +15,29 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, _x } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import useUpdateSelection from '../../../useUpdateSelection';
+import { SimpleNumeric } from '../../parts/inputs';
+import CONFIG from './config';
+import useUpdateX from './useUpdateX';
 
-function useUpdateRotation() {
-  const handleUpdateRotation = useUpdateSelection(
-    (value) => ({
-      rotationAngle: value % 360,
-    }),
-    []
+function X() {
+  const updateX = useUpdateX();
+
+  return (
+    <SimpleNumeric
+      property={CONFIG.X.PROPERTY}
+      suffix={_x('X', 'Position on X axis', 'web-stories')}
+      aria-label={__('X position', 'web-stories')}
+      canBeNegative
+      onChange={updateX}
+    />
   );
-
-  return handleUpdateRotation;
 }
 
-export default useUpdateRotation;
+export default X;

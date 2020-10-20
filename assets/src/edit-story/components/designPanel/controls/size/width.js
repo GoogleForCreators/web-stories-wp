@@ -15,19 +15,28 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, _x } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-import useUpdateSelection from '../../../useUpdateSelection';
+import { SimpleNumeric } from '../../parts/inputs';
+import CONFIG from './config';
+import useUpdateWidth from './useUpdateWidth';
 
-function useUpdateLockAspectRatio() {
-  const handleUpdateLockAspectRatio = useUpdateSelection(
-    (value) => ({
-      lockAspectRatio: value,
-    }),
-    []
+function Width() {
+  const updateWidth = useUpdateWidth();
+
+  return (
+    <SimpleNumeric
+      property={CONFIG.WIDTH.PROPERTY}
+      suffix={_x('W', 'The width dimension', 'web-stories')}
+      aria-label={__('Width', 'web-stories')}
+      onChange={updateWidth}
+    />
   );
-
-  return handleUpdateLockAspectRatio;
 }
 
-export default useUpdateLockAspectRatio;
+export default Width;

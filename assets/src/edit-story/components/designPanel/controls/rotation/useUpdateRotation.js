@@ -15,28 +15,19 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, _x } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimpleNumeric } from '../../../parts/inputs';
-import CONFIG from '../config';
-import useUpdateHeight from './useUpdateHeight';
+import useUpdateSelection from '../../useUpdateSelection';
 
-function Height() {
-  const updateHeight = useUpdateHeight();
-
-  return (
-    <SimpleNumeric
-      property={CONFIG.HEIGHT.PROPERTY}
-      suffix={_x('H', 'The height dimension', 'web-stories')}
-      aria-label={__('Height', 'web-stories')}
-      onChange={updateHeight}
-    />
+function useUpdateRotation() {
+  const handleUpdateRotation = useUpdateSelection(
+    (value) => ({
+      rotationAngle: value % 360,
+    }),
+    []
   );
+
+  return handleUpdateRotation;
 }
 
-export default Height;
+export default useUpdateRotation;

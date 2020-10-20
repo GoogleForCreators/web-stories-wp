@@ -17,13 +17,13 @@
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../../../../elements';
-import { dataPixels } from '../../../../../units';
-import clamp from '../../../../../utils/clamp';
-import useSetupFor from '../../../useSetupFor';
-import useUpdateSelection from '../../../useUpdateSelection';
+import { getDefinitionForType } from '../../../../elements';
+import { dataPixels } from '../../../../units';
+import clamp from '../../../../utils/clamp';
+import useSetupFor from '../../useSetupFor';
+import useUpdateSelection from '../../useUpdateSelection';
 
-import CONFIG from '../config';
+import CONFIG from './config';
 
 function useUpdateSize(isHorizontal) {
   const { value: lockAspectRatio } = useSetupFor(CONFIG.LOCKASPECTRATIO);

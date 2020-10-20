@@ -17,9 +17,23 @@
 /**
  * Internal dependencies
  */
-export { default as X } from './x';
-export { default as Y } from './y';
-export { default as Width } from './width';
-export { default as Height } from './height';
-export { default as LockAspectRatio } from './lockAspectRatio';
-export { default as Rotation } from './rotation';
+import useElementSetup from '../../useElementSetup';
+import useCommonProperty from '../../useCommonProperty';
+
+import CONFIG from './config';
+
+function useSetup() {
+  const rotation = useCommonProperty('rotationAngle');
+
+  useElementSetup(
+    CONFIG.ROTATION.PROPERTY,
+    {
+      value: rotation,
+      min: CONFIG.ROTATION.MIN,
+      max: CONFIG.ROTATION.MAX,
+    },
+    [rotation]
+  );
+}
+
+export default useSetup;

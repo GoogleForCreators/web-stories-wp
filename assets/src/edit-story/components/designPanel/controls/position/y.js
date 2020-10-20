@@ -15,18 +15,29 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import styled from 'styled-components';
+import { __, _x } from '@wordpress/i18n';
 
-export const HorizontalPadding = styled.div`
-  margin: 0 10px;
-`;
+/**
+ * Internal dependencies
+ */
+import { SimpleNumeric } from '../../parts/inputs';
+import CONFIG from './config';
+import useUpdateY from './useUpdateY';
 
-export const ToggleSpace = styled.div`
-  width: 30px;
-`;
+function Y() {
+  const updateY = useUpdateY();
 
-export const NarrowSpace = styled.div`
-  width: 10px;
-`;
+  return (
+    <SimpleNumeric
+      property={CONFIG.Y.PROPERTY}
+      suffix={_x('Y', 'Position on Y axis', 'web-stories')}
+      aria-label={__('Y position', 'web-stories')}
+      canBeNegative
+      onChange={updateY}
+    />
+  );
+}
+
+export default Y;
