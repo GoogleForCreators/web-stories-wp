@@ -49,7 +49,6 @@ const IconsList = styled.ul`
     flex-direction: column;
     justify-items: flex-start;
     align-items: center;
-    border: 1px solid gray;
   }
   svg {
     height: 40px;
@@ -157,12 +156,12 @@ export const Content = () => {
   );
 };
 
-export const Editor = () => {
+export const Dashboard = () => {
   return (
     <IconsList>
-      {Object.keys(EditorIcons).map((iconName) => {
+      {Object.keys(DashboardIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = EditorIcons[iconName];
+        const Icon = DashboardIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
@@ -176,12 +175,12 @@ export const Editor = () => {
   );
 };
 
-export const Dashboard = () => {
+export const Editor = () => {
   return (
     <IconsList>
-      {Object.keys(DashboardIcons).map((iconName) => {
+      {Object.keys(EditorIcons).map((iconName) => {
         // eslint-disable-next-line import/namespace
-        const Icon = DashboardIcons[iconName];
+        const Icon = EditorIcons[iconName];
         return (
           <li key={iconName}>
             <Icon />
