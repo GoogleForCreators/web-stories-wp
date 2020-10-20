@@ -358,6 +358,7 @@ class Compatibility {
 	 *
 	 * @codeCoverageIgnore
 	 * @param string $wp_version WordPress version.
+	 * @return void
 	 */
 	public function set_wp_version( $wp_version ) {
 		$this->wp_version = $wp_version;
@@ -368,6 +369,7 @@ class Compatibility {
 	 *
 	 * @codeCoverageIgnore
 	 * @param string $php_version PHP version.
+	 * @return void
 	 */
 	public function set_php_version( $php_version ) {
 		$this->php_version = $php_version;
@@ -378,6 +380,7 @@ class Compatibility {
 	 *
 	 * @codeCoverageIgnore
 	 * @param array $extensions Array of extensions.
+	 * @return void
 	 */
 	public function set_extensions( $extensions ) {
 		$this->extensions = $extensions;
@@ -388,6 +391,7 @@ class Compatibility {
 	 *
 	 * @codeCoverageIgnore
 	 * @param string $js_path Path to javascript.
+	 * @return void
 	 */
 	public function set_js_path( $js_path ) {
 		$this->js_path = $js_path;
@@ -398,6 +402,7 @@ class Compatibility {
 	 *
 	 * @codeCoverageIgnore
 	 * @param string $class_name Class name.
+	 * @return void
 	 */
 	public function set_class_name( $class_name ) {
 		$this->class_name = $class_name;

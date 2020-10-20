@@ -55,11 +55,21 @@ $extensions        = [
 			'DOMXPath',
 		],
 	],
+	'json'   => [
+		'functions' => [
+			'json_decode',
+			'json_encode',
+		],
+	],
 	'libxml' => [
-		'functions' => [ 'libxml_use_internal_errors' ],
+		'functions' => [
+			'libxml_use_internal_errors',
+		],
 	],
 	'spl'    => [
-		'functions' => [ 'spl_autoload_register' ],
+		'functions' => [
+			'spl_autoload_register',
+		],
 	],
 ];
 
@@ -95,11 +105,11 @@ function _print_missing_build_admin_notice() {
 		<p><strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong></p>
 		<ul>
 			<?php
-				foreach ( array_keys( $_error->errors ) as $error_code ) {
-					foreach ( $_error->get_error_messages( $error_code ) as $message ) {
-						printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ));
-					}
+			foreach ( array_keys( $_error->errors ) as $error_code ) {
+				foreach ( $_error->get_error_messages( $error_code ) as $message ) {
+					printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ) );
 				}
+			}
 			?>
 		</ul>
 	</div>
