@@ -17,8 +17,21 @@
 /**
  * Internal dependencies
  */
-export { ReactComponent as Duplicate } from './duplicate.svg';
-export { ReactComponent as Flip } from './flip.svg';
-export { ReactComponent as Redo } from './redo.svg';
-export { ReactComponent as Rotate } from './rotate.svg';
-export { ReactComponent as Undo } from './undo.svg';
+export { ReactComponent as Add } from './add.svg';
+export { ReactComponent as AddFilled } from './addFilled.svg';
+export { ReactComponent as AddOutlined } from './addOutlined.svg';
+export { ReactComponent as Bookmark } from './bookmark.svg';
+export { ReactComponent as Checkmark } from './checkmark.svg';
+export { ReactComponent as Edit } from './edit.svg';
+export { ReactComponent as Grid } from './grid.svg';
+export { ReactComponent as Info } from './info.svg';
+export { ReactComponent as KeyboardShortcut } from './keyboardShortcut.svg';
+export { ReactComponent as List } from './list.svg';
+export { ReactComponent as Lock } from './lock.svg';
+export { ReactComponent as Minus } from './minus.svg';
+export { ReactComponent as Plus } from './plus.svg';
+export { ReactComponent as Preview } from './preview.svg';
+export { ReactComponent as Search } from './search.svg';
+export { ReactComponent as Settings } from './settings.svg';
+export { ReactComponent as Trash } from './trash.svg';
+export { ReactComponent as Unlock } from './unlock.svg';

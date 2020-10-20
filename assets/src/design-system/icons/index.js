@@ -17,35 +17,83 @@
 /**
  * Internal dependencies
  */
-export { ReactComponent as KeyboardShortcut } from './keyboardShortcut.svg';
-export { ReactComponent as Percent } from './percent.svg';
-export { ReactComponent as Play } from './play.svg';
-export { ReactComponent as Preview } from './preview.svg';
-export { ReactComponent as SafeZone } from './safeZone.svg';
-export { ReactComponent as Share } from './share.svg';
-export { ReactComponent as Styles } from './styles.svg';
-export { ReactComponent as Video } from './video.svg';
-
-export { Duplicate, Flip, Redo, Rotate, Undo } from './action';
-
-export { Add, AddFilled, AddOutlined } from './add';
 
 export {
-  Center as AlignCenter,
-  Left as AlignLeft,
-  Right as AlignRight,
-} from './align';
+  Add,
+  AddFilled,
+  AddOutlined,
+  Bookmark,
+  Checkmark,
+  Edit,
+  Grid,
+  Info,
+  KeyboardShortcut,
+  List,
+  Lock,
+  Minus,
+  Plus,
+  Preview,
+  Search,
+  Settings,
+  Trash,
+  Unlock,
+} from './action';
+
+export { Error, Warning } from './alert';
 
 export {
   Animation,
-  Play as PlayAnimation,
-  Stop as StopAnimation,
+  Play,
+  PlayAnimation,
+  StopAnimation,
   Timeline,
-} from './animation';
+  Video,
+} from './av';
 
-export { Arrow, ArrowAlt } from './arrow';
+export { Duplicate, Flip, Redo, Rotate, Undo } from './content';
 
-export { Close, CloseAlt } from './close';
+export {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  Bold,
+  Distribute,
+  DistributeDropdown,
+  Drag,
+  DragAlt,
+  Italic,
+  Layout,
+  LetterSpacing,
+  LineHeight,
+  Media,
+  Percent,
+  SafeZone,
+  Shapes,
+  StrikeThrough,
+  Styles,
+  Text,
+  TextAdd,
+  TextAlignCenter,
+  TextAlignJustified,
+  TextAlignLeft,
+  TextAlignRight,
+  TextSize,
+  Underline,
+} from './editor';
+
+export { Upload } from './file';
+
+export {
+  Arrow,
+  ArrowAlt,
+  Chevron,
+  Close,
+  CloseAlt,
+  More,
+  MoreFilled,
+} from './navigation';
+
+export { Share } from './social';
 
 export {
   ExploreTemplatesActive,
@@ -55,54 +103,3 @@ export {
   StoriesActive,
   StoriesNormal,
 } from './dashboard';
-
-export { DistributeDropdown, Distribute } from './distribute';
-
-export { Drag, DragAlt } from './drag';
-
-export {
-  Bookmark,
-  Checkmark,
-  Chevron,
-  Edit,
-  Info,
-  Search,
-  Settings,
-  Trash,
-} from './general';
-
-export { Lock, Unlock } from './lock';
-
-export { Layout } from './layout';
-
-export { Media } from './media';
-
-export { More, MoreFilled } from './more';
-
-export { Shapes } from './shapes';
-
-export { Negative, Warning } from './status';
-
-export { Text, TextAdd, TextSize } from './text';
-
-export {
-  Center as TextAlignCenter,
-  Justified as TextAlignJustified,
-  Left as TextAlignLeft,
-  Right as TextAlignRight,
-} from './text-align';
-
-export {
-  Bold,
-  Italic,
-  LetterSpacing,
-  LineHeight,
-  StrikeThrough,
-  Underline,
-} from './text-style';
-
-export { Upload } from './upload';
-
-export { Grid, List } from './view';
-
-export { Minus as ZoomMinus, Plus as ZoomPlus } from './zoom';
