@@ -90,10 +90,9 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 		} else {
 			echo "$heading\n$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
+		// However, we still need to stop further execution.
+		return;
 	}
-
-	// However, we still need to stop further execution.
-	return;
 }
 
 /**
@@ -217,6 +216,7 @@ global $web_stories;
 
 $web_stories = new Plugin();
 $web_stories->register();
+
 
 /**
  * Web stories Plugin Instance
