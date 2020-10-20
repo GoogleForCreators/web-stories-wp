@@ -1,5 +1,5 @@
-<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect x="11" y="16" width="10" height="6" rx="1" fill="#FEEFC3"/>
-  <path d="M11.8333 22C11.3731 22 11 21.5523 11 21v-4c0-.5523.3731-1 .8333-1h8.3334c.4602 0 .8333.4477.8333 1v4" stroke="#79B3FF" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M23.2 26H8.8c-.47739 0-.93523-.2107-1.27279-.5858C7.18964 25.0391 7 24.5304 7 24V8c0-.53043.18964-1.03914.52721-1.41421C7.86477 6.21071 8.32261 6 8.8 6h11.2546c.2835 0 .5537.12032.7433.33104l3.9454 4.38376c.1653.1836.2567.4219.2567.6689V24c0 .5304-.1896 1.0391-.5272 1.4142S23.6774 26 23.2 26zM19 10v2" stroke="#79B3FF" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<svg viewBox="0 0 19 21" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
+  <path d="M14.5 11.5c0-.552-.448-1-1-1h-8c-.552 0-1 .448-1 1v4c0 .552.448 1 1 1h8c.552 0 1-.448 1-1v-4z" fill="#feefc3"/>
+  <path d="M5.333 16.5c-.46 0-.833-.448-.833-1v-4c0-.552.373-1 .833-1h8.334c.46 0 .833.448.833 1v4" fill="none" stroke="#79b3ff"/>
+  <path d="M16.7 20.5H2.3c-.477 0-.935-.211-1.273-.586C.69 19.539.5 19.03.5 18.5v-16c0-.53.19-1.039.527-1.414C1.365.711 1.823.5 2.3.5h11.255c.283 0 .553.12.743.331l3.945 4.384c.166.183.257.422.257.669V18.5c0 .53-.19 1.039-.527 1.414-.338.375-.796.586-1.273.586zm-4.2-16v2" fill="none" stroke="#79b3ff"/>
 </svg>
