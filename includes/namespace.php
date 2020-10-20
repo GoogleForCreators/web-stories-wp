@@ -29,53 +29,61 @@ namespace Google\Web_Stories;
 use WP_Error;
 use WP_Site;
 
-if (
-	! class_exists( '\Google\Web_Stories\Plugin' ) ||
-	! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' )
-) {
-	/**
-	 * Displays an admin notice about why the plugin is unable to load.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	function _print_missing_build_admin_notice() {
-		?>
-		<div class="notice notice-error">
-			<p>
-				<strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong>
-			</p>
-			<p>
-				<?php
-					echo wp_kses(
-						sprintf(
-						/* translators: %s: build commands. */
-							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
-						),
-						[
-							'code' => [],
-						]
-					);
-				?>
-			</p>
-		</div>
-		<?php
-	}
-
-	add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
+// Load Compatibility class the old fashioned way.
+if ( ! class_exists( 'Compatibility' ) ) {
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/Compatibility.php';
 }
 
-if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
+global $web_stories_compatibility;
+
+$web_stories_error         = new WP_Error();
+$web_stories_compatibility = new Compatibility( $web_stories_error );
+
+/**
+ * Displays an admin notice about why the plugin is unable to load.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function _print_missing_build_admin_notice() {
+	global $web_stories_compatibility;
+
+	$web_stories_compatibility->check_js_built();
+	$web_stories_compatibility->check_php_built();
+	$web_stories_compatibility->check_extensions();
+	$web_stories_compatibility->check_classes();
+	$web_stories_compatibility->check_functions();
+
+	$_error = $web_stories_compatibility->get_error();
+	if ( ! $_error->errors ) {
+		return;
+	}
+	?>
+	<div class="notice notice-error">
+		<p><strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong></p>
+		<ul>
+			<?php foreach ( array_keys( $_error->errors ) as $error_code ) : ?>
+				<?php foreach ( $_error->get_error_messages( $error_code ) as $message ) : ?>
+					<li>
+						<?php echo wp_kses( $message, [ 'code' => [] ] ); ?>
+					</li>
+				<?php endforeach; ?>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<?php
+}
+
+add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
+
+if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
 	// In CLI context, existence of the JS files is not required.
-	if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
+	if ( ! $web_stories_compatibility->check_php_built() ) {
+		$_error = $web_stories_compatibility->get_error();
+
 		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
-		$body    = sprintf(
-			/* translators: %s: build commands. */
-			esc_html__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-			'`composer install && npm install && npm run build`'
-		);
+		$body    = wp_strip_all_tags( $_error->get_error_message() );
 
 		if ( class_exists( '\WP_CLI' ) ) {
 			\WP_CLI::warning( "$heading\n$body" );
@@ -100,18 +108,16 @@ if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
  * @return void
  */
 function activate( $network_wide = false ) {
-	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
-		wp_die(
-		/* translators: %s: PHP version number */
-			esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_PHP_VERSION ) ),
-			esc_html__( 'Plugin could not be activated', 'web-stories' )
-		);
-	}
+	global $web_stories_compatibility;
 
-	if ( version_compare( get_bloginfo( 'version' ), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
+	$web_stories_compatibility->check_php_version();
+	$web_stories_compatibility->check_wp_version();
+	// @todo add in other checks here?
+
+	$_error = $web_stories_compatibility->get_error();
+	if ( $_error->errors ) {
 		wp_die(
-		/* translators: %s: WordPress version number */
-			esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) ),
+			$_error, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			esc_html__( 'Plugin could not be activated', 'web-stories' )
 		);
 	}
@@ -190,7 +196,9 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
+	global $web_stories_compatibility;
+
+	if ( ! $web_stories_compatibility->check_php_version() ) {
 		return;
 	}
 
