@@ -82,19 +82,9 @@ class Compatibility {
 	 * Compatibility constructor.
 	 *
 	 * @param WP_Error $error       WP_Error object passed back.
-	 * @param array    $extensions  Array of extensions.
-	 * @param string   $wp_version  Min required WordPress version.
-	 * @param string   $php_version Min required PHP version.
-	 * @param string   $js_path     Path to Javascript to test.
-	 * @param string   $class_name  Class name to check.
 	 */
-	public function __construct( WP_Error $error, array $extensions, $wp_version, $php_version, $js_path, $class_name ) {
-		$this->error       = $error;
-		$this->extensions  = $extensions;
-		$this->wp_version  = $wp_version;
-		$this->php_version = $php_version;
-		$this->js_path     = $js_path;
-		$this->class_name  = $class_name;
+	public function __construct( WP_Error $error ) {
+		$this->error = $error;
 	}
 
 	/**
@@ -361,5 +351,55 @@ class Compatibility {
 	 */
 	public function get_error() {
 		return $this->error;
+	}
+
+	/**
+	 * Set WordPress version.
+	 *
+	 * @codeCoverageIgnore
+	 * @param string $wp_version WordPress version.
+	 */
+	public function set_wp_version( $wp_version ) {
+		$this->wp_version = $wp_version;
+	}
+
+	/**
+	 * Set PHP version.
+	 *
+	 * @codeCoverageIgnore
+	 * @param string $php_version PHP version.
+	 */
+	public function set_php_version( $php_version ) {
+		$this->php_version = $php_version;
+	}
+
+	/**
+	 * Set extensions.
+	 *
+	 * @codeCoverageIgnore
+	 * @param array $extensions Array of extensions.
+	 */
+	public function set_extensions( $extensions ) {
+		$this->extensions = $extensions;
+	}
+
+	/**
+	 * Set javascript path.
+	 *
+	 * @codeCoverageIgnore
+	 * @param string $js_path Path to javascript.
+	 */
+	public function set_js_path( $js_path ) {
+		$this->js_path = $js_path;
+	}
+
+	/**
+	 * Set class name.
+	 *
+	 * @codeCoverageIgnore
+	 * @param string $class_name Class name.
+	 */
+	public function set_class_name( $class_name ) {
+		$this->class_name = $class_name;
 	}
 }

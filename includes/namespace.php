@@ -63,14 +63,12 @@ $extensions        = [
 	],
 ];
 
-$web_stories_compatibility = new Compatibility(
-	$web_stories_error,
-	$extensions,
-	WEBSTORIES_MINIMUM_WP_VERSION,
-	WEBSTORIES_MINIMUM_PHP_VERSION,
-	WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
-	'\Google\Web_Stories\Plugin'
-);
+$web_stories_compatibility = new Compatibility( $web_stories_error );
+$web_stories_compatibility->set_extensions( $extensions );
+$web_stories_compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
+$web_stories_compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
+$web_stories_compatibility->set_js_path( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' );
+$web_stories_compatibility->set_class_name( '\Google\Web_Stories\Plugin' );
 
 /**
  * Displays an admin notice about why the plugin is unable to load.

@@ -30,10 +30,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_extensions() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
-		$class_name        = '\Google\Web_Stories\Plugin';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
-		$results           = $compatibility->check_extensions();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility->set_extensions( $this->get_web_stories_required_extensions() );
+		$results = $compatibility->check_extensions();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
@@ -47,10 +46,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_classes() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
-		$class_name        = '\Google\Web_Stories\Plugin';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
-		$results           = $compatibility->check_classes();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility->set_extensions( $this->get_web_stories_required_extensions() );
+		$results = $compatibility->check_classes();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
@@ -64,10 +62,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_functions() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
-		$class_name        = '\Google\Web_Stories\Plugin';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
-		$results           = $compatibility->check_functions();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions() );
+		$compatibility->set_extensions( $this->get_web_stories_required_extensions() );
+		$results = $compatibility->check_functions();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
@@ -81,10 +78,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_wp_version() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
-		$class_name        = '\Google\Web_Stories\Plugin';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), '10.0.0', WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
-		$results           = $compatibility->check_wp_version();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility->set_wp_version( '10.0.0' );
+		$results = $compatibility->check_wp_version();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
@@ -98,10 +94,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_php_version() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
-		$class_name        = '\Google\Web_Stories\Plugin';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, '10.0.0', $js_path, $class_name );
-		$results           = $compatibility->check_php_version();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility->set_php_version( '10.0.0' );
+		$results = $compatibility->check_php_version();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
@@ -115,10 +110,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_js_built() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js';
-		$class_name        = '\Google\Web_Stories\Plugin';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, '10.0.0', $js_path, $class_name );
-		$results           = $compatibility->check_js_built();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility->set_js_path( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' );
+		$results = $compatibility->check_js_built();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
@@ -133,10 +127,9 @@ class Compatibility extends \WP_UnitTestCase {
 	 */
 	public function test_check_php_built() {
 		$web_stories_error = new WP_Error();
-		$js_path           = WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js';
-		$class_name        = '\Google\Web_Stories\Fake';
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions(), WEBSTORIES_MINIMUM_WP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, $js_path, $class_name );
-		$results           = $compatibility->check_php_built();
+		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility->set_class_name( '\Google\Web_Stories\Fake' );
+		$results = $compatibility->check_php_built();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
