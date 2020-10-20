@@ -129,19 +129,19 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
-        <WithMask
-          element={element}
-          fill={true}
-          box={box}
-          style={{
-            opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-          }}
-          previewMode={previewMode}
-        >
-          <WithBorder element={element}>
+        <WithBorder element={element}>
+          <WithMask
+            element={element}
+            fill={true}
+            box={box}
+            style={{
+              opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+            }}
+            previewMode={previewMode}
+          >
             <Display element={element} previewMode={previewMode} box={box} />
-          </WithBorder>
-        </WithMask>
+          </WithMask>
+        </WithBorder>
         {!previewMode && (
           <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
             {replacementElement && (

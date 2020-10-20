@@ -64,5 +64,5 @@ export default function WithBorder({ element, children }) {
 
 WithBorder.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
