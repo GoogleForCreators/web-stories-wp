@@ -25,7 +25,6 @@ import PropTypes from 'prop-types';
  */
 import { getElementMask, MaskTypes } from '../../masks';
 import StoryPropTypes from '../../types';
-import generatePatternStyles from '../../utils/generatePatternStyles';
 import { BORDER_POSITION } from '../../constants';
 
 const borderElementCSS = css`
@@ -36,32 +35,6 @@ const borderElementCSS = css`
   width: 100%;
   height: 100%;
   position: absolute;
-`;
-
-const solidBorderCSS = css`
-  ${({ color }) => generatePatternStyles(color, 'border-color')}
-  border-style: solid;
-  border-width: ${({ left, top, right, bottom }) =>
-    `${left}px ${top}px ${right}px ${bottom}px`};
-`;
-
-const innerSolidBorderCSS = css`
-  &:after {
-    content: ' ';
-    ${borderElementCSS}
-    ${solidBorderCSS}
-  }
-`;
-
-const outerSolidBorderCSS = css`
-  box-sizing: border-box;
-  ${solidBorderCSS}
-`;
-
-// @todo Confirm inner / outer for different elements.
-const Border = styled.div`
-  ${borderElementCSS}
-  ${innerSolidBorderCSS}
 `;
 
 const dashedBorderCSS = css`
@@ -95,31 +68,43 @@ const innerDashedBorderCSS = css`
   }
 `;
 
-const outerDashedBorderCSS = css`
-  box-sizing: border-box;
-  ${dashedBorderCSS}
-`;
-
 const DashedBorder = styled.div`
   ${borderElementCSS}
   ${innerDashedBorderCSS}
   ${({ position, left, top, right, bottom }) =>
-    BORDER_POSITION.OUTSIDE === position &&
-    `
+    getBorderPositionCSS({ left, top, right, bottom, position })}
+`;
+
+function getBorderPositionCSS({ left, top, right, bottom, position }) {
+  if (BORDER_POSITION.OUTSIDE === position) {
+    return `
     &:after {
       top: ${-top}px;
       height: calc(100% + ${top + bottom}px);
       left: ${-left}px;
       width: calc(100% + ${left + right}px);
-    }`}
-`;
+    }
+    `;
+  }
+  if (BORDER_POSITION.CENTER === position) {
+    return `
+    &:after {
+      top: ${-top / 2}px;
+      height: calc(100% + ${(top + bottom) / 2}px);
+      left: ${-left / 2}px;
+      width: calc(100% + ${(left + right) / 2}px);
+    }
+    `;
+  }
+  return '';
+}
 
 export default function WithBorder({ element, children }) {
   const { border } = element;
   if (!border) {
     return children;
   }
-  const { left, top, right, bottom, dash, gap, color, position } = border;
+  const { left, top, right, bottom, gap, color } = border;
   // If we have no color, let's short-circuit.
   if (!color) {
     return children;
@@ -135,19 +120,14 @@ export default function WithBorder({ element, children }) {
     return children;
   }
 
-  /*if (!gap || !dash) {
-    return (
-      <Border {...border} color={color}>
-        {children}
-      </Border>
-    );
-  }*/
+  // If there's no gap set, let's set the dash to 1 for creating solid border.
+  const dash = gap ? border.dash : 1;
   const {
     color: { r, g, b, a },
   } = color;
   const solidColor = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
   return (
-    <DashedBorder {...border} color={solidColor}>
+    <DashedBorder {...border} dash={dash} color={solidColor}>
       {children}
     </DashedBorder>
   );
