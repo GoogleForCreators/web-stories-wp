@@ -36,6 +36,9 @@ describe('Get Started Story', () => {
         'post_type=web-story&web-stories-demo=1'
       );
 
+      // Wait 100 milliseconds for images to load.
+      await page.waitForTimeout(100);
+
       await expect(page).toMatchElement('input[placeholder="Add title"]');
       await expect(page).toMatch(/Tips to make the most/i);
       await expect(page).toMatch(/to make the most of/i);
@@ -58,6 +61,9 @@ describe('Get Started Story', () => {
         'post-new.php',
         'post_type=web-story&web-stories-demo=1'
       );
+
+      // Wait 100 milliseconds for images to load.
+      await page.waitForTimeout(100);
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
       await expect(page).toMatch(/Tips to make the most/i);
