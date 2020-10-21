@@ -3,8 +3,10 @@
 .vscode/
 assets/
 bin/
+includes/
 node_modules/
 plugin-assets/
+third-party/
 vendor/
 .DS_Store
 phpcs.xml
