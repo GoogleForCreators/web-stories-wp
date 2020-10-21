@@ -23,9 +23,10 @@ import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
 import { getBox } from '../units/dimensions';
+import { MaskTypes } from '../masks';
 
 function OutputElement({ element }) {
-  const { id, opacity, type } = element;
+  const { id, opacity, type, borderRadius, mask } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -59,6 +60,10 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
+            borderRadius:
+              borderRadius && (mask?.type === MaskTypes.RECTANGLE || !mask)
+                ? `${borderRadius.left}px ${borderRadius.top}px ${borderRadius.right}px ${borderRadius.bottom}px`
+                : 0,
           }}
           skipDefaultMask
         >
