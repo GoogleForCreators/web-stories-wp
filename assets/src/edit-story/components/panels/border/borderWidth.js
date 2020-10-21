@@ -46,18 +46,19 @@ const Space = styled.div`
 
 const Label = styled.label`
   height: 60px;
-  span {
-    color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
-    font-family: ${({ theme }) => theme.fonts.body2.family};
-    font-size: ${({ theme }) => theme.fonts.body2.size};
-    line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
-    letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
-    text-align: center;
-    width: 100%;
-    display: inline-block;
-    margin-top: 8px;
-    cursor: pointer;
-  }
+`;
+
+const LabelText = styled.span`
+  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
+  font-family: ${({ theme }) => theme.fonts.body2.family};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  line-height: ${({ theme }) => theme.fonts.body2.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  margin-top: 8px;
+  cursor: pointer;
 `;
 
 const ToggleWrapper = styled.div`
@@ -75,84 +76,67 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
   const lockBorder = border.lockedWidth === true;
 
   const handleChange = useCallback(
+    (name, value) => {
+      const newBorder = !lockBorder
+        ? {
+            [name]: value,
+          }
+        : {
+            left: value,
+            top: value,
+            right: value,
+            bottom: value,
+          };
+      pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
+    },
+    [pushUpdateForObject, lockBorder]
+  );
+
+  const handleLockChange = useCallback(
     (newBorder) => {
       pushUpdateForObject('border', newBorder, DEFAULT_BORDER, true);
     },
     [pushUpdateForObject]
   );
 
-  const firstInputProperties = lockBorder
-    ? {
-        'aria-label': __('Edit: Border width', 'web-stories'),
-        onChange: (value) =>
-          handleChange({
-            left: value,
-            top: value,
-            right: value,
-            bottom: value,
-          }),
-      }
-    : {
-        'aria-label': __('Edit: Left border', 'web-stories'),
-        onChange: (value) =>
-          handleChange({
-            left: value,
-          }),
-      };
-
-  // @todo Max values?
-  // @todo Confirm the design for then the border width is locked.
   return (
     <Row>
       <Label>
-        <BoxedNumeric value={border.left} {...firstInputProperties} />
-        {!lockBorder && <span>{__('Left', 'web-stories')}</span>}
-        {lockBorder && <span>{__('Border Width', 'web-stories')}</span>}
+        <BoxedNumeric
+          value={border.left}
+          onChange={(value) => handleChange('left', value)}
+          aria-label={__('Edit: Left border', 'web-stories')}
+        />
+        <LabelText>{__('Left', 'web-stories')}</LabelText>
       </Label>
-      {!lockBorder && (
-        <>
-          <Space />
-          <Label>
-            <BoxedNumeric
-              value={border.top}
-              onChange={(value) =>
-                handleChange({
-                  top: value,
-                })
-              }
-              aria-label={__('Edit: Top border', 'web-stories')}
-            />
-            <span>{__('Top', 'web-stories')}</span>
-          </Label>
-          <Space />
-          <Label>
-            <BoxedNumeric
-              value={border.right}
-              onChange={(value) =>
-                handleChange({
-                  right: value,
-                })
-              }
-              aria-label={__('Edit: Right border', 'web-stories')}
-            />
-            <span>{__('Right', 'web-stories')}</span>
-          </Label>
-          <Space />
-          <Label>
-            <BoxedNumeric
-              value={border.bottom}
-              onChange={(value) =>
-                handleChange({
-                  bottom: value,
-                })
-              }
-              aria-label={__('Edit: Bottom border', 'web-stories')}
-            />
-            <span>{__('Bottom', 'web-stories')}</span>
-          </Label>
-          <Space />
-        </>
-      )}
+      <Space />
+      <Label>
+        <BoxedNumeric
+          value={border.top}
+          onChange={(value) => handleChange('top', value)}
+          aria-label={__('Edit: Top border', 'web-stories')}
+        />
+        <LabelText>{__('Top', 'web-stories')}</LabelText>
+      </Label>
+      <Space />
+      <Label>
+        <BoxedNumeric
+          value={border.right}
+          onChange={(value) => handleChange('right', value)}
+          aria-label={__('Edit: Right border', 'web-stories')}
+        />
+        <LabelText>{__('Right', 'web-stories')}</LabelText>
+      </Label>
+      <Space />
+      <Label>
+        <BoxedNumeric
+          value={border.bottom}
+          onChange={(value) => handleChange('bottom', value)}
+          aria-label={__('Edit: Bottom border', 'web-stories')}
+        />
+        <LabelText>{__('Bottom', 'web-stories')}</LabelText>
+      </Label>
+      <Space />
       <ToggleWrapper>
         <Toggle
           icon={<Lock />}
@@ -171,7 +155,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
                 bottom: border.left,
               };
             }
-            handleChange(args);
+            handleLockChange(args);
           }}
           aria-label={__('Toggle border ratio lock', 'web-stories')}
         />
