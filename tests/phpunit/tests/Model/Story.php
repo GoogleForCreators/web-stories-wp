@@ -17,10 +17,13 @@
 
 namespace Google\Web_Stories\Tests\Model;
 
+use Google\Web_Stories\Tests\Private_Access;
+
 /**
  * @coversDefaultClass \Google\Web_Stories\Model\Story
  */
 class Story extends \WP_UnitTestCase {
+	use Private_Access;
 	/**
 	 * @covers ::__construct
 	 */
@@ -51,7 +54,7 @@ class Story extends \WP_UnitTestCase {
 		$story->load_from_post( $post );
 
 		$this->assertEquals( $story->get_title(), 'test title' );
-		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
+		$this->assertEquals( $story->get_url(), set_url_scheme( get_permalink( $post ) ) );
 	}
 
 	/**
@@ -70,5 +73,30 @@ class Story extends \WP_UnitTestCase {
 
 		$this->assertEquals( $story->get_title(), '' );
 		$this->assertEquals( $story->get_url(), '' );
+	}
+
+
+	/**
+	 * @covers ::force_url_scheme
+	 */
+	public function test_force_url_scheme() {
+		$link = get_home_url( null, 'web-storires/test' );
+
+		$story = new \Google\Web_Stories\Model\Story();
+
+		$result = $this->call_private_method( $story, 'force_url_scheme', [ set_url_scheme( $link, 'https' ) ] );
+		$this->assertEquals( $result, $link );
+	}
+
+
+	/**
+	 * @covers ::force_url_scheme
+	 */
+	public function test_force_url_scheme_invalid_url() {
+		$link  = 'https://www.google.com';
+		$story = new \Google\Web_Stories\Model\Story();
+
+		$result = $this->call_private_method( $story, 'force_url_scheme', [ $link ] );
+		$this->assertEquals( $result, $link );
 	}
 }

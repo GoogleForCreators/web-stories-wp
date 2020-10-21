@@ -120,6 +120,23 @@ class Story {
 	}
 
 	/**
+	 * Force home urls to http / https based on context.
+	 *
+	 * @param string $content String to replace.
+	 *
+	 * @return string
+	 */
+	protected function force_url_scheme( $content ) {
+		$current = is_ssl() ? 'https' : 'http';
+		$new     = is_ssl() ? 'http' : 'https';
+		$home    = get_home_url();
+
+		$content = str_replace( set_url_scheme( $home, $new ), set_url_scheme( $home, $current ), $content );
+
+		return $content;
+	}
+
+	/**
 	 * Getter for title attribute.
 	 *
 	 * @since 1.0.0
@@ -138,7 +155,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_url() {
-		return $this->url;
+		return $this->force_url_scheme( $this->url );
 	}
 
 	/**
@@ -149,7 +166,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_markup() {
-		return $this->markup;
+		return $this->force_url_scheme( $this->markup );
 	}
 
 	/**
@@ -160,7 +177,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_poster_portrait() {
-		return $this->poster_portrait;
+		return $this->force_url_scheme( $this->poster_portrait );
 	}
 
 	/**
@@ -171,7 +188,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_poster_landscape() {
-		return $this->poster_landscape;
+		return $this->force_url_scheme( $this->poster_landscape );
 	}
 
 	/**
@@ -182,6 +199,6 @@ class Story {
 	 * @return string
 	 */
 	public function get_poster_square() {
-		return $this->poster_square;
+		return $this->force_url_scheme( $this->poster_square );
 	}
 }
