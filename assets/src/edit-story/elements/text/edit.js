@@ -39,6 +39,7 @@ import {
   elementWithFont,
   elementWithTextParagraphStyle,
   elementWithBackgroundColor,
+  elementWithBorderRadius,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -60,6 +61,7 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
+  ${elementWithBorderRadius}
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -96,6 +98,7 @@ function TextEdit({
     content,
     backgroundColor,
     backgroundTextMode,
+    borderRadius,
     opacity,
     height: elementHeight,
     ...rest
@@ -310,12 +313,19 @@ function TextEdit({
   const wrapperBackgroundColor =
     backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor;
 
+  const wrapperProps = {
+    backgroundColor: wrapperBackgroundColor,
+  };
+  if (borderRadius) {
+    wrapperProps.borderRadius = borderRadius;
+  }
+
   return (
     <Wrapper
       ref={wrapperRef}
       onClick={onClick}
       data-testid="textEditor"
-      backgroundColor={wrapperBackgroundColor}
+      {...wrapperProps}
     >
       {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
         <TextBox ref={highlightRef} {...textProps}>
