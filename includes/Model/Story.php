@@ -155,7 +155,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_url() {
-		return $this->force_url_scheme( $this->url );
+		return $this->url;
 	}
 
 	/**
@@ -177,7 +177,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_poster_portrait() {
-		return $this->force_url_scheme( $this->poster_portrait );
+		return $this->poster_portrait;
 	}
 
 	/**
@@ -188,7 +188,7 @@ class Story {
 	 * @return string
 	 */
 	public function get_poster_landscape() {
-		return $this->force_url_scheme( $this->poster_landscape );
+		return $this->poster_landscape;
 	}
 
 	/**
@@ -199,6 +199,6 @@ class Story {
 	 * @return string
 	 */
 	public function get_poster_square() {
-		return $this->force_url_scheme( $this->poster_square );
+		return $this->poster_square;
 	}
 }

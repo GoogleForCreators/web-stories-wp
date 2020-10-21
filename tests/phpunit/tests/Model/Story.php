@@ -54,7 +54,7 @@ class Story extends \WP_UnitTestCase {
 		$story->load_from_post( $post );
 
 		$this->assertEquals( $story->get_title(), 'test title' );
-		$this->assertEquals( $story->get_url(), set_url_scheme( get_permalink( $post ) ) );
+		$this->assertEquals( $story->get_url(), get_permalink( $post ) );
 	}
 
 	/**
