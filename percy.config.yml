@@ -2,3 +2,7 @@ version: 1
 snapshot:
   widths: [1600]
   min-height: 1000
+  percy-css: |
+      .toplevel_page_amp-options {
+        display: none;
+      }
