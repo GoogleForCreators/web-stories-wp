@@ -14,5 +14,20 @@
  * limitations under the License.
  */
 
-export * from './typography';
-export { Button } from './button';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { Button } from '../../../components';
+
+export default {
+  title: 'DesignSystem/Components/Button',
+};
+
+export const _default = () => {
+  return <Button>{'test button'}</Button>;
+};
