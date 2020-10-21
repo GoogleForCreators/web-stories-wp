@@ -54,7 +54,7 @@ const DashboardGrid = styled.div(
   }
   
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important; 
   }
 `
 );

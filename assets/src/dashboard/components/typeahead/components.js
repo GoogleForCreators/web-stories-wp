@@ -19,11 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 import { TypographyPresets } from '../typography';
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 export const SearchContainer = styled.div`
   width: 100%;
@@ -85,6 +87,11 @@ export const StyledInput = styled.input`
     cursor: default;
   }
 
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
+  }
+
   @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
     width: ${({ isExpanded }) => (isExpanded ? '100%' : '0')};
   }
@@ -120,5 +127,10 @@ export const ClearInputButton = styled.button`
 
   & > svg {
     height: 100%;
+  }
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
   }
 `;
