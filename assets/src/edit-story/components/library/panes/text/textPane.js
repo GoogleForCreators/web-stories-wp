@@ -17,8 +17,10 @@
 /**
  * External dependencies
  */
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
+import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * WordPress dependencies
@@ -42,12 +44,29 @@ const Pane = styled(SharedPane)`
 `;
 
 function TextPane(props) {
+  const paneRef = useRef();
+  const [, forceUpdate] = useState();
+
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
 
+  useEffect(() => {
+    const ro = new ResizeObserver(() => {
+      // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
+      // https://stackoverflow.com/a/58701523/13078978
+      window.requestAnimationFrame(() => {
+        forceUpdate(Date.now());
+      });
+    });
+
+    ro.observe(paneRef.current);
+
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <Pane id={paneId} {...props}>
+    <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
         <SearchInput
           initialValue={''}
@@ -67,7 +86,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && <TextSets />}
+      {showTextSets && paneRef.current && <TextSets paneRef={paneRef} />}
     </Pane>
   );
 }

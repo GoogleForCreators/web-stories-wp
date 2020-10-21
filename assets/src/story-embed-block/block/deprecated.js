@@ -19,6 +19,30 @@
  */
 import PropTypes from 'prop-types';
 
+const blockAttributes = {
+  url: {
+    type: 'string',
+  },
+  title: {
+    type: 'string',
+  },
+  poster: {
+    type: 'string',
+  },
+  width: {
+    type: 'number',
+    default: 360,
+  },
+  height: {
+    type: 'number',
+    default: 600,
+  },
+  align: {
+    type: 'string',
+    default: 'none',
+  },
+};
+
 /**
  * The block's save function (pure).
  *
@@ -42,13 +66,22 @@ function save({ attributes }) {
 
   return (
     <div className={`wp-block-web-stories-embed align${align}`}>
-      <a href={url}>
-        {poster ? (
-          <img alt={title} src={poster} width={width} height={height} />
-        ) : (
-          title
-        )}
-      </a>
+      <amp-story-player
+        style={{
+          width: width ? `${width}px` : undefined,
+          height: height ? `${height}px` : undefined,
+        }}
+        data-testid="amp-story-player"
+      >
+        <a
+          href={url}
+          style={{
+            ['--story-player-poster']: poster ? `url('${poster}')` : undefined,
+          }}
+        >
+          {title}
+        </a>
+      </amp-story-player>
     </div>
   );
 }
@@ -64,4 +97,11 @@ save.propTypes = {
   }).isRequired,
 };
 
-export default save;
+const deprecated = [
+  {
+    attributes: blockAttributes,
+    save,
+  },
+];
+
+export default deprecated;

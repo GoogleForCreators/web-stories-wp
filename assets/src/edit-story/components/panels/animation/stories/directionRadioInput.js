@@ -20,7 +20,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DIRECTION } from '../../../../../animation';
+import { DIRECTION, ROTATION } from '../../../../../animation';
 import { DirectionRadioInput } from '../directionRadioInput';
 
 export default {
@@ -39,6 +39,17 @@ export const _default = () => {
       <DirectionRadioInput
         directions={Object.values(DIRECTION)}
         defaultChecked={DIRECTION.TOP_TO_BOTTOM}
+      />
+    </Panel>
+  );
+};
+
+export const Rotation = () => {
+  return (
+    <Panel>
+      <DirectionRadioInput
+        directions={[ROTATION.CLOCKWISE, ROTATION.COUNTER_CLOCKWISE]}
+        defaultChecked={ROTATION.CLOCKWISE}
       />
     </Panel>
   );
