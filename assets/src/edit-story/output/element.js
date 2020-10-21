@@ -78,9 +78,7 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
-        {shouldDisplayBorder(element) && (
-          <ElementBorder border={element.border} />
-        )}
+        {shouldDisplayBorder(element) && <ElementBorder element={element} />}
       </StoryAnimation.AMPWrapper>
     </div>
   );

@@ -17,15 +17,27 @@
 /**
  * Internal dependencies
  */
-import { BorderPropTypes } from '../../types';
+import StoryPropTypes from '../../types';
 import { getBorderStyle } from './utils';
 
-function ElementBorder({ border }) {
-  return <div style={{ ...getBorderStyle(border) }} />;
+function ElementBorder({ element: { border, width, height } }) {
+  const dataToBorderWidthX = (x) => (x / width) * 100;
+  const dataToBorderWidthY = (y) => (y / height) * 100;
+  const style = getBorderStyle(
+    {
+      ...border,
+      top: dataToBorderWidthY(border.top),
+      left: dataToBorderWidthX(border.left),
+      right: dataToBorderWidthX(border.right),
+      bottom: dataToBorderWidthY(border.bottom),
+    },
+    '%'
+  );
+  return <div style={style} />;
 }
 
 ElementBorder.propTypes = {
-  border: BorderPropTypes.isRequired,
+  element: StoryPropTypes.element.isRequired,
 };
 
 export default ElementBorder;

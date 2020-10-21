@@ -40,36 +40,33 @@ export function shouldDisplayBorder(element) {
   return !(mask?.type && mask.type !== MaskTypes.RECTANGLE);
 }
 
-function getBorderPositionCSS({ left, top, right, bottom, position }) {
+function getBorderPositionCSS(
+  { left, top, right, bottom, position },
+  unit = 'px'
+) {
   if (BORDER_POSITION.OUTSIDE === position) {
     return {
-      top: `${-top}px`,
-      height: `calc(100% + ${top + bottom}px)`,
-      left: `${-left}px`,
-      width: `calc(100% + ${left + right}px)`,
+      top: `${-top}${unit}`,
+      height: `calc(100% + ${top + bottom}${unit})`,
+      left: `${-left}${unit}`,
+      width: `calc(100% + ${left + right}${unit})`,
     };
   }
   if (BORDER_POSITION.CENTER === position) {
     return {
-      top: `${-top / 2}px`,
-      height: `calc(100% + ${(top + bottom) / 2}px)`,
-      left: `${-left / 2}px`,
-      width: `calc(100% + ${(left + right) / 2}px)`,
+      top: `${-top / 2}${unit}`,
+      height: `calc(100% + ${(top + bottom) / 2}${unit})`,
+      left: `${-left / 2}${unit}`,
+      width: `calc(100% + ${(left + right) / 2}${unit})`,
     };
   }
   return '';
 }
 
-export function getBorderStyle({
-  dash,
-  gap,
-  color: rawColor,
-  left,
-  top,
-  right,
-  bottom,
-  position,
-}) {
+export function getBorderStyle(
+  { dash, gap, color: rawColor, left, top, right, bottom, position },
+  unit = 'px'
+) {
   const {
     color: { r, g, b, a },
   } = rawColor;
@@ -81,7 +78,7 @@ export function getBorderStyle({
     bottom: 0,
     width: '100%',
     height: '100%',
-    ...getBorderPositionCSS({ left, top, right, bottom, position }),
+    ...getBorderPositionCSS({ left, top, right, bottom, position }, unit),
     position: 'absolute',
     'background-image': `repeating-linear-gradient(0deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
       dash + gap
@@ -98,8 +95,12 @@ export function getBorderStyle({
     }px), repeating-linear-gradient(270deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
       dash + gap
     }px, ${color} ${dash + gap}px)`,
-    'background-size': `${left}px 100%, 100% ${top}px, ${right}px 100% , 100% ${bottom}px`,
-    'background-position': '0 0, 0 0, 100% 0, 0 100%',
+    'background-size': `${left}${unit} calc(100% - ${
+      top + bottom
+    }${unit}), 100% ${top}${unit}, ${right}${unit} calc(100% - ${
+      top + bottom
+    }${unit}), 100% ${bottom}${unit}`,
+    'background-position': `0 50%, 0 0, 100% 50%, 0 100%`,
     'background-repeat': 'no-repeat',
   };
 }
