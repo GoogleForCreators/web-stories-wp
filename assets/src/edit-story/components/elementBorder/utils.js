@@ -71,6 +71,22 @@ export function getBorderStyle(
     color: { r, g, b, a },
   } = rawColor;
   const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
+
+  const avoidCorners = gap && position === BORDER_POSITION.OUTSIDE;
+  // When gap is assigned, we're adjusting background-size so that there wouldn't be "floating" border in the corners.
+  // Additionally, we're reducing left and right border so that it wouldn't overlap with the bottom and top borders,
+  // otherwise, in case of opacity, there will be double border.
+  const backgroundSize = `${left}${unit} calc(100% - ${top + bottom}${unit}), ${
+    avoidCorners ? `calc(100% - ${left + right}${unit})` : '100%'
+  } ${top}${unit}, ${right}${unit} calc(100% - ${top + bottom}${unit}), ${
+    avoidCorners ? `calc(100% - ${left + right}${unit})` : '100%'
+  } ${bottom}${unit}`;
+
+  // Same here -- if the gap is assigned, we're ignoring the corners.
+  // Same here for positioning -- we're positioning the left and right border not to overlap with the top and bottom.
+  const backgroundPosition = `0 50%, ${
+    avoidCorners ? '50%' : '0'
+  } 0, 100% 50%, ${avoidCorners ? '50%' : '0'} 100%`;
   return {
     top: 0,
     left: 0,
@@ -95,12 +111,8 @@ export function getBorderStyle(
     }px), repeating-linear-gradient(270deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
       dash + gap
     }px, ${color} ${dash + gap}px)`,
-    'background-size': `${left}${unit} calc(100% - ${
-      top + bottom
-    }${unit}), 100% ${top}${unit}, ${right}${unit} calc(100% - ${
-      top + bottom
-    }${unit}), 100% ${bottom}${unit}`,
-    'background-position': `0 50%, 0 0, 100% 50%, 0 100%`,
+    'background-size': backgroundSize,
+    'background-position': backgroundPosition,
     'background-repeat': 'no-repeat',
   };
 }
