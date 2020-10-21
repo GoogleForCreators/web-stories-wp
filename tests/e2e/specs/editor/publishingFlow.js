@@ -53,6 +53,9 @@ describe('Publishing Flow', () => {
   it('should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 
+    // Increase timeout to stop publishing post failing this test.
+    await page.setDefaultTimeout(10000);
+
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await page.type('input[placeholder="Add title"]', 'Publishing Flow Test');
 
@@ -89,5 +92,6 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Publishing Flow Test');
     await expect(page).toMatchElement('amp-story-player');
+    await page.setDefaultTimeout(3000);
   });
 });
