@@ -59,16 +59,51 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
   );
 
+  const lockRadius = borderRadius.locked === true;
+
   const handleChange = useCallback(
-    (newRadius, submit = false) => {
+    (name, value) => {
+      const newRadius = !lockRadius
+        ? {
+            [name]: value,
+          }
+        : {
+            left: value,
+            top: value,
+            right: value,
+            bottom: value,
+          };
       pushUpdateForObject(
         'borderRadius',
         newRadius,
         DEFAULT_BORDER_RADIUS,
-        submit
+        true
       );
     },
-    [pushUpdateForObject]
+    [pushUpdateForObject, lockRadius]
+  );
+
+  const handleLockChange = useCallback(
+    (locked) => {
+      const newRadius = locked
+        ? {
+            locked,
+            left: borderRadius.left,
+            top: borderRadius.left,
+            right: borderRadius.left,
+            bottom: borderRadius.left,
+          }
+        : {
+            locked,
+          };
+      pushUpdateForObject(
+        'borderRadius',
+        newRadius,
+        DEFAULT_BORDER_RADIUS,
+        true
+      );
+    },
+    [pushUpdateForObject, borderRadius]
   );
 
   if (foundNonRectangles) {
@@ -81,50 +116,29 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         <BoxedNumeric
           value={borderRadius.left}
           aria-label={__('Edit: Left corner radius', 'web-stories')}
-          onChange={(value) =>
-            handleChange({
-              left: value,
-            })
-          }
+          onChange={(value) => handleChange('left', value)}
         />
         <Toggle
           icon={<Lock />}
           uncheckedIcon={<Unlock />}
           value={borderRadius.locked}
-          /* @todo Confirm locked behavior */
-          onChange={() =>
-            handleChange({
-              locked: !borderRadius.locked,
-            })
-          }
+          onChange={() => handleLockChange(!borderRadius.locked)}
           aria-label={__('Toggle corner radius lock', 'web-stories')}
         />
         <BoxedNumeric
           value={borderRadius.top}
           aria-label={__('Edit: Top corner radius', 'web-stories')}
-          onChange={(value) =>
-            handleChange({
-              top: value,
-            })
-          }
+          onChange={(value) => handleChange('top', value)}
         />
         <BoxedNumeric
           value={borderRadius.right}
           aria-label={__('Edit: Right corner radius', 'web-stories')}
-          onChange={(value) =>
-            handleChange({
-              right: value,
-            })
-          }
+          onChange={(value) => handleChange('right', value)}
         />
         <BoxedNumeric
           value={borderRadius.bottom}
           aria-label={__('Edit: Bottom corner radius', 'web-stories')}
-          onChange={(value) =>
-            handleChange({
-              bottom: value,
-            })
-          }
+          onChange={(value) => handleChange('bottom', value)}
         />
       </Row>
     </SimplePanel>
