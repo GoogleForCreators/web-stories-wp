@@ -50,6 +50,7 @@ export const _default = () => {
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
+          ariaLabel="Preview aria label"
           bottomAction={{
             targetAction: 'https://www.google.com',
             label: 'Open in Editor',
@@ -82,6 +83,7 @@ export const _publishedStory = () => {
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
         <CardPreviewContainer
+          ariaLabel="Preview aria label"
           bottomAction={{
             targetAction: 'https://www.google.com',
             label: 'Open in Editor',

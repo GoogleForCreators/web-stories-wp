@@ -19,6 +19,7 @@
  */
 import { FlagsProvider } from 'flagged';
 import { render } from 'react-dom';
+import { StrictMode } from 'react';
 
 /**
  * Internal dependencies
@@ -42,7 +43,9 @@ const initialize = (id, config, flags) => {
 
   render(
     <FlagsProvider features={flags}>
-      <App config={config} />
+      <StrictMode>
+        <App config={config} />
+      </StrictMode>
     </FlagsProvider>,
     appElement
   );

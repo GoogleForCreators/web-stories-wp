@@ -21,43 +21,57 @@ import styled, { css } from 'styled-components';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DIRECTION } from '../../../../animation';
+import { DIRECTION, ROTATION } from '../../../../animation';
 
 const Svg = styled.svg`
   display: block;
-  height: 10px;
-  width: 10px;
+  height: ${({ size }) => size};
+  width: ${({ size }) => size};
   fill: none;
   transform-origin: 50% 50%;
 `;
 
 const Icon = styled.div`
   padding: 4px;
-  transform: rotate(
-    ${({ direction }) => {
-      switch (direction) {
-        case DIRECTION.RIGHT_TO_LEFT:
-          return '270deg';
-        case DIRECTION.TOP_TO_BOTTOM:
-          return '180deg';
-        case DIRECTION.LEFT_TO_RIGHT:
-          return '90deg';
-        default:
-          return '0deg';
-      }
-    }}
-  );
+  transform: ${({ direction }) => {
+    switch (direction) {
+      case DIRECTION.RIGHT_TO_LEFT:
+        return 'rotate(270deg)';
+      case DIRECTION.TOP_TO_BOTTOM:
+        return 'rotate(180deg)';
+      case DIRECTION.LEFT_TO_RIGHT:
+        return 'rotate(90deg)';
+      case ROTATION.COUNTER_CLOCKWISE:
+        return 'rotateX(180deg) rotateZ(90deg)';
+      default:
+        return 'rotate(0deg)';
+    }
+  }};
 `;
+
+const RotationIcon = () => (
+  <Svg size="19px" viewBox="0 0 19 18">
+    <path d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9" />
+  </Svg>
+);
+
+const DirectionIcon = () => (
+  <Svg size="10px" viewBox="0 0 10 11">
+    <path d="M5 11L5 1M5 1L9 5M5 1L1 5" />
+  </Svg>
+);
 
 const Direction = ({ className, direction }) => (
   <Icon className={className} direction={direction}>
-    <Svg viewBox="0 0 10 11">
-      <path d="M5 11L5 1M5 1L9 5M5 1L1 5" />
-    </Svg>
+    {Object.values(DIRECTION).includes(direction) ? (
+      <DirectionIcon />
+    ) : (
+      <RotationIcon />
+    )}
   </Icon>
 );
 
@@ -114,6 +128,18 @@ const Label = styled.label`
           left: 0;
           transform: translateY(-50%);
         `;
+      case ROTATION.CLOCKWISE:
+        return css`
+          top: 0;
+          left: 0;
+          transform: translateX(20%);
+        `;
+      case ROTATION.COUNTER_CLOCKWISE:
+        return css`
+          bottom: 0;
+          right: 0;
+          transform: translate(-10%, -10%);
+        `;
       default:
         return css`
           bottom: 0;
@@ -159,10 +185,14 @@ const RadioGroup = styled.div`
   left: 0;
 `;
 
-const camelToPascal = (string) =>
-  string.charAt(0).toUpperCase() + string.slice(1);
-
-const pascalToSentence = (string) => string.replace(/([a-z])([A-Z])/g, '$1 $2');
+const translations = {
+  [DIRECTION.RIGHT_TO_LEFT]: __('right to left', 'web-stories'),
+  [DIRECTION.LEFT_TO_RIGHT]: __('left to right', 'web-stories'),
+  [DIRECTION.TOP_TO_BOTTOM]: __('top to bottom', 'web-stories'),
+  [DIRECTION.BOTTOM_TO_TOP]: __('bottom to top', 'web-stories'),
+  [ROTATION.CLOCKWISE]: __('clockwise', 'web-stories'),
+  [ROTATION.COUNTER_CLOCKWISE]: __('counterclockwise', 'web-stories'),
+};
 
 export const DirectionRadioInput = ({
   directions = [],
@@ -177,11 +207,7 @@ export const DirectionRadioInput = ({
         {directions.map((direction) => (
           <Label
             key={direction}
-            aria-label={sprintf(
-              /* translators: %s: Direction, for example 'top' or 'left'. */
-              __('%s Direction', 'web-stories'),
-              pascalToSentence(camelToPascal(direction))
-            )}
+            aria-label={translations[direction]}
             htmlFor={direction}
             direction={direction}
           >
@@ -201,8 +227,13 @@ export const DirectionRadioInput = ({
   );
 };
 
+const directionPropType = PropTypes.oneOf([
+  ...Object.values(DIRECTION),
+  ...Object.values(ROTATION),
+]);
+
 DirectionRadioInput.propTypes = {
-  defaultChecked: PropTypes.oneOf(Object.values(DIRECTION)),
-  directions: PropTypes.arrayOf(PropTypes.oneOf(Object.values(DIRECTION))),
+  defaultChecked: directionPropType,
+  directions: PropTypes.arrayOf(directionPropType),
   onChange: PropTypes.func,
 };

@@ -92,12 +92,10 @@ export function getPanels(elements, options = {}) {
 
   // Only display background panel in case of background element.
   if (isBackground) {
-    const panels = [
-      { type: PAGE_STYLE, Panel: PageStylePanel },
-      { type: PAGE_ATTACHMENT, Panel: PageAttachmentPanel },
-    ];
+    const panels = [{ type: PAGE_ATTACHMENT, Panel: PageAttachmentPanel }];
 
-    if (!elements[0].isDefaultBackground) {
+    const isBackgroundMedia = !elements[0].isDefaultBackground;
+    if (isBackgroundMedia) {
       panels.push({
         type: BACKGROUND_SIZE_POSITION,
         Panel: BackgroundSizePositionPanel,
@@ -117,9 +115,12 @@ export function getPanels(elements, options = {}) {
         type: IMAGE_ACCESSIBILITY,
         Panel: ImageAccessibilityPanel,
       });
+      // In case of default background without media:
+    } else {
+      panels.unshift({ type: PAGE_STYLE, Panel: PageStylePanel });
+      // Always display Presets as the first panel for background.
+      panels.unshift({ type: STYLE_PRESETS, Panel: ColorPresetPanel });
     }
-    // Always display Presets as the first panel for background.
-    panels.unshift({ type: STYLE_PRESETS, Panel: ColorPresetPanel });
     return panels;
   }
 

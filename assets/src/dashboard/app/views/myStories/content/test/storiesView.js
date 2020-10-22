@@ -73,7 +73,6 @@ describe('My Stories <StoriesView />', function () {
             updateStory: jest.fn,
           }}
           stories={fakeStories}
-          users={{}}
           view={{
             style: VIEW_STYLE.GRID,
             pageSize: { width: 210, height: 316 },
