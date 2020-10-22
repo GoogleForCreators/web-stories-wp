@@ -61,7 +61,5 @@ function setOrCreateImage(src, onLoad) {
   img.height = 'auto';
   img.onload = onLoad;
   // For 3rd-party media.
-  // todo: setting crossOrigin here causes an error for gif backgrounds
-  img.crossOrigin = 'anonymous';
   imgNode.appendChild(img);
 }
