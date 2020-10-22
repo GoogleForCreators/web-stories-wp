@@ -129,7 +129,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
-        <WithBorder element={element}>
+        <WithBorder element={element} previewMode={previewMode}>
           <WithMask
             element={element}
             fill={true}

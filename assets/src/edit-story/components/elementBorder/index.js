@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import { useUnits } from '../../units';
 import { getBorderStyle, shouldDisplayBorder } from './utils';
 
 const borderElementCSS = css`
@@ -40,20 +41,49 @@ const DashedBorder = styled.div`
   ${borderElementCSS}
   &:after {
     content: ' ';
-    ${({ color, left, top, right, bottom, position }) =>
-      getBorderStyle({ color, left, top, right, bottom, position })}
+    ${({ color, left, top, right, bottom, position, previewMode }) =>
+      getBorderStyle({
+        color,
+        left,
+        top,
+        right,
+        bottom,
+        position,
+        previewMode,
+      })}
   }
 `;
 
-export default function WithBorder({ element, children }) {
+export default function WithBorder({ element, previewMode, children }) {
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
   if (!shouldDisplayBorder(element)) {
     return children;
   }
-  const { border } = element;
-  return <DashedBorder {...border}>{children}</DashedBorder>;
+  let border = element.border;
+  const { left, top, right, bottom } = border;
+
+  // Border-width is not responsive but since preview is significantly smaller, we need it to be for that.
+  if (previewMode) {
+    border = {
+      ...border,
+      left: dataToEditorX(left),
+      top: dataToEditorX(top),
+      right: dataToEditorX(right),
+      bottom: dataToEditorX(bottom),
+    };
+  }
+  return (
+    <DashedBorder {...border} previewMode={previewMode}>
+      {children}
+    </DashedBorder>
+  );
 }
 
 WithBorder.propTypes = {
   element: StoryPropTypes.element.isRequired,
   children: PropTypes.node,
+  previewMode: PropTypes.bool.isRequired,
 };

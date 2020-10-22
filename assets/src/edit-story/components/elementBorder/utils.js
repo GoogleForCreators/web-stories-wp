@@ -67,12 +67,21 @@ export function getBorderStyle({
   right,
   bottom,
   position,
+  previewMode = false,
 }) {
   const {
     color: { r, g, b, a },
   } = rawColor;
   const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 
+  // We're making the border-width responsive just for the preview,
+  // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
+  // as opposed to having potential margin between the border and the element.
+  const borderWidth = !previewMode
+    ? `${top}px ${right}px ${bottom}px ${left}px`
+    : `${Math.ceil(top)}px ${Math.ceil(right)}px ${Math.ceil(
+        bottom
+      )}px ${Math.ceil(left)}px`;
   return {
     top: 0,
     left: 0,
@@ -82,7 +91,7 @@ export function getBorderStyle({
     height: '100%',
     position: 'absolute',
     ...getBorderPositionCSS({ left, top, right, bottom, position }),
-    borderWidth: `${top}px ${right}px ${bottom}px ${left}px `,
+    borderWidth,
     borderColor: color,
     borderStyle: 'solid',
   };
