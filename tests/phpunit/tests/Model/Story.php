@@ -17,13 +17,10 @@
 
 namespace Google\Web_Stories\Tests\Model;
 
-use Google\Web_Stories\Tests\Private_Access;
-
 /**
  * @coversDefaultClass \Google\Web_Stories\Model\Story
  */
 class Story extends \WP_UnitTestCase {
-	use Private_Access;
 	/**
 	 * @covers ::__construct
 	 */

@@ -20,6 +20,7 @@ namespace Google\Web_Stories\Tests\Story_Renderer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Private_Access;
 use WP_Post;
 use WP_UnitTestCase;
 
@@ -27,6 +28,8 @@ use WP_UnitTestCase;
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
 class HTML extends WP_UnitTestCase {
+	use Private_Access;
+
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -235,7 +238,7 @@ class HTML extends WP_UnitTestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
-		$result = $renderer->call_private_method( $story, 'replace_url_scheme', [ set_url_scheme( $link, 'https' ) ] );
+		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ set_url_scheme( $link, 'https' ) ] );
 		$this->assertEquals( $result, $link );
 	}
 
@@ -249,7 +252,7 @@ class HTML extends WP_UnitTestCase {
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
-		$result = $renderer->call_private_method( $story, 'replace_url_scheme', [ $link ] );
+		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
 	}
 
