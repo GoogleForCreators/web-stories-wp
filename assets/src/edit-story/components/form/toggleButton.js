@@ -149,6 +149,7 @@ ToggleButton.propTypes = {
   iconHeight: PropTypes.number,
   iconWidth: PropTypes.number,
   className: PropTypes.string,
+  children: PropTypes.node,
 };
 
 ToggleButton.defaultProps = {
