@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 
 /**
@@ -44,11 +44,8 @@ import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import resourceList from '../../../../../utils/resourceList';
 import { PillGroup } from '../../shared';
-import localStore, {
-  LOCAL_STORAGE_PREFIX,
-} from '../../../../../utils/localStore';
-import Dialog from '../../../../dialog';
-import { TranslateWithMarkup } from '../../../../../../i18n';
+import TermsDialog from './termsDialog';
+
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -85,13 +82,6 @@ const ProviderMediaCategoriesWrapper = styled.div`
     position: relative;
     visibility: visible;
   }
-`;
-
-const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
 `;
 
 /**
@@ -145,23 +135,6 @@ function Media3pPane(props) {
       media3p,
     })
   );
-
-  const hasAcknowledgedTerms3p = localStore.getItemByKey(
-    `${LOCAL_STORAGE_PREFIX.TERMS_3P}`
-  );
-
-  const [dialogOpen, setDialogOpen] = useState(
-    isActive && !hasAcknowledgedTerms3p
-  );
-
-  const acknowledgeTerms = () => {
-    setDialogOpen(false);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
-  };
-
-  useEffect(() => {
-    setDialogOpen(isActive && !hasAcknowledgedTerms3p);
-  }, [isActive, hasAcknowledgedTerms3p]);
 
   useEffect(() => {
     if (isActive && !selectedProvider) {
@@ -239,31 +212,7 @@ function Media3pPane(props) {
   // TODO(#2368): handle pagination / infinite scrolling
   return (
     <>
-      <Dialog open={dialogOpen} onClose={acknowledgeTerms} ariaHideApp={false}>
-        <Paragraph>
-          <TranslateWithMarkup
-            mapping={{
-              a: (
-                //eslint-disable-next-line jsx-a11y/anchor-has-content
-                <a
-                  href="https://wp.stories.google/docs#Using-media-from-third-party-providers"
-                  rel="noreferrer"
-                  target="_blank"
-                  aria-label={__(
-                    'Learn more by visiting Web Stories for WordPress',
-                    'web-stories'
-                  )}
-                />
-              ),
-            }}
-          >
-            {__(
-              'Your use of stock content is subject to third party terms. <a>Learn more.</a>',
-              'web-stories'
-            )}
-          </TranslateWithMarkup>
-        </Paragraph>
-      </Dialog>
+      {isActive && <TermsDialog />}
       <StyledPane id={paneId} {...props}>
         <PaneInner>
           <PaneHeader>
