@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from 'react';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -30,21 +29,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { SimplePanel } from '../panel';
-import { Color, Numeric, Row } from '../../form';
+import { Color, Row } from '../../form';
 import { useCommonObjectValue } from '../utils';
 import { MaskTypes } from '../../../masks';
 import { DEFAULT_BORDER } from './shared';
 import WidthControls from './borderWidth';
 import Position from './position';
-
-const BoxedNumeric = styled(Numeric)`
-  padding: 6px 6px;
-  border-radius: 4px;
-`;
-
-const Space = styled.div`
-  flex: 0 0 10px;
-`;
 
 function BorderStylePanel(props) {
   const { selectedElements, pushUpdate } = props;
@@ -53,7 +43,7 @@ function BorderStylePanel(props) {
     'border',
     DEFAULT_BORDER
   );
-  const { color, gap, dash, left, top, right, bottom } = border;
+  const { color, left, top, right, bottom } = border;
 
   const notAllRectangle = selectedElements.some(
     ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
@@ -93,31 +83,6 @@ function BorderStylePanel(props) {
               }}
               label={__('Border color', 'web-stories')}
               labelId="border-color-label"
-            />
-          </Row>
-          <Row>
-            <BoxedNumeric
-              aria-label={__('Border dash', 'web-stories')}
-              value={dash}
-              min={0}
-              max={100}
-              suffix={__('Dash', 'web-stories')}
-              onChange={(value) => {
-                handleChange(value, 'dash');
-              }}
-              canBeEmpty
-            />
-            <Space />
-            <BoxedNumeric
-              aria-label={__('Border gap', 'web-stories')}
-              value={gap}
-              min={0}
-              max={100}
-              suffix={__('Gap', 'web-stories')}
-              onChange={(value) => {
-                handleChange(value, 'gap');
-              }}
-              canBeEmpty
             />
           </Row>
         </>

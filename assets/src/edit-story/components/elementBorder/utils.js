@@ -40,53 +40,39 @@ export function shouldDisplayBorder(element) {
   return !(mask?.type && mask.type !== MaskTypes.RECTANGLE);
 }
 
-function getBorderPositionCSS(
-  { left, top, right, bottom, position },
-  unit = 'px'
-) {
+function getBorderPositionCSS({ left, top, right, bottom, position }) {
   if (BORDER_POSITION.OUTSIDE === position) {
     return {
-      top: `${-top}${unit}`,
-      height: `calc(100% + ${top + bottom}${unit})`,
-      left: `${-left}${unit}`,
-      width: `calc(100% + ${left + right}${unit})`,
+      top: `${-top}px`,
+      height: `calc(100% + ${top + bottom}px)`,
+      left: `${-left}px`,
+      width: `calc(100% + ${left + right}px)`,
     };
   }
   if (BORDER_POSITION.CENTER === position) {
     return {
-      top: `${-top / 2}${unit}`,
-      height: `calc(100% + ${(top + bottom) / 2}${unit})`,
-      left: `${-left / 2}${unit}`,
-      width: `calc(100% + ${(left + right) / 2}${unit})`,
+      top: `${-top / 2}px`,
+      height: `calc(100% + ${(top + bottom) / 2}px)`,
+      left: `${-left / 2}px`,
+      width: `calc(100% + ${(left + right) / 2}px)`,
     };
   }
   return '';
 }
 
-export function getBorderStyle(
-  { dash, gap, color: rawColor, left, top, right, bottom, position },
-  unit = 'px'
-) {
+export function getBorderStyle({
+  color: rawColor,
+  left,
+  top,
+  right,
+  bottom,
+  position,
+}) {
   const {
     color: { r, g, b, a },
   } = rawColor;
   const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 
-  const avoidCorners = gap && position === BORDER_POSITION.OUTSIDE;
-  // When gap is assigned, we're adjusting background-size so that there wouldn't be "floating" border in the corners.
-  // Additionally, we're reducing left and right border so that it wouldn't overlap with the bottom and top borders,
-  // otherwise, in case of opacity, there will be double border.
-  const backgroundSize = `${left}${unit} calc(100% - ${top + bottom}${unit}), ${
-    avoidCorners ? `calc(100% - ${left + right}${unit})` : '100%'
-  } ${top}${unit}, ${right}${unit} calc(100% - ${top + bottom}${unit}), ${
-    avoidCorners ? `calc(100% - ${left + right}${unit})` : '100%'
-  } ${bottom}${unit}`;
-
-  // Same here -- if the gap is assigned, we're ignoring the corners.
-  // Same here for positioning -- we're positioning the left and right border not to overlap with the top and bottom.
-  const backgroundPosition = `0 50%, ${
-    avoidCorners ? '50%' : '0'
-  } 0, 100% 50%, ${avoidCorners ? '50%' : '0'} 100%`;
   return {
     top: 0,
     left: 0,
@@ -94,25 +80,10 @@ export function getBorderStyle(
     bottom: 0,
     width: '100%',
     height: '100%',
-    ...getBorderPositionCSS({ left, top, right, bottom, position }, unit),
     position: 'absolute',
-    'background-image': `repeating-linear-gradient(0deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
-      dash + gap
-    }px, ${color} ${
-      dash + gap
-    }px), repeating-linear-gradient(90deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
-      dash + gap
-    }px, ${color} ${
-      dash + gap
-    }px), repeating-linear-gradient(180deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
-      dash + gap
-    }px, ${color} ${
-      dash + gap
-    }px), repeating-linear-gradient(270deg, ${color}, ${color} ${dash}px, transparent ${dash}px, transparent ${
-      dash + gap
-    }px, ${color} ${dash + gap}px)`,
-    'background-size': backgroundSize,
-    'background-position': backgroundPosition,
-    'background-repeat': 'no-repeat',
+    ...getBorderPositionCSS({ left, top, right, bottom, position }),
+    borderWidth: `${top}px ${right}px ${bottom}px ${left}px `,
+    borderColor: color,
+    borderStyle: 'solid',
   };
 }

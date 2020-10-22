@@ -24,7 +24,6 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { useUnits } from '../../units';
 import { getBorderStyle, shouldDisplayBorder } from './utils';
 
 const borderElementCSS = css`
@@ -41,35 +40,17 @@ const DashedBorder = styled.div`
   ${borderElementCSS}
   &:after {
     content: ' ';
-    ${({ dash, gap, color, left, top, right, bottom, position }) =>
-      getBorderStyle({ dash, gap, color, left, top, right, bottom, position })}
+    ${({ color, left, top, right, bottom, position }) =>
+      getBorderStyle({ color, left, top, right, bottom, position })}
   }
 `;
 
 export default function WithBorder({ element, children }) {
-  const { dataToEditorX } = useUnits((state) => ({
-    dataToEditorX: state.actions.dataToEditorX,
-  }));
   if (!shouldDisplayBorder(element)) {
     return children;
   }
   const { border } = element;
-  const { gap, left, top, right, bottom } = border;
-
-  // If there's no gap set, let's set the dash to 1 for creating solid border.
-  const dash = gap ? border.dash : 1;
-  const adjustedProps = {
-    ...border,
-    left: Math.round(dataToEditorX(left)),
-    top: Math.round(dataToEditorX(top)),
-    right: Math.round(dataToEditorX(right)),
-    bottom: Math.round(dataToEditorX(bottom)),
-  };
-  return (
-    <DashedBorder {...adjustedProps} dash={dash}>
-      {children}
-    </DashedBorder>
-  );
+  return <DashedBorder {...border}>{children}</DashedBorder>;
 }
 
 WithBorder.propTypes = {

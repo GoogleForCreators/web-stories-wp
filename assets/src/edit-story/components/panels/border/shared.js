@@ -27,7 +27,5 @@ export const DEFAULT_BORDER = {
   bottom: 0,
   lockedWidth: true,
   color: createSolid(0, 0, 0),
-  gap: 0,
-  dash: 0,
   position: BORDER_POSITION.INSIDE,
 };
