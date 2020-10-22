@@ -60,6 +60,5 @@ function setOrCreateImage(src, onLoad) {
   img.width = 10;
   img.height = 'auto';
   img.onload = onLoad;
-  // For 3rd-party media.
   imgNode.appendChild(img);
 }
