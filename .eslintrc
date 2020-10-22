@@ -104,6 +104,7 @@
     "react/forbid-component-props": ["error", {
       "forbid": ["for"]
     }],
+    "react/no-array-index-key": "error",
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": [
