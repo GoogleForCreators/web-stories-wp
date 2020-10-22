@@ -28,6 +28,7 @@ import { ToggleSpace, NarrowSpace } from '../parts/spacers';
 import Size from '../controls/size';
 import Position from '../controls/position';
 import Rotation from '../controls/rotation';
+import Flip from '../controls/flip';
 
 function SizePositionPanel() {
   return (
@@ -55,6 +56,15 @@ function SizePositionPanel() {
       </Row>
       <Row expand={false}>
         <Rotation />
+        <Flip>
+          <Flip.IsPossible>
+            <Flip.Group>
+              <Flip.Vertical />
+              <NarrowSpace />
+              <Flip.Horizontal />
+            </Flip.Group>
+          </Flip.IsPossible>
+        </Flip>
       </Row>
     </SimplePanel>
   );
