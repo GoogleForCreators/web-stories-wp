@@ -227,6 +227,33 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::replace_url_scheme
+	 */
+	public function test_replace_url_scheme() {
+		$link = get_home_url( null, 'web-storires/test' );
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$result = $renderer->call_private_method( $story, 'replace_url_scheme', [ set_url_scheme( $link, 'https' ) ] );
+		$this->assertEquals( $result, $link );
+	}
+
+
+	/**
+	 * @covers ::replace_url_scheme
+	 */
+	public function test_replace_url_scheme_invalid_url() {
+		$link  = 'https://www.google.com';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$result = $renderer->call_private_method( $story, 'replace_url_scheme', [ $link ] );
+		$this->assertEquals( $result, $link );
+	}
+
+	/**
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.

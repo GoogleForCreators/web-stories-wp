@@ -74,29 +74,4 @@ class Story extends \WP_UnitTestCase {
 		$this->assertEquals( $story->get_title(), '' );
 		$this->assertEquals( $story->get_url(), '' );
 	}
-
-
-	/**
-	 * @covers ::force_url_scheme
-	 */
-	public function test_force_url_scheme() {
-		$link = get_home_url( null, 'web-storires/test' );
-
-		$story = new \Google\Web_Stories\Model\Story();
-
-		$result = $this->call_private_method( $story, 'force_url_scheme', [ set_url_scheme( $link, 'https' ) ] );
-		$this->assertEquals( $result, $link );
-	}
-
-
-	/**
-	 * @covers ::force_url_scheme
-	 */
-	public function test_force_url_scheme_invalid_url() {
-		$link  = 'https://www.google.com';
-		$story = new \Google\Web_Stories\Model\Story();
-
-		$result = $this->call_private_method( $story, 'force_url_scheme', [ $link ] );
-		$this->assertEquals( $result, $link );
-	}
 }
