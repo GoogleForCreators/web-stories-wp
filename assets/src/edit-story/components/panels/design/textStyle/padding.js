@@ -39,8 +39,9 @@ import {
   usePresubmitHandler,
 } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
+import { metricsForNewPadding } from '../../utils/metricsForNewPadding';
 
-const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
+export const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 const MIN_MAX = {
   PADDING: {
@@ -77,23 +78,16 @@ function PaddingControls({
 
   const handleChange = useCallback(
     (newPadding, submit = false) => {
-      pushUpdate(({ x, y, width, height }) => {
-        const updates = {};
-
-        if ('horizontal' in newPadding) {
-          updates.x = x - (newPadding.horizontal - padding.horizontal || 0);
-          updates.width =
-            width + (newPadding.horizontal - padding.horizontal || 0) * 2;
-        }
-
-        if ('vertical' in newPadding) {
-          updates.y = y - (newPadding.vertical - padding.vertical || 0);
-          updates.height =
-            height + (newPadding.vertical - padding.vertical || 0) * 2;
-        }
-
-        return updates;
-      });
+      pushUpdate(({ x, y, width, height }) =>
+        metricsForNewPadding({
+          x,
+          y,
+          height,
+          width,
+          currentPadding: padding,
+          newPadding,
+        })
+      );
       pushUpdateForObject('padding', newPadding, DEFAULT_PADDING, submit);
     },
     [pushUpdate, pushUpdateForObject, padding]
