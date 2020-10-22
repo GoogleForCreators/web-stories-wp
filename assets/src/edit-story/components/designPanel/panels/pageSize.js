@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldPageSizePanel from '../../panels/backgroundSizePosition';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function ShapeStylePanel() {
+function PageSizePanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="shapestyle" title={__('Shape style', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldPageSizePanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('pageSize')}
+      {...panelProperties}
+    />
   );
 }
 
-export default ShapeStylePanel;
+export default PageSizePanel;

@@ -15,24 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldNoSelectionPanel from '../../panels/noSelection';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function VideoAccessibilityPanel() {
+function NoSelectionPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel
-      name="videoaccesibility"
-      title={__('Video accesibility', 'web-stories')}
-    >
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldNoSelectionPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('noSelection')}
+      {...panelProperties}
+    />
   );
 }
 
-export default VideoAccessibilityPanel;
+export default NoSelectionPanel;

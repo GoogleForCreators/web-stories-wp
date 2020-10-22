@@ -15,20 +15,21 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldPresetColorPanel from '../../panels/preset/colorPreset';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
 function PresetColorPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="presetcolor" title={__('Color presets', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldPresetColorPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('PresetColor')}
+      {...panelProperties}
+    />
   );
 }
 

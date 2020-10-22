@@ -15,24 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldVideoAccessibilityPanel from '../../panels/videoAccessibility';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function PageAttachmentPanel() {
+function VideoAccessibilityPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel
-      name="pageattachment"
-      title={__('Page attachment', 'web-stories')}
-    >
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldVideoAccessibilityPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('videoAccessibility')}
+      {...panelProperties}
+    />
   );
 }
 
-export default PageAttachmentPanel;
+export default VideoAccessibilityPanel;

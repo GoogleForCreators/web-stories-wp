@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldShapeStylePanel from '../../panels/shapeStyle';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function TextStylePanel() {
+function ShapeStylePanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="textstyle" title={__('Text style', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldShapeStylePanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('shapeStyle')}
+      {...panelProperties}
+    />
   );
 }
 
-export default TextStylePanel;
+export default ShapeStylePanel;

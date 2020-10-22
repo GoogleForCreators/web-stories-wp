@@ -17,31 +17,20 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
-import { DANGER_ZONE_HEIGHT } from '../../../units/dimensions';
+import OldPageStylePanel from '../../panels/pageStyle';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-export const MIN_MAX = {
-  // TODO: with %360 logic this is not used, but can be utilized via keyboard arrows
-  ROTATION: {
-    MIN: -360,
-    MAX: 360,
-  },
-  WIDTH: {
-    MIN: 1,
-    MAX: 1000,
-  },
-  HEIGHT: {
-    MIN: 1,
-    MAX: 1000,
-  },
-  X: {
-    MIN: 1,
-    MAX: PAGE_WIDTH - 1,
-  },
-  Y: {
-    MIN: 1 - Math.floor(DANGER_ZONE_HEIGHT),
-    MAX: PAGE_HEIGHT + Math.floor(DANGER_ZONE_HEIGHT) - 1,
-  },
-};
+function PageStylePanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
 
-export const DEFAULT_FLIP = { horizontal: false, vertical: false };
+  return (
+    <OldDesignPanel
+      panelType={OldPageStylePanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('pageStyle')}
+      {...panelProperties}
+    />
+  );
+}
+
+export default PageStylePanel;

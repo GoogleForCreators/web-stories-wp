@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
+import { PanelTypes } from '../../components/designPanel/panels';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import createSolidFromString from '../../utils/createSolidFromString';
 export { default as Display } from './display';

@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldPageOverlayPanel from '../../panels/backgroundOverlay';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function PageStylePanel() {
+function PageOverlayPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="pagestyle" title={__('Page Style', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldPageOverlayPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('pageOverlay')}
+      {...panelProperties}
+    />
   );
 }
 
-export default PageStylePanel;
+export default PageOverlayPanel;

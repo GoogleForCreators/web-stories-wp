@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldVideoOptionsPanel from '../../panels/videoOptions';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function AnimationPanel() {
+function VideoOptionsPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldVideoOptionsPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('VideoOptions')}
+      {...panelProperties}
+    />
   );
 }
 
-export default AnimationPanel;
+export default VideoOptionsPanel;

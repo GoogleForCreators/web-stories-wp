@@ -15,24 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldLinkPanel from '../../panels/link';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function PageSizePositionPanel() {
+function LinkPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel
-      name="pagesizeposition"
-      title={__('Page size & position', 'web-stories')}
-    >
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldLinkPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('link')}
+      {...panelProperties}
+    />
   );
 }
 
-export default PageSizePositionPanel;
+export default LinkPanel;

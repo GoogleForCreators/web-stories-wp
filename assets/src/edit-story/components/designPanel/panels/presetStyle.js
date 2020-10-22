@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldPresetStylePanel from '../../panels/preset/stylePreset';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function LayerStylePanel() {
+function PresetStylePanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="layerstyle" title={__('Layer style', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldPresetStylePanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('presetStyle')}
+      {...panelProperties}
+    />
   );
 }
 
-export default LayerStylePanel;
+export default PresetStylePanel;

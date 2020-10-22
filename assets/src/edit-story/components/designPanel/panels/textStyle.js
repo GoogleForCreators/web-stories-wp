@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldTextStylePanel from '../../panels/textStyle';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function VideoOptionsPanel() {
+function TextStylePanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="videooptions" title={__('Video options', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldTextStylePanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('textStyle')}
+      {...panelProperties}
+    />
   );
 }
 
-export default VideoOptionsPanel;
+export default TextStylePanel;

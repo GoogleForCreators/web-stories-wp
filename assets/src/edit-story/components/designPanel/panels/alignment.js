@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldAlignmentPanel from '../../panels/alignment';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function PresetStylePanel() {
+function AlignmentPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="presetstyle" title={__('Style Presets', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldAlignmentPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('alignment')}
+      {...panelProperties}
+    />
   );
 }
 
-export default PresetStylePanel;
+export default AlignmentPanel;

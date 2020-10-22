@@ -14,4 +14,23 @@
  * limitations under the License.
  */
 
-export { default } from './panel';
+/**
+ * Internal dependencies
+ */
+import OldLayerStylePanel from '../../panels/layerStyle';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
+
+function LayerStylePanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
+  return (
+    <OldDesignPanel
+      panelType={OldLayerStylePanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('layerStyle')}
+      {...panelProperties}
+    />
+  );
+}
+
+export default LayerStylePanel;

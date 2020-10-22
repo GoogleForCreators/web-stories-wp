@@ -15,21 +15,22 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../../panel';
+import OldAnimationPanel from '../../panels/animation';
+import OldDesignPanel from '../oldDesignPanel';
+import useOldDesignPanel from '../useOldDesignPanel';
 
-function AlignmentPanel() {
+function AnimationPanel() {
+  const { createSubmitHandlerForPanel, panelProperties } = useOldDesignPanel();
+
   return (
-    <SimplePanel name="alignment" title={__('Alignment', 'web-stories')}>
-      <h2>{'TBD'}</h2>
-    </SimplePanel>
+    <OldDesignPanel
+      panelType={OldAnimationPanel}
+      registerSubmitHandler={createSubmitHandlerForPanel('animation')}
+      {...panelProperties}
+    />
   );
 }
 
-export default AlignmentPanel;
+export default AnimationPanel;
