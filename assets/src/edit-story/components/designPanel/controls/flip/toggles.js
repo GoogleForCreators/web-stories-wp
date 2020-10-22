@@ -23,14 +23,14 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { FlipHorizontal, FlipVertical } from '../../../../icons';
-import { StateToggle } from '../../parts/toggles';
+import { IconToggle } from '../../parts/toggles';
 import CONFIG from './config';
 import useUpdateFlip from './useUpdateFlip';
 
 export function Horizontal() {
   const { updateHorizontal } = useUpdateFlip();
   return (
-    <StateToggle
+    <IconToggle
       onChange={updateHorizontal}
       property={CONFIG.FLIPHORIZONTAL.PROPERTY}
       icon={<FlipHorizontal />}
@@ -43,7 +43,7 @@ export function Horizontal() {
 export function Vertical() {
   const { updateVertical } = useUpdateFlip();
   return (
-    <StateToggle
+    <IconToggle
       onChange={updateVertical}
       property={CONFIG.FLIPVERTICAL.PROPERTY}
       icon={<FlipVertical />}
