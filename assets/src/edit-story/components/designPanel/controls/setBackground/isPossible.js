@@ -17,4 +17,14 @@
 /**
  * Internal dependencies
  */
-export { Button } from '../../form';
+import useSetupFor from '../../useSetupFor';
+import CONFIG from './config';
+
+function IsPossible({ children }) {
+  const { value: canSetBackground } = useSetupFor(
+    CONFIG.CANSETBACKGROUND.PROPERTY
+  );
+  return canSetBackground ? children : null;
+}
+
+export default IsPossible;

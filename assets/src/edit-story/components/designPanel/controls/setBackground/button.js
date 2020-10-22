@@ -15,6 +15,24 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
-export { Button } from '../../form';
+import { Button } from '../../parts/buttons';
+import useSetBackground from './useSetBackground';
+
+function SetBackgroundButton() {
+  const setBackground = useSetBackground();
+
+  return (
+    <Button onClick={setBackground} fullWidth>
+      {__('Set as background', 'web-stories')}
+    </Button>
+  );
+}
+
+export default SetBackgroundButton;

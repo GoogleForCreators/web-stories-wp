@@ -17,4 +17,25 @@
 /**
  * Internal dependencies
  */
-export { Button } from '../../form';
+import useElementSetup from '../../useElementSetup';
+import useSingleElementOnly from '../../useSingleElementOnly';
+import { getDefinitionForType } from '../../../../elements';
+
+import CONFIG from './config';
+
+function useSetup() {
+  const canSetBackground = useSingleElementOnly(
+    ({ type }) => getDefinitionForType(type).isMedia,
+    false
+  );
+
+  useElementSetup(
+    CONFIG.CANSETBACKGROUND.PROPERTY,
+    {
+      value: canSetBackground,
+    },
+    [canSetBackground]
+  );
+}
+
+export default useSetup;

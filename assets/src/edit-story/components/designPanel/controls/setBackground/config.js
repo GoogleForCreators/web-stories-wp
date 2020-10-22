@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-export { Button } from '../../form';
+export default {
+  CANSETBACKGROUND: {
+    PROPERTY: 'canSetBackground',
+  },
+};

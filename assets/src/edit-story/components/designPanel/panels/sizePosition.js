@@ -28,6 +28,7 @@ import { ToggleSpace, NarrowSpace } from '../parts/spacers';
 import Size from '../controls/size';
 import Position from '../controls/position';
 import Rotation from '../controls/rotation';
+import SetBackground from '../controls/setBackground';
 import Flip from '../controls/flip';
 
 function SizePositionPanel() {
@@ -36,6 +37,13 @@ function SizePositionPanel() {
       name="sizeposition"
       title={__('Size & Position', 'web-stories')}
     >
+      <SetBackground>
+        <SetBackground.IsPossible>
+          <Row>
+            <SetBackground.Button />
+          </Row>
+        </SetBackground.IsPossible>
+      </SetBackground>
       <Row>
         <Position>
           <Position.X />

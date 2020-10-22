@@ -15,6 +15,29 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-export { Button } from '../../form';
+import IsPossible from './isPossible';
+import Button from './button';
+
+import useSetup from './useSetup';
+
+function SetBackground({ children }) {
+  useSetup();
+
+  return children;
+}
+
+SetBackground.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+SetBackground.IsPossible = IsPossible;
+SetBackground.Button = Button;
+
+export default SetBackground;
