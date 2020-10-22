@@ -39,7 +39,7 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch('Tell some stories.');
 
     await percySnapshot(page, 'Plugin Activation', {
-      percyCSS: `.plugin-version-author-uri { display: none; }`,
+      percyCSS: `.plugin-version-author-uri, .amp-plugin-notice { display: none; }`,
     });
   });
 
