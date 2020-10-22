@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useFeature, useFeatures } from 'flagged';
 
 /**
@@ -44,6 +44,11 @@ import Flags from '../../../../../flags';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import resourceList from '../../../../../utils/resourceList';
 import { PillGroup } from '../../shared';
+import localStore, {
+  LOCAL_STORAGE_PREFIX,
+} from '../../../../../utils/localStore';
+import Dialog from '../../../../dialog';
+import { TranslateWithMarkup } from '../../../../../../i18n';
 import paneId from './paneId';
 import ProviderTab from './providerTab';
 
@@ -134,6 +139,23 @@ function Media3pPane(props) {
     })
   );
 
+  const hasAcknowledgedTerms3p = localStore.getItemByKey(
+    `${LOCAL_STORAGE_PREFIX.TERMS_3P}`
+  );
+
+  const [dialogOpen, setDialogOpen] = useState(
+    isActive && !hasAcknowledgedTerms3p
+  );
+
+  useEffect(() => {
+    setDialogOpen(isActive && !hasAcknowledgedTerms3p);
+  }, [isActive, hasAcknowledgedTerms3p]);
+
+  const acknowledgeTerms = () => {
+    setDialogOpen(false);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
+  };
+
   useEffect(() => {
     if (isActive && !selectedProvider) {
       setSelectedProvider({ provider: Object.keys(PROVIDERS)[0] });
@@ -209,43 +231,69 @@ function Media3pPane(props) {
 
   // TODO(#2368): handle pagination / infinite scrolling
   return (
-    <StyledPane id={paneId} {...props}>
-      <PaneInner>
-        <PaneHeader>
-          <SearchInputContainer>
-            <SearchInput
-              initialValue={searchTerm}
-              placeholder={__('Search', 'web-stories')}
-              onSearch={onSearch}
-              incremental={incrementalSearchDebounceMedia}
-              disabled={Boolean(
-                selectedProvider &&
-                  PROVIDERS[selectedProvider].supportsCategories &&
-                  media3p[selectedProvider]?.state.categories.selectedCategoryId
-              )}
-            />
-          </SearchInputContainer>
-          <ProviderTabSection>
-            {enabledProviders.map((providerType, index) => (
-              <ProviderTab
-                key={`provider-tab-${providerType}`}
-                index={index}
-                id={`provider-tab-${providerType}`}
-                name={PROVIDERS[providerType].displayName}
-                active={selectedProvider === providerType}
-                providerType={providerType}
-                setSelectedProvider={setSelectedProvider}
+    <>
+      <Dialog onClose={acknowledgeTerms} open={dialogOpen}>
+        <TranslateWithMarkup
+          mapping={{
+            a: (
+              //eslint-disable-next-line jsx-a11y/anchor-has-content
+              <a
+                href="https://wp.stories.google/docs#Using-media-from-third-party-providers"
+                rel="noreferrer"
+                target="_blank"
+                aria-label={__(
+                  'Learn more by visiting Web Stories for Wordpress',
+                  'web-stories'
+                )}
               />
-            ))}
-          </ProviderTabSection>
-        </PaneHeader>
-        <PaneBottom ref={paneBottomRef}>
-          {enabledProviders.map((providerType) =>
-            getProviderMediaAndCategories(providerType)
+            ),
+          }}
+        >
+          {__(
+            'Your use of stock content is subject to third party terms. <a>Learn more.</a>',
+            'web-stories'
           )}
-        </PaneBottom>
-      </PaneInner>
-    </StyledPane>
+        </TranslateWithMarkup>
+      </Dialog>
+      <StyledPane id={paneId} {...props}>
+        <PaneInner>
+          <PaneHeader>
+            <SearchInputContainer>
+              <SearchInput
+                initialValue={searchTerm}
+                placeholder={__('Search', 'web-stories')}
+                onSearch={onSearch}
+                incremental={incrementalSearchDebounceMedia}
+                disabled={Boolean(
+                  selectedProvider &&
+                    PROVIDERS[selectedProvider].supportsCategories &&
+                    media3p[selectedProvider]?.state.categories
+                      .selectedCategoryId
+                )}
+              />
+            </SearchInputContainer>
+            <ProviderTabSection>
+              {enabledProviders.map((providerType, index) => (
+                <ProviderTab
+                  key={`provider-tab-${providerType}`}
+                  index={index}
+                  id={`provider-tab-${providerType}`}
+                  name={PROVIDERS[providerType].displayName}
+                  active={selectedProvider === providerType}
+                  providerType={providerType}
+                  setSelectedProvider={setSelectedProvider}
+                />
+              ))}
+            </ProviderTabSection>
+          </PaneHeader>
+          <PaneBottom ref={paneBottomRef}>
+            {enabledProviders.map((providerType) =>
+              getProviderMediaAndCategories(providerType)
+            )}
+          </PaneBottom>
+        </PaneInner>
+      </StyledPane>
+    </>
   );
 }
 
