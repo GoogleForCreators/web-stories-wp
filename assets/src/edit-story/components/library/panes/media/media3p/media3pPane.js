@@ -87,6 +87,13 @@ const ProviderMediaCategoriesWrapper = styled.div`
   }
 `;
 
+const Paragraph = styled.p`
+  font-family: ${({ theme }) => theme.fonts.body1.family};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
+`;
+
 /**
  * Pane that contains the media 3P integrations.
  *
@@ -233,27 +240,29 @@ function Media3pPane(props) {
   return (
     <>
       <Dialog open={dialogOpen} onClose={acknowledgeTerms} ariaHideApp={false}>
-        <TranslateWithMarkup
-          mapping={{
-            a: (
-              //eslint-disable-next-line jsx-a11y/anchor-has-content
-              <a
-                href="https://wp.stories.google/docs#Using-media-from-third-party-providers"
-                rel="noreferrer"
-                target="_blank"
-                aria-label={__(
-                  'Learn more by visiting Web Stories for WordPress',
-                  'web-stories'
-                )}
-              />
-            ),
-          }}
-        >
-          {__(
-            'Your use of stock content is subject to third party terms. <a>Learn more.</a>',
-            'web-stories'
-          )}
-        </TranslateWithMarkup>
+        <Paragraph>
+          <TranslateWithMarkup
+            mapping={{
+              a: (
+                //eslint-disable-next-line jsx-a11y/anchor-has-content
+                <a
+                  href="https://wp.stories.google/docs#Using-media-from-third-party-providers"
+                  rel="noreferrer"
+                  target="_blank"
+                  aria-label={__(
+                    'Learn more by visiting Web Stories for WordPress',
+                    'web-stories'
+                  )}
+                />
+              ),
+            }}
+          >
+            {__(
+              'Your use of stock content is subject to third party terms. <a>Learn more.</a>',
+              'web-stories'
+            )}
+          </TranslateWithMarkup>
+        </Paragraph>
       </Dialog>
       <StyledPane id={paneId} {...props}>
         <PaneInner>
