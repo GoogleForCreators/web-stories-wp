@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { theme, lightMode } from './theme';
+export * from './theme';
