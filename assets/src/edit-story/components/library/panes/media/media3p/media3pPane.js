@@ -147,14 +147,14 @@ function Media3pPane(props) {
     isActive && !hasAcknowledgedTerms3p
   );
 
-  useEffect(() => {
-    setDialogOpen(isActive && !hasAcknowledgedTerms3p);
-  }, [isActive, hasAcknowledgedTerms3p]);
-
   const acknowledgeTerms = () => {
     setDialogOpen(false);
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
   };
+
+  useEffect(() => {
+    setDialogOpen(isActive && !hasAcknowledgedTerms3p);
+  }, [isActive, hasAcknowledgedTerms3p]);
 
   useEffect(() => {
     if (isActive && !selectedProvider) {
@@ -232,7 +232,7 @@ function Media3pPane(props) {
   // TODO(#2368): handle pagination / infinite scrolling
   return (
     <>
-      <Dialog onClose={acknowledgeTerms} open={dialogOpen}>
+      <Dialog open={dialogOpen} onClose={acknowledgeTerms} ariaHideApp={false}>
         <TranslateWithMarkup
           mapping={{
             a: (
@@ -242,7 +242,7 @@ function Media3pPane(props) {
                 rel="noreferrer"
                 target="_blank"
                 aria-label={__(
-                  'Learn more by visiting Web Stories for Wordpress',
+                  'Learn more by visiting Web Stories for WordPress',
                   'web-stories'
                 )}
               />
