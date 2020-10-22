@@ -92,6 +92,5 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Publishing Flow Test');
     await expect(page).toMatchElement('amp-story-player');
-
   });
 });

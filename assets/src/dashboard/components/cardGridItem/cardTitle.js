@@ -137,7 +137,7 @@ const CardTitle = ({
           {titleFormatted(title)}
         </TitleStoryLink>
       )}
-      <TitleBodyText>
+      <TitleBodyText className={'dashboard-item-date'}>
         {status === STORY_STATUS.DRAFT && (
           <DateHelperText>{__('draft', 'web-stories')}</DateHelperText>
         )}

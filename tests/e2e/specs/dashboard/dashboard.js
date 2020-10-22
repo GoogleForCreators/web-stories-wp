@@ -30,6 +30,8 @@ describe('Stories Dashboard', () => {
 
     await expect(page).toMatch('My Stories');
 
-    await percySnapshot(page, 'Stories Dashboard');
+    await percySnapshot(page, 'Stories Dashboard', {
+      percyCSS: `.dashboard-item-date { display: none; }`,
+    });
   });
 });
