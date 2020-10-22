@@ -30,7 +30,7 @@ use WP_Error;
 use WP_Site;
 
 // Load Compatibility class the old fashioned way.
-if ( ! class_exists( 'Compatibility' ) ) {
+if ( ! class_exists( '\Google\Web_Stories\Compatibility' ) ) {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/Compatibility.php';
 }
 
