@@ -247,7 +247,7 @@ class HTML extends WP_UnitTestCase {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme_invalid_url() {
-		$link  = 'https://www.google.com';
+		$link = 'https://www.google.com';
 
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
