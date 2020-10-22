@@ -38,6 +38,7 @@ import { DEFAULT_BORDER } from './shared';
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
+  max-width: 36px;
 `;
 
 const Space = styled.div`
