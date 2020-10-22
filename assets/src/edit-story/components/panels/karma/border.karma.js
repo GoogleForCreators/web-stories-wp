@@ -104,9 +104,32 @@ describe('Border Panel', () => {
     });
   });
 
-  // Disable reason: not implemented yet.
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should allow user to add border for shape', async () => {
-    // @todo
+  it('should allow user to add border for shape', async () => {
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    const panel = fixture.editor.inspector.designPanel.border;
+    await fixture.events.click(panel.width('Right'), { clickCount: 3 });
+    await fixture.events.keyboard.type('5');
+    await fixture.events.keyboard.press('Tab');
+
+    await fixture.events.click(panel.position('Center').button);
+
+    const [element] = await getSelection();
+    const {
+      border: { position },
+    } = element;
+    expect(position).toBe(BORDER_POSITION.CENTER);
+
+    await fixture.snapshot('Shape element with center border');
+  });
+
+  it('should not allow border for non-rectangular shape', async () => {
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
+    // Verify that panel is not found.
+    expect(() => fixture.editor.inspector.designPanel.border).toThrow();
   });
 });
