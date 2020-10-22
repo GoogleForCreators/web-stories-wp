@@ -1,5 +1,5 @@
 {
-  "current": "07f4168e-3c83-4319-aefe-9cfd8ab39624",
+  "current": "46255a97-3e9e-444a-acb4-59be70044ac6",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -4927,35 +4927,6 @@
           "id": "197f2dcb-ec81-43b9-a128-6b453afa5f95",
           "x": 41,
           "y": 223
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 331,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "197f2dcb-ec81-43b9-a128-6b453afa5f95",
-          "id": "6ae291f1-77c1-46c4-9f41-07ac6f48e1df",
-          "x": 41,
-          "y": 340
         },
         {
           "opacity": 100,
