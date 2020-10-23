@@ -22,19 +22,28 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { elementFillContent, elementWithBackgroundColor } from '../shared';
+import {
+  elementFillContent,
+  elementWithBackgroundColor,
+  elementWithBorderRadius,
+} from '../shared';
 import StoryPropTypes from '../../types';
 
 const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
+  ${elementWithBorderRadius}
 `;
 
-function ShapeDisplay({ element: { isDefaultBackground, backgroundColor } }) {
+function ShapeDisplay({
+  element: { isDefaultBackground, backgroundColor, borderRadius },
+}) {
   if (isDefaultBackground) {
     return <Element />;
   }
-  return <Element backgroundColor={backgroundColor} />;
+  return (
+    <Element backgroundColor={backgroundColor} borderRadius={borderRadius} />
+  );
 }
 
 ShapeDisplay.propTypes = {
