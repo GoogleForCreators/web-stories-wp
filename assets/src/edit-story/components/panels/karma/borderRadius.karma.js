@@ -37,7 +37,7 @@ describe('Border Radius Panel', () => {
     return storyContext.state.selectedElements;
   };
 
-  describe('CUJ: Creator can Manipulate Shape', () => {
+  describe('CUJ: Creator can Manipulate Shape: Border Radius', () => {
     it('should allow the user to add border radius for text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       // Choose Fill as background for visibility.
@@ -50,7 +50,7 @@ describe('Border Radius Panel', () => {
       await fixture.events.keyboard.type('30');
       await fixture.events.keyboard.press('tab');
 
-      let [element] = await getSelection();
+      const [element] = await getSelection();
       // Since the default state is locked, verify that all the values were set to 30.
       expect(element.borderRadius.topLeft).toBe(30);
       expect(element.borderRadius.topRight).toBe(30);
@@ -65,9 +65,9 @@ describe('Border Radius Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       // Verify the value change only for the top-left corner.
-      [element] = await getSelection();
-      expect(element.borderRadius.topLeft).toBe(10);
-      expect(element.borderRadius.topRight).toBe(30);
+      const [updatedElement] = await getSelection();
+      expect(updatedElement.borderRadius.topLeft).toBe(10);
+      expect(updatedElement.borderRadius.topRight).toBe(30);
 
       await fixture.snapshot('Text element with border radius');
     });
