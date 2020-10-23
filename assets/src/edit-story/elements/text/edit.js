@@ -62,6 +62,10 @@ const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorderRadius}
+
+  span {
+    box-decoration-break: clone;
+  }
 `;
 
 // TextBox defines all text display properties and is used for measuring
@@ -79,12 +83,26 @@ const TextBox = styled.div`
   right: 0;
 `;
 
+const TextBoxPadded = styled(TextBox)(({ verticalPadding }) => ({
+  width: `calc(100% - ${verticalPadding}px)`,
+}));
+
+const EditTextBox = styled(TextBox)(
+  ({ hasHighlightBackgroundTextMode }) =>
+    hasHighlightBackgroundTextMode && {
+      paddingTop: 0,
+      paddingBottom: 0,
+    }
+);
+
 const Highlight = styled.span`
   ${({ highlightColor }) => generatePatternStyles(highlightColor)};
   color: transparent !important;
   * {
     color: transparent !important;
   }
+  padding: ${({ padding }) => padding};
+  width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
 
 function TextEdit({
@@ -141,6 +159,7 @@ function TextEdit({
     element,
     backgroundColor,
     opacity,
+    verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
     ...(backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && {
       lineHeight: getHighlightLineheight(
         rest.lineHeight,
@@ -153,6 +172,9 @@ function TextEdit({
       backgroundColor: null,
     }),
   };
+
+  const { padding: _, ...highlightTextProps } = textProps;
+
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -313,6 +335,9 @@ function TextEdit({
   const wrapperBackgroundColor =
     backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor;
 
+  const hasHighlightBackgroundTextMode =
+    backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+
   const wrapperProps = {
     backgroundColor: wrapperBackgroundColor,
   };
@@ -327,21 +352,26 @@ function TextEdit({
       data-testid="textEditor"
       {...wrapperProps}
     >
-      {editorContent && backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT && (
-        <TextBox ref={highlightRef} {...textProps}>
+      {editorContent && hasHighlightBackgroundTextMode && (
+        <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
           <Highlight
             dangerouslySetInnerHTML={{ __html: editorContent }}
             {...textProps}
           />
-        </TextBox>
+        </TextBoxPadded>
       )}
-      <TextBox className="syncMargin" ref={textBoxRef} {...textProps}>
+      <EditTextBox
+        hasHighlightBackgroundTextMode={hasHighlightBackgroundTextMode}
+        className="syncMargin"
+        ref={textBoxRef}
+        {...textProps}
+      >
         <RichTextEditor
           ref={editorRef}
           content={content}
           onChange={handleUpdate}
         />
-      </TextBox>
+      </EditTextBox>
     </Wrapper>
   );
 }

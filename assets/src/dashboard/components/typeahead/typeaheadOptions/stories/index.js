@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -46,7 +45,7 @@ const demoItems = [
 ];
 
 export default {
-  title: 'Dashboard/Components/TypeaheadOptions',
+  title: 'Dashboard/Components/Typeahead/TypeaheadOptions',
   component: TypeaheadOptions,
 };
 const TypeaheadOptionsWrapper = styled.div`
@@ -56,9 +55,9 @@ const TypeaheadOptionsWrapper = styled.div`
 export const _default = () => (
   <TypeaheadOptionsWrapper>
     <TypeaheadOptions
-      currentSelection={''}
+      handleFocusToInput={action('focus passed to input')}
+      selectedIndex={-1}
       items={demoItems}
-      isOpen={boolean('isOpen', true)}
       onSelect={(item) => {
         action(`clicked on dropdown item ${item.value}`)(item);
       }}

@@ -60,20 +60,21 @@ const HighlightElement = styled.p`
   line-height: inherit;
   margin: 0;
   position: absolute;
-  width: 100%;
+  width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
 
 const MarginedElement = styled.span`
   position: relative;
   display: block;
   top: 0;
-  left: ${({ horizontalPadding }) => `-${horizontalPadding}px`};
+  left: 0;
 `;
 
 const Span = styled.span`
   ${elementWithBackgroundColor}
   ${elementWithTextParagraphStyle}
 
+  box-decoration-break: clone;
   position: relative;
 `;
 
