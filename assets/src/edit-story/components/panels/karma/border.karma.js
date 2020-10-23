@@ -39,11 +39,6 @@ describe('Border Panel', () => {
   };
 
   describe('CUJ: Creator can Manipulate Shape', () => {
-    beforeEach(async () => {
-      //await fixture.events.click(fixture.editor.library.textAdd);
-      //panel = fixture.editor.inspector.designPanel.sizePosition;
-    });
-
     it('should allow the user to add border for text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       const panel = fixture.editor.inspector.designPanel.border;
