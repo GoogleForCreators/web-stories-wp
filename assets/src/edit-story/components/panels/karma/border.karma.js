@@ -47,7 +47,7 @@ describe('Border Panel', () => {
       await fixture.events.keyboard.type('2');
       await fixture.events.keyboard.press('tab');
 
-      let [element] = await getSelection();
+      const [element] = await getSelection();
       // Since the default state is locked, verify that all the values were set to 10.
       expect(element.border.left).toBe(2);
       expect(element.border.top).toBe(2);
@@ -62,9 +62,9 @@ describe('Border Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       // Verify the value changed but stayed the same for the left width.
-      [element] = await getSelection();
-      expect(element.border.left).toBe(2);
-      expect(element.border.top).toBe(10);
+      const [updatedElement] = await getSelection();
+      expect(updatedElement.border.left).toBe(2);
+      expect(updatedElement.border.top).toBe(10);
 
       await fixture.snapshot('Text element with inner border');
     });
