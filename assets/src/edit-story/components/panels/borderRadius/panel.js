@@ -32,9 +32,10 @@ import { __ } from '@wordpress/i18n';
 import { Row, Toggle, Numeric } from '../../form';
 import { SimplePanel } from '../panel';
 import { useCommonObjectValue } from '../utils';
-import { Lock, Unlock } from '../../../icons';
+import { BorderLockLine, Lock, Unlock } from '../../../icons';
 import { MaskTypes } from '../../../masks';
 
+const TOGGLE_WIDTH = 28;
 const DEFAULT_BORDER_RADIUS = {
   left: 0,
   top: 0,
@@ -43,9 +44,29 @@ const DEFAULT_BORDER_RADIUS = {
   locked: true,
 };
 
+const LockToggle = styled(Toggle)`
+  position: absolute;
+  top: 50%;
+  left: calc(50% - ${TOGGLE_WIDTH / 2}px);
+`;
+
 const BoxedNumeric = styled(Numeric)`
   padding: 6px 6px;
   border-radius: 4px;
+`;
+
+const ToggleSpace = styled.div`
+  flex: 0 0 ${TOGGLE_WIDTH * 2}px;
+`;
+
+const Icon = styled.div`
+  flex: 0 0 32px;
+  text-align: center;
+  padding-top: 6px;
+  ${({ corner }) => 'right' === corner && `transform: scaleX(-1);`}
+  svg {
+    width: 24px;
+  }
 `;
 
 function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
@@ -118,7 +139,13 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
           aria-label={__('Edit: Left corner radius', 'web-stories')}
           onChange={(value) => handleChange('left', value)}
         />
-        <Toggle
+        <Icon>
+          <BorderLockLine />
+        </Icon>
+        <Icon corner={'right'}>
+          <BorderLockLine />
+        </Icon>
+        <LockToggle
           icon={<Lock />}
           uncheckedIcon={<Unlock />}
           value={borderRadius.locked}
@@ -130,11 +157,14 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
           aria-label={__('Edit: Top corner radius', 'web-stories')}
           onChange={(value) => handleChange('top', value)}
         />
+      </Row>
+      <Row>
         <BoxedNumeric
           value={borderRadius.right}
           aria-label={__('Edit: Right corner radius', 'web-stories')}
           onChange={(value) => handleChange('right', value)}
         />
+        <ToggleSpace />
         <BoxedNumeric
           value={borderRadius.bottom}
           aria-label={__('Edit: Bottom corner radius', 'web-stories')}
