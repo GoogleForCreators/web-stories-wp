@@ -35,7 +35,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, status },
+    api: { stories, media, link, users, statusCheck },
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -224,8 +224,8 @@ function APIProvider({ children }) {
   }, [users]);
 
   const getStatusCheck = useCallback(() => {
-    return apiFetch({ path: status, method: 'POST' });
-  }, [status]);
+    return apiFetch({ path: statusCheck, method: 'POST' });
+  }, [statusCheck]);
 
   const state = {
     actions: {
