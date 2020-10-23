@@ -58,6 +58,7 @@ function App({ config }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
+              <StatusCheck />
               <FileProvider>
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
@@ -70,7 +71,6 @@ function App({ config }) {
                               <DropTargetsProvider>
                                 <GlobalStyle />
                                 <DevTools />
-                                <StatusCheck />
                                 <DefaultMoveableGlobalStyle />
                                 <CropMoveableGlobalStyle />
                                 <ModalGlobalStyle />
