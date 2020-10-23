@@ -94,7 +94,7 @@ class Status_Check extends WP_REST_Controller {
 	 */
 	public function status_check_permissions_check() {
 		if ( ! current_user_can( 'edit_web-stories' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed status.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed run status check.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
 		return true;
