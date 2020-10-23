@@ -31,6 +31,7 @@ import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
 import Dialog from '../../../../dialog';
+import { Plain } from '../../../../button';
 import { TranslateWithMarkup } from '../../../../../../i18n';
 
 const Paragraph = styled.p`
@@ -61,14 +62,21 @@ function TermsDialog() {
   }
 
   return (
-    <Dialog open={dialogOpen} onClose={acknowledgeTerms} ariaHideApp={false}>
+    <Dialog
+      open={dialogOpen}
+      onClose={acknowledgeTerms}
+      ariaHideApp={false}
+      actions={
+        <Plain onClick={acknowledgeTerms}>{__('Dismiss', 'web-stories')}</Plain>
+      }
+    >
       <Paragraph>
         <TranslateWithMarkup
           mapping={{
             a: (
               //eslint-disable-next-line jsx-a11y/anchor-has-content
               <a
-                href="https://wp.stories.google/docs#Using-media-from-third-party-providers"
+                href="https://wp.stories.google/docs#Terms"
                 rel="noreferrer"
                 target="_blank"
                 aria-label={__(
