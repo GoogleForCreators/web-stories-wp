@@ -13,3 +13,110 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Internal dependencies
+ */
+import { Fixture } from '../../../karma';
+import { useStory } from '../../../app/story';
+
+describe('Border Radius Panel', () => {
+  let fixture;
+
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+  });
+
+  afterEach(() => {
+    fixture.restore();
+  });
+
+  const getSelection = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  };
+
+  describe('CUJ: Creator can Manipulate Shape', () => {
+    it('should allow the user to add border radius for text element', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+      // Choose Fill as background for visibility.
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.fill.button
+      );
+
+      const panel = fixture.editor.inspector.designPanel.borderRadius;
+      await fixture.events.click(panel.radius('Top left'), { clickCount: 3 });
+      await fixture.events.keyboard.type('30');
+      await fixture.events.keyboard.press('tab');
+
+      let [element] = await getSelection();
+      // Since the default state is locked, verify that all the values were set to 30.
+      expect(element.borderRadius.topLeft).toBe(30);
+      expect(element.borderRadius.topRight).toBe(30);
+      expect(element.borderRadius.bottomLeft).toBe(30);
+      expect(element.borderRadius.bottomRight).toBe(30);
+
+      // Take off lock.
+      await fixture.events.click(panel.lockBorderRadius.button);
+
+      await fixture.events.click(panel.radius('Top left'), { clickCount: 3 });
+      await fixture.events.keyboard.type('10');
+      await fixture.events.keyboard.press('tab');
+
+      // Verify the value change only for the top-left corner.
+      [element] = await getSelection();
+      expect(element.borderRadius.topLeft).toBe(10);
+      expect(element.borderRadius.topRight).toBe(30);
+
+      await fixture.snapshot('Text element with border radius');
+    });
+
+    it('should allow user to add border radius for media', async () => {
+      await fixture.events.click(fixture.editor.library.media.item(0));
+      const panel = fixture.editor.inspector.designPanel.borderRadius;
+
+      // Take off lock.
+      await fixture.events.click(panel.lockBorderRadius.button);
+      await fixture.events.click(panel.radius('Bottom left'), {
+        clickCount: 3,
+      });
+      await fixture.events.keyboard.type('50');
+      await fixture.events.keyboard.press('tab');
+
+      const [element] = await getSelection();
+      const {
+        borderRadius: { topLeft, topRight, bottomLeft, bottomRight },
+      } = element;
+      expect(topLeft).toBe(0);
+      expect(topRight).toBe(0);
+      expect(bottomLeft).toBe(50);
+      expect(bottomRight).toBe(0);
+
+      await fixture.snapshot('Media element with bottom left corner radius');
+    });
+  });
+
+  it('should allow user to add border radius for shape if rectangular', async () => {
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(
+      fixture.editor.library.shapes.shape('Rectangle')
+    );
+
+    const panel = fixture.editor.inspector.designPanel.borderRadius;
+    await fixture.events.click(panel.radius('Bottom right'), {
+      clickCount: 3,
+    });
+    await fixture.events.keyboard.type('50');
+    await fixture.events.keyboard.press('tab');
+
+    await fixture.snapshot('Shape element with locked border radius');
+  });
+
+  it('should not allow border for non-rectangular shape', async () => {
+    await fixture.events.click(fixture.editor.library.shapesTab);
+    await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
+    // Verify that panel is not found.
+    expect(() => fixture.editor.inspector.designPanel.borderRadius).toThrow();
+  });
+});
