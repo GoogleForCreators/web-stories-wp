@@ -135,8 +135,12 @@ function Content({
                     returnFocusId={initialFocusId}
                   />
                   <InfiniteScroller
-                    allDataLoadedMessage={__(
-                      'No more templates',
+                    allDataLoadedAriaMessage={__(
+                      'All templates are loaded',
+                      'web-stories'
+                    )}
+                    loadingAriaMessage={__(
+                      'Loading more templates',
                       'web-stories'
                     )}
                     isLoading={isLoading}
