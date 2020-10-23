@@ -35,12 +35,12 @@ import { useCommonObjectValue } from '../utils';
 import { BorderLockLine, Lock, Unlock } from '../../../icons';
 import { MaskTypes } from '../../../masks';
 
-const TOGGLE_WIDTH = 28;
+const TOGGLE_WIDTH = 30;
 const DEFAULT_BORDER_RADIUS = {
-  left: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
+  topLeft: 0,
+  topRight: 0,
+  bottomRight: 0,
+  bottomLeft: 0,
   locked: true,
 };
 
@@ -55,15 +55,18 @@ const BoxedNumeric = styled(Numeric)`
   border-radius: 4px;
 `;
 
-const ToggleSpace = styled.div`
-  flex: 0 0 ${TOGGLE_WIDTH * 2}px;
-`;
+const TOP_LEFT = 'top-left';
+const TOP_RIGHT = 'top-right';
+const BOTTOM_LEFT = 'bottom-left';
+const BOTTOM_RIGHT = 'bottom-right';
 
 const Icon = styled.div`
   flex: 0 0 32px;
   text-align: center;
   padding-top: 6px;
-  ${({ corner }) => 'right' === corner && `transform: scaleX(-1);`}
+  ${({ corner }) => TOP_RIGHT === corner && `transform: scaleX(-1);`}
+  ${({ corner }) => BOTTOM_LEFT === corner && `transform: scaleY(-1);`}
+  ${({ corner }) => BOTTOM_RIGHT === corner && `transform: scale(-1, -1);`}
   svg {
     width: 24px;
   }
@@ -89,10 +92,10 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
             [name]: value,
           }
         : {
-            left: value,
-            top: value,
-            right: value,
-            bottom: value,
+            topLeft: value,
+            topRight: value,
+            bottomRight: value,
+            bottomLeft: value,
           };
       pushUpdateForObject(
         'borderRadius',
@@ -109,10 +112,10 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
       const newRadius = locked
         ? {
             locked,
-            left: borderRadius.left,
-            top: borderRadius.left,
-            right: borderRadius.left,
-            bottom: borderRadius.left,
+            topLeft: borderRadius.topLeft,
+            topRight: borderRadius.topLeft,
+            bottomRight: borderRadius.topLeft,
+            bottomLeft: borderRadius.topLeft,
           }
         : {
             locked,
@@ -135,14 +138,15 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     <SimplePanel name="borderRadius" title={__('Corner radius', 'web-stories')}>
       <Row>
         <BoxedNumeric
-          value={borderRadius.left}
-          aria-label={__('Edit: Left corner radius', 'web-stories')}
-          onChange={(value) => handleChange('left', value)}
+          value={borderRadius.topLeft}
+          aria-label={__('Edit: Top left corner radius', 'web-stories')}
+          onChange={(value) => handleChange('topLeft', value)}
         />
         <Icon>
-          <BorderLockLine />
+          {/* Default, passed for readability only */}
+          <BorderLockLine corner={TOP_LEFT} />
         </Icon>
-        <Icon corner={'right'}>
+        <Icon corner={TOP_RIGHT}>
           <BorderLockLine />
         </Icon>
         <LockToggle
@@ -153,22 +157,27 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
           aria-label={__('Toggle corner radius lock', 'web-stories')}
         />
         <BoxedNumeric
-          value={borderRadius.top}
-          aria-label={__('Edit: Top corner radius', 'web-stories')}
-          onChange={(value) => handleChange('top', value)}
+          value={borderRadius.topRight}
+          aria-label={__('Edit: Top right corner radius', 'web-stories')}
+          onChange={(value) => handleChange('topRight', value)}
         />
       </Row>
       <Row>
         <BoxedNumeric
-          value={borderRadius.right}
-          aria-label={__('Edit: Right corner radius', 'web-stories')}
-          onChange={(value) => handleChange('right', value)}
+          value={borderRadius.bottomLeft}
+          aria-label={__('Edit: Bottom left corner radius', 'web-stories')}
+          onChange={(value) => handleChange('bottomLeft', value)}
         />
-        <ToggleSpace />
+        <Icon corner={BOTTOM_LEFT}>
+          <BorderLockLine />
+        </Icon>
+        <Icon corner={BOTTOM_RIGHT}>
+          <BorderLockLine />
+        </Icon>
         <BoxedNumeric
-          value={borderRadius.bottom}
-          aria-label={__('Edit: Bottom corner radius', 'web-stories')}
-          onChange={(value) => handleChange('bottom', value)}
+          value={borderRadius.bottomRight}
+          aria-label={__('Edit: Bottom right corner radius', 'web-stories')}
+          onChange={(value) => handleChange('bottomRight', value)}
         />
       </Row>
     </SimplePanel>

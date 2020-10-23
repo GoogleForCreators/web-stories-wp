@@ -62,7 +62,7 @@ function OutputElement({ element }) {
             left: 0,
             borderRadius:
               borderRadius && (mask?.type === MaskTypes.RECTANGLE || !mask)
-                ? `${borderRadius.left}px ${borderRadius.top}px ${borderRadius.right}px ${borderRadius.bottom}px`
+                ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
                 : 0,
           }}
           skipDefaultMask
