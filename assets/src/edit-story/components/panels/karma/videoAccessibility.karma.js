@@ -63,7 +63,7 @@ describe('Video Accessibility Panel', () => {
         '[data-testid="top-panels"]'
       );
 
-      await topPanelsWrapper.scrollTo(0, topPanelsWrapper.scrollHeight);
+      topPanelsWrapper.scrollTo(0, topPanelsWrapper.scrollHeight);
 
       // Hover current poster image
       await fixture.events.mouse.moveRel(vaPanel.poster, 10, 10, { steps: 2 });
