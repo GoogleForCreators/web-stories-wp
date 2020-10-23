@@ -25,6 +25,9 @@ import { waitFor } from '@testing-library/react';
 import apiFetcher from '../../../../../../app/media/media3p/api/apiFetcher';
 import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../../local/mediaPane';
+import localStore, {
+  LOCAL_STORAGE_PREFIX,
+} from '../../../../../../utils/localStore';
 
 const RESOURCE_BUILDERS = {
   unsplash: (name) => ({
@@ -196,6 +199,8 @@ describe('Media3pPane fetching', () => {
   let media3pPane;
 
   beforeEach(async () => {
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
+
     fixture = new Fixture();
 
     jasmine.clock().install();
