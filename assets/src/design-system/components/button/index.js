@@ -17,62 +17,126 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
 import { TYPOGRAPHY_PRESET_SIZES } from '../../theme/typography';
+import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
-export const BUTTON_TYPES = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  OUTLINE: 'outline',
-  PLAIN: 'plain',
-  ICON: 'icon',
-};
-
-export const BUTTON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-};
-
-export const BUTTON_VARIANTS = {
-  CIRCLE: 'circle',
-  RECTANGLE: 'rectangle',
-};
-
-const Base = styled.button.attrs(({ isDisabled }) => ({
-  disabled: isDisabled,
-}))`
+const Base = styled.button(
+  ({ theme }) => `
+  display: flex;
+  align-items: center;
+  box-sizing: content-box;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  box-shadow: 0 0 0 2px ${theme.colors.bg.primary};
+  color: ${theme.colors.fg.primary};
   cursor: pointer;
+  font-family: ${theme.typography.family.primary};
+  font-size: ${
+    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].size
+  }px;
+  font-weight: ${
+    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].weight
+  };
+  letter-spacing: ${
+    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].letterSpacing
+  }px;
+  line-height: ${
+    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].lineHeight
+  }px;
   text-decoration: none;
-  font-family: ${({ theme }) => theme.typography.family.primary};
-  font-size: ${({ theme }) =>
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].size}px;
-  font-weight: ${({ theme }) =>
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].weight};
-  line-height: ${({ theme }) =>
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL]
-      .lineHeight}px;
-  letter-spacing: ${({ theme }) =>
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL]
-      .letterSpacing}px;
-  border: ${({ theme }) => `2px solid ${theme.colors.bg.primary}`};
 
-  &:focus {
-    outline: ${({ theme }) => `2px solid ${theme.colors.accent.secondary}`};
+  &:disabled {
+    pointer-events: none;
   }
 
-  ${({ disabled }) =>
-    disabled &&
-    `
-		pointer-events: none;
-	`}
+  &:focus {
+    box-shadow: 
+      0 0 0 2px ${theme.colors.bg.primary}, 
+      0 0 0 4px ${theme.colors.accent.secondary};
+    outline: none;
+  }
+
+  &:active {
+    outline: none;
+  }
+
+  transition: background-color 0.6s ease 0s;
+`
+);
+
+const primaryColors = ({ theme }) => css`
+  background-color: ${theme.colors.accent.primary};
+
+  &:hover,
+  &:focus {
+    background-color: ${theme.colors.accent.primary};
+  }
+
+  &:active {
+    background-color: ${theme.colors.accent.primary};
+  }
+
+  &:disabled {
+    background-color: ${theme.colors.accent.primary};
+    color: ${theme.colors.accent.primary};
+  }
 `;
 
-const PrimaryButton = styled(Base)``;
-const SecondaryButton = styled(Base)``;
-const TertiaryButton = styled(Base)``;
-const PlainButton = styled(Base)``;
-const IconButton = styled(Base)``; // should this be separate?
+const buttonColors = {
+  [BUTTON_TYPES.PRIMARY]: primaryColors,
+  [BUTTON_TYPES.SECONDARY]: '',
+  [BUTTON_TYPES.TERTIARY]: '',
+  [BUTTON_TYPES.PLAIN]: '',
+};
+
+const ButtonRectangle = styled(Base)`
+  ${({ type }) => type && buttonColors[type]};
+  min-width: 80px;
+  height: 36px;
+  padding: 8px 16px;
+  border-radius: 4px;
+`;
+
+const ButtonCircle = styled(Base)`
+  ${({ type }) => type && buttonColors[type]};
+
+  ${({ size }) => `
+  width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+  height:${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+  border-radius: 50%;
+
+  &:active {
+    border-radius: 4px;
+  }
+
+  & > svg {
+    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    margin: 0 auto;
+  }
+  `}
+
+  transition: border-radius 0.1s ease 0s;
+`;
+
+const ButtonIcon = styled(Base)`
+  ${({ size }) => `
+    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+
+    & > svg {
+      width: 100%;
+      height:100%;
+    }
+  `}
+`;
 
 export const Button = ({
   size = BUTTON_SIZES.MEDIUM,
@@ -83,28 +147,22 @@ export const Button = ({
   ...rest
 }) => {
   const ButtonOptions = {
-    [BUTTON_VARIANTS.CIRCLE]: {
-      [BUTTON_TYPES.PRIMARY]: PrimaryButton,
-      [BUTTON_TYPES.SECONDARY]: SecondaryButton,
-      [BUTTON_TYPES.TERTIARY]: TertiaryButton,
-      [BUTTON_TYPES.PLAIN]: PlainButton,
-      [BUTTON_TYPES.ICON]: IconButton,
-    },
-    [BUTTON_VARIANTS.RECTANGLE]: {
-      [BUTTON_TYPES.PRIMARY]: PrimaryButton,
-      [BUTTON_TYPES.SECONDARY]: SecondaryButton,
-      [BUTTON_TYPES.TERTIARY]: TertiaryButton,
-      [BUTTON_TYPES.PLAIN]: PlainButton,
-      [BUTTON_TYPES.ICON]: IconButton,
-    },
+    [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
+    [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
+    [BUTTON_VARIANTS.ICON]: ButtonIcon,
   };
 
   const isLink = rest.href !== undefined;
 
-  const StyledButton = ButtonOptions[variant][type];
+  const StyledButton = ButtonOptions[variant];
 
   return (
-    <StyledButton as={isLink ? 'a' : 'button'} size={size} {...rest}>
+    <StyledButton
+      as={isLink ? 'a' : 'button'}
+      size={size}
+      type={type}
+      {...rest}
+    >
       {children}
     </StyledButton>
   );
@@ -117,3 +175,5 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   activeLabelText: PropTypes.string,
 };
+
+export { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
