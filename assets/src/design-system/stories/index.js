@@ -51,7 +51,7 @@ const ColorBlock = styled.span`
 `;
 
 export const _default = () => {
-  const { standard, accent, status } = dark;
+  const { brandColors, standard, accent, status } = dark;
   const getColorSet = (color, idx) => (
     <Container key={idx}>
       <ColorBlock color={color} />
@@ -73,6 +73,16 @@ export const _default = () => {
 
   const bgDarkColors = Object.values(dark.bg).map(getColorSet);
 
+  const brandColorsGray = Object.values(brandColors.gray).map(getColorSet);
+
+  const brandColorsViolet = Object.values(brandColors.violet).map(getColorSet);
+
+  const brandColorsBlue = Object.values(brandColors.blue).map(getColorSet);
+
+  const brandColorsRed = Object.values(brandColors.red).map(getColorSet);
+
+  const brandColorsGreen = Object.values(brandColors.green).map(getColorSet);
+
   return (
     <>
       <h2>{'Standard Colors'}</h2>
@@ -89,6 +99,16 @@ export const _default = () => {
       <Row>{fgLightColors}</Row>
       <h2>{'Light Mode (dashboard) - Background'}</h2>
       <Row>{bgLightColors}</Row>
+      <h2>{'Brand Colors - Gray'}</h2>
+      <Row>{brandColorsGray}</Row>
+      <h2>{'Brand Colors - Violet'}</h2>
+      <Row>{brandColorsViolet}</Row>
+      <h2>{'Brand Colors - Blue'}</h2>
+      <Row>{brandColorsBlue}</Row>
+      <h2>{'Brand Colors - Red'}</h2>
+      <Row>{brandColorsRed}</Row>
+      <h2>{'Brand Colors - Green'}</h2>
+      <Row>{brandColorsGreen}</Row>
     </>
   );
 };

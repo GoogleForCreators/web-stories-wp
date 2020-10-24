@@ -18,9 +18,43 @@
 // colors related to light or dark mode are nested in colors.light or colors.dark
 // it's important that the object structure be the same so that eventually we can flip from dark to light theme, vic versa
 
+const brandColors = {
+  gray: {
+    60: '#2F3131',
+    50: '#414442',
+    40: '#5E615C',
+    30: '#767570',
+    20: '#A1A09B',
+    10: '#EDEFEC',
+  },
+  violet: {
+    60: '#6343CB',
+    40: '#9A72EC',
+    30: '#CBACFF',
+    10: '#DFCDFE',
+  },
+  blue: {
+    60: '#3E4796',
+    40: '#5A72D0',
+    30: '#79B3FF',
+    10: '#C2DDFF',
+  },
+  red: {
+    60: '#A92217',
+    40: '#D84F35',
+    30: '#F28B82',
+    10: '#F6C6C6',
+  },
+  green: {
+    60: '#325E37',
+    40: '#518F58',
+    30: '#81C995',
+    10: '#CEE6D2',
+  },
+};
 const accent = {
-  primary: '#CBACFF',
-  secondary: '#79B3FF',
+  primary: brandColors.violet[30],
+  secondary: brandColors.blue[30],
 };
 const status = {
   negative: '#D93025',
@@ -35,6 +69,7 @@ export const dark = {
   standard,
   accent,
   status,
+  brandColors,
   fg: {
     primary: '#EDEFEC',
     secondary: '#A1A09B',
@@ -55,6 +90,7 @@ export const light = {
   standard,
   accent,
   status,
+  brandColors,
   fg: {
     primary: '#181D1C',
     secondary: '#5E615C',
