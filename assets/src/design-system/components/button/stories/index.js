@@ -79,6 +79,12 @@ export const _default = () => {
           </div>
         ));
       })}
+      <div>
+        <Text>{'Link as Button'}</Text>
+        <Button type={BUTTON_TYPES.PRIMARY} href="">
+          {'Link as Button'}
+        </Button>
+      </div>
     </Container>
   );
 };
