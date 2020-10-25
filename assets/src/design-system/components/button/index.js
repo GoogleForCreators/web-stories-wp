@@ -75,24 +75,51 @@ const primaryColors = ({ theme }) => css`
   background-color: ${theme.colors.accent.primary};
 
   &:hover,
-  &:focus {
-    background-color: ${theme.colors.accent.primary};
-  }
-
+  &:focus,
   &:active {
-    background-color: ${theme.colors.accent.primary};
+    background-color: ${theme.colors.brandColors.violet[40]};
   }
 
   &:disabled {
-    background-color: ${theme.colors.accent.primary};
-    color: ${theme.colors.accent.primary};
+    background-color: #efefef;
+    color: ${theme.colors.brandColors.gray[20]};
+  }
+`;
+
+const secondaryColors = ({ theme }) => css`
+  background-color: #d1d1cc;
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: ${theme.colors.brandColors.gray[20]};
+  }
+
+  &:disabled {
+    background-color: #efefef;
+    color: ${theme.colors.brandColors.gray[20]};
+  }
+`;
+
+const tertiaryColors = ({ theme }) => css`
+  background-color: ${theme.colors.standard.white};
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: #efefef;
+  }
+
+  &:disabled {
+    background-color: ${theme.colors.standard.white};
+    color: ${theme.colors.brandColors.gray[20]};
   }
 `;
 
 const buttonColors = {
   [BUTTON_TYPES.PRIMARY]: primaryColors,
-  [BUTTON_TYPES.SECONDARY]: '',
-  [BUTTON_TYPES.TERTIARY]: '',
+  [BUTTON_TYPES.SECONDARY]: secondaryColors,
+  [BUTTON_TYPES.TERTIARY]: tertiaryColors,
   [BUTTON_TYPES.PLAIN]: '',
 };
 
@@ -138,11 +165,11 @@ const ButtonIcon = styled(Base)`
   `}
 `;
 
+// TODO incorporate tooltip as a label on hover per figma
 export const Button = ({
   size = BUTTON_SIZES.MEDIUM,
   type = BUTTON_TYPES.PLAIN,
   variant = BUTTON_VARIANTS.RECTANGLE,
-  //   activeLabelText = '',
   children,
   ...rest
 }) => {
