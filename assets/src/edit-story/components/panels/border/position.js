@@ -24,24 +24,15 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Row, ToggleButton } from '../../form';
+import { IconGroup, Row } from '../../form';
 import { BORDER_POSITION } from '../../../constants';
 import { useCommonObjectValue } from '../utils';
 import { DEFAULT_BORDER } from './shared';
-
-const PositionButton = styled(ToggleButton)`
-  flex: 1;
-  margin-right: 5px;
-  label {
-    width: 100%;
-    background-color: transparent !important;
-  }
-`;
 
 const Label = styled.div`
   border: 1px solid ${({ theme }) => rgba(theme.colors.fg.white, 0.24)};
@@ -52,6 +43,7 @@ const Label = styled.div`
   padding: 6px;
   width: 100%;
   text-align: center;
+  margin-right: 8px;
   ${({ checked, theme }) =>
     checked &&
     `
@@ -60,20 +52,14 @@ const Label = styled.div`
     `}
 `;
 
-const BUTTONS = [
-  {
-    mode: BORDER_POSITION.INSIDE,
-    label: __('Inside', 'web-stories'),
-  },
-  {
-    mode: BORDER_POSITION.CENTER,
-    label: __('Center', 'web-stories'),
-  },
-  {
-    mode: BORDER_POSITION.OUTSIDE,
-    label: __('Outside', 'web-stories'),
-  },
-];
+function Icon({ label, checked }) {
+  return <Label checked={checked}>{label}</Label>;
+}
+
+Icon.propTypes = {
+  label: PropTypes.string,
+  checked: PropTypes.bool,
+};
 
 function Position({ selectedElements, pushUpdateForObject }) {
   const border = useCommonObjectValue(
@@ -83,30 +69,39 @@ function Position({ selectedElements, pushUpdateForObject }) {
   );
   const { position } = border;
 
+  const options = [
+    {
+      value: BORDER_POSITION.INSIDE,
+      Icon,
+      label: __('Inside', 'web-stories'),
+    },
+    {
+      value: BORDER_POSITION.CENTER,
+      Icon,
+      label: __('Center', 'web-stories'),
+    },
+    {
+      value: BORDER_POSITION.OUTSIDE,
+      Icon,
+      label: __('Outside', 'web-stories'),
+    },
+  ];
+
   return (
     <Row>
-      {BUTTONS.map(({ mode, label }) => (
-        <PositionButton
-          key={mode}
-          value={position === mode}
-          aria-label={sprintf(
-            /* translators: %s: Border position mode. */
-            __('Set border position mode: %s', 'web-stories'),
-            label
-          )}
-          onChange={(value) =>
-            value &&
-            pushUpdateForObject(
-              'border',
-              { position: mode },
-              DEFAULT_BORDER,
-              true
-            )
-          }
-        >
-          <Label checked={position === mode}>{label}</Label>
-        </PositionButton>
-      ))}
+      <IconGroup
+        options={options}
+        onChange={(value) =>
+          pushUpdateForObject(
+            'border',
+            { position: value },
+            DEFAULT_BORDER,
+            true
+          )
+        }
+        value={position}
+        aria-label={__('Border mode', 'web-stories')}
+      />
     </Row>
   );
 }
