@@ -54,7 +54,7 @@ function DesignInspector() {
 
   return (
     <Wrapper>
-      <TopPanels onFocus={resetStoryAnimationState} data-testid="top-panels">
+      <TopPanels onFocus={resetStoryAnimationState}>
         <DesignPanels />
       </TopPanels>
       <BottomPanels>
