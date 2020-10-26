@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TYPOGRAPHY_PRESET_SIZES } from '../../theme/typography';
+import { TYPOGRAPHY_PRESET_SIZES } from '../../';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(

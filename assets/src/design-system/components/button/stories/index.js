@@ -22,12 +22,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Headline, Text } from '../../../';
 import { Close } from '../../../icons';
+import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
 
-import { Button } from '../../../components';
-import { BUTTON_SIZES, BUTTON_TYPES } from '..';
-import { Headline, Text } from '../../../typography';
-import { BUTTON_VARIANTS } from '../constants';
 export default {
   title: 'DesignSystem/Components/Button',
 };
