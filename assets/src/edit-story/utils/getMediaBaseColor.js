@@ -18,6 +18,7 @@
  * External dependencies
  */
 import ColorThief from 'colorthief';
+
 const thief = new ColorThief();
 
 const STYLES = {
@@ -33,7 +34,6 @@ const STYLES = {
 const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
 
 export function getMediaBaseColor(resource, onBaseColor) {
-  const { type, poster, src } = resource;
   const onLoad = () => {
     const node = document.body[BASE_COLOR_NODE];
     try {
@@ -42,10 +42,11 @@ export function getMediaBaseColor(resource, onBaseColor) {
       onBaseColor([255, 255, 255]);
     }
   };
-  setOrCreateImage('video' === type ? poster : src, onLoad);
+  setOrCreateImage(resource, onLoad);
 }
 
-function setOrCreateImage(src, onLoad) {
+function setOrCreateImage(resource, onLoad) {
+  const { type, src, poster } = resource;
   let imgNode = document.body[BASE_COLOR_NODE];
   if (!imgNode) {
     imgNode = document.createElement('div');
@@ -56,9 +57,10 @@ function setOrCreateImage(src, onLoad) {
   }
   imgNode.innerHTML = '';
   const img = document.createElement('img');
-  img.src = src;
+  img.onload = onLoad;
+  img.crossOrigin = type === 'gif' ? undefined : 'anonymous';
   img.width = 10;
   img.height = 'auto';
-  img.onload = onLoad;
+  img.src = type === 'video' ? poster : src;
   imgNode.appendChild(img);
 }
