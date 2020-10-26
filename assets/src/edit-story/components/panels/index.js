@@ -21,6 +21,7 @@ import { elementTypes } from '../../elements';
 import AnimationPanel from './animation';
 import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
+import CaptionsPanel from './captions';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
@@ -40,6 +41,7 @@ export { default as LayerPanel } from './layer';
 const ANIMATION = 'animation';
 const BACKGROUND_SIZE_POSITION = 'backgroundSizePosition';
 const BACKGROUND_OVERLAY = 'backgroundOverlay';
+const CAPTIONS = 'captions';
 const STYLE_PRESETS = 'stylePresets';
 const COLOR_PRESETS = 'colorPresets';
 const IMAGE_ACCESSIBILITY = 'imageAccessibility';
@@ -74,6 +76,7 @@ export const PanelTypes = {
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
   ANIMATION,
+  CAPTIONS,
 };
 
 const ALL = Object.values(PanelTypes);
@@ -107,6 +110,10 @@ export function getPanels(elements, options = {}) {
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
+      panels.push({
+        type: CAPTIONS,
+        Panel: CaptionsPanel,
+      });
       panels.push({
         type: VIDEO_ACCESSIBILITY,
         Panel: VideoAccessibilityPanel,
@@ -157,6 +164,8 @@ export function getPanels(elements, options = {}) {
           return { type, Panel: ShapeStylePanel };
         case VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
+        case CAPTIONS:
+          return { type, Panel: CaptionsPanel };
         case VIDEO_ACCESSIBILITY:
           return { type, Panel: VideoAccessibilityPanel };
         case IMAGE_ACCESSIBILITY:

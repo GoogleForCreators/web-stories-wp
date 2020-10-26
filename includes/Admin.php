@@ -47,7 +47,7 @@ class Admin {
 	 */
 	public function init() {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
-		add_filter( 'default_content', [ $this, 'prefill_post_content' ] );
+		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
 	}
 
@@ -94,11 +94,12 @@ class Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $content Default post content.
+	 * @param string   $content Default post content.
+	 * @param \WP_Post $post    Post object.
 	 *
 	 * @return string Pre-filled post content if applicable, or the default content otherwise.
 	 */
-	public function prefill_post_content( $content ) {
+	public function prefill_post_content( $content, $post ) {
 		if ( ! isset( $_GET['from-web-story'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $content;
 		}
@@ -118,22 +119,40 @@ class Admin {
 			return $content;
 		}
 
-		$renderer = new Image( $story );
-		$args     = [
+		$args = [
 			'align'  => 'none',
 			'height' => 600,
 			'width'  => 360,
 		];
 
-		$html = $renderer->render( $args );
+		if ( ! use_block_editor_for_post( $post ) ) {
 
-		$block_markup = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s"} -->%4$s<!-- /wp:web-stories/embed -->';
+			$content = '[web_stories_embed url="%1$s" title="%2$s" poster="%3$s" width="%4$s" height="%5$s" align="%6$s"]';
+
+			return sprintf(
+				$content,
+				esc_url( $story->get_url() ),
+				esc_attr( $story->get_title() ),
+				esc_url( $story->get_poster_portrait() ),
+				absint( $args['width'] ),
+				absint( $args['height'] ),
+				esc_attr( $args['align'] )
+			);
+		}
+
+		$renderer = new Image( $story );
+		$html     = $renderer->render( $args );
+
+		$content = '<!-- wp:web-stories/embed {"url":"%1$s","title":"%2$s","poster":"%3$s","width":"%4$s","height":"%5$s","align":"%6$s"} -->%7$s<!-- /wp:web-stories/embed -->';
 
 		return sprintf(
-			$block_markup,
+			$content,
 			esc_url( $story->get_url() ),
 			esc_js( $story->get_title() ),
 			esc_url( $story->get_poster_portrait() ),
+			absint( $args['width'] ),
+			absint( $args['height'] ),
+			esc_js( $args['align'] ),
 			$html
 		);
 	}

@@ -17,7 +17,11 @@
 /**
  * WordPress dependencies
  */
-import { getEditedPostContent } from '@wordpress/e2e-test-utils';
+import {
+  activatePlugin,
+  deactivatePlugin,
+  getEditedPostContent,
+} from '@wordpress/e2e-test-utils';
 
 /**
  * Internal dependencies
@@ -89,5 +93,54 @@ describe('Publishing Flow', () => {
 
     await expect(page).toMatch('Publishing Flow Test');
     await expect(page).toMatchElement('amp-story-player');
+  });
+
+  it('should guide me towards creating a new post to embed my story in classic editor', async () => {
+    await activatePlugin('classic-editor');
+    await createNewStory();
+
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await page.type(
+      'input[placeholder="Add title"]',
+      'Publishing Flow Test (Shortcode)'
+    );
+
+    // Publish story.
+    await expect(page).toClick('button', { text: 'Publish' });
+
+    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+
+    // Create new post and embed story.
+    await expect(page).toClick('a', { text: 'Add to new post' });
+    await page.waitForNavigation();
+
+    await expect(page).toMatch('Publishing Flow Test');
+
+    // Switch to HTML mode
+    await expect(page).toClick('#content-html');
+
+    const textEditorContent = await page.$eval(
+      '.wp-editor-area',
+      (element) => element.value
+    );
+
+    expect(textEditorContent).toMatchSnapshot();
+
+    await expect(page).toClick('#publish');
+
+    const btnTab = '#message a';
+    await page.waitForSelector(btnTab);
+    const postPermalink = await page.evaluate((selector) => {
+      return document.querySelector(selector).getAttribute('href');
+    }, btnTab);
+
+    expect(postPermalink).not.toBeNull();
+    expect(postPermalink).toStrictEqual(expect.any(String));
+
+    await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+
+    await expect(page).toMatch('Publishing Flow Test');
+    await expect(page).toMatchElement('amp-story-player');
+    await deactivatePlugin('classic-editor');
   });
 });

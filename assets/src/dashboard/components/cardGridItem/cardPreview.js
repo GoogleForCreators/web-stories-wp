@@ -67,7 +67,7 @@ const EditControls = styled.div`
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
-      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)}`};
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
   }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
@@ -224,15 +224,20 @@ const CardPreviewContainer = ({
             </Button>
           </ActionContainer>
         )}
-        <ActionContainer>
-          <Button
-            {...getActionAttributes(bottomAction.targetAction)}
-            tabIndex={tabIndex}
-            aria-label={bottomAction.ariaLabel}
-          >
-            {bottomAction.label}
-          </Button>
-        </ActionContainer>
+        {bottomAction?.label ? (
+          <ActionContainer>
+            <Button
+              {...getActionAttributes(bottomAction.targetAction)}
+              tabIndex={tabIndex}
+              aria-label={bottomAction.ariaLabel}
+              isDisabled={!bottomAction.targetAction}
+            >
+              {bottomAction.label}
+            </Button>
+          </ActionContainer>
+        ) : (
+          <EmptyActionContainer />
+        )}
       </EditControls>
     </>
   );
@@ -246,10 +251,10 @@ const ActionButtonPropType = PropTypes.shape({
 });
 
 CardPreviewContainer.propTypes = {
-  ariaLabel: PropTypes.string, //TODO will be required after updating story grids
+  ariaLabel: PropTypes.string.isRequired,
   children: PropTypes.node,
   centerAction: ActionButtonPropType,
-  bottomAction: ActionButtonPropType.isRequired,
+  bottomAction: ActionButtonPropType,
   topAction: ActionButtonPropType,
   containerAction: PropTypes.func,
   pageSize: PageSizePropType.isRequired,

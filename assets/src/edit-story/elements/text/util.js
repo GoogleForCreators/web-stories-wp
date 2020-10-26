@@ -76,7 +76,7 @@ export const generateFontFamily = ({ family, fallbacks } = {}) => {
 
 export const getHighlightLineheight = function (
   lineHeight,
-  verticalPadding,
+  verticalPadding = 0,
   unit = 'px'
 ) {
   return `calc(

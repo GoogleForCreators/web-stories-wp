@@ -207,6 +207,7 @@ class Story_Post_Type {
 		}
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
 	}
 
 	/**
@@ -917,5 +918,21 @@ class Story_Post_Type {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Add VTT file type to allow file in multisite.
+	 *
+	 * @param string $value List of allowed file types.
+	 * @return string List of allowed file types.
+	 */
+	public function filter_list_of_allowed_filetypes( $value ) {
+		$filetypes = explode( ' ', $value );
+		if ( ! in_array( 'vtt', $filetypes, true ) ) {
+			$filetypes[] = 'vtt';
+			$value       = implode( ' ', $filetypes );
+		}
+
+		return $value;
 	}
 }
