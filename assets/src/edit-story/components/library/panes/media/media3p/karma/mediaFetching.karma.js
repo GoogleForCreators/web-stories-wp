@@ -199,7 +199,7 @@ describe('Media3pPane fetching', () => {
   let media3pPane;
 
   beforeEach(async () => {
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
 
     fixture = new Fixture();
 

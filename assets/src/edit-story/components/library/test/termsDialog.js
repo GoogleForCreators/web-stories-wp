@@ -55,21 +55,21 @@ describe('TermsDialog', () => {
     const link = queryByText(/^Learn more/);
     expect(link).toMatchSnapshot();
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
-      LOCAL_STORAGE_PREFIX.TERMS_3P
+      LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );
   });
   it('should store the acknowledgement in the localStore when the window is dismissed', async () => {
     const { queryByText } = renderWithTheme(<TermsDialog />);
     const dismiss = queryByText(/^Dismiss/);
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
-      LOCAL_STORAGE_PREFIX.TERMS_3P
+      LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );
     act(() => {
       fireEvent.click(dismiss);
     });
     await waitFor(() =>
       expect(localStore.setItemByKey).toHaveBeenCalledWith(
-        LOCAL_STORAGE_PREFIX.TERMS_3P,
+        LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P,
         true
       )
     );

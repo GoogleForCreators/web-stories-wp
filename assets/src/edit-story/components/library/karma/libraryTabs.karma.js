@@ -43,7 +43,7 @@ describe('LibraryTabs integration', () => {
 
   describe('keyboad navigation', () => {
     beforeEach(async () => {
-      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
+      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
       const textTab = fixture.container.querySelector('#library-tab-media');
       await fixture.events.focus(textTab);
     });

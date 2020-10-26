@@ -43,14 +43,14 @@ const Paragraph = styled.p`
 
 function TermsDialog() {
   const hasAcknowledgedTerms3p = localStore.getItemByKey(
-    `${LOCAL_STORAGE_PREFIX.TERMS_3P}`
+    `${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`
   );
 
   const [dialogOpen, setDialogOpen] = useState(!hasAcknowledgedTerms3p);
 
   const acknowledgeTerms = () => {
     setDialogOpen(false);
-    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_3P}`, true);
+    localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
   };
 
   useEffect(() => {
