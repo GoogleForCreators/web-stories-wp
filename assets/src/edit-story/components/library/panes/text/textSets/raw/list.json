@@ -1,6 +1,6 @@
 {
-  "current": "2c847372-cd79-456e-a6e0-fb837487fa0d",
-  "selection": [],
+  "current": "e21ff914-108e-4f32-9dbd-b3c8a276aa13",
+  "selection": ["48b4df6b-1a5a-44d4-a10f-0e5dc8dc1e8d"],
   "story": {
     "stylePresets": {
       "textStyles": [
@@ -246,11 +246,11 @@
           },
           "type": "text",
           "id": "a1621ecf-3b3f-4072-8e44-6bf2892eb0a6",
-          "content": "<span style=\"font-weight: 700\">The principles</span>",
+          "content": "<span style=\"font-weight: 700\">Robots in Film</span>",
           "x": 41,
           "y": 214,
           "width": 331,
-          "height": 31,
+          "height": 30,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -319,12 +319,12 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "R2-D2, Star Wars",
           "fontWeight": 400,
           "x": 59,
           "y": 261,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -394,10 +394,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "The Terminator, The Terminator",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -470,10 +470,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is unobtrusive",
+          "content": "Optimus Prime, Transformers",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -545,10 +545,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "HAL, 2001: A Space Odyssey",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -621,10 +621,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is honest",
+          "content": "Sonny, I. Robot",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -835,16 +835,16 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
               [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
               [1, 900]
             ],
             "metrics": {
@@ -881,9 +881,9 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 600\">The principles</span>",
+          "content": "<span style=\"font-weight: 600\">Robots in Film</span>",
           "width": 331,
-          "height": 32,
+          "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -956,7 +956,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "R2-D2, Star Wars",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -1031,7 +1031,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "The Terminator, The Terminator",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -1106,7 +1106,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Optimus Prime, Transformers",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -1181,7 +1181,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "HAL, 2001: A Space Odyssey",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -1256,7 +1256,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Sonny, I. Robot",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -1499,22 +1499,22 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 100],
-              [1, 100],
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 500],
-              [1, 500],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
               [0, 800],
-              [1, 800],
               [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
               [1, 900]
             ],
             "metrics": {
@@ -1551,7 +1551,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">THE PRINCIPLES</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">PLANT CARE APPS</span>",
           "fontWeight": 400,
           "x": 41,
           "y": 218,
@@ -1627,7 +1627,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "PlantMi",
           "fontWeight": 400,
           "width": 313,
           "height": 23,
@@ -1704,7 +1704,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "GreenTime",
           "fontWeight": 400,
           "width": 313,
           "height": 23,
@@ -1781,7 +1781,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Wet Dyrt",
           "fontWeight": 400,
           "width": 313,
           "height": 23,
@@ -1858,7 +1858,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "Branch &amp; Leaf",
           "fontWeight": 400,
           "width": 313,
           "height": 23,
@@ -1935,7 +1935,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Rooted",
           "fontWeight": 400,
           "width": 313,
           "height": 23,
@@ -2192,10 +2192,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "Know thyself",
           "fontWeight": 400,
           "width": 313,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2264,10 +2264,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "Be kind",
           "fontWeight": 400,
           "width": 313,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2336,10 +2336,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Trust your gut",
           "fontWeight": 400,
           "width": 313,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2408,10 +2408,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "Bring your whole self",
           "fontWeight": 400,
           "width": 313,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2480,10 +2480,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Practice Reflection",
           "fontWeight": 400,
           "width": 313,
-          "height": 22,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2556,16 +2556,16 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em\">THE PRINCIPLES</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.1em\">ESSENTIALS</span>",
           "fontWeight": 400,
-          "width": 234,
-          "height": 32,
+          "width": 177,
+          "height": 31,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "a7d0b1de-d0d4-4fa6-8970-9dca2c40f3b5",
           "id": "a1b69a5a-0d61-49b9-8ba4-44daa7581e86",
-          "x": 89,
+          "x": 118,
           "y": 209
         },
         {
@@ -2594,7 +2594,7 @@
           },
           "basedOn": "6522a49f-ceba-421a-9900-b9f265cd63f3",
           "id": "71bc3869-8369-449e-b577-507e044b1eb3",
-          "x": 338,
+          "x": 304,
           "y": 224.5
         },
         {
@@ -2623,7 +2623,7 @@
           },
           "basedOn": "71bc3869-8369-449e-b577-507e044b1eb3",
           "id": "7e373de9-463f-4f8d-b496-f37b6fba4ab4",
-          "x": 43,
+          "x": 74,
           "y": 224.5
         },
         {
@@ -2829,10 +2829,10 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 700],
+              [1, 300],
+              [1, 400],
               [1, 700]
             ],
             "metrics": {
@@ -2869,10 +2869,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "Declutter first",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -2938,10 +2938,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "Organize second",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3007,10 +3007,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Minimize distractions",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3076,10 +3076,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "Detach self-worth",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3145,10 +3145,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Practice patience",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3429,12 +3429,12 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 700],
-              [1, 700],
               [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
               [1, 900]
             ],
             "metrics": {
@@ -3471,7 +3471,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "Drip coffee",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -3543,10 +3543,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "Espresso",
           "fontWeight": 400,
           "width": 313,
-          "height": 22,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -3615,7 +3615,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Cappuccino",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -3687,7 +3687,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "Latte",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -3759,7 +3759,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Americano",
           "fontWeight": 400,
           "width": 313,
           "height": 22,
@@ -3831,10 +3831,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "The principles",
+          "content": "Coffee drinks",
           "fontWeight": 400,
           "width": 331,
-          "height": 33,
+          "height": 34,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4098,10 +4098,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "Stress relief",
           "fontWeight": 400,
           "width": 313,
-          "height": 20,
+          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4180,10 +4180,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "Brain function",
           "fontWeight": 400,
           "width": 313,
-          "height": 20,
+          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4262,10 +4262,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Flourish relationships",
           "fontWeight": 400,
           "width": 313,
-          "height": 20,
+          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4344,10 +4344,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "Creative boost",
           "fontWeight": 400,
           "width": 313,
-          "height": 20,
+          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4426,10 +4426,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Energized feelings",
           "fontWeight": 400,
           "width": 313,
-          "height": 20,
+          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4456,16 +4456,16 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
-              [0, 900]
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700]
             ],
             "metrics": {
               "upm": 1000,
@@ -4501,10 +4501,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">The principles</span>",
+          "content": "<span style=\"font-weight: 700\">Benefits of play</span>",
           "fontWeight": 400,
           "width": 331,
-          "height": 39,
+          "height": 41,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -4586,7 +4586,7 @@
           "basedOn": "23a2eebf-b6e0-4b03-adb8-4a9a4e015a6d",
           "id": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "x": 46,
-          "y": 260
+          "y": 258
         },
         {
           "opacity": 100,
@@ -4660,7 +4660,7 @@
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "98381e2f-b4b0-43dd-9b51-fa073ba77610",
           "x": 46,
-          "y": 291
+          "y": 290
         },
         {
           "opacity": 100,
@@ -4734,7 +4734,7 @@
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "02cd45b1-c37b-4da2-a326-161947df271f",
           "x": 46,
-          "y": 322
+          "y": 321
         },
         {
           "opacity": 100,
@@ -4808,7 +4808,7 @@
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "3bb4786e-ceac-44e5-8b4b-e716bf6fb349",
           "x": 46,
-          "y": 353
+          "y": 352
         },
         {
           "opacity": 100,
@@ -4882,7 +4882,7 @@
           "basedOn": "5f66f577-5ba3-45e1-ae3c-6d0581a5e644",
           "id": "af90d4a8-fc72-4035-b4ce-2351b7c981d7",
           "x": 46,
-          "y": 385
+          "y": 382
         }
       ],
       "backgroundColor": {
@@ -4942,8 +4942,8 @@
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [1, 400],
               [0, 700],
+              [1, 400],
               [1, 700]
             ],
             "metrics": {
@@ -4980,10 +4980,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is innovative</span>",
+          "content": "Headband",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5048,10 +5048,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design makes a product useful</span>",
+          "content": "Bobby pins",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5116,10 +5116,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is unobtrusive</span>",
+          "content": "Clips",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5184,10 +5184,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is aesthetic</span>",
+          "content": "Ties",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5252,10 +5252,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Scarf",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5282,18 +5282,18 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
               [0, 800],
-              [1, 800],
               [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 800],
               [1, 900]
             ],
             "metrics": {
@@ -5330,10 +5330,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 300\">The principles</span>",
+          "content": "<span style=\"font-weight: 300\">Accessory necessities</span>",
           "fontWeight": 400,
           "width": 331,
-          "height": 41,
+          "height": 42,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5592,9 +5592,9 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">The principles</span>",
+          "content": "<span style=\"font-weight: 700\">Categories of Robots</span>",
           "width": 331,
-          "height": 31,
+          "height": 30,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5667,10 +5667,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "Locomotion",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5743,10 +5743,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "Industrial",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5819,10 +5819,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is unobtrusive",
+          "content": "Medical",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5894,10 +5894,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "Consumer",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -5970,10 +5970,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is honest",
+          "content": "Aerospace",
           "fontWeight": 400,
           "width": 313,
-          "height": 21,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -6420,16 +6420,16 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
               [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
               [1, 900]
             ],
             "metrics": {
@@ -6466,7 +6466,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "Bike the Golden\nGate Bridge",
           "fontWeight": 400,
           "width": 130,
           "height": 33,
@@ -6541,7 +6541,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "Stroll through&nbsp;\nFisherman's Warf",
           "fontWeight": 400,
           "width": 130,
           "height": 33,
@@ -6616,7 +6616,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "Chill in Mission\nDolores Park",
           "fontWeight": 400,
           "width": 130,
           "height": 33,
@@ -6691,10 +6691,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product understandable",
+          "content": "Go surfing on\nOcean Beach",
           "fontWeight": 400,
           "width": 130,
-          "height": 49,
+          "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -6766,17 +6766,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is long-lasting",
+          "content": "Buy speciality\ncheese and bread at\nThe Ferry Building",
           "fontWeight": 400,
           "width": 130,
-          "height": 33,
+          "height": 50,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "8dce2eb8-bec4-4b84-83d9-dad0a1c07128",
           "id": "aaa353f9-f553-4344-9cd2-bdc8bad73399",
           "x": 64,
-          "y": 394
+          "y": 375
         },
         {
           "opacity": 100,
@@ -6841,7 +6841,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is unobtrusive",
+          "content": "Try some local dim\nsum in Chinatown",
           "fontWeight": 400,
           "width": 130,
           "height": 33,
@@ -6916,10 +6916,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is honest",
+          "content": "Explore the Presidio&nbsp;\nand Golden Gate Parks",
           "fontWeight": 400,
           "width": 130,
-          "height": 33,
+          "height": 50,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -6991,17 +6991,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is thorough down to the last detail",
+          "content": "See a game in the&nbsp;\nOracle Park",
           "fontWeight": 400,
           "width": 130,
-          "height": 49,
+          "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "aaa353f9-f553-4344-9cd2-bdc8bad73399",
           "id": "ae39e734-025b-4c43-8601-fcbb4d944b6e",
           "x": 242,
-          "y": 267
+          "y": 283
         },
         {
           "opacity": 100,
@@ -7066,17 +7066,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is environmentally-friendly",
+          "content": "Dine outdoors in\nNorth Beach",
           "fontWeight": 400,
           "width": 130,
-          "height": 49,
+          "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "aaa353f9-f553-4344-9cd2-bdc8bad73399",
           "id": "a353d4d0-cbfa-44e1-a8bd-213ed70ed145",
           "x": 242,
-          "y": 340
+          "y": 338
         },
         {
           "opacity": 100,
@@ -7141,17 +7141,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is as little design as possible",
+          "content": "Take a Ferry to&nbsp;\nSausalito",
           "fontWeight": 400,
           "width": 130,
-          "height": 49,
+          "height": 33,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "aaa353f9-f553-4344-9cd2-bdc8bad73399",
           "id": "6a3a063d-59d4-43db-b7d1-027fa2bd8ec7",
           "x": 242,
-          "y": 413
+          "y": 392
         },
         {
           "opacity": 100,
@@ -7526,7 +7526,7 @@
           "basedOn": "b69f96c0-bc39-42a5-ad82-3b631dca68af",
           "id": "bc9d0c23-68fa-4541-858b-262f19b6a05e",
           "x": 40,
-          "y": 394
+          "y": 375
         },
         {
           "opacity": 100,
@@ -7751,7 +7751,7 @@
           "basedOn": "e7f645b9-3f90-49bf-8042-da032d5cca16",
           "id": "af6c6f67-7e2a-4d3d-b428-c54b9a32fac4",
           "x": 218,
-          "y": 267
+          "y": 283
         },
         {
           "opacity": 100,
@@ -7826,7 +7826,7 @@
           "basedOn": "e7f645b9-3f90-49bf-8042-da032d5cca16",
           "id": "774bfc23-e512-423a-971a-8e815ae01ecc",
           "x": 218,
-          "y": 340
+          "y": 338
         },
         {
           "opacity": 100,
@@ -7901,7 +7901,7 @@
           "basedOn": "e7f645b9-3f90-49bf-8042-da032d5cca16",
           "id": "1f95effd-af8f-4890-835a-7e17ec2e2fe4",
           "x": 218,
-          "y": 413
+          "y": 392
         },
         {
           "opacity": 100,
@@ -8013,68 +8013,10 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "6a677a18-8799-4d4b-8f04-3fc55d994ec0",
-          "id": "7cf81393-4b7d-4edd-8832-0bc40b3674fd",
-          "x": 40,
-          "y": 378
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 154,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "6a677a18-8799-4d4b-8f04-3fc55d994ec0",
-          "id": "32e2392d-fa78-4561-b2e9-04a914d45c9f",
-          "x": 218,
-          "y": 397
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 154,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
           "basedOn": "980a5f9b-7a2f-4199-970a-38abbde832f6",
           "id": "cff34a8c-6e08-4e15-9e1f-8ef62dbb0e07",
           "x": 218,
-          "y": 324
+          "y": 325
         },
         {
           "opacity": 100,
@@ -8103,7 +8045,7 @@
           "basedOn": "ae972090-9f91-4c90-b859-9bc03af55197",
           "id": "bec793f4-a509-4b30-929a-fb9604d98991",
           "x": 218,
-          "y": 254
+          "y": 270
         },
         {
           "opacity": 100,
@@ -8133,6 +8075,64 @@
           "id": "77200e78-f860-41dc-8da8-beb917920f75",
           "x": 218,
           "y": 200
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 154,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "ae972090-9f91-4c90-b859-9bc03af55197",
+          "id": "d5371343-b3a7-4403-8ab1-790b61ebade1",
+          "x": 40,
+          "y": 362
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "color": {
+              "r": 0,
+              "g": 0,
+              "b": 0
+            }
+          },
+          "type": "shape",
+          "width": 154,
+          "height": 1,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": {
+            "type": "rectangle"
+          },
+          "basedOn": "cff34a8c-6e08-4e15-9e1f-8ef62dbb0e07",
+          "id": "2f06affc-b522-4f7d-8cb8-bd0855e899e8",
+          "x": 218,
+          "y": 379
         }
       ],
       "backgroundColor": {
@@ -8238,10 +8238,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "Snake Plant",
           "fontWeight": 400,
           "width": 292,
-          "height": 19,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8249,7 +8249,7 @@
           "basedOn": "911a54be-15e5-4465-b52c-473b53aa5f46",
           "id": "587f6698-9762-440a-9375-753c68b6b702",
           "x": 80,
-          "y": 195.5
+          "y": 195
         },
         {
           "opacity": 100,
@@ -8314,10 +8314,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "Succulent",
           "fontWeight": 400,
           "width": 292,
-          "height": 19,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8325,7 +8325,7 @@
           "basedOn": "d9fd9d7a-5ef7-40d8-93e6-b7ebe3b2f5af",
           "id": "b340f622-144b-48c5-bb74-abbbd123c312",
           "x": 80,
-          "y": 251.5
+          "y": 252
         },
         {
           "opacity": 100,
@@ -8390,17 +8390,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is unobtrusive",
+          "content": "Spider Plant",
           "fontWeight": 400,
           "width": 292,
-          "height": 19,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "c122f5fe-ae28-4ca7-98b5-c194af864b85",
           "id": "28185704-c253-4fae-8621-5bc141e28482",
           "x": 80,
-          "y": 363.5,
+          "y": 364,
           "marginOffset": 5.90625
         },
         {
@@ -8466,10 +8466,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "Aloe Vera",
           "fontWeight": 400,
           "width": 292,
-          "height": 19,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -8477,7 +8477,7 @@
           "basedOn": "684b381f-4117-4236-a264-42949b39533a",
           "id": "dd8a2c00-2a23-4301-ae99-9ade0ebe3de9",
           "x": 80,
-          "y": 307.5
+          "y": 307
         },
         {
           "opacity": 100,
@@ -8542,17 +8542,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is honest",
+          "content": "Fiddle Leaf Fig",
           "fontWeight": 400,
           "width": 292,
-          "height": 19,
+          "height": 18,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "d2e33049-7bad-4365-9663-7a842bb330bc",
           "id": "cb75aad4-9abe-4592-9f0c-e4fd5755bf54",
           "x": 80,
-          "y": 419.5,
+          "y": 419,
           "marginOffset": 5.90625
         },
         {
@@ -9164,10 +9164,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "Self care is meditation.",
           "fontWeight": 400,
           "width": 332,
-          "height": 24,
+          "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9240,10 +9240,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "Self care is journaling.",
           "fontWeight": 400,
           "width": 332,
-          "height": 24,
+          "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9316,10 +9316,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is unobtrusive",
+          "content": "Self care is eating healthy.",
           "fontWeight": 400,
           "width": 332,
-          "height": 24,
+          "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9392,10 +9392,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "Self care is exercising.",
           "fontWeight": 400,
           "width": 332,
-          "height": 24,
+          "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9468,10 +9468,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is honest",
+          "content": "Self care is socializing.",
           "fontWeight": 400,
           "width": 332,
-          "height": 24,
+          "height": 26,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9579,10 +9579,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "CDs/DVDs/VHSs",
           "fontWeight": 400,
           "width": 154,
-          "height": 16,
+          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9648,10 +9648,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "Books",
           "fontWeight": 400,
           "width": 154,
-          "height": 35,
+          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9717,17 +9717,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "Seasonal Decor",
           "fontWeight": 400,
           "width": 154,
-          "height": 16,
+          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "9b59be2e-45e1-4721-b058-866b39b0ff5d",
           "id": "faee2c09-ca9a-4f84-be5a-e23ed401f4f8",
           "x": 40,
-          "y": 361
+          "y": 347
         },
         {
           "opacity": 100,
@@ -9786,10 +9786,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product understandable",
+          "content": "Broken Appliances",
           "fontWeight": 400,
           "width": 154,
-          "height": 35,
+          "height": 15,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -9855,224 +9855,224 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is long-lasting",
-          "fontWeight": 400,
-          "width": 154,
-          "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "aaa353f9-f553-4344-9cd2-bdc8bad73399",
-          "id": "9be290e8-3171-4080-9030-e0dfc08eb7be",
-          "x": 218,
-          "y": 363
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto Condensed",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 700],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 700],
-              [1, 700]
-            ],
-            "metrics": {
-              "upm": 2048,
-              "asc": 1900,
-              "des": -500,
-              "tAsc": 1536,
-              "tDes": -512,
-              "tLGap": 102,
-              "wAsc": 1946,
-              "wDes": 512,
-              "xH": 1082,
-              "capH": 1456,
-              "yMin": -555,
-              "yMax": 2163,
-              "hAsc": 1900,
-              "hDes": -500,
-              "lGap": 0
-            }
-          },
-          "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.5,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "type": "text",
-          "content": "Good design is unobtrusive",
-          "fontWeight": 400,
-          "width": 154,
-          "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "1f3f9fe4-9855-4083-986a-afdf51f0f7b4",
-          "id": "bef35e47-956e-4992-a73e-cb6917fc69e0",
-          "x": 40,
-          "y": 419
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto Condensed",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 700],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 700],
-              [1, 700]
-            ],
-            "metrics": {
-              "upm": 2048,
-              "asc": 1900,
-              "des": -500,
-              "tAsc": 1536,
-              "tDes": -512,
-              "tLGap": 102,
-              "wAsc": 1946,
-              "wDes": 512,
-              "xH": 1082,
-              "capH": 1456,
-              "yMin": -555,
-              "yMax": 2163,
-              "hAsc": 1900,
-              "hDes": -500,
-              "lGap": 0
-            }
-          },
-          "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.5,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "type": "text",
-          "content": "Good design is honest",
-          "fontWeight": 400,
-          "width": 154,
-          "height": 16,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "da0957d9-2ca1-4ee4-83cc-a23404c98eb8",
-          "id": "a097f00a-6680-4b5f-bdef-05c48a1f3316",
-          "x": 218,
-          "y": 305
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Roboto Condensed",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 700],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 300],
-              [1, 300],
-              [0, 400],
-              [1, 400],
-              [0, 700],
-              [1, 700]
-            ],
-            "metrics": {
-              "upm": 2048,
-              "asc": 1900,
-              "des": -500,
-              "tAsc": 1536,
-              "tDes": -512,
-              "tLGap": 102,
-              "wAsc": 1946,
-              "wDes": 512,
-              "xH": 1082,
-              "capH": 1456,
-              "yMin": -555,
-              "yMax": 2163,
-              "hAsc": 1900,
-              "hDes": -500,
-              "lGap": 0
-            }
-          },
-          "fontSize": 14,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.5,
-          "textAlign": "left",
-          "padding": {
-            "locked": true,
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "type": "text",
-          "content": "Good design is thorough down to the last detail",
+          "content": "Anything that doesn't bring\nyou joy",
           "fontWeight": 400,
           "width": 154,
           "height": 35,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
+          "basedOn": "aaa353f9-f553-4344-9cd2-bdc8bad73399",
+          "id": "9be290e8-3171-4080-9030-e0dfc08eb7be",
+          "x": 218,
+          "y": 383
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto Condensed",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Stuffed Animals",
+          "fontWeight": 400,
+          "width": 154,
+          "height": 15,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "1f3f9fe4-9855-4083-986a-afdf51f0f7b4",
+          "id": "bef35e47-956e-4992-a73e-cb6917fc69e0",
+          "x": 40,
+          "y": 407
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto Condensed",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Stuff you saved in a box that you haven't opened for\na year",
+          "fontWeight": 400,
+          "width": 154,
+          "height": 55,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "da0957d9-2ca1-4ee4-83cc-a23404c98eb8",
+          "id": "a097f00a-6680-4b5f-bdef-05c48a1f3316",
+          "x": 218,
+          "y": 285
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto Condensed",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 700],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700]
+            ],
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "left",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "Rinse and repeat",
+          "fontWeight": 400,
+          "width": 154,
+          "height": 15,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "basedOn": "ae39e734-025b-4c43-8601-fcbb4d944b6e",
           "id": "d8e76066-fb80-489c-932b-ab8d7e61e2b8",
           "x": 218,
-          "y": 421
+          "y": 463
         },
         {
           "opacity": 100,
@@ -10279,7 +10279,7 @@
           "basedOn": "935ea9a2-24dd-45f1-a590-662a082d8e34",
           "id": "80850e0d-f962-4897-bf5d-843b08caaae8",
           "x": 40,
-          "y": 336
+          "y": 322
         },
         {
           "opacity": 100,
@@ -10348,7 +10348,7 @@
           "basedOn": "c77ae14d-5e53-4253-ac0e-36b935cdfca8",
           "id": "94cb0125-8ce9-4717-ad92-c8f084962877",
           "x": 39,
-          "y": 394
+          "y": 382
         },
         {
           "opacity": 100,
@@ -10486,7 +10486,7 @@
           "basedOn": "e7f645b9-3f90-49bf-8042-da032d5cca16",
           "id": "9c0d3922-3194-48d8-ad95-cb02037d2284",
           "x": 218,
-          "y": 280
+          "y": 260
         },
         {
           "opacity": 100,
@@ -10555,7 +10555,7 @@
           "basedOn": "4a81bb81-2862-4bd1-8fc1-04bb6c8e8d1c",
           "id": "4f6153f1-f4ca-4fd6-b356-da3f0b7e2de5",
           "x": 218,
-          "y": 338
+          "y": 358
         },
         {
           "opacity": 100,
@@ -10624,7 +10624,7 @@
           "basedOn": "af6c6f67-7e2a-4d3d-b428-c54b9a32fac4",
           "id": "b8a76540-9b19-445b-b1d2-f460a0173be0",
           "x": 218,
-          "y": 396
+          "y": 436
         },
         {
           "opacity": 100,
@@ -10682,7 +10682,7 @@
           "basedOn": "980a5f9b-7a2f-4199-970a-38abbde832f6",
           "id": "5dea57ca-db08-485d-b12e-cf7e9f845553",
           "x": 40,
-          "y": 327
+          "y": 310
         },
         {
           "opacity": 100,
@@ -10711,7 +10711,7 @@
           "basedOn": "ae972090-9f91-4c90-b859-9bc03af55197",
           "id": "15306dfc-17da-4d45-9ece-ebf9611c2003",
           "x": 40,
-          "y": 385
+          "y": 373
         },
         {
           "opacity": 100,
@@ -10740,7 +10740,7 @@
           "basedOn": "7cf81393-4b7d-4edd-8832-0bc40b3674fd",
           "id": "e858248a-4dc4-47f9-b750-1a374514fdd0",
           "x": 40,
-          "y": 443
+          "y": 431
         },
         {
           "opacity": 100,
@@ -10769,7 +10769,7 @@
           "basedOn": "bec793f4-a509-4b30-929a-fb9604d98991",
           "id": "2ed00db8-e88a-461c-954e-c13951f98deb",
           "x": 218,
-          "y": 271
+          "y": 252
         },
         {
           "opacity": 100,
@@ -10798,7 +10798,7 @@
           "basedOn": "77200e78-f860-41dc-8da8-beb917920f75",
           "id": "62d4953e-e441-44ba-b17f-c452c7c8f5a9",
           "x": 218,
-          "y": 329
+          "y": 351
         },
         {
           "opacity": 100,
@@ -10827,7 +10827,7 @@
           "basedOn": "15306dfc-17da-4d45-9ece-ebf9611c2003",
           "id": "f8244d91-759f-4a82-b931-e9e021e0df81",
           "x": 218,
-          "y": 387
+          "y": 429
         }
       ],
       "backgroundColor": {
@@ -10887,12 +10887,12 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 700],
-              [1, 700],
               [0, 900],
+              [1, 300],
+              [1, 400],
+              [1, 700],
               [1, 900]
             ],
             "metrics": {
@@ -10929,10 +10929,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is innovative",
+          "content": "Brazil",
           "fontWeight": 400,
           "width": 307,
-          "height": 22,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11001,10 +11001,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes a product useful",
+          "content": "Vietnam",
           "fontWeight": 400,
           "width": 307,
-          "height": 22,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11073,10 +11073,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is unobtrusive",
+          "content": "Indonesia",
           "fontWeight": 400,
           "width": 307,
-          "height": 22,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11145,10 +11145,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is aesthetic",
+          "content": "Colombia",
           "fontWeight": 400,
           "width": 307,
-          "height": 22,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11217,10 +11217,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">Good design is honest</span>",
+          "content": "Ethiopia",
           "fontWeight": 400,
           "width": 307,
-          "height": 22,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11289,7 +11289,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 400\">The principles</span>",
+          "content": "Top coffee exporters",
           "fontWeight": 400,
           "width": 331,
           "height": 34,
@@ -11533,16 +11533,16 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
-              [0, 900]
+              [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700]
             ],
             "metrics": {
               "upm": 1000,
@@ -11578,10 +11578,10 @@
             "vertical": 8
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; color: #fff\">1. &nbsp;Good design is innovative</span>",
+          "content": "<span style=\"font-weight: 700; color: #fff\">1. &nbsp;Ice breakers</span>",
           "fontWeight": 400,
           "width": 316,
-          "height": 45,
+          "height": 43,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11589,7 +11589,7 @@
           "basedOn": "2e513127-a6e7-439e-9e9c-9d24b1c55bd2",
           "id": "42bfa787-5d92-467c-9317-12c1567b4638",
           "x": 48,
-          "y": 171
+          "y": 185
         },
         {
           "opacity": 100,
@@ -11654,10 +11654,10 @@
             "vertical": 8
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">2. &nbsp;Good design makes a product &nbsp;&nbsp;&nbsp;&nbsp;</span>\n<span style=\"font-weight: 700\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; useful</span>",
+          "content": "<span style=\"font-weight: 700\">2. &nbsp;Business focused</span>",
           "fontWeight": 400,
           "width": 316,
-          "height": 69,
+          "height": 43,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -11665,7 +11665,7 @@
           "basedOn": "859e00a8-bfc3-437f-a068-6b1b23fe0c03",
           "id": "bb39a121-bc3a-49c6-8880-2afe0a964e62",
           "x": 48,
-          "y": 222
+          "y": 236
         },
         {
           "opacity": 100,
@@ -11730,7 +11730,7 @@
             "vertical": 8
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">4. &nbsp;Good design is unobtrusive</span>",
+          "content": "<span style=\"font-weight: 700\">4. &nbsp;Active games</span>",
           "fontWeight": 400,
           "width": 316,
           "height": 43,
@@ -11741,7 +11741,7 @@
           "basedOn": "87dca9c5-67ac-4297-98ed-917e34970534",
           "id": "75962323-124b-40c4-8f48-361f31b39316",
           "x": 48,
-          "y": 350
+          "y": 338
         },
         {
           "opacity": 100,
@@ -11806,7 +11806,7 @@
             "vertical": 8
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">3. &nbsp;Good design is aesthetic</span>",
+          "content": "<span style=\"font-weight: 700\">3. &nbsp;Guessing games</span>",
           "fontWeight": 400,
           "width": 316,
           "height": 43,
@@ -11817,7 +11817,7 @@
           "basedOn": "d760191c-c367-4e05-a7d4-6abface2e73e",
           "id": "3dbe1aa3-a8ca-4313-8170-83958567437d",
           "x": 48,
-          "y": 299
+          "y": 287
         },
         {
           "opacity": 100,
@@ -11882,7 +11882,7 @@
             "vertical": 8
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">5. &nbsp;Good design is honest</span>",
+          "content": "<span style=\"font-weight: 700\">5. &nbsp;Relaxing activities</span>",
           "fontWeight": 400,
           "width": 316,
           "height": 43,
@@ -11893,7 +11893,7 @@
           "basedOn": "e5b0b416-cfd2-413a-830b-db40861d530d",
           "id": "a0fbe4da-4624-4a5c-b46d-4318558b9194",
           "x": 48,
-          "y": 401
+          "y": 389
         }
       ],
       "backgroundColor": {
@@ -11953,8 +11953,8 @@
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [1, 400],
               [0, 700],
+              [1, 400],
               [1, 700]
             ],
             "metrics": {
@@ -11991,10 +11991,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design\nis innovative",
+          "content": "Cleanse",
           "fontWeight": 400,
           "width": 332,
-          "height": 47,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -12002,7 +12002,7 @@
           "basedOn": "2e513127-a6e7-439e-9e9c-9d24b1c55bd2",
           "id": "6a4b2a15-dcb8-4674-8311-b0d8165f4a1e",
           "x": 40,
-          "y": 154
+          "y": 215
         },
         {
           "opacity": 100,
@@ -12059,10 +12059,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design makes\na product useful",
+          "content": "Condition",
           "fontWeight": 400,
           "width": 332,
-          "height": 47,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -12070,7 +12070,7 @@
           "basedOn": "859e00a8-bfc3-437f-a068-6b1b23fe0c03",
           "id": "b2d9f1f9-a7b2-49c2-b154-5a6756633ff1",
           "x": 40,
-          "y": 244
+          "y": 279
         },
         {
           "opacity": 100,
@@ -12127,10 +12127,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is\nunobtrusive",
+          "content": "Detangle",
           "fontWeight": 400,
           "width": 332,
-          "height": 47,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -12138,7 +12138,7 @@
           "basedOn": "87dca9c5-67ac-4297-98ed-917e34970534",
           "id": "97aabcc5-03e2-47db-85fe-2ed0ffe3b78f",
           "x": 40,
-          "y": 426
+          "y": 404
         },
         {
           "opacity": 100,
@@ -12195,10 +12195,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "Good design is\naesthetic",
+          "content": "Moisturise and seal",
           "fontWeight": 400,
           "width": 332,
-          "height": 47,
+          "height": 20,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -12206,7 +12206,7 @@
           "basedOn": "d760191c-c367-4e05-a7d4-6abface2e73e",
           "id": "1b53244c-4993-411b-a5e7-58845c12d95c",
           "x": 40,
-          "y": 335
+          "y": 341
         },
         {
           "opacity": 100,
@@ -12225,18 +12225,18 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 200],
-              [1, 200],
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 600],
-              [1, 600],
               [0, 700],
-              [1, 700],
               [0, 800],
-              [1, 800],
               [0, 900],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 600],
+              [1, 700],
+              [1, 800],
               [1, 900]
             ],
             "metrics": {
@@ -12284,7 +12284,7 @@
           "basedOn": "6a4b2a15-dcb8-4674-8311-b0d8165f4a1e",
           "id": "a96bda21-5aaa-4352-bd58-e1286b535950",
           "x": 197,
-          "y": 134
+          "y": 195
         },
         {
           "opacity": 100,
@@ -12303,7 +12303,7 @@
           },
           "type": "shape",
           "x": 179,
-          "y": 140.5,
+          "y": 201.5,
           "width": 8,
           "height": 1,
           "scale": 100,
@@ -12341,7 +12341,7 @@
           "basedOn": "756040e3-c569-47b3-98cf-e61ad9cc74f2",
           "id": "ee8989ed-441c-4442-8cbe-2a5aca4dd4b4",
           "x": 226,
-          "y": 140.5
+          "y": 201.5
         },
         {
           "opacity": 100,
@@ -12419,7 +12419,7 @@
           "basedOn": "a96bda21-5aaa-4352-bd58-e1286b535950",
           "id": "633c0021-ea6d-4b18-9f3b-80f1869f2f01",
           "x": 197,
-          "y": 224
+          "y": 255
         },
         {
           "opacity": 100,
@@ -12448,7 +12448,7 @@
           "basedOn": "756040e3-c569-47b3-98cf-e61ad9cc74f2",
           "id": "1c2ef0db-ecb3-4b57-9650-f582784f6862",
           "x": 179,
-          "y": 231
+          "y": 266
         },
         {
           "opacity": 100,
@@ -12477,7 +12477,7 @@
           "basedOn": "ee8989ed-441c-4442-8cbe-2a5aca4dd4b4",
           "id": "dd6c59c4-50a2-4f55-96d9-163d376e0c40",
           "x": 226,
-          "y": 231
+          "y": 266
         },
         {
           "opacity": 100,
@@ -12555,7 +12555,7 @@
           "basedOn": "633c0021-ea6d-4b18-9f3b-80f1869f2f01",
           "id": "486278fa-f9c3-498f-a535-d38014013556",
           "x": 197,
-          "y": 315
+          "y": 322
         },
         {
           "opacity": 100,
@@ -12584,7 +12584,7 @@
           "basedOn": "1c2ef0db-ecb3-4b57-9650-f582784f6862",
           "id": "ab037ba1-e534-469a-9c9b-eca9290e9141",
           "x": 179,
-          "y": 322
+          "y": 329
         },
         {
           "opacity": 100,
@@ -12613,7 +12613,7 @@
           "basedOn": "dd6c59c4-50a2-4f55-96d9-163d376e0c40",
           "id": "b6cb61e8-49c9-44fc-bcba-a53b30e65eb0",
           "x": 226,
-          "y": 322
+          "y": 329
         },
         {
           "opacity": 100,
@@ -12691,7 +12691,7 @@
           "basedOn": "633c0021-ea6d-4b18-9f3b-80f1869f2f01",
           "id": "c3d5d88d-8bed-4513-b6c8-dc2ab841a53b",
           "x": 195,
-          "y": 406
+          "y": 384
         },
         {
           "opacity": 100,
@@ -12720,7 +12720,7 @@
           "basedOn": "1c2ef0db-ecb3-4b57-9650-f582784f6862",
           "id": "af667001-d6c7-48f6-b5e9-41a387912f59",
           "x": 177,
-          "y": 413
+          "y": 391
         },
         {
           "opacity": 100,
@@ -12749,7 +12749,7 @@
           "basedOn": "dd6c59c4-50a2-4f55-96d9-163d376e0c40",
           "id": "9087c5c4-ac99-44a7-a4b6-a17a54347d68",
           "x": 224,
-          "y": 413
+          "y": 391
         }
       ],
       "backgroundColor": {
@@ -12941,10 +12941,10 @@
             "styles": ["italic", "regular"],
             "variants": [
               [0, 300],
-              [1, 300],
               [0, 400],
-              [1, 400],
               [0, 700],
+              [1, 300],
+              [1, 400],
               [1, 700]
             ],
             "metrics": {
