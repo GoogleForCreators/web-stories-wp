@@ -153,7 +153,7 @@ function CardGallery({ story, isRTL, galleryLabel }) {
             const isActive = isCurrentPage && isInteractive;
             return (
               <ItemContainer
-                key={`page-${index}`}
+                key={page.id}
                 ref={(el) => {
                   pageRefs.current[page.id] = el;
                 }}

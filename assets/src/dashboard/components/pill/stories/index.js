@@ -217,7 +217,10 @@ export const _radioGroup = () => {
         ({ disabled, label, selected = false, value }, index) => {
           return (
             <Pill
-              key={value + index}
+              key={
+                /* eslint-disable-next-line react/no-array-index-key */
+                value + index
+              }
               inputType="radio"
               name="demo_radio"
               onClick={(e, selectedValue) => {
@@ -261,7 +264,10 @@ export const _colorSwatches = () => {
         return (
           <Pill
             ariaLabel={label}
-            key={value + index}
+            key={
+              /* eslint-disable-next-line react/no-array-index-key */
+              value + index
+            }
             inputType="checkbox"
             labelType={PILL_LABEL_TYPES.SWATCH}
             hex={hex}

@@ -195,7 +195,7 @@ function PublisherLogoSettings({
 
               return (
                 <GridItemContainer
-                  key={`${publisherLogo.title}_${idx}`}
+                  key={publisherLogo.id}
                   ref={(el) => {
                     itemRefs.current[publisherLogo.id] = el;
                   }}
