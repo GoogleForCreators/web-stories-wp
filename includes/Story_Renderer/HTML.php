@@ -224,13 +224,13 @@ class HTML {
 	 * @return string
 	 */
 	protected function replace_url_scheme( $content ) {
-		$current = is_ssl() ? 'https' : 'http';
-		$new     = is_ssl() ? 'http' : 'https';
-		$home    = get_home_url();
+		$home           = get_home_url();
+		$current_scheme = is_ssl() ? 'https' : 'http';
+		$replace_scheme = is_ssl() ? 'http' : 'https';
+		$search         = set_url_scheme( $home, $replace_scheme );
+		$replace        = set_url_scheme( $home, $current_scheme );
 
-		$content = str_replace( set_url_scheme( $home, $new ), set_url_scheme( $home, $current ), $content );
-
-		return $content;
+		return str_replace( $search, $replace, $content );
 	}
 
 	/**
