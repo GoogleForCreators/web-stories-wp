@@ -539,6 +539,15 @@ class Story_Post_Type extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::filter_list_of_allowed_filetypes
+	 * @group ms-required
+	 */
+	public function test_filter_list_of_allowed_filetypes() {
+		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
+		$this->assertContains( 'vtt', $site_exts );
+	}
+
+	/**
 	 * This is a bit of a hack used to buffer feed content.
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94

@@ -37,7 +37,7 @@ const DashboardGrid = styled.div(
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
   grid-template-rows: minmax(${columnHeight}px, auto);
-  scroll-margin-top: 50vh;
+  scroll-margin-top: 30vh;
   margin-top: 2px; // this is for keyboard focus 
 
   ${theme.breakpoint.tablet} {
@@ -54,7 +54,7 @@ const DashboardGrid = styled.div(
   }
   
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)};
+    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important; 
   }
 `
 );

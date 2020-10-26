@@ -34,7 +34,7 @@ import {
  */
 import StoryPlayer from './storyPlayer';
 
-function EmbedPreview({ url, title, poster, isSelected }, ref) {
+function EmbedPreview({ url, title, poster, isSelected, width, height }, ref) {
   const [interactive, setInteractive] = useState(false);
 
   useEffect(() => {
@@ -50,7 +50,14 @@ function EmbedPreview({ url, title, poster, isSelected }, ref) {
   // the block can be selected without interacting with the embed preview that the overlay covers.
   /* eslint-disable jsx-a11y/no-static-element-interactions */
   return (
-    <div className="web-stories-embed-preview">
+    <div
+      className="web-stories-embed-preview wp-block-embed__wrapper"
+      style={{
+        '--aspect-ratio': 0 !== width ? height / width : 1,
+        '--width': `${width}px`,
+        '--height': `${height}px`,
+      }}
+    >
       <StoryPlayer
         url={url}
         title={title}
@@ -75,6 +82,8 @@ EmbedPreview.propTypes = {
   title: PropTypes.string.isRequired,
   poster: PropTypes.string,
   isSelected: PropTypes.bool,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 const EmbedPreviewWithRef = forwardRef(EmbedPreview);

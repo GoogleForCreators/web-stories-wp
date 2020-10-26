@@ -106,6 +106,7 @@ const getFontDeclarations = (pages) => {
         break;
     }
   }
+
   return fontDeclarations;
 };
 

@@ -1,5 +1,5 @@
 {
-  "current": "0dd3de0f-7828-4c0d-9f62-b910a7bcacc7",
+  "current": "e8f0424f-1545-4f97-951b-82acd0a94707",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -198,8 +198,8 @@
             }
           },
           "type": "shape",
-          "x": 33,
-          "y": 340,
+          "x": 41,
+          "y": 337,
           "width": 112,
           "height": 32,
           "scale": 100,
@@ -275,8 +275,8 @@
           "type": "text",
           "content": "<span style=\"font-weight: 900; color: #fff\">CATEGORY</span>",
           "fontWeight": 400,
-          "x": 33,
-          "y": 346.5,
+          "x": 41,
+          "y": 345,
           "width": 112,
           "height": 19,
           "scale": 100,
@@ -347,16 +347,91 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">Ten principles for good design</span>",
+          "content": "<span style=\"font-weight: 700\">Robots, Humanity's New Best Friend</span>",
           "fontWeight": 700,
-          "x": 33,
-          "y": 388,
+          "x": 41,
+          "y": 385,
           "width": 313,
-          "height": 97,
+          "height": 144,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "id": "d774160a-9a92-4fb7-b49a-261032b332fe"
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Roboto",
+            "weights": [100, 300, 400, 500, 700, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [1, 100],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900]
+            ],
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"],
+            "service": "fonts.google.com",
+            "metrics": {
+              "upm": 2048,
+              "asc": 1900,
+              "des": -500,
+              "tAsc": 1536,
+              "tDes": -512,
+              "tLGap": 102,
+              "wAsc": 1946,
+              "wDes": 512,
+              "xH": 1082,
+              "capH": 1456,
+              "yMin": -555,
+              "yMax": 2163,
+              "hAsc": 1900,
+              "hDes": -500,
+              "lGap": 0
+            }
+          },
+          "fontSize": 17,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.5,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "<span style=\"font-weight: 700\">By Agatha Android</span>",
+          "fontWeight": 400,
+          "x": 41,
+          "y": 545,
+          "width": 156,
+          "height": 21,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "2c2855fd-d71b-4041-b5a0-bcc78c55003a",
+          "marginOffset": 5.578125
         },
         {
           "opacity": 100,
@@ -414,24 +489,23 @@
             }
           },
           "lineHeight": 1.5,
-          "textAlign": "initial",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "horizontal": 0,
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700\">By Dieter Rams</span>\n<span style=\"font-weight: 700\">January 31, 2020</span>",
+          "content": "<span style=\"font-weight: 700\">January 16, 2020</span>",
           "fontWeight": 400,
-          "x": 33,
-          "y": 500,
-          "width": 156,
-          "height": 48,
+          "x": 41,
+          "y": 572,
+          "width": 160,
+          "height": 21,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "2c2855fd-d71b-4041-b5a0-bcc78c55003a",
-          "marginOffset": 5.578125
+          "id": "b8f9c01a-e1d2-44bb-b3e0-9f3b7b7b0cb7"
         }
       ],
       "backgroundColor": {
@@ -641,7 +715,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 600\">Ten principles for good design</span>",
+          "content": "<span style=\"font-weight: 600\">The Local's Guide to San Francisco</span>",
           "fontWeight": 700,
           "width": 313,
           "height": 84,
@@ -714,10 +788,10 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "By Dieter Rams &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;January 31, 2020",
+          "content": "By Cali Crystal &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;May 19, 2020",
           "fontWeight": 400,
           "width": 342,
-          "height": 16,
+          "height": 17,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1005,7 +1079,7 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">TEN&nbsp;</span>\n<span style=\"font-weight: 700; letter-spacing: 0.03em\">PRINCIPLES</span>\n<span style=\"font-weight: 700; letter-spacing: 0.03em\">FOR GOOD</span>\n<span style=\"font-weight: 700; letter-spacing: 0.03em\">DESIGN</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.03em\">Plants!</span>\n<span style=\"font-weight: 700; letter-spacing: 0.03em\">Fresh Decor For Modern Homes</span>",
           "fontWeight": 700,
           "width": 313,
           "height": 201,
@@ -1086,9 +1160,9 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "By Dieter Rams\nJanuary 31, 2020",
+          "content": "By Fern Greenthumb\nJanuary 31, 2020",
           "fontWeight": 400,
-          "width": 122,
+          "width": 146,
           "height": 38,
           "scale": 100,
           "focalX": 50,
@@ -1167,7 +1241,7 @@
           "basedOn": "e5cfb7b9-60c7-454d-8aee-9e8d9a8d0ced",
           "id": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
           "x": 107,
-          "y": 374
+          "y": 380
         },
         {
           "opacity": 100,
@@ -1242,7 +1316,7 @@
           "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
           "id": "f77e3d81-d7d2-480a-b185-4a509a452b76",
           "x": 151,
-          "y": 364
+          "y": 370
         },
         {
           "opacity": 100,
@@ -1271,7 +1345,7 @@
           "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
           "id": "146eece8-418e-465e-ba9a-dfd25b1958f4",
           "x": 273,
-          "y": 374
+          "y": 380
         },
         {
           "opacity": 100,
@@ -1342,18 +1416,18 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "By Dieter Rams\nJanuary 31, 2020",
+          "content": "February 14, 2020",
           "fontWeight": 400,
           "width": 122,
-          "height": 38,
+          "height": 19,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 5.578125,
           "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
           "id": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
-          "x": 143,
-          "y": 482
+          "x": 146,
+          "y": 545
         },
         {
           "opacity": 100,
@@ -1418,17 +1492,99 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 700; letter-spacing: 0.04em\">TEN&nbsp;PRINCIPLES</span>\n<span style=\"font-weight: 700; letter-spacing: 0.04em\">FOR GOOD DESIGN</span>",
+          "content": "<span style=\"font-weight: 700; letter-spacing: 0.04em\">HEALTHY HABITS TO FIND YOUR AUTHENTIC SELF</span>",
           "fontWeight": 700,
           "width": 313,
-          "height": 77,
+          "height": 115,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "41f72c82-5f33-4ec2-be22-755a93241212",
           "id": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
           "x": 48,
-          "y": 392
+          "y": 398
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Poppins",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["italic", "regular"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 1050,
+              "des": -350,
+              "tAsc": 1050,
+              "tDes": -350,
+              "tLGap": 100,
+              "wAsc": 1135,
+              "wDes": 627,
+              "xH": 548,
+              "capH": 698,
+              "yMin": -572,
+              "yMax": 1065,
+              "hAsc": 1050,
+              "hDes": -350,
+              "lGap": 100
+            }
+          },
+          "fontSize": 14,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.4,
+          "textAlign": "center",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "By Dr. Lora Poppins",
+          "fontWeight": 400,
+          "width": 140,
+          "height": 19,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 5.578125,
+          "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
+          "id": "9188e061-cd53-466f-9a7e-af78bf59d31e",
+          "x": 139,
+          "y": 525
         }
       ],
       "backgroundColor": {
@@ -1487,10 +1643,10 @@
             }
           },
           "type": "shape",
-          "x": 24,
+          "x": 25,
           "y": 335,
           "width": 363,
-          "height": 218,
+          "height": 266,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
@@ -1566,7 +1722,8 @@
           "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
           "id": "ab4e5032-7d70-42c9-98bf-9761cb8be09b",
           "x": 40,
-          "y": 348
+          "y": 350,
+          "marginOffset": -7.049999999999997
         },
         {
           "opacity": 100,
@@ -1594,8 +1751,8 @@
           },
           "basedOn": "e6be672d-e0cb-4d5b-aef3-a223cf9914bf",
           "id": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
-          "x": 40,
-          "y": 388
+          "x": 41,
+          "y": 387
         },
         {
           "opacity": 100,
@@ -1638,7 +1795,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 43,
+          "fontSize": 42,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -1654,17 +1811,18 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 500; color: #fff\">TEN&nbsp;PRINCIPLES</span>\n<span style=\"font-weight: 500; color: #fff\">FOR GOOD DESIGN</span>",
+          "content": "<span style=\"font-weight: 500; color: #fff\">A CONDENSED GUIDE TO MINIMALISM</span>",
           "fontWeight": 700,
-          "width": 313,
-          "height": 111,
+          "width": 287,
+          "height": 154,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "dd4ac41c-e4fb-451d-977b-9564d3ee28d4",
           "id": "c1b1f578-0c36-4e88-8182-7dfcfebb8b86",
-          "x": 40,
-          "y": 389
+          "x": 41,
+          "y": 388,
+          "marginOffset": -16.043999999999997
         },
         {
           "opacity": 100,
@@ -1692,8 +1850,8 @@
           },
           "basedOn": "679372c2-385c-4dcc-ba9b-ebd100e813ee",
           "id": "da8ea483-5ce8-4443-a069-bbed22a09a6e",
-          "x": 40,
-          "y": 501
+          "x": 41,
+          "y": 548
         },
         {
           "opacity": 100,
@@ -1752,9 +1910,9 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"color: #fff\">By Dieter Rams</span>",
+          "content": "<span style=\"color: #fff\">By Mary Apartment</span>",
           "fontWeight": 400,
-          "width": 122,
+          "width": 163,
           "height": 21,
           "scale": 100,
           "focalX": 50,
@@ -1762,8 +1920,8 @@
           "marginOffset": 5.578125,
           "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
           "id": "5df6e87c-2062-4f33-8049-608df45f5ab0",
-          "x": 40,
-          "y": 515
+          "x": 41,
+          "y": 557
         },
         {
           "opacity": 100,
@@ -1815,14 +1973,14 @@
             }
           },
           "lineHeight": 1.5,
-          "textAlign": "right",
+          "textAlign": "left",
           "padding": {
             "locked": true,
             "horizontal": 0,
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"color: #fff\">January 31, 2020</span>",
+          "content": "<span style=\"color: #fff\">June 29, 2020</span>",
           "fontWeight": 400,
           "width": 122,
           "height": 21,
@@ -1832,8 +1990,8 @@
           "marginOffset": 5.578125,
           "basedOn": "5df6e87c-2062-4f33-8049-608df45f5ab0",
           "id": "3477f800-c840-4dbd-b730-37e1597711e3",
-          "x": 249,
-          "y": 515
+          "x": 272,
+          "y": 557
         }
       ],
       "backgroundColor": {
@@ -1954,8 +2112,9 @@
           "focalY": 50,
           "basedOn": "5730a6f3-4e76-4c7f-9ce5-8316ca800339",
           "id": "7dc69555-5731-4e30-b641-1431d189cdfe",
-          "x": 33,
-          "y": 362
+          "x": 40,
+          "y": 385,
+          "marginOffset": 4.068000000000001
         },
         {
           "opacity": 100,
@@ -2016,17 +2175,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 300\">Ten principles for good design</span>",
+          "content": "<span style=\"font-weight: 300\">Coffee saved the world</span>",
           "fontWeight": 700,
           "width": 313,
-          "height": 91,
+          "height": 90,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "607c25aa-8966-4232-80ac-a64ba70dd497",
           "id": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
-          "x": 33,
-          "y": 395
+          "x": 40,
+          "y": 418
         },
         {
           "opacity": 100,
@@ -2097,9 +2256,9 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "By Dieter Rams &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; January 31, 2020",
+          "content": "Caffeinated Historians",
           "fontWeight": 400,
-          "width": 342,
+          "width": 164,
           "height": 18,
           "scale": 100,
           "focalX": 50,
@@ -2107,8 +2266,8 @@
           "marginOffset": 5.578125,
           "basedOn": "be8efd99-c3a7-4a43-b508-d0a5785eddc3",
           "id": "c6867853-e246-413a-b9df-29d184090da8",
-          "x": 33,
-          "y": 505
+          "x": 40,
+          "y": 528
         },
         {
           "opacity": 100,
@@ -2136,8 +2295,90 @@
           },
           "basedOn": "0e33182f-74b6-45fe-a6c0-7893611b182c",
           "id": "ee502557-00dc-4206-be40-913a8f5cbfbc",
-          "x": 159,
-          "y": 508
+          "x": 219,
+          "y": 532
+        },
+        {
+          "opacity": 100,
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Raleway",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ],
+            "metrics": {
+              "upm": 1000,
+              "asc": 940,
+              "des": -234,
+              "tAsc": 940,
+              "tDes": -234,
+              "tLGap": 0,
+              "wAsc": 1154,
+              "wDes": 234,
+              "xH": 519,
+              "capH": 710,
+              "yMin": -223,
+              "yMax": 1151,
+              "hAsc": 940,
+              "hDes": -234,
+              "lGap": 0
+            }
+          },
+          "fontSize": 16,
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
+          "lineHeight": 1.4,
+          "textAlign": "initial",
+          "padding": {
+            "locked": true,
+            "horizontal": 0,
+            "vertical": 0
+          },
+          "type": "text",
+          "content": "January 31, 2020",
+          "fontWeight": 400,
+          "width": 164,
+          "height": 18,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "marginOffset": 5.578125,
+          "basedOn": "c6867853-e246-413a-b9df-29d184090da8",
+          "id": "60ab74f6-b153-4ca1-8507-07dda1433fb5",
+          "x": 232,
+          "y": 528
         }
       ],
       "backgroundColor": {
@@ -2242,17 +2483,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 900; color: rgba(0,0,0,0.15)\">Ten principles for good design</span>",
+          "content": "<span style=\"font-weight: 900; color: rgba(0,0,0,0.15)\">All Work Should Be Play</span>",
           "fontWeight": 700,
           "width": 313,
-          "height": 113,
+          "height": 112,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "f8175027-5283-4bfa-abe3-0d9d8e0197bf",
           "id": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
-          "x": 50,
-          "y": 340
+          "x": 44,
+          "y": 363
         },
         {
           "opacity": 100,
@@ -2316,17 +2557,17 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 900\">Ten principles for good design</span>",
+          "content": "<span style=\"font-weight: 900\">All Work Should Be Play</span>",
           "fontWeight": 700,
           "width": 313,
-          "height": 113,
+          "height": 112,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "1e7b6aad-8cc7-4404-a538-fbf9c9232588",
           "id": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
-          "x": 46,
-          "y": 336
+          "x": 41,
+          "y": 359
         },
         {
           "opacity": 100,
@@ -2381,7 +2622,7 @@
               "lGap": 0
             }
           },
-          "fontSize": 16,
+          "fontSize": 17,
           "backgroundColor": {
             "color": {
               "r": 196,
@@ -2397,18 +2638,18 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "By Dieter Rams\nJanuary 31, 2020",
+          "content": "By Industry Standard\nJanuary 31, 2020",
           "fontWeight": 400,
-          "width": 159,
-          "height": 42,
+          "width": 176,
+          "height": 44,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 5.578125,
           "basedOn": "e7faf544-0b5e-45c0-bd52-3ebad5cc96b3",
           "id": "bbd94bfc-49d5-4280-b25d-df97697225e6",
-          "x": 123,
-          "y": 448
+          "x": 121,
+          "y": 478
         },
         {
           "opacity": 100,
@@ -2489,7 +2730,7 @@
           "basedOn": "7dc69555-5731-4e30-b641-1431d189cdfe",
           "id": "fff8ea88-c2fc-417e-8489-b88f887718ff",
           "x": 111,
-          "y": 516
+          "y": 545
         },
         {
           "opacity": 100,
@@ -2508,7 +2749,7 @@
           },
           "type": "shape",
           "x": 124,
-          "y": 508,
+          "y": 537,
           "width": 4,
           "height": 40,
           "scale": 100,
@@ -2546,7 +2787,7 @@
           "basedOn": "49aa3fb2-bc63-41ac-810f-d961a96d9f47",
           "id": "87750f85-c55c-478a-b7f1-fd60b48e3e9e",
           "x": 281,
-          "y": 508
+          "y": 537
         },
         {
           "opacity": 100,
@@ -2575,7 +2816,7 @@
           "basedOn": "87750f85-c55c-478a-b7f1-fd60b48e3e9e",
           "id": "0d7ac44c-8fd5-4383-bf39-d325ffcfc8fa",
           "x": 124,
-          "y": 508
+          "y": 537
         },
         {
           "opacity": 100,
@@ -2604,7 +2845,7 @@
           "basedOn": "0d7ac44c-8fd5-4383-bf39-d325ffcfc8fa",
           "id": "ea329f35-fc03-4a8c-b8fc-5b9441d8d039",
           "x": 124,
-          "y": 544
+          "y": 573
         }
       ],
       "backgroundColor": {
@@ -2673,8 +2914,8 @@
           },
           "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
           "id": "39dd9085-76df-462d-9ca0-f09f3040fe18",
-          "x": 14,
-          "y": 306
+          "x": 16,
+          "y": 331
         },
         {
           "opacity": 100,
@@ -2702,8 +2943,8 @@
           },
           "basedOn": "39dd9085-76df-462d-9ca0-f09f3040fe18",
           "id": "e92fc3f9-3b43-4697-8201-392a09e3f9aa",
-          "x": 393,
-          "y": 306
+          "x": 395,
+          "y": 331
         },
         {
           "opacity": 100,
@@ -2731,8 +2972,8 @@
           },
           "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
           "id": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
-          "x": 14,
-          "y": 306
+          "x": 16,
+          "y": 331
         },
         {
           "opacity": 100,
@@ -2760,8 +3001,8 @@
           },
           "basedOn": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
           "id": "1ef48d77-a32f-4a85-8c75-d132a2ab04b6",
-          "x": 14,
-          "y": 578
+          "x": 16,
+          "y": 603
         },
         {
           "opacity": 100,
@@ -2770,7 +3011,7 @@
             "horizontal": false
           },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
             "family": "Nunito",
@@ -2828,17 +3069,18 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "<span style=\"font-weight: 200\">Ten principles for good design</span>",
+          "content": "<span style=\"font-weight: 200\">Hairstyle Hacks for Lazy Ladies</span>",
           "fontWeight": 700,
-          "width": 254,
-          "height": 89,
+          "width": 331,
+          "height": 92,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "7754cac3-e8a6-49bb-9b4e-9a67164f479a",
           "id": "0f5f6273-994d-45d6-923d-100b88051129",
-          "x": 77,
-          "y": 350
+          "x": 41,
+          "y": 375,
+          "marginOffset": -6.068000000000005
         },
         {
           "opacity": 100,
@@ -2866,8 +3108,8 @@
           },
           "basedOn": "7973cdf7-53b7-4c6c-961c-ec580ddd1974",
           "id": "5bde3567-9a2a-44e4-a183-4c8b62aae675",
-          "x": 104,
-          "y": 462
+          "x": 109,
+          "y": 487
         },
         {
           "opacity": 100,
@@ -2943,8 +3185,8 @@
           "focalY": 50,
           "basedOn": "f77e3d81-d7d2-480a-b185-4a509a452b76",
           "id": "9bd0f726-0d83-4066-a154-f6e415c3593d",
-          "x": 148,
-          "y": 452
+          "x": 151,
+          "y": 477
         },
         {
           "opacity": 100,
@@ -2972,8 +3214,8 @@
           },
           "basedOn": "146eece8-418e-465e-ba9a-dfd25b1958f4",
           "id": "a5beb228-301e-478b-bda4-daf8d1294720",
-          "x": 270,
-          "y": 462
+          "x": 271,
+          "y": 487
         },
         {
           "opacity": 100,
@@ -3030,18 +3272,18 @@
             "vertical": 0
           },
           "type": "text",
-          "content": "By Dieter Rams\nJanuary 31, 2020",
+          "content": "By Style-ish Mag October 12, 2020",
           "fontWeight": 400,
           "width": 159,
-          "height": 37,
+          "height": 39,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "marginOffset": 5.578125,
           "basedOn": "bbd94bfc-49d5-4280-b25d-df97697225e6",
           "id": "249be185-abeb-4282-8f56-4a61ab112160",
-          "x": 124.5,
-          "y": 493
+          "x": 125,
+          "y": 518
         }
       ],
       "backgroundColor": {

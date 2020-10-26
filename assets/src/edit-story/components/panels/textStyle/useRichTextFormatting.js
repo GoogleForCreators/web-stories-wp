@@ -42,8 +42,10 @@ function isEqual(a, b) {
   // patterns are truthy objects with either a type or a color attribute.
   // Note: `null` is a falsy object, that would cause an error if first
   // check is removed.
-  const isPattern = a && typeof a === 'object' && (a.type || a.color);
-  return !isPattern ? a === b : isPatternEqual(a, b);
+  const isAPattern = a && typeof a === 'object' && (a.type || a.color);
+  const isBPattern = b && typeof b === 'object' && (b.type || b.color);
+
+  return isAPattern && isBPattern ? isPatternEqual(a, b) : a === b;
 }
 
 /**
