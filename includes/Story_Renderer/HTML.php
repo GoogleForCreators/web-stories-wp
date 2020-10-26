@@ -225,9 +225,8 @@ class HTML {
 	 */
 	protected function replace_url_scheme( $content ) {
 		if ( is_ssl() ) {
-			$home    = get_home_url();
-			$search  = set_url_scheme( $home, 'http' );
-			$replace = set_url_scheme( $home, 'https' );
+			$search  = home_url( '', 'http' );
+			$replace = home_url( '', 'https' );
 			$content = str_replace( $search, $replace, $content );
 		}
 
