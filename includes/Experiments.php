@@ -296,18 +296,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2094
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showKeyboardShortcutsButton',
-				'label'       => __( 'Keyboard Shortcuts', 'web-stories' ),
-				'description' => __( 'Enable keyboard shortcuts button', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2095
 			 * Creation date: 2020-06-04
 			 */
