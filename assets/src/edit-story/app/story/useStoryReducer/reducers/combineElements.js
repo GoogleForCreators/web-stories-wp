@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
-import { MaskTypes } from '../../../../masks';
+import { canMaskHaveBorder } from '../../../../masks';
 
 /**
  * Combine elements by taking properties from a first item and
@@ -94,10 +94,7 @@ function combineElements(state, { firstElement, secondId }) {
   if (!secondElement.isBackground) {
     propsFromFirst.push('link');
     // If the second element is rectangular, maintain border radius, too.
-    if (
-      !secondElement.mask ||
-      secondElement.mask.type === MaskTypes.RECTANGLE
-    ) {
+    if (canMaskHaveBorder(secondElement)) {
       propsFromFirst.push('borderRadius');
     }
   }

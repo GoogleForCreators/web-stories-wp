@@ -33,7 +33,7 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import { MaskTypes } from '../../masks';
+import { canMaskHaveBorder } from '../../masks';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -102,7 +102,6 @@ function MediaEdit({ element, box }) {
     focalY,
     isBackground,
     type,
-    mask,
     borderRadius,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
@@ -166,9 +165,7 @@ function MediaEdit({ element, box }) {
   }
 
   const borderProps =
-    mask?.type === MaskTypes.RECTANGLE && borderRadius
-      ? { borderRadius }
-      : null;
+    canMaskHaveBorder(element) && borderRadius ? { borderRadius } : null;
 
   return (
     <Element ref={elementRef}>

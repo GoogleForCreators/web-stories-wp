@@ -33,7 +33,7 @@ import { Row, Toggle, Numeric } from '../../form';
 import { SimplePanel } from '../panel';
 import { useCommonObjectValue } from '../utils';
 import { BorderLockLine, Lock, Unlock } from '../../../icons';
-import { MaskTypes } from '../../../masks';
+import { canMaskHaveBorder } from '../../../masks';
 
 const TOGGLE_WIDTH = 30;
 const DEFAULT_BORDER_RADIUS = {
@@ -79,8 +79,8 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     DEFAULT_BORDER_RADIUS
   );
 
-  const foundNonRectangles = selectedElements.some(
-    ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
+  const allSupportBorder = selectedElements.every((el) =>
+    canMaskHaveBorder(el)
   );
 
   const lockRadius = borderRadius.locked === true;
@@ -130,7 +130,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     [pushUpdateForObject, borderRadius]
   );
 
-  if (foundNonRectangles) {
+  if (!allSupportBorder) {
     return null;
   }
 
