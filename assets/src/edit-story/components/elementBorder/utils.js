@@ -21,7 +21,7 @@ import { canMaskHaveBorder } from '../../masks';
 import { BORDER_POSITION } from '../../constants';
 
 export function shouldDisplayBorder(element) {
-  const { border, mask } = element;
+  const { border } = element;
   if (!border) {
     return false;
   }
@@ -35,7 +35,7 @@ export function shouldDisplayBorder(element) {
     return false;
   }
 
-  return canMaskHaveBorder(mask);
+  return canMaskHaveBorder(element);
 }
 
 function getBorderPositionCSS({ left, top, right, bottom, position }) {
@@ -65,7 +65,6 @@ export function getBorderStyle({
   right,
   bottom,
   position,
-  previewMode = false,
 }) {
   const {
     color: { r, g, b, a },
@@ -75,11 +74,10 @@ export function getBorderStyle({
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
   // as opposed to having potential margin between the border and the element.
-  const borderWidth = !previewMode
-    ? `${top}px ${right}px ${bottom}px ${left}px`
-    : `${Math.ceil(top)}px ${Math.ceil(right)}px ${Math.ceil(
-        bottom
-      )}px ${Math.ceil(left)}px`;
+  // When not in preview, the rounding doesn't have any effect.
+  const borderWidth = `${Math.ceil(top)}px ${Math.ceil(right)}px ${Math.ceil(
+    bottom
+  )}px ${Math.ceil(left)}px`;
   return {
     top: 0,
     left: 0,

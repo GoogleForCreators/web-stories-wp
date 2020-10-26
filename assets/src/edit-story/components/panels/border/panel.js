@@ -31,7 +31,7 @@ import { __ } from '@wordpress/i18n';
 import { SimplePanel } from '../panel';
 import { Color, Row } from '../../form';
 import { useCommonObjectValue } from '../utils';
-import { MaskTypes } from '../../../masks';
+import { canMaskHaveBorder } from '../../../masks';
 import { DEFAULT_BORDER } from './shared';
 import WidthControls from './borderWidth';
 import Position from './position';
@@ -45,8 +45,8 @@ function BorderStylePanel(props) {
   );
   const { color, left, top, right, bottom } = border;
 
-  const notAllRectangle = selectedElements.some(
-    ({ mask }) => mask?.type && mask?.type !== MaskTypes.RECTANGLE
+  const allSupportBorder = selectedElements.every((el) =>
+    canMaskHaveBorder(el)
   );
 
   const handleChange = useCallback(
@@ -63,8 +63,8 @@ function BorderStylePanel(props) {
     [border, pushUpdate]
   );
 
-  // If any of the elements doesn't have rectangle mask, don't display.
-  if (notAllRectangle) {
+  // If any of the elements doesn't support border, don't display.
+  if (!allSupportBorder) {
     return null;
   }
 
@@ -82,7 +82,6 @@ function BorderStylePanel(props) {
                 handleChange(value, 'color');
               }}
               label={__('Border color', 'web-stories')}
-              labelId="border-color-label"
             />
           </Row>
         </>

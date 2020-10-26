@@ -37,11 +37,11 @@ const borderElementCSS = css`
   position: absolute;
 `;
 
-const DashedBorder = styled.div`
+const Border = styled.div`
   ${borderElementCSS}
   &:after {
     content: ' ';
-    ${({ color, left, top, right, bottom, position, previewMode }) =>
+    ${({ color, left, top, right, bottom, position }) =>
       getBorderStyle({
         color,
         left,
@@ -49,12 +49,11 @@ const DashedBorder = styled.div`
         right,
         bottom,
         position,
-        previewMode,
       })}
   }
 `;
 
-export default function WithBorder({ element, previewMode, children }) {
+export default function WithBorder({ element, previewMode = false, children }) {
   const { dataToEditorX } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
@@ -76,14 +75,14 @@ export default function WithBorder({ element, previewMode, children }) {
     };
   }
   return (
-    <DashedBorder {...border} previewMode={previewMode}>
+    <Border {...border} previewMode={previewMode}>
       {children}
-    </DashedBorder>
+    </Border>
   );
 }
 
 WithBorder.propTypes = {
   element: StoryPropTypes.element.isRequired,
   children: PropTypes.node,
-  previewMode: PropTypes.bool.isRequired,
+  previewMode: PropTypes.bool,
 };

@@ -54,10 +54,10 @@ const Label = styled.div`
   text-align: center;
   ${({ checked, theme }) =>
     checked &&
-    `background-color: ${rgba(
-      theme.colors.fg.white,
-      0.24
-    )}; border-color: transparent;`}
+    `
+    background-color: ${rgba(theme.colors.fg.white, 0.24)};
+    border-color: transparent;
+    `}
 `;
 
 const BUTTONS = [

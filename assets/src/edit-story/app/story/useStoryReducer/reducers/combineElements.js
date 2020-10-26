@@ -94,7 +94,7 @@ function combineElements(state, { firstElement, secondId }) {
   if (!secondElement.isBackground) {
     propsFromFirst.push('link');
     // If relevant, maintain border, too.
-    if (canMaskHaveBorder(secondElement.mask)) {
+    if (canMaskHaveBorder(secondElement)) {
       propsFromFirst.push('border');
     }
   }
