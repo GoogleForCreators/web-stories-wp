@@ -30,12 +30,17 @@ import { PRESETS } from '../textPresets';
 
 describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => {
   let fixture;
+  let originalTimeout;
+
   beforeEach(async () => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
   });
 
   afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     fixture.restore();
   });
 
