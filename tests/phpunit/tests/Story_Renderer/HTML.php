@@ -233,13 +233,20 @@ class HTML extends WP_UnitTestCase {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme() {
+		unset( $_SERVER['HTTPS'] );
+		$_SERVER['HTTPS'] = 'on';
+
 		$link = get_home_url( null, 'web-storires/test' );
+		$link = set_url_scheme( $link, 'http' );
+
+		$link_https = set_url_scheme( $link, 'https' );
 
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
-		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ set_url_scheme( $link, 'https' ) ] );
-		$this->assertEquals( $result, $link );
+		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
+		$this->assertEquals( $result, $link_https );
+		unset( $_SERVER['HTTPS'] );
 	}
 
 
@@ -247,13 +254,16 @@ class HTML extends WP_UnitTestCase {
 	 * @covers ::replace_url_scheme
 	 */
 	public function test_replace_url_scheme_invalid_url() {
-		$link = 'https://www.google.com';
+		unset( $_SERVER['HTTPS'] );
+		$_SERVER['HTTPS'] = 'on';
+		$link             = 'https://www.google.com';
 
 		$story    = new Story();
 		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
 
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
+		unset( $_SERVER['HTTPS'] );
 	}
 
 	/**
