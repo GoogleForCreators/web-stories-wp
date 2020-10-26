@@ -57,6 +57,9 @@ function setup() {
   };
 
   const storyValue = {
+    state: {
+      pages: [],
+    },
     actions: {
       setSelectedElementsById: jest.fn(),
     },

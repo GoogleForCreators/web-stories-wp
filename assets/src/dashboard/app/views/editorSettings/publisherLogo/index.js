@@ -79,7 +79,7 @@ function PublisherLogoSettings({
   const gridRef = useRef();
   const itemRefs = useRef({});
 
-  const [activePublisherLogo, setActivePublisherLogoId] = useState(null);
+  const [activePublisherLogoId, setActivePublisherLogoId] = useState(null);
   const [indexRemoved, setIndexRemoved] = useState(null);
 
   const [contextMenuId, setContextMenuId] = useState(null);
@@ -126,23 +126,22 @@ function PublisherLogoSettings({
       return setIndexRemoved(null);
     }
     return undefined;
-  }, [
-    activePublisherLogo,
-    indexRemoved,
-    publisherLogosById,
-    setActivePublisherLogoId,
-  ]);
+  }, [indexRemoved, publisherLogosById, setActivePublisherLogoId]);
 
   useGridViewKeys({
     containerRef,
     gridRef,
     itemRefs,
     isRTL,
-    currentItemId: activePublisherLogo,
+    currentItemId: activePublisherLogoId,
     items: publisherLogos,
   });
 
   const showLogoContextMenu = !hasOnlyOneLogo;
+
+  const onMenuItemToggle = useCallback((newMenuId) => {
+    setActivePublisherLogoId(newMenuId);
+  }, []);
 
   const onMenuItemSelected = useCallback(
     (sender, logo, index) => {
@@ -164,7 +163,14 @@ function PublisherLogoSettings({
     [handleUpdateDefaultLogo, handleRemoveLogoClick]
   );
 
-  useFocusOut(containerRef, () => setActivePublisherLogoId(null), []);
+  useFocusOut(
+    containerRef,
+    () => {
+      setActivePublisherLogoId(null);
+      setContextMenuId(null);
+    },
+    []
+  );
 
   return (
     <SettingForm>
@@ -178,14 +184,14 @@ function PublisherLogoSettings({
             tabIndex={0}
             ref={gridRef}
             role="list"
-            ariaLabel={__('Viewing existing publisher logos', 'web-stories')}
+            aria-label={__('Viewing existing publisher logos', 'web-stories')}
           >
             {publisherLogos.map((publisherLogo, idx) => {
               if (!publisherLogo) {
                 return null;
               }
 
-              const isActive = activePublisherLogo === publisherLogo.id;
+              const isActive = activePublisherLogoId === publisherLogo.id;
 
               return (
                 <GridItemContainer
@@ -207,12 +213,9 @@ function PublisherLogoSettings({
                       setActivePublisherLogoId(publisherLogo.id);
                     }}
                     aria-label={sprintf(
-                      /* translators: %s: logo number.*/
-                      __(
-                        'Publisher Logo %s (currently selected)',
-                        'web-stories'
-                      ),
-                      idx + 1
+                      /* translators: %s: logo title.*/
+                      __('Publisher Logo %s', 'web-stories'),
+                      publisherLogo.title
                     )}
                   >
                     <Logo src={publisherLogo.src} alt={publisherLogo.title} />
@@ -225,10 +228,11 @@ function PublisherLogoSettings({
                   {showLogoContextMenu && (
                     <PopoverLogoContextMenu
                       isActive={isActive}
-                      activePublisherLogo={activePublisherLogo}
+                      activePublisherLogo={activePublisherLogoId}
                       idx={idx}
                       publisherLogo={publisherLogo}
                       onMenuItemSelected={onMenuItemSelected}
+                      onMenuItemToggle={onMenuItemToggle}
                       contextMenuId={{
                         set: setContextMenuId,
                         value: contextMenuId,
