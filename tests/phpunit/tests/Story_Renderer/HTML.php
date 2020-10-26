@@ -253,7 +253,7 @@ class HTML extends WP_UnitTestCase {
 	/**
 	 * @covers ::replace_url_scheme
 	 */
-	public function test_replace_url_scheme_invalid_url() {
+	public function test_replace_url_scheme_different_host() {
 		unset( $_SERVER['HTTPS'] );
 		$_SERVER['HTTPS'] = 'on';
 		$link             = 'https://www.google.com';
