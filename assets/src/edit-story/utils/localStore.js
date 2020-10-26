@@ -17,7 +17,7 @@
 export const LOCAL_STORAGE_PREFIX = {
   PANEL: 'web_stories_ui_panel_settings',
   TEXT_SET_SETTINGS: 'web_stores_text_set_settings',
-  TERMS_MEDIA3P: 'web_stories_third_party_terms_agreement',
+  TERMS_MEDIA3P: 'web_stories_media3p_terms_agreement',
 };
 
 function getItemByKey(key) {
