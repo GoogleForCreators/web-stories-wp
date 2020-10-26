@@ -44,6 +44,10 @@ Using the Web Stories editor for WordPress, you can easily create visual narrati
 
 Web Stories are for everyone! If you are a site owner, content creator, or publisher on the web, embracing the Web Stories format would be great as a way to enhance the quality of your content strategy, the value you bring to your readers, and consequently your chances of achieving sustainable success.
 
+=== Terms of Service ===
+
+By using this plugin, you agree to [Google's Terms of Service](https://policies.google.com/terms). By using third-party imagery and video provided by [Unsplash](https://unsplash.com/terms), [Coverr](https://coverr.co/license) and [Tenor](https://tenor.com/legal-terms), you agree to adhere to the respective Terms of Service.
+
 == Installation ==
 
 = Installation from within WordPress =
@@ -64,10 +68,6 @@ Web Stories are for everyone! If you are a site owner, content creator, or publi
 2. Easily create Web Stories with our drag-and-drop editor.
 3. Explore our WYSIWYG editor with easy access to many editing tools (shown here: zooming and cropping media)
 4. Get started building your first story by editing one of our expressive, fully built template stories included with the editor.
-
-== Terms of Service ==
-
-By using this plugin, you agree to [Google's Terms of Service](https://policies.google.com/terms). By using third-party imagery and video provided by [Unsplash](https://unsplash.com/terms), [Coverr](https://coverr.co/license) and [Tenor](https://tenor.com/legal-terms), you agree to adhere to the respective Terms of Service.
 
 == Frequently Asked Questions ==
 
