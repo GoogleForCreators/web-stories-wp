@@ -54,7 +54,7 @@ function IconGroup({ onChange, value: selectedValue, options, ...rest }) {
             value={value}
             type="radio"
             checked={value === selectedValue}
-            aria-label={value === selectedValue ? `Selected ${value}` : value}
+            aria-label={`Border position mode: ${value}`}
           />
           <Icon checked={value === selectedValue} label={label} />
         </Button>

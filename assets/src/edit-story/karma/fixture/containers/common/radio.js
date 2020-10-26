@@ -17,7 +17,24 @@
 /**
  * Internal dependencies
  */
-export { Radio } from './radio';
-export { Toggle } from './toggle';
-export { Select } from './select';
-export { Color } from './color';
+import { Container } from '../container';
+
+/**
+ * An icon-based radio, that is either on or off and is surrounded by a label
+ * acting as the button to trigger it. The actual radio element (the
+ * `<input type="radio" />`) is visually hidden so any mouse-user would
+ * click the surrounding label rather than the input.
+ */
+export class Radio extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get checked() {
+    return this.node.checked;
+  }
+
+  get button() {
+    return this.node.closest('label');
+  }
+}

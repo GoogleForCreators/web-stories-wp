@@ -77,7 +77,7 @@ describe('Border Panel', () => {
       await fixture.events.keyboard.type('10');
       await fixture.events.keyboard.press('Tab');
 
-      await fixture.events.click(panel.position('Outside').button);
+      await fixture.events.click(panel.position('outside').button);
 
       const borderColor = panel.borderColor;
       await fixture.events.click(borderColor.opacity, { clickCount: 3 });
@@ -110,7 +110,7 @@ describe('Border Panel', () => {
     await fixture.events.keyboard.type('5');
     await fixture.events.keyboard.press('Tab');
 
-    await fixture.events.click(panel.position('Center').button);
+    await fixture.events.click(panel.position('center').button);
 
     const [element] = await getSelection();
     const {

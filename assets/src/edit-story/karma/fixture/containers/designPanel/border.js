@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Color, Toggle } from '../common';
+import { Color, Radio, Toggle } from '../common';
 import { AbstractPanel } from './abstractPanel';
 
 /**
@@ -34,9 +34,9 @@ export class Border extends AbstractPanel {
 
   position(mode) {
     return this._get(
-      this.getByRole('checkbox', { name: `Set border position mode: ${mode}` }),
+      this.getByRole('radio', { name: `Border position mode: ${mode}` }),
       'borderPosition',
-      Toggle
+      Radio
     );
   }
 
