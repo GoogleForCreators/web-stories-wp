@@ -26,9 +26,9 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AmpProject\Attribute;
-use AmpProject\Tag;
-use AMP_Meta_Sanitizer;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AMP_Meta_Sanitizer;
 
 /**
  * Meta sanitizer.
@@ -40,7 +40,7 @@ use AMP_Meta_Sanitizer;
  * @see amp_get_boilerplate_stylesheets()
  * @see AMP_Meta_Sanitizer
  *
- * @since 1.0.0
+ * @since 1.1.0
  */
 class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	/**
@@ -53,7 +53,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 * @link https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/?format=websites
 	 * @link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/#optimize-the-amp-runtime-loading
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -104,7 +104,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 * @link https://www.ampproject.org/docs/reference/spec#boilerplate
 	 * @see amp_get_boilerplate_stylesheets()
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 */
 	protected function get_boilerplate_stylesheets() {
 		return [

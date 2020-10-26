@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useReducer } from 'react';
-import moment from 'moment-timezone';
 import queryString from 'query-string';
 
 /**
@@ -29,6 +28,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { toUTCDate } from '../../../date';
 import getAllTemplates from '../../templates';
 import { APP_ROUTES } from '../../constants';
 import templateReducer, {
@@ -54,7 +54,7 @@ export function reshapeTemplateObject(isLocal) {
     createdBy,
     description,
     status: 'template',
-    modified: moment.parseZone(modified),
+    modified: toUTCDate(modified),
     tags,
     colors,
     pages,
@@ -85,7 +85,7 @@ export function reshapeSavedTemplates({
     createdBy,
     description,
     status: 'template',
-    modified: moment(modified),
+    modified: toUTCDate(modified),
     tags,
     colors,
     pages,

@@ -26,30 +26,34 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AMP_Allowed_Tags_Generated;
-use AMP_Content_Sanitizer;
-use AMP_DOM_Utils;
-use AMP_Layout_Sanitizer;
-use AMP_Script_Sanitizer;
-use AMP_Style_Sanitizer;
-use AMP_Tag_And_Attribute_Sanitizer;
-use AmpProject\Amp;
-use AmpProject\Attribute;
-use AmpProject\Dom\Document;
-use AmpProject\Extension;
-use AmpProject\Tag;
+use Google\Web_Stories_Dependencies\AMP_Allowed_Tags_Generated;
+use Google\Web_Stories_Dependencies\AMP_Content_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_DOM_Utils;
+use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Script_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
+use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
+use Google\Web_Stories_Dependencies\AmpProject\Amp;
+use Google\Web_Stories_Dependencies\AmpProject\Attribute;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Extension;
+use Google\Web_Stories_Dependencies\AmpProject\Tag;
 use DOMElement;
 
 /**
  * Sanitization class.
  *
- * @since 1.0.0
+ * Largely copied from AMP_Theme_Support.
+ *
+ * @since 1.1.0
+ *
+ * @see \AMP_Theme_Support
  */
 class Sanitization {
 	/**
 	 * Sanitizes a document.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
 	 *
@@ -57,39 +61,26 @@ class Sanitization {
 	 */
 	public function sanitize_document( Document $document ) {
 		$sanitizers = $this->get_sanitizers();
-		/**
-		 * Class name.
-		 *
-		 * @var string $sanitizer_class
-		 */
-		foreach ( $sanitizers as $sanitizer_class => $args ) {
-			/**
-			 * The add_buffering_hooks callable.
-			 *
-			 * @var callable $callable
-			 */
-			$callable = [ $sanitizer_class, 'add_buffering_hooks' ];
-			if ( is_callable( $callable ) ) {
-				call_user_func( $callable, $args );
-			}
-		}
 
 		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
 
-		$this->add_missing_scripts( $document, $result['scripts'] );
+		$this->ensure_required_markup( $document, $result['scripts'] );
 	}
 
 	/**
 	 * Adds missing scripts.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
+	 *
+	 * @see \AMP_Theme_Support::ensure_required_markup
+	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L1543-L1770
 	 *
 	 * @param Document $document Document instance.
 	 * @param array    $scripts List of found scripts.
 	 *
 	 * @return void
 	 */
-	protected function add_missing_scripts( $document, $scripts ) {
+	protected function ensure_required_markup( $document, $scripts ) {
 		// Gather all links.
 		$links = [
 			Attribute::REL_PRECONNECT => [
@@ -127,13 +118,16 @@ class Sanitization {
 				continue;
 			}
 
-			if ( 0 === stripos( strrev( $src ), 'v0.js' ) ) {
+			if ( 'v0.js' === substr( $src, - strlen( 'v0.js' ) ) ) {
 				$amp_scripts[ Amp::RUNTIME ] = $script;
 			} elseif ( $script->hasAttribute( Attribute::CUSTOM_ELEMENT ) ) {
 				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_ELEMENT ) ] = $script;
 			} elseif ( $script->hasAttribute( Attribute::CUSTOM_TEMPLATE ) ) {
 				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_TEMPLATE ) ] = $script;
 			}
+
+			// It will be added back further down.
+			$document->head->removeChild( $script );
 		}
 
 		$specs = $this->get_extension_sources();
@@ -278,6 +272,7 @@ class Sanitization {
 		 */
 		ksort( $amp_scripts );
 		$ordered_scripts = array_merge( $ordered_scripts, $amp_scripts );
+
 		/**
 		 * Script element.
 		 *
@@ -294,6 +289,11 @@ class Sanitization {
 	/**
 	 * Returns AMP extension URLs, keyed by extension name.
 	 *
+	 * @since 1.1.0
+	 *
+	 * @see amp_register_default_scripts
+	 * @link https://github.com/ampproject/amp-wp/blob/d96052ed76a92f43b70e0a52cf8e952cf46301af/includes/amp-helper-functions.php#L1011-L1074
+	 *
 	 * @return array List of extensions and their URLs.
 	 */
 	protected function get_extension_sources() {
@@ -309,6 +309,14 @@ class Sanitization {
 			$specs[ $extension_name ] = $src;
 		}
 
+		if ( isset( $specs['amp-experiment'] ) ) {
+			/*
+			 * Version 1.0 of amp-experiment is still experimental and requires the user to enable it.
+			 * @todo Revisit once amp-experiment is no longer experimental.
+			 */
+			$specs['amp-experiment'] = 'https://cdn.ampproject.org/v0/amp-experiment-0.1.js';
+		}
+
 		return $specs;
 	}
 
@@ -319,11 +327,19 @@ class Sanitization {
 	 * to elements associated with the admin bar and other elements that are provided by the `amp_dev_mode_element_xpaths`
 	 * filter.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
+	 *
+	 * @see amp_is_dev_mode
+	 * @link https://github.com/ampproject/amp-wp/blob/d96052ed76a92f43b70e0a52cf8e952cf46301af/includes/amp-helper-functions.php#L1429-L1463
 	 *
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
 	protected function is_amp_dev_mode() {
+		// For the few sites that forcibly show the admin bar even when the user is logged out, only enable dev
+		// mode if the user is actually logged in. This prevents the dev mode from being served to crawlers
+		// when they index the AMP version.
+		$dev_mode_enabled = ( is_admin_bar_showing() && is_user_logged_in() );
+
 		/**
 		 * Filters whether AMP dev mode is enabled.
 		 *
@@ -331,19 +347,11 @@ class Sanitization {
 		 * attributes to be added to the admin bar. It will also add the attribute to all elements which match the
 		 * queries for the expressions returned by the 'web_stories_amp_dev_mode_element_xpaths' filter.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param bool Whether AMP dev mode is enabled.
 		 */
-		return apply_filters(
-			'web_stories_amp_dev_mode_enabled',
-			(
-				// For the few sites that forcibly show the admin bar even when the user is logged out, only enable dev
-				// mode if the user is actually logged in. This prevents the dev mode from being served to crawlers
-				// when they index the AMP version.
-				( is_admin_bar_showing() && is_user_logged_in() )
-			)
-		);
+		return apply_filters( 'web_stories_amp_dev_mode_enabled', $dev_mode_enabled );
 	}
 
 	/**
@@ -354,7 +362,12 @@ class Sanitization {
 	 * accessing options from the database, requiring AMP__VERSION,
 	 * and causing conflicts with our own amp_is_request() compat shim.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
+	 *
+	 * @see amp_get_content_sanitizers
+	 * @see AMP_Validation_Manager::filter_sanitizer_args
+	 * @link https://github.com/ampproject/amp-wp/blob/d96052ed76a92f43b70e0a52cf8e952cf46301af/includes/amp-helper-functions.php#L1465-L1653
+	 * @link https://github.com/ampproject/amp-wp/blob/244a1a4e2c118ad70fe352beb5a34cd0d4b18705/includes/validation/class-amp-validation-manager.php#L2033-L2071
 	 *
 	 * @return array Sanitizers.
 	 */
@@ -373,14 +386,13 @@ class Sanitization {
 			Meta_Sanitizer::class                  => [],
 			AMP_Layout_Sanitizer::class            => [],
 			Canonical_Sanitizer::class             => [],
-			Story_Sanitizer::class                 => [],
 			AMP_Tag_And_Attribute_Sanitizer::class => [],
 		];
 
 		/**
 		 * Filters the content sanitizers.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param array  $sanitizers Sanitizers.
 		 */
@@ -407,7 +419,7 @@ class Sanitization {
 
 			$sanitizers = array_merge(
 				[
-					'AMP_Dev_Mode_Sanitizer' => [
+					\AMP_Dev_Mode_Sanitizer::class => [
 						'element_xpaths' => $dev_mode_xpaths,
 					],
 				],
@@ -418,7 +430,12 @@ class Sanitization {
 		// Force certain sanitizers to be at end.
 		// AMP_Style_Sanitizer needs to catch any CSS changes from previous sanitizers.
 		// AMP_Tag_And_Attribute_Sanitizer must come at the end to clean up any remaining issues the other sanitizers didn't catch.
-		foreach ( [ AMP_Style_Sanitizer::class, AMP_Tag_And_Attribute_Sanitizer::class ] as $class_name ) {
+		foreach ( [
+			AMP_Layout_Sanitizer::class,
+			AMP_Style_Sanitizer::class,
+			Meta_Sanitizer::class,
+			AMP_Tag_And_Attribute_Sanitizer::class,
+		] as $class_name ) {
 			if ( isset( $sanitizers[ $class_name ] ) ) {
 				$sanitizer = $sanitizers[ $class_name ];
 				unset( $sanitizers[ $class_name ] );
@@ -438,7 +455,9 @@ class Sanitization {
 	/**
 	 * Validation error callback.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
+	 *
+	 * @see AMP_Validation_Error_Taxonomy::get_validation_error_sanitization
 	 *
 	 * @param array $error Error info, especially code.
 	 * @param array $data Additional data, including the node.
@@ -459,7 +478,7 @@ class Sanitization {
 		 * validation request and so they are not suitable for plugins to vary
 		 * sanitization by.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
 		 *
 		 * @param null|bool $sanitized Whether sanitized; this is initially null, and changing it to bool causes the validation error to be forced.

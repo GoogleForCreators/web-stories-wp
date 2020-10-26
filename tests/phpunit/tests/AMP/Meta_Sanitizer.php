@@ -17,17 +17,16 @@
 
 namespace Google\Web_Stories\Tests\AMP;
 
+use AMP_Tag_And_Attribute_Sanitizer;
+use AMP_Allowed_Tags_Generated;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Tests\MarkupComparison;
 use Google\Web_Stories\Tests\ScriptHash;
-use AMP_Tag_And_Attribute_Sanitizer;
-use AmpProject\Dom\Document;
-use AMP_Allowed_Tags_Generated;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer.
  */
 class Meta_Sanitizer extends \WP_UnitTestCase {
-
 	use MarkupComparison;
 	use ScriptHash;
 

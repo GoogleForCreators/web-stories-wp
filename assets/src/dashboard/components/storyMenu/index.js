@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from 'react';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -29,10 +30,11 @@ import { MoreVertical as MoreVerticalSvg } from '../../icons';
 import useFocusOut from '../../utils/useFocusOut';
 import { PopoverMenuCard } from '../popoverMenu';
 import { DROPDOWN_ITEM_PROP_TYPE } from '../types';
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 export const MoreVerticalButton = styled.button`
   display: flex;
-  border: none;
+  border: ${({ theme }) => theme.borders.transparent};
   background: transparent;
   padding: 0 8px;
   opacity: ${({ menuOpen, isVisible }) => (menuOpen || isVisible ? 1 : 0)};
@@ -43,6 +45,11 @@ export const MoreVerticalButton = styled.button`
   & > svg {
     width: 4px;
     max-height: 100%;
+  }
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+    border-width: 2px;
   }
 `;
 

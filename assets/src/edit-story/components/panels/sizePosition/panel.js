@@ -37,6 +37,7 @@ import { getDefinitionForType } from '../../../elements';
 import { calcRotatedObjectPositionAndSize } from '../../../utils/getBoundRect';
 import { SimplePanel } from '../panel';
 import FlipControls from '../shared/flipControls';
+import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
 import { getCommonValue, useCommonObjectValue } from './../utils';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
@@ -92,6 +93,8 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
+  const hasText = selectedElements.some(({ type }) => 'text' === type);
+
   const actualDimensions = useMemo(() => {
     if (isSingleElement) {
       return calcRotatedObjectPositionAndSize(
@@ -131,12 +134,33 @@ function SizePositionPanel({
   usePresubmitHandlers(lockAspectRatio, height, width);
 
   const handleSetBackground = useCallback(() => {
-    combineElements({
-      firstId: selectedElements[0].id,
-      secondId: currentBackgroundId,
-    });
+    const setBackground = (baseColor) => {
+      if (!baseColor) {
+        combineElements({
+          firstElement: selectedElements[0],
+          secondId: currentBackgroundId,
+        });
+      } else {
+        combineElements({
+          firstElement: {
+            ...selectedElements[0],
+            resource: {
+              ...selectedElements[0].resource,
+              baseColor,
+            },
+          },
+          secondId: currentBackgroundId,
+        });
+      }
+    };
+    if (selectedElements[0].resource.baseColor) {
+      setBackground();
+    } else {
+      getMediaBaseColor(selectedElements[0].resource, setBackground);
+    }
   }, [selectedElements, combineElements, currentBackgroundId]);
 
+  const disableHeight = !lockAspectRatio && hasText;
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       {isMedia && isSingleElement && (
@@ -199,7 +223,9 @@ function SizePositionPanel({
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={height}
+          value={disableHeight ? '' : height}
+          placeholder={disableHeight ? __('AUTO', 'web-stories') : ''}
+          disabled={disableHeight}
           min={MIN_MAX.HEIGHT.MIN}
           max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {

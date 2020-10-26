@@ -26,16 +26,20 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
-use AmpProject\Dom\Document;
-use DOMElement;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories\Traits\Publisher;
+use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\AMP\Story_Sanitizer;
 use Google\Web_Stories\AMP\Optimization;
 use Google\Web_Stories\AMP\Sanitization;
-use Google\Web_Stories\Model\Story;
 
 /**
  * Class Story_Renderer
  */
 class HTML {
+	use Publisher;
+
 	/**
 	 * Current post.
 	 *
@@ -51,11 +55,11 @@ class HTML {
 	protected $document;
 
 	/**
-	 * Story_Renderer constructor.
+	 * HTML constructor.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Story $story Post object.
+	 * @param Story $story Story object.
 	 */
 	public function __construct( Story $story ) {
 		$this->story = $story;
@@ -72,71 +76,97 @@ class HTML {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 
-		// TODO: What if transformation failed?
+		// If the AMP plugin is installed and available in a version >= than ours,
+		// all sanitization and optimization should be delegated to the AMP plugin.
+		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
+			add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
+
+			return $markup;
+		}
+
 		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
 
 		// This  should never actually happen.
 		if ( ! $document ) {
+			ob_start();
 			wp_die(
 				esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' ),
 				esc_html__( 'Web Stories', 'web-stories' ),
 				[
 					'response'  => 500,
-					'link_url'  => esc_url( __( 'https://wp.stories.google/', 'web-stories' ) ),
-					'link_text' => esc_html__( 'Contact Support', 'web-stories' ),
+					'link_url'  => esc_url( __( 'https://wordpress.org/support/plugin/web-stories/', 'web-stories' ) ),
+					'link_text' => esc_html__( 'Visit Support Forums', 'web-stories' ),
+					'exit'      => false,
 				]
 			);
+
+			return (string) ob_get_clean();
 		}
 
+		add_filter( 'web_stories_amp_sanitizers', [ $this, 'add_web_stories_amp_content_sanitizers' ] );
+
+		/**
+		 * Document instance.
+		 *
+		 * @var Document $document
+		 */
 		$this->document = $document;
 
-		// Run all further transformations on the Document instance.
-
-		$this->transform_html_start_tag();
-		$this->insert_analytics_configuration();
-		$this->add_poster_images();
-		$this->display_admin_bar();
-
-		if ( ! defined( '\AMP__VERSION' ) ) {
-			$this->sanitize_markup();
-			$this->optimize_markup();
-		}
+		$this->sanitize_markup();
+		$this->optimize_markup();
 
 		return trim( (string) $this->document->saveHTML() );
 	}
 
 	/**
-	 * Returns the first found element with a given tag name.
+	 * Filters the Web Stories AMP sanitizers.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
-	 * @param string $name Tag name.
-	 *
-	 * @return DOMElement|null
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
 	 */
-	protected function get_element_by_tag_name( $name ) {
-		return $this->document->getElementsByTagName( $name )->item( 0 );
+	public function add_web_stories_amp_content_sanitizers( $sanitizers ) {
+		$sanitizers[ Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => $this->get_poster_images(),
+		];
+
+		return $sanitizers;
 	}
 
 	/**
-	 * Replaces the HTML start tag to make the language attributes dynamic.
+	 * Filters the AMP plugin's sanitizers.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
+	 */
+	public function add_amp_content_sanitizers( $sanitizers ) {
+		$sanitizers[ AMP_Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => $this->get_poster_images(),
+		];
+
+		return $sanitizers;
+	}
+
+	/**
+	 * Get story meta images.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return void
+	 * @return string[] Images.
 	 */
-	protected function transform_html_start_tag() {
-		$this->document->html->setAttribute( 'amp', '' );
-
-		// See get_language_attributes().
-		if ( is_rtl() ) {
-			$this->document->html->setAttribute( 'dir', 'rtl' );
-		}
-
-		$lang = get_bloginfo( 'language' );
-		if ( $lang ) {
-			$this->document->html->setAttribute( 'lang', esc_attr( $lang ) );
-		}
+	protected function get_poster_images() {
+		return [
+			'poster-portrait-src'  => $this->story->get_poster_portrait(),
+			'poster-square-src'    => $this->story->get_poster_square(),
+			'poster-landscape-src' => $this->story->get_poster_landscape(),
+		];
 	}
 
 	/**
@@ -186,159 +216,9 @@ class HTML {
 	}
 
 	/**
-	 * Adds square, and landscape poster images to the <amp-story>.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function add_poster_images() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		$poster_images = $this->get_poster_images();
-
-		foreach ( $poster_images as $attr => $url ) {
-			$story_element->setAttribute( $attr, esc_url( $url ) );
-		}
-	}
-
-	/**
-	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function insert_analytics_configuration() {
-		/* @var DOMElement $story_element The <amp-story> element. */
-		$story_element = $this->get_element_by_tag_name( 'amp-story' );
-
-		if ( ! $story_element ) {
-			return;
-		}
-
-		ob_start();
-
-		do_action( 'web_stories_print_analytics' );
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$fragment = $this->document->createDocumentFragment();
-		$fragment->appendXml( $output );
-
-		$story_element->appendChild( $fragment );
-	}
-
-	/**
-	 * Get story meta images.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string[] Images.
-	 */
-	protected function get_poster_images() {
-		$images = [
-			'poster-portrait-src'  => $this->story->get_poster_portrait(),
-			'poster-square-src'    => $this->story->get_poster_square(),
-			'poster-landscape-src' => $this->story->get_poster_landscape(),
-		];
-
-		return array_filter( $images );
-	}
-
-	/**
-	 * Displays the WordPress admin bar on  the frontend.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	protected function display_admin_bar() {
-		ob_start();
-
-		wp_admin_bar_render();
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$document = Document::fromHtmlFragment( $output, get_bloginfo( 'charset' ) );
-
-		if ( ! $document ) {
-			return;
-		}
-
-		$adminbar = $document->getElementById( 'wpadminbar' );
-
-		if ( ! $adminbar ) {
-			return;
-		}
-
-		$adminbar = $this->document->importNode( $adminbar, true );
-
-		$this->document->body->appendChild( $adminbar );
-
-		$this->add_admin_bar_styles();
-	}
-
-	/**
-	 * Prints the admin bar styles.
-	 *
-	 * Does not rely on theme support for the admin bar
-	 * or the default admin bar styling callback
-	 * since Web Stories are theme-independent and require
-	 * specific styling.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @see _admin_bar_bump_cb
-	 *
-	 * @return void
-	 */
-	protected function add_admin_bar_styles() {
-		ob_start();
-
-		wp_styles()->do_items();
-
-		?>
-		<style media="screen" id="admin-bar-inline-css">
-			amp-story { top: 32px !important; }
-			@media screen and ( max-width: 782px ) {
-				amp-story { top: 46px !important; }
-			}
-		</style>
-		<?php
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$fragment_document = Document::fromHtmlFragment( "<html><head>$output</head><body></body></html>" );
-
-		while ( $fragment_document->head->firstChild ) {
-			$node = $fragment_document->head->removeChild( $fragment_document->head->firstChild );
-			$node = $this->document->importNode( $node, true );
-			$this->document->head->appendChild( $node );
-		}
-	}
-
-	/**
 	 * Sanitizes markup to be valid AMP.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */
@@ -350,7 +230,7 @@ class HTML {
 	/**
 	 * Optimizes AMP markup.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @return void
 	 */

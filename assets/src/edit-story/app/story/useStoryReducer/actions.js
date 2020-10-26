@@ -86,10 +86,10 @@ const updateSelectedElements = (dispatch) => ({ properties }) =>
     payload: { elementIds: null, properties },
   });
 
-const combineElements = (dispatch) => ({ firstId, firstElement, secondId }) =>
+const combineElements = (dispatch) => ({ firstElement, secondId }) =>
   dispatch({
     type: types.COMBINE_ELEMENTS,
-    payload: { firstId, firstElement, secondId },
+    payload: { firstElement, secondId },
   });
 
 const setBackgroundElement = (dispatch) => ({ elementId }) =>

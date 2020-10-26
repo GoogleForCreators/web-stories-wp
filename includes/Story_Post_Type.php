@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use DOMElement;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -37,7 +38,6 @@ use WP_Post;
 use WP_Role;
 use WP_Post_Type;
 use WP_Screen;
-use WP_Rewrite;
 
 /**
  * Class Story_Post_Type.
@@ -181,6 +181,7 @@ class Story_Post_Type {
 
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
+		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 
@@ -202,6 +203,9 @@ class Story_Post_Type {
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
+
+		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
 	}
 
 	/**
@@ -463,13 +467,34 @@ class Story_Post_Type {
 			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
 			(
 				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
-				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
+				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] ) ||
+				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'publisher-logo-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
 			)
 		) {
 			return false;
 		}
 
 		return $sanitized;
+	}
+
+	/**
+	 * Filters whether AMP-to-AMP is excluded for an element.
+	 *
+	 * The element may be either a link (`a` or `area`) or a `form`.
+	 *
+	 * @param bool       $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
+	 * @param string     $url      URL considered for exclusion.
+	 * @param string[]   $rel      Link relations.
+	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
+	 * @return bool Whether AMP-to-AMP is excluded.
+	 */
+	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
+		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
+			return true;
+		}
+
+		return $excluded;
+
 	}
 
 	/**
@@ -670,8 +695,7 @@ class Story_Post_Type {
 			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
-				'dateFormat'       => get_option( 'date_format' ),
-				'timeFormat'       => get_option( 'time_format' ),
+				'locale'           => ( new Locale() )->get_locale_settings(),
 				'allowedMimeTypes' => $this->get_allowed_mime_types(),
 				'allowedFileTypes' => $this->get_allowed_file_types(),
 				'postType'         => self::POST_TYPE_SLUG,
@@ -687,12 +711,10 @@ class Story_Post_Type {
 					'users'   => '/wp/v2/users',
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'   => '/web-stories/v1/media',
-					'fonts'   => '/web-stories/v1/fonts',
 					'link'    => '/web-stories/v1/link',
 				],
 				'metadata'         => [
-					'publisher'       => $this->get_publisher_data(),
-					'logoPlaceholder' => $this->get_publisher_logo_placeholder(),
+					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 			],
@@ -797,6 +819,35 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Filters the bulk action updated messages.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param array[] $bulk_messages Arrays of messages, each keyed by the corresponding post type. Messages are
+	 *                               keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
+	 * @param int[]   $bulk_counts   Array of item counts for each message, used to build internationalized strings.
+	 *
+	 * @return array Bulk counts.
+	 */
+	public function bulk_post_updated_messages( array $bulk_messages, $bulk_counts ) {
+		$bulk_messages[ self::POST_TYPE_SLUG ] = [
+			/* translators: %s: Number of stories. */
+			'updated'   => _n( '%s story updated.', '%s stories updated.', $bulk_counts['updated'], 'web-stories' ),
+			'locked'    => ( 1 === $bulk_counts['locked'] ) ? __( '1 story not updated, somebody is editing it.', 'web-stories' ) :
+				/* translators: %s: Number of stories. */
+				_n( '%s story not updated, somebody is editing it.', '%s stories not updated, somebody is editing them.', $bulk_counts['locked'], 'web-stories' ),
+			/* translators: %s: Number of stories. */
+			'deleted'   => _n( '%s story permanently deleted.', '%s stories permanently deleted.', $bulk_counts['deleted'], 'web-stories' ),
+			/* translators: %s: Number of stories. */
+			'trashed'   => _n( '%s story moved to the Trash.', '%s stories moved to the Trash.', $bulk_counts['trashed'], 'web-stories' ),
+			/* translators: %s: Number of stories. */
+			'untrashed' => _n( '%s story restored from the Trash.', '%s stories restored from the Trash.', $bulk_counts['untrashed'], 'web-stories' ),
+		];
+
+		return $bulk_messages;
+	}
+
+	/**
 	 * Filter feed content for stories to render as an image.
 	 *
 	 * @since 1.0.0
@@ -865,5 +916,21 @@ class Story_Post_Type {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Add VTT file type to allow file in multisite.
+	 *
+	 * @param string $value List of allowed file types.
+	 * @return string List of allowed file types.
+	 */
+	public function filter_list_of_allowed_filetypes( $value ) {
+		$filetypes = explode( ' ', $value );
+		if ( ! in_array( 'vtt', $filetypes, true ) ) {
+			$filetypes[] = 'vtt';
+			$value       = implode( ' ', $filetypes );
+		}
+
+		return $value;
 	}
 }

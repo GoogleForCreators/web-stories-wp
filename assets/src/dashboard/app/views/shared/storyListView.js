@@ -31,11 +31,9 @@ import PropTypes from 'prop-types';
 import { useCallback } from 'react';
 import {
   StoriesPropType,
-  UsersPropType,
   RenameStoryPropType,
   StoryMenuPropType,
   PageSizePropType,
-  DateSettingsPropType,
 } from '../../../types';
 import {
   PreviewPage,
@@ -74,7 +72,7 @@ import {
   ArrowAlphaDescending as ArrowAlphaDescendingSvg,
   ArrowDownward as ArrowIconSvg,
 } from '../../../icons';
-import { getRelativeDisplayDate } from '../../../utils/';
+import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
 
 const ListView = styled.div`
@@ -174,8 +172,6 @@ export default function StoryListView({
   storyMenu,
   storySort,
   storyStatus,
-  users,
-  dateSettings,
 }) {
   const {
     state: { squishContentHeight },
@@ -209,20 +205,29 @@ export default function StoryListView({
 
   return (
     <ListView data-testid="story-list-view">
-      <Table>
+      <Table aria-label={__('List view of created stories', 'web-stories')}>
         <StickyTableHeader top={stickyTopPosition}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
               onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
-              <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
+              <SelectableTitle
+                aria-label={__(
+                  'Title, select to sort table by story title',
+                  'web-stories'
+                )}
+              >
+                {__('Title', 'web-stories')}
+              </SelectableTitle>
             </TablePreviewHeaderCell>
             <TableTitleHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
               onKeyDown={(e) => onKeyDownSort(e, STORY_SORT_OPTIONS.NAME)}
             >
-              <SelectableTitle>{__('Title', 'web-stories')}</SelectableTitle>
+              <SelectableTitle aria-hidden="true">
+                {__('Title', 'web-stories')}
+              </SelectableTitle>
               <ArrowIcon active={storySort === STORY_SORT_OPTIONS.NAME}>
                 {sortDirection === SORT_DIRECTION.DESC ? (
                   <ArrowAlphaDescendingSvg />
@@ -233,6 +238,10 @@ export default function StoryListView({
             </TableTitleHeaderCell>
             <TableAuthorHeaderCell>
               <SelectableTitle
+                aria-label={__(
+                  'Author, select to sort table by story author',
+                  'web-stories'
+                )}
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.CREATED_BY)
                 }
@@ -254,6 +263,10 @@ export default function StoryListView({
             </TableAuthorHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
+                aria-label={__(
+                  'Creation date, select to sort table by date story was created',
+                  'web-stories'
+                )}
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.DATE_CREATED)
                 }
@@ -264,6 +277,7 @@ export default function StoryListView({
                 {__('Date Created', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
+                aria-hidden={true}
                 active={storySort === STORY_SORT_OPTIONS.DATE_CREATED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
@@ -272,6 +286,10 @@ export default function StoryListView({
             </TableDateHeaderCell>
             <TableDateHeaderCell>
               <SelectableTitle
+                aria-label={__(
+                  'Modification date, select to sort table by date story was last modified',
+                  'web-stories'
+                )}
                 onClick={() =>
                   onSortTitleSelected(STORY_SORT_OPTIONS.LAST_MODIFIED)
                 }
@@ -282,6 +300,7 @@ export default function StoryListView({
                 {__('Last Modified', 'web-stories')}
               </SelectableTitle>
               <ArrowIconWithTitle
+                aria-hidden={true}
                 active={storySort === STORY_SORT_OPTIONS.LAST_MODIFIED}
                 asc={sortDirection === SORT_DIRECTION.ASC}
               >
@@ -333,13 +352,9 @@ export default function StoryListView({
                   )}
                 </TitleTableCellContainer>
               </TableCell>
-              <TableCell>{users[story.author]?.name || '—'}</TableCell>
-              <TableCell>
-                {getRelativeDisplayDate(story.created, dateSettings)}
-              </TableCell>
-              <TableCell>
-                {getRelativeDisplayDate(story.modified, dateSettings)}
-              </TableCell>
+              <TableCell>{story.author || '—'}</TableCell>
+              <TableCell>{getRelativeDisplayDate(story.created)}</TableCell>
+              <TableCell>{getRelativeDisplayDate(story.modified)}</TableCell>
               {storyStatus !== STORY_STATUS.DRAFT && (
                 <TableStatusCell>
                   {story.status === STORY_STATUS.PUBLISH &&
@@ -366,6 +381,4 @@ StoryListView.propTypes = {
   storySort: PropTypes.string.isRequired,
   storyStatus: PropTypes.oneOf(Object.values(STORY_STATUS)),
   stories: StoriesPropType,
-  users: UsersPropType.isRequired,
-  dateSettings: DateSettingsPropType,
 };

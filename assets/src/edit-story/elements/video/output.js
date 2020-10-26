@@ -25,7 +25,7 @@ function defaultForUndefined(value, def) {
 }
 
 function VideoOutput({ element, box }) {
-  const { resource, loop } = element;
+  const { resource, loop, tracks } = element;
 
   const sourceProps = {
     type: resource.mimeType,
@@ -47,6 +47,17 @@ function VideoOutput({ element, box }) {
     <MediaOutput element={element} box={box}>
       <amp-video {...props} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
+        {tracks &&
+          tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+            <track
+              srcLang={srclang}
+              label={label}
+              kind={kind}
+              src={src}
+              key={key}
+              default={i == 0}
+            />
+          ))}
       </amp-video>
     </MediaOutput>
   );

@@ -17,8 +17,10 @@
 /**
  * External dependencies
  */
+import { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useFeatures } from 'flagged';
+import ResizeObserver from 'resize-observer-polyfill';
 
 /**
  * WordPress dependencies
@@ -28,33 +30,43 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Section, MainButton, SearchInput } from '../../common';
+import { Section, SearchInput } from '../../common';
 import { FontPreview } from '../../text';
-import useLibrary from '../../useLibrary';
 import { Pane as SharedPane } from '../shared';
 import paneId from './paneId';
-import { PRESETS, DEFAULT_PRESET } from './textPresets';
+import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSets from './textSets';
 
 const Pane = styled(SharedPane)`
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: 100%;
 `;
 
-const TYPE = 'text';
-
 function TextPane(props) {
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
+  const paneRef = useRef();
+  const [, forceUpdate] = useState();
 
   const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
 
+  useEffect(() => {
+    const ro = new ResizeObserver(() => {
+      // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
+      // https://stackoverflow.com/a/58701523/13078978
+      window.requestAnimationFrame(() => {
+        forceUpdate(Date.now());
+      });
+    });
+
+    ro.observe(paneRef.current);
+
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <Pane id={paneId} {...props}>
+    <Pane id={paneId} {...props} ref={paneRef}>
       {showTextAndShapesSearchInput && (
         <SearchInput
           initialValue={''}
@@ -64,14 +76,7 @@ function TextPane(props) {
         />
       )}
 
-      <Section
-        title={__('Presets', 'web-stories')}
-        titleTools={
-          <MainButton onClick={() => insertElement(TYPE, DEFAULT_PRESET)}>
-            {__('Add new text', 'web-stories')}
-          </MainButton>
-        }
-      >
+      <Section title={__('Presets', 'web-stories')}>
         {PRESETS.map(({ title, element }, i) => (
           <FontPreview
             key={i}
@@ -81,7 +86,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && <TextSets />}
+      {showTextSets && paneRef.current && <TextSets paneRef={paneRef} />}
     </Pane>
   );
 }

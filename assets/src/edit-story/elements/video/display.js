@@ -48,6 +48,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     id,
     poster,
     resource,
+    tracks,
     isBackground,
     scale,
     focalX,
@@ -72,6 +73,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     focalX,
     focalY
   );
+
   return (
     <MediaDisplay element={element} mediaRef={ref} showPlaceholder={true}>
       {previewMode ? (
@@ -93,6 +95,17 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           ref={ref}
         >
           <source src={resource.src} type={resource.mimeType} />
+          {tracks &&
+            tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
+              <track
+                srcLang={srclang}
+                label={label}
+                kind={kind}
+                src={src}
+                key={key}
+                default={i == 0}
+              />
+            ))}
         </Video>
       )}
     </MediaDisplay>

@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { useCallback, useRef } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -29,9 +30,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import DisplayElement from '../../../../canvas/displayElement';
-import { PAGE_WIDTH, TEXT_SET_SIZE } from '../../../../../constants';
-import useInsertTextSet from './useInsertTextSet';
+import { useLayout } from '../../../../../app/layout';
+import { TEXT_SET_SIZE } from '../../../../../constants';
+import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
+import useLibrary from '../../../useLibrary';
+import { dataToEditorX, dataToEditorY } from '../../../../../units';
+import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.button`
   border: 0;
@@ -42,44 +46,82 @@ const TextSetItem = styled.button`
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.07)};
   border-radius: 4px;
   cursor: pointer;
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: -webkit-focus-ring-color auto 2px;
+  }
+`;
+
+const DragWrapper = styled.div.attrs({
+  role: 'listitem',
+})``;
+
+const DragContainer = styled.div`
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  z-index: -1;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
 `;
 
 function TextSet({ elements }) {
-  const insertTextSet = useInsertTextSet();
+  const { insertTextSet } = useLibrary((state) => ({
+    insertTextSet: state.actions.insertTextSet,
+  }));
+
+  const elementRef = useRef();
+
+  const { canvasPageSize } = useLayout(({ state }) => ({
+    canvasPageSize: state.canvasPageSize,
+  }));
+
+  const handleDragStart = useCallback(
+    (e) => {
+      const { x, y } = e.target.getBoundingClientRect();
+      const offsetX = e.clientX - x;
+      const offsetY = e.clientY - y;
+
+      e.dataTransfer.setDragImage(elementRef.current, offsetX, offsetY);
+      e.dataTransfer.setData(
+        'textset',
+        JSON.stringify({
+          grabOffsetX: -offsetX,
+          grabOffsetY: -offsetY,
+          elements,
+        })
+      );
+    },
+    [elements]
+  );
+
+  const { textSetHeight, textSetWidth } = elements[0];
+  const { width: pageWidth, height: pageHeight } = canvasPageSize;
+  const dragWidth = dataToEditorX(textSetWidth, pageWidth);
+  const dragHeight = dataToEditorY(textSetHeight, pageHeight);
 
   return (
-    <TextSetItem
-      role="listitem"
-      aria-label={__('Insert Text Set', 'web-stories')}
-      onClick={() => insertTextSet(elements)}
-    >
-      {elements.map(
-        ({
-          id,
-          content,
-          previewOffsetX,
-          previewOffsetY,
-          textSetWidth,
-          textSetHeight,
-          ...rest
-        }) => (
-          <DisplayElement
-            previewMode
-            key={id}
-            element={{
-              id,
-              content: `<span style="color: #fff">${content}<span>`,
-              ...rest,
-              x: previewOffsetX + (PAGE_WIDTH - textSetWidth) / 2,
-              y:
-                previewOffsetY +
-                (PAGE_WIDTH - textSetHeight) /
-                  2 /* Use PAGE_WIDTH here since the area is square */,
-            }}
-          />
-        )
-      )}
-    </TextSetItem>
+    <DragWrapper>
+      <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
+        <TextSetElements
+          elements={elements}
+          pageSize={{
+            width: pageWidth,
+            height: pageHeight,
+          }}
+        />
+      </DragContainer>
+
+      <TextSetItem
+        role="listitem"
+        draggable={true}
+        onDragStart={handleDragStart}
+        aria-label={__('Insert Text Set', 'web-stories')}
+        onClick={() => insertTextSet(elements)}
+      >
+        <TextSetElements isForDisplay elements={elements} />
+      </TextSetItem>
+    </DragWrapper>
   );
 }
 

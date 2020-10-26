@@ -36,6 +36,15 @@ describe('getGoogleFontURL', () => {
         [0, 400],
       ],
     };
+
+    const roboto_400_700 = {
+      family: 'Roboto',
+      variants: [
+        [0, 400],
+        [0, 700],
+      ],
+    };
+
     const lato_300i_900i = {
       family: 'Lato',
       variants: [
@@ -70,6 +79,9 @@ describe('getGoogleFontURL', () => {
     );
     expect(getGoogleFontURL([roboto_400_400i])).toStrictEqual(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Aital%400%3B1'
+    );
+    expect(getGoogleFontURL([roboto_400_700])).toStrictEqual(
+      'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Awght%40400%3B700'
     );
     expect(getGoogleFontURL([roboto_100_400])).toStrictEqual(
       'https://fonts.googleapis.com/css2?display=swap&family=Roboto%3Awght%40100%3B400'

@@ -17,11 +17,11 @@ Object {
       "label": "Black",
     },
   ],
-  "createdBy": "Google AMP",
+  "createdBy": "Google",
   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   "id": 1,
   "isLocal": true,
-  "modified": "2020-04-21T07:00:00.000Z",
+  "modified": 2020-04-21T07:00:00.000Z,
   "pages": Array [
     Object {
       "elements": Array [],

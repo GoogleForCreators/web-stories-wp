@@ -29,10 +29,11 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\REST_API\Embed_Controller;
-use Google\Web_Stories\REST_API\Fonts_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
+use Google\Web_Stories\Block\Embed_Block;
+use Google\Web_Stories\Shortcode\Embed_Shortcode;
 use WP_Post;
 
 /**
@@ -87,6 +88,20 @@ class Plugin {
 	 * @var Embed_Block
 	 */
 	public $embed_block;
+
+	/**
+	 * Embed shortcode
+	 *
+	 * @var Embed_Shortcode
+	 */
+	public $embed_shortcode;
+
+	/**
+	 * Embed base
+	 *
+	 * @var Embed_Base
+	 */
+	public $embed_base;
 
 	/**
 	 * Frontend.
@@ -170,9 +185,17 @@ class Plugin {
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
 
+		// Embed base.
+		$this->embed_base = new Embed_Base();
+		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
+
 		// Gutenberg Blocks.
 		$this->embed_block = new Embed_Block();
 		add_action( 'init', [ $this->embed_block, 'init' ] );
+
+		// Embed shortcode.
+		$this->embed_shortcode = new Embed_Shortcode();
+		add_action( 'init', [ $this->embed_shortcode, 'init' ] );
 
 		// Frontend.
 		$this->discovery = new Discovery();
@@ -211,8 +234,6 @@ class Plugin {
 	 * @return void
 	 */
 	public function register_rest_routes() {
-		$fonts_controller = new Fonts_Controller();
-		$fonts_controller->register_routes();
 
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();

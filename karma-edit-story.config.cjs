@@ -34,6 +34,7 @@ module.exports = function (config) {
       'build/karma-edit-story-failed-tests.txt',
       'utf-8'
     )
+      .replace(/\s+$/g, '')
       .replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
       .replace(/-/g, '\\x2d')
       .split('\n')
@@ -69,6 +70,7 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      'node_modules/axe-core/axe.js',
     ],
 
     // list of files / patterns to exclude

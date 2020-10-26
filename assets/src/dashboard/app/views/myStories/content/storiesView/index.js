@@ -29,12 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import {
-  DateSettingsPropType,
-  StoriesPropType,
-  StoryActionsPropType,
-  UsersPropType,
-} from '../../../../../types';
+import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import {
   SortPropTypes,
   ViewPropTypes,
@@ -57,9 +52,7 @@ function StoriesView({
   sort,
   storyActions,
   stories,
-  users,
   view,
-  dateSettings,
   initialFocusStoryId = null,
 }) {
   const [contextMenuId, setContextMenuId] = useState(-1);
@@ -161,7 +154,7 @@ function StoriesView({
               body:
                 story.title.length > 0
                   ? sprintf(
-                      /* translators: %s is the story title. */
+                      /* translators: %s: story title. */
                       __(
                         '%s has been copied to your clipboard.',
                         'web-stories'
@@ -226,8 +219,6 @@ function StoriesView({
         storyMenu={storyMenu}
         storySort={sort.value}
         storyStatus={filterValue}
-        users={users}
-        dateSettings={dateSettings}
       />
     ) : (
       <StoryGridView
@@ -240,8 +231,6 @@ function StoriesView({
         previewStory={storyActions.handlePreviewStory}
         storyMenu={storyMenu}
         stories={stories}
-        users={users}
-        dateSettings={dateSettings}
         returnStoryFocusId={returnStoryFocusId}
         initialFocusStoryId={initialFocusStoryId}
       />
@@ -267,10 +256,23 @@ function StoriesView({
                   setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
                 }}
+                aria-label={sprintf(
+                  /* translators: %s: story title */
+                  __('Cancel deleting story "%s"', 'web-stories'),
+                  activeStory.title
+                )}
               >
                 {__('Cancel', 'web-stories')}
               </Button>
-              <Button type={BUTTON_TYPES.DEFAULT} onClick={handleOnDeleteStory}>
+              <Button
+                type={BUTTON_TYPES.DEFAULT}
+                onClick={handleOnDeleteStory}
+                aria-label={sprintf(
+                  /* translators: %s: story title */
+                  __('Confirm deleting story "%s"', 'web-stories'),
+                  activeStory.title
+                )}
+              >
                 {__('Delete', 'web-stories')}
               </Button>
             </>
@@ -292,9 +294,7 @@ StoriesView.propTypes = {
   sort: SortPropTypes,
   storyActions: StoryActionsPropType,
   stories: StoriesPropType,
-  users: UsersPropType,
   view: ViewPropTypes,
-  dateSettings: DateSettingsPropType,
   initialFocusStoryId: PropTypes.number,
 };
 export default StoriesView;

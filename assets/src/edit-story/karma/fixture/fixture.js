@@ -25,14 +25,16 @@ import Modal from 'react-modal';
 /**
  * Internal dependencies
  */
+import FixtureEvents from '../../../../../karma/fixture/events';
 import App from '../../app/index';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
+import FileProvider from '../../app/file/provider';
+import FileContext from '../../app/file/context';
 import Layout from '../../app/layout';
 import { DATA_VERSION } from '../../migration';
 import { createPage } from '../../elements';
-import FixtureEvents from '../../../../../karma/fixture/events';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 
@@ -50,6 +52,14 @@ const DEFAULT_CONFIG = {
     hasPublishAction: true,
   },
   version: '1.0.0-alpha.9',
+  isRTL: false,
+  locale: {
+    dateFormat: 'F j, Y',
+    timeFormat: 'g:i a',
+    gmtOffset: -4,
+    timezone: 'America/New_York',
+    weekStartsOn: 0,
+  },
 };
 
 /**
@@ -101,6 +111,11 @@ export class Fixture {
       this.apiProviderFixture_.Component
     );
 
+    this.fileProviderFixture_ = new FileProviderFixture();
+    this.stubComponent(FileProvider).callFake(
+      this.fileProviderFixture_.Component
+    );
+
     this._layoutStub = this.stubComponent(Layout);
 
     this._events = new FixtureEvents(this.act.bind(this));
@@ -110,7 +125,10 @@ export class Fixture {
     this._editor = null;
   }
 
-  restore() {}
+  restore() {
+    window.location.hash = '#';
+    localStorage.clear();
+  }
 
   get container() {
     return this._container;
@@ -181,6 +199,10 @@ export class Fixture {
     this._flags = { ...flags };
   }
 
+  setConfig(config) {
+    this._config = { ...this._config, ...config };
+  }
+
   /**
    * @param {Array<Object>} pages Pages.
    */
@@ -196,6 +218,7 @@ export class Fixture {
    */
   async render() {
     const root = document.querySelector('test-root');
+    root.setAttribute('dir', this._config.isRTL ? 'rtl' : 'ltr');
 
     // see http://reactcommunity.org/react-modal/accessibility/
     Modal.setAppElement(root);
@@ -427,51 +450,13 @@ function HookExecutor({ hooks }) {
 }
 /* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
-/* eslint-disable jasmine/no-unsafe-spy */
-class APIProviderFixture {
+class FileProviderFixture {
   constructor() {
     this._pages = [];
 
     // eslint-disable-next-line react/prop-types
     const Comp = ({ children }) => {
-      const getStoryById = useCallback(
-        // @todo: put this to __db__/
-        () =>
-          asyncResponse({
-            title: { raw: '' },
-            status: 'draft',
-            author: 1,
-            slug: '',
-            date_gmt: '2020-05-06T22:32:37',
-            modified: '2020-05-06T22:32:37',
-            excerpt: { raw: '' },
-            link: 'http://stories.local/?post_type=web-story&p=1',
-            story_data: {
-              version: DATA_VERSION,
-              pages: this._pages,
-            },
-            featured_media: 0,
-            featured_media_url: '',
-            publisher_logo_url:
-              'http://stories.local/wp-content/plugins/web-stories/assets/images/logo.png',
-            permalink_template: 'http://stories3.local/stories/%pagename%/',
-            style_presets: { textStyles: [], colors: [] },
-            password: '',
-          }),
-        []
-      );
-
-      const autoSaveById = useCallback(
-        () => jasmine.createSpy('autoSaveById'),
-        []
-      );
-      const saveStoryById = useCallback(
-        () => jasmine.createSpy('saveStoryById'),
-        []
-      );
-
-      const getAllFonts = useCallback(
-        // @todo: put actual data to __db__/
+      const getFonts = useCallback(
         () =>
           asyncResponse([
             {
@@ -569,6 +554,65 @@ class APIProviderFixture {
         []
       );
 
+      const state = {
+        actions: { getFonts },
+      };
+      return (
+        <FileContext.Provider value={state}>{children}</FileContext.Provider>
+      );
+    };
+    Comp.displayName = 'Fixture(FileProvider)';
+    this._comp = Comp;
+  }
+
+  get Component() {
+    return this._comp;
+  }
+}
+
+/* eslint-disable jasmine/no-unsafe-spy */
+class APIProviderFixture {
+  constructor() {
+    this._pages = [];
+
+    // eslint-disable-next-line react/prop-types
+    const Comp = ({ children }) => {
+      const getStoryById = useCallback(
+        // @todo: put this to __db__/
+        () =>
+          asyncResponse({
+            title: { raw: '' },
+            status: 'draft',
+            author: 1,
+            slug: '',
+            date_gmt: '2020-05-06T22:32:37',
+            modified: '2020-05-06T22:32:37',
+            excerpt: { raw: '' },
+            link: 'http://stories.local/?post_type=web-story&p=1',
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+            featured_media: 0,
+            featured_media_url: '',
+            publisher_logo_url:
+              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
+            permalink_template: 'http://stories3.local/stories/%pagename%/',
+            style_presets: { textStyles: [], colors: [] },
+            password: '',
+          }),
+        []
+      );
+
+      const autoSaveById = useCallback(
+        () => jasmine.createSpy('autoSaveById'),
+        []
+      );
+      const saveStoryById = useCallback(
+        () => jasmine.createSpy('saveStoryById'),
+        []
+      );
+
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
         const filterByMediaType = mediaType
           ? ({ mime_type }) => mime_type.startsWith(mediaType)
@@ -625,7 +669,6 @@ class APIProviderFixture {
           getMedia,
           getLinkMetadata,
           saveStoryById,
-          getAllFonts,
           getAllStatuses,
           getAllUsers,
           uploadMedia,

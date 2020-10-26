@@ -26,7 +26,6 @@ import { useMemo } from 'react';
 import { useConfig } from '../config';
 import { createContext } from '../../utils';
 import dataAdapter from './wpAdapter';
-import useFontApi from './useFontApi';
 import useMediaApi from './useMediaApi';
 import useStoryApi from './useStoryApi';
 import useTemplateApi from './useTemplateApi';
@@ -38,8 +37,7 @@ export const ApiContext = createContext({ state: {}, actions: {} });
 export default function ApiProvider({ children }) {
   const { api, editStoryURL, cdnURL } = useConfig();
 
-  const { users, currentUser, api: usersApi } = useUsersApi(dataAdapter, {
-    userApi: api.users,
+  const { currentUser, api: usersApi } = useUsersApi(dataAdapter, {
     currentUserApi: api.currentUser,
   });
 
@@ -52,8 +50,6 @@ export default function ApiProvider({ children }) {
     editStoryURL,
     storyApi: api.stories,
   });
-
-  const { api: fontApi } = useFontApi(dataAdapter, { fontApi: api.fonts });
 
   const { media, api: mediaApi } = useMediaApi(dataAdapter, {
     globalMediaApi: api.media,
@@ -70,7 +66,6 @@ export default function ApiProvider({ children }) {
         settings,
         stories,
         templates,
-        users,
         currentUser,
       },
       actions: {
@@ -78,7 +73,6 @@ export default function ApiProvider({ children }) {
         settingsApi,
         storyApi,
         templateApi,
-        fontApi,
         usersApi,
       },
     }),
@@ -87,13 +81,11 @@ export default function ApiProvider({ children }) {
       settings,
       stories,
       templates,
-      users,
       currentUser,
       mediaApi,
       settingsApi,
       storyApi,
       templateApi,
-      fontApi,
       usersApi,
     ]
   );

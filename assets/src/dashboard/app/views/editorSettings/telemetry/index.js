@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { TranslateWithMarkup } from '../../../../../i18n';
 import { SettingForm, SettingHeading, FormLabel } from '../components';
 
 const CheckBox = styled.input.attrs({
@@ -51,7 +52,17 @@ export default function TelemetrySettings({
   onCheckboxSelected,
   disabled,
 }) {
+  const checkboxRef = useRef();
+  const focusOnCheckbox = useRef(false);
+
   const checked = Boolean(selected);
+
+  useEffect(() => {
+    if (focusOnCheckbox.current) {
+      checkboxRef.current.focus();
+    }
+  });
+
   return (
     <SettingForm>
       <div>
@@ -62,25 +73,43 @@ export default function TelemetrySettings({
       <div>
         <Label>
           <CheckBox
+            ref={checkboxRef}
             data-testid="telemetry-settings-checkbox"
             disabled={disabled}
-            onChange={onCheckboxSelected}
+            onChange={() => {
+              onCheckboxSelected();
+              focusOnCheckbox.current = true;
+            }}
+            onBlur={() => {
+              focusOnCheckbox.current = false;
+            }}
             checked={checked}
           />
           <FormLabel aria-checked={checked}>
-            {__(
-              'Help us improve the Web Stories for WordPress plugin by allowing tracking of usage stats. All data are treated in accordance with Google Privacy Policy.',
-              'web-stories'
-            )}
-            &nbsp;
-            <a
-              href={__('https://policies.google.com/privacy', 'web-stories')}
-              rel="noreferrer"
-              target="_blank"
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  //eslint-disable-next-line jsx-a11y/anchor-has-content
+                  <a
+                    href={__(
+                      'https://policies.google.com/privacy',
+                      'web-stories'
+                    )}
+                    rel="noreferrer"
+                    target="_blank"
+                    aria-label={__(
+                      'Learn more by visiting Google Privacy Policy',
+                      'web-stories'
+                    )}
+                  />
+                ),
+              }}
             >
-              {__('Learn more', 'web-stories')}
-              {'.'}
-            </a>
+              {__(
+                'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with <a>Google Privacy Policy</a>.',
+                'web-stories'
+              )}
+            </TranslateWithMarkup>
           </FormLabel>
         </Label>
       </div>

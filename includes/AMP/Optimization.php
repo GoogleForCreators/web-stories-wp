@@ -26,28 +26,30 @@
 
 namespace Google\Web_Stories\AMP;
 
-use AmpProject\AmpWP\RemoteRequest\CachedRemoteGetRequest;
-use AmpProject\AmpWP\RemoteRequest\WpHttpRemoteGetRequest;
-use AmpProject\Dom\Document;
-use AmpProject\Optimizer\Configuration;
-use AmpProject\Optimizer\Error;
-use AmpProject\Optimizer\ErrorCollection;
-use AmpProject\Optimizer\LocalFallback;
-use AmpProject\Optimizer\TransformationEngine;
-use AmpProject\Optimizer\Transformer\AmpRuntimeCss;
-use AmpProject\Optimizer\Transformer\ServerSideRendering;
-use AmpProject\Optimizer\Transformer\TransformedIdentifier;
-use AmpProject\RemoteRequest\FallbackRemoteGetRequest;
-use AmpProject\RemoteRequest\FilesystemRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\CachedRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\WpHttpRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Error;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ServerSideRendering;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\TransformedIdentifier;
+use Google\Web_Stories_Dependencies\AmpProject\RemoteRequest\FallbackRemoteGetRequest;
+use Google\Web_Stories_Dependencies\AmpProject\RemoteRequest\FilesystemRemoteGetRequest;
 
 /**
  * Optimization class.
+ *
+ * @since 1.1.0
  */
 class Optimization {
 	/**
 	 * Optimizes a document.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
 	 *
@@ -73,6 +75,11 @@ class Optimization {
 	/**
 	 * Optimizer instance to use.
 	 *
+	 * @since 1.1.0
+	 *
+	 * @see AMP_Theme_Support::get_optimizer
+	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L2235-L2255
+	 *
 	 * @return TransformationEngine Optimizer transformation engine to use.
 	 */
 	private function get_optimizer() {
@@ -94,6 +101,11 @@ class Optimization {
 	/**
 	 * Get the AmpProject\Optimizer configuration object to use.
 	 *
+	 * @since 1.1.0
+	 *
+	 * @see AMP_Theme_Support::get_optimizer_configuration()
+	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L2257-L2315
+	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
 	private static function get_optimizer_configuration() {
@@ -102,7 +114,7 @@ class Optimization {
 		/**
 		 * Filter whether the AMP Optimizer should use server-side rendering or not.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param bool $enable_ssr Whether the AMP Optimizer should use server-side rendering or not.
 		 */
@@ -120,19 +132,18 @@ class Optimization {
 			);
 		}
 
+		$configuration = [
+			Configuration::KEY_TRANSFORMERS => $transformers,
+		];
+
 		/**
 		 * Filter the configuration to be used for the AMP Optimizer.
 		 *
-		 * @since 1.0.0
+		 * @since 1.1.0
 		 *
 		 * @param array $configuration Associative array of configuration data.
 		 */
-		$configuration = apply_filters(
-			'web_stories_amp_optimizer_config',
-			[
-				Configuration::KEY_TRANSFORMERS => $transformers,
-			]
-		);
+		$configuration = apply_filters( 'web_stories_amp_optimizer_config', $configuration );
 
 		return new Configuration( $configuration );
 	}

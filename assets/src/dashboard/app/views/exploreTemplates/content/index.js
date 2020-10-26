@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -41,8 +41,7 @@ import {
 } from '../../../../utils/useTemplateView';
 import { TemplatesPropType, TemplateActionsPropType } from '../../../../types';
 import FontProvider from '../../../font/fontProvider';
-import { TemplateGridView } from '../../shared';
-import EmptyView from './emptyView';
+import { TemplateGridView, EmptyContentMessage } from '../../shared';
 
 function Content({
   allPagesFetched,
@@ -79,11 +78,30 @@ function Content({
                       'No more templates',
                       'web-stories'
                     )}
+                    allDataLoadedAriaMessage={__(
+                      'All templates are loaded',
+                      'web-stories'
+                    )}
+                    loadingAriaMessage={__(
+                      'Loading more templates',
+                      'web-stories'
+                    )}
                     onLoadMore={page.requestNextPage}
                   />
                 </>
               ) : (
-                <EmptyView searchKeyword={search.keyword} />
+                <EmptyContentMessage>
+                  {search?.keyword
+                    ? sprintf(
+                        /* translators: %s: search term. */
+                        __(
+                          'Sorry, we couldn\'t find any results matching "%s"',
+                          'web-stories'
+                        ),
+                        search.keyword
+                      )
+                    : __('No templates currently available', 'web-stories')}
+                </EmptyContentMessage>
               )}
             </StandardViewContentGutter>
           </UnitsProvider>

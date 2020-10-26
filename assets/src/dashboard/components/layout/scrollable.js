@@ -61,7 +61,11 @@ const Scrollable = ({ children }) => {
 
   return (
     <ScrollContent ref={scrollFrameRef}>
-      <Inner scrollbarWidth={scrollbarWidth} paddingTop={squishContentHeight}>
+      <Inner
+        tabIndex={0}
+        scrollbarWidth={scrollbarWidth}
+        paddingTop={squishContentHeight}
+      >
         {children}
       </Inner>
     </ScrollContent>

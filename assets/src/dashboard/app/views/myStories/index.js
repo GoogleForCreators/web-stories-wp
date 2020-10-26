@@ -44,7 +44,6 @@ function MyStories() {
     storiesOrderById,
     totalPages,
     totalStoriesByStatus,
-    users,
   } = useApi(
     ({
       actions: {
@@ -60,7 +59,6 @@ function MyStories() {
           totalPages,
           totalStoriesByStatus,
         },
-        users,
       },
     }) => ({
       duplicateStory,
@@ -74,7 +72,6 @@ function MyStories() {
       storiesOrderById,
       totalPages,
       totalStoriesByStatus,
-      users,
     })
   );
 
@@ -83,13 +80,7 @@ function MyStories() {
     totalPages,
   });
 
-  const {
-    wpListURL,
-    dateFormat,
-    timeFormat,
-    gmtOffset,
-    timezone,
-  } = useConfig();
+  const { wpListURL } = useConfig();
 
   useEffect(() => {
     fetchStories({
@@ -158,7 +149,6 @@ function MyStories() {
         search={search}
         sort={sort}
         stories={orderedStories}
-        dateSettings={{ dateFormat, gmtOffset, timeFormat, timezone }}
         storyActions={{
           createTemplateFromStory,
           duplicateStory,
@@ -166,7 +156,6 @@ function MyStories() {
           updateStory,
           handlePreviewStory,
         }}
-        users={users}
         view={view}
         initialFocusStoryId={lastActiveStoryId}
       />

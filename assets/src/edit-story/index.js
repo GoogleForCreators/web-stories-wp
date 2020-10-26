@@ -18,6 +18,7 @@
  * External dependencies
  */
 import Modal from 'react-modal';
+import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
 
@@ -25,6 +26,7 @@ import { FlagsProvider } from 'flagged';
  * Internal dependencies
  */
 import { initializeTracking } from '../tracking';
+import { updateSettings } from '../date';
 import App from './app';
 import './style.css'; // This way the general editor styles are loaded before all the component styles.
 
@@ -43,11 +45,15 @@ const initialize = (id, config, flags) => {
   // see http://reactcommunity.org/react-modal/accessibility/
   Modal.setAppElement(appElement);
 
+  updateSettings(config.locale);
+
   initializeTracking('Editor');
 
   render(
     <FlagsProvider features={flags}>
-      <App config={config} />
+      <StrictMode>
+        <App config={config} />
+      </StrictMode>
     </FlagsProvider>,
     appElement
   );

@@ -85,6 +85,7 @@ class Discovery extends \WP_UnitTestCase {
 
 	public function setUp() {
 		parent::setUp();
+		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 	}
 
@@ -166,14 +167,5 @@ class Discovery extends \WP_UnitTestCase {
 		$output = get_echo( [ $object, 'print_twitter_metadata' ] );
 		$this->assertContains( 'twitter:card', $output );
 		$this->assertContains( 'twitter:image', $output );
-	}
-
-	/**
-	 * @covers ::get_valid_publisher_image
-	 */
-	public function test_get_valid_publisher_image() {
-		$object = new \Google\Web_Stories\Discovery();
-		$result = $this->call_private_method( $object, 'get_valid_publisher_image', [ self::$attachment_id ] );
-		$this->assertNotFalse( $result );
 	}
 }

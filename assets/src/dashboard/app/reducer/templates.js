@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import groupBy from '../../utils/groupBy';
+import reshapeSavedTemplateObject from '../serializers/savedTemplates';
 
 export const ACTION_TYPES = {
   CREATING_TEMPLATE_FROM_STORY: 'creating_template_from_story',
@@ -69,8 +70,18 @@ function templateReducer(state, action) {
       };
 
     case ACTION_TYPES.FETCH_MY_TEMPLATES_SUCCESS: {
-      const fetchedTemplatesById = action.payload.savedTemplates.map(
-        ({ id }) => id
+      const fetchedTemplatesById = [];
+
+      const reshapedSavedTemplates = action.payload.savedTemplates.reduce(
+        (acc, current) => {
+          if (!current) {
+            return acc;
+          }
+          fetchedTemplatesById.push(current.id);
+          acc[current.id] = reshapeSavedTemplateObject(current);
+          return acc;
+        },
+        {}
       );
 
       const combinedTemplateIds =
@@ -84,7 +95,7 @@ function templateReducer(state, action) {
         ...state,
         savedTemplates: {
           ...state.savedTemplates,
-          ...groupBy(action.payload.savedTemplates, 'id'),
+          ...reshapedSavedTemplates,
         },
         isLoading: false,
         savedTemplatesOrderById: uniqueTemplateIds,

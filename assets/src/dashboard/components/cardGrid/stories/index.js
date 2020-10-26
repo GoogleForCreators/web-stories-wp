@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import moment from 'moment-timezone';
 import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
+import { subMinutes } from '../../../../date';
 import { STORY_STATUS } from '../../../constants';
 import { STORYBOOK_PAGE_SIZE } from '../../../storybookUtils';
 import { CardGridItem, CardPreviewContainer, CardTitle } from '../../';
@@ -45,6 +45,7 @@ const Card = styled.div`
 const StorybookGridItem = (
   <CardGridItem>
     <CardPreviewContainer
+      ariaLabel="Preview aria label"
       bottomAction={{
         targetAction: 'https://www.google.com',
         label: 'Open in Editor',
@@ -61,7 +62,7 @@ const StorybookGridItem = (
       title="Story Title"
       author={'Ron Weasley'}
       status={STORY_STATUS.DRAFT}
-      displayDate={moment().subtract(2, 'minutes')}
+      displayDate={subMinutes(Date.now(), 2)}
       onEditCancel={() => {}}
       onEditComplete={() => {}}
       tabIndex={0}

@@ -53,7 +53,7 @@ class Experiments {
 	 */
 	public function init() {
 		if ( WEBSTORIES_DEV_MODE ) {
-			add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
+			add_action( 'admin_menu', [ $this, 'add_menu_page' ], 25 );
 			add_action( 'admin_init', [ $this, 'initialize_settings' ] );
 		}
 	}
@@ -73,7 +73,7 @@ class Experiments {
 			'manage_options',
 			'web-stories-experiments',
 			[ $this, 'render' ],
-			20
+			25
 		);
 	}
 

@@ -18,13 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { useInsertElement } from '../canvas';
+import { useInsertElement, useInsertTextSet } from '../canvas';
 import Context from './context';
 import { AnimationPane, AnimationIcon } from './panes/animation';
 import { MediaPane, MediaIcon } from './panes/media/local';
@@ -32,6 +32,7 @@ import { Media3pPane, Media3pIcon } from './panes/media/media3p';
 import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
+import { getTextSets } from './panes/text/textSets/utils';
 
 const MEDIA = { icon: MediaIcon, Pane: MediaPane, id: 'media' };
 const MEDIA3P = { icon: Media3pIcon, Pane: Media3pPane, id: 'media3p' };
@@ -43,7 +44,9 @@ const ANIM = { icon: AnimationIcon, Pane: AnimationPane, id: 'animation' };
 function LibraryProvider({ children }) {
   const initialTab = MEDIA.id;
   const [tab, setTab] = useState(initialTab);
+  const [textSets, setTextSets] = useState({});
   const insertElement = useInsertElement();
+  const { insertTextSet, insertTextSetByOffset } = useInsertTextSet();
 
   const { showAnimationTab, showElementsTab } = useFeatures();
 
@@ -52,12 +55,12 @@ function LibraryProvider({ children }) {
     () => [
       MEDIA,
       MEDIA3P,
-      TEXT,
+      ...(tab === TEXT.id ? [TEXT] : [{ icon: TextIcon, id: 'text' }]),
       SHAPES,
       ...(showElementsTab ? [ELEMS] : []),
       ...(showAnimationTab ? [ANIM] : []),
     ],
-    [showAnimationTab, showElementsTab]
+    [showAnimationTab, showElementsTab, tab]
   );
 
   const state = useMemo(
@@ -65,17 +68,32 @@ function LibraryProvider({ children }) {
       state: {
         tab,
         initialTab,
+        textSets,
       },
       actions: {
         setTab,
         insertElement,
+        insertTextSet,
+        insertTextSetByOffset,
       },
       data: {
         tabs: tabs,
       },
     }),
-    [tab, insertElement, initialTab, tabs]
+    [
+      tab,
+      insertElement,
+      insertTextSet,
+      insertTextSetByOffset,
+      initialTab,
+      tabs,
+      textSets,
+    ]
   );
+
+  useEffect(() => {
+    getTextSets().then(setTextSets);
+  }, []);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }

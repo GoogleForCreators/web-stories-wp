@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-import { memo, useRef } from 'react';
+import styled, { StyleSheetManager } from 'styled-components';
+import { memo, useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -33,6 +33,7 @@ import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
 import NavLayer from './navLayer';
 import SelectionCanvas from './selectionCanvas';
+import useCanvas from './useCanvas';
 import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
@@ -48,24 +49,42 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout() {
+  const { setCanvasContainer } = useCanvas((state) => ({
+    setCanvasContainer: state.actions.setCanvasContainer,
+  }));
+
   const backgroundRef = useRef(null);
+
+  const setBackgroundRef = useCallback(
+    (ref) => {
+      backgroundRef.current = ref;
+      setCanvasContainer(ref);
+    },
+    [setCanvasContainer]
+  );
 
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
+  // Elsewhere we use stylisRTLPlugin in case of RTL, however, since we're
+  // forcing the canvas to always be LTR due to problems that otherwise come up
+  // with Moveable and left-right direction, for this subtree, we are not using any plugin.
+  // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
-    <Background ref={backgroundRef} style={layoutParamsCss}>
-      <CanvasUploadDropTarget>
-        <CanvasElementDropzone>
-          <SelectionCanvas>
-            <DisplayLayer />
-            <FramesLayer />
-            <NavLayer />
-          </SelectionCanvas>
-          <EditLayer />
-        </CanvasElementDropzone>
-      </CanvasUploadDropTarget>
-    </Background>
+    <StyleSheetManager stylisPlugins={[]}>
+      <Background ref={setBackgroundRef} style={layoutParamsCss}>
+        <CanvasUploadDropTarget>
+          <CanvasElementDropzone>
+            <SelectionCanvas>
+              <DisplayLayer />
+              <FramesLayer />
+              <NavLayer />
+            </SelectionCanvas>
+            <EditLayer />
+          </CanvasElementDropzone>
+        </CanvasUploadDropTarget>
+      </Background>
+    </StyleSheetManager>
   );
 }
 

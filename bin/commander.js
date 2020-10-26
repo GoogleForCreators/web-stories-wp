@@ -39,7 +39,7 @@ import {
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
 const README_FILE = 'readme.txt';
-const FONTS_FILE = 'includes/data/fonts.json';
+const FONTS_FILE = 'assets/src/fonts/fonts.json';
 const BUILD_DIR = 'build/web-stories';
 const TEMPLATES_DIR = `${PLUGIN_DIR}/assets/src/dashboard/templates/raw`;
 const STORIES_DIR = `${PLUGIN_DIR}/includes/data/stories`;

@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests\AMP;
 
-use AmpProject\Dom\Document;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
