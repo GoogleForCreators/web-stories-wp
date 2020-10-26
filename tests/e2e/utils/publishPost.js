@@ -37,6 +37,7 @@ import {
  * @return {Promise<string>} The post's permalink.
  */
 async function publishPost() {
+  // Increase timeout to stop publishing post failing this test.
   await page.setDefaultTimeout(10000);
   const prePublishChecksEnabled = await arePrePublishChecksEnabled();
 

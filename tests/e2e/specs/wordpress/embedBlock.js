@@ -100,7 +100,6 @@ describe('Embed Block', () => {
 
       await setPostContent(EMBED_BLOCK_CONTENT);
 
-      // Increase timeout to stop publishing post failing this test.
       const postPermalink = await publishPost();
 
       expect(postPermalink).not.toBeNull();

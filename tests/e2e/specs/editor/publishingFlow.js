@@ -80,7 +80,6 @@ describe('Publishing Flow', () => {
 
     expect(await getEditedPostContent()).toMatchSnapshot();
 
-    // Increase timeout to stop publishing post failing this test.
     const postPermalink = await publishPost();
 
     expect(postPermalink).not.toBeNull();
