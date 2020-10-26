@@ -46,7 +46,7 @@
         "type": "phar"
       },
       "php-scoper": {
-        "url": "https://github.com/humbug/php-scoper/releases/latest/download/php-scoper.phar",
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.13.5/php-scoper.phar",
         "path": "vendor/bin/php-scoper",
         "type": "phar"
       }
