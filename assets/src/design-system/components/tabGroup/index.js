@@ -57,7 +57,7 @@ export const TabGroup = forwardRef(function TabGroup(
   const tabRefs = useRef({});
 
   return (
-    <StyledTabGroup ref={ref} aria-label={label}>
+    <StyledTabGroup ref={ref} aria-label={label} role="tablist">
       {tabs.map(({ id, title, ...rest }) => {
         const isActive = activeTabId === id;
         return (
