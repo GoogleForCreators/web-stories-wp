@@ -40,7 +40,7 @@ describe('Button', () => {
 
   it('should not allow onClick action when <Button /> is disabled', () => {
     const { getByText } = renderWithProviders(
-      <Button isDisabled onClick={onClickMock}>
+      <Button disabled onClick={onClickMock}>
         {buttonText}
       </Button>
     );
