@@ -330,7 +330,7 @@ describe('Element: Text', () => {
       await fixture.events.sleep(TIMEOUT);
       const option2 = fixture.screen.getByText('Roboto');
       await fixture.events.click(option2);
-      await fixture.events.sleep(TIMEOUT);
+      await fixture.events.sleep(500);
 
       expect(fontWeight.value).toBe('Regular');
     });
