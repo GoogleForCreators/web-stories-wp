@@ -67,7 +67,7 @@ const EditControls = styled.div`
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
-      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)}`};
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
   }
 
   @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {

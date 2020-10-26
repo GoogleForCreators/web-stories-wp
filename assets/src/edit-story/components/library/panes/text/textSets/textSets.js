@@ -40,6 +40,11 @@ import localStore, {
 import { UnitsProvider } from '../../../../../units';
 import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
+import useStory from '../../../../../app/story/useStory';
+import {
+  getInUseFontsForPages,
+  getTextSetsForFonts,
+} from '../../../../../utils/getInUseFonts';
 import TextSet from './textSet';
 
 const TEXT_SET_ROW_GAP = 12;
@@ -79,29 +84,44 @@ const CATEGORIES = {
   step: __('Steps', 'web-stories'),
   table: __('Table', 'web-stories'),
   quote: __('Quote', 'web-stories'),
+  inUse: __('Fonts In Use', 'web-stories'),
 };
 
 function TextSets({ paneRef }) {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
+  const storyPages = useStory(({ state: { pages } }) => pages);
 
   const [selectedCat, setSelectedCat] = useState(
     localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`)
       ?.selectedCategory
   );
 
-  const filteredTextSets = useMemo(
-    () => (selectedCat ? textSets[selectedCat] : allTextSets),
-    [selectedCat, textSets, allTextSets]
+  const getTextSetsForInUseFonts = useCallback(
+    () =>
+      getTextSetsForFonts({
+        fonts: getInUseFontsForPages(storyPages),
+        textSets: allTextSets,
+      }),
+    [allTextSets, storyPages]
   );
 
+  const filteredTextSets = useMemo(() => {
+    if (selectedCat === 'inUse') {
+      return getTextSetsForInUseFonts();
+    }
+    return selectedCat ? textSets[selectedCat] : allTextSets;
+  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts]);
+
   const categories = useMemo(
-    () =>
-      Object.keys(textSets).map((cat) => ({
+    () => [
+      ...Object.keys(textSets).map((cat) => ({
         id: cat,
         label: CATEGORIES[cat] ?? cat,
       })),
+      { id: 'inUse', label: CATEGORIES.inUse },
+    ],
     [textSets]
   );
 
@@ -112,15 +132,15 @@ function TextSets({ paneRef }) {
     overscan: 5,
   });
 
-  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
-  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
-
   const handleSelectedCategory = useCallback((selectedCategory) => {
     setSelectedCat(selectedCategory);
     localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
       selectedCategory,
     });
   }, []);
+
+  const sectionId = useMemo(() => `section-${uuidv4()}`, []);
+  const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
   return (
     <Section id={sectionId} title={title}>
