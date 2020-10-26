@@ -67,7 +67,7 @@ Web Stories are for everyone! If you are a site owner, content creator, or publi
 
 == Terms of Service ==
 
-By using this plugin, you agree to [Google's Terms of Service](https://policies.google.com/terms). By using third-party imagery and video provided by [Unsplash](https://unsplash.com/terms) and [Coverr](https://coverr.co/license), you agree to adhere to their ToS and licensing terms."
+By using this plugin, you agree to [Google's Terms of Service](https://policies.google.com/terms). By using third-party imagery and video provided by [Unsplash](https://unsplash.com/terms), [Coverr](https://coverr.co/license) and [Tenor](https://tenor.com/legal-terms), you agree to adhere to the respective Terms of Service.
 
 == Frequently Asked Questions ==
 
