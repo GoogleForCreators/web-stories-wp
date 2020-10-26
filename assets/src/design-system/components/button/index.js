@@ -120,7 +120,6 @@ const buttonColors = {
   [BUTTON_TYPES.PRIMARY]: primaryColors,
   [BUTTON_TYPES.SECONDARY]: secondaryColors,
   [BUTTON_TYPES.TERTIARY]: tertiaryColors,
-  [BUTTON_TYPES.PLAIN]: '',
 };
 
 const ButtonRectangle = styled(Base)`
@@ -132,7 +131,7 @@ const ButtonRectangle = styled(Base)`
 `;
 
 const ButtonCircle = styled(Base)`
-  ${({ type }) => type && buttonColors[type]};
+  ${({ type }) => type && buttonColors?.[type]};
 
   ${({ size }) => `
   width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
