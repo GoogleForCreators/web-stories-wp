@@ -56,7 +56,7 @@ class Embed_Block extends Embed_Base {
 	 */
 	public function init() {
 		$this->register_script( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE, Tracking::SCRIPT_HANDLE ] );
-		$this->register_style( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE ] );
+		$this->register_style( self::SCRIPT_HANDLE, [ self::STORY_PLAYER_HANDLE, Embed_Base::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,

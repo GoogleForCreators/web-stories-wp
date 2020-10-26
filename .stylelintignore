@@ -1,11 +1,10 @@
 .github
 .storybook
 __mocks__
-assets/css/*.css
+assets/css
 bin
 build
 docs
-includes
 node_modules
 tests
 vendor

@@ -22,11 +22,12 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { useCallback, useState, useEffect, useRef } from '@wordpress/element';
+import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { ResizableBox } from '@wordpress/components';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useViewportMatch } from '@wordpress/compose';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -60,6 +61,8 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const showLoadingIndicator = isFetchingData;
   const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
 
+  const isResizable = useViewportMatch('medium');
+
   const ref = useRef();
 
   useEffect(() => {
@@ -76,7 +79,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
       const player = new global.AmpStoryPlayer(global, ref.current);
       player.load();
     }
-  }, [showLoadingIndicator, showPlaceholder]);
+  }, [showLoadingIndicator, showPlaceholder, isResizable]);
 
   const fetchStoryData = useCallback(
     async (url) => {
@@ -177,6 +180,36 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const minWidth = width < height ? MIN_SIZE : MIN_SIZE * ratio;
   const minHeight = height < width ? MIN_SIZE : MIN_SIZE / ratio;
 
+  if (!isResizable) {
+    return (
+      <>
+        <EmbedControls
+          switchBackToURLInput={switchBackToURLInput}
+          poster={poster}
+          title={title}
+          setAttributes={setAttributes}
+          width={width}
+          height={height}
+          minWidth={Math.ceil(minWidth)}
+          maxWidth={Math.floor(maxWidth)}
+          minHeight={Math.floor(minHeight)}
+          maxHeight={Math.ceil(maxWidth / ratio)}
+        />
+        <div className={`${className} web-stories-embed align${align}`}>
+          <EmbedPreview
+            url={outerURL}
+            title={title}
+            poster={poster}
+            ref={ref}
+            isSelected={isSelected}
+            width={width}
+            height={height}
+          />
+        </div>
+      </>
+    );
+  }
+
   const showRightHandle =
     align === 'center' ||
     align === 'none' ||
@@ -202,7 +235,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
         minHeight={Math.floor(minHeight)}
         maxHeight={Math.ceil(maxWidth / ratio)}
       />
-      <div className={`${className} align${align}`}>
+      <div className={`${className} web-stories-embed align${align}`}>
         <ResizableBox
           showHandle={isSelected}
           size={{
@@ -235,6 +268,8 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
             poster={poster}
             ref={ref}
             isSelected={isSelected}
+            width={width}
+            height={height}
           />
         </ResizableBox>
       </div>
