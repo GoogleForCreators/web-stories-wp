@@ -93,6 +93,33 @@ describe('Element: Text', () => {
       expect(elements[1].font.family).toBe('Yrsa');
     });
 
+    it('should reset font weights when font family is updated', async () => {
+      await fixture.events.keyboard.type('Yrsa');
+      // Ensure the debounced callback has taken effect.
+      await fixture.events.sleep(TIMEOUT);
+      const option = fixture.screen.getByText('Yrsa');
+      await fixture.events.click(option);
+      await fixture.events.sleep(TIMEOUT);
+
+      const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
+      expect(fontWeight.value).toBe('Regular');
+
+      await fixture.events.click(fontWeight.select);
+      await fixture.events.click(fontWeight.option('Bold'));
+      expect(fontWeight.value).toBe('Bold');
+
+      await openFontPicker();
+
+      await fixture.events.keyboard.type('Roboto');
+      // Ensure the debounced callback has taken effect.
+      await fixture.events.sleep(TIMEOUT);
+      const option2 = fixture.screen.getByText('Roboto');
+      await fixture.events.click(option2);
+      await fixture.events.sleep(600);
+
+      expect(fontWeight.value).toBe('Regular');
+    });
+
     it('should display only the fonts from curated list by default', () => {
       const options = document
         .getElementById('editor-font-picker-list')
@@ -306,33 +333,6 @@ describe('Element: Text', () => {
           document.getElementById('editor-font-picker-list')
         );
       });
-    });
-
-    it('should reset font weights when font family is updated', async () => {
-      await fixture.events.keyboard.type('Yrsa');
-      // Ensure the debounced callback has taken effect.
-      await fixture.events.sleep(TIMEOUT);
-      const option = fixture.screen.getByText('Yrsa');
-      await fixture.events.click(option);
-      await fixture.events.sleep(TIMEOUT);
-
-      const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
-      expect(fontWeight.value).toBe('Regular');
-
-      await fixture.events.click(fontWeight.select);
-      await fixture.events.click(fontWeight.option('Bold'));
-      expect(fontWeight.value).toBe('Bold');
-
-      await openFontPicker();
-
-      await fixture.events.keyboard.type('Roboto');
-      // Ensure the debounced callback has taken effect.
-      await fixture.events.sleep(TIMEOUT);
-      const option2 = fixture.screen.getByText('Roboto');
-      await fixture.events.click(option2);
-      await fixture.events.sleep(500);
-
-      expect(fontWeight.value).toBe('Regular');
     });
   });
 });
