@@ -21,6 +21,12 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import useRadioNavigation from '../shared/useRadioNavigation';
+import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
+
 const Wrapper = styled.div`
   display: flex;
   flex: 1;
@@ -38,12 +44,17 @@ const Button = styled.label`
 const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
+  ${KEYBOARD_USER_SELECTOR} &:focus + div {
+    outline: -webkit-focus-ring-color auto 5px;
+  }
 `;
 
 function IconGroup({ onChange, value: selectedValue, options, ...rest }) {
   // We need manual arrow key navigation here, as we have a global listener for those keys
   // preventing default functionality.
   const ref = useRef();
+
+  useRadioNavigation(ref);
 
   return (
     <Wrapper ref={ref} role="radiogroup" {...rest}>
