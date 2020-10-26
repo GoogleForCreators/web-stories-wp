@@ -37,6 +37,7 @@ import {
  * @return {Promise<string>} The post's permalink.
  */
 async function publishPost() {
+  await page.setDefaultTimeout(10000);
   const prePublishChecksEnabled = await arePrePublishChecksEnabled();
 
   if (prePublishChecksEnabled) {
@@ -49,6 +50,7 @@ async function publishPost() {
   await page.waitForFunction(() =>
     wp.data.select('core/editor').getPermalink()
   );
+  await page.setDefaultTimeout(3000);
 
   return page.evaluate(() => wp.data.select('core/editor').getPermalink());
 }
