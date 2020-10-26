@@ -457,6 +457,11 @@ export function getElementMask({ type, mask }) {
   return getDefaultElementMask(type);
 }
 
+// Only no-mask or rectangles can have a border.
+export function canMaskHaveBorder(mask) {
+  return !mask || mask.type === MaskTypes.RECTANGLE;
+}
+
 export function getMaskByType(type) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }

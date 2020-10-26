@@ -17,11 +17,11 @@
 /**
  * Internal dependencies
  */
-import { getElementMask, MaskTypes } from '../../masks';
+import { canMaskHaveBorder } from '../../masks';
 import { BORDER_POSITION } from '../../constants';
 
 export function shouldDisplayBorder(element) {
-  const { border } = element;
+  const { border, mask } = element;
   if (!border) {
     return false;
   }
@@ -35,9 +35,7 @@ export function shouldDisplayBorder(element) {
     return false;
   }
 
-  // If the mask type is anything else than rectangle, let's short-circuit.
-  const mask = getElementMask(element);
-  return !(mask?.type && mask.type !== MaskTypes.RECTANGLE);
+  return canMaskHaveBorder(mask);
 }
 
 function getBorderPositionCSS({ left, top, right, bottom, position }) {
