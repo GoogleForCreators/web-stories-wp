@@ -3,7 +3,7 @@ snapshot:
   widths: [1600]
   min-height: 1000
   percy-css: |
-    .toplevel_page_amp-options, #footer-upgrade {
+    .toplevel_page_amp-options, #footer-upgrade, #wpadminbar #wp-admin-bar-updates {
       display: none;
     }
     span.update-plugins {
