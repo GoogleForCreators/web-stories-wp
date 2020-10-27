@@ -29,9 +29,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::check_extensions
 	 */
 	public function test_check_extensions() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
-		$compatibility->set_extensions( $this->get_web_stories_required_extensions() );
+		$compatibility = $this->get_compatibility_object();
 		$results = $compatibility->check_extensions();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -45,9 +43,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::check_classes
 	 */
 	public function test_check_classes() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
-		$compatibility->set_extensions( $this->get_web_stories_required_extensions() );
+		$compatibility = $this->get_compatibility_object();
 		$results = $compatibility->check_classes();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -61,9 +57,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::check_functions
 	 */
 	public function test_check_functions() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error, $this->get_web_stories_required_extensions() );
-		$compatibility->set_extensions( $this->get_web_stories_required_extensions() );
+		$compatibility = $this->get_compatibility_object();
 		$results = $compatibility->check_functions();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
@@ -77,8 +71,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::check_wp_version
 	 */
 	public function test_check_wp_version() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility = $this->get_compatibility_object();
 		$compatibility->set_wp_version( '10.0.0' );
 		$results = $compatibility->check_wp_version();
 		$this->assertFalse( $results );
@@ -93,8 +86,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::get_php_version
 	 */
 	public function test_check_php_version() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility = $this->get_compatibility_object();
 		$compatibility->set_php_version( '10.0.0' );
 		$results = $compatibility->check_php_version();
 		$this->assertFalse( $results );
@@ -109,8 +101,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::check_required_files
 	 */
 	public function test_check_required_files() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility = $this->get_compatibility_object();
 		$compatibility->set_required_files( [ WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' ] );
 		$results = $compatibility->check_required_files();
 		$this->assertFalse( $results );
@@ -126,8 +117,7 @@ class Compatibility extends \WP_UnitTestCase {
 	 * @covers ::check_php_built
 	 */
 	public function test_check_php_built() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility = $this->get_compatibility_object();
 		$compatibility->set_class_name( '\Google\Web_Stories\Fake' );
 		$results = $compatibility->check_php_built();
 		$this->assertFalse( $results );
@@ -139,12 +129,12 @@ class Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * Mock extensions, classes and functions.
-	 *
-	 * @return array
+	 * @return \Google\Web_Stories\Compatibility
 	 */
-	protected function get_web_stories_required_extensions() {
-		return [
+	protected function get_compatibility_object(){
+		$web_stories_error = new WP_Error();
+		$compatibility = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$extensions = [
 			'fake_extension' => [
 				'classes'   => [
 					'FAKE_CLASS',
@@ -154,5 +144,7 @@ class Compatibility extends \WP_UnitTestCase {
 				],
 			],
 		];
+		$compatibility->set_extensions( $extensions );
+		return $compatibility;
 	}
 }
