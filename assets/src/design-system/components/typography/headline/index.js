@@ -23,26 +23,26 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../theme';
+import { THEME_CONSTANTS } from '../../../';
 import { defaultTypographyStyle } from '../styles';
 
-export const Display = styled.h1`
+export const Headline = styled.h1`
   ${defaultTypographyStyle}
   ${({ size, theme }) => {
-    const { display } = theme.typography.presets;
+    const { headline } = theme.typography.presets;
     return {
-      fontSize: `${display[size].size}px`,
-      fontWeight: display[size].weight,
-      lineHeight: `${display[size].lineHeight}px`,
-      letterSpacing: `${display[size].letterSpacing}px`,
+      fontSize: `${headline[size].size}px`,
+      fontWeight: headline[size].weight,
+      lineHeight: `${headline[size].lineHeight}px`,
+      letterSpacing: `${headline[size].letterSpacing}px`,
     };
   }}
 `;
 
-Display.propTypes = {
+Headline.propTypes = {
   as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
-  size: PropTypes.oneOf(THEME_CONSTANTS.DISPLAY_SIZES),
+  size: PropTypes.oneOf(THEME_CONSTANTS.HEADLINE_SIZES),
 };
-Display.defaultProps = {
+Headline.defaultProps = {
   size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
 };

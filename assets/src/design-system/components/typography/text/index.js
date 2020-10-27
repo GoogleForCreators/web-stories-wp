@@ -23,26 +23,35 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../theme';
+import { THEME_CONSTANTS } from '../../../';
 import { defaultTypographyStyle } from '../styles';
 
-export const Headline = styled.h1`
+export const Text = styled.p`
   ${defaultTypographyStyle}
-  ${({ size, theme }) => {
-    const { headline } = theme.typography.presets;
+  ${({ as, isBold, size, theme }) => {
+    const { text } = theme.typography.presets;
+    const asLink = as === 'a' && {
+      color: theme.colors.accent.secondary,
+      textDecoration: 'none',
+      cursor: 'pointer',
+    };
     return {
-      fontSize: `${headline[size].size}px`,
-      fontWeight: headline[size].weight,
-      lineHeight: `${headline[size].lineHeight}px`,
-      letterSpacing: `${headline[size].letterSpacing}px`,
+      fontSize: `${text[size].size}px`,
+      fontWeight: isBold ? theme.typography.weight.bold : text[size].weight,
+      lineHeight: `${text[size].lineHeight}px`,
+      letterSpacing: `${text[size].letterSpacing}em`,
+      ...asLink,
     };
   }}
 `;
 
-Headline.propTypes = {
-  as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
-  size: PropTypes.oneOf(THEME_CONSTANTS.HEADLINE_SIZES),
+Text.propTypes = {
+  as: PropTypes.oneOf(['p', 'a', 'span']),
+  isBold: PropTypes.bool,
+  size: PropTypes.oneOf(THEME_CONSTANTS.TEXT_SIZES),
 };
-Headline.defaultProps = {
+Text.defaultProps = {
+  as: 'p',
+  isBold: false,
   size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
 };

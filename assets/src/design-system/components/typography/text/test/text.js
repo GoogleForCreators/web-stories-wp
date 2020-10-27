@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { theme, THEME_CONSTANTS } from '../../../theme';
+import { renderWithProviders } from '../../../../testUtils/renderWithProviders';
+import { theme, THEME_CONSTANTS } from '../../../../';
 import { Text } from '../';
 
 describe('design-system/typography/text', () => {

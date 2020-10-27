@@ -23,10 +23,10 @@ import { select } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { Headline } from '..';
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS } from '../../../../';
 
 export default {
-  title: 'DesignSystem/Typography/Headline',
+  title: 'DesignSystem/Components/Typography/Headline',
   component: Headline,
 };
 
