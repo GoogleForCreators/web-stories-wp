@@ -296,17 +296,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2097
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextSets',
-				'label'       => __( 'Text Sets', 'web-stories' ),
-				'description' => __( 'Enable text sets', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2095
 			 * Creation date: 2020-06-04
 			 */

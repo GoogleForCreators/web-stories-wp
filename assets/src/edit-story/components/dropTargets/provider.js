@@ -30,8 +30,8 @@ import { getDefinitionForType } from '../../elements';
 import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import Context from './context';
 
-const DROP_SOURCE_ALLOWED_TYPES = ['image', 'video'];
-const DROP_TARGET_ALLOWED_TYPES = ['image', 'video', 'shape'];
+const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];
+const DROP_TARGET_ALLOWED_TYPES = ['image', 'gif', 'video', 'shape'];
 
 const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
 const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);

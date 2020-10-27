@@ -32,10 +32,12 @@ import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
+import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck },
+    api: { stories, media, link, users },
+    encodeMarkup,
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -46,28 +48,33 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const getStorySaveData = ({
-    pages,
-    featuredMedia,
-    stylePresets,
-    publisherLogo,
-    autoAdvance,
-    defaultPageDuration,
-    ...rest
-  }) => {
-    return {
-      story_data: {
-        version: DATA_VERSION,
-        pages,
-        autoAdvance,
-        defaultPageDuration,
-      },
-      featured_media: featuredMedia,
-      style_presets: stylePresets,
-      publisher_logo: publisherLogo,
-      ...rest,
-    };
-  };
+  const getStorySaveData = useCallback(
+    ({
+      pages,
+      featuredMedia,
+      stylePresets,
+      publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
+      content,
+      ...rest
+    }) => {
+      return {
+        story_data: {
+          version: DATA_VERSION,
+          pages,
+          autoAdvance,
+          defaultPageDuration,
+        },
+        featured_media: featuredMedia,
+        style_presets: stylePresets,
+        publisher_logo: publisherLogo,
+        content: encodeMarkup ? base64Encode(content) : content,
+        ...rest,
+      };
+    },
+    [encodeMarkup]
+  );
 
   const saveStoryById = useCallback(
     /**
@@ -84,7 +91,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [stories]
+    [stories, getStorySaveData]
   );
 
   const autoSaveById = useCallback(
@@ -102,7 +109,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [stories]
+    [stories, getStorySaveData]
   );
 
   const getMedia = useCallback(
@@ -223,10 +230,6 @@ function APIProvider({ children }) {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
-  const getStatusCheck = useCallback(() => {
-    return apiFetch({ path: statusCheck, method: 'POST' });
-  }, [statusCheck]);
-
   const state = {
     actions: {
       autoSaveById,
@@ -238,7 +241,6 @@ function APIProvider({ children }) {
       uploadMedia,
       updateMedia,
       deleteMedia,
-      getStatusCheck,
     },
   };
 
