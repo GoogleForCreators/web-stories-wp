@@ -32,9 +32,7 @@ describe('Tab', () => {
 
   it('should render the default button with role of tab', () => {
     const { getByRole } = renderWithProviders(
-      <Tab ariaControlId={'testGroupId'} onClick={onClickMock}>
-        {tabText}
-      </Tab>
+      <Tab onClick={onClickMock}>{tabText}</Tab>
     );
 
     expect(getByRole('tab')).toHaveTextContent(tabText);
@@ -42,7 +40,7 @@ describe('Tab', () => {
 
   it('should not trigger a click on <Tab /> when disabled', () => {
     const { getByText } = renderWithProviders(
-      <Tab disabled ariaControlId={'testGroupId'} onClick={onClickMock}>
+      <Tab disabled onClick={onClickMock}>
         {tabText}
       </Tab>
     );
@@ -56,9 +54,7 @@ describe('Tab', () => {
 
   it('should simulate a click on <Tab />', () => {
     const { getByText } = renderWithProviders(
-      <Tab ariaControlId={'testGroupId'} onClick={onClickMock}>
-        {tabText}
-      </Tab>
+      <Tab onClick={onClickMock}>{tabText}</Tab>
     );
 
     const tab = getByText(tabText);

@@ -84,7 +84,7 @@ const StyledTab = styled.button(
 );
 
 export const Tab = forwardRef(function Tab(
-  { ariaControlId, children, isActive, ...rest },
+  { children, isActive, ...rest },
   ref
 ) {
   return (
@@ -93,7 +93,6 @@ export const Tab = forwardRef(function Tab(
       role="tab"
       isActive={isActive}
       aria-selected={isActive}
-      aria-controls={ariaControlId}
       {...rest}
     >
       {children}
@@ -102,7 +101,6 @@ export const Tab = forwardRef(function Tab(
 });
 
 Tab.propTypes = {
-  ariaControlId: PropTypes.string,
   children: PropTypes.node,
   isActive: PropTypes.bool,
 };

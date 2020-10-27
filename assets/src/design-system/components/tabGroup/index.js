@@ -20,7 +20,6 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -62,14 +61,13 @@ export const TabGroup = forwardRef(function TabGroup(
         const isActive = activeTabId === id;
         return (
           <Tab
-            key={uuidv4()}
+            key={`${title.replace(/\s/g, '')}_${id}`}
             ref={(tabRef) => (tabRefs.current[id] = tabRef)}
             id={getTabId(id)}
             isActive={isActive}
             aria-controls={
               getAriaControlsId ? getAriaControlsId(id) : getTabId(id)
             }
-            aria-selected={isActive}
             onClick={(e) => handleTabClicked(e, id, tabRefs)}
             {...rest}
           >
