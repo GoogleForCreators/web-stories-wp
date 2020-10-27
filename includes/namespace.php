@@ -82,6 +82,8 @@ $web_stories_compatibility->set_required_files(
 		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
 		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
 		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
 	]
 );
 $web_stories_compatibility->set_class_name( '\Google\Web_Stories\Plugin' );
@@ -101,15 +103,15 @@ function _print_missing_build_admin_notice() {
 	if ( ! $_error->errors ) {
 		return;
 	}
+
 	?>
 	<div class="notice notice-error">
 		<p><strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong></p>
 		<ul>
 			<?php
 			foreach ( array_keys( $_error->errors ) as $error_code ) {
-				foreach ( $_error->get_error_messages( $error_code ) as $message ) {
-					printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ) );
-				}
+				$message = $_error->get_error_message( $error_code );
+				printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ) );
 			}
 			?>
 		</ul>
@@ -136,13 +138,12 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 			echo "$heading\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
 		foreach ( array_keys( $_error->errors ) as $error_code ) {
-			foreach ( $_error->get_error_messages( $error_code ) as $message ) {
-				$body = htmlspecialchars_decode( wp_strip_all_tags( $message ) );
-				if ( class_exists( '\WP_CLI' ) ) {
-					\WP_CLI::line( $body );
-				} else {
-					echo "$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				}
+			$message = $_error->get_error_message( $error_code );
+			$body    = htmlspecialchars_decode( wp_strip_all_tags( $message ) );
+			if ( class_exists( '\WP_CLI' ) ) {
+				\WP_CLI::line( $body );
+			} else {
+				echo "$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 		}
 
@@ -279,9 +280,11 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
 
 global $web_stories;
 
-$web_stories = new Plugin();
-$web_stories->register();
-
+// Check to see if the class exists before settings it up.
+if ( $web_stories_compatibility->check_php_built() ) {
+	$web_stories = new Plugin();
+	$web_stories->register();
+}
 
 /**
  * Web stories Plugin Instance
