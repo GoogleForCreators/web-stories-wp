@@ -93,7 +93,7 @@ describe('Element: Text', () => {
       expect(elements[1].font.family).toBe('Yrsa');
     });
 
-    it('should reset font weights when font family is updated', async () => {
+    it('should reset font weight when font family is updated', async () => {
       await fixture.events.keyboard.type('Yrsa');
       // Ensure the debounced callback has taken effect.
       await fixture.events.sleep(TIMEOUT);
@@ -106,6 +106,7 @@ describe('Element: Text', () => {
 
       await fixture.events.click(fontWeight.select);
       await fixture.events.click(fontWeight.option('Bold'));
+      await fixture.events.sleep(TIMEOUT);
       expect(fontWeight.value).toBe('Bold');
 
       await openFontPicker();
@@ -116,8 +117,10 @@ describe('Element: Text', () => {
       const option2 = fixture.screen.getByText('Roboto');
       await fixture.events.click(option2);
       await fixture.events.sleep(600);
+      const updatedFontWeight =
+        fixture.editor.inspector.designPanel.textStyle.fontWeight;
 
-      expect(fontWeight.value).toBe('Regular');
+      expect(updatedFontWeight.value).toBe('Regular');
     });
 
     it('should display only the fonts from curated list by default', () => {
