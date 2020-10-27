@@ -146,6 +146,23 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 }
 
 /**
+ * Run logic to setup a new site with web stories.
+ *
+ * @return void
+ */
+function setup_new_site(){
+	$story = new Story_Post_Type( new Experiments() );
+	$story->init();
+	$story->add_caps_to_roles();
+	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
+	}
+
+	$database_upgrader = new Database_Upgrader();
+	$database_upgrader->init();
+}
+
+/**
  * Handles plugin activation.
  *
  * Throws an error if the site is running on PHP < 5.6
@@ -171,15 +188,7 @@ function activate( $network_wide = false ) {
 		);
 	}
 
-	$story = new Story_Post_Type( new Experiments() );
-	$story->init();
-	$story->add_caps_to_roles();
-	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
-		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
-	}
-
-	$database_upgrader = new Database_Upgrader();
-	$database_upgrader->init();
+	setup_new_site();
 
 	do_action( 'web_stories_activation', $network_wide );
 }
@@ -203,7 +212,7 @@ function new_site( $site ) {
 	}
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
-	activate();
+	setup_new_site();
 	restore_current_blog();
 }
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
