@@ -55,6 +55,24 @@ function RouterProvider({ children, ...props }) {
     trackScreenView(currentScreen);
   }, [currentScreen]);
 
+  // Sync up WP navigation bar with our hash location.
+  useEffect(() => {
+    // Allow default WP behavior for both `page=stories-dashboard` & `page=stories-dashboard#/`
+    if (currentPath.length <= 1) {
+      return;
+    }
+
+    const WPSubmenuItems = document.querySelectorAll(
+      '#menu-posts-web-story ul.wp-submenu li'
+    );
+    WPSubmenuItems?.forEach((el) => el.classList.remove('current'));
+    WPSubmenuItems?.forEach(
+      (el) =>
+        Boolean(el.querySelector(`a[href$="#${currentPath}"]`)) &&
+        el.classList.add('current')
+    );
+  }, [currentPath]);
+
   const value = useMemo(
     () => ({
       state: {
