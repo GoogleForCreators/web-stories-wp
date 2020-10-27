@@ -23,8 +23,8 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../../';
 import { Text } from '../';
+import { THEME_CONSTANTS } from '../../../../';
 
 export default {
   title: 'DesignSystem/Components/Typography/Text',
@@ -36,15 +36,17 @@ const textRenderAsOptions = ['p', 'a', 'span'];
 
 export const _default = () => (
   <>
-    {textPresetSizes.map((presetSize) => (
-      <div key={`${presetSize}_text`}>
-        <Text size={'small'}>{presetSize}</Text>
-        <Text size={presetSize} as={select('as', textRenderAsOptions, 'p')}>
-          {
-            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
-          }
-        </Text>
-      </div>
+    {textPresetSizes.map((presetSize, idx) => (
+      <Text
+        key={idx}
+        size={presetSize}
+        as={select('as', textRenderAsOptions, 'p')}
+      >
+        {presetSize} <br />
+        {
+          'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
+        }
+      </Text>
     ))}
   </>
 );
@@ -52,20 +54,15 @@ export const _default = () => (
 export const Bold = () => (
   <>
     {textPresetSizes.map((presetSize, idx) => (
-      <div key={`${presetSize}_text_bold`}>
-        <Text size={'small'}>{presetSize}</Text>
-
-        <Text
-          key={idx}
-          size={presetSize}
-          isBold
-          as={select('as', textRenderAsOptions, 'p')}
-        >
-          {
-            'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'
-          }
-        </Text>
-      </div>
+      <Text
+        key={idx}
+        size={presetSize}
+        isBold
+        as={select('as', textRenderAsOptions, 'p')}
+      >
+        {presetSize} <br />
+        {'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'}
+      </Text>
     ))}
   </>
 );
@@ -73,19 +70,16 @@ export const Bold = () => (
 export const Link = () => (
   <>
     {textPresetSizes.map((presetSize, idx) => (
-      <div key={`${presetSize}_text_link`}>
-        <Text size={'small'}>{presetSize}</Text>
-
-        <Text
-          key={idx}
-          size={presetSize}
-          as={select('as', textRenderAsOptions, 'a')}
-          href="#"
-          onClick={action('anchor clicked! Do something.')}
-        >
-          {`Click here for more information`}
-        </Text>
-      </div>
+      <Text
+        key={idx}
+        size={presetSize}
+        as={select('as', textRenderAsOptions, 'a')}
+        href="#"
+        onClick={action('anchor clicked! Do something.')}
+      >
+        {`${presetSize} - Click here for more information`}
+        <br />
+      </Text>
     ))}
   </>
 );
