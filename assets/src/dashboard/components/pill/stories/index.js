@@ -133,7 +133,10 @@ export const _default = () => {
         ({ icon, label, selected, value, disabled }, index) => {
           return (
             <Pill
-              key={value + index}
+              key={
+                /* eslint-disable-next-line react/no-array-index-key */
+                value + index
+              }
               inputType="checkbox"
               name={value}
               onClick={(e, selectedValue) => {
@@ -175,7 +178,10 @@ export const _floatingTabs = () => {
         ({ icon, label, selected, value, disabled }, index) => {
           return (
             <Pill
-              key={value + index}
+              key={
+                /* eslint-disable-next-line react/no-array-index-key */
+                value + index
+              }
               inputType="checkbox"
               labelType={PILL_LABEL_TYPES.FLOATING}
               name={value}
@@ -217,7 +223,10 @@ export const _radioGroup = () => {
         ({ disabled, label, selected = false, value }, index) => {
           return (
             <Pill
-              key={value + index}
+              key={
+                /* eslint-disable-next-line react/no-array-index-key */
+                value + index
+              }
               inputType="radio"
               name="demo_radio"
               onClick={(e, selectedValue) => {
@@ -261,7 +270,10 @@ export const _colorSwatches = () => {
         return (
           <Pill
             ariaLabel={label}
-            key={value + index}
+            key={
+              /* eslint-disable-next-line react/no-array-index-key */
+              value + index
+            }
             inputType="checkbox"
             labelType={PILL_LABEL_TYPES.SWATCH}
             hex={hex}

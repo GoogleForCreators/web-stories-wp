@@ -52,9 +52,9 @@ const Color = styled.div`
 function ColorList({ colors, size, spacing }) {
   return (
     <ColorContainer>
-      {colors.map(({ label, color }, index) => (
+      {colors.map(({ label, color }) => (
         <Color
-          key={index}
+          key={color}
           size={size}
           spacing={spacing}
           color={color}
