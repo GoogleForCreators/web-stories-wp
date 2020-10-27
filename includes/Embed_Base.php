@@ -113,7 +113,7 @@ class Embed_Base {
 	 * @return array
 	 */
 	protected function default_attrs() {
-		return [
+		$attrs = [
 			'align'  => 'none',
 			'height' => 600,
 			'poster' => '',
@@ -121,6 +121,15 @@ class Embed_Base {
 			'title'  => '',
 			'width'  => 360,
 		];
+
+		/**
+		 * Filters settings passed to the web stories embed.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array $attrs Array of settings passed to web stories embed.
+		 */
+		return apply_filters( 'web_stories_embed_attributes', $attrs );
 	}
 
 	/**
