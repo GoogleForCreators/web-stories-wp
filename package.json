@@ -83,7 +83,7 @@
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@percy/puppeteer": "^1.1.0",
     "@prettier/plugin-xml": "^0.12.0",
-    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
     "@storybook/addon-a11y": "^6.0.26",
     "@storybook/addon-actions": "^6.0.26",
     "@storybook/addon-backgrounds": "^6.0.26",
