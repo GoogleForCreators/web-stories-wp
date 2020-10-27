@@ -27,13 +27,18 @@ import { useStory } from '../../../../../app/story';
 
 describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => {
   let fixture;
+  let originalTimeout;
+
   beforeEach(async () => {
+    originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
     await fixture.editor.library.textTab.click();
   });
 
   afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     fixture.restore();
   });
 
