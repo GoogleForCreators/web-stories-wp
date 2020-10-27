@@ -108,7 +108,7 @@ function StoriesView({
     async (story, newTitle) => {
       setTitleRenameId(-1);
       await trackEvent('rename_story', 'dashboard');
-      storyActions.updateStory({ ...story, title: { raw: newTitle } });
+      storyActions.updateStory({ id: story.id, title: newTitle });
     },
     [storyActions]
   );

@@ -138,10 +138,17 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   );
 
   const updateStory = useCallback(
-    async (story) => {
+    async ({ id, ...data }) => {
+      const path = queryString.stringifyUrl({
+        url: `${storyApi}/${id}`,
+        query: {
+          _embed: 'author',
+        },
+      });
+
       try {
-        const response = await dataAdapter.post(`${storyApi}/${story.id}`, {
-          data: story,
+        const response = await dataAdapter.post(path, {
+          data,
         });
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
