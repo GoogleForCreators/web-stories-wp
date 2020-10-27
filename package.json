@@ -64,7 +64,7 @@
     "react-virtual": "^2.2.7",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^5.1.1",
-    "use-context-selector": "^1.1.4",
+    "use-context-selector": "^1.2.10",
     "use-debounce": "^3.4.3",
     "use-reduction": "^2.1.0",
     "uuid": "^8.3.1",
