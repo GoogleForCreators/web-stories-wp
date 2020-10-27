@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown, Label, Media, Required } from '../../../form';
+import { Row, DropDown2, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
@@ -129,20 +129,22 @@ function PublishPanel() {
               {__('Author', 'web-stories')}
             </FieldLabel>
             {isUsersLoading ? (
-              <DropDown
+              <DropDown2
                 aria-labelledby={authorLabelId}
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
                 lightMode={true}
               />
             ) : (
-              <DropDown
+              <DropDown2
                 aria-labelledby={authorLabelId}
                 options={users}
-                value={author}
+                primaryOptions={users}
+                selectedId={author}
                 disabled={isSaving}
                 onChange={handleChangeValue('author')}
                 lightMode={true}
+                hasSearch={false}
               />
             )}
           </Row>

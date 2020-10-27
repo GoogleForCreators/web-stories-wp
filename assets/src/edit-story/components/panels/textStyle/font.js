@@ -33,11 +33,12 @@ import {
   Numeric,
   Row,
   DropDown,
+  DropDown2,
   usePresubmitHandler,
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../form';
-import FontPicker from '../../fontPicker';
+//import FontPicker from '../../fontPicker';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
@@ -162,13 +163,14 @@ function FontControls({ selectedElements, pushUpdate }) {
     <>
       {fonts && (
         <Row>
-          <FontPicker
+          <DropDown2
             data-testid="font"
             aria-label={__('Font family', 'web-stories')}
             options={fonts}
             value={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
             placeholder={MULTIPLE_DISPLAY_VALUE}
             onChange={handleFontPickerChange}
+            hasSearch={true}
           />
         </Row>
       )}
