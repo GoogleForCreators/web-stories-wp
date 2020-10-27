@@ -58,8 +58,8 @@
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*   |
 | Creator can transform an element                                  | Snap to place                                    | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*   |
-| Text Sets (Text and Shape Combinations)                           | Inserting Text Sets                              | 🚨 **0.00%** *(0 / 3)*   |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 3)*   |
+| Text Sets (Text and Shape Combinations)                           | Using Text Sets                                  | 🚨 **0.00%** *(0 / 5)*   |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 5)*   |
 | User can interact with menu using keyboard                        | Tab to menu                                      | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | enter to open                                    | 🚨 **0.00%** *(0 / 5)*   |
@@ -67,4 +67,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.56%** *(2 / 356)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.56%** *(2 / 360)* |
