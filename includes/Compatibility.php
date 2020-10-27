@@ -64,11 +64,11 @@ class Compatibility {
 	protected $extensions;
 
 	/**
-	 * Path to JS file.
+	 * Array of required files.
 	 *
-	 * @var string
+	 * @var array
 	 */
-	protected $js_path;
+	protected $required_files = [];
 
 	/**
 	 * Class name.
@@ -152,24 +152,29 @@ class Compatibility {
 	}
 
 	/**
-	 * Check to see if NPM was built.
+	 * Check if required files.
 	 *
 	 * @return bool
 	 */
-	public function check_js_built() {
-		if ( ! file_exists( $this->get_js_path() ) ) {
-			$message =
-				sprintf(
-				/* translators: %s: build commands. */
-					__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-					'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
-				);
-			$data = [
-				'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
-			];
-			$this->error->add( 'failed_check_js_built', $message, $data );
+	public function check_required_files() {
+		$required_files = $this->get_required_files();
+		if ( $required_files && is_array( $required_files ) ) {
+			foreach ( $required_files as $required_file ) {
+				if ( ! is_readable( $required_file ) ) {
+					$message =
+						sprintf(
+						/* translators: %s: build commands. */
+							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
+							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
+						);
+					$data = [
+						'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
+					];
+					$this->error->add( 'failed_check_required_files', $message, $data );
 
-			return false;
+					return false;
+				}
+			}
 		}
 
 		return true;
@@ -327,10 +332,10 @@ class Compatibility {
 	 * Get JavaScript path.
 	 *
 	 * @codeCoverageIgnore
-	 * @return string
+	 * @return array
 	 */
-	public function get_js_path() {
-		return $this->js_path;
+	public function get_required_files() {
+		return $this->required_files;
 	}
 
 	/**
@@ -387,14 +392,16 @@ class Compatibility {
 	}
 
 	/**
-	 * Set javascript path.
+	 * Array of require files.
 	 *
 	 * @codeCoverageIgnore
-	 * @param string $js_path Path to javascript.
+	 *
+	 * @param array $required_files Array of require files.
+	 *
 	 * @return void
 	 */
-	public function set_js_path( $js_path ) {
-		$this->js_path = $js_path;
+	public function set_required_files( array $required_files ) {
+		$this->required_files = $required_files;
 	}
 
 	/**

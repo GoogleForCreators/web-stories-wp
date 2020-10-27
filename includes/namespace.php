@@ -77,7 +77,13 @@ $web_stories_compatibility = new Compatibility( $web_stories_error );
 $web_stories_compatibility->set_extensions( $extensions );
 $web_stories_compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
 $web_stories_compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
-$web_stories_compatibility->set_js_path( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' );
+$web_stories_compatibility->set_required_files(
+	[
+		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
+	]
+);
 $web_stories_compatibility->set_class_name( '\Google\Web_Stories\Plugin' );
 
 /**
@@ -90,7 +96,7 @@ $web_stories_compatibility->set_class_name( '\Google\Web_Stories\Plugin' );
 function _print_missing_build_admin_notice() {
 	global $web_stories_compatibility;
 
-	$web_stories_compatibility->check_js_built();
+	$web_stories_compatibility->check_required_files();
 	$web_stories_compatibility->check_php_built();
 	$web_stories_compatibility->check_extensions();
 	$web_stories_compatibility->check_classes();

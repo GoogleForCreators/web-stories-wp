@@ -106,17 +106,17 @@ class Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::check_js_built
+	 * @covers ::check_required_files
 	 */
-	public function test_check_js_built() {
+	public function test_check_required_files() {
 		$web_stories_error = new WP_Error();
 		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
-		$compatibility->set_js_path( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' );
-		$results = $compatibility->check_js_built();
+		$compatibility->set_required_files( [ WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' ] );
+		$results = $compatibility->check_required_files();
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
-		$this->assertContains( 'failed_check_js_built', $error_codes );
+		$this->assertContains( 'failed_check_required_files', $error_codes );
 		$error_message = $error->get_error_message();
 		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
 	}
