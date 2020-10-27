@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Traits\Decoder;
 use WP_REST_Server;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -39,6 +40,7 @@ use WP_Post_Type;
  * Class Status_Check
  */
 class Status_Check extends WP_REST_Controller {
+	use Decoder;
 	/**
 	 * Constructor.
 	 */
@@ -63,6 +65,14 @@ class Status_Check extends WP_REST_Controller {
 					'methods'             => WP_REST_Server::ALLMETHODS,
 					'callback'            => [ $this, 'status_check' ],
 					'permission_callback' => [ $this, 'status_check_permissions_check' ],
+					'args'                => [
+						'content' => [
+							'description'       => __( 'Test HTML content.', 'web-stories' ),
+							'required'          => true,
+							'type'              => 'string',
+							'validate_callback' => [ $this, 'check_html_string' ],
+						],
+					],
 				],
 			]
 		);
@@ -98,5 +108,17 @@ class Status_Check extends WP_REST_Controller {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check that there is html in the string by removing html.
+	 *
+	 * @param string $param HTML string.
+	 *
+	 * @return bool
+	 */
+	public function check_html_string( $param ) {
+		$html = $this->base64_decode( $param );
+		return ( wp_strip_all_tags( $html ) !== $html );
 	}
 }

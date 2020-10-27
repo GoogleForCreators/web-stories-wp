@@ -58,12 +58,12 @@ function App({ config }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
-              <StatusCheck />
               <FileProvider>
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
                     <SnackbarProvider>
                       <StoryProvider storyId={storyId}>
+                        <StatusCheck />
                         <FontProvider>
                           <MediaProvider>
                             <AutoSaveHandler />

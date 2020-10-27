@@ -230,10 +230,22 @@ function APIProvider({ children }) {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
-  const getStatusCheck = useCallback(() => {
-    return apiFetch({ path: statusCheck, method: 'POST' });
-  }, [statusCheck]);
-
+  /**
+   * Status check, submit html string.
+   *
+   * @param {string} HTML string.
+   * @return {Promise} Result promise
+   */
+  const getStatusCheck = useCallback(
+    (content) => {
+      return apiFetch({
+        path: statusCheck,
+        data: { content: encodeMarkup ? base64Encode(content) : content },
+        method: 'POST',
+      });
+    },
+    [statusCheck, encodeMarkup]
+  );
 
   const state = {
     actions: {

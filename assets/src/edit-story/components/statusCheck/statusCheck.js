@@ -22,18 +22,27 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useAPI } from '../../app';
+import { useAPI, useConfig, useStory } from '../../app';
+import getStoryMarkup from '../../output/utils/getStoryMarkup';
 
 function StatusCheck() {
   const {
     actions: { getStatusCheck },
   } = useAPI();
 
-  const { statusCheck } = useFeatures();
+  const { metadata } = useConfig();
+  const flags = useFeatures();
+  const { statusCheck } = flags;
+
+  const { story, pages } = useStory((state) => ({
+    story: state.state.story,
+    pages: state.state.pages,
+  }));
 
   const doStatusCheck = useCallback(() => {
-    if (statusCheck) {
-      getStatusCheck()
+    if (statusCheck && story && story.status && pages) {
+      const content = getStoryMarkup(story, pages, metadata, flags);
+      getStatusCheck(content)
         .then(() => {
           // @todo, check response.
         })
@@ -44,7 +53,7 @@ function StatusCheck() {
           // @todo, set final state.
         });
     }
-  }, [getStatusCheck, statusCheck]);
+  }, [getStatusCheck, statusCheck, story, pages, metadata, flags]);
 
   useEffect(doStatusCheck, [doStatusCheck]);
 

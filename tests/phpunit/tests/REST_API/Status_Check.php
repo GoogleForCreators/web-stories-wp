@@ -103,19 +103,19 @@ class Status_Check extends \WP_Test_REST_TestCase {
 	 */
 	public function test_without_permission() {
 		// Test without a login.
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request->set_param( 'content', '<a href="#">Test</a>' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$this->assertEquals( 401, $response->get_status() );
+		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
 
 		// Test with a user that does not have edit_posts capability.
 		wp_set_current_user( self::$subscriber );
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request->set_param( 'content', '<a href="#">Test</a>' );
 		$response = rest_get_server()->dispatch( $request );
 
-		$this->assertEquals( 403, $response->get_status() );
-		$data = $response->get_data();
-		$this->assertEquals( $data['code'], 'rest_forbidden' );
+		$this->assertErrorResponse( 'rest_forbidden', $response, 403 );
 	}
 
 	/**
@@ -124,11 +124,32 @@ class Status_Check extends \WP_Test_REST_TestCase {
 	 */
 	public function test_status_check() {
 		wp_set_current_user( self::$editor );
-		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request->set_param( 'content', '<a href="#">Test</a>' );
 		$response = rest_get_server()->dispatch( $request );
 		$this->assertEquals( 200, $response->get_status() );
 		$data = $response->get_data();
 		$this->assertArrayHasKey( 'success', $data );
 		$this->assertTrue( $data['success'] );
+	}
+
+	/**
+	 * @covers ::status_check_permissions_check
+	 * @covers ::status_check
+	 * @covers ::check_html_string
+	 */
+	public function test_check_html_string() {
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request->set_param( 'content', 'invalid' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
+
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
+		$request->set_param( 'content', '' );
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 }
