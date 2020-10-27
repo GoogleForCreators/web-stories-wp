@@ -40,7 +40,7 @@
     "classnames": "^2.2.6",
     "colorthief": "^2.3.2",
     "date-fns": "^2.16.1",
-    "date-fns-tz": "^1.0.10",
+    "date-fns-tz": "^1.0.12",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
