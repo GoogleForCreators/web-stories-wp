@@ -19,6 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * WordPress dependencies
@@ -31,6 +32,7 @@ import { __ } from '@wordpress/i18n';
 import { ChevronLeft } from '../../icons';
 import cssLerp from '../../utils/cssLerp';
 import { useLayoutContext, SQUISH_CSS_VAR } from '../layout';
+import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 const ScrollButton = styled.button`
   position: absolute;
@@ -52,6 +54,11 @@ const ScrollButton = styled.button`
   color: ${({ theme }) => theme.colors.gray900};
   background-color: ${({ theme }) => theme.colors.white};
   opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
+  }
 `;
 
 const DropUpArrowIcon = styled(ChevronLeft)`

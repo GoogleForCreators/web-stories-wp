@@ -32,6 +32,7 @@ use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
 use Google\Web_Stories\Story_Renderer\Image;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Traits\Decoder;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Traits\Types;
 use WP_Post;
@@ -46,6 +47,7 @@ class Story_Post_Type {
 	use Publisher;
 	use Types;
 	use Assets;
+	use Decoder;
 
 	/**
 	 * The slug of the stories post type.
@@ -205,6 +207,7 @@ class Story_Post_Type {
 		}
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
+		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
 	}
 
 	/**
@@ -715,6 +718,7 @@ class Story_Post_Type {
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
+				'encodeMarkup'     => $this->supports_decoding(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
@@ -914,5 +918,21 @@ class Story_Post_Type {
 			$data['post_title'] = '';
 		}
 		return $data;
+	}
+
+	/**
+	 * Add VTT file type to allow file in multisite.
+	 *
+	 * @param string $value List of allowed file types.
+	 * @return string List of allowed file types.
+	 */
+	public function filter_list_of_allowed_filetypes( $value ) {
+		$filetypes = explode( ' ', $value );
+		if ( ! in_array( 'vtt', $filetypes, true ) ) {
+			$filetypes[] = 'vtt';
+			$value       = implode( ' ', $filetypes );
+		}
+
+		return $value;
 	}
 }

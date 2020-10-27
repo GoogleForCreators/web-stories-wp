@@ -24,11 +24,11 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import TypeaheadInput from '../';
+import Typeahead from '../';
 
 export default {
-  title: 'Dashboard/Components/TypeaheadInput',
-  component: TypeaheadInput,
+  title: 'Dashboard/Components/Typeahead',
+  component: Typeahead,
 };
 
 const items = [
@@ -52,7 +52,7 @@ export const _default = () => {
   const [value, setValue] = useState('');
   return (
     <Container>
-      <TypeaheadInput
+      <Typeahead
         inputId={'demo-search-component'}
         items={items}
         onChange={(inputValue) => {

@@ -24,11 +24,12 @@ import { __ } from '@wordpress/i18n';
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
-import { BUTTON_TYPES } from '../../constants';
+import { BUTTON_TYPES, KEYBOARD_USER_SELECTOR } from '../../constants';
 import { BookmarkChip, Button } from '../../components';
 import { parentRoute } from '../../app/router/route';
 import { TypographyPresets } from '../typography';
@@ -73,6 +74,10 @@ const CloseLink = styled.a`
     text-decoration: none;
     font-weight: ${theme.typography.weight.bold};
     color: ${theme.colors.gray700};
+
+    ${KEYBOARD_USER_SELECTOR} &:focus {
+      outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important;
+    }
   `}
 `;
 const CapitalizedButton = styled(Button)`
