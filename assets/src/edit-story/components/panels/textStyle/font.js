@@ -205,6 +205,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         )}
         <BoxedNumeric
           aria-label={__('Font size', 'web-stories')}
+          float
           value={fontSize}
           flexBasis={58}
           textCenter

@@ -24,7 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma/fixture';
 import { useStory } from '../../../../../app/story';
-import { dataFontEm } from '../../../../../units';
+import { dataFontEm, dataPixels } from '../../../../../units';
 import stripHTML from '../../../../../utils/stripHTML';
 import { PRESETS } from '../textPresets';
 
@@ -68,7 +68,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await waitFor(() => {
         expect(stripHTML(element.content)).toEqual(content);
         const preset = PRESETS.find(({ title }) => name === title);
-        expect(element.y).toEqual(preset.element.y);
+        expect(element.y).toEqual(dataPixels(preset.element.y));
       });
       nextY = element.y;
       nextHeight = element.height;
@@ -82,7 +82,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       const element = storyContext.state.selectedElements[0];
       await waitFor(() => {
         expect(stripHTML(element.content)).toEqual(content);
-        expect(element.y).toEqual(lastY + lastHeight + POSITION_MARGIN);
+        expect(element.y).toEqual(
+          dataPixels(lastY + lastHeight + POSITION_MARGIN)
+        );
       });
       nextY = element.y;
       nextHeight = element.height;
