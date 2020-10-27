@@ -133,7 +133,10 @@ export const _default = () => {
         ({ icon, label, selected, value, disabled }, index) => {
           return (
             <Pill
-              key={value + index}
+              key={
+                /* eslint-disable-next-line react/no-array-index-key */
+                value + index
+              }
               inputType="checkbox"
               name={value}
               onClick={(e, selectedValue) => {
@@ -175,7 +178,10 @@ export const _floatingTabs = () => {
         ({ icon, label, selected, value, disabled }, index) => {
           return (
             <Pill
-              key={value + index}
+              key={
+                /* eslint-disable-next-line react/no-array-index-key */
+                value + index
+              }
               inputType="checkbox"
               labelType={PILL_LABEL_TYPES.FLOATING}
               name={value}
