@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TYPOGRAPHY_PRESET_SIZES } from '../../';
+import { THEME_CONSTANTS } from '../../';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
@@ -39,16 +39,24 @@ const Base = styled.button(
   cursor: pointer;
   font-family: ${theme.typography.family.primary};
   font-size: ${
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].size
+    theme.typography.presets.button[
+      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+    ].size
   }px;
   font-weight: ${
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].weight
+    theme.typography.presets.button[
+      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+    ].weight
   };
   letter-spacing: ${
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].letterSpacing
+    theme.typography.presets.button[
+      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+    ].letterSpacing
   }px;
   line-height: ${
-    theme.typography.presets.button[TYPOGRAPHY_PRESET_SIZES.SMALL].lineHeight
+    theme.typography.presets.button[
+      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+    ].lineHeight
   }px;
   text-decoration: none;
 

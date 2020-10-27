@@ -22,7 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Headline, Text } from '../../../';
+import { Headline, Text } from '../../';
 import { Close } from '../../../icons';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
 
