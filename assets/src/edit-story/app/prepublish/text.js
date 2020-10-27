@@ -39,7 +39,7 @@ export const pageTooMuchText = (page) => {
     return {
       message: 'Too much text on page',
       pageId: page.id,
-      type: 'warning',
+      type: 'guidance',
     };
   }
 
@@ -56,7 +56,7 @@ export const storyTooLittleText = (story) => {
     return {
       message: 'Too little text in story',
       storyId: story.id,
-      type: 'warning',
+      type: 'guidance',
     };
   }
 

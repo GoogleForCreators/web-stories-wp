@@ -21,7 +21,7 @@ import { pageTooMuchText, storyTooLittleText } from '../text';
 
 describe('text', () => {
   describe('pageTooMuchText', () => {
-    it('should return an warning if too much text', () => {
+    it('should return an guidance if too much text', () => {
       const page = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2aeaaaa',
         elements: [
@@ -42,7 +42,7 @@ describe('text', () => {
       expect(pageTooMuchText(page)).toStrictEqual({
         message: 'Too much text on page',
         pageId: page.id,
-        type: 'warning',
+        type: 'guidance',
       });
     });
 
@@ -69,7 +69,7 @@ describe('text', () => {
   });
 
   describe('storyTooLittleText', () => {
-    it('should return an warning if too little text', () => {
+    it('should return an guidance if too little text', () => {
       const story = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2astory',
         pages: [
@@ -100,7 +100,7 @@ describe('text', () => {
       expect(storyTooLittleText(story)).toStrictEqual({
         message: 'Too little text in story',
         storyId: story.id,
-        type: 'warning',
+        type: 'guidance',
       });
     });
 
