@@ -30,7 +30,10 @@ function toBinary(string) {
   }
 
   // Not using String.fromCharCode(...new Uint8Array(...)) to avoid RangeError due to too many arguments.
-  return new TextDecoder('utf-8').decode(new Uint8Array(codeUnits.buffer));
+  return new Uint8Array(codeUnits.buffer).reduce(
+    (data, byte) => data + String.fromCharCode(byte),
+    ''
+  );
 }
 
 /**
