@@ -361,6 +361,18 @@ class Experiments {
 				'description' => __( 'Enable the GIF tab in the Third-party media tab.', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Description: Flag status check.
+			 * Author: @spacedmonkey
+			 * Issue: #4918
+			 * Creation date: 2020-10-27
+			 */
+			[
+				'name'        => 'statusCheck',
+				'label'       => __( 'Status Check', 'web-stories' ),
+				'description' => __( 'Enable status check in editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
+import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -28,15 +29,22 @@ function StatusCheck() {
     actions: { getStatusCheck },
   } = useAPI();
 
+  const { statusCheck } = useFeatures();
+
   const doStatusCheck = useCallback(() => {
-    getStatusCheck()
-      .catch(() => {
-        // @todo, show error message.
-      })
-      .finally(() => {
-        // @todo, set final state.
-      });
-  }, [getStatusCheck]);
+    if (statusCheck) {
+      getStatusCheck()
+        .then(() => {
+          // @todo, check response.
+        })
+        .catch(() => {
+          // @todo, show error message.
+        })
+        .finally(() => {
+          // @todo, set final state.
+        });
+    }
+  }, [getStatusCheck, statusCheck]);
 
   useEffect(doStatusCheck, [doStatusCheck]);
 
