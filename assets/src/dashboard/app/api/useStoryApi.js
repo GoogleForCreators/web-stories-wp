@@ -338,7 +338,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           title,
         } = story.originalStoryData;
 
-        const response = await dataAdapter.post(storyApi, {
+        const path = queryString.stringifyUrl({
+          url: storyApi,
+          query: {
+            _embed: 'author',
+          },
+        });
+
+        const response = await dataAdapter.post(path, {
           data: {
             content,
             story_data,
