@@ -299,6 +299,20 @@ class Compatibility {
 	}
 
 	/**
+	 * Run checks in admin.
+	 *
+	 * @codeCoverageIgnore
+	 * @return void
+	 */
+	public function run_checks(){
+		$this->check_required_files();
+		$this->check_php_built();
+		$this->check_extensions();
+		$this->check_classes();
+		$this->check_functions();
+	}
+
+	/**
 	 * Get min WP version.
 	 *
 	 * @codeCoverageIgnore

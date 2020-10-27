@@ -96,12 +96,7 @@ $web_stories_compatibility->set_class_name( '\Google\Web_Stories\Plugin' );
 function _print_missing_build_admin_notice() {
 	global $web_stories_compatibility;
 
-	$web_stories_compatibility->check_required_files();
-	$web_stories_compatibility->check_php_built();
-	$web_stories_compatibility->check_extensions();
-	$web_stories_compatibility->check_classes();
-	$web_stories_compatibility->check_functions();
-
+	$web_stories_compatibility->run_checks();
 	$_error = $web_stories_compatibility->get_error();
 	if ( ! $_error->errors ) {
 		return;
