@@ -120,18 +120,26 @@ function _print_missing_build_admin_notice() {
 add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
 
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
-	// In CLI context, existence of the JS files is not required.
-	if ( ! $web_stories_compatibility->check_php_built() ) {
-		$_error = $web_stories_compatibility->get_error();
-
+	$web_stories_compatibility->run_checks();
+	$_error = $web_stories_compatibility->get_error();
+	if ( $_error->errors ) {
 		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
-		$body    = htmlspecialchars_decode( wp_strip_all_tags( $_error->get_error_message() ) );
-
 		if ( class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::warning( "$heading\n$body" );
+			\WP_CLI::warning( "$heading" );
 		} else {
-			echo "$heading\n$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo "$heading\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
+		foreach ( array_keys( $_error->errors ) as $error_code ) {
+			foreach ( $_error->get_error_messages( $error_code ) as $message ) {
+				$body = htmlspecialchars_decode( wp_strip_all_tags( $message ) );
+				if ( class_exists( '\WP_CLI' ) ) {
+					\WP_CLI::line( $body );
+				} else {
+					echo "$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				}
+			}
+		}
+
 		// However, we still need to stop further execution.
 		return;
 	}
