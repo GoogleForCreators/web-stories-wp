@@ -107,7 +107,7 @@ function GradientLine({
       {stops.map(({ position }, index) => (
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
-          key={position}
+          key={index}
           index={index}
           isSelected={index === currentStopIndex}
           position={position}
