@@ -147,11 +147,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           },
         });
 
+        const data = {
+          id: story.id,
+          author: story.originalStoryData.author,
+          title: story.title?.raw || story.title,
+        };
+
         const response = await dataAdapter.post(path, {
-          data: {
-            ...story,
-            author: story.originalStoryData.author,
-          },
+          data,
         });
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,

@@ -162,8 +162,11 @@ describe('ApiProvider', () => {
           },
         ],
         status: 'publish',
-        title: 'New Title',
+        title: { raw: 'New Title' },
         link: 'https://www.story-link.com',
+        originalStoryData: {
+          author: 1,
+        },
       });
     });
 
