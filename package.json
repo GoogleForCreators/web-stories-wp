@@ -63,7 +63,7 @@
     "react-transition-group": "^4.4.1",
     "react-virtual": "^2.2.7",
     "resize-observer-polyfill": "^1.5.1",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.0",
     "use-context-selector": "^1.1.4",
     "use-debounce": "^3.4.3",
     "use-reduction": "^2.1.0",
