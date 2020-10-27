@@ -47,7 +47,7 @@ function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
+  const { showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
 
@@ -86,7 +86,7 @@ function TextPane(props) {
           />
         ))}
       </Section>
-      {showTextSets && paneRef.current && <TextSets paneRef={paneRef} />}
+      {paneRef.current && <TextSets paneRef={paneRef} />}
     </Pane>
   );
 }
