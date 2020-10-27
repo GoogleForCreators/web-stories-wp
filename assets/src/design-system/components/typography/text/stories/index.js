@@ -24,10 +24,10 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import { Text } from '../';
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS } from '../../../../';
 
 export default {
-  title: 'DesignSystem/Typography/Text',
+  title: 'DesignSystem/Components/Typography/Text',
   component: Text,
 };
 

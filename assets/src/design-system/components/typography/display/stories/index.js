@@ -23,10 +23,10 @@ import { select } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { Display } from '..';
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS } from '../../../..';
 
 export default {
-  title: 'DesignSystem/Typography/Display',
+  title: 'DesignSystem/Components/Typography/Display',
   component: Display,
 };
 

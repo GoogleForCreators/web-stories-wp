@@ -17,31 +17,31 @@
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { theme, THEME_CONSTANTS } from '../../../theme';
-import { Headline } from '../';
+import { renderWithProviders } from '../../../../testUtils/renderWithProviders';
+import { theme, THEME_CONSTANTS } from '../../../../';
+import { Display } from '../';
 
-describe('design-system/typography/headline', () => {
+describe('design-system/typography/display', () => {
   const dummyContent = 'The Quick Brown Fox Jumps Over the Lazy Dog';
 
-  it('should render an h3 element when specified', () => {
+  it('should render an h2 element when specified', () => {
     const { container } = renderWithProviders(
-      <Headline as={'h3'}>{dummyContent}</Headline>
+      <Display as={'h2'}>{dummyContent}</Display>
     );
 
-    expect(container.getElementsByTagName('h3')).toHaveLength(1);
+    expect(container.getElementsByTagName('h2')).toHaveLength(1);
   });
 
   it(`should render ${THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM} font size by default`, () => {
     const { container } = renderWithProviders(
-      <Headline as={'h3'}>{dummyContent}</Headline>
+      <Display as={'h3'}>{dummyContent}</Display>
     );
 
     const DisplayElement = container.getElementsByTagName('h3')[0];
     const fontSize = window.getComputedStyle(DisplayElement).fontSize;
     expect(fontSize).toBe(
       `${
-        theme.typography.presets.headline[
+        theme.typography.presets.display[
           THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM
         ].size
       }px`
@@ -50,16 +50,16 @@ describe('design-system/typography/headline', () => {
 
   it(`should render ${THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.LARGE} font size when specified`, () => {
     const { container } = renderWithProviders(
-      <Headline as={'h3'} size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.LARGE}>
+      <Display as={'h1'} size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.LARGE}>
         {dummyContent}
-      </Headline>
+      </Display>
     );
 
-    const DisplayElement = container.getElementsByTagName('h3')[0];
+    const DisplayElement = container.getElementsByTagName('h1')[0];
     const fontSize = window.getComputedStyle(DisplayElement).fontSize;
     expect(fontSize).toBe(
       `${
-        theme.typography.presets.headline[
+        theme.typography.presets.display[
           THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.LARGE
         ].size
       }px`
