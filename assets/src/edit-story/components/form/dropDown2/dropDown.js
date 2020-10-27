@@ -85,6 +85,23 @@ const DropDownTitle = styled.span`
   letter-spacing: ${({ theme }) => theme.fonts.label.letterSpacing};
 `;
 
+/**
+ * @param {Object} props All props.
+ * @param {Function} props.onChange Triggered when user clicks on the option in the list.
+ * @param {boolean} props.lightMode Lightmode.
+ * @param {string} props.placeholder Displayed in the input when the dropdown is not open.
+ * @param {boolean} props.disabled Disables opening the dropdown if set.
+ * @param {number} props.selectedId The selected option ID.
+ * @param {Array} props.options All options, used for search.
+ * @param {boolean} props.hasSearch If to enable search feature in the dropdown.
+ * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the funcion for these entries.
+ * @param {Array} props.primaryOptions Array of options to display by default, when the user hasn't searched.
+ * @param {string} props.primaryLabel Label to display above the primary options.
+ * @param {Array} props.priorityOptions Options to display in front of all the other options in a separate group (will not remove these from the `options`).
+ * @param {string} props.priorityLabel Label to display in front of the priority options.
+ * @param {Function} props.renderer Option renderer in case a custom renderer is required.
+ * @return {*} Render.
+ */
 function DropDown({
   onChange,
   lightMode = false,
@@ -99,7 +116,12 @@ function DropDown({
   priorityOptions,
   priorityLabel,
   renderer,
+  ...rest
 }) {
+  // If search is not enabled, always display all options.
+  if (!hasSearch) {
+    primaryOptions = options;
+  }
   const ref = useRef();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -148,7 +170,7 @@ function DropDown({
         aria-expanded={isOpen}
         ref={ref}
         lightMode={lightMode}
-        aria-label={__('Edit: TODO', 'web-stories')}
+        {...rest}
       >
         <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
         <DropDownIcon />
@@ -180,6 +202,15 @@ DropDown.propTypes = {
   onChange: PropTypes.func.isRequired,
   lightMode: PropTypes.bool,
   placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  options: PropTypes.array,
+  hasSearch: PropTypes.bool,
+  onObserve: PropTypes.func,
+  primaryOptions: PropTypes.array,
+  primaryLabel: PropTypes.string,
+  priorityOptions: PropTypes.array,
+  priorityLabel: PropTypes.string,
+  renderer: PropTypes.func,
 };
 
 DropDown.defaultProps = {

@@ -38,7 +38,6 @@ import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../form';
-//import FontPicker from '../../fontPicker';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
@@ -171,7 +170,19 @@ function FontControls({ selectedElements, pushUpdate }) {
     []
   );
 
-  const Renderer = ({option, optionRef, ...rest}) => {
+  const fontMap = useMemo(
+    () =>
+      [...fonts, ...recentFonts, ...curatedFonts].reduce(
+        (lookup, option) => ({
+          ...lookup,
+          [option.id]: option,
+        }),
+        {}
+      ),
+    [fonts, recentFonts, curatedFonts]
+  );
+
+  const renderer = ({ option, optionRef, ...rest }) => {
     return (
       <Option
         {...rest}
@@ -190,18 +201,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     );
   };
 
-  const fontMap = useMemo(
-    () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
-        (lookup, option) => ({
-          ...lookup,
-          [option.id]: option,
-        }),
-        {}
-      ),
-    [fonts, recentFonts, curatedFonts]
-  );
-
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
       observedFonts.filter(
@@ -215,7 +214,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         <Row>
           <DropDown2
             data-testid="font"
-            aria-label={__('Font family', 'web-stories')}
+            aria-label={__('Edit: Font family', 'web-stories')}
             options={fonts}
             primaryOptions={curatedFonts}
             primaryLabel={__('Recommended', 'web-stories')}
@@ -230,7 +229,7 @@ function FontControls({ selectedElements, pushUpdate }) {
             hasSearch
             onChange={handleFontPickerChange}
             onObserve={onObserve}
-            renderer={Renderer}
+            renderer={renderer}
             disabled={!fonts?.length}
           />
         </Row>

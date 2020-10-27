@@ -106,9 +106,17 @@ function OptionsContainer({
 
 OptionsContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
+  options: PropTypes.array,
+  hasSearch: PropTypes.bool,
+  onObserve: PropTypes.func,
+  primaryOptions: PropTypes.array,
+  primaryLabel: PropTypes.string,
+  priorityOptions: PropTypes.array,
+  priorityLabel: PropTypes.string,
+  renderer: PropTypes.func,
 };
 
 export default OptionsContainer;

@@ -278,6 +278,13 @@ OptionList.propTypes = {
   onClose: PropTypes.func,
   onExpandedChange: PropTypes.func,
   focusTrigger: PropTypes.number,
+  options: PropTypes.array.isRequired,
+  primaryOptions: PropTypes.array.isRequired,
+  primaryLabel: PropTypes.string,
+  priorityOptions: PropTypes.array,
+  priorityLabel: PropTypes.array,
+  renderer: PropTypes.func,
+  onObserve: PropTypes.func,
 };
 
 export default OptionList;
