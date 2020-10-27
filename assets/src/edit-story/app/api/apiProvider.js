@@ -220,7 +220,9 @@ function APIProvider({ children }) {
   );
 
   const getAllUsers = useCallback(() => {
-    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
+    return apiFetch({
+      path: addQueryArgs(users, { per_page: '-1', who: 'authors' }),
+    });
   }, [users]);
 
   const state = {
