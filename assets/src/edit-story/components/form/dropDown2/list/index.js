@@ -35,7 +35,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useFont } from '../../../../app/font';
 import useFocusOut from '../../../../utils/useFocusOut';
 import {
   createOptionFilter,
@@ -58,33 +57,14 @@ function OptionList({
   primaryLabel,
   priorityOptions = [],
   priorityLabel,
+  renderer,
+  onObserve,
 }) {
+  const OptionRenderer = renderer;
   const listRef = useRef(null);
   const optionsRef = useRef([]);
   const [focusIndex, setFocusIndex] = useState(-1);
-  const [userSeenFonts, setUserSeenFonts] = useState([]);
-  const [
-    fonts,
-    recentFonts,
-    curatedFonts,
-    ensureMenuFontsLoaded,
-  ] = useFont(({ state, actions }) => [
-    state.fonts,
-    state.recentFonts,
-    state.curatedFonts,
-    actions.ensureMenuFontsLoaded,
-  ]);
-  const fontMap = useMemo(
-    () =>
-      [...options, ...priorityOptions, ...primaryOptions].reduce(
-        (lookup, option) => ({
-          ...lookup,
-          [option.id]: option,
-        }),
-        {}
-      ),
-    [options, priorityOptions, primaryOptions]
-  );
+  const [userSeenOptions, setUserSeenOptions] = useState([]);
 
   /*
    * KEYWORD FILTERING
@@ -123,7 +103,7 @@ function OptionList({
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setUserSeenFonts(addUniqueEntry(entry.target.dataset.font));
+              setUserSeenOptions(addUniqueEntry(entry.target.dataset.option));
             }
           });
         },
@@ -139,22 +119,26 @@ function OptionList({
   // Observe rendered font options
   useLayoutEffect(() => {
     const renderedOptions = optionsRef.current;
-    renderedOptions.forEach((option) => option && observer.observe(option));
+    if (onObserve) {
+      renderedOptions.forEach((option) => option && observer.observe(option));
+    }
     return () => {
-      renderedOptions.forEach((option) => option && observer.unobserve(option));
+      if (onObserve) {
+        renderedOptions.forEach(
+          (option) => option && observer.unobserve(option)
+        );
+      }
       // clear exisiting option references before next update to filteredGroup
       optionsRef.current = [];
     };
-  }, [observer, filteredListGroups]);
+  }, [observer, onObserve, filteredListGroups]);
 
   // load all seen fonts from google service
   useEffect(() => {
-    ensureMenuFontsLoaded(
-      userSeenFonts.filter(
-        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
-      )
-    );
-  }, [ensureMenuFontsLoaded, userSeenFonts, fontMap]);
+    if (onObserve) {
+      onObserve(userSeenOptions);
+    }
+  }, [onObserve, userSeenOptions]);
 
   /*
    * KEYBOARD ACCESSIBILITY
@@ -241,27 +225,44 @@ function OptionList({
                   {group.label}
                 </GroupLabel>
               )}
-              {group.options.map((option, j) => (
-                <Option
-                  key={option.id}
-                  ref={(el) =>
-                    (optionsRef.current[
-                      getInset(filteredListGroups, i, j)
-                    ] = el)
-                  }
-                  role="option"
-                  tabIndex={-1}
-                  aria-selected={value === option.name}
-                  aria-posinset={getInset(filteredListGroups, i, j)}
-                  aria-setsize={filteredOptions.length}
-                  onClick={() => onSelect(option.id)}
-                >
-                  {value === option.id && (
-                    <Selected aria-label={__('Selected', 'web-stories')} />
-                  )}
-                  {option.name}
-                </Option>
-              ))}
+              {group.options.map((option, j) => {
+                const optionProps = {
+                  key: option.id,
+                  role: 'option',
+                  tabIndex: -1,
+                  'aria-selected': value === option.id,
+                  'aria-posinset': getInset(filteredListGroups, i, j),
+                  'aria-setsize': filteredOptions.length,
+                  'data-option': option.id,
+                  onClick: () => onSelect(option.id),
+                };
+                return renderer ? (
+                  <OptionRenderer
+                    {...optionProps}
+                    option={option}
+                    optionRef={(el) =>
+                      (optionsRef.current[
+                        getInset(filteredListGroups, i, j)
+                      ] = el)
+                    }
+                    onClick={() => onSelect(option.id)}
+                  />
+                ) : (
+                  <Option
+                    {...optionProps}
+                    ref={(el) =>
+                      (optionsRef.current[
+                        getInset(filteredListGroups, i, j)
+                      ] = el)
+                    }
+                  >
+                    {value === option.id && (
+                      <Selected aria-label={__('Selected', 'web-stories')} />
+                    )}
+                    {option.name}
+                  </Option>
+                );
+              })}
             </Group>
           )
         );

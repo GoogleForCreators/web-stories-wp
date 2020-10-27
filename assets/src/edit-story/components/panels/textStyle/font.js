@@ -44,6 +44,7 @@ import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
+import { Option, Selected } from '../../form/dropDown2/list/styled';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 
@@ -81,13 +82,20 @@ function FontControls({ selectedElements, pushUpdate }) {
     curatedFonts,
     addRecentFont,
     maybeEnqueueFontStyle,
+    ensureMenuFontsLoaded,
     getFontByName,
   } = useFont(
     ({
-      actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
+      actions: {
+        addRecentFont,
+        ensureMenuFontsLoaded,
+        maybeEnqueueFontStyle,
+        getFontByName,
+      },
       state: { fonts, recentFonts, curatedFonts },
     }) => ({
       addRecentFont,
+      ensureMenuFontsLoaded,
       maybeEnqueueFontStyle,
       getFontByName,
       recentFonts,
@@ -163,6 +171,44 @@ function FontControls({ selectedElements, pushUpdate }) {
     []
   );
 
+  const Renderer = ({option, optionRef, ...rest}) => {
+    return (
+      <Option
+        {...rest}
+        ref={optionRef}
+        fontFamily={
+          option.service.includes('google')
+            ? `'${option.name}::MENU'`
+            : option.name
+        }
+      >
+        {fontFamily === option.id && (
+          <Selected aria-label={__('Selected', 'web-stories')} />
+        )}
+        {option.name}
+      </Option>
+    );
+  };
+
+  const fontMap = useMemo(
+    () =>
+      [...fonts, ...recentFonts, ...curatedFonts].reduce(
+        (lookup, option) => ({
+          ...lookup,
+          [option.id]: option,
+        }),
+        {}
+      ),
+    [fonts, recentFonts, curatedFonts]
+  );
+
+  const onObserve = (observedFonts) => {
+    ensureMenuFontsLoaded(
+      observedFonts.filter(
+        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
+      )
+    );
+  };
   return (
     <>
       {fonts && (
@@ -175,14 +221,17 @@ function FontControls({ selectedElements, pushUpdate }) {
             primaryLabel={__('Recommended', 'web-stories')}
             priorityOptions={recentFonts}
             priorityLabel={__('Recently used', 'web-stories')}
-            value={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
+            selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
             placeholder={
               MULTIPLE_VALUE === fontFamily
                 ? MULTIPLE_DISPLAY_VALUE
                 : fontFamily
             }
+            hasSearch
             onChange={handleFontPickerChange}
-            hasSearch={true}
+            onObserve={onObserve}
+            renderer={Renderer}
+            disabled={!fonts?.length}
           />
         </Row>
       )}

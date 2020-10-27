@@ -47,11 +47,13 @@ function OptionsContainer({
   onClose,
   isOpen,
   hasSearch,
+  onObserve,
   options,
   primaryOptions,
   primaryLabel,
   priorityOptions,
   priorityLabel,
+  renderer,
 }) {
   const ref = useRef();
   const inputRef = useRef();
@@ -90,11 +92,13 @@ function OptionsContainer({
         onClose={onClose}
         onExpandedChange={setIsExpanded}
         focusTrigger={trigger}
+        onObserve={onObserve}
         options={options}
         primaryOptions={primaryOptions}
         primaryLabel={primaryLabel}
         priorityOptions={priorityOptions}
         priorityLabel={priorityLabel}
+        renderer={renderer}
       />
     </Container>
   );

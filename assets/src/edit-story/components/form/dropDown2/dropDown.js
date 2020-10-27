@@ -93,12 +93,12 @@ function DropDown({
   selectedId,
   options = [],
   hasSearch = false,
-  getOptionsByQuery,
+  onObserve,
   primaryOptions,
   primaryLabel,
   priorityOptions,
   priorityLabel,
-  renderer = null,
+  renderer,
 }) {
   const ref = useRef();
 
@@ -161,11 +161,13 @@ function DropDown({
             onSelect={handleSelect}
             onClose={debouncedCloseDropDown}
             hasSearch={hasSearch}
+            onObserve={onObserve}
             options={options}
             primaryOptions={primaryOptions}
             primaryLabel={primaryLabel}
             priorityOptions={priorityOptions}
             priorityLabel={priorityLabel}
+            renderer={renderer}
           />
         </Popup>
       )}

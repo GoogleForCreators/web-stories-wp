@@ -134,6 +134,7 @@ function PublishPanel() {
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
                 lightMode={true}
+                onChange={null}
               />
             ) : (
               <DropDown2
@@ -143,8 +144,8 @@ function PublishPanel() {
                 selectedId={author}
                 disabled={isSaving}
                 onChange={handleChangeValue('author')}
-                lightMode={true}
-                hasSearch={false}
+                lightMode
+                hasSearch
               />
             )}
           </Row>
