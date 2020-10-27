@@ -146,10 +146,6 @@ const ButtonCircle = styled(Base)`
   height:${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
   border-radius: 50%;
 
-  &:active {
-    border-radius: 4px;
-  }
-
   & > svg {
     width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
     height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
