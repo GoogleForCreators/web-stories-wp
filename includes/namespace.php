@@ -147,11 +147,14 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 			}
 		}
 
-		// However, we still need to stop further execution.
 		return;
 	}
 }
 
+if ( ! $web_stories_compatibility->check_php_built() ) {
+	// However, we still need to stop further execution.
+	return;
+}
 /**
  * Run logic to setup a new site with web stories.
  *
@@ -280,11 +283,8 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
 
 global $web_stories;
 
-// Check to see if the class exists before settings it up.
-if ( $web_stories_compatibility->check_php_built() ) {
-	$web_stories = new Plugin();
-	$web_stories->register();
-}
+$web_stories = new Plugin();
+$web_stories->register();
 
 /**
  * Web stories Plugin Instance
