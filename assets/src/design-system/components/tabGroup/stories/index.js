@@ -24,8 +24,8 @@ import { useState } from 'react';
 /**
  * Internal dependencies
  */
-import { TabGroup } from '..';
 import { theme } from '../../..';
+import { TabGroup } from '..';
 
 export default {
   title: 'DesignSystem/Components/TabGroup',

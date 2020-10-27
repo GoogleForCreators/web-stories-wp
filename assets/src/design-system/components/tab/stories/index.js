@@ -23,8 +23,8 @@ import { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
+import { theme } from '../../..';
 import { Tab } from '..';
-import { theme } from '../../../theme';
 
 export default {
   title: 'DesignSystem/Components/Tab',
