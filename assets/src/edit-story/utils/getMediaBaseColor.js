@@ -18,7 +18,6 @@
  * External dependencies
  */
 import ColorThief from 'colorthief';
-
 const thief = new ColorThief();
 
 const STYLES = {
@@ -34,33 +33,42 @@ const STYLES = {
 const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
 
 export function getMediaBaseColor(resource, onBaseColor) {
-  const onLoad = () => {
-    const node = document.body[BASE_COLOR_NODE];
-    try {
-      onBaseColor(thief.getColor(node.firstElementChild));
-    } catch (e) {
-      onBaseColor([255, 255, 255]);
-    }
-  };
-  setOrCreateImage(resource, onLoad);
+  const { type, src, poster } = resource;
+  setOrCreateImage(type === 'video' ? poster : src).then(
+    (color) => onBaseColor(color),
+    () => onBaseColor([255, 255, 255]) // Fallback color is white.
+  );
 }
 
-function setOrCreateImage(resource, onLoad) {
-  const { type, src, poster } = resource;
-  let imgNode = document.body[BASE_COLOR_NODE];
-  if (!imgNode) {
-    imgNode = document.createElement('div');
-    imgNode.id = '__web-stories-base-color';
-    Object.assign(imgNode, STYLES);
-    document.body.appendChild(imgNode);
-    document.body[BASE_COLOR_NODE] = imgNode;
-  }
-  imgNode.innerHTML = '';
-  const img = document.createElement('img');
-  img.onload = onLoad;
-  img.crossOrigin = type === 'gif' ? undefined : 'anonymous';
-  img.width = 10;
-  img.height = 'auto';
-  img.src = type === 'video' ? poster : src;
-  imgNode.appendChild(img);
+function setOrCreateImage(src) {
+  return new Promise((resolve, reject) => {
+    let imgNode = document.body[BASE_COLOR_NODE];
+    if (!imgNode) {
+      imgNode = document.createElement('div');
+      imgNode.id = '__web-stories-base-color';
+      Object.assign(imgNode, STYLES);
+      document.body.appendChild(imgNode);
+      document.body[BASE_COLOR_NODE] = imgNode;
+    }
+    imgNode.innerHTML = '';
+
+    const img = new Image();
+    // Necessary to avoid tainting canvas with CORS image data.
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const node = document.body[BASE_COLOR_NODE];
+      try {
+        resolve(thief.getColor(node.firstElementChild));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    img.onerror = (e) => {
+      reject(new Error('Base color image error: ' + e.message));
+    };
+    img.width = 10;
+    img.height = 'auto';
+    img.src = src;
+    imgNode.appendChild(img);
+  });
 }
