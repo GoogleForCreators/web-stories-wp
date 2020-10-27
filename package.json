@@ -57,7 +57,7 @@
     "react-color": "^2.18.1",
     "react-dom": "^16.13.1",
     "react-modal": "^3.11.2",
-    "react-moveable": "^0.21.6",
+    "react-moveable": "^0.22.6",
     "react-photo-gallery": "^8.0.0",
     "react-pure-render": "^1.0.2",
     "react-transition-group": "^4.4.1",
