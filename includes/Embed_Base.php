@@ -129,7 +129,7 @@ class Embed_Base {
 		 *
 		 * @param array $attrs Array of settings passed to web stories embed.
 		 */
-		return apply_filters( 'web_stories_embed_attributes', $attrs );
+		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
 	}
 
 	/**
