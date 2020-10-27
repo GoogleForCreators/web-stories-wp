@@ -61,7 +61,7 @@ class Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $extensions;
+	protected $extensions = [];
 
 	/**
 	 * Array of required files.
@@ -158,7 +158,7 @@ class Compatibility {
 	 */
 	public function check_required_files() {
 		$required_files = $this->get_required_files();
-		if ( $required_files && is_array( $required_files ) ) {
+		if ( $required_files ) {
 			foreach ( $required_files as $required_file ) {
 				if ( ! is_readable( $required_file ) ) {
 					$message =
@@ -304,7 +304,7 @@ class Compatibility {
 	 * @codeCoverageIgnore
 	 * @return void
 	 */
-	public function run_checks(){
+	public function run_checks() {
 		$this->check_required_files();
 		$this->check_php_built();
 		$this->check_extensions();
@@ -339,7 +339,7 @@ class Compatibility {
 	 * @return array
 	 */
 	public function get_extensions() {
-		return $this->extensions;
+		return (array) $this->extensions;
 	}
 
 	/**
@@ -349,7 +349,7 @@ class Compatibility {
 	 * @return array
 	 */
 	public function get_required_files() {
-		return $this->required_files;
+		return (array) $this->required_files;
 	}
 
 	/**
@@ -401,7 +401,7 @@ class Compatibility {
 	 * @param array $extensions Array of extensions.
 	 * @return void
 	 */
-	public function set_extensions( $extensions ) {
+	public function set_extensions( array $extensions ) {
 		$this->extensions = $extensions;
 	}
 
