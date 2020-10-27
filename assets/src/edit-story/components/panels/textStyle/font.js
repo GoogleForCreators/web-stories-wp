@@ -77,17 +77,21 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const {
     fonts,
+    recentFonts,
+    curatedFonts,
     addRecentFont,
     maybeEnqueueFontStyle,
     getFontByName,
   } = useFont(
     ({
       actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
-      state: { fonts },
+      state: { fonts, recentFonts, curatedFonts },
     }) => ({
       addRecentFont,
       maybeEnqueueFontStyle,
       getFontByName,
+      recentFonts,
+      curatedFonts,
       fonts,
     })
   );
@@ -167,8 +171,16 @@ function FontControls({ selectedElements, pushUpdate }) {
             data-testid="font"
             aria-label={__('Font family', 'web-stories')}
             options={fonts}
+            primaryOptions={curatedFonts}
+            primaryLabel={__('Recommended', 'web-stories')}
+            priorityOptions={recentFonts}
+            priorityLabel={__('Recently used', 'web-stories')}
             value={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
-            placeholder={MULTIPLE_DISPLAY_VALUE}
+            placeholder={
+              MULTIPLE_VALUE === fontFamily
+                ? MULTIPLE_DISPLAY_VALUE
+                : fontFamily
+            }
             onChange={handleFontPickerChange}
             hasSearch={true}
           />

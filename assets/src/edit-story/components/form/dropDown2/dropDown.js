@@ -90,12 +90,8 @@ function DropDown({
   lightMode = false,
   placeholder,
   disabled = false,
-  selectedId = 'option-2',
-  options = [
-    { id: 'option-1', name: 'Option 1' },
-    { id: 'option-2', name: 'Option 2' },
-    { id: 'option-3', name: 'Option 3' },
-  ],
+  selectedId,
+  options = [],
   hasSearch = false,
   getOptionsByQuery,
   primaryOptions,
@@ -166,7 +162,7 @@ function DropDown({
             onClose={debouncedCloseDropDown}
             hasSearch={hasSearch}
             options={options}
-            primaryOptions={options}
+            primaryOptions={primaryOptions}
             primaryLabel={primaryLabel}
             priorityOptions={priorityOptions}
             priorityLabel={priorityLabel}
