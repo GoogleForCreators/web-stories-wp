@@ -23,7 +23,7 @@ import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { TYPOGRAPHY_PRESET_SIZES } from '../../';
+import { THEME_CONSTANTS } from '../../';
 
 const StyledTab = styled.button(
   ({ isActive, theme }) => `
@@ -43,17 +43,24 @@ const StyledTab = styled.button(
 
     font-family: ${theme.typography.family.primary};
     font-size: ${
-      theme.typography.presets.label[TYPOGRAPHY_PRESET_SIZES.SMALL].size
+      theme.typography.presets.label[
+        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      ].size
     }px;
     font-weight: ${
-      theme.typography.presets.label[TYPOGRAPHY_PRESET_SIZES.SMALL].weight
+      theme.typography.presets.label[
+        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      ].weight
     };
     letter-spacing: ${
-      theme.typography.presets.label[TYPOGRAPHY_PRESET_SIZES.SMALL]
-        .letterSpacing
+      theme.typography.presets.label[
+        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      ].letterSpacing
     }px;
     line-height: ${
-      theme.typography.presets.label[TYPOGRAPHY_PRESET_SIZES.SMALL].lineHeight
+      theme.typography.presets.label[
+        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      ].lineHeight
     }px;
 
     &:disabled {
