@@ -30,7 +30,7 @@ describe('WP Sidebar Nav', () => {
     );
     await page.hover('[aria-label="Main dashboard navigation"]');
 
-    // Navigating in the application to a new page syncs the WP current page in Nav
+    // Navigating through the application to a new page syncs the WP current page in Nav
     await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
       text: 'Explore Templates',
     });
@@ -40,7 +40,7 @@ describe('WP Sidebar Nav', () => {
     );
     await page.hover('[aria-label="Main dashboard navigation"]');
 
-    // Navigating in the application to a new page syncs the WP current page in Nav
+    // Navigating through WP to a new page syncs the WP current page in Nav
     await page.hover('#menu-posts-web-story');
     await expect(page).toClick('#menu-posts-web-story a', {
       text: 'Settings',
