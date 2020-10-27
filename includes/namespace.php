@@ -120,6 +120,12 @@ function _print_missing_build_admin_notice() {
 add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
 
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
+	$web_stories_compatibility->set_required_files(
+		[
+			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
+		]
+	);
 	$web_stories_compatibility->run_checks();
 	$_error = $web_stories_compatibility->get_error();
 	if ( $_error->errors ) {
@@ -150,7 +156,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
  *
  * @return void
  */
-function setup_new_site(){
+function setup_new_site() {
 	$story = new Story_Post_Type( new Experiments() );
 	$story->init();
 	$story->add_caps_to_roles();
