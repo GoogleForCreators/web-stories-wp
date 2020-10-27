@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { TextDecoder, TextEncoder } from 'util';
-
-/**
  * Internal dependencies
  */
 import base64Encode from '../base64Encode';
@@ -33,37 +28,18 @@ function fromBinary(binary) {
   return String.fromCharCode(...new Uint16Array(bytes.buffer));
 }
 
-// These are not yet available in jsdom environment.
-// See https://github.com/facebook/jest/issues/9983.
-// See https://github.com/jsdom/jsdom/issues/2524.
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
 describe('base64Encode', () => {
-  beforeAll(() => {
-    // eslint-disable-next-line jest/prefer-spy-on
-    global.btoa = jest.fn().mockImplementation(() => '*encoded*');
-  });
-  afterAll(() => {
-    global.btoa.mockClear();
-  });
-
   it('prefixes encoded content', () => {
     expect(base64Encode('Hello World')).toStartWith('__WEB_STORIES_ENCODED__');
   });
 
   it('converts Unicode characters', () => {
-    // eslint-disable-next-line jest/prefer-spy-on
-    global.btoa = jest
-      .fn()
-      .mockImplementation(() => 'SABlAGwAbABvACAAPNgN3w==');
-
-    const actual = base64Encode('Hello 🌍');
+    const actual = base64Encode('Hello 🌍 - これはサンプルです。');
     expect(actual).toStrictEqual(
-      '__WEB_STORIES_ENCODED__SABlAGwAbABvACAAPNgN3w=='
-    ); // Hello 🌍
+      '__WEB_STORIES_ENCODED__SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw'
+    ); // Hello 🌍 - これはサンプルです。
     expect(
       fromBinary(atob(actual.replace('__WEB_STORIES_ENCODED__', '')))
-    ).toStrictEqual('Hello 🌍');
+    ).toStrictEqual('Hello 🌍 - これはサンプルです。');
   });
 });

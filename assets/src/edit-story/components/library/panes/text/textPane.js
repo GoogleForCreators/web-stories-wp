@@ -79,7 +79,10 @@ function TextPane(props) {
       <Section title={__('Presets', 'web-stories')}>
         {PRESETS.map(({ title, element }, i) => (
           <FontPreview
-            key={i}
+            key={
+              /* eslint-disable-next-line react/no-array-index-key */
+              i
+            }
             title={title}
             element={element}
             onClick={() => insertPreset(element)}
