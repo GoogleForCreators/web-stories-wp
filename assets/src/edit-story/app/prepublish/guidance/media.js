@@ -68,15 +68,16 @@ export function videoElementSizeOnPage(page) {
 }
 
 export function mediaElementResolution(element) {
-  if (element.type === 'video') {
-    return videoElementResolution(element);
+  switch (element.type) {
+    case 'image':
+      return imageElementResolution(element);
+    case 'video':
+      return videoElementResolution(element);
+    case 'gif':
+      return gifElementResolution(element);
+    default:
+      throw new Error('Invalid media type');
   }
-
-  if (element.type === 'image' || element.type === 'gif') {
-    return imageElementResolution(element);
-  }
-
-  return undefined;
 }
 
 function videoElementResolution(element) {
@@ -119,6 +120,23 @@ function imageElementResolution(element) {
       type: 'guidance',
       elementId: element.id,
       message: __('Image has low resolution', 'web-stories'),
+    };
+  }
+  return undefined;
+}
+
+function gifElementResolution(element) {
+  // gif/output uses the MP4 video provided by the 3P Media API for displaying gifs
+  const heightResTooLow =
+    element.resource.output.sizes.mp4.full.height < 2 * element.height;
+  const widthResTooLow =
+    element.resource.output.sizes.mp4.full.width < 2 * element.width;
+
+  if (heightResTooLow || widthResTooLow) {
+    return {
+      type: 'guidance',
+      elementId: element.id,
+      message: __('GIF has low resolution', 'web-stories'),
     };
   }
   return undefined;

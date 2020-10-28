@@ -70,6 +70,60 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLowResolutionVideoElement.id);
   });
 
+  it("should return a message if an image element's resolution is too low (<2x pixel density)", () => {
+    const tooLowResolutionImageElement = {
+      id: 910,
+      type: 'image',
+      height: 1000,
+      width: 1000,
+      resource: {
+        sizes: {
+          full: {
+            height: 1000,
+            width: 1000,
+          },
+        },
+      },
+    };
+
+    const result = mediaGuidance.mediaElementResolution(
+      tooLowResolutionImageElement
+    );
+    expect(result).not.toBeUndefined();
+    expect(result.message).toMatchInlineSnapshot(`"Image has low resolution"`);
+    expect(result.type).toStrictEqual('guidance');
+    expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
+  });
+
+  it("should return a message if a gif element's resolution is too low (<2x pixel density)", () => {
+    const tooLowResolutionImageElement = {
+      id: 911,
+      type: 'gif',
+      height: 1000,
+      width: 1000,
+      resource: {
+        output: {
+          sizes: {
+            mp4: {
+              full: {
+                height: 1000,
+                width: 1000,
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const result = mediaGuidance.mediaElementResolution(
+      tooLowResolutionImageElement
+    );
+    expect(result).not.toBeUndefined();
+    expect(result.message).toMatchInlineSnapshot(`"GIF has low resolution"`);
+    expect(result.type).toStrictEqual('guidance');
+    expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
+  });
+
   it('should return a message if any video resolution is too high to display on most mobile devices (>4k)', () => {
     const tooHighVideoResolution = {
       id: 101,
@@ -113,6 +167,5 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLongVideo.id);
   });
 
-  it.todo('should return a message if an image element has low resolution');
   it.todo('should return a message if the video element is less than 24fps');
 });
