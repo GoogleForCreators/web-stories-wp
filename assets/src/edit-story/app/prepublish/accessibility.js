@@ -17,7 +17,17 @@
 /**
  * WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
+import ColorContrastChecker from 'color-contrast-checker';
+
+const parseRGBFromCssRGB = (cssRGB) => {
+  const [r, g, b] = cssRGB.match(/\d+/g).map((number) => parseInt(number));
+  return { r, g, b };
+};
 
 /**
  * Check text element for low contrast between font and background color
@@ -25,7 +35,58 @@
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function textElementTextLowContrast() {
+export function textElementFontLowContrast(element) {
+  // skip if element is not a text element with a background color
+  if (
+    element.type !== 'text' ||
+    element.backgroundTextMode === 'NONE' ||
+    !element.backgroundColor
+  ) {
+    return undefined;
+  }
+
+  const ccc = new ColorContrastChecker();
+  ccc.fontSize = element.fontSize;
+
+  // calculate luminance manually for background color since it's already stored in { r, g, b }
+  // format and does not need to be parsed from hex
+  const backgroundRGB = element.backgroundColor.color; // { r, g, b }
+  const backgroundLRGB = ccc.calculateLRGB(backgroundRGB);
+  const backgroundLuminance = ccc.calculateLuminance(backgroundLRGB);
+
+  // create buffer to loop spans for colors
+  const buffer = document.createElement('div');
+  buffer.innerHTML = element.content;
+  const spans = Array.prototype.slice.call(buffer.getElementsByTagName('span'));
+
+  // check all spans for contrast ratios that don't pass verification
+  let lowContrast = spans.some((span) => {
+    if (!span.style || !span.style.color) {
+      return false;
+    }
+
+    const textRGB = parseRGBFromCssRGB(span.style.color); // style.color format: rgb(000, 000, 000)
+    const textLRGB = ccc.calculateLRGB(textRGB);
+    const textLuminance = ccc.calculateLuminance(textLRGB);
+    const contrastRatio = ccc.getContrastRatio(
+      textLuminance,
+      backgroundLuminance
+    );
+    const verified = ccc.verifyContrastRatio(contrastRatio).WCAG_AA;
+    return !verified;
+  });
+
+  if (lowContrast) {
+    return {
+      message: __(
+        'Low contrast between font and background color',
+        'web-stories'
+      ),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
