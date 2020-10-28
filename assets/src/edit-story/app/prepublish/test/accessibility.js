@@ -85,16 +85,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       ).toBeUndefined();
     });
 
-    it('should return undefined if not a text element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'image',
-      };
-      expect(
-        accessibilityChecks.textElementFontLowContrast(element)
-      ).toBeUndefined();
-    });
-
     it('should return undefined if element has no background fill', () => {
       const element = {
         id: 'elementid',
@@ -107,14 +97,54 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         accessibilityChecks.textElementFontLowContrast(element)
       ).toBeUndefined();
     });
+
+    it('should return undefined if not a text element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+      };
+      expect(
+        accessibilityChecks.textElementFontLowContrast(element)
+      ).toBeUndefined();
+    });
   });
 
   describe('textElementFontSizeTooSmall', () => {
-    it.todo('should return a warning if text element font size is too small');
-    it.todo(
-      'should return undefined if text element font size is large enough'
-    );
-    it.todo('should return undefined if not a text element');
+    it('should return a warning if text element font size is too small', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        fontSize: 11,
+      };
+      expect(
+        accessibilityChecks.textElementFontSizeTooSmall(element)
+      ).toStrictEqual({
+        message: 'Font size too small',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return undefined if text element font size is large enough', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        fontSize: 12,
+      };
+      expect(
+        accessibilityChecks.textElementFontSizeTooSmall(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if not a text element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+      };
+      expect(
+        accessibilityChecks.textElementFontSizeTooSmall(element)
+      ).toBeUndefined();
+    });
   });
 
   describe('imageElementLowImageResolution', () => {
