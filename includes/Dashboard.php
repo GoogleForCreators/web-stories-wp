@@ -100,6 +100,7 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_action( 'determine_site_kit_plugin_status', [ $this, 'determine_site_kit_plugin_status' ] );
 	}
 
 	/**
@@ -233,6 +234,31 @@ class Dashboard {
 	}
 
 	/**
+	 * Find status of site kit plugin in site.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return string|false if plugin is present return 'active' or 'inactive', otherwise return false
+	 */
+	public function determine_site_kit_plugin_status() {
+
+		// Get all plugins
+		$all_plugins = get_plugins();
+
+		// check if site kit is an installed plugin
+		if ( array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins ) ) {
+			$is_site_kit_active = is_plugin_active( 'google-site-kit/google-site-kit.php' );
+			if ( $is_site_kit_active ) {
+				return 'active';
+			}
+			return 'inactive';
+		}
+		
+		// if not installed just return false
+		return false;
+	}
+
+	/**
 	 * Renders the dashboard page.
 	 *
 	 * @since 1.0.0
@@ -342,8 +368,9 @@ class Dashboard {
 				'maxUpload'          => $max_upload_size,
 				'maxUploadFormatted' => size_format( $max_upload_size ),
 				'capabilities'       => [
-					'canManageSettings' => current_user_can( 'manage_options' ),
-					'canUploadFiles'    => current_user_can( 'upload_files' ),
+					'canManageSettings'   => current_user_can( 'manage_options' ),
+					'canUploadFiles'      => current_user_can( 'upload_files' ),
+					'siteKitPluginStatus' => $this->determine_site_kit_plugin_status(),
 				],
 				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
 			],

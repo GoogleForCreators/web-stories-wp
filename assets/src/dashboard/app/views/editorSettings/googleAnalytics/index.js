@@ -41,11 +41,12 @@ import {
   SettingHeading,
   TextInputHelperText,
   VisuallyHiddenLabel,
+  HelperText,
 } from '../components';
 
 export const TEXT = {
   CONTEXT: __(
-    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on <a>analytics for your Web Stories</a>.",
+    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on<a>analytics for your Web Stories</a>.",
     'web-stories'
   ),
   CONTEXT_LINK:
@@ -55,9 +56,28 @@ export const TEXT = {
   ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
+  SITE_KIT_NOT_INSTALLED: __(
+    'Install<a>Site Kit by Google</a> to easily enable Google Analytics for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_INSTALLED: __(
+    'Use Site Kit by Google to easily<a>activate Google Analytics</a> for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_IN_USE: __(
+    "Since Google Analytics is already enabled through<a>Site Kit by Google</a>, there's no need to do anything else to configure your tracking ID for Web Stories.",
+    'web-stories'
+  ),
+  SITE_KIT_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/',
+  SITE_KIT_INSTRUCTIONS_LINK:
+    'https://sitekit.withgoogle.com/documentation/install/',
 };
 
-function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
+function GoogleAnalyticsSettings({
+  googleAnalyticsId,
+  handleUpdate,
+  siteKitPluginStatus,
+}) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
@@ -98,9 +118,41 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading htmlFor="gaTrackingID">
-        {TEXT.SECTION_HEADING}
-      </SettingHeading>
+      <div>
+        <SettingHeading htmlFor="gaTrackingID">
+          {TEXT.SECTION_HEADING}
+        </SettingHeading>
+        <HelperText>
+          {!siteKitPluginStatus && (
+            <TranslateWithMarkup
+              mapping={{
+                a: <InlineLink href={TEXT.SITE_KIT_INSTRUCTIONS_LINK} />,
+              }}
+            >
+              {TEXT.SITE_KIT_NOT_INSTALLED}
+            </TranslateWithMarkup>
+          )}
+          {siteKitPluginStatus === 'inactive' && (
+            <TranslateWithMarkup
+              mapping={{
+                a: <InlineLink href={TEXT.SITE_KIT_INSTRUCTIONS_LINK} />,
+              }}
+            >
+              {TEXT.SITE_KIT_INSTALLED}
+            </TranslateWithMarkup>
+          )}
+
+          {siteKitPluginStatus === 'active' && (
+            <TranslateWithMarkup
+              mapping={{
+                a: <InlineLink href={TEXT.SITE_KIT_INSTRUCTIONS_LINK} />,
+              }}
+            >
+              {TEXT.SITE_KIT_IN_USE}
+            </TranslateWithMarkup>
+          )}
+        </HelperText>
+      </div>
       <FormContainer>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="gaTrackingId">
@@ -114,6 +166,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
+            disabled={Boolean(siteKitPluginStatus)} // if site kit is installed we don't want to change anything here
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}
@@ -136,6 +189,7 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
+  siteKitPluginStatus: PropTypes.oneOf(['inactive', 'active', false]),
 };
 
 export default GoogleAnalyticsSettings;
