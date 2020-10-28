@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
@@ -33,12 +38,6 @@ const MIN_VIDEO_WIDTH = 852;
 // MIN_VIDEO_FPS = 24;
 // export function videoElementFps(element) {}
 
-const getChecklistMessage = (elementId, message) => ({
-  type: 'guidance',
-  elementId,
-  message,
-});
-
 export function mediaElementSizeOnPage(element) {
   // triggered if only one video is on the page and it takes less than 50% of the safe zone area
   // encourage users to consider a more immersive media sizing and cropping.
@@ -46,8 +45,14 @@ export function mediaElementSizeOnPage(element) {
   const isTooSmallOnPage = SAFE_ZONE_AREA / 2 > elementArea;
 
   if (isTooSmallOnPage) {
-    const media = element.type === 'video' ? 'Video' : 'Image';
-    return getChecklistMessage(element.id, `${media} is too small on the page`);
+    return {
+      type: 'guidance',
+      elementId: element.id,
+      message:
+        element.type === 'video'
+          ? __(`Video is too small on the page`, 'web-stories')
+          : __(`Image is too small on the page`, 'web-stories'),
+    };
   }
 
   return undefined;
@@ -85,14 +90,22 @@ function videoElementResolution(element) {
     element.resource.full.width >= MAX_VIDEO_WIDTH;
 
   if (videoResolutionHigh) {
-    return getChecklistMessage(
-      element.id,
-      "Video's resolution is too high to display on most mobile devices (>4k)"
-    );
+    return {
+      type: 'guidance',
+      elementId: element.id,
+      message: __(
+        "Video's resolution is too high to display on most mobile devices (>4k)",
+        'web-stories'
+      ),
+    };
   }
 
   if (videoResolutionLow) {
-    return getChecklistMessage(element.id, 'Video has low resolution');
+    return {
+      type: 'guidance',
+      elementId: element.id,
+      message: __('Video has low resolution', 'web-stories'),
+    };
   }
 
   return undefined;
@@ -103,17 +116,25 @@ function imageElementResolution(element) {
   const elementDims = element.height * element.width;
   const minDensity = resourceDims / MIN_PIXEL_DENSITY;
   if (elementDims > minDensity) {
-    return getChecklistMessage(element.id, 'Image has low resolution');
+    return {
+      type: 'guidance',
+      elementId: element.id,
+      message: __('Image has low resolution', 'web-stories'),
+    };
   }
   return undefined;
 }
 
 export function videoElementLength(element) {
   if (element.resource.length > MAX_VIDEO_LENGTH_SECONDS) {
-    return getChecklistMessage(
-      element.id,
-      'Video is longer than 1 minute (suggest breaking video up into multiple segments)'
-    );
+    return {
+      type: 'guidance',
+      elementId: element.id,
+      message: __(
+        'Video is longer than 1 minute (suggest breaking video up into multiple segments)',
+        'web-stories'
+      ),
+    };
   }
   return undefined;
 }
