@@ -65,6 +65,26 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       ).toBeUndefined();
     });
 
+    it('should return undefined if content has no spans', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        fontSize: 19,
+        backgroundTextMode: 'FILL',
+        backgroundColor: {
+          color: {
+            r: 255,
+            g: 0,
+            b: 153,
+          },
+        },
+        content: 'HOT GOSSIP ARTICLE',
+      };
+      expect(
+        accessibilityChecks.textElementFontLowContrast(element)
+      ).toBeUndefined();
+    });
+
     it('should return undefined if not a text element', () => {
       const element = {
         id: 'elementid',
