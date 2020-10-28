@@ -23,6 +23,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import getBoundRect from '../../../utils/getBoundRect';
 
 const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
@@ -38,6 +39,8 @@ const MIN_VIDEO_WIDTH = 852;
 
 export function mediaElementSizeOnPage(element) {
   // get the intersecting area of the element's rectangle and the safe zone's rectangle
+  // use the bounding rectangle for rotated elements
+  const { startX, startY, endX, endY } = getBoundRect([element]);
   const safeZone = {
       left: 0,
       right: PAGE_WIDTH,
@@ -45,10 +48,10 @@ export function mediaElementSizeOnPage(element) {
       top: 0,
     },
     elemRect = {
-      left: element.x,
-      right: element.x + element.width,
-      bottom: element.y + element.height,
-      top: element.y,
+      left: startX,
+      right: endX,
+      bottom: endY,
+      top: startY,
     };
   const xOverlap = Math.max(
     0,
