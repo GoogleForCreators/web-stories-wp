@@ -26,8 +26,6 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
 
 const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
-const MIN_PIXEL_DENSITY = 2;
-
 const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_WIDTH = 3840;
 const MAX_VIDEO_HEIGHT = 2160;
@@ -112,10 +110,11 @@ function videoElementResolution(element) {
 }
 
 function imageElementResolution(element) {
-  const resourceDims = element.resource.height * element.resource.width;
-  const elementDims = element.height * element.width;
-  const minDensity = resourceDims / MIN_PIXEL_DENSITY;
-  if (elementDims > minDensity) {
+  const heightResTooLow =
+    element.resource.sizes.full.height < 2 * element.height;
+  const widthResTooLow = element.resource.sizes.full.width < 2 * element.width;
+
+  if (heightResTooLow || widthResTooLow) {
     return {
       type: 'guidance',
       elementId: element.id,
