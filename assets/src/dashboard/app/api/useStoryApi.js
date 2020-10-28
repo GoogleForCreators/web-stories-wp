@@ -182,7 +182,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     async (story) => {
       try {
         await dataAdapter.deleteRequest(
-          `${trailingslashit(storyApi)}${story.id}`,
+          `${trailingslashit(storyApi)}${story.id}/`,
           {
             data: story,
           }

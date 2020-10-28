@@ -89,7 +89,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${trailingslashit(stories)}${storyId}`,
+        path: `${trailingslashit(stories)}${storyId}/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -107,7 +107,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${trailingslashit(stories)}${storyId}/autosaves`,
+        path: `${trailingslashit(stories)}${storyId}/autosaves/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -187,7 +187,7 @@ function APIProvider({ children }) {
   const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
-        path: `${trailingslashit(media)}${mediaId}`,
+        path: `${trailingslashit(media)}${mediaId}/`,
         data,
         method: 'POST',
       });
@@ -204,7 +204,7 @@ function APIProvider({ children }) {
   const deleteMedia = useCallback(
     (mediaId) => {
       return apiFetch({
-        path: `${trailingslashit(media)}${mediaId}`,
+        path: `${trailingslashit(media)}${mediaId}/`,
         data: { force: true },
         method: 'DELETE',
       });
