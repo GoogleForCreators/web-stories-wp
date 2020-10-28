@@ -17,13 +17,76 @@
 /**
  * Internal dependencies
  */
-// import * as accessibilityChecks from '../accessibility';
+import * as accessibilityChecks from '../accessibility';
 
 describe('Pre-publish checklist - accessibility issues (warnings)', () => {
-  describe('textElementTextLowContrast', () => {
-    it.todo('should return a warning if text element is low contrast');
-    it.todo('should return undefined if text element is high enough contrast');
-    it.todo('should return undefined if not a text element');
+  describe('textElementFontLowContrast', () => {
+    it('should return a warning if text element is low contrast', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        fontSize: 19,
+        backgroundTextMode: 'FILL',
+        backgroundColor: {
+          color: {
+            r: 200,
+            g: 200,
+            b: 200,
+          },
+        },
+        content: '<span style="color: #fff">HOT GOSSIP ARTICLE</span>',
+      };
+      expect(
+        accessibilityChecks.textElementFontLowContrast(element)
+      ).toStrictEqual({
+        message: 'Low contrast between font and background color',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return undefined if text element is high enough contrast', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        fontSize: 19,
+        backgroundTextMode: 'FILL',
+        backgroundColor: {
+          color: {
+            r: 255,
+            g: 0,
+            b: 153,
+          },
+        },
+        content: '<span style="color: #fff">HOT GOSSIP ARTICLE</span>',
+      };
+      expect(
+        accessibilityChecks.textElementFontLowContrast(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if not a text element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+      };
+      expect(
+        accessibilityChecks.textElementFontLowContrast(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if element has no background fill', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        fontSize: 19,
+        backgroundTextMode: 'NONE',
+        content: '<span style="color: #fff">HOT GOSSIP ARTICLE</span>',
+      };
+      expect(
+        accessibilityChecks.textElementFontLowContrast(element)
+      ).toBeUndefined();
+    });
   });
 
   describe('textElementFontSizeTooSmall', () => {
