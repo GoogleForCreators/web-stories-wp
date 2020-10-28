@@ -19,7 +19,7 @@
  */
 import { visitDashboard } from '../../utils';
 
-describe('WP Sidebar Nav', () => {
+describe('Admin Menu', () => {
   it('should sync the WP nav with the dashboard nav', async () => {
     await visitDashboard();
 
