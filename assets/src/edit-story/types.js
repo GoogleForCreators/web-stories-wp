@@ -107,15 +107,35 @@ StoryPropTypes.page = PropTypes.shape({
   backgroundOverlay: PropTypes.oneOf(Object.values(OverlayType)),
 });
 
+StoryPropTypes.resourceSize = PropTypes.shape({
+  file: PropTypes.string,
+  source_url: PropTypes.string.isRequired,
+  mime_type: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+});
+
+StoryPropTypes.imageResourceSizes = PropTypes.shape({
+  full: StoryPropTypes.resourceSize,
+  large: StoryPropTypes.resourceSize,
+  web_stories_thumbnail: StoryPropTypes.resourceSize,
+});
+
+StoryPropTypes.videoResourceSizes = PropTypes.shape({
+  full: StoryPropTypes.resourceSize,
+  preview: StoryPropTypes.resourceSize,
+});
+
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
   alt: PropTypes.string,
   title: PropTypes.string,
+  sizes: StoryPropTypes.imageResourceSizes,
 });
 
 StoryPropTypes.trackResource = PropTypes.shape({
@@ -130,7 +150,7 @@ StoryPropTypes.trackResource = PropTypes.shape({
 
 StoryPropTypes.videoResource = PropTypes.shape({
   type: PropTypes.string.isRequired,
-  id: PropTypes.number,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   mimeType: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
@@ -140,12 +160,35 @@ StoryPropTypes.videoResource = PropTypes.shape({
   tracks: PropTypes.arrayOf(StoryPropTypes.trackResource),
   alt: PropTypes.string,
   title: PropTypes.string,
+  sizes: StoryPropTypes.videoResourceSizes,
+});
+
+StoryPropTypes.gifResource = PropTypes.shape({
+  type: PropTypes.string.isRequired,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  mimeType: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  alt: PropTypes.string,
+  local: PropTypes.bool,
+  sizes: PropTypes.imageResourceSizes,
+  output: PropTypes.shape({
+    mimeType: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    sizes: PropTypes.shape({
+      mp4: StoryPropTypes.videoResourceSizes,
+      webm: StoryPropTypes.videoResourceSizes,
+    }),
+  }),
 });
 
 StoryPropTypes.resource = PropTypes.oneOfType([
   StoryPropTypes.imageResource,
   StoryPropTypes.videoResource,
   StoryPropTypes.trackResource,
+  StoryPropTypes.gifResource,
 ]);
 
 const StoryLayerPropTypes = {
@@ -200,9 +243,16 @@ StoryPropTypes.elements.video = PropTypes.shape({
   loop: PropTypes.bool,
 });
 
+StoryPropTypes.elements.gif = PropTypes.shape({
+  ...StoryElementPropTypes,
+  ...StoryMediaPropTypes,
+  resource: StoryPropTypes.gifResource,
+});
+
 StoryPropTypes.elements.media = PropTypes.oneOfType([
   StoryPropTypes.elements.image,
   StoryPropTypes.elements.video,
+  StoryPropTypes.elements.gif,
 ]);
 
 export const AnimationPropType = PropTypes.shape(AnimationProps);

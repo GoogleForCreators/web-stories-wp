@@ -20,6 +20,7 @@ namespace Google\Web_Stories\Tests\Story_Renderer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Private_Access;
 use WP_Post;
 use WP_UnitTestCase;
 
@@ -27,6 +28,8 @@ use WP_UnitTestCase;
  * @coversDefaultClass \Google\Web_Stories\Story_Renderer\HTML
  */
 class HTML extends WP_UnitTestCase {
+	use Private_Access;
+
 	public function setUp() {
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -224,6 +227,43 @@ class HTML extends WP_UnitTestCase {
 
 		$this->assertContains( 'transformed="self;v=1"', $actual );
 		$this->assertContains( 'AMP optimization could not be completed', $actual );
+	}
+
+	/**
+	 * @covers ::replace_url_scheme
+	 */
+	public function test_replace_url_scheme() {
+		unset( $_SERVER['HTTPS'] );
+		$_SERVER['HTTPS'] = 'on';
+
+		$link = get_home_url( null, 'web-storires/test' );
+		$link = set_url_scheme( $link, 'http' );
+
+		$link_https = set_url_scheme( $link, 'https' );
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
+		$this->assertEquals( $result, $link_https );
+		unset( $_SERVER['HTTPS'] );
+	}
+
+
+	/**
+	 * @covers ::replace_url_scheme
+	 */
+	public function test_replace_url_scheme_different_host() {
+		unset( $_SERVER['HTTPS'] );
+		$_SERVER['HTTPS'] = 'on';
+		$link             = 'https://www.google.com';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
+		$this->assertEquals( $result, $link );
+		unset( $_SERVER['HTTPS'] );
 	}
 
 	/**

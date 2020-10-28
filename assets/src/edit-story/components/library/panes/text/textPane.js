@@ -47,7 +47,7 @@ function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextSets, showTextAndShapesSearchInput } = useFeatures();
+  const { showTextAndShapesSearchInput } = useFeatures();
 
   const insertPreset = useInsertPreset();
 
@@ -79,14 +79,17 @@ function TextPane(props) {
       <Section title={__('Presets', 'web-stories')}>
         {PRESETS.map(({ title, element }, i) => (
           <FontPreview
-            key={i}
+            key={
+              /* eslint-disable-next-line react/no-array-index-key */
+              i
+            }
             title={title}
             element={element}
             onClick={() => insertPreset(element)}
           />
         ))}
       </Section>
-      {showTextSets && paneRef.current && <TextSets paneRef={paneRef} />}
+      {paneRef.current && <TextSets paneRef={paneRef} />}
     </Pane>
   );
 }
