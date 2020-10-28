@@ -43,7 +43,7 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${trailingslashit(stories)}${storyId}`, {
+      const path = addQueryArgs(`${trailingslashit(stories)}${storyId}/`, {
         context: `edit`,
       });
       return apiFetch({ path });
