@@ -360,12 +360,12 @@ class Experiments {
 				'label'       => __( 'Status Check', 'web-stories' ),
 				'description' => __( 'Enable status check in editor.', 'web-stories' ),
 				'group'       => 'editor',
-      ],    
+			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #4805
-			 * Creation date: 2020-10-28
-			 */
+						 * Author: @swissspidy
+						 * Issue: #4805
+						 * Creation date: 2020-10-28
+						 */
 			[
 				'name'        => 'encodeStoryMarkup',
 				/* translators: %s: WAF stands for Web Application Firewall */

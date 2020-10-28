@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Traits\Decoder;
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
 use WP_REST_Server;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -40,13 +41,22 @@ use WP_Post_Type;
  * Class Status_Check
  */
 class Status_Check extends WP_REST_Controller {
-	use Decoder;
+	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+
 	/**
 	 * Constructor.
+	 *
+	 * @param Experiments $experiments Experiments instance.
 	 */
-	public function __construct() {
+	public function __construct( Experiments $experiments ) {
 		$this->namespace = 'web-stories/v1';
 		$this->rest_base = 'status-check';
+		$this->decoder   = new Decoder( $experiments );
 	}
 
 	/**
@@ -118,7 +128,7 @@ class Status_Check extends WP_REST_Controller {
 	 * @return bool
 	 */
 	public function check_html_string( $param ) {
-		$html = $this->base64_decode( $param );
+		$html = $this->decoder->base64_decode( $param );
 		return ( wp_strip_all_tags( $html ) !== $html );
 	}
 }
