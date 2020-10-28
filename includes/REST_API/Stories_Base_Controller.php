@@ -57,13 +57,12 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string      $post_type Post type.
-	 * @param Experiments $experiments Experiments instance.
+	 * @param string $post_type Post type.
 	 */
-	public function __construct( $post_type, Experiments $experiments ) {
+	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
 		$this->namespace = 'web-stories/v1';
-		$this->decoder   = new Decoder( $experiments );
+		$this->decoder   = new Decoder( new Experiments() );
 	}
 
 	/**

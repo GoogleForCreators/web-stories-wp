@@ -51,17 +51,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	];
 
 	/**
-	 * Constructor.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param string $post_type Post type.
-	 */
-	public function __construct( $post_type ) {
-		parent::__construct( $post_type, new Experiments() );
-	}
-
-	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
 	 * @since 1.0.0
