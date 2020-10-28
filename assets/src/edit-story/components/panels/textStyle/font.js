@@ -44,8 +44,10 @@ import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
 import { Option, Selected } from '../../form/dropDown2/list/styled';
+import { useCanvas } from '../../canvas';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
+import getClosestFontWeight from './getClosestFontWeight';
 
 const MIN_MAX = {
   FONT_SIZE: {
@@ -69,11 +71,14 @@ function FontControls({ selectedElements, pushUpdate }) {
     ({ font }) => font?.family
   );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
-
   const {
     textInfo: { fontWeight, isItalic },
-    handlers: { handleSelectFontWeight },
+    handlers: { handleSelectFontWeight, handleResetFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
+
+  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
+    clearEditing,
+  }));
 
   const {
     fonts,
@@ -102,6 +107,16 @@ function FontControls({ selectedElements, pushUpdate }) {
       fonts,
     })
   );
+
+  const resetFontWeight = useCallback(
+    async ({ weights }) => {
+      const newFontWeight = getClosestFontWeight(400, weights);
+      await clearEditing();
+      handleResetFontWeight(newFontWeight);
+    },
+    [clearEditing, handleResetFontWeight]
+  );
+
   const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
     getFontByName,
     fontFamily,
@@ -134,6 +149,7 @@ function FontControls({ selectedElements, pushUpdate }) {
       );
       addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
+      resetFontWeight(fontObj);
     },
     [
       addRecentFont,
@@ -142,6 +158,7 @@ function FontControls({ selectedElements, pushUpdate }) {
       fonts,
       maybeEnqueueFontStyle,
       pushUpdate,
+      resetFontWeight,
       selectedElements,
     ]
   );
@@ -250,6 +267,7 @@ function FontControls({ selectedElements, pushUpdate }) {
         )}
         <BoxedNumeric
           aria-label={__('Font size', 'web-stories')}
+          float
           value={fontSize}
           flexBasis={58}
           textCenter

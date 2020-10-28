@@ -28,6 +28,7 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\KSES;
 use Google\Web_Stories\Media;
+use Google\Web_Stories\Traits\Decoder;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -41,6 +42,8 @@ use WP_REST_Response;
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
+	use Decoder;
+
 	/**
 	 * Constructor.
 	 *
@@ -55,7 +58,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		$this->namespace = 'web-stories/v1';
 	}
 	/**
-	 * Prepares a single template for create or update. Add post_content_filtered field to save/insert.
+	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
 	 * @since 1.0.0
 	 *
@@ -64,10 +67,10 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return stdClass|WP_Error Post object or WP_Error.
 	 */
 	protected function prepare_item_for_database( $request ) {
-		$prepared_template = parent::prepare_item_for_database( $request );
+		$prepared_post = parent::prepare_item_for_database( $request );
 
-		if ( is_wp_error( $prepared_template ) ) {
-			return $prepared_template;
+		if ( is_wp_error( $prepared_post ) ) {
+			return $prepared_post;
 		}
 		// Ensure that content and story_data are updated together.
 		if (
@@ -77,12 +80,16 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
 		}
 
-		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
-		if ( isset( $request['story_data'] ) ) {
-			$prepared_template->post_content_filtered = wp_json_encode( $request['story_data'] );
+		if ( isset( $request['content'] ) ) {
+			$prepared_post->post_content = $this->base64_decode( $prepared_post->post_content );
 		}
 
-		return $prepared_template;
+		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
+		if ( isset( $request['story_data'] ) ) {
+			$prepared_post->post_content_filtered = wp_json_encode( $request['story_data'] );
+		}
+
+		return $prepared_post;
 	}
 
 	/**

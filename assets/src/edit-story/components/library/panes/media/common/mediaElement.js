@@ -122,11 +122,6 @@ const MediaElement = ({
     alt,
   } = resource;
 
-  // Treat GIFs as images for now.
-  if (resource.type == 'gif') {
-    resource.type = 'image';
-  }
-
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
   const width = requestedWidth || requestedHeight / oRatio;
