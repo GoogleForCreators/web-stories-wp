@@ -282,7 +282,7 @@ OptionList.propTypes = {
   primaryOptions: PropTypes.array.isRequired,
   primaryLabel: PropTypes.string,
   priorityOptions: PropTypes.array,
-  priorityLabel: PropTypes.array,
+  priorityLabel: PropTypes.string,
   renderer: PropTypes.func,
   onObserve: PropTypes.func,
 };
