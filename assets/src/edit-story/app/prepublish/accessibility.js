@@ -119,7 +119,23 @@ export function textElementFontSizeTooSmall(element) {
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function imageElementLowImageResolution() {
+export function imageElementLowResolution(element) {
+  if (element.type !== 'image') {
+    return undefined;
+  }
+
+  const scaleMultiplier = element.scale / 100;
+  if (
+    element.width * scaleMultiplier > element.resource.width ||
+    element.height * scaleMultiplier > element.resource.height
+  ) {
+    return {
+      message: __('Very low image resolution', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
