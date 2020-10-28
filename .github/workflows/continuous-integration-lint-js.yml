@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm ci
-          npx patch-package
+          npx patch-package || echo "Running npx patch-package failed"
         env:
           CI: true
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
