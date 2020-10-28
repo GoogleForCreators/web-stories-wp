@@ -193,8 +193,8 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/wp/v2/settings',
-			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
+			'/wp/v2/settings/',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
 		/**
@@ -212,7 +212,7 @@ class Dashboard {
 
 		$preload_data = array_reduce(
 			$preload_paths,
-			'rest_preload_api_request',
+			'\Google\Web_Stories\rest_preload_api_request',
 			[]
 		);
 
@@ -326,12 +326,12 @@ class Dashboard {
 				'version'            => WEBSTORIES_VERSION,
 				'encodeMarkup'       => $this->decoder->supports_decoding(),
 				'api'                => [
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/wp/v2/users/me',
-					'users'       => '/wp/v2/users',
-					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/wp/v2/settings',
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'currentUser' => '/wp/v2/users/me/',
+					'users'       => '/wp/v2/users/',
+					'templates'   => '/web-stories/v1/web-story-template/',
+					'settings'    => '/wp/v2/settings/',
 				],
 				'maxUpload'          => $max_upload_size,
 				'maxUploadFormatted' => size_format( $max_upload_size ),

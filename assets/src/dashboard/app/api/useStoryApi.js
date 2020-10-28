@@ -30,6 +30,7 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
+import trailingslashit from '../../../edit-story/utils/trailingslashit';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
@@ -141,7 +142,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     async (story) => {
       try {
         const path = queryString.stringifyUrl({
-          url: `${storyApi}/${story.id}`,
+          url: `${trailingslashit(storyApi)}${story.id}/`,
           query: {
             _embed: 'author',
           },
@@ -156,6 +157,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         const response = await dataAdapter.post(path, {
           data,
         });
+
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
@@ -179,9 +181,12 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`, {
-          data: story,
-        });
+        await dataAdapter.deleteRequest(
+          `${trailingslashit(storyApi)}${story.id}`,
+          {
+            data: story,
+          }
+        );
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },

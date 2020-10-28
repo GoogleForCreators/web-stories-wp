@@ -29,6 +29,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
+import trailingslashit from '../../utils/trailingslashit';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
@@ -42,7 +43,9 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      const path = addQueryArgs(`${trailingslashit(stories)}${storyId}`, {
+        context: `edit`,
+      });
       return apiFetch({ path });
     },
     [stories]
@@ -86,7 +89,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}`,
+        path: `${trailingslashit(stories)}${storyId}`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -104,7 +107,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}/autosaves`,
+        path: `${trailingslashit(stories)}${storyId}/autosaves`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -184,7 +187,7 @@ function APIProvider({ children }) {
   const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: `${trailingslashit(media)}${mediaId}`,
         data,
         method: 'POST',
       });
@@ -201,7 +204,7 @@ function APIProvider({ children }) {
   const deleteMedia = useCallback(
     (mediaId) => {
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: `${trailingslashit(media)}${mediaId}`,
         data: { force: true },
         method: 'DELETE',
       });
