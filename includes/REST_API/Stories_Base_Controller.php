@@ -26,9 +26,10 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\KSES;
 use Google\Web_Stories\Media;
-use Google\Web_Stories\Traits\Decoder;
 use stdClass;
 use WP_Error;
 use WP_Post;
@@ -42,8 +43,6 @@ use WP_REST_Response;
  * Override the WP_REST_Posts_Controller class to add `post_content_filtered` to REST request.
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
-	use Decoder;
-
 	/**
 	 * Constructor.
 	 *
@@ -57,6 +56,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		parent::__construct( $post_type );
 		$this->namespace = 'web-stories/v1';
 	}
+
 	/**
 	 * Prepares a single story for create or update. Add post_content_filtered field to save/insert.
 	 *
@@ -72,6 +72,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		if ( is_wp_error( $prepared_post ) ) {
 			return $prepared_post;
 		}
+
 		// Ensure that content and story_data are updated together.
 		if (
 			( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
@@ -81,7 +82,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( isset( $request['content'] ) ) {
-			$prepared_post->post_content = $this->base64_decode( $prepared_post->post_content );
+			$prepared_post->post_content = ( new Decoder( new Experiments() ) )->base64_decode( $prepared_post->post_content );
 		}
 
 		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.
