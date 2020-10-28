@@ -55,7 +55,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * Override the namespace.
 	 *
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 *
 	 * @param string      $post_type Post type.
 	 * @param Experiments $experiments Experiments instance.
