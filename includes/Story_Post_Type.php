@@ -90,6 +90,13 @@ class Story_Post_Type {
 	private $experiments;
 
 	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -98,6 +105,7 @@ class Story_Post_Type {
 	 */
 	public function __construct( Experiments $experiments ) {
 		$this->experiments = $experiments;
+		$this->decoder     = new Decoder( $this->experiments );
 	}
 
 	/**
@@ -716,7 +724,7 @@ class Story_Post_Type {
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
-				'encodeMarkup'     => ( new Decoder( $this->experiments ) )->supports_decoding(),
+				'encodeMarkup'     => $this->decoder->supports_decoding(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
