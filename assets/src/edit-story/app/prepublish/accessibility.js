@@ -96,7 +96,19 @@ export function textElementFontLowContrast(element) {
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function textElementFontSizeTooSmall() {
+export function textElementFontSizeTooSmall(element) {
+  if (element.type !== 'text') {
+    return undefined;
+  }
+
+  if (element.fontSize && element.fontSize < 12) {
+    return {
+      message: __('Font size too small', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
