@@ -181,6 +181,9 @@ class Story_Post_Type {
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
+		// Custom Meta Boxes Support.
+		add_action( 'add_meta_boxes_' . self::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ] );
+
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
 		// Select the single-web-story.php template for Stories.
@@ -611,6 +614,106 @@ class Story_Post_Type {
 	}
 
 	/**
+	 * Returns list of custom meta boxes per location.
+	 *
+	 * Used to disable empty meta boxes in the editor.
+	 *
+	 * @see the_block_editor_meta_boxes()
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return array List of meta boxes per location.
+	 */
+	public function get_meta_boxes_per_location() {
+		global $wp_meta_boxes;
+
+		$screen = get_current_screen();
+
+		if ( ! $screen instanceof WP_Screen ) {
+			return [];
+		}
+
+		/* This filter is documented in wp-admin/includes/post.php */
+		$_wp_meta_boxes = apply_filters( 'filter_block_editor_meta_boxes', $wp_meta_boxes );
+
+		$priorities = [ 'high', 'sorted', 'core', 'default', 'low' ];
+
+		$meta_boxes_per_location = [];
+		foreach ( [ 'normal', 'advanced' ] as $context ) {
+			$meta_boxes_per_location[ $context ] = [];
+
+			if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ] ) ) {
+				continue;
+			}
+
+			foreach ( $priorities as $priority ) {
+				if ( ! isset( $_wp_meta_boxes[ $screen->id ][ $context ][ $priority ] ) ) {
+					continue;
+				}
+
+				$meta_boxes = (array) $_wp_meta_boxes[ $screen->id ][ $context ][ $priority ];
+				foreach ( $meta_boxes as $meta_box ) {
+					if ( false === $meta_box || ! $meta_box['title'] ) {
+						continue;
+					}
+
+					$meta_boxes_per_location[ $context ][] = [
+						'id'    => $meta_box['id'],
+						'title' => $meta_box['title'],
+					];
+				}
+			}
+		}
+
+		return $meta_boxes_per_location;
+	}
+
+	/**
+	 * Removes all meta boxes with '__back_compat_meta_box' set to 'true'.
+	 *
+	 * This removes things like the post author meta box, as this feature is
+	 * already included in the editor.
+	 *
+	 * Mimics what do_meta_boxes() does for the block editor.
+	 *
+	 * @see do_meta_boxes()
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return void
+	 */
+	public function remove_meta_boxes() {
+		global $wp_meta_boxes;
+
+		$screen = get_current_screen();
+
+		if ( ! $screen instanceof WP_Screen ) {
+			return;
+		}
+
+		// We don't currently support the 'Custom Fields' meta box.
+		remove_meta_box( 'postcustom', $screen, $screen->id );
+
+		foreach ( [ 'normal', 'advanced' ] as $context ) {
+			if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ] ) ) {
+				continue;
+			}
+
+			foreach ( [ 'high', 'sorted', 'core', 'default', 'low' ] as $priority ) {
+				foreach ( (array) $wp_meta_boxes[ $screen->id ][ $context ][ $priority ] as $meta_box ) {
+					if ( false === $meta_box || ! $meta_box['title'] ) {
+						continue;
+					}
+
+					if ( is_array( $meta_box['args'] ) && isset( $meta_box['args']['__back_compat_meta_box'] ) && $meta_box['args']['__back_compat_meta_box'] ) {
+						remove_meta_box( $meta_box['id'], $screen, $context );
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 *
 	 * Enqueue scripts for the element editor.
 	 *
@@ -697,8 +800,20 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
+		// Get admin url for handling meta boxes.
+		$meta_box_url = admin_url( 'post.php' );
+		$meta_box_url = add_query_arg(
+			[
+				'post'                  => $story_id,
+				'action'                => 'edit',
+				'meta-box-loader'       => true,
+				'meta-box-loader-nonce' => wp_create_nonce( 'meta-box-loader' ),
+			],
+			$meta_box_url
+		);
+
 		$settings = [
-			'id'         => 'edit-story',
+			'id'         => 'web-stories-editor',
 			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
@@ -715,16 +830,18 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'users'   => '/wp/v2/users',
-					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'   => '/web-stories/v1/media',
-					'link'    => '/web-stories/v1/link',
+					'users'     => '/wp/v2/users',
+					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'     => '/web-stories/v1/media',
+					'link'      => '/web-stories/v1/link',
+					'metaboxes' => $meta_box_url,
 				],
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 				'encodeMarkup'     => $this->decoder->supports_decoding(),
+				'metaBoxes'        => $this->get_meta_boxes_per_location(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

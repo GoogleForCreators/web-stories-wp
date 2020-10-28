@@ -32,6 +32,7 @@ import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
+import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
 
 function StoryProvider({ storyId, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
@@ -139,6 +140,13 @@ function StoryProvider({ storyId, children }) {
     story,
   });
 
+  // Legacy Meta Boxes support.
+  const { isSavingMetaBoxes } = useSaveMetaBoxes({
+    story,
+    isSaving,
+    isAutoSaving,
+  });
+
   const state = {
     state: {
       pages,
@@ -154,7 +162,7 @@ function StoryProvider({ storyId, children }) {
       animationState,
       capabilities,
       meta: {
-        isSaving: isSaving || isAutoSaving,
+        isSaving: isSaving || isAutoSaving || isSavingMetaBoxes,
         isFreshlyPublished,
       },
     },

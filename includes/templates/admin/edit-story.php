@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-global $post_type, $post_type_object, $post;
+global $post_type, $post_type_object, $post, $wp_meta_boxes;
 
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 
@@ -71,10 +71,30 @@ wp_add_inline_script(
 	'after'
 );
 
+// In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
+require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
+register_and_do_post_meta_boxes( $post );
+
 require_once ABSPATH . 'wp-admin/admin-header.php';
-require_once __DIR__ . '/error-no-js.php';
+
+// TODO: Use custom version of the_block_editor_meta_boxes() without the block editor specifics?
 ?>
 
-<div id="edit-story" class="hide-if-no-js">
-	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+<div class="web-stories-wp">
+	<h1 class="screen-reader-text hide-if-no-js"><?php esc_html_e( 'Web Stories', 'web-stories' ); ?></h1>
+	<div id="web-stories-editor" class="web-stories-editor-app-container hide-if-no-js">
+		<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+	</div>
+
+	<div id="metaboxes" class="hidden">
+		<?php the_block_editor_meta_boxes(); ?>
+	</div>
+
+	<?php // JavaScript is disabled. ?>
+	<div class="wrap hide-if-js web-stories-wp-no-js">
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Web Stories', 'web-stories' ); ?></h1>
+		<div class="notice notice-error notice-alt">
+			<p><?php esc_html_e( 'Web Stories for WordPress requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+		</div>
+	</div>
 </div>

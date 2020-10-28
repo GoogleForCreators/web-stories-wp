@@ -36,7 +36,7 @@ import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users },
+    api: { stories, media, link, users, metaboxes },
     encodeMarkup,
   } = useConfig();
 
@@ -230,6 +230,29 @@ function APIProvider({ children }) {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
+  const saveMetaBoxes = useCallback(
+    (story, formData) => {
+      // Additional data needed for backward compatibility.
+      // If we do not provide this data, the post will be overridden with the default values.
+      const additionalData = [
+        story.comment_status ? ['comment_status', story.comment_status] : false,
+        story.ping_status ? ['ping_status', story.ping_status] : false,
+        story.sticky ? ['sticky', story.sticky] : false,
+        story.author ? ['post_author', story.author] : false,
+      ].filter(Boolean);
+
+      additionalData.forEach(([key, value]) => formData.append(key, value));
+
+      return apiFetch({
+        url: metaboxes,
+        method: 'POST',
+        body: formData,
+        parse: false,
+      });
+    },
+    [metaboxes]
+  );
+
   const state = {
     actions: {
       autoSaveById,
@@ -241,6 +264,7 @@ function APIProvider({ children }) {
       uploadMedia,
       updateMedia,
       deleteMedia,
+      saveMetaBoxes,
     },
   };
 

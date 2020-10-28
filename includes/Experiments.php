@@ -361,6 +361,17 @@ class Experiments {
 				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
 				'group'       => 'general',
 			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #3134
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'customMetaBoxes',
+				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
+				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
