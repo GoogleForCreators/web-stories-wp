@@ -87,6 +87,7 @@ function EditorSettings() {
   const {
     capabilities: {
       canUploadFiles,
+      canInstallPlugins,
       canManageSettings,
       siteKitPluginStatus,
     } = {},
@@ -321,6 +322,7 @@ function EditorSettings() {
                 handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
                 siteKitPluginStatus={siteKitPluginStatus}
+                canInstallPlugins={canInstallPlugins}
               />
             )}
             {canManageSettings && (

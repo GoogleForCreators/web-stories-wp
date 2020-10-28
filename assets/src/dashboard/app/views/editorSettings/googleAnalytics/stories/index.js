@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { select, text } from '@storybook/addon-knobs';
+import { boolean, select, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -40,6 +40,7 @@ export const _default = () => {
         'active',
         false,
       ])}
+      canInstallPlugins={boolean('canInstallPlugins', true)}
     />
   );
 };

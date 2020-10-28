@@ -369,6 +369,7 @@ class Dashboard {
 				'maxUploadFormatted' => size_format( $max_upload_size ),
 				'capabilities'       => [
 					'canManageSettings'   => current_user_can( 'manage_options' ),
+					'canInstallPlugins'   => current_user_can( 'install_plugins' ),
 					'canUploadFiles'      => current_user_can( 'upload_files' ),
 					'siteKitPluginStatus' => $this->determine_site_kit_plugin_status(),
 				],

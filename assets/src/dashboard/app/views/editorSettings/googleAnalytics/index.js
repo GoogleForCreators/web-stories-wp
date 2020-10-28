@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -65,17 +65,17 @@ export const TEXT = {
     'web-stories'
   ),
   SITE_KIT_IN_USE: __(
-    "Since Google Analytics is already enabled through<a>Site Kit by Google</a>, there's no need to do anything else to configure your tracking ID for Web Stories.",
+    'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
     'web-stories'
   ),
+  SITE_KIT_ADMIN_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/', // TODO get a direct link to WP admin (it's a modal)
   SITE_KIT_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/',
-  SITE_KIT_INSTRUCTIONS_LINK:
-    'https://sitekit.withgoogle.com/documentation/install/',
 };
 
 function GoogleAnalyticsSettings({
   googleAnalyticsId,
   handleUpdate,
+  canInstallPlugins,
   siteKitPluginStatus,
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
@@ -116,6 +116,14 @@ function GoogleAnalyticsSettings({
     [handleOnSave]
   );
 
+  const siteKitLink = useMemo(
+    () =>
+      canInstallPlugins
+        ? TEXT.SITE_KIT_ADMIN_PLUGIN_LINK
+        : TEXT.SITE_KIT_PLUGIN_LINK,
+    [canInstallPlugins]
+  );
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
@@ -126,7 +134,7 @@ function GoogleAnalyticsSettings({
           {!siteKitPluginStatus && (
             <TranslateWithMarkup
               mapping={{
-                a: <InlineLink href={TEXT.SITE_KIT_INSTRUCTIONS_LINK} />,
+                a: <InlineLink href={siteKitLink} />,
               }}
             >
               {TEXT.SITE_KIT_NOT_INSTALLED}
@@ -135,22 +143,14 @@ function GoogleAnalyticsSettings({
           {siteKitPluginStatus === 'inactive' && (
             <TranslateWithMarkup
               mapping={{
-                a: <InlineLink href={TEXT.SITE_KIT_INSTRUCTIONS_LINK} />,
+                a: <InlineLink href={siteKitLink} />,
               }}
             >
               {TEXT.SITE_KIT_INSTALLED}
             </TranslateWithMarkup>
           )}
 
-          {siteKitPluginStatus === 'active' && (
-            <TranslateWithMarkup
-              mapping={{
-                a: <InlineLink href={TEXT.SITE_KIT_INSTRUCTIONS_LINK} />,
-              }}
-            >
-              {TEXT.SITE_KIT_IN_USE}
-            </TranslateWithMarkup>
-          )}
+          {siteKitPluginStatus === 'active' && TEXT.SITE_KIT_IN_USE}
         </HelperText>
       </div>
       <FormContainer>
@@ -190,6 +190,7 @@ GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
   siteKitPluginStatus: PropTypes.oneOf(['inactive', 'active', false]),
+  canInstallPlugins: PropTypes.bool,
 };
 
 export default GoogleAnalyticsSettings;
