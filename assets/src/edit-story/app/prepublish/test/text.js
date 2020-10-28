@@ -21,7 +21,7 @@ import { pageTooMuchText, storyTooLittleText } from '../text';
 
 describe('Pre-publish checklist - text guidelines', () => {
   describe('pageTooMuchText', () => {
-    it('should return an guidance if too much text', () => {
+    it('should return a guidance if too much text', () => {
       const page = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2aeaaaa',
         elements: [
@@ -46,7 +46,7 @@ describe('Pre-publish checklist - text guidelines', () => {
       });
     });
 
-    it('should return null if under the text limit', () => {
+    it('should return undefined if under the text limit', () => {
       const page = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2aeaaaa',
         elements: [
@@ -69,7 +69,7 @@ describe('Pre-publish checklist - text guidelines', () => {
   });
 
   describe('storyTooLittleText', () => {
-    it('should return an guidance if too little text', () => {
+    it('should return a guidance if too little text', () => {
       const story = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2astory',
         pages: [
@@ -104,7 +104,7 @@ describe('Pre-publish checklist - text guidelines', () => {
       });
     });
 
-    it('should return null if there is enough text', () => {
+    it('should return undefined if there is enough text', () => {
       const story = {
         id: 'd886c844-5b5c-4b27-a9c3-332df2astory',
         pages: [
