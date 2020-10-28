@@ -105,6 +105,8 @@ class KSES {
 	 * @see safecss_filter_attr()
 	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
 	 *
+	 * @SuppressWarnings(PHPMD)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $css A string of CSS rules.
@@ -398,6 +400,8 @@ class KSES {
 
 	/**
 	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
 	 *

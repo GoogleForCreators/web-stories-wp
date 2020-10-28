@@ -32,6 +32,7 @@ use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
+use WP_REST_Posts_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
@@ -83,7 +84,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller {
 		}
 
 		if ( ! $parent_controller ) {
-			$parent_controller = new \WP_REST_Posts_Controller( $parent_post_type );
+			$parent_controller = new WP_REST_Posts_Controller( $parent_post_type );
 		}
 
 		$this->parent_controller = $parent_controller;
