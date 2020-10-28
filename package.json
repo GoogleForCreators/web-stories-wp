@@ -206,7 +206,7 @@
     "lint:php:fix": "composer phpcbf",
     "lint:phpstan": "composer phpstan",
     "lint:md": "markdownlint .",
-    "postinstall": "patch-package",
+    "postinstall": "# patch-package - temporarily disabled. blocked by https://github.com/npm/cli/issues/1905",
     "storybook": "start-storybook --quiet",
     "storybook:build": "build-storybook -c .storybook -o build/storybook --quiet",
     "test": "npm-run-all --parallel test:*",
