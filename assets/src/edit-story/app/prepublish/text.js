@@ -15,14 +15,19 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import stripHTML from '../../utils/stripHTML';
 
-const maxPageCharacterCount = 200;
-const minStoryCharacterCount = 100;
+const MAX_PAGE_CHARACTER_COUNT = 200;
+const MIN_STORY_CHARACTER_COUNT = 100;
 
-const characterCountForPage = (page) => {
+function characterCountForPage(page) {
   let characterCount = 0;
   page.elements.forEach((element) => {
     if (element.type === 'text') {
@@ -30,35 +35,35 @@ const characterCountForPage = (page) => {
     }
   });
   return characterCount;
-};
+}
 
-export const pageTooMuchText = (page) => {
+export function pageTooMuchText(page) {
   const characterCount = characterCountForPage(page);
 
-  if (characterCount > maxPageCharacterCount) {
+  if (characterCount > MAX_PAGE_CHARACTER_COUNT) {
     return {
-      message: 'Too much text on page',
+      message: __('Too much text on page', 'web-stories'),
       pageId: page.id,
       type: 'guidance',
     };
   }
 
-  return null;
-};
+  return undefined;
+}
 
-export const storyTooLittleText = (story) => {
+export function storyTooLittleText(story) {
   let characterCount = 0;
   story.pages.forEach((page) => {
     characterCount += characterCountForPage(page);
   });
 
-  if (characterCount < minStoryCharacterCount) {
+  if (characterCount < MIN_STORY_CHARACTER_COUNT) {
     return {
-      message: 'Too little text in story',
+      message: __('Too little text in story', 'web-stories'),
       storyId: story.id,
       type: 'guidance',
     };
   }
 
-  return null;
-};
+  return undefined;
+}

@@ -19,7 +19,7 @@
  */
 import { pageTooMuchText, storyTooLittleText } from '../text';
 
-describe('text', () => {
+describe('Pre-publish checklist - text guidelines', () => {
   describe('pageTooMuchText', () => {
     it('should return an guidance if too much text', () => {
       const page = {
@@ -64,7 +64,7 @@ describe('text', () => {
           },
         ],
       };
-      expect(pageTooMuchText(page)).toBeNull();
+      expect(pageTooMuchText(page)).toBeUndefined();
     });
   });
 
@@ -132,7 +132,7 @@ describe('text', () => {
           },
         ],
       };
-      expect(storyTooLittleText(story)).toBeNull();
+      expect(storyTooLittleText(story)).toBeUndefined();
     });
   });
 });
