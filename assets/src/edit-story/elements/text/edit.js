@@ -360,6 +360,7 @@ function TextEdit({
           ref={editorRef}
           content={content}
           onChange={handleUpdate}
+          onBlur={updateContent}
         />
       </EditTextBox>
     </Wrapper>

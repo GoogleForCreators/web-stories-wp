@@ -28,7 +28,7 @@ import useUnmount from '../../utils/useUnmount';
 import useRichText from './useRichText';
 import customInlineDisplay from './customInlineDisplay';
 
-function RichTextEditor({ content, onChange }, ref) {
+function RichTextEditor({ content, onChange, onBlur }, ref) {
   const editorRef = useRef(null);
   const {
     state: { editorState },
@@ -88,6 +88,7 @@ function RichTextEditor({ content, onChange }, ref) {
       handleKeyCommand={handleKeyCommand}
       handlePastedText={handlePastedText}
       customStyleFn={customInlineDisplay}
+      onBlur={onBlur}
       stripPastedStyles
     />
   );
@@ -98,6 +99,7 @@ const RichTextEditorWithRef = forwardRef(RichTextEditor);
 RichTextEditor.propTypes = {
   content: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func,
 };
 
 export default RichTextEditorWithRef;
