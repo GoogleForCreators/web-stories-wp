@@ -349,6 +349,18 @@ class Experiments {
 				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #4805
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'encodeStoryMarkup',
+				/* translators: %s: WAF stands for Web Application Firewall */
+				'label'       => __( 'WAF Compatibility', 'web-stories' ),
+				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 
