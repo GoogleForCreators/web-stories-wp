@@ -65,12 +65,18 @@ function RouterProvider({ children, ...props }) {
     const WPSubmenuItems = document.querySelectorAll(
       '#menu-posts-web-story ul.wp-submenu li'
     );
-    WPSubmenuItems?.forEach((el) => el.classList.remove('current'));
-    WPSubmenuItems?.forEach(
-      (el) =>
-        Boolean(el.querySelector(`a[href$="#${currentPath}"]`)) &&
-        el.classList.add('current')
-    );
+    WPSubmenuItems?.forEach((el) => {
+      el.classList.remove('current');
+      el.querySelector('a')?.classList.remove('current');
+      el.querySelector('a')?.removeAttribute('aria-current');
+    });
+    WPSubmenuItems?.forEach((el) => {
+      if (el.querySelector(`a[href$="#${currentPath}"]`)) {
+        el.classList.add('current');
+        el.querySelector('a')?.classList.add('current');
+        el.querySelector('a')?.setAttribute('aria-current', 'page');
+      }
+    });
   }, [currentPath]);
 
   const value = useMemo(
