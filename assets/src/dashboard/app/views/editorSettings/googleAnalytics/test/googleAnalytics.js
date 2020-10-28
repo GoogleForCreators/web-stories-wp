@@ -49,6 +49,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
 
     const input = getByRole('textbox');
     expect(input).toBeDefined();
+    expect(input).toBeEnabled();
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
@@ -64,6 +65,32 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
 
     const label = getByLabelText(TEXT.ARIA_LABEL);
     expect(label).toBeInTheDocument();
+  });
+
+  it('should not allow the input to be active when siteKitPluginStatus is "inactive"', function () {
+    const { getByRole } = renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdate={mockUpdate}
+        siteKitPluginStatus="inactive"
+      />
+    );
+
+    const input = getByRole('textbox');
+    expect(input).toBeDisabled();
+  });
+
+  it('should not allow the input to be active when siteKitPluginStatus is "active"', function () {
+    const { getByRole } = renderWithProviders(
+      <GoogleAnalyticsSettings
+        googleAnalyticsId={googleAnalyticsId}
+        handleUpdate={mockUpdate}
+        siteKitPluginStatus="active"
+      />
+    );
+
+    const input = getByRole('textbox');
+    expect(input).toBeDisabled();
   });
 
   it('should call mockUpdate when enter is keyed on input', function () {
