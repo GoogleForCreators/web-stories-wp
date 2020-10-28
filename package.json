@@ -207,6 +207,7 @@
     "lint:php": "composer phpcs",
     "lint:php:fix": "composer phpcbf",
     "lint:phpstan": "composer phpstan",
+    "lint:phpmd": "composer phpmd",
     "lint:md": "markdownlint .",
     "postinstall": "npx patch-package",
     "storybook": "start-storybook --quiet",

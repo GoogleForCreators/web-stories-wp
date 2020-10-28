@@ -96,7 +96,7 @@
     ],
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",
-    "phpmd": "phpmd includes/ text phpmd.xml",
+    "phpmd": "phpmd . text phpmd.xml",
     "phpstan": "phpstan analyse --memory-limit=512M",
     "prefix-dependencies": [
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
