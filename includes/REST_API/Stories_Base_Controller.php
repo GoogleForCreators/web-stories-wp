@@ -44,17 +44,26 @@ use WP_REST_Response;
  */
 class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
 	 *
-	 * @since 1.0.0
+	 * @since 1.1.0
 	 *
-	 * @param string $post_type Post type.
+	 * @param string      $post_type Post type.
+	 * @param Experiments $experiments Experiments instance.
 	 */
-	public function __construct( $post_type ) {
+	public function __construct( $post_type, Experiments $experiments ) {
 		parent::__construct( $post_type );
-		$this->namespace = 'web-stories/v1';
+		$this->namespace   = 'web-stories/v1';
+		$this->experiments = $experiments;
 	}
 
 	/**
@@ -82,7 +91,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( isset( $request['content'] ) ) {
-			$prepared_post->post_content = ( new Decoder( new Experiments() ) )->base64_decode( $prepared_post->post_content );
+			$prepared_post->post_content = ( new Decoder( $this->experiments ) )->base64_decode( $prepared_post->post_content );
 		}
 
 		// If the request is updating the content as well, let's make sure the JSON representation of the story is saved, too.

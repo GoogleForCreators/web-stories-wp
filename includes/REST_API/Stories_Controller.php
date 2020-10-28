@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Publisher;
@@ -48,6 +49,17 @@ class Stories_Controller extends Stories_Base_Controller {
 		'colors'     => [],
 		'textStyles' => [],
 	];
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param string $post_type Post type.
+	 */
+	public function __construct( $post_type ) {
+		parent::__construct( $post_type, new Experiments() );
+	}
 
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
