@@ -37,6 +37,12 @@ function characterCountForPage(page) {
   return characterCount;
 }
 
+/**
+ * Check page for too much text
+ *
+ * @param  {Object} page Page object
+ * @return {Object} Prepublish check response
+ */
 export function pageTooMuchText(page) {
   const characterCount = characterCountForPage(page);
 
@@ -51,6 +57,13 @@ export function pageTooMuchText(page) {
   return undefined;
 }
 
+/**
+ * Check story for too little text
+ *
+ * @param {Object} page Page object
+ * @param story
+ * @return {Object} Prepublish check response
+ */
 export function storyTooLittleText(story) {
   let characterCount = 0;
   story.pages.forEach((page) => {
