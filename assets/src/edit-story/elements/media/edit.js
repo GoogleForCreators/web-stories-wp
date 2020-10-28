@@ -116,7 +116,7 @@ function MediaEdit({ element, box }) {
     [id, updateElementById]
   );
 
-  const isImage = 'image' === type;
+  const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
 
   const mediaProps = getMediaSizePositionProps(

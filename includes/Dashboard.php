@@ -35,8 +35,8 @@ use WP_Screen;
  * Dashboard class.
  */
 class Dashboard {
-
 	use Assets;
+
 	/**
 	 * Script handle.
 	 *
@@ -59,6 +59,13 @@ class Dashboard {
 	private $experiments;
 
 	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -67,6 +74,7 @@ class Dashboard {
 	 */
 	public function __construct( Experiments $experiments ) {
 		$this->experiments = $experiments;
+		$this->decoder     = new Decoder( $this->experiments );
 	}
 
 	/**
@@ -126,7 +134,7 @@ class Dashboard {
 			__( 'Explore Templates', 'web-stories' ),
 			__( 'Explore Templates', 'web-stories' ),
 			'edit_web-stories',
-			'stories-dashboard-explore',
+			'stories-dashboard#/templates-gallery',
 			'__return_null',
 			1
 		);
@@ -136,7 +144,7 @@ class Dashboard {
 			__( 'Settings', 'web-stories' ),
 			__( 'Settings', 'web-stories' ),
 			'edit_web-stories',
-			'stories-dashboard-settings',
+			'stories-dashboard#/editor-settings',
 			'__return_null',
 			20
 		);
@@ -166,33 +174,6 @@ class Dashboard {
 					[
 						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
 						'page'      => 'stories-dashboard',
-					],
-					admin_url( 'edit.php' )
-				)
-			);
-			exit;
-		}
-
-
-		if ( 'edit.php' === $pagenow && 'stories-dashboard-settings' === $page ) {
-			wp_safe_redirect(
-				add_query_arg(
-					[
-						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
-						'page'      => 'stories-dashboard#/editor-settings',
-					],
-					admin_url( 'edit.php' )
-				)
-			);
-			exit;
-		}
-
-		if ( 'edit.php' === $pagenow && 'stories-dashboard-explore' === $page ) {
-			wp_safe_redirect(
-				add_query_arg(
-					[
-						'post_type' => Story_Post_Type::POST_TYPE_SLUG,
-						'page'      => 'stories-dashboard#/templates-gallery',
 					],
 					admin_url( 'edit.php' )
 				)
@@ -343,6 +324,7 @@ class Dashboard {
 				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
 				'version'            => WEBSTORIES_VERSION,
+				'encodeMarkup'       => $this->decoder->supports_decoding(),
 				'api'                => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',

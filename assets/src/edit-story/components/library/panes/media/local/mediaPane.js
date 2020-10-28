@@ -213,7 +213,7 @@ function MediaPane(props) {
               initialValue={searchTerm}
               placeholder={__('Search', 'web-stories')}
               onSearch={onSearch}
-              incrementala={incrementalSearchDebounceMedia}
+              incremental={incrementalSearchDebounceMedia}
             />
           </SearchInputContainer>
           <FilterArea>

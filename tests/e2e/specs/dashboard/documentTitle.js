@@ -33,6 +33,7 @@ describe('Document Title', () => {
     await expect(dashboardNavigation).toClick('a', {
       text: 'Explore Templates',
     });
+    await page.waitForTimeout(100);
 
     await expect(page).toMatch('Viewing all templates');
     await expect(await page.title()).toStartWith('Explore Templates');
@@ -41,10 +42,11 @@ describe('Document Title', () => {
       '[data-testid="template-grid-item-1"]'
     );
     await expect(firstTemplate).toClick('a', { text: 'See details' });
+    await page.waitForTimeout(100);
     await expect(await page.title()).toStartWith('Template Details');
 
     await expect(page).toClick('a', { text: 'Close' });
-
+    await page.waitForTimeout(100);
     await expect(page).toMatch('Viewing all templates');
     await expect(await page.title()).toStartWith('Explore Templates');
   });

@@ -75,6 +75,7 @@ class HTML {
 	public function render() {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
+		$markup = $this->replace_url_scheme( $markup );
 
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
@@ -213,6 +214,24 @@ class HTML {
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Force home urls to http / https based on context.
+	 *
+	 * @param string $content String to replace.
+	 *
+	 * @return string
+	 */
+	protected function replace_url_scheme( $content ) {
+		if ( is_ssl() ) {
+			$search  = home_url( '', 'http' );
+			$replace = home_url( '', 'https' );
+			$content = str_replace( $search, $replace, $content );
+		}
+
+		return $content;
+
 	}
 
 	/**
