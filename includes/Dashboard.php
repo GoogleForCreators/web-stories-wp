@@ -29,7 +29,6 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Assets;
-use Google\Web_Stories\Traits\Decoder;
 use WP_Screen;
 
 /**
@@ -317,7 +316,7 @@ class Dashboard {
 				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
 				'version'            => WEBSTORIES_VERSION,
-				'encodeMarkup'       => ( new \Google\Web_Stories\Decoder( $this->experiments ) )->supports_decoding(),
+				'encodeMarkup'       => ( new Decoder( $this->experiments ) )->supports_decoding(),
 				'api'                => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',
