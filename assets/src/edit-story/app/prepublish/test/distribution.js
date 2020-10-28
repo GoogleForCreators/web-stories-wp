@@ -17,11 +17,39 @@
 /**
  * Internal dependencies
  */
-// import * as distributionChecks from '../distribution';
+import * as distributionChecks from '../distribution';
 
 describe('Pre-publish checklist - distribution issues (warnings)', () => {
-  describe('storyMissingDescription', () => {
-    it.todo('should return a warning if story is missing description');
-    it.todo('should return undefined if story has description');
+  describe('storyMissingExcerpt', () => {
+    it('should return a warning if story is missing excerpt', () => {
+      const story = {
+        id: 'storyid',
+      };
+      expect(distributionChecks.storyMissingExcerpt(story)).toStrictEqual({
+        message: 'Missing story excerpt',
+        storyId: story.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return a warning if story has empty excerpt', () => {
+      const story = {
+        id: 'storyid',
+        excerpt: '',
+      };
+      expect(distributionChecks.storyMissingExcerpt(story)).toStrictEqual({
+        message: 'Missing story excerpt',
+        storyId: story.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return undefined if story has excerpt', () => {
+      const story = {
+        id: 'storyid',
+        excerpt: 'This is an excerpt',
+      };
+      expect(distributionChecks.storyMissingExcerpt(story)).toBeUndefined();
+    });
   });
 });
