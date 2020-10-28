@@ -38,7 +38,9 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch("You're all set!");
     await expect(page).toMatch('Tell some stories.');
 
-    await percySnapshot(page, 'Plugin Activation');
+    await percySnapshot(page, 'Plugin Activation', {
+      percyCSS: `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`,
+    });
   });
 
   it('should dismiss plugin activation message', async () => {

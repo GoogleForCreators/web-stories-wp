@@ -48,7 +48,9 @@ describe('Admin Menu', () => {
       visible: true,
     });
 
-    await percySnapshot(page, 'Admin Menu');
+    await percySnapshot(page, 'Admin Menu', {
+      percyCSS: `.postbox { display: none; }`,
+    });
   });
 
   it('should link to "My Stories"', async () => {

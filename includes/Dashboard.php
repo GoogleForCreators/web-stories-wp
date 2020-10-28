@@ -29,7 +29,6 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Traits\Assets;
-use Google\Web_Stories\Traits\Decoder;
 use WP_Screen;
 
 /**
@@ -37,7 +36,6 @@ use WP_Screen;
  */
 class Dashboard {
 	use Assets;
-	use Decoder;
 
 	/**
 	 * Script handle.
@@ -61,6 +59,13 @@ class Dashboard {
 	private $experiments;
 
 	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -69,6 +74,7 @@ class Dashboard {
 	 */
 	public function __construct( Experiments $experiments ) {
 		$this->experiments = $experiments;
+		$this->decoder     = new Decoder( $this->experiments );
 	}
 
 	/**
@@ -318,7 +324,7 @@ class Dashboard {
 				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
 				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
 				'version'            => WEBSTORIES_VERSION,
-				'encodeMarkup'       => $this->supports_decoding(),
+				'encodeMarkup'       => $this->decoder->supports_decoding(),
 				'api'                => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',
