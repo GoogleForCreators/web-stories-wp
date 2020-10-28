@@ -172,7 +172,7 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const fontMap = useMemo(
     () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
+      [...fonts, ...(recentFonts || []), ...(curatedFonts || [])].reduce(
         (lookup, option) => ({
           ...lookup,
           [option.id]: option,

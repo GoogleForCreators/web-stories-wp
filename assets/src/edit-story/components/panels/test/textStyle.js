@@ -29,7 +29,7 @@ import RichTextContext from '../../richText/context';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import DropDown from '../../form/dropDown';
-import FontPicker from '../../fontPicker';
+import DropDown2 from '../../form/dropDown2';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
@@ -37,7 +37,7 @@ import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
 jest.mock('../../form/dropDown');
-jest.mock('../../fontPicker');
+jest.mock('../../form/dropDown2');
 jest.mock('../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
@@ -139,7 +139,7 @@ describe('Panels/TextStyle', () => {
 
     controls = {};
     DropDown.mockImplementation(FakeControl);
-    FontPicker.mockImplementation(FakeControl);
+    DropDown2.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });
 
