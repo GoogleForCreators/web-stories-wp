@@ -45,6 +45,7 @@ const Card = styled.div`
 const StorybookGridItem = (
   <CardGridItem>
     <CardPreviewContainer
+      ariaLabel="Preview aria label"
       bottomAction={{
         targetAction: 'https://www.google.com',
         label: 'Open in Editor',
@@ -75,6 +76,7 @@ export const _default = () => {
   return (
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       {itemArray.map((gridItem, index) => (
+        //eslint-disable-next-line react/no-array-index-key
         <div key={index}>{gridItem}</div>
       ))}
     </CardGrid>

@@ -38,7 +38,7 @@ jobs:
         with:
           php-version: '7.4'
           coverage: none
-          tools: composer
+          tools: composer:v1
 
       - name: Get Composer cache directory
         id: composer-cache

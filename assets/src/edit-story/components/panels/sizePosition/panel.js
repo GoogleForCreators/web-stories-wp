@@ -93,6 +93,8 @@ function SizePositionPanel({
     ({ type }) => getDefinitionForType(type).canFlip
   );
 
+  const hasText = selectedElements.some(({ type }) => 'text' === type);
+
   const actualDimensions = useMemo(() => {
     if (isSingleElement) {
       return calcRotatedObjectPositionAndSize(
@@ -158,6 +160,7 @@ function SizePositionPanel({
     }
   }, [selectedElements, combineElements, currentBackgroundId]);
 
+  const disableHeight = !lockAspectRatio && hasText;
   return (
     <SimplePanel name="size" title={__('Size & position', 'web-stories')}>
       {isMedia && isSingleElement && (
@@ -220,7 +223,9 @@ function SizePositionPanel({
         />
         <BoxedNumeric
           suffix={_x('H', 'The Height dimension', 'web-stories')}
-          value={height}
+          value={disableHeight ? '' : height}
+          placeholder={disableHeight ? __('AUTO', 'web-stories') : ''}
+          disabled={disableHeight}
           min={MIN_MAX.HEIGHT.MIN}
           max={MIN_MAX.HEIGHT.MAX}
           onChange={(value) => {

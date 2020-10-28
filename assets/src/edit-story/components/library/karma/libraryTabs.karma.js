@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
 
 describe('LibraryTabs integration', () => {
   let fixture;
@@ -42,6 +43,7 @@ describe('LibraryTabs integration', () => {
 
   describe('keyboad navigation', () => {
     beforeEach(async () => {
+      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
       const textTab = fixture.container.querySelector('#library-tab-media');
       await fixture.events.focus(textTab);
     });

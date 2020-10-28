@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { TypeaheadInput } from '../../../components';
+import { Typeahead } from '../../../components';
 
 export default function TypeaheadSearch({
   placeholder = '',
@@ -47,7 +47,7 @@ export default function TypeaheadSearch({
   }, [stories]);
 
   return (
-    <TypeaheadInput
+    <Typeahead
       inputId="typeahead-search"
       items={typeaheadMenuOptions}
       onChange={handleChange}

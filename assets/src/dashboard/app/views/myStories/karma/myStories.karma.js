@@ -286,6 +286,64 @@ describe('Grid view', () => {
       );
     });
 
+    it('should look at options in search menu and select one with keyboard', async () => {
+      const { stories } = await getStoriesState();
+
+      const firstStoryTitle = Object.values(stories)[0].title;
+
+      const searchInput = fixture.screen.getByPlaceholderText('Search Stories');
+
+      expect(searchInput).toBeTruthy();
+
+      await fixture.events.focus(searchInput);
+
+      await fixture.events.keyboard.type(firstStoryTitle.substring(0, 1)); // get first to characters of title so that other options come up too
+
+      // Wait for the debounce
+      await fixture.events.sleep(300);
+
+      const searchOptions = fixture.screen.getByTestId('typeahead-options');
+
+      expect(searchOptions).toBeTruthy();
+
+      await fixture.events.keyboard.press('down');
+
+      const activeListItems = within(searchOptions).queryAllByRole('listitem');
+
+      expect(activeListItems[0]).toBe(document.activeElement);
+
+      // focus should move to the search input when keydown on 'up' from first list item
+      await fixture.events.keyboard.press('up');
+
+      expect(searchInput).toBe(document.activeElement);
+
+      // key down to the bottom of the available search options
+      // plus once more beyond available search options to make sure focus stays intact
+      for (let iter = 0; iter < activeListItems.length + 1; iter++) {
+        // disable eslint to prevet overlapping .act calls
+        // eslint-disable-next-line no-await-in-loop
+        await fixture.events.keyboard.press('down');
+      }
+
+      expect(activeListItems[activeListItems.length - 1]).toBe(
+        document.activeElement
+      );
+
+      await fixture.events.keyboard.press('Enter');
+
+      const selectedStoryTitle = Object.values(stories)[
+        activeListItems.length - 1
+      ].title;
+
+      const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
+
+      expect(storyElements.length).toEqual(
+        Object.values(stories).filter(({ title }) =>
+          title.includes(selectedStoryTitle)
+        ).length
+      );
+    });
+
     it('should sort by Date Created', async () => {
       const sortDropdown = fixture.screen.getByLabelText(
         'Choose sort option for display'

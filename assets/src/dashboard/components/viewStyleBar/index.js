@@ -19,13 +19,19 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { rgba } from 'polished';
 
 /**
  * Internal dependencies
  */
 
 import { Grid as GridSVG, List as ListSVG } from '../../icons';
-import { ICON_METRICS, VIEW_STYLE, VIEW_STYLE_LABELS } from '../../constants';
+import {
+  ICON_METRICS,
+  KEYBOARD_USER_SELECTOR,
+  VIEW_STYLE,
+  VIEW_STYLE_LABELS,
+} from '../../constants';
 import Tooltip from '../tooltip';
 
 const Container = styled.div`
@@ -45,6 +51,10 @@ const ToggleButton = styled.button`
   }
   &:active svg {
     color: ${({ theme }) => theme.colors.gray800};
+  }
+  ${KEYBOARD_USER_SELECTOR} &:focus {
+    outline: ${({ theme }) =>
+      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
   }
 `;
 

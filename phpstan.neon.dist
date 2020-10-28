@@ -20,6 +20,7 @@ parameters:
     - includes/
   excludes_analyse:
     - includes/vendor/*
+    - includes/polyfills/*
   scanDirectories:
     - third-party/
   scanFiles:
@@ -31,6 +32,8 @@ parameters:
     - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
     - tests/phpstan/stubs/wordpress-defines.php
     - tests/phpstan/bootstrap.php
+    - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
+    - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
   dynamicConstantNames:
     - WP_DEBUG
     - WP_DEBUG_LOG
@@ -58,14 +61,3 @@ parameters:
     # wp_die() is called with [ 'exit' => false ]
     - message: '#^Unreachable statement - code above always terminates.$#'
       path: includes/Story_Renderer/HTML.php
-
-    # AMP PHP Library files
-    # TODO: Actually fix this.
-    -
-      message: '#AMP_Base_Sanitizer not found#'
-      paths:
-        - includes/AMP
-        - includes/Story_Renderer/HTML.php
-    -
-      message: '#AMP_Meta_Sanitizer not found#'
-      path: includes/AMP

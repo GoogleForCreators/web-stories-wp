@@ -45,6 +45,13 @@ class Embed_Base {
 	const STORY_PLAYER_HANDLE = 'standalone-amp-story-player';
 
 	/**
+	 * Script handle for frontend assets.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_HANDLE = 'web-stories-embed';
+
+	/**
 	 * Initializes the Web Stories embed block.
 	 *
 	 * @since 1.1.0
@@ -54,6 +61,23 @@ class Embed_Base {
 	public function init() {
 		wp_register_script( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.js', [], 'v0', false );
 		wp_register_style( self::STORY_PLAYER_HANDLE, 'https://cdn.ampproject.org/amp-story-player-v0.css', [], 'v0' );
+
+		// Registering a style without a `src` allows us to just use the inline style below
+		// without needing an external stylesheet.
+		wp_register_style(
+			self::SCRIPT_HANDLE,
+			'',
+			[],
+			WEBSTORIES_VERSION
+		);
+
+		if ( is_readable( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' ) ) {
+			$css = file_get_contents( WEBSTORIES_PLUGIN_DIR_PATH . 'includes/assets/embed.css' );
+
+			if ( $css ) {
+				wp_add_inline_style( self::SCRIPT_HANDLE, $css );
+			}
+		}
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'filter_kses_allowed_html' ], 10, 2 );
 	}
@@ -89,7 +113,7 @@ class Embed_Base {
 	 * @return array
 	 */
 	protected function default_attrs() {
-		return [
+		$attrs = [
 			'align'  => 'none',
 			'height' => 600,
 			'poster' => '',
@@ -97,6 +121,15 @@ class Embed_Base {
 			'title'  => '',
 			'width'  => 360,
 		];
+
+		/**
+		 * Filters settings passed to the web stories embed.
+		 *
+		 * @since 1.1.0
+		 *
+		 * @param array $attrs Array of settings passed to web stories embed.
+		 */
+		return apply_filters( 'web_stories_embed_default_attributes', $attrs );
 	}
 
 	/**

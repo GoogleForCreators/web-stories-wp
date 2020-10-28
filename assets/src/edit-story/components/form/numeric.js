@@ -110,6 +110,7 @@ function Numeric({
   max,
   canBeNegative,
   canBeEmpty,
+  placeholder,
   ...rest
 }) {
   const [inputValue, setInputValue] = useState(value);
@@ -123,7 +124,7 @@ function Numeric({
   const { focused, handleFocus, handleBlur } = useFocusAndSelect(inputRef);
 
   const isMultiple = inputValue === MULTIPLE_VALUE;
-  const placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : '';
+  placeholder = isMultiple ? MULTIPLE_DISPLAY_VALUE : placeholder;
 
   const handleChange = useCallback((event) => {
     // If the user types something in, clear timeout
@@ -373,6 +374,7 @@ Numeric.propTypes = {
   max: PropTypes.number,
   canBeNegative: PropTypes.bool,
   canBeEmpty: PropTypes.bool,
+  placeholder: PropTypes.string,
 };
 
 Numeric.defaultProps = {

@@ -42,8 +42,10 @@ function isEqual(a, b) {
   // patterns are truthy objects with either a type or a color attribute.
   // Note: `null` is a falsy object, that would cause an error if first
   // check is removed.
-  const isPattern = a && typeof a === 'object' && (a.type || a.color);
-  return !isPattern ? a === b : isPatternEqual(a, b);
+  const isAPattern = a && typeof a === 'object' && (a.type || a.color);
+  const isBPattern = b && typeof b === 'object' && (b.type || b.color);
+
+  return isAPattern && isBPattern ? isPatternEqual(a, b) : a === b;
 }
 
 /**
@@ -104,6 +106,10 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
   );
 
   const handlers = useMemo(() => {
+    const htmlFormatters = getHTMLFormatters();
+    const handleResetFontWeight = (weight) =>
+      push(htmlFormatters.setFontWeight, weight);
+
     if (hasCurrentEditor) {
       return {
         // This particular function ignores the flag argument.
@@ -116,10 +122,9 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickUnderline: selectionActions.toggleUnderlineInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
+        handleResetFontWeight,
       };
     }
-
-    const htmlFormatters = getHTMLFormatters();
 
     return {
       handleClickBold: (flag) => push(htmlFormatters.toggleBold, flag),
@@ -131,6 +136,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleSetLetterSpacing: (letterSpacing) =>
         push(htmlFormatters.setLetterSpacing, letterSpacing),
       handleSetColor: (color) => push(htmlFormatters.setColor, color),
+      handleResetFontWeight,
     };
   }, [hasCurrentEditor, selectionActions, push]);
 

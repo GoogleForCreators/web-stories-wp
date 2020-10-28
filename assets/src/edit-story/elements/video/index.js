@@ -51,6 +51,7 @@ export const defaultAttributes = {
   controls: false,
   loop: false,
   autoPlay: true,
+  tracks: [],
   resource: {
     posterId: null,
     poster: null,
@@ -64,5 +65,6 @@ export const panels = [
   ...MEDIA_PANELS,
   PanelTypes.LINK,
   PanelTypes.VIDEO_OPTIONS,
+  PanelTypes.CAPTIONS,
   PanelTypes.VIDEO_ACCESSIBILITY,
 ];

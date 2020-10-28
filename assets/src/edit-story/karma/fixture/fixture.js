@@ -199,6 +199,10 @@ export class Fixture {
     this._flags = { ...flags };
   }
 
+  setConfig(config) {
+    this._config = { ...this._config, ...config };
+  }
+
   /**
    * @param {Array<Object>} pages Pages.
    */
@@ -214,6 +218,7 @@ export class Fixture {
    */
   async render() {
     const root = document.querySelector('test-root');
+    root.setAttribute('dir', this._config.isRTL ? 'rtl' : 'ltr');
 
     // see http://reactcommunity.org/react-modal/accessibility/
     Modal.setAppElement(root);
