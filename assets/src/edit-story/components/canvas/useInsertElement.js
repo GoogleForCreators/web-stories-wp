@@ -84,12 +84,6 @@ function useInsertElement() {
    */
   const insertElement = useCallback(
     (type, props) => {
-      if (type == 'gif') {
-        // Treat GIFs just like images
-        type = 'image';
-        props.resource.type = 'image';
-      }
-
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });

@@ -19,20 +19,21 @@
  */
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import { preloadImage } from '../../app/media/utils';
+import resourceList from '../../utils/resourceList';
 import {
   calculateSrcSet,
   getSmallestUrlForWidth,
   mediaWithScale,
-} from '../media/util';
-import { getMediaSizePositionProps } from '../media';
-import MediaDisplay from '../media/display';
-import { preloadImage } from '../../app/media/utils';
-import resourceList from '../../utils/resourceList';
+} from './util';
+import MediaDisplay from './display';
+import { getMediaSizePositionProps } from '.';
 
 const Img = styled.img`
   position: absolute;
@@ -108,7 +109,10 @@ function ImageDisplay({ element, box }) {
 }
 
 ImageDisplay.propTypes = {
-  element: StoryPropTypes.elements.image.isRequired,
+  element: PropTypes.oneOfType([
+    StoryPropTypes.elements.image,
+    StoryPropTypes.elements.gif,
+  ]).isRequired,
   box: StoryPropTypes.box.isRequired,
 };
 

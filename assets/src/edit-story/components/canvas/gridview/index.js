@@ -267,7 +267,7 @@ function GridView() {
 
             return (
               <ItemContainer
-                key={`page-${index}`}
+                key={page.id}
                 ref={(el) => {
                   pageRefs.current[page.id] = el;
                 }}
@@ -283,7 +283,7 @@ function GridView() {
                 </PageSeparator>
                 <ReorderableItem position={index}>
                   <PagePreview
-                    key={index}
+                    key={page.id}
                     aria-label={
                       isCurrentPage
                         ? sprintf(

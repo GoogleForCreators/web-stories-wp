@@ -15,23 +15,18 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { visitDashboard } from '../../utils';
+import StoryPropTypes from '../../types';
+import MediaEdit from '../media/edit';
 
-describe('Stories Dashboard', () => {
-  it('should be able to open the dashboard', async () => {
-    await visitDashboard();
+function GifEdit({ element, box }) {
+  return <MediaEdit element={element} box={box} />;
+}
 
-    await expect(page).toMatch('My Stories');
+GifEdit.propTypes = {
+  element: StoryPropTypes.elements.gif.isRequired,
+  box: StoryPropTypes.box.isRequired,
+};
 
-    await percySnapshot(page, 'Stories Dashboard', {
-      percyCSS: `.dashboard-grid-item-date { display: none; }`,
-    });
-  });
-});
+export default GifEdit;

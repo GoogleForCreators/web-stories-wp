@@ -15,23 +15,17 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { visitDashboard } from '../../utils';
+import StoryPropTypes from '../../types';
+import MediaFrame from '../media/frame';
 
-describe('Stories Dashboard', () => {
-  it('should be able to open the dashboard', async () => {
-    await visitDashboard();
+function GifFrame({ element }) {
+  return <MediaFrame element={element} />;
+}
 
-    await expect(page).toMatch('My Stories');
+GifFrame.propTypes = {
+  element: StoryPropTypes.elements.gif.isRequired,
+};
 
-    await percySnapshot(page, 'Stories Dashboard', {
-      percyCSS: `.dashboard-grid-item-date { display: none; }`,
-    });
-  });
-});
+export default GifFrame;

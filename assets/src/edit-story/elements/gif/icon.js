@@ -15,23 +15,18 @@
  */
 
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import { percySnapshot } from '@percy/puppeteer';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { visitDashboard } from '../../utils';
+import { Media } from '../../icons';
 
-describe('Stories Dashboard', () => {
-  it('should be able to open the dashboard', async () => {
-    await visitDashboard();
+function GifIcon() {
+  const alt = __('GIF element', 'web-stories');
+  return <Media aria-label={alt} />;
+}
 
-    await expect(page).toMatch('My Stories');
-
-    await percySnapshot(page, 'Stories Dashboard', {
-      percyCSS: `.dashboard-grid-item-date { display: none; }`,
-    });
-  });
-});
+export default GifIcon;

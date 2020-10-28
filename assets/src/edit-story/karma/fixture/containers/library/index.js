@@ -17,7 +17,8 @@
 /**
  * Internal dependencies
  */
-import { Container } from './container';
+import { Container } from '../container';
+import Text from './text';
 
 /**
  * The library wrapper - containing tabs and panes for media, text and shapes.
@@ -69,15 +70,6 @@ export class Library extends Container {
       'shapes',
       Shapes
     );
-  }
-}
-
-export class Text extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
-  preset(name) {
-    return this.getByRole('button', { name });
   }
 }
 

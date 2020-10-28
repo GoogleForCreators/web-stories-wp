@@ -15,23 +15,28 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
-import { visitDashboard } from '../../utils';
+import { Container } from '../container';
 
-describe('Stories Dashboard', () => {
-  it('should be able to open the dashboard', async () => {
-    await visitDashboard();
+export default class Text extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-    await expect(page).toMatch('My Stories');
+  preset(name) {
+    return this.getByRole('button', { name });
+  }
 
-    await percySnapshot(page, 'Stories Dashboard', {
-      percyCSS: `.dashboard-grid-item-date { display: none; }`,
-    });
-  });
-});
+  get textSetList() {
+    return this.getByRole('list', { name: /Text Sets/ });
+  }
+
+  get textSets() {
+    return this.getAllByRole('listitem');
+  }
+
+  textSetFilter(name) {
+    return this.getByRole('option', { name });
+  }
+}

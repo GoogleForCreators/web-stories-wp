@@ -296,17 +296,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2097
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextSets',
-				'label'       => __( 'Text Sets', 'web-stories' ),
-				'description' => __( 'Enable text sets', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2095
 			 * Creation date: 2020-06-04
 			 */
@@ -361,16 +350,16 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Description: Flag for showing the Gif Media3p subtab.
-			 * Author: @diegovar
-			 * Issue: #3349
-			 * Creation date: 2020-08-28
+			 * Author: @swissspidy
+			 * Issue: #4805
+			 * Creation date: 2020-10-28
 			 */
 			[
-				'name'        => 'showGifTab',
-				'label'       => __( 'GIFs', 'web-stories' ),
-				'description' => __( 'Enable the GIF tab in the Third-party media tab.', 'web-stories' ),
-				'group'       => 'editor',
+				'name'        => 'encodeStoryMarkup',
+				/* translators: %s: WAF stands for Web Application Firewall */
+				'label'       => __( 'WAF Compatibility', 'web-stories' ),
+				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
+				'group'       => 'general',
 			],
 		];
 	}

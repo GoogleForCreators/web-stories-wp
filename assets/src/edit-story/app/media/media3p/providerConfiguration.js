@@ -94,7 +94,6 @@ export const PROVIDERS = {
   },
   [ProviderType.TENOR]: {
     displayName: __('GIFs', 'web-stories'),
-    featureName: 'showGifTab',
     contentTypeFilter: ContentType.GIF,
     supportsCategories: true,
     requiresAuthorAttribution: false,

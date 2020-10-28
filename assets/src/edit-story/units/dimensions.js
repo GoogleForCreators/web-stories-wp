@@ -44,7 +44,7 @@ export function dataPixels(v) {
  * @return {number} The font size for the specified "em" value.
  */
 export function dataFontEm(v) {
-  return dataPixels(v * DEFAULT_EM);
+  return Number((v * DEFAULT_EM).toFixed(1));
 }
 
 /**
