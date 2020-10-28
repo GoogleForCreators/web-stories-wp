@@ -37,10 +37,32 @@ const MIN_VIDEO_WIDTH = 852;
 // export function videoElementFps(element) {}
 
 export function mediaElementSizeOnPage(element) {
-  // triggered if only one video is on the page and it takes less than 50% of the safe zone area
-  // encourage users to consider a more immersive media sizing and cropping.
-  const elementArea = element.height * element.width;
-  const isTooSmallOnPage = SAFE_ZONE_AREA / 2 > elementArea;
+  // get the intersecting area of the element's rectangle and the safe zone's rectangle
+  const safeZone = {
+      left: 0,
+      right: PAGE_WIDTH,
+      bottom: PAGE_HEIGHT,
+      top: 0,
+    },
+    elemRect = {
+      left: element.x,
+      right: element.x + element.width,
+      bottom: element.y + element.height,
+      top: element.y,
+    };
+  const xOverlap = Math.max(
+    0,
+    Math.min(safeZone.right, elemRect.right) -
+      Math.max(safeZone.left, elemRect.left)
+  );
+  const yOverlap = Math.max(
+    0,
+    Math.min(safeZone.bottom, elemRect.bottom) -
+      Math.max(safeZone.top, elemRect.top)
+  );
+  const elementArea = xOverlap * yOverlap;
+
+  const isTooSmallOnPage = elementArea < SAFE_ZONE_AREA / 2;
 
   if (isTooSmallOnPage) {
     return {
@@ -62,7 +84,10 @@ export function videoElementSizeOnPage(page) {
   );
   if (videoElementsOnPage.length === 1) {
     const [videoElement] = videoElementsOnPage;
-    return mediaElementSizeOnPage(videoElement);
+    return {
+      pageId: page.id,
+      ...mediaElementSizeOnPage(videoElement),
+    };
   }
   return undefined;
 }

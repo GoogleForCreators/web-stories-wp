@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../../constants';
 import * as mediaGuidance from '../media';
 
 describe('Pre-publish checklist - media guidelines (guidance)', () => {
@@ -26,6 +27,8 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       type: 'image',
       height: 50,
       width: 50,
+      x: 0,
+      y: 0,
     };
     const result = mediaGuidance.mediaElementSizeOnPage(tooSmallImageElement);
     expect(result).not.toBeUndefined();
@@ -37,8 +40,10 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     const tooSmallVideoElement = {
       id: 456,
       type: 'video',
-      height: 100,
-      width: 400,
+      height: PAGE_HEIGHT,
+      width: PAGE_WIDTH,
+      x: 0,
+      y: -(PAGE_HEIGHT / 2) - 1,
     };
     const result = mediaGuidance.mediaElementSizeOnPage(tooSmallVideoElement);
     expect(result).not.toBeUndefined();
