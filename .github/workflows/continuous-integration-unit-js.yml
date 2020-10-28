@@ -42,7 +42,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install -g npm@7
           npm ci
           npx patch-package
           npx rollup --config assets/src/migration/rollup.config.migrate.js

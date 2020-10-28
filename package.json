@@ -21,7 +21,7 @@
     "url": "https://github.com/google/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 14",
+    "node": ">= 15",
     "npm": "~7"
   },
   "workspaces": {
