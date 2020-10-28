@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import useFocusOut from '../../../utils/useFocusOut';
 import List from './list';
 import SearchInput from './searchInput';
+import { isKeywordFilterable } from './list/utils';
 
 const Container = styled.div`
   position: relative;
@@ -46,6 +47,7 @@ function OptionsContainer({
   onSelect,
   onClose,
   isOpen,
+  getOptionsByQuery,
   hasSearch,
   onObserve,
   options,
@@ -58,6 +60,7 @@ function OptionsContainer({
   const ref = useRef();
   const inputRef = useRef();
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [queriedOptions, setQueriedOptions] = useState(null);
   const [isExpanded, setIsExpanded] = useState(true);
   const [trigger, setTrigger] = useState(0);
 
@@ -66,6 +69,20 @@ function OptionsContainer({
   const handleSearchInputChanged = useCallback(({ target }) => {
     setSearchKeyword(target.value);
   }, []);
+
+  const handleLoadOptions = useCallback(() => {
+    getOptionsByQuery(searchKeyword).then((result) => {
+      setQueriedOptions(result);
+    });
+  }, [getOptionsByQuery, searchKeyword]);
+
+  useEffect(() => {
+    if (getOptionsByQuery && isKeywordFilterable(searchKeyword)) {
+      handleLoadOptions();
+    } else {
+      setQueriedOptions(null);
+    }
+  }, [getOptionsByQuery, searchKeyword, handleLoadOptions]);
 
   useEffect(() => {
     if (isOpen) {
@@ -93,7 +110,7 @@ function OptionsContainer({
         onExpandedChange={setIsExpanded}
         focusTrigger={trigger}
         onObserve={onObserve}
-        options={options}
+        options={options || queriedOptions}
         primaryOptions={primaryOptions}
         primaryLabel={primaryLabel}
         priorityOptions={priorityOptions}
@@ -110,6 +127,7 @@ OptionsContainer.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
   options: PropTypes.array,
+  getOptionsByQuery: PropTypes.func,
   hasSearch: PropTypes.bool,
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,

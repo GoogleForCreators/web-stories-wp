@@ -226,11 +226,15 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getAllUsers = useCallback(() => {
-    return apiFetch({
-      path: addQueryArgs(users, { per_page: '-1', who: 'authors' }),
-    });
-  }, [users]);
+  const getUsers = useCallback(
+    (search = null) => {
+      // @todo per_page 10 is for testing, change later.
+      return apiFetch({
+        path: addQueryArgs(users, { per_page: '10', who: 'authors', search }),
+      });
+    },
+    [users]
+  );
 
   const state = {
     actions: {
@@ -239,7 +243,7 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      getAllUsers,
+      getUsers,
       uploadMedia,
       updateMedia,
       deleteMedia,

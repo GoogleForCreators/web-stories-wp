@@ -79,9 +79,10 @@ function OptionList({
     }
     groups.push({
       label: primaryLabel,
-      options: isKeywordFilterable(keyword)
-        ? createOptionFilter(options)(keyword)
-        : primaryOptions,
+      options:
+        isKeywordFilterable(keyword) && options
+          ? createOptionFilter(options)(keyword)
+          : primaryOptions,
     });
     return groups;
   }, [

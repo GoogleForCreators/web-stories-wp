@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -36,6 +36,7 @@ import { useConfig } from '../../../../app/config';
 import PanelTitle from '../../../panels/panel/shared/title';
 import PanelContent from '../../../panels/panel/shared/content';
 import Panel from '../../../panels/panel/panel';
+import { useAPI } from '../../../../app/api';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -51,6 +52,9 @@ const MediaWrapper = styled.div`
 `;
 
 function PublishPanel() {
+  const {
+    actions: { getUsers },
+  } = useAPI();
   const {
     state: { tab, users, isUsersLoading },
     actions: { loadUsers },
@@ -80,6 +84,8 @@ function PublishPanel() {
     }
   );
 
+  const [queriedUsers, setQueriedUsers] = useState(null);
+
   useEffect(() => {
     if (tab === 'document') {
       loadUsers();
@@ -97,6 +103,19 @@ function PublishPanel() {
         },
       }),
     [updateStory]
+  );
+
+  const getUsersBySearch = useCallback(
+    (search) => {
+      return getUsers(search).then((data) => {
+        const saveData = data.map(({ id, name }) => ({
+          value: id,
+          name,
+        }));
+        setQueriedUsers(saveData);
+      });
+    },
+    [getUsers]
   );
 
   // @todo Enforce square image while selecting in Media Library.
@@ -139,7 +158,8 @@ function PublishPanel() {
             ) : (
               <DropDown2
                 aria-labelledby={authorLabelId}
-                options={users}
+                getOptionsByQuery={getUsersBySearch}
+                options={queriedUsers}
                 primaryOptions={users}
                 selectedId={author}
                 disabled={isSaving}

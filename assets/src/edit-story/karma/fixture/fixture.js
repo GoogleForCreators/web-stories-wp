@@ -657,7 +657,7 @@ class APIProviderFixture {
         []
       );
 
-      const getAllUsers = useCallback(
+      const getUsers = useCallback(
         () => asyncResponse([{ id: 1, name: 'John Doe' }]),
         []
       );
@@ -670,7 +670,7 @@ class APIProviderFixture {
           getLinkMetadata,
           saveStoryById,
           getAllStatuses,
-          getAllUsers,
+          getUsers,
           uploadMedia,
           updateMedia,
         },

@@ -94,6 +94,7 @@ const DropDownTitle = styled.span`
  * @param {number} props.selectedId The selected option ID.
  * @param {Array} props.options All options, used for search.
  * @param {boolean} props.hasSearch If to enable search feature in the dropdown.
+ * @param {Function} props.getOptionsByQuery Function to query options in case options are not set.
  * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the funcion for these entries.
  * @param {Array} props.primaryOptions Array of options to display by default, when the user hasn't searched.
  * @param {string} props.primaryLabel Label to display above the primary options.
@@ -108,8 +109,9 @@ function DropDown({
   placeholder,
   disabled = false,
   selectedId,
-  options = [],
+  options,
   hasSearch = false,
+  getOptionsByQuery,
   onObserve,
   primaryOptions,
   primaryLabel,
@@ -160,7 +162,6 @@ function DropDown({
     [isOpen]
   );
 
-  const selectedOption = options.find(({ id }) => id === selectedId);
   return (
     <Container onKeyDown={handleKeyPress}>
       <DropDownSelect
@@ -172,7 +173,8 @@ function DropDown({
         lightMode={lightMode}
         {...rest}
       >
-        <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
+        {/* @todo This needs to display the name instead. We're not always querying all options so it might not be available!*/}
+        <DropDownTitle>{selectedId || placeholder}</DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
       {!disabled && (
@@ -182,6 +184,7 @@ function DropDown({
             value={selectedId}
             onSelect={handleSelect}
             onClose={debouncedCloseDropDown}
+            getOptionsByQuery={getOptionsByQuery}
             hasSearch={hasSearch}
             onObserve={onObserve}
             options={options}
@@ -205,6 +208,7 @@ DropDown.propTypes = {
   disabled: PropTypes.bool,
   options: PropTypes.array,
   hasSearch: PropTypes.bool,
+  getOptionsByQuery: PropTypes.func,
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,
   primaryLabel: PropTypes.string,
