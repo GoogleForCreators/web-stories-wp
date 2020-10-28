@@ -168,6 +168,8 @@ class Embed_Controller extends WP_REST_Controller {
 	/**
 	 * Retrieves the story metadata for a given URL on the current site.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $url  The URL that should be inspected for metadata.

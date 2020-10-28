@@ -179,6 +179,8 @@ function setup_new_site() {
  *
  * Throws an error if the site is running on PHP < 5.6
  *
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ *
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to activate network-wide.
