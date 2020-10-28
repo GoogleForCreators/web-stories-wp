@@ -17,14 +17,23 @@
 /**
  * WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
- * Check story for missing description
+ * Check story for missing excerpt
  *
- * @param  {Object} element Element object
+ * @param {Object} element Element object
+ * @param story
  * @return {Object} Prepublish check response
  */
-export function storyMissingDescription() {
+export function storyMissingExcerpt(story) {
+  if (!story.excerpt || !story.excerpt.length) {
+    return {
+      message: __('Missing story excerpt', 'web-stories'),
+      storyId: story.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
