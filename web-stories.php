@@ -51,7 +51,7 @@ define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.3' );
 
 $cdn_version = 'main';
-if( false !== strpos( WEBSTORIES_VERSION, '+' ) ){
+if ( false !== strpos( WEBSTORIES_VERSION, '+' ) ) {
 	$pieces      = explode( '+', WEBSTORIES_VERSION );
 	$cdn_version = array_shift( $pieces );
 }

@@ -272,7 +272,7 @@ register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
 
 
-if ( ! $web_stories_compatibility->check_required_files() ||  ! $web_stories_compatibility->check_php_version() ||  ! $web_stories_compatibility->check_wp_version() ) {
+if ( ! $web_stories_compatibility->check_required_files() || ! $web_stories_compatibility->check_php_version() || ! $web_stories_compatibility->check_wp_version() ) {
 	// However, we still need to stop further execution.
 	return;
 }
