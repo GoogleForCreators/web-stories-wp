@@ -16,20 +16,75 @@
 /**
  * Internal dependencies
  */
-// import generalGuidelines from '../general';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../constants';
+import * as generalGuidelines from '../general';
 
 describe('Pre-publish checklist - general guidelines (guidance)', () => {
-  it.todo(
-    'should return guidance if story has less than 4 pages or more than 30 pages'
-  );
+  it('should return guidance if story has less than 4 pages or more than 30 pages', () => {
+    const storyTooShort = generalGuidelines.storyPagesCount({
+      storyId: 123,
+      title: 'Publishers HATE her!',
+      pages: new Array(3),
+    });
+    const storyTooLong = generalGuidelines.storyPagesCount({
+      storyId: 456,
+      title: 'Carrot Cake Recipe',
+      pages: new Array(31),
+    });
+    const testUndefined = generalGuidelines.storyPagesCount({
+      storyId: 567,
+      title: "World's best banana bread",
+      pages: new Array(20),
+    });
 
-  it.todo(
-    'should return guidance if the story title is longer than 40 characters'
-  );
+    expect(storyTooShort).not.toBeUndefined();
+    expect(storyTooShort.message).toMatchInlineSnapshot(
+      `"Story has fewer than 4 pages (ideally, stories should have a minimum of 10 pages)"`
+    );
+    expect(storyTooShort.storyId).toStrictEqual(123);
 
-  it.todo(
-    'should return guidance if the story is missing landscape poster/cover'
-  );
+    expect(storyTooLong).not.toBeUndefined();
+    expect(storyTooLong.message).toMatchInlineSnapshot(
+      `"Story has more than 30 pages (ideally, stories shouldn't have more than 20 pages)"`
+    );
+    expect(storyTooLong.storyId).toStrictEqual(456);
+
+    expect(testUndefined).toBeUndefined();
+  });
+
+  it('should return guidance if the story title is longer than 40 characters', () => {
+    const testStory = {
+      storyId: 123,
+      title:
+        'If you want to make an apple pie from scratch, you must first create the universe.',
+    };
+    const testUndefined = generalGuidelines.storyTitleLength({
+      storyId: 345,
+      title: 'Once, there was a man from Nantucket...',
+    });
+    const test = generalGuidelines.storyTitleLength(testStory);
+    expect(test).not.toBeUndefined();
+    expect(test.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE);
+    expect(test.message).toMatchInlineSnapshot(
+      `"Story title is longer than 40 characters"`
+    );
+    expect(test.storyId).toStrictEqual(testStory.storyId);
+    expect(testUndefined).toBeUndefined();
+  });
+
+  it('should return guidance if the story is missing landscape poster/cover', () => {
+    const testStory = {
+      storyId: 890,
+      title: 'Work work work work work',
+      featuredMediaUrl: undefined,
+    };
+    const testMissingCover = generalGuidelines.storyPosterAttached(testStory);
+    expect(testMissingCover).not.toBeUndefined();
+    expect(testMissingCover.message).toMatchInlineSnapshot(
+      `"Missing story poster/cover"`
+    );
+    expect(testMissingCover.storyId).toStrictEqual(testStory.storyId);
+  });
 
   // the story's poster/cover sizes are not saved
   it.todo("should return guidance if the story's poster/cover is too small");
