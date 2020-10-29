@@ -85,12 +85,12 @@ const primaryColors = ({ theme }) => css`
   &:hover,
   &:focus,
   &:active {
-    background-color: ${theme.colors.brandColors.violet[40]};
+    background-color: ${theme.colors.violet[40]};
   }
 
   &:disabled {
     background-color: #efefef;
-    color: ${theme.colors.brandColors.gray[20]};
+    color: ${theme.colors.gray[20]};
   }
 `;
 
@@ -100,12 +100,12 @@ const secondaryColors = ({ theme }) => css`
   &:hover,
   &:focus,
   &:active {
-    background-color: ${theme.colors.brandColors.gray[20]};
+    background-color: ${theme.colors.gray[20]};
   }
 
   &:disabled {
     background-color: #efefef;
-    color: ${theme.colors.brandColors.gray[20]};
+    color: ${theme.colors.gray[20]};
   }
 `;
 
@@ -120,7 +120,7 @@ const tertiaryColors = ({ theme }) => css`
 
   &:disabled {
     background-color: ${theme.colors.standard.white};
-    color: ${theme.colors.brandColors.gray[20]};
+    color: ${theme.colors.gray[20]};
   }
 `;
 
