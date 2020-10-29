@@ -107,7 +107,7 @@ class Compatibility {
 			$data    = [
 				'title' => $message,
 			];
-			$this->error->add( 'failed_check_php_version', $message, $data );
+			$this->add_to_error( 'failed_check_php_version', $message, $data );
 
 			return false;
 		}
@@ -129,7 +129,7 @@ class Compatibility {
 			$data    = [
 				'title' => $message,
 			];
-			$this->error->add( 'failed_check_wp_version', $message, $data );
+			$this->add_to_error( 'failed_check_wp_version', $message, $data );
 
 			return false;
 		}
@@ -158,7 +158,7 @@ class Compatibility {
 					$data = [
 						'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
 					];
-					$this->error->add( 'failed_check_required_files', $message, $data );
+					$this->add_to_error( 'failed_check_required_files', $message, $data );
 
 					return false;
 				}
@@ -184,10 +184,10 @@ class Compatibility {
 		}
 
 		if ( count( $missing_extensions ) > 0 ) {
-			$this->error->add(
+			$this->add_to_error(
 				'missing_extension',
 				sprintf(
-				/* translators: %s is list of missing extensions */
+					/* translators: %s is list of missing extensions */
 					_n(
 						'The following PHP extension is missing: %s. Please contact your host to finish installation.',
 						'The following PHP extensions are missing: %s. Please contact your host to finish installation.',
@@ -228,10 +228,10 @@ class Compatibility {
 		}
 
 		if ( count( $missing_classes ) > 0 ) {
-			$this->error->add(
+			$this->add_to_error(
 				'missing_class',
 				sprintf(
-				/* translators: %s is list of missing extensions */
+					/* translators: %s is list of missing extensions */
 					_n(
 						'The following PHP class is missing: %s. Please contact your host to finish installation.',
 						'The following PHP classes are missing: %s. Please contact your host to finish installation.',
@@ -272,7 +272,7 @@ class Compatibility {
 		}
 
 		if ( count( $missing_functions ) > 0 ) {
-			$this->error->add(
+			$this->add_to_error(
 				'missing_function',
 				sprintf(
 				/* translators: %s is list of missing extensions */
@@ -305,6 +305,19 @@ class Compatibility {
 		$this->check_extensions();
 		$this->check_classes();
 		$this->check_functions();
+	}
+
+	/**
+	 * Helper to add error code to WP_Error object.
+	 *
+	 * @param string|int $code    Error code.
+	 * @param string     $message Error message.
+	 * @param mixed      $data    Optional. Error data.
+	 */
+	protected function add_to_error( $code, $message, $data = '' ) {
+		if ( ! in_array( $code, $this->error->get_error_codes(), true ) ) {
+			$this->error->add( $code, $message, $data );
+		}
 	}
 
 	/**
