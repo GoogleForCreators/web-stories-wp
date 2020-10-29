@@ -32,7 +32,6 @@ import DropDown from '../../form/dropDown';
 import DropDown2 from '../../form/dropDown2';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
-import CanvasContext from '../../canvas/context';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { renderPanel } from './_utils';
 
@@ -45,47 +44,23 @@ const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
 function Wrapper({ children }) {
   return (
-    <CanvasContext.Provider
+    <FontContext.Provider
       value={{
-        state: {},
-        actions: {
-          clearEditing: jest.fn(),
-        },
-      }}
-    >
-      <FontContext.Provider
-        value={{
-          state: {
-            fonts: [
-              {
-                name: 'ABeeZee',
-                value: 'ABeeZee',
-                service: 'foo.bar.baz',
-                weights: [400],
-                styles: ['italic', 'regular'],
-                variants: [
-                  [0, 400],
-                  [1, 400],
-                ],
-                fallbacks: ['serif'],
-              },
-              {
-                name: 'Neu Font',
-                value: 'Neu Font',
-                service: 'foo.bar.baz',
-                weights: [400],
-                styles: ['italic', 'regular'],
-                variants: [
-                  [0, 400],
-                  [1, 400],
-                ],
-                fallbacks: ['fallback1'],
-              },
-            ],
-          },
-          actions: {
-            maybeEnqueueFontStyle: () => Promise.resolve(),
-            getFontByName: () => ({
+        state: {
+          fonts: [
+            {
+              name: 'ABeeZee',
+              value: 'ABeeZee',
+              service: 'foo.bar.baz',
+              weights: [400],
+              styles: ['italic', 'regular'],
+              variants: [
+                [0, 400],
+                [1, 400],
+              ],
+              fallbacks: ['serif'],
+            },
+            {
               name: 'Neu Font',
               value: 'Neu Font',
               service: 'foo.bar.baz',
@@ -96,18 +71,33 @@ function Wrapper({ children }) {
                 [1, 400],
               ],
               fallbacks: ['fallback1'],
-            }),
-            addRecentFont: jest.fn(),
-          },
-        }}
+            },
+          ],
+        },
+        actions: {
+          maybeEnqueueFontStyle: () => Promise.resolve(),
+          getFontByName: () => ({
+            name: 'Neu Font',
+            value: 'Neu Font',
+            service: 'foo.bar.baz',
+            weights: [400],
+            styles: ['italic', 'regular'],
+            variants: [
+              [0, 400],
+              [1, 400],
+            ],
+            fallbacks: ['fallback1'],
+          }),
+          addRecentFont: jest.fn(),
+        },
+      }}
+    >
+      <RichTextContext.Provider
+        value={{ state: {}, actions: { selectionActions: {} } }}
       >
-        <RichTextContext.Provider
-          value={{ state: {}, actions: { selectionActions: {} } }}
-        >
-          {children}
-        </RichTextContext.Provider>
-      </FontContext.Provider>
-    </CanvasContext.Provider>
+        {children}
+      </RichTextContext.Provider>
+    </FontContext.Provider>
   );
 }
 

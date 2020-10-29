@@ -51,7 +51,6 @@ function setupPanel(
   const config = { capabilities };
   const loadUsers = jest.fn();
 
-  // @todo this creates warnings.
   const getUserById = jest.fn().mockImplementation(() => Promise.resolve({}));
   const apiContextValue = {
     actions: { getUserById },
