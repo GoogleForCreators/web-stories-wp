@@ -187,8 +187,6 @@ function activate( $network_wide = false ) {
 
 	$web_stories_compatibility->check_php_version();
 	$web_stories_compatibility->check_wp_version();
-	// @todo add in other checks here?
-
 	$_error = $web_stories_compatibility->get_error();
 	if ( $_error->errors ) {
 		wp_die(
