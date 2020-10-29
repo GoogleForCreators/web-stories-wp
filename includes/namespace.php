@@ -151,10 +151,6 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 	}
 }
 
-if ( ! $web_stories_compatibility->check_required_files() ) {
-	// However, we still need to stop further execution.
-	return;
-}
 /**
  * Run logic to setup a new site with web stories.
  *
@@ -274,6 +270,22 @@ function deactivate( $network_wide ) {
 
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
+
+
+if ( ! $web_stories_compatibility->check_required_files() ||  ! $web_stories_compatibility->check_php_version() ||  ! $web_stories_compatibility->check_wp_version() ) {
+	// However, we still need to stop further execution.
+	return;
+}
+
+// Autoloader for dependencies.
+if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php' ) ) {
+	require WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php';
+}
+
+// Autoloader for plugin itself.
+if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' ) ) {
+	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
+}
 
 global $web_stories;
 

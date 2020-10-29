@@ -50,7 +50,11 @@ define( 'WEBSTORIES_ASSETS_URL', WEBSTORIES_PLUGIN_DIR_URL . 'assets' );
 define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '5.6' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.3' );
 
-$cdn_version = false !== strpos( WEBSTORIES_VERSION, '+' ) ? 'main' : explode( '+', WEBSTORIES_VERSION )[0];
+$cdn_version = 'main';
+if( false !== strpos( WEBSTORIES_VERSION, '+' ) ){
+	$pieces      = explode( '+', WEBSTORIES_VERSION );
+	$cdn_version = array_shift( $pieces );
+}
 
 define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/' . $cdn_version );
 
@@ -60,15 +64,5 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
-// Autoloader for dependencies.
-if ( file_exists( __DIR__ . '/third-party/vendor/scoper-autoload.php' ) ) {
-	require __DIR__ . '/third-party/vendor/scoper-autoload.php';
-}
-
-// Autoloader for plugin itself.
-if ( file_exists( __DIR__ . '/includes/vendor/autoload.php' ) ) {
-	require __DIR__ . '/includes/vendor/autoload.php';
-}
-
 // Main plugin initialization happens there so that this file is still parsable in PHP < 5.6.
-require __DIR__ . '/includes/namespace.php';
+require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/namespace.php';
