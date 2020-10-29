@@ -36,18 +36,17 @@ const displayRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export const _default = () => (
   <>
-    {displayPresetSizes.map((presetSize, idx) => (
-      <>
+    {displayPresetSizes.map((presetSize) => (
+      <div key={`${presetSize}_display`}>
         <Text size={'small'}>{presetSize}</Text>
 
         <Display
-          key={idx}
           size={presetSize}
           as={select('as', displayRenderAsOptions, 'h1')}
         >
           {'The Quick Brown Fox Jumps Over the Lazy Dog'} <br />
         </Display>
-      </>
+      </div>
     ))}
   </>
 );

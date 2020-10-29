@@ -36,19 +36,15 @@ const textRenderAsOptions = ['p', 'a', 'span'];
 
 export const _default = () => (
   <>
-    {textPresetSizes.map((presetSize, idx) => (
-      <>
+    {textPresetSizes.map((presetSize) => (
+      <div key={`${presetSize}_text`}>
         <Text size={'small'}>{presetSize}</Text>
-        <Text
-          key={idx}
-          size={presetSize}
-          as={select('as', textRenderAsOptions, 'p')}
-        >
+        <Text size={presetSize} as={select('as', textRenderAsOptions, 'p')}>
           {
             'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
           }
         </Text>
-      </>
+      </div>
     ))}
   </>
 );

@@ -36,17 +36,16 @@ const headlineRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
 export const _default = () => (
   <>
-    {headlinePresetSizes.map((presetSize, idx) => (
-      <>
+    {headlinePresetSizes.map((presetSize) => (
+      <div key={`${presetSize}_headline`}>
         <Text size={'small'}>{presetSize}</Text>
         <Headline
-          key={idx}
           size={presetSize}
           as={select('as', headlineRenderAsOptions, 'h1')}
         >
           {'The Quick Brown Fox Jumps Over the Lazy Dog'}
         </Headline>
-      </>
+      </div>
     ))}
   </>
 );

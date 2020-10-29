@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../';
+import { THEME_CONSTANTS } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 export const Text = styled.p`
