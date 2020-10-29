@@ -45,7 +45,7 @@ const defaultConfig = {
     canActivatePlugins: true,
     canInstallPlugins: true,
     siteKitActive: false,
-    siteKitInstalled: true,
+    siteKitInstalled: false,
   },
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',

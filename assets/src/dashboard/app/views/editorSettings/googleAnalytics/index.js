@@ -75,7 +75,7 @@ export const TEXT = {
 function GoogleAnalyticsSettings({
   googleAnalyticsId,
   handleUpdate,
-  siteKitCapabilities,
+  siteKitCapabilities = {},
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');

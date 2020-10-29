@@ -27,6 +27,13 @@ import GoogleAnalyticsSettings, { TEXT } from '../';
 describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
   let googleAnalyticsId;
   let mockUpdate;
+  const defaultSiteKitCapabilities = {
+    analyticsModuleActive: false,
+    canActivatePlugins: true,
+    canInstallPlugins: true,
+    siteKitActive: false,
+    siteKitInstalled: false,
+  };
 
   beforeEach(() => {
     googleAnalyticsId = '';
@@ -44,6 +51,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -60,6 +68,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -73,9 +82,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitCapabilities={{
-          analyticsModuleActive: false,
-          canActivatePlugins: true,
-          canInstallPlugins: true,
+          ...defaultSiteKitCapabilities,
           siteKitActive: true,
           siteKitInstalled: true,
         }}
@@ -92,9 +99,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
         siteKitCapabilities={{
-          analyticsModuleActive: false,
-          canActivatePlugins: true,
-          canInstallPlugins: true,
+          ...defaultSiteKitCapabilities,
           siteKitActive: false,
           siteKitInstalled: true,
         }}
@@ -110,6 +115,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -123,6 +129,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -136,6 +143,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -153,6 +161,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -168,6 +177,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
@@ -182,6 +192,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
+        siteKitCapabilities={{ ...defaultSiteKitCapabilities }}
       />
     );
 
