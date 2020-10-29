@@ -24,12 +24,14 @@ import { __ } from '@wordpress/i18n';
  */
 import ColorContrastChecker from 'color-contrast-checker';
 
+const MAX_PAGE_LINKS = 3;
+const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
+const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
+
 const parseRGBFromCssRGB = (cssRGB) => {
   const [r, g, b] = cssRGB.match(/\d+/g).map((number) => parseInt(number));
   return { r, g, b };
 };
-
-const MAX_PAGE_LINKS = 3;
 
 /**
  * Check text element for low contrast between font and background color
@@ -233,12 +235,28 @@ export function pageTooManyLinks(page) {
 }
 
 /**
- * Check text element for link tappable region too small
+ * Check element with link for tappable region too small
  *
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function textElementTappableRegionTooSmall() {
+export function elementLinkTappableRegionTooSmall(element) {
+  const hasLink = element.link && element.link.url && element.link.url.length;
+  if (!hasLink) {
+    return undefined;
+  }
+
+  if (
+    element.width < LINK_TAPPABLE_REGION_MIN_WIDTH ||
+    element.height < LINK_TAPPABLE_REGION_MIN_HEIGHT
+  ) {
+    return {
+      message: __('Link tappable region is too small', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
