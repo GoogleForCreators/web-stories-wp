@@ -264,12 +264,6 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	global $web_stories_compatibility;
-
-	if ( ! $web_stories_compatibility->check_php_version() ) {
-		return;
-	}
-
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
