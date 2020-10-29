@@ -20,18 +20,32 @@
 import { __ } from '@wordpress/i18n';
 
 /**
- * External dependencies
+ * Internal dependencies
  */
-import ColorContrastChecker from 'color-contrast-checker';
+import {
+  calculateLuminanceFromRGB,
+  calculateLuminanceFromStyleColor,
+  checkContrastFromLuminances,
+} from '../../utils/contrastUtils';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
 
-const parseRGBFromCssRGB = (cssRGB) => {
-  const [r, g, b] = cssRGB.match(/\d+/g).map((number) => parseInt(number));
-  return { r, g, b };
-};
+let spansFromContentBuffer;
+function getSpansFromContent(content) {
+  // memoize buffer
+  if (!spansFromContentBuffer) {
+    spansFromContentBuffer = document.createElement('div');
+  }
+
+  spansFromContentBuffer.innerHTML = content;
+
+  // return Array instead of HtmlCollection
+  return Array.prototype.slice.call(
+    spansFromContentBuffer.getElementsByTagName('span')
+  );
+}
 
 /**
  * Check text element for low contrast between font and background color
@@ -40,7 +54,6 @@ const parseRGBFromCssRGB = (cssRGB) => {
  * @return {Object} Prepublish check response
  */
 export function textElementFontLowContrast(element) {
-  // skip if element is not a text element with a background color
   if (
     element.type !== 'text' ||
     element.backgroundTextMode === 'NONE' ||
@@ -49,35 +62,27 @@ export function textElementFontLowContrast(element) {
     return undefined;
   }
 
-  const ccc = new ColorContrastChecker();
-  ccc.fontSize = element.fontSize;
-
-  // calculate luminance manually for background color since it's already stored in { r, g, b }
-  // format and does not need to be parsed from hex
-  const backgroundRGB = element.backgroundColor.color; // { r, g, b }
-  const backgroundLRGB = ccc.calculateLRGB(backgroundRGB);
-  const backgroundLuminance = ccc.calculateLuminance(backgroundLRGB);
-
-  // create buffer to loop spans for colors
-  const buffer = document.createElement('div');
-  buffer.innerHTML = element.content;
-  const spans = Array.prototype.slice.call(buffer.getElementsByTagName('span'));
+  // get background luminance from text fill
+  // @todo: look for background image/color
+  const backgroundLuminance = calculateLuminanceFromRGB(
+    element.backgroundColor.color
+  );
 
   // check all spans for contrast ratios that don't pass verification
+  const spans = getSpansFromContent(element.content);
   let lowContrast = spans.some((span) => {
     if (!span.style || !span.style.color) {
       return false;
     }
 
-    const textRGB = parseRGBFromCssRGB(span.style.color); // style.color: "rgb(000, 000, 000)"
-    const textLRGB = ccc.calculateLRGB(textRGB);
-    const textLuminance = ccc.calculateLuminance(textLRGB);
-    const contrastRatio = ccc.getContrastRatio(
+    const textLuminance = calculateLuminanceFromStyleColor(span.style.color);
+
+    const contrastCheck = checkContrastFromLuminances(
       textLuminance,
-      backgroundLuminance
+      backgroundLuminance,
+      element.fontSize
     );
-    const verified = ccc.verifyContrastRatio(contrastRatio).WCAG_AA;
-    return !verified;
+    return !contrastCheck.WCAG_AA;
   });
 
   if (lowContrast) {
