@@ -31,12 +31,16 @@ use WP_Error;
 /**
  * Class Compatibility
  *
+ * @since 1.2.0
+ *
  * @package Google\Web_Stories
  */
 class Compatibility {
 
 	/**
 	 * WP_Error object passed back.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @var WP_Error
 	 */
@@ -45,12 +49,16 @@ class Compatibility {
 	/**
 	 * WordPress version.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @var string
 	 */
 	protected $wp_version;
 
 	/**
 	 * PHP version.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @var string
 	 */
@@ -59,6 +67,8 @@ class Compatibility {
 	/**
 	 * Array of extensions.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @var array
 	 */
 	protected $extensions = [];
@@ -66,12 +76,16 @@ class Compatibility {
 	/**
 	 * Array of required files.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @var array
 	 */
 	protected $required_files = [];
 
 	/**
 	 * Compatibility constructor.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @param WP_Error $error       WP_Error object passed back.
 	 */
@@ -81,6 +95,8 @@ class Compatibility {
 
 	/**
 	 * Check to see if PHP version check passes.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @return bool
 	 */
@@ -102,6 +118,8 @@ class Compatibility {
 	/**
 	 * Check to see if WordPress version check passes.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @return bool
 	 */
 	public function check_wp_version() {
@@ -121,6 +139,8 @@ class Compatibility {
 
 	/**
 	 * Check if required files.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @return bool
 	 */
@@ -150,6 +170,8 @@ class Compatibility {
 
 	/**
 	 * Check to see if all required PHP extensions are installed.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @return bool
 	 */
@@ -184,6 +206,8 @@ class Compatibility {
 
 	/**
 	 * Check to see if classes exist.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @return bool
 	 */
@@ -227,6 +251,8 @@ class Compatibility {
 	/**
 	 * Check to see if all require functions exist.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @return bool
 	 */
 	public function check_functions() {
@@ -269,6 +295,8 @@ class Compatibility {
 	/**
 	 * Run checks in admin.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @codeCoverageIgnore
 	 * @return void
 	 */
@@ -292,6 +320,8 @@ class Compatibility {
 	/**
 	 * Get min PHP version.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @codeCoverageIgnore
 	 * @return string
 	 */
@@ -301,6 +331,8 @@ class Compatibility {
 
 	/**
 	 * Array of extensions.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @codeCoverageIgnore
 	 * @return array
@@ -312,6 +344,8 @@ class Compatibility {
 	/**
 	 * Get JavaScript path.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @codeCoverageIgnore
 	 * @return array
 	 */
@@ -322,6 +356,8 @@ class Compatibility {
 	/**
 	 * Getter to get the error object.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @codeCoverageIgnore
 	 * @return WP_Error
 	 */
@@ -331,6 +367,8 @@ class Compatibility {
 
 	/**
 	 * Set WordPress version.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @codeCoverageIgnore
 	 * @param string $wp_version WordPress version.
@@ -343,6 +381,8 @@ class Compatibility {
 	/**
 	 * Set PHP version.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @codeCoverageIgnore
 	 * @param string $php_version PHP version.
 	 * @return void
@@ -354,6 +394,8 @@ class Compatibility {
 	/**
 	 * Set extensions.
 	 *
+	 * @since 1.2.0
+	 *
 	 * @codeCoverageIgnore
 	 * @param array $extensions Array of extensions.
 	 * @return void
@@ -364,6 +406,8 @@ class Compatibility {
 
 	/**
 	 * Array of require files.
+	 *
+	 * @since 1.2.0
 	 *
 	 * @codeCoverageIgnore
 	 *

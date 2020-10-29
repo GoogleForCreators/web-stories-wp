@@ -156,6 +156,8 @@ if ( ! $web_stories_compatibility->check_required_files() ) {
 }
 /**
  * Run logic to setup a new site with web stories.
+ * 
+ * @since 1.2.0
  *
  * @return void
  */
