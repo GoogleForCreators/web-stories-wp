@@ -112,22 +112,6 @@ class Compatibility extends \WP_UnitTestCase {
 		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
 	}
 
-
-	/**
-	 * @covers ::check_php_built
-	 */
-	public function test_check_php_built() {
-		$compatibility = $this->get_compatibility_object();
-		$compatibility->set_class_name( '\Google\Web_Stories\Fake' );
-		$results = $compatibility->check_php_built();
-		$this->assertFalse( $results );
-		$error       = $compatibility->get_error();
-		$error_codes = $error->get_error_codes();
-		$this->assertContains( 'failed_build', $error_codes );
-		$error_message = $error->get_error_message();
-		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
-	}
-
 	/**
 	 * @return \Google\Web_Stories\Compatibility
 	 */

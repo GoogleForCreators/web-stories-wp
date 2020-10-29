@@ -71,14 +71,6 @@ class Compatibility {
 	protected $required_files = [];
 
 	/**
-	 * Class name.
-	 *
-	 * @var string
-	 */
-	protected $class_name;
-
-
-	/**
 	 * Compatibility constructor.
 	 *
 	 * @param WP_Error $error       WP_Error object passed back.
@@ -120,30 +112,6 @@ class Compatibility {
 				'title' => $message,
 			];
 			$this->error->add( 'failed_check_wp_version', $message, $data );
-
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Check to see PHP has been built with composer.
-	 *
-	 * @return bool
-	 */
-	public function check_php_built() {
-		if ( ! class_exists( $this->get_class_name() ) ) {
-			$message =
-				sprintf(
-				/* translators: %s: build commands. */
-					__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-					'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
-				);
-			$data = [
-				'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
-			];
-			$this->error->add( 'failed_build', $message, $data );
 
 			return false;
 		}
@@ -306,7 +274,6 @@ class Compatibility {
 	 */
 	public function run_checks() {
 		$this->check_required_files();
-		$this->check_php_built();
 		$this->check_extensions();
 		$this->check_classes();
 		$this->check_functions();
@@ -350,16 +317,6 @@ class Compatibility {
 	 */
 	public function get_required_files() {
 		return (array) $this->required_files;
-	}
-
-	/**
-	 * Get class name.
-	 *
-	 * @codeCoverageIgnore
-	 * @return string
-	 */
-	public function get_class_name() {
-		return $this->class_name;
 	}
 
 	/**
@@ -416,16 +373,5 @@ class Compatibility {
 	 */
 	public function set_required_files( array $required_files ) {
 		$this->required_files = $required_files;
-	}
-
-	/**
-	 * Set class name.
-	 *
-	 * @codeCoverageIgnore
-	 * @param string $class_name Class name.
-	 * @return void
-	 */
-	public function set_class_name( $class_name ) {
-		$this->class_name = $class_name;
 	}
 }

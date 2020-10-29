@@ -86,7 +86,6 @@ $web_stories_compatibility->set_required_files(
 		WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
 	]
 );
-$web_stories_compatibility->set_class_name( '\Google\Web_Stories\Plugin' );
 
 /**
  * Displays an admin notice about why the plugin is unable to load.
@@ -151,7 +150,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 	}
 }
 
-if ( ! $web_stories_compatibility->check_php_built() ) {
+if ( ! $web_stories_compatibility->check_required_files() ) {
 	// However, we still need to stop further execution.
 	return;
 }
