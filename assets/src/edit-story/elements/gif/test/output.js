@@ -64,9 +64,7 @@ describe('Gif Output', () => {
       rotationAngle: 0,
     },
   };
-  it('should produce valid AMP output', async () => {
-    await expect(<GifOutput {...baseProps} />).toBeValidAMPStoryElement();
-  });
+
   it('should produce an AMP video with autoplay, no controls, no audio, and loop', async () => {
     const output = <GifOutput {...baseProps} />;
     const outputStr = renderToStaticMarkup(output);
@@ -76,5 +74,32 @@ describe('Gif Output', () => {
       )
     );
     await expect(outputStr).toMatchSnapshot();
+  });
+
+  it('should include poster image if available', async () => {
+    const newProps = { ...baseProps };
+    newProps.element.resource.output.poster =
+      'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png';
+    const output = <GifOutput {...newProps} />;
+    const outputStr = renderToStaticMarkup(output);
+    await expect(outputStr).toStrictEqual(
+      expect.stringMatching(
+        'src="https://c.tenor.com/4F2m7BWP6KYAAAPo/flying-kiss-muah.mp4"'
+      )
+    );
+    await expect(outputStr).toMatchSnapshot();
+  });
+
+  describe('AMP validation', () => {
+    it('should produce valid AMP output', async () => {
+      await expect(<GifOutput {...baseProps} />).toBeValidAMPStoryElement();
+    });
+
+    it('should produce valid AMP output with poster', async () => {
+      const newProps = { ...baseProps };
+      newProps.element.resource.output.poster =
+        'https://c.tenor.com/4F2m7BWP6KYAAAAC/flying-kiss-muah-poster.png';
+      await expect(<GifOutput {...newProps} />).toBeValidAMPStoryElement();
+    });
   });
 });
