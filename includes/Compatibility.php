@@ -313,6 +313,8 @@ class Compatibility {
 	 * @param string|int $code    Error code.
 	 * @param string     $message Error message.
 	 * @param mixed      $data    Optional. Error data.
+	 *
+	 * @return void
 	 */
 	protected function add_to_error( $code, $message, $data = '' ) {
 		if ( ! in_array( $code, $this->error->get_error_codes(), true ) ) {

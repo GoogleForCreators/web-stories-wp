@@ -113,6 +113,26 @@ class Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::check_required_files
+	 * @covers ::add_to_error
+	 */
+	public function test_add_to_error() {
+		$compatibility = $this->get_compatibility_object();
+		$compatibility->set_required_files( [ WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' ] );
+		$results  = $compatibility->check_required_files();
+		$results2 = $compatibility->check_required_files();
+		$this->assertFalse( $results );
+		$this->assertFalse( $results2 );
+		$error       = $compatibility->get_error();
+		$error_codes = $error->get_error_codes();
+		$this->assertContains( 'failed_check_required_files', $error_codes );
+		$error_message = $error->get_error_message();
+		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
+		$messages = $error->get_error_messages( 'failed_check_required_files' );
+		$this->assertCount( 1, $messages );
+	}
+
+	/**
 	 * @return \Google\Web_Stories\Compatibility
 	 */
 	protected function get_compatibility_object() {
