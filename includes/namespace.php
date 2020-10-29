@@ -121,6 +121,7 @@ function _print_missing_build_admin_notice() {
 add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
 
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
+	// Only check for built php files in a CLI context.
 	$web_stories_compatibility->set_required_files(
 		[
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
