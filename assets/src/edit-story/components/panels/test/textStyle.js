@@ -488,7 +488,7 @@ describe('Panels/TextStyle', () => {
   describe('FontControls', () => {
     it('should select font', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      await act(() => controls.font.onChange('Neu Font'));
+      await act(() => controls.font.onChange({ id: 'Neu Font' }));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
           font: {

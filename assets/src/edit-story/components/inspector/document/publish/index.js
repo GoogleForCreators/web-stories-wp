@@ -136,9 +136,11 @@ function PublishPanel() {
     if (users?.length) {
       const currentAuthor = users.find(({ id }) => author === id);
       if (!currentAuthor) {
-        getUserById(author).then(({ id, name }) => {
-          setVisibleOptions([{ id, name }, ...users]);
-        });
+        getUserById(author)
+          .then(({ id, name }) => {
+            setVisibleOptions([{ id, name }, ...users]);
+          })
+          .catch(() => setVisibleOptions(users));
       } else {
         setVisibleOptions(users);
       }
