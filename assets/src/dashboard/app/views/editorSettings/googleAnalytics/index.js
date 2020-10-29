@@ -130,7 +130,7 @@ function GoogleAnalyticsSettings({
       return TEXT.SITE_KIT_IN_USE;
     }
 
-    if (siteKitInstalled && !siteKitActive) {
+    if (siteKitInstalled) {
       return (
         <TranslateWithMarkup
           mapping={{
@@ -173,7 +173,7 @@ function GoogleAnalyticsSettings({
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
-            disabled={siteKitInstalled} // if site kit is installed we don't want to change anything here
+            disabled={siteKitInstalled}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}
