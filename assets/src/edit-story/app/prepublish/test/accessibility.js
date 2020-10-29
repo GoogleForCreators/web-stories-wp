@@ -458,14 +458,32 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
     });
   });
 
-  describe('textElementTappableRegionTooSmall', () => {
+  describe('elementLinkTappableRegionTooSmall', () => {
+    it('should return a warning if element tappable region is too small', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        link: {
+          url: 'https://google.com',
+        },
+        content: 'G',
+        width: 40,
+        height: 40,
+      };
+      expect(
+        accessibilityChecks.elementLinkTappableRegionTooSmall(element)
+      ).toStrictEqual({
+        message: 'Link tappable region is too small',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
     it.todo(
-      'should return a warning if text element tappable region is too small'
+      'should return undefined if element has large enough tappable region'
     );
-    it.todo(
-      'should return undefined if text element has large enough tappable region'
-    );
-    it.todo('should return undefined if not an text element');
+
+    it.todo('should return undefined if not an element with link');
   });
 
   describe('imageElementMissingAlt', () => {
