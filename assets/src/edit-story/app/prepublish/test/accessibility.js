@@ -222,21 +222,159 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
   });
 
   describe('videoElementMissingTitle', () => {
-    it.todo('should return a warning if video element missing title');
-    it.todo('should return undefined if video element has title');
-    it.todo('should return undefined if not an video element');
+    it('should return a warning if video element missing title', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingTitle(element)
+      ).toStrictEqual({
+        message: 'Video is missing title',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return a warning if video element has empty title', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+        title: '',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingTitle(element)
+      ).toStrictEqual({
+        message: 'Video is missing title',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return undefined if video element has title', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+        title: 'Video title',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingTitle(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if not an image element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingTitle(element)
+      ).toBeUndefined();
+    });
   });
 
-  describe('videoElementMissingSubtitle', () => {
-    it.todo('should return a warning if video element missing subtitle');
-    it.todo('should return undefined if video element has subtitle');
-    it.todo('should return undefined if not an video element');
+  describe('videoElementMissingAlt', () => {
+    it('should return a warning if video element missing alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+      };
+      expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
+        {
+          message: 'Video is missing assistive text',
+          elementId: element.id,
+          type: 'warning',
+        }
+      );
+    });
+
+    it('should return a warning if video element has empty alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+        alt: '',
+      };
+      expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
+        {
+          message: 'Video is missing assistive text',
+          elementId: element.id,
+          type: 'warning',
+        }
+      );
+    });
+
+    it('should return undefined if video element has alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+        alt: 'Video is about things',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingAlt(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if not an image element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingAlt(element)
+      ).toBeUndefined();
+    });
   });
 
   describe('videoElementMissingCaptions', () => {
-    it.todo('should return a warning if video element missing captions');
-    it.todo('should return undefined if video element has captions');
-    it.todo('should return undefined if not an video element');
+    it('should return a warning if video element missing captions', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingCaptions(element)
+      ).toStrictEqual({
+        message: 'Video is missing captions',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return a warning if video element has empty captions', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+        tracks: [],
+      };
+      expect(
+        accessibilityChecks.videoElementMissingCaptions(element)
+      ).toStrictEqual({
+        message: 'Video is missing captions',
+        elementId: element.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return undefined if video element has captions', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        tracks: [{ id: 'trackid' }],
+      };
+      expect(
+        accessibilityChecks.videoElementMissingCaptions(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if not an image element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+      };
+      expect(
+        accessibilityChecks.videoElementMissingCaptions(element)
+      ).toBeUndefined();
+    });
   });
 
   describe('pageTooManyLinks', () => {
