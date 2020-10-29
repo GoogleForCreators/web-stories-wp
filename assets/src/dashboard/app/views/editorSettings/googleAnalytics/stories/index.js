@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -35,12 +35,13 @@ export const _default = () => {
     <GoogleAnalyticsSettings
       onUpdateGoogleAnalyticsId={action('update google analytics id submitted')}
       googleAnalyticsId={text('googleAnalyticsId', 'UA-000000-98')}
-      siteKitPluginStatus={select('siteKitPluginStatus', [
-        'inactive',
-        'active',
-        false,
-      ])}
-      canInstallPlugins={boolean('canInstallPlugins', true)}
+      siteKitCapabilities={{
+        analyticsModuleActive: boolean('analyticsModuleActive', false),
+        canActivatePlugins: boolean('canActivatePlugins', true),
+        canInstallPlugins: boolean('canInstallPlugins', true),
+        siteKitActive: boolean('siteKitActive', false),
+        siteKitInstalled: boolean('siteKitInstalled', false),
+      }}
     />
   );
 };

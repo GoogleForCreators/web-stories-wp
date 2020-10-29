@@ -67,12 +67,18 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  it('should not allow the input to be active when siteKitPluginStatus is "inactive"', function () {
+  it('should not allow the input to be active when site kit is active', function () {
     const { getByRole } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitPluginStatus="inactive"
+        siteKitCapabilities={{
+          analyticsModuleActive: false,
+          canActivatePlugins: true,
+          canInstallPlugins: true,
+          siteKitActive: true,
+          siteKitInstalled: true,
+        }}
       />
     );
 
@@ -80,12 +86,18 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     expect(input).toBeDisabled();
   });
 
-  it('should not allow the input to be active when siteKitPluginStatus is "active"', function () {
+  it('should not allow the input to be active when site kit is installed', function () {
     const { getByRole } = renderWithProviders(
       <GoogleAnalyticsSettings
         googleAnalyticsId={googleAnalyticsId}
         handleUpdate={mockUpdate}
-        siteKitPluginStatus="active"
+        siteKitCapabilities={{
+          analyticsModuleActive: false,
+          canActivatePlugins: true,
+          canInstallPlugins: true,
+          siteKitActive: false,
+          siteKitInstalled: true,
+        }}
       />
     );
 

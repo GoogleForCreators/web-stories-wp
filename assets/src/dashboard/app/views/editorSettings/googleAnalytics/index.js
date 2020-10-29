@@ -75,13 +75,18 @@ export const TEXT = {
 function GoogleAnalyticsSettings({
   googleAnalyticsId,
   handleUpdate,
-  canInstallPlugins,
-  siteKitPluginStatus,
+  siteKitCapabilities,
 }) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
+
+  const {
+    canInstallPlugins,
+    siteKitActive,
+    siteKitInstalled,
+  } = siteKitCapabilities;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -131,7 +136,7 @@ function GoogleAnalyticsSettings({
           {TEXT.SECTION_HEADING}
         </SettingHeading>
         <HelperText>
-          {!siteKitPluginStatus && (
+          {!siteKitInstalled && (
             <TranslateWithMarkup
               mapping={{
                 a: <InlineLink href={siteKitLink} />,
@@ -140,7 +145,7 @@ function GoogleAnalyticsSettings({
               {TEXT.SITE_KIT_NOT_INSTALLED}
             </TranslateWithMarkup>
           )}
-          {siteKitPluginStatus === 'inactive' && (
+          {siteKitInstalled && !siteKitActive && (
             <TranslateWithMarkup
               mapping={{
                 a: <InlineLink href={siteKitLink} />,
@@ -150,7 +155,7 @@ function GoogleAnalyticsSettings({
             </TranslateWithMarkup>
           )}
 
-          {siteKitPluginStatus === 'active' && TEXT.SITE_KIT_IN_USE}
+          {siteKitActive && TEXT.SITE_KIT_IN_USE}
         </HelperText>
       </div>
       <FormContainer>
@@ -166,7 +171,7 @@ function GoogleAnalyticsSettings({
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
-            disabled={Boolean(siteKitPluginStatus)} // if site kit is installed we don't want to change anything here
+            disabled={siteKitInstalled} // if site kit is installed we don't want to change anything here
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}
@@ -189,8 +194,13 @@ function GoogleAnalyticsSettings({
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
-  siteKitPluginStatus: PropTypes.oneOf(['inactive', 'active', false]),
-  canInstallPlugins: PropTypes.bool,
+  siteKitCapabilities: PropTypes.shape({
+    analyticsModuleActive: PropTypes.bool,
+    canActivatePlugins: PropTypes.bool,
+    canInstallPlugins: PropTypes.bool,
+    siteKitActive: PropTypes.bool,
+    siteKitInstalled: PropTypes.bool,
+  }),
 };
 
 export default GoogleAnalyticsSettings;

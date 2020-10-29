@@ -40,6 +40,13 @@ const defaultConfig = {
     canInstallPlugins: true,
     siteKitPluginStatus: false,
   },
+  siteKitCapabilities: {
+    analyticsModuleActive: false,
+    canActivatePlugins: true,
+    canInstallPlugins: true,
+    siteKitActive: false,
+    siteKitInstalled: true,
+  },
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',
   isRTL: false,

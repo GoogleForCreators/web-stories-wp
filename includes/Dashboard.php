@@ -238,24 +238,14 @@ class Dashboard {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return string|false if plugin is present return 'active' or 'inactive', otherwise return false
+	 * @return boolean 
 	 */
 	public function determine_site_kit_plugin_status() {
 
 		// Get all plugins
 		$all_plugins = get_plugins();
 
-		// check if site kit is an installed plugin
-		if ( array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins ) ) {
-			$is_site_kit_active = is_plugin_active( 'google-site-kit/google-site-kit.php' );
-			if ( $is_site_kit_active ) {
-				return 'active';
-			}
-			return 'inactive';
-		}
-		
-		// if not installed just return false
-		return false;
+		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**
@@ -365,13 +355,19 @@ class Dashboard {
 					'templates'   => '/web-stories/v1/web-story-template',
 					'settings'    => '/web-stories/v1/settings',
 				],
-				'maxUpload'          => $max_upload_size,
-				'maxUploadFormatted' => size_format( $max_upload_size ),
-				'capabilities'       => [
-					'canManageSettings'   => current_user_can( 'manage_options' ),
-					'canInstallPlugins'   => current_user_can( 'install_plugins' ),
-					'canUploadFiles'      => current_user_can( 'upload_files' ),
-					'siteKitPluginStatus' => $this->determine_site_kit_plugin_status(),
+				'maxUpload'           => $max_upload_size,
+				'maxUploadFormatted'  => size_format( $max_upload_size ),
+				'capabilities'        => [
+					'canManageSettings' => current_user_can( 'manage_options' ),
+					'canUploadFiles'    => current_user_can( 'upload_files' ),
+					
+				],
+				'siteKitCapabilities' => [
+					'siteKitInstalled'      => $this->determine_site_kit_plugin_status(),
+					'siteKitActive'         => defined( 'GOOGLESITEKIT_VERSION' ),
+					'analyticsModuleActive' => false, // TODO: copy the logic from Analytics.php we need to share somehow.
+					'canInstallPlugins'     => current_user_can( 'install_plugins' ),
+					'canActivatePlugins'    => current_user_can( 'activate_plugin', 'google-site-kit/google-site-kit.php' ),
 				],
 				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
 			],
