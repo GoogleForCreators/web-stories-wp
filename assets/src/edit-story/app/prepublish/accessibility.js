@@ -159,7 +159,11 @@ export function videoElementMissingTitle(element) {
     return undefined;
   }
 
-  if (!element.title || !element.title.length) {
+  const { resource } = element;
+  if (
+    (!element.title || !element.title.length) &&
+    (!resource.title || !resource.title.length)
+  ) {
     return {
       message: __('Video is missing title', 'web-stories'),
       elementId: element.id,
@@ -181,7 +185,11 @@ export function videoElementMissingAlt(element) {
     return undefined;
   }
 
-  if (!element.alt || !element.alt.length) {
+  const { resource } = element;
+  if (
+    (!element.alt || !element.alt.length) &&
+    (!resource.alt || !resource.alt.length)
+  ) {
     return {
       message: __('Video is missing assistive text', 'web-stories'),
       elementId: element.id,
@@ -276,7 +284,11 @@ export function imageElementMissingAlt(element) {
     return undefined;
   }
 
-  if (!element.alt || !element.alt.length) {
+  const { resource } = element;
+  if (
+    (!element.alt || !element.alt.length) &&
+    (!resource.alt || !resource.alt.length)
+  ) {
     return {
       message: __('Image is missing alt text', 'web-stories'),
       elementId: element.id,

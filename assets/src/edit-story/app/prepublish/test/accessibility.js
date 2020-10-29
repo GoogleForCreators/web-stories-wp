@@ -226,6 +226,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'video',
+        resource: {},
       };
       expect(
         accessibilityChecks.videoElementMissingTitle(element)
@@ -241,6 +242,9 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
         title: '',
+        resource: {
+          title: '',
+        },
       };
       expect(
         accessibilityChecks.videoElementMissingTitle(element)
@@ -256,6 +260,20 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
         title: 'Video title',
+        resource: {},
+      };
+      expect(
+        accessibilityChecks.videoElementMissingTitle(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if video resource has title', () => {
+      const element = {
+        id: 'elementid',
+        type: 'video',
+        resource: {
+          title: 'Video title',
+        },
       };
       expect(
         accessibilityChecks.videoElementMissingTitle(element)
@@ -266,6 +284,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'text',
+        resource: {},
       };
       expect(
         accessibilityChecks.videoElementMissingTitle(element)
@@ -278,6 +297,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'video',
+        resource: {},
       };
       expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
         {
@@ -293,6 +313,9 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
         alt: '',
+        resource: {
+          alt: '',
+        },
       };
       expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
         {
@@ -308,6 +331,20 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
         alt: 'Video is about things',
+        resource: {},
+      };
+      expect(
+        accessibilityChecks.videoElementMissingAlt(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if video resource has alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+        resource: {
+          alt: 'Image is about things',
+        },
       };
       expect(
         accessibilityChecks.videoElementMissingAlt(element)
@@ -318,6 +355,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'text',
+        resource: {},
       };
       expect(
         accessibilityChecks.videoElementMissingAlt(element)
@@ -491,6 +529,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'image',
+        resource: {},
       };
       expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
         {
@@ -506,6 +545,9 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'image',
         alt: '',
+        resource: {
+          alt: '',
+        },
       };
       expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
         {
@@ -521,6 +563,20 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'image',
         alt: 'Image is about things',
+        resource: {},
+      };
+      expect(
+        accessibilityChecks.imageElementMissingAlt(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if image resource has alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+        resource: {
+          alt: 'Image is about things',
+        },
       };
       expect(
         accessibilityChecks.imageElementMissingAlt(element)
@@ -531,6 +587,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'text',
+        resource: {},
       };
       expect(
         accessibilityChecks.imageElementMissingAlt(element)
