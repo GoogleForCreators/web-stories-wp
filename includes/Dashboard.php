@@ -100,7 +100,7 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
-		add_action( 'determine_site_kit_plugin_status', [ $this, 'determine_site_kit_plugin_status' ] );
+		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -240,7 +240,7 @@ class Dashboard {
 	 *
 	 * @return boolean 
 	 */
-	public function determine_site_kit_plugin_status() {
+	public function is_site_kit_plugin_installed() {
 
 		// Get all plugins
 		$all_plugins = get_plugins();
@@ -338,16 +338,16 @@ class Dashboard {
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
-				'isRTL'              => is_rtl(),
-				'locale'             => ( new Locale() )->get_locale_settings(),
-				'newStoryURL'        => $new_story_url,
-				'editStoryURL'       => $edit_story_url,
-				'wpListURL'          => $classic_wp_list_url,
-				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
-				'version'            => WEBSTORIES_VERSION,
-				'encodeMarkup'       => $this->decoder->supports_decoding(),
-				'api'                => [
+				'isRTL'               => is_rtl(),
+				'locale'              => ( new Locale() )->get_locale_settings(),
+				'newStoryURL'         => $new_story_url,
+				'editStoryURL'        => $edit_story_url,
+				'wpListURL'           => $classic_wp_list_url,
+				'assetsURL'           => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'              => trailingslashit( WEBSTORIES_CDN_URL ),
+				'version'             => WEBSTORIES_VERSION,
+				'encodeMarkup'        => $this->decoder->supports_decoding(),
+				'api'                 => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',
 					'currentUser' => '/web-stories/v1/users/me',
@@ -363,7 +363,7 @@ class Dashboard {
 					
 				],
 				'siteKitCapabilities' => [
-					'siteKitInstalled'      => $this->determine_site_kit_plugin_status(),
+					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),
 					'siteKitActive'         => defined( 'GOOGLESITEKIT_VERSION' ),
 					'analyticsModuleActive' => false, // TODO: copy the logic from Analytics.php we need to share somehow.
 					'canInstallPlugins'     => current_user_can( 'install_plugins' ),
