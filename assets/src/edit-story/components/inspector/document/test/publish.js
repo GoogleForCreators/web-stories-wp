@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -91,45 +91,45 @@ function setupPanel(
 }
 
 describe('PublishPanel', () => {
-  it('should render PublishPanel', () => {
+  it('should render PublishPanel', async () => {
     const { getByText } = setupPanel();
     const publishPanel = getByText('Publishing');
     const publisherLogo = getByText('Publisher Logo');
 
-    expect(publishPanel).toBeDefined();
-    expect(publisherLogo).toBeDefined();
+    await waitFor(() => expect(publishPanel).toBeDefined());
+    await waitFor(() => expect(publisherLogo).toBeDefined());
   });
 
-  it('should display Author field if authors available', () => {
+  it('should display Author field if authors available', async () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Author' });
-    expect(element).toBeDefined();
+    await waitFor(() => expect(element).toBeDefined());
   });
 
-  it('should not display Author field without correct permissions', () => {
+  it('should not display Author field without correct permissions', async () => {
     const { queryByText } = setupPanel({
       hasAssignAuthorAction: false,
     });
     const element = queryByText('Author');
-    expect(element).toBeNull();
+    await waitFor(() => expect(element).toBeNull());
   });
 
-  it('should open Date picker when clicking on date', () => {
+  it('should open Date picker when clicking on date', async () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
     const calendar = getByRole('button', { name: 'January 2020' });
-    expect(calendar).toBeDefined();
+    await waitFor(() => expect(calendar).toBeDefined());
   });
 
-  it('should update the story when choosing a date from the calendar', () => {
+  it('should update the story when choosing a date from the calendar', async () => {
     const { getByRole, updateStory } = setupPanel();
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
     const firstOfJanuary = getByRole('button', { name: 'January 1, 2020' });
-    expect(firstOfJanuary).toBeDefined();
+    await waitFor(() => expect(firstOfJanuary).toBeDefined());
 
     fireEvent.click(firstOfJanuary);
     expect(updateStory).toHaveBeenCalledTimes(1);
@@ -140,7 +140,7 @@ describe('PublishPanel', () => {
     expect(date.getFullYear()).toStrictEqual(2020);
   });
 
-  it('should update the story when choosing time', () => {
+  it('should update the story when choosing time', async () => {
     const { getByRole, getByLabelText, updateStory } = setupPanel();
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
@@ -149,7 +149,7 @@ describe('PublishPanel', () => {
     const minutes = getByLabelText('Minutes');
     const am = getByRole('button', { name: 'AM' });
 
-    expect(minutes).toBeDefined();
+    await waitFor(() => expect(minutes).toBeDefined());
     expect(hours).toBeDefined();
     expect(am).toBeDefined();
 
@@ -176,7 +176,7 @@ describe('PublishPanel', () => {
     expect(date3.getHours()).toStrictEqual(9);
   });
 
-  it('should not update the date with incorrect times', () => {
+  it('should not update the date with incorrect times', async () => {
     const { getByRole, getByLabelText, updateStory } = setupPanel();
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
@@ -190,10 +190,10 @@ describe('PublishPanel', () => {
     fireEvent.change(minutes, { target: { value: '130' } });
     fireEvent.blur(minutes);
 
-    expect(updateStory).toHaveBeenCalledTimes(0);
+    await waitFor(() => expect(updateStory).toHaveBeenCalledTimes(0));
   });
 
-  it('should open the calendar via keyboard events', () => {
+  it('should open the calendar via keyboard events', async () => {
     const { getByRole, queryByLabelText } = setupPanel();
 
     let dateInCalendar = queryByLabelText('January 1, 2020');
@@ -206,6 +206,6 @@ describe('PublishPanel', () => {
     });
 
     dateInCalendar = getByRole('button', { name: 'January 1, 2020' });
-    expect(dateInCalendar).toBeDefined();
+    await waitFor(() => expect(dateInCalendar).toBeDefined());
   });
 });
