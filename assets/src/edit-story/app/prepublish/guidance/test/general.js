@@ -13,3 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+// import generalGuidelines from '../general';
+
+describe('Pre-publish checklist - general guidelines (guidance)', () => {
+  it.todo(
+    'should return guidance if story has less than 4 pages or more than 30 pages'
+  );
+
+  it.todo(
+    'should return guidance if the story title is longer than 40 characters'
+  );
+
+  it.todo(
+    'should return guidance if the story is missing landscape poster/cover'
+  );
+
+  // the story's poster/cover sizes are not saved
+  it.todo("should return guidance if the story's poster/cover is too small");
+});
