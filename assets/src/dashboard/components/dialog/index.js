@@ -28,7 +28,11 @@ import Modal from '../modal';
 
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div(
-  ({ theme: { colors } }) => `
+  ({
+    theme: {
+      internalTheme: { colors },
+    },
+  }) => `
     display: flex;
     position: relative;
     overflow-y: auto;
@@ -54,7 +58,7 @@ const DialogTitle = styled.h1`
   ${TypographyPresets.Large};
   flex: 0 0 auto;
   margin: 0 24px;
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
 `;
 const DialogContent = styled.div`
   ${TypographyPresets.Medium};
@@ -62,7 +66,7 @@ const DialogContent = styled.div`
   padding: 24px 0 16px;
   margin: 0 24px;
   overflow-y: auto;
-  color: ${({ theme }) => theme.colors.gray700};
+  color: ${({ theme }) => theme.internalTheme.colors.gray700};
 `;
 
 const DialogActions = styled.div`

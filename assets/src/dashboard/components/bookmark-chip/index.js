@@ -45,11 +45,11 @@ const chipSize = {
 
 const ChipContainer = styled.button`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.white};
-  border: ${({ theme }) => theme.borders.transparent};
-  border-radius: ${({ theme }) => theme.button.borderRadius}px;
-  box-shadow: ${({ theme }) => theme.chip.shadow};
-  color: ${({ theme }) => theme.colors.gray500};
+  background-color: ${({ theme }) => theme.internalTheme.colors.white};
+  border: ${({ theme }) => theme.internalTheme.borders.transparent};
+  border-radius: ${({ theme }) => theme.internalTheme.button.borderRadius}px;
+  box-shadow: ${({ theme }) => theme.internalTheme.chip.shadow};
+  color: ${({ theme }) => theme.internalTheme.colors.gray500};
   cursor: pointer;
   display: flex;
   padding: 5px;
@@ -59,15 +59,15 @@ const ChipContainer = styled.button`
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.colors.gray600};
+    color: ${({ theme }) => theme.internalTheme.colors.gray600};
   }
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) => theme.colors.action};
+    border-color: ${({ theme }) => theme.internalTheme.colors.action};
   }
 
   &:disabled {
-    color: ${({ theme }) => theme.colors.gray500};
+    color: ${({ theme }) => theme.internalTheme.colors.gray500};
     opacity: 0.5;
     pointer-events: none;
   }

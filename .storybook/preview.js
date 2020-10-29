@@ -92,7 +92,13 @@ addDecorator((story, { id }) => {
   if (isDashboardStorybook) {
     return (
       <FlagsProvider features={{ enableAnimation: true }}>
-        <ThemeProvider theme={dashboardTheme}>
+        <ThemeProvider
+          theme={{
+            internalTheme: dashboardTheme,
+            ...designSystemTheme,
+            colors: lightMode,
+          }}
+        >
           <ConfigProvider
             config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
           >
@@ -110,7 +116,7 @@ addDecorator((story, { id }) => {
 
   if (isDesignSystemStorybook) {
     // override darkMode colors
-    const dsTheme = { ...designSystemTheme, colors: { ...lightMode } };
+    const dsTheme = { ...designSystemTheme, colors: lightMode };
     return <ThemeProvider theme={dsTheme}>{story()}</ThemeProvider>;
   }
 

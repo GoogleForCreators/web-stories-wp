@@ -83,18 +83,20 @@ const PreviewContainer = styled.div`
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
+  width: ${({ theme }) => theme.internalTheme.previewWidth.thumbnail}px;
+  height: ${({ theme }) =>
+    theme.internalTheme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.borders.gray75};
+  border-radius: ${({ theme }) =>
+    theme.internalTheme.storyPreview.borderRadius}px;
+  border: ${({ theme }) => theme.internalTheme.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
-  width: ${({ theme }) => theme.table.headerContentSize}px;
+  width: ${({ theme }) => theme.internalTheme.table.headerContentSize}px;
   height: 100%;
   display: inline-grid;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.internalTheme.colors.gray900};
   vertical-align: middle;
 
   svg {
@@ -108,13 +110,13 @@ const ArrowIconWithTitle = styled(ArrowIcon)`
   margin-left: 6px;
   margin-top: -2px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
     margin-left: 4px;
   }
 `;
 
 const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
-  color: ${({ theme }) => theme.colors.bluePrimary};
+  color: ${({ theme }) => theme.internalTheme.colors.bluePrimary};
   font-weight: 500;
   cursor: pointer;
 `;

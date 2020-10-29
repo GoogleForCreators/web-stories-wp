@@ -41,9 +41,10 @@ import { ActionLabel } from './types';
 
 const PreviewPane = styled.div`
   position: relative;
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
+  border-radius: ${({ theme }) =>
+    theme.internalTheme.storyPreview.borderRadius}px;
   height: ${({ cardSize }) => `${cardSize.containerHeight}px`};
-  border: ${({ theme }) => theme.borders.gray75};
+  border: ${({ theme }) => theme.internalTheme.borders.gray75};
   width: 100%;
   overflow: hidden;
   z-index: -1;
@@ -61,16 +62,20 @@ const EditControls = styled.div`
   justify-content: space-between;
   padding: 0;
   transition: opacity ease-in-out 300ms;
-  background: ${({ theme }) => theme.cardItem.previewOverlay};
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
+  background: ${({ theme }) => theme.internalTheme.cardItem.previewOverlay};
+  border-radius: ${({ theme }) =>
+    theme.internalTheme.storyPreview.borderRadius}px;
   opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
-      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
+      `2px solid ${rgba(
+        theme.internalTheme.colors.bluePrimary,
+        0.85
+      )} !important`};
   }
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.smallDisplayPhone} {
     button,
     a {
       min-width: ${({ cardSize }) => cardSize.width};

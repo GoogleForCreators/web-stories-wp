@@ -39,7 +39,7 @@ import {
 import { DROPDOWN_TYPES, VIEW_STYLE } from '../../../constants';
 
 const DisplayFormatContainer = styled.div`
-  height: ${({ theme }) => theme.formatContainer.height}px;
+  height: ${({ theme }) => theme.internalTheme.formatContainer.height}px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,13 +63,13 @@ const ControlsContainer = styled.div`
 
 const Label = styled.span`
   ${TypographyPresets.Small};
-  color: ${({ theme }) => theme.colors.gray500};
+  color: ${({ theme }) => theme.internalTheme.colors.gray500};
 `;
 
 const ExternalLink = styled.a`
   ${TypographyPresets.Small};
   margin-right: 15px;
-  color: ${({ theme }) => theme.colors.bluePrimary};
+  color: ${({ theme }) => theme.internalTheme.colors.bluePrimary};
   font-weight: 500;
   cursor: pointer;
   text-decoration: none;

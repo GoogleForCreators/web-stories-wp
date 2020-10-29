@@ -50,21 +50,21 @@ export const PillLabel = styled.span(
     padding-right: ${isSelected ? '4px' : '20px'};
     padding-left: ${isSelected ? `${ACTIVE_CHOICE_ICON_SIZE}px` : '20px'};
     align-items: center;
-    background-color: ${theme.colors.white};
-    color: ${theme.colors.gray700};
-    border: ${theme.borders.gray50};
-    border-radius: ${theme.button.borderRadius}px;
+    background-color: ${theme.internalTheme.colors.white};
+    color: ${theme.internalTheme.colors.gray700};
+    border: ${theme.internalTheme.borders.gray50};
+    border-radius: ${theme.internalTheme.button.borderRadius}px;
 
     ${PillInput}:enabled:hover + & {
-      background-color: ${theme.colors.blueLight};
+      background-color: ${theme.internalTheme.colors.blueLight};
     }
 
     ${PillInput}:focus + & { 
-      border: ${theme.borders.action};
+      border: ${theme.internalTheme.borders.action};
     }
 
     ${PillInput}:checked + & {
-      background-color: ${theme.colors.blueLight};
+      background-color: ${theme.internalTheme.colors.blueLight};
     }
 
     ${PillInput}:disabled + & {
@@ -84,7 +84,7 @@ export const FloatingTabLabel = styled(PillLabel)`
   border-color: transparent;
 
   ${PillInput}:checked + & {
-    box-shadow: ${({ theme }) => theme.floatingTab.shadow};
+    box-shadow: ${({ theme }) => theme.internalTheme.floatingTab.shadow};
     background-color: transparent;
   }
 `;
@@ -124,8 +124,8 @@ export const ActiveSwatchIcon = styled(CheckmarkIcon).attrs({
   padding: 2px;
   color: ${({ theme, hex = '#000' }) =>
     hex.toLowerCase().includes('fff')
-      ? theme.colors.black
-      : theme.colors.white};
+      ? theme.internalTheme.colors.black
+      : theme.internalTheme.colors.white};
   transition: opacity 0.2s ${BEZIER.outSine};
 `;
 
@@ -137,8 +137,8 @@ export const ActiveChoiceIcon = styled(CloseIcon).attrs({
   width: ACTIVE_CHOICE_ICON_SIZE,
   height: ACTIVE_CHOICE_ICON_SIZE,
 })`
-  background-color: ${({ theme }) => theme.colors.gray700};
-  color: ${({ theme }) => theme.colors.blueLight};
+  background-color: ${({ theme }) => theme.internalTheme.colors.gray700};
+  color: ${({ theme }) => theme.internalTheme.colors.blueLight};
   border-radius: 50%;
   padding: 3px;
   margin-left: ${ACTIVE_CHOICE_LEFT_MARGIN}px;

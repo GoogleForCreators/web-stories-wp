@@ -26,7 +26,7 @@ const PillContainer = styled.div`
   align-items: center;
   height: 44px;
   padding: 0 10px;
-  border-radius: ${({ theme }) => theme.button.borderRadius}px;
+  border-radius: ${({ theme }) => theme.internalTheme.button.borderRadius}px;
   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.25);
 `;
 
@@ -42,7 +42,7 @@ const PillPart = styled.div`
       width: 1px;
       height: 20px;
       margin: 0 10px;
-      background-color: ${({ theme }) => theme.colors.gray75};
+      background-color: ${({ theme }) => theme.internalTheme.colors.gray75};
     }
   }
 `;
@@ -55,8 +55,8 @@ function MultiPartPill({ children }) {
 
   return (
     <PillContainer>
-      {parts.map((part, index) => (
-        <PillPart key={index}>{part}</PillPart>
+      {parts.map((part) => (
+        <PillPart key={`${part}_pill`}>{part}</PillPart>
       ))}
     </PillContainer>
   );

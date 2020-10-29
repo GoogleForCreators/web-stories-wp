@@ -36,7 +36,7 @@ export const AnimationList = styled.div(
     width: 100%;
     height: 100%;
     overflow: scroll;
-    background-color: ${theme.colors.gray25};
+    background-color: ${theme.internalTheme.colors.gray25};
   `
 );
 
@@ -81,7 +81,7 @@ export const DeleteIcon = styled(CloseIconBase).attrs({
   width: 12,
   height: 12,
 })`
-  color: ${({ theme }) => theme.colors.gray700};
+  color: ${({ theme }) => theme.internalTheme.colors.gray700};
 `;
 
 export const LabelButton = styled.button(
@@ -93,7 +93,7 @@ export const LabelButton = styled.button(
     ${
       isActive &&
       `
-        color: ${theme.colors.bluePrimary};
+        color: ${theme.internalTheme.colors.bluePrimary};
         font-weight: 700;
       `
     }
@@ -128,7 +128,7 @@ export const TimelineAnimation = styled.div(
     align-items: center;
     width: 100%;
     border: none;
-    border-bottom: 1px solid ${theme.colors.gray600};
+    border-bottom: 1px solid ${theme.internalTheme.colors.gray600};
     margin-bottom: 10px;
   `
 );
@@ -141,8 +141,8 @@ export const TimelineLabel = styled.div(
     position: relative;
     width: 100px;
     padding: 20px 0;
-    border-right: 1px solid ${theme.colors.gray600};
-    background-color: ${theme.colors.white};
+    border-right: 1px solid ${theme.internalTheme.colors.gray600};
+    background-color: ${theme.internalTheme.colors.white};
   `
 );
 
@@ -156,7 +156,7 @@ export const TimelineBarContainer = styled.div(
       content: '';
       width: 100%;
       height: 1px;
-      background-color: ${theme.colors.gray300};
+      background-color: ${theme.internalTheme.colors.gray300};
     }
   `
 );
@@ -169,6 +169,6 @@ export const TimelineBar = styled.button(
     left: ${offset}%;
     width: ${width}%;
     height: 20px;
-    background-color: ${theme.colors.bluePrimary};
+    background-color: ${theme.internalTheme.colors.bluePrimary};
   `
 );

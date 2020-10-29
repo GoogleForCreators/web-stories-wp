@@ -32,7 +32,7 @@ const DashboardGrid = styled.div(
   ({ columnHeight, columnWidth, theme }) => `
   display: grid;
   width: 100%;
-  grid-column-gap: ${theme.grid.columnGap.desktop}px;
+  grid-column-gap: ${theme.internalTheme.grid.columnGap.desktop}px;
   grid-row-gap: 80px;
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
@@ -40,21 +40,24 @@ const DashboardGrid = styled.div(
   scroll-margin-top: 30vh;
   margin-top: 2px; // this is for keyboard focus 
 
-  ${theme.breakpoint.tablet} {
-    grid-column-gap: ${theme.grid.columnGap.tablet}px;
+  ${theme.internalTheme.breakpoint.tablet} {
+    grid-column-gap: ${theme.internalTheme.grid.columnGap.tablet}px;
   }
-  ${theme.breakpoint.largeDisplayPhone} {
-    grid-column-gap: ${theme.grid.columnGap.largeDisplayPhone}px;
+  ${theme.internalTheme.breakpoint.largeDisplayPhone} {
+    grid-column-gap: ${theme.internalTheme.grid.columnGap.largeDisplayPhone}px;
   }
-  ${theme.breakpoint.smallDisplayPhone} {
-    grid-column-gap: ${theme.grid.columnGap.smallDisplayPhone}px;
+  ${theme.internalTheme.breakpoint.smallDisplayPhone} {
+    grid-column-gap: ${theme.internalTheme.grid.columnGap.smallDisplayPhone}px;
   }
-  ${theme.breakpoint.min} {
-    grid-column-gap: ${theme.grid.columnGap.min}px;
+  ${theme.internalTheme.breakpoint.min} {
+    grid-column-gap: ${theme.internalTheme.grid.columnGap.min}px;
   }
   
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important; 
+    outline: 2px solid ${rgba(
+      theme.internalTheme.colors.bluePrimary,
+      0.85
+    )} !important; 
   }
 `
 );

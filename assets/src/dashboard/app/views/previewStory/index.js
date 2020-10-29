@@ -46,12 +46,12 @@ const PREVIEW_CONTAINER_ID = 'previewContainer';
 
 const CloseButton = styled.button`
   align-self: flex-end;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.internalTheme.colors.white};
   margin-top: 20px;
   margin-right: 11px;
   width: ${CLOSE_BUTTON_SIZE.WIDTH}px;
   height: ${CLOSE_BUTTON_SIZE.HEIGHT}px;
-  border: ${({ theme }) => theme.borders.transparent};
+  border: ${({ theme }) => theme.internalTheme.borders.transparent};
   background-color: transparent;
   z-index: 10;
 
@@ -67,7 +67,7 @@ const IframeContainer = styled.div`
   min-height: 90vh;
 
   &:focus {
-    border: ${({ theme }) => theme.borders.bluePrimary};
+    border: ${({ theme }) => theme.internalTheme.borders.bluePrimary};
     border-width: 2px;
   }
 `;
@@ -76,7 +76,7 @@ const HelperText = styled.p`
   ${TypographyPresets.Large};
   margin: 0;
   padding-bottom: 20px;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.internalTheme.colors.white};
 `;
 
 const HelperContainer = styled.div`

@@ -29,13 +29,13 @@ import { TypographyPresets } from '../typography';
 const StyledButton = styled.button`
   ${TypographyPresets.Small};
 
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.internalTheme.colors.white};
   cursor: pointer;
-  border: ${({ theme }) => theme.borders.transparent};
-  border-radius: ${({ theme }) => theme.button.borderRadius}px;
+  border: ${({ theme }) => theme.internalTheme.borders.transparent};
+  border-radius: ${({ theme }) => theme.internalTheme.button.borderRadius}px;
   display: flex;
   min-width: 100px;
   opacity: 0.75;
@@ -49,11 +49,11 @@ const StyledButton = styled.button`
     box-shadow: none;
     opacity: 1;
     outline: none;
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.internalTheme.colors.white};
   }
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) => theme.colors.action};
+    border-color: ${({ theme }) => theme.internalTheme.colors.action};
   }
 
   &:disabled {
@@ -63,7 +63,7 @@ const StyledButton = styled.button`
 `;
 
 const PrimaryButton = styled(StyledButton)`
-  background-color: ${({ theme }) => theme.colors.bluePrimary};
+  background-color: ${({ theme }) => theme.internalTheme.colors.bluePrimary};
 `;
 
 export const DefaultButton = styled(StyledButton)`
@@ -72,8 +72,8 @@ export const DefaultButton = styled(StyledButton)`
     min-width: 50px;
     padding: 4px 14px;
     background: transparent;
-    color: ${theme.colors.bluePrimary};
-    border: ${theme.borders.transparent};
+    color: ${theme.internalTheme.colors.bluePrimary};
+    border: ${theme.internalTheme.borders.transparent};
     border-radius: 5px;
     font-weight: 500;
     text-transform: uppercase;
@@ -83,9 +83,9 @@ export const DefaultButton = styled(StyledButton)`
     &:focus,
     &:active,
     &:hover {
-      color: ${theme.colors.bluePrimary};
-      border-color: ${theme.colors.blueLight};
-      background-color: ${theme.colors.blueLight};
+      color: ${theme.internalTheme.colors.bluePrimary};
+      border-color: ${theme.internalTheme.colors.blueLight};
+      background-color: ${theme.internalTheme.colors.blueLight};
     }
 
     transition: background-color 0.6s ease 0s;
@@ -94,23 +94,23 @@ export const DefaultButton = styled(StyledButton)`
 
 // TODO: address CTA active styling
 const CtaButton = styled(StyledButton)`
-  background-color: ${({ theme }) => theme.colors.bluePrimary};
+  background-color: ${({ theme }) => theme.internalTheme.colors.bluePrimary};
   opacity: 1;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    outline: ${({ theme }) => theme.borders.action};
+    outline: ${({ theme }) => theme.internalTheme.borders.action};
   }
 `;
 
 const SecondaryButton = styled(StyledButton)`
   border-radius: 0px;
   background-color: transparent;
-  text-shadow: ${({ theme }) => theme.text.shadow};
+  text-shadow: ${({ theme }) => theme.internalTheme.text.shadow};
 
   &:focus,
   &:active,
   &:hover {
-    text-shadow: ${({ theme }) => theme.text.shadow};
+    text-shadow: ${({ theme }) => theme.internalTheme.text.shadow};
   }
 `;
 

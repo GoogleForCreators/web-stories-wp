@@ -37,7 +37,7 @@ const ScrollMessage = styled.div`
   padding: 140px 0 40px;
   margin: -100px auto 0;
   text-align: center;
-  color: ${({ theme }) => theme.colors.gray500};
+  color: ${({ theme }) => theme.internalTheme.colors.gray500};
 `;
 
 const AriaOnlyAlert = styled.span(visuallyHiddenStyles);

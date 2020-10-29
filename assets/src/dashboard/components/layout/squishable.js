@@ -38,7 +38,7 @@ const Squish = styled.div`
     `${END_SQUISH_LENGTH}px`,
     SQUISH_CSS_VAR
   )};
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({ theme }) => theme.internalTheme.colors.white};
   z-index: ${Z_INDEX.LAYOUT_SQUISHABLE};
 `;
 

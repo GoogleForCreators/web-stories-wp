@@ -30,6 +30,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import {
+  theme as externalDesignSystemTheme,
+  lightMode,
+} from '../../design-system';
 import theme, { GlobalStyle } from '../theme';
 import KeyboardOnlyOutline from '../utils/keyboardOnlyOutline';
 import {
@@ -121,9 +125,15 @@ const AppContent = () => {
 
 function App({ config }) {
   const { isRTL } = config;
+  // TODO strip local dashboard theme out and rely on theme from design-system
+  const activeTheme = {
+    internalTheme: theme,
+    ...externalDesignSystemTheme,
+    colors: lightMode,
+  };
   return (
     <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={activeTheme}>
         <ConfigProvider config={config}>
           <ToastProvider>
             <ApiProvider>

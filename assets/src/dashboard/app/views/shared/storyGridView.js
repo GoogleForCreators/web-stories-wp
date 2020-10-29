@@ -56,11 +56,11 @@ export const DetailRow = styled.div`
 
 const StoryGrid = styled(CardGrid)`
   width: ${({ theme }) =>
-    `calc(100% - ${theme.standardViewContentGutter.desktop}px)`};
+    `calc(100% - ${theme.internalTheme.standardViewContentGutter.desktop}px)`};
 
-  @media ${({ theme }) => theme.breakpoint.smallDisplayPhone} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.smallDisplayPhone} {
     width: ${({ theme }) =>
-      `calc(100% - ${theme.standardViewContentGutter.min}px)`};
+      `calc(100% - ${theme.internalTheme.standardViewContentGutter.min}px)`};
   }
 `;
 

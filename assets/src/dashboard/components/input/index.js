@@ -31,9 +31,13 @@ export const TextInput = styled.input`
   padding: 1px 8px;
   border-radius: 6px;
   border: ${({ theme, error }) =>
-    error ? theme.borders.danger : theme.borders.gray100};
+    error
+      ? theme.internalTheme.borders.danger
+      : theme.internalTheme.borders.gray100};
   &:active {
     border: ${({ theme, error }) =>
-      error ? theme.borders.danger : theme.borders.action};
+      error
+        ? theme.internalTheme.borders.danger
+        : theme.internalTheme.borders.action};
   }
 `;

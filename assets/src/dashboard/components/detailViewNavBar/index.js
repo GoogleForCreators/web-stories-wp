@@ -39,22 +39,22 @@ const Nav = styled.nav`
   position: relative;
   justify-content: space-between;
   align-items: center;
-  border-bottom: ${theme.borders.gray50};
-  background-color: ${theme.colors.white};
+  border-bottom: ${theme.internalTheme.borders.gray50};
+  background-color: ${theme.internalTheme.colors.white};
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: ${theme.navBar.height}px;
+  height: ${theme.internalTheme.navBar.height}px;
 
-  padding: 0 ${theme.detailViewContentGutter.desktop}px;
+  padding: 0 ${theme.internalTheme.detailViewContentGutter.desktop}px;
 
-  @media ${theme.breakpoint.tablet} {
-    padding: 0 ${theme.detailViewContentGutter.tablet}px;
+  @media ${theme.internalTheme.breakpoint.tablet} {
+    padding: 0 ${theme.internalTheme.detailViewContentGutter.tablet}px;
   }
 
-  @media ${theme.breakpoint.smallDisplayPhone} {
+  @media ${theme.internalTheme.breakpoint.smallDisplayPhone} {
     flex-wrap: wrap;
-    padding: 0 ${theme.detailViewContentGutter.min}px;
+    padding: 0 ${theme.internalTheme.detailViewContentGutter.min}px;
   }
   `}
 `;
@@ -72,11 +72,14 @@ const CloseLink = styled.a`
   ${TypographyPresets.Medium};
   ${({ theme }) => `
     text-decoration: none;
-    font-weight: ${theme.typography.weight.bold};
-    color: ${theme.colors.gray700};
+    font-weight: ${theme.internalTheme.typography.weight.bold};
+    color: ${theme.internalTheme.colors.gray700};
 
     ${KEYBOARD_USER_SELECTOR} &:focus {
-      outline: 2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important;
+      outline: 2px solid ${rgba(
+        theme.internalTheme.colors.bluePrimary,
+        0.85
+      )} !important;
     }
   `}
 `;

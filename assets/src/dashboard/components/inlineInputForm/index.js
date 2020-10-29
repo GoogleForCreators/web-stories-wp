@@ -32,7 +32,7 @@ const Label = styled.label(visuallyHiddenStyles);
 
 const ErrorText = styled.p`
   ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.colors.danger};
+  color: ${({ theme }) => theme.internalTheme.colors.danger};
   margin-left: 1em;
   padding-top: 0.25em;
 `;

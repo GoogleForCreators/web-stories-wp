@@ -28,9 +28,9 @@ export const Link = styled.a`
   ${TypographyPresets.Small};
   margin: 0;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.bluePrimary};
+  color: ${({ theme }) => theme.internalTheme.colors.bluePrimary};
   cursor: pointer;
-  border-bottom: ${({ theme }) => theme.borders.transparent};
+  border-bottom: ${({ theme }) => theme.internalTheme.borders.transparent};
 
   &:hover,
   &:focus,

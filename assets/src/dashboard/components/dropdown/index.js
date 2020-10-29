@@ -72,28 +72,30 @@ export const InnerDropdown = styled.button`
     margin: 0;
     background-color: ${
       hasSelectedItems
-        ? theme.colors.blueLight
-        : theme.dropdown[type][isOpen ? 'activeBackground' : 'background']
+        ? theme.internalTheme.colors.blueLight
+        : theme.internalTheme.dropdown[type][
+            isOpen ? 'activeBackground' : 'background'
+          ]
     };
-    border-radius: ${theme.dropdown[type].borderRadius}px;
-    border: ${theme.dropdown[type].border};
-    color: ${theme.colors.gray600};
+    border-radius: ${theme.internalTheme.dropdown[type].borderRadius}px;
+    border: ${theme.internalTheme.dropdown[type].border};
+    color: ${theme.internalTheme.colors.gray600};
     cursor: ${disabled ? 'inherit' : 'pointer'};
 
     &:hover {
       background-color: ${
         hasSelectedItems
-          ? theme.colors.blueLight
-          : theme.dropdown[type].activeBackground
+          ? theme.internalTheme.colors.blueLight
+          : theme.internalTheme.dropdown[type].activeBackground
       };
     }
 
     &:focus {
-      border: ${theme.borders.action};
+      border: ${theme.internalTheme.borders.action};
     }
 
     &:disabled {
-      color: ${theme.colors.gray400};
+      color: ${theme.internalTheme.colors.gray400};
     }
   `}
 `;
@@ -112,7 +114,7 @@ const InnerDropdownText = styled.span`
   text-overflow: ellipsis;
   white-space: nowrap;
   margin-right: 10px;
-  color: ${({ theme }) => theme.colors.gray800};
+  color: ${({ theme }) => theme.internalTheme.colors.gray800};
 `;
 
 const DropdownIcon = styled.span`
@@ -121,7 +123,7 @@ const DropdownIcon = styled.span`
   height: 100%;
   pointer-events: none;
   & > svg {
-    color: ${({ theme }) => theme.colors.gray500};
+    color: ${({ theme }) => theme.internalTheme.colors.gray500};
     width: 10px;
     height: 5px;
   }
@@ -133,7 +135,7 @@ const ClearButton = styled.div`
   justify-content: center;
   border: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.colors.gray600};
+  color: ${({ theme }) => theme.internalTheme.colors.gray600};
   margin: 0 8px 0 0;
   padding: 0;
 `;

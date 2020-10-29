@@ -35,9 +35,9 @@ export const Table = styled.table`
 export const TableBody = styled.tbody``;
 
 export const TableHeader = styled.thead`
-  background: ${({ theme }) => theme.colors.gray50};
-  border-top: ${({ theme }) => theme.table.border};
-  border-bottom: ${({ theme }) => theme.table.border};
+  background: ${({ theme }) => theme.internalTheme.colors.gray50};
+  border-top: ${({ theme }) => theme.internalTheme.table.border};
+  border-bottom: ${({ theme }) => theme.internalTheme.table.border};
 `;
 
 export const StickyTableHeader = styled(TableHeader)`
@@ -46,9 +46,9 @@ export const StickyTableHeader = styled(TableHeader)`
   border-bottom: 0;
   th {
     height: 100%;
-    background: ${({ theme }) => theme.colors.gray50};
+    background: ${({ theme }) => theme.internalTheme.colors.gray50};
     border-top-width: 0;
-    border-bottom: ${({ theme }) => theme.table.border};
+    border-bottom: ${({ theme }) => theme.internalTheme.table.border};
     position: sticky;
     z-index: ${Z_INDEX.STICKY_TABLE};
     top: ${({ top }) => `${top}px` || 0};
@@ -59,16 +59,16 @@ StickyTableHeader.propTypes = {
 };
 
 export const TableHeaderCell = styled.th`
-  padding: ${({ theme }) => theme.table.headerCellPadding}px;
-  font-weight: ${({ theme }) => theme.typography.weight.normal};
-  color: ${({ theme }) => theme.colors.gray500};
+  padding: ${({ theme }) => theme.internalTheme.table.headerCellPadding}px;
+  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.normal};
+  color: ${({ theme }) => theme.internalTheme.colors.gray500};
   text-align: left;
 `;
 
 export const TablePreviewHeaderCell = styled(TableHeaderCell)`
   padding-right: 0;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
     display: none;
   }
 `;
@@ -76,7 +76,7 @@ export const TablePreviewHeaderCell = styled(TableHeaderCell)`
 export const TableDateHeaderCell = styled(TableHeaderCell)`
   min-width: 160px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
     min-width: 150px;
   }
 `;
@@ -85,7 +85,7 @@ export const TableStatusHeaderCell = styled(TableHeaderCell)`
   display: table-cell;
   min-width: 100px;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
     display: none;
   }
 `;
@@ -104,8 +104,9 @@ export const TableTitleHeaderCell = styled(TableHeaderCell)`
     margin-right: 5px;
   }
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
-    padding-left: ${({ theme }) => theme.table.headerCellPadding}px;
+  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+    padding-left: ${({ theme }) =>
+      theme.internalTheme.table.headerCellPadding}px;
     span {
       display: inline;
     }
@@ -120,22 +121,22 @@ export const TableContentHeaderCell = styled(TableHeaderCell)`
 export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
-  padding: ${({ theme }) => theme.table.cellPadding}px;
-  font-weight: ${({ theme }) => theme.typography.weight.normal};
+  padding: ${({ theme }) => theme.internalTheme.table.cellPadding}px;
+  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.normal};
   word-break: break-word;
-  font-size: ${({ theme }) => theme.typography.presets.s.size}px;
-  color: ${({ theme }) => theme.colors.gray900};
-  height: ${({ theme }) => theme.table.cellPadding * 2 + 50}px;
+  font-size: ${({ theme }) => theme.internalTheme.typography.presets.s.size}px;
+  color: ${({ theme }) => theme.internalTheme.colors.gray900};
+  height: ${({ theme }) => theme.internalTheme.table.cellPadding * 2 + 50}px;
   vertical-align: middle;
-  line-height: ${({ theme }) => theme.table.headerContentSize}px;
+  line-height: ${({ theme }) => theme.internalTheme.table.headerContentSize}px;
 `;
 
 export const TableStatusCell = styled(TableCell)`
   display: table-cell;
-  color: ${({ theme }) => theme.colors.gray400};
+  color: ${({ theme }) => theme.internalTheme.colors.gray400};
   font-weight: 500;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
     display: none;
   }
 `;
@@ -152,9 +153,9 @@ export const TableContentCell = styled(TableCell)`
 `;
 
 export const TablePreviewCell = styled(TableCell)`
-  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
+  width: ${({ theme }) => theme.internalTheme.previewWidth.thumbnail}px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
     display: none;
   }
 `;

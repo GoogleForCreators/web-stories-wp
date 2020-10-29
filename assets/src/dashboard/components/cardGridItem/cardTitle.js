@@ -45,8 +45,8 @@ const TitleStoryLink = styled(Link)`
   display: inline-block;
   max-width: 100%;
   margin-bottom: 2px;
-  color: ${({ theme }) => theme.colors.gray900};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  color: ${({ theme }) => theme.internalTheme.colors.gray900};
+  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -54,17 +54,17 @@ const TitleStoryLink = styled(Link)`
 
 const TitleBodyText = styled(Paragraph2)`
   margin: 0;
-  color: ${({ theme }) => theme.colors.gray500};
-  font-weight: ${({ theme }) => theme.typography.weight.light};
+  color: ${({ theme }) => theme.internalTheme.colors.gray500};
+  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.light};
 `;
 
 const DateHelperText = styled.span`
   text-transform: uppercase;
   font-weight: 500;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.internalTheme.colors.gray900};
   &:after {
     content: '-';
-    color: ${({ theme }) => theme.colors.gray500};
+    color: ${({ theme }) => theme.internalTheme.colors.gray500};
     font-weight: 400;
     padding: 0 0.25em;
   }

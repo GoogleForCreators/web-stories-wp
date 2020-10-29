@@ -24,13 +24,21 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
+import {
+  theme as externalDesignSystemTheme,
+  lightMode,
+} from '../../design-system';
 import theme from '../theme';
 import { ConfigProvider } from '../app/config';
 import MockApiProvider from './mockApiProvider';
 
 const defaultProviderValues = {
   features: {},
-  theme,
+  theme: {
+    internalTheme: theme,
+    ...externalDesignSystemTheme,
+    colors: lightMode,
+  },
   config: {},
   api: {},
 };

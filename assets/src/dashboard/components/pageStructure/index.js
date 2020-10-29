@@ -64,7 +64,7 @@ export const PageContent = styled.div`
   left: ${({ fullWidth }) =>
     fullWidth ? '0' : `${DASHBOARD_LEFT_NAV_WIDTH}px`};
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
     left: 0;
   }
 `;
@@ -79,12 +79,12 @@ export const LeftRailContainer = styled.nav.attrs({
   top: 0;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
-  background: ${({ theme }) => theme.colors.white};
-  border-right: ${({ theme }) => theme.borders.gray50};
+  background: ${({ theme }) => theme.internalTheme.colors.white};
+  border-right: ${({ theme }) => theme.internalTheme.borders.gray50};
   z-index: ${Z_INDEX.LAYOUT_FIXED};
   transition: transform 0.25s ${BEZIER.outCubic}, opacity 0.25s linear;
 
-  @media ${({ theme }) => theme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
     padding-left: 0;
     opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
     visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};

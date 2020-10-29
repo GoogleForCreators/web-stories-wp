@@ -34,13 +34,13 @@ import { KEYBOARD_USER_SELECTOR } from '../../constants';
 
 export const MoreVerticalButton = styled.button`
   display: flex;
-  border: ${({ theme }) => theme.borders.transparent};
+  border: ${({ theme }) => theme.internalTheme.borders.transparent};
   background: transparent;
   padding: 0 8px;
   opacity: ${({ menuOpen, isVisible }) => (menuOpen || isVisible ? 1 : 0)};
   transition: opacity ease-in-out 300ms;
   cursor: pointer;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.internalTheme.colors.gray900};
 
   & > svg {
     width: 4px;
@@ -48,7 +48,8 @@ export const MoreVerticalButton = styled.button`
   }
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) => rgba(theme.colors.bluePrimary, 0.85)};
+    border-color: ${({ theme }) =>
+      rgba(theme.internalTheme.colors.bluePrimary, 0.85)};
     border-width: 2px;
   }
 `;
