@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -27,16 +27,16 @@ import { THEME_CONSTANTS } from '../../../';
 import { defaultTypographyStyle } from '../styles';
 
 export const Headline = styled.h1`
-  ${defaultTypographyStyle}
-  ${({ size, theme }) => {
-    const { headline } = theme.typography.presets;
-    return {
-      fontSize: `${headline[size].size}px`,
-      fontWeight: headline[size].weight,
-      lineHeight: `${headline[size].lineHeight}px`,
-      letterSpacing: `${headline[size].letterSpacing}px`,
-    };
-  }}
+  ${defaultTypographyStyle};
+
+  ${({ theme, size }) =>
+    css`
+      font-size: ${theme.typography.presets.headline[size].size}px;
+      font-weight: ${theme.typography.presets.headline[size].weight};
+      line-height: ${theme.typography.presets.headline[size].lineHeight}px;
+      letter-spacing: ${theme.typography.presets.headline[size]
+        .letterSpacing}px;
+    `}
 `;
 
 Headline.propTypes = {

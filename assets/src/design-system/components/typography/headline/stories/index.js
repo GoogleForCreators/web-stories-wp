@@ -22,8 +22,9 @@ import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { Headline } from '..';
 import { THEME_CONSTANTS } from '../../../../';
+import { Text } from '../../';
+import { Headline } from '..';
 
 export default {
   title: 'DesignSystem/Components/Typography/Headline',
@@ -36,13 +37,16 @@ const headlineRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 export const _default = () => (
   <>
     {headlinePresetSizes.map((presetSize, idx) => (
-      <Headline
-        key={idx}
-        size={presetSize}
-        as={select('as', headlineRenderAsOptions, 'h1')}
-      >
-        {presetSize} {'- The Quick Brown Fox Jumps Over the Lazy Dog'}
-      </Headline>
+      <>
+        <Text size={'small'}>{presetSize}</Text>
+        <Headline
+          key={idx}
+          size={presetSize}
+          as={select('as', headlineRenderAsOptions, 'h1')}
+        >
+          {'The Quick Brown Fox Jumps Over the Lazy Dog'}
+        </Headline>
+      </>
     ))}
   </>
 );

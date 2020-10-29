@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
@@ -30,18 +30,20 @@ export const Text = styled.p`
   ${defaultTypographyStyle}
   ${({ as, isBold, size, theme }) => {
     const { text } = theme.typography.presets;
-    const asLink = as === 'a' && {
-      color: theme.colors.accent.secondary,
-      textDecoration: 'none',
-      cursor: 'pointer',
-    };
-    return {
-      fontSize: `${text[size].size}px`,
-      fontWeight: isBold ? theme.typography.weight.bold : text[size].weight,
-      lineHeight: `${text[size].lineHeight}px`,
-      letterSpacing: `${text[size].letterSpacing}em`,
-      ...asLink,
-    };
+    const asLink =
+      as === 'a' &&
+      css`
+        color: ${theme.colors.accent.secondary};
+        text-decoration: none;
+        cursor: pointer;
+      `;
+    return css`
+      font-size: ${text[size].size}px;
+      font-weight: ${isBold ? theme.typography.weight.bold : text[size].weight};
+      line-height: ${text[size].lineHeight}px;
+      letter-spacing: ${text[size].letterSpacing}em;
+      ${asLink};
+    `;
   }}
 `;
 
