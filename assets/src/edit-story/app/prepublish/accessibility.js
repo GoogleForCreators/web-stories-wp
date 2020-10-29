@@ -145,17 +145,41 @@ export function imageElementLowResolution(element) {
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function videoElementMissingTitle() {
+export function videoElementMissingTitle(element) {
+  if (element.type !== 'video') {
+    return undefined;
+  }
+
+  if (!element.title || !element.title.length) {
+    return {
+      message: __('Video is missing title', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
 /**
- * Check video element for doesn’t include subtitle
+ * Check video element for doesn’t include assistive text
  *
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function videoElementMissingSubtitle() {
+export function videoElementMissingAlt(element) {
+  if (element.type !== 'video') {
+    return undefined;
+  }
+
+  if (!element.alt || !element.alt.length) {
+    return {
+      message: __('Video is missing assistive text', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
@@ -165,7 +189,19 @@ export function videoElementMissingSubtitle() {
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function videoElementMissingCaptions() {
+export function videoElementMissingCaptions(element) {
+  if (element.type !== 'video') {
+    return undefined;
+  }
+
+  if (!element.tracks || !element.tracks.length) {
+    return {
+      message: __('Video is missing captions', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
