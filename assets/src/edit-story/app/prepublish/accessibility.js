@@ -69,7 +69,7 @@ export function textElementFontLowContrast(element) {
       return false;
     }
 
-    const textRGB = parseRGBFromCssRGB(span.style.color); // style.color format: rgb(000, 000, 000)
+    const textRGB = parseRGBFromCssRGB(span.style.color); // style.color: "rgb(000, 000, 000)"
     const textLRGB = ccc.calculateLRGB(textRGB);
     const textLuminance = ccc.calculateLuminance(textLRGB);
     const contrastRatio = ccc.getContrastRatio(
