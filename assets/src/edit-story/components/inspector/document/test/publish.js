@@ -27,6 +27,7 @@ import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
 import PublishPanel from '../publish';
 import { renderWithTheme } from '../../../../testUtils';
+import ApiContext from '../../../../app/api/context';
 
 function setupPanel(
   capabilities = {
@@ -49,6 +50,12 @@ function setupPanel(
 
   const config = { capabilities };
   const loadUsers = jest.fn();
+
+  // @todo this creates warnings.
+  const getUserById = jest.fn().mockImplementation(() => Promise.resolve({}));
+  const apiContextValue = {
+    actions: { getUserById },
+  };
   const inspectorContextValue = {
     actions: { loadUsers },
     state: {
@@ -64,11 +71,13 @@ function setupPanel(
     queryByLabelText,
   } = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <StoryContext.Provider value={storyContextValue}>
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <PublishPanel />
-        </InspectorContext.Provider>
-      </StoryContext.Provider>
+      <ApiContext.Provider value={apiContextValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <InspectorContext.Provider value={inspectorContextValue}>
+            <PublishPanel />
+          </InspectorContext.Provider>
+        </StoryContext.Provider>
+      </ApiContext.Provider>
     </ConfigContext.Provider>
   );
   return {
