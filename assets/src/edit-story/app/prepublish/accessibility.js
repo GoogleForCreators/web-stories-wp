@@ -248,6 +248,18 @@ export function textElementTappableRegionTooSmall() {
  * @param  {Object} element Element object
  * @return {Object} Prepublish check response
  */
-export function imageElementMissingAltText() {
+export function imageElementMissingAlt(element) {
+  if (element.type !== 'image') {
+    return undefined;
+  }
+
+  if (!element.alt || !element.alt.length) {
+    return {
+      message: __('Image is missing alt text', 'web-stories'),
+      elementId: element.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }

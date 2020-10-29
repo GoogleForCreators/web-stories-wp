@@ -468,9 +468,55 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
     it.todo('should return undefined if not an text element');
   });
 
-  describe('imageElementMissingAltText', () => {
-    it.todo('should return a warning if image element is missing alt text');
-    it.todo('should return undefined if image element has alt text');
-    it.todo('should return undefined if not an image element');
+  describe('imageElementMissingAlt', () => {
+    it('should return a warning if image element missing alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+      };
+      expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
+        {
+          message: 'Image is missing alt text',
+          elementId: element.id,
+          type: 'warning',
+        }
+      );
+    });
+
+    it('should return a warning if image element has empty alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+        alt: '',
+      };
+      expect(accessibilityChecks.imageElementMissingAlt(element)).toStrictEqual(
+        {
+          message: 'Image is missing alt text',
+          elementId: element.id,
+          type: 'warning',
+        }
+      );
+    });
+
+    it('should return undefined if image element has alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+        alt: 'Image is about things',
+      };
+      expect(
+        accessibilityChecks.imageElementMissingAlt(element)
+      ).toBeUndefined();
+    });
+
+    it('should return undefined if not an image element', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+      };
+      expect(
+        accessibilityChecks.imageElementMissingAlt(element)
+      ).toBeUndefined();
+    });
   });
 });
