@@ -154,7 +154,7 @@ function OptionList({
         onClose();
       } else if (key === 'Enter') {
         if (filteredOptions[focusIndex]) {
-          onSelect(filteredOptions[focusIndex].name);
+          onSelect(filteredOptions[focusIndex]);
         }
       } else if (key === 'ArrowUp') {
         setFocusIndex((index) => Math.max(0, index - 1));
