@@ -95,7 +95,7 @@ describe('Element: Text', () => {
 
     it('should display only the fonts from curated list by default', () => {
       const options = document
-        .getElementById('editor-font-picker-list')
+        .getElementById('editor-dropdown-list')
         .querySelectorAll('li[role="option"]');
       expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
     });
@@ -106,7 +106,7 @@ describe('Element: Text', () => {
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         let options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(2);
         expect(options[0].textContent).toBe('Abel');
@@ -116,7 +116,7 @@ describe('Element: Text', () => {
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(1);
         expect(options[0].textContent).toBe('Abel');
@@ -127,7 +127,7 @@ describe('Element: Text', () => {
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         let options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
@@ -137,7 +137,7 @@ describe('Element: Text', () => {
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         const options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(2);
 
@@ -145,7 +145,7 @@ describe('Element: Text', () => {
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         const defaultOptions = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         // Back to all options.
         expect(defaultOptions.length).toBe(DEFAULT_VISIBLE_FONTS);
@@ -162,7 +162,7 @@ describe('Element: Text', () => {
     describe('with recent fonts', () => {
       it('should not display any recent fonts by default', () => {
         let options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
       });
@@ -177,7 +177,7 @@ describe('Element: Text', () => {
         await openFontPicker();
 
         let options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 1);
         expect(options[0].textContent).toBe('Space Mono');
@@ -190,7 +190,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         await openFontPicker();
         options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 2);
 
@@ -202,7 +202,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         await openFontPicker();
         options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 3);
 
@@ -214,7 +214,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         await openFontPicker();
         options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 4);
 
@@ -226,7 +226,7 @@ describe('Element: Text', () => {
         await wait(TIMEOUT);
         await openFontPicker();
         options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
 
@@ -239,7 +239,7 @@ describe('Element: Text', () => {
         await openFontPicker();
 
         options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
 
         // Ensure there are only 5 extra options added.
@@ -272,7 +272,7 @@ describe('Element: Text', () => {
         // Ensure the debounced callback has taken effect.
         await wait(TIMEOUT);
         let options = document
-          .getElementById('editor-font-picker-list')
+          .getElementById('editor-dropdown-list')
           .querySelectorAll('li[role="option"]');
 
         // Twice for 'Abel', once for Abhaya Libre.
@@ -303,7 +303,7 @@ describe('Element: Text', () => {
         expect(input.getAttribute('aria-expanded')).toBe('true');
         await fixture.events.keyboard.press('Esc');
         await waitForElementToBeRemoved(
-          document.getElementById('editor-font-picker-list')
+          document.getElementById('editor-dropdown-list')
         );
       });
     });

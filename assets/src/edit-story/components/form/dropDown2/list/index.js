@@ -206,7 +206,7 @@ function OptionList({
     <List
       ref={listRef}
       tabIndex={0}
-      id="editor-font-picker-list"
+      id="editor-dropdown-list"
       role="listbox"
       onKeyDown={handleKeyPress}
       aria-label={__('Option List Selector', 'web-stories')}

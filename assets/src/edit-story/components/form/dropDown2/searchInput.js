@@ -81,7 +81,7 @@ const Input = styled.input.attrs({
   type: 'search',
   role: 'combobox',
   ['aria-autocomplete']: 'list',
-  ['aria-owns']: 'editor-font-picker-list',
+  ['aria-owns']: 'editor-dropdown-list',
 })`
   width: 100%;
   padding: 6px 20px 6px 30px;

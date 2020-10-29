@@ -50,6 +50,7 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
     hasPublishAction: true,
+    hasAssignAuthorAction: true,
   },
   version: '1.0.0-alpha.9',
   isRTL: false,
@@ -657,9 +658,19 @@ class APIProviderFixture {
         []
       );
 
-      const getUsers = useCallback(
-        () => asyncResponse([{ id: 1, name: 'John Doe' }]),
+      const users = useMemo(
+        () => [
+          { id: 1, name: 'John Doe' },
+          { id: 2, name: 'Jane Doe' },
+        ],
         []
+      );
+
+      const getUsers = useCallback(() => asyncResponse(users), [users]);
+
+      const getUserById = useCallback(
+        (search) => asyncResponse(users.find(({ id }) => id === search)),
+        [users]
       );
 
       const state = {
@@ -671,6 +682,7 @@ class APIProviderFixture {
           saveStoryById,
           getAllStatuses,
           getUsers,
+          getUserById,
           uploadMedia,
           updateMedia,
         },
