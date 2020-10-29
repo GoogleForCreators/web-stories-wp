@@ -70,6 +70,8 @@ class Sanitization {
 	/**
 	 * Adds missing scripts.
 	 *
+	 * @SuppressWarnings(PHPMD)
+	 *
 	 * @since 1.1.0
 	 *
 	 * @see \AMP_Theme_Support::ensure_required_markup

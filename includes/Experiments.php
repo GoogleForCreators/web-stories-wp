@@ -200,6 +200,8 @@ class Experiments {
 	/**
 	 * Returns a list of all experiments.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return array List of experiments by group.
