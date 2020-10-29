@@ -378,8 +378,84 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
   });
 
   describe('pageTooManyLinks', () => {
-    it.todo('should return a warning if page has too many links');
-    it.todo('should return undefined if page has a reasonable number of links');
+    it('should return a warning if page has too many links', () => {
+      const page = {
+        id: 'pageid',
+        elements: [
+          { type: 'text' },
+          { type: 'video' },
+          {
+            type: 'text',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+          {
+            type: 'image',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+          {
+            type: 'text',
+            link: {
+              url: '',
+            },
+          },
+          {
+            type: 'text',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+          {
+            type: 'text',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+        ],
+      };
+      expect(accessibilityChecks.pageTooManyLinks(page)).toStrictEqual({
+        message: 'Too many links on page',
+        pageId: page.id,
+        type: 'warning',
+      });
+    });
+
+    it('should return undefined if page has a reasonable number of links', () => {
+      const page = {
+        elements: [
+          { type: 'text' },
+          { type: 'video' },
+          {
+            type: 'text',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+          {
+            type: 'image',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+          {
+            type: 'text',
+            link: {
+              url: '',
+            },
+          },
+          {
+            type: 'text',
+            link: {
+              url: 'https://google.com',
+            },
+          },
+        ],
+      };
+      expect(accessibilityChecks.pageTooManyLinks(page)).toBeUndefined();
+    });
   });
 
   describe('textElementTappableRegionTooSmall', () => {

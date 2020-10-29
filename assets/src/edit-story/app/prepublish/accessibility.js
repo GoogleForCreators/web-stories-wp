@@ -29,6 +29,8 @@ const parseRGBFromCssRGB = (cssRGB) => {
   return { r, g, b };
 };
 
+const MAX_PAGE_LINKS = 3;
+
 /**
  * Check text element for low contrast between font and background color
  *
@@ -211,7 +213,22 @@ export function videoElementMissingCaptions(element) {
  * @param  {Object} page Page object
  * @return {Object} Prepublish check response
  */
-export function pageTooManyLinks() {
+export function pageTooManyLinks(page) {
+  let linkCount = 0;
+  page.elements.forEach((element) => {
+    if (element.link && element.link.url && element.link.url.length) {
+      linkCount += 1;
+    }
+  });
+
+  if (linkCount > MAX_PAGE_LINKS) {
+    return {
+      message: __('Too many links on page', 'web-stories'),
+      pageId: page.id,
+      type: 'warning',
+    };
+  }
+
   return undefined;
 }
 
