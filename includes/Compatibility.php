@@ -158,7 +158,7 @@ class Compatibility {
 					$data = [
 						'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
 					];
-					$this->error->add( 'failed_build', $message, $data );
+					$this->error->add( 'failed_check_required_files', $message, $data );
 
 					return false;
 				}

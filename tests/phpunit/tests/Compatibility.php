@@ -107,7 +107,7 @@ class Compatibility extends \WP_UnitTestCase {
 		$this->assertFalse( $results );
 		$error       = $compatibility->get_error();
 		$error_codes = $error->get_error_codes();
-		$this->assertContains( 'failed_build', $error_codes );
+		$this->assertContains( 'failed_check_required_files', $error_codes );
 		$error_message = $error->get_error_message();
 		$this->assertContains( 'You appear to be running an incomplete version of the plugin.', $error_message );
 	}
