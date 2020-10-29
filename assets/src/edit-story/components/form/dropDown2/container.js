@@ -26,7 +26,7 @@ import styled from 'styled-components';
 import useFocusOut from '../../../utils/useFocusOut';
 import List from './list';
 import SearchInput from './searchInput';
-import { isKeywordFilterable } from './list/utils';
+import { isKeywordFilterable } from './utils';
 
 const Container = styled.div`
   position: relative;

@@ -42,7 +42,7 @@ import {
   getOptions,
   addUniqueEntry,
   getInset,
-} from './utils';
+} from '../utils';
 import { List, Group, GroupLabel, Option, Selected, NoResult } from './styled';
 
 function OptionList({
