@@ -176,14 +176,14 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_extensions() {
-		$_web_stories_missing_extensions = [];
-		foreach ( $this->get_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
-			if ( ! extension_loaded( $_web_stories_required_extension ) ) {
-				$_web_stories_missing_extensions[] = "<code>$_web_stories_required_extension</code>";
+		$missing_extensions = [];
+		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
+			if ( ! extension_loaded( $required_extension ) ) {
+				$missing_extensions[] = "<code>$required_extension</code>";
 			}
 		}
 
-		if ( count( $_web_stories_missing_extensions ) > 0 ) {
+		if ( count( $missing_extensions ) > 0 ) {
 			$this->error->add(
 				'missing_extension',
 				sprintf(
@@ -191,10 +191,10 @@ class Compatibility {
 					_n(
 						'The following PHP extension is missing: %s. Please contact your host to finish installation.',
 						'The following PHP extensions are missing: %s. Please contact your host to finish installation.',
-						count( $_web_stories_missing_extensions ),
+						count( $missing_extensions ),
 						'web-stories'
 					),
-					implode( ', ', $_web_stories_missing_extensions )
+					implode( ', ', $missing_extensions )
 				)
 			);
 
@@ -212,22 +212,22 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_classes() {
-		$_web_stories_missing_classes = [];
-		foreach ( $this->get_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
-			foreach ( $_web_stories_required_constructs as $_web_stories_construct_type => $_web_stories_constructs ) {
-				if ( 'classes' !== $_web_stories_construct_type ) {
+		$missing_classes = [];
+		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
+			foreach ( $required_constructs as $construct_type => $constructs ) {
+				if ( 'classes' !== $construct_type ) {
 					continue;
 				}
 
-				foreach ( $_web_stories_constructs as $_web_stories_construct ) {
-					if ( ! class_exists( $_web_stories_construct ) ) {
-						$_web_stories_missing_classes[] = "<code>$_web_stories_construct</code>";
+				foreach ( $constructs as $construct ) {
+					if ( ! class_exists( $construct ) ) {
+						$missing_classes[] = "<code>$construct</code>";
 					}
 				}
 			}
 		}
 
-		if ( count( $_web_stories_missing_classes ) > 0 ) {
+		if ( count( $missing_classes ) > 0 ) {
 			$this->error->add(
 				'missing_class',
 				sprintf(
@@ -235,10 +235,10 @@ class Compatibility {
 					_n(
 						'The following PHP class is missing: %s. Please contact your host to finish installation.',
 						'The following PHP classes are missing: %s. Please contact your host to finish installation.',
-						count( $_web_stories_missing_classes ),
+						count( $missing_classes ),
 						'web-stories'
 					),
-					implode( ', ', $_web_stories_missing_classes )
+					implode( ', ', $missing_classes )
 				)
 			);
 
@@ -256,22 +256,22 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_functions() {
-		$_web_stories_missing_functions = [];
-		foreach ( $this->get_extensions() as $_web_stories_required_extension => $_web_stories_required_constructs ) {
-			foreach ( $_web_stories_required_constructs as $_web_stories_construct_type => $_web_stories_constructs ) {
-				if ( 'functions' !== $_web_stories_construct_type ) {
+		$missing_functions = [];
+		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
+			foreach ( $required_constructs as $construct_type => $constructs ) {
+				if ( 'functions' !== $construct_type ) {
 					continue;
 				}
 
-				foreach ( $_web_stories_constructs as $_web_stories_construct ) {
-					if ( ! function_exists( $_web_stories_construct ) ) {
-						$_web_stories_missing_functions[] = "<code>$_web_stories_construct</code>";
+				foreach ( $constructs as $construct ) {
+					if ( ! function_exists( $construct ) ) {
+						$missing_functions[] = "<code>$construct</code>";
 					}
 				}
 			}
 		}
 
-		if ( count( $_web_stories_missing_functions ) > 0 ) {
+		if ( count( $missing_functions ) > 0 ) {
 			$this->error->add(
 				'missing_function',
 				sprintf(
@@ -279,10 +279,10 @@ class Compatibility {
 					_n(
 						'The following PHP function is missing: %s. Please contact your host to finish installation.',
 						'The following PHP functions are missing: %s. Please contact your host to finish installation.',
-						count( $_web_stories_missing_functions ),
+						count( $missing_functions ),
 						'web-stories'
 					),
-					implode( ', ', $_web_stories_missing_functions )
+					implode( ', ', $missing_functions )
 				)
 			);
 
