@@ -76,9 +76,9 @@ function FontControls({ selectedElements, pushUpdate }) {
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
   const {
-    fonts,
-    recentFonts,
-    curatedFonts,
+    fonts = [],
+    recentFonts = [],
+    curatedFonts = [],
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
@@ -109,7 +109,7 @@ function FontControls({ selectedElements, pushUpdate }) {
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontPickerChange = useCallback(
-    async ({ id }) => {
+    async (id) => {
       const fontObj = fonts.find((item) => item.value === id);
       const newFont = {
         family: id,
@@ -172,7 +172,7 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const fontMap = useMemo(
     () =>
-      [...fonts, ...(recentFonts || []), ...(curatedFonts || [])].reduce(
+      [...fonts, ...recentFonts, ...curatedFonts].reduce(
         (lookup, option) => ({
           ...lookup,
           [option.id]: option,

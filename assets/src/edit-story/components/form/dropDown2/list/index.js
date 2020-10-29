@@ -154,7 +154,7 @@ function OptionList({
         onClose();
       } else if (key === 'Enter') {
         if (filteredOptions[focusIndex]) {
-          onSelect(filteredOptions[focusIndex]);
+          onSelect(filteredOptions[focusIndex].id);
         }
       } else if (key === 'ArrowUp') {
         setFocusIndex((index) => Math.max(0, index - 1));
@@ -235,7 +235,7 @@ function OptionList({
                   'aria-posinset': getInset(filteredListGroups, i, j),
                   'aria-setsize': filteredOptions.length,
                   'data-option': option.id,
-                  onClick: () => onSelect(option),
+                  onClick: () => onSelect(option.id),
                 };
                 return renderer ? (
                   <OptionRenderer
@@ -246,7 +246,7 @@ function OptionList({
                         getInset(filteredListGroups, i, j)
                       ] = el)
                     }
-                    onClick={() => onSelect(option)}
+                    onClick={() => onSelect(option.id)}
                   />
                 ) : (
                   <Option

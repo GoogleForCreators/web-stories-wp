@@ -148,7 +148,7 @@ function PublishPanel() {
   }, [author, getUserById, users]);
 
   const handleChangeAuthor = useCallback(
-    ({ id }) => {
+    (id) => {
       updateStory({
         properties: { author: id },
       });
