@@ -59,9 +59,11 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       id: 789,
       type: 'video',
       resource: {
-        full: {
-          height: 480,
-          width: 852,
+        sizes: {
+          full: {
+            height: 480,
+            width: 852,
+          },
         },
       },
     };
@@ -134,9 +136,11 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       id: 101,
       type: 'video',
       resource: {
-        full: {
-          height: 2160,
-          width: 3840,
+        sizes: {
+          full: {
+            height: 2160,
+            width: 3840,
+          },
         },
       },
     };
@@ -156,9 +160,11 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
       type: 'video',
       resource: {
         length: 75,
-        full: {
-          height: 2160,
-          width: 3840,
+        sizes: {
+          full: {
+            height: 2160,
+            width: 3840,
+          },
         },
       },
     };

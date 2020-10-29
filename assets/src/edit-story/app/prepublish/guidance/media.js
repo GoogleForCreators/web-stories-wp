@@ -24,6 +24,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import getBoundRect from '../../../utils/getBoundRect';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
@@ -37,10 +38,23 @@ const MIN_VIDEO_WIDTH = 852;
 // MIN_VIDEO_FPS = 24;
 // export function videoElementFps(element) {}
 
+/**
+ * @typedef {import('../../../types').Page} Page
+ * @typedef {import('../../../types').Element} Element
+ * @typedef {import('../types').Guidance} Guidance
+ */
+
+/**
+ * Compare an element's size to the safe zone area it is overlapping
+ * If the element takes up <50% of the safe zone, return guidance. Otherwise return undefined.
+ *
+ * @param {Element} element The element being checked for guidelines
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
 export function mediaElementSizeOnPage(element) {
-  // get the intersecting area of the element's rectangle and the safe zone's rectangle
   // use the bounding rectangle for rotated elements
   const { startX, startY, endX, endY } = getBoundRect([element]);
+  // get the intersecting area of the element's rectangle and the safe zone's rectangle
   const safeZone = {
       left: 0,
       right: PAGE_WIDTH,
@@ -63,13 +77,14 @@ export function mediaElementSizeOnPage(element) {
     Math.min(safeZone.bottom, elemRect.bottom) -
       Math.max(safeZone.top, elemRect.top)
   );
+
   const elementArea = xOverlap * yOverlap;
 
   const isTooSmallOnPage = elementArea < SAFE_ZONE_AREA / 2;
 
   if (isTooSmallOnPage) {
     return {
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message:
         element.type === 'video'
@@ -81,6 +96,12 @@ export function mediaElementSizeOnPage(element) {
   return undefined;
 }
 
+/**
+ * If there is only one video on the page, check it for its size on the page.
+ *
+ * @param {Page} page The page being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
 export function videoElementSizeOnPage(page) {
   const videoElementsOnPage = page.elements.filter(
     ({ type }) => type === 'video'
@@ -95,6 +116,13 @@ export function videoElementSizeOnPage(page) {
   return undefined;
 }
 
+/**
+ * Check an element's resolution. If the resolution is not within guidelines, return guidance.
+ * Otherwise return undefined.
+ *
+ * @param {element} element The element being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
 export function mediaElementResolution(element) {
   switch (element.type) {
     case 'image':
@@ -110,15 +138,15 @@ export function mediaElementResolution(element) {
 
 function videoElementResolution(element) {
   const videoResolutionLow =
-    element.resource.full.height <= MIN_VIDEO_HEIGHT &&
-    element.resource.full.width <= MIN_VIDEO_WIDTH;
+    element.resource.sizes.full.height <= MIN_VIDEO_HEIGHT &&
+    element.resource.sizes.full.width <= MIN_VIDEO_WIDTH;
   const videoResolutionHigh =
-    element.resource.full.height >= MAX_VIDEO_HEIGHT &&
-    element.resource.full.width >= MAX_VIDEO_WIDTH;
+    element.resource.sizes.full.height >= MAX_VIDEO_HEIGHT &&
+    element.resource.sizes.full.width >= MAX_VIDEO_WIDTH;
 
   if (videoResolutionHigh) {
     return {
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: __(
         "Video's resolution is too high to display on most mobile devices (>4k)",
@@ -129,7 +157,7 @@ function videoElementResolution(element) {
 
   if (videoResolutionLow) {
     return {
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: __('Video has low resolution', 'web-stories'),
     };
@@ -145,7 +173,7 @@ function imageElementResolution(element) {
 
   if (heightResTooLow || widthResTooLow) {
     return {
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: __('Image has low resolution', 'web-stories'),
     };
@@ -162,7 +190,7 @@ function gifElementResolution(element) {
 
   if (heightResTooLow || widthResTooLow) {
     return {
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: __('GIF has low resolution', 'web-stories'),
     };
@@ -170,10 +198,17 @@ function gifElementResolution(element) {
   return undefined;
 }
 
+/**
+ * Check a video element's length.
+ * If the length is longer than 1 minute, return guidance. Otherwise return undefined.
+ *
+ * @param {element} element The element being checked
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
 export function videoElementLength(element) {
   if (element.resource.length > MAX_VIDEO_LENGTH_SECONDS) {
     return {
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: __(
         'Video is longer than 1 minute (suggest breaking video up into multiple segments)',
