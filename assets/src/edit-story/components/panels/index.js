@@ -73,6 +73,7 @@ export const PanelTypes = {
   LAYER_STYLE,
   TEXT,
   TEXT_STYLE,
+  BORDER_RADIUS,
   LINK,
   VIDEO_OPTIONS,
   IMAGE_ACCESSIBILITY,
