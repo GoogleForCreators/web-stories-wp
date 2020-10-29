@@ -121,13 +121,36 @@ function GoogleAnalyticsSettings({
     [handleOnSave]
   );
 
-  const siteKitLink = useMemo(
-    () =>
-      canInstallPlugins
-        ? TEXT.SITE_KIT_ADMIN_PLUGIN_LINK
-        : TEXT.SITE_KIT_PLUGIN_LINK,
-    [canInstallPlugins]
-  );
+  const siteKitDisplayText = useMemo(() => {
+    const siteKitLink = canInstallPlugins
+      ? TEXT.SITE_KIT_ADMIN_PLUGIN_LINK
+      : TEXT.SITE_KIT_PLUGIN_LINK;
+
+    if (siteKitActive) {
+      return TEXT.SITE_KIT_IN_USE;
+    }
+
+    if (siteKitInstalled && !siteKitActive) {
+      return (
+        <TranslateWithMarkup
+          mapping={{
+            a: <InlineLink href={siteKitLink} />,
+          }}
+        >
+          {TEXT.SITE_KIT_INSTALLED}
+        </TranslateWithMarkup>
+      );
+    }
+    return (
+      <TranslateWithMarkup
+        mapping={{
+          a: <InlineLink href={siteKitLink} />,
+        }}
+      >
+        {TEXT.SITE_KIT_NOT_INSTALLED}
+      </TranslateWithMarkup>
+    );
+  }, [canInstallPlugins, siteKitActive, siteKitInstalled]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -135,28 +158,7 @@ function GoogleAnalyticsSettings({
         <SettingHeading htmlFor="gaTrackingID">
           {TEXT.SECTION_HEADING}
         </SettingHeading>
-        <HelperText>
-          {!siteKitInstalled && (
-            <TranslateWithMarkup
-              mapping={{
-                a: <InlineLink href={siteKitLink} />,
-              }}
-            >
-              {TEXT.SITE_KIT_NOT_INSTALLED}
-            </TranslateWithMarkup>
-          )}
-          {siteKitInstalled && !siteKitActive && (
-            <TranslateWithMarkup
-              mapping={{
-                a: <InlineLink href={siteKitLink} />,
-              }}
-            >
-              {TEXT.SITE_KIT_INSTALLED}
-            </TranslateWithMarkup>
-          )}
-
-          {siteKitActive && TEXT.SITE_KIT_IN_USE}
-        </HelperText>
+        <HelperText>{siteKitDisplayText}</HelperText>
       </div>
       <FormContainer>
         <InlineForm>
