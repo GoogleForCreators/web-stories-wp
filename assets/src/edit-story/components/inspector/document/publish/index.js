@@ -53,7 +53,7 @@ const MediaWrapper = styled.div`
 
 function PublishPanel() {
   const {
-    actions: { getUsers },
+    actions: { getUsers, getUserById },
   } = useAPI();
   const {
     state: { tab, users, isUsersLoading },
@@ -85,6 +85,7 @@ function PublishPanel() {
   );
 
   const [queriedUsers, setQueriedUsers] = useState(null);
+  const [visibleOptions, setVisibleOptions] = useState(null);
 
   useEffect(() => {
     if (tab === 'document') {
@@ -108,11 +109,11 @@ function PublishPanel() {
   const getUsersBySearch = useCallback(
     (search) => {
       return getUsers(search).then((data) => {
-        const saveData = data.map(({ id, name }) => ({
-          value: id,
+        const userData = data.map(({ id, name }) => ({
+          id,
           name,
         }));
-        setQueriedUsers(saveData);
+        setQueriedUsers(userData);
       });
     },
     [getUsers]
@@ -131,12 +132,37 @@ function PublishPanel() {
     [updateStory]
   );
 
-  const handleChangeValue = useCallback(
-    (prop) => (value) => updateStory({ properties: { [prop]: value } }),
+  useEffect(() => {
+    if (users?.length) {
+      const currentAuthor = users.find(({ id }) => author === id);
+      if (!currentAuthor) {
+        getUserById(author).then(({ id, name }) => {
+          setVisibleOptions([{ id, name }, ...users]);
+        });
+      } else {
+        setVisibleOptions(users);
+      }
+    }
+  }, [author, getUserById, users]);
+
+  const handleChangeAuthor = useCallback(
+    ({ id }) => {
+      updateStory({
+        properties: { author: id },
+      });
+    },
     [updateStory]
   );
 
   const authorLabelId = `author-label-${uuidv4()}`;
+  const dropDownParams = {
+    hasSearch: true,
+    'aria-labelledby': authorLabelId,
+    lightMode: true,
+    onChange: handleChangeAuthor,
+    getOptionsByQuery: getUsersBySearch,
+    selectedId: author,
+  };
   return (
     <Panel name="publishing">
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
@@ -147,25 +173,19 @@ function PublishPanel() {
             <FieldLabel id={authorLabelId}>
               {__('Author', 'web-stories')}
             </FieldLabel>
-            {isUsersLoading ? (
+            {isUsersLoading || !visibleOptions ? (
               <DropDown2
-                aria-labelledby={authorLabelId}
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
-                lightMode={true}
-                onChange={null}
+                primaryOptions={[]}
+                {...dropDownParams}
               />
             ) : (
               <DropDown2
-                aria-labelledby={authorLabelId}
-                getOptionsByQuery={getUsersBySearch}
                 options={queriedUsers}
-                primaryOptions={users}
-                selectedId={author}
+                primaryOptions={visibleOptions}
                 disabled={isSaving}
-                onChange={handleChangeValue('author')}
-                lightMode
-                hasSearch
+                {...dropDownParams}
               />
             )}
           </Row>

@@ -93,10 +93,9 @@ function InspectorProvider({ children }) {
       getUsers()
         .then((data) => {
           const saveData = data.map(({ id, name }) => ({
-            value: id,
+            id,
             name,
           }));
-
           setUsers(saveData);
         })
         .finally(() => {

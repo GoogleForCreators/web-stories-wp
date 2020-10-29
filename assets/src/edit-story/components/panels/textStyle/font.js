@@ -124,10 +124,10 @@ function FontControls({ selectedElements, pushUpdate }) {
   const fontStyle = isItalic ? 'italic' : 'normal';
 
   const handleFontPickerChange = useCallback(
-    async (value) => {
-      const fontObj = fonts.find((item) => item.value === value);
+    async ({ id }) => {
+      const fontObj = fonts.find((item) => item.value === id);
       const newFont = {
-        family: value,
+        family: id,
         ...objectPick(fontObj, [
           'service',
           'fallbacks',

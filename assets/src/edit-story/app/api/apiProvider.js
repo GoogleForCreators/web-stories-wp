@@ -228,9 +228,17 @@ function APIProvider({ children }) {
 
   const getUsers = useCallback(
     (search = null) => {
-      // @todo per_page 10 is for testing, change later.
       return apiFetch({
-        path: addQueryArgs(users, { per_page: '10', who: 'authors', search }),
+        path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
+      });
+    },
+    [users]
+  );
+
+  const getUserById = useCallback(
+    (userId) => {
+      return apiFetch({
+        path: addQueryArgs(`${users}/${userId}`, { context: `edit` }),
       });
     },
     [users]
@@ -244,6 +252,7 @@ function APIProvider({ children }) {
       getLinkMetadata,
       saveStoryById,
       getUsers,
+      getUserById,
       uploadMedia,
       updateMedia,
       deleteMedia,

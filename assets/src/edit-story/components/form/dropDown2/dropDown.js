@@ -120,6 +120,11 @@ function DropDown({
   renderer,
   ...rest
 }) {
+  if (!options && !getOptionsByQuery) {
+    throw new Error(
+      'Dropdown initiated with invalid params: options or getOptionsByQuery has to be set'
+    );
+  }
   // If search is not enabled, always display all options.
   if (!hasSearch) {
     primaryOptions = options;
@@ -162,6 +167,7 @@ function DropDown({
     [isOpen]
   );
 
+  const selectedOption = primaryOptions.find(({ id }) => id === selectedId);
   return (
     <Container onKeyDown={handleKeyPress}>
       <DropDownSelect
@@ -173,8 +179,7 @@ function DropDown({
         lightMode={lightMode}
         {...rest}
       >
-        {/* @todo This needs to display the name instead. We're not always querying all options so it might not be available!*/}
-        <DropDownTitle>{selectedId || placeholder}</DropDownTitle>
+        <DropDownTitle>{selectedOption?.name || placeholder}</DropDownTitle>
         <DropDownIcon />
       </DropDownSelect>
       {!disabled && (

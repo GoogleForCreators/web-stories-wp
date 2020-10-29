@@ -235,7 +235,7 @@ function OptionList({
                   'aria-posinset': getInset(filteredListGroups, i, j),
                   'aria-setsize': filteredOptions.length,
                   'data-option': option.id,
-                  onClick: () => onSelect(option.id),
+                  onClick: () => onSelect(option),
                 };
                 return renderer ? (
                   <OptionRenderer
@@ -246,7 +246,7 @@ function OptionList({
                         getInset(filteredListGroups, i, j)
                       ] = el)
                     }
-                    onClick={() => onSelect(option.id)}
+                    onClick={() => onSelect(option)}
                   />
                 ) : (
                   <Option
