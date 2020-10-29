@@ -58,6 +58,8 @@
 	<!-- The main plugin file should be parsable by PHP < 5.6. -->
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
 		<exclude-pattern>web-stories.php</exclude-pattern>
+		<exclude-pattern>includes/Compatibility.php</exclude-pattern>
+		<exclude-pattern>includes/namespace.php</exclude-pattern>
 	</rule>
 
 	<!-- Show details about violated sniffs -->

@@ -37,14 +37,14 @@ if ( ! class_exists( '\Google\Web_Stories\Compatibility' ) ) {
 global $web_stories_compatibility;
 
 $web_stories_error = new WP_Error();
-$extensions        = [
-	'date'   => [
-		'classes' => [
+$extensions        = array(
+	'date'   => array(
+		'classes' => array(
 			'DateTimeImmutable',
-		],
-	],
-	'dom'    => [
-		'classes' => [
+		),
+	),
+	'dom'    => array(
+		'classes' => array(
 			'DOMAttr',
 			'DOMComment',
 			'DOMDocument',
@@ -53,38 +53,38 @@ $extensions        = [
 			'DOMNodeList',
 			'DOMText',
 			'DOMXPath',
-		],
-	],
-	'json'   => [
-		'functions' => [
+		),
+	),
+	'json'   => array(
+		'functions' => array(
 			'json_decode',
 			'json_encode',
-		],
-	],
-	'libxml' => [
-		'functions' => [
+		),
+	),
+	'libxml' => array(
+		'functions' => array(
 			'libxml_use_internal_errors',
-		],
-	],
-	'spl'    => [
-		'functions' => [
+		),
+	),
+	'spl'    => array(
+		'functions' => array(
 			'spl_autoload_register',
-		],
-	],
-];
+		),
+	),
+);
 
 $web_stories_compatibility = new Compatibility( $web_stories_error );
 $web_stories_compatibility->set_extensions( $extensions );
 $web_stories_compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
 $web_stories_compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
 $web_stories_compatibility->set_required_files(
-	[
+	array(
 		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
 		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
 		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
 		WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
 		WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
-	]
+	)
 );
 
 /**
@@ -110,7 +110,7 @@ function _print_missing_build_admin_notice() {
 			<?php
 			foreach ( array_keys( $_error->errors ) as $error_code ) {
 				$message = $_error->get_error_message( $error_code );
-				printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ) );
+				printf( '<li>%s</li>', wp_kses( $message, array( 'code' => array() ) ) );
 			}
 			?>
 		</ul>
@@ -123,10 +123,10 @@ add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
 	// Only check for built php files in a CLI context.
 	$web_stories_compatibility->set_required_files(
-		[
+		array(
 			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
 			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
-		]
+		)
 	);
 	$web_stories_compatibility->run_checks();
 	$_error = $web_stories_compatibility->get_error();

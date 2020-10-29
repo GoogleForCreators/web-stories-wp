@@ -71,7 +71,7 @@ class Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $extensions = [];
+	protected $extensions = array();
 
 	/**
 	 * Array of required files.
@@ -80,7 +80,7 @@ class Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $required_files = [];
+	protected $required_files = array();
 
 	/**
 	 * Compatibility constructor.
@@ -176,7 +176,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_extensions() {
-		$missing_extensions = [];
+		$missing_extensions = array();
 		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
 			if ( ! extension_loaded( $required_extension ) ) {
 				$missing_extensions[] = "<code>$required_extension</code>";
@@ -212,7 +212,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_classes() {
-		$missing_classes = [];
+		$missing_classes = array();
 		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'classes' !== $construct_type ) {
@@ -256,7 +256,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_functions() {
-		$missing_functions = [];
+		$missing_functions = array();
 		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'functions' !== $construct_type ) {
