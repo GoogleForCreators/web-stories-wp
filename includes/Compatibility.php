@@ -104,9 +104,9 @@ class Compatibility {
 		if ( version_compare( PHP_VERSION, $this->get_php_version(), '<' ) ) {
 			/* translators: %s: PHP version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), $this->get_php_version() ) );
-			$data    = [
+			$data    = array(
 				'title' => $message,
-			];
+			);
 			$this->add_to_error( 'failed_check_php_version', $message, $data );
 
 			return false;
@@ -126,9 +126,9 @@ class Compatibility {
 		if ( version_compare( get_bloginfo( 'version' ), $this->get_wp_version(), '<' ) ) {
 			/* translators: %s: WordPress version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), $this->get_wp_version() ) );
-			$data    = [
+			$data    = array(
 				'title' => $message,
-			];
+			);
 			$this->add_to_error( 'failed_check_wp_version', $message, $data );
 
 			return false;
@@ -155,9 +155,9 @@ class Compatibility {
 							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
 							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
 						);
-					$data = [
+					$data = array(
 						'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
-					];
+					);
 					$this->add_to_error( 'failed_check_required_files', $message, $data );
 
 					return false;
