@@ -177,7 +177,7 @@ class Compatibility {
 	 */
 	public function check_extensions() {
 		$missing_extensions = [];
-		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
+		foreach ( array_keys( $this->get_extensions() ) as $required_extension ) {
 			if ( ! extension_loaded( $required_extension ) ) {
 				$missing_extensions[] = "<code>$required_extension</code>";
 			}
@@ -213,7 +213,7 @@ class Compatibility {
 	 */
 	public function check_classes() {
 		$missing_classes = [];
-		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
+		foreach ( $this->get_extensions() as $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'classes' !== $construct_type ) {
 					continue;
@@ -257,7 +257,7 @@ class Compatibility {
 	 */
 	public function check_functions() {
 		$missing_functions = [];
-		foreach ( $this->get_extensions() as $required_extension => $required_constructs ) {
+		foreach ( $this->get_extensions() as $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'functions' !== $construct_type ) {
 					continue;
