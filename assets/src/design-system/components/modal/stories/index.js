@@ -82,7 +82,7 @@ export const OverriddenStyles = () => {
       <Headline>{'Lorem ipsum dolor'}</Headline>
       <Text>
         {
-          "Don't get cheap on me, Dodgson. I told you, how many times, we needed locking mechanisms on the vehicle doors!"
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
         }
       </Text>
       <Button
@@ -109,7 +109,7 @@ export const OverriddenStyles = () => {
         }}
       >
         <div>
-          <Headline as="h2">{'Modal Content Goes Here!'}</Headline>
+          <Headline as="h2">{'Ut enim ad minim veniam'}</Headline>
           <Text>
             {
               'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'

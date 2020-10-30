@@ -24,6 +24,7 @@ import { text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../../';
 import { Button, BUTTON_TYPES, Text } from '../../';
 import { Dialog } from '..';
 
@@ -43,12 +44,15 @@ export const _default = () => {
         setToggleDialog(!toggleDialog);
       }}
     >
-      {'Button Text'}
+      {'Primary'}
     </Button>
   );
   return (
     <>
-      <Button onClick={() => setToggleDialog(!toggleDialog)}>
+      <Button
+        type={BUTTON_TYPES.PRIMARY}
+        onClick={() => setToggleDialog(!toggleDialog)}
+      >
         {'Toggle Dialog'}
       </Button>
       <Dialog
@@ -57,14 +61,14 @@ export const _default = () => {
           setToggleDialog(!toggleDialog);
         }}
         isOpen={toggleDialog}
-        title={text('title', 'Dialog title')}
+        title={text('title', 'Headline')}
         contentLabel={'Dialog content Label for modal'}
         actions={ActionsNode}
       >
-        <Text>
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL}>
           {text(
             'body text',
-            'Are you sure you want to do this action? It cannot be reversed.'
+            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
           )}
         </Text>
       </Dialog>
@@ -84,7 +88,7 @@ export const With2Actions = () => {
           setToggleDialog(!toggleDialog);
         }}
       >
-        {'cancel'}
+        {'Secondary'}
       </Button>
       <Button
         type={BUTTON_TYPES.PRIMARY}
@@ -92,13 +96,16 @@ export const With2Actions = () => {
           action('button clicked');
         }}
       >
-        {'an action'}
+        {'Primary'}
       </Button>
     </>
   );
   return (
     <>
-      <Button onClick={() => setToggleDialog(!toggleDialog)}>
+      <Button
+        type={BUTTON_TYPES.PRIMARY}
+        onClick={() => setToggleDialog(!toggleDialog)}
+      >
         {'Toggle Dialog'}
       </Button>
       <Dialog
@@ -107,14 +114,14 @@ export const With2Actions = () => {
           setToggleDialog(!toggleDialog);
         }}
         isOpen={toggleDialog}
-        title={text('title', 'Dialog title')}
+        title={text('title', 'Headline')}
         contentLabel={'Dialog content Label for modal'}
         actions={ActionsNode}
       >
-        <Text>
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL}>
           {text(
             'body text',
-            'Are you sure you want to do this action? It cannot be reversed.'
+            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
           )}
         </Text>
       </Dialog>

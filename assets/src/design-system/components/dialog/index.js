@@ -24,8 +24,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../';
 import { Modal, Headline } from '../';
-import { THEME_CONSTANTS } from '../../theme';
 
 // Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div`
@@ -35,7 +35,7 @@ const DialogBox = styled.div`
   align-items: flex-start;
   color: ${({ theme }) => theme.colors.fg.primary};
   overflow-y: auto;
-  max-width: 920px;
+  max-width: 512px;
   max-height: 100%;
   padding: 12px 16px;
   border-radius: 8px;
@@ -46,7 +46,6 @@ const DialogBox = styled.div`
 const DialogContent = styled.div`
   padding: 8px 0 12px;
   margin: 0;
-  max-width: 600px;
   overflow-y: auto;
   color: ${({ theme }) => theme.colors.fg.primary};
 `;

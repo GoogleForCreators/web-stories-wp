@@ -22,10 +22,10 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithProviders } from '../../../testUtils/';
-import Dialog from '../';
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { Dialog } from '../';
 
-describe('Dialog', () => {
+describe('DesignSystem/Components/Dialog', () => {
   it('should not render a dialog by default', () => {
     const { queryAllByRole } = renderWithProviders(
       <Dialog onClose={jest.fn}>
