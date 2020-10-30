@@ -18,7 +18,7 @@ index ad79820..1914f22 100644
 @@ -48,8 +48,30 @@ public function getSettings() {
  		return $this->oParserSettings;
  	}
- 
+
 -	public function parseIdentifier($bIgnoreCase = true) {
 -		$sResult = $this->parseCharacter(true);
 +	public function parseIdentifier($bIgnoreCase = true, $bNameStartCodePoint = true) {
@@ -68,30 +68,30 @@ index ad79820..1914f22 100644
  			return mb_strlen($sString, $this->sCharset);
  		} else {
  			return strlen($sString);
--		}	
--	}	
+-		}
+-	}
 +		}
 +	}
- 
+
  	private function substr($iStart, $iLength) {
  		if ($iLength < 0) {
  			$iLength = $this->iLength - $iStart + $iLength;
--		}	
+-		}
 +		}
  		if ($iStart + $iLength > $this->iLength) {
  			$iLength = $this->iLength - $iStart;
--		}	
+-		}
 +		}
  		$sResult = '';
  		while ($iLength > 0) {
  			$sResult .= $this->aText[$iStart];
  			$iStart++;
  			$iLength--;
--		}	
+-		}
 +		}
  		return $sResult;
  	}
- 
+
 diff --git a/lib/Sabberworm/CSS/Value/Color.php b/lib/Sabberworm/CSS/Value/Color.php
 index c6ed9b1..f02777f 100644
 --- a/lib/Sabberworm/CSS/Value/Color.php
@@ -113,7 +113,7 @@ index ea34f2e..16cae89 100644
  		$this->assertSame('#header {margin: 10px 2em 1cm 2%;color: red !important;frequency: 30Hz;}
  body {color: green;}', $oDoc->render());
  	}
--	
+-
 +
  	function testRuleGetters() {
  		$oDoc = $this->parsedStructureForFile('values');
@@ -122,7 +122,7 @@ index ea34f2e..16cae89 100644
  |test {gaga: 2;}';
  		$this->assertSame($sExpected, $oDoc->render());
  	}
--	
+-
 +
  	function testInnerColors() {
  		$oDoc = $this->parsedStructureForFile('inner-color');
@@ -131,7 +131,7 @@ index ea34f2e..16cae89 100644
  		$this->assertSame('@media screen {html {some: -test(val2);}}
  #unrelated {other: yes;}', $oDoc->render());
  	}
--	
+-
 +
  	/**
  	* @expectedException Sabberworm\CSS\Parsing\OutputException
@@ -178,13 +178,13 @@ index 1914f22..2271d03 100644
 --- a/lib/Sabberworm/CSS/Parsing/ParserState.php
 +++ b/lib/Sabberworm/CSS/Parsing/ParserState.php
 @@ -54,14 +54,14 @@ public function parseIdentifier($bIgnoreCase = true, $bNameStartCodePoint = true
- 
+
          if ( $bNameStartCodePoint ) {
              // Check if 3 code points would start an identifier. See <https://drafts.csswg.org/css-syntax-3/#would-start-an-identifier>.
 -            $sNameStartCodePoint = '[a-zA-Z_]|[\x80-\xFF}]';
 +            $sNameStartCodePoint = '[a-zA-Z_]|[\x80-\xFF]';
              $sEscapeCode = '\\[^\r\n\f]';
- 
+
              if (
                  ! (
 -                    preg_match("/-([-${sNameStartCodePoint}]|${sEscapeCode})/isSu", $this->peek(3)) ||
@@ -203,7 +203,7 @@ index 16cae89..921209e 100644
 @@ -767,10 +767,30 @@ function testLonelyImport() {
  		$this->assertSame($sExpected, $oDoc->render());
  	}
- 
+
 +    function getInvalidIdentifiers() {
 +        return array(
 +            array(
@@ -261,7 +261,7 @@ index 921209e..68284ce 100644
 --- a/tests/Sabberworm/CSS/ParserTest.php
 +++ b/tests/Sabberworm/CSS/ParserTest.php
 @@ -769,28 +769,21 @@ function testLonelyImport() {
- 
+
      function getInvalidIdentifiers() {
          return array(
 -            array(
@@ -276,7 +276,7 @@ index 921209e..68284ce 100644
 +            array('body { 4-o-transition: all .3s ease-in-out; }' ),
          );
  	}
- 
+
      /**
       * @dataProvider getInvalidIdentifiers
 +     *
@@ -317,7 +317,7 @@ index 2271d03..7ab8e01 100644
 @@ -72,7 +72,7 @@ public function parseIdentifier($bIgnoreCase = true, $bNameStartCodePoint = true
              $sResult = $this->parseCharacter(true);
          }
- 
+
 -		if ($sResult === null) {
 +		if (!$this->oParserSettings->bLenientParsing && $sResult === null) {
  			throw new UnexpectedTokenException($sResult, $this->peek(5), 'identifier', $this->iLineNo);
@@ -328,7 +328,7 @@ index 68284ce..ff8c5c9 100644
 --- a/tests/Sabberworm/CSS/ParserTest.php
 +++ b/tests/Sabberworm/CSS/ParserTest.php
 @@ -769,8 +769,8 @@ function testLonelyImport() {
- 
+
      function getInvalidIdentifiers() {
          return array(
 -            array('body { -0-transition: all .3s ease-in-out; }' ),
@@ -337,7 +337,7 @@ index 68284ce..ff8c5c9 100644
 +            array('body { 4-o-transition: all .3s ease-in-out; }'),
          );
  	}
- 
+
 
 From 113df5d55e94e21c6402021dfa959924941d4c29 Mon Sep 17 00:00:00 2001
 From: Pierre Gordon <pierregordon@protonmail.com>
@@ -356,7 +356,7 @@ index 7ab8e01..2271d03 100644
 @@ -72,7 +72,7 @@ public function parseIdentifier($bIgnoreCase = true, $bNameStartCodePoint = true
              $sResult = $this->parseCharacter(true);
          }
- 
+
 -		if (!$this->oParserSettings->bLenientParsing && $sResult === null) {
 +		if ($sResult === null) {
  			throw new UnexpectedTokenException($sResult, $this->peek(5), 'identifier', $this->iLineNo);

@@ -11,7 +11,7 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.4",
+    "ampproject/amp-wp": "^2.0.5",
     "civicrm/composer-downloads-plugin": "^2.1",
     "cweagans/composer-patches": "^1.6",
     "mcaskill/composer-exclude-files": "^2.0",
@@ -53,14 +53,28 @@
         "type": "phar"
       }
     },
-    "enable-patching": false,
     "exclude-from-files": [
       "ampproject/amp-wp/back-compat/back-compat.php",
       "ampproject/amp-wp/includes/amp-helper-functions.php",
       "ampproject/amp-wp/includes/admin/functions.php",
       "ampproject/amp-wp/includes/deprecated.php",
       "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
-    ]
+    ],
+    "patches": {
+      "sabberworm/php-css-parser": {
+        "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
+        "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
+      }
+    },
+    "patches-ignore": {
+      "ampproject/amp-wp": {
+        "sabberworm/php-css-parser": {
+          "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
+          "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "patches/php-css-parser-pull-185.patch",
+          "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
+        }
+      }
+    }
   },
   "autoload": {
     "psr-4": {
@@ -82,6 +96,11 @@
     {
       "type": "vcs",
       "url": "https://github.com/ampproject/amp-wp",
+      "no-api": true
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
       "no-api": true
     }
   ],
