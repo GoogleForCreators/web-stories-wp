@@ -53,15 +53,15 @@ const DialogContent = styled.div`
 
 const DialogActions = styled.div`
   display: flex;
-  /* align-items: flex-end; */
+  align-self: flex-end;
   margin: 0;
 
-  /* & > button {
+  & > button {
     margin-right: 10px;
     &:last-of-type {
       margin-right: 0;
     }
-  } */
+  }
 `;
 
 export function Dialog({
@@ -78,7 +78,7 @@ export function Dialog({
         {Boolean(title) && (
           <Headline
             as="h2"
-            size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM}
+            size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}
           >
             {title}
           </Headline>
