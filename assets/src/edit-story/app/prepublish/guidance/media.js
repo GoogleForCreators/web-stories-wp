@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -28,15 +28,13 @@ import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
-const MAX_VIDEO_LENGTH_SECONDS = 60;
 const MAX_VIDEO_WIDTH = 3840;
 const MAX_VIDEO_HEIGHT = 2160;
 const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
 
-// todo: get video frames per second
-// MIN_VIDEO_FPS = 24;
-// export function videoElementFps(element) {}
+const MAX_VIDEO_LENGTH_SECONDS = 60;
+const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -210,9 +208,15 @@ export function videoElementLength(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __(
-        'Video is longer than 1 minute (suggest breaking video up into multiple segments)',
-        'web-stories'
+      message: sprintf(
+        /* translators: %d: number of minutes; */
+        _n(
+          'Video is longer than %d minute (suggest breaking video up into multiple segments)',
+          'Video is longer than %d minutes (suggest breaking video up into multiple segments)',
+          MAX_VIDEO_LENGTH_MINUTES,
+          'web-stories'
+        ),
+        MAX_VIDEO_LENGTH_MINUTES
       ),
     };
   }
