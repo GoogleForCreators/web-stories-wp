@@ -55,7 +55,7 @@
     "react": "^17.0.1",
     "react-calendar": "^3.0.1",
     "react-color": "^2.18.1",
-    "react-dom": "^16.13.1",
+    "react-dom": "^17.0.1",
     "react-modal": "^3.11.2",
     "react-moveable": "^0.21.6",
     "react-photo-gallery": "^8.0.0",
