@@ -83,7 +83,7 @@ class Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::get_php_version
+	 * @covers ::check_php_version
 	 */
 	public function test_check_php_version() {
 		$compatibility = $this->get_compatibility_object();

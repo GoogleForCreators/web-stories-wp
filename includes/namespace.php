@@ -133,7 +133,7 @@ if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' ===
 	if ( $_error->errors ) {
 		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
 		if ( class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::warning( "$heading" );
+			\WP_CLI::warning( $heading );
 		} else {
 			echo "$heading\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
