@@ -17,9 +17,10 @@
 /**
  * External dependencies
  */
+import { useContext } from 'react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeContext } from 'styled-components';
 import { rgba } from 'polished';
 
 const ADMIN_TOOLBAR_HEIGHT = 32;
@@ -80,9 +81,9 @@ export function Modal({
   modalStyles = {},
   onClose,
   overlayStyles,
-  theme,
   ...props
 }) {
+  const themeContext = useContext(ThemeContext);
   return (
     <ReactModal
       className={CONTENT_CLASS}
@@ -94,7 +95,7 @@ export function Modal({
       style={{
         maxHeight: '100vh',
         ...modalStyles,
-        overlay: { ...customStyles.overlay(theme), ...overlayStyles },
+        overlay: { ...customStyles.overlay(themeContext), ...overlayStyles },
         content: { ...customStyles.content, ...contentStyles },
       }}
       {...props}
@@ -113,5 +114,4 @@ Modal.propTypes = {
   isOpen: PropTypes.bool,
   modalStyles: PropTypes.object,
   overlayStyles: PropTypes.object,
-  theme: PropTypes.object,
 };
