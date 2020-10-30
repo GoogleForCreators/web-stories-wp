@@ -16,15 +16,9 @@
 /**
  * External dependencies
  */
-import React, {
-  createContext,
-  useMemo,
-  useRef,
-  useLayoutEffect,
-  useCallback,
-  useState,
-} from 'react';
+import { createContext, useMemo, useRef, useLayoutEffect, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */

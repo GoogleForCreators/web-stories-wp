@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 /**
  * Internal dependencies

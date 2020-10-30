@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 /**
  * WordPress dependencies

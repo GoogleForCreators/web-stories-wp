@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import React, { createRef } from 'react';
+import { createRef } from 'react';
 import styled, { css } from 'styled-components';
 
 /**

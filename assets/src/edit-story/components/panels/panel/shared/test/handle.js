@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { fireEvent } from '@testing-library/react';
 
 /**
