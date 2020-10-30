@@ -27,19 +27,19 @@ import { rgba } from 'polished';
 import { THEME_CONSTANTS } from '../../';
 import { Modal, Headline } from '../';
 
-// Shadow styles ported from @material-ui/Dialog
 const DialogBox = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  overflow-y: auto;
   max-width: 512px;
   max-height: 100%;
+  color: ${({ theme }) => theme.colors.fg.primary};
+  overflow-y: auto;
   padding: 12px 16px;
   border-radius: 8px;
   border: ${({ theme }) => `1px solid ${rgba(theme.colors.fg.primary, 0.24)}`};
+
   transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
