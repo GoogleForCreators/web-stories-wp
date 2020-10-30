@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
@@ -30,6 +30,9 @@ import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const MIN_STORY_PAGES = 4;
 const MAX_STORY_PAGES = 30;
+const MIN_STORY_PAGES_RECOMMENDED = 10;
+const MAX_STORY_PAGES_RECOMMENDED = 20;
+const MAX_STORY_TITLE_LENGTH = 40;
 
 /**
  * Check the number of pages in a Story.
@@ -44,13 +47,23 @@ export function storyPagesCount(story) {
   const hasTooManyPages = story.pages.length > MAX_STORY_PAGES;
   if (hasTooFewPages || hasTooManyPages) {
     const message = hasTooFewPages
-      ? __(
-          'Story has fewer than 4 pages (ideally, stories should have a minimum of 10 pages)',
-          'web-stories'
+      ? sprintf(
+          /* translators: 1: minimum number of pages. 2: recommended number of pages. */
+          __(
+            'Story has fewer than %1$d pages (ideally, stories should have a minimum of %2$d pages)',
+            'web-stories'
+          ),
+          MIN_STORY_PAGES,
+          MIN_STORY_PAGES_RECOMMENDED
         )
-      : __(
-          "Story has more than 30 pages (ideally, stories shouldn't have more than 20 pages)",
-          'web-stories'
+      : sprintf(
+          /* translators: 1: maximum number of pages. 2: recommended number of pages. */
+          __(
+            "Story has more than %1$d pages (ideally, stories shouldn't have more than %2$d pages)",
+            'web-stories'
+          ),
+          MAX_STORY_PAGES,
+          MAX_STORY_PAGES_RECOMMENDED
         );
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
@@ -70,11 +83,15 @@ export function storyPagesCount(story) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyTitleLength(story) {
-  if (story.title.length > 40) {
+  if (story.title.length > MAX_STORY_TITLE_LENGTH) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       storyId: story.storyId,
-      message: __('Story title is longer than 40 characters', 'web-stories'),
+      message: sprintf(
+        /* translators: %d: maximum story title length. */
+        __('Story title is longer than %d characters', 'web-stories'),
+        MAX_STORY_TITLE_LENGTH
+      ),
     };
   }
   return undefined;
