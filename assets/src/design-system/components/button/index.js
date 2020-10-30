@@ -29,7 +29,7 @@ const Base = styled.button(
   ({ theme }) => `
   display: flex;
   align-items: center;
-  box-sizing: content-box;
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
   background: transparent;
