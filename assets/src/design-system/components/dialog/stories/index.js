@@ -82,7 +82,7 @@ export const With2Actions = () => {
   const ActionsNode = (
     <>
       <Button
-        type={BUTTON_TYPES.SECONDARY}
+        type={BUTTON_TYPES.TERTIARY}
         onClick={() => {
           action('cancel button clicked');
           setToggleDialog(!toggleDialog);
