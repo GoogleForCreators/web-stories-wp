@@ -71,21 +71,4 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     expect(test.storyId).toStrictEqual(testStory.storyId);
     expect(testUndefined).toBeUndefined();
   });
-
-  it('should return guidance if the story is missing landscape poster/cover', () => {
-    const testStory = {
-      storyId: 890,
-      title: 'Work work work work work',
-      featuredMediaUrl: undefined,
-    };
-    const testMissingCover = generalGuidelines.storyPosterAttached(testStory);
-    expect(testMissingCover).not.toBeUndefined();
-    expect(testMissingCover.message).toMatchInlineSnapshot(
-      `"Missing story poster/cover"`
-    );
-    expect(testMissingCover.storyId).toStrictEqual(testStory.storyId);
-  });
-
-  // the story's poster/cover sizes are not saved
-  it.todo("should return guidance if the story's poster/cover is too small");
 });

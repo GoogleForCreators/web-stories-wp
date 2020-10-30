@@ -79,32 +79,3 @@ export function storyTitleLength(story) {
   }
   return undefined;
 }
-
-/**
- * Check that a cover/poster is attached to the Story
- * Otherwise return undefined.
- *
- * @param {Story} story The story object being checked
- * @return {Guidance|undefined} The guidance object for consumption
- */
-export function storyPosterAttached(story) {
-  if (typeof story.featuredMediaUrl !== 'string') {
-    return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      storyId: story.storyId,
-      message: __('Missing story poster/cover', 'web-stories'),
-    };
-  }
-  return undefined;
-}
-
-// todo: square and landscape story cover/poster sizes
-/**
- * Check the number of pages in a Story.
- * If the Story has less than 4 pages or more than 30 pages return guidance
- * Otherwise return undefined.
- *
- * @param {Story} story The story object being checked
- * @return {Guidance|undefined} The guidance object for consumption
- */
-// export function storyPosterSize(story) {}
