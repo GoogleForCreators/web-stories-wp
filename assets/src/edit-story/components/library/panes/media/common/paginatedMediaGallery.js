@@ -18,7 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 
 /**
