@@ -46,7 +46,8 @@ const Container = styled.div`
   width: ${PANEL_WIDTH}px;
 `;
 
-const GridItem = styled.div`
+const GridItem = styled.button`
+  border: none;
   background: #333;
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
