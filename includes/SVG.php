@@ -26,6 +26,8 @@
 
 namespace Google\Web_Stories;
 
+use SimpleXMLElement;
+
 /**
  * Class SVG
  *
@@ -45,6 +47,14 @@ class SVG {
 	 * @var string
 	 */
 	const MINE_TYPE = 'image/svg+xml';
+
+	/**
+	 * Array of SimpleXMLElements.
+	 *
+	 * @var array
+	 */
+	protected $svgs = [];
+
 	/**
 	 * Experiments instance.
 	 *
@@ -217,7 +227,7 @@ class SVG {
 	 * @return array
 	 */
 	protected function get_svg_size( $file ) {
-		$svg = simplexml_load_file( $file );
+		$svg = $this->get_svg_data( $file );
 
 		$width  = 0;
 		$height = 0;
@@ -250,7 +260,7 @@ class SVG {
 	 * @return bool
 	 */
 	public function has_script_tags( $file ) {
-		$svg   = simplexml_load_file( $file );
+		$svg   = $this->get_svg_data( $file );
 		$count = 0;
 		if ( false !== $svg ) {
 			$count = count( $svg->script );
@@ -287,5 +297,21 @@ class SVG {
 		}
 
 		return $wp_check_filetype_and_ext;
+	}
+
+	/**
+	 * Get SVG data.
+	 *
+	 * @param string $file File path.
+	 *
+	 * @return SimpleXMLElement
+	 */
+	protected function get_svg_data( $file ) {
+		$key = md5( $file );
+		if ( ! isset( $this->svgs[ $key ] ) ) {
+			$this->svgs[ $key ] = simplexml_load_file( $file );
+		}
+
+		return $this->svgs[ $key ];
 	}
 }
