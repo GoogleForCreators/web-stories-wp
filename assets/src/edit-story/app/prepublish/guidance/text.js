@@ -22,7 +22,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import stripHTML from '../../utils/stripHTML';
+import stripHTML from '../../../utils/stripHTML';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const MAX_PAGE_CHARACTER_COUNT = 200;
 const MIN_STORY_CHARACTER_COUNT = 100;
@@ -38,10 +39,16 @@ function characterCountForPage(page) {
 }
 
 /**
+ * @typedef {import('../../../types').Story} Story
+ * @typedef {import('../../../types').Page} Page
+ * @typedef {import('../types').Guidance} Guidance
+ */
+
+/**
  * Check page for too much text
  *
- * @param  {Object} page Page object
- * @return {Object} Prepublish check response
+ * @param {Page} page The page being checked for guidelines
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function pageTooMuchText(page) {
   const characterCount = characterCountForPage(page);
@@ -50,7 +57,7 @@ export function pageTooMuchText(page) {
     return {
       message: __('Too much text on page', 'web-stories'),
       pageId: page.id,
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
     };
   }
 
@@ -60,9 +67,8 @@ export function pageTooMuchText(page) {
 /**
  * Check story for too little text
  *
- * @param {Object} page Page object
- * @param story
- * @return {Object} Prepublish check response
+ * @param {Story} story The story being checked for guidelines
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyTooLittleText(story) {
   let characterCount = 0;
@@ -74,7 +80,7 @@ export function storyTooLittleText(story) {
     return {
       message: __('Too little text in story', 'web-stories'),
       storyId: story.id,
-      type: 'guidance',
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
     };
   }
 

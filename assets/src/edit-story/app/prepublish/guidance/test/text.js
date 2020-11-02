@@ -19,7 +19,7 @@
  */
 import { pageTooMuchText, storyTooLittleText } from '../text';
 
-describe('Pre-publish checklist - text guidelines', () => {
+describe('Pre-publish checklist - text guidelines (guidance)', () => {
   describe('pageTooMuchText', () => {
     it('should return a guidance if too much text', () => {
       const page = {
