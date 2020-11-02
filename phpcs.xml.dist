@@ -45,6 +45,7 @@
 				<element value="removeChild" />
 				<element value="ownerDocument" />
 				<element value="strictErrorChecking" />
+				<element value="viewBox" />
 			</property>
 		</properties>
 	</rule>
