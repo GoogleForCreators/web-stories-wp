@@ -23,7 +23,6 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
-    "civicrm/composer-downloads-plugin": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
