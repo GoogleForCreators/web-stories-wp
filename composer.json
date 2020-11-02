@@ -27,6 +27,7 @@
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
@@ -95,6 +96,7 @@
     ],
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",
+    "phpmd": "phpmd . text phpmd.xml",
     "phpstan": "phpstan analyse --memory-limit=512M",
     "prefix-dependencies": [
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
