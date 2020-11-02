@@ -42,10 +42,26 @@ class Locale {
 	public function get_locale_settings() {
 		global $wp_locale;
 
+		/* translators: Date format, see https://www.php.net/date */
+		$default_date_format = __( 'd/m/Y', 'web-stories' );
+
+		/* translators: Date format, see https://www.php.net/date */
+		$default_time_format = __( 'g:i a', 'web-stories' );
+
+		$date_format = get_option( 'date_format' );
+		if ( empty( trim( $date_format ) ) ) {
+			$date_format = $default_date_format;
+		}
+
+		$time_format = get_option( 'time_format' );
+		if ( empty( trim( $time_format ) ) ) {
+			$time_format = $default_time_format;
+		}
+
 		return [
 			'locale'           => str_replace( '_', '-', get_user_locale() ),
-			'dateFormat'       => get_option( 'date_format' ),
-			'timeFormat'       => get_option( 'time_format' ),
+			'dateFormat'       => $date_format,
+			'timeFormat'       => $time_format,
 			'gmtOffset'        => get_option( 'gmt_offset' ),
 			'timezone'         => get_option( 'timezone_string' ),
 			'months'           => array_values( $wp_locale->month ),
