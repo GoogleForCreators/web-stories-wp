@@ -42,11 +42,7 @@ const dropKeyframes = keyframes`
     transform: translateY(-30%);
     animation-timing-function: cubic-bezier(.75,.05,.86,.08);
   }
-  50% {
-    transform: translateY(0%);
-    animation-timing-function: cubic-bezier(.22,.61,.35,1);
-  }
-  100% {
+  50%, 100% {
     transform: translateY(0%);
     animation-timing-function: cubic-bezier(.22,.61,.35,1);
   }
@@ -61,10 +57,7 @@ const fadeInKeyframes = keyframes`
   0% {
     opacity: 0;
   }
-  50% {
-    opacity: 1;
-  }
-  100% {
+  50%, 100% {
     opacity: 1;
   }
 `;
@@ -78,10 +71,7 @@ const flyInLeftKeyframes = keyframes`
   0% {
     transform: translateX(-100%);
   }
-  50% {
-    transform: translateX(0%);
-  }
-  100% {
+  50%, 100% {
     transform: translateX(0%);
   }
 `;
@@ -95,10 +85,7 @@ const flyInRightKeyframes = keyframes`
   0% {
     transform: translateX(100%);
   }
-  50% {
-    transform: translateX(0%);
-  }
-  100% {
+  50%, 100% {
     transform: translateX(0%);
   }
 `;
@@ -112,10 +99,7 @@ const flyInTopKeyframes = keyframes`
   0% {
     transform: translateY(-100%);
   }
-  50% {
-    transform: translateY(0%);
-  }
-  100% {
+  50%, 100% {
     transform: translateY(0%);
   }
 `;
@@ -129,10 +113,7 @@ const flyInBottomKeyframes = keyframes`
   0% {
     transform: translateY(100%);
   }
-  50% {
-    transform: translateY(0%);
-  }
-  100% {
+  50%, 100% {
     transform: translateY(0%);
   }
 `;
@@ -140,4 +121,52 @@ const flyInBottomKeyframes = keyframes`
 export const FlyInBottomAnimation = styled.div`
   display: inline-block;
   animation: ${flyInBottomKeyframes} 2s linear infinite;
+`;
+
+const pulseKeyframes = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  12.5% {
+    transform: scale(0.75);
+  }
+  37.5% {
+    transform: scale(1.25);
+  }
+  50%, 100% {
+    transform: scale(1);
+  }
+`;
+
+export const PulseAnimation = styled.div`
+  display: inline-block;
+  animation: ${pulseKeyframes} 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+`;
+
+const rotateInLeftKeyframes = keyframes`
+  0% {
+    transform: translateX(-100%) rotate(360deg);
+  }
+  50%, 100% {
+    transform: translateX(0%);
+  }
+`;
+
+export const RotateInLeftAnimation = styled.div`
+  display: inline-block;
+  animation: ${rotateInLeftKeyframes} 2s linear infinite;
+`;
+
+const rotateInRightKeyframes = keyframes`
+  0% {
+    transform: translateX(100%) rotate(-360deg);
+  }
+  50%, 100% {
+    transform: translateX(0%);
+  }
+`;
+
+export const RotateInRightAnimation = styled.div`
+  display: inline-block;
+  animation: ${rotateInRightKeyframes} 2s linear infinite;
 `;

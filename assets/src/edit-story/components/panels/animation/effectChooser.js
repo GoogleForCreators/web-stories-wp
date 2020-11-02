@@ -39,6 +39,9 @@ import {
   FlyInRightAnimation,
   FlyInTopAnimation,
   FlyInBottomAnimation,
+  PulseAnimation,
+  RotateInLeftAnimation,
+  RotateInRightAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -129,13 +132,21 @@ export default function EffectChooser() {
           </ContentWrapper>
         </GridItem>
         <GridItemFullRow>
-          <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
+          <ContentWrapper>
+            <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
+          </ContentWrapper>
         </GridItemFullRow>
         <GridItemHalfRow>
-          <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+          <ContentWrapper>
+            <RotateInLeftAnimation>
+              {__('Rotate', 'web-stories')}
+            </RotateInLeftAnimation>
+          </ContentWrapper>
         </GridItemHalfRow>
         <GridItemHalfRow>
-          <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+          <RotateInRightAnimation>
+            <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+          </RotateInRightAnimation>
         </GridItemHalfRow>
       </Grid>
     </Container>
