@@ -23,15 +23,14 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
-import { expandPresetStyles } from '../expandPresetStyles';
 
 export const Headline = styled.h1`
   ${defaultTypographyStyle};
 
   ${({ theme, size }) =>
-    expandPresetStyles({
+    themeHelpers.expandPresetStyles({
       preset: theme.typography.presets.headline[size],
       theme,
     })}

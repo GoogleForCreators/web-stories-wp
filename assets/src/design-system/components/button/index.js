@@ -22,8 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../';
-import { expandPresetStyles } from '../';
+import { THEME_CONSTANTS, themeHelpers } from '../../';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
@@ -36,10 +35,13 @@ const Base = styled.button(
     margin: 0;
     background: transparent;
     border: none;
-    box-shadow: 0 0 0 2px ${theme.colors.bg.primary};
+    ${themeHelpers.focusableOutlineCSS(
+      theme.colors.bg.primary,
+      theme.colors.accent.secondary
+    )};
     color: ${theme.colors.fg.primary};
     cursor: pointer;
-    ${expandPresetStyles({
+    ${themeHelpers.expandPresetStyles({
       preset:
         theme.typography.presets.button[
           THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
@@ -51,8 +53,6 @@ const Base = styled.button(
     }
 
     &:focus {
-      box-shadow: 0 0 0 2px ${theme.colors.bg.primary},
-        0 0 0 4px ${theme.colors.accent.secondary};
       outline: none;
     }
 

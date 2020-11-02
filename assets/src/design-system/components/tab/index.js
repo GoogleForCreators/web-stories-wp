@@ -17,70 +17,55 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../';
 
 const StyledTab = styled.button(
-  ({ isActive, theme }) => `
+  ({ isActive, theme }) => css`
     box-sizing: content-box;
     height: 32px;
     padding: 0 16px;
 
-    background-color: ${
-      isActive ? theme.colors.bg.primary : theme.colors.bg.divider
-    };
+    background-color: ${isActive
+      ? theme.colors.bg.primary
+      : theme.colors.bg.divider};
     border: none;
     border-radius: 50px;
-    box-shadow: 0 0 0 2px ${theme.colors.standard.white};
+    ${themeHelpers.focusableOutlineCSS(
+      theme.colors.bg.primary,
+      theme.colors.accent.secondary
+    )};
+
     color: ${isActive ? theme.colors.fg.primary : theme.colors.fg.secondary};
     cursor: pointer;
-
-
-    font-family: ${theme.typography.family.primary};
-    font-size: ${
-      theme.typography.presets.label[
-        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-      ].size
-    }px;
-    font-weight: ${
-      theme.typography.presets.label[
-        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-      ].weight
-    };
-    letter-spacing: ${
-      theme.typography.presets.label[
-        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-      ].letterSpacing
-    }px;
-    line-height: ${
-      theme.typography.presets.label[
-        THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-      ].lineHeight
-    }px;
+    ${themeHelpers.expandPresetStyles({
+      preset:
+        theme.typography.presets.label[
+          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+        ],
+      theme,
+    })};
 
     &:disabled {
-        pointer-events: none;
+      pointer-events: none;
     }
 
     &:hover {
-        color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
+      color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
     }
 
     &:focus {
-        box-shadow: 
-          0 0 0 2px ${theme.colors.standard.white}, 
-          0 0 0 4px ${theme.colors.accent.secondary};
-        outline: none;
-        color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
+      outline: none;
+      color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
     }
-    
+
     transition: color 0.6s ease 0s;
-    `
+  `
 );
 
 export const Tab = forwardRef(function Tab(

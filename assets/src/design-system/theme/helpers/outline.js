@@ -13,7 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { css } from 'styled-components';
 
-export { Display } from './display';
-export { Headline } from './headline';
-export { Text } from './text';
+export const focusableOutlineCSS = (bg, accent) => css`
+  box-shadow: 0 0 0 2px ${bg};
+  &:focus {
+    box-shadow: 0 0 0 2px ${bg}, 0 0 0 4px ${accent};
+  }
+`;

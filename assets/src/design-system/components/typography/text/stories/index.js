@@ -36,9 +36,9 @@ const textRenderAsOptions = ['p', 'a', 'span'];
 
 export const _default = () => (
   <>
-    {textPresetSizes.map((presetSize, idx) => (
+    {textPresetSizes.map((presetSize) => (
       <Text
-        key={idx}
+        key={`${presetSize}_text`}
         size={presetSize}
         as={select('as', textRenderAsOptions, 'p')}
       >
@@ -53,9 +53,9 @@ export const _default = () => (
 
 export const Bold = () => (
   <>
-    {textPresetSizes.map((presetSize, idx) => (
+    {textPresetSizes.map((presetSize) => (
       <Text
-        key={idx}
+        key={`${presetSize}_text_bold`}
         size={presetSize}
         isBold
         as={select('as', textRenderAsOptions, 'p')}
@@ -69,9 +69,9 @@ export const Bold = () => (
 
 export const Link = () => (
   <>
-    {textPresetSizes.map((presetSize, idx) => (
+    {textPresetSizes.map((presetSize) => (
       <Text
-        key={idx}
+        key={`${presetSize}_text_link`}
         size={presetSize}
         as={select('as', textRenderAsOptions, 'a')}
         href="#"

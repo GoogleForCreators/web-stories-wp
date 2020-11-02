@@ -33,7 +33,6 @@ const StyledTabGroup = styled.div`
 
   & > button {
     margin-left: 8px;
-    
     &:first-of-type {
       margin-left: 0;
     }

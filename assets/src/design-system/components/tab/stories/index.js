@@ -19,7 +19,7 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
@@ -29,11 +29,20 @@ import { Tab } from '..';
 export default {
   title: 'DesignSystem/Components/Tab',
 };
+
+const Container = styled.div`
+  background-color: ${(props) => props.theme.colors.bg.primary};
+  width: 600px;
+  height: 400px;
+  padding: 30px;
+`;
 // Override light theme because this component is only set up for dark theme right now given fg and bg coloring
 export const _default = () => (
   <ThemeProvider theme={theme}>
-    <Tab isActive={boolean('isActive')} onClick={action('click on tab')}>
-      {text('children', 'I am tab text')}
-    </Tab>
+    <Container>
+      <Tab isActive={boolean('isActive')} onClick={action('click on tab')}>
+        {text('children', 'I am tab text')}
+      </Tab>
+    </Container>
   </ThemeProvider>
 );

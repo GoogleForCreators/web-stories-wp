@@ -19,6 +19,7 @@
  */
 import { dark as darkMode, light as lightMode } from './colors';
 import { THEME_CONSTANTS } from './constants';
+import * as themeHelpers from './helpers';
 import { typography } from './typography';
 
 export const theme = {
@@ -26,4 +27,4 @@ export const theme = {
   colors: { ...darkMode },
 };
 
-export { lightMode, THEME_CONSTANTS };
+export { lightMode, THEME_CONSTANTS, themeHelpers };

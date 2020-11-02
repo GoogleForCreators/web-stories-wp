@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import { action } from '@storybook/addon-actions';
 import { useState } from 'react';
 
@@ -30,23 +30,32 @@ import { TabGroup } from '..';
 export default {
   title: 'DesignSystem/Components/TabGroup',
 };
+
+const Container = styled.div`
+  background-color: ${(props) => props.theme.colors.bg.primary};
+  width: 600px;
+  height: 400px;
+  padding: 30px;
+`;
 export const _default = () => {
   const [currentTabId, setCurrentTabId] = useState();
   return (
     <ThemeProvider theme={theme}>
-      <TabGroup
-        activeTabId={currentTabId}
-        tabs={[
-          { id: '1', title: 'tab one' },
-          { id: '2', title: 'tab two' },
-          { id: '3', title: 'tab three' },
-        ]}
-        label={'tab group label'}
-        handleTabClicked={(e, id, tabRefs) => {
-          action('tab clicked')(tabRefs.current[id]);
-          setCurrentTabId(id);
-        }}
-      />
+      <Container>
+        <TabGroup
+          activeTabId={currentTabId}
+          tabs={[
+            { id: '1', title: 'tab one' },
+            { id: '2', title: 'tab two' },
+            { id: '3', title: 'tab three' },
+          ]}
+          label={'tab group label'}
+          handleTabClicked={(e, id, tabRefs) => {
+            action('tab clicked')(tabRefs.current[id]);
+            setCurrentTabId(id);
+          }}
+        />
+      </Container>
     </ThemeProvider>
   );
 };
