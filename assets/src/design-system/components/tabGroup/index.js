@@ -32,12 +32,10 @@ const StyledTabGroup = styled.div`
   flex-wrap: wrap;
 
   & > button {
-    margin: 0 4px;
+    margin-left: 8px;
+    
     &:first-of-type {
       margin-left: 0;
-    }
-    &:last-of-type {
-      margin-right: 0;
     }
   }
 `;
