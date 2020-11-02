@@ -132,6 +132,13 @@ class Plugin {
 	public $analytics;
 
 	/**
+	 * SVG.
+	 *
+	 * @var SVG
+	 */
+	public $svg;
+
+	/**
 	 * Experiments.
 	 *
 	 * @var Experiments
@@ -141,7 +148,7 @@ class Plugin {
 	/**
 	 * Initialize plugin functionality.
 	 *
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 *
 	 * @return void
 	 */
@@ -204,6 +211,9 @@ class Plugin {
 		$this->analytics = new Analytics();
 		add_action( 'init', [ $this->analytics, 'init' ] );
 
+		$this->svg = new SVG( $this->experiments );
+		add_action( 'init', [ $this->svg, 'init' ] );
+
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
 		$activation_flag = new Activation_Flag();
@@ -229,7 +239,7 @@ class Plugin {
 	/**
 	 * Registers REST API routes.
 	 *
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 *
 	 * @return void
 	 */

@@ -363,6 +363,17 @@ class Experiments {
 				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
 				'group'       => 'general',
 			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: xxx
+			 * Creation date: 2020-11-02
+			 */
+			[
+				'name'        => 'enableSVG',
+				'label'       => __( 'SVG support', 'web-stories' ),
+				'description' => __( 'Enable svg support', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 
