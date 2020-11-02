@@ -33,7 +33,7 @@ import {
   Numeric,
   Row,
   DropDown,
-  DropDown2,
+  AdvancedDropDown,
   usePresubmitHandler,
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
@@ -43,7 +43,7 @@ import { getCommonValue } from '../utils';
 import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
-import { Option, Selected } from '../../form/dropDown2/list/styled';
+import { Option, Selected } from '../../form/advancedDropDown/list/styled';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 
@@ -212,7 +212,7 @@ function FontControls({ selectedElements, pushUpdate }) {
     <>
       {fonts && (
         <Row>
-          <DropDown2
+          <AdvancedDropDown
             data-testid="font"
             aria-label={__('Edit: Font family', 'web-stories')}
             options={fonts}

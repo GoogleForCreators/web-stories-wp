@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown2, Label, Media, Required } from '../../../form';
+import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
@@ -176,14 +176,14 @@ function PublishPanel() {
               {__('Author', 'web-stories')}
             </FieldLabel>
             {isUsersLoading || !visibleOptions ? (
-              <DropDown2
+              <AdvancedDropDown
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
                 primaryOptions={[]}
                 {...dropDownParams}
               />
             ) : (
-              <DropDown2
+              <AdvancedDropDown
                 options={queriedUsers}
                 primaryOptions={visibleOptions}
                 disabled={isSaving}
