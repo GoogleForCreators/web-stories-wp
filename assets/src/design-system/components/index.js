@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { Text, Display, Headline } from './typography';
+export { Text, Display, Headline, expandPresetStyles } from './typography';
 export { Button } from './button';

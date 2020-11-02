@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
-export * from './display';
-export * from './headline';
-export * from './text';
+export { Display } from './display';
+export { Headline } from './headline';
+export { Text } from './text';
+export { expandPresetStyles } from './expandPresetStyles';

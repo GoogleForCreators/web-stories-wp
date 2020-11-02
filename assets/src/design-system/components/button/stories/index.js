@@ -34,13 +34,17 @@ const Container = styled.div`
   display: flex;
   align-items: space-evenly;
   flex-direction: column;
+`;
 
+const Row = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   & > div {
-    display: flex;
-    flex-direction: row;
-
-    & > * {
-      margin: 10px;
+    width: 200px;
+    margin: 10px;
+    p {
+      padding-top: 10px;
     }
   }
 `;
@@ -48,7 +52,7 @@ const Container = styled.div`
 export const _default = () => {
   return (
     <Container>
-      <Headline as="h2">{'Buttons'}</Headline>
+      <Headline as="h2">{'Buttons by Variant, Size, and Type'}</Headline>
       {Object.values(BUTTON_VARIANTS).map((buttonVariant) => {
         const buttonContent =
           buttonVariant === BUTTON_VARIANTS.RECTANGLE ? (
@@ -58,31 +62,37 @@ export const _default = () => {
           );
 
         return Object.values(BUTTON_SIZES).map((buttonSize) => (
-          <div key={`${buttonVariant}_${buttonSize}_storybook`}>
-            <Text>
-              {buttonVariant}
-              {' - '}
-              {buttonSize}
-            </Text>
+          <Row key={`${buttonVariant}_${buttonSize}_row_storybook`}>
             {Object.values(BUTTON_TYPES).map((buttonType) => (
-              <Button
-                key={`${buttonVariant}_${buttonType}_storybook`}
-                variant={buttonVariant}
-                type={buttonType}
-                size={buttonSize}
+              <div
+                key={`${buttonVariant}_${buttonSize}_${buttonType}_storybook`}
               >
-                {buttonContent}
-              </Button>
+                <Button
+                  key={`${buttonVariant}_${buttonType}_storybook`}
+                  variant={buttonVariant}
+                  type={buttonType}
+                  size={buttonSize}
+                >
+                  {buttonContent}
+                </Button>
+                <Text>
+                  {`variant: ${buttonVariant}`} <br />
+                  {`size: ${buttonSize}`} <br />
+                  {`type: ${buttonType}`}
+                </Text>
+              </div>
             ))}
-          </div>
+          </Row>
         ));
       })}
-      <div>
-        <Text>{'Link as Button'}</Text>
-        <Button type={BUTTON_TYPES.PRIMARY} href="">
-          {'Link as Button'}
-        </Button>
-      </div>
+      <Row>
+        <div>
+          <Button type={BUTTON_TYPES.PRIMARY} href="">
+            {'Link as Button'}
+          </Button>
+          <Text>{'Link as Button'}</Text>
+        </div>
+      </Row>
     </Container>
   );
 };

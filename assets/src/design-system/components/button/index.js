@@ -23,61 +23,45 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../';
+import { expandPresetStyles } from '../';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
-  ({ theme }) => `
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  background: transparent;
-  border: none;
-  box-shadow: 0 0 0 2px ${theme.colors.bg.primary};
-  color: ${theme.colors.fg.primary};
-  cursor: pointer;
-  font-family: ${theme.typography.family.primary};
-  font-size: ${
-    theme.typography.presets.button[
-      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-    ].size
-  }px;
-  font-weight: ${
-    theme.typography.presets.button[
-      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-    ].weight
-  };
-  letter-spacing: ${
-    theme.typography.presets.button[
-      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-    ].letterSpacing
-  }px;
-  line-height: ${
-    theme.typography.presets.button[
-      THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-    ].lineHeight
-  }px;
-  text-decoration: none;
+  ({ theme }) => css`
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    box-shadow: 0 0 0 2px ${theme.colors.bg.primary};
+    color: ${theme.colors.fg.primary};
+    cursor: pointer;
+    ${expandPresetStyles({
+      preset:
+        theme.typography.presets.button[
+          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+        ],
+      theme,
+    })};
+    &:disabled {
+      pointer-events: none;
+    }
 
-  &:disabled {
-    pointer-events: none;
-  }
+    &:focus {
+      box-shadow: 0 0 0 2px ${theme.colors.bg.primary},
+        0 0 0 4px ${theme.colors.accent.secondary};
+      outline: none;
+    }
 
-  &:focus {
-    box-shadow: 
-      0 0 0 2px ${theme.colors.bg.primary}, 
-      0 0 0 4px ${theme.colors.accent.secondary};
-    outline: none;
-  }
+    &:active {
+      outline: none;
+    }
 
-  &:active {
-    outline: none;
-  }
-
-  transition: background-color 0.6s ease 0s;
-`
+    transition: background-color 0.6s ease 0s;
+  `
 );
 
 const primaryColors = ({ theme }) => css`
@@ -132,7 +116,7 @@ const buttonColors = {
 };
 
 const ButtonRectangle = styled(Base)`
-  ${({ type }) => type && buttonColors[type]};
+  ${({ type }) => type && buttonColors?.[type]};
   min-width: 80px;
   height: 36px;
   padding: 8px 16px;
@@ -142,19 +126,17 @@ const ButtonRectangle = styled(Base)`
 const ButtonCircle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
 
-  ${({ size }) => `
-  width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-  height:${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-  border-radius: 50%;
+  ${({ size }) => css`
+    width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+    border-radius: 50%;
 
-  & > svg {
-    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    margin: 0 auto;
-  }
+    & > svg {
+      width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+      height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+      margin: 0 auto;
+    }
   `}
-
-  transition: border-radius 0.1s ease 0s;
 `;
 
 const ButtonIcon = styled(Base)`
@@ -170,6 +152,12 @@ const ButtonIcon = styled(Base)`
 `;
 
 // TODO incorporate tooltip as a label on hover per figma
+const ButtonOptions = {
+  [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
+  [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
+  [BUTTON_VARIANTS.ICON]: ButtonIcon,
+};
+
 export const Button = ({
   size = BUTTON_SIZES.MEDIUM,
   type = BUTTON_TYPES.PLAIN,
@@ -177,14 +165,7 @@ export const Button = ({
   children,
   ...rest
 }) => {
-  const ButtonOptions = {
-    [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
-    [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
-    [BUTTON_VARIANTS.ICON]: ButtonIcon,
-  };
-
   const isLink = rest.href !== undefined;
-
   const StyledButton = ButtonOptions[variant];
 
   return (
