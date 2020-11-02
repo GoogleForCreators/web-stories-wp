@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
+export * as Icons from './icons';
 export * from './theme';
+export * from './components';

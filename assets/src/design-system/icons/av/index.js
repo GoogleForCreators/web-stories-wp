@@ -17,13 +17,10 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
 
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode };
+export { ReactComponent as Animation } from './animation.svg';
+export { ReactComponent as Play } from './play.svg';
+export { ReactComponent as PlayAnimation } from './playAnimation.svg';
+export { ReactComponent as StopAnimation } from './stopAnimation.svg';
+export { ReactComponent as Timeline } from './timeline.svg';
+export { ReactComponent as Video } from './video.svg';

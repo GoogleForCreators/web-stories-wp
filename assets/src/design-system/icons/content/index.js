@@ -17,13 +17,8 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
-
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode };
+export { ReactComponent as Duplicate } from './duplicate.svg';
+export { ReactComponent as Flip } from './flip.svg';
+export { ReactComponent as Redo } from './redo.svg';
+export { ReactComponent as Rotate } from './rotate.svg';
+export { ReactComponent as Undo } from './undo.svg';

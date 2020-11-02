@@ -17,13 +17,5 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
-
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode };
+export { ReactComponent as Error } from './error.svg';
+export { ReactComponent as Warning } from './warning.svg';

@@ -17,13 +17,10 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
 
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode };
+export { ReactComponent as ExploreTemplatesActive } from './exploreTemplatesActive.svg';
+export { ReactComponent as ExploreTemplatesNormal } from './exploreTemplatesNormal.svg';
+export { ReactComponent as SavedTemplatesActive } from './savedTemplatesActive.svg';
+export { ReactComponent as SavedTemplatesNormal } from './savedTemplatesNormal.svg';
+export { ReactComponent as StoriesActive } from './storiesActive.svg';
+export { ReactComponent as StoriesNormal } from './storiesNormal.svg';

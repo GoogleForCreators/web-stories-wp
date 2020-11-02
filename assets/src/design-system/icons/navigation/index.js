@@ -17,13 +17,10 @@
 /**
  * Internal dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
-import { typography } from './typography';
-
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode };
+export { ReactComponent as Arrow } from './arrow.svg';
+export { ReactComponent as ArrowAlt } from './arrowAlt.svg';
+export { ReactComponent as Chevron } from './chevron.svg';
+export { ReactComponent as Close } from './close.svg';
+export { ReactComponent as CloseAlt } from './closeAlt.svg';
+export { ReactComponent as More } from './more.svg';
+export { ReactComponent as MoreFilled } from './moreFilled.svg';
