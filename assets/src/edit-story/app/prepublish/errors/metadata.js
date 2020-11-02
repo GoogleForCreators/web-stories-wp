@@ -100,8 +100,8 @@ export function storyTitle(story) {
  */
 export function storyCoverPortraitSize(story) {
   if (
-    story.featuredMediaResource.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
-    story.featuredMediaResource.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
+    story.featuredMedia.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
+    story.featuredMedia.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
@@ -122,8 +122,8 @@ export function storyCoverPortraitSize(story) {
  */
 export function publisherLogoSize(story) {
   if (
-    story.publisherLogoResource.height < PUBLISHER_LOGO_MIN_HEIGHT ||
-    story.publisherLogoResource.width < PUBLISHER_LOGO_MIN_WIDTH
+    story.publisherLogo.height < PUBLISHER_LOGO_MIN_HEIGHT ||
+    story.publisherLogo.width < PUBLISHER_LOGO_MIN_WIDTH
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
@@ -148,7 +148,7 @@ export function linkInPageAttachmentRegion(story) {
     const { elements } = page;
     const isLinkAttached = Boolean(page?.pageAttachment?.url.length);
     return (
-      !isLinkAttached &&
+      isLinkAttached &&
       elements.filter(({ link }) => link?.url?.length).some(isElementBelowLimit)
     );
   });
