@@ -373,6 +373,18 @@ class Experiments {
 				'label'       => __( 'SVG support', 'web-stories' ),
 				'description' => __( 'Enable svg support', 'web-stories' ),
 				'group'       => 'general',
+      ],  
+			/**
+			 * Author: @swissspidy
+			 * Issue: #4081
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'eyeDropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'group'       => 'editor',
+
 			],
 		];
 	}
