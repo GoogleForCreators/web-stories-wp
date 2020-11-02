@@ -31,14 +31,14 @@ import { __ } from '@wordpress/i18n';
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
 import {
-  StoryAnimation,
-  useStoryAnimationContext,
-} from '../../../../animation/components';
-import {
-  animations,
-  elements,
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
+  DropAnimation,
+  FadeInAnimation,
+  FlyInLeftAnimation,
+  FlyInRightAnimation,
+  FlyInTopAnimation,
+  FlyInBottomAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -52,6 +52,7 @@ const GridItem = styled.button`
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
+  overflow: hidden;
 `;
 
 const Grid = styled.div`
@@ -83,75 +84,61 @@ const ContentWrapper = styled.span`
   text-transform: uppercase;
 `;
 
-function EffectChooser() {
-  const {
-    actions: { WAAPIAnimationMethods },
-  } = useStoryAnimationContext();
-
+export default function EffectChooser() {
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
-    WAAPIAnimationMethods.play();
   });
 
   return (
     <Container>
       <Grid>
         <GridItemFullRow>
-          <StoryAnimation.WAAPIWrapper target={'drop'}>
+          <DropAnimation>
             <ContentWrapper>{__('Drop', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          </DropAnimation>
         </GridItemFullRow>
         <GridItemFullRow>
-          <StoryAnimation.WAAPIWrapper target={'fade-in'}>
+          <FadeInAnimation>
             <ContentWrapper>{__('Fade in', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          </FadeInAnimation>
         </GridItemFullRow>
         <GridItem>
-          <StoryAnimation.WAAPIWrapper target={'fly-in-bottom'}>
-            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>
+            <FlyInLeftAnimation>
+              {__('Fly in', 'web-stories')}
+            </FlyInLeftAnimation>
+          </ContentWrapper>
         </GridItem>
         <GridItem>
-          <StoryAnimation.WAAPIWrapper target={'fly-in-top'}>
-            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>
+            <FlyInTopAnimation>{__('Fly in', 'web-stories')}</FlyInTopAnimation>
+          </ContentWrapper>
         </GridItem>
         <GridItem>
-          <StoryAnimation.WAAPIWrapper target={'fly-in-left'}>
-            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>
+            <FlyInBottomAnimation>
+              {__('Fly in', 'web-stories')}
+            </FlyInBottomAnimation>
+          </ContentWrapper>
         </GridItem>
         <GridItem>
-          <StoryAnimation.WAAPIWrapper target={'fly-in-right'}>
-            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>
+            <FlyInRightAnimation>
+              {__('Fly in', 'web-stories')}
+            </FlyInRightAnimation>
+          </ContentWrapper>
         </GridItem>
         <GridItemFullRow>
-          <StoryAnimation.WAAPIWrapper target={'pulse'}>
-            <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
         </GridItemFullRow>
         <GridItemHalfRow>
-          <StoryAnimation.WAAPIWrapper target={'rotate-left'}>
-            <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
         <GridItemHalfRow>
-          <StoryAnimation.WAAPIWrapper target={'rotate-right'}>
-            <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
-          </StoryAnimation.WAAPIWrapper>
+          <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
       </Grid>
     </Container>
-  );
-}
-
-export default function WrappedEffectChooser(props) {
-  return (
-    <StoryAnimation.Provider animations={animations} elements={elements}>
-      <StoryAnimation.AMPAnimations />
-      <EffectChooser {...props} />
-    </StoryAnimation.Provider>
   );
 }
 

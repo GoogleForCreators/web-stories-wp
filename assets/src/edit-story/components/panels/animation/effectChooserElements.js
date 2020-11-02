@@ -14,109 +14,130 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { ANIMATION_EFFECTS, DIRECTION } from '../../../../animation';
+import styled, { keyframes } from 'styled-components';
 
 export const GRID_ITEM_HEIGHT = 64;
 export const PANEL_WIDTH = 276;
 
-export const animations = [
-  { targets: ['drop'], type: ANIMATION_EFFECTS.DROP },
-  { targets: ['fade-in'], type: ANIMATION_EFFECTS.FADE_IN },
-  {
-    targets: ['fly-in-bottom'],
-    type: ANIMATION_EFFECTS.FLY_IN,
-    flyInDir: DIRECTION.BOTTOM_TO_TOP,
-  },
-  {
-    targets: ['fly-in-top'],
-    type: ANIMATION_EFFECTS.FLY_IN,
-    flyInDir: DIRECTION.TOP_TO_BOTTOM,
-  },
-  {
-    targets: ['fly-in-left'],
-    type: ANIMATION_EFFECTS.FLY_IN,
-    flyInDir: DIRECTION.LEFT_TO_RIGHT,
-  },
-  {
-    targets: ['fly-in-right'],
-    type: ANIMATION_EFFECTS.FLY_IN,
-    flyInDir: DIRECTION.RIGHT_TO_LEFT,
-  },
-  {
-    targets: ['pulse'],
-    type: ANIMATION_EFFECTS.PULSE,
-  },
-  {
-    targets: ['rotate-left'],
-    type: ANIMATION_EFFECTS.ROTATE_IN,
-    rotateInDir: DIRECTION.LEFT_TO_RIGHT,
-  },
-  {
-    targets: ['rotate-right'],
-    type: ANIMATION_EFFECTS.ROTATE_IN,
-    rotateInDir: DIRECTION.RIGHT_TO_LEFT,
-  },
-];
+const dropKeyframes = keyframes`
+  0% {
+    transform: translateY(-100%);
+    animation-timing-function: cubic-bezier(.75,.05,.86,.08);
+  }
+  15% {
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(.22,.61,.35,1);
+  }
+  26% {
+    transform: translateY(-62%);
+    animation-timing-function: cubic-bezier(.75,.05,.86,.08);
+  }
+  37% {
+    transform: translateY(-0%);
+    animation-timing-function: cubic-bezier(.22,.61,.35,1);
+  }
+  41.5% {
+    transform: translateY(-30%);
+    animation-timing-function: cubic-bezier(.75,.05,.86,.08);
+  }
+  50% {
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(.22,.61,.35,1);
+  }
+  100% {
+    transform: translateY(0%);
+    animation-timing-function: cubic-bezier(.22,.61,.35,1);
+  }
+`;
 
-export const elements = [
-  {
-    id: 'drop',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-  },
-  {
-    id: 'fade-in',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-  },
-  {
-    id: 'fly-in-bottom',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-    width: 58,
-  },
-  {
-    id: 'fly-in-top',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-    width: 58,
-  },
-  {
-    id: 'fly-in-left',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-    width: 58,
-  },
-  {
-    id: 'fly-in-right',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-    width: 58,
-  },
-  {
-    id: 'pulse',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-  },
-  {
-    id: 'rotate-left',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-  },
-  {
-    id: 'rotate-right',
-    x: 0,
-    y: 0,
-    height: GRID_ITEM_HEIGHT,
-  },
-];
+export const DropAnimation = styled.div`
+  display: inline-block;
+  animation: ${dropKeyframes} 3.2s linear infinite;
+`;
+
+const fadeInKeyframes = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+export const FadeInAnimation = styled.div`
+  display: inline-block;
+  animation: ${fadeInKeyframes} 2.5s linear infinite;
+`;
+
+const flyInLeftKeyframes = keyframes`
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+`;
+
+export const FlyInLeftAnimation = styled.div`
+  display: inline-block;
+  animation: ${flyInLeftKeyframes} 2s linear infinite;
+`;
+
+const flyInRightKeyframes = keyframes`
+  0% {
+    transform: translateX(100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+`;
+
+export const FlyInRightAnimation = styled.div`
+  display: inline-block;
+  animation: ${flyInRightKeyframes} 2s linear infinite;
+`;
+
+const flyInTopKeyframes = keyframes`
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+`;
+
+export const FlyInTopAnimation = styled.div`
+  display: inline-block;
+  animation: ${flyInTopKeyframes} 2s linear infinite;
+`;
+
+const flyInBottomKeyframes = keyframes`
+  0% {
+    transform: translateY(100%);
+  }
+  50% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+`;
+
+export const FlyInBottomAnimation = styled.div`
+  display: inline-block;
+  animation: ${flyInBottomKeyframes} 2s linear infinite;
+`;
