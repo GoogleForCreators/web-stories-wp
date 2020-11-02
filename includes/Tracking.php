@@ -101,9 +101,6 @@ class Tracking {
 	 * @return array Tracking settings.
 	 */
 	public function get_settings() {
-		$site_url     = untrailingslashit( site_url() );
-		$current_user = wp_get_current_user();
-
 		return [
 			'trackingAllowed' => $this->is_active(),
 			'trackingId'      => self::TRACKING_ID,
