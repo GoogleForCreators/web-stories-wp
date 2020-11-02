@@ -55,8 +55,6 @@ class SVG {
 	/**
 	 * SVG constructor.
 	 *
-	 * @since 1.0.0
-	 *
 	 * @param Experiments $experiments Experiments instance.
 	 *
 	 * @return void
