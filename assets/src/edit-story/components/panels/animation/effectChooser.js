@@ -17,28 +17,32 @@
 /**
  * External dependencies
  */
-import React, { forwardRef, useEffect } from 'react';
-import propTypes from 'prop-types';
+import React, { useEffect } from 'react';
+// import propTypes from 'prop-types';
 import styled from 'styled-components';
-
-const GRID_ITEM_HEIGHT = 64;
-const PANEL_WIDTH = 276;
 
 /**
  * Internal dependencies
  */
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
 import {
   StoryAnimation,
   useStoryAnimationContext,
 } from '../../../../animation/components';
-import { ANIMATION_EFFECTS, DIRECTION } from '../../../../animation';
+import {
+  animations,
+  elements,
+  GRID_ITEM_HEIGHT,
+  PANEL_WIDTH,
+} from './effectChooserElements';
 
 const Container = styled.div`
   background: black;
-  font-family: 'Teko', sans-serif;
-  color: white;
   width: ${PANEL_WIDTH}px;
 `;
 
@@ -51,6 +55,7 @@ const GridItem = styled.div`
 
 const Grid = styled.div`
   display: grid;
+  justify-content: center;
   gap: 15px 3px;
   grid-template-columns: repeat(4, 58px);
   padding: 15px;
@@ -65,19 +70,19 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
-const animations = [
-  { targets: ['e1'], type: ANIMATION_EFFECTS.DROP },
-  { targets: ['e2'], type: ANIMATION_EFFECTS.FADE_IN },
-  {
-    targets: ['e3'],
-    type: ANIMATION_EFFECTS.FLY_IN,
-    flyInDir: DIRECTION.LEFT_TO_RIGHT,
-  },
-  // { targets: ['e3'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-  // { targets: ['e4'], type: ANIMATION_TYPES.BLINK_ON, duration: 3000 },
-];
+const ContentWrapper = styled.span`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+  color: white;
+  text-transform: uppercase;
+`;
 
-function EffectChooser({ onAnimationSelected }) {
+function EffectChooser() {
   const {
     actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
@@ -91,26 +96,50 @@ function EffectChooser({ onAnimationSelected }) {
     <Container>
       <Grid>
         <GridItemFullRow>
-          <StoryAnimation.WAAPIWrapper target={'e1'}>
-            <span>DROP</span>
+          <StoryAnimation.WAAPIWrapper target={'drop'}>
+            <ContentWrapper>{__('Drop', 'web-stories')}</ContentWrapper>
           </StoryAnimation.WAAPIWrapper>
         </GridItemFullRow>
         <GridItemFullRow>
-          <StoryAnimation.WAAPIWrapper target={'e2'}>
-            <span>FADE IN</span>
+          <StoryAnimation.WAAPIWrapper target={'fade-in'}>
+            <ContentWrapper>{__('Fade in', 'web-stories')}</ContentWrapper>
           </StoryAnimation.WAAPIWrapper>
         </GridItemFullRow>
         <GridItem>
-          <StoryAnimation.WAAPIWrapper target={'e3'}>
-            <span>FI</span>
+          <StoryAnimation.WAAPIWrapper target={'fly-in-bottom'}>
+            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
           </StoryAnimation.WAAPIWrapper>
         </GridItem>
-        <GridItem>Fly In L</GridItem>
-        <GridItem>Fly In R</GridItem>
-        <GridItem>Fly In B</GridItem>
-        <GridItemFullRow>Pulse</GridItemFullRow>
-        <GridItemHalfRow>Rotate L</GridItemHalfRow>
-        <GridItemHalfRow>Rotate R</GridItemHalfRow>
+        <GridItem>
+          <StoryAnimation.WAAPIWrapper target={'fly-in-top'}>
+            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          </StoryAnimation.WAAPIWrapper>
+        </GridItem>
+        <GridItem>
+          <StoryAnimation.WAAPIWrapper target={'fly-in-left'}>
+            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          </StoryAnimation.WAAPIWrapper>
+        </GridItem>
+        <GridItem>
+          <StoryAnimation.WAAPIWrapper target={'fly-in-right'}>
+            <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          </StoryAnimation.WAAPIWrapper>
+        </GridItem>
+        <GridItemFullRow>
+          <StoryAnimation.WAAPIWrapper target={'pulse'}>
+            <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
+          </StoryAnimation.WAAPIWrapper>
+        </GridItemFullRow>
+        <GridItemHalfRow>
+          <StoryAnimation.WAAPIWrapper target={'rotate-left'}>
+            <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+          </StoryAnimation.WAAPIWrapper>
+        </GridItemHalfRow>
+        <GridItemHalfRow>
+          <StoryAnimation.WAAPIWrapper target={'rotate-right'}>
+            <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+          </StoryAnimation.WAAPIWrapper>
+        </GridItemHalfRow>
       </Grid>
     </Container>
   );
@@ -118,30 +147,7 @@ function EffectChooser({ onAnimationSelected }) {
 
 export default function WrappedEffectChooser(props) {
   return (
-    <StoryAnimation.Provider
-      animations={animations}
-      elements={[
-        {
-          id: 'e1',
-          x: 0,
-          y: 0,
-          height: GRID_ITEM_HEIGHT,
-        },
-        {
-          id: 'e2',
-          x: 0,
-          y: 0,
-          height: GRID_ITEM_HEIGHT,
-        },
-        {
-          id: 'e3',
-          x: 0,
-          y: 0,
-          height: GRID_ITEM_HEIGHT,
-          width: 58,
-        },
-      ]}
-    >
+    <StoryAnimation.Provider animations={animations} elements={elements}>
       <StoryAnimation.AMPAnimations />
       <EffectChooser {...props} />
     </StoryAnimation.Provider>
@@ -149,5 +155,5 @@ export default function WrappedEffectChooser(props) {
 }
 
 EffectChooser.propTypes = {
-  onAnimationSelected: propTypes.func.isRequired,
+  // onAnimationSelected: propTypes.func.isRequired,
 };
