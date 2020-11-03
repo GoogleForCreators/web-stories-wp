@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
-export { Display } from './display';
-export { Headline } from './headline';
-export { Text } from './text';
-export { expandPresetStyles } from './expandPresetStyles';
+/**
+ * External dependencies
+ */
+import { css } from 'styled-components';
+
+export const expandPresetStyles = ({ preset, theme }) => css`
+  font-family: ${theme.typography.family.primary};
+  font-size: ${preset.size}px;
+  font-weight: ${preset.weight};
+  letter-spacing: ${preset.letterSpacing}px;
+  line-height: ${preset.lineHeight}px;
+  text-decoration: ${preset.textDecoration || 'none'};
+`;

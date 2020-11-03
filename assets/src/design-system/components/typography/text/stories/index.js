@@ -52,7 +52,7 @@ export const _default = () => (
 export const Bold = () => (
   <>
     {textPresetSizes.map((presetSize, idx) => (
-      <>
+      <div key={`${presetSize}_text_bold`}>
         <Text size={'small'}>{presetSize}</Text>
 
         <Text
@@ -65,7 +65,7 @@ export const Bold = () => (
             'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'
           }
         </Text>
-      </>
+      </div>
     ))}
   </>
 );
@@ -73,7 +73,7 @@ export const Bold = () => (
 export const Link = () => (
   <>
     {textPresetSizes.map((presetSize, idx) => (
-      <>
+      <div key={`${presetSize}_text_link`}>
         <Text size={'small'}>{presetSize}</Text>
 
         <Text
@@ -85,7 +85,7 @@ export const Link = () => (
         >
           {`Click here for more information`}
         </Text>
-      </>
+      </div>
     ))}
   </>
 );

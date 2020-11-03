@@ -14,7 +14,20 @@
  * limitations under the License.
  */
 
-export { Display } from './display';
-export { Headline } from './headline';
-export { Text } from './text';
-export { expandPresetStyles } from './expandPresetStyles';
+export const BUTTON_TYPES = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  TERTIARY: 'tertiary',
+  PLAIN: 'plain',
+};
+
+export const BUTTON_SIZES = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+};
+
+export const BUTTON_VARIANTS = {
+  CIRCLE: 'circle',
+  RECTANGLE: 'rectangle',
+  ICON: 'icon',
+};

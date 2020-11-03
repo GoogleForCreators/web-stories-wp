@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { dark as darkMode, light as lightMode } from './colors';
-export { THEME_CONSTANTS } from './constants';
+import { THEME_CONSTANTS } from './constants';
 import { typography } from './typography';
 
 export const theme = {
@@ -26,4 +26,4 @@ export const theme = {
   colors: { ...darkMode },
 };
 
-export { lightMode };
+export { lightMode, THEME_CONSTANTS };
