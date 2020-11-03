@@ -20,16 +20,33 @@
 import { EditorState, Modifier } from 'draft-js';
 import { useCallback } from 'react';
 
+/**
+ * Internal dependencies
+ */
+import getPastedBlocks from './getPastedBlocks';
+
+/*
+ * This hook returns a function to handle text pasted while in edit-mode.
+ *
+ * Compare this with `usePasteTextContent` that handles generally pasting
+ * text without being in text edit-mode anywhere.
+ */
 function useHandlePastedText(setEditorState) {
   return useCallback(
     (text, html, state) => {
-      // TODO: handle pasted html content
-      // https://github.com/google/web-stories-wp/issues/760
       const content = state.getCurrentContent();
       const selection = state.getSelection();
-      const style = state.getCurrentInlineStyle();
-      const newState = Modifier.replaceText(content, selection, text, style);
-      const result = EditorState.push(state, newState, 'insert-characters');
+      let newState, stateChange;
+      if (html) {
+        const blocks = getPastedBlocks(html);
+        newState = Modifier.replaceWithFragment(content, selection, blocks);
+        stateChange = 'insert-fragment';
+      } else {
+        const style = state.getCurrentInlineStyle();
+        newState = Modifier.replaceText(content, selection, text, style);
+        stateChange = 'insert-characters';
+      }
+      const result = EditorState.push(state, newState, stateChange);
       setEditorState(result);
       return true;
     },
