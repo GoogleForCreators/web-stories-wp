@@ -14,23 +14,12 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import {
-  TYPOGRAPHY_PRESET_SIZES,
-  TEXT_SIZES,
-  HEADLINE_SIZES,
-  DISPLAY_SIZES,
-} from './typography';
+export const ALERT_SEVERITY = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+  DEFAULT: 'default',
+};
 
-const Z_INDEX = {
-  SNACKBAR: 15,
-};
-export const THEME_CONSTANTS = {
-  TYPOGRAPHY_PRESET_SIZES,
-  TEXT_SIZES,
-  HEADLINE_SIZES,
-  DISPLAY_SIZES,
-  Z_INDEX,
-};
+export const AUTO_REMOVE_ALERT_TIME_INTERVAL = 10000;
