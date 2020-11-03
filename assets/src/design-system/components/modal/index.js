@@ -58,7 +58,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     zIndex: 10,
-    backgroundColor: rgba(theme.colors.bg.workspace, 0.96),
+    backgroundColor: rgba(theme.colors.bg.overlay, 0.5),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
