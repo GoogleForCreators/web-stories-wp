@@ -55,12 +55,12 @@ describe('<ColorPreview />', () => {
     getPreviewStyleMock.mockImplementation(() => {
       return { backgroundColor: 'red' };
     });
-    getPreviewTextMock.mockImplementation(() => {
-      return 'FF0000';
-    });
   });
 
   it('should render correct style and text', () => {
+    getPreviewTextMock.mockImplementation(() => {
+      return 'FF0000';
+    });
     const { button, swatch, input } = arrange(
       <ColorPreview
         onChange={() => {}}
@@ -110,6 +110,7 @@ describe('<ColorPreview />', () => {
       <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
     expect(input.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
+    expect(input).toHaveValue('');
   });
 
   it('should open the color picker when clicked', () => {
@@ -153,6 +154,9 @@ describe('<ColorPreview />', () => {
   });
 
   it('should invoke onChange when inputting valid hex', () => {
+    getPreviewTextMock.mockImplementation(() => {
+      return 'FF0000';
+    });
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
     const { input } = arrange(
@@ -204,6 +208,9 @@ describe('<ColorPreview />', () => {
   });
 
   it('should revert to last known value when blurring invalid input', () => {
+    getPreviewTextMock.mockImplementation(() => {
+      return 'FF0000';
+    });
     const onChange = jest.fn();
     const value = createSolid(255, 0, 0);
     const { input } = arrange(
