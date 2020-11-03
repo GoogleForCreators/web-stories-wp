@@ -68,7 +68,9 @@
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
       "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
     },
-    "files": ["includes/polyfills/mbstring.php"]
+    "files": [
+      "includes/polyfills/mbstring.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
@@ -86,8 +88,12 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-install-cmd": ["@prefix-dependencies"],
-    "post-update-cmd": ["@prefix-dependencies"],
+    "post-install-cmd": [
+      "@prefix-dependencies"
+    ],
+    "post-update-cmd": [
+      "@prefix-dependencies"
+    ],
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",
     "phpmd": "phpmd . text phpmd.xml",
