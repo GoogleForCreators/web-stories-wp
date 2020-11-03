@@ -74,10 +74,6 @@ export const ANIMATION_EFFECTS = {
   },
 };
 
-/*
- * @TODO See what Sam wants the user facing names of these animation
- *       parts to be here & update `name` field.
- */
 export const ANIMATION_PARTS = {
   BLINK_ON: {
     value: ANIMATION_TYPES.BLINK_ON,
