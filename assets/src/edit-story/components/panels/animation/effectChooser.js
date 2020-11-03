@@ -15,19 +15,18 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+/**
  * External dependencies
  */
 import React, { useEffect } from 'react';
-// import propTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
 import {
@@ -152,7 +151,3 @@ export default function EffectChooser() {
     </Container>
   );
 }
-
-EffectChooser.propTypes = {
-  // onAnimationSelected: propTypes.func.isRequired,
-};
