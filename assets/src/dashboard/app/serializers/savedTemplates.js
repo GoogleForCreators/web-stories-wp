@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { migrate, DATA_VERSION } from '../../../edit-story/migration/migrate';
+import { migrate, DATA_VERSION } from '../../../migration/migrate';
 import { toUTCDate } from '../../../date';
 
 // TODO: this is mostly placeholder to generally lend shape to saved templates that matches stories. We do no have stories formatted and returned in saved template API yet
