@@ -365,15 +365,15 @@ class Experiments {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: xxx
+			 * Issue: #798
 			 * Creation date: 2020-11-02
 			 */
 			[
 				'name'        => 'enableSVG',
-				'label'       => __( 'SVG support', 'web-stories' ),
-				'description' => __( 'Enable svg support', 'web-stories' ),
+				'label'       => __( 'SVG upload', 'web-stories' ),
+				'description' => __( 'Enable SVG upload.', 'web-stories' ),
 				'group'       => 'general',
-      ],  
+			],
 			/**
 			 * Author: @swissspidy
 			 * Issue: #4081
