@@ -25,7 +25,7 @@ import { parseToRgb, getLuminance } from 'polished';
 /**
  * WordPress dependencies
  */
-import { __, _x } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -303,7 +303,7 @@ function ColorPreview({
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleFocus}
-            placeholder={MULTIPLE_DISPLAY_VALUE}
+            placeholder={isMultiple ? MULTIPLE_DISPLAY_VALUE : ''}
           />
         </Preview>
       ) : (
@@ -313,12 +313,7 @@ function ColorPreview({
             <Transparent />
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewInsideButton>
-          <TextualPreview>
-            {isMultiple
-              ? MULTIPLE_DISPLAY_VALUE
-              : previewText ||
-                _x('None', 'No color or gradient selected', 'web-stories')}
-          </TextualPreview>
+          <TextualPreview>{previewText}</TextualPreview>
         </PreviewButton>
       )}
       <Popup

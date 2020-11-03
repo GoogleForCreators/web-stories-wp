@@ -106,25 +106,10 @@ describe('<ColorPreview />', () => {
       return null;
     });
 
-    const { button } = arrange(
+    const { input } = arrange(
       <ColorPreview onChange={() => {}} value={MULTIPLE_VALUE} label="Color" />
     );
-
-    expect(button).toHaveTextContent(MULTIPLE_DISPLAY_VALUE);
-  });
-
-  it('should render none if applicable', () => {
-    getPreviewTextMock.mockImplementation(() => {
-      return null;
-    });
-
-    const { button, input } = arrange(
-      <ColorPreview onChange={() => {}} value={null} label="Color" />
-    );
-
-    expect(button).toHaveTextContent('None');
-
-    expect(input).toBeNull();
+    expect(input.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
   });
 
   it('should open the color picker when clicked', () => {
