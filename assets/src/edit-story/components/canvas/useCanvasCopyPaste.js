@@ -100,7 +100,7 @@ function useCanvasGlobalKeys() {
           let addedElements = elementPasteHandler(template.content);
           if (!addedElements) {
             // If not, parse as HTML and insert text with formatting
-            addedElements = pasteTextContent(template.content);
+            addedElements = pasteTextContent(template.innerHTML);
           }
           if (addedElements) {
             evt.preventDefault();
