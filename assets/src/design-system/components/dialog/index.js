@@ -35,6 +35,7 @@ const DialogBox = styled.div`
   max-width: 512px;
   max-height: 100%;
   color: ${({ theme }) => theme.colors.fg.primary};
+  background-color: ${({ theme }) => theme.colors.bg.primary};
   overflow-y: auto;
   padding: 12px 16px;
   border-radius: 8px;
