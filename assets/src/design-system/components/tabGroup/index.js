@@ -39,6 +39,7 @@ const StyledTabGroup = styled.div`
   }
 `;
 
+const titleKeyRegex = /\s/g;
 export const TabGroup = forwardRef(function TabGroup(
   {
     getTabId = (id) => id,
@@ -58,7 +59,7 @@ export const TabGroup = forwardRef(function TabGroup(
         const isActive = activeTabId === id;
         return (
           <Tab
-            key={`${title.replace(/\s/g, '')}_${id}`}
+            key={`${title.replace(titleKeyRegex, '')}_${id}`}
             ref={(tabRef) => (tabRefs.current[id] = tabRef)}
             id={getTabId(id)}
             isActive={isActive}
