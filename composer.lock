@@ -833,16 +833,16 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v5.5.1",
+            "version": "v5.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "5b62027b3f3b9de4994da627898599460f054584"
+                "reference": "7a8d0009b38c5fdec777a0a5333552ff6e445065"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/5b62027b3f3b9de4994da627898599460f054584",
-                "reference": "5b62027b3f3b9de4994da627898599460f054584",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/7a8d0009b38c5fdec777a0a5333552ff6e445065",
+                "reference": "7a8d0009b38c5fdec777a0a5333552ff6e445065",
                 "shasum": ""
             },
             "replace": {
@@ -869,7 +869,7 @@
                 "static analysis",
                 "wordpress"
             ],
-            "time": "2020-09-02T05:31:36+00:00"
+            "time": "2020-10-31T01:42:05+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
