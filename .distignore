@@ -55,6 +55,7 @@ package-lock.json
 percy.config.yml
 phpcs.xml
 phpcs.xml.dist
+phpmd.xml
 phpstan.neon.dist
 phpunit.xml
 phpunit.xml.dist
