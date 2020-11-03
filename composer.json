@@ -12,7 +12,7 @@
     "ext-libxml": "*",
     "ext-mbstring": "*",
     "ampproject/amp-wp": "^2.0.4",
-    "civicrm/composer-downloads-plugin": "^2.1",
+    "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "mcaskill/composer-exclude-files": "^2.0",
     "symfony/polyfill-mbstring": "^1.18"
@@ -23,7 +23,7 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
-    "civicrm/composer-downloads-plugin": "^2.1",
+    "civicrm/composer-downloads-plugin": "^3.0",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
