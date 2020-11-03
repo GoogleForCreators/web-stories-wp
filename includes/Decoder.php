@@ -1,8 +1,8 @@
 <?php
 /**
- * Trait Decoder
+ * Class Decoder
  *
- * @package   Google\Web_Stories\Traits
+ * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/google/web-stories-wp
@@ -24,34 +24,58 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Traits;
+namespace Google\Web_Stories;
 
 /**
- * Trait Decoder
+ * Decoder class.
  *
- * @package Google\Web_Stories\Traits
+ * @since 1.1.0
+ *
+ * @package Google\Web_Stories
  */
-trait Decoder {
+class Decoder {
+	/**
+	 * Experiments instance.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
+	 * Dashboard constructor.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @param Experiments $experiments Experiments instance.
+	 */
+	public function __construct( Experiments $experiments ) {
+		$this->experiments = $experiments;
+	}
+
 	/**
 	 * Determines whether encoding and decoding of story markup is supported.
 	 *
-	 * Checks whether the required mbstring PHP extension is available.
+	 * Depends on the encodeStoryMarkup feature flag.
 	 *
-	 * The `WEBSTORIES_DEV_MODE` constant can be used to disable this functionality.
+	 * @since 1.1.0
 	 *
 	 * @return bool Whether decoding is supported.
 	 */
-	protected function supports_decoding() {
-		return ( ! defined( '\WEBSTORIES_DEV_MODE' ) || ! WEBSTORIES_DEV_MODE );
+	public function supports_decoding() {
+		return $this->experiments->is_experiment_enabled( 'encodeStoryMarkup' );
 	}
 
 	/**
 	 * Decodes string if encoded.
 	 *
+	 * @since 1.1.0
+	 *
 	 * @param string $string String to decode.
 	 * @return string Decoded string.
 	 */
-	protected function base64_decode( $string ) {
+	public function base64_decode( $string ) {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 

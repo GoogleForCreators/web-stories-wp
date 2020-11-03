@@ -55,8 +55,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci
-          npx patch-package || echo "Running npx patch-package failed"
+          # TODO: Use npm ci
+          # See https://github.com/npm/cli/issues/1905
+          npm install
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true

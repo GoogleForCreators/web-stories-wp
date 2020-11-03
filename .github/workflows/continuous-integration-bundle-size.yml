@@ -21,7 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm ci
+          # TODO: Use npm ci
+          # See https://github.com/npm/cli/issues/1905
+          npm install
         env:
           CI: true
 

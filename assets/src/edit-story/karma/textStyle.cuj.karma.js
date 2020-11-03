@@ -75,10 +75,10 @@ describe('Element: Text', () => {
     it('should apply the selected font', async () => {
       await fixture.events.keyboard.type('Yrsa');
       // Ensure the debounced callback has taken effect.
-      await fixture.events.sleep(TIMEOUT);
+      await wait(TIMEOUT);
       const option = fixture.screen.getByText('Yrsa');
       await fixture.events.click(option);
-      await fixture.events.sleep(TIMEOUT);
+      await wait(TIMEOUT);
       await openFontPicker();
       const selected = fixture.screen.getAllByRole('option', {
         name: 'Selected Yrsa',
@@ -93,36 +93,6 @@ describe('Element: Text', () => {
       expect(elements[1].font.family).toBe('Yrsa');
     });
 
-    it('should reset font weight when font family is updated', async () => {
-      await fixture.events.keyboard.type('Yrsa');
-      // Ensure the debounced callback has taken effect.
-      await fixture.events.sleep(TIMEOUT);
-      const option = fixture.screen.getByText('Yrsa');
-      await fixture.events.click(option);
-      await fixture.events.sleep(TIMEOUT);
-
-      const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
-      expect(fontWeight.value).toBe('Regular');
-
-      await fixture.events.click(fontWeight.select);
-      await fixture.events.click(fontWeight.option('Bold'));
-      await fixture.events.sleep(TIMEOUT);
-      expect(fontWeight.value).toBe('Bold');
-
-      await openFontPicker();
-
-      await fixture.events.keyboard.type('Roboto');
-      // Ensure the debounced callback has taken effect.
-      await fixture.events.sleep(TIMEOUT);
-      const option2 = fixture.screen.getByText('Roboto');
-      await fixture.events.click(option2);
-      await fixture.events.sleep(600);
-      const updatedFontWeight =
-        fixture.editor.inspector.designPanel.textStyle.fontWeight;
-
-      expect(updatedFontWeight.value).toBe('Regular');
-    });
-
     it('should display only the fonts from curated list by default', () => {
       const options = document
         .getElementById('editor-font-picker-list')
@@ -134,7 +104,7 @@ describe('Element: Text', () => {
       it('should display the correct fonts when searching', async () => {
         await fixture.events.keyboard.type('Ab');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         let options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li[role="option"]');
@@ -144,7 +114,7 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('el');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li[role="option"]');
@@ -155,7 +125,7 @@ describe('Element: Text', () => {
       it('should not search with less than 2 characters', async () => {
         await fixture.events.keyboard.type('A');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         let options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li[role="option"]');
@@ -165,7 +135,7 @@ describe('Element: Text', () => {
       it('should restore default fonts list when emptying search', async () => {
         await fixture.events.keyboard.type('Ab');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         const options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li[role="option"]');
@@ -173,7 +143,7 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.press('Backspace');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         const defaultOptions = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li[role="option"]');
@@ -184,7 +154,7 @@ describe('Element: Text', () => {
       it('should show empty list in case of no results', async () => {
         await fixture.events.keyboard.type('No fonts here');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         expect(fixture.screen.getByText('No matches found')).toBeDefined();
       });
     });
@@ -200,10 +170,10 @@ describe('Element: Text', () => {
       it('should add up to 5 recent fonts, displaying the most recent first', async () => {
         await fixture.events.keyboard.type('Space Mono');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         let option = fixture.screen.getByText('Space Mono');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
 
         let options = document
@@ -214,10 +184,10 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('Abel');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Abel');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
@@ -226,10 +196,10 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('Abhaya Libre');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Abhaya Libre');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
@@ -238,10 +208,10 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('Source Serif Pro');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Source Serif Pro');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
@@ -250,10 +220,10 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('Roboto');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Roboto');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
         options = document
           .getElementById('editor-font-picker-list')
@@ -262,10 +232,10 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('Yrsa');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         option = fixture.screen.getByText('Yrsa');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
 
         options = document
@@ -281,7 +251,7 @@ describe('Element: Text', () => {
       it('should display the selected recent font with a tick', async () => {
         const option = fixture.screen.getByText('Source Serif Pro');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
         const selected = fixture.screen.getAllByRole('option', {
           name: 'Selected Source Serif Pro',
@@ -292,15 +262,15 @@ describe('Element: Text', () => {
 
       it('should include recent fonts to search', async () => {
         await fixture.events.keyboard.type('Abe');
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         const option = fixture.screen.getByText('Abel');
         await fixture.events.click(option);
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         await openFontPicker();
 
         await fixture.events.keyboard.type('Abe');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         let options = document
           .getElementById('editor-font-picker-list')
           .querySelectorAll('li[role="option"]');
@@ -320,7 +290,7 @@ describe('Element: Text', () => {
 
         await fixture.events.keyboard.type('Ubuntu');
         // Ensure the debounced callback has taken effect.
-        await fixture.events.sleep(TIMEOUT);
+        await wait(TIMEOUT);
         const selected = fixture.screen.getAllByRole('option', {
           name: 'Selected Ubuntu',
         });
@@ -339,3 +309,9 @@ describe('Element: Text', () => {
     });
   });
 });
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}

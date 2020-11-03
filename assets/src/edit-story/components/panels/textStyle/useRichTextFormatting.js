@@ -106,10 +106,6 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
   );
 
   const handlers = useMemo(() => {
-    const htmlFormatters = getHTMLFormatters();
-    const handleResetFontWeight = (weight) =>
-      push(htmlFormatters.setFontWeight, weight);
-
     if (hasCurrentEditor) {
       return {
         // This particular function ignores the flag argument.
@@ -122,9 +118,10 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickUnderline: selectionActions.toggleUnderlineInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
-        handleResetFontWeight,
       };
     }
+
+    const htmlFormatters = getHTMLFormatters();
 
     return {
       handleClickBold: (flag) => push(htmlFormatters.toggleBold, flag),
@@ -136,7 +133,6 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleSetLetterSpacing: (letterSpacing) =>
         push(htmlFormatters.setLetterSpacing, letterSpacing),
       handleSetColor: (color) => push(htmlFormatters.setColor, color),
-      handleResetFontWeight,
     };
   }, [hasCurrentEditor, selectionActions, push]);
 
