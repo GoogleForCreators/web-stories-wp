@@ -48,12 +48,12 @@ class Locale {
 		/* translators: Date format, see https://www.php.net/date */
 		$default_time_format = __( 'g:i a', 'web-stories' );
 
-		$date_format = get_option( 'date_format' );
+		$date_format = get_option( 'date_format', $default_date_format );
 		if ( empty( trim( $date_format ) ) ) {
 			$date_format = $default_date_format;
 		}
 
-		$time_format = get_option( 'time_format' );
+		$time_format = get_option( 'time_format', $default_time_format );
 		if ( empty( trim( $time_format ) ) ) {
 			$time_format = $default_time_format;
 		}
