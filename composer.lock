@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c04f4f9ade783af4a17fca336cec781",
+    "content-hash": "5a4791a4805c3e87eb76ba2440deadb7",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -109,25 +109,25 @@
         },
         {
             "name": "civicrm/composer-downloads-plugin",
-            "version": "v2.1.1",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/civicrm/composer-downloads-plugin.git",
-                "reference": "8722bc7d547315be39397a3078bb51ee053ca269"
+                "reference": "3aabb6d259a86158d01829fc2c62a2afb9618877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/civicrm/composer-downloads-plugin/zipball/8722bc7d547315be39397a3078bb51ee053ca269",
-                "reference": "8722bc7d547315be39397a3078bb51ee053ca269",
+                "url": "https://api.github.com/repos/civicrm/composer-downloads-plugin/zipball/3aabb6d259a86158d01829fc2c62a2afb9618877",
+                "reference": "3aabb6d259a86158d01829fc2c62a2afb9618877",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
+                "composer-plugin-api": "^1.1 || ^2.0",
                 "php": ">=5.6",
                 "togos/gitignore": "~1.1.1"
             },
             "require-dev": {
-                "composer/composer": "~1.0",
+                "composer/composer": "~1.0 || ~2.0",
                 "friendsofphp/php-cs-fixer": "^2.3",
                 "phpunit/phpunit": "^5.7",
                 "totten/process-helper": "^1.0.1"
@@ -156,7 +156,7 @@
                 }
             ],
             "description": "Composer plugin for downloading additional files within any composer package.",
-            "time": "2019-08-28T00:33:51+00:00"
+            "time": "2020-11-02T05:26:23+00:00"
         },
         {
             "name": "cweagans/composer-patches",
@@ -326,12 +326,17 @@
                 "phpunit/phpunit": "^4.8.36"
             },
             "type": "library",
+            "extra": {
+                "patches_applied": {
+                    "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
+                    "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Sabberworm\\CSS\\": "lib/Sabberworm/CSS/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
