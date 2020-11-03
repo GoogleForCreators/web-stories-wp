@@ -26,11 +26,18 @@ import {
   calculateLuminanceFromRGB,
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
-} from '../../utils/contrastUtils';
+} from '../../../utils/contrastUtils';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
+
+/**
+ * @typedef {import('../../../types').Page} Page
+ * @typedef {import('../../../types').Element} Element
+ * @typedef {import('../types').Guidance} Guidance
+ */
 
 let spansFromContentBuffer;
 function getSpansFromContent(content) {
@@ -50,15 +57,11 @@ function getSpansFromContent(content) {
 /**
  * Check text element for low contrast between font and background color
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The text element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function textElementFontLowContrast(element) {
-  if (
-    element.type !== 'text' ||
-    element.backgroundTextMode === 'NONE' ||
-    !element.backgroundColor
-  ) {
+  if (element.backgroundTextMode === 'NONE' || !element.backgroundColor) {
     return undefined;
   }
 
@@ -92,7 +95,7 @@ export function textElementFontLowContrast(element) {
         'web-stories'
       ),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -102,19 +105,15 @@ export function textElementFontLowContrast(element) {
 /**
  * Check text element for font size too small (<12)
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The text element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function textElementFontSizeTooSmall(element) {
-  if (element.type !== 'text') {
-    return undefined;
-  }
-
   if (element.fontSize && element.fontSize < 12) {
     return {
       message: __('Font size too small', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -129,10 +128,6 @@ export function textElementFontSizeTooSmall(element) {
  * @return {Object} Prepublish check response
  */
 export function imageElementLowResolution(element) {
-  if (element.type !== 'image') {
-    return undefined;
-  }
-
   const scaleMultiplier = element.scale / 100;
   if (
     element.width * scaleMultiplier > element.resource.width ||
@@ -141,7 +136,7 @@ export function imageElementLowResolution(element) {
     return {
       message: __('Very low image resolution', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -151,14 +146,10 @@ export function imageElementLowResolution(element) {
 /**
  * Check video element for doesn’t include title
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The video element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementMissingTitle(element) {
-  if (element.type !== 'video') {
-    return undefined;
-  }
-
   const { resource } = element;
   if (
     (!element.title || !element.title.length) &&
@@ -167,7 +158,7 @@ export function videoElementMissingTitle(element) {
     return {
       message: __('Video is missing title', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -177,14 +168,10 @@ export function videoElementMissingTitle(element) {
 /**
  * Check video element for doesn’t include assistive text
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The video element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementMissingAlt(element) {
-  if (element.type !== 'video') {
-    return undefined;
-  }
-
   const { resource } = element;
   if (
     (!element.alt || !element.alt.length) &&
@@ -193,7 +180,7 @@ export function videoElementMissingAlt(element) {
     return {
       message: __('Video is missing assistive text', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -203,19 +190,15 @@ export function videoElementMissingAlt(element) {
 /**
  * Check video element for doesn’t include captions
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The video element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementMissingCaptions(element) {
-  if (element.type !== 'video') {
-    return undefined;
-  }
-
   if (!element.tracks || !element.tracks.length) {
     return {
       message: __('Video is missing captions', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -225,8 +208,8 @@ export function videoElementMissingCaptions(element) {
 /**
  * Check page for too many links (more than 3)
  *
- * @param  {Object} page Page object
- * @return {Object} Prepublish check response
+ * @param {Page} page The page being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function pageTooManyLinks(page) {
   let linkCount = 0;
@@ -240,7 +223,7 @@ export function pageTooManyLinks(page) {
     return {
       message: __('Too many links on page', 'web-stories'),
       pageId: page.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -250,12 +233,11 @@ export function pageTooManyLinks(page) {
 /**
  * Check element with link for tappable region too small
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function elementLinkTappableRegionTooSmall(element) {
-  const hasLink = element.link && element.link.url && element.link.url.length;
-  if (!hasLink) {
+  if (!element.link || !element.link.url || !element.link.url.length) {
     return undefined;
   }
 
@@ -266,7 +248,7 @@ export function elementLinkTappableRegionTooSmall(element) {
     return {
       message: __('Link tappable region is too small', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
@@ -276,14 +258,10 @@ export function elementLinkTappableRegionTooSmall(element) {
 /**
  * Check image element for missing alt text
  *
- * @param  {Object} element Element object
- * @return {Object} Prepublish check response
+ * @param {Element} element The image element being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function imageElementMissingAlt(element) {
-  if (element.type !== 'image') {
-    return undefined;
-  }
-
   const { resource } = element;
   if (
     (!element.alt || !element.alt.length) &&
@@ -292,7 +270,7 @@ export function imageElementMissingAlt(element) {
     return {
       message: __('Image is missing alt text', 'web-stories'),
       elementId: element.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
