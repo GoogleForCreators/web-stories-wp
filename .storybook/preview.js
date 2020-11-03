@@ -94,7 +94,7 @@ addDecorator((story, { id }) => {
       <FlagsProvider features={{ enableAnimation: true }}>
         <ThemeProvider
           theme={{
-            internalTheme: dashboardTheme,
+            DEPRECATED_THEME: dashboardTheme,
             ...designSystemTheme,
             colors: lightMode,
           }}

@@ -38,7 +38,7 @@ import Pill from '../pill';
 export const Panel = styled.div(
   ({ isNarrow, isOpen, theme }) => `
     align-items: flex-start;
-    background-color: ${theme.internalTheme.colors.white};
+    background-color: ${theme.DEPRECATED_THEME.colors.white};
     border-radius: 8px;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
     display: flex;
@@ -56,14 +56,14 @@ export const Panel = styled.div(
       isNarrow
         ? `width: 260px;`
         : `
-          width: ${theme.internalTheme.popoverPanel.desktopWidth}px;
+          width: ${theme.DEPRECATED_THEME.popoverPanel.desktopWidth}px;
 
-          @media ${theme.internalTheme.breakpoint.tablet} {
-            width: ${theme.internalTheme.popoverPanel.tabletWidth}px;
+          @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
+            width: ${theme.DEPRECATED_THEME.popoverPanel.tabletWidth}px;
           }
 
-           @media ${theme.internalTheme.breakpoint.desktop} {
-            width: ${theme.internalTheme.popoverPanel.desktopWidth}px;
+           @media ${theme.DEPRECATED_THEME.breakpoint.desktop} {
+            width: ${theme.DEPRECATED_THEME.popoverPanel.desktopWidth}px;
           }
     `
     }
@@ -94,7 +94,7 @@ const KeyboardCloseOnly = styled.button`
   &:focus {
     clip: unset;
     align-self: flex-end;
-    border: ${({ theme }) => theme.internalTheme.borders.action};
+    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.action};
     border-radius: 50%;
     height: 20px;
     width: 20px;

@@ -26,7 +26,7 @@ const PillContainer = styled.div`
   align-items: center;
   height: 44px;
   padding: 0 10px;
-  border-radius: ${({ theme }) => theme.internalTheme.button.borderRadius}px;
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.button.borderRadius}px;
   box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.25);
 `;
 
@@ -42,7 +42,7 @@ const PillPart = styled.div`
       width: 1px;
       height: 20px;
       margin: 0 10px;
-      background-color: ${({ theme }) => theme.internalTheme.colors.gray75};
+      background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray75};
     }
   }
 `;

@@ -35,7 +35,7 @@ import MockApiProvider from './mockApiProvider';
 const defaultProviderValues = {
   features: {},
   theme: {
-    internalTheme: theme,
+    DEPRECATED_THEME: theme,
     ...externalDesignSystemTheme,
     colors: lightMode,
   },

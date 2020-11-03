@@ -33,11 +33,11 @@ export const SearchContainer = styled.div`
   align-items: flex-end;
   flex-direction: column;
   border-radius: ${({ theme }) =>
-    `${theme.internalTheme.expandedTypeahead.borderRadius}px`};
+    `${theme.DEPRECATED_THEME.expandedTypeahead.borderRadius}px`};
   border: none;
   background: none;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     flex: ${({ isExpanded }) => (isExpanded ? '1 0 100%' : '0 1 40px')};
     transition: flex 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
@@ -53,10 +53,10 @@ export const InputContainer = styled.div`
   width: 100%;
   padding: 5px 8px;
   border-radius: ${({ theme }) =>
-    `${theme.internalTheme.typeahead.borderRadius}px`};
-  border: 1px solid ${({ theme }) => theme.internalTheme.colors.gray50};
-  color: ${({ theme }) => theme.internalTheme.colors.gray500};
-  background-color: ${({ theme }) => theme.internalTheme.colors.gray25};
+    `${theme.DEPRECATED_THEME.typeahead.borderRadius}px`};
+  border: 1px solid ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray25};
 `;
 
 export const ControlVisibilityContainer = styled.div`
@@ -64,7 +64,7 @@ export const ControlVisibilityContainer = styled.div`
   display: flex;
   flex-grow: 1;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     opacity: ${({ isExpanded }) => (isExpanded ? '1' : '0')};
     transition: opacity 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
   }
@@ -79,9 +79,9 @@ export const StyledInput = styled.input`
   height: 100%;
   width: 100%;
   padding: 0 0 0 7.5px;
-  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
   text-overflow: ellipsis;
-  color: ${({ theme }) => theme.internalTheme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   background-color: transparent;
   border: none;
 
@@ -92,12 +92,12 @@ export const StyledInput = styled.input`
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
       `2px solid ${rgba(
-        theme.internalTheme.colors.bluePrimary,
+        theme.DEPRECATED_THEME.colors.bluePrimary,
         0.85
       )} !important`};
   }
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     width: ${({ isExpanded }) => (isExpanded ? '100%' : '0')};
   }
 `;
@@ -110,14 +110,14 @@ export const SearchButton = styled.button`
   padding: 0;
   border: none;
   background-color: transparent;
-  color: ${({ theme }) => theme.internalTheme.colors.gray300};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray300};
   height: 16px;
   & > svg {
     height: 100%;
   }
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
-    color: ${({ theme }) => theme.internalTheme.colors.gray500};
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
   }
 `;
 
@@ -126,7 +126,7 @@ export const ClearInputButton = styled.button`
   background-color: transparent;
   margin: auto 0;
   padding: 0;
-  color: ${({ theme }) => theme.internalTheme.colors.gray600};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray600};
   cursor: pointer;
   height: 12px;
 
@@ -137,7 +137,7 @@ export const ClearInputButton = styled.button`
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
       `2px solid ${rgba(
-        theme.internalTheme.colors.bluePrimary,
+        theme.DEPRECATED_THEME.colors.bluePrimary,
         0.85
       )} !important`};
   }

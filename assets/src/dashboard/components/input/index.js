@@ -32,12 +32,12 @@ export const TextInput = styled.input`
   border-radius: 6px;
   border: ${({ theme, error }) =>
     error
-      ? theme.internalTheme.borders.danger
-      : theme.internalTheme.borders.gray100};
+      ? theme.DEPRECATED_THEME.borders.danger
+      : theme.DEPRECATED_THEME.borders.gray100};
   &:active {
     border: ${({ theme, error }) =>
       error
-        ? theme.internalTheme.borders.danger
-        : theme.internalTheme.borders.action};
+        ? theme.DEPRECATED_THEME.borders.danger
+        : theme.DEPRECATED_THEME.borders.action};
   }
 `;

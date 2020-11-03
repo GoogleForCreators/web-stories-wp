@@ -35,24 +35,24 @@ const NavButton = styled.button`
     height: 40px;
     width: 40px;
     border-radius: 50%;
-    color: ${theme.internalTheme.colors.gray900};
+    color: ${theme.DEPRECATED_THEME.colors.gray900};
     cursor: pointer;
     background-color: transparent;
-    border: ${theme.internalTheme.borders.transparent};
+    border: ${theme.DEPRECATED_THEME.borders.transparent};
     transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
     padding: 6px;
 
     &:hover, &:active, &:focus {
-      background-color: ${theme.internalTheme.colors.gray800};
-      color: ${theme.internalTheme.colors.white};
+      background-color: ${theme.DEPRECATED_THEME.colors.gray800};
+      color: ${theme.DEPRECATED_THEME.colors.white};
       
-      @media ${theme.internalTheme.breakpoint.largeDisplayPhone} {
-        color: ${theme.internalTheme.colors.gray800};
+      @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+        color: ${theme.DEPRECATED_THEME.colors.gray800};
         background-color: transparent;
        }
     }
     ${KEYBOARD_USER_SELECTOR} &:focus {
-        border-color: ${theme.internalTheme.colors.action};
+        border-color: ${theme.DEPRECATED_THEME.colors.action};
       }
     
     &:disabled {

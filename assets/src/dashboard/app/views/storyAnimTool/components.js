@@ -44,7 +44,7 @@ export const ActiveCard = styled.div(
       .map(
         (elementId) => `
           [data-element-id='${elementId}'] {
-            border: 2px solid ${theme.internalTheme.colors.bluePrimary};
+            border: 2px solid ${theme.DEPRECATED_THEME.colors.bluePrimary};
           }
         `
       )
@@ -76,9 +76,9 @@ export const ElementInfo = styled.button(
     width: 100%;
     text-align: left;
     border: none;
-    border-bottom: 1px solid ${theme.internalTheme.colors.gray500};
+    border-bottom: 1px solid ${theme.DEPRECATED_THEME.colors.gray500};
     background-color: ${
-      isActive ? theme.internalTheme.colors.gray75 : 'transparent'
+      isActive ? theme.DEPRECATED_THEME.colors.gray75 : 'transparent'
     };
   `
 );

@@ -50,21 +50,21 @@ export const PillLabel = styled.span(
     padding-right: ${isSelected ? '4px' : '20px'};
     padding-left: ${isSelected ? `${ACTIVE_CHOICE_ICON_SIZE}px` : '20px'};
     align-items: center;
-    background-color: ${theme.internalTheme.colors.white};
-    color: ${theme.internalTheme.colors.gray700};
-    border: ${theme.internalTheme.borders.gray50};
-    border-radius: ${theme.internalTheme.button.borderRadius}px;
+    background-color: ${theme.DEPRECATED_THEME.colors.white};
+    color: ${theme.DEPRECATED_THEME.colors.gray700};
+    border: ${theme.DEPRECATED_THEME.borders.gray50};
+    border-radius: ${theme.DEPRECATED_THEME.button.borderRadius}px;
 
     ${PillInput}:enabled:hover + & {
-      background-color: ${theme.internalTheme.colors.blueLight};
+      background-color: ${theme.DEPRECATED_THEME.colors.blueLight};
     }
 
     ${PillInput}:focus + & { 
-      border: ${theme.internalTheme.borders.action};
+      border: ${theme.DEPRECATED_THEME.borders.action};
     }
 
     ${PillInput}:checked + & {
-      background-color: ${theme.internalTheme.colors.blueLight};
+      background-color: ${theme.DEPRECATED_THEME.colors.blueLight};
     }
 
     ${PillInput}:disabled + & {
@@ -84,7 +84,7 @@ export const FloatingTabLabel = styled(PillLabel)`
   border-color: transparent;
 
   ${PillInput}:checked + & {
-    box-shadow: ${({ theme }) => theme.internalTheme.floatingTab.shadow};
+    box-shadow: ${({ theme }) => theme.DEPRECATED_THEME.floatingTab.shadow};
     background-color: transparent;
   }
 `;
@@ -124,8 +124,8 @@ export const ActiveSwatchIcon = styled(CheckmarkIcon).attrs({
   padding: 2px;
   color: ${({ theme, hex = '#000' }) =>
     hex.toLowerCase().includes('fff')
-      ? theme.internalTheme.colors.black
-      : theme.internalTheme.colors.white};
+      ? theme.DEPRECATED_THEME.colors.black
+      : theme.DEPRECATED_THEME.colors.white};
   transition: opacity 0.2s ${BEZIER.outSine};
 `;
 
@@ -137,8 +137,8 @@ export const ActiveChoiceIcon = styled(CloseIcon).attrs({
   width: ACTIVE_CHOICE_ICON_SIZE,
   height: ACTIVE_CHOICE_ICON_SIZE,
 })`
-  background-color: ${({ theme }) => theme.internalTheme.colors.gray700};
-  color: ${({ theme }) => theme.internalTheme.colors.blueLight};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray700};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.blueLight};
   border-radius: 50%;
   padding: 3px;
   margin-left: ${ACTIVE_CHOICE_LEFT_MARGIN}px;

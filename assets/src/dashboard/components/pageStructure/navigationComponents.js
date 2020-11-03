@@ -47,18 +47,19 @@ export const NavButton = styled(Button)`
   margin-bottom: 0;
   margin-top: 0;
   background-color: ${({ theme }) =>
-    theme.internalTheme.colors.foreground.gray12};
-  color: ${({ theme }) => theme.internalTheme.colors.black};
+    theme.DEPRECATED_THEME.colors.foreground.gray12};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.black};
   border-radius: 4px;
-  border-color: ${({ theme }) => theme.internalTheme.colors.foreground.gray12};
+  border-color: ${({ theme }) =>
+    theme.DEPRECATED_THEME.colors.foreground.gray12};
   height: 36px;
 
   &:hover,
   &:focus,
   &:focus-within {
     background-color: ${({ theme }) =>
-      theme.internalTheme.colors.foreground.gray16};
-    color: ${({ theme }) => theme.internalTheme.colors.black};
+      theme.DEPRECATED_THEME.colors.foreground.gray16};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.black};
   }
 `;
 
@@ -80,34 +81,34 @@ export const NavLink = styled.a`
     padding: 4px 28px;
     margin: 4px 0;
     font-weight: ${
-      theme.internalTheme.typography.weight[active ? 'bold' : 'normal']
+      theme.DEPRECATED_THEME.typography.weight[active ? 'bold' : 'normal']
     };
     text-decoration: none;
     color: ${
       active
-        ? theme.internalTheme.colors.gray900
-        : theme.internalTheme.colors.gray600
+        ? theme.DEPRECATED_THEME.colors.gray900
+        : theme.DEPRECATED_THEME.colors.gray600
     };
 
     &:focus {
       color: ${
         active
-          ? theme.internalTheme.colors.gray900
-          : theme.internalTheme.colors.gray600
+          ? theme.DEPRECATED_THEME.colors.gray900
+          : theme.DEPRECATED_THEME.colors.gray600
       };
     }
     &:hover {
       color: ${
         active
-          ? theme.internalTheme.colors.gray900
-          : theme.internalTheme.colors.gray600
+          ? theme.DEPRECATED_THEME.colors.gray900
+          : theme.DEPRECATED_THEME.colors.gray600
       };
-      background-color: ${theme.internalTheme.colors.gray50};
+      background-color: ${theme.DEPRECATED_THEME.colors.gray50};
     }
   `}
 `;
 
 export const AppInfo = styled.div`
   ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.internalTheme.colors.gray500};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
 `;

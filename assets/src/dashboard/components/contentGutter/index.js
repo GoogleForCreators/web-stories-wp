@@ -21,14 +21,14 @@ import styled from 'styled-components';
 
 export const StandardViewContentGutter = styled.div(
   ({ theme }) => `
-    margin: 0 ${theme.internalTheme.standardViewContentGutter.desktop}px;
+    margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
 
-    @media ${theme.internalTheme.breakpoint.largeDisplayPhone} {
-      margin: 0 ${theme.internalTheme.standardViewContentGutter.largeDisplayPhone}px;
+    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.largeDisplayPhone}px;
     }
 
-    @media ${theme.internalTheme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.internalTheme.standardViewContentGutter.smallDisplayPhone}px;
+    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.DEPRECATED_THEME.standardViewContentGutter.smallDisplayPhone}px;
     }
   `
 );
@@ -36,22 +36,22 @@ export const StandardViewContentGutter = styled.div(
 export const DetailViewContentGutter = styled.div(
   ({ theme }) => `
     padding-top: ${
-      theme.internalTheme.navBar.height +
-      theme.internalTheme.detailViewContentGutter.desktop / 2
+      theme.DEPRECATED_THEME.navBar.height +
+      theme.DEPRECATED_THEME.detailViewContentGutter.desktop / 2
     }px;
-    margin: 0 ${theme.internalTheme.detailViewContentGutter.desktop}px;
+    margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.desktop}px;
 
 
-    @media ${theme.internalTheme.breakpoint.tablet} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
       padding-top: ${
-        theme.internalTheme.navBar.height +
-        theme.internalTheme.detailViewContentGutter.tablet / 2
+        theme.DEPRECATED_THEME.navBar.height +
+        theme.DEPRECATED_THEME.detailViewContentGutter.tablet / 2
       }px;
-      margin: 0 ${theme.internalTheme.detailViewContentGutter.tablet}px;
+      margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.tablet}px;
     }
 
-    @media ${theme.internalTheme.breakpoint.smallDisplayPhone} {
-      margin: 0 ${theme.internalTheme.detailViewContentGutter.min}px;
+    @media ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+      margin: 0 ${theme.DEPRECATED_THEME.detailViewContentGutter.min}px;
     }
   `
 );

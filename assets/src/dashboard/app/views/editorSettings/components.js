@@ -51,7 +51,7 @@ export const SettingForm = styled.form`
   column-gap: 6.56%;
   padding-bottom: 52px;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     grid-template-columns: 100%;
     row-gap: 20px;
   }
@@ -59,8 +59,8 @@ export const SettingForm = styled.form`
 
 export const SettingHeading = styled.h3`
   ${TypographyPresets.Small};
-  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
-  color: ${({ theme }) => theme.internalTheme.colors.black};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.black};
   padding-bottom: 8px;
 `;
 
@@ -77,13 +77,13 @@ export const InlineLink = styled(Link)`
 
 export const HelperText = styled.p`
   ${TypographyPresets.Small};
-  color: ${({ theme }) => theme.internalTheme.colors.gray200};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
 `;
 
 export const DefaultLogoText = styled.p`
   ${TypographyPresets.ExtraSmall};
   margin: 0;
-  color: ${({ theme }) => theme.internalTheme.colors.gray200};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
   width: 100%;
   text-align: center;
 `;
@@ -94,18 +94,18 @@ export const TextInputHelperText = styled(HelperText)`
 export const FinePrintHelperText = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-top: 10px;
-  color: ${({ theme }) => theme.internalTheme.colors.gray200};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
 `;
 
 export const FormLabel = styled.span`
   ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.internalTheme.colors.gray400};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray400};
 `;
 
 export const Error = styled.p`
   ${TypographyPresets.ExtraSmall};
   padding-bottom: 10px;
-  color: ${({ theme }) => theme.internalTheme.colors.danger};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.danger};
 `;
 
 export const UploadedContainer = styled.div`
@@ -115,13 +115,13 @@ export const UploadedContainer = styled.div`
   grid-column-gap: 12px;
   grid-row-gap: 20px;
   padding-bottom: 24px;
-  border: ${({ theme }) => theme.internalTheme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   border-width: 2px;
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: none;
     border-color: ${({ theme }) =>
-      rgba(theme.internalTheme.colors.bluePrimary, 0.85)};
+      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
   }
 `;
 
@@ -139,7 +139,7 @@ export const GridItemContainer = styled.div`
 export const GridItemButton = styled.button`
   display: block;
   background-color: transparent;
-  border: ${({ theme }) => theme.internalTheme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   width: 100%;
   height: 100%;
   border-radius: 4px;
@@ -148,7 +148,7 @@ export const GridItemButton = styled.button`
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     border-color: ${({ theme }) =>
-      rgba(theme.internalTheme.colors.bluePrimary, 0.85)};
+      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
     border-width: 2px;
     outline: none;
   }
@@ -180,10 +180,10 @@ export const LogoMenuButton = styled.button`
   height: 24px;
   text-align: center;
   padding: 0;
-  color: ${({ theme }) => theme.internalTheme.colors.white};
-  background: ${({ theme }) => theme.internalTheme.colors.gray700};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray700};
   border-radius: 50%;
-  border: ${({ theme }) => theme.internalTheme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   cursor: pointer;
 
   & > svg {
@@ -196,7 +196,7 @@ export const LogoMenuButton = styled.button`
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     border-color: ${({ theme }) =>
-      rgba(theme.internalTheme.colors.bluePrimary, 0.85)};
+      rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
     border-width: 2px;
     outline: none;
   }
@@ -208,7 +208,7 @@ export const SaveButton = styled(Button).attrs({
 
 export const ErrorText = styled.p`
   ${TypographyPresets.ExtraSmall};
-  color: ${({ theme }) => theme.internalTheme.colors.danger};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.danger};
   margin-left: 1em;
   padding-top: 0.25em;
 `;

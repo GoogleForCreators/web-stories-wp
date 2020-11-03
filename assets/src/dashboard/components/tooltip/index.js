@@ -32,8 +32,8 @@ export const Content = styled.div`
   border-radius: 2px;
   padding: 10px;
   white-space: nowrap;
-  background: ${({ theme }) => theme.internalTheme.tooltip.background};
-  color: ${({ theme }) => theme.internalTheme.tooltip.color};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.tooltip.background};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.tooltip.color};
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity linear 200ms;
 `;

@@ -47,7 +47,7 @@ const AnimationBar = styled.div`
     height: 3px;
     width: ${selectedButtonWidth}px;
     margin-left: ${selectedButtonLeft}%;
-    background-color:  ${theme.internalTheme.colors.bluePrimary600};
+    background-color:  ${theme.DEPRECATED_THEME.colors.bluePrimary600};
     transition: all 0.3s ${BEZIER.outSine};
   `}
 `;
@@ -68,19 +68,19 @@ const ToggleButton = styled.button`
     border: none;
     padding: 0;
     margin: 0;
-    font-weight: ${theme.internalTheme.typography.weight.bold};
+    font-weight: ${theme.DEPRECATED_THEME.typography.weight.bold};
     color: ${
       isActive
-        ? theme.internalTheme.colors.gray900
-        : theme.internalTheme.colors.gray600
+        ? theme.DEPRECATED_THEME.colors.gray900
+        : theme.DEPRECATED_THEME.colors.gray600
     };
     background-color: transparent;
 
     ${KEYBOARD_USER_SELECTOR} &:focus {
-        border: 1px solid ${theme.internalTheme.colors.action};
+        border: 1px solid ${theme.DEPRECATED_THEME.colors.action};
     }
     &:disabled {
-      color: ${theme.internalTheme.colors.gray400};
+      color: ${theme.DEPRECATED_THEME.colors.gray400};
       cursor: default;
     }
   `}

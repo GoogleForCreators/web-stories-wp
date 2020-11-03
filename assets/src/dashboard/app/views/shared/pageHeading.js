@@ -35,7 +35,7 @@ import TelemetryBanner from './telemetryBanner';
 
 const StyledHeader = styled.h2`
   ${TypographyPresets.ExtraExtraLarge};
-  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -43,7 +43,7 @@ const StyledHeader = styled.h2`
   font-size: ${cssLerp('36px', '30px', '--squish-progress')};
   white-space: nowrap;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
     font-size: ${cssLerp('30px', '24px', '--squish-progress')};
   }
 `;
@@ -61,9 +61,9 @@ const SearchContainer = styled.div`
   position: relative;
   width: 100%;
   height: 29px;
-  @media ${({ theme }) => theme.internalTheme.breakpoint.smallDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
     left: ${({ theme }) =>
-      `${theme.internalTheme.standardViewContentGutter.min}px`};
+      `${theme.DEPRECATED_THEME.standardViewContentGutter.min}px`};
     max-width: 100%;
     justify-content: flex-start;
   }
@@ -84,7 +84,8 @@ const HeadingBodyWrapper = styled(StandardViewContentGutter)`
   align-items: center;
   height: 75px;
   padding-bottom: 3px;
-  border-bottom: ${({ theme }) => theme.internalTheme.subNavigationBar.border};
+  border-bottom: ${({ theme }) =>
+    theme.DEPRECATED_THEME.subNavigationBar.border};
 `;
 
 export const HeaderToggleButtonContainer = styled.div`

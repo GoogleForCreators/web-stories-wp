@@ -45,11 +45,11 @@ const chipSize = {
 
 const ChipContainer = styled.button`
   align-items: center;
-  background-color: ${({ theme }) => theme.internalTheme.colors.white};
-  border: ${({ theme }) => theme.internalTheme.borders.transparent};
-  border-radius: ${({ theme }) => theme.internalTheme.button.borderRadius}px;
-  box-shadow: ${({ theme }) => theme.internalTheme.chip.shadow};
-  color: ${({ theme }) => theme.internalTheme.colors.gray500};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
+  border-radius: ${({ theme }) => theme.DEPRECATED_THEME.button.borderRadius}px;
+  box-shadow: ${({ theme }) => theme.DEPRECATED_THEME.chip.shadow};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
   cursor: pointer;
   display: flex;
   padding: 5px;
@@ -59,15 +59,15 @@ const ChipContainer = styled.button`
   &:focus,
   &:active,
   &:hover {
-    color: ${({ theme }) => theme.internalTheme.colors.gray600};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray600};
   }
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
-    border-color: ${({ theme }) => theme.internalTheme.colors.action};
+    border-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.action};
   }
 
   &:disabled {
-    color: ${({ theme }) => theme.internalTheme.colors.gray500};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
     opacity: 0.5;
     pointer-events: none;
   }

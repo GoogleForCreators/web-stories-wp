@@ -74,14 +74,14 @@ export const MiniCardButton = styled.button(
     background-color: transparent;
     border: ${
       isSelected
-        ? theme.internalTheme.borders.bluePrimary
-        : theme.internalTheme.borders.transparent
+        ? theme.DEPRECATED_THEME.borders.bluePrimary
+        : theme.DEPRECATED_THEME.borders.transparent
     };
     border-width: 2px; 
 
     ${KEYBOARD_USER_SELECTOR} &:focus {
       border-radius: 0;
-      border-color: ${rgba(theme.internalTheme.colors.bluePrimary, 0.85)};
+      border-color: ${rgba(theme.DEPRECATED_THEME.colors.bluePrimary, 0.85)};
       outline: none;
     }
   `
@@ -97,7 +97,7 @@ export const MiniCard = styled.div(
     position: relative;
     width: ${width}px;
     cursor: pointer;
-    border: ${theme.internalTheme.borders.gray75};
+    border: ${theme.DEPRECATED_THEME.borders.gray75};
   `
 );
 MiniCard.propTypes = {
@@ -111,7 +111,7 @@ export const ActiveCard = styled.div(
     width: ${width}px;
     overflow: hidden;
     height: ${containerHeight}px;
-    border: ${theme.internalTheme.borders.gray75};
+    border: ${theme.DEPRECATED_THEME.borders.gray75};
   `
 );
 ActiveCard.propTypes = {

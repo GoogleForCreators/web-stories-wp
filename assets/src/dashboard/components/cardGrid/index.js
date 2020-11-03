@@ -32,7 +32,7 @@ const DashboardGrid = styled.div(
   ({ columnHeight, columnWidth, theme }) => `
   display: grid;
   width: 100%;
-  grid-column-gap: ${theme.internalTheme.grid.columnGap.desktop}px;
+  grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.desktop}px;
   grid-row-gap: 80px;
   grid-template-columns:
     repeat(auto-fill, ${columnWidth}px);
@@ -40,22 +40,26 @@ const DashboardGrid = styled.div(
   scroll-margin-top: 30vh;
   margin-top: 2px; // this is for keyboard focus 
 
-  ${theme.internalTheme.breakpoint.tablet} {
-    grid-column-gap: ${theme.internalTheme.grid.columnGap.tablet}px;
+  ${theme.DEPRECATED_THEME.breakpoint.tablet} {
+    grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.tablet}px;
   }
-  ${theme.internalTheme.breakpoint.largeDisplayPhone} {
-    grid-column-gap: ${theme.internalTheme.grid.columnGap.largeDisplayPhone}px;
+  ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
+    grid-column-gap: ${
+      theme.DEPRECATED_THEME.grid.columnGap.largeDisplayPhone
+    }px;
   }
-  ${theme.internalTheme.breakpoint.smallDisplayPhone} {
-    grid-column-gap: ${theme.internalTheme.grid.columnGap.smallDisplayPhone}px;
+  ${theme.DEPRECATED_THEME.breakpoint.smallDisplayPhone} {
+    grid-column-gap: ${
+      theme.DEPRECATED_THEME.grid.columnGap.smallDisplayPhone
+    }px;
   }
-  ${theme.internalTheme.breakpoint.min} {
-    grid-column-gap: ${theme.internalTheme.grid.columnGap.min}px;
+  ${theme.DEPRECATED_THEME.breakpoint.min} {
+    grid-column-gap: ${theme.DEPRECATED_THEME.grid.columnGap.min}px;
   }
   
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: 2px solid ${rgba(
-      theme.internalTheme.colors.bluePrimary,
+      theme.DEPRECATED_THEME.colors.bluePrimary,
       0.85
     )} !important; 
   }

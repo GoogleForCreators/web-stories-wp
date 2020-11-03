@@ -30,7 +30,7 @@ import Modal from '../modal';
 const DialogBox = styled.div(
   ({
     theme: {
-      internalTheme: { colors },
+      DEPRECATED_THEME: { colors },
     },
   }) => `
     display: flex;
@@ -58,7 +58,7 @@ const DialogTitle = styled.h1`
   ${TypographyPresets.Large};
   flex: 0 0 auto;
   margin: 0 24px;
-  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
 `;
 const DialogContent = styled.div`
   ${TypographyPresets.Medium};
@@ -66,7 +66,7 @@ const DialogContent = styled.div`
   padding: 24px 0 16px;
   margin: 0 24px;
   overflow-y: auto;
-  color: ${({ theme }) => theme.internalTheme.colors.gray700};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray700};
 `;
 
 const DialogActions = styled.div`

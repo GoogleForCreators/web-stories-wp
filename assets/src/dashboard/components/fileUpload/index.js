@@ -47,8 +47,8 @@ const UploadFormArea = styled.div`
   border-radius: 4px;
   border: ${({ isDragging, theme }) =>
     isDragging
-      ? theme.internalTheme.borders.bluePrimary
-      : theme.internalTheme.borders.gray100};
+      ? theme.DEPRECATED_THEME.borders.bluePrimary
+      : theme.DEPRECATED_THEME.borders.gray100};
   border-style: dashed;
 
   transition: border-color 300ms ease-in;
@@ -58,7 +58,7 @@ const UploadHelperText = styled.span`
   ${TypographyPresets.ExtraSmall};
   margin: 0 auto 16px;
   padding: 0 20%;
-  color: ${({ theme }) => theme.internalTheme.colors.gray200};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray200};
 `;
 
 /* TODO: new button styles */
@@ -72,7 +72,7 @@ const UploadLabelAsCta = styled(DefaultButton).attrs({
   line-height: 16px;
 
   &:focus-within {
-    border: ${({ theme }) => theme.internalTheme.borders.action};
+    border: ${({ theme }) => theme.DEPRECATED_THEME.borders.action};
   }
 `;
 
@@ -84,7 +84,7 @@ const LoadingIndicator = styled.div`
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.internalTheme.colors.white};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   opacity: ${({ isLoading }) => (isLoading ? 0.6 : 0)};
   z-index: ${({ isLoading }) => (isLoading ? '100' : '0')};
 

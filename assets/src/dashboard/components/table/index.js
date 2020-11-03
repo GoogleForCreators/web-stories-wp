@@ -35,9 +35,9 @@ export const Table = styled.table`
 export const TableBody = styled.tbody``;
 
 export const TableHeader = styled.thead`
-  background: ${({ theme }) => theme.internalTheme.colors.gray50};
-  border-top: ${({ theme }) => theme.internalTheme.table.border};
-  border-bottom: ${({ theme }) => theme.internalTheme.table.border};
+  background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
+  border-top: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
+  border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
 `;
 
 export const StickyTableHeader = styled(TableHeader)`
@@ -46,9 +46,9 @@ export const StickyTableHeader = styled(TableHeader)`
   border-bottom: 0;
   th {
     height: 100%;
-    background: ${({ theme }) => theme.internalTheme.colors.gray50};
+    background: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray50};
     border-top-width: 0;
-    border-bottom: ${({ theme }) => theme.internalTheme.table.border};
+    border-bottom: ${({ theme }) => theme.DEPRECATED_THEME.table.border};
     position: sticky;
     z-index: ${Z_INDEX.STICKY_TABLE};
     top: ${({ top }) => `${top}px` || 0};
@@ -59,16 +59,17 @@ StickyTableHeader.propTypes = {
 };
 
 export const TableHeaderCell = styled.th`
-  padding: ${({ theme }) => theme.internalTheme.table.headerCellPadding}px;
-  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.normal};
-  color: ${({ theme }) => theme.internalTheme.colors.gray500};
+  padding: ${({ theme }) => theme.DEPRECATED_THEME.table.headerCellPadding}px;
+  font-weight: ${({ theme }) =>
+    theme.DEPRECATED_THEME.typography.weight.normal};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray500};
   text-align: left;
 `;
 
 export const TablePreviewHeaderCell = styled(TableHeaderCell)`
   padding-right: 0;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     display: none;
   }
 `;
@@ -76,7 +77,7 @@ export const TablePreviewHeaderCell = styled(TableHeaderCell)`
 export const TableDateHeaderCell = styled(TableHeaderCell)`
   min-width: 160px;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     min-width: 150px;
   }
 `;
@@ -85,7 +86,7 @@ export const TableStatusHeaderCell = styled(TableHeaderCell)`
   display: table-cell;
   min-width: 100px;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
     display: none;
   }
 `;
@@ -104,9 +105,9 @@ export const TableTitleHeaderCell = styled(TableHeaderCell)`
     margin-right: 5px;
   }
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     padding-left: ${({ theme }) =>
-      theme.internalTheme.table.headerCellPadding}px;
+      theme.DEPRECATED_THEME.table.headerCellPadding}px;
     span {
       display: inline;
     }
@@ -121,22 +122,25 @@ export const TableContentHeaderCell = styled(TableHeaderCell)`
 export const TableRow = styled.tr``;
 
 export const TableCell = styled.td`
-  padding: ${({ theme }) => theme.internalTheme.table.cellPadding}px;
-  font-weight: ${({ theme }) => theme.internalTheme.typography.weight.normal};
+  padding: ${({ theme }) => theme.DEPRECATED_THEME.table.cellPadding}px;
+  font-weight: ${({ theme }) =>
+    theme.DEPRECATED_THEME.typography.weight.normal};
   word-break: break-word;
-  font-size: ${({ theme }) => theme.internalTheme.typography.presets.s.size}px;
-  color: ${({ theme }) => theme.internalTheme.colors.gray900};
-  height: ${({ theme }) => theme.internalTheme.table.cellPadding * 2 + 50}px;
+  font-size: ${({ theme }) =>
+    theme.DEPRECATED_THEME.typography.presets.s.size}px;
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  height: ${({ theme }) => theme.DEPRECATED_THEME.table.cellPadding * 2 + 50}px;
   vertical-align: middle;
-  line-height: ${({ theme }) => theme.internalTheme.table.headerContentSize}px;
+  line-height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.table.headerContentSize}px;
 `;
 
 export const TableStatusCell = styled(TableCell)`
   display: table-cell;
-  color: ${({ theme }) => theme.internalTheme.colors.gray400};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray400};
   font-weight: 500;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.tablet} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.tablet} {
     display: none;
   }
 `;
@@ -153,9 +157,9 @@ export const TableContentCell = styled(TableCell)`
 `;
 
 export const TablePreviewCell = styled(TableCell)`
-  width: ${({ theme }) => theme.internalTheme.previewWidth.thumbnail}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.previewWidth.thumbnail}px;
 
-  @media ${({ theme }) => theme.internalTheme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     display: none;
   }
 `;
