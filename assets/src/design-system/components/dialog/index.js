@@ -39,8 +39,6 @@ const DialogBox = styled.div`
   padding: 12px 16px;
   border-radius: 8px;
   border: ${({ theme }) => `1px solid ${rgba(theme.colors.fg.primary, 0.24)}`};
-
-  transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 `;
 
 const DialogContent = styled.div`
