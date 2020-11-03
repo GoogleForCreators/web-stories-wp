@@ -140,7 +140,7 @@ function MediaPane(props) {
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
     try {
-      if (!allowedMimeTypes.includes(mediaPickerEl.mimeType)) {
+      if (!allowedMimeTypes.includes(resource.mimeType)) {
         /* translators: %s is a list of allowed file extensions. */
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
