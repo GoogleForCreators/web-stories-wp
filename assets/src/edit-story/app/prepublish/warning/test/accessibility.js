@@ -97,16 +97,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         accessibilityChecks.textElementFontLowContrast(element)
       ).toBeUndefined();
     });
-
-    it('should return undefined if not a text element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'image',
-      };
-      expect(
-        accessibilityChecks.textElementFontLowContrast(element)
-      ).toBeUndefined();
-    });
   });
 
   describe('textElementFontSizeTooSmall', () => {
@@ -130,16 +120,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'text',
         fontSize: 12,
-      };
-      expect(
-        accessibilityChecks.textElementFontSizeTooSmall(element)
-      ).toBeUndefined();
-    });
-
-    it('should return undefined if not a text element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'image',
       };
       expect(
         accessibilityChecks.textElementFontSizeTooSmall(element)
@@ -209,16 +189,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         accessibilityChecks.imageElementLowResolution(element)
       ).toBeUndefined();
     });
-
-    it('should return undefined if not an image element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'text',
-      };
-      expect(
-        accessibilityChecks.imageElementLowResolution(element)
-      ).toBeUndefined();
-    });
   });
 
   describe('videoElementMissingTitle', () => {
@@ -274,17 +244,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         resource: {
           title: 'Video title',
         },
-      };
-      expect(
-        accessibilityChecks.videoElementMissingTitle(element)
-      ).toBeUndefined();
-    });
-
-    it('should return undefined if not an image element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'text',
-        resource: {},
       };
       expect(
         accessibilityChecks.videoElementMissingTitle(element)
@@ -350,17 +309,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         accessibilityChecks.videoElementMissingAlt(element)
       ).toBeUndefined();
     });
-
-    it('should return undefined if not an image element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'text',
-        resource: {},
-      };
-      expect(
-        accessibilityChecks.videoElementMissingAlt(element)
-      ).toBeUndefined();
-    });
   });
 
   describe('videoElementMissingCaptions', () => {
@@ -398,16 +346,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'text',
         tracks: [{ id: 'trackid' }],
-      };
-      expect(
-        accessibilityChecks.videoElementMissingCaptions(element)
-      ).toBeUndefined();
-    });
-
-    it('should return undefined if not an image element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'text',
       };
       expect(
         accessibilityChecks.videoElementMissingCaptions(element)
@@ -517,11 +455,34 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       });
     });
 
-    it.todo(
-      'should return undefined if element has large enough tappable region'
-    );
+    it('should return undefined if element has large enough tappable region', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        link: {
+          url: 'https://google.com',
+        },
+        content: 'G',
+        width: 48,
+        height: 48,
+      };
+      expect(
+        accessibilityChecks.elementLinkTappableRegionTooSmall(element)
+      ).toBeUndefined();
+    });
 
-    it.todo('should return undefined if not an element with link');
+    it('should return undefined if not an element with link', () => {
+      const element = {
+        id: 'elementid',
+        type: 'text',
+        content: 'G',
+        width: 40,
+        height: 40,
+      };
+      expect(
+        accessibilityChecks.elementLinkTappableRegionTooSmall(element)
+      ).toBeUndefined();
+    });
   });
 
   describe('imageElementMissingAlt', () => {
@@ -577,17 +538,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         resource: {
           alt: 'Image is about things',
         },
-      };
-      expect(
-        accessibilityChecks.imageElementMissingAlt(element)
-      ).toBeUndefined();
-    });
-
-    it('should return undefined if not an image element', () => {
-      const element = {
-        id: 'elementid',
-        type: 'text',
-        resource: {},
       };
       expect(
         accessibilityChecks.imageElementMissingAlt(element)

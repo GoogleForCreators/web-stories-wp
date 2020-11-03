@@ -20,18 +20,27 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Internal dependencies
+ */
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+
+/**
+ * @typedef {import('../../../types').Story} Story
+ * @typedef {import('../types').Guidance} Guidance
+ */
+
+/**
  * Check story for missing excerpt
  *
- * @param {Object} element Element object
- * @param story
- * @return {Object} Prepublish check response
+ * @param {Story} story The story being checked for warnings
+ * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyMissingExcerpt(story) {
   if (!story.excerpt || !story.excerpt.length) {
     return {
       message: __('Missing story excerpt', 'web-stories'),
       storyId: story.id,
-      type: 'warning',
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
 
