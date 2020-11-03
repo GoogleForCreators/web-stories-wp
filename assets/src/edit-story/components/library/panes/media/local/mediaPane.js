@@ -151,7 +151,7 @@ function MediaPane(props) {
           )
         );
 
-        throw createError('ValidError', mediaPickerEl.title, message);
+        throw createError('ValidError', resource.title, message);
       }
       // WordPress media picker event, sizes.medium.url is the smallest image
       insertMediaElement(
