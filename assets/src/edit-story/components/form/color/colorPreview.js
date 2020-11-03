@@ -90,7 +90,7 @@ const VisualPreviewButton = styled(VisualPreview).attrs(buttonAttrs)`
   ${buttonStyle}
   border-radius: 4px 0 0 4px;
   border-color: ${({ color, theme }) =>
-    getLuminance(color) > 0.2
+    color && getLuminance(color) > 0.2
       ? theme.colors.bg.v1
       : theme.colors.whiteout} !important;
 `;
@@ -142,7 +142,7 @@ const TextualInput = styled(TextualPreview).attrs({ as: 'input' })`
   cursor: text;
   overflow: auto;
   border-radius: 0 4px 4px 0;
-  text-transform: uppercase;
+  text-transform: ${({ value }) => (value ? 'uppercase' : 'initial')};
 `;
 
 function ColorPreview({
@@ -175,10 +175,8 @@ function ColorPreview({
   useEffect(() => setInputValue(previewText), [previewText]);
 
   const colorType = value?.type;
-  const isEditable =
-    !isMultiple &&
-    Boolean(previewText) &&
-    (!colorType || colorType === 'solid');
+  // Allow editing always in case of solid color of if color type is missing (multiple)
+  const isEditable = !colorType || colorType === 'solid';
 
   const editLabel = __('Edit', 'web-stories');
   const inputLabel = __('Enter', 'web-stories');
@@ -198,17 +196,14 @@ function ColorPreview({
         // Update actual color, which will in turn update hex input from value
         const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
 
-        // Keep same opacity as before though
-        const {
-          color: { a },
-        } = value;
-
+        // Keep same opacity as before though. In case of mixed values, set to default (1).
+        const a = isMultiple ? 1 : value.color.a;
         onChange({ color: { r, g, b, a } });
       }
 
       selectInputContents.current = selectContentOnUpdate;
     },
-    [inputValue, previewText, onChange, value]
+    [inputValue, previewText, onChange, value, isMultiple]
   );
 
   const handleInputChange = useCallback((evt) => {
@@ -297,7 +292,7 @@ function ColorPreview({
             {...buttonProps}
             color={previewStyle?.backgroundColor}
           >
-            {value.a < 1 && <Transparent />}
+            {(value?.a < 1 || isMultiple) && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewButton>
           <TextualInput
@@ -308,6 +303,7 @@ function ColorPreview({
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleFocus}
+            placeholder={MULTIPLE_DISPLAY_VALUE}
           />
         </Preview>
       ) : (
