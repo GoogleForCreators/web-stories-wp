@@ -363,6 +363,17 @@ class Experiments {
 				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
 				'group'       => 'general',
 			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #4081
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'eyeDropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

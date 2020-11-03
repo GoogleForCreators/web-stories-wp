@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86b9eb5512ecac3dea35fa4df86eb15d",
+    "content-hash": "0f19f6006aeee3114d54a0769bef5fb0",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -109,25 +109,25 @@
         },
         {
             "name": "civicrm/composer-downloads-plugin",
-            "version": "v2.1.1",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/civicrm/composer-downloads-plugin.git",
-                "reference": "8722bc7d547315be39397a3078bb51ee053ca269"
+                "reference": "3aabb6d259a86158d01829fc2c62a2afb9618877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/civicrm/composer-downloads-plugin/zipball/8722bc7d547315be39397a3078bb51ee053ca269",
-                "reference": "8722bc7d547315be39397a3078bb51ee053ca269",
+                "url": "https://api.github.com/repos/civicrm/composer-downloads-plugin/zipball/3aabb6d259a86158d01829fc2c62a2afb9618877",
+                "reference": "3aabb6d259a86158d01829fc2c62a2afb9618877",
                 "shasum": ""
             },
             "require": {
-                "composer-plugin-api": "^1.1",
+                "composer-plugin-api": "^1.1 || ^2.0",
                 "php": ">=5.6",
                 "togos/gitignore": "~1.1.1"
             },
             "require-dev": {
-                "composer/composer": "~1.0",
+                "composer/composer": "~1.0 || ~2.0",
                 "friendsofphp/php-cs-fixer": "^2.3",
                 "phpunit/phpunit": "^5.7",
                 "totten/process-helper": "^1.0.1"
@@ -156,7 +156,7 @@
                 }
             ],
             "description": "Composer plugin for downloading additional files within any composer package.",
-            "time": "2019-08-28T00:33:51+00:00"
+            "time": "2020-11-02T05:26:23+00:00"
         },
         {
             "name": "cweagans/composer-patches",
