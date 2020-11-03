@@ -171,5 +171,13 @@ export const typography = {
         letterSpacing: 0,
       },
     },
+    label: {
+      [TYPOGRAPHY_PRESET_SIZES.SMALL]: {
+        weight: 400,
+        size: 14,
+        lineHeight: 20,
+        letterSpacing: 0,
+      },
+    },
   },
 };

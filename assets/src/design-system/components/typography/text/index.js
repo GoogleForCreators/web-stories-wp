@@ -23,9 +23,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
-import { expandPresetStyles } from '../expandPresetStyles';
 
 export const Text = styled.p`
   ${defaultTypographyStyle}
@@ -38,7 +37,7 @@ export const Text = styled.p`
         cursor: pointer;
       `;
     return css`
-      ${expandPresetStyles({
+      ${themeHelpers.expandPresetStyles({
         preset: theme.typography.presets.text[size],
         theme,
       })};

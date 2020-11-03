@@ -14,6 +14,5 @@
  * limitations under the License.
  */
 
-export { Display } from './display';
-export { Headline } from './headline';
-export { Text } from './text';
+export { focusableOutlineCSS } from './outline';
+export { expandPresetStyles } from './expandPresetStyles';
