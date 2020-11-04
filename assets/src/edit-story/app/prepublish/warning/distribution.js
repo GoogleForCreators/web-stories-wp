@@ -36,7 +36,7 @@ import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyMissingExcerpt(story) {
-  if (!story.excerpt || !story.excerpt.length) {
+  if (!story.excerpt?.length) {
     return {
       message: __('Missing story excerpt', 'web-stories'),
       storyId: story.id,

@@ -74,7 +74,7 @@ export function textElementFontLowContrast(element) {
   // check all spans for contrast ratios that don't pass verification
   const spans = getSpansFromContent(element.content);
   let lowContrast = spans.some((span) => {
-    if (!span.style || !span.style.color) {
+    if (!span.style?.color) {
       return false;
     }
 
@@ -150,11 +150,7 @@ export function imageElementLowResolution(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementMissingTitle(element) {
-  const { resource } = element;
-  if (
-    (!element.title || !element.title.length) &&
-    (!resource.title || !resource.title.length)
-  ) {
+  if (!element.title?.length && !element.resource?.title?.length) {
     return {
       message: __('Video is missing title', 'web-stories'),
       elementId: element.id,
@@ -172,11 +168,7 @@ export function videoElementMissingTitle(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementMissingAlt(element) {
-  const { resource } = element;
-  if (
-    (!element.alt || !element.alt.length) &&
-    (!resource.alt || !resource.alt.length)
-  ) {
+  if (!element.alt?.length && !element.resource?.alt?.length) {
     return {
       message: __('Video is missing assistive text', 'web-stories'),
       elementId: element.id,
@@ -194,7 +186,7 @@ export function videoElementMissingAlt(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementMissingCaptions(element) {
-  if (!element.tracks || !element.tracks.length) {
+  if (!element.tracks?.length) {
     return {
       message: __('Video is missing captions', 'web-stories'),
       elementId: element.id,
@@ -214,7 +206,7 @@ export function videoElementMissingCaptions(element) {
 export function pageTooManyLinks(page) {
   let linkCount = 0;
   page.elements.forEach((element) => {
-    if (element.link && element.link.url && element.link.url.length) {
+    if (element.link?.url?.length) {
       linkCount += 1;
     }
   });
@@ -237,7 +229,7 @@ export function pageTooManyLinks(page) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function elementLinkTappableRegionTooSmall(element) {
-  if (!element.link || !element.link.url || !element.link.url.length) {
+  if (!element.link?.url?.length) {
     return undefined;
   }
 
@@ -262,11 +254,7 @@ export function elementLinkTappableRegionTooSmall(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function imageElementMissingAlt(element) {
-  const { resource } = element;
-  if (
-    (!element.alt || !element.alt.length) &&
-    (!resource.alt || !resource.alt.length)
-  ) {
+  if (!element.alt?.length && !element.resource?.alt?.length) {
     return {
       message: __('Image is missing alt text', 'web-stories'),
       elementId: element.id,
