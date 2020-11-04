@@ -10,3 +10,4 @@ third-party/
 vendor/
 .DS_Store
 phpcs.xml
+ui-debug.log
