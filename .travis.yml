@@ -41,8 +41,9 @@ env:
 
 install:
   - nvm install
-  - npm ci
-  - npx patch-package
+  # TODO: Use npm ci
+  # See https://github.com/npm/cli/issues/1905
+  - npm install
   - composer install --no-interaction
 
 script:
