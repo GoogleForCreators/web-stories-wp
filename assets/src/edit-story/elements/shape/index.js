@@ -50,6 +50,7 @@ export const panels = [
   PanelTypes.COLOR_PRESETS,
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,
+  PanelTypes.BORDER,
   PanelTypes.LAYER_STYLE,
   PanelTypes.LINK,
   PanelTypes.SHAPE_STYLE,

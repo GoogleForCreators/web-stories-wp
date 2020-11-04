@@ -211,6 +211,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Retrieves a collection of web stories.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.

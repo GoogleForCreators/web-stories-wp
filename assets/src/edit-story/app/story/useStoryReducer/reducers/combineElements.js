@@ -93,8 +93,9 @@ function combineElements(state, { firstElement, secondId }) {
   // If the element we're dropping into is not background, maintain link, too.
   if (!secondElement.isBackground) {
     propsFromFirst.push('link');
-    // If the second element is rectangular, maintain border radius, too.
+    // If relevant, maintain border, too.
     if (canMaskHaveBorder(secondElement)) {
+      propsFromFirst.push('border');
       propsFromFirst.push('borderRadius');
     }
   }

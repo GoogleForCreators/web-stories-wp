@@ -72,6 +72,7 @@ export const panels = [
   PanelTypes.LAYER_STYLE,
   PanelTypes.TEXT_STYLE,
   PanelTypes.BORDER_RADIUS,
+  PanelTypes.BORDER,
   PanelTypes.LINK,
   PanelTypes.ANIMATION,
 ];
