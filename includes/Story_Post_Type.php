@@ -703,12 +703,15 @@ class Story_Post_Type {
 		// We don't currently support the 'Custom Fields' meta box.
 		remove_meta_box( 'postcustom', $screen, $screen->id );
 
-		foreach ( [ 'normal', 'advanced' ] as $context ) {
+		$locations  = [ 'side', 'normal', 'advanced' ];
+		$priorities = [ 'high', 'sorted', 'core', 'default', 'low' ];
+
+		foreach ( $locations as $context ) {
 			if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ] ) ) {
 				continue;
 			}
 
-			foreach ( [ 'high', 'sorted', 'core', 'default', 'low' ] as $priority ) {
+			foreach ( $priorities as $priority ) {
 				if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ][ $priority ] ) ) {
 					continue;
 				}
