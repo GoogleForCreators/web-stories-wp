@@ -14,5 +14,18 @@
  * limitations under the License.
  */
 
-export { default as FontProvider, GOOGLE_MENU_FONT_URL } from './fontProvider';
-export { default as useFont } from './useFont';
+/**
+ * Internal dependencies
+ */
+import createSolid from '../../../utils/createSolid';
+import { BORDER_POSITION } from '../../../constants';
+
+export const DEFAULT_BORDER = {
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  lockedWidth: true,
+  color: createSolid(0, 0, 0),
+  position: BORDER_POSITION.INSIDE,
+};

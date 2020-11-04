@@ -19,92 +19,65 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { rgba } from 'polished';
-import { v4 as uuidv4 } from 'uuid';
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
-import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 import useRadioNavigation from '../shared/useRadioNavigation';
+import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
 
-const RadioButton = styled.label`
+const Wrapper = styled.div`
+  display: flex;
+  flex: 1;
+`;
+
+const Button = styled.label`
   display: block;
   min-height: 30px;
-  margin: 10px 0;
-`;
-
-const RADIO_SIZE = 24;
-const TEXT_OFFSET = 30;
-
-const Label = styled.span`
-  display: flex;
-  position: relative;
-  margin-bottom: 0;
+  margin-right: 8px;
+  flex: 1;
   cursor: pointer;
-  svg {
-    width: ${RADIO_SIZE}px;
-    height: ${RADIO_SIZE}px;
-    margin-right: ${TEXT_OFFSET - RADIO_SIZE}px;
-  }
-`;
-
-const Name = styled.span`
-  line-height: 24px;
 `;
 
 // Class should contain "mousetrap" to enable keyboard shortcuts on inputs.
 const Radio = styled.input.attrs({ className: 'mousetrap' })`
   opacity: 0;
   position: absolute;
-  ${KEYBOARD_USER_SELECTOR} &:focus + ${Label} {
+  ${KEYBOARD_USER_SELECTOR} &:focus + div {
     outline: -webkit-focus-ring-color auto 5px;
   }
 `;
 
-const Helper = styled.div`
-  margin-left: ${TEXT_OFFSET}px;
-  color: ${({ theme }) => rgba(theme.colors.fg.white, 0.54)};
-  font-size: 12px;
-  line-height: ${({ theme }) => theme.fonts.label.lineHeight};
-`;
-
-function RadioGroup({ onChange, value: selectedValue, options }) {
-  const radioGroupId = useMemo(() => uuidv4(), []);
-
+function IconGroup({ onChange, value: selectedValue, options, ...rest }) {
   // We need manual arrow key navigation here, as we have a global listener for those keys
   // preventing default functionality.
   const ref = useRef();
 
   useRadioNavigation(ref);
+
   return (
-    <div ref={ref}>
-      {options.map(({ value, name, helper }, i) => (
-        <RadioButton key={value}>
+    <Wrapper ref={ref} role="radiogroup" {...rest}>
+      {options.map(({ value, Icon, label }) => (
+        <Button key={value}>
           <Radio
             onChange={(evt) => onChange(evt.target.value, evt)}
             value={value}
             type="radio"
             checked={value === selectedValue}
-            aria-labelledby={`radio-${i}-${radioGroupId}`}
+            aria-label={`Border position mode: ${value}`}
           />
-          <Label isActive={value === selectedValue}>
-            {value === selectedValue ? <Selected /> : <UnSelected />}
-            <Name id={`radio-${i}-${radioGroupId}`}>{name}</Name>
-          </Label>
-          {helper && <Helper>{helper}</Helper>}
-        </RadioButton>
+          <Icon checked={value === selectedValue} label={label} />
+        </Button>
       ))}
-    </div>
+    </Wrapper>
   );
 }
 
-RadioGroup.propTypes = {
+IconGroup.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
 };
 
-export default RadioGroup;
+export default IconGroup;
