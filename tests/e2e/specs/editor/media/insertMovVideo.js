@@ -45,6 +45,9 @@ describe('Inserting .mov from dialog', () => {
       '.attachments-browser .attachments .attachment:first-of-type';
     await page.waitForSelector(btnSelector);
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-    await percySnapshot(page, 'Prevent insert .mov from Dialog');
+    await percySnapshot(page, 'Avoid inserting .mov files');
+
+    const closeBtnSelector = '.media-modal-close';
+    await page.click(closeBtnSelector);
   });
 });
