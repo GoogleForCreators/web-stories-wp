@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
@@ -22,7 +25,7 @@ import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
-import { useAPI, useConfig, useStory } from '../../app';
+import { useAPI, useConfig } from '../../app';
 import getStoryMarkup from '../../output/utils/getStoryMarkup';
 
 function StatusCheck() {
@@ -34,26 +37,46 @@ function StatusCheck() {
   const flags = useFeatures();
   const { statusCheck } = flags;
 
-  const { story, pages } = useStory((state) => ({
-    story: state.state.story,
-    pages: state.state.pages,
-  }));
-
   const doStatusCheck = useCallback(() => {
-    if (statusCheck && story && story.status && pages) {
+    if (statusCheck) {
+      const story = {
+        storyId: 1,
+        title: 'Story!',
+        author: 1,
+        slug: 'story',
+        publisherLogo: 1,
+        defaultPageDuration: 7,
+        status: 'publish',
+        date: '2020-04-10T07:06:26',
+        modified: '',
+        excerpt: '',
+        featuredMedia: 0,
+        password: '',
+        stylePresets: '',
+      };
+      const pages = [
+        {
+          type: 'page',
+          id: '2',
+          elements: [],
+        },
+      ];
       const content = getStoryMarkup(story, pages, metadata, flags);
       getStatusCheck(content)
         .then(() => {
-          // @todo, check response.
+          // eslint-disable-next-line no-console
+          console.log(__('Status Check successful.', 'web-stories'));
         })
         .catch(() => {
-          // @todo, show error message.
+          // eslint-disable-next-line no-console
+          console.log(__('Status Check failure.', 'web-stories'));
         })
         .finally(() => {
-          // @todo, set final state.
+          // eslint-disable-next-line no-console
+          console.log(__('Status Check finished.', 'web-stories'));
         });
     }
-  }, [getStatusCheck, statusCheck, story, pages, metadata, flags]);
+  }, [getStatusCheck, statusCheck, metadata, flags]);
 
   useEffect(doStatusCheck, [doStatusCheck]);
 
