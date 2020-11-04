@@ -706,6 +706,10 @@ class Story_Post_Type {
 			}
 
 			foreach ( [ 'high', 'sorted', 'core', 'default', 'low' ] as $priority ) {
+				if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ][ $priority ] ) ) {
+					continue;
+				}
+
 				foreach ( (array) $wp_meta_boxes[ $screen->id ][ $context ][ $priority ] as $meta_box ) {
 					if ( false === $meta_box || ! $meta_box['title'] ) {
 						continue;
