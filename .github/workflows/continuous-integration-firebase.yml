@@ -35,8 +35,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          (cd web-stories-scraper && npm ci)
-          (cd functions && npm ci)
+          cd web-stories-scraper
+          npm ci
+          cd ..
         env:
           CI: true
 
@@ -55,7 +56,7 @@ jobs:
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v1.5.0
         with:
-          args: deploy -m 'Automated deploy from GitHub Actions'
+          args: deploy --only hosting -m 'Automated deploy from GitHub Actions'
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           PROJECT_ID: ${{ secrets.FIREBASE_PROJECT_ID }}
