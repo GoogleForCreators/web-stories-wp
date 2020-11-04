@@ -189,7 +189,7 @@ class Story_Post_Type {
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
 
 		// Custom Meta Boxes Support.
-		add_action( 'add_meta_boxes_' . self::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ] );
+		add_action( 'add_meta_boxes_' . self::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ], PHP_INT_MAX );
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
