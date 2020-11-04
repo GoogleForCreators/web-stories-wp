@@ -64,6 +64,8 @@ $extensions        = [
 	'libxml' => [
 		'functions' => [
 			'libxml_use_internal_errors',
+			'libxml_clear_errors',
+			'libxml_get_last_error',
 			'simplexml_load_file',
 		],
 	],

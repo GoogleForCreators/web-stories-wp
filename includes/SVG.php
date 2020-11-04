@@ -309,7 +309,10 @@ class SVG {
 	protected function get_svg_data( $file ) {
 		$key = md5( $file );
 		if ( ! isset( $this->svgs[ $key ] ) ) {
+			$errors = libxml_use_internal_errors( true );
 			$this->svgs[ $key ] = simplexml_load_file( $file );
+			libxml_clear_errors();
+			libxml_use_internal_errors( $errors );
 		}
 
 		return $this->svgs[ $key ];
