@@ -29,7 +29,7 @@ function nativeCopyPasteExpected() {
     'true' === contentEditable ||
     'textarea' === tagName.toLowerCase() ||
     ('input' === tagName.toLowerCase() &&
-      ['text', 'number', 'search'].includes(type))
+      ['text', 'number', 'search', 'email', 'tel', 'url'].includes(type))
   ) {
     return true;
   }
