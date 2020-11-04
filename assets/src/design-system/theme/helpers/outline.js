@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS } from './constants';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
+import { css } from 'styled-components';
 
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode, THEME_CONSTANTS, themeHelpers };
+export const focusableOutlineCSS = (bg, accent) => css`
+  box-shadow: 0 0 0 2px ${bg};
+  &:focus {
+    box-shadow: 0 0 0 2px ${bg}, 0 0 0 4px ${accent};
+  }
+`;

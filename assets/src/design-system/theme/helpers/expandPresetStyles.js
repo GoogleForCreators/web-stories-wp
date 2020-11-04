@@ -15,16 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS } from './constants';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
+import { css } from 'styled-components';
 
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode, THEME_CONSTANTS, themeHelpers };
+export const expandPresetStyles = ({ preset, theme }) => css`
+  font-family: ${theme.typography.family.primary};
+  font-size: ${preset.size}px;
+  font-weight: ${preset.weight};
+  letter-spacing: ${preset.letterSpacing}px;
+  line-height: ${preset.lineHeight}px;
+  text-decoration: ${preset.textDecoration || 'none'};
+`;

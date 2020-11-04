@@ -14,17 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS } from './constants';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
-
-export const theme = {
-  typography,
-  colors: { ...darkMode },
-};
-
-export { lightMode, THEME_CONSTANTS, themeHelpers };
+export { focusableOutlineCSS } from './outline';
+export { expandPresetStyles } from './expandPresetStyles';

@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { dark as darkMode, light as lightMode } from './colors';
-import { THEME_CONSTANTS } from './constants';
-import * as themeHelpers from './helpers';
-import { typography } from './typography';
-
-export const theme = {
-  typography,
-  colors: { ...darkMode },
+export const BUTTON_TYPES = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  TERTIARY: 'tertiary',
+  PLAIN: 'plain',
 };
 
-export { lightMode, THEME_CONSTANTS, themeHelpers };
+export const BUTTON_SIZES = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+};
+
+export const BUTTON_VARIANTS = {
+  CIRCLE: 'circle',
+  RECTANGLE: 'rectangle',
+  ICON: 'icon',
+};
