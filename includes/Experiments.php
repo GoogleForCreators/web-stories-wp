@@ -200,6 +200,8 @@ class Experiments {
 	/**
 	 * Returns a list of all experiments.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return array List of experiments by group.
@@ -370,6 +372,17 @@ class Experiments {
 				'name'        => 'customMetaBoxes',
 				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
 				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #4081
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'eyeDropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

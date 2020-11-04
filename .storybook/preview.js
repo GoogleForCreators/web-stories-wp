@@ -40,6 +40,11 @@ import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboard
 import { ConfigProvider } from '../assets/src/dashboard/app/config';
 import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
 
+import {
+  theme as designSystemTheme,
+  lightMode,
+} from '../assets/src/design-system/theme';
+
 // @todo: Find better way to mock these.
 const wp = {};
 window.wp = window.wp || wp;
@@ -81,9 +86,10 @@ addParameters({
 addDecorator(withKnobs);
 
 addDecorator((story, { id }) => {
-  const useDashboardTheme = id.startsWith('dashboard');
+  const isDesignSystemStorybook = id.startsWith('designsystem');
+  const isDashboardStorybook = id.startsWith('dashboard');
 
-  if (useDashboardTheme) {
+  if (isDashboardStorybook) {
     return (
       <FlagsProvider features={{ enableAnimation: true }}>
         <ThemeProvider theme={dashboardTheme}>
@@ -100,6 +106,12 @@ addDecorator((story, { id }) => {
         </ThemeProvider>
       </FlagsProvider>
     );
+  }
+
+  if (isDesignSystemStorybook) {
+    // override darkMode colors
+    const dsTheme = { ...designSystemTheme, colors: { ...lightMode } };
+    return <ThemeProvider theme={dsTheme}>{story()}</ThemeProvider>;
   }
 
   return (
