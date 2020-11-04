@@ -115,6 +115,7 @@ function MediaPane(props) {
   const { showSnackbar } = useSnackbar();
 
   const {
+    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
@@ -145,7 +146,7 @@ function MediaPane(props) {
         const message = sprintf(
           /* translators: %s: list of allowed file types. */
           __('Please choose only %s to insert into page.', 'web-stories'),
-          allowedMimeTypes.join(
+          allowedFileTypes.join(
             /* translators: delimiter used in a list */
             __(', ', 'web-stories')
           )
