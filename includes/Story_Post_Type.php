@@ -41,6 +41,10 @@ use WP_Screen;
 
 /**
  * Class Story_Post_Type.
+ *
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Story_Post_Type {
 	use Publisher;
@@ -327,6 +331,8 @@ class Story_Post_Type {
 
 	/**
 	 * Get the post type for the current request.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.0.0
 	 *
