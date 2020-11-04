@@ -90,6 +90,7 @@ echo -e $(status_message "Import default set of media assets...")
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png
+wp media import /var/www/html/wp-content/e2e-assets/small-video.mov
 
 CURRENT_WP_VERSION=$(wp core version | tr -d '\r')
 echo -e $(status_message "Current WordPress version: $CURRENT_WP_VERSION...")
