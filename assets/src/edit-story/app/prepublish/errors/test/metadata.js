@@ -98,6 +98,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
       storyId: 123,
       pages: [
         {
+          id: 890,
           pageAttachment: testPageAttachment,
           elements: [{ ...elementInRegion, link: { url: 'bomb.com ' } }],
         },
@@ -110,7 +111,11 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testNoAttachment).toBeUndefined();
     expect(testLinkInPageAttachment).not.toBeUndefined();
     expect(testLinkInPageAttachment.message).toMatchInlineSnapshot(
-      `"Story has a link in the page attachment region"`
+      `"Page has a link in the page attachment region"`
+    );
+    expect(testLinkInPageAttachment.pages).toHaveLength(1);
+    expect(testLinkInPageAttachment.pages[0]).toStrictEqual(
+      testLinkInPageAttachmentStory.pages[0].id
     );
     expect(testLinkInPageAttachment.storyId).toStrictEqual(
       testLinkInPageAttachmentStory.storyId

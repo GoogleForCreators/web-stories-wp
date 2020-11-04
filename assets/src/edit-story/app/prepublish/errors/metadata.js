@@ -144,21 +144,30 @@ export function publisherLogoSize(story) {
  */
 export function linkInPageAttachmentRegion(story) {
   const { pages } = story;
-  const isLinkInPageAttachmentArea = pages.some((page) => {
-    const { elements } = page;
-    const isLinkAttached = Boolean(page?.pageAttachment?.url.length);
-    return (
-      isLinkAttached &&
-      elements.filter(({ link }) => link?.url?.length).some(isElementBelowLimit)
-    );
-  });
+  const pagesWithLinksInAttachmentArea = pages
+    .filter((page) => {
+      const { elements } = page;
+      const hasPageAttachment = Boolean(page?.pageAttachment?.url.length);
+      return (
+        hasPageAttachment &&
+        elements
+          .filter(({ link }) => Boolean(link?.url?.length))
+          .some(isElementBelowLimit)
+      );
+    })
+    .map((page) => page.id);
+
+  const isLinkInPageAttachmentArea = Boolean(
+    pagesWithLinksInAttachmentArea.length
+  );
 
   if (isLinkInPageAttachmentArea) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
+      pages: pagesWithLinksInAttachmentArea,
       message: __(
-        'Story has a link in the page attachment region',
+        'Page has a link in the page attachment region',
         'web-stories'
       ),
     };
