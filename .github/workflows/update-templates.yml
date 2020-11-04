@@ -31,7 +31,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Update templates and FTUE story
-        run: npm run workflow:mirate
+        run: npm run workflow:migrate
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
