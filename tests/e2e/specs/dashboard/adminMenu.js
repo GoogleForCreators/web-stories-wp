@@ -48,5 +48,15 @@ describe('Admin Menu', () => {
     await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
       'Settings'
     );
+    await page.hover('[aria-label="Main dashboard navigation"]');
+
+    // Navigating through application back to My Story from another route
+    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+      text: 'My Stories',
+    });
+    await page.hover('#menu-posts-web-story');
+    await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
+      'My Stories'
+    );
   });
 });

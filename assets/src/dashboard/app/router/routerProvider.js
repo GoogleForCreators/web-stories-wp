@@ -57,9 +57,10 @@ function RouterProvider({ children, ...props }) {
 
   // Sync up WP navigation bar with our hash location.
   useEffect(() => {
-    // Allow default WP behavior for both `page=stories-dashboard` & `page=stories-dashboard#/`
+    let query = `a[href$="#${currentPath}"]`;
+    // `My Stories` link in WP doesn't have a hash in the href
     if (currentPath.length <= 1) {
-      return;
+      query = 'a[href$="page=stories-dashboard"]';
     }
 
     const WPSubmenuItems = document.querySelectorAll(
@@ -71,7 +72,7 @@ function RouterProvider({ children, ...props }) {
       el.querySelector('a')?.removeAttribute('aria-current');
     });
     WPSubmenuItems?.forEach((el) => {
-      if (el.querySelector(`a[href$="#${currentPath}"]`)) {
+      if (el.querySelector(query)) {
         el.classList.add('current');
         el.querySelector('a')?.classList.add('current');
         el.querySelector('a')?.setAttribute('aria-current', 'page');
