@@ -43,6 +43,8 @@
 | Creator can Apply or Save a Color from/to Their Preset Library    | Display Panel                                    | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Manage Color Presets                             | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*   |
+| Creator can Manipulate Shape                                      | Border                                           | 🚨 **0.00%** *(0 / 2)*   |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*   |
 | Creator can Preview & Publish Their Story                         | Publish story                                    | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 1)*   |
 | Creator can Select an Element                                     | Transforming element                             | 🚨 **0.00%** *(0 / 2)*   |
@@ -67,4 +69,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.56%** *(2 / 358)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.55%** *(2 / 362)* |
