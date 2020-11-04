@@ -26,6 +26,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
  * Internal dependencies
  */
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
+import { useStory } from '../../../app/story';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -46,6 +47,14 @@ function Panel({
   ariaHidden = false,
   isPersisted = true,
 }) {
+  const { selectedElementIds } = useStory(
+    ({ state: { selectedElementIds } }) => {
+      return {
+        selectedElementIds,
+      };
+    }
+  );
+
   const persisted = useMemo(
     () =>
       isPersisted
@@ -90,6 +99,13 @@ function Panel({
     },
     [resizeable, expandToHeight]
   );
+
+  // Expand panel on first mount/on selection change if it can't be persisted.
+  useEffect(() => {
+    if (!isPersisted) {
+      expand(true);
+    }
+  }, [expand, isPersisted, selectedElementIds]);
 
   useEffect(() => {
     if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {

@@ -81,6 +81,10 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('textbox', { name: /Font size/ });
   }
 
+  get collapse() {
+    return this.getByRole('button', { name: /Collapse panel/ });
+  }
+
   // @todo: add remaining input options:
   // * font family and size
   // * justify toggles
