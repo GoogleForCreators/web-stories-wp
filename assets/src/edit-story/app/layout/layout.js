@@ -54,11 +54,9 @@ const Editor = styled.section.attrs({
 
   display: grid;
   grid:
-    'lib       canv      insp' 1fr
-    'metaboxes metaboxes insp' 1fr / minmax(
-      ${LIBRARY_MIN_WIDTH}px,
-      ${LIBRARY_MAX_WIDTH}px
-    )
+    'lib   canv        insp' 1fr
+    'lib   metaboxes   insp' auto /
+    minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
 `;
