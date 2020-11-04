@@ -43,7 +43,11 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="style" title={__('Style', 'web-stories')}>
+    <SimplePanel
+      name="style"
+      title={__('Style', 'web-stories')}
+      isPersisted={false}
+    >
       <Row>
         <Color
           hasGradient

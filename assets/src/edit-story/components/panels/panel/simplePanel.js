@@ -26,9 +26,9 @@ import Panel from './panel';
 import PanelTitle from './shared/title';
 import PanelContent from './shared/content';
 
-function SimplePanel({ children, name, title }) {
+function SimplePanel({ children, name, title, isPersisted }) {
   return (
-    <Panel name={name}>
+    <Panel name={name} isPersisted={isPersisted}>
       <PanelTitle>{title}</PanelTitle>
       <PanelContent>{children}</PanelContent>
     </Panel>
@@ -39,6 +39,7 @@ SimplePanel.propTypes = {
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  isPersisted: PropTypes.bool,
 };
 
 export default SimplePanel;

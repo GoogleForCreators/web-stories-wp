@@ -44,14 +44,23 @@ function Panel({
   initialHeight = null,
   ariaLabel = null,
   ariaHidden = false,
+  isPersisted = true,
 }) {
   const persisted = useMemo(
-    () => localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`),
-    [name]
+    () =>
+      isPersisted
+        ? localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`)
+        : null,
+    [name, isPersisted]
   );
-  const [isCollapsed, setIsCollapsed] = useState(
-    Boolean(persisted?.isCollapsed)
-  );
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    // If not persisted, always default to expanded.
+    if (!isPersisted) {
+      return false;
+    }
+    // Default state for panels that can be persisted is collapsed.
+    return undefined === persisted?.isCollapsed ? true : persisted.isCollapsed;
+  });
   const [expandToHeight, setExpandToHeight] = useState(
     persisted?.expandToHeight || initialHeight
   );
@@ -82,14 +91,6 @@ function Panel({
     [resizeable, expandToHeight]
   );
 
-  // Expand panel on first mount if collapse not persisted
-  useEffect(() => {
-    if (persisted?.isCollapsed) {
-      return;
-    }
-    expand(true);
-  }, [canCollapse, expand, persisted]);
-
   useEffect(() => {
     if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
       collapse();
@@ -106,7 +107,7 @@ function Panel({
 
   // Persist when user collapses
   useEffect(() => {
-    if (!manuallyChanged) {
+    if (!manuallyChanged || !isPersisted) {
       return;
     }
 
@@ -116,7 +117,7 @@ function Panel({
       isCollapsed,
       expandToHeight,
     });
-  }, [name, isCollapsed, height, expandToHeight, manuallyChanged]);
+  }, [name, isCollapsed, height, expandToHeight, manuallyChanged, isPersisted]);
 
   const manuallySetHeight = useCallback(
     (h) => {
