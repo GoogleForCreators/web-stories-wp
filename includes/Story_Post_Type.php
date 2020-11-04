@@ -44,6 +44,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Story_Post_Type {
@@ -116,6 +117,8 @@ class Story_Post_Type {
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
 	 *
