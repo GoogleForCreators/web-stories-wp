@@ -35,9 +35,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd web-stories-scraper
-          npm ci
-          cd ..
+          (cd web-stories-scraper && npm ci)
+          (cd functions && npm ci)
         env:
           CI: true
 
