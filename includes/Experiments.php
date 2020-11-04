@@ -364,10 +364,10 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-						 * Author: @swissspidy
-						 * Issue: #4805
-						 * Creation date: 2020-10-28
-						 */
+			 * Author: @swissspidy
+			 * Issue: #4805
+			 * Creation date: 2020-10-28
+			 */
 			[
 				'name'        => 'encodeStoryMarkup',
 				/* translators: %s: WAF stands for Web Application Firewall */
