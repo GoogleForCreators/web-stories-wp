@@ -57,6 +57,7 @@ describe('Video Accessibility Panel', () => {
     it('should allow user to edit and reset poster image using mouse', async () => {
       // Remember original poster image
       const originalPoster = vaPanel.posterImage.src;
+      vaPanel.poster.scrollIntoView();
 
       // Hover current poster image
       await fixture.events.mouse.moveRel(vaPanel.poster, 10, 10, { steps: 2 });

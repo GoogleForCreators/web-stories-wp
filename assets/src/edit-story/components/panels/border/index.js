@@ -14,10 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-export { Radio } from './radio';
-export { Toggle } from './toggle';
-export { Select } from './select';
-export { Color } from './color';
+export { default } from './panel';

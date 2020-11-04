@@ -17,7 +17,16 @@
 /**
  * Internal dependencies
  */
-export { Radio } from './radio';
-export { Toggle } from './toggle';
-export { Select } from './select';
-export { Color } from './color';
+import { BorderPropTypes } from '../../types';
+import { getBorderStyle } from './utils';
+
+function ElementBorder({ border }) {
+  const style = getBorderStyle(border);
+  return <div style={style} />;
+}
+
+ElementBorder.propTypes = {
+  border: BorderPropTypes.isRequired,
+};
+
+export default ElementBorder;

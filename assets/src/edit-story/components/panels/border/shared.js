@@ -17,7 +17,15 @@
 /**
  * Internal dependencies
  */
-export { Radio } from './radio';
-export { Toggle } from './toggle';
-export { Select } from './select';
-export { Color } from './color';
+import createSolid from '../../../utils/createSolid';
+import { BORDER_POSITION } from '../../../constants';
+
+export const DEFAULT_BORDER = {
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  lockedWidth: true,
+  color: createSolid(0, 0, 0),
+  position: BORDER_POSITION.INSIDE,
+};
