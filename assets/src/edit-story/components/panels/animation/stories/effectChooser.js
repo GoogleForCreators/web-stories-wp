@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import React from 'react';
+import { action } from '@storybook/addon-actions';
 
-export { default as FontProvider, GOOGLE_MENU_FONT_URL } from './fontProvider';
-export { default as useFont } from './useFont';
+/**
+ * Internal dependencies
+ */
+import EffectChooser from '../effectChooser';
+
+export default {
+  title: 'Animations/Effect Chooser',
+  component: EffectChooser,
+};
+
+export const _default = () => {
+  return <EffectChooser onAnimationSelected={action('onAnimationSelected')} />;
+};

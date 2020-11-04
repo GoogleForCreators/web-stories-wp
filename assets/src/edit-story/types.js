@@ -34,6 +34,16 @@ export const HexPropType = PropTypes.shape({
   a: PropTypes.number,
 });
 
+export const BorderPropTypes = PropTypes.shape({
+  color: HexPropType.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  right: PropTypes.number,
+  bottom: PropTypes.number,
+  locked: PropTypes.bool.isRequired,
+  position: PropTypes.string.isRequired,
+});
+
 export const ColorStopPropType = PropTypes.shape({
   color: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
