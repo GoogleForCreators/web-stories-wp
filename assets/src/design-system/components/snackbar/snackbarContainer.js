@@ -13,39 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { rgba } from 'polished';
-import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { ALERT_SEVERITY } from './constants';
+import { THEME_CONSTANTS } from '../../theme';
 
-const slideIn = keyframes`
-	from {
-		transform: translateY(100%);
-	}
-	to {
-		transform: translateY(0);
-	}
-`;
-
-export const AlertContainer = styled.div`
+// todo use the same helper as dialog to get width respectfully of wordPress nav
+export const SnackbarContainer = styled.div`
+  position: fixed;
+  bottom: 40px;
+  right: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 208px;
-  max-width: 336px;
-  min-height: 48px;
-  padding: 14px 16px;
-  margin-top: 20px;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  border: ${({ theme }) =>
-    `1px solid ${rgba(theme.colors.border.primary, 0.24)}`};
-  border-radius: 8px;
-  animation: 0.5s ${slideIn} ease-out;
+  flex-direction: column;
+  align-items: ${({ alignItems }) => alignItems};
+  width: 100vw;
+  z-index: ${THEME_CONSTANTS.Z_INDEX.SNACKBAR};
 `;
+SnackbarContainer.propTypes = {
+  alignItems: PropTypes.string,
+};
+SnackbarContainer.defaultProps = {
+  alignItems: 'center',
+};

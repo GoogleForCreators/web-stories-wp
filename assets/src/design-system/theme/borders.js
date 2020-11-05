@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-export const ALERT_SEVERITY = {
-  ERROR: 'error',
-  WARNING: 'warning',
-  INFO: 'info',
-  SUCCESS: 'success',
-  DEFAULT: 'default',
+export const borders = {
+  radius: '8px',
 };
-
-export const AUTO_REMOVE_ALERT_TIME_INTERVAL = 10000;

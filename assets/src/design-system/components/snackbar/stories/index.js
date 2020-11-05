@@ -22,25 +22,74 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { Alert, ALERT_SEVERITY } from '../../';
-import { Snackbar } from '..';
+import { SnackbarContainer, SnackbarMessage, MESSAGE_SEVERITY } from '../';
 
 export default {
   title: 'DesignSystem/Components/Snackbar',
 };
 
 export const _default = () => (
-  <Snackbar>
-    <Alert
-      isAllowDismiss={boolean('isAllowDismiss1')}
-      handleDismiss={action('error message dismiss')}
-      message={text('errorMessage', 'This is an error.')}
-      title={text('errorTitle', 'Error Title')}
+  <SnackbarContainer>
+    <SnackbarMessage
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      handleAction={action('handle action clicked')}
+      actionLabel={text('actionLabel', 'Retry')}
+      message={text('message', 'Sorry! File failed to upload.')}
       severity={select(
-        'alert severity',
-        Object.values(ALERT_SEVERITY),
-        ALERT_SEVERITY.ERROR
+        'severity',
+        Object.values(MESSAGE_SEVERITY),
+        MESSAGE_SEVERITY.ERROR
       )}
+      ariaLabel={text(
+        'ariaLabel',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleDismiss={action('handle dismiss fired')}
     />
-  </Snackbar>
+  </SnackbarContainer>
+);
+
+export const NoAction = () => (
+  <SnackbarContainer>
+    <SnackbarMessage
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      handleAction={action('handle action clicked')}
+      actionLabel={text('actionLabel', '')}
+      message={text('message', 'Sorry! File failed to upload.')}
+      severity={select(
+        'severity',
+        Object.values(MESSAGE_SEVERITY),
+        MESSAGE_SEVERITY.ERROR
+      )}
+      ariaLabel={text(
+        'ariaLabel',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleDismiss={action('handle dismiss fired')}
+    />
+  </SnackbarContainer>
+);
+
+export const LongMessage = () => (
+  <SnackbarContainer>
+    <SnackbarMessage
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      handleAction={action('handle action clicked')}
+      actionLabel={text('actionLabel', 'Retry')}
+      message={text(
+        'message',
+        'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
+      )}
+      severity={select(
+        'severity',
+        Object.values(MESSAGE_SEVERITY),
+        MESSAGE_SEVERITY.ERROR
+      )}
+      ariaLabel={text(
+        'ariaLabel',
+        'this is my aria label giving my message context for screen reader users'
+      )}
+      handleDismiss={action('handle dismiss fired')}
+    />
+  </SnackbarContainer>
 );

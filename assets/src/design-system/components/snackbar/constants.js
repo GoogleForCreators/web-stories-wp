@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-export { Text, Display, Headline } from './typography';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export { Button } from './button';
-export * as Snackbar from './snackbar';
+export const MESSAGE_SEVERITY = {
+  ERROR: 'error',
+  WARNING: 'warning',
+  INFO: 'info',
+  SUCCESS: 'success',
+  DEFAULT: 'default',
+};
+
+export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL = 10000;

@@ -13,38 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../';
-
-/**
- * Internal dependencies
- */
-
-// todo use the same helper as dialog to get width respectfully of wordPress nav
-
-export const Snackbar = styled.div`
-  position: fixed;
-  bottom: 40px;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: ${({ alignItems }) => alignItems};
-  width: 100vw;
-  z-index: ${THEME_CONSTANTS.Z_INDEX.SNACKBAR};
-`;
-Snackbar.propTypes = {
-  alignItems: PropTypes.string,
-};
-Snackbar.defaultProps = {
-  alignItems: 'center',
-};
-
-export default Snackbar;
+export {
+  AUTO_REMOVE_MESSAGE_TIME_INTERVAL,
+  MESSAGE_SEVERITY,
+} from './constants';
+export { SnackbarContainer } from './snackbarContainer';
+export { SnackbarMessage } from './snackbarMessage';
