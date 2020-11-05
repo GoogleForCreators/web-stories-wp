@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { default as createNewStory } from './createNewStory';
-export { default as previewStory } from './previewStory';
-export { default as visitDashboard } from './visitDashboard';
-export { default as addRequestInterception } from './addRequestInterception';
-export { default as withExperimentalFeatures } from './experimentalFeatures';
-export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
-export { default as publishPost } from './publishPost';
-export { default as addTextElement } from './addTextElement';
+export default async function addTextElement() {
+  await expect(page).toClick('button[aria-label="Add new text element"]');
+  await expect(page).toMatchElement('[data-testid="textFrame"]', {
+    text: 'Fill in some text',
+  });
+}
