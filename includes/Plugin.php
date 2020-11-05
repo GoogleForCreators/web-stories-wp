@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\AMP\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
@@ -141,6 +142,13 @@ class Plugin {
 	public $experiments;
 
 	/**
+	 * Site Kit integration.
+	 *
+	 * @var Site_Kit
+	 */
+	public $site_kit;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -177,9 +185,6 @@ class Plugin {
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
-		$this->dashboard = new Dashboard( $this->experiments );
-		add_action( 'init', [ $this->dashboard, 'init' ] );
-
 		$this->story = new Story_Post_Type( $this->experiments );
 		add_action( 'init', [ $this->story, 'init' ] );
 
@@ -213,6 +218,12 @@ class Plugin {
 
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
+
+		$this->site_kit = new Site_kit( $this->analytics );
+		add_action( 'init', [ $this->site_kit, 'init' ] );
+
+		$this->dashboard = new Dashboard( $this->experiments, $this->site_kit );
+		add_action( 'init', [ $this->dashboard, 'init' ] );
 	}
 
 	/**
