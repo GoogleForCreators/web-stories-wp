@@ -41,6 +41,15 @@ import {
   PulseAnimation,
   RotateInLeftAnimation,
   RotateInRightAnimation,
+  TwirlInAnimation,
+  WhooshInLeftAnimation,
+  WhooshInRightAnimation,
+  PanRightAnimation,
+  PanBottomAnimation,
+  PanTopAnimation,
+  PanLeftAnimation,
+  ZoomInAnimation,
+  ZoomOutAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -146,6 +155,53 @@ export default function EffectChooser() {
           <RotateInRightAnimation>
             <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
           </RotateInRightAnimation>
+        </GridItemHalfRow>
+        <GridItemFullRow>
+          <TwirlInAnimation>
+            <ContentWrapper>{__('Twirl In', 'web-stories')}</ContentWrapper>
+          </TwirlInAnimation>
+        </GridItemFullRow>
+        <GridItemHalfRow>
+          <ContentWrapper>
+            <WhooshInLeftAnimation>
+              {__('Woosh In', 'web-stories')}
+            </WhooshInLeftAnimation>
+          </ContentWrapper>
+        </GridItemHalfRow>
+        <GridItemHalfRow>
+          <WhooshInRightAnimation>
+            <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
+          </WhooshInRightAnimation>
+        </GridItemHalfRow>
+        <GridItem>
+          <ContentWrapper>
+            <PanLeftAnimation>{__('Pan', 'web-stories')}</PanLeftAnimation>
+          </ContentWrapper>
+        </GridItem>
+        <GridItem>
+          <ContentWrapper>
+            <PanTopAnimation>{__('Pan', 'web-stories')}</PanTopAnimation>
+          </ContentWrapper>
+        </GridItem>
+        <GridItem>
+          <ContentWrapper>
+            <PanBottomAnimation>{__('Pan', 'web-stories')}</PanBottomAnimation>
+          </ContentWrapper>
+        </GridItem>
+        <GridItem>
+          <ContentWrapper>
+            <PanRightAnimation>{__('Pan', 'web-stories')}</PanRightAnimation>
+          </ContentWrapper>
+        </GridItem>
+        <GridItemHalfRow>
+          <ContentWrapper>
+            <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
+          </ContentWrapper>
+        </GridItemHalfRow>
+        <GridItemHalfRow>
+          <ZoomOutAnimation>
+            <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
+          </ZoomOutAnimation>
         </GridItemHalfRow>
       </Grid>
     </Container>

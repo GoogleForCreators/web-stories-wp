@@ -170,3 +170,139 @@ export const RotateInRightAnimation = styled.div`
   display: inline-block;
   animation: ${rotateInRightKeyframes} 2s linear infinite;
 `;
+
+const twirlInKeyframes = keyframes`
+  0% {
+    transform: rotate(-540deg) scale(0.1);
+    opacity: 0;
+  }
+  50%, 100% {
+    transform: none;
+    opacity: 1;
+  }
+`;
+
+export const TwirlInAnimation = styled.div`
+  display: inline-block;
+  animation: ${twirlInKeyframes} 2s cubic-bezier(0.2, 0.75, 0.4, 1) infinite;
+`;
+
+const whooshInLeftKeyframes = keyframes`
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50%, 100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+`;
+
+export const WhooshInLeftAnimation = styled.div`
+  display: inline-block;
+  animation: ${whooshInLeftKeyframes} 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+`;
+
+const whooshInRightKeyframes = keyframes`
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  50%, 100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+`;
+
+export const WhooshInRightAnimation = styled.div`
+  display: inline-block;
+  animation: ${whooshInRightKeyframes} 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+`;
+
+const panLeftKeyframes = keyframes`
+  0% {
+    transform: translateX(-100%) scale(1.5);
+  }
+  50%, 100% {
+    transform: translateX(200%) scale(1.5);
+  }
+`;
+
+export const PanLeftAnimation = styled.div`
+  display: inline-block;
+  animation: ${panLeftKeyframes} 3s linear infinite;
+`;
+
+const panRightKeyframes = keyframes`
+  0% {
+    transform: translateX(100%) scale(1.5);
+  }
+  50%, 100% {
+    transform: translateX(-200%) scale(1.5);
+  }
+`;
+
+export const PanRightAnimation = styled.div`
+  display: inline-block;
+  animation: ${panRightKeyframes} 3s linear infinite;
+`;
+
+const panTopKeyframes = keyframes`
+  0% {
+    transform: translateY(-100%) scale(1.5);
+  }
+  50%, 100% {
+    transform: translateY(200%) scale(1.5);
+  }
+`;
+
+export const PanTopAnimation = styled.div`
+  display: inline-block;
+  animation: ${panTopKeyframes} 3s linear infinite;
+`;
+
+const panBottomKeyframes = keyframes`
+  0% {
+    transform: translateY(100%) scale(1.5);
+  }
+  50%, 100% {
+    transform: translateY(-200%) scale(1.5);
+  }
+`;
+
+export const PanBottomAnimation = styled.div`
+  display: inline-block;
+  animation: ${panBottomKeyframes} 3s linear infinite;
+`;
+
+const zoomInKeyframes = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
+
+export const ZoomInAnimation = styled.div`
+  display: inline-block;
+  animation: ${zoomInKeyframes} 2s linear infinite;
+`;
+
+const zoomOutKeyframes = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(2);
+  }
+  50%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
+
+export const ZoomOutAnimation = styled.div`
+  display: inline-block;
+  animation: ${zoomOutKeyframes} 2s linear infinite;
+`;
