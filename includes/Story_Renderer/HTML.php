@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
+use AmpProject\Dom\Document as AMP_Document;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
@@ -74,6 +75,7 @@ class HTML {
 	 */
 	public function render() {
 		$markup = $this->story->get_markup();
+		$markup = $this->display_admin_bar( $markup );
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
 
@@ -184,6 +186,27 @@ class HTML {
 		<meta name="amp-story-generator-version" content="<?php echo esc_attr( WEBSTORIES_VERSION ); ?>" />
 		<?php
 
+		if ( is_admin_bar_showing() && is_user_logged_in() ) {
+			// Printing scripts here is done primarily for the benefit of the admin bar.
+			// Note that wp_enqueue_scripts() is not called.
+			wp_styles()->do_items();
+			wp_print_head_scripts();
+			wp_print_footer_scripts();
+			?>
+			<style media="screen" id="admin-bar-inline-css">
+				amp-story {
+					top: 32px !important;
+				}
+
+				@media screen and ( max-width: 782px ) {
+					amp-story {
+						top: 46px !important;
+					}
+				}
+			</style>
+			<?php
+		}
+
 		/**
 		 * Prints scripts or data in the head tag on the front end.
 		 */
@@ -217,6 +240,74 @@ class HTML {
 	}
 
 	/**
+	 * Displays the WordPress admin bar on the frontend.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $content Story markup.
+	 *
+	 * @return string Filtered content.
+	 */
+	protected function display_admin_bar( $content ) {
+		ob_start();
+
+		wp_admin_bar_render();
+
+		$output = (string) ob_get_clean();
+
+		return str_replace( '<body>', '<body>' . $output, $content );
+	}
+
+	/**
+	 * Prints the admin bar styles.
+	 *
+	 * Does not rely on theme support for the admin bar
+	 * or the default admin bar styling callback
+	 * since Web Stories are theme-independent and require
+	 * specific styling.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @see _admin_bar_bump_cb
+	 *
+	 * @param Document|AMP_Document $document Document instance.
+	 * @return void
+	 */
+	protected function add_admin_bar_styles( &$document ) {
+		ob_start();
+
+		wp_styles()->do_items();
+
+		?>
+		<style media="screen" id="admin-bar-inline-css">
+			amp-story { top: 32px !important; }
+			@media screen and ( max-width: 782px ) {
+				amp-story { top: 46px !important; }
+			}
+		</style>
+		<?php
+
+		$output = (string) ob_get_clean();
+
+		if ( empty( $output ) ) {
+			return;
+		}
+
+		$fragment          = $document->createDocumentFragment();
+		$fragment_document = Document::fromHtmlFragment( $output );
+
+		if ( $fragment_document ) {
+			while ( $fragment_document->body->firstChild ) {
+				$node = $fragment_document->body->removeChild( $fragment_document->body->firstChild );
+				$node = $document->importNode( $node, true );
+				$fragment->appendChild( $node );
+			}
+		}
+
+		$document->head->appendChild( $fragment );
+	}
+
+	/**
 	 * Force home urls to http / https based on context.
 	 *
 	 * @param string $content String to replace.
@@ -231,7 +322,6 @@ class HTML {
 		}
 
 		return $content;
-
 	}
 
 	/**

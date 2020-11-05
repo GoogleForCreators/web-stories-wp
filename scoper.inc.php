@@ -84,6 +84,7 @@ return [
 				[
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-allowed-tags-generated.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php',
+					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-dev-mode-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-layout-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php',
 					'vendor/ampproject/amp-wp/includes/sanitizers/class-amp-rule-spec.php',
