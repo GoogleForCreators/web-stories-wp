@@ -71,7 +71,9 @@ function OutputElement({ element }) {
           box={box}
           id={'el-' + id}
           style={{
-            ...(border ? getBorderStyle({ ...border, borderRadius }) : null),
+            ...(border?.position === BORDER_POSITION.OUTSIDE
+              ? getBorderStyle({ ...border, borderRadius })
+              : null),
             pointerEvents: 'initial',
             width: '100%',
             height: '100%',
@@ -100,9 +102,10 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
-        {false && shouldDisplayBorder(element) && (
-          <ElementBorder border={{ ...element.border, borderRadius}} />
-        )}
+        {border?.position !== BORDER_POSITION.OUTSIDE &&
+          shouldDisplayBorder(element) && (
+            <ElementBorder border={{ ...element.border, borderRadius }} />
+          )}
       </StoryAnimation.AMPWrapper>
     </div>
   );

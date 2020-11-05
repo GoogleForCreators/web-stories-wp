@@ -79,14 +79,7 @@ export function getBorderStyle({
   const borderWidth = `${Math.ceil(top)}px ${Math.ceil(right)}px ${Math.ceil(
     bottom
   )}px ${Math.ceil(left)}px`;
-  return {
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+  const borderStyle = {
     ...getBorderPositionCSS({ left, top, right, bottom, position }),
     borderWidth,
     borderColor: color,
@@ -95,4 +88,17 @@ export function getBorderStyle({
       ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
       : null,
   };
+  if (position === BORDER_POSITION.OUTSIDE) {
+    return {
+      ...borderStyle,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+    };
+  }
+  return borderStyle;
 }
