@@ -49,7 +49,16 @@ describe('Custom Meta Boxes', () => {
     await expect(page).toMatchElement('#web_stories_test_meta_box_field');
     await page.type('#web_stories_test_meta_box_field', 'Meta Box Test Value');
 
-    await percySnapshot(page, 'Custom Meta Box Support');
+    await percySnapshot(page, 'Custom Meta Boxes');
+
+    // Verify that collapsing works via postbox.js from WordPress.
+
+    await expect(page).toClick('button.handlediv[aria-expanded="true"]');
+    await expect(page).toMatchElement(
+      'button.handlediv[aria-expanded="false"]'
+    );
+
+    await percySnapshot(page, 'Custom Meta Boxes Collapsed');
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
