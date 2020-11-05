@@ -157,5 +157,27 @@ export const typography = {
         letterSpacing: 0.16,
       },
     },
+    button: {
+      [TYPOGRAPHY_PRESET_SIZES.MEDIUM]: {
+        weight: 500,
+        size: 16,
+        lineHeight: 24,
+        letterSpacing: 0,
+      },
+      [TYPOGRAPHY_PRESET_SIZES.SMALL]: {
+        weight: 500,
+        size: 14,
+        lineHeight: 20,
+        letterSpacing: 0,
+      },
+    },
+    label: {
+      [TYPOGRAPHY_PRESET_SIZES.SMALL]: {
+        weight: 400,
+        size: 14,
+        lineHeight: 20,
+        letterSpacing: 0,
+      },
+    },
   },
 };

@@ -23,13 +23,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 export const Text = styled.p`
   ${defaultTypographyStyle}
   ${({ as, isBold, size, theme }) => {
-    const { text } = theme.typography.presets;
     const asLink =
       as === 'a' &&
       css`
@@ -38,10 +37,13 @@ export const Text = styled.p`
         cursor: pointer;
       `;
     return css`
-      font-size: ${text[size].size}px;
-      font-weight: ${isBold ? theme.typography.weight.bold : text[size].weight};
-      line-height: ${text[size].lineHeight}px;
-      letter-spacing: ${text[size].letterSpacing}em;
+      ${themeHelpers.expandPresetStyles({
+        preset: theme.typography.presets.text[size],
+        theme,
+      })};
+      font-weight: ${isBold
+        ? theme.typography.weight.bold
+        : theme.typography.presets.text[size].weight};
       ${asLink};
     `;
   }}

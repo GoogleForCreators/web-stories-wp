@@ -23,6 +23,8 @@ import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
 import { getBox } from '../units/dimensions';
+import { shouldDisplayBorder } from '../components/elementBorder/utils';
+import ElementBorder from '../components/elementBorder/output';
 
 function OutputElement({ element }) {
   const { id, opacity, type } = element;
@@ -76,6 +78,9 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
+        {shouldDisplayBorder(element) && (
+          <ElementBorder border={element.border} />
+        )}
       </StoryAnimation.AMPWrapper>
     </div>
   );
