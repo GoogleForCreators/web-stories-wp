@@ -27,11 +27,7 @@ import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import {
-  createNewStory,
-  withExperimentalFeatures,
-  previewStory,
-} from '../../utils';
+import { createNewStory, withExperimentalFeatures } from '../../utils';
 
 describe('Custom Meta Boxes', () => {
   withExperimentalFeatures(['customMetaBoxes']);
@@ -60,15 +56,9 @@ describe('Custom Meta Boxes', () => {
 
     await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
-    const editorPage = page;
-    const previewPage = await previewStory(editorPage);
-
-    // This will confirm that the data was saved successfully.
-    await expect(previewPage).toMatchElement(
-      'meta[property="web-stories:meta-box-test"][content="Meta Box Test Value"]'
-    );
-
-    await editorPage.bringToFront();
-    await previewPage.close();
+    // Refresh page to verify that the text has been persisted.
+    await page.reload();
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await expect(page).toMatch('Meta Box Test Value');
   });
 });
