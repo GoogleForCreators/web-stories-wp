@@ -200,10 +200,15 @@ function APIProvider({ children }) {
    */
   const deleteMedia = useCallback(
     (mediaId) => {
+      // `apiFetch` by default turns `DELETE` requests into `POST` requests
+      // with `X-HTTP-Method-Override: DELETE` headers.
+      // However, some Web Application Firewall (WAF) solutions prevent this.
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: addQueryArgs(`${media}/${mediaId}`, { _method: 'DELETE' }),
         data: { force: true },
-        method: 'DELETE',
+        method: 'POST',
       });
     },
     [media]

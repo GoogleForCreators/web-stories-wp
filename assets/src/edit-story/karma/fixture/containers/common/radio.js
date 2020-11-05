@@ -14,5 +14,27 @@
  * limitations under the License.
  */
 
-export { default as FontProvider, GOOGLE_MENU_FONT_URL } from './fontProvider';
-export { default as useFont } from './useFont';
+/**
+ * Internal dependencies
+ */
+import { Container } from '../container';
+
+/**
+ * An icon-based radio, that is either on or off and is surrounded by a label
+ * acting as the button to trigger it. The actual radio element (the
+ * `<input type="radio" />`) is visually hidden so any mouse-user would
+ * click the surrounding label rather than the input.
+ */
+export class Radio extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get checked() {
+    return this.node.checked;
+  }
+
+  get button() {
+    return this.node.closest('label');
+  }
+}
