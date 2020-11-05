@@ -23,12 +23,16 @@ import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
 import { getBox } from '../units/dimensions';
-import { shouldDisplayBorder } from '../components/elementBorder/utils';
+import {
+  getBorderStyle,
+  shouldDisplayBorder,
+} from '../components/elementBorder/utils';
 import ElementBorder from '../components/elementBorder/output';
 import { canMaskHaveBorder } from '../masks';
+import { BORDER_POSITION } from '../constants';
 
 function OutputElement({ element }) {
-  const { id, opacity, type, borderRadius } = element;
+  const { id, opacity, type, borderRadius, border } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -40,10 +44,22 @@ function OutputElement({ element }) {
       style={{
         position: 'absolute',
         pointerEvents: 'none',
-        left: `${x}%`,
-        top: `${y}%`,
-        width: `${width}%`,
-        height: `${height}%`,
+        left:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `calc(${x}% - ${border.left}px)`
+            : `${x}%`,
+        top:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `calc(${y}% - ${border.top}px)`
+            : `${y}%`,
+        width:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `calc(${width}% + ${border.left + border.right}px)`
+            : `${width}%`,
+        height:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `calc(${height}% + ${border.top + border.bottom}px)`
+            : `${height}%`,
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
       }}
@@ -55,6 +71,7 @@ function OutputElement({ element }) {
           box={box}
           id={'el-' + id}
           style={{
+            ...(border ? getBorderStyle({ ...border, borderRadius }) : null),
             pointerEvents: 'initial',
             width: '100%',
             height: '100%',
@@ -83,7 +100,7 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
-        {shouldDisplayBorder(element) && (
+        {false && shouldDisplayBorder(element) && (
           <ElementBorder border={{ ...element.border, borderRadius}} />
         )}
       </StoryAnimation.AMPWrapper>
