@@ -71,6 +71,14 @@ describe('Custom Meta Boxes', () => {
     // Refresh page to verify that the text has been persisted.
     await page.reload();
     await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await expect(page).toMatch('Meta Box Test Value');
+
+    const metaBoxValue = await page.evaluate(() => {
+      return document
+        .getElementById('web_stories_test_meta_box_field')
+        .getAttribute('href');
+    });
+    await expect(metaBoxValue).toStrictEqual('Meta Box Test Value');
+
+    await percySnapshot(page, 'Custom Meta Boxes Refreshed');
   });
 });
