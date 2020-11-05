@@ -60,6 +60,11 @@ describe('Custom Meta Boxes', () => {
 
     await percySnapshot(page, 'Custom Meta Boxes Collapsed');
 
+    await expect(page).toClick('button.handlediv[aria-expanded="false"]');
+    await expect(page).toMatchElement(
+      'button.handlediv[aria-expanded="true"]'
+    );
+
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
 
