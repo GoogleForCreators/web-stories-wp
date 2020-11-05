@@ -72,11 +72,9 @@ describe('Custom Meta Boxes', () => {
     await page.reload();
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    const metaBoxValue = await page.evaluate(() => {
-      return document
-        .getElementById('web_stories_test_meta_box_field')
-        .getAttribute('href');
-    });
+    const metaBoxValue = await page.evaluate(
+      () => document.getElementById('web_stories_test_meta_box_field').value
+    );
     await expect(metaBoxValue).toStrictEqual('Meta Box Test Value');
 
     await percySnapshot(page, 'Custom Meta Boxes Refreshed');
