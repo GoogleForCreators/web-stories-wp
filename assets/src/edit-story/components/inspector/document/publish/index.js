@@ -53,7 +53,7 @@ const MediaWrapper = styled.div`
 
 function PublishPanel() {
   const {
-    actions: { getUsers, getUserById },
+    actions: { getAuthors, getUserById },
   } = useAPI();
   const {
     state: { tab, users, isUsersLoading },
@@ -106,9 +106,9 @@ function PublishPanel() {
     [updateStory]
   );
 
-  const getUsersBySearch = useCallback(
+  const getAuthorsBySearch = useCallback(
     (search) => {
-      return getUsers(search).then((data) => {
+      return getAuthors(search).then((data) => {
         const userData = data.map(({ id, name }) => ({
           id,
           name,
@@ -116,7 +116,7 @@ function PublishPanel() {
         setQueriedUsers(userData);
       });
     },
-    [getUsers]
+    [getAuthors]
   );
 
   // @todo Enforce square image while selecting in Media Library.
@@ -162,7 +162,7 @@ function PublishPanel() {
     'aria-labelledby': authorLabelId,
     lightMode: true,
     onChange: handleChangeAuthor,
-    getOptionsByQuery: getUsersBySearch,
+    getOptionsByQuery: getAuthorsBySearch,
     selectedId: author,
   };
   return (

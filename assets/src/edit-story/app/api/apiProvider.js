@@ -226,7 +226,7 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getUsers = useCallback(
+  const getAuthors = useCallback(
     (search = null) => {
       return apiFetch({
         path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
@@ -251,7 +251,7 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      getUsers,
+      getAuthors,
       getUserById,
       uploadMedia,
       updateMedia,

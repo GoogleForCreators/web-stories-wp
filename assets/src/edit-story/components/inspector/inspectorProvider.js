@@ -43,7 +43,7 @@ const PREPUBLISH = 'prepublish';
 
 function InspectorProvider({ children }) {
   const {
-    actions: { getUsers },
+    actions: { getAuthors },
   } = useAPI();
   const { selectedElementIds, currentPage } = useStory((state) => ({
     selectedElementIds: state.state.selectedElementIds,
@@ -90,7 +90,7 @@ function InspectorProvider({ children }) {
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
       setIsUsersLoading(true);
-      getUsers()
+      getAuthors()
         .then((data) => {
           const saveData = data.map(({ id, name }) => ({
             id,
@@ -102,7 +102,7 @@ function InspectorProvider({ children }) {
           setIsUsersLoading(false);
         });
     }
-  }, [isUsersLoading, users.length, getUsers]);
+  }, [isUsersLoading, users.length, getAuthors]);
 
   const state = {
     state: {

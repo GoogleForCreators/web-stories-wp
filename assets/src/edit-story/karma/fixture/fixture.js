@@ -666,7 +666,7 @@ class APIProviderFixture {
         []
       );
 
-      const getUsers = useCallback(() => asyncResponse(users), [users]);
+      const getAuthors = useCallback(() => asyncResponse(users), [users]);
 
       const getUserById = useCallback(
         (search) => asyncResponse(users.find(({ id }) => id === search)),
@@ -681,7 +681,7 @@ class APIProviderFixture {
           getLinkMetadata,
           saveStoryById,
           getAllStatuses,
-          getUsers,
+          getAuthors,
           getUserById,
           uploadMedia,
           updateMedia,
