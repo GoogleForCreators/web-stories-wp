@@ -34,7 +34,7 @@ const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  min-width: 160px;
+  width: 100%;
   max-height: 370px;
   overflow-x: hidden;
   overflow-y: auto;

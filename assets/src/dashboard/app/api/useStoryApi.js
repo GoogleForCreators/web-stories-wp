@@ -140,8 +140,21 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const updateStory = useCallback(
     async (story) => {
       try {
-        const response = await dataAdapter.post(`${storyApi}/${story.id}`, {
-          data: story,
+        const path = queryString.stringifyUrl({
+          url: `${storyApi}/${story.id}`,
+          query: {
+            _embed: 'author',
+          },
+        });
+
+        const data = {
+          id: story.id,
+          author: story.originalStoryData.author,
+          title: story.title?.raw || story.title,
+        };
+
+        const response = await dataAdapter.post(path, {
+          data,
         });
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
@@ -166,9 +179,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`, {
-          data: story,
-        });
+        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
@@ -338,7 +349,14 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           title,
         } = story.originalStoryData;
 
-        const response = await dataAdapter.post(storyApi, {
+        const path = queryString.stringifyUrl({
+          url: storyApi,
+          query: {
+            _embed: 'author',
+          },
+        });
+
+        const response = await dataAdapter.post(path, {
           data: {
             content,
             story_data,

@@ -19,6 +19,10 @@
   width: 100%;
 }
 
+.web-stories-embed.aligncenter {
+  text-align: initial;
+}
+
 .web-stories-embed .wp-block-embed__wrapper {
   position: relative;
 }

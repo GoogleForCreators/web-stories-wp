@@ -102,6 +102,8 @@ class Analytics {
 	 *
 	 * Note: variables in single quotes will be substituted by <amp-analytics>.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @see https://github.com/ampproject/amphtml/blob/master/spec/amp-var-substitutions.md
 	 *
 	 * @param string $tracking_id Tracking ID.

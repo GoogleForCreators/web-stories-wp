@@ -47,6 +47,8 @@ class Activation_Flag {
 	/**
 	 * Sets the flag that the plugin has just been activated.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param bool $network_wide Whether the plugin is being activated network-wide.
@@ -64,6 +66,8 @@ class Activation_Flag {
 	/**
 	 * Gets the flag that the plugin has just been activated.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param bool $network_wide Whether to check the flag network-wide.
@@ -80,6 +84,8 @@ class Activation_Flag {
 
 	/**
 	 * Deletes the flag that the plugin has just been activated.
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 *
 	 * @since 1.0.0
 	 *

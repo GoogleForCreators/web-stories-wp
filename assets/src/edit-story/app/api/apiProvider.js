@@ -32,10 +32,12 @@ import addQueryArgs from '../../utils/addQueryArgs';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
+import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
     api: { stories, media, link, users },
+    encodeMarkup,
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -46,28 +48,33 @@ function APIProvider({ children }) {
     [stories]
   );
 
-  const getStorySaveData = ({
-    pages,
-    featuredMedia,
-    stylePresets,
-    publisherLogo,
-    autoAdvance,
-    defaultPageDuration,
-    ...rest
-  }) => {
-    return {
-      story_data: {
-        version: DATA_VERSION,
-        pages,
-        autoAdvance,
-        defaultPageDuration,
-      },
-      featured_media: featuredMedia,
-      style_presets: stylePresets,
-      publisher_logo: publisherLogo,
-      ...rest,
-    };
-  };
+  const getStorySaveData = useCallback(
+    ({
+      pages,
+      featuredMedia,
+      stylePresets,
+      publisherLogo,
+      autoAdvance,
+      defaultPageDuration,
+      content,
+      ...rest
+    }) => {
+      return {
+        story_data: {
+          version: DATA_VERSION,
+          pages,
+          autoAdvance,
+          defaultPageDuration,
+        },
+        featured_media: featuredMedia,
+        style_presets: stylePresets,
+        publisher_logo: publisherLogo,
+        content: encodeMarkup ? base64Encode(content) : content,
+        ...rest,
+      };
+    },
+    [encodeMarkup]
+  );
 
   const saveStoryById = useCallback(
     /**
@@ -84,7 +91,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [stories]
+    [stories, getStorySaveData]
   );
 
   const autoSaveById = useCallback(
@@ -102,7 +109,7 @@ function APIProvider({ children }) {
         method: 'POST',
       });
     },
-    [stories]
+    [stories, getStorySaveData]
   );
 
   const getMedia = useCallback(
@@ -193,10 +200,15 @@ function APIProvider({ children }) {
    */
   const deleteMedia = useCallback(
     (mediaId) => {
+      // `apiFetch` by default turns `DELETE` requests into `POST` requests
+      // with `X-HTTP-Method-Override: DELETE` headers.
+      // However, some Web Application Firewall (WAF) solutions prevent this.
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: addQueryArgs(`${media}/${mediaId}`, { _method: 'DELETE' }),
         data: { force: true },
-        method: 'DELETE',
+        method: 'POST',
       });
     },
     [media]

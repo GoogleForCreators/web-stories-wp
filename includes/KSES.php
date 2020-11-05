@@ -105,6 +105,8 @@ class KSES {
 	 * @see safecss_filter_attr()
 	 * @todo Use safe_style_disallowed_chars filter once WP 5.5+ is required.
 	 *
+	 * @SuppressWarnings(PHPMD)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $css A string of CSS rules.
@@ -319,10 +321,14 @@ class KSES {
 			}
 
 			if ( $found && $url_attr ) {
+				$url_matches = [];
+
 				// Simplified: matches the sequence `url(*)`.
 				preg_match_all( '/url\([^)]+\)/', $parts[1], $url_matches );
 
 				foreach ( $url_matches[0] as $url_match ) {
+					$url_pieces = [];
+
 					// Clean up the URL from each of the matches above.
 					preg_match( '/^url\(\s*([\'\"]?)(.*)(\g1)\s*\)$/', $url_match, $url_pieces );
 
@@ -352,10 +358,14 @@ class KSES {
 			}
 
 			if ( $found && $color_attr ) {
+				$color_matches = [];
+
 				// Simplified: matches the sequence `rgb(*)` and `rgba(*)`.
 				preg_match_all( '/rgba?\([^)]+\)/', $parts[1], $color_matches );
 
 				foreach ( $color_matches[0] as $color_match ) {
+					$color_pieces = [];
+
 					// Clean up the color from each of the matches above.
 					preg_match( '/^rgba?\([^)]*\)$/', $color_match, $color_pieces );
 
@@ -390,6 +400,8 @@ class KSES {
 
 	/**
 	 * Filter the allowed tags for KSES to allow for complete amp-story document markup.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
 	 *

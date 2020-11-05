@@ -42,10 +42,9 @@ import DropDownList from './list';
 const DropDownContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-width: 160px;
+  flex: 1;
   color: ${({ theme }) => theme.colors.fg.black};
   font-family: ${({ theme }) => theme.fonts.body1.font};
-
   border-radius: 4px;
   border: 1px solid transparent;
   ${KEYBOARD_USER_SELECTOR} &:focus-within {
@@ -121,6 +120,7 @@ function DropDown({
       ),
     [value, options]
   );
+
   const toggleOptions = useCallback(() => {
     setIsOpen(false);
     if (isKeyboardUser()) {

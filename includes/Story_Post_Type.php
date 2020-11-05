@@ -41,6 +41,10 @@ use WP_Screen;
 
 /**
  * Class Story_Post_Type.
+ *
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Story_Post_Type {
 	use Publisher;
@@ -90,6 +94,13 @@ class Story_Post_Type {
 	private $experiments;
 
 	/**
+	 * Decoder instance.
+	 *
+	 * @var Decoder Decoder instance.
+	 */
+	private $decoder;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
@@ -98,6 +109,7 @@ class Story_Post_Type {
 	 */
 	public function __construct( Experiments $experiments ) {
 		$this->experiments = $experiments;
+		$this->decoder     = new Decoder( $this->experiments );
 	}
 
 	/**
@@ -319,6 +331,8 @@ class Story_Post_Type {
 
 	/**
 	 * Get the post type for the current request.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.0.0
 	 *
@@ -708,7 +722,7 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'users'   => '/wp/v2/users',
+					'users'   => '/web-stories/v1/users',
 					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'   => '/web-stories/v1/media',
 					'link'    => '/web-stories/v1/link',
@@ -717,6 +731,7 @@ class Story_Post_Type {
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
+				'encodeMarkup'     => $this->decoder->supports_decoding(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

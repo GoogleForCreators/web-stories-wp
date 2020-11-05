@@ -76,6 +76,7 @@ export const _default = () => {
   return (
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       {itemArray.map((gridItem, index) => (
+        //eslint-disable-next-line react/no-array-index-key
         <div key={index}>{gridItem}</div>
       ))}
     </CardGrid>

@@ -7,11 +7,12 @@
   "require": {
     "php": "^5.6 || ^7.0",
     "ext-dom": "*",
+    "ext-iconv": "*",
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.4",
-    "civicrm/composer-downloads-plugin": "^2.1",
+    "ampproject/amp-wp": "^2.0.5",
+    "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "mcaskill/composer-exclude-files": "^2.0",
     "symfony/polyfill-mbstring": "^1.18"
@@ -22,10 +23,10 @@
   },
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
-    "civicrm/composer-downloads-plugin": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpmd/phpmd": "^2.9",
     "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5",
     "roave/security-advisories": "dev-master",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
@@ -41,7 +42,7 @@
   "extra": {
     "downloads": {
       "phpstan": {
-        "url": "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar",
+        "url": "https://github.com/phpstan/phpstan/releases/download/0.12.52/phpstan.phar",
         "path": "vendor/bin/phpstan",
         "type": "phar"
       },
@@ -51,14 +52,28 @@
         "type": "phar"
       }
     },
-    "enable-patching": false,
     "exclude-from-files": [
       "ampproject/amp-wp/back-compat/back-compat.php",
       "ampproject/amp-wp/includes/amp-helper-functions.php",
       "ampproject/amp-wp/includes/admin/functions.php",
       "ampproject/amp-wp/includes/deprecated.php",
       "ampproject/amp-wp/docs/includes/register-wp-cli-commands.php"
-    ]
+    ],
+    "patches": {
+      "sabberworm/php-css-parser": {
+        "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
+        "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+      }
+    },
+    "patches-ignore": {
+      "ampproject/amp-wp": {
+        "sabberworm/php-css-parser": {
+          "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "patches/php-css-parser-pull-193.patch",
+          "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "patches/php-css-parser-pull-185.patch",
+          "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "patches/php-css-parser-commit-10a2501.patch"
+        }
+      }
+    }
   },
   "autoload": {
     "psr-4": {
@@ -81,6 +96,11 @@
       "type": "vcs",
       "url": "https://github.com/ampproject/amp-wp",
       "no-api": true
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/sabberworm/PHP-CSS-Parser.git",
+      "no-api": true
     }
   ],
   "minimum-stability": "dev",
@@ -94,6 +114,7 @@
     ],
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",
+    "phpmd": "phpmd . text phpmd.xml",
     "phpstan": "phpstan analyse --memory-limit=512M",
     "prefix-dependencies": [
       "php-scoper add-prefix --output-dir=./third-party --force --quiet",
