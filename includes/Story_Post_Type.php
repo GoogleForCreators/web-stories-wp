@@ -765,7 +765,13 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
+
+		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
+			$script_dependencies[] = 'postbox';
+		}
+
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
 		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
 
 		wp_localize_script(
