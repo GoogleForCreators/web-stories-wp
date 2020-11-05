@@ -24,7 +24,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import useFocusOut from '../../../utils/useFocusOut';
-import List from './list';
 import SearchInput from './searchInput';
 import { isKeywordFilterable } from './utils';
 
@@ -43,19 +42,11 @@ const Container = styled.div`
 `;
 
 function OptionsContainer({
-  value,
-  onSelect,
   onClose,
   isOpen,
   getOptionsByQuery,
   hasSearch,
-  onObserve,
-  options,
-  primaryOptions,
-  primaryLabel,
-  priorityOptions,
-  priorityLabel,
-  renderer,
+  renderContents,
 }) {
   const ref = useRef();
   const inputRef = useRef();
@@ -102,39 +93,22 @@ function OptionsContainer({
           focusFontListFirstOption={() => setTrigger((v) => ++v)}
         />
       )}
-      <List
-        value={value}
-        keyword={searchKeyword}
-        onSelect={onSelect}
-        onClose={onClose}
-        onExpandedChange={setIsExpanded}
-        focusTrigger={trigger}
-        onObserve={onObserve}
-        options={options || queriedOptions}
-        primaryOptions={primaryOptions}
-        primaryLabel={primaryLabel}
-        priorityOptions={priorityOptions}
-        priorityLabel={priorityLabel}
-        renderer={renderer}
-      />
+      {renderContents({
+        searchKeyword,
+        setIsExpanded,
+        trigger,
+        queriedOptions,
+      })}
     </Container>
   );
 }
 
 OptionsContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  value: PropTypes.any.isRequired,
   onClose: PropTypes.func.isRequired,
-  onSelect: PropTypes.func.isRequired,
-  options: PropTypes.array,
   getOptionsByQuery: PropTypes.func,
   hasSearch: PropTypes.bool,
-  onObserve: PropTypes.func,
-  primaryOptions: PropTypes.array,
-  primaryLabel: PropTypes.string,
-  priorityOptions: PropTypes.array,
-  priorityLabel: PropTypes.string,
-  renderer: PropTypes.func,
+  renderContents: PropTypes.func.isRequired,
 };
 
 export default OptionsContainer;

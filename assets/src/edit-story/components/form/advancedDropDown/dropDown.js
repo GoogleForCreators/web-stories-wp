@@ -34,6 +34,7 @@ import { __ } from '@wordpress/i18n';
 import { ReactComponent as DropDownIcon } from '../../../icons/dropdown.svg';
 import Popup from '../../popup';
 import OptionsContainer from './container';
+import List from './list';
 
 const DEFAULT_WIDTH = 240;
 
@@ -186,18 +187,31 @@ function DropDown({
         <Popup anchor={ref} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
           <OptionsContainer
             isOpen={isOpen}
-            value={selectedId}
-            onSelect={handleSelect}
             onClose={debouncedCloseDropDown}
             getOptionsByQuery={getOptionsByQuery}
             hasSearch={hasSearch}
-            onObserve={onObserve}
-            options={options}
-            primaryOptions={primaryOptions}
-            primaryLabel={primaryLabel}
-            priorityOptions={priorityOptions}
-            priorityLabel={priorityLabel}
-            renderer={renderer}
+            renderContents={({
+              searchKeyword,
+              setIsExpanded,
+              trigger,
+              queriedOptions,
+            }) => (
+              <List
+                value={selectedId}
+                keyword={searchKeyword}
+                onSelect={handleSelect}
+                onClose={debouncedCloseDropDown}
+                onExpandedChange={setIsExpanded}
+                focusTrigger={trigger}
+                onObserve={onObserve}
+                options={options || queriedOptions}
+                primaryOptions={primaryOptions}
+                primaryLabel={primaryLabel}
+                priorityOptions={priorityOptions}
+                priorityLabel={priorityLabel}
+                renderer={renderer}
+              />
+            )}
           />
         </Popup>
       )}
