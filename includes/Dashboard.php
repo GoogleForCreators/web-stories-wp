@@ -193,7 +193,8 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/wp/v2/settings',
+			'/web-stories/v1/settings',
+			'/web-stories/v1/users/me',
 			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
@@ -328,10 +329,10 @@ class Dashboard {
 				'api'                => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/wp/v2/users/me',
-					'users'       => '/wp/v2/users',
+					'currentUser' => '/web-stories/v1/users/me',
+					'users'       => '/web-stories/v1/users',
 					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/wp/v2/settings',
+					'settings'    => '/web-stories/v1/settings',
 				],
 				'maxUpload'          => $max_upload_size,
 				'maxUploadFormatted' => size_format( $max_upload_size ),

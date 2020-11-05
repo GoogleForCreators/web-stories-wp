@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import queryString from 'query-string';
+
+/**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
@@ -28,11 +33,21 @@ const post = (path, options = {}) =>
     method: 'POST',
   });
 
+// `apiFetch` by default turns `DELETE` requests into `POST` requests
+// with `X-HTTP-Method-Override: DELETE` headers.
+// However, some Web Application Firewall (WAF) solutions prevent this.
+// `?_method=DELETE` is an alternative solution to override the request method.
+// See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
 const deleteRequest = (path, options = {}) =>
   apiFetch({
-    path,
+    path: queryString.stringifyUrl({
+      url: path,
+      query: {
+        _method: 'DELETE',
+      },
+    }),
     ...options,
-    method: 'DELETE',
+    method: 'POST',
   });
 
 export default {
