@@ -81,7 +81,6 @@ const Input = styled.input.attrs({
   type: 'search',
   role: 'combobox',
   ['aria-autocomplete']: 'list',
-  ['aria-owns']: 'editor-dropdown-list',
 })`
   width: 100%;
   padding: 6px 20px 6px 30px;
@@ -111,7 +110,14 @@ const Input = styled.input.attrs({
 `;
 
 const SearchInput = forwardRef(function SearchInput(
-  { isExpanded, onClose, value, onChange, focusFontListFirstOption = () => {} },
+  {
+    isExpanded,
+    onClose,
+    value,
+    onChange,
+    focusFontListFirstOption = () => {},
+    ...rest
+  },
   ref
 ) {
   const handleKeyPress = useCallback(
@@ -134,6 +140,7 @@ const SearchInput = forwardRef(function SearchInput(
         onKeyDown={handleKeyPress}
         placeholder={__('Search', 'web-stories')}
         onChange={onChange}
+        {...rest}
       />
       <SearchIconContainer>
         <SearchIcon />
@@ -153,6 +160,7 @@ SearchInput.propTypes = {
   isExpanded: PropTypes.bool,
   onClose: PropTypes.func,
   focusFontListFirstOption: PropTypes.func,
+  listId: PropTypes.string,
 };
 
 export default SearchInput;

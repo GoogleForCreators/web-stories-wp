@@ -59,6 +59,7 @@ function OptionList({
   priorityLabel,
   renderer,
   onObserve,
+  listId,
 }) {
   const OptionRenderer = renderer;
   const listRef = useRef(null);
@@ -206,7 +207,7 @@ function OptionList({
     <List
       ref={listRef}
       tabIndex={0}
-      id="editor-dropdown-list"
+      id={listId}
       role="listbox"
       onKeyDown={handleKeyPress}
       aria-label={__('Option List Selector', 'web-stories')}
@@ -274,6 +275,7 @@ OptionList.propTypes = {
   priorityLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onObserve: PropTypes.func,
+  listId: PropTypes.string.isRequired,
 };
 
 export default OptionList;

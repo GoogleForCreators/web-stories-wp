@@ -72,8 +72,10 @@ describe('Inspector Tabs integration', () => {
       // Ensure the debounced callback has taken effect.
       await fixture.events.sleep(300);
 
-      const options = document
-        .getElementById('editor-dropdown-list')
+      const options = fixture.screen
+        .getByRole('listbox', {
+          name: /Option List Selector/,
+        })
         .querySelectorAll('li[role="option"]');
       expect(options.length).toBe(2);
       fixture.events.click(options[1]);
@@ -101,8 +103,10 @@ describe('Inspector Tabs integration', () => {
       await fixture.events.sleep(300);
       await fixture.events.keyboard.type('Jane');
 
-      const options = document
-        .getElementById('editor-dropdown-list')
+      const options = fixture.screen
+        .getByRole('listbox', {
+          name: /Option List Selector/,
+        })
         .querySelectorAll('li[role="option"]');
       expect(options.length).toBe(1);
       expect(options[0].textContent).toBe('Jane Doe');

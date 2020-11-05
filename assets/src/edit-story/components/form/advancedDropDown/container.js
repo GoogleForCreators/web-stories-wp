@@ -20,6 +20,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
+
 /**
  * Internal dependencies
  */
@@ -80,6 +82,7 @@ function OptionsContainer({
     }
   }, [isOpen]);
 
+  const listId = `list-${uuidv4()}`;
   return (
     <Container role="dialog" ref={ref}>
       {hasSearch && (
@@ -90,6 +93,7 @@ function OptionsContainer({
           onClose={onClose}
           isExpanded={isExpanded}
           focusFontListFirstOption={() => setTrigger((v) => v + 1)}
+          aria-owns={listId}
         />
       )}
       {renderContents({
@@ -97,6 +101,7 @@ function OptionsContainer({
         setIsExpanded,
         trigger,
         queriedOptions,
+        listId,
       })}
     </Container>
   );
