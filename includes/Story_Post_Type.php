@@ -846,7 +846,7 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'users'     => '/wp/v2/users',
+					'users'     => '/web-stories/v1/users',
 					'stories'   => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'     => '/web-stories/v1/media',
 					'link'      => '/web-stories/v1/link',
