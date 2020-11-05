@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { percySnapshot } from '@percy/puppeteer';
+
 /**
  * WordPress dependencies
  */
@@ -32,11 +34,11 @@ describe('Custom Meta Boxes', () => {
   withExperimentalFeatures(['customMetaBoxes']);
 
   beforeAll(async () => {
-    await activatePlugin('web-stories-meta-box');
+    await activatePlugin('web-stories-test-plugin-meta-box');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('web-stories-meta-box');
+    await deactivatePlugin('web-stories-test-plugin-meta-box');
   });
 
   it('should display meta boxes and save their content', async () => {
@@ -47,6 +49,8 @@ describe('Custom Meta Boxes', () => {
 
     await expect(page).toMatchElement('#web_stories_test_meta_box_field');
     await page.type('#web_stories_test_meta_box_field', 'Meta Box Test Value');
+
+    await percySnapshot(page, 'Custom Meta Box Support');
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
