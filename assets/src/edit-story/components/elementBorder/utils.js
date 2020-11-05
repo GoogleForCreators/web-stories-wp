@@ -65,6 +65,7 @@ export function getBorderStyle({
   right,
   bottom,
   position,
+  borderRadius,
 }) {
   const {
     color: { r, g, b, a },
@@ -90,5 +91,8 @@ export function getBorderStyle({
     borderWidth,
     borderColor: color,
     borderStyle: 'solid',
+    borderRadius: borderRadius
+      ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
+      : null,
   };
 }

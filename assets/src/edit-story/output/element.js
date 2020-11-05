@@ -84,7 +84,7 @@ function OutputElement({ element }) {
           </WithLink>
         </WithMask>
         {shouldDisplayBorder(element) && (
-          <ElementBorder border={element.border} />
+          <ElementBorder border={{ ...element.border, borderRadius}} />
         )}
       </StoryAnimation.AMPWrapper>
     </div>

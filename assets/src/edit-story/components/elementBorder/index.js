@@ -41,7 +41,7 @@ const Border = styled.div`
   ${borderElementCSS}
   &:after {
     content: ' ';
-    ${({ color, left, top, right, bottom, position }) =>
+    ${({ color, left, top, right, bottom, position, borderRadius }) =>
       getBorderStyle({
         color,
         left,
@@ -49,6 +49,7 @@ const Border = styled.div`
         right,
         bottom,
         position,
+        borderRadius,
       })}
   }
 `;
@@ -61,6 +62,7 @@ export default function WithBorder({ element, previewMode = false, children }) {
   if (!shouldDisplayBorder(element)) {
     return children;
   }
+  const { borderRadius } = element;
   let border = element.border;
   const { left, top, right, bottom } = border;
 
@@ -75,7 +77,7 @@ export default function WithBorder({ element, previewMode = false, children }) {
     };
   }
   return (
-    <Border {...border} previewMode={previewMode}>
+    <Border {...border} borderRadius={borderRadius} previewMode={previewMode}>
       {children}
     </Border>
   );

@@ -38,7 +38,7 @@ const Element = styled.div`
 `;
 
 function MediaDisplay({
-  element: { id, resource, scale, focalX, focalY, borderRadius },
+  element: { id, resource, scale, focalX, focalY, border, borderRadius },
   mediaRef,
   children,
   showPlaceholder = false,
@@ -65,7 +65,7 @@ function MediaDisplay({
     }
   });
   return (
-    <Element borderRadius={borderRadius} showPlaceholder={showPlaceholder}>
+    <Element borderRadius={borderRadius} border={border} showPlaceholder={showPlaceholder}>
       {children}
     </Element>
   );
