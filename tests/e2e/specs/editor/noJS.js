@@ -31,7 +31,7 @@ describe('Story Editor with disabled JavaScript', () => {
 
     await createNewStory();
 
-    await expect(page).toMatchElement('#web-stories-no-js');
+    await expect(page).toMatchElement('.web-stories-wp-no-js');
 
     // Re-enable javascript for snapsnots.
     await page.setJavaScriptEnabled(true);
