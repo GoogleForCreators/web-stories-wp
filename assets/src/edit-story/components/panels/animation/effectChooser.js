@@ -22,6 +22,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import React, { useEffect } from 'react';
+import propTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -29,6 +30,11 @@ import styled from 'styled-components';
  */
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
+import {
+  ANIMATION_EFFECTS,
+  DIRECTION,
+  ROTATION,
+} from '../../../../animation/constants';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -102,7 +108,7 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
-export default function EffectChooser() {
+export default function EffectChooser({ onAnimationSelected }) {
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   });
@@ -110,87 +116,205 @@ export default function EffectChooser() {
   return (
     <Container>
       <Grid>
-        <GridItemFullRow>
+        <GridItemFullRow
+          onClick={() =>
+            onAnimationSelected({ animation: ANIMATION_EFFECTS.DROP.value })
+          }
+        >
           <ContentWrapper>{__('Drop', 'web-stories')}</ContentWrapper>
           <DropAnimation>{__('Drop', 'web-stories')}</DropAnimation>
         </GridItemFullRow>
-        <GridItemFullRow>
+        <GridItemFullRow
+          onClick={() =>
+            onAnimationSelected({ animation: ANIMATION_EFFECTS.FADE_IN.value })
+          }
+        >
           <ContentWrapper>{__('Fade in', 'web-stories')}</ContentWrapper>
           <FadeInAnimation>{__('Fade in', 'web-stories')}</FadeInAnimation>
         </GridItemFullRow>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.FLY_IN.value,
+              direction: DIRECTION.LEFT_TO_RIGHT,
+            })
+          }
+        >
           <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
           <FlyInLeftAnimation>{__('Fly in', 'web-stories')}</FlyInLeftAnimation>
         </GridItem>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.FLY_IN.value,
+              direction: DIRECTION.TOP_TO_BOTTOM,
+            })
+          }
+        >
           <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
           <FlyInTopAnimation>{__('Fly in', 'web-stories')}</FlyInTopAnimation>
         </GridItem>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.FLY_IN.value,
+              direction: DIRECTION.BOTTOM_TO_TOP,
+            })
+          }
+        >
           <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
           <FlyInBottomAnimation>
             {__('Fly in', 'web-stories')}
           </FlyInBottomAnimation>
         </GridItem>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.FLY_IN.value,
+              direction: DIRECTION.RIGHT_TO_LEFT,
+            })
+          }
+        >
           <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
           <FlyInRightAnimation>
             {__('Fly in', 'web-stories')}
           </FlyInRightAnimation>
         </GridItem>
-        <GridItemFullRow>
+        <GridItemFullRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.PULSE.value,
+            })
+          }
+        >
           <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
           <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
         </GridItemFullRow>
-        <GridItemHalfRow>
+        <GridItemHalfRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.FLY_IN.value,
+              rotation: ROTATION.COUNTER_CLOCKWISE,
+            })
+          }
+        >
           <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
           <RotateInLeftAnimation>
             {__('Rotate', 'web-stories')}
           </RotateInLeftAnimation>
         </GridItemHalfRow>
-        <GridItemHalfRow>
+        <GridItemHalfRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.FLY_IN.value,
+              rotation: ROTATION.CLOCKWISE,
+            })
+          }
+        >
           <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
           <RotateInRightAnimation>
             {__('Rotate', 'web-stories')}
           </RotateInRightAnimation>
         </GridItemHalfRow>
-        <GridItemFullRow>
+        <GridItemFullRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.TWIRL_IN.value,
+            })
+          }
+        >
           <ContentWrapper>{__('Twirl In', 'web-stories')}</ContentWrapper>
           <TwirlInAnimation>{__('Twirl In', 'web-stories')}</TwirlInAnimation>
         </GridItemFullRow>
-        <GridItemHalfRow>
+        <GridItemHalfRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.WHOOSH_IN.value,
+              direction: DIRECTION.LEFT_TO_RIGHT,
+            })
+          }
+        >
           <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
           <WhooshInLeftAnimation>
             {__('Woosh In', 'web-stories')}
           </WhooshInLeftAnimation>
         </GridItemHalfRow>
-        <GridItemHalfRow>
+        <GridItemHalfRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.WHOOSH_IN.value,
+              direction: DIRECTION.RIGHT_TO_LEFT,
+            })
+          }
+        >
           <WhooshInRightAnimation>
             {__('Woosh In', 'web-stories')}
           </WhooshInRightAnimation>
           <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.PAN.value,
+              direction: DIRECTION.LEFT_TO_RIGHT,
+            })
+          }
+        >
           <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
           <PanLeftAnimation>{__('Pan', 'web-stories')}</PanLeftAnimation>
         </GridItem>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.PAN.value,
+              direction: DIRECTION.TOP_TO_BOTTOM,
+            })
+          }
+        >
           <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
           <PanTopAnimation>{__('Pan', 'web-stories')}</PanTopAnimation>
         </GridItem>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.PAN.value,
+              direction: DIRECTION.BOTTOM_TO_TOP,
+            })
+          }
+        >
           <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>{' '}
           <PanBottomAnimation>{__('Pan', 'web-stories')}</PanBottomAnimation>
         </GridItem>
-        <GridItem>
+        <GridItem
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.PAN.value,
+              direction: DIRECTION.RIGHT_TO_LEFT,
+            })
+          }
+        >
           <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
           <PanRightAnimation>{__('Pan', 'web-stories')}</PanRightAnimation>
         </GridItem>
-        <GridItemHalfRow>
+        <GridItemHalfRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.ZOOM.value,
+              defaultValue: 0,
+            })
+          }
+        >
           <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
           <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
         </GridItemHalfRow>
-        <GridItemHalfRow>
+        <GridItemHalfRow
+          onClick={() =>
+            onAnimationSelected({
+              animation: ANIMATION_EFFECTS.ZOOM.value,
+              defaultValue: 1,
+            })
+          }
+        >
           <ZoomOutAnimation>{__('Zoom Out', 'web-stories')}</ZoomOutAnimation>
           <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
@@ -198,3 +322,7 @@ export default function EffectChooser() {
     </Container>
   );
 }
+
+EffectChooser.propTypes = {
+  onAnimationSelected: propTypes.func.isRequired,
+};
