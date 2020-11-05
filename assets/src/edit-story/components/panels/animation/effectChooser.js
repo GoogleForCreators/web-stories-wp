@@ -50,11 +50,16 @@ import {
   PanLeftAnimation,
   ZoomInAnimation,
   ZoomOutAnimation,
+  BaseAnimationCell,
 } from './effectChooserElements';
 
 const Container = styled.div`
   background: black;
   width: ${PANEL_WIDTH}px;
+`;
+
+const ContentWrapper = styled.div`
+  display: inline-block;
 `;
 
 const GridItem = styled.button`
@@ -64,6 +69,20 @@ const GridItem = styled.button`
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
   overflow: hidden;
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+  color: white;
+  text-transform: uppercase;
+
+  &:hover {
+    ${BaseAnimationCell} {
+      display: inline-block;
+    }
+
+    ${ContentWrapper} {
+      display: none;
+    }
+  }
 `;
 
 const Grid = styled.div`
@@ -83,18 +102,6 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
-const ContentWrapper = styled.span`
-  display: flex;
-  height: 100%;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Teko', sans-serif;
-  font-size: 20px;
-  color: white;
-  text-transform: uppercase;
-`;
-
 export default function EffectChooser() {
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
@@ -104,104 +111,88 @@ export default function EffectChooser() {
     <Container>
       <Grid>
         <GridItemFullRow>
-          <DropAnimation>
-            <ContentWrapper>{__('Drop', 'web-stories')}</ContentWrapper>
-          </DropAnimation>
+          <ContentWrapper>{__('Drop', 'web-stories')}</ContentWrapper>
+          <DropAnimation>{__('Drop', 'web-stories')}</DropAnimation>
         </GridItemFullRow>
         <GridItemFullRow>
-          <FadeInAnimation>
-            <ContentWrapper>{__('Fade in', 'web-stories')}</ContentWrapper>
-          </FadeInAnimation>
+          <ContentWrapper>{__('Fade in', 'web-stories')}</ContentWrapper>
+          <FadeInAnimation>{__('Fade in', 'web-stories')}</FadeInAnimation>
         </GridItemFullRow>
         <GridItem>
-          <ContentWrapper>
-            <FlyInLeftAnimation>
-              {__('Fly in', 'web-stories')}
-            </FlyInLeftAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          <FlyInLeftAnimation>{__('Fly in', 'web-stories')}</FlyInLeftAnimation>
         </GridItem>
         <GridItem>
-          <ContentWrapper>
-            <FlyInTopAnimation>{__('Fly in', 'web-stories')}</FlyInTopAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          <FlyInTopAnimation>{__('Fly in', 'web-stories')}</FlyInTopAnimation>
         </GridItem>
         <GridItem>
-          <ContentWrapper>
-            <FlyInBottomAnimation>
-              {__('Fly in', 'web-stories')}
-            </FlyInBottomAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          <FlyInBottomAnimation>
+            {__('Fly in', 'web-stories')}
+          </FlyInBottomAnimation>
         </GridItem>
         <GridItem>
-          <ContentWrapper>
-            <FlyInRightAnimation>
-              {__('Fly in', 'web-stories')}
-            </FlyInRightAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
+          <FlyInRightAnimation>
+            {__('Fly in', 'web-stories')}
+          </FlyInRightAnimation>
         </GridItem>
         <GridItemFullRow>
-          <ContentWrapper>
-            <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
+          <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
         </GridItemFullRow>
         <GridItemHalfRow>
-          <ContentWrapper>
-            <RotateInLeftAnimation>
-              {__('Rotate', 'web-stories')}
-            </RotateInLeftAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+          <RotateInLeftAnimation>
+            {__('Rotate', 'web-stories')}
+          </RotateInLeftAnimation>
         </GridItemHalfRow>
         <GridItemHalfRow>
+          <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
           <RotateInRightAnimation>
-            <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
+            {__('Rotate', 'web-stories')}
           </RotateInRightAnimation>
         </GridItemHalfRow>
         <GridItemFullRow>
-          <TwirlInAnimation>
-            <ContentWrapper>{__('Twirl In', 'web-stories')}</ContentWrapper>
-          </TwirlInAnimation>
+          <ContentWrapper>{__('Twirl In', 'web-stories')}</ContentWrapper>
+          <TwirlInAnimation>{__('Twirl In', 'web-stories')}</TwirlInAnimation>
         </GridItemFullRow>
         <GridItemHalfRow>
-          <ContentWrapper>
-            <WhooshInLeftAnimation>
-              {__('Woosh In', 'web-stories')}
-            </WhooshInLeftAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
+          <WhooshInLeftAnimation>
+            {__('Woosh In', 'web-stories')}
+          </WhooshInLeftAnimation>
         </GridItemHalfRow>
         <GridItemHalfRow>
           <WhooshInRightAnimation>
-            <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
+            {__('Woosh In', 'web-stories')}
           </WhooshInRightAnimation>
+          <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
         <GridItem>
-          <ContentWrapper>
-            <PanLeftAnimation>{__('Pan', 'web-stories')}</PanLeftAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
+          <PanLeftAnimation>{__('Pan', 'web-stories')}</PanLeftAnimation>
         </GridItem>
         <GridItem>
-          <ContentWrapper>
-            <PanTopAnimation>{__('Pan', 'web-stories')}</PanTopAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
+          <PanTopAnimation>{__('Pan', 'web-stories')}</PanTopAnimation>
         </GridItem>
         <GridItem>
-          <ContentWrapper>
-            <PanBottomAnimation>{__('Pan', 'web-stories')}</PanBottomAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>{' '}
+          <PanBottomAnimation>{__('Pan', 'web-stories')}</PanBottomAnimation>
         </GridItem>
         <GridItem>
-          <ContentWrapper>
-            <PanRightAnimation>{__('Pan', 'web-stories')}</PanRightAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
+          <PanRightAnimation>{__('Pan', 'web-stories')}</PanRightAnimation>
         </GridItem>
         <GridItemHalfRow>
-          <ContentWrapper>
-            <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
-          </ContentWrapper>
+          <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
+          <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
         </GridItemHalfRow>
         <GridItemHalfRow>
-          <ZoomOutAnimation>
-            <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
-          </ZoomOutAnimation>
+          <ZoomOutAnimation>{__('Zoom Out', 'web-stories')}</ZoomOutAnimation>
+          <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
       </Grid>
     </Container>

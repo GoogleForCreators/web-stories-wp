@@ -21,6 +21,10 @@ import styled, { keyframes } from 'styled-components';
 export const GRID_ITEM_HEIGHT = 64;
 export const PANEL_WIDTH = 276;
 
+export const BaseAnimationCell = styled.div`
+  display: none;
+`;
+
 const dropKeyframes = keyframes`
   0% {
     transform: translateY(-100%);
@@ -48,8 +52,7 @@ const dropKeyframes = keyframes`
   }
 `;
 
-export const DropAnimation = styled.div`
-  display: inline-block;
+export const DropAnimation = styled(BaseAnimationCell)`
   animation: ${dropKeyframes} 3.2s linear infinite;
 `;
 
@@ -62,8 +65,7 @@ const fadeInKeyframes = keyframes`
   }
 `;
 
-export const FadeInAnimation = styled.div`
-  display: inline-block;
+export const FadeInAnimation = styled(BaseAnimationCell)`
   animation: ${fadeInKeyframes} 2.5s linear infinite;
 `;
 
@@ -76,8 +78,7 @@ const flyInLeftKeyframes = keyframes`
   }
 `;
 
-export const FlyInLeftAnimation = styled.div`
-  display: inline-block;
+export const FlyInLeftAnimation = styled(BaseAnimationCell)`
   animation: ${flyInLeftKeyframes} 2s linear infinite;
 `;
 
@@ -90,8 +91,7 @@ const flyInRightKeyframes = keyframes`
   }
 `;
 
-export const FlyInRightAnimation = styled.div`
-  display: inline-block;
+export const FlyInRightAnimation = styled(BaseAnimationCell)`
   animation: ${flyInRightKeyframes} 2s linear infinite;
 `;
 
@@ -104,8 +104,7 @@ const flyInTopKeyframes = keyframes`
   }
 `;
 
-export const FlyInTopAnimation = styled.div`
-  display: inline-block;
+export const FlyInTopAnimation = styled(BaseAnimationCell)`
   animation: ${flyInTopKeyframes} 2s linear infinite;
 `;
 
@@ -118,8 +117,7 @@ const flyInBottomKeyframes = keyframes`
   }
 `;
 
-export const FlyInBottomAnimation = styled.div`
-  display: inline-block;
+export const FlyInBottomAnimation = styled(BaseAnimationCell)`
   animation: ${flyInBottomKeyframes} 2s linear infinite;
 `;
 
@@ -138,8 +136,7 @@ const pulseKeyframes = keyframes`
   }
 `;
 
-export const PulseAnimation = styled.div`
-  display: inline-block;
+export const PulseAnimation = styled(BaseAnimationCell)`
   animation: ${pulseKeyframes} 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 `;
 
@@ -152,8 +149,7 @@ const rotateInLeftKeyframes = keyframes`
   }
 `;
 
-export const RotateInLeftAnimation = styled.div`
-  display: inline-block;
+export const RotateInLeftAnimation = styled(BaseAnimationCell)`
   animation: ${rotateInLeftKeyframes} 2s linear infinite;
 `;
 
@@ -166,8 +162,7 @@ const rotateInRightKeyframes = keyframes`
   }
 `;
 
-export const RotateInRightAnimation = styled.div`
-  display: inline-block;
+export const RotateInRightAnimation = styled(BaseAnimationCell)`
   animation: ${rotateInRightKeyframes} 2s linear infinite;
 `;
 
@@ -182,8 +177,7 @@ const twirlInKeyframes = keyframes`
   }
 `;
 
-export const TwirlInAnimation = styled.div`
-  display: inline-block;
+export const TwirlInAnimation = styled(BaseAnimationCell)`
   animation: ${twirlInKeyframes} 2s cubic-bezier(0.2, 0.75, 0.4, 1) infinite;
 `;
 
@@ -198,8 +192,7 @@ const whooshInLeftKeyframes = keyframes`
   }
 `;
 
-export const WhooshInLeftAnimation = styled.div`
-  display: inline-block;
+export const WhooshInLeftAnimation = styled(BaseAnimationCell)`
   animation: ${whooshInLeftKeyframes} 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 `;
 
@@ -214,8 +207,7 @@ const whooshInRightKeyframes = keyframes`
   }
 `;
 
-export const WhooshInRightAnimation = styled.div`
-  display: inline-block;
+export const WhooshInRightAnimation = styled(BaseAnimationCell)`
   animation: ${whooshInRightKeyframes} 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 `;
 
@@ -228,8 +220,7 @@ const panLeftKeyframes = keyframes`
   }
 `;
 
-export const PanLeftAnimation = styled.div`
-  display: inline-block;
+export const PanLeftAnimation = styled(BaseAnimationCell)`
   animation: ${panLeftKeyframes} 3s linear infinite;
 `;
 
@@ -242,8 +233,7 @@ const panRightKeyframes = keyframes`
   }
 `;
 
-export const PanRightAnimation = styled.div`
-  display: inline-block;
+export const PanRightAnimation = styled(BaseAnimationCell)`
   animation: ${panRightKeyframes} 3s linear infinite;
 `;
 
@@ -256,8 +246,7 @@ const panTopKeyframes = keyframes`
   }
 `;
 
-export const PanTopAnimation = styled.div`
-  display: inline-block;
+export const PanTopAnimation = styled(BaseAnimationCell)`
   animation: ${panTopKeyframes} 3s linear infinite;
 `;
 
@@ -270,8 +259,7 @@ const panBottomKeyframes = keyframes`
   }
 `;
 
-export const PanBottomAnimation = styled.div`
-  display: inline-block;
+export const PanBottomAnimation = styled(BaseAnimationCell)`
   animation: ${panBottomKeyframes} 3s linear infinite;
 `;
 
@@ -286,8 +274,7 @@ const zoomInKeyframes = keyframes`
   }
 `;
 
-export const ZoomInAnimation = styled.div`
-  display: inline-block;
+export const ZoomInAnimation = styled(BaseAnimationCell)`
   animation: ${zoomInKeyframes} 2s linear infinite;
 `;
 
@@ -302,7 +289,6 @@ const zoomOutKeyframes = keyframes`
   }
 `;
 
-export const ZoomOutAnimation = styled.div`
-  display: inline-block;
+export const ZoomOutAnimation = styled(BaseAnimationCell)`
   animation: ${zoomOutKeyframes} 2s linear infinite;
 `;
