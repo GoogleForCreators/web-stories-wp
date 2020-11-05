@@ -153,8 +153,8 @@ function ColorPreview({
   label,
   colorPickerActions,
 }) {
-  const isMultiple = value === MULTIPLE_VALUE;
-  value = isMultiple ? '' : value;
+  const isMixed = value === MULTIPLE_VALUE;
+  value = isMixed ? '' : value;
 
   const previewStyle = getPreviewStyle(value);
   const previewText = getPreviewText(value);
@@ -175,7 +175,7 @@ function ColorPreview({
   useEffect(() => setInputValue(previewText), [previewText]);
 
   const colorType = value?.type;
-  // Allow editing always in case of solid color of if color type is missing (multiple)
+  // Allow editing always in case of solid color of if color type is missing (mixed)
   const isEditable = !colorType || colorType === 'solid';
 
   const editLabel = __('Edit', 'web-stories');
@@ -197,13 +197,13 @@ function ColorPreview({
         const { red: r, green: g, blue: b } = parseToRgb(`#${hex}`);
 
         // Keep same opacity as before though. In case of mixed values, set to default (1).
-        const a = isMultiple ? 1 : value.color.a;
+        const a = isMixed ? 1 : value.color.a;
         onChange({ color: { r, g, b, a } });
       }
 
       selectInputContents.current = selectContentOnUpdate;
     },
-    [inputValue, previewText, onChange, value, isMultiple]
+    [inputValue, previewText, onChange, value, isMixed]
   );
 
   const handleInputChange = useCallback((evt) => {
@@ -292,7 +292,7 @@ function ColorPreview({
             {...buttonProps}
             color={previewStyle?.backgroundColor}
           >
-            {(value?.a < 1 || isMultiple) && <Transparent />}
+            {(value?.a < 1 || isMixed) && <Transparent />}
             <CurrentColor role="status" style={previewStyle} />
           </VisualPreviewButton>
           <TextualInput
@@ -303,7 +303,7 @@ function ColorPreview({
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onFocus={handleFocus}
-            placeholder={isMultiple ? MULTIPLE_DISPLAY_VALUE : ''}
+            placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
           />
         </Preview>
       ) : (
@@ -324,7 +324,7 @@ function ColorPreview({
         spacing={spacing}
       >
         <ColorPicker
-          color={isMultiple ? null : value}
+          color={isMixed ? null : value}
           onChange={onChange}
           hasGradient={hasGradient}
           hasOpacity={hasOpacity}
