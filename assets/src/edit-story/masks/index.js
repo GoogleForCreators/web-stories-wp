@@ -174,6 +174,7 @@ export const MASKS = [
     name: __('Rectangle', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.RECTANGLE],
     ratio: 1,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.CIRCLE,
@@ -455,6 +456,12 @@ export function getElementMask({ type, mask }) {
     return MASKS.find((m) => m.type === mask.type);
   }
   return getDefaultElementMask(type);
+}
+
+// Only no-mask and masks with supportsBorder support border.
+export function canMaskHaveBorder(element) {
+  const mask = getElementMask(element);
+  return !mask || mask.supportsBorder;
 }
 
 export function getMaskByType(type) {
