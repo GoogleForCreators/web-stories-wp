@@ -57,14 +57,13 @@ function OptionsContainer({
 
   useFocusOut(ref, onClose, [onClose]);
 
-  const handleSearchInputChanged = useCallback(({ target }) => {
-    setSearchKeyword(target.value);
-  }, []);
+  const handleSearchInputChanged = useCallback(
+    ({ target: { value } }) => setSearchKeyword(value),
+    []
+  );
 
   const handleLoadOptions = useCallback(() => {
-    getOptionsByQuery(searchKeyword).then((result) => {
-      setQueriedOptions(result);
-    });
+    getOptionsByQuery(searchKeyword).then(setQueriedOptions);
   }, [getOptionsByQuery, searchKeyword]);
 
   useEffect(() => {
@@ -90,7 +89,7 @@ function OptionsContainer({
           onChange={handleSearchInputChanged}
           onClose={onClose}
           isExpanded={isExpanded}
-          focusFontListFirstOption={() => setTrigger((v) => ++v)}
+          focusFontListFirstOption={() => setTrigger((v) => v + 1)}
         />
       )}
       {renderContents({

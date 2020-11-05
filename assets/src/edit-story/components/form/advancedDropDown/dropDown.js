@@ -107,7 +107,7 @@ const DropDownTitle = styled.span`
 function DropDown({
   onChange,
   lightMode = false,
-  placeholder,
+  placeholder = __('Select an Option', 'web-stories'),
   disabled = false,
   selectedId,
   options,
@@ -233,13 +233,7 @@ DropDown.propTypes = {
   primaryLabel: PropTypes.string,
   priorityOptions: PropTypes.array,
   priorityLabel: PropTypes.string,
-  renderer: PropTypes.func,
-};
-
-DropDown.defaultProps = {
-  value: '',
-  lightMode: false,
-  placeholder: __('Select an Option', 'web-stories'),
+  renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 export default DropDown;

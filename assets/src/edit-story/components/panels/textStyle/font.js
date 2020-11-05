@@ -33,19 +33,17 @@ import {
   Numeric,
   Row,
   DropDown,
-  AdvancedDropDown,
   usePresubmitHandler,
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../form';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
-import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
-import { Option, Selected } from '../../form/advancedDropDown/list/styled';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
+import FontPicker from './fontPicker';
 
 const MIN_MAX = {
   FONT_SIZE: {
@@ -75,30 +73,14 @@ function FontControls({ selectedElements, pushUpdate }) {
     handlers: { handleSelectFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const {
-    fonts = [],
-    recentFonts = [],
-    curatedFonts = [],
-    addRecentFont,
-    maybeEnqueueFontStyle,
-    ensureMenuFontsLoaded,
-    getFontByName,
-  } = useFont(
+  const { fonts = [], maybeEnqueueFontStyle, getFontByName } = useFont(
     ({
-      actions: {
-        addRecentFont,
-        ensureMenuFontsLoaded,
-        maybeEnqueueFontStyle,
-        getFontByName,
-      },
-      state: { fonts, recentFonts, curatedFonts },
+      actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
+      state: { fonts },
     }) => ({
       addRecentFont,
-      ensureMenuFontsLoaded,
       maybeEnqueueFontStyle,
       getFontByName,
-      recentFonts,
-      curatedFonts,
       fonts,
     })
   );
@@ -107,44 +89,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     fontFamily,
   ]);
   const fontStyle = isItalic ? 'italic' : 'normal';
-
-  const handleFontPickerChange = useCallback(
-    async (id) => {
-      const fontObj = fonts.find((item) => item.value === id);
-      const newFont = {
-        family: id,
-        ...objectPick(fontObj, [
-          'service',
-          'fallbacks',
-          'weights',
-          'styles',
-          'variants',
-          'metrics',
-        ]),
-      };
-      await maybeEnqueueFontStyle(
-        selectedElements.map(({ content }) => {
-          return {
-            font: newFont,
-            fontStyle,
-            fontWeight,
-            content: stripHTML(content),
-          };
-        })
-      );
-      addRecentFont(fontObj);
-      pushUpdate({ font: newFont }, true);
-    },
-    [
-      addRecentFont,
-      fontStyle,
-      fontWeight,
-      fonts,
-      maybeEnqueueFontStyle,
-      pushUpdate,
-      selectedElements,
-    ]
-  );
 
   const handleFontWeightPickerChange = useCallback(
     async (value) => {
@@ -170,67 +114,13 @@ function FontControls({ selectedElements, pushUpdate }) {
     []
   );
 
-  const fontMap = useMemo(
-    () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
-        (lookup, option) => ({
-          ...lookup,
-          [option.id]: option,
-        }),
-        {}
-      ),
-    [fonts, recentFonts, curatedFonts]
-  );
-
-  const renderer = ({ option, optionRef, ...rest }) => {
-    return (
-      <Option
-        {...rest}
-        ref={optionRef}
-        fontFamily={
-          option.service.includes('google')
-            ? `'${option.name}::MENU'`
-            : option.name
-        }
-      >
-        {fontFamily === option.id && (
-          <Selected aria-label={__('Selected', 'web-stories')} />
-        )}
-        {option.name}
-      </Option>
-    );
-  };
-
-  const onObserve = (observedFonts) => {
-    ensureMenuFontsLoaded(
-      observedFonts.filter(
-        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
-      )
-    );
-  };
   return (
     <>
       {fonts && (
         <Row>
-          <AdvancedDropDown
-            data-testid="font"
-            aria-label={__('Edit: Font family', 'web-stories')}
-            options={fonts}
-            primaryOptions={curatedFonts}
-            primaryLabel={__('Recommended', 'web-stories')}
-            priorityOptions={recentFonts}
-            priorityLabel={__('Recently used', 'web-stories')}
-            selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
-            placeholder={
-              MULTIPLE_VALUE === fontFamily
-                ? MULTIPLE_DISPLAY_VALUE
-                : fontFamily
-            }
-            hasSearch
-            onChange={handleFontPickerChange}
-            onObserve={onObserve}
-            renderer={renderer}
-            disabled={!fonts?.length}
+          <FontPicker
+            selectedElements={selectedElements}
+            pushUpdate={pushUpdate}
           />
         </Row>
       )}
