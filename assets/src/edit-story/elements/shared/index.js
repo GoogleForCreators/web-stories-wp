@@ -53,12 +53,12 @@ export const elementWithRotation = css`
 
 export const elementWithBorderRadius = css`
   ${({ borderRadius, border }) =>
-    borderRadius && border?.position !== BORDER_POSITION.OUTSIDE
+  borderRadius && (border?.position !== BORDER_POSITION.OUTSIDE || true)
       ? `border-radius: ${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
       : ''};
 
   ${({ borderRadius, border }) =>
-    borderRadius && border?.position === BORDER_POSITION.OUTSIDE
+    borderRadius && border?.position === BORDER_POSITION.OUTSIDE && false
       ? `border-radius: ${Math.max(
           0,
           borderRadius.topLeft -

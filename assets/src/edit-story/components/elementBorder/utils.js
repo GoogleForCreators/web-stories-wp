@@ -39,14 +39,6 @@ export function shouldDisplayBorder(element) {
 }
 
 function getBorderPositionCSS({ left, top, right, bottom, position }) {
-  if (BORDER_POSITION.OUTSIDE === position) {
-    return {
-      top: `${-top}px`,
-      height: `calc(100% + ${top + bottom}px)`,
-      left: `${-left}px`,
-      width: `calc(100% + ${left + right}px)`,
-    };
-  }
   if (BORDER_POSITION.CENTER === position) {
     return {
       top: `${-top / 2}px`,
@@ -88,17 +80,14 @@ export function getBorderStyle({
       ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
       : null,
   };
-  if (position === BORDER_POSITION.OUTSIDE) {
-    return {
-      ...borderStyle,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      width: '100%',
-      height: '100%',
-      position: 'absolute',
-    };
-  }
-  return borderStyle;
+  return {
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    ...borderStyle,
+  };
 }

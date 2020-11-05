@@ -25,6 +25,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
+import { BORDER_POSITION } from '../../constants';
 import { getBorderStyle, shouldDisplayBorder } from './utils';
 
 const borderElementCSS = css`
@@ -40,8 +41,14 @@ const borderElementCSS = css`
 const Border = styled.div`
   ${borderElementCSS}
   &:after {
-    content: ' ';
+    ${({ position }) =>
+      position !== BORDER_POSITION.OUTSIDE &&
+      `
+      ${borderElementCSS}
+      content: ' ';
+    `}
     ${({ color, left, top, right, bottom, position, borderRadius }) =>
+      position !== BORDER_POSITION.OUTSIDE &&
       getBorderStyle({
         color,
         left,
@@ -52,6 +59,7 @@ const Border = styled.div`
         borderRadius,
       })}
   }
+}
 `;
 
 export default function WithBorder({ element, previewMode = false, children }) {

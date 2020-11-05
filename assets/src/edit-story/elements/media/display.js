@@ -65,7 +65,11 @@ function MediaDisplay({
     }
   });
   return (
-    <Element borderRadius={borderRadius} border={border} showPlaceholder={showPlaceholder}>
+    <Element
+      borderRadius={borderRadius}
+      border={border}
+      showPlaceholder={showPlaceholder}
+    >
       {children}
     </Element>
   );
