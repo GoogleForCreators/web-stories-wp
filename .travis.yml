@@ -44,6 +44,7 @@ install:
   # TODO: Use npm ci
   # See https://github.com/npm/cli/issues/1905
   - npm install
+  - composer self-update --1
   - composer install --no-interaction
 
 script:
