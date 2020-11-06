@@ -43,6 +43,47 @@ if (!existsSync(directory)) {
   mkdirSync(directory);
 }
 
+const WEBSITE_LOCATION = 'https://wp.stories.google/stories/';
+
+/* eslint-disable no-irregular-whitespace */
+const ADDITIONAL_ANALYTICS = `
+<amp-analytics type="gtag" data-credentials="include">
+ <script type="application/json">
+   {
+     "vars": {
+       "gtag_id": "UA-174115079-1",
+       "config": {
+         "UA-174115079-1": {
+           "groups": "default"
+         }
+       }
+     },
+     "triggers": {
+       "storyProgress": {
+         "on": "story-page-visible",
+         "vars": {
+           "event_name": "custom",
+           "event_action": "story_progress",
+           "event_category": "\${title}",
+           "event_label": "\${storyPageId}",
+           "send_to": ["UA-174115079-1"]
+         }
+       },
+       "storyEnd": {
+         "on": "story-last-page-visible",
+         "vars": {
+           "event_name": "custom",
+           "event_action": "story_complete",
+           "event_category": "\${title}",
+           "send_to": ["UA-174115079-1"]
+         }
+       }
+     }
+   }
+ </script>
+</amp-analytics>`;
+/* eslint-enable no-irregular-whitespace */
+
 console.log(
   `Downloading story and saving to '${relative(__dirname, directory)}'`
 );
@@ -61,8 +102,8 @@ class WebStoriesScraperPlugin {
     registerAction('generateFilename', ({ resource }) => {
       const parsedURL = new URL(resource.getUrl());
       const urlPath = basename(parsedURL.pathname);
+      // TODO: For Unsplash images, take URL query params into account.
       let filename = resource.getFilename() || urlPath || defaultFilename;
-      const fileExtension = extname(filename);
 
       if (resource.isHtml()) {
         storyPath = urlPath;
@@ -71,6 +112,12 @@ class WebStoriesScraperPlugin {
       if (resource.isHtml()) {
         filename = join(urlPath, filename);
       } else {
+        let fileExtension = extname(filename);
+        // Especially Unsplash images do not have an extension.
+        if (!fileExtension) {
+          fileExtension = '.jpg';
+        }
+
         const directoryByExtension =
           subdirectories
             .filter((dir) => dir.extensions.includes(fileExtension))
@@ -88,20 +135,78 @@ class WebStoriesScraperPlugin {
     // Clean up resulting HTML file.
     registerAction('onResourceSaved', ({ resource }) => {
       if (resource.isHtml()) {
+        const parsedURL = new URL(resource.getUrl());
+        const urlPath = basename(parsedURL.pathname);
         const filePath = join(directory, resource.getFilename());
 
-        writeFileSync(
-          filePath,
-          readFileSync(filePath, 'utf-8')
-            // Remove some clutter.
-            .replace(
-              /<link rel="(EditURI|wlwmanifest|prev|next|shortlink|alternate)"[^>]+>\s?/gm,
-              ''
-            )
-            .replace(/<link rel="https:\/\/api\.w\.org\/"[^>]+>/gm, '')
-            // Fix for https://github.com/website-scraper/node-website-scraper/issues/355.
-            .replace(/font-family:"([^,]+)"/gm, `font-family:'$1'`)
-        );
+        let fileContents = readFileSync(filePath, 'utf-8');
+        fileContents = fileContents
+          // Remove some clutter.
+          .replace(
+            /<link rel="(EditURI|wlwmanifest|prev|next|shortlink|alternate)"[^>]+>\s?/gm,
+            ''
+          )
+          .replace(/<link rel="https:\/\/api\.w\.org\/"[^>]+>/gm, '')
+          // Remove noindex.
+          .replace('<meta name="robots" content="noindex,nofollow">', '')
+          // Full URLs for twitter and Open Graph images.
+          .replace(
+            /<meta property="twitter:image" content="([^>]+)">/gm,
+            (match, p1) =>
+              `<meta property="twitter:image" content="${WEBSITE_LOCATION}/${urlPath}/${p1}">`
+          )
+          .replace(
+            /<meta property="og:image" content="([^>]+)">/gm,
+            (match, p1) =>
+              `<meta property="og:image" content="${WEBSITE_LOCATION}/${urlPath}/${p1}">`
+          )
+          // Full URLs for story poster & publisher logo.
+          .replace(
+            'publisher-logo-src="',
+            `publisher-logo-src="${WEBSITE_LOCATION}/${urlPath}/`
+          )
+          .replace(
+            'poster-portrait-src="',
+            `poster-portrait-src="${WEBSITE_LOCATION}/${urlPath}/`
+          )
+          .replace(
+            'poster-landscape-src="',
+            `poster-landscape-src="${WEBSITE_LOCATION}/${urlPath}/`
+          )
+          .replace(
+            'poster-square-src="',
+            `poster-square-src="${WEBSITE_LOCATION}/${urlPath}/`
+          )
+          // Fix schema data.
+          .replace(
+            /<script type="application\/ld\+json">(.*)<\/script>/gm,
+            (match, p1) => {
+              const metadata = JSON.parse(p1);
+              if (metadata.image) {
+                metadata.image =
+                  `${WEBSITE_LOCATION}/${urlPath}/` +
+                  fileContents.match(/poster-portrait-src="([^"]+)"/)[1];
+              }
+              if (metadata.publisher.logo) {
+                metadata.publisher.logo.url =
+                  `${WEBSITE_LOCATION}/${urlPath}/` +
+                  fileContents.match(/publisher-logo-src="([^"]+)"/)[1];
+              }
+              metadata.mainEntityOfPage = `${WEBSITE_LOCATION}/${urlPath}`;
+              return `<script type="application/ld+json">${JSON.stringify(
+                metadata
+              )}</script>`;
+            }
+          )
+          // Workaround for https://github.com/website-scraper/node-website-scraper/issues/355.
+          .replace(/font-family:"([^,]+)"/gm, `font-family:'$1'`)
+          // Additional analytics for testing.
+          .replace(
+            '</amp-analytics>',
+            '</amp-analytics>' + ADDITIONAL_ANALYTICS
+          );
+
+        writeFileSync(filePath, fileContents);
       }
     });
   }
