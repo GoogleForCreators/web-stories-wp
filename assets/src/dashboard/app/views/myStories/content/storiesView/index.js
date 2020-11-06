@@ -29,18 +29,19 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { Dialog, Button, BUTTON_TYPES } from '../../../../../../design-system';
+
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { Button, Dialog, useToastContext } from '../../../../../components';
+import { useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
-  BUTTON_TYPES,
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
@@ -251,7 +252,7 @@ function StoriesView({
           actions={
             <>
               <Button
-                type={BUTTON_TYPES.DEFAULT}
+                type={BUTTON_TYPES.TERTIARY}
                 onClick={() => {
                   setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
@@ -265,7 +266,7 @@ function StoriesView({
                 {__('Cancel', 'web-stories')}
               </Button>
               <Button
-                type={BUTTON_TYPES.DEFAULT}
+                type={BUTTON_TYPES.PRIMARY}
                 onClick={handleOnDeleteStory}
                 aria-label={sprintf(
                   /* translators: %s: story title */
