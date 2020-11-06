@@ -176,7 +176,15 @@ class Site_Kit {
 				$link = admin_url( 'plugins.php' );
 			}
 		} elseif ( current_user_can( 'install_plugins' ) ) {
-			$link = admin_url( 'plugin-install.php?s=Site%20Kit%20by%20Google&tab=search&type=term' );
+			$link = admin_url(
+				add_query_arg(
+					[
+						's'   => urlencode( __( 'Site Kit by Google', 'web-stories' ) ),
+						'tab' => 'search',
+					],
+					'plugin-install.php'
+				)
+			);
 		}
 
 		return [
