@@ -31,9 +31,14 @@ describe('Admin Menu', () => {
     await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through the application to a new page syncs the WP current page in Nav
-    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
-      text: 'Explore Templates',
-    });
+    await page.waitForTimeout(100);
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+        text: 'Explore Templates',
+      }),
+    ]);
+    await page.waitForTimeout(100);
     await page.hover('#menu-posts-web-story');
     await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
       'Explore Templates'
@@ -42,18 +47,29 @@ describe('Admin Menu', () => {
 
     // Navigating through WP to a new page syncs the WP current page in Nav
     await page.hover('#menu-posts-web-story');
-    await expect(page).toClick('#menu-posts-web-story a', {
-      text: 'Settings',
-    });
+    await page.waitForTimeout(100);
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(page).toClick('#menu-posts-web-story a', {
+        text: 'Settings',
+      }),
+    ]);
+    await page.waitForTimeout(100);
     await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
       'Settings'
     );
-    await page.hover('[aria-label="Main dashboard navigation"]');
+    // await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through application back to My Story from another route
-    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
-      text: 'My Stories',
-    });
+    await page.waitForTimeout(100);
+    await Promise.all([
+      page.waitForNavigation(),
+      expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+        text: 'My Stories',
+      }),
+    ]);
+    await page.waitForTimeout(100);
+    await page.hover('#menu-posts-web-story');
     await expect(await page.$('#menu-posts-web-story .current a')).toMatch(
       'My Stories'
     );
