@@ -328,7 +328,7 @@ function rest_preload_api_request( $memo, $path ) {
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
 		parse_str( $path_parts['query'], $query_params );
-		$embed = isset( $query_params['_embed'] );
+		$embed = isset( $query_params['_embed'] ) ? $query_params['_embed'] : false;
 		$request->set_query_params( $query_params );
 	}
 
