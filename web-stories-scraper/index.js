@@ -153,29 +153,34 @@ class WebStoriesScraperPlugin {
           .replace(
             /<meta property="twitter:image" content="([^>]+)">/gm,
             (match, p1) =>
-              `<meta property="twitter:image" content="${WEBSITE_LOCATION}/${urlPath}/${p1}">`
+              `<meta property="twitter:image" content="${WEBSITE_LOCATION}${urlPath}/${p1}">`
           )
           .replace(
             /<meta property="og:image" content="([^>]+)">/gm,
             (match, p1) =>
-              `<meta property="og:image" content="${WEBSITE_LOCATION}/${urlPath}/${p1}">`
+              `<meta property="og:image" content="${WEBSITE_LOCATION}${urlPath}/${p1}">`
           )
           // Full URLs for story poster & publisher logo.
           .replace(
             'publisher-logo-src="',
-            `publisher-logo-src="${WEBSITE_LOCATION}/${urlPath}/`
+            `publisher-logo-src="${WEBSITE_LOCATION}${urlPath}/`
           )
           .replace(
             'poster-portrait-src="',
-            `poster-portrait-src="${WEBSITE_LOCATION}/${urlPath}/`
+            `poster-portrait-src="${WEBSITE_LOCATION}${urlPath}/`
           )
           .replace(
             'poster-landscape-src="',
-            `poster-landscape-src="${WEBSITE_LOCATION}/${urlPath}/`
+            `poster-landscape-src="${WEBSITE_LOCATION}${urlPath}/`
           )
           .replace(
             'poster-square-src="',
-            `poster-square-src="${WEBSITE_LOCATION}/${urlPath}/`
+            `poster-square-src="${WEBSITE_LOCATION}${urlPath}/`
+          )
+          // Full URLs for video tracks.
+          .replace(
+            /src="tracks\//g,
+            `src="${WEBSITE_LOCATION}${urlPath}/tracks/`
           )
           // Fix schema data.
           .replace(
@@ -184,15 +189,15 @@ class WebStoriesScraperPlugin {
               const metadata = JSON.parse(p1);
               if (metadata.image) {
                 metadata.image =
-                  `${WEBSITE_LOCATION}/${urlPath}/` +
+                  `${WEBSITE_LOCATION}${urlPath}/` +
                   fileContents.match(/poster-portrait-src="([^"]+)"/)[1];
               }
               if (metadata.publisher.logo) {
                 metadata.publisher.logo.url =
-                  `${WEBSITE_LOCATION}/${urlPath}/` +
+                  `${WEBSITE_LOCATION}${urlPath}/` +
                   fileContents.match(/publisher-logo-src="([^"]+)"/)[1];
               }
-              metadata.mainEntityOfPage = `${WEBSITE_LOCATION}/${urlPath}`;
+              metadata.mainEntityOfPage = `${WEBSITE_LOCATION}${urlPath}`;
               return `<script type="application/ld+json">${JSON.stringify(
                 metadata
               )}</script>`;
@@ -232,11 +237,16 @@ const options = {
     { selector: 'meta[property="og:image"]', attr: 'content' },
     { selector: 'meta[property="twitter:image"]', attr: 'content' },
     { selector: 'link[rel="canonical"]', attr: 'href' },
+    { selector: 'track', attr: 'src' },
   ],
   subdirectories: [
     {
       directory: 'assets',
       extensions: ['.jpg', '.jpeg', '.png', '.svg', '.webp', '.gif', '.mp4'],
+    },
+    {
+      directory: 'tracks',
+      extensions: ['.vtt'],
     },
   ],
   plugins: [new SaveToExistingDirectoryPlugin(), new WebStoriesScraperPlugin()],
