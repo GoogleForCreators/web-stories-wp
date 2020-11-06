@@ -31,7 +31,7 @@ export default {
   component: Text,
 };
 
-const textPresetSizes = THEME_CONSTANTS.TEXT_SIZES;
+const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 const textRenderAsOptions = ['p', 'a', 'span'];
 
 export const _default = () => (

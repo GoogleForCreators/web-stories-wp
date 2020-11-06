@@ -38,7 +38,7 @@ export const Headline = styled.h1`
 
 Headline.propTypes = {
   as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
-  size: PropTypes.oneOf(THEME_CONSTANTS.HEADLINE_SIZES),
+  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES),
 };
 Headline.defaultProps = {
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,

@@ -55,7 +55,7 @@ export const Text = styled.p`
 Text.propTypes = {
   as: PropTypes.oneOf(['p', 'a', 'span']),
   isBold: PropTypes.bool,
-  size: PropTypes.oneOf(THEME_CONSTANTS.TEXT_SIZES),
+  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };
 Text.defaultProps = {
   as: 'p',

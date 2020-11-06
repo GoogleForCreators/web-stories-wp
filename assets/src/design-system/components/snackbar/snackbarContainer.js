@@ -24,17 +24,18 @@ import styled from 'styled-components';
  */
 import { THEME_CONSTANTS } from '../../theme';
 
-// todo use the same helper as dialog to get width respectfully of wordPress nav
 export const SnackbarContainer = styled.div`
   position: fixed;
   bottom: 40px;
+  left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   align-items: ${({ alignItems }) => alignItems};
-  width: 100vw;
+  width: 100%;
   z-index: ${THEME_CONSTANTS.Z_INDEX.SNACKBAR};
 `;
+
 SnackbarContainer.propTypes = {
   alignItems: PropTypes.string,
 };
