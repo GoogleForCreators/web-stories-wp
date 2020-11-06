@@ -82,7 +82,7 @@ StoryPropTypes.story = PropTypes.shape({
   modified: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
   featuredMedia: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     url: PropTypes.string.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
