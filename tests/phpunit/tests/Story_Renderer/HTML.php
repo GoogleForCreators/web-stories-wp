@@ -31,6 +31,8 @@ class HTML extends WP_UnitTestCase {
 	use Private_Access;
 
 	public function setUp() {
+		parent::setUp();
+
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
 		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
@@ -40,6 +42,8 @@ class HTML extends WP_UnitTestCase {
 	public function tearDown() {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+
+		parent::tearDown();
 	}
 
 	/**
