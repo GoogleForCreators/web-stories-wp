@@ -42,7 +42,11 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      const path = addQueryArgs(`${stories}/${storyId}`, {
+        context: `edit`,
+        _embed: 'wp:featuredmedia',
+      });
+
       return apiFetch({ path });
     },
     [stories]
