@@ -28,7 +28,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ANIMATION_EFFECTS } from '../../../../animation/constants';
+import {
+  ANIMATION_EFFECTS,
+  ANIMATION_PARTS,
+} from '../../../../animation/constants';
 import {
   getAnimationEffectProps,
   AnimationProps,
@@ -39,7 +42,10 @@ import EffectInput from './effectInput';
 
 function getEffectName(type) {
   return (
-    Object.values(ANIMATION_EFFECTS).find((o) => o.value === type)?.name || ''
+    [
+      ...Object.values(ANIMATION_EFFECTS),
+      ...Object.values(ANIMATION_PARTS),
+    ].find((o) => o.value === type)?.name || ''
   );
 }
 
