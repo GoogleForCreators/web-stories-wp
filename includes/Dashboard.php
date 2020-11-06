@@ -28,7 +28,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\AMP\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
 use WP_Screen;
 
@@ -79,7 +79,7 @@ class Dashboard {
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
-	 * @param Site_Kit $site_kit Site_Kit instance.
+	 * @param Site_Kit    $site_kit    Site_Kit instance.
 	 */
 	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;

@@ -28,7 +28,7 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\AMP\Integrations\Site_Kit;
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
@@ -37,7 +37,6 @@ use Google\Web_Stories\Block\Embed_Block;
 use Google\Web_Stories\REST_API\Stories_Settings_Controller;
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
-use WP_Post;
 
 /**
  * Plugin class.
@@ -219,7 +218,7 @@ class Plugin {
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
 
-		$this->site_kit = new Site_kit( $this->analytics );
+		$this->site_kit = new Site_Kit( $this->analytics );
 		add_action( 'init', [ $this->site_kit, 'init' ] );
 
 		$this->dashboard = new Dashboard( $this->experiments, $this->site_kit );

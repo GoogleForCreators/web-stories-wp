@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\AMP\Integrations;
+namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Analytics;
 use Google\Web_Stories\Story_Post_Type;
