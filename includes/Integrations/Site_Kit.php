@@ -59,15 +59,37 @@ class Site_Kit {
 	public function init() {
 		add_filter( 'googlesitekit_amp_gtag_opt', [ $this, 'filter_site_kit_gtag_opt' ] );
 
-		if ( in_array( 'analytics', $this->get_site_kit_active_modules_option(), true ) ) {
+		if ( $this->is_analytics_module_active() ) {
 			remove_action( 'web_stories_print_analytics', [ $this->analytics, 'print_analytics_tag' ] );
 		}
 	}
 
 	/**
+	 * Determines whether Site Kit is active.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return bool Whether Site Kit is active.
+	 */
+	protected function is_plugin_active() {
+		return defined( 'GOOGLESITEKIT_VERSION' );
+	}
+
+	/**
+	 * Determines whether the built-in Analytics module in Site Kit is active.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return bool Whether Site Kit's analytics module is active.
+	 */
+	protected function is_analytics_module_active() {
+		return in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
+	}
+
+	/**
 	 * Filters Site Kit's Google Analytics configuration.
 	 *
-	 * @since 1.0.0
+	 * @since 1.2.0
 	 *
 	 * @param array $gtag_opt Array of gtag configuration options.
 	 *
@@ -103,8 +125,8 @@ class Site_Kit {
 	 *
 	 * @return array List of active module slugs.
 	 */
-	private function get_site_kit_active_modules_option() {
-		if ( ! defined( 'GOOGLESITEKIT_VERSION' ) ) {
+	protected function get_site_kit_active_modules_option() {
+		if ( ! $this->is_plugin_active() ) {
 			return [];
 		}
 
@@ -132,8 +154,8 @@ class Site_Kit {
 	 */
 	public function get_plugin_status() {
 		$is_installed        = array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
-		$is_active           = defined( 'GOOGLESITEKIT_VERSION' );
-		$is_analytics_active = in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
+		$is_active           = $this->is_plugin_active();
+		$is_analytics_active = $this->is_analytics_module_active();
 
 		$link      = __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' );
 		$dashboard = admin_url( 'admin.php?page=googlesitekit-dashboard' );
@@ -160,7 +182,7 @@ class Site_Kit {
 		return [
 			'installed'       => $is_installed,
 			'active'          => $is_active,
-			'analyticsActive' => in_array( 'analytics', $this->get_site_kit_active_modules_option(), true ),
+			'analyticsActive' => $is_analytics_active,
 			'link'            => $link,
 		];
 	}
