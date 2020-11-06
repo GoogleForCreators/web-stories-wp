@@ -41,6 +41,11 @@
   },
   "extra": {
     "downloads": {
+      "composer-normalize": {
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.9.0/composer-normalize.phar",
+        "path": "vendor/bin/composer-normalize",
+        "type": "phar"
+      },
       "phpstan": {
         "url": "https://github.com/phpstan/phpstan/releases/download/0.12.52/phpstan.phar",
         "path": "vendor/bin/phpstan",
@@ -112,6 +117,7 @@
     "post-update-cmd": [
       "@prefix-dependencies"
     ],
+    "composer-normalize": "composer-normalize",
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",
     "phpmd": "phpmd . text phpmd.xml",
