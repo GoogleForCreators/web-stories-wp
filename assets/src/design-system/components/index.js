@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export { Text, Display, Headline } from './typography';
+export { Button } from './button';
 export { Modal } from './modal';
 export { Pill } from './pill';
-export { Button } from './button';
 export * as Snackbar from './snackbar';
+export { Text, Display, Headline } from './typography';
