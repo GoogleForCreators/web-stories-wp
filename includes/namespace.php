@@ -296,7 +296,6 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  * @param string|array $path REST API path to preload.
  *
  * @return array Modified reduce accumulator.
-
  */
 function rest_preload_api_request( $memo, $path ) {
 	// array_reduce() doesn't support passing an array in PHP 5.2,
