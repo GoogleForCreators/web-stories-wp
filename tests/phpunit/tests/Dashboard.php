@@ -128,7 +128,7 @@ class Dashboard extends \WP_UnitTestCase {
 					->willReturn( [] );
 
 		$dashboard = new \Google\Web_Stories\Dashboard(
-			$this->createMock( \Google\Web_Stories\Experiments::class ),
+			$experiments,
 			$this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class )
 		);
 		$dashboard->add_menu_page();
