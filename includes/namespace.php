@@ -286,7 +286,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  *
  * Like rest_preload_api_request() in core, but embeds links.
  *
- * @link  https://core.trac.wordpress.org/ticket/51636
+ * @link  https://core.trac.wordpress.org/ticket/51722
  *
  * @since 1.2.0
  *
