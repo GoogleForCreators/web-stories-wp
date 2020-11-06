@@ -10,3 +10,5 @@ third-party/
 vendor/
 .DS_Store
 phpcs.xml
+public/stories/*/assets
+public/stories/*/tracks
