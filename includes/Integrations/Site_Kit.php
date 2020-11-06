@@ -188,7 +188,7 @@ class Site_Kit {
 		}
 
 		return [
-			'installed'       => $is_installed,
+			'installed'       => $is_active || $is_installed,
 			'active'          => $is_active,
 			'analyticsActive' => $is_analytics_active,
 			'link'            => $link,

@@ -60,6 +60,7 @@ class Site_Kit extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::init
+	 * @covers ::is_analytics_module_active
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
@@ -175,10 +176,71 @@ class Site_Kit extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::get_plugin_status
+	 */
+	public function test_get_plugin_status_plugin_installed() {
+		wp_cache_set( 'plugins', [ 'google-site-kit/google-site-kit.php' ], 'plugins' );
+
+		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
+		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
+
+		$expected = [
+			'installed'       => false,
+			'active'          => false,
+			'analyticsActive' => false,
+			'link'            => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
+		];
+
+		$actual = $site_kit->get_plugin_status();
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::get_plugin_status
+	 * @covers ::is_plugin_active
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_plugin_status_analytics_active() {
+	public function test_get_plugin_status_plugin_active() {
+		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
+		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
+		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
+
+		$expected = [
+			'installed'       => true,
+			'active'          => true,
+			'analyticsActive' => false,
+			'link'            => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
+		];
+
+		$actual = $site_kit->get_plugin_status();
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::get_plugin_status
+	 * @covers ::is_analytics_module_active
+	 * @runInSeparateProcess
+	 * @preserveGlobalState disabled
+	 */
+	public function test_get_plugin_status_analytics_module_active() {
+		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
+		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
+
+		$analytics = $this->createMock( \Google\Web_Stories\Analytics::class );
+		$site_kit  = new \Google\Web_Stories\Integrations\Site_Kit( $analytics );
+
+		$expected = [
+			'installed'       => true,
+			'active'          => true,
+			'analyticsActive' => true,
+			'link'            => __( 'https://wordpress.org/plugins/google-site-kit/', 'web-stories' ),
+		];
+
+		$actual = $site_kit->get_plugin_status();
+
+		$this->assertEqualSetsWithIndex( $expected, $actual );
 	}
 }
