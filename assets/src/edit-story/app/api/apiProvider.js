@@ -70,7 +70,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
         },
-        featured_media: featuredMedia,
+        featured_media: featuredMedia.id,
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
