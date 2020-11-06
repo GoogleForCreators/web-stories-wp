@@ -213,7 +213,7 @@ class Dashboard {
 
 		$preload_data = array_reduce(
 			$preload_paths,
-			'rest_preload_api_request',
+			__NAMESPACE__ . '\rest_preload_api_request',
 			[]
 		);
 
