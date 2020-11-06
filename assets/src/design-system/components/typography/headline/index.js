@@ -41,5 +41,5 @@ Headline.propTypes = {
   size: PropTypes.oneOf(THEME_CONSTANTS.HEADLINE_SIZES),
 };
 Headline.defaultProps = {
-  size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

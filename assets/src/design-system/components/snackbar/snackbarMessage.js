@@ -107,7 +107,7 @@ const SnackbarMessage = ({
       tabIndex={0}
       hasAction={Boolean(actionLabel)}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {message}
       </Text>
       {actionLabel && (

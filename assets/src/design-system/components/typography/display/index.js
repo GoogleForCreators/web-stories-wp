@@ -40,5 +40,5 @@ Display.propTypes = {
   size: PropTypes.oneOf(THEME_CONSTANTS.DISPLAY_SIZES),
 };
 Display.defaultProps = {
-  size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

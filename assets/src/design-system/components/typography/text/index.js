@@ -60,5 +60,5 @@ Text.propTypes = {
 Text.defaultProps = {
   as: 'p',
   isBold: false,
-  size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };
