@@ -152,13 +152,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ github.repository }}.wiki
-          ref: master
-          token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Download full bundle
         uses: actions/download-artifact@v2
         with:
@@ -192,3 +185,28 @@ jobs:
           asset_name: web-stories-composer
           asset_content_type: application/zip
         continue-on-error: true
+
+  deploy-to-staging:
+    name: Deploy to staging environment
+    needs: build
+    runs-on: ubuntu-latest
+    # TODO: Uncomment before merge.
+#    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download full bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: web-stories
+          path: build
+
+      - name: Setup SSH Keys and known_hosts
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.PANTHEON_DEPLOY_KEY }}
+
+      - name: Run deployment
+        run: bash bin/deploy-to-test-environment.sh
