@@ -36,7 +36,7 @@ import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
 import WithBorder from '../elementBorder';
-import { BORDER_POSITION } from '../../constants';
+import { getBorderPositionCSS, isOutsideBorder } from '../elementBorder/utils';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -134,8 +134,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     }
   });
 
-  const { left = 0, right = 0, top = 0, bottom = 0 } = border;
-
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
@@ -146,22 +144,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             box={box}
             style={{
               opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-              width:
-                border?.position === BORDER_POSITION.OUTSIDE
-                  ? `${box.width + left + right}px`
-                  : null,
-              height:
-                border?.position === BORDER_POSITION.OUTSIDE
-                  ? `${box.height + top + bottom}px`
-                  : null,
-              top:
-                border?.position === BORDER_POSITION.OUTSIDE
-                  ? `${-border.top}px`
-                  : 0,
-              left:
-                border?.position === BORDER_POSITION.OUTSIDE
-                  ? `${-border.left}px`
-                  : 0,
+              ...(isOutsideBorder(border)
+                ? getBorderPositionCSS({
+                    ...border,
+                    width: `${box.width}px`,
+                    height: `${box.height}px`,
+                    skipOutsideBorder: false,
+                  })
+                : null),
             }}
             previewMode={previewMode}
           >

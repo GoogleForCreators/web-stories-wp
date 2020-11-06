@@ -38,13 +38,32 @@ export function shouldDisplayBorder(element) {
   return canMaskHaveBorder(element);
 }
 
-function getBorderPositionCSS({ left, top, right, bottom, position }) {
+export function getBorderPositionCSS({
+  left,
+  top,
+  right,
+  bottom,
+  position,
+  width = '100%',
+  height = '100%',
+  posTop = '0px',
+  posLeft = '0px',
+  skipOutsideBorder = true,
+}) {
   if (BORDER_POSITION.CENTER === position) {
     return {
-      top: `${-top / 2}px`,
-      height: `calc(100% + ${(top + bottom) / 2}px)`,
-      left: `${-left / 2}px`,
-      width: `calc(100% + ${(left + right) / 2}px)`,
+      top: `calc(${posTop} - ${top / 2}px)`,
+      height: `calc(${height} + ${(top + bottom) / 2}px)`,
+      left: `calc(${posLeft} - ${left / 2}px)`,
+      width: `calc(${width} + ${(left + right) / 2}px)`,
+    };
+  }
+  if (BORDER_POSITION.OUTSIDE === position && !skipOutsideBorder) {
+    return {
+      left: `calc(${posLeft} - ${left}px)`,
+      top: `calc(${posTop} - ${top}px)`,
+      width: `calc(${width} + ${left + right}px)`,
+      height: `calc(${height} + ${top + bottom}px)`,
     };
   }
   return '';
@@ -58,6 +77,7 @@ export function getBorderStyle({
   bottom,
   position,
   borderRadius,
+  skipOutsideBorder = true,
 }) {
   const {
     color: { r, g, b, a },
@@ -72,7 +92,14 @@ export function getBorderStyle({
     bottom
   )}px ${Math.ceil(left)}px`;
   const borderStyle = {
-    ...getBorderPositionCSS({ left, top, right, bottom, position }),
+    ...getBorderPositionCSS({
+      left,
+      top,
+      right,
+      bottom,
+      position,
+      skipOutsideBorder,
+    }),
     borderWidth,
     borderColor: color,
     borderStyle: 'solid',
@@ -90,4 +117,8 @@ export function getBorderStyle({
     position: 'absolute',
     ...borderStyle,
   };
+}
+
+export function isOutsideBorder(border) {
+  return border?.position === BORDER_POSITION.OUTSIDE;
 }

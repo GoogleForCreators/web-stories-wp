@@ -64,6 +64,7 @@ function MediaDisplay({
       } else {
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          // @todo this needs to resize the outside border element separately now.
           const newImgProps = getMediaSizePositionProps(
             resource,
             resize[0],

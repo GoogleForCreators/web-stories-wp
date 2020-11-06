@@ -24,7 +24,10 @@ import { css } from 'styled-components';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
-import { BORDER_POSITION } from '../../constants';
+import {
+  getBorderStyle,
+  isOutsideBorder,
+} from '../../components/elementBorder/utils';
 
 export const elementFillContent = css`
   position: absolute;
@@ -52,31 +55,20 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBorderRadius = css`
-  ${({ borderRadius, border }) =>
-  borderRadius && (border?.position !== BORDER_POSITION.OUTSIDE || true)
+  ${({ borderRadius }) =>
+    borderRadius
       ? `border-radius: ${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
       : ''};
+`;
 
-  ${({ borderRadius, border }) =>
-    borderRadius && border?.position === BORDER_POSITION.OUTSIDE && false
-      ? `border-radius: ${Math.max(
-          0,
-          borderRadius.topLeft -
-            (border.top > border.left ? border.top : border.left)
-        )}px ${Math.max(
-          0,
-          borderRadius.topRight -
-            (border.top > border.right ? border.top : border.right)
-        )}px ${Math.max(
-          0,
-          borderRadius.bottomRight -
-            (border.bottom > border.right ? border.bottom : border.right)
-        )}px ${Math.max(
-          0,
-          borderRadius.bottomLeft -
-            (border.bottom > border.left ? border.bottom : border.left)
-        )}px`
-      : ''};
+export const elementWithOutsideBorderPosition = css`
+  ${({ border, borderRadius }) =>
+    isOutsideBorder({ position: border?.position }) &&
+    getBorderStyle({
+      ...border,
+      borderRadius,
+      skipOutsideBorder: false,
+    })}
 `;
 
 export const elementWithBackgroundColor = css`

@@ -24,7 +24,9 @@ import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
 import { getBox } from '../units/dimensions';
 import {
+  getBorderPositionCSS,
   getBorderStyle,
+  isOutsideBorder,
   shouldDisplayBorder,
 } from '../components/elementBorder/utils';
 import ElementBorder from '../components/elementBorder/output';
@@ -44,22 +46,20 @@ function OutputElement({ element }) {
       style={{
         position: 'absolute',
         pointerEvents: 'none',
-        left:
-          border?.position === BORDER_POSITION.OUTSIDE
-            ? `calc(${x}% - ${border.left}px)`
-            : `${x}%`,
-        top:
-          border?.position === BORDER_POSITION.OUTSIDE
-            ? `calc(${y}% - ${border.top}px)`
-            : `${y}%`,
-        width:
-          border?.position === BORDER_POSITION.OUTSIDE
-            ? `calc(${width}% + ${border.left + border.right}px)`
-            : `${width}%`,
-        height:
-          border?.position === BORDER_POSITION.OUTSIDE
-            ? `calc(${height}% + ${border.top + border.bottom}px)`
-            : `${height}%`,
+        left: `${x}%`,
+        top: `${y}%`,
+        width: `${width}%`,
+        height: `${height}%`,
+        ...(isOutsideBorder(border)
+          ? getBorderPositionCSS({
+              ...border,
+              width: `${width}%`,
+              height: `${height}%`,
+              posTop: `${y}%`,
+              posLeft: `${x}%`,
+              skipOutsideBorder: false,
+            })
+          : null),
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
       }}
