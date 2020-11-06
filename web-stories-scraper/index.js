@@ -199,7 +199,10 @@ class WebStoriesScraperPlugin {
             }
           )
           // Workaround for https://github.com/website-scraper/node-website-scraper/issues/355.
-          .replace(/font-family:"([^,]+)"/gm, `font-family:'$1'`)
+          .replace(
+            /font-family:([^;]+)/gm,
+            (match, p1) => `font-family:${p1.replace(/"/gm, "'")}`
+          )
           // Additional analytics for testing.
           .replace(
             '</amp-analytics>',
