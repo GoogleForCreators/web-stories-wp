@@ -40,6 +40,8 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { CropBox, MEDIA_MASK_OPACITY } from './';
+import {BORDER_POSITION} from "../../constants";
+import {getBorderStyle} from "../../components/elementBorder/utils";
 
 const Element = styled.div`
   ${elementFillContent}
@@ -102,6 +104,7 @@ function MediaEdit({ element, box }) {
     focalY,
     isBackground,
     type,
+    border,
     borderRadius,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
@@ -181,7 +184,26 @@ function MediaEdit({ element, box }) {
           <source src={resource.src} type={resource.mimeType} />
         </FadedVideo>
       )}
-      <CropBox ref={setCropBox} {...borderProps}>
+      <CropBox ref={setCropBox} {...borderProps} style={{
+        ...getBorderStyle({ ...border, borderRadius }),
+        position: 'absolute',
+        left:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `-${border.left}px`
+            : '0',
+        top:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `-${border.top}px`
+            : '0',
+        width:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `calc(100% + ${border.left + border.right}px)`
+            : `100%`,
+        height:
+          border?.position === BORDER_POSITION.OUTSIDE
+            ? `calc(100% + ${border.top + border.bottom}px)`
+            : `100%`,
+      }}>
         <WithMask element={element} fill={true} applyFlip={false} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (

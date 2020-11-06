@@ -26,6 +26,8 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import { elementFillContent, elementWithBorderRadius } from '../shared';
 import { useTransformHandler } from '../../components/transform';
+import { getBorderStyle } from '../../components/elementBorder/utils';
+import { BORDER_POSITION } from '../../constants';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
@@ -35,6 +37,17 @@ const Element = styled.div`
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
+  ${({ color, left, top, right, bottom, position, borderRadius }) =>
+    position === BORDER_POSITION.OUTSIDE &&
+    getBorderStyle({
+      color,
+      left,
+      top,
+      right,
+      bottom,
+      position,
+      borderRadius,
+    })}
 `;
 
 function MediaDisplay({
@@ -64,11 +77,19 @@ function MediaDisplay({
       }
     }
   });
+  const borderProps =
+    border?.position === BORDER_POSITION.OUTSIDE
+      ? {
+          ...border,
+          borderRadius,
+        }
+      : {};
   return (
     <Element
       borderRadius={borderRadius}
       border={border}
       showPlaceholder={showPlaceholder}
+      {...borderProps}
     >
       {children}
     </Element>

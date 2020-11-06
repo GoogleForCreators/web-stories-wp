@@ -27,8 +27,6 @@ import PropTypes from 'prop-types';
 import StoryPropTypes from '../../types';
 import { preloadImage } from '../../app/media/utils';
 import resourceList from '../../utils/resourceList';
-import { getBorderStyle } from '../../components/elementBorder/utils';
-import { BORDER_POSITION } from '../../constants';
 import {
   calculateSrcSet,
   getSmallestUrlForWidth,
@@ -40,17 +38,6 @@ import { getMediaSizePositionProps } from '.';
 const Img = styled.img`
   position: absolute;
   ${mediaWithScale}
-  ${({ color, left, top, right, bottom, position, borderRadius }) =>
-    position === BORDER_POSITION.OUTSIDE &&
-    getBorderStyle({
-      color,
-      left,
-      top,
-      right,
-      bottom,
-      position,
-      borderRadius,
-    })}
 `;
 
 function ImageDisplay({ element, box }) {
@@ -102,13 +89,6 @@ function ImageDisplay({ element, box }) {
 
   const showPlaceholder = srcType !== 'fullsize';
 
-  const borderProps =
-    element.border?.position === BORDER_POSITION.OUTSIDE
-      ? {
-          ...element.border,
-          borderRadius: element.borderRadius,
-        }
-      : {};
   return (
     <MediaDisplay
       element={element}
@@ -123,7 +103,6 @@ function ImageDisplay({ element, box }) {
         alt={resource.alt}
         data-testid="imageElement"
         {...imgProps}
-        {...borderProps}
       />
     </MediaDisplay>
   );
