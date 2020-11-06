@@ -1,12 +1,12 @@
 | **CUJ**                                                           | **Action**                                       | **Completion**           |
 | ----------------------------------------------------------------- | ------------------------------------------------ | ------------------------ |
-| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **8.33%** *(1 / 12)*  |
+| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **0.00%** *(0 / 12)*  |
 |                                                                   | Apply a link to multi-selection                  | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Edit brand icon                                  | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Edit description                                 | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Link with Page Attachment                        | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 3)*   |
-|                                                                   | *[total]*                                        | 🚨 **4.76%** *(1 / 21)*  |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 21)*  |
 | Creator Can Add Image/Video to Page                               | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*   |
@@ -69,4 +69,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.55%** *(2 / 362)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.00%** *(0 / 362)* |
