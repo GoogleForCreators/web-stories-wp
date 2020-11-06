@@ -61,13 +61,12 @@ export const elementWithBorderRadius = css`
       : ''};
 `;
 
-export const elementWithOutsideBorderPosition = css`
+export const elementWithOutsideBorder = css`
   ${({ border, borderRadius }) =>
     isOutsideBorder({ position: border?.position }) &&
     getBorderStyle({
       ...border,
       borderRadius,
-      skipOutsideBorder: false,
     })}
 `;
 

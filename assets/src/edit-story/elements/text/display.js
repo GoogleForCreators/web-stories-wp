@@ -31,6 +31,7 @@ import {
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
   elementWithBorderRadius,
+  elementWithOutsideBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -50,6 +51,8 @@ import {
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
+  ${elementWithBorderRadius}
+  ${elementWithOutsideBorder}
   ${elementWithTextParagraphStyle}
   line-height: ${({ lineHeight, verticalPadding }) =>
     getHighlightLineheight(lineHeight, verticalPadding)};
@@ -92,10 +95,12 @@ const FillElement = styled.p`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
 `;
+
 const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
   ${elementWithBorderRadius}
+  ${elementWithOutsideBorder}
   margin: 0;
 `;
 
@@ -110,7 +115,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { borderRadius, font } = rest;
+  const { border, borderRadius, font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -165,8 +170,14 @@ function TextDisplay({
   );
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+    // @todo Add a separate wrapper for outside border since the highlight wrapper has margin assinged.
     return (
-      <HighlightWrapperElement ref={ref} {...props}>
+      <HighlightWrapperElement
+        ref={ref}
+        {...props}
+        border={border}
+        borderRadius={borderRadius}
+      >
         <HighlightElement {...props}>
           <MarginedElement {...props}>
             <BackgroundSpan
@@ -197,6 +208,7 @@ function TextDisplay({
         backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
       }
       borderRadius={borderRadius}
+      border={border}
     >
       <FillElement
         ref={ref}
