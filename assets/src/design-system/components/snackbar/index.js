@@ -21,5 +21,5 @@ export {
   AUTO_REMOVE_MESSAGE_TIME_INTERVAL,
   MESSAGE_SEVERITY,
 } from './constants';
-export { SnackbarContainer } from './snackbarContainer';
-export { SnackbarMessage } from './snackbarMessage';
+export { SnackbarContainer as Container } from './snackbarContainer';
+export { SnackbarMessage as Message } from './snackbarMessage';

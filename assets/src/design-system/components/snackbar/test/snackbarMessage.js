@@ -42,6 +42,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
 
     expect(alert).toBeInTheDocument();
   });
+
   it(`should trigger mockHandleDismiss after ${AUTO_REMOVE_MESSAGE_TIME_INTERVAL}ms`, async () => {
     jest.setTimeout(AUTO_REMOVE_MESSAGE_TIME_INTERVAL + 500);
 

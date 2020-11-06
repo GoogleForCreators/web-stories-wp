@@ -22,7 +22,9 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { SnackbarContainer, SnackbarMessage, MESSAGE_SEVERITY } from '../';
+import { SnackbarContainer } from '../snackbarContainer';
+import { SnackbarMessage } from '../snackbarMessage';
+import { MESSAGE_SEVERITY } from '../constants';
 
 export default {
   title: 'DesignSystem/Components/Snackbar',
