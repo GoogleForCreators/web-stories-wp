@@ -209,16 +209,11 @@ class Dashboard {
 		 */
 		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
-		$_GET['_embed'] = 1;
-
 		$preload_data = array_reduce(
 			$preload_paths,
 			__NAMESPACE__ . '\rest_preload_api_request',
 			[]
 		);
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		unset( $_GET['_embed'] );
 
 		wp_add_inline_script(
 			'wp-api-fetch',
