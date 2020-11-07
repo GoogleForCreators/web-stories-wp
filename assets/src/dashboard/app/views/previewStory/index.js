@@ -22,38 +22,48 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Modal, TypographyPresets, Button } from '../../../components';
-import { WPBODY_ID, BUTTON_TYPES } from '../../../constants';
-import dashboardTheme from '../../../theme';
-import { Close as CloseIcon } from '../../../icons';
+import {
+  Button,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  Modal,
+  Text,
+  themeHelpers,
+} from '../../../../design-system';
+import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
 import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
 
 const CLOSE_BUTTON_SIZE = {
-  HEIGHT: 30,
-  WIDTH: 30,
+  HEIGHT: 20,
+  WIDTH: 20,
 };
 const AMP_LOCAL_STORAGE = 'amp-story-state';
 const PREVIEW_CONTAINER_ID = 'previewContainer';
 
-const CloseButton = styled.button`
+const CloseButton = styled(Button)`
   align-self: flex-end;
   color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  margin-top: 20px;
-  margin-right: 11px;
+  margin: 15px 11px 5px 0;
   width: ${CLOSE_BUTTON_SIZE.WIDTH}px;
   height: ${CLOSE_BUTTON_SIZE.HEIGHT}px;
   border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   background-color: transparent;
-  z-index: 10;
+  z-index: 15;
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.bg.overlay,
+      theme.colors.accent.secondary
+    )};
 
   &:hover {
     cursor: pointer;
@@ -72,11 +82,9 @@ const IframeContainer = styled.div`
   }
 `;
 
-const HelperText = styled.p`
-  ${TypographyPresets.Large};
-  margin: 0;
+const HelperText = styled(Text)`
   padding-bottom: 20px;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
+  color: ${({ theme }) => theme.colors.standard.white};
 `;
 
 const HelperContainer = styled.div`
@@ -87,6 +95,14 @@ const HelperContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  /* Because this modal is "dark mode" we need to override focusable outline */
+  & > button {
+    ${({ theme }) =>
+      themeHelpers.focusableOutlineCSS(
+        theme.colors.bg.overlay,
+        theme.colors.accent.secondary
+      )};
+  }
 `;
 
 const PreviewStory = ({ story, handleClose }) => {
@@ -112,6 +128,8 @@ const PreviewStory = ({ story, handleClose }) => {
       clearStoryPreview,
     })
   );
+
+  const theme = useContext(ThemeContext);
 
   const containerRef = useRef(document.getElementById(WPBODY_ID));
   const iframeContainerRef = useRef();
@@ -198,15 +216,17 @@ const PreviewStory = ({ story, handleClose }) => {
       overlayStyles={{
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        backgroundColor: dashboardTheme.colors.storyPreviewBackground,
+        backgroundColor: theme.colors.bg.overlay,
       }}
     >
       <>
         <CloseButton
+          variant={BUTTON_VARIANTS.ICON}
+          type={BUTTON_TYPES.PLAIN}
           onClick={handleClose}
           aria-label={__('close preview', 'web-stories')}
         >
-          <CloseIcon aria-hidden={true} />
+          <Icons.Close aria-hidden={true} />
         </CloseButton>
 
         {!previewError && (
@@ -229,7 +249,7 @@ const PreviewStory = ({ story, handleClose }) => {
         {previewError && (
           <HelperContainer>
             <HelperText>{previewError}</HelperText>
-            <Button type={BUTTON_TYPES.CTA} onClick={handleClose}>
+            <Button type={BUTTON_TYPES.PRIMARY} onClick={handleClose}>
               {__('Close Preview', 'web-stories')}
             </Button>
           </HelperContainer>
