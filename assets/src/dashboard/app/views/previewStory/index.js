@@ -61,7 +61,7 @@ const CloseButton = styled(Button)`
   z-index: 15;
   ${({ theme }) =>
     themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.overlay,
+      theme.colors.bg.storyPreview,
       theme.colors.accent.secondary
     )};
 
@@ -70,6 +70,7 @@ const CloseButton = styled(Button)`
   }
 `;
 
+// 40 getting subtracted from height is the size of the close button + margin. The Iframe wants specifics in safari, this is important to make sure the close button is visible.
 const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
 
@@ -99,7 +100,7 @@ const HelperContainer = styled.div`
   & > button {
     ${({ theme }) =>
       themeHelpers.focusableOutlineCSS(
-        theme.colors.bg.overlay,
+        theme.colors.bg.storyPreview,
         theme.colors.accent.secondary
       )};
   }
@@ -216,7 +217,7 @@ const PreviewStory = ({ story, handleClose }) => {
       overlayStyles={{
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        backgroundColor: theme.colors.bg.overlay,
+        backgroundColor: theme.colors.bg.storyPreview,
       }}
     >
       <>
