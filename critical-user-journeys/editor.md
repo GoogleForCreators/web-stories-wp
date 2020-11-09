@@ -35,11 +35,11 @@
 |                                                                   | Select an individual word to edit                | 🚨 **0.00%** *(0 / 9)*   |
 |                                                                   | Write/edit text                                  | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 15)*  |
-| Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🛴 **50.00%** *(1 / 2)*  |
+| Creator can Apply or Save Text Style from/to Their Preset Library | Apply Text Style Presets                         | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Display Panel                                    | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Manage Text Style Presets                        | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Save Text Style                                  | 🚨 **0.00%** *(0 / 2)*   |
-|                                                                   | *[total]*                                        | 🚨 **12.50%** *(1 / 8)*  |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 8)*   |
 | Creator can Apply or Save a Color from/to Their Preset Library    | Display Panel                                    | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Manage Color Presets                             | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 2)*   |
@@ -69,4 +69,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **1.10%** *(4 / 362)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.55%** *(2 / 362)* |
