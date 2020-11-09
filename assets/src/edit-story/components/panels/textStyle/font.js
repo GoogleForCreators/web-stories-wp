@@ -75,10 +75,9 @@ function FontControls({ selectedElements, pushUpdate }) {
 
   const { fonts = [], maybeEnqueueFontStyle, getFontByName } = useFont(
     ({
-      actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
+      actions: { maybeEnqueueFontStyle, getFontByName },
       state: { fonts },
     }) => ({
-      addRecentFont,
       maybeEnqueueFontStyle,
       getFontByName,
       fonts,
