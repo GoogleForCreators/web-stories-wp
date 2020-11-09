@@ -42,7 +42,7 @@ describe('Video output', () => {
         type: 'video',
         mimeType: 'video/mp4',
         id: 123,
-        src: 'https://example.com/image.png',
+        src: 'https://example.com/video.mp4',
         poster: 'https://example.com/poster.png',
         alt: 'alt text',
         height: 1920,
@@ -51,28 +51,6 @@ describe('Video output', () => {
     },
     box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
   };
-
-  it('should produce valid AMP output', async () => {
-    await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
-  });
-
-  it('should produce valid AMP output with track', async () => {
-    const props = {
-      ...baseProps,
-      tracks: [
-        {
-          track: 'https://example.com/track.vtt',
-          trackId: 123,
-          trackName: 'track.vtt',
-          id: 'rersd-fdfd-fdfd-fdfd',
-          srcLang: '',
-          label: '',
-          kind: 'caption',
-        },
-      ],
-    };
-    await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
-  });
 
   it('an undefined alt tag in the element should fall back to the resource', async () => {
     const props = {
@@ -93,5 +71,38 @@ describe('Video output', () => {
     await expect(outputStr).not.toStrictEqual(
       expect.stringMatching('alt text')
     );
+  });
+
+  describe('AMP validation', () => {
+    it('should produce valid AMP output', async () => {
+      await expect(<VideoOutput {...baseProps} />).toBeValidAMPStoryElement();
+    });
+
+    it('should produce valid AMP output with missing poster', async () => {
+      const props = {
+        ...baseProps,
+      };
+      delete props.element.resource.poster;
+
+      await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
+    });
+
+    it('should produce valid AMP output with track', async () => {
+      const props = {
+        ...baseProps,
+        tracks: [
+          {
+            track: 'https://example.com/track.vtt',
+            trackId: 123,
+            trackName: 'track.vtt',
+            id: 'rersd-fdfd-fdfd-fdfd',
+            srcLang: '',
+            label: '',
+            kind: 'caption',
+          },
+        ],
+      };
+      await expect(<VideoOutput {...props} />).toBeValidAMPStoryElement();
+    });
   });
 });

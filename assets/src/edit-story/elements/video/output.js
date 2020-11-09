@@ -34,7 +34,10 @@ function VideoOutput({ element, box }) {
 
   const props = {
     autoPlay: 'autoplay',
-    poster: defaultForUndefined(element.poster, resource.poster),
+    poster: defaultForUndefined(
+      defaultForUndefined(element.poster, resource.poster),
+      ''
+    ),
     artwork: defaultForUndefined(element.poster, resource.poster),
     title: defaultForUndefined(element.title, resource.title),
     alt: defaultForUndefined(element.alt, resource.alt),
@@ -55,7 +58,7 @@ function VideoOutput({ element, box }) {
               kind={kind}
               src={src}
               key={key}
-              default={i == 0}
+              default={i === 0}
             />
           ))}
       </amp-video>
