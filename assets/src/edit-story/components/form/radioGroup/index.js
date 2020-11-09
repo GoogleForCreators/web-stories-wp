@@ -28,7 +28,7 @@ import { useMemo, useRef } from 'react';
  */
 import { Radio as UnSelected, RadioSelected as Selected } from '../../../icons';
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
-import useRadioNavigation from './useRadioNavigation';
+import useRadioNavigation from '../shared/useRadioNavigation';
 
 const RadioButton = styled.label`
   display: block;

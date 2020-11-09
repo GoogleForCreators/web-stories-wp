@@ -33,6 +33,8 @@ use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
 use Google\Web_Stories\Block\Embed_Block;
+use Google\Web_Stories\REST_API\Stories_Settings_Controller;
+use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
 use WP_Post;
 
@@ -249,5 +251,11 @@ class Plugin {
 
 		$stories_media = new Stories_Media_Controller( 'attachment' );
 		$stories_media->register_routes();
+
+		$stories_users = new Stories_Users_Controller();
+		$stories_users->register_routes();
+
+		$stories_settings = new Stories_Settings_Controller();
+		$stories_settings->register_routes();
 	}
 }
