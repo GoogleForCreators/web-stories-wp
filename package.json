@@ -118,7 +118,7 @@
     "core-js": "^3.6.5",
     "css-loader": "^5.0.1",
     "cssnano": "^4.1.10",
-    "eslint": "^7.10.0",
+    "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-header": "^3.1.0",
