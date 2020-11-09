@@ -341,15 +341,13 @@ function TextEdit({
   const wrapperProps = {
     backgroundColor: wrapperBackgroundColor,
   };
-  if (borderRadius) {
-    wrapperProps.borderRadius = borderRadius;
-  }
 
   return (
     <Wrapper
       ref={wrapperRef}
       onClick={onClick}
       data-testid="textEditor"
+      borderRadius={borderRadius}
       {...wrapperProps}
     >
       {editorContent && hasHighlightBackgroundTextMode && (

@@ -142,9 +142,9 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
           aria-label={__('Edit: Top left corner radius', 'web-stories')}
           onChange={(value) => handleChange('topLeft', value)}
         />
-        <Icon>
-          {/* Default, passed for readability only */}
-          <BorderLockLine corner={TOP_LEFT} />
+        {/* Default, passed for readability only */}
+        <Icon corner={TOP_LEFT}>
+          <BorderLockLine />
         </Icon>
         <Icon corner={TOP_RIGHT}>
           <BorderLockLine />

@@ -33,7 +33,6 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
-import { canMaskHaveBorder } from '../../masks';
 import { isOutsideBorder } from '../../components/elementBorder/utils';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
@@ -168,9 +167,7 @@ function MediaEdit({ element, box }) {
 
   // @todo Add radius for outside border, too.
   const borderProps =
-    canMaskHaveBorder(element) && isOutsideBorder(border) && borderRadius
-      ? { borderRadius, border }
-      : null;
+    isOutsideBorder(border) && borderRadius ? { borderRadius, border } : null;
 
   return (
     <Element ref={elementRef}>

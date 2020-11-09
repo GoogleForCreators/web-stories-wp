@@ -81,10 +81,9 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
-            borderRadius:
-              borderRadius && canMaskHaveBorder(element)
-                ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
-                : null,
+            borderRadius: borderRadius
+              ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
+              : null,
           }}
           skipDefaultMask
         >
