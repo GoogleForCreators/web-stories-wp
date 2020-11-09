@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { boolean, text, select } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -24,7 +24,6 @@ import { action } from '@storybook/addon-actions';
  */
 import { SnackbarContainer } from '../snackbarContainer';
 import { SnackbarMessage } from '../snackbarMessage';
-import { MESSAGE_SEVERITY } from '../constants';
 
 export default {
   title: 'DesignSystem/Components/Snackbar',
@@ -37,11 +36,6 @@ export const _default = () => (
       handleAction={action('handle action clicked')}
       actionLabel={text('actionLabel', 'Retry')}
       message={text('message', 'Sorry! File failed to upload.')}
-      severity={select(
-        'severity',
-        Object.values(MESSAGE_SEVERITY),
-        MESSAGE_SEVERITY.ERROR
-      )}
       ariaLabel={text(
         'ariaLabel',
         'this is my aria label giving my message context for screen reader users'
@@ -51,23 +45,19 @@ export const _default = () => (
   </SnackbarContainer>
 );
 
-export const NoAction = () => (
+export const NoActionWithRemoveMessageTimingOverride = () => (
   <SnackbarContainer>
     <SnackbarMessage
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
       handleAction={action('handle action clicked')}
       actionLabel={text('actionLabel', '')}
       message={text('message', 'Sorry! File failed to upload.')}
-      severity={select(
-        'severity',
-        Object.values(MESSAGE_SEVERITY),
-        MESSAGE_SEVERITY.ERROR
-      )}
       ariaLabel={text(
         'ariaLabel',
         'this is my aria label giving my message context for screen reader users'
       )}
       handleDismiss={action('handle dismiss fired')}
+      removeMessageTimeInterval={80000}
     />
   </SnackbarContainer>
 );
@@ -81,11 +71,6 @@ export const LongMessage = () => (
       message={text(
         'message',
         'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
-      )}
-      severity={select(
-        'severity',
-        Object.values(MESSAGE_SEVERITY),
-        MESSAGE_SEVERITY.ERROR
       )}
       ariaLabel={text(
         'ariaLabel',

@@ -24,7 +24,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { SnackbarMessage } from '../snackbarMessage';
-import { AUTO_REMOVE_MESSAGE_TIME_INTERVAL } from '../constants';
+import { AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX } from '../constants';
 
 describe('design-system/components/snackbar/SnackbarMessage', () => {
   const mockHandleDismiss = jest.fn();
@@ -43,8 +43,8 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
     expect(alert).toBeInTheDocument();
   });
 
-  it(`should trigger mockHandleDismiss after ${AUTO_REMOVE_MESSAGE_TIME_INTERVAL}ms`, async () => {
-    jest.setTimeout(AUTO_REMOVE_MESSAGE_TIME_INTERVAL + 500);
+  it(`should trigger mockHandleDismiss after ${AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX}ms`, async () => {
+    jest.setTimeout(AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX + 500);
 
     renderWithProviders(
       <SnackbarMessage
@@ -55,7 +55,7 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
     );
 
     await waitFor(() => expect(mockHandleDismiss).toHaveBeenCalledTimes(1), {
-      timeout: AUTO_REMOVE_MESSAGE_TIME_INTERVAL + 500,
+      timeout: AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX + 500,
     });
   });
 

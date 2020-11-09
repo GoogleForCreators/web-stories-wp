@@ -14,12 +14,5 @@
  * limitations under the License.
  */
 
-export const MESSAGE_SEVERITY = {
-  ERROR: 'error',
-  WARNING: 'warning',
-  INFO: 'info',
-  SUCCESS: 'success',
-  DEFAULT: 'default',
-};
-
-export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL = 10000;
+export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX = 10000;
+export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN = 4000;

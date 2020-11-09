@@ -29,8 +29,8 @@ import { THEME_CONSTANTS } from '../../theme';
 import { Button } from '../button';
 import { Text } from '../typography';
 import {
-  MESSAGE_SEVERITY,
-  AUTO_REMOVE_MESSAGE_TIME_INTERVAL,
+  AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX,
+  AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN,
 } from './constants';
 
 const slideIn = keyframes`
@@ -80,20 +80,29 @@ const SnackbarMessage = ({
   actionLabel,
   isPreventAutoDismiss,
   message,
-  severity = MESSAGE_SEVERITY.DEFAULT,
   ariaLabel,
   handleDismiss,
+  removeMessageTimeInterval,
 }) => {
   const autoDismissRef = useRef();
   autoDismissRef.current = isPreventAutoDismiss ? () => {} : handleDismiss;
+
+  const messageRemovalTimeInterval = useRef(
+    typeof removeMessageTimeInterval === 'number' &&
+      removeMessageTimeInterval < AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX &&
+      removeMessageTimeInterval > AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN
+      ? removeMessageTimeInterval
+      : AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX
+  );
 
   useEffect(() => {
     if (!autoDismissRef.current) {
       return () => {};
     }
+
     const dismissTimeout = setTimeout(
       () => autoDismissRef.current(),
-      AUTO_REMOVE_MESSAGE_TIME_INTERVAL
+      messageRemovalTimeInterval.current
     );
 
     return () => clearTimeout(dismissTimeout);
@@ -101,7 +110,6 @@ const SnackbarMessage = ({
 
   return (
     <MessageContainer
-      severity={severity}
       role="alert"
       aria-label={ariaLabel}
       tabIndex={0}
@@ -120,11 +128,11 @@ const SnackbarMessage = ({
 SnackbarMessage.propTypes = {
   message: PropTypes.string.isRequired,
   isPreventAutoDismiss: PropTypes.bool,
-  severity: PropTypes.oneOf(Object.values(MESSAGE_SEVERITY)),
   actionLabel: PropTypes.string,
   handleAction: PropTypes.func,
   ariaLabel: PropTypes.string.isRequired,
   handleDismiss: PropTypes.func.isRequired,
+  removeMessageTimeInterval: PropTypes.number,
 };
 
-export { SnackbarMessage, MESSAGE_SEVERITY };
+export { SnackbarMessage };

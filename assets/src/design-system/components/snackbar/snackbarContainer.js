@@ -26,7 +26,7 @@ import { THEME_CONSTANTS } from '../../theme';
 
 export const SnackbarContainer = styled.div`
   position: fixed;
-  bottom: 40px;
+  bottom: 16px;
   left: 0;
   right: 0;
   display: flex;

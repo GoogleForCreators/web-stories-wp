@@ -17,9 +17,5 @@
 /**
  * Internal dependencies
  */
-export {
-  AUTO_REMOVE_MESSAGE_TIME_INTERVAL,
-  MESSAGE_SEVERITY,
-} from './constants';
 export { SnackbarContainer as Container } from './snackbarContainer';
 export { SnackbarMessage as Message } from './snackbarMessage';
