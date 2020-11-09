@@ -601,6 +601,7 @@ class APIProviderFixture {
             permalink_template: 'http://stories3.local/stories/%pagename%/',
             style_presets: { textStyles: [], colors: [] },
             password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
           }),
         []
       );
