@@ -23,10 +23,14 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import StoryPropTypes from '../../types';
 import { elementFillContent, elementWithBorderRadius } from '../shared';
 import { useTransformHandler } from '../../components/transform';
-import { getBorderStyle } from '../../components/elementBorder/utils';
+import {
+  getBorderStyle,
+  isOutsideBorder,
+} from '../../components/elementBorder/utils';
 import { BORDER_POSITION } from '../../constants';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -56,6 +60,7 @@ function MediaDisplay({
   children,
   showPlaceholder = false,
 }) {
+  const ref = useRef();
   useTransformHandler(id, (transform) => {
     const target = mediaRef.current;
     if (mediaRef.current) {
@@ -74,23 +79,32 @@ function MediaDisplay({
             focalY
           );
           target.style.cssText = getMediaWithScaleCss(newImgProps);
+          if (isOutsideBorder(border)) {
+            // We're undoing the scale for the outside border to ensure it stays correct size.
+            // Then add border widths to the new size.
+            const mediaScale = Math.max(scale || 100, 100) * 0.01;
+            ref.current.style.width =
+              newImgProps.width / mediaScale +
+              border.left +
+              border.right +
+              'px';
+            ref.current.style.height =
+              newImgProps.height / mediaScale +
+              border.top +
+              border.bottom +
+              'px';
+          }
         }
       }
     }
   });
-  const borderProps =
-    border?.position === BORDER_POSITION.OUTSIDE
-      ? {
-          ...border,
-          borderRadius,
-        }
-      : {};
+
   return (
     <Element
+      ref={ref}
       borderRadius={borderRadius}
-      border={border}
       showPlaceholder={showPlaceholder}
-      {...borderProps}
+      {...(isOutsideBorder(border) ? border : null)}
     >
       {children}
     </Element>
