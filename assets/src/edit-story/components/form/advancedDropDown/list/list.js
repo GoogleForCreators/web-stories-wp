@@ -43,7 +43,8 @@ import {
   addUniqueEntry,
   getInset,
 } from '../utils';
-import { List, Group, GroupLabel, Option, Selected, NoResult } from './styled';
+import { List, Group, GroupLabel, NoResult } from './styled';
+import DefaultRenderer from './defaultRenderer';
 
 function OptionList({
   keyword = '',
@@ -57,7 +58,7 @@ function OptionList({
   primaryLabel,
   priorityOptions = [],
   priorityLabel,
-  renderer,
+  renderer = DefaultRenderer,
   onObserve,
   listId,
 }) {
@@ -228,33 +229,24 @@ function OptionList({
                 </GroupLabel>
               )}
               {group.options.map((option, j) => {
-                const optionProps = {
-                  key: option.id,
-                  role: 'option',
-                  tabIndex: -1,
-                  'aria-selected': value === option.id,
-                  'aria-posinset': getInset(filteredListGroups, i, j),
-                  'aria-setsize': filteredOptions.length,
-                  'data-option': option.id,
-                  onClick: () => onSelect(option),
-                  ref: (el) =>
-                    (optionsRef.current[
-                      getInset(filteredListGroups, i, j)
-                    ] = el),
-                };
-                return renderer ? (
+                return (
                   <OptionRenderer
                     key={option.id}
-                    {...optionProps}
+                    role={'option'}
+                    tabIndex="-1"
+                    aria-selected={value === option.id}
+                    aria-posinset={getInset(filteredListGroups, i, j)}
+                    aria-setsize={filteredOptions.length}
+                    data-option={option.id}
+                    onClick={() => onSelect(option)}
+                    ref={(el) =>
+                      (optionsRef.current[
+                        getInset(filteredListGroups, i, j)
+                      ] = el)
+                    }
                     option={option}
+                    value={value}
                   />
-                ) : (
-                  <Option key={option.id} {...optionProps}>
-                    {value === option.id && (
-                      <Selected aria-label={__('Selected', 'web-stories')} />
-                    )}
-                    {option.name}
-                  </Option>
                 );
               })}
             </Group>
