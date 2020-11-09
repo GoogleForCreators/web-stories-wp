@@ -78,7 +78,7 @@
     "@babel/eslint-plugin": "^7.12.1",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/plugin-proposal-private-methods": "^7.10.4",
-    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@percy/puppeteer": "^1.1.0",
