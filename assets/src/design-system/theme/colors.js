@@ -182,6 +182,7 @@ export const light = {
   standard,
   accent,
   status,
+  opacity,
   ...brand,
   fg: {
     primary: brand.gray[90],

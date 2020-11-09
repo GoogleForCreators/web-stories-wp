@@ -32,16 +32,16 @@ const StyledTab = styled.button(
     padding: 0 16px;
 
     background-color: ${isActive
-      ? theme.colors.bg.primary
-      : theme.colors.bg.divider};
+      ? theme.colors.interactiveBg.primaryNormal
+      : theme.colors.opacity.footprint};
     border: none;
     border-radius: 50px;
     ${themeHelpers.focusableOutlineCSS(
       theme.colors.bg.primary,
-      theme.colors.accent.secondary
+      theme.colors.border.focus
     )};
 
-    color: ${isActive ? theme.colors.fg.primary : theme.colors.fg.secondary};
+    color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.primary};
     cursor: pointer;
     ${themeHelpers.expandPresetStyles({
       preset:
@@ -55,16 +55,12 @@ const StyledTab = styled.button(
       pointer-events: none;
     }
 
-    &:hover {
-      color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
-    }
-
     &:focus {
       outline: none;
-      color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
     }
 
     transition: color 0.6s ease 0s;
+    transition: background-color 0.6s ease 0s;
   `
 );
 

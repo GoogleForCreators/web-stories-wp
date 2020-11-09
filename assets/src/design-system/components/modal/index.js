@@ -21,7 +21,6 @@ import { useContext } from 'react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { rgba } from 'polished';
 
 const ADMIN_TOOLBAR_HEIGHT = 32;
 const ADMIN_MENU_WIDTH = 160;
@@ -58,7 +57,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     zIndex: 10,
-    backgroundColor: rgba(theme.colors.bg.overlay, 0.5),
+    backgroundColor: theme.colors.opacity.black64,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -84,6 +83,7 @@ export function Modal({
   ...props
 }) {
   const themeContext = useContext(ThemeContext);
+
   return (
     <ReactModal
       className={CONTENT_CLASS}
