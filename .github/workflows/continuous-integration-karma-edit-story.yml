@@ -57,7 +57,7 @@ jobs:
           flags: karmatests
 
       - name: Upload Percy snapshots
-        uses: percy/snapshot-action@v0.1.1
+        uses: percy/snapshot-action@v0.1.2
         with:
           build-directory: '.test_artifacts/karma_snapshots'
           flags: '--config=percy.config.yml'
