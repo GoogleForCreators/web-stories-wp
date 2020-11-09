@@ -63,16 +63,18 @@ jest.mock('../wpAdapter', () => ({
       _embedded: { author: [{ id: 1, name: 'admin' }] },
     });
   },
-  deleteRequest: (path, { data }) =>
+  deleteRequest: (path) => {
+    const id = path.split('/')[1];
     Promise.resolve({
-      id: data.id,
+      id: id,
       status: 'publish',
-      title: { rendered: data.title, raw: data.title },
+      title: { rendered: 'Carlos', raw: 'Carlos' },
       story_data: { pages: [{ id: 1, elements: [] }] },
       modified_gmt: '1970-01-01T00:00:00.000Z',
       date_gmt: '1970-01-01T00:00:00.000Z',
       link: 'https://www.story-link.com',
-    }),
+    });
+  },
 }));
 
 describe('ApiProvider', () => {
