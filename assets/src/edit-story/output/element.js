@@ -99,7 +99,7 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
-        {isOutsideBorder(border) && shouldDisplayBorder(element) && (
+        {!isOutsideBorder(border) && shouldDisplayBorder(element) && (
           <ElementBorder border={{ ...element.border, borderRadius }} />
         )}
       </StoryAnimation.AMPWrapper>

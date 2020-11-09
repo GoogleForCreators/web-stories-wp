@@ -41,13 +41,13 @@ const Border = styled.div`
   ${borderElementCSS}
   &:after {
     ${({ position }) =>
-      isOutsideBorder({ position }) &&
+      !isOutsideBorder({ position }) &&
       `
       ${borderElementCSS}
       content: ' ';
     `}
     ${({ color, left, top, right, bottom, position, borderRadius }) =>
-      isOutsideBorder({ position }) &&
+      !isOutsideBorder({ position }) &&
       getBorderStyle({
         color,
         left,
