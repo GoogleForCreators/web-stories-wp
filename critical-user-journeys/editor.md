@@ -1,12 +1,12 @@
 | **CUJ**                                                           | **Action**                                       | **Completion**           |
 | ----------------------------------------------------------------- | ------------------------------------------------ | ------------------------ |
-| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **0.00%** *(0 / 12)*  |
+| Creator Can Add A Link                                            | Apply a link to any element                      | 🚨 **8.33%** *(1 / 12)*  |
 |                                                                   | Apply a link to multi-selection                  | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Edit brand icon                                  | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Edit description                                 | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Link with Page Attachment                        | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Remove applied link                              | 🚨 **0.00%** *(0 / 3)*   |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 21)*  |
+|                                                                   | *[total]*                                        | 🚨 **4.76%** *(1 / 21)*  |
 | Creator Can Add Image/Video to Page                               | Drag image/video from desktop to canvas          | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Search media                                     | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*   |
@@ -23,8 +23,8 @@
 |                                                                   | Set kerning                                      | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | Set line height                                  | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Set text color                                   | 🚨 **0.00%** *(0 / 5)*   |
-|                                                                   | Use font picker                                  | 🚨 **7.69%** *(1 / 13)*  |
-|                                                                   | *[total]*                                        | 🚨 **2.86%** *(1 / 35)*  |
+|                                                                   | Use font picker                                  | 🚨 **0.00%** *(0 / 13)*  |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 35)*  |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Adding link to element in Attachment area        | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Remove Page Attachment                           | 🚨 **0.00%** *(0 / 1)*   |
