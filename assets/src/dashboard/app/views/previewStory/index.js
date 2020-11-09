@@ -72,9 +72,9 @@ const CloseButton = styled(Button)`
 
 const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
-  height: ${({ dimensions }) =>
-    `${dimensions.height - CLOSE_BUTTON_SIZE.HEIGHT}px`};
-  min-height: 90vh;
+
+  height: ${({ dimensions }) => `${dimensions.height - 40}px`};
+  max-height: calc(100vh - 40px);
 
   &:focus {
     border: ${({ theme }) => theme.DEPRECATED_THEME.borders.bluePrimary};
@@ -90,7 +90,7 @@ const HelperText = styled(Text)`
 const HelperContainer = styled.div`
   position: ${({ overlay }) => (overlay ? 'absolute' : 'inherit')};
   width: 100%;
-  min-height: 90vh;
+  height: calc(100% - 40px);
   display: flex;
   align-items: center;
   justify-content: center;
