@@ -25,6 +25,7 @@ import styled from 'styled-components';
  */
 import { dark, light } from '../theme/colors';
 import { Headline, Text, THEME_CONSTANTS } from '../';
+import { Button, BUTTON_TYPES } from '../components';
 
 export default {
   title: 'DesignSystem/Colors',
@@ -34,9 +35,19 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  border-top: ${({ beginLightDark }) =>
+    beginLightDark ? '1px solid black' : 'none'};
+  padding-top: ${({ beginLightDark }) => (beginLightDark ? '6px' : 'inherit')};
   & > h2 {
     width: 100%;
   }
+`;
+const FixedButton = styled(Button)`
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-top: 20px;
+  margin-right: 20px;
 `;
 
 const Container = styled.div`
@@ -46,6 +57,7 @@ const Container = styled.div`
   margin-right: 20px;
   flex-direction: column;
   align-items: center;
+  overflow-wrap: anywhere;
 `;
 
 const ColorBlock = styled.span`
@@ -64,11 +76,12 @@ export const _default = () => {
   const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES;
   return (
     <div>
-      <button onClick={() => setIsDarkTheme(!isDarkTheme)}>{`Toggle to ${
-        isDarkTheme ? 'light' : 'dark'
-      } theme`}</button>
+      <FixedButton
+        type={BUTTON_TYPES.PRIMARY}
+        onClick={() => setIsDarkTheme(!isDarkTheme)}
+      >{`Toggle to ${isDarkTheme ? 'light' : 'dark'} theme`}</FixedButton>
       {Object.keys(activeTheme).map((themeSection) => (
-        <Row key={themeSection}>
+        <Row key={themeSection} beginLightDark={themeSection === 'fg'}>
           <Headline as="h2">{themeSection}</Headline>
           {Object.keys(activeTheme[themeSection]).map((sectionValue) => (
             <Container key={`${themeSection}_${sectionValue}`}>
