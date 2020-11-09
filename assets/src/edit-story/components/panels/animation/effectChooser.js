@@ -80,7 +80,8 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   color: white;
   text-transform: uppercase;
 
-  &:hover {
+  &:hover,
+  &:focus {
     ${BaseAnimationCell} {
       display: inline-block;
     }
