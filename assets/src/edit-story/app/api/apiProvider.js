@@ -42,7 +42,10 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      const path = addQueryArgs(`${stories}/${storyId}`, {
+        context: 'edit',
+        _embed: 'author',
+      });
       return apiFetch({ path });
     },
     [stories]
@@ -57,6 +60,7 @@ function APIProvider({ children }) {
       autoAdvance,
       defaultPageDuration,
       content,
+      author,
       ...rest
     }) => {
       return {
@@ -70,6 +74,7 @@ function APIProvider({ children }) {
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
+        author: author.id,
         ...rest,
       };
     },

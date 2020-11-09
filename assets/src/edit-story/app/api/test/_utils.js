@@ -51,7 +51,7 @@ export const GET_MEDIA_RESPONSE_BODY = [
       raw: 'IMAGE',
       rendered: 'IMAGE',
     },
-    author: 1,
+    author: { id: 1, name: 'John Doe' },
     featured_media: 0,
     comment_status: 'open',
     ping_status: 'closed',

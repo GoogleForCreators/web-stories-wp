@@ -236,16 +236,20 @@ function OptionList({
                   'aria-posinset': getInset(filteredListGroups, i, j),
                   'aria-setsize': filteredOptions.length,
                   'data-option': option.id,
-                  onClick: () => onSelect(option.id),
+                  onClick: () => onSelect(option),
                   ref: (el) =>
                     (optionsRef.current[
                       getInset(filteredListGroups, i, j)
                     ] = el),
                 };
                 return renderer ? (
-                  <OptionRenderer {...optionProps} option={option} />
+                  <OptionRenderer
+                    key={option.id}
+                    {...optionProps}
+                    option={option}
+                  />
                 ) : (
-                  <Option {...optionProps}>
+                  <Option key={option.id} {...optionProps}>
                     {value === option.id && (
                       <Selected aria-label={__('Selected', 'web-stories')} />
                     )}
@@ -263,12 +267,12 @@ function OptionList({
 
 OptionList.propTypes = {
   keyword: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onSelect: PropTypes.func,
   onClose: PropTypes.func,
   onExpandedChange: PropTypes.func,
   focusTrigger: PropTypes.number,
-  options: PropTypes.array.isRequired,
+  options: PropTypes.array,
   primaryOptions: PropTypes.array.isRequired,
   primaryLabel: PropTypes.string,
   priorityOptions: PropTypes.array,

@@ -70,7 +70,7 @@ function PublishPanel() {
     ({
       state: {
         meta: { isSaving },
-        story: { author = '', featuredMediaUrl = '', publisherLogoUrl = '' },
+        story: { author = {}, featuredMediaUrl = '', publisherLogoUrl = '' },
       },
       actions: { updateStory },
     }) => {
@@ -134,13 +134,9 @@ function PublishPanel() {
 
   useEffect(() => {
     if (users?.length) {
-      const currentAuthor = users.find(({ id }) => author === id);
+      const currentAuthor = users.find(({ id }) => author.id === id);
       if (!currentAuthor) {
-        getUserById(author)
-          .then(({ id, name }) => {
-            setVisibleOptions([{ id, name }, ...users]);
-          })
-          .catch(() => setVisibleOptions(users));
+        setVisibleOptions([author, ...users]);
       } else {
         setVisibleOptions(users);
       }
@@ -148,9 +144,9 @@ function PublishPanel() {
   }, [author, getUserById, users]);
 
   const handleChangeAuthor = useCallback(
-    (id) => {
+    ({ id, name }) => {
       updateStory({
-        properties: { author: id },
+        properties: { author: { id, name } },
       });
     },
     [updateStory]
@@ -163,7 +159,7 @@ function PublishPanel() {
     lightMode: true,
     onChange: handleChangeAuthor,
     getOptionsByQuery: getAuthorsBySearch,
-    selectedId: author,
+    selectedId: author.id,
   };
   return (
     <Panel name="publishing">

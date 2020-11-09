@@ -73,7 +73,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
   );
 
   const handleFontPickerChange = useCallback(
-    async (id) => {
+    async ({ id }) => {
       const fontObj = fonts.find((item) => item.value === id);
       const newFont = {
         family: id,

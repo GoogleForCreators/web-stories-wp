@@ -41,7 +41,6 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
         const {
           title: { raw: title },
           status,
-          author,
           slug,
           date_gmt,
           modified,
@@ -56,6 +55,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           permalink_template: permalinkTemplate,
           style_presets: stylePresets,
           password,
+          _embedded: { author = [] },
         } = post;
         const date = `${date_gmt}Z`;
 
@@ -94,7 +94,7 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           storyId,
           title,
           status: statusFormat,
-          author,
+          author: { id: author[0].id, name: author[0].name },
           date,
           modified,
           excerpt,
