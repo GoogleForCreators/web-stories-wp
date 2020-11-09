@@ -25,8 +25,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
-import { BORDER_POSITION } from '../../constants';
-import { getBorderStyle, shouldDisplayBorder } from './utils';
+import { getBorderStyle, isOutsideBorder, shouldDisplayBorder } from './utils';
 
 const borderElementCSS = css`
   top: 0;
@@ -42,13 +41,13 @@ const Border = styled.div`
   ${borderElementCSS}
   &:after {
     ${({ position }) =>
-      position !== BORDER_POSITION.OUTSIDE &&
+      isOutsideBorder({ position }) &&
       `
       ${borderElementCSS}
       content: ' ';
     `}
     ${({ color, left, top, right, bottom, position, borderRadius }) =>
-      position !== BORDER_POSITION.OUTSIDE &&
+      isOutsideBorder({ position }) &&
       getBorderStyle({
         color,
         left,

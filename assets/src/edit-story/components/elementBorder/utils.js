@@ -58,7 +58,7 @@ export function getBorderPositionCSS({
       width: `calc(${width} + ${(left + right) / 2}px)`,
     };
   }
-  if (BORDER_POSITION.OUTSIDE === position && !skipOutsideBorder) {
+  if (isOutsideBorder({ position }) && !skipOutsideBorder) {
     return {
       left: `calc(${posLeft} - ${left}px)`,
       top: `calc(${posTop} - ${top}px)`,

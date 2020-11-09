@@ -30,8 +30,6 @@ import {
   shouldDisplayBorder,
 } from '../components/elementBorder/utils';
 import ElementBorder from '../components/elementBorder/output';
-import { canMaskHaveBorder } from '../masks';
-import { BORDER_POSITION } from '../constants';
 
 function OutputElement({ element }) {
   const { id, opacity, type, borderRadius, border } = element;
@@ -71,7 +69,7 @@ function OutputElement({ element }) {
           box={box}
           id={'el-' + id}
           style={{
-            ...(border?.position === BORDER_POSITION.OUTSIDE
+            ...(isOutsideBorder(border)
               ? getBorderStyle({ ...border, borderRadius })
               : null),
             pointerEvents: 'initial',
@@ -101,10 +99,9 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
-        {border?.position !== BORDER_POSITION.OUTSIDE &&
-          shouldDisplayBorder(element) && (
-            <ElementBorder border={{ ...element.border, borderRadius }} />
-          )}
+        {isOutsideBorder(border) && shouldDisplayBorder(element) && (
+          <ElementBorder border={{ ...element.border, borderRadius }} />
+        )}
       </StoryAnimation.AMPWrapper>
     </div>
   );

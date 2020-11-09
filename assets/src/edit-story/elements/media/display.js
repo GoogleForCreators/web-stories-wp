@@ -31,7 +31,6 @@ import {
   getBorderStyle,
   isOutsideBorder,
 } from '../../components/elementBorder/utils';
-import { BORDER_POSITION } from '../../constants';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
@@ -42,7 +41,7 @@ const Element = styled.div`
   color: transparent;
   overflow: hidden;
   ${({ color, left, top, right, bottom, position, borderRadius }) =>
-    position === BORDER_POSITION.OUTSIDE &&
+    isOutsideBorder({ position }) &&
     getBorderStyle({
       color,
       left,
