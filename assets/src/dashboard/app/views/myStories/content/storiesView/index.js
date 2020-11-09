@@ -46,6 +46,7 @@ import {
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 import { trackEvent } from '../../../../../../tracking';
+import { titleFormatted } from '../../../../../utils';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -260,7 +261,7 @@ function StoriesView({
                 aria-label={sprintf(
                   /* translators: %s: story title */
                   __('Cancel deleting story "%s"', 'web-stories'),
-                  activeStory.title
+                  titleFormatted(activeStory.title)
                 )}
               >
                 {__('Cancel', 'web-stories')}
@@ -271,7 +272,7 @@ function StoriesView({
                 aria-label={sprintf(
                   /* translators: %s: story title */
                   __('Confirm deleting story "%s"', 'web-stories'),
-                  activeStory.title
+                  titleFormatted(activeStory.title)
                 )}
               >
                 {__('Delete', 'web-stories')}
@@ -282,7 +283,7 @@ function StoriesView({
           {sprintf(
             /* translators: %s: story title. */
             __('Are you sure you want to delete "%s"?', 'web-stories'),
-            activeStory.title
+            titleFormatted(activeStory.title)
           )}
         </Dialog>
       )}
