@@ -30,7 +30,7 @@
   "dependencies": {
     "@wordpress/api-fetch": "^3.19.1",
     "@wordpress/block-editor": "^5.0.2",
-    "@wordpress/blocks": "^6.23.0",
+    "@wordpress/blocks": "^6.24.1",
     "@wordpress/components": "^11.0.0",
     "@wordpress/compose": "^3.20.1",
     "@wordpress/data": "^4.25.0",
