@@ -54,7 +54,7 @@ class CustomBlockRenderMap {
   }
 }
 
-function getPastedBlocks(html, asArray = false) {
+function getPastedBlocks(html, existingStyles = []) {
   const renderMap = new CustomBlockRenderMap();
   const { contentBlocks, entityMap } = convertFromHTML(
     html,
@@ -67,13 +67,7 @@ function getPastedBlocks(html, asArray = false) {
   );
 
   // Now select everything and remove entity from it all
-  const firstBlock = pastedContentState.getFirstBlock();
-  const lastBlock = pastedContentState.getLastBlock();
-  const emptySelection = SelectionState.createEmpty(firstBlock.getKey());
-  const entireSelection = emptySelection.merge({
-    focusKey: lastBlock.getKey(),
-    focusOffset: lastBlock.getLength(),
-  });
+  const entireSelection = selectEverything(pastedContentState);
   const noEntityContent = Modifier.applyEntity(
     pastedContentState,
     entireSelection,
@@ -132,9 +126,26 @@ function getPastedBlocks(html, asArray = false) {
     lastBlockType = blockType;
   });
 
-  return asArray
-    ? updatedContentState.getBlocksAsArray()
-    : updatedContentState.getBlockMap();
+  // Finally, apply existing styles if any
+  const everythingSelection = selectEverything(updatedContentState);
+  existingStyles.forEach((existingStyle) => {
+    updatedContentState = Modifier.applyInlineStyle(
+      updatedContentState,
+      everythingSelection,
+      existingStyle
+    );
+  });
+
+  return updatedContentState.getBlockMap();
 }
 
 export default getPastedBlocks;
+
+function selectEverything(contentState) {
+  const firstBlock = contentState.getFirstBlock();
+  const lastBlock = contentState.getLastBlock();
+  return SelectionState.createEmpty(firstBlock.getKey()).merge({
+    focusKey: lastBlock.getKey(),
+    focusOffset: lastBlock.getLength(),
+  });
+}

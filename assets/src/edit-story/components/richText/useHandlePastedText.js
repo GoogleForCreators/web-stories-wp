@@ -24,6 +24,8 @@ import { useCallback } from 'react';
  * Internal dependencies
  */
 import getPastedBlocks from './getPastedBlocks';
+import { COLOR } from './customConstants';
+import { getPrefixStylesInSelection } from './styleManipulation';
 
 /*
  * This hook returns a function to handle text pasted while in edit-mode.
@@ -38,7 +40,16 @@ function useHandlePastedText(setEditorState) {
       const selection = state.getSelection();
       let newState, stateChange;
       if (html) {
-        const blocks = getPastedBlocks(html);
+        // Get the styles of the current selection context (collapsed or not),
+        // that should be applied to the entirety of the pasted HTML.
+        // In this instance, we only care about the text color - all other existing
+        // styles will be ignored and overwritten by pasted content.
+        let existingStyles = getPrefixStylesInSelection(state, COLOR);
+        if (existingStyles.length > 1) {
+          // If selection has multiple colors, use only the first one
+          existingStyles = existingStyles.slice(0, 1);
+        }
+        const blocks = getPastedBlocks(html, existingStyles);
         newState = Modifier.replaceWithFragment(content, selection, blocks);
         stateChange = 'insert-fragment';
       } else {
