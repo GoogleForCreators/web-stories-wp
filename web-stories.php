@@ -60,15 +60,142 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
+// Load Compatibility class the old fashioned way.
+if ( ! class_exists( 'Web_Stories_Compatibility' ) ) {
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'Web_Stories_Compatibility.php';
+}
+
+global $web_stories_compatibility;
+
+$web_stories_error = new WP_Error();
+$extensions        = [
+	'date'   => [
+		'classes' => [
+			'DateTimeImmutable',
+		],
+	],
+	'dom'    => [
+		'classes' => [
+			'DOMAttr',
+			'DOMComment',
+			'DOMDocument',
+			'DOMElement',
+			'DOMNode',
+			'DOMNodeList',
+			'DOMText',
+			'DOMXPath',
+		],
+	],
+	'json'   => [
+		'functions' => [
+			'json_decode',
+			'json_encode',
+		],
+	],
+	'libxml' => [
+		'functions' => [
+			'libxml_use_internal_errors',
+		],
+	],
+	'spl'    => [
+		'functions' => [
+			'spl_autoload_register',
+		],
+	],
+];
+
+$web_stories_compatibility = new Web_Stories_Compatibility( $web_stories_error );
+$web_stories_compatibility->set_extensions( $extensions );
+$web_stories_compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
+$web_stories_compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
+$web_stories_compatibility->set_required_files(
+	[
+		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
+		WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
+	]
+);
+
+/**
+ * Displays an admin notice about why the plugin is unable to load.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function _print_missing_build_admin_notice() {
+	global $web_stories_compatibility;
+
+	$web_stories_compatibility->run_checks();
+	$_error = $web_stories_compatibility->get_error();
+	if ( ! $_error->errors ) {
+		return;
+	}
+
+	?>
+	<div class="notice notice-error">
+		<p><strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong></p>
+		<ul>
+			<?php
+			foreach ( array_keys( $_error->errors ) as $error_code ) {
+				$message = $_error->get_error_message( $error_code );
+				printf( '<li>%s</li>', wp_kses( $message, [ 'code' => [] ] ) );
+			}
+			?>
+		</ul>
+	</div>
+	<?php
+}
+
+add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
+
+if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
+	// Only check for built php files in a CLI context.
+	$web_stories_compatibility->set_required_files(
+		[
+			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
+		]
+	);
+	$web_stories_compatibility->run_checks();
+	$_error = $web_stories_compatibility->get_error();
+	if ( $_error->errors ) {
+		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
+		if ( class_exists( '\WP_CLI' ) ) {
+			\WP_CLI::warning( $heading );
+		} else {
+			echo "$heading\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		foreach ( array_keys( $_error->errors ) as $error_code ) {
+			$message = $_error->get_error_message( $error_code );
+			$body    = htmlspecialchars_decode( wp_strip_all_tags( $message ) );
+			if ( class_exists( '\WP_CLI' ) ) {
+				\WP_CLI::line( $body );
+			} else {
+				echo "$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			}
+		}
+
+		return;
+	}
+}
+
+if ( ! $web_stories_compatibility->check_required_files() ||  ! $web_stories_compatibility->check_php_version() ||  ! $web_stories_compatibility->check_wp_version() ) {
+	// However, we still need to stop further execution.
+	return;
+}
+
 // Autoloader for dependencies.
-if ( file_exists( __DIR__ . '/third-party/vendor/scoper-autoload.php' ) ) {
-	require __DIR__ . '/third-party/vendor/scoper-autoload.php';
+if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php' ) ) {
+	require WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php';
 }
 
 // Autoloader for plugin itself.
-if ( file_exists( __DIR__ . '/includes/vendor/autoload.php' ) ) {
-	require __DIR__ . '/includes/vendor/autoload.php';
+if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php' ) ) {
+	require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php';
 }
 
 // Main plugin initialization happens there so that this file is still parsable in PHP < 5.6.
-require __DIR__ . '/includes/namespace.php';
+require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/namespace.php';

@@ -21,9 +21,9 @@ namespace Google\Web_Stories\Tests;
 use WP_Error;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Compatibility
+ * @coversDefaultClass \Web_Stories_Compatibility
  */
-class Compatibility extends \WP_UnitTestCase {
+class Web_Stories_Compatibility extends \WP_UnitTestCase {
 
 	/**
 	 * @covers ::check_extensions
@@ -133,11 +133,11 @@ class Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @return \Google\Web_Stories\Compatibility
+	 * @return \Google\Web_Stories\Web_Stories_Compatibility
 	 */
 	protected function get_compatibility_object() {
 		$web_stories_error = new WP_Error();
-		$compatibility     = new \Google\Web_Stories\Compatibility( $web_stories_error );
+		$compatibility     = new \Web_Stories_Compatibility( $web_stories_error );
 		$extensions        = [
 			'fake_extension' => [
 				'classes'   => [
