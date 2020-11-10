@@ -526,7 +526,7 @@ class Story_Post_Type {
 			return false;
 		}
 
-		// Skip sanitization for missing vide posters.
+		// Skip sanitization for missing video posters.
 		if ( isset( $error['node_name'] ) && 'amp-video' === $error['node_name'] ) {
 			return false;
 		}
