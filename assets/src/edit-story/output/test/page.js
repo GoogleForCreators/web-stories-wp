@@ -31,7 +31,8 @@ import { useFeature } from 'flagged';
  */
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT, BORDER_POSITION } from '../../constants';
+import { MaskTypes } from '../../masks';
 
 describe('Page output', () => {
   useFeature.mockImplementation((feature) => {
@@ -770,6 +771,101 @@ describe('Page output', () => {
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).not.toContain('Hello, example!');
       expect(content).not.toContain('https://hello.example');
+    });
+  });
+
+  describe('border', () => {
+    const BACKGROUND_ELEMENT = {
+      isBackground: true,
+      id: 'baz',
+      type: 'image',
+      mimeType: 'image/png',
+      origRatio: 1,
+      x: 50,
+      y: 100,
+      scale: 1,
+      rotationAngle: 0,
+      width: 1,
+      height: 1,
+      resource: {
+        type: 'image',
+        mimeType: 'image/png',
+        id: 123,
+        src: 'https://example.com/image.png',
+        poster: 'https://example.com/poster.png',
+        height: 1,
+        width: 1,
+      },
+    };
+
+    const MEDIA_ELEMENT = {
+      ...BACKGROUND_ELEMENT,
+      isBackground: false,
+      id: 'baz',
+      type: 'image',
+    };
+
+    it('should output element with border if border is set', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...MEDIA_ELEMENT,
+              border: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 10,
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                position: BORDER_POSITION.INSIDE,
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).toContain('border-width:10px 10px 10px 10px;');
+      expect(content).toContain('border-color:rgba(255,255,255,1);');
+    });
+
+    it('should not output border if the element is not rectangular', () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [
+            BACKGROUND_ELEMENT,
+            {
+              ...MEDIA_ELEMENT,
+              border: {
+                top: 10,
+                left: 10,
+                right: 10,
+                bottom: 10,
+                color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+                position: 'center',
+              },
+              mask: {
+                type: MaskTypes.CIRCLE,
+              },
+            },
+          ],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const content = renderToStaticMarkup(<PageOutput {...props} />);
+      expect(content).not.toContain('border-width:10px 10px 10px 10px;');
+      expect(content).not.toContain('border-color:rgba(255,255,255,1);');
     });
   });
 

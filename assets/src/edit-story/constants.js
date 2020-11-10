@@ -79,6 +79,12 @@ export const BACKGROUND_TEXT_MODE = {
   HIGHLIGHT: 'HIGHLIGHT',
 };
 
+export const BORDER_POSITION = {
+  INSIDE: 'inside',
+  CENTER: 'center',
+  OUTSIDE: 'outside',
+};
+
 export const FONT_WEIGHT = {
   NORMAL: 400,
   MEDIUM: 500,

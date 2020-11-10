@@ -17,24 +17,22 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../../theme';
+import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
 import { defaultTypographyStyle } from '../styles';
 
 export const Display = styled.h1`
   ${defaultTypographyStyle}
   ${({ size, theme }) =>
-    css`
-      font-size: ${theme.typography.presets.display[size].size}px;
-      font-weight: ${theme.typography.presets.display[size].weight};
-      line-height: ${theme.typography.presets.display[size].lineHeight}px;
-      letter-spacing: ${theme.typography.presets.display[size].letterSpacing}px;
-    `}
+    themeHelpers.expandPresetStyles({
+      preset: theme.typography.presets.display[size],
+      theme,
+    })}
 `;
 
 Display.propTypes = {
