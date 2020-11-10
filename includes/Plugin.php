@@ -143,25 +143,11 @@ class Plugin {
 	public $experiments;
 
 	/**
-	 * AMP plugin integration.
+	 * 3P integrations.
 	 *
-	 * @var AMP
+	 * @var array
 	 */
-	public $amp;
-
-	/**
-	 * Jetpack integration.
-	 *
-	 * @var Jetpack
-	 */
-	public $jetpack;
-
-	/**
-	 * Site Kit integration.
-	 *
-	 * @var Site_Kit
-	 */
-	public $site_kit;
+	public $integrations = [];
 
 	/**
 	 * Initialize plugin functionality.
@@ -234,16 +220,16 @@ class Plugin {
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
 
-		$this->amp = new AMP();
-		add_action( 'init', [ $this->amp, 'init' ] );
+		$this->integrations['amp'] = new AMP();
+		add_action( 'init', [ $this->integrations['amp'], 'init' ] );
 
-		$this->jetpack = new Jetpack();
-		add_action( 'init', [ $this->jetpack, 'init' ] );
+		$this->integrations['jetpack'] = new Jetpack();
+		add_action( 'init', [ $this->integrations['jetpack'], 'init' ] );
 
-		$this->site_kit = new Site_Kit( $this->analytics );
-		add_action( 'init', [ $this->site_kit, 'init' ] );
+		$this->integrations['site-kit'] = new Site_Kit( $this->analytics );
+		add_action( 'init', [ $this->integrations['site-kit'], 'init' ] );
 
-		$this->dashboard = new Dashboard( $this->experiments, $this->site_kit );
+		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
 	}
 

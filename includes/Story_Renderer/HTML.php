@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Story_Renderer;
 
+use AmpProject\Dom\Document as AMP_Document;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Traits\Publisher;
 use Google\Web_Stories\Model\Story;
@@ -76,6 +77,7 @@ class HTML {
 		$markup = $this->story->get_markup();
 		$markup = $this->replace_html_head( $markup );
 		$markup = $this->replace_url_scheme( $markup );
+		$markup = $this->print_analytics( $markup );
 
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
@@ -232,6 +234,32 @@ class HTML {
 
 		return $content;
 
+	}
+
+	/**
+	 * Force home urls to http / https based on context.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $content String to replace.
+	 *
+	 * @return string
+	 */
+	protected function print_analytics( $content ) {
+		ob_start();
+
+		/**
+		 * Fires before the closing <amp-story> tag.
+		 *
+		 * Can be used to print <amp-analytics> configuration.
+		 *
+		 * @since 1.1.0
+		 */
+		do_action( 'web_stories_print_analytics' );
+
+		$output = (string) ob_get_clean();
+
+		return str_replace( '</amp-story>', $output . '</amp-story>', $content );
 	}
 
 	/**

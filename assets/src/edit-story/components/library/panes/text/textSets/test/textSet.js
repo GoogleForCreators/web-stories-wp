@@ -256,12 +256,12 @@ describe('TextSets', () => {
     );
   });
 
-  it('should allow inserting a text set', async () => {
+  it('should allow inserting a text set', () => {
     insertTextSet.mockImplementation((elements) => elements);
     const { queryAllByRole } = setup(SETS);
     const sets = queryAllByRole('listitem');
     expect(sets).toHaveLength(2);
-    await fireEvent.click(sets[1]);
+    fireEvent.click(sets[1]);
 
     expect(insertTextSet).toHaveBeenCalledTimes(1);
 

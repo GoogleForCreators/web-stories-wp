@@ -84,57 +84,6 @@ trait Sanitization_Utils {
 	}
 
 	/**
-	 * Replaces the amp-story end tag to include amp-analytics tag if set up.
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
-	 */
-	private function insert_analytics_configuration( &$document ) {
-		/**
-		 * The <amp-story> element.
-		 *
-		 * @var DOMElement $story_element The <amp-story> element.
-		 */
-		$story_element = $document->body->getElementsByTagName( 'amp-story' )->item( 0 );
-
-		if ( ! $story_element instanceof DOMElement ) {
-			return;
-		}
-
-		ob_start();
-
-		/**
-		 * Fires before the closing <amp-story> tag.
-		 *
-		 * Can be used to print <amp-analytics> configuration.
-		 *
-		 * @since 1.1.0
-		 */
-		do_action( 'web_stories_print_analytics' );
-
-		$output = (string) ob_get_clean();
-
-		if ( empty( $output ) ) {
-			return;
-		}
-
-		$fragment          = $document->createDocumentFragment();
-		$fragment_document = Document::fromHtmlFragment( $output );
-
-		if ( $fragment_document ) {
-			while ( $fragment_document->body->firstChild ) {
-				$node = $fragment_document->body->removeChild( $fragment_document->body->firstChild );
-				$node = $document->importNode( $node, true );
-				$fragment->appendChild( $node );
-			}
-		}
-
-		$story_element->appendChild( $fragment );
-	}
-
-	/**
 	 * Replaces the placeholder of publisher logo in the content.
 	 *
 	 * @since 1.1.0
