@@ -20,6 +20,11 @@
 import { percySnapshot } from '@percy/puppeteer';
 
 /**
+ * WordPress dependencies
+ */
+import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
+/**
  * Internal dependencies
  */
 import { createNewStory } from '../../utils';
@@ -37,5 +42,21 @@ describe('Story Editor with disabled JavaScript', () => {
     await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Editor no js');
+  });
+
+  it('should display error message on RTL', async () => {
+    await activatePlugin('rtl-tester');
+    // Disable javascript for test.
+    await page.setJavaScriptEnabled(false);
+
+    await createNewStory();
+
+    await expect(page).toMatchElement('#web-stories-no-js');
+
+    // Re-enable javascript for snapsnots.
+    await page.setJavaScriptEnabled(true);
+
+    await percySnapshot(page, 'Editor no js');
+    await deactivatePlugin('rtl-tester');
   });
 });

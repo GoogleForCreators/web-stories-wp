@@ -28,6 +28,8 @@ import {
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
+const percyCSS = `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`;
+
 describe('Plugin Activation', () => {
   beforeEach(async () => {
     await deactivatePlugin('web-stories');
@@ -38,9 +40,16 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch("You're all set!");
     await expect(page).toMatch('Tell some stories.');
 
-    await percySnapshot(page, 'Plugin Activation', {
-      percyCSS: `.plugin-version-author-uri, .amp-plugin-notice, .update-message, .subsubsub { display: none; }`,
-    });
+    await percySnapshot(page, 'Plugin Activation', { percyCSS });
+  });
+
+  it('should display a custom message after plugin activation on RTL', async () => {
+    await activatePlugin('rtl-tester');
+    await expect(page).toMatch("You're all set!");
+    await expect(page).toMatch('Tell some stories.');
+
+    await percySnapshot(page, 'Plugin Activation', { percyCSS });
+    await deactivatePlugin('rtl-tester');
   });
 
   it('should dismiss plugin activation message', async () => {
