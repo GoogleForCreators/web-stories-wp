@@ -122,7 +122,7 @@ describe('Panels/Preset', () => {
   });
 
   it('should render <StylePresetPanel /> panel', () => {
-    const { getByText } = setupPanel();
+    const { getByText, getByRole } = setupPanel();
     const element = getByText(PANEL_LABEL);
     expect(element).toBeDefined();
   });
@@ -201,6 +201,7 @@ describe('Panels/Preset', () => {
         textStyles: [TEST_STYLE],
       };
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
+      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
 
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();

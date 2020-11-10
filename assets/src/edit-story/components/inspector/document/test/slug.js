@@ -56,18 +56,21 @@ function setupPanel() {
 describe('SlugPanel', () => {
   it('should render Slug Panel', () => {
     const { getByRole } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Permalink' });
     expect(element).toBeDefined();
   });
 
   it('should display permalink', () => {
     const { getByRole } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const url = getByRole('link', { name: 'https://example.com/foo' });
     expect(url).toBeDefined();
   });
 
   it('should allow trailing spaces while typing but not onblur', async () => {
     const { getByRole, updateStory } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Edit: URL slug' });
 
     fireEvent.change(input, {
@@ -97,6 +100,7 @@ describe('SlugPanel', () => {
 
   it('should respect the link limit', async () => {
     const { getByRole, updateStory } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Edit: URL slug' });
     expect(input).toBeDefined();
 

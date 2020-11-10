@@ -20,6 +20,7 @@
 import ImageAccessibility from '../imageAccessibility';
 import { MULTIPLE_DISPLAY_VALUE } from '../../form';
 import { renderPanel } from './_utils';
+import {fireEvent} from "@testing-library/react";
 
 jest.mock('../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
@@ -39,6 +40,7 @@ describe('Panels/ImageAccessibility', () => {
 
   it('should render <ImageAccessibility /> panel', () => {
     const { getByRole } = renderImageAccessibility([defaultElement]);
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: /Edit: Assistive text/i });
     expect(input).toBeDefined();
   });
@@ -51,6 +53,7 @@ describe('Panels/ImageAccessibility', () => {
         resource: { title: '', alt: 'Hello!', src: '2' },
       },
     ]);
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: /Edit: Assistive text/i });
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');

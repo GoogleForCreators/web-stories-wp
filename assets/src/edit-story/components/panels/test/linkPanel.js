@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen } from '@testing-library/react';
+import {fireEvent, screen} from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -69,6 +69,7 @@ describe('Panels/Link', () => {
   };
   it('should not display metadata fields if URL is missing', () => {
     renderLinkPanel([DEFAULT_ELEMENT]);
+    fireEvent.click(screen.getByRole('button', { name: 'Expand panel' }));
     expect(
       screen.getByRole('textbox', {
         name: 'Edit: Element link',
@@ -95,6 +96,7 @@ describe('Panels/Link', () => {
         },
       },
     ]);
+    fireEvent.click(screen.getByRole('button', { name: 'Expand panel' }));
     expect(screen.getByText('Invalid web address.')).toBeInTheDocument();
   });
 
@@ -107,6 +109,7 @@ describe('Panels/Link', () => {
         },
       },
     ]);
+    fireEvent.click(screen.getByRole('button', { name: 'Expand panel' }));
     expect(
       screen.queryByRole('textbox', {
         name: 'Edit: Link description',
@@ -134,6 +137,7 @@ describe('Panels/Link', () => {
       },
     ]);
 
+    fireEvent.click(screen.getByRole('button', { name: 'Expand panel' }));
     const linkInput = screen.getByRole('textbox', {
       name: 'Edit: Element link',
     });

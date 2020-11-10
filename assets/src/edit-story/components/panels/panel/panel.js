@@ -93,6 +93,7 @@ function Panel({
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
+      setManuallyChanged(true);
       if (restoreHeight && resizeable) {
         setHeight(expandToHeight);
       }

@@ -53,18 +53,21 @@ function setupPanel() {
 describe('ExcerptPanel', () => {
   it('should render Excerpt Panel', () => {
     const { getByRole } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Excerpt' });
     expect(element).toBeDefined();
   });
 
   it('should display textbox', () => {
     const { getByRole } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Edit: Story Excerpt' });
     expect(input).toBeDefined();
   });
 
   it('should respect excerpt character limit', async () => {
     const { getByRole, updateStory } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Edit: Story Excerpt' });
 
     const bigExcerpt = ''.padStart(EXCERPT_MAX_LENGTH + 10, '1');

@@ -41,6 +41,7 @@ describe('Text Style Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    localStorage.clear();
     await fixture.render();
     await addText();
   });

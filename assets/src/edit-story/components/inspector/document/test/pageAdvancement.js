@@ -52,6 +52,7 @@ function setupPanel(configs = {}) {
 describe('PageAdvancementPanel', () => {
   it('should render Page Advancement Panel', () => {
     const { getByRole, updateStory } = setupPanel();
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeDefined();
     fireEvent.click(getByRole('radio', { name: 'Auto' }));
@@ -66,6 +67,7 @@ describe('PageAdvancementPanel', () => {
     const { getByRole, updateStory } = setupPanel({
       autoAdvance: true,
     });
+    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Page Advancement' });
     expect(element).toBeDefined();
 
