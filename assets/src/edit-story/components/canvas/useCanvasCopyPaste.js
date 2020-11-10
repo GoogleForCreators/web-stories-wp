@@ -97,12 +97,12 @@ function useCanvasGlobalKeys() {
             .replace(/<\/?html>/g, '')
             .replace(/<\/?body>/g, '');
           // First check if it's a paste of "real" elements copied from this editor
-          let addedElements = elementPasteHandler(template.content);
-          if (!addedElements) {
+          let hasAddedElements = elementPasteHandler(template.content);
+          if (!hasAddedElements) {
             // If not, parse as HTML and insert text with formatting
-            addedElements = pasteTextContent(template.innerHTML);
+            hasAddedElements = pasteTextContent(template.innerHTML);
           }
-          if (addedElements) {
+          if (hasAddedElements) {
             evt.preventDefault();
           }
         }
