@@ -67,7 +67,7 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 
 // Load Compatibility class the old fashioned way.
 if ( ! class_exists( 'Web_Stories_Compatibility' ) ) {
-	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'Web_Stories_Compatibility.php';
+	require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/Web_Stories_Compatibility.php';
 }
 
 global $web_stories_compatibility;
@@ -190,6 +190,8 @@ if ( ! $web_stories_compatibility->check_required_files() || ! $web_stories_comp
 	// However, we still need to stop further execution.
 	return;
 }
+
+unset( $web_stories_compatibility );
 
 // Autoloader for dependencies.
 if ( file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php' ) ) {
