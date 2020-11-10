@@ -96,7 +96,7 @@ function useCanvasGlobalKeys() {
             .replace(/<meta[^>]+>/g, '')
             .replace(/<\/?html>/g, '')
             .replace(/<\/?body>/g, '');
-          // First check if it's a paste of "real" elements copied from this edito
+          // First check if it's a paste of "real" elements copied from this editor
           let addedElements = elementPasteHandler(template.content);
           if (!addedElements) {
             // If not, parse as HTML and insert text with formatting

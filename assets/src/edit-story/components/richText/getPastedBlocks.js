@@ -74,7 +74,7 @@ function getPastedBlocks(html, existingStyles = []) {
     null
   );
 
-  // Then walk through entire content, buildig a new parallel document in `updatedContentState`
+  // Then walk through entire content, building a new parallel document in `updatedContentState`
   // with corrected styles and the required added list styles
   const newContentBlocks = noEntityContent.getBlocksAsArray();
   let updatedContentState = noEntityContent;
