@@ -56,7 +56,7 @@ describe('Stories Dashboard with disabled JavaScript', () => {
     // Re-enable javascript for snapsnots.
     await page.setJavaScriptEnabled(true);
 
-    await percySnapshot(page, 'Dashboard no js');
+    await percySnapshot(page, 'Dashboard no js on RTL');
     await deactivatePlugin('rtl-tester');
   });
 });

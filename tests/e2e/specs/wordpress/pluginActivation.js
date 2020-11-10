@@ -48,7 +48,7 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch("You're all set!");
     await expect(page).toMatch('Tell some stories.');
 
-    await percySnapshot(page, 'Plugin Activation', { percyCSS });
+    await percySnapshot(page, 'Plugin Activation on RTL', { percyCSS });
     await deactivatePlugin('rtl-tester');
   });
 

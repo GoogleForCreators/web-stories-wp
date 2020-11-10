@@ -43,7 +43,7 @@ describe('Story Editor', () => {
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await percySnapshot(page, 'Empty Editor');
+    await percySnapshot(page, 'Empty Editor on RTL');
     await deactivatePlugin('rtl-tester');
   });
 });

@@ -56,7 +56,7 @@ describe('Story Editor with disabled JavaScript', () => {
     // Re-enable javascript for snapsnots.
     await page.setJavaScriptEnabled(true);
 
-    await percySnapshot(page, 'Editor no js');
+    await percySnapshot(page, 'Editor no js on RTL');
     await deactivatePlugin('rtl-tester');
   });
 });

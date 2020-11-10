@@ -20,9 +20,16 @@
 import { percySnapshot } from '@percy/puppeteer';
 
 /**
+ * WordPress dependencies
+ */
+import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
+/**
  * Internal dependencies
  */
 import { visitDashboard } from '../../utils';
+
+const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
@@ -30,8 +37,15 @@ describe('Stories Dashboard', () => {
 
     await expect(page).toMatch('My Stories');
 
-    await percySnapshot(page, 'Stories Dashboard', {
-      percyCSS: `.dashboard-grid-item-date { display: none; }`,
-    });
+    await percySnapshot(page, 'Stories Dashboard', { percyCSS });
+  });
+  it('should be able to open the dashboard on RTL', async () => {
+    await activatePlugin('rtl-tester');
+    await visitDashboard();
+
+    await expect(page).toMatch('My Stories');
+
+    await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
+    await deactivatePlugin('rtl-tester');
   });
 });
