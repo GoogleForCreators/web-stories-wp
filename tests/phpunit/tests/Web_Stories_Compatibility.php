@@ -133,7 +133,7 @@ class Web_Stories_Compatibility extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @return \Google\Web_Stories\Web_Stories_Compatibility
+	 * @return \Web_Stories_Compatibility
 	 */
 	protected function get_compatibility_object() {
 		$web_stories_error = new WP_Error();
