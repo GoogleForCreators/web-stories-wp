@@ -68,6 +68,7 @@ export const elementWithOutsideBorder = css`
       ...border,
       borderRadius,
     })}
+  background-clip: padding-box;
 `;
 
 export const elementWithBackgroundColor = css`

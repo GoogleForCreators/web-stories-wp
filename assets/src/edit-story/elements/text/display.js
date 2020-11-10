@@ -42,17 +42,19 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
+import { isOutsideBorder } from '../../components/elementBorder/utils';
 import {
   getHighlightLineheight,
   generateParagraphTextStyle,
   calcFontMetrics,
 } from './util';
 
+const OutsideBorder = styled.div`
+  ${elementWithOutsideBorder}
+`;
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
-  ${elementWithBorderRadius}
-  ${elementWithOutsideBorder}
   ${elementWithTextParagraphStyle}
   line-height: ${({ lineHeight, verticalPadding }) =>
     getHighlightLineheight(lineHeight, verticalPadding)};
@@ -109,6 +111,7 @@ function TextDisplay({
   element: { id, content, backgroundColor, backgroundTextMode, ...rest },
 }) {
   const ref = useRef(null);
+  const outerBorderRef = useRef(null);
 
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -160,6 +163,21 @@ function TextDisplay({
     target.style.margin = updatedMargin
       ? `${dataToEditorY(-updatedMargin) / 2}px 0`
       : '';
+
+    if (outerBorderRef.current) {
+      if (transform) {
+        const { resize } = transform;
+        if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          const [width, height] = resize;
+          if (isOutsideBorder(border)) {
+            outerBorderRef.current.style.width =
+              width + border.left + border.right + 'px';
+            outerBorderRef.current.style.height =
+              height + border.top + border.bottom + 'px';
+          }
+        }
+      }
+    }
   });
 
   // Setting the text color of the entire block to black essentially removes all inline
@@ -170,40 +188,44 @@ function TextDisplay({
   );
 
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
-    // @todo Add a separate wrapper for outside border since the highlight wrapper has margin assinged.
+    // We need a separate outside border wrapper for outside border
+    // since the highlight wrapper uses negative margin to position the content.
+    // This, however, would shift the border incorrectly.
     return (
-      <HighlightWrapperElement
-        ref={ref}
-        {...props}
+      <OutsideBorder
+        ref={outerBorderRef}
         border={border}
         borderRadius={borderRadius}
       >
-        <HighlightElement {...props}>
-          <MarginedElement {...props}>
-            <BackgroundSpan
-              {...props}
-              dangerouslySetInnerHTML={{
-                __html: contentWithoutColor,
-              }}
-            />
-          </MarginedElement>
-        </HighlightElement>
-        <HighlightElement {...props}>
-          <MarginedElement {...props}>
-            <ForegroundSpan
-              {...props}
-              dangerouslySetInnerHTML={{
-                __html: content,
-              }}
-            />
-          </MarginedElement>
-        </HighlightElement>
-      </HighlightWrapperElement>
+        <HighlightWrapperElement ref={ref} {...props}>
+          <HighlightElement {...props}>
+            <MarginedElement {...props}>
+              <BackgroundSpan
+                {...props}
+                dangerouslySetInnerHTML={{
+                  __html: contentWithoutColor,
+                }}
+              />
+            </MarginedElement>
+          </HighlightElement>
+          <HighlightElement {...props}>
+            <MarginedElement {...props}>
+              <ForegroundSpan
+                {...props}
+                dangerouslySetInnerHTML={{
+                  __html: content,
+                }}
+              />
+            </MarginedElement>
+          </HighlightElement>
+        </HighlightWrapperElement>
+      </OutsideBorder>
     );
   }
 
   return (
     <Background
+      ref={outerBorderRef}
       backgroundColor={
         backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
       }
