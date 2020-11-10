@@ -45,6 +45,8 @@ describe('Plugin Activation', () => {
 
   it('should display a custom message after plugin activation on RTL', async () => {
     await activatePlugin('rtl-tester');
+    await deactivatePlugin('web-stories');
+    await activatePlugin('web-stories');
     await expect(page).toMatch("You're all set!");
     await expect(page).toMatch('Tell some stories.');
 
