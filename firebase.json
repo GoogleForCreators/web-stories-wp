@@ -6,6 +6,7 @@
       "**/.*"
     ],
     "cleanUrls": true,
+    "trailingSlash": true,
     "headers": [
       {
         "source": "**/*.@(jpg|jpeg|gif|png|mp4)",
