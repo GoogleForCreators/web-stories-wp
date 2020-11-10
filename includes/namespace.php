@@ -291,6 +291,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  * @since 1.2.0
  *
  * @see   \rest_preload_api_request
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  *
  * @param array        $memo Reduce accumulator.
  * @param string|array $path REST API path to preload.
