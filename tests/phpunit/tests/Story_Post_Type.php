@@ -98,7 +98,7 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$this->assertSame( PHP_INT_MAX, has_filter( 'template_include', [ $story_post_type, 'filter_template_include' ] ) );
 		$this->assertSame( 10, has_filter( 'option_amp-options', [ $story_post_type, 'filter_amp_options' ] ) );
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $story_post_type, 'filter_supportable_post_types' ] ) );
-		$this->assertSame( 10, has_filter( 'amp_validation_error_sanitized', [ $story_post_type, 'filter_amp_story_element_validation_error_sanitized' ] ) );
+		$this->assertSame( 10, has_filter( 'amp_validation_error_sanitized', [ $story_post_type, 'filter_amp_validation_error_sanitized' ] ) );
 		$this->assertSame( 10, has_filter( 'amp_to_amp_linking_element_excluded', [ $story_post_type, 'filter_amp_to_amp_linking_element_excluded' ] ) );
 		$this->assertSame( 10, has_filter( '_wp_post_revision_fields', [ $story_post_type, 'filter_revision_fields' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $story_post_type, 'add_to_jetpack_sitemap' ] ) );
