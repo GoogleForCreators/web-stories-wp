@@ -128,6 +128,7 @@ export class Fixture {
       'animation',
       'backgroundSizePosition',
       'backgroundOverlay',
+      'borderRadius',
       'borderStyle',
       'captions',
       'stylePresets',

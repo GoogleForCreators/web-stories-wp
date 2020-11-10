@@ -42,9 +42,19 @@ describe('Panels/VideoAccessibility', () => {
     return renderPanel(VideoAccessibility, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:videoAccessibility',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <VideoAccessibility /> panel', () => {
     const { getByRole } = renderVideoAccessibility([defaultElement]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const imageHolder = getByRole('region', { name: /video poster/i });
     expect(imageHolder).toBeDefined();
   });
@@ -53,7 +63,6 @@ describe('Panels/VideoAccessibility', () => {
     const { getByRole, pushUpdate } = renderVideoAccessibility([
       defaultElement,
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const imageHolder = getByRole('region', { name: /video poster/i });
     imageHolder.focus();
     expect(imageHolder).toHaveFocus();
@@ -66,10 +75,9 @@ describe('Panels/VideoAccessibility', () => {
   });
 
   it('should trim "alt" to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText, submit, getByRole } = renderVideoAccessibility([
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
       defaultElement,
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByPlaceholderText('Assistive text');
 
     const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
@@ -84,10 +92,9 @@ describe('Panels/VideoAccessibility', () => {
   });
 
   it('should trim "title" to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText, submit, getByRole } = renderVideoAccessibility([
+    const { getByPlaceholderText, submit } = renderVideoAccessibility([
       defaultElement,
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByPlaceholderText('Title');
 
     const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
@@ -113,7 +120,6 @@ describe('Panels/VideoAccessibility', () => {
         },
       },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const title = getByRole('textbox', { name: 'Edit: Video title' });
     expect(title.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(title).toHaveValue('');

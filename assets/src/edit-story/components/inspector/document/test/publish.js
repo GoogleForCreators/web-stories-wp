@@ -82,9 +82,18 @@ function setupPanel(
 }
 
 describe('PublishPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:publishing',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
   it('should render PublishPanel', () => {
-    const { getByText, getByRole } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
+    const { getByText } = setupPanel();
     const publishPanel = getByText('Publishing');
     const publisherLogo = getByText('Publisher Logo');
 
@@ -94,23 +103,20 @@ describe('PublishPanel', () => {
 
   it('should display Author field if authors available', () => {
     const { getByRole } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Author' });
     expect(element).toBeDefined();
   });
 
   it('should not display Author field without correct permissions', () => {
-    const { queryByText, getByRole } = setupPanel({
+    const { queryByText } = setupPanel({
       hasAssignAuthorAction: false,
     });
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = queryByText('Author');
     expect(element).toBeNull();
   });
 
   it('should open Date picker when clicking on date', () => {
     const { getByRole } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
@@ -120,7 +126,6 @@ describe('PublishPanel', () => {
 
   it('should update the story when choosing a date from the calendar', () => {
     const { getByRole, updateStory } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
@@ -138,7 +143,6 @@ describe('PublishPanel', () => {
 
   it('should update the story when choosing time', () => {
     const { getByRole, getByLabelText, updateStory } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
@@ -175,7 +179,6 @@ describe('PublishPanel', () => {
 
   it('should not update the date with incorrect times', () => {
     const { getByRole, getByLabelText, updateStory } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Edit: Story publish time' });
 
     fireEvent.click(element);
@@ -193,7 +196,6 @@ describe('PublishPanel', () => {
 
   it('should open the calendar via keyboard events', () => {
     const { getByRole, queryByLabelText } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
 
     let dateInCalendar = queryByLabelText('January 1, 2020');
     expect(dateInCalendar).toBeNull();

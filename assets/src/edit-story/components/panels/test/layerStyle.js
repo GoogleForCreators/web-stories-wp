@@ -33,25 +33,33 @@ describe('Panels/LayerStyle', () => {
     return renderPanel(LayerStyle, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:layerStyle',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <LayerStyle /> panel', () => {
     const { getByRole } = renderLayerStyle([
       { ...defaultElement, opacity: 100 },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Layer' });
     expect(element).toBeDefined();
   });
 
   it('should set opacity to 100 if not set', () => {
     const { getByRole } = renderLayerStyle([{}]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('100%');
   });
 
   it('should set opacity to 0 if set to 0', () => {
     const { getByRole } = renderLayerStyle([{ ...defaultElement, opacity: 0 }]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('0%');
   });
@@ -60,7 +68,6 @@ describe('Panels/LayerStyle', () => {
     const { getByRole } = renderLayerStyle([
       { ...defaultElement, opacity: 49 },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.value).toStrictEqual('49%');
   });
@@ -69,7 +76,6 @@ describe('Panels/LayerStyle', () => {
     const { getByRole, pushUpdate } = renderLayerStyle([
       { ...defaultElement, opacity: 49 },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: '23' } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
@@ -80,7 +86,6 @@ describe('Panels/LayerStyle', () => {
     const { getByRole, submit } = renderLayerStyle([
       { ...defaultElement, opacity: 49 },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: null } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
@@ -94,7 +99,6 @@ describe('Panels/LayerStyle', () => {
     const { getByRole, submit } = renderLayerStyle([
       { ...defaultElement, opacity: 49 },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     fireEvent.change(input, { target: { value: 101 } });
     fireEvent.keyDown(input, { key: 'Enter', which: 13 });
@@ -109,7 +113,6 @@ describe('Panels/LayerStyle', () => {
       { ...defaultElement, opacity: 50 },
       { id: 2, opacity: 80 },
     ]);
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(input.value).toStrictEqual('');

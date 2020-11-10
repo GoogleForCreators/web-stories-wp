@@ -56,9 +56,19 @@ function setupPanel(
 }
 
 describe('StatusPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:status',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render Status Panel', () => {
     const { getByRole } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const element = getByRole('button', { name: 'Status & Visibility' });
     expect(element).toBeDefined();
 
@@ -67,16 +77,14 @@ describe('StatusPanel', () => {
   });
 
   it('should not render the status option without correct permissions', () => {
-    const { queryByText, getByRole } = setupPanel({
+    const { queryByText } = setupPanel({
       hasPublishAction: false,
     });
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     expect(queryByText('Public')).toBeNull();
   });
 
   it('should update the story when clicking on status', () => {
     const { getByRole, updateStory } = setupPanel();
-    fireEvent.click(getByRole('button', { name: 'Expand panel' }));
     const publishOption = getByRole('radio', { name: /Public/i }).closest(
       'label'
     );

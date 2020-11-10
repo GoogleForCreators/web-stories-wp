@@ -121,8 +121,19 @@ describe('Panels/Preset', () => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-style',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <StylePresetPanel /> panel', () => {
-    const { getByText, getByRole } = setupPanel();
+    const { getByText } = setupPanel();
     const element = getByText(PANEL_LABEL);
     expect(element).toBeDefined();
   });
@@ -201,7 +212,6 @@ describe('Panels/Preset', () => {
         textStyles: [TEST_STYLE],
       };
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
 
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();

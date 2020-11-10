@@ -127,6 +127,17 @@ describe('Panels/Preset', () => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-color',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <ColorPresetPanel /> panel', () => {
     const { getByText } = setupPanel();
     const element = getByText(PANEL_LABEL);
@@ -164,10 +175,9 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR],
       };
-      const { getByLabelText, queryByLabelText, getByRole } = setupPanel(
+      const { getByLabelText, queryByLabelText } = setupPanel(
         extraStylePresets
       );
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       expect(editButton).toBeDefined();
 
@@ -329,13 +339,9 @@ describe('Panels/Preset', () => {
       const extraStylePresets = {
         colors: [TEST_COLOR, TEST_COLOR_2],
       };
-      const {
-        getByLabelText,
-        queryAllByLabelText,
-        updateStory,
-        getByRole,
-      } = setupPanel(extraStylePresets);
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
+      const { getByLabelText, queryAllByLabelText, updateStory } = setupPanel(
+        extraStylePresets
+      );
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
       fireEvent.click(editButton);
 
@@ -370,7 +376,6 @@ describe('Panels/Preset', () => {
         extraStylePresets,
         extraStateProps
       );
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 
@@ -389,7 +394,6 @@ describe('Panels/Preset', () => {
         colors: [TEST_COLOR],
       };
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 
@@ -421,12 +425,10 @@ describe('Panels/Preset', () => {
       presetHasOpacity.mockImplementation((color) => {
         return Boolean(color.color?.a !== undefined && color.color.a < 1);
       });
-      const {
-        getAllByRole,
-        updateCurrentPageProperties,
-        getByRole,
-      } = setupPanel(extraStylePresets, extraStateProps);
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
+      const { getAllByRole, updateCurrentPageProperties } = setupPanel(
+        extraStylePresets,
+        extraStateProps
+      );
 
       const applyPresetButtons = getAllByRole('button', { name: APPLY_PRESET });
       const applyPreset1 = applyPresetButtons[0];
@@ -457,7 +459,6 @@ describe('Panels/Preset', () => {
         extraStylePresets,
         extraStateProps
       );
-      fireEvent.click(getByRole('button', { name: 'Expand panel' }));
 
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
