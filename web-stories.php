@@ -130,7 +130,7 @@ $web_stories_compatibility->set_required_files(
  *
  * @return void
  */
-function _print_missing_build_admin_notice() {
+function web_stories_print_admin_notice() {
 	global $web_stories_compatibility;
 
 	$web_stories_compatibility->run_checks();
@@ -153,8 +153,7 @@ function _print_missing_build_admin_notice() {
 	</div>
 	<?php
 }
-
-add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
+add_action( 'admin_notices', 'web_stories_print_admin_notice' );
 
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
 	// Only check for built php files in a CLI context.
