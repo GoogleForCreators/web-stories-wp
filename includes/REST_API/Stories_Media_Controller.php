@@ -101,10 +101,11 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		$query_args = parent::prepare_items_query( $prepared_args, $request );
 
 		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
-			$media_types                  = $this->get_media_types();
-			$media_type_mimes             = array_values( $media_types );
-			$media_type_mimes             = array_filter( $media_type_mimes );
-			$media_type_mimes             = array_merge( ...$media_type_mimes );
+			$media_types      = $this->get_media_types();
+			$media_type_mimes = array_values( $media_types );
+			$media_type_mimes = array_filter( $media_type_mimes );
+			$media_type_mimes = array_merge( ...$media_type_mimes );
+
 			$query_args['post_mime_type'] = $media_type_mimes;
 		}
 
