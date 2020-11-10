@@ -38,15 +38,12 @@ module.exports = function (api) {
       [
         '@babel/preset-react',
         {
-          // Not fully released yet, see https://github.com/facebook/react/pull/18299#issuecomment-603738136.
-          //runtime: 'automatic',
+          runtime: 'automatic',
           development: !isProduction,
         },
       ],
     ],
     plugins: [
-      '@wordpress/babel-plugin-import-jsx-pragma',
-      '@babel/plugin-transform-react-jsx',
       'babel-plugin-styled-components',
       ['@babel/plugin-proposal-class-properties', { loose: true }],
       ['@babel/plugin-proposal-private-methods', { loose: true }],
