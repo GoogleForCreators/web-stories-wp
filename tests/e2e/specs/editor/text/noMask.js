@@ -52,4 +52,35 @@ describe('Inserting text', () => {
     await editorPage.bringToFront();
     await previewPage.close();
   });
+  it('should not cut off the glyphs', async () => {
+    await createNewStory();
+
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    await expect(page).toClick('svg[aria-label="Text library"]');
+    const libraryPaneSelector = 'section#library-pane-text';
+    await expect(page).toClick(`${libraryPaneSelector} button`);
+    const textFrame = 'div[data-testid="frameElement"]';
+    await page.waitForSelector(textFrame);
+    await page.keyboard.type('yes!');
+
+    await expect(page).toClick('button[aria-label="Edit: Font family"]');
+    await expect(page).toClick(
+      'li[role="option"][data-font="Nothing You Could Do"]'
+    );
+
+    const textElementSelector = 'span[data-text=true]';
+    await page.waitForSelector(textElementSelector);
+    await expect(page).toMatchElement(textElementSelector, {
+      text: 'yes!',
+    });
+
+    await expect(page).toClick('li#library-tab-media');
+    await expect(page).toClick('div#wpbody');
+
+    const editorPage = page;
+    const previewPage = await previewStory(editorPage);
+
+    await percySnapshot(previewPage, 'Text glyphs are not cut off');
+  });
 });
