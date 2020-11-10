@@ -358,7 +358,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 
-		$query = new \WP_Query();
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = 'stories';
 		$query->set( 'name', 'stories' );
 		$query->set( 'page', self::$story_id );
 
@@ -379,7 +380,27 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 
-		$query = new \WP_Query();
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = 'stories';
+		$query->set( 'pagename', 'stories' );
+
+		add_filter( 'post_type_archive_link', '__return_false' );
+		$result = $story_post_type->redirect_post_type_archive_urls( false, $query );
+		remove_filter( 'post_type_archive_link', '__return_false' );
+
+		$this->assertFalse( $result );
+	}
+
+	/**
+	 * @covers ::redirect_post_type_archive_urls
+	 */
+	public function test_redirect_post_type_archive_urls_pagename_child_set() {
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = 'client/stories';
 		$query->set( 'pagename', 'stories' );
 
 		add_filter( 'post_type_archive_link', '__return_false' );
@@ -398,7 +419,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $this->createMock( \Google\Web_Stories\Experiments::class ) );
 		$story_post_type->init();
 
-		$query = new \WP_Query();
+		$query                    = new \WP_Query();
+		$query->query['pagename'] = 'stories';
 		$query->set( 'pagename', 'stories' );
 		$query->set( 'feed', 'feed' );
 
