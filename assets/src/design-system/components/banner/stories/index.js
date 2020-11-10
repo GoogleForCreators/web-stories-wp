@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,6 +26,8 @@ import { text } from '@storybook/addon-knobs';
 import { THEME_CONSTANTS } from '../../../';
 import { Text } from '../../';
 import { Banner } from '..';
+
+const demoBgUrl = 'https://picsum.photos/1500/160';
 
 export default {
   title: 'DesignSystem/Components/Banner',
@@ -37,10 +38,54 @@ export const _default = () => {
   return (
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
-      title={'my storybook banner'}
+      title={'my banner'}
       onClose={action('close banner clicked')}
+      isDashboard={boolean('isDashboard', false)}
+      backgroundUrl={demoBgUrl}
     >
-      <Text>{'I am a banner child'}</Text>
+      <Text>{text('children', 'I am a banner child')}</Text>
+    </Banner>
+  );
+};
+
+export const EditorBanner = () => {
+  return (
+    <Banner
+      closeButtonLabel={'Dismiss storybook banner'}
+      title={'Animations are here!'}
+      onClose={(e) => action('close banner clicked')(e)}
+      backgroundUrl={demoBgUrl}
+    >
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+        {
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      </Text>
+    </Banner>
+  );
+};
+
+export const DashboardBanner = () => {
+  return (
+    <Banner
+      closeButtonLabel={'Dismiss storybook banner'}
+      title={'Help improve the editor!'}
+      onClose={(e) => action('close banner clicked')(e)}
+      isDashboard
+      backgroundUrl={demoBgUrl}
+    >
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+        {
+          'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with '
+        }
+        <Text
+          size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}
+          href="#"
+          as="a"
+        >
+          {'Google Privacy Policy'}
+        </Text>
+      </Text>
     </Banner>
   );
 };
