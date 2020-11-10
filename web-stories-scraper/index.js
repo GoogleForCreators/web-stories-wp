@@ -182,6 +182,11 @@ class WebStoriesScraperPlugin {
             /src="tracks\//g,
             `src="${WEBSITE_LOCATION}${urlPath}/tracks/`
           )
+          // Full URLs for link[rel=canonical].
+          .replace(
+            '<link rel="canonical" href="index.html">',
+            `<link rel="canonical" href="${WEBSITE_LOCATION}${urlPath}/">`
+          )
           // Fix schema data.
           .replace(
             /<script type="application\/ld\+json">(.*)<\/script>/gm,
