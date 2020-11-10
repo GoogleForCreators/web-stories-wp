@@ -789,7 +789,6 @@ class Story_Post_Type {
 		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
 			return $bypass;
 		}
- 
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
 		if ( isset( $query->query['pagename'] ) && 'stories' === $query->query['pagename'] && ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) ) {
 			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
