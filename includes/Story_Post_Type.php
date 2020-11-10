@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use DOMElement;
+use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -194,6 +195,7 @@ class Story_Post_Type {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
+		add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
 		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
 
@@ -457,6 +459,39 @@ class Story_Post_Type {
 		}
 
 		return array_values( $post_types );
+	}
+
+	/**
+	 * Filters the AMP plugin's sanitizers.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
+	 */
+	public function add_amp_content_sanitizers( $sanitizers ) {
+		if ( ! is_singular( 'web-story' ) ) {
+			return $sanitizers;
+		}
+
+		$post = get_queried_object();
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return $sanitizers;
+		}
+
+		$story = new Story();
+		$story->load_from_post( $post );
+		$sanitizers[ AMP_Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => [
+				'poster-portrait-src'  => $story->get_poster_portrait(),
+				'poster-square-src'    => $story->get_poster_square(),
+				'poster-landscape-src' => $story->get_poster_landscape(),
+			],
+		];
+
+		return $sanitizers;
 	}
 
 	/**
