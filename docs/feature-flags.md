@@ -61,7 +61,7 @@ Before publishing the next release, all remnants of permanently enabled feature 
 
 ## Turning on/off feature flags with the Experiments tab
 
-Feature flags can be managed via a hidden "Experiements" tab within the Stories wordpress nav. There you can turn on/off all experiments defined in `includes/Experiments.php`.
+Feature flags can be managed via a hidden "Experiements" tab within the Stories WordPress nav. There you can turn on/off all experiments defined in `includes/Experiments.php`.
 
 To turn it on, edit `web-stories.php` to switch `WEBSTORIES_DEV_MODE` from `true`. This will enable the Experiments tab, but make sure to set this back to `false` after you're done in order to not inadvertently commit this change.
 
