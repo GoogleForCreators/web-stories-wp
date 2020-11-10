@@ -124,6 +124,10 @@ class WebStoriesScraperPlugin {
             .map((dir) => dir.directory)
             .shift() || '';
 
+        if (filename.includes('%')) {
+          filename = decodeURI(filename);
+        }
+
         filename = join(storyPath, directoryByExtension, filename);
       }
 
