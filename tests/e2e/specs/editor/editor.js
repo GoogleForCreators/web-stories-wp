@@ -20,14 +20,9 @@
 import { percySnapshot } from '@percy/puppeteer';
 
 /**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
-
-/**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
+import { createNewStory, deactivateRTL, activateRTL } from '../../utils';
 
 describe('Story Editor', () => {
   it('should be able to create a blank story', async () => {
@@ -38,12 +33,12 @@ describe('Story Editor', () => {
     await percySnapshot(page, 'Empty Editor');
   });
   it('should be able to create a blank story on RTL', async () => {
-    await activatePlugin('rtl-tester');
+    await activateRTL();
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
     await percySnapshot(page, 'Empty Editor on RTL');
-    await deactivatePlugin('rtl-tester');
+    await deactivateRTL();
   });
 });

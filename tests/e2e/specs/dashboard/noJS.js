@@ -20,14 +20,9 @@
 import { percySnapshot } from '@percy/puppeteer';
 
 /**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
-
-/**
  * Internal dependencies
  */
-import { visitDashboard } from '../../utils';
+import { activateRTL, deactivateRTL, visitDashboard } from '../../utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   it('should display error message', async () => {
@@ -45,7 +40,7 @@ describe('Stories Dashboard with disabled JavaScript', () => {
   });
 
   it('should display error message on RTL', async () => {
-    await activatePlugin('rtl-tester');
+    await activateRTL();
     // Disable javascript for test.
     await page.setJavaScriptEnabled(false);
 
@@ -57,6 +52,6 @@ describe('Stories Dashboard with disabled JavaScript', () => {
     await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Dashboard no js on RTL');
-    await deactivatePlugin('rtl-tester');
+    await deactivateRTL();
   });
 });
