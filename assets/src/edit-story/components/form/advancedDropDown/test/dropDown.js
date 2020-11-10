@@ -144,7 +144,7 @@ describe('DropDown: Font Picker', () => {
     });
 
     // The second font in the list.
-    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1]);
   });
 
   it('should close the menu when the Esc key is pressed.', async () => {
@@ -206,7 +206,7 @@ describe('DropDown: Font Picker', () => {
     });
 
     // Moving down by 2 and back 1 up should end up with the second font: Roboto Condensed.
-    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1]);
   });
 
   it('should search and filter the list to match the results.', async () => {
