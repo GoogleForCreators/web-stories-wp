@@ -30,11 +30,7 @@ import styled from 'styled-components';
  */
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
-import {
-  ANIMATION_EFFECTS,
-  DIRECTION,
-  ROTATION,
-} from '../../../../animation/constants';
+import { ANIMATION_EFFECTS, DIRECTION, ROTATION } from '../../../../animation';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -140,7 +136,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.FLY_IN.value,
-              direction: DIRECTION.LEFT_TO_RIGHT,
+              flyInDir: DIRECTION.LEFT_TO_RIGHT,
             })
           }
         >
@@ -152,7 +148,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.FLY_IN.value,
-              direction: DIRECTION.TOP_TO_BOTTOM,
+              flyInDir: DIRECTION.TOP_TO_BOTTOM,
             })
           }
         >
@@ -164,7 +160,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.FLY_IN.value,
-              direction: DIRECTION.BOTTOM_TO_TOP,
+              flyInDir: DIRECTION.BOTTOM_TO_TOP,
             })
           }
         >
@@ -178,7 +174,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.FLY_IN.value,
-              direction: DIRECTION.RIGHT_TO_LEFT,
+              flyInDir: DIRECTION.RIGHT_TO_LEFT,
             })
           }
         >
@@ -203,7 +199,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-              rotation: ROTATION.COUNTER_CLOCKWISE,
+              rotateInDir: ROTATION.COUNTER_CLOCKWISE,
             })
           }
         >
@@ -217,7 +213,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-              rotation: ROTATION.CLOCKWISE,
+              rotateInDir: ROTATION.CLOCKWISE,
             })
           }
         >
@@ -242,13 +238,13 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.WHOOSH_IN.value,
-              direction: DIRECTION.LEFT_TO_RIGHT,
+              whooshInDir: DIRECTION.LEFT_TO_RIGHT,
             })
           }
         >
-          <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
+          <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
           <WhooshInLeftAnimation>
-            {__('Woosh In', 'web-stories')}
+            {__('Whoosh In', 'web-stories')}
           </WhooshInLeftAnimation>
         </GridItemHalfRow>
         <GridItemHalfRow
@@ -256,21 +252,21 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.WHOOSH_IN.value,
-              direction: DIRECTION.RIGHT_TO_LEFT,
+              whooshInDir: DIRECTION.RIGHT_TO_LEFT,
             })
           }
         >
           <WhooshInRightAnimation>
-            {__('Woosh In', 'web-stories')}
+            {__('Whoosh In', 'web-stories')}
           </WhooshInRightAnimation>
-          <ContentWrapper>{__('Woosh In', 'web-stories')}</ContentWrapper>
+          <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
         </GridItemHalfRow>
         <GridItem
           aria-label={__('Pan from Left Effect', 'web-stories')}
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.PAN.value,
-              direction: DIRECTION.LEFT_TO_RIGHT,
+              panDir: DIRECTION.LEFT_TO_RIGHT,
             })
           }
         >
@@ -282,7 +278,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.PAN.value,
-              direction: DIRECTION.TOP_TO_BOTTOM,
+              panDir: DIRECTION.TOP_TO_BOTTOM,
             })
           }
         >
@@ -294,7 +290,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.PAN.value,
-              direction: DIRECTION.BOTTOM_TO_TOP,
+              panDir: DIRECTION.BOTTOM_TO_TOP,
             })
           }
         >
@@ -306,7 +302,7 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.PAN.value,
-              direction: DIRECTION.RIGHT_TO_LEFT,
+              panDir: DIRECTION.RIGHT_TO_LEFT,
             })
           }
         >
@@ -318,7 +314,8 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.ZOOM.value,
-              defaultValue: 0,
+              zoomFrom: 0,
+              zoomTo: 1,
             })
           }
         >
@@ -330,7 +327,8 @@ export default function EffectChooser({ onAnimationSelected }) {
           onClick={() =>
             onAnimationSelected({
               animation: ANIMATION_EFFECTS.ZOOM.value,
-              defaultValue: 1,
+              zoomFrom: 2,
+              zoomTo: 1,
             })
           }
         >

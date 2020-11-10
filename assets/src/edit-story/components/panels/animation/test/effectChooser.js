@@ -53,7 +53,7 @@ describe('<EffectChooser />', function () {
 
     expect(onAnimationSelected).toHaveBeenCalledWith({
       animation: ANIMATION_EFFECTS.FLY_IN.value,
-      direction: DIRECTION.LEFT_TO_RIGHT,
+      flyInDir: DIRECTION.LEFT_TO_RIGHT,
     });
   });
 
@@ -67,7 +67,7 @@ describe('<EffectChooser />', function () {
 
     expect(onAnimationSelected).toHaveBeenCalledWith({
       animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-      rotation: ROTATION.COUNTER_CLOCKWISE,
+      rotateInDir: ROTATION.COUNTER_CLOCKWISE,
     });
   });
 
@@ -81,7 +81,8 @@ describe('<EffectChooser />', function () {
 
     expect(onAnimationSelected).toHaveBeenCalledWith({
       animation: ANIMATION_EFFECTS.ZOOM.value,
-      defaultValue: 0,
+      zoomFrom: 0,
+      zoomTo: 1,
     });
   });
 });
