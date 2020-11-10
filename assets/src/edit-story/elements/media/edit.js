@@ -165,7 +165,6 @@ function MediaEdit({ element, box }) {
     cropMediaProps.srcSet = srcSet;
   }
 
-  // @todo Add radius for outside border, too.
   const borderProps =
     isOutsideBorder(border) && borderRadius ? { borderRadius, border } : null;
 
