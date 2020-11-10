@@ -15,4 +15,5 @@
  */
 
 export { Text, Display, Headline } from './typography';
-export { Button } from './button';
+export * from './button';
+export { Modal } from './modal';

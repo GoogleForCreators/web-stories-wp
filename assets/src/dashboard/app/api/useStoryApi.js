@@ -179,9 +179,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`, {
-          data: story,
-        });
+        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },

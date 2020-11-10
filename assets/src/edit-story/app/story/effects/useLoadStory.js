@@ -48,8 +48,10 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           excerpt: { raw: excerpt },
           link,
           story_data: storyDataRaw,
+          // todo: get featured_media_url original dimensions for prepublish checklist
           featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
+          // todo: get publisher_logo_url image dimensions for prepublish checklist
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
           style_presets: stylePresets,

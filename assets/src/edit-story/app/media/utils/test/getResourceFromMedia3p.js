@@ -256,87 +256,95 @@ describe('getResourceFromMedia3p', () => {
 
   it('should return image and video resources for tenor gifs', () => {
     const media3pResource = {
-      name: 'media/tenor:6669065364376864993',
+      name: 'media/tenor:3468838096637910112',
       provider: 'TENOR',
       type: 'GIF',
       author: {},
-      createTime: '2020-06-01T03:08:24Z',
+      createTime: '2020-10-26T21:36:35Z',
       registerUsageUrl:
-        'https://media3p.googleapis.com/v1/media:registerUsage?token=AX7RMSfLAN8%2B70jpJTvTsQaIeuf5MlhFyWIq54rLC3vULzHC8OeNIaaEreXEvbUkaevy61VVi4LYPLLjhmgIjHZfkHCv3Q%3D%3D',
+        'https://media3p.googleapis.com/v1/media:registerUsage?token=ASGVQQM7RDo11b9csHFps5CdRRojuc3hJdc5cgBr817EXo%2B4oHZyK/RIyx4%2Bko/WHVgHwgBx1wThYyUgljKneqDEakyl0A%3D%3D',
       imageUrls: [
         {
           url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAAC/still-here-are-you-still-here.gif',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAC/happy-national-cat-day-peace.gif',
           imageName: 'gif',
           mimeType: 'image/gif',
           width: 498,
-          height: 371,
+          height: 498,
         },
         {
           url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAAM/still-here-are-you-still-here.gif',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
+          imageName: 'gifpreview',
+          mimeType: 'image/gif',
+          width: 640,
+          height: 640,
+        },
+        {
+          url:
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAM/happy-national-cat-day-peace.gif',
           imageName: 'tinygif',
           mimeType: 'image/gif',
           width: 220,
-          height: 164,
+          height: 220,
         },
         {
           url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAAS/still-here-are-you-still-here.gif',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAS/happy-national-cat-day-peace.gif',
           imageName: 'nanogif',
           mimeType: 'image/gif',
-          width: 121,
+          width: 90,
           height: 90,
         },
       ],
       videoUrls: [
         {
           url:
-            'https://media.tenor.com/videos/e2f95cb962325e9cf058bec8ec565476/webm',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAPs/happy-national-cat-day-peace.webm',
           videoName: 'webm',
           mimeType: 'image/webm',
           width: 640,
-          height: 478,
+          height: 640,
         },
         {
           url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAPo/still-here-are-you-still-here.mp4',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAPo/happy-national-cat-day-peace.mp4',
           videoName: 'mp4',
           mimeType: 'video/mp4',
           width: 640,
-          height: 478,
+          height: 640,
         },
         {
           url:
-            'https://media.tenor.com/videos/317ba641fbe9731c70e49eb5dfbf23f3/webm',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAP3/happy-national-cat-day-peace.webm',
           videoName: 'tinywebm',
           mimeType: 'image/webm',
-          width: 320,
-          height: 238,
+          width: 186,
+          height: 186,
         },
         {
           url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAP1/still-here-are-you-still-here.mp4',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAP1/happy-national-cat-day-peace.mp4',
           videoName: 'tinymp4',
           mimeType: 'video/mp4',
-          width: 320,
-          height: 238,
+          width: 186,
+          height: 186,
         },
         {
           url:
-            'https://media.tenor.com/videos/1511f3558f31d1ea13231b2be3b44b6c/webm',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAP4/happy-national-cat-day-peace.webm',
           videoName: 'nanowebm',
           mimeType: 'image/webm',
-          width: 150,
-          height: 112,
+          width: 86,
+          height: 86,
         },
         {
           url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAP2/still-here-are-you-still-here.mp4',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAP2/happy-national-cat-day-peace.mp4',
           videoName: 'nanomp4',
           mimeType: 'video/mp4',
-          width: 150,
-          height: 112,
+          width: 86,
+          height: 86,
         },
       ],
       videoMetadata: {
@@ -350,11 +358,11 @@ describe('getResourceFromMedia3p', () => {
       lengthFormatted: undefined,
       type: 'gif',
       mimeType: 'image/gif',
-      creationDate: '2020-06-01T03:08:24Z',
+      creationDate: '2020-10-26T21:36:35Z',
       src:
-        'https://c.tenor.com/XI1HnVuLSOEAAAAC/still-here-are-you-still-here.gif',
+        'https://c.tenor.com/MCPJ3sVx3GAAAAAC/happy-national-cat-day-peace.gif',
       width: 498,
-      height: 371,
+      height: 498,
       title: undefined,
       alt: null,
       local: false,
@@ -362,72 +370,74 @@ describe('getResourceFromMedia3p', () => {
       posterId: undefined,
       sizes: {
         full: {
-          file: 'media/tenor:6669065364376864993',
-          height: 371,
+          file: 'media/tenor:3468838096637910112',
+          height: 498,
           mime_type: 'image/gif',
           source_url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAAC/still-here-are-you-still-here.gif',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAC/happy-national-cat-day-peace.gif',
           width: 498,
         },
         large: {
-          file: 'media/tenor:6669065364376864993',
-          height: 164,
+          file: 'media/tenor:3468838096637910112',
+          height: 220,
           mime_type: 'image/gif',
           source_url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAAM/still-here-are-you-still-here.gif',
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAM/happy-national-cat-day-peace.gif',
           width: 220,
         },
         web_stories_thumbnail: {
-          file: 'media/tenor:6669065364376864993',
+          file: 'media/tenor:3468838096637910112',
           height: 90,
           mime_type: 'image/gif',
           source_url:
-            'https://c.tenor.com/XI1HnVuLSOEAAAAS/still-here-are-you-still-here.gif',
-          width: 121,
+            'https://c.tenor.com/MCPJ3sVx3GAAAAAS/happy-national-cat-day-peace.gif',
+          width: 90,
         },
       },
       output: {
         mimeType: 'video/mp4',
+        poster:
+          'https://c.tenor.com/MCPJ3sVx3GAAAAAe/happy-national-cat-day-peace.png',
         sizes: {
           mp4: {
             full: {
-              file: 'media/tenor:6669065364376864993',
-              height: 478,
+              file: 'media/tenor:3468838096637910112',
+              height: 640,
               mime_type: 'video/mp4',
               source_url:
-                'https://c.tenor.com/XI1HnVuLSOEAAAPo/still-here-are-you-still-here.mp4',
+                'https://c.tenor.com/MCPJ3sVx3GAAAAPo/happy-national-cat-day-peace.mp4',
               width: 640,
             },
             preview: {
-              file: 'media/tenor:6669065364376864993',
-              height: 112,
+              file: 'media/tenor:3468838096637910112',
+              height: 86,
               mime_type: 'video/mp4',
               source_url:
-                'https://c.tenor.com/XI1HnVuLSOEAAAP2/still-here-are-you-still-here.mp4',
-              width: 150,
+                'https://c.tenor.com/MCPJ3sVx3GAAAAP2/happy-national-cat-day-peace.mp4',
+              width: 86,
             },
           },
           webm: {
             full: {
-              file: 'media/tenor:6669065364376864993',
-              height: 478,
+              file: 'media/tenor:3468838096637910112',
+              height: 640,
               mime_type: 'image/webm',
               source_url:
-                'https://media.tenor.com/videos/e2f95cb962325e9cf058bec8ec565476/webm',
+                'https://c.tenor.com/MCPJ3sVx3GAAAAPs/happy-national-cat-day-peace.webm',
               width: 640,
             },
             preview: {
-              file: 'media/tenor:6669065364376864993',
-              height: 112,
+              file: 'media/tenor:3468838096637910112',
+              height: 86,
               mime_type: 'image/webm',
               source_url:
-                'https://media.tenor.com/videos/1511f3558f31d1ea13231b2be3b44b6c/webm',
-              width: 150,
+                'https://c.tenor.com/MCPJ3sVx3GAAAAP4/happy-national-cat-day-peace.webm',
+              width: 86,
             },
           },
         },
         src:
-          'https://c.tenor.com/XI1HnVuLSOEAAAPo/still-here-are-you-still-here.mp4',
+          'https://c.tenor.com/MCPJ3sVx3GAAAAPo/happy-national-cat-day-peace.mp4',
       },
       attribution: {
         author: {
@@ -435,7 +445,7 @@ describe('getResourceFromMedia3p', () => {
           url: undefined,
         },
         registerUsageUrl:
-          'https://media3p.googleapis.com/v1/media:registerUsage?token=AX7RMSfLAN8%2B70jpJTvTsQaIeuf5MlhFyWIq54rLC3vULzHC8OeNIaaEreXEvbUkaevy61VVi4LYPLLjhmgIjHZfkHCv3Q%3D%3D',
+          'https://media3p.googleapis.com/v1/media:registerUsage?token=ASGVQQM7RDo11b9csHFps5CdRRojuc3hJdc5cgBr817EXo%2B4oHZyK/RIyx4%2Bko/WHVgHwgBx1wThYyUgljKneqDEakyl0A%3D%3D',
       },
     };
     expect(getResourceFromMedia3p(media3pResource)).toStrictEqual(
