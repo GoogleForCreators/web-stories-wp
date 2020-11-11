@@ -34,7 +34,7 @@ const Canvas = () => {
 };
 
 describe('useCanvasKeys', function () {
-  it('should select all elements and collect their IDs when mod+a is pressed.', async function () {
+  it('should select all elements and collect their IDs when mod+a is pressed.', () => {
     const setSelectedElementsById = jest.fn();
 
     const { container } = render(
@@ -50,7 +50,7 @@ describe('useCanvasKeys', function () {
       </StoryContext.Provider>
     );
 
-    await fireEvent.keyDown(container, {
+    fireEvent.keyDown(container, {
       key: 'a',
       which: 65,
       ctrlKey: true,
@@ -61,7 +61,7 @@ describe('useCanvasKeys', function () {
     });
   });
 
-  it('should enter edit mode when the element can when the "Enter" key is pressed.', async function () {
+  it('should enter edit mode when the element can when the "Enter" key is pressed.', () => {
     const setEditingElement = jest.fn();
 
     const { container } = render(
@@ -84,7 +84,7 @@ describe('useCanvasKeys', function () {
       </StoryContext.Provider>
     );
 
-    await fireEvent.keyDown(container, {
+    fireEvent.keyDown(container, {
       key: 'Enter',
       which: 13,
     });
@@ -92,7 +92,7 @@ describe('useCanvasKeys', function () {
     expect(setEditingElement).toHaveBeenCalledWith('abc123');
   });
 
-  it('should delete selected elements when the "Delete" key is pressed.', async function () {
+  it('should delete selected elements when the "Delete" key is pressed.', () => {
     const deleteSelectedElements = jest.fn();
 
     const { container } = render(
@@ -109,7 +109,7 @@ describe('useCanvasKeys', function () {
       </StoryContext.Provider>
     );
 
-    await fireEvent.keyDown(container, {
+    fireEvent.keyDown(container, {
       key: 'Backspace',
       which: 8,
     });
@@ -117,7 +117,7 @@ describe('useCanvasKeys', function () {
     expect(deleteSelectedElements).toHaveBeenCalledWith();
   });
 
-  it('should deselect items when the "Escape" key is pressed.', async function () {
+  it('should deselect items when the "Escape" key is pressed.', () => {
     const clearSelection = jest.fn();
 
     const { container } = render(
@@ -134,7 +134,7 @@ describe('useCanvasKeys', function () {
       </StoryContext.Provider>
     );
 
-    await fireEvent.keyDown(container, {
+    fireEvent.keyDown(container, {
       key: 'Escape',
       which: 27,
     });

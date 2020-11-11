@@ -79,11 +79,12 @@ export const getHighlightLineheight = function (
   verticalPadding = 0,
   unit = 'px'
 ) {
-  return `calc(
-    ${lineHeight}em
-    ${verticalPadding > 0 ? '+' : '-'}
-    ${2 * Math.abs(verticalPadding)}${unit}
-  )`;
+  if (verticalPadding === 0) {
+    return `${lineHeight}em`;
+  }
+  return `calc(${lineHeight}em ${verticalPadding > 0 ? '+' : '-'} ${
+    2 * Math.abs(verticalPadding)
+  }${unit})`;
 };
 
 export function calcFontMetrics(element) {

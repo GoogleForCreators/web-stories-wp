@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { generateFontFamily } from '../util';
+import { generateFontFamily, getHighlightLineheight } from '../util';
 
 describe('Text/util', () => {
   describe('Text/util/generateFontFamily', () => {
@@ -44,6 +44,32 @@ describe('Text/util', () => {
           fallbacks: fallbackArray,
         })
       ).toStrictEqual(expected);
+    });
+  });
+
+  describe('Text/util/getHighlightLineheight', () => {
+    it('should return correct value when just line-height', () => {
+      const actual = getHighlightLineheight(3);
+      const expected = '3em';
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should return correct value with positive padding', () => {
+      const actual = getHighlightLineheight(3, 10);
+      const expected = 'calc(3em + 20px)';
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should return correct value with negative padding', () => {
+      const actual = getHighlightLineheight(3, -6);
+      const expected = 'calc(3em - 12px)';
+      expect(actual).toStrictEqual(expected);
+    });
+
+    it('should return correct value with given units', () => {
+      const actual = getHighlightLineheight(3, 2, '%');
+      const expected = 'calc(3em + 4%)';
+      expect(actual).toStrictEqual(expected);
     });
   });
 });

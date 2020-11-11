@@ -28,6 +28,7 @@ import buildLocalizeFn from 'date-fns/locale/_lib/buildLocalizeFn';
  */
 import { getSettings } from './settings';
 import formatDistance from './formatDistance';
+import getTimeZoneString from './getTimeZoneString';
 
 /**
  * Returns date-fns option.
@@ -44,8 +45,6 @@ function getOptions() {
   const settings = getSettings();
   const {
     locale: localeCode,
-    timezone,
-    gmtOffset,
     weekStartsOn,
     months,
     monthsShort,
@@ -141,7 +140,7 @@ function getOptions() {
    */
   const locale = {
     ...originalLocale,
-    code: localeCode,
+    code: localeCode || originalLocale.code,
     formatDistance: formatDistance,
     localize: localize,
     options: {
@@ -151,7 +150,7 @@ function getOptions() {
 
   return {
     weekStartsOn,
-    timeZone: timezone || gmtOffset,
+    timeZone: getTimeZoneString(),
     locale,
   };
 }
