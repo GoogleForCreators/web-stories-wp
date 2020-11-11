@@ -34,8 +34,8 @@ class AMP extends \WP_UnitTestCase {
 		$this->assertSame( 10, has_filter( 'option_amp-options', [ $amp, 'filter_amp_options' ] ) );
 		$this->assertSame( 10, has_filter( 'amp_supportable_post_types', [ $amp, 'filter_supportable_post_types' ] ) );
 		$this->assertSame( 10, has_filter( 'amp_to_amp_linking_element_excluded', [ $amp, 'filter_amp_to_amp_linking_element_excluded' ] ) );
-		$this->assertSame( 10, has_filter( 'amp_validation_error_sanitized', [ $amp, 'filter_amp_story_element_validation_error_sanitized' ] ) );
-		$this->assertSame( 10, has_filter( 'web_stories_amp_validation_error_sanitized', [ $amp, 'filter_amp_story_element_validation_error_sanitized' ] ) );
+		$this->assertSame( 10, has_filter( 'amp_validation_error_sanitized', [ $amp, 'filter_amp_validation_error_sanitized' ] ) );
+		$this->assertSame( 10, has_filter( 'web_stories_amp_validation_error_sanitized', [ $amp, 'filter_amp_validation_error_sanitized' ] ) );
 
 		remove_all_filters( 'option_amp-options' );
 		remove_all_filters( 'amp_supportable_post_types' );
