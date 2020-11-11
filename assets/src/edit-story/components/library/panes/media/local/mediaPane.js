@@ -18,14 +18,14 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 
 /**
  * WordPress dependencies
  */
 
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -37,6 +37,7 @@ import { useMediaPicker } from '../../../../mediaPicker';
 import { SearchInput } from '../../../common';
 import { Primary } from '../../../../button';
 import useLibrary from '../../../useLibrary';
+import createError from '../../../../../utils/createError';
 import {
   getResourceFromMediaPicker,
   getTypeFromMime,
@@ -54,6 +55,7 @@ import resourceList from '../../../../../utils/resourceList';
 import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
+import { useSnackbar } from '../../../../../app';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -110,12 +112,20 @@ function MediaPane(props) {
     }
   );
 
+  const { showSnackbar } = useSnackbar();
+
   const {
+    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
+
+  const allowedMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
@@ -130,16 +140,36 @@ function MediaPane(props) {
    */
   const onSelect = (mediaPickerEl) => {
     const resource = getResourceFromMediaPicker(mediaPickerEl);
-    // WordPress media picker event, sizes.medium.url is the smallest image
-    insertMediaElement(
-      resource,
-      mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
-    );
+    try {
+      if (!allowedMimeTypes.includes(resource.mimeType)) {
+        /* translators: %s is a list of allowed file extensions. */
+        const message = sprintf(
+          /* translators: %s: list of allowed file types. */
+          __('Please choose only %s to insert into page.', 'web-stories'),
+          allowedFileTypes.join(
+            /* translators: delimiter used in a list */
+            __(', ', 'web-stories')
+          )
+        );
+
+        throw createError('ValidError', resource.title, message);
+      }
+      // WordPress media picker event, sizes.medium.url is the smallest image
+      insertMediaElement(
+        resource,
+        mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
+      );
+    } catch (e) {
+      showSnackbar({
+        message: e.message,
+      });
+    }
   };
 
   const openMediaPicker = useMediaPicker({
     onSelect,
     onClose,
+    type: allowedMimeTypes,
   });
 
   /**
@@ -176,10 +206,6 @@ function MediaPane(props) {
 
   const filterResource = useCallback(
     ({ mimeType, width, height }) => {
-      const allowedMimeTypes = [
-        ...allowedImageMimeTypes,
-        ...allowedVideoMimeTypes,
-      ];
       const filterByMimeTypeAllowed = allowedMimeTypes.includes(mimeType);
       const filterByMediaType = mediaType
         ? mediaType === getTypeFromMime(mimeType)
@@ -188,7 +214,7 @@ function MediaPane(props) {
 
       return filterByMimeTypeAllowed && filterByMediaType && filterByValidMedia;
     },
-    [allowedImageMimeTypes, allowedVideoMimeTypes, mediaType]
+    [allowedMimeTypes, mediaType]
   );
 
   const resources = media.filter(filterResource);
