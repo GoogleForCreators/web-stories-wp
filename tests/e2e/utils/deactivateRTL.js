@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-export { default as createNewStory } from './createNewStory';
-export { default as previewStory } from './previewStory';
-export { default as visitDashboard } from './visitDashboard';
-export { default as addRequestInterception } from './addRequestInterception';
-export { default as withExperimentalFeatures } from './experimentalFeatures';
-export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption';
-export { default as deactivateRTL } from './deactivateRTL';
-export { default as activateRTL } from './activateRTL';
-export { default as publishPost } from './publishPost';
+/**
+ * WordPress dependencies
+ */
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
+
+/**
+ * Creates a new story.
+ */
+async function deactivateRTL() {
+  await visitAdminPage('plugins.php', 'd=ltr');
+}
+
+export default deactivateRTL;
