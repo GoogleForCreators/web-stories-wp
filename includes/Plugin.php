@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\AMP;
+use Google\Web_Stories\Integrations\Jetpack;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
@@ -217,6 +219,14 @@ class Plugin {
 
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
+
+		$amp = new AMP();
+		add_action( 'init', [ $amp, 'init' ] );
+		$this->integrations['amp'] = $amp;
+
+		$jetpack = new Jetpack();
+		add_action( 'init', [ $jetpack, 'init' ] );
+		$this->integrations['jetpack'] = $jetpack;
 
 		$site_kit = new Site_Kit( $this->analytics );
 		add_action( 'init', [ $site_kit, 'init' ] );

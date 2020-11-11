@@ -365,7 +365,7 @@ class Sanitization extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers \Google\Web_Stories\Story_Post_Type::filter_amp_validation_error_sanitized
+	 * @covers \Google\Web_Stories\Integrations\AMP::filter_amp_validation_error_sanitized
 	 */
 	public function test_sanitize_amp_video_with_missing_poster() {
 		ob_start();

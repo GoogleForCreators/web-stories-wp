@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\Tests;
+namespace Google\Web_Stories\Tests\Integrations;
 
-use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tests\Private_Access;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Site_Kit
