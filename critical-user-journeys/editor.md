@@ -16,15 +16,15 @@
 |                                                                   | Set different poster image                       | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 16)*  |
-| Creator Can Style Text                                            | Apply B                                          | 🚨 **0.00%** *(0 / 19)*  |
+| Creator Can Style Text                                            | Apply B                                          | 🚨 **5.26%** *(1 / 19)*  |
 |                                                                   | Apply I                                          | 🚨 **0.00%** *(0 / 10)*  |
 |                                                                   | Apply U                                          | 🚨 **0.00%** *(0 / 9)*   |
-|                                                                   | Select weight                                    | 🚨 **0.00%** *(0 / 9)*   |
+|                                                                   | Select weight                                    | 🚨 **11.11%** *(1 / 9)*  |
 |                                                                   | Set kerning                                      | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | Set line height                                  | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Set text color                                   | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | Use font picker                                  | 🚨 **0.00%** *(0 / 13)*  |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 35)*  |
+|                                                                   | *[total]*                                        | 🚨 **2.86%** *(1 / 35)*  |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Adding link to element in Attachment area        | 🚨 **0.00%** *(0 / 1)*   |
 |                                                                   | Remove Page Attachment                           | 🚨 **0.00%** *(0 / 1)*   |
@@ -69,4 +69,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.55%** *(2 / 362)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **1.38%** *(5 / 362)* |
