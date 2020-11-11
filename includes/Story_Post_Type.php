@@ -26,8 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use DOMElement;
-use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;

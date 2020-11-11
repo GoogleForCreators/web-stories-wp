@@ -220,14 +220,17 @@ class Plugin {
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
 
-		$this->integrations['amp'] = new AMP();
+		$amp = new AMP();
 		add_action( 'init', [ $this->integrations['amp'], 'init' ] );
+		$this->integrations['amp'] = $amp;
 
-		$this->integrations['jetpack'] = new Jetpack();
+		$jetpack = new Jetpack();
 		add_action( 'init', [ $this->integrations['jetpack'], 'init' ] );
+		$this->integrations['jetpack'] = $jetpack;
 
-		$this->integrations['site-kit'] = new Site_Kit( $this->analytics );
-		add_action( 'init', [ $this->integrations['site-kit'], 'init' ] );
+		$site_kit = new Site_Kit( $this->analytics );
+		add_action( 'init', [ $site_kit, 'init' ] );
+		$this->integrations['site-kit'] = $site_kit;
 
 		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );

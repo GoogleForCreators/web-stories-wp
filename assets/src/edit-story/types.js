@@ -81,7 +81,12 @@ StoryPropTypes.story = PropTypes.shape({
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
-  featuredMedia: PropTypes.number.isRequired,
+  featuredMedia: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
   password: PropTypes.string.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
@@ -374,6 +379,6 @@ export default StoryPropTypes;
  * @property {string} modified The modified date of the story.
  * @property {string} content AMP HTML content.
  * @property {string} excerpt Short description.
- * @property {number} featuredMedia Featured media ID.
+ * @property {Object} featuredMedia Featured media object.
  * @property {string} password Password
  */

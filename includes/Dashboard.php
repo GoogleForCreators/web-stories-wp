@@ -219,16 +219,11 @@ class Dashboard {
 		 */
 		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
-		$_GET['_embed'] = 1;
-
 		$preload_data = array_reduce(
 			$preload_paths,
-			'rest_preload_api_request',
+			__NAMESPACE__ . '\rest_preload_api_request',
 			[]
 		);
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		unset( $_GET['_embed'] );
 
 		wp_add_inline_script(
 			'wp-api-fetch',
@@ -351,7 +346,6 @@ class Dashboard {
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
 				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
-
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

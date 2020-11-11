@@ -30,5 +30,9 @@ export default {
 };
 
 export const _default = () => {
-  return <EffectChooser onAnimationSelected={action('onAnimationSelected')} />;
+  return (
+    <EffectChooser
+      onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
+    />
+  );
 };
