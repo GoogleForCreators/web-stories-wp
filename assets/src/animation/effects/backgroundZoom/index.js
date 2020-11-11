@@ -19,16 +19,24 @@
  */
 import { AnimationZoom } from '../../parts/zoom';
 
+// @TODO hoist lerp from dashboard into here
+const lerp = (range, progress) =>
+  (1 - progress) * range[0] + progress * range[1];
+
 export function EffectBackgroundZoom({
-  // element,
-  zoomFrom = 3,
+  element,
+  normalizedScaleFrom = 0.75,
   duration = 1000,
   delay,
   easing,
 }) {
   // console.log(element);
+  const range = [1 / (element.scale / 100), 4 / (element.scale / 100)];
   return AnimationZoom({
-    zoomFrom,
+    // @TODO we need to define the range based off the element scale
+    // at element scale 400, the range should be [1/4, 1]
+    // at element scale 100, the range should be [1, 4]
+    zoomFrom: lerp(range, normalizedScaleFrom),
     zoomTo: 1,
     duration,
     delay,

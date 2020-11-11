@@ -35,8 +35,8 @@ export const ZoomEffectInputPropTypes = {
 };
 
 export default {
-  zoomFrom: {
-    label: __('From', 'web-stories'),
+  normalizedScaleFrom: {
+    label: __('Scale From', 'web-stories'),
     tooltip: __('Slide between min and max zoom amounts', 'web-stories'),
     type: FIELD_TYPES.RANGE,
     defaultValue: 0,
