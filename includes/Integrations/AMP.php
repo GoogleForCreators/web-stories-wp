@@ -36,6 +36,8 @@ use WP_Screen;
 
 /**
  * Class AMP.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class AMP {
 	use Publisher;
