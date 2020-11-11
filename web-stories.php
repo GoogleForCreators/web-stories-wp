@@ -73,6 +73,8 @@ if ( ! class_exists( 'Web_Stories_Compatibility' ) ) {
 /**
  * Setup web stories compatibility class.
  *
+ * @SuppressWarnings(PHPMD.MissingImport)
+ *
  * @since 1.2.0
  *
  * @return Web_Stories_Compatibility
