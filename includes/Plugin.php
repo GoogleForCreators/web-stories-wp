@@ -144,32 +144,11 @@ class Plugin {
 	public $experiments;
 
 	/**
-	 * AMP plugin integration.
+	 * 3P integrations.
 	 *
-	 * @var AMP
+	 * @var array
 	 */
-	public $amp;
-
-	/**
-	 * Jetpack integration.
-	 *
-	 * @var Jetpack
-	 */
-	public $jetpack;
-
-	/**
-	 * Site Kit integration.
-	 *
-	 * @var Site_Kit
-	 */
-	public $site_kit;
-
-	/**
-	 * NextGEN Gallery integration.
-	 *
-	 * @var NextGen_Gallery
-	 */
-	public $nextgen_gallery;
+	public $integrations = [];
 
 	/**
 	 * Initialize plugin functionality.
@@ -185,7 +164,6 @@ class Plugin {
 		// Settings.
 		$this->settings = new Settings();
 		add_action( 'init', [ $this->settings, 'init' ], 5 );
-
 
 		$this->experiments = new Experiments();
 		add_action( 'init', [ $this->experiments, 'init' ], 7 );
@@ -242,20 +220,25 @@ class Plugin {
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
 
-		$this->amp = new AMP();
-		add_action( 'init', [ $this->amp, 'init' ] );
+		$amp = new AMP();
+		add_action( 'init', [ $amp, 'init' ] );
+		$this->integrations['amp'] = $amp;
 
-		$this->jetpack = new Jetpack();
-		add_action( 'init', [ $this->jetpack, 'init' ] );
+		$jetpack = new Jetpack();
+		add_action( 'init', [ $jetpack, 'init' ] );
+		$this->integrations['jetpack'] = $jetpack;
 
 		// This runs at init priority -2 because NextGEN inits at -1.
-		$this->nextgen_gallery = new NextGen_Gallery();
-		add_action( 'init', [ $this->nextgen_gallery, 'init' ], -2 );
+		$nextgen_gallery = new NextGen_Gallery();
+		add_action( 'init', [ $nextgen_gallery, 'init' ], -2 );
+		$this->integrations['nextgen_gallery'] = $nextgen_gallery;
 
-		$this->site_kit = new Site_Kit( $this->analytics );
-		add_action( 'init', [ $this->site_kit, 'init' ] );
+		$site_kit = new Site_Kit( $this->analytics );
+		add_action( 'init', [ $site_kit, 'init' ] );
+		$this->integrations['site-kit'] = $site_kit;
 
-		$this->dashboard = new Dashboard( $this->experiments, $this->site_kit );
+
+		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
 	}
 

@@ -83,6 +83,7 @@ export const dark = {
     workspace: '#1B1D1C',
     panel: '#282A2A',
     divider: standard.white,
+    overlay: '#1E1F1F',
   },
 };
 
@@ -104,5 +105,6 @@ export const light = {
     workspace: '#FCFCFC',
     panel: '#F7F8F7',
     divider: '#1B1D1C',
+    overlay: '#1E1F1F',
   },
 };

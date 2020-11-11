@@ -48,16 +48,32 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           excerpt: { raw: excerpt },
           link,
           story_data: storyDataRaw,
-          // todo: get featured_media_url original dimensions for prepublish checklist
-          featured_media: featuredMedia,
           featured_media_url: featuredMediaUrl,
-          // todo: get publisher_logo_url image dimensions for prepublish checklist
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
           style_presets: stylePresets,
           password,
+          _embedded: embedded,
         } = post;
         const date = `${date_gmt}Z`;
+
+        let featuredMedia = {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: featuredMediaUrl,
+        };
+
+        if (embedded && embedded['wp:featuredmedia']) {
+          const featuredMediaData = embedded['wp:featuredmedia'][0];
+
+          featuredMedia = {
+            id: featuredMediaData?.id,
+            height: featuredMediaData?.media_details?.height,
+            width: featuredMediaData?.media_details?.width,
+            url: featuredMediaUrl,
+          };
+        }
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -101,7 +117,6 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           slug,
           link,
           featuredMedia,
-          featuredMediaUrl,
           permalinkConfig,
           publisherLogoUrl,
           password,

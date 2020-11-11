@@ -17,12 +17,22 @@
 /**
  * External dependencies
  */
-import { getDaysInMonth, isLeapYear } from 'date-fns';
-import { format, zonedTimeToUtc } from 'date-fns-tz';
+import { getDaysInMonth, isLeapYear, format } from 'date-fns';
+import { format as formatWithTZ, zonedTimeToUtc, toDate } from 'date-fns-tz';
+/**
+ * Internal dependencies
+ */
+import getOptions from './getOptions';
 
 const MINUTE_IN_SECONDS = 60;
 const HOUR_IN_MINUTES = 60;
 const HOUR_IN_SECONDS = HOUR_IN_MINUTES * MINUTE_IN_SECONDS;
+
+const FORMAT_TOKEN_SEPARATOR = '\u2006';
+export const FORMAT_TOKEN_SEPARATOR_REGEX = new RegExp(
+  FORMAT_TOKEN_SEPARATOR,
+  'gi'
+);
 
 /**
  * Map of PHP formats to date-fns formats.
@@ -61,7 +71,7 @@ const formatMap = {
 
   // The day of the year (starting from 0). 0 through 365.
   z(date) {
-    return Number(format(date, 'D')) - 1;
+    return Number(format(date, 'DDD')) - 1;
   },
 
   // ISO-8601 week number of year, weeks starting on Monday. Example: 42 (the 42nd week in the year).
@@ -114,7 +124,8 @@ const formatMap = {
     const minutes = format(timezoned, 'm');
     const hours = format(timezoned, 'H');
 
-    return (
+    // Round results like PHP also does.
+    return Math.round(
       (seconds + minutes * MINUTE_IN_SECONDS + hours * HOUR_IN_SECONDS) / 86.4
     );
   },
@@ -144,7 +155,7 @@ const formatMap = {
   v: 'SSS',
 
   // Timezone identifier. Examples: UTC, GMT, Atlantic/Azores.
-  e: 'zz',
+  e: 'zzzz',
 
   // Whether or not the date is in daylight saving time.	1 if Daylight Saving Time, 0 otherwise.
   //eslint-disable-next-line no-unused-vars
@@ -164,18 +175,38 @@ const formatMap = {
 
   // Timezone offset in seconds. -43200 through 50400.
   Z(date) {
-    // Timezone offset in seconds.
-    const offset = format(date, 'Z');
+    const offset = formatWithTZ(
+      toDate(date, getOptions()),
+      'XXX',
+      getOptions()
+    );
+
+    if ('Z' === offset) {
+      return 0;
+    }
+
     const sign = offset[0] === '-' ? -1 : 1;
-    const parts = offset.substring(1).split(':');
+    const parts = offset.substring(1).split(':').map(Number);
     return sign * (parts[0] * HOUR_IN_MINUTES + parts[1]) * MINUTE_IN_SECONDS;
   },
 
   // ISO 8601 date. Example: 2004-02-12T15:19:21+00:00
-  c: 'yyyy-MM-DDTHH:mm:ssZ', // .toISOString
+  c(date) {
+    return formatWithTZ(
+      toDate(date, getOptions()),
+      "yyyy-MM-dd'T'HH:mm:ssxxx",
+      getOptions()
+    );
+  },
 
   // RFC 2822 formatted date.
-  r: 'ddd, D MMM yyyy HH:mm:ss ZZ',
+  r(date) {
+    return formatWithTZ(
+      toDate(date, getOptions()),
+      'EEE, dd MMM yyyy HH:mm:ss xx',
+      getOptions()
+    );
+  },
 
   // Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT).
   U: 't',
@@ -187,13 +218,15 @@ const formatMap = {
  * @see https://www.php.net/manual/en/datetime.format.php
  *
  * @param {string} dateFormat PHP-style formatting string.
- * @param {Date|string|null} date Date object or string, parsable by date-fns.
+ * @param {Date} date Date object.
  *
  * @return {string} Formatted date.
  */
-function convertFormatString(dateFormat, date = new Date()) {
-  let i, char;
+function convertFormatString(dateFormat, date) {
+  let i;
+  let char;
   const newFormat = [];
+
   for (i = 0; i < dateFormat.length; i++) {
     char = dateFormat[i];
 
@@ -201,14 +234,14 @@ function convertFormatString(dateFormat, date = new Date()) {
     if ('\\' === char) {
       // Add next character, then move on.
       i++;
-      newFormat.push(`'${dateFormat[i]}`);
+      newFormat.push(`'${dateFormat[i]}'`);
       continue;
     }
 
     if (char in formatMap) {
       if (typeof formatMap[char] !== 'string') {
         // If the format is a function, call it.
-        newFormat.push(formatMap[char](date));
+        newFormat.push(`'${formatMap[char](date)}'`);
       } else {
         // Otherwise, add as a formatting string.
         newFormat.push(formatMap[char]);
@@ -218,7 +251,10 @@ function convertFormatString(dateFormat, date = new Date()) {
     }
   }
 
-  return newFormat.join('');
+  // Join with an arbitrary unicode character in order to create space between format tokens,
+  // as PHP doesn't use repeating tokens to indicate a different format, and instead the results
+  // of each call of the token should be concatenated with the previous.
+  return newFormat.join(FORMAT_TOKEN_SEPARATOR);
 }
 
 export default convertFormatString;

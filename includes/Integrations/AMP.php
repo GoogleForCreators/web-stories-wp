@@ -27,7 +27,10 @@
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
+use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Publisher;
 use WP_Post;
 use WP_Screen;
 
@@ -35,6 +38,8 @@ use WP_Screen;
  * Class AMP.
  */
 class AMP {
+	use Publisher;
+
 	/**
 	 * Slug of the AMP validated URL post type.
 	 *
@@ -53,10 +58,11 @@ class AMP {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
-		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
+		add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
+		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
 
 		// This filter is actually used in this plugin's `Sanitization` class.
-		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
+		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_validation_error_sanitized' ], 10, 2 );
 	}
 
 	/**
@@ -100,7 +106,40 @@ class AMP {
 	}
 
 	/**
-	 * Filter amp_validation_error_sanitized to prevent invalid markup removal for the amp-story element.
+	 * Filters the AMP plugin's sanitizers.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array $sanitizers Sanitizers.
+	 * @return array Sanitizers.
+	 */
+	public function add_amp_content_sanitizers( $sanitizers ) {
+		if ( ! is_singular( 'web-story' ) ) {
+			return $sanitizers;
+		}
+
+		$post = get_queried_object();
+		if ( ! ( $post instanceof WP_Post ) ) {
+			return $sanitizers;
+		}
+
+		$story = new Story();
+		$story->load_from_post( $post );
+		$sanitizers[ AMP_Story_Sanitizer::class ] = [
+			'publisher_logo'             => $this->get_publisher_logo(),
+			'publisher_logo_placeholder' => $this->get_publisher_logo_placeholder(),
+			'poster_images'              => [
+				'poster-portrait-src'  => $story->get_poster_portrait(),
+				'poster-square-src'    => $story->get_poster_square(),
+				'poster-landscape-src' => $story->get_poster_landscape(),
+			],
+		];
+
+		return $sanitizers;
+	}
+
+	/**
+	 * Filter amp_validation_error_sanitized to prevent invalid markup removal for Web Stories.
 	 *
 	 * Since the amp-story element requires the poster-portrait-src attribute to be valid, when this attribute is absent
 	 * the AMP plugin will try to remove the amp-story element altogether. This is not the preferred resolution! So
@@ -109,15 +148,17 @@ class AMP {
 	 * element so that the page will not be advertised as AMP. This prevents GSC from complaining about a validation
 	 * issue which we already know about.
 	 *
-	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
+	 * The same is done for <amp-video> elements, for example when they have missing poster images.
 	 *
-	 * @since 1.2.0
+	 * @since 1.1.1
+	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
 	 *
 	 * @param null|bool $sanitized Whether sanitized. Null means sanitization is not overridden.
 	 * @param array     $error Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
-	public function filter_amp_story_element_validation_error_sanitized( $sanitized, $error ) {
+	public function filter_amp_validation_error_sanitized( $sanitized, $error ) {
+		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
 			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
 			(
@@ -126,6 +167,11 @@ class AMP {
 				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'publisher-logo-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
 			)
 		) {
+			return false;
+		}
+
+		// Skip sanitization for missing video posters.
+		if ( isset( $error['node_name'] ) && 'amp-video' === $error['node_name'] ) {
 			return false;
 		}
 

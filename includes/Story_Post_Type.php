@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use DOMElement;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -588,9 +587,8 @@ class Story_Post_Type {
 		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
 			return $bypass;
 		}
-
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
-		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
+		if ( isset( $query->query['pagename'] ) && 'stories' === $query->query['pagename'] && ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) ) {
 			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
 			if (
 				$query->get( 'page' ) &&

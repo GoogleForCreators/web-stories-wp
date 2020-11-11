@@ -271,6 +271,46 @@ class HTML extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::print_analytics
+	 */
+	public function test_print_analytics() {
+		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body></html>';
+
+		add_action(
+			'web_stories_print_analytics',
+			static function() {
+				echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
+			}
+		);
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
+
+		remove_all_actions( 'web_stories_print_analytics' );
+
+		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::print_analytics
+	 */
+	public function test_print_analytics_no_output() {
+		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
+
+		$this->assertNotContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertSame( $source, $actual );
+	}
+
+	/**
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.
