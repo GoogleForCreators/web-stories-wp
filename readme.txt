@@ -132,6 +132,10 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 == Upgrade Notice ==
 
+= 1.1.1 =
+
+Bug fixes and performance improvements.
+
 = 1.0.0 =
 
 Initial stable release.
