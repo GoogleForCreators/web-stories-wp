@@ -74,6 +74,10 @@ export const ANIMATION_EFFECTS = {
   },
 };
 
+export const BACKGROUND_ANIMATION_EFFECTS = {
+  ZOOM: { value: 'effect-background-zoom', name: ANIMATION_EFFECTS.ZOOM.name },
+};
+
 export const ANIMATION_PARTS = {
   BLINK_ON: {
     value: ANIMATION_TYPES.BLINK_ON,
@@ -117,6 +121,7 @@ export const FIELD_TYPES = {
   FLOAT: 'float',
   TEXT: 'text',
   CHECKBOX: 'checkbox',
+  RANGE: 'RANGE',
 };
 
 export const STORY_ANIMATION_STATE = {

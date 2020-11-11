@@ -15,21 +15,30 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../constants';
+import { FIELD_TYPES } from '../../constants';
+import { AnimationInputPropTypes } from '../types';
 
-const getDefaultFieldValue = (fieldType) => {
-  switch (fieldType) {
-    case FIELD_TYPES.CHECKBOX:
-      return false;
-    case FIELD_TYPES.NUMBER:
-    case FIELD_TYPES.FLOAT:
-    case FIELD_TYPES.RANGE:
-      return 0;
-    default:
-      return '';
-  }
+export const ZoomEffectInputPropTypes = {
+  zoomFrom: PropTypes.shape(AnimationInputPropTypes),
 };
 
-export default getDefaultFieldValue;
+export default {
+  zoomFrom: {
+    label: __('From', 'web-stories'),
+    tooltip: __('Slide between min and max zoom amounts', 'web-stories'),
+    type: FIELD_TYPES.RANGE,
+    defaultValue: 0,
+  },
+};

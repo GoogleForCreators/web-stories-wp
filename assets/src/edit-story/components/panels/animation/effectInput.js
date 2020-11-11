@@ -26,6 +26,7 @@ import { FIELD_TYPES } from '../../../../animation/constants';
 import { GeneralAnimationPropTypes } from '../../../../animation/outputs/types';
 import { AnimationFormPropTypes } from '../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../form';
+import RangeInput from '../../rangeInput';
 
 function EffectInput({ effectProps, effectConfig, field, onChange }) {
   switch (effectProps[field].type) {
@@ -38,6 +39,17 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
             value: v,
             name: v,
           }))}
+        />
+      );
+    case FIELD_TYPES.RANGE:
+      return (
+        <RangeInput
+          value={effectConfig[field] || effectProps[field].defaultValue}
+          handleChange={(value) => onChange(value, true)}
+          minorStep={0.01}
+          majorStep={0.1}
+          min={0}
+          max={1}
         />
       );
     default:

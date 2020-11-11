@@ -93,6 +93,9 @@ function AnimationPanel({
       .filter((a) => !a.delete);
   }, [selectedElements, selectedElementAnimations]);
 
+  const isBackground =
+    selectedElements.length === 1 && selectedElements[0].isBackground;
+
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
@@ -102,6 +105,7 @@ function AnimationPanel({
   ) : (
     <>
       <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
+        {/* @TODO Add BG Effect chooser */}
         <Row>
           <EffectChooserDropdown onAnimationSelected={handleAddEffect} />
         </Row>

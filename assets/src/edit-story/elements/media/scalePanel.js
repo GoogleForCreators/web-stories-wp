@@ -40,7 +40,7 @@ const OFFSET_Y = 8;
 // @todo: Should maxScale depend on the maximum resolution? Or should that
 // be left up to the helper errors? Both? In either case there'd be maximum
 // bounding scale.
-const MAX_SCALE = 400;
+export const MAX_SCALE = 400;
 
 const Container = styled.div`
   position: absolute;

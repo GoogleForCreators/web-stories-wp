@@ -17,19 +17,21 @@
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../constants';
+import { AnimationZoom } from '../../parts/zoom';
 
-const getDefaultFieldValue = (fieldType) => {
-  switch (fieldType) {
-    case FIELD_TYPES.CHECKBOX:
-      return false;
-    case FIELD_TYPES.NUMBER:
-    case FIELD_TYPES.FLOAT:
-    case FIELD_TYPES.RANGE:
-      return 0;
-    default:
-      return '';
-  }
-};
-
-export default getDefaultFieldValue;
+export function EffectBackgroundZoom({
+  // element,
+  zoomFrom = 3,
+  duration = 1000,
+  delay,
+  easing,
+}) {
+  // console.log(element);
+  return AnimationZoom({
+    zoomFrom,
+    zoomTo: 1,
+    duration,
+    delay,
+    easing,
+  });
+}
