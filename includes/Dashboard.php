@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
 use WP_Screen;
 
@@ -59,6 +60,13 @@ class Dashboard {
 	private $experiments;
 
 	/**
+	 * Site_Kit instance.
+	 *
+	 * @var Site_Kit Site_Kit instance.
+	 */
+	private $site_kit;
+
+	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
@@ -71,10 +79,12 @@ class Dashboard {
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 * @param Site_Kit    $site_kit    Site_Kit instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
 		$this->decoder     = new Decoder( $this->experiments );
+		$this->site_kit    = $site_kit;
 	}
 
 	/**
@@ -335,6 +345,7 @@ class Dashboard {
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
+				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
