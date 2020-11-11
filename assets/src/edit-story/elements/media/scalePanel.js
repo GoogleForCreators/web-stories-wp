@@ -41,6 +41,7 @@ const OFFSET_Y = 8;
 // be left up to the helper errors? Both? In either case there'd be maximum
 // bounding scale.
 export const MAX_SCALE = 400;
+export const MIN_SCALE = 100;
 
 const Container = styled.div`
   position: absolute;
@@ -98,7 +99,7 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
         <RangeInput
-          min={100}
+          min={MIN_SCALE}
           max={MAX_SCALE}
           majorStep={10}
           minorStep={1}

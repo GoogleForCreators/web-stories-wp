@@ -29,6 +29,10 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import {
+  ANIMATION_EFFECTS,
+  BACKGROUND_ANIMATION_EFFECTS,
+} from '../../../../animation/constants';
 import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
@@ -36,6 +40,11 @@ import { SimplePanel } from '../panel';
 import { Note } from '../shared';
 import EffectPanel from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
+
+const BACKGROUND_ANIMATION_OPTIONS = [
+  { value: '', name: __('Add Effect', 'web-stories') },
+  ...Object.values(BACKGROUND_ANIMATION_EFFECTS),
+];
 
 const ANIMATION_PROPERTY = 'animation';
 
@@ -105,7 +114,6 @@ function AnimationPanel({
   ) : (
     <>
       <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-        {/* @TODO Add BG Effect chooser */}
         <Row>
           <EffectChooserDropdown onAnimationSelected={handleAddEffect} />
         </Row>
