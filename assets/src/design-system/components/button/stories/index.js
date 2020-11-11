@@ -91,6 +91,12 @@ export const _default = () => {
             {'Link as Button'}
           </Button>
           <Text>{'Link as Button'}</Text>
+
+          <Button type={BUTTON_TYPES.PRIMARY}>
+            {'Just a really really long button to ensure edge cases!!!!!'}
+          </Button>
+
+          <Button type={BUTTON_TYPES.PRIMARY}>{'Text'}</Button>
         </div>
       </Row>
     </Container>

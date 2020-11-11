@@ -27,20 +27,15 @@ import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
   ({ theme }) => css`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    box-sizing: border-box;
+    position: relative;
+    display: block;
     padding: 0;
     margin: 0;
     background: transparent;
     border: none;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.primary,
-      theme.colors.border.focus
-    )};
     color: ${theme.colors.fg.primary};
     cursor: pointer;
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
       preset:
         theme.typography.presets.button[
@@ -110,22 +105,40 @@ const buttonColors = {
 const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
   min-width: 80px;
-  height: 36px;
-  padding: 8px 16px;
+  min-height: 44px;
   border-radius: 4px;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
+    padding: 16px 32px;
+    height: 100%;
+  }
 `;
 
 const ButtonCircle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
 
   ${({ size }) => css`
-    width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-    height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+    width: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
+    height: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
     border-radius: 50%;
 
-    & > svg {
-      width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-      height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      box-sizing: border-box;
+      padding: 10px 10px;
+      height: 100%;
+      width: 100%;
+    }
+
+    svg {
+      width: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
+      height: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
       margin: 0 auto;
     }
   `}
@@ -133,12 +146,22 @@ const ButtonCircle = styled(Base)`
 
 const ButtonIcon = styled(Base)`
   ${({ size }) => `
-    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    width: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
+    height:${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
 
-    & > svg {
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      box-sizing: border-box;
+      height: 100%;
+      width: 100%;
+    }
+    
+    svg {
       width: 100%;
       height:100%;
+      margin: 0 auto;
     }
   `}
 `;
@@ -167,7 +190,7 @@ export const Button = ({
       type={type}
       {...rest}
     >
-      {children}
+      <div>{children}</div>
     </StyledButton>
   );
 };
