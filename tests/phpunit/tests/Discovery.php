@@ -58,7 +58,7 @@ class Discovery extends \WP_UnitTestCase {
 		self::$story_id      = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
+				'post_title'   => 'Discovery Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
 				'post_author'  => self::$user_id,
@@ -87,6 +87,12 @@ class Discovery extends \WP_UnitTestCase {
 		parent::setUp();
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
+	}
+
+	public function tearDown() {
+		// Set by go_to();
+		$_SERVER['REQUEST_URI'] = '';
+		parent::tearDown();
 	}
 
 	/**

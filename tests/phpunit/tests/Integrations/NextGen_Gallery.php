@@ -24,27 +24,6 @@ use Google\Web_Stories\Story_Post_Type;
  */
 class NextGen_Gallery extends \WP_UnitTestCase {
 	/**
-	 * Story ID.
-	 *
-	 * @var int
-	 */
-	protected static $story_id;
-
-	/**
-	 * @param $factory
-	 */
-	public static function wpSetUpBeforeClass( $factory ) {
-		self::$story_id = $factory->post->create(
-			[
-				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
-				'post_status'  => 'publish',
-				'post_content' => 'Example content',
-			]
-		);
-	}
-
-	/**
 	 * @covers ::init
 	 */
 	public function test_init() {
