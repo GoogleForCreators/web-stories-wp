@@ -30,6 +30,7 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Integrations\AMP;
 use Google\Web_Stories\Integrations\Jetpack;
+use Google\Web_Stories\Integrations\NextGen_Gallery;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Status_Check_Controller;
@@ -165,7 +166,6 @@ class Plugin {
 		$this->settings = new Settings();
 		add_action( 'init', [ $this->settings, 'init' ], 5 );
 
-
 		$this->experiments = new Experiments();
 		add_action( 'init', [ $this->experiments, 'init' ], 7 );
 
@@ -228,6 +228,11 @@ class Plugin {
 		$jetpack = new Jetpack();
 		add_action( 'init', [ $jetpack, 'init' ] );
 		$this->integrations['jetpack'] = $jetpack;
+
+		// This runs at init priority -2 because NextGEN inits at -1.
+		$nextgen_gallery = new NextGen_Gallery();
+		add_action( 'init', [ $nextgen_gallery, 'init' ], -2 );
+		$this->integrations['nextgen_gallery'] = $nextgen_gallery;
 
 		$site_kit = new Site_Kit( $this->analytics );
 		add_action( 'init', [ $site_kit, 'init' ] );
