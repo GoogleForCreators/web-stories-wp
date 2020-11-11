@@ -36,6 +36,8 @@ use WP_Screen;
 
 /**
  * Class AMP.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class AMP {
 	use Publisher;
@@ -172,6 +174,11 @@ class AMP {
 
 		// Skip sanitization for missing video posters.
 		if ( isset( $error['node_name'] ) && 'amp-video' === $error['node_name'] ) {
+			return false;
+		}
+
+		// Skip sanitization for amp-video > source with invalid src.
+		if ( isset( $error['parent_name'] ) && 'source' === $error['parent_name'] ) {
 			return false;
 		}
 
