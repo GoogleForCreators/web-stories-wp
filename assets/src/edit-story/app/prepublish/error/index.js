@@ -18,4 +18,4 @@
  */
 import * as metadataErrors from './metadata';
 
-export default [{ type: 'story', checklist: [...metadataErrors] }];
+export const story = [...metadataErrors];

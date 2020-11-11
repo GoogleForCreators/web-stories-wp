@@ -13,25 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import * as generalGuidance from './general';
-import * as mediaGuidance from './media';
-import * as textGuidance from './text';
-
-export const story = [...generalGuidance, textGuidance.storyTooLittleText];
-export const page = [
-  mediaGuidance.videoElementSizeOnPage,
-  textGuidance.pageTooMuchText,
-];
-export const element = [
-  {
-    type: ['video', 'gif', 'image'],
-    checklist: [
-      mediaGuidance.mediaElementSizeOnPage,
-      mediaGuidance.mediaElementResolution,
-    ],
-  },
-  { type: 'video', checklist: mediaGuidance.videoElementLength },
-];

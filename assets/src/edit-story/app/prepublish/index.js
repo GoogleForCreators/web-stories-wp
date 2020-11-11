@@ -16,8 +16,24 @@
 /**
  * Internal dependencies
  */
-// import errors from './error';
-// import warnings from './warning';
-// import guidance from './guidance';
+// import * as error from './error';
+// import * as warning from './warning';
+// import * as guidance from './guidance';
 
-// export default function runChecklist(story) {}
+// const storyChecklist = [...error.story, ...warning.story, ...guidance];
+// const pageChecklist = [...warning.page, ...guidance.page];
+// const elementChecklist = [...warning.element, ...guidance.element];
+
+/**
+ *
+ * @typedef {import ('./types').Guidance} Guidance
+ * @typedef {import('../../types').Story} Story
+ */
+
+/**
+ *
+ * @param {Story} story The full story object being checked for guidance messages.
+ * @return {Guidance[]} The array of checklist items to be rectified.
+ */
+
+export default function prepublishChecklist(/*story*/) {}

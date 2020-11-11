@@ -19,7 +19,9 @@
 import * as accessibilityWarnings from './accessibility';
 import * as distributionWarnings from './distribution';
 
-export default [
+export const story = [distributionWarnings.storyMissingExcerpt];
+export const page = [accessibilityWarnings.pageTooManyLinks];
+export const element = [
   {
     type: 'text',
     checklist: [
@@ -46,6 +48,4 @@ export default [
     type: ['text', 'image', 'shape', 'video', 'gif'],
     checklist: [accessibilityWarnings.elementLinkTappableRegionTooSmall],
   },
-  { type: 'page', checklist: [accessibilityWarnings.pageTooManyLinks] },
-  { type: 'story', checklist: [distributionWarnings.storyMissingExcerpt] },
 ];
