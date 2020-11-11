@@ -367,7 +367,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( $request['_web_stories_envelope'] ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$response = rest_get_server()->envelope_response( $response, isset( $_GET['_embed'] ) );
+			$response = rest_get_server()->envelope_response( $response, isset( $request['_embed'] ) ? $request['_embed'] : false );
 		}
 		return $response;
 	}

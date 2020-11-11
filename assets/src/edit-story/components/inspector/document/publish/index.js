@@ -63,21 +63,25 @@ function PublishPanel() {
   const {
     isSaving,
     author,
-    featuredMediaUrl,
+    featuredMedia,
     publisherLogoUrl,
     updateStory,
   } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { author = {}, featuredMediaUrl = '', publisherLogoUrl = '' },
+        story: {
+          author = {},
+          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+          publisherLogoUrl = '',
+        },
       },
       actions: { updateStory },
     }) => {
       return {
         isSaving,
         author,
-        featuredMediaUrl,
+        featuredMedia,
         publisherLogoUrl,
         updateStory,
       };
@@ -99,8 +103,12 @@ function PublishPanel() {
     (image) =>
       updateStory({
         properties: {
-          featuredMedia: image.id,
-          featuredMediaUrl: image.sizes?.medium?.url || image.url,
+          featuredMedia: {
+            id: image.id,
+            height: image.sizes?.medium?.height || image.height,
+            url: image.sizes?.medium?.url || image.url,
+            width: image.sizes?.medium?.width || image.width,
+          },
         },
       }),
     [updateStory]
@@ -213,7 +221,7 @@ function PublishPanel() {
           </LabelWrapper>
           <MediaWrapper>
             <Media
-              value={featuredMediaUrl}
+              value={featuredMedia?.url}
               onChange={handleChangeCover}
               title={__('Select as cover image', 'web-stories')}
               buttonInsertText={__('Select as cover image', 'web-stories')}
