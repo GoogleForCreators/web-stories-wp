@@ -30,7 +30,7 @@ function GifOutput({ element, box }) {
         autoplay="autoplay"
         loop="loop"
         noaudio="noaudio"
-        poster=""
+        poster={resource.output.poster || ''}
         layout="fill"
         title={element.title ?? resource.title}
         alt={element.alt ?? resource.alt}

@@ -229,7 +229,9 @@ function StoryAnimTool() {
       ...activeStory.originalStoryData,
       title: activeStory.title,
       excerpt: '',
-      featuredMedia: 0,
+      featuredMedia: {
+        id: 0,
+      },
       story_data: {
         ...activeStory.originalStoryData.story_data,
         pages: {

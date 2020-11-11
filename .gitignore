@@ -1,5 +1,4 @@
 .test_artifacts
-.travis_deploy_key
 .idea/
 .vscode/
 .DS_Store

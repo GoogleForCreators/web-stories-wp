@@ -34,7 +34,7 @@ import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 import { curatedFontNames } from './curatedFonts';
 
-const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
+export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
   const [fonts, setFonts] = useState([]);

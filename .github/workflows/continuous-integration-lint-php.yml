@@ -45,15 +45,9 @@ jobs:
 
       - name: Static Analysis (PHPStan)
         run: composer phpstan -- --error-format=checkstyle | cs2pr
-        if: always()
 
       - name: Static Analysis (PHPMD)
         run: composer phpmd
-        if: always()
 
       - name: Normalize composer.json
-        # composer-normalize requires PHP 7.1+. Ignore version conflicts.
-        run: |
-          composer require --no-interaction --dev ergebnis/composer-normalize:2.9.0 --ignore-platform-reqs
-          composer --no-interaction normalize --dry-run
-        if: always()
+        run: composer composer-normalize --no-interaction -- --dry-run

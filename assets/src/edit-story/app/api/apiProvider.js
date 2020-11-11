@@ -42,7 +42,11 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      const path = addQueryArgs(`${stories}/${storyId}`, {
+        context: `edit`,
+        _embed: 'wp:featuredmedia',
+      });
+
       return apiFetch({ path });
     },
     [stories]
@@ -66,7 +70,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
         },
-        featured_media: featuredMedia,
+        featured_media: featuredMedia.id,
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
@@ -200,10 +204,15 @@ function APIProvider({ children }) {
    */
   const deleteMedia = useCallback(
     (mediaId) => {
+      // `apiFetch` by default turns `DELETE` requests into `POST` requests
+      // with `X-HTTP-Method-Override: DELETE` headers.
+      // However, some Web Application Firewall (WAF) solutions prevent this.
+      // `?_method=DELETE` is an alternative solution to override the request method.
+      // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: addQueryArgs(`${media}/${mediaId}`, { _method: 'DELETE' }),
         data: { force: true },
-        method: 'DELETE',
+        method: 'POST',
       });
     },
     [media]
