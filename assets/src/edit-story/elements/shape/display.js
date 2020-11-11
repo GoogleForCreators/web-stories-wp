@@ -61,7 +61,7 @@ function ShapeDisplay({
         }
       } else {
         ref.current.style.width = '';
-        ref.current.syle.height = '';
+        ref.current.style.height = '';
       }
     }
   });
