@@ -49,7 +49,7 @@ function OutputElement({ element }) {
     >
       <StoryAnimation.AMPWrapper target={id}>
         <WithMask
-          className="mask"
+          className={element.type === 'text' ? undefined : 'mask'}
           element={element}
           box={box}
           id={'el-' + id}
