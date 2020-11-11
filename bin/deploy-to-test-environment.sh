@@ -85,8 +85,7 @@ git add -A "wp-content/plugins/web-stories/"
 git commit -F /tmp/commit-message.txt
 
 echo "Pushing new build to remote repository"
-# TODO: Uncomment before merging.
-#git push origin $PANTHEON_BRANCH
+git push origin $PANTHEON_BRANCH
 
 echo "View site at http://$PANTHEON_BRANCH-$PANTHEON_SITE.pantheonsite.io/"
 echo "Access Pantheon dashboard at https://dashboard.pantheon.io/sites/$PANTHEON_UUID#$PANTHEON_BRANCH"
