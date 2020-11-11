@@ -238,6 +238,19 @@ describe('Text Element output', () => {
     expect(element).toMatchSnapshot();
   });
 
+  it('should render text without the mask class', () => {
+    const html = renderToStaticMarkup(
+      <WrapAnimation>
+        <OutputElement element={DEFAULT_TEXT} />
+      </WrapAnimation>
+    );
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    const element = div.firstElementChild;
+    expect(element).not.toHaveStyle({ overflow: 'hidden' });
+    expect(element).not.toHaveClass('mask');
+  });
+
   describe('AMP validation', () => {
     it('should produce valid AMP output when setting text color', async () => {
       await expect(
