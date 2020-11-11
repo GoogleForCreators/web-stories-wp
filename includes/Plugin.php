@@ -221,11 +221,11 @@ class Plugin {
 		$activation_notice->init();
 
 		$amp = new AMP();
-		add_action( 'init', [ $this->integrations['amp'], 'init' ] );
+		add_action( 'init', [ $amp, 'init' ] );
 		$this->integrations['amp'] = $amp;
 
 		$jetpack = new Jetpack();
-		add_action( 'init', [ $this->integrations['jetpack'], 'init' ] );
+		add_action( 'init', [ $jetpack, 'init' ] );
 		$this->integrations['jetpack'] = $jetpack;
 
 		$site_kit = new Site_Kit( $this->analytics );
