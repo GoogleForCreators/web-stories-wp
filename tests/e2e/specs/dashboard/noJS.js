@@ -22,7 +22,7 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { visitDashboard } from '../../utils';
+import { activateRTL, deactivateRTL, visitDashboard } from '../../utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   it('should display error message', async () => {
@@ -37,5 +37,21 @@ describe('Stories Dashboard with disabled JavaScript', () => {
     await page.setJavaScriptEnabled(true);
 
     await percySnapshot(page, 'Dashboard no js');
+  });
+
+  it('should display error message on RTL', async () => {
+    await activateRTL();
+    // Disable javascript for test.
+    await page.setJavaScriptEnabled(false);
+
+    await visitDashboard();
+
+    await expect(page).toMatchElement('#web-stories-no-js');
+
+    // Re-enable javascript for snapsnots.
+    await page.setJavaScriptEnabled(true);
+
+    await percySnapshot(page, 'Dashboard no js on RTL');
+    await deactivateRTL();
   });
 });

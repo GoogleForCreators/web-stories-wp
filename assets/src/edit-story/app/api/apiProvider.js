@@ -42,7 +42,11 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      const path = addQueryArgs(`${stories}/${storyId}`, {
+        context: `edit`,
+        _embed: 'wp:featuredmedia',
+      });
+
       return apiFetch({ path });
     },
     [stories]
@@ -66,7 +70,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
         },
-        featured_media: featuredMedia,
+        featured_media: featuredMedia.id,
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,

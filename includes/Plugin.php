@@ -28,6 +28,9 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\AMP;
+use Google\Web_Stories\Integrations\Jetpack;
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
@@ -36,7 +39,6 @@ use Google\Web_Stories\Block\Embed_Block;
 use Google\Web_Stories\REST_API\Stories_Settings_Controller;
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
-use WP_Post;
 
 /**
  * Plugin class.
@@ -141,6 +143,13 @@ class Plugin {
 	public $experiments;
 
 	/**
+	 * 3P integrations.
+	 *
+	 * @var array
+	 */
+	public $integrations = [];
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -177,9 +186,6 @@ class Plugin {
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
-		$this->dashboard = new Dashboard( $this->experiments );
-		add_action( 'init', [ $this->dashboard, 'init' ] );
-
 		$this->story = new Story_Post_Type( $this->experiments );
 		add_action( 'init', [ $this->story, 'init' ] );
 
@@ -213,6 +219,21 @@ class Plugin {
 
 		$activation_notice = new Activation_Notice( $activation_flag );
 		$activation_notice->init();
+
+		$amp = new AMP();
+		add_action( 'init', [ $amp, 'init' ] );
+		$this->integrations['amp'] = $amp;
+
+		$jetpack = new Jetpack();
+		add_action( 'init', [ $jetpack, 'init' ] );
+		$this->integrations['jetpack'] = $jetpack;
+
+		$site_kit = new Site_Kit( $this->analytics );
+		add_action( 'init', [ $site_kit, 'init' ] );
+		$this->integrations['site-kit'] = $site_kit;
+
+		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
+		add_action( 'init', [ $this->dashboard, 'init' ] );
 	}
 
 	/**
