@@ -38,6 +38,12 @@ describe('nativeCopyPasteExpected', () => {
     numberInput.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
 
+    const searchInput = document.createElement('input');
+    searchInput.type = 'search';
+    document.body.appendChild(searchInput);
+    searchInput.focus();
+    expect(nativeCopyPasteExpected()).toBe(true);
+
     const contentEditable = document.createElement('div');
     contentEditable.setAttribute('contenteditable', 'true');
     document.body.appendChild(contentEditable);

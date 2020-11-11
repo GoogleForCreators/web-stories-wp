@@ -83,18 +83,20 @@ const PreviewContainer = styled.div`
   display: inline-block;
   position: relative;
   overflow: hidden;
-  width: ${({ theme }) => theme.previewWidth.thumbnail}px;
-  height: ${({ theme }) => theme.previewWidth.thumbnail / FULLBLEED_RATIO}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.previewWidth.thumbnail}px;
+  height: ${({ theme }) =>
+    theme.DEPRECATED_THEME.previewWidth.thumbnail / FULLBLEED_RATIO}px;
   vertical-align: middle;
-  border-radius: ${({ theme }) => theme.storyPreview.borderRadius}px;
-  border: ${({ theme }) => theme.borders.gray75};
+  border-radius: ${({ theme }) =>
+    theme.DEPRECATED_THEME.storyPreview.borderRadius}px;
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.gray75};
 `;
 
 const ArrowIcon = styled.div`
-  width: ${({ theme }) => theme.table.headerContentSize}px;
+  width: ${({ theme }) => theme.DEPRECATED_THEME.table.headerContentSize}px;
   height: 100%;
   display: inline-grid;
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
   vertical-align: middle;
 
   svg {
@@ -108,13 +110,13 @@ const ArrowIconWithTitle = styled(ArrowIcon)`
   margin-left: 6px;
   margin-top: -2px;
 
-  @media ${({ theme }) => theme.breakpoint.largeDisplayPhone} {
+  @media ${({ theme }) => theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
     margin-left: 4px;
   }
 `;
 
 const SelectableTitle = styled.span.attrs({ tabIndex: 0 })`
-  color: ${({ theme }) => theme.colors.bluePrimary};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
   font-weight: 500;
   cursor: pointer;
 `;
