@@ -70,58 +70,67 @@ if ( ! class_exists( 'Web_Stories_Compatibility' ) ) {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/Web_Stories_Compatibility.php';
 }
 
-global $web_stories_compatibility;
+/**
+ * Setup web stories compatibility class.
+ *
+ * @since 1.2.0
+ *
+ * @return Web_Stories_Compatibility
+ */
+function get_web_stories_compat_instance() {
+	$error      = new WP_Error();
+	$extensions = array(
+		'date'   => array(
+			'classes' => array(
+				'DateTimeImmutable',
+			),
+		),
+		'dom'    => array(
+			'classes' => array(
+				'DOMAttr',
+				'DOMComment',
+				'DOMDocument',
+				'DOMElement',
+				'DOMNode',
+				'DOMNodeList',
+				'DOMText',
+				'DOMXPath',
+			),
+		),
+		'json'   => array(
+			'functions' => array(
+				'json_decode',
+				'json_encode',
+			),
+		),
+		'libxml' => array(
+			'functions' => array(
+				'libxml_use_internal_errors',
+			),
+		),
+		'spl'    => array(
+			'functions' => array(
+				'spl_autoload_register',
+			),
+		),
+	);
 
-$web_stories_error = new WP_Error();
-$extensions        = array(
-	'date'   => array(
-		'classes' => array(
-			'DateTimeImmutable',
-		),
-	),
-	'dom'    => array(
-		'classes' => array(
-			'DOMAttr',
-			'DOMComment',
-			'DOMDocument',
-			'DOMElement',
-			'DOMNode',
-			'DOMNodeList',
-			'DOMText',
-			'DOMXPath',
-		),
-	),
-	'json'   => array(
-		'functions' => array(
-			'json_decode',
-			'json_encode',
-		),
-	),
-	'libxml' => array(
-		'functions' => array(
-			'libxml_use_internal_errors',
-		),
-	),
-	'spl'    => array(
-		'functions' => array(
-			'spl_autoload_register',
-		),
-	),
-);
+	$compatibility = new Web_Stories_Compatibility( $error );
+	$compatibility->set_extensions( $extensions );
+	$compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
+	$compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
+	$compatibility->set_required_files(
+		array(
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
+			WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
+		)
+	);
 
-$web_stories_compatibility = new Web_Stories_Compatibility( $web_stories_error );
-$web_stories_compatibility->set_extensions( $extensions );
-$web_stories_compatibility->set_php_version( WEBSTORIES_MINIMUM_PHP_VERSION );
-$web_stories_compatibility->set_wp_version( WEBSTORIES_MINIMUM_WP_VERSION );
-$web_stories_compatibility->set_required_files(
-	array(
-		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js',
-		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/stories-dashboard.js',
-		WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/web-stories-embed-block.js',
-		WEBSTORIES_PLUGIN_DIR_PATH . '/includes/vendor/autoload.php',
-		WEBSTORIES_PLUGIN_DIR_PATH . '/third-party/vendor/scoper-autoload.php',
-	)
-);
+	return $compatibility;
+}
 
 /**
  * Displays an admin notice about why the plugin is unable to load.
@@ -131,10 +140,10 @@ $web_stories_compatibility->set_required_files(
  * @return void
  */
 function web_stories_print_admin_notice() {
-	global $web_stories_compatibility;
+	$compatibility = get_web_stories_compat_instance();
 
-	$web_stories_compatibility->run_checks();
-	$_error = $web_stories_compatibility->get_error();
+	$compatibility->run_checks();
+	$_error = $compatibility->get_error();
 	if ( ! $_error->errors ) {
 		return;
 	}
@@ -155,6 +164,7 @@ function web_stories_print_admin_notice() {
 }
 add_action( 'admin_notices', 'web_stories_print_admin_notice' );
 
+$web_stories_compatibility = get_web_stories_compat_instance();
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
 	// Only check for built php files in a CLI context.
 	$web_stories_compatibility->set_required_files(
