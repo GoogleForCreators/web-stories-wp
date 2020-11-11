@@ -17,7 +17,9 @@
 /**
  * Internal dependencies
  */
-import convertFormatString from '../convertFormatString';
+import convertFormatString, {
+  FORMAT_TOKEN_SEPARATOR_REGEX,
+} from '../convertFormatString';
 import format from '../format';
 
 describe('date/convertFormatString', () => {
@@ -25,11 +27,15 @@ describe('date/convertFormatString', () => {
     ['d-m-Y H:i', 'dd-MM-yyyy HH:mm'],
     ['F j, Y', 'MMMM d, yyyy'],
     ['F M l D', 'MMMM MMM EEEE EEE'],
+    ['G \\h h \\m\\i\\n', "H 'h' hh 'm''i''n'"],
   ])(
     'converts PHP date format string to its date-fns equivalent',
     (formatString, expectedOutput) => {
-      expect(convertFormatString(formatString)).toStrictEqual(expectedOutput);
-      expect(() => () => format(new Date(), formatString)).not.toThrow();
+      const convertedWithoutSeparator = convertFormatString(
+        formatString
+      ).replace(FORMAT_TOKEN_SEPARATOR_REGEX, '');
+      expect(convertedWithoutSeparator).toStrictEqual(expectedOutput);
+      expect(() => format(new Date(), formatString)).not.toThrow();
     }
   );
 });

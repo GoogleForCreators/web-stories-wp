@@ -34,7 +34,7 @@ export const ColumnContainer = styled.section`
     display: flex;
     margin-bottom: 40px;
 
-    @media ${theme.breakpoint.largeDisplayPhone} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
       display: block;
     }
   `}
@@ -53,16 +53,16 @@ export const Column = styled.div`
     width: 50%;
 
     & + & {
-      padding-left: ${theme.standardViewContentGutter.desktop}px;
+      padding-left: ${theme.DEPRECATED_THEME.standardViewContentGutter.desktop}px;
     }
 
-    @media ${theme.breakpoint.tablet} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.tablet} {
       & + & {
-        padding-left: ${theme.standardViewContentGutter.min}px;
+        padding-left: ${theme.DEPRECATED_THEME.standardViewContentGutter.min}px;
       }
     }
 
-    @media ${theme.breakpoint.largeDisplayPhone} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
       width: 100%;
     }
   `}
@@ -72,20 +72,20 @@ export const Title = styled.h1.attrs({
   'aria-label': __('Template Title', 'web-stories'),
 })`
   ${TypographyPresets.ExtraLarge};
-  color: ${({ theme }) => theme.colors.gray900};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
 `;
 
 export const ByLine = styled(Paragraph2)(
   ({ theme }) => `
     margin: 0 0 20px;
-    color: ${theme.colors.gray400};
+    color: ${theme.DEPRECATED_THEME.colors.gray400};
   `
 );
 
 export const Text = styled(Paragraph2)`
   ${({ theme }) => `
     margin: 0 0 20px;
-    color: ${theme.colors.gray900};
+    color: ${theme.DEPRECATED_THEME.colors.gray900};
   `}
 `;
 
@@ -117,14 +117,14 @@ export const RowContainer = styled.section.attrs({
 
 export const SubHeading = styled.h2`
   ${TypographyPresets.Large};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
+  font-weight: ${({ theme }) => theme.DEPRECATED_THEME.typography.weight.bold};
   margin-bottom: 20px;
 `;
 
 export const LargeDisplayPagination = styled.div(
   ({ theme }) => `
     display: flex;
-    @media ${theme.breakpoint.largeDisplayPhone} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
       display: none;
     }
   `
@@ -133,7 +133,7 @@ export const LargeDisplayPagination = styled.div(
 export const SmallDisplayPagination = styled.div(
   ({ theme }) => `
     display: none;
-    @media ${theme.breakpoint.largeDisplayPhone} {
+    @media ${theme.DEPRECATED_THEME.breakpoint.largeDisplayPhone} {
       width: 100%;
       display: flex;
       justify-content: flex-start;

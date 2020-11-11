@@ -22,13 +22,15 @@ import { format as _format, toDate } from 'date-fns-tz';
 /**
  * Internal dependencies
  */
-import convertFormatString from './convertFormatString';
+import convertFormatString, {
+  FORMAT_TOKEN_SEPARATOR_REGEX,
+} from './convertFormatString';
 import getOptions from './getOptions';
 
 /**
  * Formats a date by a given format.
  *
- * @param {Date} date Date to format.
+ * @param {Date|string} date Date to format.
  * @param {string} formatString PHP-style date format.
  * @return {string} Formatted date.
  */
@@ -37,7 +39,14 @@ function format(date, formatString) {
     return '';
   }
 
-  return _format(toDate(date), convertFormatString(formatString), getOptions());
+  const parsedDate = toDate(date);
+  const options = getOptions();
+  const convertedFormat = convertFormatString(formatString, parsedDate);
+
+  return _format(parsedDate, convertedFormat, options).replace(
+    FORMAT_TOKEN_SEPARATOR_REGEX,
+    ''
+  );
 }
 
 export default format;

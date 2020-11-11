@@ -40,9 +40,6 @@ web-stories-scraper
 .stylelintrc
 .svgo.yml
 .test_artifacts
-.travis.yml
-.travis_deploy_key
-.travis_deploy_key.enc
 babel.config.cjs
 codecov.yml
 composer.lock

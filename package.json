@@ -25,7 +25,7 @@
     "npm": "~6.14"
   },
   "bin": {
-    "commander": "./bin/commander.js"
+    "commander": "bin/commander.js"
   },
   "dependencies": {
     "@wordpress/api-fetch": "^3.19.1",
@@ -109,7 +109,7 @@
     "@wordpress/jest-puppeteer-axe": "^1.10.0",
     "amphtml-validator": "^1.0.33",
     "axe-core": "^4.0.2",
-    "babel-jest": "^26.5.2",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
     "babel-plugin-inline-json-import": "^0.3.2",
     "babel-plugin-styled-components": "^1.11.0",
@@ -127,7 +127,7 @@
     "eslint-plugin-jasmine": "^4.1.1",
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-jest-dom": "^3.2.4",
-    "eslint-plugin-jsdoc": "^30.7.3",
+    "eslint-plugin-jsdoc": "^30.7.7",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-markdown": "^1.0.2",
     "eslint-plugin-node": "^11.1.0",
@@ -135,11 +135,11 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-testing-library": "^3.9.0",
+    "eslint-plugin-testing-library": "^3.10.0",
     "got": "^11.8.0",
     "husky": "^4.3.0",
     "jasmine-core": "^3.6.0",
-    "jest": "^25.5.4",
+    "jest": "^26.6.3",
     "jest-axe": "^4.1.0",
     "jest-canvas-mock": "^2.3.0",
     "jest-extended": "^0.11.5",
