@@ -102,7 +102,7 @@ class Story_Sanitizer extends \WP_UnitTestCase {
 	/**
 	 * @dataProvider get_poster_image_data
 	 * @covers ::sanitize
-	 * @covers Sanitization_Utils::sanitize_poster_portrait
+	 * @covers Sanitization_Utils::add_poster_images
 	 *
 	 * @param string   $source   Source.
 	 * @param string   $expected Expected.
