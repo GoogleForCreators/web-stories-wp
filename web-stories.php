@@ -65,11 +65,6 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
-// Load Compatibility class the old fashioned way.
-if ( ! class_exists( 'Web_Stories_Compatibility' ) ) {
-	require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/Web_Stories_Compatibility.php';
-}
-
 /**
  * Setup web stories compatibility class.
  *
@@ -116,6 +111,11 @@ function get_web_stories_compat_instance() {
 			),
 		),
 	);
+
+	// Load Compatibility class the old fashioned way.
+	if ( ! class_exists( 'Web_Stories_Compatibility' ) ) {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/Web_Stories_Compatibility.php';
+	}
 
 	$compatibility = new Web_Stories_Compatibility( $error );
 	$compatibility->set_extensions( $extensions );
