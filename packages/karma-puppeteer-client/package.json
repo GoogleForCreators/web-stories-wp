@@ -1,7 +1,7 @@
 {
   "name": "karma-puppeteer-client",
   "engines": {
-    "node": ">= 14",
+    "node": ">= 15",
     "npm": "~7"
   },
   "main": "src",
