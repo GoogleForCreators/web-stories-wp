@@ -23,9 +23,9 @@ use Spy_REST_Server;
 use WP_REST_Request;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\REST_API\Status_Check
+ * @coversDefaultClass \Google\Web_Stories\REST_API\Status_Check_Controller
  */
-class Status_Check extends \WP_Test_REST_TestCase {
+class Status_Check_Controller extends \WP_Test_REST_TestCase {
 	/**
 	 * @var \WP_REST_Server
 	 */
@@ -131,25 +131,5 @@ class Status_Check extends \WP_Test_REST_TestCase {
 		$data = $response->get_data();
 		$this->assertArrayHasKey( 'success', $data );
 		$this->assertTrue( $data['success'] );
-	}
-
-	/**
-	 * @covers ::status_check_permissions_check
-	 * @covers ::status_check
-	 * @covers ::check_html_string
-	 */
-	public function test_check_html_string() {
-		wp_set_current_user( self::$editor );
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
-		$request->set_param( 'content', 'invalid' );
-		$response = rest_get_server()->dispatch( $request );
-
-		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
-
-		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
-		$request->set_param( 'content', '' );
-		$response = rest_get_server()->dispatch( $request );
-
-		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 }

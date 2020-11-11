@@ -352,7 +352,6 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Description: Flag status check.
 			 * Author: @spacedmonkey
 			 * Issue: #4918
 			 * Creation date: 2020-10-27

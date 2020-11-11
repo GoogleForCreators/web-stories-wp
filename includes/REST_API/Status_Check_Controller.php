@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Status_Check
+ * Class Status_Check_Controller
  *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
@@ -38,9 +38,9 @@ use WP_Post_Type;
 /**
  * API endpoint check status.
  *
- * Class Status_Check
+ * Class Status_Check_Controller
  */
-class Status_Check extends WP_REST_Controller {
+class Status_Check_Controller extends WP_REST_Controller {
 	/**
 	 * Decoder instance.
 	 *
@@ -77,10 +77,9 @@ class Status_Check extends WP_REST_Controller {
 					'permission_callback' => [ $this, 'status_check_permissions_check' ],
 					'args'                => [
 						'content' => [
-							'description'       => __( 'Test HTML content.', 'web-stories' ),
-							'required'          => true,
-							'type'              => 'string',
-							'validate_callback' => [ $this, 'check_html_string' ],
+							'description' => __( 'Test HTML content.', 'web-stories' ),
+							'required'    => true,
+							'type'        => 'string',
 						],
 					],
 				],
@@ -118,17 +117,5 @@ class Status_Check extends WP_REST_Controller {
 		}
 
 		return true;
-	}
-
-	/**
-	 * Check that there is html in the string by removing html.
-	 *
-	 * @param string $param HTML string.
-	 *
-	 * @return bool
-	 */
-	public function check_html_string( $param ) {
-		$html = $this->decoder->base64_decode( $param );
-		return ( wp_strip_all_tags( $html ) !== $html );
 	}
 }

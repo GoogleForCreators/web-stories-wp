@@ -13,72 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
+
 /**
  * External dependencies
  */
 import { useCallback, useEffect } from 'react';
-import { useFeatures } from 'flagged';
+import { useFeature } from 'flagged';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
 /**
  * Internal dependencies
  */
-import { useAPI, useConfig } from '../../app';
-import getStoryMarkup from '../../output/utils/getStoryMarkup';
+import { useAPI } from '../../app';
+import { getContent } from './utils';
 
 function StatusCheck() {
   const {
     actions: { getStatusCheck },
   } = useAPI();
-
-  const { metadata } = useConfig();
-  const flags = useFeatures();
-  const { statusCheck } = flags;
+  const statusCheckEnabled = useFeature('statusCheck');
 
   const doStatusCheck = useCallback(() => {
-    if (statusCheck) {
-      const story = {
-        storyId: 1,
-        title: 'Story!',
-        author: 1,
-        slug: 'story',
-        publisherLogo: 1,
-        defaultPageDuration: 7,
-        status: 'publish',
-        date: '2020-04-10T07:06:26',
-        modified: '',
-        excerpt: '',
-        featuredMedia: 0,
-        password: '',
-        stylePresets: '',
-      };
-      const pages = [
-        {
-          type: 'page',
-          id: '2',
-          elements: [],
-        },
-      ];
-      const content = getStoryMarkup(story, pages, metadata, flags);
-      getStatusCheck(content)
-        .then(() => {
-          // eslint-disable-next-line no-console
-          console.log(__('Status Check successful.', 'web-stories'));
-        })
-        .catch(() => {
-          // eslint-disable-next-line no-console
-          console.log(__('Status Check failure.', 'web-stories'));
-        })
-        .finally(() => {
-          // eslint-disable-next-line no-console
-          console.log(__('Status Check finished.', 'web-stories'));
-        });
+    if (!statusCheckEnabled) {
+      return;
     }
-  }, [getStatusCheck, statusCheck, metadata, flags]);
 
-  useEffect(doStatusCheck, [doStatusCheck]);
+    async function performRequests() {
+      const content = getContent();
+
+      try {
+        await getStatusCheck(content);
+        // eslint-disable-next-line no-console
+        console.log(__('Status Check successful.', 'web-stories'));
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log(__('Status Check failure.', 'web-stories'));
+      }
+      // eslint-disable-next-line no-console
+      console.log(__('Status Check finished.', 'web-stories'));
+    }
+
+    performRequests();
+  }, [getStatusCheck, statusCheckEnabled]);
+
+  useEffect(doStatusCheck);
 
   return null;
 }

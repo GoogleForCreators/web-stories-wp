@@ -32,7 +32,7 @@ use Google\Web_Stories\Integrations\AMP;
 use Google\Web_Stories\Integrations\Jetpack;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\REST_API\Embed_Controller;
-use Google\Web_Stories\REST_API\Status_Check;
+use Google\Web_Stories\REST_API\Status_Check_Controller;
 use Google\Web_Stories\REST_API\Stories_Media_Controller;
 use Google\Web_Stories\REST_API\Link_Controller;
 use Google\Web_Stories\REST_API\Stories_Autosaves_Controller;
@@ -262,7 +262,7 @@ class Plugin {
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();
 
-		$status_check = new Status_Check( $this->experiments );
+		$status_check = new Status_Check_Controller( $this->experiments );
 		$status_check->register_routes();
 
 		$embed_controller = new Embed_Controller();
