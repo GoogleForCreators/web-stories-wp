@@ -237,7 +237,6 @@ class Plugin {
 		add_action( 'init', [ $site_kit, 'init' ] );
 		$this->integrations['site-kit'] = $site_kit;
 
-
 		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
 	}
