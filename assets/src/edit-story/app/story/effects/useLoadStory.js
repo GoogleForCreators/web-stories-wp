@@ -47,17 +47,42 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           excerpt: { raw: excerpt },
           link,
           story_data: storyDataRaw,
-          // todo: get featured_media_url original dimensions for prepublish checklist
-          featured_media: featuredMedia,
-          featured_media_url: featuredMediaUrl,
           // todo: get publisher_logo_url image dimensions for prepublish checklist
           publisher_logo_url: publisherLogoUrl,
           permalink_template: permalinkTemplate,
           style_presets: stylePresets,
           password,
-          _embedded: { author = [] },
+          _embedded: embedded = {},
         } = post;
         const date = `${date_gmt}Z`;
+
+        let author = {
+          id: 0,
+          name: '',
+        };
+
+        if ('author' in embedded) {
+          author = {
+            id: embedded.author[0].id,
+            name: embedded.author[0].name,
+          };
+        }
+
+        let featuredMedia = {
+          id: 0,
+          height: 0,
+          width: 0,
+          url: '',
+        };
+
+        if ('wp:featuredmedia' in embedded) {
+          featuredMedia = {
+            id: embedded['wp:featuredmedia'][0].id,
+            height: embedded['wp:featuredmedia'][0].media_details?.height,
+            width: embedded['wp:featuredmedia'][0].media_details?.width,
+            url: embedded['wp:featuredmedia'][0].source_url,
+          };
+        }
 
         const [prefix, suffix] = permalinkTemplate.split(
           /%(?:postname|pagename)%/
@@ -94,14 +119,13 @@ function useLoadStory({ storyId, shouldLoad, restore }) {
           storyId,
           title,
           status: statusFormat,
-          author: { id: author[0].id, name: author[0].name },
+          author,
           date,
           modified,
           excerpt,
           slug,
           link,
           featuredMedia,
-          featuredMediaUrl,
           permalinkConfig,
           publisherLogoUrl,
           password,

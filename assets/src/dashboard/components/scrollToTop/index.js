@@ -49,15 +49,18 @@ const ScrollButton = styled.button`
   pointer-events: ${({ isVisible }) => (isVisible ? 'auto' : 'none')};
   cursor: pointer;
   border-radius: 50%;
-  border: ${({ theme }) => theme.borders.transparent};
+  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.25);
-  color: ${({ theme }) => theme.colors.gray900};
-  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray900};
+  background-color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
   opacity: ${cssLerp(0, 1, SQUISH_CSS_VAR)};
 
   ${KEYBOARD_USER_SELECTOR} &:focus {
     outline: ${({ theme }) =>
-      `2px solid ${rgba(theme.colors.bluePrimary, 0.85)} !important`};
+      `2px solid ${rgba(
+        theme.DEPRECATED_THEME.colors.bluePrimary,
+        0.85
+      )} !important`};
   }
 `;
 

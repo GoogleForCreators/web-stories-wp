@@ -44,8 +44,9 @@ function APIProvider({ children }) {
     (storyId) => {
       const path = addQueryArgs(`${stories}/${storyId}`, {
         context: 'edit',
-        _embed: 'author',
+        _embed: 'wp:featuredmedia,author',
       });
+
       return apiFetch({ path });
     },
     [stories]
@@ -70,7 +71,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
         },
-        featured_media: featuredMedia,
+        featured_media: featuredMedia.id,
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,

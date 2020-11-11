@@ -32,7 +32,7 @@ describe('getStoryPropsToSave', () => {
       date: '2020-04-10T07:06:26',
       modified: '',
       excerpt: '',
-      featuredMedia: 0,
+      featuredMedia: { id: 0 },
       password: '',
       stylePresets: '',
       autoAdvance: 'manual',

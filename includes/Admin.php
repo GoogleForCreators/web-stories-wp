@@ -74,8 +74,8 @@ class Admin {
 			return $class;
 		}
 
-		// Default WordPress posts list table screen.
-		if ( 'edit' === $screen->base ) {
+		// Default WordPress posts list table screen and dashboard.
+		if ( 'post' !== $screen->base ) {
 			return $class;
 		}
 

@@ -41,7 +41,7 @@ function setupPanel(
       story: {
         author: { id: 1, name: 'John Doe' },
         date: '2020-01-01T20:20:20',
-        featuredMediaUrl: '',
+        featuredMedia: { url: '' },
         publisherLogoUrl: '',
       },
     },

@@ -61,7 +61,7 @@ const PUBLISHER_LOGO_MIN_WIDTH = 96;
  * @return {Guidance|undefined} Guidance object for consumption
  */
 export function storyCoverAttached(story) {
-  if (typeof story.featuredMediaUrl !== 'string') {
+  if (typeof story?.featuredMedia?.url !== 'string') {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
@@ -100,8 +100,8 @@ export function storyTitle(story) {
  */
 export function storyCoverPortraitSize(story) {
   if (
-    story.featuredMedia.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
-    story.featuredMedia.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
+    story?.featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
+    story?.featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
