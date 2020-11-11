@@ -183,7 +183,7 @@ function StoryAnimTool() {
             animations[index] = animationWithTarget;
           }
 
-          story.pages[activePageIndex].animations = [...animations];
+          story.pages[activePageIndex].animations = animations;
           return story;
         },
         { ...activeStory }
