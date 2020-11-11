@@ -24,6 +24,7 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { useAPI } from '../../api';
+import { useConfig } from '../../config';
 
 /**
  * Function returning the current Meta Boxes DOM Node in the editor
@@ -55,6 +56,12 @@ function usePrevious(value) {
 
 function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   const isFeatureEnabled = useFeature('customMetaBoxes');
+  const { metaBoxes } = useConfig();
+
+  const locations = ['normal', 'advanced'];
+  const hasMetaBoxes = locations.some((location) =>
+    Boolean(metaBoxes[location].length)
+  );
 
   const {
     actions: { saveMetaBoxes },
@@ -66,10 +73,10 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   const wasAutoSaving = usePrevious(isAutoSaving);
 
   // Save metaboxes when performing a full save on the post.
-  // TODO: only do this when there are actually meta boxes.
   useEffect(() => {
     // Save metaboxes on save completion, except for autosaves that are not a post preview.
     if (
+      !hasMetaBoxes ||
       !isFeatureEnabled ||
       isSaving ||
       isAutoSaving ||
@@ -112,6 +119,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
     save();
   }, [
     isFeatureEnabled,
+    hasMetaBoxes,
     story,
     isSaving,
     wasSaving,
