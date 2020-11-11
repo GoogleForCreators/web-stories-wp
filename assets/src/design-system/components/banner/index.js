@@ -26,7 +26,7 @@ import styled, { css } from 'styled-components';
  */
 import { Close } from '../../icons';
 import { THEME_CONSTANTS } from '../../theme';
-import { Button, BUTTON_TYPES } from '../button';
+import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '../button';
 import { Text } from '../typography';
 
 const Title = styled(Text)`
@@ -44,17 +44,7 @@ const Content = styled.div`
 const CloseButton = styled(Button)`
   grid-area: closeButton;
   justify-self: end;
-  min-width: 1px;
-  width: 32px;
-  height: 32px;
   margin: 2px 0 0;
-  padding: 9.5px;
-
-  & > svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 // TODO update this once new theme colors are merged
@@ -116,7 +106,8 @@ export const Banner = forwardRef(
         </Title>
         <CloseButton
           type={BUTTON_TYPES.PLAIN}
-          variant={BUTTON_TYPES.ICON}
+          variant={BUTTON_VARIANTS.ICON}
+          size={BUTTON_SIZES.SMALL}
           aria-label={closeButtonLabel}
           onClick={onClose}
         >
