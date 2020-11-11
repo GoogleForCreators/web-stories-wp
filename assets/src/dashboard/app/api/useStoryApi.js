@@ -234,7 +234,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
             slug: title,
             date: created || Date.now().toString(),
             modified: modified || Date.now().toString(),
-            featuredMedia: 0,
+            featuredMedia: {
+              id: 0,
+            },
             password: password || '',
             excerpt: excerpt || '',
           },
@@ -288,6 +290,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
+            featuredMedia: {
+              id: 0,
+            },
           },
           pages,
           metadata: {
