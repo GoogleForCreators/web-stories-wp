@@ -204,14 +204,16 @@ const formattedStoriesArray = [
         autoAdvance: true,
         defaultPageDuration: 7,
       },
-      featured_media_url: '',
       publisher_logo_url:
         'https://replaceme.com/images/fallback-wordpress-publisher-logo.png',
       style_presets: {
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 3, name: 'Jango Fett' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 3, name: 'Jango Fett' }],
+      },
       _links: {
         self: [
           {
@@ -502,7 +504,10 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 21, name: 'Chewbacca' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 21, name: 'Chewbacca' }],
+      },
       _links: {
         self: [
           {
@@ -1085,7 +1090,10 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 4, name: 'Luke Skywalker' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 4, name: 'Luke Skywalker' }],
+      },
       _links: {
         self: [
           {
@@ -1490,7 +1498,10 @@ const formattedStoriesArray = [
         colors: [],
         textStyles: [],
       },
-      _embedded: { author: [{ id: 2, name: 'Lando-Calrissian' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 2, name: 'Lando-Calrissian' }],
+      },
       _links: {
         self: [
           {

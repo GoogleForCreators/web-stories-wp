@@ -40,7 +40,7 @@ function setupPanel(
       story: {
         author: 'test',
         date: '2020-01-01T20:20:20',
-        featuredMediaUrl: '',
+        featuredMedia: { url: '' },
         publisherLogoUrl: '',
       },
     },

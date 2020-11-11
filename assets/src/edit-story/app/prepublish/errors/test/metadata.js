@@ -24,7 +24,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     const testStory = {
       storyId: 890,
       title: 'Work work work work work',
-      featuredMediaUrl: undefined,
+      featuredMedia: undefined,
     };
     const testMissingCover = metadataGuidelines.storyCoverAttached(testStory);
     expect(testMissingCover).not.toBeUndefined();
