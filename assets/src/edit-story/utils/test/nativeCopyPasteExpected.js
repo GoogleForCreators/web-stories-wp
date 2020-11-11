@@ -20,44 +20,59 @@
 import nativeCopyPasteExpected from '../nativeCopyPasteExpected';
 
 describe('nativeCopyPasteExpected', () => {
-  it('should detect selection correctly for different inputs', () => {
+  it('should detect selection correctly for textarea', () => {
     const textArea = document.createElement('textarea');
     document.body.appendChild(textArea);
     textArea.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
+  });
 
+  it('should detect selection correctly for text input', () => {
     const textInput = document.createElement('input');
     textInput.type = 'text';
     document.body.appendChild(textInput);
     textInput.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
+  });
 
+  it('should detect selection correctly for number input', () => {
     const numberInput = document.createElement('input');
     numberInput.type = 'number';
     document.body.appendChild(numberInput);
     numberInput.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
+  });
 
+  it('should detect selection correctly for search input', () => {
     const searchInput = document.createElement('input');
     searchInput.type = 'search';
     document.body.appendChild(searchInput);
     searchInput.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
+  });
 
+  // Disable reason: jsdom does not actually support checking for contenteditable.
+  // See https://github.com/jsdom/jsdom/issues/1670
+  //eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should detect selection correctly for contenteditable element', () => {
     const contentEditable = document.createElement('div');
     contentEditable.setAttribute('contenteditable', 'true');
     document.body.appendChild(contentEditable);
     contentEditable.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
+  });
 
+  it('should detect selection correctly for unsupported input', () => {
     const windowSpy = jest
       .spyOn(global, 'getSelection')
       .mockImplementation(() => false);
 
     const incorrectInput = document.createElement('input');
-    incorrectInput.type = 'test';
+    // Setting to something like "invalid" does not work, will be ignored by jsdom.
+    incorrectInput.type = 'file';
     document.body.appendChild(incorrectInput);
     incorrectInput.focus();
+
     expect(nativeCopyPasteExpected()).toBe(false);
 
     windowSpy.mockRestore();
