@@ -60,7 +60,7 @@ export default function useTelemetryOptIn() {
   const dataIsLoaded =
     currentUser.data.meta?.web_stories_tracking_optin !== undefined;
 
-  const optedIn = Boolean(currentUser.data.meta?.web_stories_tracking_optin);
+  const optedIn = Boolean(currentUser?.data?.meta?.web_stories_tracking_optin);
 
   const dataFetched = useRef(false);
 
