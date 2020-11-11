@@ -50,12 +50,9 @@ describe('nativeCopyPasteExpected', () => {
     contentEditable.focus();
     expect(nativeCopyPasteExpected()).toBe(true);
 
-    const originalWindow = { ...window };
-    const windowSpy = jest.spyOn(global, 'window', 'get');
-    windowSpy.mockImplementation(() => ({
-      ...originalWindow,
-      getSelection: () => false,
-    }));
+    const windowSpy = jest
+      .spyOn(global, 'getSelection')
+      .mockImplementation(() => false);
 
     const incorrectInput = document.createElement('input');
     incorrectInput.type = 'test';
@@ -67,18 +64,13 @@ describe('nativeCopyPasteExpected', () => {
   });
 
   it('should use native copypaste if there is selection', () => {
-    const originalWindow = { ...window };
-    const windowSpy = jest.spyOn(global, 'window', 'get');
-    windowSpy.mockImplementation(() => ({
-      ...originalWindow,
-      getSelection() {
-        return {
-          rangeCount: 1,
-          collapsed: false,
-          getRangeAt: () => true,
-        };
-      },
-    }));
+    const windowSpy = jest
+      .spyOn(global, 'getSelection')
+      .mockImplementation(() => ({
+        rangeCount: 1,
+        collapsed: false,
+        getRangeAt: () => true,
+      }));
 
     expect(nativeCopyPasteExpected()).toBe(true);
 
