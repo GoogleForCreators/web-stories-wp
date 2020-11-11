@@ -51,10 +51,6 @@ function setupPanel(
   const config = { capabilities };
   const loadUsers = jest.fn();
 
-  const getUserById = jest.fn().mockImplementation(() => Promise.resolve({}));
-  const apiContextValue = {
-    actions: { getUserById },
-  };
   const inspectorContextValue = {
     actions: { loadUsers },
     state: {

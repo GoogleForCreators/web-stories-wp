@@ -53,7 +53,7 @@ const MediaWrapper = styled.div`
 
 function PublishPanel() {
   const {
-    actions: { getAuthors, getUserById },
+    actions: { getAuthors },
   } = useAPI();
   const {
     state: { tab, users, isUsersLoading },
@@ -149,7 +149,7 @@ function PublishPanel() {
         setVisibleOptions(users);
       }
     }
-  }, [author, getUserById, users]);
+  }, [author, users]);
 
   const handleChangeAuthor = useCallback(
     ({ id, name }) => {

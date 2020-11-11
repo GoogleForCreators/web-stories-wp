@@ -246,15 +246,6 @@ function APIProvider({ children }) {
     [users]
   );
 
-  const getUserById = useCallback(
-    (userId) => {
-      return apiFetch({
-        path: addQueryArgs(`${users}/${userId}`, { context: `edit` }),
-      });
-    },
-    [users]
-  );
-
   const state = {
     actions: {
       autoSaveById,
@@ -263,7 +254,6 @@ function APIProvider({ children }) {
       getLinkMetadata,
       saveStoryById,
       getAuthors,
-      getUserById,
       uploadMedia,
       updateMedia,
       deleteMedia,
