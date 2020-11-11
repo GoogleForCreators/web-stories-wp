@@ -42,6 +42,7 @@ function Panel({
   children,
   resizeable = false,
   canCollapse = true,
+  collapsedByDefault = true,
   initialHeight = null,
   ariaLabel = null,
   ariaHidden = false,
@@ -68,7 +69,9 @@ function Panel({
       return false;
     }
     // Default state for panels that can be persisted is collapsed.
-    return undefined === persisted?.isCollapsed ? true : persisted.isCollapsed;
+    return undefined === persisted?.isCollapsed
+      ? collapsedByDefault
+      : persisted.isCollapsed;
   });
   const [expandToHeight, setExpandToHeight] = useState(
     persisted?.expandToHeight || initialHeight
@@ -204,6 +207,7 @@ Panel.propTypes = {
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
+  collapsedByDefault: PropTypes.bool,
   ariaLabel: PropTypes.string,
   ariaHidden: PropTypes.bool,
   isPersisted: PropTypes.bool,

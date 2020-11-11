@@ -26,9 +26,9 @@ import Panel from './panel';
 import PanelTitle from './shared/title';
 import PanelContent from './shared/content';
 
-function SimplePanel({ children, name, title, isPersisted = true }) {
+function SimplePanel({ children, name, title, ...rest }) {
   return (
-    <Panel name={name} isPersisted={isPersisted}>
+    <Panel name={name} {...rest}>
       <PanelTitle>{title}</PanelTitle>
       <PanelContent>{children}</PanelContent>
     </Panel>
