@@ -27,7 +27,7 @@ import { THEME_CONSTANTS } from '../../../';
 import { Text } from '../../';
 import { Banner } from '..';
 
-const demoBgUrl = 'https://picsum.photos/1500/160';
+const demoBgUrl = 'https://picsum.photos/id/240/1500/160';
 
 export default {
   title: 'DesignSystem/Components/Banner',
@@ -38,7 +38,7 @@ export const _default = () => {
   return (
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
-      title={'my banner'}
+      title={text('title', 'my banner')}
       onClose={action('close banner clicked')}
       isDashboard={boolean('isDashboard', false)}
       backgroundUrl={demoBgUrl}
@@ -85,6 +85,23 @@ export const DashboardBanner = () => {
         >
           {'Google Privacy Policy'}
         </Text>
+      </Text>
+    </Banner>
+  );
+};
+
+export const BannerNoBackgroundImage = () => {
+  return (
+    <Banner
+      closeButtonLabel={'Dismiss storybook banner'}
+      title={text('title', 'New Feature!')}
+      onClose={(e) => action('close banner clicked')(e)}
+      isDashboard={boolean('isDashboard', true)}
+    >
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+        {
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
       </Text>
     </Banner>
   );

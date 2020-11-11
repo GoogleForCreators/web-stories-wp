@@ -61,16 +61,9 @@ const DialogActions = styled.div`
   }
 `;
 
-export function Dialog({
-  children,
-  title,
-  actions,
-  isOpen,
-  onClose,
-  ...props
-}) {
+export function Dialog({ children, title, actions, isOpen, onClose, ...rest }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} {...props}>
+    <Modal isOpen={isOpen} onClose={onClose} {...rest}>
       <DialogBox>
         {Boolean(title) && (
           <Headline

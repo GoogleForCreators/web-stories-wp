@@ -17,21 +17,22 @@
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import { Close } from '../../icons';
-import { THEME_CONSTANTS } from '../../';
-import { Button, Text } from '../';
-import { BUTTON_TYPES } from '../button';
+import { THEME_CONSTANTS } from '../../theme';
+import { Button, BUTTON_TYPES } from '../button';
+import { Text } from '../typography';
 
 const Title = styled(Text)`
   grid-area: title;
   font-weight: 600;
+  padding-left: 8px;
 `;
 
 const Content = styled.div`
@@ -50,9 +51,9 @@ const CloseButton = styled(Button)`
   padding: 9.5px;
 
   & > svg {
+    display: block;
     width: 100%;
     height: 100%;
-    display: block;
   }
 `;
 
@@ -62,8 +63,8 @@ const Container = styled.div`
   display: grid;
   width: 100%;
   max-height: 60px;
-  grid-template-columns: 96px 408px auto;
-  grid-column-gap: 33px;
+  grid-template-columns: 104px 408px auto;
+  grid-column-gap: 32px;
   grid-template-areas: 'title content closeButton';
   padding: 6px 8px;
   background-color: ${({ theme }) => theme.colors.gray[10]};
@@ -81,10 +82,11 @@ const Container = styled.div`
 
       ${Title} {
         margin-top: -16px;
+        padding-left: 0;
         font-weight: normal;
       }
       ${Content} {
-        margin: 12px 0;
+        margin: 8px 0 18px;
       }
     `}
 `;
@@ -98,7 +100,7 @@ export const Banner = forwardRef(
       isDashboard,
       title,
       onClose,
-      ...props
+      ...rest
     },
     ref
   ) => {
@@ -107,7 +109,7 @@ export const Banner = forwardRef(
         ref={ref}
         backgroundUrl={backgroundUrl}
         isDashboard={isDashboard}
-        {...props}
+        {...rest}
       >
         <Title size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.LARGE}>
           {title}
