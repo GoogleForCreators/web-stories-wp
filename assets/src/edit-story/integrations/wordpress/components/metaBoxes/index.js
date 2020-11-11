@@ -24,7 +24,7 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../app/config';
+import { useConfig } from '../../../../app/config';
 import MetaBoxesArea from './metaBoxesArea';
 
 const Wrapper = styled.div``;

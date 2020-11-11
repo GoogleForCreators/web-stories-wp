@@ -29,7 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Library from '../../components/library';
 import Workspace from '../../components/workspace';
-import MetaBoxes from '../../components/metaBoxes';
+import MetaBoxes from '../../integrations/wordpress/components/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,

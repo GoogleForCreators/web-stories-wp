@@ -24,8 +24,8 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import CircularProgress from '../circularProgress';
-import { useStory } from '../../app/story';
+import CircularProgress from '../../../../components/circularProgress';
+import { useStory } from '../../../../app/story';
 
 const Wrapper = styled.div`
   position: relative;
