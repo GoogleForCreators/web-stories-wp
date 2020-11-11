@@ -66,13 +66,11 @@ function setupPanel(
     queryByLabelText,
   } = renderWithTheme(
     <ConfigContext.Provider value={config}>
-      <ApiContext.Provider value={apiContextValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <InspectorContext.Provider value={inspectorContextValue}>
-            <PublishPanel />
-          </InspectorContext.Provider>
-        </StoryContext.Provider>
-      </ApiContext.Provider>
+      <StoryContext.Provider value={storyContextValue}>
+        <InspectorContext.Provider value={inspectorContextValue}>
+          <PublishPanel />
+        </InspectorContext.Provider>
+      </StoryContext.Provider>
     </ConfigContext.Provider>
   );
   return {
