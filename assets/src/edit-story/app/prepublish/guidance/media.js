@@ -110,7 +110,7 @@ export function videoElementSizeOnPage(page) {
  * Check an element's resolution. If the resolution is not within guidelines, return guidance.
  * Otherwise return undefined.
  *
- * @param {element} element The element being checked
+ * @param {Element} element The element being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function mediaElementResolution(element) {
@@ -193,7 +193,7 @@ function gifElementResolution(element) {
  * Check a video element's length.
  * If the length is longer than 1 minute, return guidance. Otherwise return undefined.
  *
- * @param {element} element The element being checked
+ * @param {Element} element The element being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementLength(element) {
