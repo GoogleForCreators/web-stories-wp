@@ -297,12 +297,12 @@ class Web_Stories_Compatibility {
 	 * @return void
 	 */
 	public function run_checks() {
+		$this->check_php_version();
+		$this->check_wp_version();
 		$this->check_required_files();
 		$this->check_extensions();
 		$this->check_classes();
 		$this->check_functions();
-		$this->check_php_version();
-		$this->check_wp_version();
 	}
 
 	/**
