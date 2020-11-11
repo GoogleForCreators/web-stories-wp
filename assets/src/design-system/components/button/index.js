@@ -26,7 +26,7 @@ import { THEME_CONSTANTS, themeHelpers } from '../../';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
-  ({ theme }) => css`
+  ({ size, theme }) => css`
     position: relative;
     display: block;
     padding: 0;
@@ -37,10 +37,13 @@ const Base = styled.button(
     cursor: pointer;
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.button[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      preset: {
+        ...theme.typography.presets.button[
+          size === BUTTON_SIZES.SMALL
+            ? THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM
         ],
+      },
       theme,
     })};
 
@@ -104,8 +107,8 @@ const buttonColors = {
 
 const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-  min-width: 80px;
-  min-height: 44px;
+  min-width: 1px;
+  min-height: 1em;
   border-radius: 4px;
 
   & > div {
@@ -113,18 +116,18 @@ const ButtonRectangle = styled(Base)`
     align-items: center;
     justify-content: space-around;
     box-sizing: border-box;
-    padding: 16px 32px;
+    padding: ${({ size }) =>
+      size === BUTTON_SIZES.SMALL ? '8px 16px' : '16px 32px'};
     height: 100%;
   }
 `;
 
-const ButtonCircle = styled(Base)`
+const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-
+  border-radius: 4px;
   ${({ size }) => css`
     width: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
     height: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
-    border-radius: 50%;
 
     & > div {
       display: flex;
@@ -142,6 +145,10 @@ const ButtonCircle = styled(Base)`
       margin: 0 auto;
     }
   `}
+`;
+
+const ButtonCircle = styled(ButtonSquare)`
+  border-radius: 50%;
 `;
 
 const ButtonIcon = styled(Base)`
@@ -170,6 +177,7 @@ const ButtonIcon = styled(Base)`
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
+  [BUTTON_VARIANTS.SQUARE]: ButtonSquare,
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
