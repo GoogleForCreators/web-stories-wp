@@ -71,7 +71,6 @@ const Container = styled.div`
       text-align: center;
 
       ${Title} {
-        margin-top: -16px;
         padding-left: 0;
         font-weight: normal;
       }
