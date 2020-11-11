@@ -97,7 +97,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * @param WP_REST_Request $request       Optional. Request to prepare items for.
 	 * @return array Array of query arguments.
 	 */
-	protected function prepare_items_query( $prepared_args = array(), $request = null ) {
+	protected function prepare_items_query( $prepared_args = [], $request = null ) {
 		$query_args = parent::prepare_items_query( $prepared_args, $request );
 
 		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
