@@ -175,6 +175,11 @@ class AMP {
 			return false;
 		}
 
+		// Skip sanitization for amp-video > source with invalid src.
+		if ( isset( $error['parent_name'] ) && 'source' === $error['parent_name'] ) {
+			return false;
+		}
+
 		return $sanitized;
 	}
 
