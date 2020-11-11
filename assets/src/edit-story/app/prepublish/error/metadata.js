@@ -148,7 +148,7 @@ export function linkInPageAttachmentRegion(story) {
   if (isLinkInPageAttachmentArea) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.storyId,
+      storyId: story.id,
       pages: pagesWithLinksInAttachmentArea,
       message: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.HELPER_TEXT,

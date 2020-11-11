@@ -13,3 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * Internal dependencies
+ */
+import prepublishChecklist from '../';
+
+describe('prepublish checklist', () => {
+  it('should return guidance for the story', () => {
+    const testStory = {
+      id: 120,
+      pages: [{ id: 123, elements: [] }],
+    };
+    expect(prepublishChecklist(testStory)).toMatchSnapshot();
+  });
+});

@@ -20,7 +20,11 @@ import * as generalGuidance from './general';
 import * as mediaGuidance from './media';
 import * as textGuidance from './text';
 
-export const story = [...generalGuidance, textGuidance.storyTooLittleText];
+export const story = [
+  generalGuidance.storyPagesCount,
+  generalGuidance.storyTitleLength,
+  textGuidance.storyTooLittleText,
+];
 export const page = [
   mediaGuidance.videoElementSizeOnPage,
   textGuidance.pageTooMuchText,
