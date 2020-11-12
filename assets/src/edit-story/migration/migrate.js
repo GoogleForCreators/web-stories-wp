@@ -42,6 +42,7 @@ import backgroundColorToPage from './migrations/v0021_backgroundColorToPage';
 import dataPixelTo412 from './migrations/v0022_dataPixelTo412';
 import convertOverlayPattern from './migrations/v0023_convertOverlayPattern';
 import blobsToSingleBlob from './migrations/v0024_blobsToSingleBlob';
+import singleAnimationTarget from './migrations/v0025_singleAnimationTarget';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -68,6 +69,7 @@ const MIGRATIONS = {
   22: [dataPixelTo412],
   23: [convertOverlayPattern],
   24: [blobsToSingleBlob],
+  25: [singleAnimationTarget],
 };
 
 export const DATA_VERSION = Math.max.apply(

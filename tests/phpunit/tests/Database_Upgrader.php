@@ -237,9 +237,15 @@ class Database_Upgrader extends \WP_UnitTestCase {
 	 */
 	public function test_init_sets_missing_options_multisite() {
 		$blog_id = (int) self::factory()->blog->create();
+
 		switch_to_blog( $blog_id );
-		$this->assertSame( WEBSTORIES_DB_VERSION, get_option( \Google\Web_Stories\Database_Upgrader::OPTION ) );
-		$this->assertSame( '0.0.0', get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION ) );
+
+		$db_version   = get_option( \Google\Web_Stories\Database_Upgrader::OPTION );
+		$prev_version = get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
+
 		restore_current_blog();
+
+		$this->assertSame( WEBSTORIES_DB_VERSION, $db_version );
+		$this->assertSame( '0.0.0', $prev_version );
 	}
 }
