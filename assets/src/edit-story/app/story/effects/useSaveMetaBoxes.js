@@ -39,11 +39,10 @@ function getMetaBoxContainer(location) {
   const area = document.querySelector(
     `.web-stories-meta-boxes-area-${location} .metabox-location-${location}`
   );
-  if (area) {
-    return area;
-  }
 
-  return document.querySelector('#metaboxes .metabox-location-' + location);
+  return (
+    area || document.querySelector('#metaboxes .metabox-location-' + location)
+  );
 }
 
 function usePrevious(value) {
@@ -74,7 +73,6 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
 
   // Save metaboxes when performing a full save on the post.
   useEffect(() => {
-    // Save metaboxes on save completion, except for autosaves that are not a post preview.
     if (
       !hasMetaBoxes ||
       !isFeatureEnabled ||
@@ -92,14 +90,14 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
       global.tinyMCE?.triggerSave();
 
       // We gather all the metaboxes locations data and the base form data.
-      const baseFormData = new window.FormData(
-        document.querySelector('.metabox-base-form')
-      );
+      const baseFormElement = document.querySelector('.metabox-base-form');
+      const baseFormData = new global.FormData(baseFormElement || undefined);
 
       const formDataToMerge = [
         baseFormData,
         ...['normal', 'advanced'].map(
-          (location) => new window.FormData(getMetaBoxContainer(location))
+          (location) =>
+            new global.FormData(getMetaBoxContainer(location) || undefined)
         ),
       ];
 
@@ -109,7 +107,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
           acc.append(key, value);
         }
         return acc;
-      }, new window.FormData());
+      }, new global.FormData());
 
       setIsSavingMetaBoxes(true);
       await saveMetaBoxes(story, formData);
