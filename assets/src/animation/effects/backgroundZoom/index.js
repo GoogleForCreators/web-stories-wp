@@ -17,11 +17,9 @@
 /**
  * Internal dependencies
  */
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
-
-// @TODO hoist lerp from dashboard into here
-const lerp = (range, progress) =>
-  (1 - progress) * range[0] + progress * range[1];
+import { lerp } from '../../utils';
 
 export function EffectBackgroundZoom({
   element,
@@ -30,13 +28,12 @@ export function EffectBackgroundZoom({
   delay,
   easing,
 }) {
-  // console.log(element);
-  const range = [1 / (element.scale / 100), 4 / (element.scale / 100)];
+  // Define the range based off the element scale
+  // at element scale 400, the range should be [1/4, 1]
+  // at element scale 100, the range should be [1, 4]
+  const range = [BG_MIN_SCALE / element.scale, BG_MAX_SCALE / element.scale];
   return AnimationZoom({
-    // @TODO we need to define the range based off the element scale
-    // at element scale 400, the range should be [1/4, 1]
-    // at element scale 100, the range should be [1, 4]
-    zoomFrom: lerp(range, normalizedScaleFrom),
+    zoomFrom: lerp(normalizedScaleFrom, range),
     zoomTo: 1,
     duration,
     delay,

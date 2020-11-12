@@ -32,7 +32,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import StoryPropTypes from '../../edit-story/types';
-import clamp from '../../edit-story/utils/clamp';
+import { clamp } from '../../animation';
 import { createContext } from '../../edit-story/utils/context';
 import { AnimationPart, throughput } from '../parts';
 import { AnimationProps } from '../parts/types';

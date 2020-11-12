@@ -13,11 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const clamp = (v, range) => {
-  const lowerBound = Math.min(range[0], range[1]);
-  const upperBound = Math.max(range[0], range[1]);
-
-  return Math.min(Math.max(lowerBound, v), upperBound);
-};
-
-export default clamp;
+export { clamp, lerp, progress } from './range';

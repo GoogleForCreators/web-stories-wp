@@ -130,3 +130,6 @@ export const STORY_ANIMATION_STATE = {
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
 };
+
+export const BG_MIN_SCALE = 100;
+export const BG_MAX_SCALE = 400;

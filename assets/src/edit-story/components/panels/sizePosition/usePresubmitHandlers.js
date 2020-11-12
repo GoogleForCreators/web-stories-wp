@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
 /**
  * Internal dependencies
  */
-import usePresubmitHandler from '../../form/usePresubmitHandler';
+import { clamp } from '../../../../animation';
 import { getDefinitionForType } from '../../../elements';
-import clamp from '../../../utils/clamp';
 import { dataPixels } from '../../../units';
 import { calcRotatedObjectPositionAndSize } from '../../../utils/getBoundRect';
+import usePresubmitHandler from '../../form/usePresubmitHandler';
 import { MIN_MAX } from './constants';
 import { isNum } from './utils';
 

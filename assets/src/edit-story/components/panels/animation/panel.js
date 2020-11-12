@@ -32,7 +32,10 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
-} from '../../../../animation/constants';
+  BG_MAX_SCALE,
+  BG_MIN_SCALE,
+  progress,
+} from '../../../../animation';
 import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
@@ -40,10 +43,6 @@ import { SimplePanel } from '../panel';
 import { Note } from '../shared';
 import EffectPanel from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
-
-// @TODO use progress fn if we have it in dashboard.
-const getZoomFromScale = (scale) =>
-  (scale - MIN_SCALE) / (MAX_SCALE - MIN_SCALE);
 
 const ANIMATION_OPTIONS = [
   { value: '', name: __('Add Effect', 'web-stories') },
@@ -88,7 +87,8 @@ function AnimationPanel({
       // the current background's scale slider
       if (isBackground && type === BACKGROUND_ANIMATION_EFFECTS.ZOOM.value) {
         defaults.normalizedScaleFrom =
-          getZoomFromScale(backgroundScale) || defaults.normalizedScaleFrom;
+          progress(backgroundScale, [BG_MIN_SCALE, BG_MAX_SCALE]) ||
+          defaults.normalizedScaleFrom;
       }
 
       pushUpdateForObject(
