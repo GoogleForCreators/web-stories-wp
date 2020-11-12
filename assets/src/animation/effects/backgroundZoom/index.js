@@ -38,5 +38,6 @@ export function EffectBackgroundZoom({
     duration,
     delay,
     easing,
+    targetLeafElement: true,
   });
 }
