@@ -19,7 +19,7 @@
  */
 import { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { CustomPicker } from 'react-color';
 import { Saturation, Hue, Alpha } from 'react-color/lib/components/common';
 import { useFeatures } from 'flagged';
@@ -71,20 +71,29 @@ const SaturationWrapper = styled.div`
   grid-area: saturation;
 `;
 
-const HueWrapper = styled.div`
+const sliderWrapperCSS = css`
   position: relative;
   height: ${BODY_HEIGHT}px;
   width: ${CONTROLS_WIDTH}px;
+  padding-bottom: 7px;
+`;
+
+const HueWrapper = styled.div`
+  ${sliderWrapperCSS}
   grid-area: hue;
 `;
 
 const AlphaWrapper = styled.div`
+  ${sliderWrapperCSS}
+  grid-area: alpha;
+`;
+
+const PointerWrapper = styled.div`
+  height: 100%;
+  width: 100%;
   position: relative;
-  height: ${BODY_HEIGHT}px;
-  width: ${CONTROLS_WIDTH}px;
   background: #fff;
   border-radius: ${CONTROLS_BORDER_RADIUS}px;
-  grid-area: alpha;
 `;
 
 const Footer = styled.div`
@@ -150,30 +159,34 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
           />
         </SaturationWrapper>
         <HueWrapper>
-          <Hue
-            direction="vertical"
-            width={`${CONTROLS_WIDTH}px`}
-            height={`${BODY_HEIGHT}px`}
-            radius={`${CONTROLS_BORDER_RADIUS}px`}
-            pointer={() => <Pointer offset={0} currentColor={rgb} />}
-            hsl={hsl}
-            onChange={onChange}
-          />
-        </HueWrapper>
-        {showOpacity && (
-          <AlphaWrapper>
-            <Alpha
+          <PointerWrapper>
+            <Hue
               direction="vertical"
               width={`${CONTROLS_WIDTH}px`}
-              height={`${BODY_HEIGHT}px`}
+              height={`${BODY_HEIGHT - 7}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
-              pointer={() => (
-                <Pointer offset={-3} currentColor={rgb} withAlpha />
-              )}
-              rgb={rgb}
+              pointer={() => <Pointer offset={0} currentColor={rgb} />}
               hsl={hsl}
               onChange={onChange}
             />
+          </PointerWrapper>
+        </HueWrapper>
+        {showOpacity && (
+          <AlphaWrapper>
+            <PointerWrapper>
+              <Alpha
+                direction="vertical"
+                width={`${CONTROLS_WIDTH}px`}
+                height={`${BODY_HEIGHT - 7}px`}
+                radius={`${CONTROLS_BORDER_RADIUS}px`}
+                pointer={() => (
+                  <Pointer offset={-3} currentColor={rgb} withAlpha />
+                )}
+                rgb={rgb}
+                hsl={hsl}
+                onChange={onChange}
+              />
+            </PointerWrapper>
           </AlphaWrapper>
         )}
       </Body>
