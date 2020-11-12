@@ -18,8 +18,6 @@
 
 namespace Google\Web_Stories\Tests;
 
-use WP_Error;
-
 /**
  * @coversDefaultClass \Web_Stories_Compatibility
  */
@@ -136,8 +134,7 @@ class Web_Stories_Compatibility extends \WP_UnitTestCase {
 	 * @return \Web_Stories_Compatibility
 	 */
 	protected function get_compatibility_object() {
-		$web_stories_error = new WP_Error();
-		$compatibility     = new \Web_Stories_Compatibility( $web_stories_error );
+		$compatibility     = \web_stories_get_compat_instance();
 		$extensions        = [
 			'fake_extension' => [
 				'classes'   => [
