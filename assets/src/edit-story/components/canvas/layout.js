@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { forwardRef, createRef } from 'react';
 
@@ -138,26 +138,6 @@ const PageAreaSafeZone = styled.div`
   overflow: visible;
   position: relative;
   margin: auto 0;
-
-  ${({ showSafeZone }) =>
-    showSafeZone &&
-    css`
-      &::before,
-      &::after {
-        content: '';
-        width: 12px;
-        height: var(--page-height-px);
-        position: absolute;
-        border-top: 1px solid rgba(255, 255, 255, 0.4);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-      }
-      &::before {
-        left: -12px;
-      }
-      &::after {
-        right: -12px;
-      }
-    `}
 `;
 
 const HeadArea = styled(Area).attrs({ area: 'head', overflowAllowed: false })``;
@@ -217,7 +197,6 @@ function useLayoutParamsCssVars() {
 const PageArea = forwardRef(function PageArea(
   {
     children,
-    showSafeZone = false,
     showOverflow = false,
     fullbleedRef = createRef(),
     overlay = [],
@@ -233,11 +212,7 @@ const PageArea = forwardRef(function PageArea(
       role="region"
     >
       <PageAreaWithOverflow showOverflow={showOverflow} background={background}>
-        <PageAreaSafeZone
-          ref={ref}
-          data-testid="safezone"
-          showSafeZone={showSafeZone}
-        >
+        <PageAreaSafeZone ref={ref} data-testid="safezone">
           {children}
         </PageAreaSafeZone>
       </PageAreaWithOverflow>
@@ -248,7 +223,6 @@ const PageArea = forwardRef(function PageArea(
 
 PageArea.propTypes = {
   children: PropTypes.node,
-  showSafeZone: PropTypes.bool,
   showOverflow: PropTypes.bool,
   fullbleedRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   overlay: PropTypes.node,
