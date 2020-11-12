@@ -36,13 +36,17 @@ import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users },
+    api: { stories, media, link, users, statusCheck },
     encodeMarkup,
   } = useConfig();
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, { context: `edit` });
+      const path = addQueryArgs(`${stories}/${storyId}`, {
+        context: `edit`,
+        _embed: 'wp:featuredmedia',
+      });
+
       return apiFetch({ path });
     },
     [stories]
@@ -66,7 +70,7 @@ function APIProvider({ children }) {
           autoAdvance,
           defaultPageDuration,
         },
-        featured_media: featuredMedia,
+        featured_media: featuredMedia.id,
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
@@ -235,6 +239,23 @@ function APIProvider({ children }) {
     return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
   }, [users]);
 
+  /**
+   * Status check, submit html string.
+   *
+   * @param {string} HTML string.
+   * @return {Promise} Result promise
+   */
+  const getStatusCheck = useCallback(
+    (content) => {
+      return apiFetch({
+        path: statusCheck,
+        data: { content: encodeMarkup ? base64Encode(content) : content },
+        method: 'POST',
+      });
+    },
+    [statusCheck, encodeMarkup]
+  );
+
   const state = {
     actions: {
       autoSaveById,
@@ -246,6 +267,7 @@ function APIProvider({ children }) {
       uploadMedia,
       updateMedia,
       deleteMedia,
+      getStatusCheck,
     },
   };
 

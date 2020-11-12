@@ -19,6 +19,7 @@
  */
 import { useEffect, useState, useMemo, useCallback } from 'react';
 import { useFeatures } from 'flagged';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -161,27 +162,32 @@ function StoryAnimTool() {
 
   const handleAddOrUpdateAnimation = useCallback(
     (animation) => {
-      const story = { ...activeStory };
-      const animationWithTargets = {
-        ...animation,
-        targets: [...Object.values(selectedElementIds)],
-      };
+      const story = Object.values(selectedElementIds).reduce(
+        (story, selectedElementId, i) => {
+          const animationWithTarget = {
+            ...animation,
+            targets: [selectedElementId],
+            id: i === 0 ? animation.id : uuidv4(),
+          };
 
-      const animations = story.pages[activePageIndex].animations || [];
-      const index = animations.findIndex(
-        (a) => a.id === animationWithTargets.id
+          const animations = story.pages[activePageIndex].animations || [];
+          const index = animations.findIndex(
+            (a) => a.id === animationWithTarget.id
+          );
+
+          if (index < 0) {
+            // not found, push it to the end
+            animations.push(animationWithTarget);
+          } else {
+            // found, overwrite at index
+            animations[index] = animationWithTarget;
+          }
+
+          story.pages[activePageIndex].animations = animations;
+          return story;
+        },
+        { ...activeStory }
       );
-
-      if (index < 0) {
-        // not found, push it to the end
-        animations.push(animationWithTargets);
-      } else {
-        // found, overwrite at index
-        animations[index] = animationWithTargets;
-      }
-
-      story.pages[activePageIndex].animations = [...animations];
-
       setActiveStory(story);
       saveActiveStoryUpdates(story);
 
@@ -229,7 +235,9 @@ function StoryAnimTool() {
       ...activeStory.originalStoryData,
       title: activeStory.title,
       excerpt: '',
-      featuredMedia: 0,
+      featuredMedia: {
+        id: 0,
+      },
       story_data: {
         ...activeStory.originalStoryData.story_data,
         pages: {

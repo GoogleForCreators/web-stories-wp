@@ -22,24 +22,19 @@ set -e
 
 echo "Initializing deployment to Web Stories test environment"
 
-echo "Start the ssh-agent in the background"
-eval "$(ssh-agent -s)"
-
-openssl aes-256-cbc -K $encrypted_d8cd72ebe8d4_key -iv $encrypted_d8cd72ebe8d4_iv -in .travis_deploy_key.enc -out .travis_deploy_key -d
-chmod 600 .travis_deploy_key
-ssh-add .travis_deploy_key
-
 PANTHEON_SITE="wordpress-amp"
 PANTHEON_BRANCH="stories-new"
 PANTHEON_UUID="6b7f1eeb-705b-4201-864d-2007030c8372"
-
-SSH_IDENTITY="$(pwd)/.travis_deploy_key"
 
 cd "$(dirname "$0")/.."
 project_dir="$(pwd)"
 repo_dir="$HOME/deployment-targets/$PANTHEON_SITE"
 
 echo "Setting up SSH configuration"
+
+# Dynamic hosts through Pantheon mean constantly checking interactively
+# that we mean to connect to an unknown host. We ignore those here.
+echo "StrictHostKeyChecking no" > ~/.ssh/config
 
 if ! grep -q "codeserver.dev.$PANTHEON_UUID.drush.in" ~/.ssh/known_hosts; then
     ssh-keyscan -p 2222 codeserver.dev.$PANTHEON_UUID.drush.in >> ~/.ssh/known_hosts
@@ -50,8 +45,6 @@ if ! grep -q "codeserver.dev.$PANTHEON_UUID.drush.in" ~/.ssh/config; then
     echo "Host $PANTHEON_SITE" >> ~/.ssh/config
     echo "  Hostname codeserver.dev.$PANTHEON_UUID.drush.in" >> ~/.ssh/config
     echo "  User codeserver.dev.$PANTHEON_UUID" >> ~/.ssh/config
-    echo "  IdentityFile $SSH_IDENTITY" >> ~/.ssh/config
-    echo "  IdentitiesOnly yes" >> ~/.ssh/config
     echo "  Port 2222" >> ~/.ssh/config
     echo "  KbdInteractiveAuthentication no" >> ~/.ssh/config
 fi
@@ -78,13 +71,7 @@ if git rev-parse --verify --quiet "origin/$PANTHEON_BRANCH" > /dev/null; then
     git reset --hard "origin/$PANTHEON_BRANCH"
 fi
 
-# Install and build.
 cd "$project_dir"
-
-echo "Building plugin"
-npm run build:js --silent
-npm run workflow:version --silent -- --nightly
-npm run workflow:build-plugin --silent
 
 echo "Moving files to repository"
 rsync -avz --delete ./build/web-stories/ "$repo_dir/wp-content/plugins/web-stories/"

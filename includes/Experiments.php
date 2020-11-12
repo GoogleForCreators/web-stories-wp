@@ -352,6 +352,17 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #4918
+			 * Creation date: 2020-10-27
+			 */
+			[
+				'name'        => 'statusCheck',
+				'label'       => __( 'Status Check', 'web-stories' ),
+				'description' => __( 'Enable status check in editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @swissspidy
 			 * Issue: #4805
 			 * Creation date: 2020-10-28
