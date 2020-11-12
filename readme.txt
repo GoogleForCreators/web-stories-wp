@@ -112,7 +112,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.1.1 =
 
-*Release Date:** November 11, 2020.
+**Release Date:** November 11, 2020.
 
 * Bug fixes and performance improvements.
 
