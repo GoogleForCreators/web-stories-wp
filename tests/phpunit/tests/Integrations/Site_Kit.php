@@ -37,7 +37,7 @@ class Site_Kit extends \WP_UnitTestCase {
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
-				'post_title'   => 'Example title',
+				'post_title'   => 'Site Kit Test Story',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
 			]
