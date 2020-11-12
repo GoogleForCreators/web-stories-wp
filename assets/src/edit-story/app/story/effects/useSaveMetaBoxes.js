@@ -55,7 +55,7 @@ function usePrevious(value) {
 
 function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   const isFeatureEnabled = useFeature('customMetaBoxes');
-  const { metaBoxes } = useConfig();
+  const { metaBoxes = {} } = useConfig();
 
   const locations = ['normal', 'advanced'];
   const hasMetaBoxes = locations.some((location) =>
