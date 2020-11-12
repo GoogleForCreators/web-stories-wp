@@ -38,8 +38,12 @@ const Row = styled.div`
   border-top: ${({ beginLightDark }) =>
     beginLightDark ? '1px solid black' : 'none'};
   padding-top: ${({ beginLightDark }) => (beginLightDark ? '6px' : 'inherit')};
-  & > h2 {
+  & > h2,
+  & > h3 {
     width: 100%;
+  }
+  & > h3 {
+    margin-top: 5px;
   }
 `;
 const FixedButton = styled(Button)`
@@ -55,9 +59,13 @@ const Container = styled.div`
   height: 150px;
   display: flex;
   margin-right: 20px;
+  margin-top: 10px;
   flex-direction: column;
   align-items: center;
   overflow-wrap: anywhere;
+  p {
+    text-align: center;
+  }
 `;
 
 const ColorBlock = styled.span`
@@ -83,14 +91,46 @@ export const _default = () => {
       {Object.keys(activeTheme).map((themeSection) => (
         <Row key={themeSection} beginLightDark={themeSection === 'fg'}>
           <Headline as="h2">{themeSection}</Headline>
-          {Object.keys(activeTheme[themeSection]).map((sectionValue) => (
-            <Container key={`${themeSection}_${sectionValue}`}>
-              <ColorBlock color={activeTheme[themeSection][sectionValue]} />
-              <Text
-                size={SMALL}
-              >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text>
-            </Container>
-          ))}
+          {Object.keys(activeTheme[themeSection]).map((sectionValue) => {
+            if (typeof activeTheme[themeSection][sectionValue] === 'object') {
+              return (
+                <Row>
+                  <Headline as="h3" size={SMALL}>
+                    {`${themeSection} - ${sectionValue}`}
+                  </Headline>
+                  {Object.keys(activeTheme[themeSection][sectionValue]).map(
+                    (nestedSection) => {
+                      return (
+                        <Container
+                          key={`${themeSection}_${sectionValue}_${nestedSection}`}
+                        >
+                          <ColorBlock
+                            color={
+                              activeTheme[themeSection][sectionValue][
+                                nestedSection
+                              ]
+                            }
+                          />
+                          <Text
+                            size={SMALL}
+                          >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text>
+                        </Container>
+                      );
+                    }
+                  )}
+                </Row>
+              );
+            }
+
+            return (
+              <Container key={`${themeSection}_${sectionValue}`}>
+                <ColorBlock color={activeTheme[themeSection][sectionValue]} />
+                <Text
+                  size={SMALL}
+                >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text>
+              </Container>
+            );
+          })}
         </Row>
       ))}
     </div>

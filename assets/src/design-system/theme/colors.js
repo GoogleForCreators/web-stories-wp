@@ -110,12 +110,7 @@ const opacity = {
   violet24: rgba(brand.violet[30], 0.24),
 };
 
-export const dark = {
-  standard,
-  accent,
-  status,
-  opacity,
-  ...brand,
+const darkTheme = {
   fg: {
     primary: brand.gray[5],
     secondary: brand.gray[20],
@@ -178,12 +173,7 @@ export const dark = {
   },
 };
 
-export const light = {
-  standard,
-  accent,
-  status,
-  opacity,
-  ...brand,
+const lightTheme = {
   fg: {
     primary: brand.gray[90],
     secondary: brand.gray[70],
@@ -244,4 +234,24 @@ export const light = {
     primary: opacity.black24,
     secondary: opacity.black10,
   },
+};
+
+export const dark = {
+  standard,
+  accent,
+  status,
+  opacity,
+  ...brand,
+  ...darkTheme,
+  inverted: { ...lightTheme },
+};
+
+export const light = {
+  standard,
+  accent,
+  status,
+  opacity,
+  ...brand,
+  ...lightTheme,
+  inverted: { ...darkTheme },
 };
