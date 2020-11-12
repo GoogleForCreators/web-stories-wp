@@ -57,7 +57,7 @@ const customStyles = {
     right: 0,
     bottom: 0,
     zIndex: 10,
-    backgroundColor: theme.colors.opacity.black64,
+    backgroundColor: theme.colors.opacity.overlay,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
