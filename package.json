@@ -52,7 +52,7 @@
     "patch-package": "^6.2.2",
     "polished": "^4.0.3",
     "prop-types": "^15.7.2",
-    "query-string": "^6.13.6",
+    "query-string": "^6.13.7",
     "react": "^16.13.1",
     "react-calendar": "^3.0.1",
     "react-color": "^2.19.3",
