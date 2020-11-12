@@ -74,7 +74,7 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
  *
  * @return Web_Stories_Compatibility
  */
-function get_web_stories_compat_instance() {
+function web_stories_get_compat_instance() {
 	$error      = new WP_Error();
 	$extensions = array(
 		'date'   => array(
@@ -142,7 +142,7 @@ function get_web_stories_compat_instance() {
  * @return void
  */
 function web_stories_print_admin_notice() {
-	$compatibility = get_web_stories_compat_instance();
+	$compatibility = web_stories_get_compat_instance();
 
 	$compatibility->run_checks();
 	$_error = $compatibility->get_error();
@@ -166,7 +166,7 @@ function web_stories_print_admin_notice() {
 }
 add_action( 'admin_notices', 'web_stories_print_admin_notice' );
 
-$web_stories_compatibility = get_web_stories_compat_instance();
+$web_stories_compatibility = web_stories_get_compat_instance();
 if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
 	// Only check for built php files in a CLI context.
 	$web_stories_compatibility->set_required_files(
