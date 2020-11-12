@@ -41,7 +41,7 @@ const StyledTab = styled.button(
       theme.colors.border.focus
     )};
 
-    color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.primary};
+    color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.secondary};
     cursor: pointer;
     ${themeHelpers.expandPresetStyles({
       preset:
