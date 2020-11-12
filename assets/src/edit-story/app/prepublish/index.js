@@ -16,13 +16,9 @@
 /**
  * Internal dependencies
  */
-import * as error from './error';
-import * as warning from './warning';
-import * as guidance from './guidance';
-
-const storyChecklist = [...error.story, ...warning.story, ...guidance.story];
-const pageChecklist = [...warning.page, ...guidance.page];
-const elementChecklist = [...warning.element, ...guidance.element];
+import error from './error';
+import warning from './warning';
+import guidance from './guidance';
 
 /**
  *
@@ -37,49 +33,90 @@ const elementChecklist = [...warning.element, ...guidance.element];
  */
 
 export default function prepublishChecklist(story) {
-  const guidanceMessages = [];
-  storyChecklist.forEach((getStoryGuidance) => {
-    try {
-      const storyGuidance = getStoryGuidance(story);
-      if (typeof storyGuidance !== 'undefined') {
-        guidanceMessages.push(storyGuidance);
-      }
-    } catch (e) {
-      // Ignore errors
-    }
-  });
+  if (!story) {
+    return [];
+  }
+  return [error, warning, guidance]
+    .map((byType) => {
+      const {
+        // arrays of functions
+        story: storyChecklist = [],
+        page: pageChecklist = [],
+        ...elementChecklistsByType
+      } = byType;
 
-  pageChecklist.forEach((getPageGuidance) => {
-    story?.pages?.forEach((page) => {
+      let storyGuidance = [],
+        pageGuidance = [],
+        elementGuidance = [];
+
+      // get guidance messages for the top-level story object
+
       try {
-        const pageGuidance = getPageGuidance(page);
-        if (typeof pageGuidance !== 'undefined') {
-          guidanceMessages.push(pageGuidance);
-        }
-        const { elements } = page;
-        elementChecklist.forEach(({ type: checkElementType, checklist }) => {
+        storyChecklist.forEach((getStoryGuidance) => {
+          const guidanceMessage = getStoryGuidance(story);
+          if (guidanceMessage !== undefined) {
+            storyGuidance.push(guidanceMessage);
+          }
+        });
+      } catch (e) {
+        // ignore errors
+      }
+
+      // for each page, run checklist on the page object as well as each element
+      ({ pageGuidance, elementGuidance } = story.pages.reduce(
+        (prev, currentPage) => {
+          const { id: pageId, elements } = currentPage;
+
+          // get guidance for the page object
+          const currentPageGuidance = [];
+          try {
+            pageChecklist.forEach((getPageGuidance) => {
+              const guidanceMessage = getPageGuidance(currentPage);
+              if (guidanceMessage !== undefined) {
+                currentPageGuidance.push(guidanceMessage);
+              }
+            });
+          } catch (e) {
+            // ignore errors
+          }
+
+          // get guidance for all the elements on the page
+          let currentPageElementGuidance = [];
           elements.forEach((element) => {
-            const isElementAllowed = checkElementType.includes(element.type);
+            const elementsChecklist =
+              elementChecklistsByType[element.type] || [];
 
-            if (isElementAllowed) {
-              checklist.forEach((getElementGuidance) => {
-                const elementGuidance = getElementGuidance(element);
-
-                if (typeof elementGuidance !== 'undefined') {
-                  guidanceMessages.push({
-                    ...elementGuidance,
-                    pageId: page.id,
+            try {
+              elementsChecklist.forEach((getElementGuidance) => {
+                const guidanceMessage = getElementGuidance(element);
+                if (guidanceMessage !== undefined) {
+                  currentPageElementGuidance.push({
+                    ...guidanceMessage,
+                    // provide the page the element is on
+                    pageId,
                   });
                 }
               });
+            } catch (e) {
+              // ignore errors
             }
           });
-        });
-      } catch (e) {
-        // Ignore errors
-      }
-    });
-  });
 
-  return guidanceMessages;
+          return {
+            pageGuidance: [...prev.pageGuidance, ...currentPageGuidance],
+            elementGuidance: [
+              ...prev.elementGuidance,
+              ...currentPageElementGuidance,
+            ],
+          };
+        },
+        {
+          pageGuidance: [],
+          elementGuidance: [],
+        }
+      ));
+
+      return [...storyGuidance, ...pageGuidance, ...elementGuidance];
+    })
+    .flat();
 }

@@ -69,7 +69,7 @@ export function storyPagesCount(story) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyTitleLength(story) {
-  if (story.title.length > MAX_STORY_TITLE_LENGTH_CHARS) {
+  if (story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       storyId: story.storyId,

@@ -41,7 +41,7 @@ const PUBLISHER_LOGO_MIN_WIDTH = 96;
  * @return {Guidance|undefined} Guidance object for consumption
  */
 export function storyCoverAttached(story) {
-  if (typeof story?.featuredMedia?.url !== 'string') {
+  if (typeof story.featuredMedia?.url !== 'string') {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
@@ -61,7 +61,7 @@ export function storyCoverAttached(story) {
  * @return {Guidance|undefined} Guidance object for consumption
  */
 export function storyTitle(story) {
-  if (typeof story.title !== 'string' || story.title.trim() === '') {
+  if (typeof story.title !== 'string' || story.title?.trim() === '') {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
@@ -82,8 +82,8 @@ export function storyTitle(story) {
  */
 export function storyCoverPortraitSize(story) {
   if (
-    story?.featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
-    story?.featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
+    story.featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
+    story.featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
@@ -105,8 +105,8 @@ export function storyCoverPortraitSize(story) {
  */
 export function publisherLogoSize(story) {
   if (
-    story.publisherLogo.height < PUBLISHER_LOGO_MIN_HEIGHT ||
-    story.publisherLogo.width < PUBLISHER_LOGO_MIN_WIDTH
+    story.publisherLogo?.height < PUBLISHER_LOGO_MIN_HEIGHT ||
+    story.publisherLogo?.width < PUBLISHER_LOGO_MIN_WIDTH
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
@@ -131,7 +131,7 @@ export function linkInPageAttachmentRegion(story) {
   const pagesWithLinksInAttachmentArea = pages
     .filter((page) => {
       const { elements } = page;
-      const hasPageAttachment = Boolean(page?.pageAttachment?.url.length);
+      const hasPageAttachment = Boolean(page.pageAttachment?.url?.length);
       return (
         hasPageAttachment &&
         elements

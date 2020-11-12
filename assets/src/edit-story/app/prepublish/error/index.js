@@ -18,10 +18,12 @@
  */
 import * as metadataErrors from './metadata';
 
-export const story = [
-  metadataErrors.storyCoverAttached,
-  metadataErrors.storyTitle,
-  metadataErrors.storyCoverPortraitSize,
-  metadataErrors.publisherLogoSize,
-  metadataErrors.linkInPageAttachmentRegion,
-];
+export default {
+  story: [
+    metadataErrors.storyCoverAttached,
+    metadataErrors.storyTitle,
+    metadataErrors.storyCoverPortraitSize,
+    metadataErrors.publisherLogoSize,
+    metadataErrors.linkInPageAttachmentRegion,
+  ],
+};

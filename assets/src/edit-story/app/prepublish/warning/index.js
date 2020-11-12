@@ -19,33 +19,29 @@
 import * as accessibilityWarnings from './accessibility';
 import * as distributionWarnings from './distribution';
 
-export const story = [distributionWarnings.storyMissingExcerpt];
-export const page = [accessibilityWarnings.pageTooManyLinks];
-export const element = [
-  {
-    type: 'text',
-    checklist: [
-      accessibilityWarnings.textElementFontLowContrast,
-      accessibilityWarnings.textElementFontSizeTooSmall,
-    ],
-  },
-  {
-    type: ['image', 'gif'],
-    checklist: [
-      accessibilityWarnings.imageElementLowResolution,
-      accessibilityWarnings.imageElementMissingAlt,
-    ],
-  },
-  {
-    type: 'video',
-    checklist: [
-      accessibilityWarnings.videoElementMissingTitle,
-      accessibilityWarnings.videoElementMissingAlt,
-      accessibilityWarnings.videoElementMissingCaptions,
-    ],
-  },
-  {
-    type: ['text', 'image', 'shape', 'video', 'gif'],
-    checklist: [accessibilityWarnings.elementLinkTappableRegionTooSmall],
-  },
-];
+export default {
+  story: [distributionWarnings.storyMissingExcerpt],
+  page: [accessibilityWarnings.pageTooManyLinks],
+  text: [
+    accessibilityWarnings.textElementFontLowContrast,
+    accessibilityWarnings.textElementFontSizeTooSmall,
+    accessibilityWarnings.elementLinkTappableRegionTooSmall,
+  ],
+  image: [
+    accessibilityWarnings.imageElementLowResolution,
+    accessibilityWarnings.imageElementMissingAlt,
+    accessibilityWarnings.elementLinkTappableRegionTooSmall,
+  ],
+  shape: [accessibilityWarnings.elementLinkTappableRegionTooSmall],
+  gif: [
+    accessibilityWarnings.imageElementLowResolution,
+    accessibilityWarnings.imageElementMissingAlt,
+    accessibilityWarnings.elementLinkTappableRegionTooSmall,
+  ],
+  video: [
+    accessibilityWarnings.videoElementMissingTitle,
+    accessibilityWarnings.videoElementMissingAlt,
+    accessibilityWarnings.videoElementMissingCaptions,
+    accessibilityWarnings.elementLinkTappableRegionTooSmall,
+  ],
+};

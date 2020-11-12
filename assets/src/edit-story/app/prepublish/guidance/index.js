@@ -20,22 +20,24 @@ import * as generalGuidance from './general';
 import * as mediaGuidance from './media';
 import * as textGuidance from './text';
 
-export const story = [
-  generalGuidance.storyPagesCount,
-  generalGuidance.storyTitleLength,
-  textGuidance.storyTooLittleText,
-];
-export const page = [
-  mediaGuidance.videoElementSizeOnPage,
-  textGuidance.pageTooMuchText,
-];
-export const element = [
-  {
-    type: ['video', 'gif', 'image'],
-    checklist: [
-      mediaGuidance.mediaElementSizeOnPage,
-      mediaGuidance.mediaElementResolution,
-    ],
-  },
-  { type: 'video', checklist: mediaGuidance.videoElementLength },
-];
+export default {
+  story: [
+    generalGuidance.storyPagesCount,
+    generalGuidance.storyTitleLength,
+    textGuidance.storyTooLittleText,
+  ],
+  page: [mediaGuidance.videoElementSizeOnPage, textGuidance.pageTooMuchText],
+  video: [
+    mediaGuidance.mediaElementSizeOnPage,
+    mediaGuidance.mediaElementResolution,
+    mediaGuidance.videoElementLength,
+  ],
+  gif: [
+    mediaGuidance.mediaElementSizeOnPage,
+    mediaGuidance.mediaElementResolution,
+  ],
+  image: [
+    mediaGuidance.mediaElementSizeOnPage,
+    mediaGuidance.mediaElementResolution,
+  ],
+};
