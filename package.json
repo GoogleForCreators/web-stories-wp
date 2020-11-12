@@ -98,7 +98,7 @@
     "@svgr/webpack": "^5.4.0",
     "@testing-library/dom": "^7.26.6",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^11.1.2",
     "@testing-library/react-hooks": "^3.4.2",
     "@testing-library/user-event": "^12.2.2",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.8.0",
