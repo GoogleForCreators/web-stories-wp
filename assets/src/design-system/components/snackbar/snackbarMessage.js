@@ -52,9 +52,10 @@ const MessageContainer = styled.div`
   min-height: 48px;
   padding: 14px 16px;
   margin-top: 20px;
-  background-color: ${({ theme }) => theme.colors.bg.primary};
+  background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
+  color: ${({ theme }) => theme.colors.inverted.fg.primary};
   border: ${({ theme }) =>
-    `1px solid ${rgba(theme.colors.border.primary, 0.24)}`};
+    `1px solid ${rgba(theme.colors.inverted.border.primary, 0.24)}`};
   border-radius: ${({ theme }) => theme.borders.radius};
   animation: 0.5s ${slideIn} ease-out;
 `;
@@ -66,12 +67,12 @@ const ActionButton = styled(Button)`
   padding: 0;
   margin: 0 0 0 auto;
   text-decoration: underline;
-  color: ${({ theme }) => theme.colors.fg.linkNormal};
+  color: ${({ theme }) => theme.colors.inverted.fg.linkNormal};
 
   &:focus,
   &:hover,
   &:active {
-    color: ${({ theme }) => theme.colors.fg.linkHover};
+    color: ${({ theme }) => theme.colors.inverted.fg.linkHover};
   }
 `;
 
