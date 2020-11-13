@@ -68,10 +68,8 @@ function Panel({
     if (!isPersistable) {
       return false;
     }
-    // Default state for panels that can be persisted is collapsed.
-    return undefined === persisted?.isCollapsed
-      ? collapsedByDefault
-      : persisted.isCollapsed;
+    // If isCollapsed is not defined, return the default value.
+    return persisted?.isCollapsed ?? collapsedByDefault;
   });
   const [expandToHeight, setExpandToHeight] = useState(
     persisted?.expandToHeight || initialHeight
@@ -127,7 +125,7 @@ function Panel({
 
   // Persist when user collapses
   useEffect(() => {
-    if (!manuallyChanged || !isPersistable) {
+    if (!isPersistable || !manuallyChanged) {
       return;
     }
 
