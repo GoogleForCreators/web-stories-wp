@@ -46,8 +46,12 @@ const DEFAULT_BORDER_RADIUS = {
 
 const LockToggle = styled(Toggle)`
   position: absolute;
-  top: 50%;
+  top: calc(50% + 2px);
   left: calc(50% - ${TOGGLE_WIDTH / 2}px);
+`;
+
+const LockToggleRow = styled(Row)`
+  margin: 0;
 `;
 
 const BoxedNumeric = styled(Numeric)`
@@ -149,6 +153,13 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         <Icon corner={TOP_RIGHT}>
           <BorderLockLine />
         </Icon>
+        <BoxedNumeric
+          value={borderRadius.topRight}
+          aria-label={__('Edit: Top right corner radius', 'web-stories')}
+          onChange={(value) => handleChange('topRight', value)}
+        />
+      </Row>
+      <LockToggleRow>
         <LockToggle
           icon={<Lock />}
           uncheckedIcon={<Unlock />}
@@ -156,12 +167,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
           onChange={() => handleLockChange(!borderRadius.locked)}
           aria-label={__('Toggle corner radius lock', 'web-stories')}
         />
-        <BoxedNumeric
-          value={borderRadius.topRight}
-          aria-label={__('Edit: Top right corner radius', 'web-stories')}
-          onChange={(value) => handleChange('topRight', value)}
-        />
-      </Row>
+      </LockToggleRow>
       <Row>
         <BoxedNumeric
           value={borderRadius.bottomLeft}
