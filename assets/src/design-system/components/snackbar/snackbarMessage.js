@@ -55,9 +55,14 @@ const MessageContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   border: ${({ theme }) =>
-    `1px solid ${rgba(theme.colors.inverted.border.primary, 0.24)}`};
+    `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
   border-radius: ${({ theme }) => theme.borders.radius};
+
   animation: 0.5s ${slideIn} ease-out;
+`;
+
+const Message = styled(Text)`
+  color: ${({ theme }) => theme.colors.inverted.fg.primary};
 `;
 
 const ActionButton = styled(Button)`
@@ -116,9 +121,9 @@ const SnackbarMessage = ({
       tabIndex={0}
       hasAction={Boolean(actionLabel)}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+      <Message size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {message}
-      </Text>
+      </Message>
       {actionLabel && (
         <ActionButton onClick={handleAction}>{actionLabel}</ActionButton>
       )}

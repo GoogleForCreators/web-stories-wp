@@ -18,18 +18,47 @@
  */
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
+import styled, { ThemeProvider } from 'styled-components';
 
 /**
  * Internal dependencies
  */
+import { theme } from '../../..';
 import { SnackbarContainer } from '../snackbarContainer';
 import { SnackbarMessage } from '../snackbarMessage';
+
+const Container = styled.div`
+  background-color: ${(props) => props.theme.colors.bg.primary};
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+`;
 
 export default {
   title: 'DesignSystem/Components/Snackbar',
 };
 
 export const _default = () => (
+  <ThemeProvider theme={theme}>
+    <Container>
+      <SnackbarContainer>
+        <SnackbarMessage
+          isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+          handleAction={action('handle action clicked')}
+          actionLabel={text('actionLabel', 'Retry')}
+          message={text('message', 'Sorry! File failed to upload.')}
+          ariaLabel={text(
+            'ariaLabel',
+            'this is my aria label giving my message context for screen reader users'
+          )}
+          handleDismiss={action('handle dismiss fired')}
+        />
+      </SnackbarContainer>
+    </Container>
+  </ThemeProvider>
+);
+
+export const LightThemeDefault = () => (
   <SnackbarContainer>
     <SnackbarMessage
       isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
