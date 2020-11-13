@@ -122,3 +122,27 @@ export function getBorderStyle({
 export function isOutsideBorder(border) {
   return border?.position === BORDER_POSITION.OUTSIDE;
 }
+
+export function getInnerRadius(outerRadius, oneSide, otherSide) {
+  return outerRadius - Math.min(outerRadius, Math.max(oneSide, otherSide)) / 2;
+}
+
+export function getBorderRadius({ borderRadius, border }) {
+  if (!borderRadius) {
+    return {};
+  }
+  if (border?.position === BORDER_POSITION.CENTER) {
+    const radii = [
+      getInnerRadius(borderRadius.topLeft, border.top, border.left),
+      getInnerRadius(borderRadius.topRight, border.top, border.right),
+      getInnerRadius(borderRadius.bottomRight, border.bottom, border.right),
+      getInnerRadius(borderRadius.bottomLeft, border.bottom, border.left),
+    ];
+    return {
+      borderRadius: radii.map((radius) => `${radius}px`).join(' '),
+    };
+  }
+  return {
+    borderRadius: `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`,
+  };
+}

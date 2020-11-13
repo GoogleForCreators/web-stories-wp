@@ -25,6 +25,7 @@ import StoryPropTypes from '../types';
 import { getBox } from '../units/dimensions';
 import {
   getBorderPositionCSS,
+  getBorderRadius,
   getBorderStyle,
   isOutsideBorder,
   shouldDisplayBorder,
@@ -79,9 +80,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
-            borderRadius: borderRadius
-              ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
-              : null,
+            ...getBorderRadius({ border, borderRadius }),
           }}
           skipDefaultMask
         >

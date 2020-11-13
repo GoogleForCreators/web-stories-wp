@@ -27,6 +27,7 @@ import { calcFontMetrics, generateFontFamily } from '../text/util';
 import {
   getBorderStyle,
   isOutsideBorder,
+  getBorderRadius,
 } from '../../components/elementBorder/utils';
 
 export const elementFillContent = css`
@@ -55,10 +56,7 @@ export const elementWithRotation = css`
 `;
 
 export const elementWithBorderRadius = css`
-  ${({ borderRadius }) =>
-    borderRadius
-      ? `border-radius: ${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
-      : ''};
+  ${(props) => getBorderRadius(props)}
 `;
 
 export const elementWithOutsideBorder = css`
