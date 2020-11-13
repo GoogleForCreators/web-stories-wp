@@ -20,18 +20,32 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import { useState, useEffect } from 'react';
+/**
  * Internal dependencies
  */
 import { SimplePanel } from '../../panels/panel';
-// import prepublishChecklist from '../../../app/prepublish';
-// import { useStory } from '../../../app';
+import { useStory } from '../../../app';
+import prepublishChecklist from '../../../app/prepublish';
 
 function PrepublishInspector() {
-  // const story = useStory(({ state }) => ({ state }));
-  // console.log('story', story);
+  const { story, pages } = useStory(({ state: { story, pages } }) => ({
+    story,
+    pages,
+  }));
+  const [currentList, setCurrentList] = useState(
+    prepublishChecklist({ ...story, pages })
+  );
+
+  useEffect(() => {
+    setCurrentList(prepublishChecklist({ ...story, pages }));
+  }, [pages, story]);
+
   return (
     <SimplePanel name="prepublish" title={__('Prepublish', 'web-stories')}>
-      {__('Coming soon', 'web-stories')}
+      {JSON.stringify(currentList)}
     </SimplePanel>
   );
 }

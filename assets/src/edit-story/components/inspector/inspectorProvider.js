@@ -137,7 +137,7 @@ function InspectorProvider({ children }) {
           ? [
               {
                 id: PREPUBLISH,
-                title: __('Prepublish', 'web-stories'),
+                title: __('Checklist', 'web-stories'),
                 Pane: PrepublishInspector,
               },
             ]
