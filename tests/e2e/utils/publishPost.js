@@ -19,18 +19,21 @@
  */
 import {
   arePrePublishChecksEnabled,
-  publishPostWithPrePublishChecksDisabled,
-  publishPost as _publishPost,
+  openPublishPanel,
 } from '@wordpress/e2e-test-utils';
 
 /**
  * Custom helper function to publish posts in Gutenberg.
  *
- * Avoid using disablePrePublishChecks.
+ * Avoids using `disablePrePublishChecks`.
  *
  * The main reason for this is that it calls toggleScreenOption,
  * which itself is rather flaky and sometimes
  * doesn't find the requested element, causing JS errors.
+ *
+ * Also avoids using the original `publishPost` helper as it often
+ * fails waiting for a snackbar message to appear.
+ * Instead, we wait to receive the post's updated permalink.
  *
  * @see https://github.com/WordPress/gutenberg/blob/f96bd6b6fdfca02d47edce8c2f0d68dccf3a37be/packages/e2e-test-utils/src/toggle-screen-option.js#L20-L23
  *
@@ -42,10 +45,11 @@ async function publishPost() {
   const prePublishChecksEnabled = await arePrePublishChecksEnabled();
 
   if (prePublishChecksEnabled) {
-    await _publishPost();
-  } else {
-    await publishPostWithPrePublishChecksDisabled();
+    await openPublishPanel();
   }
+
+  // Publish the post
+  await page.click('.editor-post-publish-button');
 
   // Wait until the selector returns a truthy value.
   await page.waitForFunction(() =>
