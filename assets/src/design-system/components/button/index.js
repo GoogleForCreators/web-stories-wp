@@ -37,7 +37,7 @@ const Base = styled.button(
     border: none;
     ${themeHelpers.focusableOutlineCSS(
       theme.colors.bg.primary,
-      theme.colors.accent.secondary
+      theme.colors.border.focus
     )};
     color: ${theme.colors.fg.primary};
     cursor: pointer;
@@ -48,16 +48,19 @@ const Base = styled.button(
         ],
       theme,
     })};
-    &:disabled {
-      pointer-events: none;
-    }
 
-    &:focus {
-      outline: none;
-    }
-
+    &:focus,
     &:active {
       outline: none;
+    }
+    &:active {
+      background-color: ${theme.colors.interactiveBg.active};
+    }
+
+    &:disabled {
+      pointer-events: none;
+      background-color: ${theme.colors.interactiveBg.disable};
+      color: ${theme.colors.fg.disable};
     }
 
     transition: background-color 0.6s ease 0s;
@@ -65,47 +68,36 @@ const Base = styled.button(
 );
 
 const primaryColors = ({ theme }) => css`
-  background-color: ${theme.colors.accent.primary};
+  background-color: ${theme.colors.interactiveBg.brandNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: ${theme.colors.violet[40]};
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.brandHover};
   }
-
-  &:disabled {
-    background-color: #efefef;
-    color: ${theme.colors.gray[20]};
+  &:active {
+    background-color: ${theme.colors.interactiveBg.active};
   }
 `;
 
 const secondaryColors = ({ theme }) => css`
-  background-color: #d1d1cc;
+  background-color: ${theme.colors.interactiveBg.secondaryNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: ${theme.colors.gray[20]};
-  }
-
-  &:disabled {
-    background-color: #efefef;
-    color: ${theme.colors.gray[20]};
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.secondaryHover};
   }
 `;
 
 const tertiaryColors = ({ theme }) => css`
-  background-color: ${theme.colors.standard.white};
+  background-color: ${theme.colors.interactiveBg.tertiaryNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: #efefef;
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.tertiaryHover};
   }
 
   &:disabled {
-    background-color: ${theme.colors.standard.white};
-    color: ${theme.colors.gray[20]};
+    background-color: ${theme.colors.interactiveBg.tertiaryNormal};
   }
 `;
 

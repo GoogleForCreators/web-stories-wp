@@ -36,7 +36,7 @@ import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users },
+    api: { stories, media, link, users, statusCheck },
     encodeMarkup,
   } = useConfig();
 
@@ -246,6 +246,23 @@ function APIProvider({ children }) {
     [users]
   );
 
+  /**
+   * Status check, submit html string.
+   *
+   * @param {string} HTML string.
+   * @return {Promise} Result promise
+   */
+  const getStatusCheck = useCallback(
+    (content) => {
+      return apiFetch({
+        path: statusCheck,
+        data: { content: encodeMarkup ? base64Encode(content) : content },
+        method: 'POST',
+      });
+    },
+    [statusCheck, encodeMarkup]
+  );
+
   const state = {
     actions: {
       autoSaveById,
@@ -257,6 +274,7 @@ function APIProvider({ children }) {
       uploadMedia,
       updateMedia,
       deleteMedia,
+      getStatusCheck,
     },
   };
 

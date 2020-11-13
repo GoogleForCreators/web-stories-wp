@@ -24,10 +24,6 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories;
-
-use WP_Error;
-
 /**
  * Class Compatibility
  *
@@ -35,7 +31,7 @@ use WP_Error;
  *
  * @package Google\Web_Stories
  */
-class Compatibility {
+class Web_Stories_Compatibility {
 
 	/**
 	 * WP_Error object passed back.
@@ -71,7 +67,7 @@ class Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $extensions = [];
+	protected $extensions = array();
 
 	/**
 	 * Array of required files.
@@ -80,7 +76,7 @@ class Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $required_files = [];
+	protected $required_files = array();
 
 	/**
 	 * Compatibility constructor.
@@ -104,9 +100,9 @@ class Compatibility {
 		if ( version_compare( PHP_VERSION, $this->get_php_version(), '<' ) ) {
 			/* translators: %s: PHP version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), $this->get_php_version() ) );
-			$data    = [
+			$data    = array(
 				'title' => $message,
-			];
+			);
 			$this->add_to_error( 'failed_check_php_version', $message, $data );
 
 			return false;
@@ -126,9 +122,9 @@ class Compatibility {
 		if ( version_compare( get_bloginfo( 'version' ), $this->get_wp_version(), '<' ) ) {
 			/* translators: %s: WordPress version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), $this->get_wp_version() ) );
-			$data    = [
+			$data    = array(
 				'title' => $message,
-			];
+			);
 			$this->add_to_error( 'failed_check_wp_version', $message, $data );
 
 			return false;
@@ -155,9 +151,9 @@ class Compatibility {
 							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
 							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
 						);
-					$data = [
+					$data = array(
 						'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
-					];
+					);
 					$this->add_to_error( 'failed_check_required_files', $message, $data );
 
 					return false;
@@ -176,7 +172,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_extensions() {
-		$missing_extensions = [];
+		$missing_extensions = array();
 		foreach ( array_keys( $this->get_extensions() ) as $required_extension ) {
 			if ( ! extension_loaded( $required_extension ) ) {
 				$missing_extensions[] = "<code>$required_extension</code>";
@@ -212,7 +208,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_classes() {
-		$missing_classes = [];
+		$missing_classes = array();
 		foreach ( $this->get_extensions() as $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'classes' !== $construct_type ) {
@@ -256,7 +252,7 @@ class Compatibility {
 	 * @return bool
 	 */
 	public function check_functions() {
-		$missing_functions = [];
+		$missing_functions = array();
 		foreach ( $this->get_extensions() as $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'functions' !== $construct_type ) {
@@ -301,6 +297,8 @@ class Compatibility {
 	 * @return void
 	 */
 	public function run_checks() {
+		$this->check_php_version();
+		$this->check_wp_version();
 		$this->check_required_files();
 		$this->check_extensions();
 		$this->check_classes();

@@ -21,7 +21,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -31,6 +31,7 @@ import styled from 'styled-components';
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
 import { ANIMATION_EFFECTS, DIRECTION, ROTATION } from '../../../../animation';
+import useFocusOut from '../../../utils/useFocusOut';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -105,13 +106,17 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
-export default function EffectChooser({ onAnimationSelected }) {
+export default function EffectChooser({ onAnimationSelected, onDismiss }) {
+  const ref = useRef();
+
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   });
 
+  useFocusOut(ref, () => onDismiss?.(), []);
+
   return (
-    <Container>
+    <Container ref={ref}>
       <Grid>
         <GridItemFullRow
           aria-label={__('Drop Effect', 'web-stories')}
@@ -342,4 +347,5 @@ export default function EffectChooser({ onAnimationSelected }) {
 
 EffectChooser.propTypes = {
   onAnimationSelected: propTypes.func.isRequired,
+  onDismiss: propTypes.func,
 };

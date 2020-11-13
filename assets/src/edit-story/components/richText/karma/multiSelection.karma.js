@@ -150,7 +150,7 @@ describe('Styling multiple text fields', () => {
       expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
-      expect(fontColor.output).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontColor.output).toBe('');
 
       // Toggle all styles
       await data.fixture.events.click(italic.button);
