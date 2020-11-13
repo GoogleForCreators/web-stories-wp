@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { Button } from './button';
+export * from './button';
 export { Modal } from './modal';
 export { Pill } from './pill';
 export * as Snackbar from './snackbar';
