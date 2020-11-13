@@ -27,7 +27,6 @@ import StoryContext from '../../../../app/story/context';
 import InspectorContext from '../../../inspector/context';
 import PublishPanel from '../publish';
 import { renderWithTheme } from '../../../../testUtils';
-import ApiContext from '../../../../app/api/context';
 
 function setupPanel(
   capabilities = {
