@@ -50,7 +50,7 @@ function PageStylePanel() {
     <SimplePanel
       name="pageStyle"
       title={__('Page', 'web-stories')}
-      isPersisted={false}
+      isPersistable={false}
     >
       <Row>
         <Color

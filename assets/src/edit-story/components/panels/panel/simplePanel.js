@@ -39,7 +39,6 @@ SimplePanel.propTypes = {
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  isPersisted: PropTypes.bool,
 };
 
 export default SimplePanel;

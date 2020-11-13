@@ -46,7 +46,7 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
     <SimplePanel
       name="style"
       title={__('Style', 'web-stories')}
-      isPersisted={false}
+      isPersistable={false}
     >
       <Row>
         <Color

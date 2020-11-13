@@ -38,7 +38,7 @@ function StylePanel(props) {
     <SimplePanel
       name="style"
       title={__('Style', 'web-stories')}
-      isPersisted={false}
+      isPersistable={false}
     >
       <FontControls {...props} />
       <TextStyleControls {...props} />
