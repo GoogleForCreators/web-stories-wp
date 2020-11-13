@@ -25,4 +25,7 @@ export const focusableOutlineCSS = (accent) => css`
   &:focus {
     border: solid 2px ${accent};
   }
+  * {
+    box-sizing: border-box;
+  }
 `;

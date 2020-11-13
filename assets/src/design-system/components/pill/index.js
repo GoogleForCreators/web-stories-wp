@@ -56,8 +56,6 @@ const StyledPill = styled.button(
       display: flex;
       align-items: center;
       justify-content: space-around;
-      box-sizing: border-box;
-      box-sizing: content-box;
       padding: 6px 16px;
       height: 100%;
     }

@@ -115,7 +115,6 @@ const ButtonRectangle = styled(Base)`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    box-sizing: border-box;
     padding: ${({ size }) =>
       size === BUTTON_SIZES.SMALL ? '8px 16px' : '16px 32px'};
     height: 100%;
@@ -133,7 +132,6 @@ const ButtonSquare = styled(Base)`
       display: flex;
       align-items: center;
       justify-content: space-around;
-      box-sizing: border-box;
       padding: 10px 10px;
       height: 100%;
       width: 100%;
@@ -152,22 +150,21 @@ const ButtonCircle = styled(ButtonSquare)`
 `;
 
 const ButtonIcon = styled(Base)`
-  ${({ size }) => `
+  ${({ size }) => css`
     width: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
-    height:${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
+    height: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
 
     & > div {
       display: flex;
       align-items: center;
       justify-content: space-around;
-      box-sizing: border-box;
       height: 100%;
       width: 100%;
     }
-    
+
     svg {
       width: 100%;
-      height:100%;
+      height: auto;
       margin: 0 auto;
     }
   `}
