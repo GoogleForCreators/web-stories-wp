@@ -77,7 +77,7 @@ class Jetpack {
 	 *
 	 * @param boolean $is_amp_request Is the request supposed to return valid AMP content.
 	 *
-	 * @return boolean
+	 * @return bool Whether the current request is an AMP request.
 	 */
 	public function force_amp_request( $is_amp_request ) {
 		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
