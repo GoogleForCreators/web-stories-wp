@@ -52,7 +52,7 @@ const DropDownContainer = styled.div`
   }
 `;
 
-const DropDownSelect = styled.button`
+export const DropDownSelect = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -86,7 +86,7 @@ const DropDownSelect = styled.button`
   }
 `;
 
-const DropDownTitle = styled.span`
+export const DropDownTitle = styled.span`
   user-select: none;
   color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.label.family};

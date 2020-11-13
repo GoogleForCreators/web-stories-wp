@@ -59,3 +59,24 @@ export const _default = () => {
     </ThemeProvider>
   );
 };
+
+export const LightTheme = () => {
+  const [currentTabId, setCurrentTabId] = useState();
+  return (
+    <Container>
+      <TabGroup
+        activeTabId={currentTabId}
+        tabs={[
+          { id: '1', title: 'tab one' },
+          { id: '2', title: 'tab two' },
+          { id: '3', title: 'tab three' },
+        ]}
+        label={'tab group label'}
+        handleTabClicked={(e, id, tabRefs) => {
+          action('tab clicked')(tabRefs.current[id]);
+          setCurrentTabId(id);
+        }}
+      />
+    </Container>
+  );
+};

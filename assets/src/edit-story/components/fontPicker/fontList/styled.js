@@ -23,6 +23,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { ReactComponent as Checkmark } from '../../../icons/checkmark.svg';
+import { ScrollBarStyles } from '../../library/common/scrollbarStyles';
 
 export const List = styled.div`
   width: 100%;
@@ -39,22 +40,7 @@ export const List = styled.div`
   scrollbar-color: transparent
     ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
 
-  ::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border: none;
-    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
-  }
-
-  :focus {
-    outline: 2px solid ${({ theme }) => theme.colors.accent.secondary};
-  }
+  ${ScrollBarStyles}
 `;
 
 export const Group = styled.ul`

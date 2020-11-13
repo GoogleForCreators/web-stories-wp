@@ -30,12 +30,9 @@ describe('useGlobalClipboardHandlers', () => {
     const copyCutHandler = jest.fn();
     const pasteHandler = jest.fn();
 
-    const originalWindow = { ...window };
-    const windowSpy = jest.spyOn(global, 'window', 'get');
-    windowSpy.mockImplementation(() => ({
-      ...originalWindow,
-      getSelection: () => false,
-    }));
+    const windowSpy = jest
+      .spyOn(global, 'getSelection')
+      .mockImplementation(() => false);
 
     renderHook(() => {
       useGlobalClipboardHandlers(copyCutHandler, pasteHandler);

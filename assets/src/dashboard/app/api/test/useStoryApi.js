@@ -46,9 +46,11 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      featured_media_url: '',
       story_data: { pages: [{ id: 0, elements: [] }] },
-      _embedded: { author: [{ id: 1, name: 'admin' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 1, name: 'admin' }],
+      },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
@@ -92,9 +94,11 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      featured_media_url: '',
       story_data: { pages: [{ id: 0, elements: [] }] },
-      _embedded: { author: [{ id: 1, name: 'admin' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 1, name: 'admin' }],
+      },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(
@@ -128,9 +132,11 @@ describe('reshapeStoryObject', () => {
       template: '',
       categories: [],
       tags: [],
-      featured_media_url: '',
       story_data: { pages: [] },
-      _embedded: { author: [{ id: 1, name: 'admin' }] },
+      _embedded: {
+        'wp:featuredmedia': [{ id: 0, url: '' }],
+        author: [{ id: 1, name: 'admin' }],
+      },
     };
 
     const reshapedObj = reshapeStoryObject('http://editstory.com?action=edit')(

@@ -363,4 +363,70 @@ class Sanitization extends \WP_UnitTestCase {
 			$sanitizers['AMP_Dev_Mode_Sanitizer']['element_xpaths']
 		);
 	}
+
+	/**
+	 * @covers \Google\Web_Stories\Integrations\AMP::filter_amp_validation_error_sanitized
+	 */
+	public function test_sanitize_amp_video_with_missing_poster() {
+		ob_start();
+		?>
+		<html>
+		<head>
+		<script async="" src="https://cdn.ampproject.org/v0.js"></script>
+		<script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>
+		</head>
+		<body>
+		<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png">
+			<amp-story-page id="foo">
+				<amp-story-grid-layer template="fill">
+					<amp-video autoplay="autoplay" title="Some Video" alt="Some Video" layout="fill" id="foo"><source type="video/mp4" src="https://example.com/video.mp4"/></amp-video>
+				</amp-story-grid-layer>
+			</amp-story-page>
+		</amp-story>
+		</body>
+		</html>
+		<?php
+		$original_html = ob_get_clean();
+
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
+
+		$document = Document::fromHtml( $original_html );
+		$sanitization->sanitize_document( $document );
+
+		$video_element = $document->body->getElementsByTagName( 'amp-video' )->item( 0 );
+		$this->assertInstanceOf( DOMElement::class, $video_element );
+	}
+
+	/**
+	 * @covers \Google\Web_Stories\Integrations\AMP::filter_amp_validation_error_sanitized
+	 */
+	public function test_sanitize_amp_video_with_http_source() {
+		ob_start();
+		?>
+		<html>
+		<head>
+			<script async="" src="https://cdn.ampproject.org/v0.js"></script>
+			<script async="" src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>
+		</head>
+		<body>
+		<amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png">
+			<amp-story-page id="foo">
+				<amp-story-grid-layer template="fill">
+					<amp-video autoplay="autoplay" title="Some Video" alt="Some Video" layout="fill" poster="https://example.com/poster.png"><source type="video/mp4" src="http://example.com/video.mp4"/></amp-video>
+				</amp-story-grid-layer>
+			</amp-story-page>
+		</amp-story>
+		</body>
+		</html>
+		<?php
+		$original_html = ob_get_clean();
+
+		$sanitization = new \Google\Web_Stories\AMP\Sanitization();
+
+		$document = Document::fromHtml( $original_html );
+		$sanitization->sanitize_document( $document );
+
+		$video_element = $document->body->getElementsByTagName( 'amp-video' )->item( 0 );
+		$this->assertInstanceOf( DOMElement::class, $video_element );
+	}
 }

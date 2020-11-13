@@ -36,6 +36,7 @@ import { GlobalStyle as CalendarStyle } from '../components/form/dateTime/calend
 import { useDropTargets, DropTargetsProvider } from '../components/dropTargets';
 import { useTransform, TransformProvider } from '../components/transform';
 import DevTools from '../components/devTools';
+import StatusCheck from '../components/statusCheck';
 import AutoSaveHandler from '../components/autoSaveHandler';
 import ErrorBoundary from '../components/errorBoundary';
 import { useHistory, HistoryProvider } from './history';
@@ -57,6 +58,7 @@ function App({ config }) {
         <ErrorBoundary>
           <ConfigProvider config={config}>
             <APIProvider>
+              <StatusCheck />
               <FileProvider>
                 <Media3pApiProvider>
                   <HistoryProvider size={50}>
