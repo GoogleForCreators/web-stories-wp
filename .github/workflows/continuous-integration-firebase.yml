@@ -42,9 +42,7 @@ jobs:
           CI: true
 
       - name: Download Web Stories
-        run: |
-          cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ./public/stories/
-          git checkout public/stories/**/*.html
+        run: cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ./public/stories/
 
       - name: Compress Images
         uses: calibreapp/image-actions@1.1.0
