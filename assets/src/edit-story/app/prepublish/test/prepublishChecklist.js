@@ -17,7 +17,13 @@
  * Internal dependencies
  */
 import prepublishChecklist from '../';
-
+const DEFAULT_STORY_PROPS = {
+  featuredMedia: {
+    url: 'https://greatimageaggregate.com/1234',
+  },
+  title: 'How to get rich',
+  excerpt: "There's a secret no one wants you to know about",
+};
 describe('prepublish checklist', () => {
   it('should return guidance for the story', () => {
     const testStory = {
@@ -26,4 +32,49 @@ describe('prepublish checklist', () => {
     };
     expect(prepublishChecklist(testStory)).toMatchSnapshot();
   });
+  it('should return an empty array', () => {
+    const testStory = {
+      id: 456,
+      ...DEFAULT_STORY_PROPS,
+      pages: [
+        {
+          id: 1,
+          elements: [
+            {
+              type: 'text',
+              content: 'The prepublish checklist should return an empty array',
+            },
+          ],
+        },
+        {
+          id: 2,
+          elements: [
+            {
+              type: 'text',
+              content: 'A story needs at least 100 characters',
+            },
+          ],
+        },
+        {
+          id: 3,
+          elements: [
+            {
+              type: 'text',
+              content: 'There once was a man from Nantucket...',
+            },
+          ],
+        },
+        {
+          id: 4,
+          elements: [],
+        },
+      ],
+    };
+    expect(prepublishChecklist(testStory) instanceof Array).toBeTrue();
+    expect(prepublishChecklist(testStory)).toHaveLength(0);
+  });
+
+  describe('story-based guidelines', () => {});
+  describe('page-based guidelines', () => {});
+  describe('element-based guidelines', () => {});
 });

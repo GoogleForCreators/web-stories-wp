@@ -23,8 +23,12 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { SimplePanel } from '../../panels/panel';
+// import prepublishChecklist from '../../../app/prepublish';
+// import { useStory } from '../../../app';
 
 function PrepublishInspector() {
+  // const story = useStory(({ state }) => ({ state }));
+  // console.log('story', story);
   return (
     <SimplePanel name="prepublish" title={__('Prepublish', 'web-stories')}>
       {__('Coming soon', 'web-stories')}
