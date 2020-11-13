@@ -36,14 +36,17 @@ import EffectChooser from './effectChooser';
 
 const Container = styled.div`
   overflow-y: scroll;
-  height: 240px;
+  max-height: 240px;
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 8px;
 
   ${ScrollBarStyles}
 `;
 
-export default function EffectChooserDropdown({ onAnimationSelected }) {
+export default function EffectChooserDropdown({
+  onAnimationSelected,
+  isBackgroundEffects = false,
+}) {
   const selectRef = useRef();
   const dropdownRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -61,6 +64,7 @@ export default function EffectChooserDropdown({ onAnimationSelected }) {
           <EffectChooser
             onAnimationSelected={onAnimationSelected}
             onDismiss={() => setIsOpen(false)}
+            isBackgroundEffects={isBackgroundEffects}
           />
         </Container>
       </Popup>
@@ -70,4 +74,5 @@ export default function EffectChooserDropdown({ onAnimationSelected }) {
 
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: propTypes.func.isRequired,
+  isBackgroundEffects: propTypes.bool,
 };
