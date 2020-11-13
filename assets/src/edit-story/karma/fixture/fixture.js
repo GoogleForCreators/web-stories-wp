@@ -697,6 +697,14 @@ class APIProviderFixture {
         []
       );
 
+      const getStatusCheck = useCallback(
+        () =>
+          asyncResponse({
+            success: true,
+          }),
+        []
+      );
+
       const state = {
         actions: {
           autoSaveById,
@@ -708,6 +716,7 @@ class APIProviderFixture {
           getAllUsers,
           uploadMedia,
           updateMedia,
+          getStatusCheck,
         },
       };
       return (

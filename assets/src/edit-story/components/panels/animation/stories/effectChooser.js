@@ -23,6 +23,7 @@ import { action } from '@storybook/addon-actions';
  * Internal dependencies
  */
 import EffectChooser from '../effectChooser';
+import EffectChooserDropdown from '../effectChooserDropdown';
 
 export default {
   title: 'Animations/Effect Chooser',
@@ -30,5 +31,19 @@ export default {
 };
 
 export const _default = () => {
-  return <EffectChooser onAnimationSelected={action('onAnimationSelected')} />;
+  return (
+    <EffectChooser
+      onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
+    />
+  );
+};
+
+export const insideDropdownButton = () => {
+  return (
+    <EffectChooserDropdown selectedEffectTitle={'Hi'}>
+      <EffectChooser
+        onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
+      />
+    </EffectChooserDropdown>
+  );
 };

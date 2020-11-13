@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -34,6 +35,7 @@ use WP_REST_Response;
  * Stories_Media_Controller class.
  */
 class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
+	use Types;
 	/**
 	 * Constructor.
 	 *
@@ -84,5 +86,43 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		];
 
 		return $query_params;
+	}
+
+	/**
+	 * Filter request by allowed mime types.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param array           $prepared_args Optional. Array of prepared arguments. Default empty array.
+	 * @param WP_REST_Request $request       Optional. Request to prepare items for.
+	 * @return array Array of query arguments.
+	 */
+	protected function prepare_items_query( $prepared_args = [], $request = null ) {
+		$query_args = parent::prepare_items_query( $prepared_args, $request );
+
+		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
+			$media_types      = $this->get_media_types();
+			$media_type_mimes = array_values( $media_types );
+			$media_type_mimes = array_filter( $media_type_mimes );
+			$media_type_mimes = array_merge( ...$media_type_mimes );
+
+			$query_args['post_mime_type'] = $media_type_mimes;
+		}
+
+		return $query_args;
+	}
+
+
+	/**
+	 * Retrieves the supported media types.
+	 *
+	 * Media types are considered the MIME type category.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @return array Array of supported media types.
+	 */
+	protected function get_media_types() {
+		return $this->get_allowed_mime_types();
 	}
 }
