@@ -52,10 +52,14 @@ describe('Border Radius Panel', () => {
 
       const [element] = await getSelection();
       // Since the default state is locked, verify that all the values were set to 30.
-      expect(element.borderRadius.topLeft).toBe(30);
-      expect(element.borderRadius.topRight).toBe(30);
-      expect(element.borderRadius.bottomLeft).toBe(30);
-      expect(element.borderRadius.bottomRight).toBe(30);
+      expect(element.borderRadius).toEqual(
+        jasmine.objectContaining({
+          topLeft: 30,
+          topRight: 30,
+          bottomLeft: 30,
+          bottomRight: 30,
+        })
+      );
 
       // Take off lock.
       await fixture.events.click(panel.lockBorderRadius.button);
@@ -92,6 +96,14 @@ describe('Border Radius Panel', () => {
       expect(topRight).toBe(0);
       expect(bottomLeft).toBe(50);
       expect(bottomRight).toBe(0);
+      expect(element.borderRadius).toEqual(
+        jasmine.objectContaining({
+          topLeft: 0,
+          topRight: 0,
+          bottomLeft: 50,
+          bottomRight: 0,
+        })
+      );
 
       await fixture.snapshot('Media element with bottom left corner radius');
     });

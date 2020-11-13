@@ -45,17 +45,7 @@ const Border = styled.div`
       `
       content: ' ';
     `}
-    ${({ color, left, top, right, bottom, position, borderRadius }) =>
-      !isOutsideBorder({ position }) &&
-      getBorderStyle({
-        color,
-        left,
-        top,
-        right,
-        bottom,
-        position,
-        borderRadius,
-      })}
+    ${(props) => !isOutsideBorder(props) && getBorderStyle(props)}
   }
 }
 `;
