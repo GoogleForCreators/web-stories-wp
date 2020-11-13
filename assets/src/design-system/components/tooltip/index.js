@@ -18,20 +18,14 @@
  * External dependencies
  */
 import propTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { useState, useRef, useMemo, useEffect } from 'react';
 /**
  * Internal dependencies
  */
 
+// move these to constants
 export const TOOLTIP_POSITIONS = {
-  LEFT_CENTER: 'left_center',
-  LEFT_START: 'left_start',
-  LEFT_END: 'left_end',
-  RIGHT_CENTER: 'right_center',
-  RIGHT_START: 'right_start',
-  RIGHT_END: 'right_end',
-  // these are good
   TOP_CENTER: 'top_center',
   TOP_RIGHT: 'top_right',
   TOP_LEFT: 'top_left',
@@ -40,16 +34,34 @@ export const TOOLTIP_POSITIONS = {
   BOTTOM_LEFT: 'bottom_left',
 };
 
+const tailStyles = (position) => css`
+  background-color: teal;
+  &:after {
+    content: ' ';
+    position: absolute;
+    top: calc(100% - 4px);
+    left: 50%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+  }
+`;
+
+// ${({ visible }) =>
+// visible ? 'visible' : 'hidden'};
 export const Content = styled.div`
-  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
+  visibility: visible;
+
   position: absolute;
   border-radius: 2px;
   padding: 10px;
   white-space: nowrap;
   background: lime;
   color: salmon;
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  opacity: 1; // ${({ visible }) => (visible ? 1 : 0)};
   transition: opacity linear 200ms;
+  ${({ hasTail, position }) => hasTail && tailStyles(position)}
 `;
 
 const ContentWrapper = styled.div`
@@ -65,7 +77,12 @@ export const Container = styled.div.attrs({
   display: inline-flex;
 `;
 
-export function Tooltip({ children, content, position }) {
+export function Tooltip({
+  children,
+  content,
+  hasTail,
+  position = TOOLTIP_POSITIONS.BOTTOM_CENTER,
+}) {
   const containerRef = useRef();
   const contentRef = useRef();
   const previousContent = useRef();
@@ -126,36 +143,6 @@ export function Tooltip({ children, content, position }) {
         left: containerRect.left - contentRect.left,
         top: -(containerRect.height * 2),
       };
-    } else if (position === TOOLTIP_POSITIONS.RIGHT_CENTER) {
-      metrics = {
-        left: containerRect.width + 1,
-        top: containerRect.height / 2,
-      };
-    } else if (position === TOOLTIP_POSITIONS.RIGHT_START) {
-      metrics = {
-        left: containerRect.width + 1,
-        top: -(containerRect.height * 2 - contentRect.height),
-      };
-    } else if (position === TOOLTIP_POSITIONS.RIGHT_END) {
-      metrics = {
-        left: containerRect.width + 1,
-        top: containerRect.height - contentRect.height,
-      };
-    } else if (position === TOOLTIP_POSITIONS.LEFT_CENTER) {
-      metrics = {
-        left: -(contentRect.width + 1),
-        top: containerRect.height / 2,
-      };
-    } else if (position === TOOLTIP_POSITIONS.LEFT_START) {
-      metrics = {
-        left: -(contentRect.width + 1),
-        top: -(containerRect.height * 2 - contentRect.height),
-      };
-    } else if (position === TOOLTIP_POSITIONS.LEFT_END) {
-      metrics = {
-        left: -(contentRect.width + 1),
-        top: containerRect.height - contentRect.height,
-      };
     }
     return metrics;
   }, [position, showTooltip]);
@@ -172,6 +159,7 @@ export function Tooltip({ children, content, position }) {
         ref={contentRef}
         style={offset}
         position={position}
+        hasTail={hasTail}
         visible={showTooltip}
       >
         {content}
@@ -183,6 +171,7 @@ export function Tooltip({ children, content, position }) {
 Tooltip.propTypes = {
   children: propTypes.node.isRequired,
   content: propTypes.node.isRequired,
+  hasTail: propTypes.bool,
   position: propTypes.oneOf(['left', 'right', 'center']).isRequired,
 };
 

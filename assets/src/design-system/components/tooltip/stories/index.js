@@ -79,9 +79,9 @@ export const LightMode = () => (
   <Container>
     <div>
       <Tooltip
-        position={select('Position', TOOLTIP_POSITIONS, TOOLTIP_POSITIONS.LEFT)}
+        position={select('Position', TOOLTIP_POSITIONS)}
         content={text('tooltipContent', 'Tooltip Content')}
-        hasTail={boolean('hasTail', true)}
+        hasTail={boolean('hasTail')}
       >
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
           <List aria-hidden={true} />
