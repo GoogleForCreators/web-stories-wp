@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Integrations;
 
 use DOMElement;
+use Google\Web_Stories\Discovery;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 use WP_Screen;
@@ -35,6 +36,22 @@ use WP_Screen;
  * Class Jetpack.
  */
 class Jetpack {
+	/**
+	 * Frontend.
+	 *
+	 * @var Discovery
+	 */
+	public $discovery;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param Discovery $discovery Analytics instance.
+	 */
+	public function __construct( Discovery $discovery ) {
+		$this->discovery = $discovery;
+	}
+
 	/**
 	 * Initializes all hooks.
 	 *
@@ -49,6 +66,8 @@ class Jetpack {
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
+		// Load at priority 2 - https://github.com/Automattic/jetpack/blob/e940e90c3f26a6f24f8e7fccd72a1dd6360be2b5/class.jetpack.php#L709.
+		add_action( 'web_stories_story_head', [ $this, 'remove_jetpack_open_graph' ], 2 );
 	}
 
 	/**
@@ -66,5 +85,24 @@ class Jetpack {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
+	}
+
+	/**
+	 * Remove web stories open graph tags if jetpack is active.
+	 *
+	 * @return void
+	 */
+	public function remove_jetpack_open_graph() {
+		/**
+		 * Filter copied from jetpack.
+		 *
+		 * @see https://github.com/Automattic/jetpack/blob/e940e90c3f26a6f24f8e7fccd72a1dd6360be2b5/class.jetpack.php#L2126
+		 *
+		 * @param bool false Should Open Graph Meta tags be added. Default to false.
+		 */
+		if ( apply_filters( 'jetpack_enable_open_graph', false ) ) {
+			remove_action( 'web_stories_story_head', [ $this->discovery, 'print_open_graph_metadata' ] );
+			remove_action( 'web_stories_story_head', [ $this->discovery, 'print_twitter_metadata' ] );
+		}
 	}
 }

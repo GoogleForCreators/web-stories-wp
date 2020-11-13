@@ -225,8 +225,8 @@ class Plugin {
 		add_action( 'init', [ $amp, 'init' ] );
 		$this->integrations['amp'] = $amp;
 
-		$jetpack = new Jetpack();
-		add_action( 'init', [ $jetpack, 'init' ] );
+		$jetpack = new Jetpack( $this->discovery );
+		add_action( 'init', [ $jetpack, 'init' ], 9 );
 		$this->integrations['jetpack'] = $jetpack;
 
 		// This runs at init priority -2 because NextGEN inits at -1.

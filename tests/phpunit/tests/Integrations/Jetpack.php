@@ -27,7 +27,8 @@ class Jetpack extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_init() {
-		$jetpack = new \Google\Web_Stories\Integrations\Jetpack();
+		$discovery = $this->createMock( \Google\Web_Stories\Discovery::class );
+		$jetpack   = new \Google\Web_Stories\Integrations\Jetpack( $discovery );
 		$jetpack->init();
 
 		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -44,7 +45,8 @@ class Jetpack extends \WP_UnitTestCase {
 	public function test_init_is_wpcom() {
 		define( 'IS_WPCOM', true );
 
-		$jetpack = new \Google\Web_Stories\Integrations\Jetpack();
+		$discovery = $this->createMock( \Google\Web_Stories\Discovery::class );
+		$jetpack   = new \Google\Web_Stories\Integrations\Jetpack( $discovery );
 		$jetpack->init();
 
 		$this->assertSame( 10, has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
@@ -57,7 +59,8 @@ class Jetpack extends \WP_UnitTestCase {
 	 * @covers ::add_to_jetpack_sitemap
 	 */
 	public function test_add_to_jetpack_sitemap() {
-		$jetpack = new \Google\Web_Stories\Integrations\Jetpack();
+		$discovery = $this->createMock( \Google\Web_Stories\Discovery::class );
+		$jetpack   = new \Google\Web_Stories\Integrations\Jetpack( $discovery );
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $jetpack->add_to_jetpack_sitemap( [] ) );
 	}
 }
