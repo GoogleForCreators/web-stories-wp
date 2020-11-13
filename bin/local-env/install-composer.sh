@@ -1,5 +1,5 @@
 #!/bin/bash
-COMPOSER_VERSION='1.10.1'
+COMPOSER_VERSION='1.10.17'
 
 # Exit if any command fails
 set -e
