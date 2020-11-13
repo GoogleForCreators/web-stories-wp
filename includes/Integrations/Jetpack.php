@@ -49,6 +49,8 @@ class Jetpack {
 		} else {
 			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
 		}
+
+		add_filter( 'jetpack_is_amp_request', [ $this, 'force_amp_request' ] );
 	}
 
 	/**
@@ -66,5 +68,21 @@ class Jetpack {
 		$post_types[] = Story_Post_Type::POST_TYPE_SLUG;
 
 		return $post_types;
+	}
+
+	/**
+	 * Force jetpack to see web stories as AMP.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param boolean $is_amp_request Is the request supposed to return valid AMP content.
+	 *
+	 * @return bool Whether the current request is an AMP request.
+	 */
+	public function force_amp_request( $is_amp_request ) {
+		if ( ! is_singular( Story_Post_Type::POST_TYPE_SLUG ) ) {
+			return $is_amp_request;
+		}
+		return true;
 	}
 }
