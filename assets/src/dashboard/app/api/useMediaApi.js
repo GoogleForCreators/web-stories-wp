@@ -21,17 +21,13 @@ import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import mediaReducer, {
   defaultMediaState,
   ACTION_TYPES as MEDIA_ACTION_TYPES,
 } from '../reducer/media';
+import { ERRORS } from '../textContent';
 
 export default function useMediaApi(dataAdapter, { globalMediaApi }) {
   const [state, dispatch] = useReducer(mediaReducer, defaultMediaState);
@@ -65,7 +61,7 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to fetch media', 'web-stories'),
+              title: ERRORS.LOAD_MEDIA.TITLE,
             },
           },
         });
@@ -105,7 +101,7 @@ export default function useMediaApi(dataAdapter, { globalMediaApi }) {
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to add media', 'web-stories'),
+              title: ERRORS.UPLOAD_PUBLISHER_LOGO.TITLE,
             },
           },
         });
