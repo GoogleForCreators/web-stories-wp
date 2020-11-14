@@ -31,51 +31,36 @@ import styled, { ThemeContext } from 'styled-components';
  */
 import {
   Button,
+  BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
   Modal,
   Text,
-  themeHelpers,
 } from '../../../../design-system';
 import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
 import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
 
-const CLOSE_BUTTON_SIZE = {
-  HEIGHT: 20,
-  WIDTH: 20,
-};
 const AMP_LOCAL_STORAGE = 'amp-story-state';
 const PREVIEW_CONTAINER_ID = 'previewContainer';
 
-const CloseButton = styled(Button)`
+const CloseButtonContainer = styled.div`
   align-self: flex-end;
-  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.white};
-  margin: 15px 11px 5px 0;
-  width: ${CLOSE_BUTTON_SIZE.WIDTH}px;
-  height: ${CLOSE_BUTTON_SIZE.HEIGHT}px;
-  border: ${({ theme }) => theme.DEPRECATED_THEME.borders.transparent};
-  background-color: transparent;
-  z-index: 15;
-  ${({ theme }) =>
-    themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.storyPreview,
-      theme.colors.accent.secondary
-    )};
-
-  &:hover {
-    cursor: pointer;
-  }
+  margin: 14px 10px 4px 0;
 `;
 
-// 40 getting subtracted from height is the size of the close button + margin. The Iframe wants specifics in safari, this is important to make sure the close button is visible.
+const CloseButton = styled(Button)`
+  color: ${({ theme }) => theme.colors.standard.white};
+`;
+
+// 54 getting subtracted from height is the size of the close button + margin. The Iframe wants specifics in safari, this is important to make sure the close button is visible.
 const IframeContainer = styled.div`
   width: ${({ dimensions }) => `${dimensions.width}px`};
 
-  height: ${({ dimensions }) => `${dimensions.height - 40}px`};
-  max-height: calc(100vh - 40px);
+  height: ${({ dimensions }) => `${dimensions.height - 54}px`};
+  max-height: calc(100vh - 54px);
 
   &:focus {
     border: ${({ theme }) => theme.DEPRECATED_THEME.borders.bluePrimary};
@@ -96,14 +81,6 @@ const HelperContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  /* Because this modal is "dark mode" we need to override focusable outline */
-  & > button {
-    ${({ theme }) =>
-      themeHelpers.focusableOutlineCSS(
-        theme.colors.bg.storyPreview,
-        theme.colors.accent.secondary
-      )};
-  }
 `;
 
 const PreviewStory = ({ story, handleClose }) => {
@@ -221,15 +198,17 @@ const PreviewStory = ({ story, handleClose }) => {
       }}
     >
       <>
-        <CloseButton
-          variant={BUTTON_VARIANTS.ICON}
-          type={BUTTON_TYPES.PLAIN}
-          onClick={handleClose}
-          aria-label={__('close preview', 'web-stories')}
-        >
-          <Icons.Close aria-hidden={true} />
-        </CloseButton>
-
+        <CloseButtonContainer>
+          <CloseButton
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.PLAIN}
+            size={BUTTON_SIZES.SMALL}
+            onClick={handleClose}
+            aria-label={__('close preview', 'web-stories')}
+          >
+            <Icons.Close aria-hidden={true} />
+          </CloseButton>
+        </CloseButtonContainer>
         {!previewError && (
           <IframeContainer
             ref={iframeContainerRef}
@@ -250,7 +229,11 @@ const PreviewStory = ({ story, handleClose }) => {
         {previewError && (
           <HelperContainer>
             <HelperText>{previewError}</HelperText>
-            <Button type={BUTTON_TYPES.PRIMARY} onClick={handleClose}>
+            <Button
+              type={BUTTON_TYPES.PRIMARY}
+              size={BUTTON_SIZES.MEDIUM}
+              onClick={handleClose}
+            >
               {__('Close Preview', 'web-stories')}
             </Button>
           </HelperContainer>

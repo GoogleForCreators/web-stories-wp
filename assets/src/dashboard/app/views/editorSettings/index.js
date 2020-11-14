@@ -27,7 +27,12 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Dialog, Button, BUTTON_TYPES } from '../../../../design-system';
+import {
+  Dialog,
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../../design-system';
 import useApi from '../../api/useApi';
 import { Layout } from '../../../components';
 import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
@@ -350,12 +355,14 @@ function EditorSettings() {
             <Button
               type={BUTTON_TYPES.TERTIARY}
               onClick={() => setActiveDialog(null)}
+              size={BUTTON_SIZES.SMALL}
             >
               {__('Cancel', 'web-stories')}
             </Button>
             <Button
               type={BUTTON_TYPES.PRIMARY}
               onClick={handleDialogConfirmRemoveLogo}
+              size={BUTTON_SIZES.SMALL}
             >
               {__('Delete Logo', 'web-stories')}
             </Button>

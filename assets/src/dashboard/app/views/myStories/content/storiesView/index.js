@@ -29,7 +29,12 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Dialog, Button, BUTTON_TYPES } from '../../../../../../design-system';
+import {
+  Dialog,
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../../../../design-system';
 
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import {
@@ -254,6 +259,7 @@ function StoriesView({
             <>
               <Button
                 type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={() => {
                   setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
@@ -268,6 +274,7 @@ function StoriesView({
               </Button>
               <Button
                 type={BUTTON_TYPES.PRIMARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={handleOnDeleteStory}
                 aria-label={sprintf(
                   /* translators: %s: story title */
