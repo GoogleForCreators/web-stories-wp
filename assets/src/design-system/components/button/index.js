@@ -42,8 +42,8 @@ const Base = styled.button(
       preset: {
         ...theme.typography.presets.button[
           size === BUTTON_SIZES.SMALL
-            ? THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-            : THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM
+            ? THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM
         ],
       },
       theme,
