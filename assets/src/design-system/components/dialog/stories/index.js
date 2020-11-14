@@ -25,7 +25,8 @@ import { text } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../';
-import { Button, BUTTON_TYPES, Text } from '../../';
+import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
+import { Text } from '../../typography';
 import { Dialog } from '..';
 
 export default {
@@ -38,6 +39,7 @@ export const _default = () => {
 
   const ActionsNode = (
     <Button
+      size={BUTTON_SIZES.SMALL}
       type={BUTTON_TYPES.PRIMARY}
       onClick={() => {
         action('button clicked');
@@ -50,6 +52,7 @@ export const _default = () => {
   return (
     <>
       <Button
+        size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => setToggleDialog(!toggleDialog)}
       >
@@ -82,6 +85,7 @@ export const With2Actions = () => {
   const ActionsNode = (
     <>
       <Button
+        size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
         onClick={() => {
           action('cancel button clicked');
@@ -91,6 +95,7 @@ export const With2Actions = () => {
         {'Secondary'}
       </Button>
       <Button
+        size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => {
           action('button clicked');
@@ -103,6 +108,7 @@ export const With2Actions = () => {
   return (
     <>
       <Button
+        size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => setToggleDialog(!toggleDialog)}
       >

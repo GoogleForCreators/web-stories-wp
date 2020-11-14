@@ -23,43 +23,43 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { Tab } from '../';
+import { Pill } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
-describe('Tab', () => {
-  const tabText = 'Some tab text';
+describe('Pill', () => {
+  const pillText = 'Some pil text';
   const onClickMock = jest.fn();
 
-  it('should render the default button with role of tab', () => {
+  it('should render the default button as a pill', () => {
     const { getByRole } = renderWithProviders(
-      <Tab onClick={onClickMock}>{tabText}</Tab>
+      <Pill onClick={onClickMock}>{pillText}</Pill>
     );
 
-    expect(getByRole('tab')).toHaveTextContent(tabText);
+    expect(getByRole('button')).toHaveTextContent(pillText);
   });
 
-  it('should not trigger a click on <Tab /> when disabled', () => {
+  it('should not trigger a click on <Pill /> when disabled', () => {
     const { getByText } = renderWithProviders(
-      <Tab disabled onClick={onClickMock}>
-        {tabText}
-      </Tab>
+      <Pill disabled onClick={onClickMock}>
+        {pillText}
+      </Pill>
     );
 
-    const tab = getByText(tabText);
+    const pil = getByText(pillText);
 
-    fireEvent.click(tab);
+    fireEvent.click(pil);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
   });
 
-  it('should simulate a click on <Tab />', () => {
+  it('should simulate a click on <Pill />', () => {
     const { getByText } = renderWithProviders(
-      <Tab onClick={onClickMock}>{tabText}</Tab>
+      <Pill onClick={onClickMock}>{pillText}</Pill>
     );
 
-    const tab = getByText(tabText);
+    const pil = getByText(pillText);
 
-    fireEvent.click(tab);
+    fireEvent.click(pil);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
