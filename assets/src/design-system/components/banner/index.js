@@ -72,6 +72,7 @@ const Container = styled.div`
 
       ${Title} {
         padding-left: 0;
+        margin-top: -10px;
         font-weight: normal;
       }
       ${Content} {
