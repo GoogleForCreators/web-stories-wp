@@ -19,29 +19,23 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 
-const StyledTab = styled.button(
+const StyledPill = styled.button(
   ({ isActive, theme }) => css`
-    box-sizing: content-box;
-    height: 32px;
-    padding: 0 16px;
+    min-height: 32px;
 
     background-color: ${isActive
-      ? theme.colors.bg.primary
-      : theme.colors.bg.divider};
+      ? theme.colors.interactiveBg.primaryNormal
+      : theme.colors.opacity.footprint};
     border: none;
     border-radius: 50px;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.primary,
-      theme.colors.accent.secondary
-    )};
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
-    color: ${isActive ? theme.colors.fg.primary : theme.colors.fg.secondary};
+    color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.secondary};
     cursor: pointer;
     ${themeHelpers.expandPresetStyles({
       preset:
@@ -55,37 +49,32 @@ const StyledTab = styled.button(
       pointer-events: none;
     }
 
-    &:hover {
-      color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
-    }
-
     &:focus {
       outline: none;
-      color: ${isActive ? theme.colors.fg.primary : theme.colors.bg.primary};
+    }
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 6px 16px;
+      height: 100%;
     }
 
     transition: color 0.6s ease 0s;
+    transition: background-color 0.6s ease 0s;
   `
 );
 
-export const Tab = forwardRef(function Tab(
-  { children, isActive, ...rest },
-  ref
-) {
+export const Pill = ({ children, isActive, onClick, ...rest }) => {
   return (
-    <StyledTab
-      ref={ref}
-      role="tab"
-      isActive={isActive}
-      aria-selected={isActive}
-      {...rest}
-    >
-      {children}
-    </StyledTab>
+    <StyledPill isActive={isActive} onClick={onClick} {...rest}>
+      <div>{children}</div>
+    </StyledPill>
   );
-});
+};
 
-Tab.propTypes = {
-  children: PropTypes.node,
-  isActive: PropTypes.bool,
+Pill.propTypes = {
+  children: PropTypes.node.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

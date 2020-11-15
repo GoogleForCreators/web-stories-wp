@@ -73,18 +73,23 @@ function ImageDisplay({ element, box }) {
 
   useEffect(() => {
     let timeout;
+    let mounted = true;
     if (resourceList.get(resource.id)?.type !== 'fullsize') {
       timeout = setTimeout(async () => {
         const preloadedImg = await preloadImage(resource.src, srcSet);
-        resourceList.set(resource.id, {
-          type: 'fullsize',
-        });
-        setSrc(preloadedImg.currentSrc);
-        setSrcType('fullsize');
+        if (mounted) {
+          resourceList.set(resource.id, {
+            type: 'fullsize',
+          });
+          setSrc(preloadedImg.currentSrc);
+          setSrcType('fullsize');
+        }
       });
     }
-
-    return () => clearTimeout(timeout);
+    return () => {
+      mounted = false;
+      clearTimeout(timeout);
+    };
   }, [resource.id, resource.src, srcSet, srcType]);
 
   const showPlaceholder = srcType !== 'fullsize';

@@ -17,20 +17,24 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
-
+import styled, { ThemeProvider } from 'styled-components';
+import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
+import { theme } from '../../../theme';
 import { Headline, Text } from '../../';
 import { Close } from '../../../icons';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
+import { TYPOGRAPHY_PRESET_SIZES } from '../../../theme/typography';
 
 export default {
   title: 'DesignSystem/Components/Button',
 };
 
 const Container = styled.div`
+  background-color: ${(props) => props.theme.colors.bg.primary};
+
   display: flex;
   align-items: space-evenly;
   flex-direction: column;
@@ -49,50 +53,109 @@ const Row = styled.div`
   }
 `;
 
+const ButtonCombosToDisplay = () => (
+  <Container>
+    <Headline as="h2">{'Buttons by Variant, Size, and Type'}</Headline>
+    {Object.values(BUTTON_VARIANTS).map((buttonVariant) => {
+      const buttonContent =
+        buttonVariant === BUTTON_VARIANTS.RECTANGLE ? (
+          'Standard Button'
+        ) : (
+          <Close />
+        );
+
+      return Object.values(BUTTON_SIZES).map((buttonSize) => (
+        <Row key={`${buttonVariant}_${buttonSize}_row_storybook`}>
+          {Object.values(BUTTON_TYPES).map((buttonType) => (
+            <div key={`${buttonVariant}_${buttonSize}_${buttonType}_storybook`}>
+              <Button
+                key={`${buttonVariant}_${buttonType}_storybook`}
+                variant={buttonVariant}
+                type={buttonType}
+                size={buttonSize}
+              >
+                {buttonContent}
+              </Button>
+              <Text>
+                {`variant: ${buttonVariant}`} <br />
+                {`size: ${buttonSize}`} <br />
+                {`type: ${buttonType}`}
+              </Text>
+            </div>
+          ))}
+        </Row>
+      ));
+    })}
+    <Headline as="h3" size={TYPOGRAPHY_PRESET_SIZES.SMALL}>
+      {'Button Demos'}
+    </Headline>
+    <Row>
+      <div>
+        <Button
+          href=""
+          type={select(
+            'link as button - type',
+            Object.values(BUTTON_TYPES),
+            BUTTON_TYPES.PRIMARY
+          )}
+          variant={select(
+            'link as button - variant',
+            Object.values(BUTTON_VARIANTS),
+            BUTTON_VARIANTS.RECTANGLE
+          )}
+          size={select(
+            'link as button - size',
+            Object.values(BUTTON_SIZES),
+            BUTTON_SIZES.MEDIUM
+          )}
+        >
+          {'Link as Button'}
+        </Button>
+        <Text>{'Link as Button'}</Text>
+      </div>
+      <div>
+        <Button type={BUTTON_TYPES.PRIMARY}>
+          {'Just a really really long button to ensure edge cases!!!!!'}
+        </Button>
+        <Text>{'Edge case: really long'}</Text>
+      </div>
+      <div>
+        <Button type={BUTTON_TYPES.PRIMARY}>{'Text'}</Button>
+        <Text>{'Edge case: short'}</Text>
+      </div>
+      <div>
+        <Button
+          disabled
+          type={select(
+            'disabled button type',
+            Object.values(BUTTON_TYPES),
+            BUTTON_TYPES.PRIMARY
+          )}
+          variant={select(
+            'disabled button variant',
+            Object.values(BUTTON_VARIANTS),
+            BUTTON_VARIANTS.RECTANGLE
+          )}
+          size={select(
+            'disabled button size',
+            Object.values(BUTTON_SIZES),
+            BUTTON_SIZES.MEDIUM
+          )}
+        >
+          {'Text'}
+        </Button>
+        <Text>{'Disabled button'}</Text>
+      </div>
+    </Row>
+  </Container>
+);
+
 export const _default = () => {
   return (
-    <Container>
-      <Headline as="h2">{'Buttons by Variant, Size, and Type'}</Headline>
-      {Object.values(BUTTON_VARIANTS).map((buttonVariant) => {
-        const buttonContent =
-          buttonVariant === BUTTON_VARIANTS.RECTANGLE ? (
-            'Standard Button'
-          ) : (
-            <Close />
-          );
-
-        return Object.values(BUTTON_SIZES).map((buttonSize) => (
-          <Row key={`${buttonVariant}_${buttonSize}_row_storybook`}>
-            {Object.values(BUTTON_TYPES).map((buttonType) => (
-              <div
-                key={`${buttonVariant}_${buttonSize}_${buttonType}_storybook`}
-              >
-                <Button
-                  key={`${buttonVariant}_${buttonType}_storybook`}
-                  variant={buttonVariant}
-                  type={buttonType}
-                  size={buttonSize}
-                >
-                  {buttonContent}
-                </Button>
-                <Text>
-                  {`variant: ${buttonVariant}`} <br />
-                  {`size: ${buttonSize}`} <br />
-                  {`type: ${buttonType}`}
-                </Text>
-              </div>
-            ))}
-          </Row>
-        ));
-      })}
-      <Row>
-        <div>
-          <Button type={BUTTON_TYPES.PRIMARY} href="">
-            {'Link as Button'}
-          </Button>
-          <Text>{'Link as Button'}</Text>
-        </div>
-      </Row>
-    </Container>
+    <ThemeProvider theme={theme}>
+      <ButtonCombosToDisplay />
+    </ThemeProvider>
   );
 };
+
+export const LightThemeButtons = () => <ButtonCombosToDisplay />;

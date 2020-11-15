@@ -22,7 +22,7 @@
 // eslint-disable-next-line no-undef
 const path = require('path');
 
-const fs = jest.genMockFromModule('fs');
+const fs = jest.createMockFromModule('fs');
 
 /* eslint-disable security/detect-object-injection */
 

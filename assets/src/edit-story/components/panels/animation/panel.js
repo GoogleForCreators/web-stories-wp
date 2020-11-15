@@ -29,18 +29,13 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { ANIMATION_EFFECTS } from '../../../../animation/constants';
 import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
-import { Row, DropDown } from '../../form';
+import { Row } from '../../form';
 import { SimplePanel } from '../panel';
 import { Note } from '../shared';
 import EffectPanel from './effectPanel';
-
-const ANIMATION_OPTIONS = [
-  { value: '', name: __('Add Effect', 'web-stories') },
-  ...Object.values(ANIMATION_EFFECTS),
-];
+import EffectChooserDropdown from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
 
@@ -64,18 +59,19 @@ function AnimationPanel({
   );
 
   const handleAddEffect = useCallback(
-    (type) => {
-      if (!type) {
+    ({ animation, ...options }) => {
+      if (!animation) {
         return;
       }
 
-      const defaults = getAnimationEffectDefaults(type);
+      const defaults = getAnimationEffectDefaults(animation);
       pushUpdateForObject(
         ANIMATION_PROPERTY,
         {
           id: uuidv4(),
-          type,
+          type: animation,
           ...defaults,
+          ...options,
         },
         null,
         true
@@ -106,11 +102,9 @@ function AnimationPanel({
   ) : (
     <>
       <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-        <DropDown
-          value={ANIMATION_OPTIONS[0].value}
-          onChange={handleAddEffect}
-          options={ANIMATION_OPTIONS}
-        />
+        <Row>
+          <EffectChooserDropdown onAnimationSelected={handleAddEffect} />
+        </Row>
       </SimplePanel>
       {updatedAnimations.map((animation) => (
         <EffectPanel

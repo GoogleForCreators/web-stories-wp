@@ -23,7 +23,8 @@ import { action } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { Button, Text, Headline, BUTTON_TYPES } from '../../';
+import { Button, BUTTON_SIZES, BUTTON_TYPES } from '../../button';
+import { Text, Headline } from '../../typography';
 import { Modal } from '..';
 
 export default {
@@ -42,6 +43,7 @@ export const _default = () => {
         }
       </Text>
       <Button
+        size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => setToggleModal(!toggleModal)}
       >
@@ -86,6 +88,7 @@ export const OverriddenStyles = () => {
         }
       </Text>
       <Button
+        size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => setToggleModal(!toggleModal)}
       >

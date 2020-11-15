@@ -35,13 +35,13 @@ export default {
 const StyledButton = styled(Button)`
   min-width: 0;
   text-shadow: none;
-  color: ${({ theme }) => theme.colors.gray800};
+  color: ${({ theme }) => theme.DEPRECATED_THEME.colors.gray800};
 
   &:focus,
   &:active,
   &:hover {
     text-shadow: none;
-    color: ${({ theme }) => theme.colors.bluePrimary};
+    color: ${({ theme }) => theme.DEPRECATED_THEME.colors.bluePrimary};
   }
 `;
 

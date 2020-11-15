@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use DOMElement;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use Google\Web_Stories\Story_Renderer\Embed;
@@ -44,6 +43,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
 class Story_Post_Type {
@@ -57,13 +57,6 @@ class Story_Post_Type {
 	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story';
-
-	/**
-	 * Slug of the AMP validated URL post type.
-	 *
-	 * @var string
-	 */
-	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
 	 * Web Stories editor script handle.
@@ -191,12 +184,6 @@ class Story_Post_Type {
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
-		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
-		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
-		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
-		add_filter( 'amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
-		add_filter( 'web_stories_amp_validation_error_sanitized', [ $this, 'filter_amp_story_element_validation_error_sanitized' ], 10, 2 );
-
 		add_filter( '_wp_post_revision_fields', [ $this, 'filter_revision_fields' ], 10, 2 );
 
 		// Filter RSS content fields.
@@ -208,13 +195,6 @@ class Story_Post_Type {
 		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
 
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
-
-		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
-		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
-			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
-		} else {
-			add_filter( 'jetpack_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
-		}
 
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
@@ -327,188 +307,6 @@ class Story_Post_Type {
 	 */
 	protected function get_post_type_icon() {
 		return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xMCAyMGM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE1LjUyMyAwIDEwIDAgMCA0LjQ3NyAwIDEwczQuNDc3IDEwIDEwIDEwek01LjUgNmExIDEgMCAwMTEtMUgxMWExIDEgMCAwMTEgMXY4YTEgMSAwIDAxLTEgMUg2LjVhMSAxIDAgMDEtMS0xVjZ6TTEzIDZhMSAxIDAgMDExIDF2NmExIDEgMCAwMS0xIDFWNnptMi43NSAxLjc1QS43NS43NSAwIDAwMTUgN3Y2YS43NS43NSAwIDAwLjc1LS43NXYtNC41eiIgZmlsbD0iI2EwYTVhYSIvPjwvc3ZnPg==';
-	}
-
-	/**
-	 * Get the post type for the current request.
-	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string|null
-	 */
-	protected function get_request_post_type() {
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-
-		if ( did_action( 'wp' ) && is_singular() ) {
-			$post_type = get_post_type( get_queried_object_id() );
-			return $post_type ?: null;
-		}
-
-		if (
-			is_admin()
-			&&
-			isset( $_GET['action'], $_GET['post'] )
-			&&
-			'amp_validate' === $_GET['action']
-			&&
-			get_post_type( (int) $_GET['post'] ) === self::AMP_VALIDATED_URL_POST_TYPE
-		) {
-			return $this->get_validated_url_post_type( (int) $_GET['post'] );
-		}
-
-		$current_screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
-
-		if ( $current_screen instanceof WP_Screen ) {
-			$current_post = get_post();
-
-			if ( self::AMP_VALIDATED_URL_POST_TYPE === $current_screen->post_type && $current_post instanceof WP_Post && $current_post->post_type === $current_screen->post_type ) {
-				$validated_url_post_type = $this->get_validated_url_post_type( $current_post->ID );
-				if ( $validated_url_post_type ) {
-					return $validated_url_post_type;
-				}
-			}
-
-			if ( $current_screen->post_type ) {
-				return $current_screen->post_type;
-			}
-
-			return null;
-		}
-
-		if ( isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( (string) wp_unslash( $_SERVER['REQUEST_URI'] ), '/web-stories/v1/web-story/' ) ) {
-			return self::POST_TYPE_SLUG;
-		}
-
-		// phpcs:enable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-
-		return null;
-	}
-
-	/**
-	 * Get the singular post type which is the queried object for the given validated URL post.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param int $post_id Post ID for Validated URL Post.
-	 *
-	 * @return string|null Post type or null if validated URL is not for a singular post.
-	 */
-	protected function get_validated_url_post_type( $post_id ) {
-		if ( empty( $post_id ) ) {
-			return null;
-		}
-
-		$post = get_post( $post_id );
-		if ( ! ( $post instanceof WP_Post ) ) {
-			return null;
-		}
-
-		if ( self::AMP_VALIDATED_URL_POST_TYPE !== $post->post_type ) {
-			return null;
-		}
-
-		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
-		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
-			$post_type = get_post_type( $queried_object['id'] );
-			if ( $post_type ) {
-				return $post_type;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Filter AMP options to force Standard mode (AMP-first) when a web story is being requested.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $options Options.
-	 *
-	 * @return array Filtered options.
-	 */
-	public function filter_amp_options( $options ) {
-		if ( $this->get_request_post_type() === self::POST_TYPE_SLUG ) {
-			$options['theme_support']          = 'standard';
-			$options['supported_post_types'][] = self::POST_TYPE_SLUG;
-			$options['supported_templates'][]  = 'is_singular';
-		}
-		return $options;
-	}
-
-	/**
-	 * Filter the post types which are supportable.
-	 *
-	 * Remove web-stories from the list unless the currently requested post type is for a web-story. This is done in
-	 * order to hide stories from the list of supportable post types on the AMP Settings screen.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param string[] $post_types Post types.
-	 *
-	 * @return array Supportable post types.
-	 */
-	public function filter_supportable_post_types( $post_types ) {
-		if ( $this->get_request_post_type() === self::POST_TYPE_SLUG ) {
-			$post_types = array_merge( $post_types, [ self::POST_TYPE_SLUG ] );
-		} else {
-			$post_types = array_diff( $post_types, [ self::POST_TYPE_SLUG ] );
-		}
-
-		return array_values( $post_types );
-	}
-
-	/**
-	 * Filter amp_validation_error_sanitized to prevent invalid markup removal for the amp-story element.
-	 *
-	 * Since the amp-story element requires the poster-portrait-src attribute to be valid, when this attribute is absent
-	 * the AMP plugin will try to remove the amp-story element altogether. This is not the preferred resolution! So
-	 * instead, this will force the invalid markup to be kept. When this is done, the AMP plugin in Standard mode
-	 * (which Web Stories enforces while serving singular web-story posts) will remove the amp attribute from the html
-	 * element so that the page will not be advertised as AMP. This prevents GSC from complaining about a validation
-	 * issue which we already know about.
-	 *
-	 * @since 1.0.0
-	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
-	 *
-	 * @param null|bool $sanitized Whether sanitized. Null means sanitization is not overridden.
-	 * @param array     $error Validation error being sanitized.
-	 * @return null|bool Whether sanitized.
-	 */
-	public function filter_amp_story_element_validation_error_sanitized( $sanitized, $error ) {
-		if (
-			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
-			(
-				( XML_ELEMENT_NODE === $error['node_type'] && 'amp-story' === $error['node_name'] && 'body' === $error['parent_name'] ) ||
-				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'poster-portrait-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] ) ||
-				( XML_ATTRIBUTE_NODE === $error['node_type'] && 'publisher-logo-src' === $error['node_name'] && 'amp-story' === $error['parent_name'] )
-			)
-		) {
-			return false;
-		}
-
-		return $sanitized;
-	}
-
-	/**
-	 * Filters whether AMP-to-AMP is excluded for an element.
-	 *
-	 * The element may be either a link (`a` or `area`) or a `form`.
-	 *
-	 * @param bool       $excluded Excluded. Default value is whether element already has a `noamphtml` link relation or the URL is among `excluded_urls`.
-	 * @param string     $url      URL considered for exclusion.
-	 * @param string[]   $rel      Link relations.
-	 * @param DOMElement $element  The element considered for excluding from AMP-to-AMP linking. May be instance of `a`, `area`, or `form`.
-	 * @return bool Whether AMP-to-AMP is excluded.
-	 */
-	public function filter_amp_to_amp_linking_element_excluded( $excluded, $url, $rel, $element ) {
-		if ( $element instanceof DOMElement && $element->parentNode instanceof DOMElement && 'amp-story-player' === $element->parentNode->tagName ) {
-			return true;
-		}
-
-		return $excluded;
-
 	}
 
 	/**
@@ -721,10 +519,11 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'users'   => '/web-stories/v1/users',
-					'stories' => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'   => '/web-stories/v1/media',
-					'link'    => '/web-stories/v1/link',
+					'users'       => '/web-stories/v1/users',
+					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
+					'media'       => '/web-stories/v1/media',
+					'link'        => '/web-stories/v1/link',
+					'statusCheck' => '/web-stories/v1/status-check',
 				],
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
@@ -789,9 +588,8 @@ class Story_Post_Type {
 		if ( ! $wp_rewrite instanceof \WP_Rewrite || ! $wp_rewrite->using_permalinks() ) {
 			return $bypass;
 		}
-
 		// 'pagename' is for most permalink types, name is for when the %postname% is used as a top-level field.
-		if ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) {
+		if ( isset( $query->query['pagename'] ) && 'stories' === $query->query['pagename'] && ( 'stories' === $query->get( 'pagename' ) || 'stories' === $query->get( 'name' ) ) ) {
 			$redirect_url = get_post_type_archive_link( self::POST_TYPE_SLUG );
 			if (
 				$query->get( 'page' ) &&
@@ -813,23 +611,6 @@ class Story_Post_Type {
 		}
 
 		return $bypass;
-	}
-
-	/**
-	 * Adds the web story post type to Jetpack / WordPress.com sitemaps.
-	 *
-	 * @see https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $post_types Array of post types.
-	 *
-	 * @return array Modified list of post types.
-	 */
-	public function add_to_jetpack_sitemap( $post_types ) {
-		$post_types[] = self::POST_TYPE_SLUG;
-
-		return $post_types;
 	}
 
 	/**

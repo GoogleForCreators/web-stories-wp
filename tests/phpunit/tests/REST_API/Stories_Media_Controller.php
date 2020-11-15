@@ -44,6 +44,24 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 			]
 		);
 
+		$factory->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$factory->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-videeo.mov',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mov',
+				'post_title'     => 'Test Video Move',
+			]
+		);
+
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -94,5 +112,39 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$this->assertArrayHasKey( 'headers', $data );
 		$this->assertArrayHasKey( 'body', $data );
 		$this->assertArrayHasKey( 'status', $data );
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::prepare_items_query
+	 */
+	public function test_get_items_filter_mime() {
+		wp_set_current_user( self::$user_id );
+		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertCount( 2, $data );
+		$mime_type = wp_list_pluck( $data, 'mime_type' );
+		$this->assertNotContains( 'video/mov', $mime_type );
+		$this->assertContains( 'image/jpeg', $mime_type );
+		$this->assertContains( 'video/mp4', $mime_type );
+	}
+
+	/**
+	 * @covers ::get_items
+	 * @covers ::get_media_types
+	 */
+	public function test_get_items_filter_video() {
+		wp_set_current_user( self::$user_id );
+		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/media' );
+		$request->set_param( 'media_type', 'video' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$this->assertCount( 1, $data );
+		$mime_type = wp_list_pluck( $data, 'mime_type' );
+		$this->assertNotContains( 'video/mov', $mime_type );
+		$this->assertContains( 'video/mp4', $mime_type );
 	}
 }
