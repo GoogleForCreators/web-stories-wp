@@ -60,6 +60,6 @@ export const ERRORS = {
     TITLE: __('Unable to Render Preview', 'web-stories'),
   },
   LOAD_TEMPLATE: {
-    DEFAULT_MESSAGE: 'Could not load the template',
+    DEFAULT_MESSAGE: __('Could not load the template', 'web-stories'),
   },
 };
