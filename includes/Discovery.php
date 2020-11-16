@@ -47,8 +47,19 @@ class Discovery {
 	public function init() {
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
-		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
-		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
+
+		/**
+		 * Filters filter to enable / disable open graph data.
+		 *
+		 * @since 1.2.0
+		 * @param bool $enable_open_graph Enable / disable open graph. Default to true.
+		 */
+		$enable_open_graph = apply_filters( 'web_stories_enable_open_graph', true );
+
+		if ( $enable_open_graph ) {
+			add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
+			add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
+		}
 
 		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
 
@@ -162,9 +173,9 @@ class Discovery {
 		/**
 		 * Filters the schema.org metadata for a given story.
 		 *
-	 * @since 1.0.0
-	 *
-	 * @param array $metadata The structured data.
+		 * @since 1.0.0
+		 *
+		 * @param array $metadata The structured data.
 		 * @param WP_Post $post The current post object.
 		 */
 		return apply_filters( 'web_stories_story_schema_metadata', $metadata, $post );
