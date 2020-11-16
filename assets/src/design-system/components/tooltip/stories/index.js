@@ -22,15 +22,15 @@ import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme } from '../../..';
-import { Tooltip, TOOLTIP_POSITIONS } from '..';
+import { theme } from '../../../theme';
+import { List } from '../../../icons';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../button';
-import { List } from '../../../icons';
+import { Tooltip, TOOLTIP_POSITIONS } from '..';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',
@@ -46,17 +46,6 @@ const Container = styled.div`
   padding: 30px;
 `;
 
-// const positionValues = {
-//   left: 'left',
-//   right: 'right',
-//   center: 'center',
-//   bottom_left: 'bottom_left',
-//   bottom_right: 'bottom_right',
-//   bottom_center: 'bottom_center',
-//   top: 'top',
-//   top_right: 'top_right',
-//   top_left: 'top_left',
-// };
 // Override light theme because this component is only set up for dark theme right now given fg and bg coloring
 export const _default = () => (
   <ThemeProvider theme={theme}>

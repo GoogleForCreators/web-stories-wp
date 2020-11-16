@@ -28,17 +28,17 @@ import { Tooltip } from '../';
 describe('<Tooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
     const { getByText } = renderWithProviders(
-      <Tooltip content="Grid View">
+      <Tooltip content="Some tooltip text">
         <div />
       </Tooltip>
     );
 
-    expect(getByText('Grid View')).not.toBeVisible();
+    expect(getByText('Some tooltip text')).not.toBeVisible();
   });
 
   it('should be visible when the mouse is hovering over the container', function () {
     const { getByTestId, getByText } = renderWithProviders(
-      <Tooltip content="Grid View">
+      <Tooltip content="Some tooltip text">
         <div />
       </Tooltip>
     );
@@ -52,6 +52,6 @@ describe('<Tooltip />', function () {
       fireEvent(getByTestId('tooltip-container'), mouseEvent);
     });
 
-    expect(getByText('Grid View')).toBeVisible();
+    expect(getByText('Some tooltip text')).toBeVisible();
   });
 });
