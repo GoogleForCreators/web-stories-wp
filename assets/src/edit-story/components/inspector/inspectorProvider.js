@@ -32,6 +32,9 @@ import { __ } from '@wordpress/i18n';
 import { useAPI } from '../../app/api';
 import useResizeEffect from '../../utils/useResizeEffect';
 import { useStory } from '../../app/story';
+import useChecklist from '../../app/prepublish/useChecklist';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish/constants';
+import { Error, Warning } from '../../../design-system/icons/alert';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
@@ -49,7 +52,21 @@ function InspectorProvider({ children }) {
     selectedElementIds: state.state.selectedElementIds,
     currentPage: state.state.currentPage,
   }));
+
   const { showPrePublishTab } = useFeatures();
+  const { currentList } = useChecklist();
+  const prepublishAlert = useCallback(
+    () =>
+      currentList.some(
+        ({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR
+      ) ? (
+        <Error className="alert error" />
+      ) : (
+        <Warning className="alert warning" />
+      ),
+    [currentList]
+  );
+
   const inspectorRef = useRef(null);
 
   const initialTab = DESIGN;
@@ -136,6 +153,7 @@ function InspectorProvider({ children }) {
         ...(showPrePublishTab
           ? [
               {
+                icon: currentList.length > 0 ? prepublishAlert : undefined,
                 id: PREPUBLISH,
                 title: __('Checklist', 'web-stories'),
                 Pane: PrepublishInspector,

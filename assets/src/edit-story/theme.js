@@ -122,6 +122,8 @@ const theme = {
       gray24: '#5E615C',
       gray16: '#414442',
       gray8: '#2F3131',
+      negative: '#E45F53',
+      warning: '#F4B844',
 
       // v0: '#000000', <=> replaced with fg.black
       // v1: '#FFFFFF', <=> replaced with fg.white

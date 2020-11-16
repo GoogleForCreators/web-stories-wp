@@ -13,25 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { UploadDropTarget } from '../uploadDropTarget';
-import ChecklistProvider from '../../app/prepublish/checklistProvider';
-import InspectorProvider from './inspectorProvider';
-import InspectorLayout from './inspectorLayout';
+import { createContext } from 'react';
 
-function Inspector() {
-  return (
-    <ChecklistProvider>
-      <InspectorProvider>
-        <UploadDropTarget disabled>
-          <InspectorLayout />
-        </UploadDropTarget>
-      </InspectorProvider>
-    </ChecklistProvider>
-  );
-}
-
-export default Inspector;
+export default createContext({ currentList: [] });
