@@ -40,6 +40,7 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
   generateParagraphTextStyle,
@@ -102,6 +103,7 @@ function TextDisplay({
   element: { id, content, backgroundColor, backgroundTextMode, ...rest },
 }) {
   const ref = useRef(null);
+  const bgRef = useRef(null);
 
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -155,6 +157,10 @@ function TextDisplay({
       : '';
   });
 
+  // @todo Add allowed style rules here, to ensure irrelevant styles aren't being assigned?
+  // @todo Add handler for fg color, too.
+  useColorTransformHandler({ id, targetRef: bgRef });
+
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.
   const contentWithoutColor = useMemo(
@@ -168,6 +174,7 @@ function TextDisplay({
         <HighlightElement {...props}>
           <MarginedElement {...props}>
             <BackgroundSpan
+              ref={bgRef}
               {...props}
               dangerouslySetInnerHTML={{
                 __html: contentWithoutColor,
@@ -191,6 +198,7 @@ function TextDisplay({
 
   return (
     <Background
+      ref={bgRef}
       backgroundColor={
         backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
       }
