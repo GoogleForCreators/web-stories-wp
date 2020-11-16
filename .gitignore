@@ -3,6 +3,7 @@
 .vscode/
 assets/
 bin/
+build/
 includes/
 node_modules/
 plugin-assets/
