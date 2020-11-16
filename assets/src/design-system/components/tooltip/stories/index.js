@@ -24,7 +24,12 @@ import styled, { ThemeProvider } from 'styled-components';
  */
 import { theme } from '../../..';
 import { Tooltip, TOOLTIP_POSITIONS } from '..';
-import { Button, BUTTON_TYPES, BUTTON_VARIANTS } from '../../button';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+} from '../../button';
 import { List } from '../../../icons';
 
 export default {
@@ -59,15 +64,31 @@ export const _default = () => (
       <div>
         <Tooltip
           position={select(
-            'Position',
+            'Tooltip for icon - position',
             TOOLTIP_POSITIONS,
-            TOOLTIP_POSITIONS.LEFT
+            TOOLTIP_POSITIONS.BOTTOM_CENTER
           )}
-          content={text('tooltipContent', 'Tooltip Content')}
-          hasTail={boolean('hasTail', true)}
+          content={text('Tooltip for icon - content', 'Tooltip Content')}
+          hasTail={boolean('Tooltip for icon - hasTail', true)}
         >
           <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
             <List aria-hidden={true} />
+          </Button>
+        </Tooltip>
+      </div>
+
+      <div>
+        <Tooltip
+          position={select(
+            'Tooltip for button - position',
+            TOOLTIP_POSITIONS,
+            TOOLTIP_POSITIONS.BOTTOM_CENTER
+          )}
+          content={text('Tooltip for button - content', 'Tooltip Content')}
+          hasTail={boolean('Tooltip for button - hasTail')}
+        >
+          <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
+            {'I am just a normal button'}
           </Button>
         </Tooltip>
       </div>
@@ -79,12 +100,32 @@ export const LightMode = () => (
   <Container>
     <div>
       <Tooltip
-        position={select('Position', TOOLTIP_POSITIONS)}
-        content={text('tooltipContent', 'Tooltip Content')}
-        hasTail={boolean('hasTail')}
+        position={select(
+          'Tooltip for icon - position',
+          TOOLTIP_POSITIONS,
+          TOOLTIP_POSITIONS.BOTTOM_CENTER
+        )}
+        content={text('Tooltip for icon - content', 'Tooltip Content')}
+        hasTail={boolean('Tooltip for icon - hasTail', true)}
       >
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
           <List aria-hidden={true} />
+        </Button>
+      </Tooltip>
+    </div>
+
+    <div>
+      <Tooltip
+        position={select(
+          'Tooltip for button - position',
+          TOOLTIP_POSITIONS,
+          TOOLTIP_POSITIONS.BOTTOM_CENTER
+        )}
+        content={text('Tooltip for button - content', 'Tooltip Content')}
+        hasTail={boolean('Tooltip for button - hasTail')}
+      >
+        <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
+          {'I am just a normal button'}
         </Button>
       </Tooltip>
     </div>
