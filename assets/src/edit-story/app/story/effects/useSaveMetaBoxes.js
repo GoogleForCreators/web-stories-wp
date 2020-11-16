@@ -45,6 +45,7 @@ function getMetaBoxContainer(location) {
   );
 }
 
+// Returns a prop's previous value.
 function usePrevious(value) {
   const ref = useRef();
   useEffect(() => {
@@ -53,6 +54,17 @@ function usePrevious(value) {
   return ref.current;
 }
 
+/**
+ * Effect to save meta boxes for a story.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L24-L126
+ *
+ * @param {Object} props Hook props.
+ * @param {Object} props.story Story object.
+ * @param {boolean} props.isSaving Whether saving is in progress.
+ * @param {boolean} props.isAutoSaving Whether autosaving is in progress.
+ * @return {{isSavingMetaBoxes: boolean}} Metaboxes status.
+ */
 function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   const isFeatureEnabled = useFeature('customMetaBoxes');
   const { metaBoxes = {} } = useConfig();

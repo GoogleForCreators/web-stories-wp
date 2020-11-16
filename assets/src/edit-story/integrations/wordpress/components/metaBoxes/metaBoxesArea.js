@@ -94,6 +94,15 @@ const Spinner = styled.div`
   z-index: 1;
 `;
 
+/**
+ * Component for displaying a single meta box.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/78585d6935fee9020017d17383cef597b67c5703/packages/edit-post/src/components/meta-boxes/meta-boxes-area/index.js
+ *
+ * @param {Object} props Component props.
+ * @param {string} props.location Location name.
+ * @return {*} Element.
+ */
 function MetaBoxesArea({ location }) {
   const formRef = useRef();
   const containerRef = useRef();
@@ -114,7 +123,6 @@ function MetaBoxesArea({ location }) {
     };
   });
 
-  // TODO: Maybe improve UX when isSaving.
   return (
     <Wrapper className={`web-stories-meta-boxes-area-${location}`}>
       {isSaving && (
