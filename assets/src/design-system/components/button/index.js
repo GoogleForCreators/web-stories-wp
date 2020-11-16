@@ -26,38 +26,39 @@ import { THEME_CONSTANTS, themeHelpers } from '../../';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
-  ({ theme }) => css`
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    box-sizing: border-box;
+  ({ size, theme }) => css`
+    position: relative;
+    display: block;
     padding: 0;
     margin: 0;
     background: transparent;
     border: none;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.primary,
-      theme.colors.accent.secondary
-    )};
     color: ${theme.colors.fg.primary};
     cursor: pointer;
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.button[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      preset: {
+        ...theme.typography.presets.button[
+          size === BUTTON_SIZES.SMALL
+            ? THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM
         ],
+      },
       theme,
     })};
-    &:disabled {
-      pointer-events: none;
-    }
 
-    &:focus {
-      outline: none;
-    }
-
+    &:focus,
     &:active {
       outline: none;
+    }
+    &:active {
+      background-color: ${theme.colors.interactiveBg.active};
+    }
+
+    &:disabled {
+      pointer-events: none;
+      background-color: ${theme.colors.interactiveBg.disable};
+      color: ${theme.colors.fg.disable};
     }
 
     transition: background-color 0.6s ease 0s;
@@ -65,47 +66,36 @@ const Base = styled.button(
 );
 
 const primaryColors = ({ theme }) => css`
-  background-color: ${theme.colors.accent.primary};
+  background-color: ${theme.colors.interactiveBg.brandNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: ${theme.colors.violet[40]};
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.brandHover};
   }
-
-  &:disabled {
-    background-color: #efefef;
-    color: ${theme.colors.gray[20]};
+  &:active {
+    background-color: ${theme.colors.interactiveBg.active};
   }
 `;
 
 const secondaryColors = ({ theme }) => css`
-  background-color: #d1d1cc;
+  background-color: ${theme.colors.interactiveBg.secondaryNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: ${theme.colors.gray[20]};
-  }
-
-  &:disabled {
-    background-color: #efefef;
-    color: ${theme.colors.gray[20]};
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.secondaryHover};
   }
 `;
 
 const tertiaryColors = ({ theme }) => css`
-  background-color: ${theme.colors.standard.white};
+  background-color: ${theme.colors.interactiveBg.tertiaryNormal};
 
   &:hover,
-  &:focus,
-  &:active {
-    background-color: #efefef;
+  &:focus {
+    background-color: ${theme.colors.interactiveBg.tertiaryHover};
   }
 
   &:disabled {
-    background-color: ${theme.colors.standard.white};
-    color: ${theme.colors.gray[20]};
+    background-color: ${theme.colors.interactiveBg.tertiaryNormal};
   }
 `;
 
@@ -117,36 +107,65 @@ const buttonColors = {
 
 const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-  min-width: 80px;
-  height: 36px;
-  padding: 8px 16px;
+  min-width: 1px;
+  min-height: 1em;
   border-radius: 4px;
+
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: ${({ size }) =>
+      size === BUTTON_SIZES.SMALL ? '8px 16px' : '16px 32px'};
+    height: 100%;
+  }
 `;
 
-const ButtonCircle = styled(Base)`
+const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-
+  border-radius: 4px;
   ${({ size }) => css`
-    width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-    height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-    border-radius: 50%;
+    width: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
+    height: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
 
-    & > svg {
-      width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-      height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px 10px;
+      height: 100%;
+      width: 100%;
+    }
+
+    svg {
+      width: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
+      height: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
       margin: 0 auto;
     }
   `}
 `;
 
-const ButtonIcon = styled(Base)`
-  ${({ size }) => `
-    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+const ButtonCircle = styled(ButtonSquare)`
+  border-radius: 50%;
+`;
 
-    & > svg {
+const ButtonIcon = styled(Base)`
+  ${({ size }) => css`
+    width: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
+    height: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 100%;
       width: 100%;
-      height:100%;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
     }
   `}
 `;
@@ -155,6 +174,7 @@ const ButtonIcon = styled(Base)`
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
+  [BUTTON_VARIANTS.SQUARE]: ButtonSquare,
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
@@ -175,7 +195,7 @@ export const Button = ({
       type={type}
       {...rest}
     >
-      {children}
+      <div>{children}</div>
     </StyledButton>
   );
 };

@@ -82,4 +82,5 @@ export const MEDIA_PANELS = [
   PanelTypes.SIZE_POSITION,
   PanelTypes.BORDER,
   PanelTypes.ANIMATION,
+  PanelTypes.LINK,
 ];

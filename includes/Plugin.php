@@ -252,7 +252,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function load_amp_plugin_compat() {
-		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/plugin-compat/amp.php';
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
 	}
 
 	/**

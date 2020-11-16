@@ -110,13 +110,14 @@ describe('combineElements', () => {
       },
       {
         id: '456',
-        type: 'image',
+        type: 'video',
         focalX: 20,
-        resource: { type: 'image', src: '1' },
+        resource: { type: 'video', src: '1' },
         x: 10,
         y: 10,
         width: 10,
         height: 10,
+        tracks: ['track-1'],
       },
       {
         id: '789',
@@ -160,8 +161,8 @@ describe('combineElements', () => {
       },
       {
         id: '789',
-        resource: { type: 'image', src: '1' },
-        type: 'image',
+        resource: { type: 'video', src: '1' },
+        type: 'video',
         // Note that focalX is copied and focalY is reset to 50
         focalX: 20,
         focalY: 50,
@@ -171,6 +172,7 @@ describe('combineElements', () => {
         y: 20,
         width: 20,
         height: 20,
+        tracks: ['track-1'],
       },
     ]);
   });
@@ -533,13 +535,14 @@ function getDefaultState1() {
           },
           {
             id: '456',
-            type: 'image',
+            type: 'video',
             focalX: 20,
-            resource: { type: 'image', src: '1' },
+            resource: { type: 'video', src: '1' },
             x: 10,
             y: 10,
             width: 10,
             height: 10,
+            tracks: ['track-1'],
           },
           {
             id: '789',
