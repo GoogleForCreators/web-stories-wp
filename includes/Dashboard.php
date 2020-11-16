@@ -28,6 +28,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Traits\Assets;
 use WP_Screen;
 
@@ -59,6 +60,13 @@ class Dashboard {
 	private $experiments;
 
 	/**
+	 * Site_Kit instance.
+	 *
+	 * @var Site_Kit Site_Kit instance.
+	 */
+	private $site_kit;
+
+	/**
 	 * Decoder instance.
 	 *
 	 * @var Decoder Decoder instance.
@@ -71,10 +79,12 @@ class Dashboard {
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 * @param Site_Kit    $site_kit    Site_Kit instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
 		$this->decoder     = new Decoder( $this->experiments );
+		$this->site_kit    = $site_kit;
 	}
 
 	/**
@@ -193,7 +203,8 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/wp/v2/settings',
+			'/web-stories/v1/settings',
+			'/web-stories/v1/users/me',
 			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
@@ -208,16 +219,11 @@ class Dashboard {
 		 */
 		$preload_paths = apply_filters( 'web_stories_dashboard_preload_paths', $preload_paths );
 
-		$_GET['_embed'] = 1;
-
 		$preload_data = array_reduce(
 			$preload_paths,
-			'rest_preload_api_request',
+			__NAMESPACE__ . '\rest_preload_api_request',
 			[]
 		);
-
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		unset( $_GET['_embed'] );
 
 		wp_add_inline_script(
 			'wp-api-fetch',
@@ -328,10 +334,10 @@ class Dashboard {
 				'api'                => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/wp/v2/users/me',
-					'users'       => '/wp/v2/users',
+					'currentUser' => '/web-stories/v1/users/me',
+					'users'       => '/web-stories/v1/users',
 					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/wp/v2/settings',
+					'settings'    => '/web-stories/v1/settings',
 				],
 				'maxUpload'          => $max_upload_size,
 				'maxUploadFormatted' => size_format( $max_upload_size ),
@@ -339,6 +345,7 @@ class Dashboard {
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
 				],
+				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

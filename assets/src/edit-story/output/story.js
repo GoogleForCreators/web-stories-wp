@@ -30,7 +30,13 @@ import getFontDeclarations from './utils/getFontDeclarations';
 import OutputPage from './page';
 
 function OutputStory({
-  story: { featuredMediaUrl, link, title, autoAdvance, defaultPageDuration },
+  story: {
+    featuredMedia: { url: featuredMediaUrl },
+    link,
+    title,
+    autoAdvance,
+    defaultPageDuration,
+  },
   pages,
   metadata: { publisher },
 }) {

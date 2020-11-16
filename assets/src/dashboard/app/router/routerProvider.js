@@ -55,6 +55,31 @@ function RouterProvider({ children, ...props }) {
     trackScreenView(currentScreen);
   }, [currentScreen]);
 
+  // Sync up WP navigation bar with our hash location.
+  useEffect(() => {
+    let query = `a[href$="#${currentPath}"]`;
+    // `My Stories` link in WP doesn't have a hash in the href
+    if (currentPath.length <= 1) {
+      query = 'a[href$="page=stories-dashboard"]';
+    }
+
+    const WPSubmenuItems = document.querySelectorAll(
+      '#menu-posts-web-story ul.wp-submenu li'
+    );
+    WPSubmenuItems?.forEach((el) => {
+      el.classList.remove('current');
+      el.querySelector('a')?.classList.remove('current');
+      el.querySelector('a')?.removeAttribute('aria-current');
+    });
+    WPSubmenuItems?.forEach((el) => {
+      if (el.querySelector(query)) {
+        el.classList.add('current');
+        el.querySelector('a')?.classList.add('current');
+        el.querySelector('a')?.setAttribute('aria-current', 'page');
+      }
+    });
+  }, [currentPath]);
+
   const value = useMemo(
     () => ({
       state: {

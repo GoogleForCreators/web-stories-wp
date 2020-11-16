@@ -127,20 +127,6 @@ describe('Keyboard Shortcuts Menu', () => {
   });
 
   describe('CUJ: User can interact with menu using keyboard: Tab to menu, enter to open, esc to close', () => {
-    it('should be able to tab to keyboard shortcuts button', async () => {
-      const safeZone = fixture.editor.getByRole('checkbox', {
-        name: /^Disable Safe Zone$/,
-      });
-
-      await fixture.events.focus(safeZone);
-      await fixture.events.keyboard.shortcut('Shift+Tab');
-
-      const focusElement = document.activeElement;
-      const menuToggle = getKeyboardShortcutsToggle();
-
-      expect(focusElement).toEqual(menuToggle);
-    });
-
     it('should be able to toggle menu open with Enter key', async () => {
       const hiddenMenu = getKeyboardShortcutsMenu();
       // Menu should be closed

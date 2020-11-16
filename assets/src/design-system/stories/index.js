@@ -25,6 +25,7 @@ import styled from 'styled-components';
  */
 import { dark, light } from '../theme/colors';
 import { Headline, Text, THEME_CONSTANTS } from '../';
+import { Button, BUTTON_TYPES } from '../components';
 
 export default {
   title: 'DesignSystem/Colors',
@@ -34,9 +35,23 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  & > h2 {
+  border-top: ${({ beginLightDark }) =>
+    beginLightDark ? '1px solid black' : 'none'};
+  padding-top: ${({ beginLightDark }) => (beginLightDark ? '6px' : 'inherit')};
+  & > h2,
+  & > h3 {
     width: 100%;
   }
+  & > h3 {
+    margin-top: 5px;
+  }
+`;
+const FixedButton = styled(Button)`
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-top: 20px;
+  margin-right: 20px;
 `;
 
 const Container = styled.div`
@@ -44,8 +59,13 @@ const Container = styled.div`
   height: 150px;
   display: flex;
   margin-right: 20px;
+  margin-top: 10px;
   flex-direction: column;
   align-items: center;
+  overflow-wrap: anywhere;
+  p {
+    text-align: center;
+  }
 `;
 
 const ColorBlock = styled.span`
@@ -64,20 +84,53 @@ export const _default = () => {
   const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES;
   return (
     <div>
-      <button onClick={() => setIsDarkTheme(!isDarkTheme)}>{`Toggle to ${
-        isDarkTheme ? 'light' : 'dark'
-      } theme`}</button>
+      <FixedButton
+        type={BUTTON_TYPES.PRIMARY}
+        onClick={() => setIsDarkTheme(!isDarkTheme)}
+      >{`Toggle to ${isDarkTheme ? 'light' : 'dark'} theme`}</FixedButton>
       {Object.keys(activeTheme).map((themeSection) => (
-        <Row key={themeSection}>
+        <Row key={themeSection} beginLightDark={themeSection === 'fg'}>
           <Headline as="h2">{themeSection}</Headline>
-          {Object.keys(activeTheme[themeSection]).map((sectionValue) => (
-            <Container key={`${themeSection}_${sectionValue}`}>
-              <ColorBlock color={activeTheme[themeSection][sectionValue]} />
-              <Text
-                size={SMALL}
-              >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text>
-            </Container>
-          ))}
+          {Object.keys(activeTheme[themeSection]).map((sectionValue) => {
+            if (typeof activeTheme[themeSection][sectionValue] === 'object') {
+              return (
+                <Row>
+                  <Headline as="h3" size={SMALL}>
+                    {`${themeSection} - ${sectionValue}`}
+                  </Headline>
+                  {Object.keys(activeTheme[themeSection][sectionValue]).map(
+                    (nestedSection) => {
+                      return (
+                        <Container
+                          key={`${themeSection}_${sectionValue}_${nestedSection}`}
+                        >
+                          <ColorBlock
+                            color={
+                              activeTheme[themeSection][sectionValue][
+                                nestedSection
+                              ]
+                            }
+                          />
+                          <Text
+                            size={SMALL}
+                          >{`${themeSection}.${sectionValue}.${nestedSection} (${activeTheme[themeSection][sectionValue][nestedSection]})`}</Text>
+                        </Container>
+                      );
+                    }
+                  )}
+                </Row>
+              );
+            }
+
+            return (
+              <Container key={`${themeSection}_${sectionValue}`}>
+                <ColorBlock color={activeTheme[themeSection][sectionValue]} />
+                <Text
+                  size={SMALL}
+                >{`${themeSection}.${sectionValue} (${activeTheme[themeSection][sectionValue]})`}</Text>
+              </Container>
+            );
+          })}
         </Row>
       ))}
     </div>
