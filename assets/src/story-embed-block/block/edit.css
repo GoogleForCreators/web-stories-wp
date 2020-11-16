@@ -1,6 +1,8 @@
 /* Loading Indicator */
-.block-editor-block-list__block[data-type="web-stories/embed"][data-align="right"] .wp-block,
-.block-editor-block-list__block[data-type="web-stories/embed"][data-align="left"] .wp-block {
+.block-editor-block-list__block[data-type='web-stories/embed'][data-align='right']
+  .wp-block,
+.block-editor-block-list__block[data-type='web-stories/embed'][data-align='left']
+  .wp-block {
   height: auto;
   overflow: hidden;
 }
