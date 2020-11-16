@@ -88,6 +88,7 @@ function combineElements(state, { firstElement, secondId }) {
     'focalY',
     'flip',
     'backgroundOverlay',
+    'tracks',
   ];
 
   // If the element we're dropping into is not background, maintain link, too.

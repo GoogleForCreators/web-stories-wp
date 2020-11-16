@@ -90,9 +90,8 @@ function FramesLayer() {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { showSafeZone, setDesignSpaceGuideline } = useCanvas(
-    ({ state: { showSafeZone }, actions: { setDesignSpaceGuideline } }) => ({
-      showSafeZone,
+  const { setDesignSpaceGuideline } = useCanvas(
+    ({ actions: { setDesignSpaceGuideline } }) => ({
       setDesignSpaceGuideline,
     })
   );
@@ -117,7 +116,6 @@ function FramesLayer() {
     >
       {!isAnimating && (
         <FramesPageArea
-          showSafeZone={showSafeZone}
           overlay={
             Boolean(draggingResource) &&
             isDropSource(draggingResource.type) &&

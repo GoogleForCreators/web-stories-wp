@@ -34,7 +34,6 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
     pageContainer,
     canvasContainer,
     designSpaceGuideline,
-    showSafeZone,
   } = useCanvas(
     ({
       state: {
@@ -42,7 +41,6 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
         pageContainer,
         canvasContainer,
         designSpaceGuideline,
-        showSafeZone,
       },
     }) => ({
       canvasWidth,
@@ -50,7 +48,6 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
       pageContainer,
       canvasContainer,
       designSpaceGuideline,
-      showSafeZone,
     })
   );
   const { activeDropTargetId } = useDropTargets((state) => ({
@@ -116,7 +113,7 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
     : [];
 
   const elementGuidelines = canSnap
-    ? [...otherNodes, ...(showSafeZone ? [designSpaceGuideline] : [])]
+    ? [...otherNodes, designSpaceGuideline]
     : [];
 
   return {

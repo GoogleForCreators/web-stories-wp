@@ -134,8 +134,8 @@ class Web_Stories_Compatibility extends \WP_UnitTestCase {
 	 * @return \Web_Stories_Compatibility
 	 */
 	protected function get_compatibility_object() {
-		$compatibility     = \web_stories_get_compat_instance();
-		$extensions        = [
+		$compatibility = \web_stories_get_compat_instance();
+		$extensions    = [
 			'fake_extension' => [
 				'classes'   => [
 					'FAKE_CLASS',

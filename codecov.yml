@@ -83,6 +83,7 @@ ignore:
   - uninstall.php
   - includes/namespace.php
   - includes/compat
+  - includes/polyfills
   - includes/templates
   - includes/AMP/Integration/AMP_Story_Sanitizer.php
   - includes/REST_API/Stories_Settings_Controller.php
