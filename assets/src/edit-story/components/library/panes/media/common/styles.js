@@ -35,6 +35,17 @@ export const PaneHeader = styled.div`
   flex: 0 1 auto;
 `;
 
+export const SearchInputContainer = styled.div`
+  padding: 0 ${PANE_PADDING};
+`;
+
+export const FilterArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
+`;
+
 export const MediaGalleryContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
@@ -89,8 +100,4 @@ export const StyledPane = styled(Pane)`
   height: 100%;
   padding: 0;
   overflow: hidden;
-`;
-
-export const SearchInputContainer = styled.div`
-  padding: 0 ${PANE_PADDING};
 `;

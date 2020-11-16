@@ -43,29 +43,22 @@ import {
   getTypeFromMime,
 } from '../../../../../app/media/utils';
 import {
-  MediaGalleryMessage,
   PaneHeader,
   PaneInner,
   SearchInputContainer,
   StyledPane,
+  FilterArea,
+  MediaGalleryMessage,
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import resourceList from '../../../../../utils/resourceList';
 import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
-import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
-
-const FilterArea = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-  padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
-`;
 
 const FILTERS = [
   { value: '', name: __('All Types', 'web-stories') },
