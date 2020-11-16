@@ -59,7 +59,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
 
   const locations = ['normal', 'advanced'];
   const hasMetaBoxes = locations.some((location) =>
-    Boolean(metaBoxes[location].length)
+    Boolean(metaBoxes[location]?.length)
   );
 
   const {

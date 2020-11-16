@@ -32,7 +32,7 @@ const Wrapper = styled.div``;
 function MetaBoxes() {
   const customMetaBoxes = useFeature('customMetaBoxes');
 
-  const { postType, metaBoxes } = useConfig();
+  const { postType, metaBoxes = {} } = useConfig();
 
   useEffect(() => {
     // Allow toggling metaboxes panels.
@@ -59,7 +59,7 @@ function MetaBoxes() {
   return (
     <Wrapper>
       {locations.map((location) => {
-        const isVisible = Boolean(metaBoxes[location].length);
+        const isVisible = Boolean(metaBoxes[location]?.length);
         return (
           isVisible && <MetaBoxesArea key={location} location={location} />
         );
