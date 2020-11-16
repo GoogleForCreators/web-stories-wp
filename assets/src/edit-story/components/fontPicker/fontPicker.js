@@ -133,7 +133,7 @@ function FontPicker({ onChange, lightMode = false, placeholder, value }) {
         aria-expanded={isOpen}
         ref={ref}
         lightMode={lightMode}
-        aria-label={__('Edit: Font family', 'web-stories')}
+        aria-label={__('Font family', 'web-stories')}
       >
         <FontPickerTitle>{value || placeholder}</FontPickerTitle>
         <DropDownIcon />

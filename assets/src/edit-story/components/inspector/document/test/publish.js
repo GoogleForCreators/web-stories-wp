@@ -107,7 +107,7 @@ describe('PublishPanel', () => {
 
   it('should open Date picker when clicking on date', () => {
     const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Edit: Story publish time' });
+    const element = getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
     const calendar = getByRole('button', { name: 'January 2020' });
@@ -116,7 +116,7 @@ describe('PublishPanel', () => {
 
   it('should update the story when choosing a date from the calendar', () => {
     const { getByRole, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Edit: Story publish time' });
+    const element = getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
     const firstOfJanuary = getByRole('button', { name: 'January 1, 2020' });
@@ -133,7 +133,7 @@ describe('PublishPanel', () => {
 
   it('should update the story when choosing time', () => {
     const { getByRole, getByLabelText, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Edit: Story publish time' });
+    const element = getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
     const hours = getByLabelText('Hours');
@@ -169,7 +169,7 @@ describe('PublishPanel', () => {
 
   it('should not update the date with incorrect times', () => {
     const { getByRole, getByLabelText, updateStory } = setupPanel();
-    const element = getByRole('button', { name: 'Edit: Story publish time' });
+    const element = getByRole('button', { name: 'Story publish time' });
 
     fireEvent.click(element);
     const hours = getByLabelText('Hours');
@@ -190,7 +190,7 @@ describe('PublishPanel', () => {
     let dateInCalendar = queryByLabelText('January 1, 2020');
     expect(dateInCalendar).toBeNull();
 
-    const element = getByRole('button', { name: 'Edit: Story publish time' });
+    const element = getByRole('button', { name: 'Story publish time' });
     fireEvent.keyDown(element, {
       key: 'Enter',
       which: 13,

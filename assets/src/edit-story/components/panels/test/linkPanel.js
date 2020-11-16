@@ -71,12 +71,12 @@ describe('Panels/Link', () => {
     renderLinkPanel([DEFAULT_ELEMENT]);
     expect(
       screen.getByRole('textbox', {
-        name: 'Edit: Element link',
+        name: 'Element link',
       })
     ).toBeInTheDocument();
     expect(
       screen.queryByRole('textbox', {
-        name: 'Edit: Link description',
+        name: 'Link description',
       })
     ).toBeNull();
     expect(
@@ -109,7 +109,7 @@ describe('Panels/Link', () => {
     ]);
     expect(
       screen.queryByRole('textbox', {
-        name: 'Edit: Link description',
+        name: 'Link description',
       })
     ).toBeNull();
     expect(
@@ -135,13 +135,13 @@ describe('Panels/Link', () => {
     ]);
 
     const linkInput = screen.getByRole('textbox', {
-      name: 'Edit: Element link',
+      name: 'Element link',
     });
     expect(linkInput.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(linkInput.value).toStrictEqual('');
 
     const descInput = screen.queryByRole('textbox', {
-      name: 'Edit: Link description',
+      name: 'Link description',
     });
     expect(descInput.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(descInput.value).toStrictEqual('');
