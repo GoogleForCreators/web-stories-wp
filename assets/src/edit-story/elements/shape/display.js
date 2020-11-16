@@ -24,17 +24,26 @@ import styled from 'styled-components';
  */
 import { elementFillContent, elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
+import {useTransformHandler} from "../../components/transform";
+import getMediaSizePositionProps from "../media/getMediaSizePositionProps";
+import {getMediaWithScaleCss} from "../media/util";
+import {useRef} from "react";
+import useColorTransformHandler from "../shared/useColorTransformHandler";
 
 const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
 `;
 
-function ShapeDisplay({ element: { isDefaultBackground, backgroundColor } }) {
+function ShapeDisplay({
+  element: { isDefaultBackground, backgroundColor, id },
+}) {
+  const ref = useRef(null);
+  useColorTransformHandler({ id, targetRef: ref, style: 'background-color' });
   if (isDefaultBackground) {
     return <Element />;
   }
-  return <Element backgroundColor={backgroundColor} />;
+  return <Element ref={ref} backgroundColor={backgroundColor} />;
 }
 
 ShapeDisplay.propTypes = {
