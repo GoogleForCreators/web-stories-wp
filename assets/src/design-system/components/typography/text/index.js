@@ -32,9 +32,12 @@ export const Text = styled.p`
     const asLink =
       as === 'a' &&
       css`
-        color: ${theme.colors.accent.secondary};
+        color: ${theme.colors.fg.linkNormal};
         text-decoration: none;
         cursor: pointer;
+        &:hover {
+          color: ${theme.colors.fg.linkHover};
+        }
       `;
     return css`
       ${themeHelpers.expandPresetStyles({

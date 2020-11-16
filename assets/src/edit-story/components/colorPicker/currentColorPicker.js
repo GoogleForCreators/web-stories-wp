@@ -92,6 +92,7 @@ const Footer = styled.div`
   font-size: ${CONTROLS_WIDTH}px;
   line-height: 19px;
   position: relative;
+  margin-top: 7px;
   display: grid;
   grid: 'eyedropper hex opacity' ${HEADER_FOOTER_HEIGHT}px / ${EYEDROPPER_ICON_SIZE}px 1fr ${OPACITY_WIDTH}px;
   grid-gap: 10px;

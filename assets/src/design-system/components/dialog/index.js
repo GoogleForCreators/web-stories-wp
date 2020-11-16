@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { rgba } from 'polished';
 
 /**
  * Internal dependencies
@@ -39,7 +38,7 @@ const DialogBox = styled.div`
   overflow-y: auto;
   padding: 12px 16px;
   border-radius: 8px;
-  border: ${({ theme }) => `1px solid ${rgba(theme.colors.fg.primary, 0.24)}`};
+  border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
 `;
 
 const DialogContent = styled.div`

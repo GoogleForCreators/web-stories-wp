@@ -32,6 +32,7 @@ class Jetpack extends \WP_UnitTestCase {
 
 		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
 		$this->assertSame( 10, has_filter( 'jetpack_sitemap_post_types', [ $jetpack, 'add_to_jetpack_sitemap' ] ) );
+		$this->assertSame( 10, has_filter( 'jetpack_is_amp_request', [ $jetpack, 'force_amp_request' ] ) );
 
 		remove_all_filters( 'jetpack_sitemap_post_types' );
 	}

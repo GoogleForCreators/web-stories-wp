@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-export const BUTTON_TYPES = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  TERTIARY: 'tertiary',
-  PLAIN: 'plain',
-};
+/**
+ * External dependencies
+ */
+import { css } from 'styled-components';
+import { rgba } from 'polished';
 
-export const BUTTON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-};
+export const ScrollBarStyles = css`
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
 
-export const BUTTON_VARIANTS = {
-  CIRCLE: 'circle',
-  RECTANGLE: 'rectangle',
-  SQUARE: 'square',
-  ICON: 'icon',
-};
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border: none;
+    background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.38)};
+  }
+
+  :focus {
+    outline: 2px solid ${({ theme }) => theme.colors.accent.secondary};
+  }
+`;
