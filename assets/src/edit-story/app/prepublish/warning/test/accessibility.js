@@ -54,11 +54,11 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         backgroundColor: {
           color: {
             r: 255,
-            g: 0,
-            b: 153,
+            g: 255,
+            b: 255,
           },
         },
-        content: '<span style="color: #fff">HOT GOSSIP ARTICLE</span>',
+        content: '<span style="color: #000">HOT GOSSIP ARTICLE</span>',
       };
       expect(
         accessibilityChecks.textElementFontLowContrast(element)
