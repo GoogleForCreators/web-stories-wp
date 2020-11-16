@@ -48,18 +48,8 @@ class Discovery {
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 
-		/**
-		 * Filters filter to enable / disable open graph data.
-		 *
-		 * @since 1.2.0
-		 * @param bool $enable_open_graph Enable / disable open graph. Default to true.
-		 */
-		$enable_open_graph = apply_filters( 'web_stories_enable_open_graph', true );
-
-		if ( $enable_open_graph ) {
-			add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
-			add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
-		}
+		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
+		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
 
 		add_action( 'web_stories_story_head', [ $this, 'print_feed_link' ], 4 );
 
@@ -91,6 +81,17 @@ class Discovery {
 	 * @return void
 	 */
 	public function print_metadata() {
+		/**
+		 * Filters filter to enable / disable metadata
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_open_graph Enable / disable metadata. Default to true.
+		 */
+		$enable_metadata = apply_filters( 'web_stories_enable_metadata', true );
+		if ( ! $enable_metadata ) {
+			return;
+		}
 		?>
 		<title><?php echo esc_html( wp_get_document_title() ); ?></title>
 		<meta name="description" content="<?php echo esc_attr( wp_strip_all_tags( get_the_excerpt() ) ); ?>" />
@@ -105,6 +106,17 @@ class Discovery {
 	 * @return void
 	 */
 	public function print_schemaorg_metadata() {
+		/**
+		 * Filters filter to enable / disable schemaorg metadata.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_schemaorg_metadata Enable / disable schemaorg metadata. Default to true.
+		 */
+		$enable_schemaorg_metadata = apply_filters( 'web_stories_enable_schemaorg_metadata', true );
+		if ( ! $enable_schemaorg_metadata ) {
+			return;
+		}
 		$metadata = $this->get_schemaorg_metadata();
 
 		?>
@@ -189,6 +201,17 @@ class Discovery {
 	 * @return void
 	 */
 	public function print_open_graph_metadata() {
+		/**
+		 * Filters filter to enable / disable open graph metadata.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_open_graph_metadata Enable / disable open graph metadata. Default to true.
+		 */
+		$enable_open_graph_metadata = apply_filters( 'web_stories_enable_open_graph_metadata', true );
+		if ( ! $enable_open_graph_metadata ) {
+			return;
+		}
 		?>
 		<meta property="og:locale" content="<?php echo esc_attr( get_bloginfo( 'language' ) ); ?>" />
 		<meta property="og:type" content="article" />
@@ -229,6 +252,17 @@ class Discovery {
 	 * @return void
 	 */
 	public function print_twitter_metadata() {
+		/**
+		 * Filters filter to enable / disable twitter metadata.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enable_twitter_metadata Enable / disable twitter metadata. Default to true.
+		 */
+		$enable_twitter_metadata = apply_filters( 'web_stories_enable_twitter_metadata', true );
+		if ( ! $enable_twitter_metadata ) {
+			return;
+		}
 		?>
 		<meta name="twitter:card" content="summary_large_image" />
 		<?php
