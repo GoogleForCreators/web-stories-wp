@@ -21,14 +21,14 @@ import { useTransformHandler } from '../../components/transform';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
 
-function useColorTransformHandler({ id, targetRef, style }) {
+function useColorTransformHandler({ id, targetRef }) {
   useTransformHandler(id, (transform) => {
     if (targetRef.current) {
       if (transform === null) {
         targetRef.current.style.cssText = '';
       } else {
-        const { color } = transform;
-        if (color) {
+        const { color, style } = transform;
+        if (color && style) {
           targetRef.current.style.cssText = convertToCSS(
             generatePatternStyles(color, style)
           );

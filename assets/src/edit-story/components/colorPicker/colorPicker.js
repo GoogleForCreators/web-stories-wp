@@ -81,6 +81,7 @@ function ColorPicker({
   onChange,
   onClose,
   renderFooter,
+  changedStyle = 'background',
 }) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
@@ -158,10 +159,11 @@ function ColorPicker({
       selectedElementIds.forEach((id) => {
         pushTransform(id, {
           color: generatedColor,
+          style: changedStyle,
         });
       });
     }
-  }, [selectedElementIds, generatedColor, pushTransform]);
+  }, [selectedElementIds, generatedColor, pushTransform, changedStyle]);
 
   return (
     <CSSTransition in appear={true} classNames="picker" timeout={300}>
@@ -211,6 +213,7 @@ ColorPicker.propTypes = {
   hasOpacity: PropTypes.bool,
   color: PatternPropType,
   renderFooter: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorPicker.defaultProps = {

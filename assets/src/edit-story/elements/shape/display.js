@@ -36,7 +36,7 @@ function ShapeDisplay({
   element: { isDefaultBackground, backgroundColor, id },
 }) {
   const ref = useRef(null);
-  useColorTransformHandler({ id, targetRef: ref, style: 'background' });
+  useColorTransformHandler({ id, targetRef: ref });
   if (isDefaultBackground) {
     return <Element />;
   }
