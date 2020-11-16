@@ -23,11 +23,11 @@ import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { theme } from '../../..';
-import { Tab } from '..';
+import { theme } from '../../../theme';
+import { Pill } from '..';
 
 export default {
-  title: 'DesignSystem/Components/Tab',
+  title: 'DesignSystem/Components/Pill',
 };
 
 const Container = styled.div`
@@ -40,9 +40,25 @@ const Container = styled.div`
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <Tab isActive={boolean('isActive')} onClick={action('click on tab')}>
-        {text('children', 'I am tab text')}
-      </Tab>
+      <Pill
+        isActive={boolean('isActive', false)}
+        onClick={(e) => action('click on pill')(e)}
+      >
+        {text('children', 'I am pill text')}
+      </Pill>
     </Container>
   </ThemeProvider>
 );
+
+export const LightTheme = () => {
+  return (
+    <Container>
+      <Pill
+        isActive={boolean('isActive', false)}
+        onClick={(e) => action('click on pill')(e)}
+      >
+        {text('children', 'I am pill text')}
+      </Pill>
+    </Container>
+  );
+};

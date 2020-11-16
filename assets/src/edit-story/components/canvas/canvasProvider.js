@@ -38,7 +38,6 @@ function CanvasProvider({ children }) {
   const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
-  const [showSafeZone, setShowSafeZone] = useState(true);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
   const [displayLinkGuidelines, setDisplayLinkGuidelines] = useState(false);
 
@@ -167,7 +166,6 @@ function CanvasProvider({ children }) {
         editingElementState,
         isEditing: Boolean(editingElement),
         lastSelectionEvent,
-        showSafeZone,
         pageSize,
         displayLinkGuidelines,
         pageAttachmentContainer,
@@ -184,7 +182,6 @@ function CanvasProvider({ children }) {
         handleSelectElement,
         selectIntersection,
         setPageSize,
-        setShowSafeZone,
         setDisplayLinkGuidelines,
         setPageAttachmentContainer,
         setCanvasContainer,
@@ -199,7 +196,6 @@ function CanvasProvider({ children }) {
       editingElementState,
       lastSelectionEvent,
       pageSize,
-      showSafeZone,
       setPageContainer,
       setFullbleedContainer,
       getNodeForElement,
@@ -210,7 +206,6 @@ function CanvasProvider({ children }) {
       handleSelectElement,
       selectIntersection,
       setPageSize,
-      setShowSafeZone,
       displayLinkGuidelines,
       setDisplayLinkGuidelines,
       pageAttachmentContainer,

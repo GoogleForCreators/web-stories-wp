@@ -29,5 +29,6 @@ export const BUTTON_SIZES = {
 export const BUTTON_VARIANTS = {
   CIRCLE: 'circle',
   RECTANGLE: 'rectangle',
+  SQUARE: 'square',
   ICON: 'icon',
 };

@@ -76,10 +76,10 @@ export const PanelTypes = {
   BORDER,
   LINK,
   VIDEO_OPTIONS,
+  CAPTIONS,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
   ANIMATION,
-  CAPTIONS,
 };
 
 const ALL = Object.values(PanelTypes);
