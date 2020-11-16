@@ -45,44 +45,44 @@ if (!existsSync(directory)) {
 
 const WEBSITE_LOCATION = 'https://wp.stories.google/stories/';
 
-/* eslint-disable no-irregular-whitespace */
+/* eslint-disable no-template-curly-in-string */
+const ADDITIONAL_ANALYTICS_CONFIG = {
+  vars: {
+    gtag_id: 'UA-174115079-1',
+    config: {
+      'UA-174115079-1': {
+        groups: 'default',
+      },
+    },
+  },
+  triggers: {
+    storyProgress: {
+      on: 'story-page-visible',
+      vars: {
+        event_name: 'custom',
+        event_action: 'story_progress',
+        event_category: '${title}',
+        event_label: '${storyPageId}',
+        send_to: 'UA-174115079-1',
+      },
+    },
+    storyEnd: {
+      on: 'story-last-page-visible',
+      vars: {
+        event_name: 'custom',
+        event_action: 'story_complete',
+        event_category: '${title}',
+        send_to: 'UA-174115079-1',
+      },
+    },
+  },
+};
+/* eslint-enable no-template-curly-in-string */
+
 const ADDITIONAL_ANALYTICS = `
-<amp-analytics type="gtag" data-credentials="include">
- <script type="application/json">
-   {
-     "vars": {
-       "gtag_id": "UA-174115079-1",
-       "config": {
-         "UA-174115079-1": {
-           "groups": "default"
-         }
-       }
-     },
-     "triggers": {
-       "storyProgress": {
-         "on": "story-page-visible",
-         "vars": {
-           "event_name": "custom",
-           "event_action": "story_progress",
-           "event_category": "\${title}",
-           "event_label": "\${storyPageId}",
-           "send_to": ["UA-174115079-1"]
-         }
-       },
-       "storyEnd": {
-         "on": "story-last-page-visible",
-         "vars": {
-           "event_name": "custom",
-           "event_action": "story_complete",
-           "event_category": "\${title}",
-           "send_to": ["UA-174115079-1"]
-         }
-       }
-     }
-   }
- </script>
-</amp-analytics>`;
-/* eslint-enable no-irregular-whitespace */
+<amp-analytics type="gtag" data-credentials="include"><script type="application/json">${JSON.stringify(
+  ADDITIONAL_ANALYTICS_CONFIG
+)}</script></amp-analytics>`;
 
 console.log(
   `Downloading story and saving to '${relative(__dirname, directory)}'`
