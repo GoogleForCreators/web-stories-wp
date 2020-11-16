@@ -36,6 +36,8 @@ import { useKeyDownEffect } from '../keyboard';
 import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import useFocusTrapping from '../../utils/useFocusTrapping';
+import { useTransform } from '../transform';
+import { useStory } from '../../app/story';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
@@ -96,6 +98,18 @@ function ColorPicker({
     },
   } = useColor();
 
+  const {
+    actions: { pushTransform },
+  } = useTransform();
+
+  const { selectedElementIds } = useStory(
+    ({ state: { selectedElementIds } }) => {
+      return {
+        selectedElementIds,
+      };
+    }
+  );
+
   const [onDebouncedChange] = useDebouncedCallback(onChange, 100, {
     leading: true,
   });
@@ -137,6 +151,17 @@ function ColorPicker({
 
   useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
   useFocusTrapping({ ref: containerRef });
+
+  //console.log(currentColor, generatedColor, color);
+  useEffect(() => {
+    if (generatedColor) {
+      selectedElementIds.forEach((id) => {
+        pushTransform(id, {
+          color: generatedColor,
+        });
+      });
+    }
+  }, [selectedElementIds, generatedColor, pushTransform]);
 
   return (
     <CSSTransition in appear={true} classNames="picker" timeout={300}>

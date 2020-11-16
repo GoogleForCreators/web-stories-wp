@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CustomPicker } from 'react-color';
@@ -33,8 +33,6 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Eyedropper } from '../button';
-import { useStory } from '../../app/story';
-import { useTransform } from '../transform';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
@@ -120,18 +118,6 @@ const Opacity = styled.div`
 `;
 
 function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
-  const {
-    actions: { pushTransform },
-  } = useTransform();
-
-  const { selectedElementIds } = useStory(
-    ({ state: { selectedElementIds } }) => {
-      return {
-        selectedElementIds,
-      };
-    }
-  );
-
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
@@ -149,16 +135,6 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
       onChange({ ...rgb, a: isNaN(value) ? 1 : parseInt(value) / 100 }),
     [rgb, onChange]
   );
-
-  useEffect(() => {
-    if (rgb) {
-      selectedElementIds.forEach((id) => {
-        pushTransform(id, {
-          color: rgb,
-        });
-      });
-    }
-  }, [selectedElementIds, rgb, pushTransform]);
 
   const { eyeDropper } = useFeatures();
 

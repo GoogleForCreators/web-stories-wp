@@ -22,13 +22,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import { elementFillContent, elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
-import {useTransformHandler} from "../../components/transform";
-import getMediaSizePositionProps from "../media/getMediaSizePositionProps";
-import {getMediaWithScaleCss} from "../media/util";
-import {useRef} from "react";
-import useColorTransformHandler from "../shared/useColorTransformHandler";
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 
 const Element = styled.div`
   ${elementFillContent}
@@ -39,7 +36,7 @@ function ShapeDisplay({
   element: { isDefaultBackground, backgroundColor, id },
 }) {
   const ref = useRef(null);
-  useColorTransformHandler({ id, targetRef: ref, style: 'background-color' });
+  useColorTransformHandler({ id, targetRef: ref, style: 'background' });
   if (isDefaultBackground) {
     return <Element />;
   }

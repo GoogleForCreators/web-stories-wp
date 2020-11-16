@@ -18,6 +18,8 @@
  * Internal dependencies
  */
 import { useTransformHandler } from '../../components/transform';
+import generatePatternStyles from '../../utils/generatePatternStyles';
+import convertToCSS from '../../utils/convertToCSS';
 
 function useColorTransformHandler({ id, targetRef, style }) {
   useTransformHandler(id, (transform) => {
@@ -27,8 +29,9 @@ function useColorTransformHandler({ id, targetRef, style }) {
       } else {
         const { color } = transform;
         if (color) {
-          const { r, g, b, a } = color;
-          targetRef.current.style.cssText = `${style}: rgba(${r}, ${g}, ${b}, ${a})`;
+          targetRef.current.style.cssText = convertToCSS(
+            generatePatternStyles(color, style)
+          );
         }
       }
     }

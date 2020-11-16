@@ -102,7 +102,7 @@ export function generatePresetStyle(preset, prepareForCSS) {
   ) {
     style = {
       ...style,
-      ...generatePatternStyles(backgroundColor, 'background'),
+      ...ć(backgroundColor, 'background'),
     };
   }
   return style;
