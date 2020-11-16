@@ -37,6 +37,23 @@ export function hashToParams(hash) {
   return new URLSearchParams(hash.startsWith('#') ? hash.substr(1) : hash);
 }
 
+function hashFromURL(url) {
+  return url.substring(url.indexOf('#'));
+}
+
+function getValueFromHash(hash, key, fallback) {
+  const params = hashToParams(hash);
+  let _value = fallback;
+  try {
+    if (params.has(key)) {
+      _value = JSON.parse(decodeURI(params.get(key)));
+    }
+  } catch (e) {
+    // @TODO Add some error handling
+  }
+  return _value;
+}
+
 /**
  * Functions like a normal `useState()` but reads initial value of of url
  * hash key and uses `fallback` if no value found. Also updates hash key on
@@ -53,18 +70,22 @@ export function hashToParams(hash) {
  * @return {[*, Function]} value & setter tuple like `useState()`
  */
 function useHashState(key, fallback) {
-  const [value, setValue] = useState(() => {
-    const params = hashToParams(window.location.hash);
-    let _value = fallback;
-    try {
-      if (params.has(key)) {
-        _value = JSON.parse(decodeURI(params.get(key)));
+  const [value, setValue] = useState(() =>
+    getValueFromHash(window.location.hash, key, fallback)
+  );
+
+  useEffect(() => {
+    const handleHashChange = ({ newURL }) => {
+      const newHash = hashFromURL(newURL);
+      const newValue = getValueFromHash(newHash, key, fallback);
+      if (value !== newValue) {
+        setValue(newValue);
       }
-    } catch (e) {
-      // @TODO Add some error handling
-    }
-    return _value;
-  });
+    };
+    window.addEventListener('hashchange', handleHashChange, false);
+    return () =>
+      window.removeEventListener('hashchange', handleHashChange, false);
+  }, [value, key, fallback]);
 
   // update url param when value updates
   useEffect(() => {
