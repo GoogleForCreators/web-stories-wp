@@ -47,7 +47,6 @@ class Discovery {
 	public function init() {
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
-
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_twitter_metadata' ] );
 
