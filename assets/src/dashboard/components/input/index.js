@@ -31,7 +31,9 @@ export const TextInput = styled.input`
   padding: 1px 8px;
   border-radius: 6px;
   border: ${({ theme, error }) =>
-    error ? theme.DEPRECATED.borders.danger : theme.DEPRECATED.borders.gray100};
+    error
+      ? theme.DEPRECATED_THEME.borders.danger
+      : theme.DEPRECATED_THEME.borders.gray100};
   &:active:enabled {
     border: ${({ theme, error }) =>
       error
