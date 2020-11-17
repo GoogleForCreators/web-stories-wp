@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+.web-stories-embed.alignleft,
+.web-stories-embed.alignright {
+  width: 100%;
+}
+
 .web-stories-embed.aligncenter {
   text-align: initial;
 }
@@ -22,13 +27,18 @@
   position: relative;
 }
 
+.web-stories-embed.alignleft .wp-block-embed__wrapper {
+  margin-right: auto;
+}
+.web-stories-embed.alignright .wp-block-embed__wrapper {
+  margin-left: auto;
+}
 .web-stories-embed.aligncenter .wp-block-embed__wrapper {
   margin-left: auto;
   margin-right: auto;
 }
 
 .web-stories-embed:not(.web-stories-embed-amp) .wp-block-embed__wrapper {
-  min-width: var(--width);
   max-width: var(--width);
 }
 

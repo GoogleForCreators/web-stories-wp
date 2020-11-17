@@ -38,6 +38,12 @@
   width: inherit;
   height: inherit;
 }
+.wp-block-web-stories-embed.alignleft .components-resizable-box__container {
+  margin-right: auto;
+}
+.wp-block-web-stories-embed.alignright .components-resizable-box__container {
+  margin-left: auto;
+}
 .wp-block-web-stories-embed.aligncenter .components-resizable-box__container {
   margin: auto;
 }
