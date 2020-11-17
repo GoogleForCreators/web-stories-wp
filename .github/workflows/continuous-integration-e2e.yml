@@ -61,6 +61,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          # Ensure latest version of npm 7
+          # See https://github.com/npm/cli/issues/2147
+          npm i -g npm@7
           # TODO: Use npm ci
           # See https://github.com/npm/cli/issues/1905
           npm install
