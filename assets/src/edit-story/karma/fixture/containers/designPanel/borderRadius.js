@@ -29,7 +29,7 @@ export class BorderRadius extends AbstractPanel {
   }
 
   radius(corner) {
-    return this.getByRole('textbox', { name: `Edit: ${corner} corner radius` });
+    return this.getByRole('textbox', { name: `${corner} corner radius` });
   }
 
   get lockBorderRadius() {

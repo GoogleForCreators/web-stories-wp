@@ -143,7 +143,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
       <Row>
         <BoxedNumeric
           value={borderRadius.topLeft}
-          aria-label={__('Edit: Top left corner radius', 'web-stories')}
+          aria-label={__('Top left corner radius', 'web-stories')}
           onChange={(value) => handleChange('topLeft', value)}
         />
         {/* Default, passed for readability only */}
@@ -155,7 +155,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         </Icon>
         <BoxedNumeric
           value={borderRadius.topRight}
-          aria-label={__('Edit: Top right corner radius', 'web-stories')}
+          aria-label={__('Top right corner radius', 'web-stories')}
           onChange={(value) => handleChange('topRight', value)}
         />
       </Row>
@@ -171,7 +171,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
       <Row>
         <BoxedNumeric
           value={borderRadius.bottomLeft}
-          aria-label={__('Edit: Bottom left corner radius', 'web-stories')}
+          aria-label={__('Bottom left corner radius', 'web-stories')}
           onChange={(value) => handleChange('bottomLeft', value)}
         />
         <Icon corner={BOTTOM_LEFT}>
@@ -182,7 +182,7 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
         </Icon>
         <BoxedNumeric
           value={borderRadius.bottomRight}
-          aria-label={__('Edit: Bottom right corner radius', 'web-stories')}
+          aria-label={__('Bottom right corner radius', 'web-stories')}
           onChange={(value) => handleChange('bottomRight', value)}
         />
       </Row>
