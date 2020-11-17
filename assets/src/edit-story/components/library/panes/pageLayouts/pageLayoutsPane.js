@@ -41,6 +41,13 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
+export const PageLayoutsParentContainer = styled.div`
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin-top: 28px;
+  width: 100%;
+`;
+
 function PageLayoutsPane(props) {
   const {
     actions: { getTemplates },
@@ -48,7 +55,7 @@ function PageLayoutsPane(props) {
   const [templates, setTemplates] = useState([]);
   const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
-  const paneRef = useRef();
+  const pageLayoutsParentRef = useRef();
 
   useEffect(() => {
     getTemplates().then((result) => setTemplates(result));
@@ -83,7 +90,7 @@ function PageLayoutsPane(props) {
   }, []);
 
   return (
-    <StyledPane id={paneId} {...props} ref={paneRef}>
+    <StyledPane id={paneId} {...props}>
       <PaneInner>
         <PillGroup
           items={pills}
@@ -91,9 +98,14 @@ function PageLayoutsPane(props) {
           selectItem={handleSelectTemplate}
           deselectItem={() => handleSelectTemplate(null)}
         />
-        {paneRef.current && (
-          <PageLayouts paneRef={paneRef} pages={filteredPages} />
-        )}
+        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
+          {pageLayoutsParentRef.current && (
+            <PageLayouts
+              parentRef={pageLayoutsParentRef}
+              pages={filteredPages}
+            />
+          )}
+        </PageLayoutsParentContainer>
       </PaneInner>
     </StyledPane>
   );

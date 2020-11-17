@@ -35,9 +35,6 @@ import PageLayout, {
 const PageLayoutsContainer = styled.div`
   height: ${({ height }) => `${height}px`};
   width: 100%;
-  margin-top: 28px;
-  overflow-x: hidden;
-  overflow-y: scroll;
   position: relative;
 `;
 
@@ -53,11 +50,11 @@ const PageLayoutsRow = styled.div`
 `;
 
 function PageLayouts(props) {
-  const { pages, paneRef } = props;
+  const { pages, parentRef } = props;
 
   const rowVirtualizer = useVirtual({
     size: Math.ceil(pages.length / 2),
-    parentRef: paneRef,
+    parentRef,
     estimateSize: useCallback(
       () => PAGE_LAYOUT_PANE_WIDTH / PAGE_RATIO + PAGE_LAYOUT_ROW_GAP,
       []
@@ -88,7 +85,7 @@ function PageLayouts(props) {
 }
 
 PageLayouts.propTypes = {
-  paneRef: PropTypes.object,
+  parentRef: PropTypes.object,
   pages: PropTypes.array,
 };
 
