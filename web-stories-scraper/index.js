@@ -101,22 +101,39 @@ class WebStoriesScraperPlugin {
 
     registerAction('generateFilename', ({ resource }) => {
       const parsedURL = new URL(resource.getUrl());
-      const urlPath = basename(parsedURL.pathname);
-      // TODO: For Unsplash images, take URL query params into account.
-      let filename = resource.getFilename() || urlPath || defaultFilename;
+      const urlPath = parsedURL.pathname;
+      const fileBasename = basename(urlPath);
+
+      let filename = resource.getFilename() || fileBasename || defaultFilename;
 
       if (resource.isHtml()) {
-        storyPath = urlPath;
+        storyPath = fileBasename;
       }
 
       if (resource.isHtml()) {
-        filename = join(urlPath, filename);
+        filename = join(fileBasename, filename);
       } else {
-        let fileExtension = extname(filename);
-        // Especially Unsplash images do not have an extension.
-        if (!fileExtension) {
-          fileExtension = '.jpg';
+        // Handle cases like https://media.tenor.com/videos/d99cfb8cc99410e25c94a3fd055822f4/mp4
+        if (urlPath.endsWith('/mp4')) {
+          filename = basename(urlPath.replace('/mp4', '.mp4'));
         }
+
+        // Handle cases like https://media.tenor.com/images/6166cdb8fd058cc357fef30656310d07/tenor.gif
+        if (urlPath.endsWith('/tenor.gif')) {
+          filename = basename(urlPath.replace('/tenor.gif', '.gif'));
+        }
+
+        // Handle cases like https://images.unsplash.com/photo-1601758174493-45d0a4d3e407?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80
+        if (parsedURL.searchParams.get('w')) {
+          filename += '-' + parsedURL.searchParams.get('w');
+        }
+
+        // Especially Unsplash images do not have an extension.
+        if (!extname(filename)) {
+          filename += '.jpg';
+        }
+
+        let fileExtension = extname(filename);
 
         const directoryByExtension =
           subdirectories
@@ -140,7 +157,7 @@ class WebStoriesScraperPlugin {
     registerAction('onResourceSaved', ({ resource }) => {
       if (resource.isHtml()) {
         const parsedURL = new URL(resource.getUrl());
-        const urlPath = basename(parsedURL.pathname);
+        const storySlug = basename(parsedURL.pathname);
         const filePath = join(directory, resource.getFilename());
 
         let fileContents = readFileSync(filePath, 'utf-8');
@@ -157,39 +174,39 @@ class WebStoriesScraperPlugin {
           .replace(
             /<meta property="twitter:image" content="([^>]+)">/gm,
             (match, p1) =>
-              `<meta property="twitter:image" content="${WEBSITE_LOCATION}${urlPath}/${p1}">`
+              `<meta property="twitter:image" content="${WEBSITE_LOCATION}${storySlug}/${p1}">`
           )
           .replace(
             /<meta property="og:image" content="([^>]+)">/gm,
             (match, p1) =>
-              `<meta property="og:image" content="${WEBSITE_LOCATION}${urlPath}/${p1}">`
+              `<meta property="og:image" content="${WEBSITE_LOCATION}${storySlug}/${p1}">`
           )
           // Full URLs for story poster & publisher logo.
           .replace(
             'publisher-logo-src="',
-            `publisher-logo-src="${WEBSITE_LOCATION}${urlPath}/`
+            `publisher-logo-src="${WEBSITE_LOCATION}${storySlug}/`
           )
           .replace(
             'poster-portrait-src="',
-            `poster-portrait-src="${WEBSITE_LOCATION}${urlPath}/`
+            `poster-portrait-src="${WEBSITE_LOCATION}${storySlug}/`
           )
           .replace(
             'poster-landscape-src="',
-            `poster-landscape-src="${WEBSITE_LOCATION}${urlPath}/`
+            `poster-landscape-src="${WEBSITE_LOCATION}${storySlug}/`
           )
           .replace(
             'poster-square-src="',
-            `poster-square-src="${WEBSITE_LOCATION}${urlPath}/`
+            `poster-square-src="${WEBSITE_LOCATION}${storySlug}/`
           )
           // Full URLs for video tracks.
           .replace(
             /src="tracks\//g,
-            `src="${WEBSITE_LOCATION}${urlPath}/tracks/`
+            `src="${WEBSITE_LOCATION}${storySlug}/tracks/`
           )
           // Full URLs for link[rel=canonical].
           .replace(
             '<link rel="canonical" href="index.html">',
-            `<link rel="canonical" href="${WEBSITE_LOCATION}${urlPath}/">`
+            `<link rel="canonical" href="${WEBSITE_LOCATION}${storySlug}/">`
           )
           // Fix schema data.
           .replace(
@@ -198,15 +215,15 @@ class WebStoriesScraperPlugin {
               const metadata = JSON.parse(p1);
               if (metadata.image) {
                 metadata.image =
-                  `${WEBSITE_LOCATION}${urlPath}/` +
+                  `${WEBSITE_LOCATION}${storySlug}/` +
                   fileContents.match(/poster-portrait-src="([^"]+)"/)[1];
               }
               if (metadata.publisher.logo) {
                 metadata.publisher.logo.url =
-                  `${WEBSITE_LOCATION}${urlPath}/` +
+                  `${WEBSITE_LOCATION}${storySlug}/` +
                   fileContents.match(/publisher-logo-src="([^"]+)"/)[1];
               }
-              metadata.mainEntityOfPage = `${WEBSITE_LOCATION}${urlPath}`;
+              metadata.mainEntityOfPage = `${WEBSITE_LOCATION}${storySlug}`;
               return `<script type="application/ld+json">${JSON.stringify(
                 metadata
               )}</script>`;
