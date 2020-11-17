@@ -33,6 +33,7 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
+import useUnmount from '../../utils/useUnmount';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -107,25 +108,49 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
+  const [updatedProperties, setUpdatedProperties] = useState({});
+  const lastUpdatedProperties = useRef({});
 
+  const setProperties = useCallback(
+    (properties) => {
+      const newProps = {
+        ...lastUpdatedProperties.current,
+        ...properties,
+      };
+      lastUpdatedProperties.current = newProps;
+      setUpdatedProperties(lastUpdatedProperties.current);
+    },
+    [setUpdatedProperties]
+  );
+
+  // Actually update the properties of the current element
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
   }));
-  const setProperties = useCallback(
-    (properties) => updateElementById({ elementId: id, properties }),
-    [id, updateElementById]
-  );
+  const updateActualProperties = useCallback(() => {
+    const properties = lastUpdatedProperties.current;
+    if (Object.keys(properties).length === 0) {
+      return;
+    }
+    updateElementById({ elementId: id, properties });
+  }, [id, updateElementById]);
+
+  useUnmount(updateActualProperties);
 
   const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
+
+  const actualScale = updatedProperties.scale ?? scale;
+  const actualFocalX = updatedProperties.focalX ?? focalX;
+  const actualFocalY = updatedProperties.focalY ?? focalY;
 
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
     height,
-    scale,
-    flip?.horizontal ? 100 - focalX : focalX,
-    flip?.vertical ? 100 - focalY : focalY
+    actualScale,
+    flip?.horizontal ? 100 - actualFocalX : actualFocalX,
+    flip?.vertical ? 100 - actualFocalY : actualFocalY
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
@@ -229,7 +254,7 @@ function MediaEdit({ element, box }) {
         y={y}
         width={width}
         height={height}
-        scale={scale || 100}
+        scale={actualScale || 100}
       />
     </Element>
   );
