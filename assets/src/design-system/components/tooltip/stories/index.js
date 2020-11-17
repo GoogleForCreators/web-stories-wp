@@ -30,7 +30,8 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../button';
-import { Tooltip, TOOLTIP_POSITIONS } from '..';
+import { TOOLTIP_POSITIONS } from '../constants';
+import { Tooltip } from '..';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',

@@ -23,16 +23,8 @@ import { useState, useRef, useMemo, useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { TOOLTIP_POSITIONS } from './constants';
 
-// move these to constants
-export const TOOLTIP_POSITIONS = {
-  TOP_CENTER: 'top_center',
-  TOP_RIGHT: 'top_right',
-  TOP_LEFT: 'top_left',
-  BOTTOM_CENTER: 'bottom_center',
-  BOTTOM_RIGHT: 'bottom_right',
-  BOTTOM_LEFT: 'bottom_left',
-};
 const SVG_TOOLTIP_TAIL_ID = 'tooltip-tail';
 const TAIL_WIDTH = 34;
 const TAIL_HEIGHT = 8;
@@ -121,7 +113,7 @@ const ContentWrapper = styled.div`
   display: inline-flex;
 `;
 
-export const Container = styled.div.attrs({
+const Container = styled.div.attrs({
   ['data-testid']: 'tooltip-container',
 })`
   position: relative;
@@ -130,7 +122,7 @@ export const Container = styled.div.attrs({
   display: inline-flex;
 `;
 
-export function Tooltip({
+function Tooltip({
   children,
   content,
   hasTail,
@@ -224,10 +216,8 @@ export function Tooltip({
 Tooltip.propTypes = {
   children: propTypes.node.isRequired,
   content: propTypes.node.isRequired,
-  hasTail: propTypes.bool,
   position: propTypes.oneOf(Object.values(TOOLTIP_POSITIONS)).isRequired,
+  hasTail: propTypes.bool,
 };
 
-Tooltip.defaultProps = {
-  position: 'left',
-};
+export { TOOLTIP_POSITIONS, Tooltip };
