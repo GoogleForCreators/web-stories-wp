@@ -23,6 +23,8 @@ import { useState, useRef, useMemo, useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../theme';
+import { Text } from '../typography';
 import { TOOLTIP_POSITIONS } from './constants';
 
 const SVG_TOOLTIP_TAIL_ID = 'tooltip-tail';
@@ -93,17 +95,23 @@ const Tail = styled.span`
   }
 `;
 
-export const Content = styled.div`
-  visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
-  position: absolute;
-  max-width: 300px;
-  border-radius: 4px;
-  padding: 10px;
-  overflow-wrap: break-word;
-  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
+export const Content = styled.div(
+  ({ theme, visible }) => css`
+    visibility: ${visible ? 'visible' : 'hidden'};
+    position: absolute;
+    max-width: 300px;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: ${theme.colors.interactiveBg.primaryNormal};
+
+    opacity: ${visible ? 1 : 0};
+    transition: opacity linear 200ms;
+  `
+);
+
+const TooltipText = styled(Text)`
   color: ${({ theme }) => theme.colors.bg.primary};
-  opacity: ${({ visible }) => (visible ? 1 : 0)};
-  transition: opacity linear 200ms;
+  overflow-wrap: break-word;
 `;
 
 const ContentWrapper = styled.div`
@@ -202,7 +210,12 @@ function Tooltip({
       </SvgForTail>
       <ContentWrapper ref={containerRef}>{children}</ContentWrapper>
       <Content ref={contentRef} style={offset} visible={showTooltip}>
-        {content}
+        <TooltipText
+          as="span"
+          size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}
+        >
+          {content}
+        </TooltipText>
         {hasTail && <Tail position={position} />}
       </Content>
     </Container>
