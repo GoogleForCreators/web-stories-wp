@@ -23,13 +23,14 @@ import convertToCSS from '../../utils/convertToCSS';
 
 function useColorTransformHandler({ id, targetRef }) {
   useTransformHandler(id, (transform) => {
-    if (targetRef.current) {
+    const target = targetRef.current;
+    if (target) {
       if (transform === null) {
-        targetRef.current.style.cssText = '';
+        target.style.cssText = '';
       } else {
         const { color, style } = transform;
         if (color && style) {
-          targetRef.current.style.cssText = convertToCSS(
+          target.style.cssText = convertToCSS(
             generatePatternStyles(color, style)
           );
         }
