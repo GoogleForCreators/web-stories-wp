@@ -13,8 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './components';
-export * from './constants';
-export * from './parts';
-export * from './outputs';
-export * from './utils';
+export { clamp, lerp, progress } from './range';

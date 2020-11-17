@@ -42,7 +42,7 @@ function ImageOutput({ element, box }) {
   }
 
   return (
-    <MediaOutput box={box} element={element}>
+    <MediaOutput box={box} element={element} data-leaf-element="true">
       <amp-img {...props} />
     </MediaOutput>
   );
