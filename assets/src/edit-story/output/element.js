@@ -71,7 +71,7 @@ function OutputElement({ element }) {
           id={'el-' + id}
           style={{
             ...(isOutsideBorder(border)
-              ? getBorderStyle({ ...border, borderRadius })
+              ? getBorderStyle({ ...border, borderRadius, opacity })
               : null),
             pointerEvents: 'initial',
             width: '100%',
@@ -99,7 +99,9 @@ function OutputElement({ element }) {
           </WithLink>
         </WithMask>
         {!isOutsideBorder(border) && shouldDisplayBorder(element) && (
-          <ElementBorder border={{ ...element.border, borderRadius }} />
+          <ElementBorder
+            border={{ ...element.border, borderRadius, opacity }}
+          />
         )}
       </StoryAnimation.AMPWrapper>
     </div>

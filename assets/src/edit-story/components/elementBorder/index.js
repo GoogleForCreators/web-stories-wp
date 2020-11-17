@@ -58,7 +58,7 @@ export default function WithBorder({ element, previewMode = false, children }) {
   if (!shouldDisplayBorder(element)) {
     return children;
   }
-  const { borderRadius } = element;
+  const { borderRadius, opacity } = element;
   let border = element.border;
   const { left, top, right, bottom } = border;
 
@@ -73,7 +73,12 @@ export default function WithBorder({ element, previewMode = false, children }) {
     };
   }
   return (
-    <Border {...border} borderRadius={borderRadius} previewMode={previewMode}>
+    <Border
+      {...border}
+      borderRadius={borderRadius}
+      previewMode={previewMode}
+      opacity={opacity}
+    >
       {children}
     </Border>
   );

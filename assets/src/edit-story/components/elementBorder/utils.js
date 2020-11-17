@@ -77,12 +77,19 @@ export function getBorderStyle({
   bottom,
   position,
   borderRadius,
+  opacity = 100,
   skipOutsideBorder = true,
 }) {
   const {
     color: { r, g, b, a },
   } = rawColor;
-  const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
+  // In case of inner/center border we need to adjust the opacity based on the layer opacity, too.
+  // Outside border already has opacity applied since it's added to the element directly.
+  opacity = opacity / 100;
+  const adjustedBorderOpacity = a !== undefined ? opacity * a : opacity;
+  const color = isOutsideBorder({ position })
+    ? `rgba(${r},${g},${b},${a === undefined ? 1 : a})`
+    : `rgba(${r},${g},${b},${adjustedBorderOpacity})`;
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
