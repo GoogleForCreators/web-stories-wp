@@ -28,6 +28,7 @@ import { TOOLTIP_POSITIONS } from './constants';
 const SVG_TOOLTIP_TAIL_ID = 'tooltip-tail';
 const TAIL_WIDTH = 34;
 const TAIL_HEIGHT = 8;
+const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
 
 const SvgForTail = styled.svg`
   position: absolute;
@@ -42,7 +43,6 @@ const getTailPosition = (position) => {
         bottom: -${TAIL_HEIGHT}px;
         left: calc(50% - ${TAIL_WIDTH / 2}px);
         transform: rotate(180deg);
-        background-color: red;
       `;
 
     case TOOLTIP_POSITIONS.TOP_LEFT:
@@ -50,7 +50,6 @@ const getTailPosition = (position) => {
         bottom: -${TAIL_HEIGHT}px;
         left: 0;
         transform: rotate(180deg);
-        background-color: red;
       `;
 
     case TOOLTIP_POSITIONS.TOP_RIGHT:
@@ -58,7 +57,6 @@ const getTailPosition = (position) => {
         bottom: -${TAIL_HEIGHT}px;
         right: 0;
         transform: rotate(180deg);
-        background-color: red;
       `;
 
     case TOOLTIP_POSITIONS.BOTTOM_RIGHT:
@@ -100,7 +98,6 @@ export const Content = styled.div`
   position: absolute;
   max-width: 300px;
   border-radius: 4px;
-  margin-top: 8px;
   padding: 10px;
   overflow-wrap: break-word;
   background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
@@ -157,36 +154,35 @@ function Tooltip({
     // tooltip position is based on the element interacting with to enable tool tip.
     // left means it will start at the left side of the element interacting with
     // center means it will start from the center point of the element
-    // refactor this to be easier
     if (position === TOOLTIP_POSITIONS.BOTTOM_LEFT) {
       metrics = {
         left: containerRect.left - contentRect.left,
-        top: containerRect.height + 1,
+        top: containerRect.height + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT,
       };
     } else if (position === TOOLTIP_POSITIONS.BOTTOM_RIGHT) {
       metrics = {
         left: containerRect.width - contentRect.width,
-        top: containerRect.height + 1,
+        top: containerRect.height + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT,
       };
     } else if (position === TOOLTIP_POSITIONS.BOTTOM_CENTER) {
       metrics = {
         left: (containerRect.width - contentRect.width) / 2,
-        top: containerRect.height + 1,
+        top: containerRect.height + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT,
       };
     } else if (position === TOOLTIP_POSITIONS.TOP_CENTER) {
       metrics = {
         left: (containerRect.width - contentRect.width) / 2,
-        top: -(containerRect.height * 2),
+        top: -(contentRect.height + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT),
       };
     } else if (position === TOOLTIP_POSITIONS.TOP_RIGHT) {
       metrics = {
         left: containerRect.width - contentRect.width,
-        top: -(containerRect.height * 2),
+        top: -(contentRect.height + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT),
       };
     } else if (position === TOOLTIP_POSITIONS.TOP_LEFT) {
       metrics = {
         left: containerRect.left - contentRect.left,
-        top: -(containerRect.height * 2),
+        top: -(contentRect.height + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT),
       };
     }
     return metrics;
