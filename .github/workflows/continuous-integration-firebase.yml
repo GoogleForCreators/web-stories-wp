@@ -35,9 +35,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd web-stories-scraper
-          npm ci
-          cd ..
+          (cd web-stories-scraper && npm ci)
+          (cd sitemap-generator && npm ci)
         env:
           CI: true
 
@@ -50,6 +49,9 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           compressOnly: true
           ignorePaths: 'node_modules/**,build'
+
+      - name: Build XML Sitemap
+        run: node ./sitemap-generator/index.js ./public/sitemap.xml
 
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v1.5.0
