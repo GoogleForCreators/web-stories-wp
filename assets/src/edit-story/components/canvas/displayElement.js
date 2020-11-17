@@ -36,6 +36,7 @@ import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
 import WithBorder from '../elementBorder';
+import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -126,6 +127,9 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     }
   });
 
+  const bgOverlayRef = useRef(null);
+  useColorTransformHandler({ id, targetRef: bgOverlayRef });
+
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
@@ -160,7 +164,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           </ReplacementContainer>
         )}
         {isBackground && backgroundOverlay && !hasReplacement && (
-          <BackgroundOverlay style={generatePatternStyles(backgroundOverlay)} />
+          <BackgroundOverlay
+            ref={bgOverlayRef}
+            style={generatePatternStyles(backgroundOverlay)}
+          />
         )}
       </AnimationWrapper>
     </Wrapper>
