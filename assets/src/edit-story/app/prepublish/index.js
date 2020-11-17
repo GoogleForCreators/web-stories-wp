@@ -64,7 +64,8 @@ export default function prepublishChecklist(story) {
 
       // for each page, run checklist on the page object as well as each element
       ({ pageGuidance, elementGuidance } = story.pages.reduce(
-        (prev, currentPage) => {
+        (prev, currentPage, currentIndex) => {
+          const page = currentIndex + 1;
           const { id: pageId, elements } = currentPage;
 
           // get guidance for the page object
@@ -73,7 +74,7 @@ export default function prepublishChecklist(story) {
             pageChecklist.forEach((getPageGuidance) => {
               const guidanceMessage = getPageGuidance(currentPage);
               if (guidanceMessage !== undefined) {
-                currentPageGuidance.push(guidanceMessage);
+                currentPageGuidance.push({ ...guidanceMessage, page });
               }
             });
           } catch (e) {
@@ -94,6 +95,7 @@ export default function prepublishChecklist(story) {
                     ...guidanceMessage,
                     // provide the page the element is on
                     pageId,
+                    page,
                   });
                 }
               });

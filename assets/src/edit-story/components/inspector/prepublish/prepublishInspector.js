@@ -15,39 +15,15 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * External dependencies
- */
-import { useState, useEffect } from 'react';
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../panels/panel';
-import { useStory } from '../../../app';
-import prepublishChecklist from '../../../app/prepublish';
+import useChecklist from '../../../app/prepublish/useChecklist';
+import ChecklistTab from './checklistTab';
 
 function PrepublishInspector() {
-  const { story, pages } = useStory(({ state: { story, pages } }) => ({
-    story,
-    pages,
-  }));
-  const [currentList, setCurrentList] = useState(
-    prepublishChecklist({ ...story, pages })
-  );
+  const checklist = useChecklist();
 
-  useEffect(() => {
-    setCurrentList(prepublishChecklist({ ...story, pages }));
-  }, [pages, story]);
-
-  return (
-    <SimplePanel name="prepublish" title={__('Prepublish', 'web-stories')}>
-      {JSON.stringify(currentList)}
-    </SimplePanel>
-  );
+  return <ChecklistTab checklist={checklist.currentList || []} />;
 }
 
 export default PrepublishInspector;

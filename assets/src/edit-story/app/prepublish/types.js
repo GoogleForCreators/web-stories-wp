@@ -15,6 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { PRE_PUBLISH_MESSAGE_TYPES } from './constants';
+
+/**
  * Guidance return object
  *
  * @typedef {Guidance} Guidance
@@ -24,3 +33,17 @@
  * @property {string} [storyId] The ID of the story element being checked
  *
  */
+
+export const GuidancePropType = PropTypes.shape({
+  type: PropTypes.oneOf([
+    PRE_PUBLISH_MESSAGE_TYPES.ERROR,
+    PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+    PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+  ]),
+  pageId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  page: PropTypes.number,
+  elementId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  storyId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+});
+
+export const GuidanceChecklist = PropTypes.arrayOf(GuidancePropType);
