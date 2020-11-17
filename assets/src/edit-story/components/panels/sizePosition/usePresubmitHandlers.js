@@ -21,7 +21,7 @@ import { useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import { clamp } from '../../../../animation';
+import clamp from '../../../utils/clamp';
 import { getDefinitionForType } from '../../../elements';
 import { dataPixels } from '../../../units';
 import { calcRotatedObjectPositionAndSize } from '../../../utils/getBoundRect';

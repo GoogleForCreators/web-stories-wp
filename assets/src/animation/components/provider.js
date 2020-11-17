@@ -147,7 +147,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         animation.currentTime =
           time === 'end'
             ? animationEndTime
-            : clamp(time, { MIN: 0, MAX: animationEndTime });
+            : clamp(time, [0, animationEndTime]);
       });
 
     return {
