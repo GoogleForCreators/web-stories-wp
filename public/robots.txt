@@ -1,1 +1,1 @@
-Sitemap: https://wp.stories.google/robots.txt
+Sitemap: https://wp.stories.google/sitemap.xml
