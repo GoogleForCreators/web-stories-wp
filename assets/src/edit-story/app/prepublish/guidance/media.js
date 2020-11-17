@@ -163,7 +163,7 @@ function imageElementResolution(element) {
 
   if (heightResTooLow || widthResTooLow) {
     return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
+      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
       message: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
       help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,

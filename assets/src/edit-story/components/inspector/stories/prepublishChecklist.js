@@ -55,94 +55,6 @@ export const _default = () => {
               alt: 'example-2',
               local: false,
               sizes: {
-                medium: {
-                  file: 'example-2-39-300x200.jpg',
-                  width: 300,
-                  height: 200,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-300x200.jpg',
-                },
-                large: {
-                  file: 'example-2-39-1024x683.jpg',
-                  width: 1024,
-                  height: 683,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-1024x683.jpg',
-                },
-                thumbnail: {
-                  file: 'example-2-39-150x150.jpg',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-150x150.jpg',
-                },
-                medium_large: {
-                  file: 'example-2-39-768x512.jpg',
-                  width: 768,
-                  height: 512,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-768x512.jpg',
-                },
-                '1536x1536': {
-                  file: 'example-2-39-1536x1024.jpg',
-                  width: 1536,
-                  height: 1024,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-1536x1024.jpg',
-                },
-                'post-thumbnail': {
-                  file: 'example-2-39-1200x800.jpg',
-                  width: 1200,
-                  height: 800,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-1200x800.jpg',
-                },
-                'web-stories-poster-portrait': {
-                  file: 'example-2-39-640x853.jpg',
-                  width: 640,
-                  height: 853,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-640x853.jpg',
-                },
-                'web-stories-poster-landscape': {
-                  file: 'example-2-39-853x640.jpg',
-                  width: 853,
-                  height: 640,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-853x640.jpg',
-                },
-                'web-stories-poster-square': {
-                  file: 'example-2-39-640x640.jpg',
-                  width: 640,
-                  height: 640,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-640x640.jpg',
-                },
-                'web-stories-publisher-logo': {
-                  file: 'example-2-39-96x96.jpg',
-                  width: 96,
-                  height: 96,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-96x96.jpg',
-                },
-                'web-stories-thumbnail': {
-                  file: 'example-2-39-150x100.jpg',
-                  width: 150,
-                  height: 100,
-                  mime_type: 'image/jpeg',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/example-2-39-150x100.jpg',
-                },
                 full: {
                   file: 'example-2-39.jpg',
                   width: 1920,
@@ -163,15 +75,9 @@ export const _default = () => {
           },
           {
             opacity: 100,
-            flip: {
-              vertical: false,
-              horizontal: false,
-            },
             rotationAngle: 0,
             lockAspectRatio: true,
             scale: 100,
-            focalX: 50,
-            focalY: 50,
             resource: {
               type: 'image',
               mimeType: 'image/png',
@@ -185,70 +91,6 @@ export const _default = () => {
               alt: 'image',
               local: false,
               sizes: {
-                medium: {
-                  file: 'image-283x300.png',
-                  width: 283,
-                  height: 300,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-283x300.png',
-                },
-                thumbnail: {
-                  file: 'image-150x150.png',
-                  width: 150,
-                  height: 150,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-150x150.png',
-                },
-                medium_large: {
-                  file: 'image-768x814.png',
-                  width: 768,
-                  height: 814,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-768x814.png',
-                },
-                'web-stories-poster-portrait': {
-                  file: 'image-640x853.png',
-                  width: 640,
-                  height: 853,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-640x853.png',
-                },
-                'web-stories-poster-landscape': {
-                  file: 'image-853x640.png',
-                  width: 853,
-                  height: 640,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-853x640.png',
-                },
-                'web-stories-poster-square': {
-                  file: 'image-640x640.png',
-                  width: 640,
-                  height: 640,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-640x640.png',
-                },
-                'web-stories-publisher-logo': {
-                  file: 'image-96x96.png',
-                  width: 96,
-                  height: 96,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-96x96.png',
-                },
-                'web-stories-thumbnail': {
-                  file: 'image-150x159.png',
-                  width: 150,
-                  height: 159,
-                  mime_type: 'image/png',
-                  source_url:
-                    'http://localhost:8899/wp-content/uploads/2020/11/image-150x159.png',
-                },
                 full: {
                   file: 'image.png',
                   width: 892,
@@ -265,14 +107,6 @@ export const _default = () => {
             y: 131,
             width: 530,
             height: 562,
-            mask: {
-              type: 'rectangle',
-              showInLibrary: true,
-              name: 'Rectangle',
-              path: 'M 0,0 1,0 1,1 0,1 0,0 Z',
-              ratio: 1,
-              supportsBorder: true,
-            },
             id: 'd8ac1103-b60f-4827-a557-1161dbcaae36',
           },
         ],
