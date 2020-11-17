@@ -21,18 +21,30 @@ import { useTransformHandler } from '../../components/transform';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import convertToCSS from '../../utils/convertToCSS';
 
-function useColorTransformHandler({ id, targetRef }) {
+function useColorTransformHandler({ id, targetRef, expectedStyle }) {
   useTransformHandler(id, (transform) => {
-    const target = targetRef.current;
+    const target =
+      undefined !== targetRef?.current ? targetRef.current : targetRef;
     if (target) {
       if (transform === null) {
         target.style.cssText = '';
       } else {
         const { color, style } = transform;
+        // If the transforming style and the expected style don't match, return.
+        if (expectedStyle && expectedStyle !== style) {
+          return;
+        }
         if (color && style) {
-          target.style.cssText = convertToCSS(
-            generatePatternStyles(color, style)
-          );
+          // In case we're changing text color, we need the first child instead of the element itself.
+          if ('color' === style && target.children?.[0]) {
+            target.children[0].style.cssText = convertToCSS(
+              generatePatternStyles(color, style)
+            );
+          } else {
+            target.style.cssText = convertToCSS(
+              generatePatternStyles(color, style)
+            );
+          }
         }
       }
     }

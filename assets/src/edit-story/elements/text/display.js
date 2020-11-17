@@ -104,6 +104,7 @@ function TextDisplay({
 }) {
   const ref = useRef(null);
   const bgRef = useRef(null);
+  const fgRef = useRef(null);
 
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -146,7 +147,8 @@ function TextDisplay({
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
   useTransformHandler(id, (transform) => {
-    const target = ref.current;
+    // Ref is set in case of high-light mode only, use the fgRef if that's missing.
+    const target = ref?.current || fgRef.current;
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
@@ -157,9 +159,19 @@ function TextDisplay({
       : '';
   });
 
-  // @todo Add allowed style rules here, to ensure irrelevant styles aren't being assigned?
-  // @todo Add handler for fg color, too.
-  useColorTransformHandler({ id, targetRef: bgRef });
+  const innerElementTracker = useRef(null);
+  useEffect(() => {
+    if (fgRef.current?.children) {
+      innerElementTracker.current = fgRef.current.children[0];
+    }
+  }, [fgRef]);
+
+  useColorTransformHandler({
+    id,
+    targetRef: bgRef,
+    expectedStyle: 'background',
+  });
+  useColorTransformHandler({ id, targetRef: fgRef, expectedStyle: 'color' });
 
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.
@@ -185,6 +197,7 @@ function TextDisplay({
         <HighlightElement {...props}>
           <MarginedElement {...props}>
             <ForegroundSpan
+              ref={fgRef}
               {...props}
               dangerouslySetInnerHTML={{
                 __html: content,
@@ -204,7 +217,7 @@ function TextDisplay({
       }
     >
       <FillElement
-        ref={ref}
+        ref={fgRef}
         dangerouslySetInnerHTML={{
           __html: content,
         }}
