@@ -34,6 +34,7 @@ import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import useUnmount from '../../utils/useUnmount';
+import { useKeyDownEffect } from '../../components/keyboard';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -108,6 +109,7 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
+  const scaleRef = useRef(null);
   const [updatedProperties, setUpdatedProperties] = useState({});
   const lastUpdatedProperties = useRef({});
 
@@ -123,7 +125,7 @@ function MediaEdit({ element, box }) {
     [setUpdatedProperties]
   );
 
-  // Actually update the properties of the current element
+  // Actually update the properties of the current element on unmount
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
   }));
@@ -134,8 +136,20 @@ function MediaEdit({ element, box }) {
     }
     updateElementById({ elementId: id, properties });
   }, [id, updateElementById]);
-
   useUnmount(updateActualProperties);
+
+  // But clear last updated properties on <esc> to make it abort editing
+  const clear = useCallback(() => {
+    lastUpdatedProperties.current = {};
+  }, []);
+  // Allow <esc> to keep bubbling up by allowing default
+  const config = { key: 'esc', allowDefault: true };
+  // Add the listener to the visual element itself
+  useKeyDownEffect(elementRef, config, clear, [clear]);
+  // This element exists in an overlay, that is only mounted after a cycle, so we need it to
+  // update once the ref is set - thus the ref value is added to the deps.
+  // Yes, it's a bit ugly, but it works!
+  useKeyDownEffect(scaleRef, config, clear, [clear, scaleRef.current]);
 
   const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
@@ -255,6 +269,7 @@ function MediaEdit({ element, box }) {
         width={width}
         height={height}
         scale={actualScale || 100}
+        ref={scaleRef}
       />
     </Element>
   );

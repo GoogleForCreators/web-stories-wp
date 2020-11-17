@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { forwardRef } from 'react';
 
 /**
  * Internal dependencies
@@ -53,10 +54,10 @@ const Container = styled.div`
   padding: 0 4px;
 `;
 
-function ScalePanel({ setProperties, width, height, x, y, scale }) {
+function ScalePanelWithRef({ setProperties, width, height, x, y, scale }, ref) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
-      <Container x={x} y={y} width={width} height={height}>
+      <Container x={x} y={y} width={width} height={height} ref={ref}>
         <RangeInput
           min={100}
           max={MAX_SCALE}
@@ -70,7 +71,9 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
   );
 }
 
-ScalePanel.propTypes = {
+const ScalePanel = forwardRef(ScalePanelWithRef);
+
+ScalePanel.propTypes = ScalePanelWithRef.propTypes = {
   setProperties: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
