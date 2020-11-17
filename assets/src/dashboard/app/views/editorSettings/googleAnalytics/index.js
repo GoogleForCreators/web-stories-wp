@@ -134,7 +134,9 @@ function GoogleAnalyticsSettings({
       return (
         <TranslateWithMarkup
           mapping={{
-            a: <InlineLink href={siteKitLink} />,
+            a: (
+              <InlineLink href={siteKitLink} rel="noreferrer" target="_blank" />
+            ),
           }}
         >
           {TEXT.SITE_KIT_INSTALLED}
@@ -144,7 +146,7 @@ function GoogleAnalyticsSettings({
     return (
       <TranslateWithMarkup
         mapping={{
-          a: <InlineLink href={siteKitLink} />,
+          a: <InlineLink href={siteKitLink} rel="noreferrer" target="_blank" />,
         }}
       >
         {TEXT.SITE_KIT_NOT_INSTALLED}
@@ -183,7 +185,13 @@ function GoogleAnalyticsSettings({
         <TextInputHelperText>
           <TranslateWithMarkup
             mapping={{
-              a: <InlineLink href={TEXT.CONTEXT_LINK} />,
+              a: (
+                <InlineLink
+                  href={TEXT.CONTEXT_LINK}
+                  rel="noreferrer"
+                  target="_blank"
+                />
+              ),
             }}
           >
             {TEXT.CONTEXT}
