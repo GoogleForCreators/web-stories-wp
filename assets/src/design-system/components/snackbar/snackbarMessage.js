@@ -118,7 +118,6 @@ const SnackbarMessage = ({
     <MessageContainer
       role="alert"
       aria-label={ariaLabel}
-      tabIndex={0}
       hasAction={Boolean(actionLabel)}
     >
       <Message size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
