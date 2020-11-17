@@ -15,10 +15,10 @@
  */
 
 export const TOOLTIP_POSITIONS = {
-  TOP_CENTER: 'top_center',
-  TOP_RIGHT: 'top_right',
-  TOP_LEFT: 'top_left',
   BOTTOM_CENTER: 'bottom_center',
-  BOTTOM_RIGHT: 'bottom_right',
   BOTTOM_LEFT: 'bottom_left',
+  BOTTOM_RIGHT: 'bottom_right',
+  TOP_CENTER: 'top_center',
+  TOP_LEFT: 'top_left',
+  TOP_RIGHT: 'top_right',
 };

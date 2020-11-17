@@ -73,7 +73,7 @@ const getTailPosition = (position) => {
         left: 0;
       `;
 
-    // default is bottom center
+    // default is TOOLTIP_POSITIONS.BOTTOM_CENTER
     default: {
       return css`
         top: -${TAIL_HEIGHT}px;
@@ -103,8 +103,8 @@ export const Content = styled.div(
     border-radius: 4px;
     padding: 10px;
     background-color: ${theme.colors.interactiveBg.primaryNormal};
-
     opacity: ${visible ? 1 : 0};
+
     transition: opacity linear 200ms;
   `
 );
@@ -122,9 +122,9 @@ const Container = styled.div.attrs({
   ['data-testid']: 'tooltip-container',
 })`
   position: relative;
+  display: inline-flex;
   height: inherit;
   width: inherit;
-  display: inline-flex;
 `;
 
 function Tooltip({
@@ -159,9 +159,10 @@ function Tooltip({
     const containerRect = containerRef.current.getBoundingClientRect();
     const contentRect = contentRef.current.getBoundingClientRect();
 
-    // tooltip position is based on the element interacting with to enable tool tip.
-    // left means it will start at the left side of the element interacting with
-    // center means it will start from the center point of the element
+    // Tooltip position is based on the element being interacting with that makes the tooltip visible.
+    // Left means it will start at the left side of the element being interacting with.
+    // Center means it will start from the center point of the element being interacted with.
+    // Right means it will start at the right side of the element being interacted with.
     if (position === TOOLTIP_POSITIONS.BOTTOM_LEFT) {
       metrics = {
         left: containerRect.left - contentRect.left,

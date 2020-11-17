@@ -47,19 +47,18 @@ const Container = styled.div`
   padding: 30px;
 `;
 
-// Override light theme because this component is only set up for dark theme right now given fg and bg coloring
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
       <div>
         <Tooltip
+          content={text('Tooltip for icon - content', 'Tooltip Content')}
+          hasTail={boolean('Tooltip for icon - hasTail', true)}
           position={select(
             'Tooltip for icon - position',
             TOOLTIP_POSITIONS,
             TOOLTIP_POSITIONS.BOTTOM_CENTER
           )}
-          content={text('Tooltip for icon - content', 'Tooltip Content')}
-          hasTail={boolean('Tooltip for icon - hasTail', true)}
         >
           <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
             <List aria-hidden={true} />
@@ -69,13 +68,13 @@ export const _default = () => (
 
       <div>
         <Tooltip
+          content={text('Tooltip for button - content', 'Tooltip Content')}
+          hasTail={boolean('Tooltip for button - hasTail')}
           position={select(
             'Tooltip for button - position',
             TOOLTIP_POSITIONS,
             TOOLTIP_POSITIONS.BOTTOM_CENTER
           )}
-          content={text('Tooltip for button - content', 'Tooltip Content')}
-          hasTail={boolean('Tooltip for button - hasTail')}
         >
           <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
             {'I am just a normal button'}
@@ -90,13 +89,13 @@ export const LightMode = () => (
   <Container>
     <div>
       <Tooltip
+        content={text('Tooltip for icon - content', 'Tooltip Content')}
+        hasTail={boolean('Tooltip for icon - hasTail', true)}
         position={select(
           'Tooltip for icon - position',
           TOOLTIP_POSITIONS,
           TOOLTIP_POSITIONS.BOTTOM_CENTER
         )}
-        content={text('Tooltip for icon - content', 'Tooltip Content')}
-        hasTail={boolean('Tooltip for icon - hasTail', true)}
       >
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
           <List aria-hidden={true} />
@@ -106,13 +105,13 @@ export const LightMode = () => (
 
     <div>
       <Tooltip
+        content={text('Tooltip for button - content', 'Tooltip Content')}
+        hasTail={boolean('Tooltip for button - hasTail')}
         position={select(
           'Tooltip for button - position',
           TOOLTIP_POSITIONS,
           TOOLTIP_POSITIONS.BOTTOM_CENTER
         )}
-        content={text('Tooltip for button - content', 'Tooltip Content')}
-        hasTail={boolean('Tooltip for button - hasTail')}
       >
         <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
           {'I am just a normal button'}
