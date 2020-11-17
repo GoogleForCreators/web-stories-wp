@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
+import { boolean, number, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled, { ThemeProvider } from 'styled-components';
 
@@ -41,17 +41,17 @@ export default {
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <SnackbarContainer>
+      <SnackbarContainer customZIndex={number('customZIndex')}>
         <SnackbarMessage
-          isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
-          handleAction={action('handle action clicked')}
           actionLabel={text('actionLabel', 'Retry')}
-          message={text('message', 'Sorry! File failed to upload.')}
           ariaLabel={text(
             'ariaLabel',
             'this is my aria label giving my message context for screen reader users'
           )}
+          handleAction={action('handle action clicked')}
           handleDismiss={action('handle dismiss fired')}
+          isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+          message={text('message', 'Sorry! File failed to upload.')}
         />
       </SnackbarContainer>
     </Container>
@@ -59,53 +59,53 @@ export const _default = () => (
 );
 
 export const LightThemeDefault = () => (
-  <SnackbarContainer>
+  <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
-      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
-      handleAction={action('handle action clicked')}
       actionLabel={text('actionLabel', 'Retry')}
-      message={text('message', 'Sorry! File failed to upload.')}
       ariaLabel={text(
         'ariaLabel',
         'this is my aria label giving my message context for screen reader users'
       )}
+      handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
     />
   </SnackbarContainer>
 );
 
 export const NoActionWithRemoveMessageTimingOverride = () => (
-  <SnackbarContainer>
+  <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
-      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
-      handleAction={action('handle action clicked')}
       actionLabel={text('actionLabel', '')}
-      message={text('message', 'Sorry! File failed to upload.')}
       ariaLabel={text(
         'ariaLabel',
         'this is my aria label giving my message context for screen reader users'
       )}
+      handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text('message', 'Sorry! File failed to upload.')}
       removeMessageTimeInterval={80000}
     />
   </SnackbarContainer>
 );
 
 export const LongMessage = () => (
-  <SnackbarContainer>
+  <SnackbarContainer customZIndex={number('customZIndex')}>
     <SnackbarMessage
-      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
-      handleAction={action('handle action clicked')}
       actionLabel={text('actionLabel', 'Retry')}
-      message={text(
-        'message',
-        'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
-      )}
       ariaLabel={text(
         'ariaLabel',
         'this is my aria label giving my message context for screen reader users'
       )}
+      handleAction={action('handle action clicked')}
       handleDismiss={action('handle dismiss fired')}
+      isPreventAutoDismiss={boolean('isPreventAutoDismiss')}
+      message={text(
+        'message',
+        'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
+      )}
     />
   </SnackbarContainer>
 );

@@ -82,12 +82,12 @@ const ActionButton = styled(Button)`
 `;
 
 const SnackbarMessage = ({
-  handleAction = () => {},
   actionLabel,
+  ariaLabel,
+  handleAction = () => {},
+  handleDismiss,
   isPreventAutoDismiss,
   message,
-  ariaLabel,
-  handleDismiss,
   removeMessageTimeInterval,
 }) => {
   const autoDismissRef = useRef();
@@ -131,12 +131,12 @@ const SnackbarMessage = ({
 };
 
 SnackbarMessage.propTypes = {
+  ariaLabel: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
-  isPreventAutoDismiss: PropTypes.bool,
+  handleDismiss: PropTypes.func.isRequired,
   actionLabel: PropTypes.string,
   handleAction: PropTypes.func,
-  ariaLabel: PropTypes.string.isRequired,
-  handleDismiss: PropTypes.func.isRequired,
+  isPreventAutoDismiss: PropTypes.bool,
   removeMessageTimeInterval: PropTypes.number,
 };
 

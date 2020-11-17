@@ -33,11 +33,13 @@ export const SnackbarContainer = styled.div`
   flex-direction: column;
   align-items: ${({ alignItems }) => alignItems};
   width: 100%;
-  z-index: ${THEME_CONSTANTS.Z_INDEX.SNACKBAR};
+  z-index: ${({ customZIndex }) =>
+    customZIndex || THEME_CONSTANTS.Z_INDEX.SNACKBAR};
 `;
 
 SnackbarContainer.propTypes = {
   alignItems: PropTypes.string,
+  customZIndex: PropTypes.number,
 };
 SnackbarContainer.defaultProps = {
   alignItems: 'center',
