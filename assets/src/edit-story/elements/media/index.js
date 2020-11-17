@@ -85,4 +85,5 @@ export const MEDIA_PANELS = [
   PanelTypes.BORDER_RADIUS,
   PanelTypes.BORDER,
   PanelTypes.ANIMATION,
+  PanelTypes.LINK,
 ];
