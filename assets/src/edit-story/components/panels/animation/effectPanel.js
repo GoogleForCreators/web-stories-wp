@@ -41,7 +41,7 @@ import { Row, Button } from '../../form';
 import { Panel, PanelTitle, PanelContent } from '../panel';
 import EffectInput from './effectInput';
 
-function getEffectName(type) {
+export function getEffectName(type) {
   return (
     [
       ...Object.values(ANIMATION_EFFECTS),
@@ -96,8 +96,9 @@ function EffectPanel({
   ));
 
   return (
-    <Panel key={id} name={type}>
+    <Panel key={id} name={type} canCollapse={false}>
       <PanelTitle
+        canCollapse={false}
         secondaryAction={
           <Button onClick={handleRemoveClick}>
             {__('Delete', 'web-stories')}

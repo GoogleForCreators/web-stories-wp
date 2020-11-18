@@ -46,6 +46,7 @@ const Container = styled.div`
 export default function EffectChooserDropdown({
   onAnimationSelected,
   isBackgroundEffects = false,
+  selectedEffectTitle,
 }) {
   const selectRef = useRef();
   const dropdownRef = useRef();
@@ -53,7 +54,9 @@ export default function EffectChooserDropdown({
 
   return (
     <DropDownSelect ref={selectRef} onClick={() => setIsOpen(!isOpen)}>
-      <DropDownTitle>{__('Select Animation', 'web-stories')}</DropDownTitle>
+      <DropDownTitle>
+        {selectedEffectTitle || __('Select Animation', 'web-stories')}
+      </DropDownTitle>
       <DropdownIcon />
       <Popup
         anchor={selectRef}
@@ -75,4 +78,5 @@ export default function EffectChooserDropdown({
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: propTypes.func.isRequired,
   isBackgroundEffects: propTypes.bool,
+  selectedEffectTitle: propTypes.string,
 };

@@ -40,7 +40,7 @@ import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
 import { SimplePanel } from '../panel';
 import { Note } from '../shared';
-import EffectPanel from './effectPanel';
+import EffectPanel, { getEffectName } from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
@@ -127,6 +127,7 @@ function AnimationPanel({
           <EffectChooserDropdown
             onAnimationSelected={handleAddEffect}
             isBackgroundEffects={isBackground}
+            selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
           />
         </Row>
       </SimplePanel>
