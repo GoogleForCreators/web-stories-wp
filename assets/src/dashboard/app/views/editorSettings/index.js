@@ -38,6 +38,8 @@ import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import GoogleAnalyticsSettings from './googleAnalytics';
+import GoogleAdSenseSettings from './googleAdSense';
+import GoogleAdManagerSettings from './googleAdManager';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
@@ -49,6 +51,9 @@ function EditorSettings() {
     fetchSettings,
     updateSettings,
     googleAnalyticsId,
+    adSensePublisherId,
+    adSenseSlotId,
+    adManagerSlotId,
     fetchMediaById,
     uploadMedia,
     activePublisherLogoId,
@@ -64,9 +69,12 @@ function EditorSettings() {
       },
       state: {
         settings: {
-          activePublisherLogoId,
           googleAnalyticsId,
+          adSensePublisherId,
+          adSenseSlotId,
+          adManagerSlotId,
           publisherLogoIds,
+          activePublisherLogoId,
         },
         media: { isLoading: isMediaLoading, mediaById, newlyCreatedMediaIds },
       },
@@ -74,6 +82,9 @@ function EditorSettings() {
       fetchSettings,
       updateSettings,
       googleAnalyticsId,
+      adSensePublisherId,
+      adSenseSlotId,
+      adManagerSlotId,
       fetchMediaById,
       uploadMedia,
       activePublisherLogoId,
@@ -138,6 +149,23 @@ function EditorSettings() {
   const handleUpdateGoogleAnalyticsId = useCallback(
     (newGoogleAnalyticsId) =>
       updateSettings({ googleAnalyticsId: newGoogleAnalyticsId }),
+    [updateSettings]
+  );
+
+  const handleUpdateAdSensePublisherId = useCallback(
+    (newAdSensePublisherId) =>
+      updateSettings({ adSensePublisherId: newAdSensePublisherId }),
+    [updateSettings]
+  );
+
+  const handleUpdateAdSenseSlotId = useCallback(
+    (newAdSenseSlotId) => updateSettings({ adSenseSlotId: newAdSenseSlotId }),
+    [updateSettings]
+  );
+
+  const handleUpdateAdManagerSlotId = useCallback(
+    (newAdManagerSlotId) =>
+      updateSettings({ adManagerSlotId: newAdManagerSlotId }),
     [updateSettings]
   );
 
@@ -334,6 +362,20 @@ function EditorSettings() {
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
               selected={optedIn}
             />
+            {canManageSettings && (
+              <GoogleAdSenseSettings
+                handleUpdatePublisherId={handleUpdateAdSensePublisherId}
+                handleUpdateSlotId={handleUpdateAdSenseSlotId}
+                publisherId={adSensePublisherId}
+                slotId={adSenseSlotId}
+              />
+            )}
+            {canManageSettings && (
+              <GoogleAdManagerSettings
+                handleUpdate={handleUpdateAdManagerSlotId}
+                slotId={adManagerSlotId}
+              />
+            )}
           </Main>
         </Layout.Scrollable>
       </Wrapper>

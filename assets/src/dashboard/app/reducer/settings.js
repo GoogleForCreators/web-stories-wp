@@ -25,6 +25,9 @@ export const defaultSettingsState = {
   activePublisherLogoId: null,
   error: {},
   googleAnalyticsId: '',
+  adSensePublisherId: '',
+  adSenseSlotId: '',
+  adManagerSlotId: '',
   publisherLogoIds: [],
 };
 
@@ -45,6 +48,9 @@ function settingsReducer(state, action) {
         activePublisherLogoId: action.payload.activePublisherLogoId,
         error: {},
         googleAnalyticsId: action.payload.googleAnalyticsId,
+        adSensePublisherId: action.payload.adSensePublisherId,
+        adSenseSlotId: action.payload.adSenseSlotId,
+        adManagerSlotId: action.payload.adManagerSlotId,
         publisherLogoIds: [
           ...new Set([
             action.payload.activePublisherLogoId,

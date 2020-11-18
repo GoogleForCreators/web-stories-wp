@@ -52,7 +52,7 @@ export const TEXT = {
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
-  ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
+  LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
 };
@@ -98,17 +98,14 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading htmlFor="gaTrackingID">
-        {TEXT.SECTION_HEADING}
-      </SettingHeading>
+      <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
       <FormContainer>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="gaTrackingId">
-            {TEXT.ARIA_LABEL}
+            {TEXT.LABEL}
           </VisuallyHiddenLabel>
           <GoogleAnalyticsTextInput
-            label={TEXT.ARIA_LABEL}
-            id="gaTrackingId"
+            name="gaTrackingId"
             value={analyticsId}
             onChange={handleUpdateId}
             onKeyDown={handleOnKeyDown}

@@ -62,6 +62,9 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_SUCCESS,
         payload: {
           googleAnalyticsId: response.web_stories_ga_tracking_id,
+          adSensePublisherId: response.web_stories_adsense_publisher_id,
+          adSenseSlotId: response.web_stories_adsense_slot_id,
+          adManagerSlotId: response.web_stories_ad_manager_slot_id,
           activePublisherLogoId: response.web_stories_active_publisher_logo,
           publisherLogoIds: response.web_stories_publisher_logos,
         },
@@ -82,6 +85,9 @@ export default function useSettingsApi(
   const updateSettings = useCallback(
     async ({
       googleAnalyticsId,
+      adSensePublisherId,
+      adSenseSlotId,
+      adManagerSlotId,
       publisherLogoIds,
       publisherLogoIdToRemove,
       publisherLogoToMakeDefault,
@@ -90,6 +96,18 @@ export default function useSettingsApi(
         const query = {};
         if (googleAnalyticsId !== undefined) {
           query.web_stories_ga_tracking_id = googleAnalyticsId;
+        }
+
+        if (adSensePublisherId !== undefined) {
+          query.web_stories_adsense_publisher_id = adSensePublisherId;
+        }
+
+        if (adSenseSlotId !== undefined) {
+          query.web_stories_adsense_slot_id = adSenseSlotId;
+        }
+
+        if (adManagerSlotId !== undefined) {
+          query.web_stories_ad_manager_slot_id = adManagerSlotId;
         }
 
         if (publisherLogoIds) {
@@ -119,6 +137,9 @@ export default function useSettingsApi(
           type: SETTINGS_ACTION_TYPES.UPDATE_SETTINGS_SUCCESS,
           payload: {
             googleAnalyticsId: response.web_stories_ga_tracking_id,
+            adSensePublisherId: response.web_stories_adsense_publisher_id,
+            adSenseSlotId: response.web_stories_adsense_slot_id,
+            adManagerSlotId: response.web_stories_ad_manager_slot_id,
             activePublisherLogoId: response.web_stories_active_publisher_logo,
             publisherLogoIds: response.web_stories_publisher_logos,
           },

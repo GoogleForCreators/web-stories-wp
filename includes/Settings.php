@@ -61,6 +61,27 @@ class Settings {
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
 
 	/**
+	 * AdSense Publisher ID setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ADSENSE_PUBLISHER_ID = 'web_stories_adsense_publisher_id';
+
+	/**
+	 * AdSense Slot ID setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ADSENSE_SLOT_ID = 'web_stories_adsense_slot_id';
+
+	/**
+	 * Ad Manager Slot ID setting name.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_AD_MANAGER_SLOT_ID = 'web_stories_ad_manager_slot_id';
+
+	/**
 	 * Active publisher logo setting name.
 	 *
 	 * @var string
@@ -98,6 +119,39 @@ class Settings {
 			self::SETTING_NAME_TRACKING_ID,
 			[
 				'description'  => __( 'Google Analytics Tracking ID', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ADSENSE_PUBLISHER_ID,
+			[
+				'description'  => __( 'Google AdSense Publisher ID', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ADSENSE_SLOT_ID,
+			[
+				'description'  => __( 'Google AdSense Slot ID', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_AD_MANAGER_SLOT_ID,
+			[
+				'description'  => __( 'Google Ad Manager Slot ID', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => '',
 				'show_in_rest' => true,
