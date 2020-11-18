@@ -121,25 +121,21 @@ function AnimationPanel({
       </Row>
     </SimplePanel>
   ) : (
-    <>
-      <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-        <Row>
-          <EffectChooserDropdown
-            onAnimationSelected={handleAddEffect}
-            isBackgroundEffects={isBackground}
-            selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
-          />
-        </Row>
-      </SimplePanel>
-      {updatedAnimations.map((animation) => (
+    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
+      <Row>
+        <EffectChooserDropdown
+          onAnimationSelected={handleAddEffect}
+          selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
+        />
+      </Row>
+      {updatedAnimations[0] && (
         <EffectPanel
-          key={animation.id}
-          animation={animation}
+          animation={updatedAnimations[0]}
           onChange={handlePanelChange}
           onRemove={handleRemoveEffect}
         />
-      ))}
-    </>
+      )}
+    </SimplePanel>
   );
 }
 

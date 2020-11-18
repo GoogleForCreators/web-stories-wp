@@ -233,14 +233,11 @@ export default function EffectChooser({
               <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
             </GridItemFullRow>
             <GridItemHalfRow
-              aria-label={__(
-                'Rotate In Counter Clockwise Effect',
-                'web-stories'
-              )}
+              aria-label={__('Rotate In Left Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-                  rotateInDir: ROTATION.COUNTER_CLOCKWISE,
+                  rotateInDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
             >
@@ -250,11 +247,11 @@ export default function EffectChooser({
               </RotateInLeftAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
-              aria-label={__('Rotate In Clockwise Effect', 'web-stories')}
+              aria-label={__('Rotate In Right Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-                  rotateInDir: ROTATION.CLOCKWISE,
+                  rotateInDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
             >

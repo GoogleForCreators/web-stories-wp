@@ -95,21 +95,7 @@ function EffectPanel({
     </Row>
   ));
 
-  return (
-    <Panel key={id} name={type} canCollapse={false}>
-      <PanelTitle
-        canCollapse={false}
-        secondaryAction={
-          <Button onClick={handleRemoveClick}>
-            {__('Delete', 'web-stories')}
-          </Button>
-        }
-      >
-        {getEffectName(type)}
-      </PanelTitle>
-      <PanelContent>{content}</PanelContent>
-    </Panel>
-  );
+  return content;
 }
 
 EffectPanel.propTypes = {
