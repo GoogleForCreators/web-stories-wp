@@ -4,8 +4,8 @@
 
 To contribute to this plugin, you need the following tools installed on your computer:
 
-- [PHP](https://www.php.net/) - version 7.2 or higher, preferably installed via [Homebrew](https://brew.sh/)
-- [Composer](https://getcomposer.org/) (PHP package manager) - to install PHP dependencies. Preferably version 1.x (see #5083 for Composer v2 support).
+- [PHP](https://www.php.net/) - version 7.2 or higher, preferably installed via [Homebrew](https://brew.sh/).
+- [Composer](https://getcomposer.org/) (PHP package manager) - version 2.0.7 or higher, to install PHP dependencies.
 - [Node.js](https://nodejs.org/en/) (current LTS) - to install JavaScript dependencies.
 - [WordPress](https://wordpress.org/download/) - to run the actual plugin.
 - [Docker Desktop](https://www.docker.com/products/docker-desktop) and [Docker Compose](https://docs.docker.com/compose/install/) - for using the local environment
@@ -26,13 +26,7 @@ Check out the [Local Environment](./local-environment.md) document.
 
 First of all, you need to make sure that all PHP and JavaScript dependencies are installed:
 
-Install Composer by following [installation instructions](https://getcomposer.org/download/), and then ensure to downgrade to version 1:
-
-```bash
-composer self-update --1
-```
-
-Install all the required composer packages, run:
+Install Composer by following [installation instructions](https://getcomposer.org/download/), and then install all the required composer packages, run:
 
 ```bash
 composer install
