@@ -175,8 +175,17 @@ function MediaEdit({ element, box }) {
     [scale, setProperties]
   );
 
+  // Cancelable wheel events require a non-passive listener, which React
+  // can't do on its own, so we need to attach manually.
+  useEffect(() => {
+    const node = elementRef.current;
+    const opts = { passive: false };
+    node.addEventListener('wheel', handleWheel, opts);
+    return () => node.removeEventListener('wheel', handleWheel, opts);
+  }, [handleWheel]);
+
   return (
-    <Element ref={elementRef} onWheel={handleWheel}>
+    <Element ref={elementRef}>
       {isImage && (
         <FadedImage
           {...fadedMediaProps}
