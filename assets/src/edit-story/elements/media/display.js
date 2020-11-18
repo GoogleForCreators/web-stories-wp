@@ -70,19 +70,10 @@ function MediaDisplay({
           );
           target.style.cssText = getMediaWithScaleCss(newImgProps);
           if (isOutsideBorder(border)) {
-            // We're undoing the scale for the outside border to ensure it stays correct size.
-            // Then add border widths to the new size.
-            const mediaScale = Math.max(scale || 100, 100) * 0.01;
             ref.current.style.width =
-              newImgProps.width / mediaScale +
-              border.left +
-              border.right +
-              'px';
+              resize[0] + border.left + border.right + 'px';
             ref.current.style.height =
-              newImgProps.height / mediaScale +
-              border.top +
-              border.bottom +
-              'px';
+              resize[1] + border.top + border.bottom + 'px';
           }
         }
       }
