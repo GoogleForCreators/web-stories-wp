@@ -66,7 +66,7 @@ const StyledPill = styled.button(
 export const Pill = ({ children, isActive, onClick, ...rest }) => {
   return (
     <StyledPill isActive={isActive} onClick={onClick} {...rest}>
-      <div>{children}</div>
+      {children}
     </StyledPill>
   );
 };
