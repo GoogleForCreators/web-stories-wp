@@ -29,6 +29,12 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import {
+  BACKGROUND_ANIMATION_EFFECTS,
+  BG_MAX_SCALE,
+  BG_MIN_SCALE,
+  progress,
+} from '../../../../animation';
 import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
@@ -58,6 +64,9 @@ function AnimationPanel({
     [pushUpdateForObject]
   );
 
+  const isBackground =
+    selectedElements.length === 1 && selectedElements[0].isBackground;
+  const backgroundScale = isBackground && selectedElements[0].scale;
   const handleAddEffect = useCallback(
     ({ animation, ...options }) => {
       if (!animation) {
@@ -65,6 +74,18 @@ function AnimationPanel({
       }
 
       const defaults = getAnimationEffectDefaults(animation);
+
+      // Background Zoom's `scale from` initial value should match
+      // the current background's scale slider
+      if (
+        isBackground &&
+        animation === BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+      ) {
+        defaults.normalizedScaleFrom =
+          progress(backgroundScale, [BG_MIN_SCALE, BG_MAX_SCALE]) ||
+          defaults.normalizedScaleFrom;
+      }
+
       pushUpdateForObject(
         ANIMATION_PROPERTY,
         {
@@ -77,7 +98,7 @@ function AnimationPanel({
         true
       );
     },
-    [pushUpdateForObject]
+    [pushUpdateForObject, isBackground, backgroundScale]
   );
 
   const updatedAnimations = useMemo(() => {
@@ -103,7 +124,10 @@ function AnimationPanel({
     <>
       <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
         <Row>
-          <EffectChooserDropdown onAnimationSelected={handleAddEffect} />
+          <EffectChooserDropdown
+            onAnimationSelected={handleAddEffect}
+            isBackgroundEffects={isBackground}
+          />
         </Row>
       </SimplePanel>
       {updatedAnimations.map((animation) => (

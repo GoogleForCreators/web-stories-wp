@@ -31,6 +31,7 @@ import PropTypes from 'prop-types';
 import {
   ANIMATION_EFFECTS,
   ANIMATION_PARTS,
+  BACKGROUND_ANIMATION_EFFECTS,
 } from '../../../../animation/constants';
 import {
   getAnimationEffectProps,
@@ -45,6 +46,7 @@ function getEffectName(type) {
     [
       ...Object.values(ANIMATION_EFFECTS),
       ...Object.values(ANIMATION_PARTS),
+      ...Object.values(BACKGROUND_ANIMATION_EFFECTS),
     ].find((o) => o.value === type)?.name || ''
   );
 }
