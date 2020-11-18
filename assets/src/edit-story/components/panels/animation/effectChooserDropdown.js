@@ -53,7 +53,11 @@ export default function EffectChooserDropdown({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropDownSelect ref={selectRef} onClick={() => setIsOpen(!isOpen)}>
+    <DropDownSelect
+      aria-label={__('Animation: Effect Chooser', 'web-stories')}
+      ref={selectRef}
+      onClick={() => setIsOpen(!isOpen)}
+    >
       <DropDownTitle>
         {selectedEffectTitle || __('Select Animation', 'web-stories')}
       </DropDownTitle>
