@@ -134,17 +134,30 @@ export default function EffectChooser({
           <span>{__('No Effect', 'web-stories')}</span>
         </GridItemFullRow>
         {isBackgroundEffects ? (
-          <GridItemFullRow
-            aria-label={__('Zoom Effect', 'web-stories')}
-            onClick={() =>
-              onAnimationSelected({
-                animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-              })
-            }
-          >
-            <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
-            <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
-          </GridItemFullRow>
+          <>
+            <GridItemFullRow
+              aria-label={__('Zoom Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                })
+              }
+            >
+              <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
+              <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
+            </GridItemFullRow>
+            <GridItemFullRow
+              aria-label={__('Pan Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                })
+              }
+            >
+              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
+              <ZoomOutAnimation>{__('Pan', 'web-stories')}</ZoomOutAnimation>
+            </GridItemFullRow>
+          </>
         ) : (
           <>
             <GridItemFullRow
