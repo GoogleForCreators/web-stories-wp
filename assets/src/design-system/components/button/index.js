@@ -27,8 +27,10 @@ import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
   ({ size, theme }) => css`
-    position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
     background: transparent;
@@ -110,37 +112,20 @@ const ButtonRectangle = styled(Base)`
   min-width: 1px;
   min-height: 1em;
   border-radius: 4px;
-
-  & > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: ${({ size }) =>
-      size === BUTTON_SIZES.SMALL ? '8px 16px' : '16px 32px'};
-    height: 100%;
-  }
+  padding: ${({ size }) =>
+    size === BUTTON_SIZES.SMALL ? '8px 16px' : '18px 32px'};
 `;
 
 const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
   border-radius: 4px;
   ${({ size }) => css`
-    width: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
-    height: ${(size === BUTTON_SIZES.SMALL ? 32 : 56) + 8}px;
-
-    & > div {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 10px 10px;
-      height: 100%;
-      width: 100%;
-    }
+    width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
 
     svg {
-      width: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
-      height: ${size === BUTTON_SIZES.SMALL ? 16 : 20}px;
-      margin: 0 auto;
+      width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+      height: auto;
     }
   `}
 `;
@@ -151,17 +136,8 @@ const ButtonCircle = styled(ButtonSquare)`
 
 const ButtonIcon = styled(Base)`
   ${({ size }) => css`
-    width: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
-    height: ${(size === BUTTON_SIZES.SMALL ? 16 : 20) + 8}px;
-
-    & > div {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      height: 100%;
-      width: 100%;
-    }
-
+    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
     svg {
       width: 100%;
       height: auto;
@@ -170,7 +146,6 @@ const ButtonIcon = styled(Base)`
   `}
 `;
 
-// TODO incorporate tooltip as a label on hover per figma
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
@@ -195,7 +170,7 @@ export const Button = ({
       type={type}
       {...rest}
     >
-      <div>{children}</div>
+      {children}
     </StyledButton>
   );
 };

@@ -26,7 +26,12 @@ import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 
 const StyledPill = styled.button(
   ({ isActive, theme }) => css`
-    min-height: 32px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 6px 16px;
+    height: 32px;
 
     background-color: ${isActive
       ? theme.colors.interactiveBg.primaryNormal
@@ -51,13 +56,6 @@ const StyledPill = styled.button(
 
     &:focus {
       outline: none;
-    }
-    div {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 6px 16px;
-      height: 100%;
     }
 
     transition: color 0.6s ease 0s;
