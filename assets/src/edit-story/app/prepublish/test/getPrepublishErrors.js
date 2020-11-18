@@ -74,7 +74,7 @@ describe('prepublish checklist', () => {
     expect(getPrepublishErrors(testStory)).toHaveLength(0);
   });
 
-  describe('story-based guidelines', () => {});
-  describe('page-based guidelines', () => {});
-  describe('element-based guidelines', () => {});
+  it.todo('story-based guidelines');
+  it.todo('page-based guidelines');
+  it.todo('element-based guidelines');
 });
