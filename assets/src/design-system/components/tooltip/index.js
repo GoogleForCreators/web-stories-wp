@@ -42,41 +42,41 @@ const getTailPosition = (position) => {
   switch (position) {
     case TOOLTIP_POSITIONS.TOP_CENTER:
       return css`
-        bottom: -${TAIL_HEIGHT}px;
+        bottom: -${TAIL_HEIGHT - 1}px;
         left: calc(50% - ${TAIL_WIDTH / 2}px);
         transform: rotate(180deg);
       `;
 
     case TOOLTIP_POSITIONS.TOP_LEFT:
       return css`
-        bottom: -${TAIL_HEIGHT}px;
+        bottom: -${TAIL_HEIGHT - 1}px;
         left: 0;
         transform: rotate(180deg);
       `;
 
     case TOOLTIP_POSITIONS.TOP_RIGHT:
       return css`
-        bottom: -${TAIL_HEIGHT}px;
+        bottom: -${TAIL_HEIGHT - 1}px;
         right: 0;
         transform: rotate(180deg);
       `;
 
     case TOOLTIP_POSITIONS.BOTTOM_RIGHT:
       return css`
-        top: -${TAIL_HEIGHT}px;
+        top: -${TAIL_HEIGHT - 1}px;
         right: 0;
       `;
 
     case TOOLTIP_POSITIONS.BOTTOM_LEFT:
       return css`
-        top: -${TAIL_HEIGHT}px;
+        top: -${TAIL_HEIGHT - 1}px;
         left: 0;
       `;
 
     // default is TOOLTIP_POSITIONS.BOTTOM_CENTER
     default: {
       return css`
-        top: -${TAIL_HEIGHT}px;
+        top: -${TAIL_HEIGHT - 1}px;
         left: calc(50% - ${TAIL_WIDTH / 2}px);
       `;
     }
@@ -91,6 +91,7 @@ const Tail = styled.span`
     ${({ position }) => getTailPosition(position)};
     background-color: inherit;
     border: inherit;
+    border-bottom: none;
     clip-path: url('#${SVG_TOOLTIP_TAIL_ID}');
   }
 `;
