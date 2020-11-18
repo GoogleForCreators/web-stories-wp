@@ -23,11 +23,6 @@ import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import useInspector from '../../../inspector/useInspector';
@@ -123,6 +118,7 @@ Toggle.propTypes = {
 };
 
 function Title({
+  title,
   children,
   isPrimary,
   isSecondary,
@@ -174,10 +170,6 @@ function Title({
     }
   }, [setExpandToHeight, height, resizeable]);
 
-  const titleLabel = isCollapsed
-    ? __('Expand panel', 'web-stories')
-    : __('Collapse panel', 'web-stories');
-
   const toggle = isCollapsed ? expand : collapse;
   const onToggle = useCallback(() => {
     toggle();
@@ -192,6 +184,11 @@ function Title({
       isPrimary={isPrimary}
       isSecondary={isSecondary}
       hasResizeHandle={isResizable && !isCollapsed}
+      aria-label={title}
+      aria-expanded={!isCollapsed}
+      aria-controls={panelContentId}
+      role="button"
+      onClick={onToggle}
     >
       {isResizable && (
         <DragHandle
@@ -204,7 +201,7 @@ function Title({
           tabIndex={ariaHidden ? -1 : 0}
         />
       )}
-      <HeaderButton onClick={onToggle}>
+      <HeaderButton>
         <Heading id={panelTitleId}>{children}</Heading>
         <HeaderActions>
           {secondaryAction}
@@ -212,9 +209,6 @@ function Title({
             <Toggle
               isCollapsed={isCollapsed}
               toggle={onToggle}
-              aria-label={titleLabel}
-              aria-expanded={!isCollapsed}
-              aria-controls={panelContentId}
               tabIndex={ariaHidden ? -1 : 0}
             >
               <Arrow />
@@ -227,6 +221,7 @@ function Title({
 }
 
 Title.propTypes = {
+  title: PropTypes.string,
   children: PropTypes.node,
   isPrimary: PropTypes.bool,
   isSecondary: PropTypes.bool,

@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import PropTypes from 'prop-types';
@@ -29,7 +34,15 @@ import PanelContent from './shared/content';
 function SimplePanel({ children, name, title }) {
   return (
     <Panel name={name}>
-      <PanelTitle>{title}</PanelTitle>
+      <PanelTitle
+        title={sprintf(
+          /* translators: %s: panel name. */
+          __('%s panel', 'web-stories'),
+          title
+        )}
+      >
+        {title}
+      </PanelTitle>
       <PanelContent>{children}</PanelContent>
     </Panel>
   );
