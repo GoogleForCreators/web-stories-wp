@@ -33,6 +33,7 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -162,8 +163,20 @@ function MediaEdit({ element, box }) {
     cropMediaProps.srcSet = srcSet;
   }
 
+  const handleWheel = useCallback(
+    (evt) => {
+      const newScale = scale + evt.deltaY;
+      setProperties({
+        scale: Math.min(BG_MAX_SCALE, Math.max(BG_MIN_SCALE, newScale)),
+      });
+      evt.preventDefault();
+      evt.stopPropagation();
+    },
+    [scale, setProperties]
+  );
+
   return (
-    <Element ref={elementRef}>
+    <Element ref={elementRef} onWheel={handleWheel}>
       {isImage && (
         <FadedImage
           {...fadedMediaProps}
