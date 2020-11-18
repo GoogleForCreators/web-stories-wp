@@ -103,7 +103,7 @@ export const Content = styled.div(
     max-width: 300px;
     border-radius: 4px;
     padding: 10px;
-    background-color: ${theme.colors.interactiveBg.primaryNormal};
+    background-color: ${theme.colors.inverted.bg.primary};
     opacity: ${visible ? 1 : 0};
 
     transition: opacity linear 200ms;
@@ -111,7 +111,7 @@ export const Content = styled.div(
 );
 
 const TooltipText = styled(Text)`
-  color: ${({ theme }) => theme.colors.bg.primary};
+  color: ${({ theme }) => theme.colors.inverted.fg.primary};
   overflow-wrap: break-word;
 `;
 
