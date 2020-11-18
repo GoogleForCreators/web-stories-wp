@@ -29,6 +29,10 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
+
+jest.mock('../../../../dashboard/templates');
+import getAllTemplates from '../../../../dashboard/templates';
+
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
@@ -76,5 +80,26 @@ describe('APIProvider', () => {
       path:
         '/mediaPath?context=edit&per_page=100&page=1&_web_stories_envelope=true&cache_bust=true',
     });
+  });
+
+  it('getTemplates gets templates w/ cdnURL', async () => {
+    const templates = [{ id: 'templateid' }];
+    getAllTemplates.mockReturnValue(Promise.resolve(templates));
+
+    const cdnURL = 'https://test.url';
+    const { result } = renderApiProvider({
+      configValue: {
+        api: {},
+        cdnURL,
+      },
+    });
+
+    let templatesResult;
+    await act(async () => {
+      templatesResult = await result.current.actions.getTemplates();
+    });
+
+    expect(getAllTemplates).toHaveBeenCalledWith({ cdnURL });
+    expect(templatesResult).toStrictEqual(templates);
   });
 });
