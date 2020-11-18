@@ -37,7 +37,7 @@ import useFocusOut from '../../utils/useFocusOut';
 import createSolid from '../../utils/createSolid';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import { useTransform } from '../transform';
-import { useStory } from '../../app/story';
+import useStory from '../../app/story/useStory';
 import CurrentColorPicker from './currentColorPicker';
 import GradientPicker from './gradientPicker';
 import Header from './header';
