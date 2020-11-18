@@ -15,16 +15,11 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf, _n } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import getBoundRect from '../../../utils/getBoundRect';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
@@ -34,7 +29,6 @@ const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
 
 const MAX_VIDEO_LENGTH_SECONDS = 60;
-const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -84,10 +78,8 @@ export function mediaElementSizeOnPage(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message:
-        element.type === 'video'
-          ? __(`Video is too small on the page`, 'web-stories')
-          : __(`Image is too small on the page`, 'web-stories'),
+      message: MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.HELPER_TEXT,
     };
   }
 
@@ -146,10 +138,8 @@ function videoElementResolution(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __(
-        "Video's resolution is too high to display on most mobile devices (>4k)",
-        'web-stories'
-      ),
+      message: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.HELPER_TEXT,
     };
   }
 
@@ -157,7 +147,8 @@ function videoElementResolution(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __('Video has low resolution', 'web-stories'),
+      message: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_LOW.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_LOW.HELPER_TEXT,
     };
   }
 
@@ -173,7 +164,8 @@ function imageElementResolution(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __('Image has low resolution', 'web-stories'),
+      message: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+      help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
     };
   }
   return undefined;
@@ -190,7 +182,8 @@ function gifElementResolution(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __('GIF has low resolution', 'web-stories'),
+      message: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+      help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
     };
   }
   return undefined;
@@ -208,16 +201,8 @@ export function videoElementLength(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: sprintf(
-        /* translators: %d: number of minutes; */
-        _n(
-          'Video is longer than %d minute (suggest breaking video up into multiple segments)',
-          'Video is longer than %d minutes (suggest breaking video up into multiple segments)',
-          MAX_VIDEO_LENGTH_MINUTES,
-          'web-stories'
-        ),
-        MAX_VIDEO_LENGTH_MINUTES
-      ),
+      message: MESSAGES.MEDIA.VIDEO_TOO_LONG.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_TOO_LONG.HELPER_TEXT,
     };
   }
   return undefined;

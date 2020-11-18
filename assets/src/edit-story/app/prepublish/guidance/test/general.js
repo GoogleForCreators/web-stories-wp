@@ -38,15 +38,11 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     });
 
     expect(storyTooShort).not.toBeUndefined();
-    expect(storyTooShort.message).toMatchInlineSnapshot(
-      `"Story has fewer than 4 pages (ideally, stories should have a minimum of 10 pages)"`
-    );
+    expect(storyTooShort.message).toMatchInlineSnapshot(`"Story too short"`);
     expect(storyTooShort.storyId).toStrictEqual(123);
 
     expect(storyTooLong).not.toBeUndefined();
-    expect(storyTooLong.message).toMatchInlineSnapshot(
-      `"Story has more than 30 pages (ideally, stories shouldn't have more than 20 pages)"`
-    );
+    expect(storyTooLong.message).toMatchInlineSnapshot(`"Story too long"`);
     expect(storyTooLong.storyId).toStrictEqual(456);
 
     expect(testUndefined).toBeUndefined();
@@ -65,9 +61,7 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     const test = generalGuidelines.storyTitleLength(testStory);
     expect(test).not.toBeUndefined();
     expect(test.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE);
-    expect(test.message).toMatchInlineSnapshot(
-      `"Story title is longer than 40 characters"`
-    );
+    expect(test.message).toMatchInlineSnapshot(`"Story title too long"`);
     expect(test.storyId).toStrictEqual(testStory.storyId);
     expect(testUndefined).toBeUndefined();
   });

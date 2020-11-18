@@ -30,15 +30,10 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import isElementBelowLimit from '../../../utils/isElementBelowLimit';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from '../constants';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
@@ -65,7 +60,8 @@ export function storyCoverAttached(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
-      message: __('Missing story cover', 'web-stories'),
+      message: MESSAGES.CRITICAL_METADATA.MISSING_COVER.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.MISSING_COVER.HELPER_TEXT,
     };
   }
   return undefined;
@@ -84,7 +80,8 @@ export function storyTitle(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
-      message: __('Missing story title', 'web-stories'),
+      message: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.HELPER_TEXT,
     };
   }
   return undefined;
@@ -106,7 +103,8 @@ export function storyCoverPortraitSize(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
-      message: __("Story's portrait cover image is too small", 'web-stories'),
+      message: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.HELPER_TEXT,
     };
   }
   return undefined;
@@ -128,7 +126,8 @@ export function publisherLogoSize(story) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
-      message: __("Story's publisher logo image is too small", 'web-stories'),
+      message: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.HELPER_TEXT,
     };
   }
   return undefined;
@@ -166,10 +165,8 @@ export function linkInPageAttachmentRegion(story) {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
       pages: pagesWithLinksInAttachmentArea,
-      message: __(
-        'Page has a link in the page attachment region',
-        'web-stories'
-      ),
+      message: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.LINK_ATTACHMENT_CONFLICT.HELPER_TEXT,
     };
   }
   return undefined;
