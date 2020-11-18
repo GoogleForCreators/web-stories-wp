@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -24,6 +24,16 @@ import PropTypes from 'prop-types';
 import { useStory } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
 import Context from './context';
+
+function usePrev(value) {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
+}
 
 function PrepublishChecklistProvider({ children }) {
   const story = useStory(({ state: { story, pages } }) => {
@@ -36,9 +46,19 @@ function PrepublishChecklistProvider({ children }) {
   );
 
   const handleRefreshList = useCallback(
-    () => setCurrentList(getPrepublishErrors(story)),
+    () => setCurrentList(() => getPrepublishErrors(story)),
     [story]
   );
+
+  const prevPages = usePrev(story.pages);
+
+  const refreshOnInitialLoad = prevPages?.length === 0 && story.pages?.length;
+
+  useEffect(() => {
+    if (refreshOnInitialLoad) {
+      handleRefreshList();
+    }
+  }, [handleRefreshList, refreshOnInitialLoad]);
 
   return (
     <Context.Provider
