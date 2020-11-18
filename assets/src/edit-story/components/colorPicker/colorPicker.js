@@ -153,7 +153,6 @@ function ColorPicker({
   useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
   useFocusTrapping({ ref: containerRef });
 
-  //console.log(currentColor, generatedColor, color);
   useEffect(() => {
     if (generatedColor) {
       selectedElementIds.forEach((id) => {
