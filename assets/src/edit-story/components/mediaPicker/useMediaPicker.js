@@ -29,7 +29,6 @@ import { __ } from '@wordpress/i18n';
  */
 import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
-import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
 import { trackEvent } from '../../../tracking';
 
@@ -38,6 +37,7 @@ export default function useMediaPicker({
   buttonInsertText = __('Insert into page', 'web-stories'),
   onSelect = () => {},
   onClose = () => {},
+  onPermissionError = () => {},
   type = '',
   multiple = false,
 }) {
@@ -50,7 +50,6 @@ export default function useMediaPicker({
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const { showSnackbar } = useSnackbar();
   useEffect(() => {
     try {
       // Work around that forces default tab as upload tab.
@@ -77,11 +76,7 @@ export default function useMediaPicker({
 
     // If a user does not have the rights to upload to the media library, do not show the media picker.
     if (!hasUploadMediaAction) {
-      const message = __(
-        'Sorry, you are unable to upload files.',
-        'web-stories'
-      );
-      showSnackbar({ message });
+      onPermissionError();
       evt.preventDefault();
       return false;
     }

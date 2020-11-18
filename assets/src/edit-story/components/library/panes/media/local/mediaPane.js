@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -56,6 +56,7 @@ import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
+import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -131,6 +132,8 @@ function MediaPane(props) {
     insertElement: state.actions.insertElement,
   }));
 
+  const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
+
   const onClose = resetWithFetch;
 
   /**
@@ -170,6 +173,7 @@ function MediaPane(props) {
     onSelect,
     onClose,
     type: allowedMimeTypes,
+    onPermissionError: () => setIsPermissionDialogOpen(true),
   });
 
   /**
@@ -271,6 +275,11 @@ function MediaPane(props) {
             searchTerm={searchTerm}
           />
         )}
+
+        <MissingUploadPermissionDialog
+          open={isPermissionDialogOpen}
+          onClose={() => setIsPermissionDialogOpen(false)}
+        />
       </PaneInner>
     </StyledPane>
   );
