@@ -60,7 +60,7 @@ import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
 
-export const FilterArea = styled.div`
+const FilterArea = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
