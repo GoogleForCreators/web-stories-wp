@@ -165,14 +165,16 @@ function MediaEdit({ element, box }) {
 
   const handleWheel = useCallback(
     (evt) => {
-      const newScale = scale + evt.deltaY;
-      setProperties({
-        scale: Math.min(BG_MAX_SCALE, Math.max(BG_MIN_SCALE, newScale)),
-      });
+      setProperties(({ scale: oldScale }) => ({
+        scale: Math.min(
+          BG_MAX_SCALE,
+          Math.max(BG_MIN_SCALE, oldScale + evt.deltaY)
+        ),
+      }));
       evt.preventDefault();
       evt.stopPropagation();
     },
-    [scale, setProperties]
+    [setProperties]
   );
 
   // Cancelable wheel events require a non-passive listener, which React
