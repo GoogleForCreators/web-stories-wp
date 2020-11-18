@@ -34,7 +34,6 @@ import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
-  ROTATION,
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
 import {

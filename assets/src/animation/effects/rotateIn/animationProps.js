@@ -44,12 +44,12 @@ export default {
     defaultValue: DIRECTION.LEFT_TO_RIGHT,
   },
   stopAngle: {
-    label: __('Stop Angle', 'web-stories'),
+    label: __('Angle', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     defaultValue: 0,
   },
   numberOfRotations: {
-    label: __('# of Rotations', 'web-stories'),
+    label: __('Rotations', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     defaultValue: 1,
   },

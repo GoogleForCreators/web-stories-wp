@@ -67,6 +67,19 @@ function AnimationPanel({
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
   const backgroundScale = isBackground && selectedElements[0].scale;
+  const updatedAnimations = useMemo(() => {
+    // Combining local element updates with the
+    // page level applied updates
+    const updated = selectedElements
+      .map((element) => element.animation)
+      .filter(Boolean);
+    return selectedElementAnimations
+      .map((anim) => ({
+        ...(updated.find((a) => a.id === anim.id) || anim),
+      }))
+      .filter((a) => !a.delete);
+  }, [selectedElements, selectedElementAnimations]);
+
   const handleAddEffect = useCallback(
     ({ animation, ...options }) => {
       if (!animation) {
@@ -100,19 +113,6 @@ function AnimationPanel({
     },
     [pushUpdateForObject, isBackground, backgroundScale]
   );
-
-  const updatedAnimations = useMemo(() => {
-    // Combining local element updates with the
-    // page level applied updates
-    const updated = selectedElements
-      .map((element) => element.animation)
-      .filter(Boolean);
-    return selectedElementAnimations
-      .map((anim) => ({
-        ...(updated.find((a) => a.id === anim.id) || anim),
-      }))
-      .filter((a) => !a.delete);
-  }, [selectedElements, selectedElementAnimations]);
 
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>

@@ -15,15 +15,11 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -32,13 +28,12 @@ import {
   ANIMATION_EFFECTS,
   ANIMATION_PARTS,
   BACKGROUND_ANIMATION_EFFECTS,
-} from '../../../../animation/constants';
+  FIELD_TYPES,
+} from '../../../../animation';
 import {
   getAnimationEffectProps,
   AnimationProps,
 } from '../../../../animation/parts';
-import { Row, Button } from '../../form';
-import { Panel, PanelTitle, PanelContent } from '../panel';
 import EffectInput from './effectInput';
 
 export function getEffectName(type) {
@@ -50,12 +45,29 @@ export function getEffectName(type) {
     ].find((o) => o.value === type)?.name || ''
   );
 }
+const AnimationGrid = styled.div`
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: auto auto;
+  grid-auto-rows: 32px;
+`;
 
-function EffectPanel({
-  animation: { id, type, ...config },
-  onChange,
-  onRemove,
-}) {
+const AnimationGridField = styled.div(
+  ({ isRotationComponent, isHalfWidthField }) => [
+    {
+      gridColumn: '1/3',
+    },
+    isRotationComponent && {
+      gridRow: '1/3',
+      gridColumn: 'auto',
+    },
+    isHalfWidthField && {
+      gridColumn: 'auto',
+    },
+  ]
+);
+
+function EffectPanel({ animation: { id, type, ...config }, onChange }) {
   const { props } = getAnimationEffectProps(type);
 
   const handleInputChange = useCallback(
@@ -73,17 +85,31 @@ function EffectPanel({
     [id, type, config, onChange]
   );
 
-  const handleRemoveClick = useCallback(() => {
-    onRemove({
-      id,
-      type,
-      ...config,
-      delete: true,
-    });
-  }, [id, type, config, onRemove]);
+  // const handleRemoveClick = useCallback(() => {
+  //   onRemove({
+  //     id,
+  //     type,
+  //     ...config,
+  //     delete: true,
+  //   });
+  // }, [id, type, config, onRemove]);
 
-  const content = Object.keys(props).map((field) => (
-    <Row key={field} expand>
+  const containsVisualPicker = useMemo(() => {
+    return Object.keys(props).reduce((memo, current) => {
+      return (
+        props[current].type === FIELD_TYPES.DIRECTION_PICKER ||
+        props[current].type === FIELD_TYPES.ROTATION_PICKER ||
+        memo
+      );
+    }, false);
+  }, [props]);
+
+  const content = Object.keys(props).map((field, index) => (
+    <AnimationGridField
+      key={field}
+      isRotationComponent={containsVisualPicker && index === 0}
+      isHalfWidthField={containsVisualPicker && (index === 1 || index === 2)}
+    >
       <EffectInput
         effectProps={props}
         effectConfig={config}
@@ -92,16 +118,16 @@ function EffectPanel({
           handleInputChange({ [field]: value }, submitArg)
         }
       />
-    </Row>
+    </AnimationGridField>
   ));
 
-  return content;
+  return <AnimationGrid>{content}</AnimationGrid>;
 }
 
 EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
+  // onRemove: PropTypes.func.isRequired,
 };
 
 export default EffectPanel;
