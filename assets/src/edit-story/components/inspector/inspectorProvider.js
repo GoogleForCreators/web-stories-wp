@@ -32,13 +32,13 @@ import { __ } from '@wordpress/i18n';
 import { useAPI } from '../../app/api';
 import useResizeEffect from '../../utils/useResizeEffect';
 import { useStory } from '../../app/story';
-import useChecklist from '../../app/prepublish/useChecklist';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish/constants';
+
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { Error, Warning } from '../../../design-system/icons/alert';
+import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
 import DocumentInspector from './document';
-import PrepublishInspector from './prepublish';
 
 const DESIGN = 'design';
 const DOCUMENT = 'document';
@@ -48,23 +48,22 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAllUsers },
   } = useAPI();
-  const { selectedElementIds, currentPage } = useStory((state) => ({
-    selectedElementIds: state.state.selectedElementIds,
-    currentPage: state.state.currentPage,
+  const { selectedElementIds, currentPage } = useStory(({ state }) => ({
+    selectedElementIds: state.selectedElementIds,
+    currentPage: state.currentPage,
   }));
 
   const { showPrePublishTab } = useFeatures();
-  const { currentList } = useChecklist();
+  const { checklist, refreshChecklist } = usePrepublishChecklist();
+
   const prepublishAlert = useCallback(
     () =>
-      currentList.some(
-        ({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR
-      ) ? (
+      checklist.some(({ type }) => type === PRE_PUBLISH_MESSAGE_TYPES.ERROR) ? (
         <Error className="alert error" />
       ) : (
         <Warning className="alert warning" />
       ),
-    [currentList]
+    [checklist]
   );
 
   const inspectorRef = useRef(null);
@@ -90,7 +89,10 @@ function InspectorProvider({ children }) {
 
   useEffect(() => {
     tabRef.current = tab;
-  }, [tab]);
+    if (tab === PREPUBLISH) {
+      refreshChecklist();
+    }
+  }, [tab, refreshChecklist]);
 
   useEffect(() => {
     if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
@@ -153,7 +155,7 @@ function InspectorProvider({ children }) {
         ...(showPrePublishTab
           ? [
               {
-                icon: currentList.length > 0 ? prepublishAlert : undefined,
+                icon: checklist.length > 0 ? prepublishAlert : undefined,
                 id: PREPUBLISH,
                 title: __('Checklist', 'web-stories'),
                 Pane: PrepublishInspector,

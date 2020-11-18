@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prepublish checklist should return guidance for the story 1`] = `
+Array [
+  Object {
+    "message": "Missing story cover",
+    "storyId": 120,
+    "type": "error",
+  },
+  Object {
+    "message": "Missing story title",
+    "storyId": 120,
+    "type": "error",
+  },
+  Object {
+    "message": "Missing story excerpt",
+    "storyId": 120,
+    "type": "warning",
+  },
+  Object {
+    "message": "Story has fewer than 4 pages (ideally, stories should have a minimum of 10 pages)",
+    "storyId": 120,
+    "type": "guidance",
+  },
+  Object {
+    "message": "Too little text in story",
+    "storyId": 120,
+    "type": "guidance",
+  },
+]
+`;

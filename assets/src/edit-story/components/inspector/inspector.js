@@ -18,19 +18,20 @@
  * Internal dependencies
  */
 import { UploadDropTarget } from '../uploadDropTarget';
-import ChecklistProvider from '../../app/prepublish/checklistProvider';
+
 import InspectorProvider from './inspectorProvider';
 import InspectorLayout from './inspectorLayout';
+import { PrepublishChecklistProvider } from './prepublish';
 
 function Inspector() {
   return (
-    <ChecklistProvider>
+    <PrepublishChecklistProvider>
       <InspectorProvider>
         <UploadDropTarget disabled>
           <InspectorLayout />
         </UploadDropTarget>
       </InspectorProvider>
-    </ChecklistProvider>
+    </PrepublishChecklistProvider>
   );
 }
 

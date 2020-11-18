@@ -123,6 +123,7 @@ const theme = {
       gray16: '#414442',
       gray8: '#2F3131',
       negative: '#E45F53',
+      positive: '#81C995',
       warning: '#F4B844',
 
       // v0: '#000000', <=> replaced with fg.black

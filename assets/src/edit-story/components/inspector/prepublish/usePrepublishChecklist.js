@@ -16,6 +16,16 @@
 /**
  * External dependencies
  */
-import { createContext } from 'react';
+import { useContext } from 'react';
+/**
+ * Internal dependencies
+ */
+import Context from './context';
 
-export default createContext({ currentList: [] });
+function usePrepublishChecklist() {
+  const { checklist, refreshChecklist } = useContext(Context);
+
+  return { checklist, refreshChecklist };
+}
+
+export default usePrepublishChecklist;

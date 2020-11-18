@@ -16,14 +16,6 @@
 /**
  * External dependencies
  */
-import { useContext } from 'react';
-/**
- * Internal dependencies
- */
-import Context from './context';
+import { createContext } from 'react';
 
-function useChecklist() {
-  return useContext(Context);
-}
-
-export default useChecklist;
+export default createContext({ checklist: [] });

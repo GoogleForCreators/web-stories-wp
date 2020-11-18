@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import prepublishChecklist from '../';
+import { getPrepublishErrors } from '..';
 const DEFAULT_STORY_PROPS = {
   featuredMedia: {
     url: 'https://greatimageaggregate.com/1234',
@@ -30,7 +30,7 @@ describe('prepublish checklist', () => {
       id: 120,
       pages: [{ id: 123, elements: [] }],
     };
-    expect(prepublishChecklist(testStory)).toMatchSnapshot();
+    expect(getPrepublishErrors(testStory)).toMatchSnapshot();
   });
   it('should return an empty array', () => {
     const testStory = {
@@ -70,8 +70,8 @@ describe('prepublish checklist', () => {
         },
       ],
     };
-    expect(prepublishChecklist(testStory) instanceof Array).toBeTrue();
-    expect(prepublishChecklist(testStory)).toHaveLength(0);
+    expect(getPrepublishErrors(testStory) instanceof Array).toBeTrue();
+    expect(getPrepublishErrors(testStory)).toHaveLength(0);
   });
 
   describe('story-based guidelines', () => {});

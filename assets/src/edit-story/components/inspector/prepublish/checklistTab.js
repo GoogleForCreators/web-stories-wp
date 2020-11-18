@@ -30,22 +30,34 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { SimplePanel } from '../../panels/panel';
 import { Rectangle } from '../../../icons';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish/constants';
-import { GuidanceChecklist } from '../../../app/prepublish/types';
+import { Checkmark as CheckmarkIcon } from '../../../../design-system/icons';
+import { PRE_PUBLISH_MESSAGE_TYPES, types } from '../../../app/prepublish';
 import { Label } from '../../form';
 
-const NumberDecorator = styled.span`
+const MAX_NUMBER_FOR_BADGE = 99;
+
+const NumberBadge = styled.span`
   display: inline-flex;
-  justify-content: center;
-  align-items: center;
   height: 20px;
   width: 20px;
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  margin-right: 7px;
-  border-radius: 100%;
+  line-height: 20px;
+  justify-content: center;
+  margin-left: 14px;
+  border-radius: 50%;
+  font-size: ${({ number }) =>
+    number > MAX_NUMBER_FOR_BADGE ? '10px' : '12px'};
+  &::after {
+    content: ${({ number }) => `"${annotateNumber(number)}"`};
+  }
   color: ${({ theme }) => theme.colors.bg.panel};
   background-color: ${({ theme, error }) =>
     error ? theme.colors.fg.negative : theme.colors.fg.warning};
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const PanelTitle = styled.span`
@@ -54,20 +66,65 @@ const PanelTitle = styled.span`
 `;
 
 const Row = styled.div`
-  margin-bottom: 25px;
-  padding-left: 12px;
+  &:not(:first-child) {
+    padding-top: 9px;
+  }
+  margin-bottom: 16px;
+  margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
+  font-size: ${({ theme }) => theme.fonts.body2.size};
 `;
 
 const PageIndicator = styled(Label)`
+  &:not(:first-child) {
+    padding-top: 9px;
+  }
+  margin-bottom: 8px;
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
   svg {
     height: 14px;
-    width: 14px;
+    width: 9px;
     margin-right: 6px;
   }
 `;
+
+const EmptyLayout = styled.div`
+  margin-top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Checkmark = styled(CheckmarkIcon)`
+  margin-bottom: 16px;
+  height: 64px;
+  width: 64px;
+  padding: 5px 12px 5px 15px;
+  border-radius: 50%;
+  color: ${({ theme }) => theme.colors.fg.positive};
+  border: 1px solid ${({ theme }) => theme.colors.fg.positive};
+`;
+
+const EmptyHeading = styled.h1`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.fonts.body1.size};
+  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
+  margin: 0;
+`;
+const EmptyParagraph = styled.p`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+  font-size: ${({ theme }) => theme.fonts.description.size};
+  line-height: ${({ theme }) => theme.fonts.description.lineHeight};
+  margin: 0;
+`;
+
+function annotateNumber(number) {
+  if (number <= MAX_NUMBER_FOR_BADGE) {
+    return number;
+  }
+  return `${MAX_NUMBER_FOR_BADGE}+`;
+}
 
 const ChecklistTab = (props) => {
   const { checklist } = props;
@@ -126,44 +183,66 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
-  const renderRow = useCallback(({ message, id }) => {
-    return <Row key={`guidance-${id}`}>{message}</Row>;
+  const renderRow = useCallback(({ message, id, pageGroup }) => {
+    return (
+      <Row key={`guidance-${id}`} pageGroup={pageGroup}>
+        {message}
+      </Row>
+    );
   }, []);
 
-  const renderPageGroupedRow = (entry) => {
-    const [pageNum, messages] = entry;
-    return (
-      <Fragment key={`guidance-page-group-${pageNum}`}>
-        <PageIndicator>
-          <Rectangle />
-          {sprintf(
-            /* translators: %s: the page number where the checklist issue is. */
-            __('Page %s', 'web-stories'),
-            pageNum
+  const renderPageGroupedRow = useCallback(
+    (entry) => {
+      const [pageNum, messages] = entry;
+      return (
+        <Fragment key={`guidance-page-group-${pageNum}`}>
+          <PageIndicator>
+            <Rectangle />
+            {sprintf(
+              /* translators: %s: page number */
+              __('Page %s', 'web-stories'),
+              pageNum
+            )}
+          </PageIndicator>
+          {messages.map((message) =>
+            renderRow({ ...message, pageGroup: true })
           )}
-        </PageIndicator>
-        {messages.map(renderRow)}
-      </Fragment>
-    );
-  };
+        </Fragment>
+      );
+    },
+    [renderRow]
+  );
 
-  const showHighPriorityItems =
-    Boolean(highPriority.length) || Boolean(pages.lengths?.highPriority);
+  const highPriorityLength =
+    highPriority.length + (pages.lengths?.highPriority || 0);
+  const recommendedLength =
+    recommended.length + (pages.lengths?.recommended || 0);
+
+  const showHighPriorityItems = Boolean(highPriorityLength);
   const showRecommendedItems =
     Boolean(recommended.length) || Boolean(pages.lengths?.recommended);
 
+  if (!showHighPriorityItems && !showRecommendedItems) {
+    return (
+      <EmptyLayout>
+        <Checkmark />
+        <EmptyHeading>{__('Awesome work!', 'web-stories')}</EmptyHeading>
+        <EmptyParagraph>{__('No Issues Found', 'web-stories')}</EmptyParagraph>
+      </EmptyLayout>
+    );
+  }
   return (
     <>
       {showHighPriorityItems && (
         <SimplePanel
           name="checklist"
           title={
-            <>
-              <NumberDecorator error>{highPriority.length}</NumberDecorator>
+            <TitleWrapper>
               <PanelTitle error>
                 {__('High Priority', 'web-stories')}
               </PanelTitle>
-            </>
+              <NumberBadge error number={highPriorityLength} />
+            </TitleWrapper>
           }
         >
           {highPriority.map(renderRow)}
@@ -174,14 +253,12 @@ const ChecklistTab = (props) => {
         <SimplePanel
           name="checklist"
           title={
-            <>
-              <NumberDecorator recommended>
-                {recommended.length}
-              </NumberDecorator>
+            <TitleWrapper>
               <PanelTitle recommended>
                 {__('Recommended', 'web-stories')}
               </PanelTitle>
-            </>
+              <NumberBadge recommended number={recommendedLength} />
+            </TitleWrapper>
           }
         >
           {recommended.map(renderRow)}
@@ -193,7 +270,7 @@ const ChecklistTab = (props) => {
 };
 
 ChecklistTab.propTypes = {
-  checklist: GuidanceChecklist,
+  checklist: types.GuidanceChecklist,
 };
 
 export default ChecklistTab;

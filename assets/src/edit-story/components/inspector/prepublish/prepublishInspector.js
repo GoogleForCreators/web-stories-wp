@@ -17,13 +17,12 @@
 /**
  * Internal dependencies
  */
-import useChecklist from '../../../app/prepublish/useChecklist';
-import ChecklistTab from './checklistTab';
+import { usePrepublishChecklist, ChecklistTab } from '.';
 
 function PrepublishInspector() {
-  const checklist = useChecklist();
+  const { checklist } = usePrepublishChecklist();
 
-  return <ChecklistTab checklist={checklist.currentList || []} />;
+  return <ChecklistTab checklist={checklist} />;
 }
 
 export default PrepublishInspector;
