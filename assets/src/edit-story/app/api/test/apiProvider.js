@@ -84,7 +84,7 @@ describe('APIProvider', () => {
 
   it('getTemplates gets templates w/ cdnURL', async () => {
     const templates = [{ id: 'templateid' }];
-    getAllTemplates.mockReturnValue(Promise.resolve(templates));
+    getAllTemplates.mockResolvedValue(templates);
 
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
