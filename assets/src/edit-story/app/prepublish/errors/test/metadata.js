@@ -29,7 +29,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     const testMissingCover = metadataGuidelines.storyCoverAttached(testStory);
     expect(testMissingCover).not.toBeUndefined();
     expect(testMissingCover.message).toMatchInlineSnapshot(
-      `"Missing story cover"`
+      `"Missing story cover image"`
     );
     expect(testMissingCover.storyId).toStrictEqual(testStory.storyId);
   });
@@ -54,12 +54,8 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testHappy).toBeUndefined();
     expect(testEmptyString).not.toBeUndefined();
     expect(testUndefined).not.toBeUndefined();
-    expect(testUndefined.message).toMatchInlineSnapshot(
-      `"Missing story title"`
-    );
-    expect(testEmptyString.message).toMatchInlineSnapshot(
-      `"Missing story title"`
-    );
+    expect(testUndefined.message).toMatchInlineSnapshot(`"Missing title"`);
+    expect(testEmptyString.message).toMatchInlineSnapshot(`"Missing title"`);
     expect(testUndefined.storyId).toStrictEqual(
       testUndefinedTitleStory.storyId
     );
@@ -111,7 +107,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testNoAttachment).toBeUndefined();
     expect(testLinkInPageAttachment).not.toBeUndefined();
     expect(testLinkInPageAttachment.message).toMatchInlineSnapshot(
-      `"Page has a link in the page attachment region"`
+      `"Link conflict with page attachment"`
     );
     expect(testLinkInPageAttachment.pages).toHaveLength(1);
     expect(testLinkInPageAttachment.pages[0]).toStrictEqual(
@@ -158,9 +154,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth).not.toBeUndefined();
     expect(testWidth.storyId).toStrictEqual(testWidthStory.storyId);
     expect(test).not.toBeUndefined();
-    expect(test.message).toMatchInlineSnapshot(
-      `"Story's publisher logo image is too small"`
-    );
+    expect(test.message).toMatchInlineSnapshot(`"Publisher logo is too small"`);
     expect(test.storyId).toStrictEqual(testStory.storyId);
   });
 
@@ -201,9 +195,7 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth).not.toBeUndefined();
     expect(testWidth.storyId).toStrictEqual(testWidthStory.storyId);
     expect(test).not.toBeUndefined();
-    expect(test.message).toMatchInlineSnapshot(
-      `"Story's portrait cover image is too small"`
-    );
+    expect(test.message).toMatchInlineSnapshot(`"Story cover image too small"`);
     expect(test.storyId).toStrictEqual(testStory.storyId);
   });
 });

@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { MESSAGES } from '../../constants';
 import { pageTooMuchText, storyTooLittleText } from '../text';
 
 describe('Pre-publish checklist - text guidelines (guidance)', () => {
@@ -40,9 +41,10 @@ describe('Pre-publish checklist - text guidelines (guidance)', () => {
         ],
       };
       expect(pageTooMuchText(page)).toStrictEqual({
-        message: 'Too much text on page',
         pageId: page.id,
         type: 'guidance',
+        message: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT,
+        help: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.HELPER_TEXT,
       });
     });
 
@@ -98,9 +100,10 @@ describe('Pre-publish checklist - text guidelines (guidance)', () => {
         ],
       };
       expect(storyTooLittleText(story)).toStrictEqual({
-        message: 'Too little text in story',
         storyId: story.id,
         type: 'guidance',
+        message: MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT,
+        help: MESSAGES.TEXT.TOO_LITTLE_TEXT.HELPER_TEXT,
       });
     });
 
