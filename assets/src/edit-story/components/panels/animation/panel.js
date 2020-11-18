@@ -80,12 +80,14 @@ function AnimationPanel({
       .filter((a) => !a.delete);
   }, [selectedElements, selectedElementAnimations]);
 
-  const handleAddEffect = useCallback(
+  const elAnimationId = updatedAnimations[0]?.id;
+  const handleAddOrUpdateElementEffect = useCallback(
     ({ animation, ...options }) => {
       if (!animation) {
         return;
       }
 
+      const id = elAnimationId || uuidv4();
       const defaults = getAnimationEffectDefaults(animation);
 
       // Background Zoom's `scale from` initial value should match
@@ -102,7 +104,7 @@ function AnimationPanel({
       pushUpdateForObject(
         ANIMATION_PROPERTY,
         {
-          id: uuidv4(),
+          id,
           type: animation,
           ...defaults,
           ...options,
@@ -111,7 +113,7 @@ function AnimationPanel({
         true
       );
     },
-    [pushUpdateForObject, isBackground, backgroundScale]
+    [elAnimationId, isBackground, pushUpdateForObject, backgroundScale]
   );
 
   return selectedElements.length > 1 ? (
@@ -124,7 +126,7 @@ function AnimationPanel({
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
         <EffectChooserDropdown
-          onAnimationSelected={handleAddEffect}
+          onAnimationSelected={handleAddOrUpdateElementEffect}
           selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
         />
       </Row>
