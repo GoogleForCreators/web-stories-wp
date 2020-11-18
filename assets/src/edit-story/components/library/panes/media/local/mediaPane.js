@@ -19,7 +19,6 @@
  */
 import { useFeature } from 'flagged';
 import { useCallback, useMemo } from 'react';
-import styled from 'styled-components';
 
 /**
  * WordPress dependencies
