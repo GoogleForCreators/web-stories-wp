@@ -108,49 +108,47 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
-  const [updatedProperties, setUpdatedProperties] = useState({});
-  const lastUpdatedProperties = useRef({});
+  const [localProperties, setLocalProperties] = useState({});
+  const lastLocalProperties = useRef({});
 
-  const setProperties = useCallback(
-    (properties) => {
-      const newProps = {
-        ...lastUpdatedProperties.current,
-        ...properties,
-      };
-      lastUpdatedProperties.current = newProps;
-      setUpdatedProperties(lastUpdatedProperties.current);
-    },
-    [setUpdatedProperties]
-  );
+  const updateLocalProperties = useCallback((properties) => {
+    const newProps = {
+      ...lastLocalProperties.current,
+      ...properties,
+    };
+    lastLocalProperties.current = newProps;
+    setLocalProperties(lastLocalProperties.current);
+  }, []);
 
-  // Actually update the properties of the current element
+  // Update the true global properties of the current element
+  // This now only happens on unmount
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
   }));
-  const updateActualProperties = useCallback(() => {
-    const properties = lastUpdatedProperties.current;
+  const updateProperties = useCallback(() => {
+    const properties = lastLocalProperties.current;
     if (Object.keys(properties).length === 0) {
       return;
     }
     updateElementById({ elementId: id, properties });
   }, [id, updateElementById]);
 
-  useUnmount(updateActualProperties);
+  useUnmount(updateProperties);
 
   const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
 
-  const actualScale = updatedProperties.scale ?? scale;
-  const actualFocalX = updatedProperties.focalX ?? focalX;
-  const actualFocalY = updatedProperties.focalY ?? focalY;
+  const localScale = localProperties.scale ?? scale;
+  const localFocalX = localProperties.focalX ?? focalX;
+  const localFocalY = localProperties.focalY ?? focalY;
 
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
     height,
-    actualScale,
-    flip?.horizontal ? 100 - actualFocalX : actualFocalX,
-    flip?.vertical ? 100 - actualFocalY : actualFocalY
+    localScale,
+    flip?.horizontal ? 100 - localFocalX : localFocalX,
+    flip?.vertical ? 100 - localFocalY : localFocalY
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
@@ -214,7 +212,7 @@ function MediaEdit({ element, box }) {
 
       {fullMedia && croppedMedia && (
         <EditPanMoveable
-          setProperties={setProperties}
+          setProperties={updateLocalProperties}
           fullMedia={fullMedia}
           croppedMedia={croppedMedia}
           flip={flip}
@@ -232,7 +230,7 @@ function MediaEdit({ element, box }) {
 
       {!isBackground && cropBox && croppedMedia && (
         <EditCropMoveable
-          setProperties={setProperties}
+          setProperties={updateLocalProperties}
           cropBox={cropBox}
           croppedMedia={croppedMedia}
           flip={flip}
@@ -249,12 +247,12 @@ function MediaEdit({ element, box }) {
       )}
 
       <ScalePanel
-        setProperties={setProperties}
+        setProperties={updateLocalProperties}
         x={x}
         y={y}
         width={width}
         height={height}
-        scale={actualScale || 100}
+        scale={localScale || 100}
       />
     </Element>
   );
