@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import InOverlay from '../../components/overlay';
 import RangeInput from '../../components/rangeInput';
 import { useKeyDownEffect } from '../../components/keyboard';
@@ -37,10 +38,6 @@ import { Z_INDEX_CANVAS } from '../../constants';
 const MIN_WIDTH = 165;
 const HEIGHT = 28;
 const OFFSET_Y = 8;
-// @todo: Should maxScale depend on the maximum resolution? Or should that
-// be left up to the helper errors? Both? In either case there'd be maximum
-// bounding scale.
-const MAX_SCALE = 400;
 
 const Container = styled.div`
   position: absolute;
@@ -97,9 +94,14 @@ function ScalePanel({ setProperties, width, height, x, y, scale }) {
   return (
     <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
+        {/* 
+          @todo: Should maxScale depend on the maximum resolution? Or should that
+          be left up to the helper errors? Both? In either case there'd be maximum
+          bounding scale. 
+        */}
         <RangeInput
-          min={100}
-          max={MAX_SCALE}
+          min={BG_MIN_SCALE}
+          max={BG_MAX_SCALE}
           majorStep={10}
           minorStep={1}
           value={scale}

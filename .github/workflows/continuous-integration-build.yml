@@ -25,7 +25,7 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
       - name: Setup npm cache
-        uses: pat-s/always-upload-cache@v2.1.0
+        uses: pat-s/always-upload-cache@v2.1.3
         with:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
@@ -46,7 +46,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.0
+        uses: pat-s/always-upload-cache@v2.1.3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}

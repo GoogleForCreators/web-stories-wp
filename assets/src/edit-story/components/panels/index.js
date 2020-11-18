@@ -108,6 +108,10 @@ export function getPanels(elements, options = {}) {
         Panel: BackgroundSizePositionPanel,
       });
       panels.push({ type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel });
+
+      if (enableAnimation) {
+        panels.push({ type: ANIMATION, Panel: AnimationPanel });
+      }
     }
 
     // If the selected element's type is video / image , display accessibility panel, too.

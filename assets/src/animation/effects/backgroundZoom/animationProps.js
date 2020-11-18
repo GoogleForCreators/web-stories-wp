@@ -13,11 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const clamp = (v, range) => {
-  const lowerBound = Math.min(range[0], range[1]);
-  const upperBound = Math.max(range[0], range[1]);
 
-  return Math.min(Math.max(lowerBound, v), upperBound);
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import { FIELD_TYPES } from '../../constants';
+import { AnimationInputPropTypes } from '../types';
+
+export const ZoomEffectInputPropTypes = {
+  zoomFrom: PropTypes.shape(AnimationInputPropTypes),
 };
 
-export default clamp;
+export default {
+  normalizedScaleFrom: {
+    label: __('Scale From', 'web-stories'),
+    tooltip: __('Slide between min and max zoom amounts', 'web-stories'),
+    type: FIELD_TYPES.RANGE,
+    defaultValue: 0,
+  },
+};
