@@ -117,7 +117,7 @@ export const MESSAGES = {
     LINK_ATTACHMENT_CONFLICT: {
       MAIN_TEXT: __('Link conflict with page attachment', 'web-stories'),
       HELPER_TEXT: __(
-        'Links in the bottom of a page with a Page Attachment are disabled. ',
+        'Links in the bottom of a page with a Page Attachment are disabled.',
         'web-stories'
       ),
     },
@@ -150,7 +150,7 @@ export const MESSAGES = {
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum image size width 2: minimum image size height */
         __(
-          'Use %1$dpx by %2$dpx for full screen images. Use similar pixel density for cropped images. ',
+          'Use %1$dpx by %2$dpx for full screen images. Use similar pixel density for cropped images.',
           'web-stories'
         ),
         IMAGE_SIZE_WIDTH,
@@ -174,7 +174,7 @@ export const MESSAGES = {
     TOO_MANY_LINKS: {
       MAIN_TEXT: __('Too many links on a page', 'web-stories'),
       HELPER_TEXT: __(
-        'Avoid having more than one link per page. ',
+        'Avoid having more than one link per page.',
         'web-stories'
       ),
     },
@@ -211,7 +211,7 @@ export const MESSAGES = {
       MAIN_TEXT: __('Story too short', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum number of pages. 2: maximum number of pages. */
-        __('Use between %1$d and %2$d pages in your story', 'web-stories'),
+        __('Use between %1$d and %2$d pages in your story.', 'web-stories'),
         MIN_STORY_PAGES,
         MAX_STORY_PAGES
       ),
@@ -220,7 +220,7 @@ export const MESSAGES = {
       MAIN_TEXT: __('Story too long', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum number of pages. 2: maximum number of pages. */
-        __('Use between %1$d and %2$d pages in your story', 'web-stories'),
+        __('Use between %1$d and %2$d pages in your story.', 'web-stories'),
         MIN_STORY_PAGES,
         MAX_STORY_PAGES
       ),
@@ -274,7 +274,7 @@ export const MESSAGES = {
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum image size width 2: minimum image size height */
         __(
-          'Use %1$d x %2$dpx for full screen images, keep to similar pixel density for cropped images. ',
+          'Use %1$d x %2$dpx for full screen images, keep to similar pixel density for cropped images.',
           'web-stories'
         ),
         IMAGE_SIZE_WIDTH,
