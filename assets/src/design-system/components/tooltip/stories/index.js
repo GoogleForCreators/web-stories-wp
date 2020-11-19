@@ -69,7 +69,7 @@ export const _default = () => (
           'Page background colors cannot have opacity'
         )}
       >
-        <Color />
+        <Color tabIndex={0} />
       </WithTooltip>
 
       <WithTooltip
@@ -123,7 +123,7 @@ export const LightMode = () => (
         'Page background colors cannot have opacity'
       )}
     >
-      <Color />
+      <Color tabIndex={0} />
     </WithTooltip>
 
     <WithTooltip
