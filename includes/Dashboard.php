@@ -367,7 +367,7 @@ class Dashboard {
 					'canInstallPlugins'     => current_user_can( 'install_plugins' ),
 					'canActivatePlugins'    => current_user_can( 'activate_plugin', 'google-site-kit/google-site-kit.php' ),
 				],
-				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
+				'siteKitStatus'       => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
