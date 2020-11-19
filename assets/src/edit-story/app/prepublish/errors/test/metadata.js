@@ -54,8 +54,12 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testHappy).toBeUndefined();
     expect(testEmptyString).not.toBeUndefined();
     expect(testUndefined).not.toBeUndefined();
-    expect(testUndefined.message).toMatchInlineSnapshot(`"Missing title"`);
-    expect(testEmptyString.message).toMatchInlineSnapshot(`"Missing title"`);
+    expect(testUndefined.message).toMatchInlineSnapshot(
+      `"Missing story title"`
+    );
+    expect(testEmptyString.message).toMatchInlineSnapshot(
+      `"Missing story title"`
+    );
     expect(testUndefined.storyId).toStrictEqual(
       testUndefinedTitleStory.storyId
     );
