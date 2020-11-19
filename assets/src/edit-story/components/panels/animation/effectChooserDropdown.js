@@ -45,6 +45,7 @@ const Container = styled.div`
 
 export default function EffectChooserDropdown({
   onAnimationSelected,
+  onNoEffectSelected,
   isBackgroundEffects = false,
   selectedEffectTitle,
 }) {
@@ -69,6 +70,7 @@ export default function EffectChooserDropdown({
       >
         <Container ref={dropdownRef}>
           <EffectChooser
+            onNoEffectSelected={onNoEffectSelected}
             onAnimationSelected={onAnimationSelected}
             onDismiss={() => setIsOpen(false)}
             isBackgroundEffects={isBackgroundEffects}
@@ -83,4 +85,5 @@ EffectChooserDropdown.propTypes = {
   onAnimationSelected: propTypes.func.isRequired,
   isBackgroundEffects: propTypes.bool,
   selectedEffectTitle: propTypes.string,
+  onNoEffectSelected: propTypes.func.isRequired,
 };

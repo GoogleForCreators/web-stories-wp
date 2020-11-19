@@ -57,13 +57,6 @@ function AnimationPanel({
     [pushUpdateForObject]
   );
 
-  const handleRemoveEffect = useCallback(
-    (animation) => {
-      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, true);
-    },
-    [pushUpdateForObject]
-  );
-
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
   const backgroundScale = isBackground && selectedElements[0].scale;
@@ -116,6 +109,18 @@ function AnimationPanel({
     [elAnimationId, isBackground, pushUpdateForObject, backgroundScale]
   );
 
+  const handleRemoveEffect = useCallback(() => {
+    pushUpdateForObject(
+      ANIMATION_PROPERTY,
+      {
+        ...updatedAnimations[0],
+        delete: true,
+      },
+      null,
+      true
+    );
+  }, [pushUpdateForObject, updatedAnimations]);
+
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
@@ -128,13 +133,13 @@ function AnimationPanel({
         <EffectChooserDropdown
           onAnimationSelected={handleAddOrUpdateElementEffect}
           selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
+          onNoEffectSelected={handleRemoveEffect}
         />
       </Row>
       {updatedAnimations[0] && (
         <EffectPanel
           animation={updatedAnimations[0]}
           onChange={handlePanelChange}
-          onRemove={handleRemoveEffect}
         />
       )}
     </SimplePanel>

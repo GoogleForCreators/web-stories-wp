@@ -51,10 +51,6 @@ import {
   TwirlInAnimation,
   WhooshInLeftAnimation,
   WhooshInRightAnimation,
-  PanRightAnimation,
-  PanBottomAnimation,
-  PanTopAnimation,
-  PanLeftAnimation,
   ZoomInAnimation,
   ZoomOutAnimation,
   BaseAnimationCell,
@@ -116,6 +112,7 @@ const GridItemHalfRow = styled(GridItem)`
 
 export default function EffectChooser({
   onAnimationSelected,
+  onNoEffectSelected,
   onDismiss,
   isBackgroundEffects = false,
 }) {
@@ -130,6 +127,12 @@ export default function EffectChooser({
   return (
     <Container ref={ref}>
       <Grid>
+        <GridItemFullRow
+          onClick={onNoEffectSelected}
+          aria-label={__('No Effect', 'web-stories')}
+        >
+          <span>{__('No Effect', 'web-stories')}</span>
+        </GridItemFullRow>
         {isBackgroundEffects ? (
           <GridItemFullRow
             aria-label={__('Zoom Effect', 'web-stories')}
@@ -337,6 +340,7 @@ export default function EffectChooser({
 
 EffectChooser.propTypes = {
   onAnimationSelected: propTypes.func.isRequired,
+  onNoEffectSelected: propTypes.func.isRequired,
   onDismiss: propTypes.func,
   isBackgroundEffects: propTypes.bool,
 };
