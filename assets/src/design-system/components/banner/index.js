@@ -47,7 +47,6 @@ const CloseButton = styled(Button)`
   align-self: flex-start;
 `;
 
-// TODO update this once new theme colors are merged
 const Container = styled.div`
   box-sizing: border-box;
   display: grid;
