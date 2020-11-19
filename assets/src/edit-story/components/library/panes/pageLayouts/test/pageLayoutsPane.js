@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { act } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../../../testUtils';
@@ -22,8 +27,8 @@ import ConfigContext from '../../../../../app/config/context';
 import APIContext from '../../../../../app/api/context';
 import PageLayoutsPane from '../pageLayoutsPane';
 
-const createTemplate = (name, id) => ({
-  name,
+const createTemplate = (title, id) => ({
+  title,
   id,
   pages: [{ id: 1 }, { id: 2 }, { id: 3 }],
 });
@@ -34,19 +39,26 @@ const configValue = {
 
 const TEMPLATE_NAMES = ['List', 'Grid', 'Masonary'];
 
+function flushPromiseQueue() {
+  return new Promise((resolve) => resolve());
+}
+
 describe('PageLayoutsPane', () => {
+  let getTemplates = jest.fn();
   let templates;
 
-  function renderWithTemplates(component) {
+  function renderWithTemplates() {
     const apiValue = {
       actions: {
-        getTemplates: jest.fn().mockResolvedValue(templates),
+        getTemplates,
       },
     };
 
     return renderWithTheme(
       <ConfigContext.Provider value={configValue}>
-        <APIContext.Provider value={apiValue}>{component}</APIContext.Provider>
+        <APIContext.Provider value={apiValue}>
+          <PageLayoutsPane isActive={true} />
+        </APIContext.Provider>
       </ConfigContext.Provider>
     );
   }
@@ -55,15 +67,18 @@ describe('PageLayoutsPane', () => {
     templates = TEMPLATE_NAMES.map((name, index) =>
       createTemplate(name, index)
     );
+    getTemplates.mockResolvedValue(templates);
   });
 
-  it('should render <PageLayoutsPane /> with dummy layouts', () => {
-    const { queryByText } = renderWithTemplates(
-      <PageLayoutsPane isActive={true} />
-    );
+  it('should render <PageLayoutsPane /> with dummy layouts', async () => {
+    const { queryByText } = renderWithTemplates();
+
+    await act(async () => {
+      await flushPromiseQueue();
+    });
 
     TEMPLATE_NAMES.forEach((name) => {
-      expect(queryByText(name)).toBeDefined();
+      expect(queryByText(name)).toBeInTheDocument();
     });
   });
 });
