@@ -30,13 +30,15 @@ use Google\Web_Stories\Media;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Stories;
 use Google\Web_Stories\Story_Post_Type;
+use Iterator;
 
 /**
  * Renderer class.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @implements Iterator<int, \WP_Post>
  */
-abstract class Renderer implements RenderingInterface {
+abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -67,6 +69,13 @@ abstract class Renderer implements RenderingInterface {
 	protected $story_posts = [];
 
 	/**
+	 * Pointer to iterate over stories.
+	 *
+	 * @var int
+	 */
+	private $position = 0;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Stories $stories Stories instance.
@@ -83,6 +92,51 @@ abstract class Renderer implements RenderingInterface {
 	 * @return string
 	 */
 	abstract public function render();
+
+	/**
+	 * Retrieve current story.
+	 *
+	 * @return mixed|void
+	 */
+	public function current() {
+		return $this->story_posts[ $this->position ];
+	}
+
+	/**
+	 * Retrieve next story.
+	 *
+	 * @retrun void
+	 */
+	public function next() {
+		++ $this->position;
+	}
+
+	/**
+	 * Retrieve the key for current node in list.
+	 *
+	 * @return bool|float|int|string|void|null
+	 */
+	public function key() {
+		return $this->position;
+	}
+
+	/**
+	 * Check if current position is valid.
+	 *
+	 * @return bool|void
+	 */
+	public function valid() {
+		return isset( $this->story_posts[ $this->position ] );
+	}
+
+	/**
+	 * Reset pointer to start of the list.
+	 *
+	 * @return void
+	 */
+	public function rewind() {
+		$this->position = 0;
+	}
 
 	/**
 	 * Perform initial setup for object.
@@ -127,19 +181,11 @@ abstract class Renderer implements RenderingInterface {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @param int    $story_id             Story's id for which the story attributes are requested.
-	 * @param string $single_story_classes Single story's classes.
-	 *
 	 * @return array Returns single story item data.
 	 */
-	protected function get_story_item_data( $story_id, $single_story_classes = '' ) {
-
-		$story_data = [];
-
-		if ( empty( $story_id ) || 0 >= intval( $story_id ) ) {
-			return $story_data;
-		}
-
+	protected function get_story_item_data() {
+		$story_data      = [];
+		$story_id        = $this->current()->ID;
 		$author_id       = absint( get_post_field( 'post_author', $story_id ) );
 		$is_circles_view = $this->is_view_type( 'circles' );
 		$image_size      = $is_circles_view ? Media::POSTER_SQUARE_IMAGE_SIZE : Media::POSTER_PORTRAIT_IMAGE_SIZE;
@@ -167,7 +213,7 @@ abstract class Renderer implements RenderingInterface {
 		$story_data['poster']               = get_the_post_thumbnail_url( $story_id, $image_size );
 		$story_data['author']               = $author_name;
 		$story_data['date']                 = $story_date;
-		$story_data['class']                = $single_story_classes;
+		$story_data['class']                = $this->get_single_story_classes();
 		$story_data['show_content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
 
 		return $story_data;
@@ -295,13 +341,11 @@ abstract class Renderer implements RenderingInterface {
 	/**
 	 * Render story markup.
 	 *
-	 * @param int $story_id Story ID.
-	 *
 	 * @return void
 	 */
-	protected function render_single_story_content( $story_id ) {
+	public function render_single_story_content() {
 
-		$story_data           = $this->get_story_item_data( $story_id );
+		$story_data           = $this->get_story_item_data();
 		$single_story_classes = $this->get_single_story_classes();
 		$show_story_player    = ( true !== $this->attributes['show_story_poster'] && $this->is_view_type( 'grid' ) );
 

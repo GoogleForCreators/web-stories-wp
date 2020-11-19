@@ -129,32 +129,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 	}
 
 	/**
-	 * @covers ::get_story_item_data
-	 */
-	public function test_get_story_item_data() {
-
-		$this->stories->method( 'get_story_attributes' )->willReturn(
-			[
-				'view_type'   => 'grid',
-				'show_title'  => true,
-				'show_author' => true,
-				'show_date'   => true,
-			]
-		);
-		$renderer = new Test_Renderer( $this->stories );
-
-		$output = $this->call_private_method( $renderer, 'get_story_item_data', [ '' ] );
-
-		$this->assertEmpty( $output );
-
-		$output = $this->call_private_method( $renderer, 'get_story_item_data', [ self::$story_id, 'test' ] );
-
-		$expected = $this->get_story_item_data( $renderer );
-
-		$this->assertSame( $expected, $output );
-	}
-
-	/**
 	 * @covers ::render_story_with_story_player
 	 */
 	public function test_render_story_with_story_player() {

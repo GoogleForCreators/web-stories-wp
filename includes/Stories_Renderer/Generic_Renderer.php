@@ -67,7 +67,7 @@ class Generic_Renderer extends Renderer {
 	 */
 	public function render() {
 
-		if ( empty( $this->story_posts ) || ! is_array( $this->story_posts ) ) {
+		if ( ! $this->valid() ) {
 			return '';
 		}
 
@@ -83,15 +83,19 @@ class Generic_Renderer extends Renderer {
 			>
 				<?php
 
-				foreach ( $this->story_posts as $story_post ) {
-					$this->render_single_story_content( $story_post->ID );
-				}
+				do {
+
+					$this->render_single_story_content();
+					$this->next();
+
+				} while ( $this->valid() );
 				?>
 
 			</div>
 			<?php $this->maybe_render_archive_link(); ?>
 		</div>
 		<?php
+		$view_type = $this->get_view_type();
 
 		/**
 		 * Filters the Generic renderer stories content.
@@ -100,7 +104,7 @@ class Generic_Renderer extends Renderer {
 		 *
 		 * @param string $content Stories content.
 		 */
-		return apply_filters( "web_stories_{$this->get_view_type()}_renderer_stories_content", (string) ob_get_clean() );
+		return apply_filters( "web_stories_{$view_type}_renderer_stories_content", (string) ob_get_clean() );
 	}
 
 }

@@ -67,7 +67,7 @@ class Carousel_Renderer extends Renderer {
 	 */
 	public function render() {
 
-		if ( empty( $this->story_posts ) || ! is_array( $this->story_posts ) ) {
+		if ( ! $this->valid() ) {
 			return '';
 		}
 
@@ -90,10 +90,12 @@ class Carousel_Renderer extends Renderer {
 					aria-label="Basic carousel"
 				>
 					<?php
+					do {
 
-					foreach ( $this->story_posts as $story_post ) {
-						$this->render_single_story_content( $story_post->ID );
-					}
+						$this->render_single_story_content();
+						$this->next();
+
+					} while ( $this->valid() );
 					?>
 				</amp-carousel>
 			</div>
