@@ -17,10 +17,17 @@
 /**
  * Internal dependencies
  */
-import { getBox } from '../../../edit-story/units/dimensions';
+import {
+  FULLBLEED_RATIO,
+  PAGE_HEIGHT,
+  PAGE_WIDTH,
+} from '../../../edit-story/constants';
 import getMediaSizePositionProps from '../../../edit-story/elements/media/getMediaSizePositionProps';
+import { getBox } from '../../../edit-story/units/dimensions';
 import { BACKGROUND_ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
+
+const FULLBLEED_PAGE_HEIGHT = (1 / FULLBLEED_RATIO) * PAGE_WIDTH;
 
 export function EffectBackgroundPan({
   panDir = DIRECTION.RIGHT_TO_LEFT,
@@ -37,8 +44,10 @@ export function EffectBackgroundPan({
   };
 
   const animationName = `direction-${panDir}-${BACKGROUND_ANIMATION_EFFECTS.PAN.value}`;
-  const box = getBox(element, 66.67, 100);
-  const mediaPosition = getMediaSizePositionProps(
+  // Get elements box based on a given page size with proper ratio.
+  const box = getBox(element, PAGE_WIDTH, PAGE_HEIGHT);
+  // Calculate image offsets based off given box, focal point
+  const media = getMediaSizePositionProps(
     element.resource,
     box.width,
     box.height,
@@ -46,14 +55,43 @@ export function EffectBackgroundPan({
     element.focalX,
     element.focalY
   );
-  const keyframes = {
-    transform: [
-      `translateX(${(mediaPosition.offsetX / mediaPosition.width) * 100}%)`,
-      `translateX(0%)`,
-    ],
+
+  // Since we don't know the page size at the time this animation will be called,
+  // we want to divide out the page size and make these bounds relative to the element size.
+  const translateToLeftBound = `translate3d(${
+    (media.offsetX / media.width) * 100
+  }%, 0, 0)`;
+  const translateToRightBound = `translate3d(-${
+    ((media.width - (media.offsetX + PAGE_WIDTH)) / media.width) * 100
+  }%, 0, 0)`;
+  const translateToTopBound = `translate3d(0, ${
+    (media.offsetY / media.height) * 100
+  }%, 0)`;
+  const translateToBottomBound = `translate3d(0, -${
+    ((media.height - (media.offsetY + FULLBLEED_PAGE_HEIGHT)) / media.height) *
+    100
+  }%, 0)`;
+  const translateToOriginX = 'translate3d(0%, 0, 0)';
+  const translateToOriginY = 'translate3d(0, 0%, 0)';
+
+  const translate = {
+    from: {
+      [DIRECTION.RIGHT_TO_LEFT]: translateToRightBound,
+      [DIRECTION.LEFT_TO_RIGHT]: translateToLeftBound,
+      [DIRECTION.BOTTOM_TO_TOP]: translateToBottomBound,
+      [DIRECTION.TOP_TO_BOTTOM]: translateToTopBound,
+    },
+    to: {
+      [DIRECTION.RIGHT_TO_LEFT]: translateToOriginX,
+      [DIRECTION.LEFT_TO_RIGHT]: translateToOriginX,
+      [DIRECTION.BOTTOM_TO_TOP]: translateToOriginY,
+      [DIRECTION.TOP_TO_BOTTOM]: translateToOriginY,
+    },
   };
 
-  // console.log('PAN %X: ', mediaPosition.offsetX / mediaPosition.width);
+  const keyframes = {
+    transform: [translate.from[panDir], translate.to[panDir]],
+  };
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,

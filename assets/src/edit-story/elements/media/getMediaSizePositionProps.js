@@ -50,16 +50,7 @@ function getMediaSizePositionProps(
     0,
     Math.min(mediaHeight * focalY * 0.01 - height * 0.5, mediaHeight - height)
   );
-  // console.log({
-  //   width: mediaWidth,
-  //   height: mediaHeight,
-  //   offsetX,
-  //   offsetY,
-  //   scale,
-  //   focalX,
-  //   focalY,
-  // });
-  // console.log('MEDIA_PROPS %X: ', offsetX);
+
   return {
     width: mediaWidth,
     height: mediaHeight,
