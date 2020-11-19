@@ -32,8 +32,17 @@ import {
   previewStory,
   addTextElement,
   insertStoryTitle,
-  publishStory,
 } from '../../utils';
+
+async function publishStory() {
+  await expect(page).toClick('button', { text: 'Publish' });
+  await expect(page).toMatch('Story published!');
+  await expect(page).toClick('button', { text: 'Dismiss' });
+  await expect(page).toMatchElement('button', {
+    text: 'Switch to Draft',
+  });
+  await expect(page).toClick('button', { text: 'Update' });
+}
 
 describe('Author User', () => {
   beforeAll(async () => {

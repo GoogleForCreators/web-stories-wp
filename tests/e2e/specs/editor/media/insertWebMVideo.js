@@ -26,7 +26,6 @@ import {
   createNewStory,
   previewStory,
   insertStoryTitle,
-  publishStory,
 } from '../../../utils';
 
 const MODAL = '.media-modal';
@@ -104,8 +103,6 @@ describe('Inserting WebM Video', () => {
     // Wait for poster image to be generated.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-
-    await publishStory();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);

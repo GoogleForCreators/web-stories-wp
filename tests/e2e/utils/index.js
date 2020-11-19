@@ -23,6 +23,5 @@ export { default as withDisabledToolbarOnFrontend } from './toolbarProfileOption
 export { default as deactivateRTL } from './deactivateRTL';
 export { default as activateRTL } from './activateRTL';
 export { default as publishPost } from './publishPost';
-export { default as publishStory } from './publishStory';
 export { default as addTextElement } from './addTextElement';
 export { default as insertStoryTitle } from './insertStoryTitle';
