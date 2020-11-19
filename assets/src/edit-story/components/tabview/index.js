@@ -89,10 +89,14 @@ const Tab = styled.li.attrs(({ isActive }) => ({
 
     &.alert {
       width: ${ALERT_ICON_SIZE}px;
-      height: ${ALERT_ICON_SIZE}px;
+      height: auto;
       position: absolute;
       left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
-      top: calc(50% - ${ALERT_ICON_SIZE / 2}px);
+      top: calc(
+        50% -
+          ${({ isActive }) =>
+            isActive ? ALERT_ICON_SIZE / 2 - 1 : ALERT_ICON_SIZE / 2}}px
+      );
       opacity: 1;
       &.warning {
         color: ${({ theme }) => theme.colors.fg.warning};
