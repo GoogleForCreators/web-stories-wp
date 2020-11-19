@@ -130,6 +130,20 @@ describe('Image Editor', () => {
 
         await fixture.snapshot('Image reset');
       });
+
+      it('should allow image to be scaled using mouse-wheel', async () => {
+        // Validate that image has focus
+        const image = fixture.editor.canvas.editLayer.media;
+        expect(image).toHaveFocus();
+
+        // Scale image up by scrolling three steps
+        await fixture.events.mouse.moveRel(image, 10, 10);
+        await fixture.events.mouse.wheel({ deltaY: 1 });
+        await fixture.events.mouse.wheel({ deltaY: 1 });
+        await fixture.events.mouse.wheel({ deltaY: 1 });
+
+        await fixture.snapshot('Image scaled up');
+      });
     });
   });
 });
