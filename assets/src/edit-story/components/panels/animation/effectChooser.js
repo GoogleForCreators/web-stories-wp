@@ -300,56 +300,6 @@ export default function EffectChooser({
               </WhooshInRightAnimation>
               <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
-            <GridItem
-              aria-label={__('Pan from Left Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.LEFT_TO_RIGHT,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <PanLeftAnimation>{__('Pan', 'web-stories')}</PanLeftAnimation>
-            </GridItem>
-            <GridItem
-              aria-label={__('Pan from Top Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.TOP_TO_BOTTOM,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <PanTopAnimation>{__('Pan', 'web-stories')}</PanTopAnimation>
-            </GridItem>
-            <GridItem
-              aria-label={__('Pan from Bottom Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.BOTTOM_TO_TOP,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>{' '}
-              <PanBottomAnimation>
-                {__('Pan', 'web-stories')}
-              </PanBottomAnimation>
-            </GridItem>
-            <GridItem
-              aria-label={__('Pan from Right Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.RIGHT_TO_LEFT,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <PanRightAnimation>{__('Pan', 'web-stories')}</PanRightAnimation>
-            </GridItem>
             <GridItemHalfRow
               aria-label={__('Zoom In Effect', 'web-stories')}
               onClick={() =>

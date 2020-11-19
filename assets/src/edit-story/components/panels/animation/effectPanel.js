@@ -85,15 +85,6 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
     [id, type, config, onChange]
   );
 
-  // const handleRemoveClick = useCallback(() => {
-  //   onRemove({
-  //     id,
-  //     type,
-  //     ...config,
-  //     delete: true,
-  //   });
-  // }, [id, type, config, onRemove]);
-
   const containsVisualPicker = useMemo(() => {
     return Object.keys(props).reduce((memo, current) => {
       return (
@@ -127,7 +118,6 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
 EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
-  // onRemove: PropTypes.func.isRequired,
 };
 
 export default EffectPanel;
