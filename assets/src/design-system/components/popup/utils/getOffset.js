@@ -17,50 +17,8 @@
 /**
  * Internal dependencies
  */
-import { Placement } from '.';
-
-export function getXTransforms(placement) {
-  // left & right
-  if (placement.startsWith('left')) {
-    return -1;
-  } else if (placement.startsWith('right')) {
-    return null;
-  }
-  // top & bottom
-  if (placement.endsWith('-start')) {
-    return null;
-  } else if (placement.endsWith('-end')) {
-    return -1;
-  }
-  return -0.5;
-}
-
-export function getYTransforms(placement) {
-  if (
-    placement.startsWith('top') ||
-    placement === Placement.RIGHT_END ||
-    placement === Placement.LEFT_END
-  ) {
-    return -1;
-  }
-  if (placement === Placement.RIGHT || placement === Placement.LEFT) {
-    return -0.5;
-  }
-  return null;
-}
-
-// note that we cannot use percentage values for transforms, which
-// do not work correctly for rotated elements
-export function getTransforms(placement) {
-  const xTransforms = getXTransforms(placement);
-  const yTransforms = getYTransforms(placement);
-  if (!xTransforms && !yTransforms) {
-    return '';
-  }
-  return `translate(${(xTransforms || 0) * 100}%, ${
-    (yTransforms || 0) * 100
-  }%)`;
-}
+import { PLACEMENT } from '../constants';
+import { getXTransforms, getYTransforms } from './getTransforms';
 
 export function getXOffset(
   placement,
@@ -70,25 +28,25 @@ export function getXOffset(
   bodyRect
 ) {
   switch (placement) {
-    case Placement.BOTTOM_START:
-    case Placement.TOP_START:
-    case Placement.LEFT:
-    case Placement.LEFT_END:
-    case Placement.LEFT_START:
+    case PLACEMENT.BOTTOM_START:
+    case PLACEMENT.TOP_START:
+    case PLACEMENT.LEFT:
+    case PLACEMENT.LEFT_END:
+    case PLACEMENT.LEFT_START:
       return bodyRect.left + (dockRect?.left || anchorRect.left) - spacing;
-    case Placement.BOTTOM_END:
-    case Placement.TOP_END:
-    case Placement.RIGHT:
-    case Placement.RIGHT_END:
-    case Placement.RIGHT_START:
+    case PLACEMENT.BOTTOM_END:
+    case PLACEMENT.TOP_END:
+    case PLACEMENT.RIGHT:
+    case PLACEMENT.RIGHT_END:
+    case PLACEMENT.RIGHT_START:
       return (
         bodyRect.left +
         (dockRect?.left || anchorRect.left) +
         anchorRect.width +
         spacing
       );
-    case Placement.BOTTOM:
-    case Placement.TOP:
+    case PLACEMENT.BOTTOM:
+    case PLACEMENT.TOP:
       return (
         bodyRect.left +
         (dockRect?.left || anchorRect.left) +
@@ -101,20 +59,20 @@ export function getXOffset(
 
 export function getYOffset(placement, spacing = 0, anchorRect) {
   switch (placement) {
-    case Placement.BOTTOM:
-    case Placement.BOTTOM_START:
-    case Placement.BOTTOM_END:
-    case Placement.LEFT_END:
-    case Placement.RIGHT_END:
+    case PLACEMENT.BOTTOM:
+    case PLACEMENT.BOTTOM_START:
+    case PLACEMENT.BOTTOM_END:
+    case PLACEMENT.LEFT_END:
+    case PLACEMENT.RIGHT_END:
       return anchorRect.top + anchorRect.height + spacing;
-    case Placement.TOP:
-    case Placement.TOP_START:
-    case Placement.TOP_END:
-    case Placement.LEFT_START:
-    case Placement.RIGHT_START:
+    case PLACEMENT.TOP:
+    case PLACEMENT.TOP_START:
+    case PLACEMENT.TOP_END:
+    case PLACEMENT.LEFT_START:
+    case PLACEMENT.RIGHT_START:
       return anchorRect.top - spacing;
-    case Placement.RIGHT:
-    case Placement.LEFT:
+    case PLACEMENT.RIGHT:
+    case PLACEMENT.LEFT:
       return anchorRect.top + anchorRect.height / 2;
     default:
       return 0;

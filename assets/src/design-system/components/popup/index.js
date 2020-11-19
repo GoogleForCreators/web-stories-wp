@@ -26,29 +26,9 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
 import useResizeEffect from '../../utils/useResizeEffect';
 import { THEME_CONSTANTS } from '../../theme/';
 import { getTransforms, getOffset } from './utils';
+import { PLACEMENT } from './constants';
 
-/**
- * Internal dependencies
- */
-
-export const Placement = {
-  // TOP
-  TOP: 'top',
-  TOP_START: 'top-start',
-  TOP_END: 'top-end',
-  // BOTTOM
-  BOTTOM: 'bottom',
-  BOTTOM_START: 'bottom-start',
-  BOTTOM_END: 'bottom-end',
-  // RIGHT
-  RIGHT: 'right',
-  RIGHT_START: 'right-start',
-  RIGHT_END: 'right-end',
-  // LEFT
-  LEFT: 'left',
-  LEFT_START: 'left-start',
-  LEFT_END: 'left-end',
-};
+// TODO scrollbar update, commented out until design updates are done
 
 const Container = styled.div.attrs(
   ({ x, y, width, height, fillWidth, fillHeight, placement }) => ({
@@ -96,7 +76,7 @@ function Popup({
   dock,
   children,
   renderContents,
-  placement = 'bottom',
+  placement = PLACEMENT.BOTTOM,
   spacing,
   isOpen,
   fillWidth = false,
@@ -160,3 +140,4 @@ function Popup({
 }
 
 export default Popup;
+export { PLACEMENT };
