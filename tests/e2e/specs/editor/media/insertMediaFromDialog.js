@@ -77,7 +77,7 @@ describe('Inserting Media from Dialog', () => {
       document.querySelector(selector).click();
     }, btnTab);
     const btnSelector =
-      '.attachments-browser .attachments .attachment[aria-label="small-video"]:first-of-type';
+      '.attachments-browser .attachments .attachment[aria-label="small-video"]';
     await page.waitForSelector(btnSelector);
     await page.evaluate((selector) => {
       document.querySelector(selector).click();

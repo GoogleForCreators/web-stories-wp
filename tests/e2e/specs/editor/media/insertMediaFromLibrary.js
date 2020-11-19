@@ -32,9 +32,7 @@ describe('Inserting Media from Media Library', () => {
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     // Clicking will only act on the first element.
-    await expect(page).toClick(
-      '.mediaElementimage[data-testid="mediaElement"]'
-    );
+    await expect(page).toClick('.mediaElementimage');
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
@@ -52,11 +50,9 @@ describe('Inserting Media from Media Library', () => {
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     // Clicking will only act on the first element.
-    await expect(page).toClick(
-      '.mediaElementvideo[data-testid="mediaElement"]'
-    );
+    await expect(page).toClick('.mediaElementvideo');
 
-    // First match is for the background element, second for the image.
+    // First match is for the background element, second for the video.
     await expect(page).toMatchElement(
       '[data-testid="frameElement"]:nth-of-type(2)'
     );
