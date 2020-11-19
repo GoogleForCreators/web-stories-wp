@@ -75,7 +75,7 @@ function PageLayouts(props) {
           >
             {indexes.map((index) => {
               const page = pages[index];
-              return page ? <PageLayout key={index} page={page} /> : null;
+              return page ? <PageLayout key={page.id} page={page} /> : null;
             })}
           </PageLayoutsRow>
         );
