@@ -74,6 +74,7 @@ describe('PageLayoutsPane', () => {
     const { queryByText } = renderWithTemplates();
 
     await act(async () => {
+      // Needed to flush all promises to get templates to resolve
       await flushPromiseQueue();
     });
 
