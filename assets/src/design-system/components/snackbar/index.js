@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export { Text, Display, Headline } from './typography';
+/**
+ * Internal dependencies
+ */
+export { SnackbarContainer as Container } from './snackbarContainer';
+export { SnackbarMessage as Message } from './snackbarMessage';

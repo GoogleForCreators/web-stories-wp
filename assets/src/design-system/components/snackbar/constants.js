@@ -14,8 +14,5 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export { Text, Display, Headline } from './typography';
+export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MAX = 10000;
+export const AUTO_REMOVE_MESSAGE_TIME_INTERVAL_MIN = 4000;

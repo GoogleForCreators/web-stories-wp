@@ -14,8 +14,15 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export { Text, Display, Headline } from './typography';
+/**
+ * Internal dependencies
+ */
+import * as TYPOGRAPHY from './typography';
+import * as WP_ADMIN from './wpAdmin';
+import { Z_INDEX } from './zIndex';
+
+export const THEME_CONSTANTS = {
+  TYPOGRAPHY,
+  Z_INDEX,
+  WP_ADMIN,
+};

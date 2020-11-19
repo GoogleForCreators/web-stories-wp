@@ -13,32 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
-import { defaultTypographyStyle } from '../styles';
+import { THEME_CONSTANTS } from '../../theme';
 
-export const Display = styled.h1`
-  ${defaultTypographyStyle}
-  ${({ size, theme }) =>
-    themeHelpers.expandPresetStyles({
-      preset: theme.typography.presets.display[size],
-      theme,
-    })}
+export const SnackbarContainer = styled.div`
+  position: fixed;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: ${({ alignItems }) => alignItems};
+  width: 100%;
+  z-index: ${({ customZIndex }) =>
+    customZIndex || THEME_CONSTANTS.Z_INDEX.SNACKBAR};
 `;
 
-Display.propTypes = {
-  as: PropTypes.oneOf(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']).isRequired,
-  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES),
+SnackbarContainer.propTypes = {
+  alignItems: PropTypes.string,
+  customZIndex: PropTypes.number,
 };
-Display.defaultProps = {
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
+SnackbarContainer.defaultProps = {
+  alignItems: 'center',
 };

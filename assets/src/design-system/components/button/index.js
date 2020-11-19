@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
@@ -42,8 +42,8 @@ const Base = styled.button(
       preset: {
         ...theme.typography.presets.button[
           size === BUTTON_SIZES.SMALL
-            ? THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
-            : THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM
+            ? THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM
         ],
       },
       theme,
@@ -153,7 +153,7 @@ const ButtonOptions = {
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
-export const Button = ({
+const Button = ({
   size = BUTTON_SIZES.MEDIUM,
   type = BUTTON_TYPES.PLAIN,
   variant = BUTTON_VARIANTS.RECTANGLE,
@@ -183,4 +183,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };

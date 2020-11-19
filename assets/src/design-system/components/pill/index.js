@@ -45,7 +45,7 @@ const StyledPill = styled.button(
     ${themeHelpers.expandPresetStyles({
       preset:
         theme.typography.presets.label[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
         ],
       theme,
     })};
