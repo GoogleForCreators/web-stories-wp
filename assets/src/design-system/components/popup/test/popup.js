@@ -17,8 +17,10 @@
 /**
  * Internal dependencies
  */
-import Popup from '../index';
-import { renderWithTheme } from '../../../testUtils';
+import Popup from '../';
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+
+// TODO tests with karma to easily get positions and interact
 
 describe('Popup', () => {
   it('should render popup', () => {
@@ -26,7 +28,7 @@ describe('Popup', () => {
       current: document.createElement('div'),
     };
     document.body.append(anchor.current);
-    const { getByText } = renderWithTheme(
+    const { getByText } = renderWithProviders(
       <Popup anchor={anchor} isOpen={true}>
         {'Hello World!'}
       </Popup>
@@ -36,16 +38,12 @@ describe('Popup', () => {
     expect(popup).toBeDefined();
   });
 
-  // TODO(wassgha): Tests for different placements
-
-  // TODO(wassgha): Test for default placement
-
   it('should not render popup when isOpen set to false', () => {
     const anchor = {
       current: document.createElement('div'),
     };
     document.body.append(anchor.current);
-    const { queryByText } = renderWithTheme(
+    const { queryByText } = renderWithProviders(
       <Popup anchor={anchor} isOpen={false}>
         {'Hello World!'}
       </Popup>

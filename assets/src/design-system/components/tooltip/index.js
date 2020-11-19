@@ -172,5 +172,4 @@ WithTooltip.propTypes = {
   title: PropTypes.string,
 };
 
-export default WithTooltip;
-export { PLACEMENT as TOOLTIP_PLACEMENT };
+export { WithTooltip, PLACEMENT as TOOLTIP_PLACEMENT };

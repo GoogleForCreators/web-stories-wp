@@ -15,43 +15,19 @@
  */
 
 /**
- * External dependencies
- */
-import { fireEvent } from '@testing-library/react';
-/**
  * Internal dependencies
  */
-import { act } from 'react-dom/test-utils';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { Tooltip } from '../';
+import { WithTooltip } from '../';
 
 describe('<Tooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
-    const { getByText } = renderWithProviders(
-      <Tooltip content="Some tooltip text">
-        <div />
-      </Tooltip>
+    const { queryAllByText } = renderWithProviders(
+      <WithTooltip title={'Some tooltip text'}>
+        <button>{'hover to see tooltip'}</button>
+      </WithTooltip>
     );
 
-    expect(getByText('Some tooltip text')).not.toBeVisible();
-  });
-
-  it('should be visible when the mouse is hovering over the container', function () {
-    const { getByTestId, getByText } = renderWithProviders(
-      <Tooltip content="Some tooltip text">
-        <div />
-      </Tooltip>
-    );
-
-    const mouseEvent = new MouseEvent('mouseover', {
-      bubbles: true,
-      cancelable: false,
-    });
-
-    act(() => {
-      fireEvent(getByTestId('tooltip-container'), mouseEvent);
-    });
-
-    expect(getByText('Some tooltip text')).toBeVisible();
+    expect(queryAllByText('Some tooltip text')).toHaveLength(0);
   });
 });
