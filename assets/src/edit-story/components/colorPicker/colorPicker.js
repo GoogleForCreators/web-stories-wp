@@ -103,7 +103,7 @@ function ColorPicker({
     actions: { pushTransform },
   } = useTransform();
 
-  const { selectedElementIds } = useStory(
+  const { selectedElementIds = [] } = useStory(
     ({ state: { selectedElementIds } }) => {
       return {
         selectedElementIds,
