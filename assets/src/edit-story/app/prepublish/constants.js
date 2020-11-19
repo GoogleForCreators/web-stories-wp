@@ -69,7 +69,7 @@ export const MESSAGES = {
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum cover dimension width x minimum cover dimension height. 2: cover dimensions aspect ratio.  */
         __(
-          'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned in text. Should be at least %1$s and maintain a %2$s aspect ratio.',
+          'Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least %1$s in size and maintain a %2$s aspect ratio.',
           'web-stories'
         ),
         `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
@@ -89,7 +89,7 @@ export const MESSAGES = {
       ),
     },
     COVER_WRONG_ASPECT_RATIO: {
-      MAIN_TEXT: __('Story cover image wrong aspect ratio ', 'web-stories'),
+      MAIN_TEXT: __('Story cover image wrong aspect ratio', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum cover dimension width X minimum cover dimension height. 2: cover dimensions aspect ratio. */
         __(
@@ -142,7 +142,7 @@ export const MESSAGES = {
       MAIN_TEXT: __('Font size too small', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum font size. */
-        __('Text should be size %d or higher.', 'web-stories'),
+        __('Text should have size %d or larger.', 'web-stories'),
         MIN_FONT_SIZE
       ),
     },
@@ -197,7 +197,7 @@ export const MESSAGES = {
       ),
     },
     MISSING_VIDEO_ALT_TEXT: {
-      MAIN_TEXT: __('Video missing assistive text', 'web-stories'),
+      MAIN_TEXT: __('Video missing alt text', 'web-stories'),
       HELPER_TEXT: sprintf(
         /* translators: %s: alt. */
         __(
@@ -249,7 +249,7 @@ export const MESSAGES = {
       HELPER_TEXT: sprintf(
         /* translators: 1: maximum number of story characters. 2: maximum percentage of characters, depending on number of pages. */
         __(
-          'Keep text to max %1$d characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than %2$d%% percent of the pages in the story.',
+          'Keep text to max %1$d characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than %2$d%% of the pages in the story.',
           'web-stories'
         ),
         MAX_STORY_CHARACTERS,
@@ -296,7 +296,7 @@ export const MESSAGES = {
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum image size width x minimum image size height. */
         __(
-          'Use %s for full screen images. Use similar pixel density for cropped images.',
+          'Use %s for full screen images, keep to similar pixel density for cropped images.',
           'web-stories'
         ),
         `${IMAGE_SIZE_WIDTH}x${IMAGE_SIZE_HEIGHT}px`
