@@ -190,14 +190,15 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
-  const renderRow = useCallback(({ message, help, id, pageGroup }) => {
-    return (
+  const renderRow = useCallback(
+    ({ message, help, id, pageGroup }) => (
       <Row key={`guidance-${id}`} pageGroup={pageGroup}>
         {message}
         <HelperText>{help}</HelperText>
       </Row>
-    );
-  }, []);
+    ),
+    []
+  );
 
   const renderPageGroupedRow = useCallback(
     (entry) => {
@@ -207,7 +208,7 @@ const ChecklistTab = (props) => {
           <PageIndicator>
             <Rectangle />
             {sprintf(
-              /* translators: %s: page number */
+              /* translators: %s: page number. */
               __('Page %s', 'web-stories'),
               pageNum
             )}

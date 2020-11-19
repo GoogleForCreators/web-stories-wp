@@ -64,7 +64,7 @@ function getPrepublishErrors(story) {
       // for each page, run checklist on the page object as well as each element
       ({ pageGuidance, elementGuidance } = story.pages.reduce(
         (prev, currentPage, currentIndex) => {
-          const page = currentIndex + 1;
+          const pageNum = currentIndex + 1;
           const { id: pageId, elements } = currentPage;
 
           // get guidance for the page object
@@ -73,7 +73,7 @@ function getPrepublishErrors(story) {
             try {
               const guidanceMessage = getPageGuidance(currentPage);
               if (guidanceMessage !== undefined) {
-                currentPageGuidance.push({ ...guidanceMessage, page });
+                currentPageGuidance.push({ ...guidanceMessage, page: pageNum });
               }
             } catch (e) {
               // ignore errors
@@ -94,7 +94,7 @@ function getPrepublishErrors(story) {
                     ...guidanceMessage,
                     // provide the page the element is on
                     pageId,
-                    page,
+                    page: pageNum,
                   });
                 }
               } catch (e) {
