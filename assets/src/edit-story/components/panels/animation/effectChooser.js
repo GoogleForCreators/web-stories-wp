@@ -54,6 +54,10 @@ import {
   ZoomInAnimation,
   ZoomOutAnimation,
   BaseAnimationCell,
+  PanTopAnimation,
+  PanRightAnimation,
+  PanBottomAnimation,
+  PanLeftAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -146,17 +150,60 @@ export default function EffectChooser({
               <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
               <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
             </GridItemFullRow>
-            <GridItemFullRow
-              aria-label={__('Pan Effect', 'web-stories')}
+            <GridItem
+              aria-label={__('Pan Left Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
             >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <ZoomOutAnimation>{__('Pan', 'web-stories')}</ZoomOutAnimation>
-            </GridItemFullRow>
+              <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
+              <PanLeftAnimation>
+                {__('Pan Left', 'web-stories')}
+              </PanLeftAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Right Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.RIGHT_TO_LEFT,
+                })
+              }
+            >
+              <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
+              <PanRightAnimation>
+                {__('Pan Right', 'web-stories')}
+              </PanRightAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Up Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.BOTTOM_TO_TOP,
+                })
+              }
+            >
+              <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
+              <PanBottomAnimation>
+                {__('Pan Up', 'web-stories')}
+              </PanBottomAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Down Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.TOP_TO_BOTTOM,
+                })
+              }
+            >
+              <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
+              <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
+            </GridItem>
           </>
         ) : (
           <>

@@ -198,6 +198,7 @@ const translations = {
 };
 
 export const DirectionRadioInput = ({
+  value,
   directions = [],
   onChange,
   defaultChecked,
@@ -220,6 +221,7 @@ export const DirectionRadioInput = ({
               name="direction"
               value={direction}
               onChange={onChange}
+              checked={value === direction}
               defaultChecked={defaultChecked === direction}
             />
             <DirectionIndicator direction={direction} />
@@ -237,6 +239,7 @@ const directionPropType = PropTypes.oneOf([
 
 DirectionRadioInput.propTypes = {
   defaultChecked: directionPropType,
+  value: directionPropType,
   directions: PropTypes.arrayOf(directionPropType),
   onChange: PropTypes.func,
 };

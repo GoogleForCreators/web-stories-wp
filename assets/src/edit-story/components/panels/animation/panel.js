@@ -134,6 +134,7 @@ function AnimationPanel({
           onAnimationSelected={handleAddOrUpdateElementEffect}
           selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
           onNoEffectSelected={handleRemoveEffect}
+          isBackgroundEffects={isBackground}
         />
       </Row>
       {updatedAnimations[0] && (

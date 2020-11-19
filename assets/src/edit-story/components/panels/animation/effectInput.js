@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DIRECTION, FIELD_TYPES } from '../../../../animation';
+import { FIELD_TYPES } from '../../../../animation';
 import { GeneralAnimationPropTypes } from '../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../form';
@@ -84,17 +84,8 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
     case FIELD_TYPES.DIRECTION_PICKER:
       return (
         <DirectionRadioInput
-          directions={Object.values(DIRECTION)}
-          defaultChecked={
-            effectConfig[field] || effectProps[field].defaultValue
-          }
-          onChange={directionControlOnChange}
-        />
-      );
-    case FIELD_TYPES.ROTATION_PICKER:
-      return (
-        <DirectionRadioInput
-          directions={[DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT]}
+          value={effectConfig[field] || effectProps[field].defaultValue}
+          directions={effectProps[field].values}
           defaultChecked={
             effectConfig[field] || effectProps[field].defaultValue
           }

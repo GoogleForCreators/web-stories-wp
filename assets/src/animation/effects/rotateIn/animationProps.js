@@ -39,7 +39,7 @@ export const RotateInEffectInputPropTypes = {
 export default {
   rotateInDir: {
     label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.ROTATION_PICKER,
+    type: FIELD_TYPES.DIRECTION_PICKER,
     values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
     defaultValue: DIRECTION.LEFT_TO_RIGHT,
   },
