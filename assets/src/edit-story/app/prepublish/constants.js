@@ -237,10 +237,11 @@ export const MESSAGES = {
   TEXT: {
     TOO_MUCH_PAGE_TEXT: {
       MAIN_TEXT: __('Too much text on page', 'web-stories'),
+      // eslint-disable eslint/no-useless-escape
       HELPER_TEXT: sprintf(
         /* translators: 1: maximum number of story characters. 2: maximum percentage of characters, depending on number of pages. */
         __(
-          'Keep text to max %1$d characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than %2$d% of the pages in the story.',
+          'Keep text to max %1$d characters per page. Consider using a page attachment, breaking up the text into multiple screens, or keeping the total number of pages with a lot of text to less than %2$d%% percent of the pages in the story.',
           'web-stories'
         ),
         MAX_STORY_CHARACTERS,
