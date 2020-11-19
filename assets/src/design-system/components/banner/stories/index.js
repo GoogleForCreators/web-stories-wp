@@ -43,7 +43,9 @@ export const _default = () => {
       isDashboard={boolean('isDashboard', false)}
       backgroundUrl={demoBgUrl}
     >
-      <Text>{text('children', 'I am a banner child')}</Text>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+        {text('children', 'I am a banner child')}
+      </Text>
     </Banner>
   );
 };

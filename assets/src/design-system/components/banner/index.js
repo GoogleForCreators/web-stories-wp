@@ -37,14 +37,14 @@ const Title = styled(Text)`
 
 const Content = styled.div`
   grid-area: content;
-  padding-top: 4px;
   margin-bottom: 4px;
+  max-width: 480px;
 `;
 
 const CloseButton = styled(Button)`
   grid-area: closeButton;
   justify-self: end;
-  margin: 2px 0 0;
+  align-self: flex-start;
 `;
 
 // TODO update this once new theme colors are merged
@@ -56,6 +56,7 @@ const Container = styled.div`
   grid-template-columns: 104px 408px auto;
   grid-column-gap: 32px;
   grid-template-areas: 'title content closeButton';
+  align-items: baseline;
   padding: 6px 8px;
   background-color: ${({ theme }) => theme.colors.gray[10]};
   background-image: url('${({ backgroundUrl }) => backgroundUrl}');
@@ -76,7 +77,7 @@ const Container = styled.div`
         font-weight: normal;
       }
       ${Content} {
-        margin: 8px 0 18px;
+        margin: 8px auto 18px;
       }
     `}
 `;
@@ -105,8 +106,8 @@ export const Banner = forwardRef(
           {title}
         </Title>
         <CloseButton
-          type={BUTTON_TYPES.PLAIN}
-          variant={BUTTON_VARIANTS.ICON}
+          type={BUTTON_TYPES.TERTIARY}
+          variant={BUTTON_VARIANTS.SQUARE}
           size={BUTTON_SIZES.SMALL}
           aria-label={closeButtonLabel}
           onClick={onClose}
