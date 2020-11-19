@@ -22,7 +22,7 @@ import {
   MESSAGES,
   MIN_STORY_PAGES,
   MAX_STORY_PAGES,
-  MAX_STORY_TITLE_LENGTH,
+  MAX_STORY_TITLE_LENGTH_CHARS,
 } from '../constants';
 
 /**
@@ -69,7 +69,7 @@ export function storyPagesCount(story) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyTitleLength(story) {
-  if (story.title.length > MAX_STORY_TITLE_LENGTH) {
+  if (story.title.length > MAX_STORY_TITLE_LENGTH_CHARS) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       storyId: story.storyId,
