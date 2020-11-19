@@ -100,6 +100,7 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -233,6 +234,19 @@ class Dashboard {
 	}
 
 	/**
+	 * Find status of site kit plugin in site.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return boolean 
+	 */
+	public function is_site_kit_plugin_installed() {
+		$all_plugins = get_plugins();
+
+		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
+	}
+
+	/**
 	 * Renders the dashboard page.
 	 *
 	 * @since 1.0.0
@@ -322,16 +336,16 @@ class Dashboard {
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
-				'isRTL'              => is_rtl(),
-				'locale'             => ( new Locale() )->get_locale_settings(),
-				'newStoryURL'        => $new_story_url,
-				'editStoryURL'       => $edit_story_url,
-				'wpListURL'          => $classic_wp_list_url,
-				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
-				'version'            => WEBSTORIES_VERSION,
-				'encodeMarkup'       => $this->decoder->supports_decoding(),
-				'api'                => [
+				'isRTL'               => is_rtl(),
+				'locale'              => ( new Locale() )->get_locale_settings(),
+				'newStoryURL'         => $new_story_url,
+				'editStoryURL'        => $edit_story_url,
+				'wpListURL'           => $classic_wp_list_url,
+				'assetsURL'           => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'              => trailingslashit( WEBSTORIES_CDN_URL ),
+				'version'             => WEBSTORIES_VERSION,
+				'encodeMarkup'        => $this->decoder->supports_decoding(),
+				'api'                 => [
 					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
 					'media'       => '/web-stories/v1/media',
 					'currentUser' => '/web-stories/v1/users/me',
@@ -339,11 +353,19 @@ class Dashboard {
 					'templates'   => '/web-stories/v1/web-story-template',
 					'settings'    => '/web-stories/v1/settings',
 				],
-				'maxUpload'          => $max_upload_size,
-				'maxUploadFormatted' => size_format( $max_upload_size ),
-				'capabilities'       => [
+				'maxUpload'           => $max_upload_size,
+				'maxUploadFormatted'  => size_format( $max_upload_size ),
+				'capabilities'        => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
+					
+				],
+				'siteKitCapabilities' => [
+					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),
+					'siteKitActive'         => defined( 'GOOGLESITEKIT_VERSION' ),
+					'analyticsModuleActive' => false, // TODO: copy the logic from Analytics.php we need to share somehow.
+					'canInstallPlugins'     => current_user_can( 'install_plugins' ),
+					'canActivatePlugins'    => current_user_can( 'activate_plugin', 'google-site-kit/google-site-kit.php' ),
 				],
 				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
 			],
