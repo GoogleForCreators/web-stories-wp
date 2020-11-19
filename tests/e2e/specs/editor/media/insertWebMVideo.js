@@ -22,7 +22,12 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory } from '../../../utils';
+import {
+  createNewStory,
+  previewStory,
+  insertStoryTitle,
+  publishStory,
+} from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -85,6 +90,8 @@ describe('Inserting WebM Video', () => {
   it('should insert an video by clicking on media library and preview on FE', async () => {
     await createNewStory();
 
+    await insertStoryTitle('Publishing with video');
+
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     await page.waitForSelector('.mediaElementvideo');
@@ -98,6 +105,8 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
+    await publishStory();
+
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('amp-video');
@@ -107,8 +116,6 @@ describe('Inserting WebM Video', () => {
     });
 
     expect(poster).not.toBeNull();
-
-    await percySnapshot(previewPage, 'Preview Video with poster');
 
     await editorPage.bringToFront();
     await previewPage.close();

@@ -27,22 +27,13 @@ import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory, addTextElement } from '../../utils';
-
-async function insertStoryTitle(title) {
-  await expect(page).toMatchElement('input[placeholder="Add title"]');
-  await page.type('input[placeholder="Add title"]', title);
-}
-
-async function publishStory() {
-  await expect(page).toClick('button', { text: 'Publish' });
-  await expect(page).toMatch('Story published!');
-  await expect(page).toClick('button', { text: 'Dismiss' });
-  await expect(page).toMatchElement('button', {
-    text: 'Switch to Draft',
-  });
-  await expect(page).toClick('button', { text: 'Update' });
-}
+import {
+  createNewStory,
+  previewStory,
+  addTextElement,
+  insertStoryTitle,
+  publishStory,
+} from '../../utils';
 
 describe('Author User', () => {
   beforeAll(async () => {
