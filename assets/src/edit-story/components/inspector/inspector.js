@@ -21,17 +21,14 @@ import { UploadDropTarget } from '../uploadDropTarget';
 
 import InspectorProvider from './inspectorProvider';
 import InspectorLayout from './inspectorLayout';
-import { PrepublishChecklistProvider } from './prepublish';
 
 function Inspector() {
   return (
-    <PrepublishChecklistProvider>
-      <InspectorProvider>
-        <UploadDropTarget disabled>
-          <InspectorLayout />
-        </UploadDropTarget>
-      </InspectorProvider>
-    </PrepublishChecklistProvider>
+    <InspectorProvider>
+      <UploadDropTarget disabled>
+        <InspectorLayout />
+      </UploadDropTarget>
+    </InspectorProvider>
   );
 }
 
