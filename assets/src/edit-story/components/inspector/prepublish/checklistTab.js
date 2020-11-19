@@ -74,6 +74,12 @@ const Row = styled.div`
   font-size: ${({ theme }) => theme.fonts.body2.size};
 `;
 
+const HelperText = styled.span`
+  display: block;
+  font-size: ${({ theme }) => theme.fonts.body2.size};
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
 const PageIndicator = styled(Label)`
   &:not(:first-child) {
     padding-top: 9px;
@@ -112,6 +118,7 @@ const EmptyHeading = styled.h1`
   line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
   margin: 0;
 `;
+
 const EmptyParagraph = styled.p`
   color: ${({ theme }) => theme.colors.fg.secondary};
   font-size: ${({ theme }) => theme.fonts.description.size};
@@ -183,10 +190,11 @@ const ChecklistTab = (props) => {
     [checklist]
   );
 
-  const renderRow = useCallback(({ message, id, pageGroup }) => {
+  const renderRow = useCallback(({ message, help, id, pageGroup }) => {
     return (
       <Row key={`guidance-${id}`} pageGroup={pageGroup}>
         {message}
+        <HelperText>{help}</HelperText>
       </Row>
     );
   }, []);

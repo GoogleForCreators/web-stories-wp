@@ -74,7 +74,16 @@ describe('prepublish checklist', () => {
     expect(getPrepublishErrors(testStory)).toHaveLength(0);
   });
 
-  it.todo('story-based guidelines');
-  it.todo('page-based guidelines');
-  it.todo('element-based guidelines');
+  it.todo(
+    'should not throw errors if the checklist functions throw (and should not skip the others)'
+  );
+  it.todo(
+    'should provide the page number where the element that needs guidance is'
+  );
+  it.todo(
+    'should return the guidance ordered by: story, then page, then elements'
+  );
+  it.todo(
+    'should return the guidance ordered by: errors, then warnings, then guidance'
+  );
 });

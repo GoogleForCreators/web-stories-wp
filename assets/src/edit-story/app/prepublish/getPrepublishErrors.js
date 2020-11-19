@@ -50,16 +50,16 @@ function getPrepublishErrors(story) {
         elementGuidance = [];
 
       // get guidance messages for the top-level story object
-      try {
-        storyChecklist.forEach((getStoryGuidance) => {
+      storyChecklist.forEach((getStoryGuidance) => {
+        try {
           const guidanceMessage = getStoryGuidance(story);
           if (guidanceMessage !== undefined) {
             storyGuidance.push(guidanceMessage);
           }
-        });
-      } catch (e) {
-        // ignore errors
-      }
+        } catch (e) {
+          // ignore errors
+        }
+      });
 
       // for each page, run checklist on the page object as well as each element
       ({ pageGuidance, elementGuidance } = story.pages.reduce(
@@ -69,16 +69,16 @@ function getPrepublishErrors(story) {
 
           // get guidance for the page object
           const currentPageGuidance = [];
-          try {
-            pageChecklist.forEach((getPageGuidance) => {
+          pageChecklist.forEach((getPageGuidance) => {
+            try {
               const guidanceMessage = getPageGuidance(currentPage);
               if (guidanceMessage !== undefined) {
                 currentPageGuidance.push({ ...guidanceMessage, page });
               }
-            });
-          } catch (e) {
-            // ignore errors
-          }
+            } catch (e) {
+              // ignore errors
+            }
+          });
 
           // get guidance for all the elements on the page
           let currentPageElementGuidance = [];
@@ -86,8 +86,8 @@ function getPrepublishErrors(story) {
             const elementsChecklist =
               elementChecklistsByType[element.type] || [];
 
-            try {
-              elementsChecklist.forEach((getElementGuidance) => {
+            elementsChecklist.forEach((getElementGuidance) => {
+              try {
                 const guidanceMessage = getElementGuidance(element);
                 if (guidanceMessage !== undefined) {
                   currentPageElementGuidance.push({
@@ -97,10 +97,10 @@ function getPrepublishErrors(story) {
                     page,
                   });
                 }
-              });
-            } catch (e) {
-              // ignore errors
-            }
+              } catch (e) {
+                // ignore errors
+              }
+            });
           });
 
           return {
