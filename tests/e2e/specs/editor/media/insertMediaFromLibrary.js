@@ -24,7 +24,6 @@ import { percySnapshot } from '@percy/puppeteer';
  */
 import { createNewStory } from '../../../utils';
 
-
 describe('Inserting Media from Media Library', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   it('should insert an image by clicking on it', async () => {
@@ -58,8 +57,11 @@ describe('Inserting Media from Media Library', () => {
     await expect(page).toClick('.mediaElementvideo');
 
     await page.waitForSelector('[data-testid="videoElement"]');
-
     await expect(page).toMatchElement('[data-testid="videoElement"]');
+
+    // Wait for poster image to be generated.
+    await page.waitForSelector('[alt="Preview poster image"]');
+    await expect(page).toMatchElement('[alt="Preview poster image"]');
 
     await percySnapshot(page, 'Inserting Video from Media Library');
   });

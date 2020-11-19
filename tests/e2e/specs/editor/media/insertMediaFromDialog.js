@@ -89,6 +89,10 @@ describe('Inserting Media from Dialog', () => {
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
+    // Wait for poster image to be generated.
+    await page.waitForSelector('[alt="Preview poster image"]');
+    await expect(page).toMatchElement('[alt="Preview poster image"]');
+
     await percySnapshot(page, 'Inserting Video from Dialog');
   });
 });
