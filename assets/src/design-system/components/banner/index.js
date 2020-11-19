@@ -58,8 +58,9 @@ const Container = styled.div`
   grid-template-areas: 'title content closeButton';
   align-items: baseline;
   padding: 6px 8px;
-  background-color: ${({ theme }) => theme.colors.gray[10]};
+  background-color: ${({ theme }) => theme.colors.gray[5]};
   background-image: url('${({ backgroundUrl }) => backgroundUrl}');
+  border-radius: 8px;
 
   ${({ isDashboard }) =>
     isDashboard &&
