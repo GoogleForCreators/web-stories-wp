@@ -17,6 +17,8 @@
 /**
  * Internal dependencies
  */
+import { getBox } from '../../../edit-story/units/dimensions';
+import getMediaSizePositionProps from '../../../edit-story/elements/media/getMediaSizePositionProps';
 import { BACKGROUND_ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
 
@@ -25,7 +27,7 @@ export function EffectBackgroundPan({
   duration = 500,
   delay,
   easing,
-  // element,
+  element,
 }) {
   const timings = {
     fill: 'both',
@@ -35,9 +37,23 @@ export function EffectBackgroundPan({
   };
 
   const animationName = `direction-${panDir}-${BACKGROUND_ANIMATION_EFFECTS.PAN.value}`;
+  const box = getBox(element, 66.67, 100);
+  const mediaPosition = getMediaSizePositionProps(
+    element.resource,
+    box.width,
+    box.height,
+    element.scale,
+    element.focalX,
+    element.focalY
+  );
   const keyframes = {
-    transform: [``, ``],
+    transform: [
+      `translateX(${(mediaPosition.offsetX / mediaPosition.width) * 100}%)`,
+      `translateX(0%)`,
+    ],
   };
+
+  // console.log('PAN %X: ', mediaPosition.offsetX / mediaPosition.width);
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,
