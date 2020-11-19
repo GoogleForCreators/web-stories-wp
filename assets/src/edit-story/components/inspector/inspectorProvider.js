@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { useFeatures } from 'flagged';
+import { useDebouncedCallback } from 'use-debounce/lib';
 
 /**
  * WordPress dependencies
@@ -55,6 +56,10 @@ function InspectorProvider({ children }) {
 
   const { showPrePublishTab } = useFeatures();
   const { checklist, refreshChecklist } = usePrepublishChecklist();
+  const [refreshChecklistDebounced] = useDebouncedCallback(
+    refreshChecklist,
+    500
+  );
 
   const prepublishAlert = useCallback(
     () =>
@@ -90,9 +95,9 @@ function InspectorProvider({ children }) {
   useEffect(() => {
     tabRef.current = tab;
     if (tab === PREPUBLISH) {
-      refreshChecklist();
+      refreshChecklistDebounced();
     }
-  }, [tab, refreshChecklist]);
+  }, [tab, refreshChecklistDebounced, refreshChecklist]);
 
   useEffect(() => {
     if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {

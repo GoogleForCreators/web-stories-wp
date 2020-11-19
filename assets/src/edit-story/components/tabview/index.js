@@ -95,8 +95,11 @@ const Tab = styled.li.attrs(({ isActive }) => ({
       top: calc(
         50% -
           ${({ isActive }) =>
-            isActive ? ALERT_ICON_SIZE / 2 - 1 : ALERT_ICON_SIZE / 2}}px
+            isActive
+              ? `${ALERT_ICON_SIZE / 2 - 1}px`
+              : `${ALERT_ICON_SIZE / 2}px`}
       );
+      overflow: visible;
       opacity: 1;
       &.warning {
         color: ${({ theme }) => theme.colors.fg.warning};

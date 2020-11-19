@@ -46,7 +46,7 @@ function PrepublishChecklistProvider({ children }) {
   );
 
   const handleRefreshList = useCallback(
-    () => setCurrentList(() => getPrepublishErrors(story)),
+    () => setCurrentList(getPrepublishErrors(story)),
     [story]
   );
 
