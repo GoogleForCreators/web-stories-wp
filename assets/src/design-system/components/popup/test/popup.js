@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import Popup from '../';
+import { Popup } from '../';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 
 // TODO tests with karma to easily get positions and interact

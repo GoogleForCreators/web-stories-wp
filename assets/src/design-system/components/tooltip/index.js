@@ -24,7 +24,7 @@ import { useState, useRef, useMemo, useCallback } from 'react';
 /**
  * Internal dependencies
  */
-import Popup, { PLACEMENT } from '../popup';
+import { Popup, PLACEMENT } from '../popup';
 import { prettifyShortcut } from '../keyboard';
 import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';

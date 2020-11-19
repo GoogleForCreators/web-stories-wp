@@ -21,9 +21,6 @@ import * as TYPOGRAPHY from './typography';
 import * as WP_ADMIN from './wpAdmin';
 import { Z_INDEX } from './zIndex';
 
-// todo sort this once rest of consts are merged from snackbar
-export const SCROLLBAR_WIDTH = 11;
-
 export const THEME_CONSTANTS = {
   TYPOGRAPHY,
   Z_INDEX,

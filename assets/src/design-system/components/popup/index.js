@@ -24,7 +24,6 @@ import { useLayoutEffect, useCallback, useState, useRef } from 'react';
  * Internal dependencies
  */
 import useResizeEffect from '../../utils/useResizeEffect';
-import { THEME_CONSTANTS } from '../../theme/';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
@@ -54,8 +53,8 @@ const Container = styled.div.attrs(
   }
 
   *::-webkit-scrollbar {
-    width: ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px;
-    height: ${THEME_CONSTANTS.SCROLLBAR_WIDTH}px;
+    width: 11px;
+    height: 11px;
   }
 
   *::-webkit-scrollbar-track {
@@ -139,5 +138,4 @@ function Popup({
     : null;
 }
 
-export default Popup;
-export { PLACEMENT };
+export { Popup, PLACEMENT };
