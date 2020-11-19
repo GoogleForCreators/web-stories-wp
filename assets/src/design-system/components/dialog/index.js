@@ -37,7 +37,7 @@ const DialogBox = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   overflow-y: auto;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
 `;
 

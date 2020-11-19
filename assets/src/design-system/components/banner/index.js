@@ -59,7 +59,7 @@ const Container = styled.div`
   padding: 6px 8px;
   background-color: ${({ theme }) => theme.colors.gray[5]};
   background-image: url('${({ backgroundUrl }) => backgroundUrl}');
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
 
   ${({ isDashboard }) =>
     isDashboard &&
@@ -102,7 +102,7 @@ export const Banner = forwardRef(
         isDashboard={isDashboard}
         {...rest}
       >
-        <Title size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.LARGE}>
+        <Title size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.LARGE}>
           {title}
         </Title>
         <CloseButton

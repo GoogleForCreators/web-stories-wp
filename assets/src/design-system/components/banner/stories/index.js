@@ -43,7 +43,7 @@ export const _default = () => {
       isDashboard={boolean('isDashboard', false)}
       backgroundUrl={demoBgUrl}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {text('children', 'I am a banner child')}
       </Text>
     </Banner>
@@ -58,7 +58,7 @@ export const EditorBanner = () => {
       onClose={(e) => action('close banner clicked')(e)}
       backgroundUrl={demoBgUrl}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         }
@@ -76,12 +76,12 @@ export const DashboardBanner = () => {
       isDashboard
       backgroundUrl={demoBgUrl}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {
           'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with '
         }
         <Text
-          size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           href="#"
           as="a"
         >
@@ -100,7 +100,7 @@ export const BannerNoBackgroundImage = () => {
       onClose={(e) => action('close banner clicked')(e)}
       isDashboard={boolean('isDashboard', true)}
     >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}>
+      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         }
