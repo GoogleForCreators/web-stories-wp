@@ -32,7 +32,9 @@ describe('Inserting Media from Media Library', () => {
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
     // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement"]');
+    await expect(page).toClick(
+      '.mediaElementimage[data-testid="mediaElement"]'
+    );
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(
@@ -42,5 +44,25 @@ describe('Inserting Media from Media Library', () => {
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await percySnapshot(page, 'Inserting Image from Media Library');
+  });
+
+  it('should insert an video by clicking on it', async () => {
+    await createNewStory();
+
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    // Clicking will only act on the first element.
+    await expect(page).toClick(
+      '.mediaElementvideo[data-testid="mediaElement"]'
+    );
+
+    // First match is for the background element, second for the image.
+    await expect(page).toMatchElement(
+      '[data-testid="frameElement"]:nth-of-type(2)'
+    );
+
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
+
+    await percySnapshot(page, 'Inserting Video from Media Library');
   });
 });

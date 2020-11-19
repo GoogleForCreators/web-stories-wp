@@ -59,4 +59,36 @@ describe('Inserting Media from Dialog', () => {
 
     await percySnapshot(page, 'Inserting Image from Dialog');
   });
+
+  it('should insert an video by clicking on it', async () => {
+    await createNewStory();
+
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    // Clicking will only act on the first element.
+    await expect(page).toClick('button', { text: 'Upload' });
+
+    await page.waitForSelector(MODAL, {
+      visible: true,
+    });
+    const btnTab = '#menu-item-browse';
+    await page.waitForSelector(btnTab);
+    await page.evaluate((selector) => {
+      document.querySelector(selector).click();
+    }, btnTab);
+    const btnSelector =
+      '.attachments-browser .attachments .attachment[aria-label="small-video"]:first-of-type';
+    await page.waitForSelector(btnSelector);
+    await page.evaluate((selector) => {
+      document.querySelector(selector).click();
+    }, btnSelector);
+    const btnSelect = '.media-button-select';
+    await page.evaluate((selector) => {
+      document.querySelector(selector).click();
+    }, btnSelect);
+
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
+
+    await percySnapshot(page, 'Inserting Video from Dialog');
+  });
 });
