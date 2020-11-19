@@ -46,23 +46,4 @@ describe('Inserting Media from Media Library', () => {
 
     await percySnapshot(page, 'Inserting Image from Media Library');
   });
-
-  it('should insert an video by clicking on it', async () => {
-    await createNewStory();
-
-    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
-
-    await page.waitForSelector('.mediaElementvideo');
-    // Clicking will only act on the first element.
-    await expect(page).toClick('.mediaElementvideo');
-
-    await page.waitForSelector('[data-testid="videoElement"]');
-    await expect(page).toMatchElement('[data-testid="videoElement"]');
-
-    // Wait for poster image to be generated.
-    await page.waitForSelector('[alt="Preview poster image"]');
-    await expect(page).toMatchElement('[alt="Preview poster image"]');
-
-    await percySnapshot(page, 'Inserting Video from Media Library');
-  });
 });
