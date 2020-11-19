@@ -16,7 +16,8 @@
 
 /**
  * External dependencies
- */
+ */ import { useCallback } from 'react';
+
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { rgba } from 'polished';
@@ -25,11 +26,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../../../animation/constants';
-import { GeneralAnimationPropTypes } from '../../../../animation/outputs/types';
+import { DIRECTION, FIELD_TYPES } from '../../../../animation';
+import { GeneralAnimationPropTypes } from '../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../form';
 import RangeInput from '../../rangeInput';
+import { DirectionRadioInput } from './directionRadioInput';
 
 const RangeContainer = styled.div`
   width: 100%;
@@ -46,6 +48,10 @@ const Label = styled.label`
 
 function EffectInput({ effectProps, effectConfig, field, onChange }) {
   const rangeId = `range-${uuidv4()}`;
+  const directionControlOnChange = useCallback(
+    ({ nativeEvent: { target } }) => onChange(target.value, true),
+    [onChange]
+  );
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
@@ -74,6 +80,26 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
             style={{ width: '100%' }}
           />
         </RangeContainer>
+      );
+    case FIELD_TYPES.DIRECTION_PICKER:
+      return (
+        <DirectionRadioInput
+          directions={Object.values(DIRECTION)}
+          defaultChecked={
+            effectConfig[field] || effectProps[field].defaultValue
+          }
+          onChange={directionControlOnChange}
+        />
+      );
+    case FIELD_TYPES.ROTATION_PICKER:
+      return (
+        <DirectionRadioInput
+          directions={[DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT]}
+          defaultChecked={
+            effectConfig[field] || effectProps[field].defaultValue
+          }
+          onChange={directionControlOnChange}
+        />
       );
     default:
       return (

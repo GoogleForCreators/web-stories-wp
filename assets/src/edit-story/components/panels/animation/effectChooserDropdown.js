@@ -45,15 +45,23 @@ const Container = styled.div`
 
 export default function EffectChooserDropdown({
   onAnimationSelected,
+  onNoEffectSelected,
   isBackgroundEffects = false,
+  selectedEffectTitle,
 }) {
   const selectRef = useRef();
   const dropdownRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropDownSelect ref={selectRef} onClick={() => setIsOpen(!isOpen)}>
-      <DropDownTitle>{__('Select Animation', 'web-stories')}</DropDownTitle>
+    <DropDownSelect
+      aria-label={__('Animation: Effect Chooser', 'web-stories')}
+      ref={selectRef}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <DropDownTitle>
+        {selectedEffectTitle || __('Select Animation', 'web-stories')}
+      </DropDownTitle>
       <DropdownIcon />
       <Popup
         anchor={selectRef}
@@ -62,6 +70,7 @@ export default function EffectChooserDropdown({
       >
         <Container ref={dropdownRef}>
           <EffectChooser
+            onNoEffectSelected={onNoEffectSelected}
             onAnimationSelected={onAnimationSelected}
             onDismiss={() => setIsOpen(false)}
             isBackgroundEffects={isBackgroundEffects}
@@ -75,4 +84,6 @@ export default function EffectChooserDropdown({
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: propTypes.func.isRequired,
   isBackgroundEffects: propTypes.bool,
+  selectedEffectTitle: propTypes.string,
+  onNoEffectSelected: propTypes.func.isRequired,
 };
