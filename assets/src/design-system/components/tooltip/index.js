@@ -18,16 +18,19 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { useState, useRef, useMemo, useCallback } from 'react';
 
 /**
  * Internal dependencies
  */
-// import { prettifyShortcut } from '../keyboard';
-import Popup, { Placement } from '../popup';
+import Popup, { PLACEMENT } from '../popup';
+import { prettifyShortcut } from '../keyboard';
 import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
+import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
+
+const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
 
 const Wrapper = styled.div`
   position: relative;
@@ -54,72 +57,12 @@ const TooltipText = styled(Text)`
   padding: 10px;
 `;
 
-const SVG_TOOLTIP_TAIL_ID = 'tooltip-tail';
-const TAIL_WIDTH = 34;
-const TAIL_HEIGHT = 8;
-const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
-
-const SvgForTail = styled.svg`
-  position: absolute;
-  width: 0;
-  height: 0;
-`;
-const getTailPosition = ({ placement, translateX, spacing }) => {
-  switch (placement) {
-    case Placement.TOP:
-    case Placement.TOP_START:
-    case Placement.TOP_END:
-      return css`
-        bottom: -${TAIL_HEIGHT - 1}px;
-        transform: translateX(${translateX}px) rotate(180deg);
-      `;
-    case Placement.BOTTOM:
-    case Placement.BOTTOM_START:
-    case Placement.BOTTOM_END:
-      return css`
-        top: -${TAIL_HEIGHT - 1}px;
-        transform: translateX(${translateX}px);
-      `;
-    case Placement.LEFT:
-    case Placement.LEFT_START:
-    case Placement.LEFT_END:
-      return css`
-        right: -${TAIL_WIDTH - spacing.x - 1}px;
-        transform: rotate(90deg);
-      `;
-    case Placement.RIGHT:
-    case Placement.RIGHT_START:
-    case Placement.RIGHT_END:
-      return css`
-        left: -${TAIL_WIDTH - spacing.x - 1}px;
-        transform: rotate(-90deg);
-      `;
-    default:
-      return ``;
-  }
-};
-
-const TooltipArrow = styled.span`
-  @supports (clip-path: url('#${SVG_TOOLTIP_TAIL_ID}')) {
-    position: absolute;
-    display: block;
-    height: ${TAIL_HEIGHT}px;
-    width: ${TAIL_WIDTH}px;
-    ${({ placement, translateX, spacing }) =>
-      getTailPosition({ placement, translateX, spacing })};
-    background-color: inherit;
-    border: none;
-    border-bottom: none;
-    clip-path: url('#${SVG_TOOLTIP_TAIL_ID}');
-  }
-`;
 const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
-
 function WithTooltip({
   title,
   shortcut,
   hasTail,
-  placement = 'bottom',
+  placement = PLACEMENT.BOTTOM,
   children,
   onPointerEnter = () => {},
   onPointerLeave = () => {},
@@ -183,11 +126,7 @@ function WithTooltip({
       >
         {children}
       </Wrapper>
-      <SvgForTail>
-        <clipPath id={SVG_TOOLTIP_TAIL_ID} clipPathUnits="objectBoundingBox">
-          <path d="M1,1 L0.868,1 C0.792,1,0.72,0.853,0.676,0.606 L0.585,0.098 C0.562,-0.033,0.513,-0.033,0.489,0.098 L0.399,0.606 C0.355,0.853,0.283,1,0.207,1 L0,1 L1,1" />
-        </clipPath>
-      </SvgForTail>
+
       <Popup
         anchor={anchorRef}
         placement={placement}
@@ -200,15 +139,20 @@ function WithTooltip({
             as="span"
             size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}
           >
-            {title}
+            {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           </TooltipText>
-          {/* {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title} */}
           {hasTail && (
-            <TooltipArrow
-              placement={placement}
-              translateX={arrowDelta}
-              spacing={spacing}
-            />
+            <>
+              <SvgForTail>
+                <clipPath
+                  id={SVG_TOOLTIP_TAIL_ID}
+                  clipPathUnits="objectBoundingBox"
+                >
+                  <path d="M1,1 L0.868,1 C0.792,1,0.72,0.853,0.676,0.606 L0.585,0.098 C0.562,-0.033,0.513,-0.033,0.489,0.098 L0.399,0.606 C0.355,0.853,0.283,1,0.207,1 L0,1 L1,1" />
+                </clipPath>
+              </SvgForTail>
+              <Tail placement={placement} translateX={arrowDelta} />
+            </>
           )}
         </Tooltip>
       </Popup>
@@ -217,15 +161,16 @@ function WithTooltip({
 }
 
 WithTooltip.propTypes = {
-  title: PropTypes.string,
-  shortcut: PropTypes.string,
+  children: PropTypes.node.isRequired,
   hasTail: PropTypes.bool,
-  placement: PropTypes.string,
+  placement: PropTypes.oneOf(Object.values(PLACEMENT)),
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  children: PropTypes.node,
+  shortcut: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default WithTooltip;
+export { PLACEMENT as TOOLTIP_PLACEMENT };
