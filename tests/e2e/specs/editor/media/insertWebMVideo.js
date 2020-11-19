@@ -102,13 +102,13 @@ describe('Inserting WebM Video', () => {
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('amp-video');
 
-    const poster = await page.$eval('amp-video', (video) => {
+    const poster = await previewPage.$eval('amp-video', (video) => {
       return video.poster;
     });
 
     expect(poster).not.toBeNull();
 
-    await percySnapshot(page, 'Preview Video with poster');
+    await percySnapshot(previewPage, 'Preview Video with poster');
 
     await editorPage.bringToFront();
     await previewPage.close();
