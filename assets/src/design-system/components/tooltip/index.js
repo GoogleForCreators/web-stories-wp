@@ -137,7 +137,7 @@ function WithTooltip({
         <Tooltip ref={tooltipRef} placement={placement} shown={shown}>
           <TooltipText
             as="span"
-            size={THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.X_SMALL}
+            size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           >
             {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
           </TooltipText>
