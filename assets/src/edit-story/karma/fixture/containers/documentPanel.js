@@ -17,4 +17,20 @@
 /**
  * Internal dependencies
  */
-export { default } from './fontPicker';
+import { Container } from './container';
+
+/**
+ * The editor's canvas. Includes: display, frames, editor layers, carousel,
+ * navigation buttons, page menu.
+ */
+export class DocumentPanel extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get author() {
+    return this.getByRole('button', { name: /Author/ });
+  }
+
+  // @TODO: rest of the fields.
+}

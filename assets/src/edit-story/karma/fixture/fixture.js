@@ -50,6 +50,7 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
     hasPublishAction: true,
+    hasAssignAuthorAction: true,
   },
   version: '1.0.0-alpha.9',
   isRTL: false,
@@ -635,6 +636,7 @@ class APIProviderFixture {
             permalink_template: 'http://stories3.local/stories/%pagename%/',
             style_presets: { textStyles: [], colors: [] },
             password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
           }),
         []
       );
@@ -692,10 +694,15 @@ class APIProviderFixture {
         []
       );
 
-      const getAllUsers = useCallback(
-        () => asyncResponse([{ id: 1, name: 'John Doe' }]),
+      const users = useMemo(
+        () => [
+          { id: 1, name: 'John Doe' },
+          { id: 2, name: 'Jane Doe' },
+        ],
         []
       );
+
+      const getAuthors = useCallback(() => asyncResponse(users), [users]);
 
       const getStatusCheck = useCallback(
         () =>
@@ -713,7 +720,7 @@ class APIProviderFixture {
           getLinkMetadata,
           saveStoryById,
           getAllStatuses,
-          getAllUsers,
+          getAuthors,
           uploadMedia,
           updateMedia,
           getStatusCheck,
