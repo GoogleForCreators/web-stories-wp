@@ -22,11 +22,7 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import {
-  createNewStory,
-  previewStory,
-  insertStoryTitle,
-} from '../../../utils';
+import { createNewStory, previewStory, insertStoryTitle } from '../../../utils';
 
 const MODAL = '.media-modal';
 
