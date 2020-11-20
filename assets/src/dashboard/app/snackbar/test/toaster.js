@@ -17,9 +17,27 @@
 /**
  * Internal dependencies
  */
-import { SnackbarContainer as Container } from './snackbarContainer';
-import { SnackbarMessage as Message } from './snackbarMessage';
+import { renderWithProviders } from '../../../testUtils/';
+import SnackbarContainer from '../snackbarContainer';
 
-const Snackbar = { Container, Message };
+const testMessage = {
+  message: 'i am an error',
+  id: 1,
+};
 
-export { Snackbar };
+// TODO add more
+describe('SnackbarContainer', () => {
+  const mockRemoveSnackbarMessageClick = jest.fn();
+  it('should have 1 active snackbar message', () => {
+    const { getByRole } = renderWithProviders(
+      <SnackbarContainer
+        activeSnackbarMessage={testMessage}
+        handleDismissMessage={mockRemoveSnackbarMessageClick}
+      />
+    );
+
+    const alert = getByRole('alert');
+
+    expect(alert).toBeInTheDocument();
+  });
+});

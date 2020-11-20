@@ -22,13 +22,13 @@ import { useState } from 'react';
  * Internal dependencies
  */
 import { Button } from '../../../../components';
-import { ToastProvider } from '../../../../components/toaster';
+import { SnackbarProvider } from '../../../snackbar';
 import { ApiContext } from '../../../api/apiProvider';
-import ToasterView from '../';
+import SnackbarView from '../';
 
 export default {
-  title: 'Dashboard/Views/Toaster',
-  component: ToasterView,
+  title: 'Dashboard/Views/DashboardSnackbar',
+  component: SnackbarView,
 };
 
 const storyErrors = [
@@ -141,9 +141,9 @@ export const _default = () => {
           ? 'No more practice template alerts'
           : 'Add practice template alert'}
       </Button>
-      <ToastProvider>
-        <ToasterView />
-      </ToastProvider>
+      <SnackbarProvider>
+        <SnackbarView />
+      </SnackbarProvider>
     </ApiContext.Provider>
   );
 };

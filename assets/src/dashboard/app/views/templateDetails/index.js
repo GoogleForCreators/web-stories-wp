@@ -25,11 +25,12 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { clamp } from '../../../../animation';
 import { TransformProvider } from '../../../../edit-story/components/transform';
-import { Layout, useToastContext } from '../../../components';
+import { Layout } from '../../../components';
 import { ALERT_SEVERITY } from '../../../constants';
 import { useTemplateView, usePagePreviewSize } from '../../../utils/';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
+import { useSnackbarContext } from '../../snackbar';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
@@ -50,9 +51,11 @@ function TemplateDetails() {
     actions,
   } = useRouteHistory();
 
-  const { addToast } = useToastContext(({ actions: { addToast } }) => ({
-    addToast,
-  }));
+  const { addSnackbarMessage } = useSnackbarContext(
+    ({ actions: { addSnackbarMessage } }) => ({
+      addSnackbarMessage,
+    })
+  );
 
   const {
     isLoading,
@@ -117,7 +120,7 @@ function TemplateDetails() {
     templateFetchFn(id)
       .then(setTemplate)
       .catch(() => {
-        addToast({
+        addSnackbarMessage({
           message: { body: ERRORS.LOAD_TEMPLATES.DEFAULT_MESSAGE },
           severity: ALERT_SEVERITY.ERROR,
           id: Date.now(),
@@ -131,7 +134,7 @@ function TemplateDetails() {
     isLocal,
     templateId,
     templates,
-    addToast,
+    addSnackbarMessage,
   ]);
 
   const templatedId = template?.id;

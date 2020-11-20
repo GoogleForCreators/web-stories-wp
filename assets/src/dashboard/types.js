@@ -23,11 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../edit-story/types';
-import {
-  STORY_STATUS,
-  TEMPLATES_GALLERY_STATUS,
-  ALERT_SEVERITY,
-} from './constants';
+import { STORY_STATUS, TEMPLATES_GALLERY_STATUS } from './constants';
 
 export const DashboardStatusesPropType = PropTypes.oneOf([
   ...Object.values(STORY_STATUS),
@@ -132,17 +128,14 @@ export const RenameStoryPropType = PropTypes.shape({
   handleCancelRename: PropTypes.func,
 });
 
-export const AlertSeveritiesPropType = PropTypes.oneOf(
-  Object.values(ALERT_SEVERITY)
-);
-
-export const ToastMessagePropType = PropTypes.shape({
+export const SnackbarMessagePropType = PropTypes.shape({
   message: PropTypes.shape({
     title: PropTypes.string,
     body: PropTypes.string.isRequired,
   }),
-  severity: AlertSeveritiesPropType,
   id: PropTypes.number.isRequired,
 });
 
-export const ToastMessagesPropType = PropTypes.arrayOf(ToastMessagePropType);
+export const SnackbarMessagesPropType = PropTypes.arrayOf(
+  SnackbarMessagePropType
+);
