@@ -98,7 +98,7 @@ function Publish() {
 
   const button = (
     <Primary
-      onMouseEnter={refreshChecklist}
+      onPointerEnter={refreshChecklist}
       onClick={handlePublish}
       isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
     >
