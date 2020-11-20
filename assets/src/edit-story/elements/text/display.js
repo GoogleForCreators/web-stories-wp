@@ -156,6 +156,9 @@ function TextDisplay({
     maybeEnqueueFontStyle([{ ...fontFaceSetConfigs, font }]);
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
+  const isHighLight = backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+  const refWithBorder = isHighLight ? outerBorderRef : bgRef;
+
   useTransformHandler(id, (transform) => {
     // Ref is set in case of high-light mode only, use the fgRef if that's missing.
     const target = ref?.current || fgRef.current;
@@ -170,18 +173,14 @@ function TextDisplay({
 
     if (outerBorderRef.current || bgRef.current) {
       // Depending on the background mode, choose the element that has border assigned to it.
-      const elWithBorder =
-        backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT
-          ? outerBorderRef.current
-          : bgRef.current;
       if (transform) {
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
           const [width, height] = resize;
           if (isOutsideBorder(border)) {
-            elWithBorder.style.width =
+            refWithBorder.current.style.width =
               width + border.left + border.right + 'px';
-            elWithBorder.style.height =
+            refWithBorder.current.style.height =
               height + border.top + border.bottom + 'px';
           }
         }
@@ -202,6 +201,11 @@ function TextDisplay({
     expectedStyle: 'background',
   });
   useColorTransformHandler({ id, targetRef: fgRef, expectedStyle: 'color' });
+  useColorTransformHandler({
+    id,
+    targetRef: refWithBorder,
+    expectedStyle: 'border-color',
+  });
 
   // Setting the text color of the entire block to black essentially removes all inline
   // color styling allowing us to apply transparent to all of them.
@@ -210,7 +214,7 @@ function TextDisplay({
     [content]
   );
 
-  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+  if (isHighLight) {
     // We need a separate outside border wrapper for outside border
     // since the highlight wrapper uses negative margin to position the content.
     // This, however, would shift the border incorrectly.
