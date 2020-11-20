@@ -63,28 +63,11 @@ describe('Panels/VideoAccessibility', () => {
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 
-  it('should trim "alt" to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText, submit } = renderVideoAccessibility([
-      defaultElement,
-    ]);
-    const input = getByPlaceholderText('Assistive text');
-
-    const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
-
-    fireEvent.change(input, { target: { value: bigText } });
-    const submits = submit({
-      resource: { posterId: 0, poster: '', alt: bigText },
-    });
-    expect(submits[defaultElement.id].resource.alt).toHaveLength(
-      MIN_MAX.ALT_TEXT.MAX
-    );
-  });
-
   it('should trim "title" to maximum allowed length if exceeding', () => {
     const { getByPlaceholderText, submit } = renderVideoAccessibility([
       defaultElement,
     ]);
-    const input = getByPlaceholderText('Title');
+    const input = getByPlaceholderText('Include any burned-in text');
 
     const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
 
@@ -112,9 +95,5 @@ describe('Panels/VideoAccessibility', () => {
     const title = getByRole('textbox', { name: 'Edit: Video title' });
     expect(title.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(title).toHaveValue('');
-
-    const alt = getByRole('textbox', { name: 'Edit: Assistive text' });
-    expect(alt.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-    expect(alt).toHaveValue('');
   });
 });
