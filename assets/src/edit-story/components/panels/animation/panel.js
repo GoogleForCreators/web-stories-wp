@@ -33,7 +33,9 @@ import {
   BACKGROUND_ANIMATION_EFFECTS,
   BG_MAX_SCALE,
   BG_MIN_SCALE,
+  DIRECTION,
   progress,
+  hasOffsets,
 } from '../../../../animation';
 import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
@@ -121,6 +123,20 @@ function AnimationPanel({
     );
   }, [pushUpdateForObject, updatedAnimations]);
 
+  // Figure out if any options are disabled
+  // for an animation type input
+  const disabledTypeOptionsMap = useMemo(() => {
+    const hasOffset = hasOffsets({ element: selectedElements[0] });
+    return {
+      [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: [
+        !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
+        !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
+        !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
+        !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+      ].filter(Boolean),
+    };
+  }, [selectedElements]);
+
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
       <Row>
@@ -135,12 +151,14 @@ function AnimationPanel({
           selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
           onNoEffectSelected={handleRemoveEffect}
           isBackgroundEffects={isBackground}
+          disabledTypeOptionsMap={disabledTypeOptionsMap}
         />
       </Row>
       {updatedAnimations[0] && (
         <EffectPanel
           animation={updatedAnimations[0]}
           onChange={handlePanelChange}
+          disabledTypeOptionsMap={disabledTypeOptionsMap}
         />
       )}
     </SimplePanel>

@@ -46,7 +46,13 @@ const Label = styled.label`
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
 `;
 
-function EffectInput({ effectProps, effectConfig, field, onChange }) {
+function EffectInput({
+  effectProps,
+  effectConfig,
+  field,
+  onChange,
+  disabledOptions,
+}) {
   const rangeId = `range-${uuidv4()}`;
   const directionControlOnChange = useCallback(
     ({ nativeEvent: { target } }) => onChange(target.value, true),
@@ -85,10 +91,9 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
       return (
         <DirectionRadioInput
           value={effectConfig[field] || effectProps[field].defaultValue}
-          directions={effectProps[field].values}
-          defaultChecked={
-            effectConfig[field] || effectProps[field].defaultValue
-          }
+          directions={effectProps[field].values?.filter(
+            (v) => !disabledOptions.includes(v)
+          )}
           onChange={directionControlOnChange}
         />
       );
@@ -114,6 +119,7 @@ EffectInput.propTypes = {
   effectConfig: PropTypes.shape(GeneralAnimationPropTypes).isRequired,
   field: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabledOptions: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default EffectInput;

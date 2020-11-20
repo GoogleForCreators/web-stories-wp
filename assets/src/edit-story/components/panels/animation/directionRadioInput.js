@@ -197,12 +197,7 @@ const translations = {
   [ROTATION.COUNTER_CLOCKWISE]: __('counterclockwise', 'web-stories'),
 };
 
-export const DirectionRadioInput = ({
-  value,
-  directions = [],
-  onChange,
-  defaultChecked,
-}) => {
+export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
   return (
     <Fieldset>
       <Figure />
@@ -222,7 +217,6 @@ export const DirectionRadioInput = ({
               value={direction}
               onChange={onChange}
               checked={value === direction}
-              defaultChecked={defaultChecked === direction}
             />
             <DirectionIndicator direction={direction} />
           </Label>
@@ -238,7 +232,6 @@ const directionPropType = PropTypes.oneOf([
 ]);
 
 DirectionRadioInput.propTypes = {
-  defaultChecked: directionPropType,
   value: directionPropType,
   directions: PropTypes.arrayOf(directionPropType),
   onChange: PropTypes.func,

@@ -17,17 +17,9 @@
 /**
  * Internal dependencies
  */
-import {
-  FULLBLEED_RATIO,
-  PAGE_HEIGHT,
-  PAGE_WIDTH,
-} from '../../../edit-story/constants';
-import getMediaSizePositionProps from '../../../edit-story/elements/media/getMediaSizePositionProps';
-import { getBox } from '../../../edit-story/units/dimensions';
 import { BACKGROUND_ANIMATION_EFFECTS, DIRECTION } from '../../constants';
 import SimpleAnimation from '../../parts/simpleAnimation';
-
-const FULLBLEED_PAGE_HEIGHT = (1 / FULLBLEED_RATIO) * PAGE_WIDTH;
+import { getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundPan({
   panDir = DIRECTION.RIGHT_TO_LEFT,
@@ -44,42 +36,16 @@ export function EffectBackgroundPan({
   };
 
   const animationName = `direction-${panDir}-${BACKGROUND_ANIMATION_EFFECTS.PAN.value}`;
-  // Get elements box based on a given page size with proper ratio.
-  const box = getBox(element, PAGE_WIDTH, PAGE_HEIGHT);
-  // Calculate image offsets based off given box, focal point
-  const media = getMediaSizePositionProps(
-    element.resource,
-    box.width,
-    box.height,
-    element.scale,
-    element.focalX,
-    element.focalY
-  );
 
-  // Since we don't know the page size at the time this animation will be called,
-  // we want to divide out the page size and make these bounds relative to the element size.
-  const translateToLeftBound = `translate3d(${
-    (media.offsetX / media.width) * 100
-  }%, 0, 0)`;
-  const translateToRightBound = `translate3d(-${
-    ((media.width - (media.offsetX + PAGE_WIDTH)) / media.width) * 100
-  }%, 0, 0)`;
-  const translateToTopBound = `translate3d(0, ${
-    (media.offsetY / media.height) * 100
-  }%, 0)`;
-  const translateToBottomBound = `translate3d(0, -${
-    ((media.height - (media.offsetY + FULLBLEED_PAGE_HEIGHT)) / media.height) *
-    100
-  }%, 0)`;
+  const offsets = getMediaBoundOffsets({ element });
   const translateToOriginX = 'translate3d(0%, 0, 0)';
   const translateToOriginY = 'translate3d(0, 0%, 0)';
-
   const translate = {
     from: {
-      [DIRECTION.RIGHT_TO_LEFT]: translateToRightBound,
-      [DIRECTION.LEFT_TO_RIGHT]: translateToLeftBound,
-      [DIRECTION.BOTTOM_TO_TOP]: translateToBottomBound,
-      [DIRECTION.TOP_TO_BOTTOM]: translateToTopBound,
+      [DIRECTION.RIGHT_TO_LEFT]: `translate3d(${offsets.left}%, 0, 0)`,
+      [DIRECTION.LEFT_TO_RIGHT]: `translate3d(${offsets.right}%, 0, 0)`,
+      [DIRECTION.BOTTOM_TO_TOP]: `translate3d(0, ${offsets.top}%, 0)`,
+      [DIRECTION.TOP_TO_BOTTOM]: `translate3d(0, ${offsets.bottom}%, 0)`,
     },
     to: {
       [DIRECTION.RIGHT_TO_LEFT]: translateToOriginX,
