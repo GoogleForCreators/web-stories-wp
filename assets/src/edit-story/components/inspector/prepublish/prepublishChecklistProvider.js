@@ -16,24 +16,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useRef, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
+import usePrevious from '../../../utils/usePrevious';
 import Context from './context';
-
-function usePrev(value) {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
-}
 
 function PrepublishChecklistProvider({ children }) {
   const story = useStory(({ state: { story, pages } }) => {
@@ -50,7 +41,7 @@ function PrepublishChecklistProvider({ children }) {
     [story]
   );
 
-  const prevPages = usePrev(story.pages);
+  const prevPages = usePrevious(story.pages);
 
   const refreshOnInitialLoad = prevPages?.length === 0 && story.pages?.length;
 
