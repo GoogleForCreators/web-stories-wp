@@ -22,7 +22,12 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory, insertStoryTitle } from '../../../utils';
+import {
+  createNewStory,
+  previewStory,
+  insertStoryTitle,
+  clickButton,
+} from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -38,21 +43,12 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    const btnTab = '#menu-item-browse';
-    await page.waitForSelector(btnTab);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnTab);
-    const btnSelector =
-      '.attachments-browser .attachments .attachment[aria-label="small-video"]';
-    await page.waitForSelector(btnSelector);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnSelector);
-    const btnSelect = '.media-button-select';
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnSelect);
+
+    await clickButton('#menu-item-browse');
+    await clickButton(
+      '.attachments-browser .attachments .attachment[aria-label="small-video"]'
+    );
+    await clickButton('.media-button-select');
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
