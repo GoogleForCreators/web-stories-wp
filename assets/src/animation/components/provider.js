@@ -58,7 +58,15 @@ const createOnFinishPromise = (animation) => {
   });
 };
 
-function Provider({ animations, elements, children, onWAAPIFinish }) {
+const ALL_ELEMENTS = 'all_elements';
+
+function Provider({
+  animations,
+  elements,
+  children,
+  onWAAPIFinish,
+  selectedElements = ALL_ELEMENTS,
+}) {
   const enableAnimation = useFeature('enableAnimation');
 
   const elementsMap = useMemo(() => {
@@ -115,7 +123,10 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
 
   const hoistWAAPIAnimation = useCallback((WAPPIAnimation) => {
     const symbol = Symbol();
-    WAAPIAnimationMap.current.set(symbol, WAPPIAnimation);
+    WAAPIAnimationMap.current.set(symbol, {
+      animation: WAPPIAnimation,
+      element,
+    });
 
     setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
     return () => {
@@ -127,7 +138,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
 
   const WAAPIAnimationMethods = useMemo(() => {
     const play = () =>
-      WAAPIAnimations.forEach((animation) => {
+      WAAPIAnimations.forEach(({ animation, element }) => {
         // Sometimes an animation part can get into a
         // stuck state where executing `play` doesn't
         // trigger the animation. A workaround to avoid
@@ -138,9 +149,9 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         animation?.play();
       });
     const pause = () =>
-      WAAPIAnimations.forEach((animation) => animation?.pause());
+      WAAPIAnimations.forEach(({ animation, element }) => animation?.pause());
     const setCurrentTime = (time) =>
-      WAAPIAnimations.forEach((animation) => {
+      WAAPIAnimations.forEach(({ animation, element }) => {
         const { duration, delay } =
           (animation.effect?.timing || animation.effect?.getTiming()) ?? {};
         const animationEndTime = (delay || 0) + (duration || 0);
@@ -224,6 +235,10 @@ Provider.propTypes = {
   elements: PropTypes.arrayOf(StoryPropTypes.element),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
+  selectedElements: PropTypes.oneOfType([
+    ALL_ELEMENTS,
+    PropTypes.arrayOf(StoryPropTypes.element.id),
+  ]),
 };
 
 export default Provider;

@@ -100,15 +100,21 @@ function DisplayPage({
 }
 
 function DisplayLayer() {
-  const { currentPage, animationState, updateAnimationState } = useStory(
-    ({ state, actions }) => {
-      return {
-        currentPage: state.currentPage,
-        animationState: state.animationState,
-        updateAnimationState: actions.updateAnimationState,
-      };
-    }
-  );
+  const {
+    currentPage,
+    animationState,
+    updateAnimationState,
+    selectedElementAnimations,
+    selectedElements,
+  } = useStory(({ state, actions }) => {
+    return {
+      currentPage: state.currentPage,
+      animationState: state.animationState,
+      selectedElementAnimations: state.selectedElementAnimations,
+      selectedElements: state.selectedElements,
+      updateAnimationState: actions.updateAnimationState,
+    };
+  });
   const {
     editingElement,
     setPageContainer,
