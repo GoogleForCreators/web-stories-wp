@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
+import { isOutsideBorder } from '../components/elementBorder/utils';
 import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {
@@ -54,7 +55,13 @@ export default function WithMask({
       : transformFlip;
   }
 
-  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
+  // Don't display mask if we have outside border, not to cut it off while resizing.
+  // Note that border can be applied to a rectangle only anyway.
+  if (
+    !mask?.type ||
+    (isBackground && mask.type !== MaskTypes.RECTANGLE) ||
+    isOutsideBorder(element.border)
+  ) {
     return (
       <div
         style={{
