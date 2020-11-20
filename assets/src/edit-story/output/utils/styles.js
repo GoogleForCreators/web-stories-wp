@@ -58,6 +58,29 @@ function CustomStyles() {
                 top: calc((1 - ${safeToFullRatio}) * 100% / 2);
               }
 
+              @media (max-aspect-ratio: 490 / 874)  {
+                @media (min-aspect-ratio: 435 / 874) {
+                  .page-fullbleed-area {
+                    top: calc((1 - ${safeToFullRatio}) * 85%);
+                  }
+                }
+                @media (min-aspect-ratio: 450 / 874) {
+                  .page-fullbleed-area {
+                    top: calc((1 - ${safeToFullRatio}) * 75%);
+                  }
+                }
+                @media (min-aspect-ratio: 461 / 874) {
+                  .page-fullbleed-area {
+                    top: calc((1 - ${safeToFullRatio}) * 70%);
+                  }
+                }
+                @media (min-aspect-ratio: 475 / 874) {
+                  .page-fullbleed-area {
+                    top: calc((1 - ${safeToFullRatio}) * 60%);
+                  }
+                }
+              }
+
               .page-safe-area {
                 overflow: visible;
                 position: absolute;
