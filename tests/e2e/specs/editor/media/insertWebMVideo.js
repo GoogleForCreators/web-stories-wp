@@ -105,7 +105,7 @@ describe('Inserting WebM Video', () => {
     });
 
     // Check that the value of the poster is the url that contains webm and not null.
-    expect(poster).endsWith('.webm');
+    expect(poster.endsWith('.webm')).toBeTrue();
 
     await editorPage.bringToFront();
     await previewPage.close();
