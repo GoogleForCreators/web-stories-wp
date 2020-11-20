@@ -26,6 +26,10 @@ const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
 const PUBLISHER_LOGO_MIN_HEIGHT = 96;
 const PUBLISHER_LOGO_MIN_WIDTH = 96;
 
+function hasNoFeaturedMedia(story) {
+  return (story.featuredMedia?.url?.trim() || '') === '';
+}
+
 /**
  *
  * @typedef {import('../types').Guidance} Guidance
@@ -41,7 +45,10 @@ const PUBLISHER_LOGO_MIN_WIDTH = 96;
  * @return {Guidance|undefined} Guidance object for consumption
  */
 export function storyCoverAttached(story) {
-  if (typeof story.featuredMedia?.url !== 'string') {
+  if (
+    typeof story.featuredMedia?.url !== 'string' ||
+    hasNoFeaturedMedia(story)
+  ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
       storyId: story.storyId,
@@ -81,6 +88,9 @@ export function storyTitle(story) {
  * @return {Guidance|undefined} Guidance object for consumption
  */
 export function storyCoverPortraitSize(story) {
+  if (hasNoFeaturedMedia(story)) {
+    return undefined;
+  }
   if (
     story.featuredMedia?.height < FEATURED_MEDIA_RESOURCE_MIN_HEIGHT ||
     story.featuredMedia?.width < FEATURED_MEDIA_RESOURCE_MIN_WIDTH
