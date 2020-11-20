@@ -26,9 +26,9 @@ import Panel from './panel';
 import PanelTitle from './shared/title';
 import PanelContent from './shared/content';
 
-function SimplePanel({ children, name, title }) {
+function SimplePanel({ children, name, title, ...rest }) {
   return (
-    <Panel name={name}>
+    <Panel name={name} {...rest}>
       <PanelTitle>{title}</PanelTitle>
       <PanelContent>{children}</PanelContent>
     </Panel>

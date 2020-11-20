@@ -33,6 +33,17 @@ describe('Panels/LayerStyle', () => {
     return renderPanel(LayerStyle, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:layerStyle',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <LayerStyle /> panel', () => {
     const { getByRole } = renderLayerStyle([
       { ...defaultElement, opacity: 100 },

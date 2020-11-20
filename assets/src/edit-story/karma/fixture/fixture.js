@@ -123,6 +123,41 @@ export class Fixture {
     this._container = null;
 
     this._editor = null;
+
+    const panels = [
+      'animation',
+      'backgroundSizePosition',
+      'backgroundOverlay',
+      'borderRadius',
+      'borderStyle',
+      'captions',
+      'stylePresets',
+      'colorPresets',
+      'imageAccessibility',
+      'layerStyle',
+      'link',
+      'pageAttachment',
+      'pageStyle',
+      'size',
+      'shapeStyle',
+      'text',
+      'textStyle',
+      'videoOptions',
+      'videoAccessibility',
+      'elementAlignment',
+      'noselection',
+      'publishing',
+      'status',
+      'stylepreset-style',
+      'stylepreset-color',
+    ];
+    // Open all panels by default.
+    panels.forEach((panel) => {
+      localStorage.setItem(
+        `web_stories_ui_panel_settings:${panel}`,
+        JSON.stringify({ isCollapsed: false })
+      );
+    });
   }
 
   restore() {
