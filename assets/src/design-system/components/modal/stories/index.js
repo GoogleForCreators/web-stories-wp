@@ -36,7 +36,7 @@ export const _default = () => {
   const [toggleModal, setToggleModal] = useState(false);
   return (
     <>
-      <Headline>{'Lorem ipsum dolor'}</Headline>
+      <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
       <Text>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
@@ -81,7 +81,7 @@ export const OverriddenStyles = () => {
 
   return (
     <>
-      <Headline>{'Lorem ipsum dolor'}</Headline>
+      <Headline as="h1">{'Lorem ipsum dolor'}</Headline>
       <Text>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '

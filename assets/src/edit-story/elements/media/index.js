@@ -24,6 +24,7 @@ import styled from 'styled-components';
  */
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
 import { PanelTypes } from '../../components/panels';
+import { elementWithBorderRadius } from '../shared';
 
 export { default as getMediaSizePositionProps } from './getMediaSizePositionProps';
 export { default as getFocalFromOffset } from './getFocalFromOffset';
@@ -35,6 +36,7 @@ export const CropBox = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
+  ${elementWithBorderRadius}
 
   &::after {
     content: '';
@@ -80,6 +82,7 @@ export const MEDIA_PANELS = [
   PanelTypes.BACKGROUND_SIZE_POSITION,
   PanelTypes.LAYER_STYLE,
   PanelTypes.SIZE_POSITION,
+  PanelTypes.BORDER_RADIUS,
   PanelTypes.BORDER,
   PanelTypes.ANIMATION,
   PanelTypes.LINK,

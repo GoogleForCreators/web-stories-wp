@@ -56,6 +56,17 @@ function setupPanel(
 }
 
 describe('StatusPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:status',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render Status Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Status & Visibility' });

@@ -25,7 +25,12 @@ const defaults = {
   duration: 1000,
 };
 
-export function AnimationZoom({ zoomFrom = 0, zoomTo = 1, ...args }) {
+export function AnimationZoom({
+  zoomFrom = 0,
+  zoomTo = 1,
+  targetLeafElement = false,
+  ...args
+}) {
   const timings = {
     ...defaults,
     ...args,
@@ -40,7 +45,8 @@ export function AnimationZoom({ zoomFrom = 0, zoomTo = 1, ...args }) {
     animationName,
     keyframes,
     timings,
-    false
+    false,
+    targetLeafElement
   );
 
   return {
