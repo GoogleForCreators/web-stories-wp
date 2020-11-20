@@ -325,7 +325,7 @@ describe('Background Copy Paste integration', () => {
 
   function getMediaElement(imageAlt) {
     return getElementByQueryAndMatcher(
-      '[data-testid="mediaElement"] img',
+      '[data-testid="mediaElement-image"] img',
       getByAttribute('alt', imageAlt)
     );
   }

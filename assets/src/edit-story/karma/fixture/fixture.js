@@ -247,7 +247,7 @@ export class Fixture {
     // there
     let mediaElements;
     await waitFor(() => {
-      mediaElements = this.querySelectorAll('[data-testid=mediaElement]');
+      mediaElements = this.querySelectorAll('.mediaElement');
       if (!mediaElements?.length) {
         throw new Error(
           `Not ready: only found ${mediaElements?.length} media elements`
