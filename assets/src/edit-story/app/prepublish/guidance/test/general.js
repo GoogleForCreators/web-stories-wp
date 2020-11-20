@@ -62,7 +62,7 @@ describe('Pre-publish checklist - general guidelines (guidance)', () => {
     expect(test).not.toBeUndefined();
     expect(test.type).toStrictEqual(PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE);
     expect(test.message).toMatchInlineSnapshot(`"Story title too long"`);
-    expect(test.storyId).toStrictEqual(testStory.storyId);
+    expect(test.storyId).toStrictEqual(testStory.id);
     expect(testUndefined).toBeUndefined();
   });
 });

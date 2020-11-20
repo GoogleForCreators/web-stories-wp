@@ -5,13 +5,13 @@ Array [
   Object {
     "help": "Used as the cover for the Story and is representative of the story. Should not have the Story title pre-embedded on it or any other burned-in text. Should be at least 640x853px in size and maintain a 3:4 aspect ratio.",
     "message": "Missing story cover image",
-    "storyId": undefined,
+    "storyId": 120,
     "type": "error",
   },
   Object {
     "help": "Keep the title clear and clean, ideally under 10 words in less than 40 characters.",
     "message": "Missing story title",
-    "storyId": undefined,
+    "storyId": 120,
     "type": "error",
   },
   Object {
@@ -23,7 +23,7 @@ Array [
   Object {
     "help": "Use between 4 and 30 pages in your story.",
     "message": "Story too short",
-    "storyId": undefined,
+    "storyId": 120,
     "type": "guidance",
   },
   Object {

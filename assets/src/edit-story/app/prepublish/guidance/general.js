@@ -53,7 +53,7 @@ export function storyPagesCount(story) {
         };
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      storyId: story.storyId,
+      storyId: story.id,
       ...message,
     };
   }
@@ -72,7 +72,7 @@ export function storyTitleLength(story) {
   if (story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      storyId: story.storyId,
+      storyId: story.id,
       message: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.MAIN_TEXT,
       help: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.HELPER_TEXT,
     };
