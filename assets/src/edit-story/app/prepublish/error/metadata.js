@@ -51,7 +51,7 @@ export function storyCoverAttached(story) {
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.storyId,
+      storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.MISSING_COVER.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.MISSING_COVER.HELPER_TEXT,
     };
@@ -71,7 +71,7 @@ export function storyTitle(story) {
   if (typeof story.title !== 'string' || story.title?.trim() === '') {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.storyId,
+      storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.MISSING_TITLE.HELPER_TEXT,
     };
@@ -97,7 +97,7 @@ export function storyCoverPortraitSize(story) {
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.storyId,
+      storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.HELPER_TEXT,
     };
@@ -120,7 +120,7 @@ export function publisherLogoSize(story) {
   ) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
-      storyId: story.storyId,
+      storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.LOGO_TOO_SMALL.HELPER_TEXT,
     };

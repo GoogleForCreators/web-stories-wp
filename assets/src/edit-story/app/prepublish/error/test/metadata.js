@@ -60,10 +60,8 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testEmptyString.message).toMatchInlineSnapshot(
       `"Missing story title"`
     );
-    expect(testUndefined.storyId).toStrictEqual(
-      testUndefinedTitleStory.storyId
-    );
-    expect(testEmptyString.storyId).toStrictEqual(testEmptyStringStory.storyId);
+    expect(testUndefined.storyId).toStrictEqual(testUndefinedTitleStory.id);
+    expect(testEmptyString.storyId).toStrictEqual(testEmptyStringStory.id);
   });
 
   it('should return an error-type guidance message if there is a link in the page attachment region', () => {
@@ -159,13 +157,14 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(`"Publisher logo is too small"`);
-    expect(test.storyId).toStrictEqual(testStory.storyId);
+    expect(test.storyId).toStrictEqual(testStory.id);
   });
 
   it("should return an error-type guidance message if the story's publisher logo is too small", () => {
     const testHeightStory = {
       id: 123,
       featuredMedia: {
+        url: 'featured-media.com/img',
         height: 1,
         width: 640,
       },
@@ -173,17 +172,19 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     const testWidthStory = {
       id: 345,
       featuredMedia: {
+        url: 'featured-media.com/img',
         width: 1,
         height: 853,
       },
     };
     const testStory = {
       id: 456,
-      featuredMedia: { height: 1, width: 1 },
+      featuredMedia: { height: 1, width: 1, url: 'featured-media.com/img' },
     };
     const testHappy = metadataGuidelines.storyCoverPortraitSize({
       id: 345,
       featuredMedia: {
+        url: 'featured-media.com/img',
         height: 853,
         width: 640,
       },
@@ -200,6 +201,6 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(testWidth.storyId).toStrictEqual(testWidthStory.id);
     expect(test).not.toBeUndefined();
     expect(test.message).toMatchInlineSnapshot(`"Story cover image too small"`);
-    expect(test.storyId).toStrictEqual(testStory.storyId);
+    expect(test.storyId).toStrictEqual(testStory.id);
   });
 });
