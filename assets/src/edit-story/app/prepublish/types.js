@@ -47,7 +47,7 @@ export const GuidancePropType = PropTypes.shape({
   elementId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   storyId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   message: PropTypes.string.isRequired,
-  help: PropTypes.string.isRequired,
+  help: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 });
 
 export const GuidanceChecklist = PropTypes.arrayOf(GuidancePropType);

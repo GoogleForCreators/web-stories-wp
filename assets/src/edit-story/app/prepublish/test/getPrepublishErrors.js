@@ -25,6 +25,7 @@ const DEFAULT_STORY_PROPS = {
   excerpt: "There's a secret no one wants you to know about",
 };
 describe('prepublish checklist', () => {
+  beforeEach(jest.resetModules);
   it('should return guidance for the story', () => {
     const testStory = {
       id: 120,
@@ -74,16 +75,54 @@ describe('prepublish checklist', () => {
     expect(getPrepublishErrors(testStory)).toHaveLength(0);
   });
 
-  it.todo(
-    'should not throw errors if the checklist functions throw (and should not skip the others)'
-  );
-  it.todo(
-    'should provide the page number where the element that needs guidance is'
-  );
-  it.todo(
-    'should return the guidance ordered by: story, then page, then elements'
-  );
-  it.todo(
-    'should return the guidance ordered by: errors, then warnings, then guidance'
-  );
+  it('should not throw errors if the checklist functions throw (and should not skip the others)', () => {
+    const mockFn = jest.fn(() => {
+      throw new Error('What are you doing here?');
+    });
+    jest.doMock('../warning', () => {
+      const actual = jest.requireActual('../warning').default;
+      return {
+        ...actual,
+        story: [...actual.story, mockFn],
+        page: [...actual.page, mockFn],
+        image: [...actual.image, mockFn],
+      };
+    });
+    const getPrepublishErrorsCopy = jest.requireActual('../getPrepublishErrors')
+      .default;
+    const malformedStory = {
+      title: undefined,
+      pages: [{ elements: [{ type: 'image', height: 1, width: 1 }] }],
+    };
+    expect(() => getPrepublishErrorsCopy(malformedStory)).not.toThrow();
+    expect(mockFn).toHaveBeenCalledWith(malformedStory);
+    expect(mockFn).toHaveBeenCalledTimes(3);
+    expect(getPrepublishErrorsCopy(malformedStory)).toStrictEqual(
+      getPrepublishErrors(malformedStory)
+    );
+  });
+
+  it('should provide the page number where the element that needs guidance is', () => {
+    const malformedStory = {
+      title: undefined,
+      pages: [
+        {
+          elements: [
+            {
+              id: 456,
+              type: 'text',
+              content: 'some normal text content, should not appear',
+            },
+          ],
+        },
+        {
+          elements: [{ id: 123, type: 'image', height: 1, width: 1 }],
+        },
+      ],
+    };
+    const test = getPrepublishErrors(malformedStory);
+    const elementErrors = test.filter(({ elementId }) => Boolean(elementId));
+    expect(elementErrors).toHaveLength(1);
+    expect(elementErrors[0].page).toStrictEqual(2);
+  });
 });
