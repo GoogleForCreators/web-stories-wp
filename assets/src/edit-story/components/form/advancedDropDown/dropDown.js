@@ -101,6 +101,7 @@ const DropDownTitle = styled.span`
  * @param {string} props.primaryLabel Label to display above the primary options.
  * @param {Array} props.priorityOptions Options to display in front of all the other options in a separate group (will not remove these from the `options`).
  * @param {string} props.priorityLabel Label to display in front of the priority options.
+ * @param {string} props.searchResultsLabel Label to display in front of matching options for a search.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
  * @return {*} Render.
  */
@@ -118,6 +119,7 @@ function DropDown({
   primaryLabel,
   priorityOptions,
   priorityLabel,
+  searchResultsLabel,
   renderer,
   ...rest
 }) {
@@ -211,6 +213,7 @@ function DropDown({
                 primaryLabel={primaryLabel}
                 priorityOptions={priorityOptions}
                 priorityLabel={priorityLabel}
+                searchResultsLabel={searchResultsLabel}
                 renderer={renderer}
               />
             )}
@@ -235,6 +238,7 @@ DropDown.propTypes = {
   primaryLabel: PropTypes.string,
   priorityOptions: PropTypes.array,
   priorityLabel: PropTypes.string,
+  searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
