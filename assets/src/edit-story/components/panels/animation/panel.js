@@ -126,15 +126,18 @@ function AnimationPanel({
   // Figure out if any options are disabled
   // for an animation type input
   const disabledTypeOptionsMap = useMemo(() => {
-    const hasOffset = hasOffsets({ element: selectedElements[0] });
-    return {
-      [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: [
-        !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
-        !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
-        !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
-        !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
-      ].filter(Boolean),
-    };
+    if (selectedElements[0]?.isBackground) {
+      const hasOffset = hasOffsets({ element: selectedElements[0] });
+      return {
+        [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: [
+          !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
+          !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
+          !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
+          !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+        ].filter(Boolean),
+      };
+    }
+    return {};
   }, [selectedElements]);
 
   return selectedElements.length > 1 ? (
