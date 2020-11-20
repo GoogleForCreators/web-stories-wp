@@ -19,7 +19,9 @@
 
 import { createNewStory } from '../../utils';
 
-describe('prepublish checklist', () => {
+// todo enable tests when feature flag is on
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip('prepublish checklist', () => {
   it('should show the checklist', async () => {
     await createNewStory();
     await expect(page).toMatchElement('#inspector-tab-prepublish[hidden=""]');
