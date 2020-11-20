@@ -100,6 +100,7 @@ function PageAdvancementPanel() {
     <SimplePanel
       name="pageAdvancement"
       title={__('Page Advancement', 'web-stories')}
+      collapsedByDefault={false}
     >
       <Row>
         <Note>

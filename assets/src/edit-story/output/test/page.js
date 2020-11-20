@@ -916,6 +916,84 @@ describe('Page output', () => {
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
+    describe('borderRadius', () => {
+      const BACKGROUND_ELEMENT = {
+        isBackground: true,
+        id: 'baz',
+        type: 'image',
+        mimeType: 'image/png',
+        origRatio: 1,
+        x: 50,
+        y: 100,
+        scale: 1,
+        rotationAngle: 0,
+        width: 1,
+        height: 1,
+        resource: {
+          type: 'image',
+          mimeType: 'image/png',
+          id: 123,
+          src: 'https://example.com/image.png',
+          poster: 'https://example.com/poster.png',
+          height: 1,
+          width: 1,
+        },
+      };
+
+      const MEDIA_ELEMENT = {
+        ...BACKGROUND_ELEMENT,
+        isBackground: false,
+        id: 'baz',
+        type: 'image',
+        borderRadius: {
+          topLeft: 10,
+          topRight: 20,
+          bottomRight: 10,
+          bottomLeft: 10,
+        },
+      };
+
+      it('should output element with border radius if the radius is set', () => {
+        const props = {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [BACKGROUND_ELEMENT, MEDIA_ELEMENT],
+          },
+          autoAdvance: false,
+          defaultPageDuration: 7,
+        };
+
+        const content = renderToStaticMarkup(<PageOutput {...props} />);
+        expect(content).toContain('border-radius:10px 20px 10px 10px');
+      });
+
+      it('should not output border if the element is not rectangular', () => {
+        const props = {
+          id: '123',
+          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          page: {
+            id: '123',
+            elements: [
+              BACKGROUND_ELEMENT,
+              {
+                ...MEDIA_ELEMENT,
+                mask: {
+                  type: MaskTypes.CIRCLE,
+                },
+              },
+            ],
+          },
+          autoAdvance: false,
+          defaultPageDuration: 7,
+        };
+
+        const content = renderToStaticMarkup(<PageOutput {...props} />);
+        expect(content).not.toContain('border-width:10px 20px 10px 10px');
+      });
+    });
+
     describe('AMP validation', () => {
       it('should produce valid output with media elements', async () => {
         const props = {

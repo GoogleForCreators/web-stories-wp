@@ -21,11 +21,7 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import {
-  ANIMATION_EFFECTS,
-  DIRECTION,
-  ROTATION,
-} from '../../../../../animation';
+import { ANIMATION_EFFECTS, DIRECTION } from '../../../../../animation';
 import { renderWithTheme } from '../../../../testUtils';
 import EffectChooser from '../effectChooser';
 
@@ -63,11 +59,11 @@ describe('<EffectChooser />', function () {
       <EffectChooser onAnimationSelected={onAnimationSelected} />
     );
 
-    fireEvent.click(getByLabelText('Rotate In Counter Clockwise Effect'));
+    fireEvent.click(getByLabelText('Rotate In Left Effect'));
 
     expect(onAnimationSelected).toHaveBeenCalledWith({
       animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-      rotateInDir: ROTATION.COUNTER_CLOCKWISE,
+      rotateInDir: DIRECTION.LEFT_TO_RIGHT,
     });
   });
 

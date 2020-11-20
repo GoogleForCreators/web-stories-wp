@@ -37,6 +37,7 @@ import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
 import WithBorder from '../elementBorder';
 import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
+import { getBorderPositionCSS, isOutsideBorder } from '../elementBorder/utils';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -96,7 +97,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       }
     : null;
 
-  const { id, opacity, type, isBackground, backgroundOverlay } = element;
+  const {
+    id,
+    opacity,
+    type,
+    isBackground,
+    backgroundOverlay,
+    border = {},
+  } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
@@ -140,6 +148,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             box={box}
             style={{
               opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+              ...(isOutsideBorder(border)
+                ? getBorderPositionCSS({
+                    ...border,
+                    width: `${box.width}px`,
+                    height: `${box.height}px`,
+                    skipOutsideBorder: false,
+                  })
+                : null),
             }}
             previewMode={previewMode}
           >

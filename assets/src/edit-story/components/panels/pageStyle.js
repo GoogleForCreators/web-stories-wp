@@ -47,7 +47,11 @@ function PageStylePanel() {
   );
 
   return (
-    <SimplePanel name="pageStyle" title={__('Page', 'web-stories')}>
+    <SimplePanel
+      name="pageStyle"
+      title={__('Page', 'web-stories')}
+      isPersistable={false}
+    >
       <Row>
         <Color
           hasGradient
