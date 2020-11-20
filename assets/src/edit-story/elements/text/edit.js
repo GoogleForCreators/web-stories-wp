@@ -39,6 +39,8 @@ import {
   elementWithFont,
   elementWithTextParagraphStyle,
   elementWithBackgroundColor,
+  elementWithBorderRadius,
+  elementWithOutsideBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -48,6 +50,10 @@ import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
+import {
+  isOutsideBorder,
+  getBorderPositionCSS,
+} from '../../components/elementBorder/utils';
 import {
   calcFontMetrics,
   generateParagraphTextStyle,
@@ -60,6 +66,7 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
+  ${elementWithBorderRadius}
 
   span {
     box-decoration-break: clone;
@@ -103,6 +110,17 @@ const Highlight = styled.span`
   width: ${({ verticalPadding }) => `calc(100% - ${verticalPadding}px)`};
 `;
 
+const OutsideBorder = styled.div`
+  ${elementWithOutsideBorder}
+  ${({ border }) =>
+    isOutsideBorder({ position: border?.position }) &&
+    getBorderPositionCSS({
+      ...border,
+      skipOutsideBorder: false,
+    })}
+  overflow: hidden;
+`;
+
 function TextEdit({
   element,
   box: { x, y, height, rotationAngle },
@@ -114,6 +132,8 @@ function TextEdit({
     content,
     backgroundColor,
     backgroundTextMode,
+    border,
+    borderRadius,
     opacity,
     height: elementHeight,
     ...rest
@@ -335,34 +355,41 @@ function TextEdit({
   const hasHighlightBackgroundTextMode =
     backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
 
+  const wrapperProps = {
+    backgroundColor: wrapperBackgroundColor,
+  };
+
   return (
-    <Wrapper
-      ref={wrapperRef}
-      onClick={onClick}
-      data-testid="textEditor"
-      backgroundColor={wrapperBackgroundColor}
-    >
-      {editorContent && hasHighlightBackgroundTextMode && (
-        <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
-          <Highlight
-            dangerouslySetInnerHTML={{ __html: editorContent }}
-            {...textProps}
-          />
-        </TextBoxPadded>
-      )}
-      <EditTextBox
-        hasHighlightBackgroundTextMode={hasHighlightBackgroundTextMode}
-        className="syncMargin"
-        ref={textBoxRef}
-        {...textProps}
+    <OutsideBorder border={border} borderRadius={borderRadius}>
+      <Wrapper
+        ref={wrapperRef}
+        onClick={onClick}
+        data-testid="textEditor"
+        borderRadius={!isOutsideBorder(border) && borderRadius}
+        {...wrapperProps}
       >
-        <RichTextEditor
-          ref={editorRef}
-          content={content}
-          onChange={handleUpdate}
-        />
-      </EditTextBox>
-    </Wrapper>
+        {editorContent && hasHighlightBackgroundTextMode && (
+          <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
+            <Highlight
+              dangerouslySetInnerHTML={{ __html: editorContent }}
+              {...textProps}
+            />
+          </TextBoxPadded>
+        )}
+        <EditTextBox
+          hasHighlightBackgroundTextMode={hasHighlightBackgroundTextMode}
+          className="syncMargin"
+          ref={textBoxRef}
+          {...textProps}
+        >
+          <RichTextEditor
+            ref={editorRef}
+            content={content}
+            onChange={handleUpdate}
+          />
+        </EditTextBox>
+      </Wrapper>
+    </OutsideBorder>
   );
 }
 

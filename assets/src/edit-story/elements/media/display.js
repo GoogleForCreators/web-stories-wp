@@ -23,25 +23,34 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import StoryPropTypes from '../../types';
-import { elementFillContent } from '../shared';
+import {
+  elementFillContent,
+  elementWithBorderRadius,
+  elementWithOutsideBorder,
+} from '../shared';
 import { useTransformHandler } from '../../components/transform';
+import { isOutsideBorder } from '../../components/elementBorder/utils';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
+  ${elementWithBorderRadius}
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
+  ${elementWithOutsideBorder}
 `;
 
 function MediaDisplay({
-  element: { id, resource, scale, focalX, focalY },
+  element: { id, resource, scale, focalX, focalY, border, borderRadius },
   mediaRef,
   children,
   showPlaceholder = false,
 }) {
+  const ref = useRef();
   useTransformHandler(id, (transform) => {
     const target = mediaRef.current;
     if (mediaRef.current) {
@@ -50,6 +59,7 @@ function MediaDisplay({
       } else {
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          // @todo this needs to resize the outside border element separately now.
           const newImgProps = getMediaSizePositionProps(
             resource,
             resize[0],
@@ -59,11 +69,27 @@ function MediaDisplay({
             focalY
           );
           target.style.cssText = getMediaWithScaleCss(newImgProps);
+          if (isOutsideBorder(border)) {
+            ref.current.style.width =
+              resize[0] + border.left + border.right + 'px';
+            ref.current.style.height =
+              resize[1] + border.top + border.bottom + 'px';
+          }
         }
       }
     }
   });
-  return <Element showPlaceholder={showPlaceholder}>{children}</Element>;
+
+  return (
+    <Element
+      ref={ref}
+      border={border}
+      borderRadius={borderRadius}
+      showPlaceholder={showPlaceholder}
+    >
+      {children}
+    </Element>
+  );
 }
 
 MediaDisplay.propTypes = {

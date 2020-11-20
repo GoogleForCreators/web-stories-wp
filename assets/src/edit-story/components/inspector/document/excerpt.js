@@ -54,7 +54,11 @@ function ExcerptPanel() {
   );
 
   return (
-    <SimplePanel name="excerpt" title={__('Excerpt', 'web-stories')}>
+    <SimplePanel
+      name="excerpt"
+      title={__('Excerpt', 'web-stories')}
+      collapsedByDefault={false}
+    >
       <Row>
         <TextArea
           value={excerpt}

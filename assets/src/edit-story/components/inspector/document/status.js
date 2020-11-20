@@ -130,7 +130,11 @@ function StatusPanel() {
   };
 
   return (
-    <SimplePanel name="status" title={__('Status & Visibility', 'web-stories')}>
+    <SimplePanel
+      name="status"
+      title={__('Status & Visibility', 'web-stories')}
+      collapsedByDefault={false}
+    >
       <>
         <Row>
           <RadioGroup

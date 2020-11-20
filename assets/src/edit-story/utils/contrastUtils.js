@@ -17,13 +17,8 @@
 /**
  * External dependencies
  */
-import ColorContrastChecker from 'color-contrast-checker';
 
-// Parse style.color from "rgb(000, 000, 000)" into {r, g, b} format
-function parseRGBFromStyleColor(styleColor) {
-  const [r, g, b] = styleColor.match(/\d+/g).map((number) => parseInt(number));
-  return { r, g, b };
-}
+import * as hues from '@ap.cx/hues';
 
 /**
  * Calculate luminance from RGB Object
@@ -32,9 +27,14 @@ function parseRGBFromStyleColor(styleColor) {
  * @return {number} Luminance
  */
 export function calculateLuminanceFromRGB(rgb) {
-  const ccc = new ColorContrastChecker();
-  const lrgb = ccc.calculateLRGB(rgb);
-  return ccc.calculateLuminance(lrgb);
+  const { r, g, b, a } = rgb;
+  const luminance = hues.relativeLuminance({
+    r: r / 255.0,
+    g: g / 255.0,
+    b: b / 255.0,
+    a: a === undefined ? 1.0 : a,
+  });
+  return luminance;
 }
 
 /**
@@ -44,8 +44,8 @@ export function calculateLuminanceFromRGB(rgb) {
  * @return {number} Luminance
  */
 export function calculateLuminanceFromStyleColor(styleColor) {
-  const rgb = parseRGBFromStyleColor(styleColor);
-  return calculateLuminanceFromRGB(rgb);
+  const rgb = hues.str2rgba(styleColor);
+  return hues.relativeLuminance(rgb);
 }
 
 /**
@@ -53,14 +53,9 @@ export function calculateLuminanceFromStyleColor(styleColor) {
  *
  * @param  {number} luminanceA Luminance A
  * @param  {number} luminanceB Luminance B
- * @param  {number} fontSize Optional fontSize for checking contrast ratio
  * @return {Object} WCAG contrast ratio checks
  */
-export function checkContrastFromLuminances(luminanceA, luminanceB, fontSize) {
-  const ccc = new ColorContrastChecker();
-  if (fontSize) {
-    ccc.fontSize = fontSize;
-  }
-  const contrastRatio = ccc.getContrastRatio(luminanceA, luminanceB);
-  return ccc.verifyContrastRatio(contrastRatio);
+export function checkContrastFromLuminances(luminanceA, luminanceB) {
+  const ratio = hues.contrast(luminanceA, luminanceB);
+  return { ratio, WCAG_AA: hues.aa(ratio) };
 }

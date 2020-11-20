@@ -22,11 +22,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 import { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from './constants';
 
 const Base = styled.button(
-  ({ theme }) => css`
+  ({ size, theme }) => css`
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -35,17 +35,17 @@ const Base = styled.button(
     margin: 0;
     background: transparent;
     border: none;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.primary,
-      theme.colors.border.focus
-    )};
     color: ${theme.colors.fg.primary};
     cursor: pointer;
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
-      preset:
-        theme.typography.presets.button[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+      preset: {
+        ...theme.typography.presets.button[
+          size === BUTTON_SIZES.SMALL
+            ? THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+            : THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM
         ],
+      },
       theme,
     })};
 
@@ -109,48 +109,51 @@ const buttonColors = {
 
 const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-  min-width: 80px;
-  height: 36px;
-  padding: 8px 16px;
+  min-width: 1px;
+  min-height: 1em;
   border-radius: 4px;
+  padding: ${({ size }) =>
+    size === BUTTON_SIZES.SMALL ? '8px 16px' : '18px 32px'};
 `;
 
-const ButtonCircle = styled(Base)`
+const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-
+  border-radius: 4px;
   ${({ size }) => css`
     width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
     height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
-    border-radius: 50%;
 
-    & > svg {
+    svg {
       width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-      height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+      height: auto;
+    }
+  `}
+`;
+
+const ButtonCircle = styled(ButtonSquare)`
+  border-radius: 50%;
+`;
+
+const ButtonIcon = styled(Base)`
+  ${({ size }) => css`
+    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    height: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
+    svg {
+      width: 100%;
+      height: auto;
       margin: 0 auto;
     }
   `}
 `;
 
-const ButtonIcon = styled(Base)`
-  ${({ size }) => `
-    width: ${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-    height:${size === BUTTON_SIZES.SMALL ? 14 : 20}px;
-
-    & > svg {
-      width: 100%;
-      height:100%;
-    }
-  `}
-`;
-
-// TODO incorporate tooltip as a label on hover per figma
 const ButtonOptions = {
   [BUTTON_VARIANTS.RECTANGLE]: ButtonRectangle,
   [BUTTON_VARIANTS.CIRCLE]: ButtonCircle,
+  [BUTTON_VARIANTS.SQUARE]: ButtonSquare,
   [BUTTON_VARIANTS.ICON]: ButtonIcon,
 };
 
-export const Button = ({
+const Button = ({
   size = BUTTON_SIZES.MEDIUM,
   type = BUTTON_TYPES.PLAIN,
   variant = BUTTON_VARIANTS.RECTANGLE,
@@ -180,4 +183,4 @@ Button.propTypes = {
   activeLabelText: PropTypes.string,
 };
 
-export { BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };
+export { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS };

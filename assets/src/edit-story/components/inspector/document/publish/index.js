@@ -170,7 +170,7 @@ function PublishPanel() {
     selectedId: author.id,
   };
   return (
-    <Panel name="publishing">
+    <Panel name="publishing" collapsedByDefault={false}>
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent padding={'10px 10px 10px 20px'}>
         <PublishTime />

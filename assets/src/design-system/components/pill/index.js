@@ -19,34 +19,33 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { forwardRef } from 'react';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS, themeHelpers } from '../../';
+import { THEME_CONSTANTS, themeHelpers } from '../../theme';
 
-const StyledTab = styled.button(
+const StyledPill = styled.button(
   ({ isActive, theme }) => css`
-    box-sizing: content-box;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 6px 16px;
     height: 32px;
-    padding: 0 16px;
 
     background-color: ${isActive
       ? theme.colors.interactiveBg.primaryNormal
       : theme.colors.opacity.footprint};
     border: none;
     border-radius: 50px;
-    ${themeHelpers.focusableOutlineCSS(
-      theme.colors.bg.primary,
-      theme.colors.border.focus
-    )};
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.secondary};
     cursor: pointer;
     ${themeHelpers.expandPresetStyles({
       preset:
         theme.typography.presets.label[
-          THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.SMALL
+          THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
         ],
       theme,
     })};
@@ -64,24 +63,16 @@ const StyledTab = styled.button(
   `
 );
 
-export const Tab = forwardRef(function Tab(
-  { children, isActive, ...rest },
-  ref
-) {
+export const Pill = ({ children, isActive, onClick, ...rest }) => {
   return (
-    <StyledTab
-      ref={ref}
-      role="tab"
-      isActive={isActive}
-      aria-selected={isActive}
-      {...rest}
-    >
+    <StyledPill isActive={isActive} onClick={onClick} {...rest}>
       {children}
-    </StyledTab>
+    </StyledPill>
   );
-});
+};
 
-Tab.propTypes = {
-  children: PropTypes.node,
-  isActive: PropTypes.bool,
+Pill.propTypes = {
+  children: PropTypes.node.isRequired,
+  isActive: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

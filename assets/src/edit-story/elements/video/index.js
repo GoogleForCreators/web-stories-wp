@@ -63,7 +63,6 @@ export const defaultAttributes = {
 export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   ...MEDIA_PANELS,
-  PanelTypes.LINK,
   PanelTypes.VIDEO_OPTIONS,
   PanelTypes.CAPTIONS,
   PanelTypes.VIDEO_ACCESSIBILITY,

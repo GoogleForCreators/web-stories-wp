@@ -78,6 +78,17 @@ describe('Panels/SizePosition', () => {
     return renderPanel(SizePosition, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:size',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <SizePosition /> panel', () => {
     const { getByRole } = renderSizePosition([defaultElement]);
     const element = getByRole('button', { name: 'Size & position' });
@@ -188,7 +199,6 @@ describe('Panels/SizePosition', () => {
           type: 'text',
         },
       ]);
-
       const input = getByRole('textbox', { name: 'Height' });
       expect(input).toBeDisabled();
       expect(input).toHaveValue('');
