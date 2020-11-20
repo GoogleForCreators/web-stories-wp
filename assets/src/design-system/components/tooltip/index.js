@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   position: relative;
 `;
 
-const Tooltip = styled.div`
+const TooltipContainer = styled.div`
   margin: 0;
   display: flex;
   justify-content: center;
@@ -58,7 +58,8 @@ const TooltipText = styled(Text)`
 `;
 
 const getBoundingBoxCenter = ({ x, width }) => x + width / 2;
-function WithTooltip({
+
+function Tooltip({
   title,
   shortcut,
   hasTail,
@@ -134,7 +135,7 @@ function WithTooltip({
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
       >
-        <Tooltip ref={tooltipRef} placement={placement} shown={shown}>
+        <TooltipContainer ref={tooltipRef} placement={placement} shown={shown}>
           <TooltipText
             as="span"
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
@@ -154,13 +155,13 @@ function WithTooltip({
               <Tail placement={placement} translateX={arrowDelta} />
             </>
           )}
-        </Tooltip>
+        </TooltipContainer>
       </Popup>
     </>
   );
 }
 
-WithTooltip.propTypes = {
+Tooltip.propTypes = {
   children: PropTypes.node.isRequired,
   hasTail: PropTypes.bool,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
@@ -172,4 +173,4 @@ WithTooltip.propTypes = {
   title: PropTypes.string,
 };
 
-export { WithTooltip, PLACEMENT as TOOLTIP_PLACEMENT };
+export { Tooltip, PLACEMENT as TOOLTIP_PLACEMENT };

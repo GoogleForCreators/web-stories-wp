@@ -30,7 +30,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '../../button';
-import { WithTooltip, TOOLTIP_PLACEMENT } from '..';
+import { Tooltip, TOOLTIP_PLACEMENT } from '..';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',
@@ -56,7 +56,7 @@ const Color = styled.div`
 export const _default = () => (
   <ThemeProvider theme={theme}>
     <Container>
-      <WithTooltip
+      <Tooltip
         hasTail={boolean('Tooltip for color - hasTail', true)}
         placement={select(
           'Tooltip for color - position',
@@ -70,9 +70,9 @@ export const _default = () => (
         )}
       >
         <Color tabIndex={0} />
-      </WithTooltip>
+      </Tooltip>
 
-      <WithTooltip
+      <Tooltip
         hasTail={boolean('Tooltip for icon - hasTail', true)}
         placement={select(
           'Tooltip for icon - position',
@@ -85,9 +85,9 @@ export const _default = () => (
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
           <List aria-hidden={true} />
         </Button>
-      </WithTooltip>
+      </Tooltip>
 
-      <WithTooltip
+      <Tooltip
         hasTail={boolean('Tooltip for standard button - hasTail', false)}
         placement={select(
           'Tooltip for standard button - position',
@@ -103,14 +103,14 @@ export const _default = () => (
         <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
           {'I am just a normal button'}
         </Button>
-      </WithTooltip>
+      </Tooltip>
     </Container>
   </ThemeProvider>
 );
 
 export const LightMode = () => (
   <Container>
-    <WithTooltip
+    <Tooltip
       hasTail={boolean('Tooltip for color - hasTail', true)}
       placement={select(
         'Tooltip for color - position',
@@ -124,9 +124,9 @@ export const LightMode = () => (
       )}
     >
       <Color tabIndex={0} />
-    </WithTooltip>
+    </Tooltip>
 
-    <WithTooltip
+    <Tooltip
       hasTail={boolean('Tooltip for icon - hasTail', true)}
       placement={select(
         'Tooltip for icon - position',
@@ -139,9 +139,9 @@ export const LightMode = () => (
       <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
         <List aria-hidden={true} />
       </Button>
-    </WithTooltip>
+    </Tooltip>
 
-    <WithTooltip
+    <Tooltip
       hasTail={boolean('Tooltip for standard button - hasTail', false)}
       placement={select(
         'Tooltip for standard button - position',
@@ -157,6 +157,6 @@ export const LightMode = () => (
       <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
         {'I am just a normal button'}
       </Button>
-    </WithTooltip>
+    </Tooltip>
   </Container>
 );

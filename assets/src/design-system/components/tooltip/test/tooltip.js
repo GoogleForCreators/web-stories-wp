@@ -18,14 +18,14 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { WithTooltip } from '../';
+import { Tooltip } from '../';
 
 describe('<Tooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
     const { queryAllByText } = renderWithProviders(
-      <WithTooltip title={'Some tooltip text'}>
+      <Tooltip title={'Some tooltip text'}>
         <button>{'hover to see tooltip'}</button>
-      </WithTooltip>
+      </Tooltip>
     );
 
     expect(queryAllByText('Some tooltip text')).toHaveLength(0);
