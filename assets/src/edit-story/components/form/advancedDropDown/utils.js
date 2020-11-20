@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const createFontFilter = (fonts) => (keyword) =>
-  fonts.filter(({ name }) =>
+export const createOptionFilter = (options) => (keyword) =>
+  options.filter(({ name }) =>
     name.toLowerCase().includes(keyword.toLowerCase())
   );
 

@@ -17,34 +17,36 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { forwardRef } from 'react';
+import PropTypes from 'prop-types';
+
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { useFile } from '../../file';
+import { Option, Selected } from './styled';
 
-function useLoadFonts({ fonts, setFonts }) {
-  const fontsLength = fonts.length;
-  const {
-    actions: { getFonts },
-  } = useFile();
-  useEffect(() => {
-    async function loadFonts() {
-      const newFonts = await getFonts();
-      const formattedFonts = newFonts.map((font) => ({
-        id: font.family,
-        name: font.family,
-        value: font.family,
-        ...font,
-      }));
+const DefaultRenderer = forwardRef(function DefaultRenderer(
+  { option, value, ...rest },
+  ref
+) {
+  return (
+    <Option key={option.id} {...rest} ref={ref}>
+      {value === option.id && (
+        <Selected aria-label={__('Selected', 'web-stories')} />
+      )}
+      {option.name}
+    </Option>
+  );
+});
 
-      setFonts(formattedFonts);
-    }
-    if (!fontsLength) {
-      loadFonts();
-    }
-  }, [fontsLength, setFonts, getFonts]);
-}
+DefaultRenderer.propTypes = {
+  option: PropTypes.object.isRequired,
+  value: PropTypes.any.isRequired,
+};
 
-export default useLoadFonts;
+export default DefaultRenderer;

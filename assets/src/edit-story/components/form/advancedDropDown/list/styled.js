@@ -22,8 +22,8 @@ import { rgba } from 'polished';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Checkmark } from '../../../icons/checkmark.svg';
-import { ScrollBarStyles } from '../../library/common/scrollbarStyles';
+import { ReactComponent as Checkmark } from '../../../../icons/checkmark.svg';
+import { ScrollBarStyles } from '../../../library/common/scrollbarStyles';
 
 export const List = styled.div`
   width: 100%;
