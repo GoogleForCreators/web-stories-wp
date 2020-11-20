@@ -13,32 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { createContext } from 'react';
 
-/**
- * Internal dependencies
- */
-import Panel from './panel';
-import PanelTitle from './shared/title';
-import PanelContent from './shared/content';
-
-function SimplePanel({ children, name, title, ...rest }) {
-  return (
-    <Panel name={name} {...rest}>
-      <PanelTitle>{title}</PanelTitle>
-      <PanelContent>{children}</PanelContent>
-    </Panel>
-  );
-}
-
-SimplePanel.propTypes = {
-  children: PropTypes.node,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-};
-
-export default SimplePanel;
+export default createContext({ checklist: [] });

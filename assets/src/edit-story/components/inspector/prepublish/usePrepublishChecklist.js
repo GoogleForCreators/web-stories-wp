@@ -13,32 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-
+import { useContext } from 'react';
 /**
  * Internal dependencies
  */
-import Panel from './panel';
-import PanelTitle from './shared/title';
-import PanelContent from './shared/content';
+import Context from './context';
 
-function SimplePanel({ children, name, title, ...rest }) {
-  return (
-    <Panel name={name} {...rest}>
-      <PanelTitle>{title}</PanelTitle>
-      <PanelContent>{children}</PanelContent>
-    </Panel>
-  );
+function usePrepublishChecklist() {
+  const { checklist, refreshChecklist } = useContext(Context);
+
+  return { checklist, refreshChecklist };
 }
 
-SimplePanel.propTypes = {
-  children: PropTypes.node,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-};
-
-export default SimplePanel;
+export default usePrepublishChecklist;

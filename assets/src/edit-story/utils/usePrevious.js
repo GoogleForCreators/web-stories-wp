@@ -17,28 +17,14 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
 
-/**
- * Internal dependencies
- */
-import Panel from './panel';
-import PanelTitle from './shared/title';
-import PanelContent from './shared/content';
+export default function usePrevious(value) {
+  const ref = useRef();
 
-function SimplePanel({ children, name, title, ...rest }) {
-  return (
-    <Panel name={name} {...rest}>
-      <PanelTitle>{title}</PanelTitle>
-      <PanelContent>{children}</PanelContent>
-    </Panel>
-  );
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+
+  return ref.current;
 }
-
-SimplePanel.propTypes = {
-  children: PropTypes.node,
-  name: PropTypes.string.isRequired,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-};
-
-export default SimplePanel;

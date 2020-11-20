@@ -15,16 +15,11 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf, _n } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
 import getBoundRect from '../../../utils/getBoundRect';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const SAFE_ZONE_AREA = PAGE_HEIGHT * PAGE_WIDTH;
 
@@ -34,7 +29,6 @@ const MIN_VIDEO_HEIGHT = 480;
 const MIN_VIDEO_WIDTH = 852;
 
 const MAX_VIDEO_LENGTH_SECONDS = 60;
-const MAX_VIDEO_LENGTH_MINUTES = Math.floor(MAX_VIDEO_LENGTH_SECONDS / 60);
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -84,10 +78,8 @@ export function mediaElementSizeOnPage(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message:
-        element.type === 'video'
-          ? __(`Video is too small on the page`, 'web-stories')
-          : __(`Image is too small on the page`, 'web-stories'),
+      message: MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_IMAGE_TOO_SMALL_ON_PAGE.HELPER_TEXT,
     };
   }
 
@@ -118,7 +110,7 @@ export function videoElementSizeOnPage(page) {
  * Check an element's resolution. If the resolution is not within guidelines, return guidance.
  * Otherwise return undefined.
  *
- * @param {element} element The element being checked
+ * @param {Element} element The element being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function mediaElementResolution(element) {
@@ -136,20 +128,18 @@ export function mediaElementResolution(element) {
 
 function videoElementResolution(element) {
   const videoResolutionLow =
-    element.resource.sizes.full.height <= MIN_VIDEO_HEIGHT &&
-    element.resource.sizes.full.width <= MIN_VIDEO_WIDTH;
+    element.resource?.sizes?.full?.height <= MIN_VIDEO_HEIGHT &&
+    element.resource?.sizes?.full?.width <= MIN_VIDEO_WIDTH;
   const videoResolutionHigh =
-    element.resource.sizes.full.height >= MAX_VIDEO_HEIGHT &&
-    element.resource.sizes.full.width >= MAX_VIDEO_WIDTH;
+    element.resource?.sizes?.full?.height >= MAX_VIDEO_HEIGHT &&
+    element.resource?.sizes?.full?.width >= MAX_VIDEO_WIDTH;
 
   if (videoResolutionHigh) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __(
-        "Video's resolution is too high to display on most mobile devices (>4k)",
-        'web-stories'
-      ),
+      message: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.HELPER_TEXT,
     };
   }
 
@@ -157,7 +147,8 @@ function videoElementResolution(element) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __('Video has low resolution', 'web-stories'),
+      message: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_LOW.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_LOW.HELPER_TEXT,
     };
   }
 
@@ -166,14 +157,16 @@ function videoElementResolution(element) {
 
 function imageElementResolution(element) {
   const heightResTooLow =
-    element.resource.sizes.full.height < 2 * element.height;
-  const widthResTooLow = element.resource.sizes.full.width < 2 * element.width;
+    element.resource?.sizes?.full?.height < 2 * element.height;
+  const widthResTooLow =
+    element.resource?.sizes?.full?.width < 2 * element.width;
 
   if (heightResTooLow || widthResTooLow) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __('Image has low resolution', 'web-stories'),
+      message: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+      help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
     };
   }
   return undefined;
@@ -182,15 +175,16 @@ function imageElementResolution(element) {
 function gifElementResolution(element) {
   // gif/output uses the MP4 video provided by the 3P Media API for displaying gifs
   const heightResTooLow =
-    element.resource.output.sizes.mp4.full.height < 2 * element.height;
+    element.resource?.output?.sizes?.mp4?.full?.height < 2 * element.height;
   const widthResTooLow =
-    element.resource.output.sizes.mp4.full.width < 2 * element.width;
+    element.resource?.output?.sizes?.mp4?.full?.width < 2 * element.width;
 
   if (heightResTooLow || widthResTooLow) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: __('GIF has low resolution', 'web-stories'),
+      message: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+      help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
     };
   }
   return undefined;
@@ -200,24 +194,16 @@ function gifElementResolution(element) {
  * Check a video element's length.
  * If the length is longer than 1 minute, return guidance. Otherwise return undefined.
  *
- * @param {element} element The element being checked
+ * @param {Element} element The element being checked
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function videoElementLength(element) {
-  if (element.resource.length > MAX_VIDEO_LENGTH_SECONDS) {
+  if (element.resource?.length > MAX_VIDEO_LENGTH_SECONDS) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
       elementId: element.id,
-      message: sprintf(
-        /* translators: %d: number of minutes; */
-        _n(
-          'Video is longer than %d minute (suggest breaking video up into multiple segments)',
-          'Video is longer than %d minutes (suggest breaking video up into multiple segments)',
-          MAX_VIDEO_LENGTH_MINUTES,
-          'web-stories'
-        ),
-        MAX_VIDEO_LENGTH_MINUTES
-      ),
+      message: MESSAGES.MEDIA.VIDEO_TOO_LONG.MAIN_TEXT,
+      help: MESSAGES.MEDIA.VIDEO_TOO_LONG.HELPER_TEXT,
     };
   }
   return undefined;
