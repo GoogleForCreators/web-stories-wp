@@ -100,12 +100,13 @@ describe('Inserting WebM Video', () => {
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('amp-video');
 
-    const poster = await previewPage.$eval('amp-video', (video) => {
-      return video.poster;
-    });
+    const poster = await previewPage.evaluate((selector) => {
+      return document.querySelector(selector).getAttribute('poster');
+    }, 'amp-video');
 
-    // Check that the value of the poster is the url that contains webm and not null.
-    expect(poster.endsWith('.webm')).toBeTrue();
+    // Check that the value of the poster is the url that is a string and not null.
+    expect(poster).not.toBeNull();
+    expect(poster).toStrictEqual(expect.any(String));
 
     await editorPage.bringToFront();
     await previewPage.close();
