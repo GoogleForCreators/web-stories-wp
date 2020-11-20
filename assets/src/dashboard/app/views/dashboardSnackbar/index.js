@@ -22,11 +22,10 @@ import { useEffect } from 'react';
 /**
  * Internal dependencies
  */
-import { Toaster, useToastContext } from '../../../components/toaster';
-import { ALERT_SEVERITY } from '../../../constants';
+import { SnackbarContainer, useSnackbarContext } from '../../snackbar';
 import useApi from '../../api/useApi';
 
-function ToasterView() {
+function SnackbarView() {
   const { storyError, templateError, settingsError, mediaError } = useApi(
     ({
       state: {
@@ -39,57 +38,52 @@ function ToasterView() {
   );
 
   const {
-    actions: { removeToast, addToast },
-    state: { activeToasts },
-  } = useToastContext();
+    actions: { removeSnackbarMessage, addSnackbarMessage },
+    state: { activeSnackbarMessage },
+  } = useSnackbarContext();
 
   useEffect(() => {
     if (storyError?.id) {
-      addToast({
+      addSnackbarMessage({
         message: storyError.message,
-        severity: ALERT_SEVERITY.ERROR,
         id: storyError.id,
       });
     }
-  }, [storyError, addToast]);
+  }, [storyError, addSnackbarMessage]);
 
   useEffect(() => {
     if (templateError?.id) {
-      addToast({
+      addSnackbarMessage({
         message: templateError.message,
-        severity: ALERT_SEVERITY.ERROR,
         id: templateError.id,
       });
     }
-  }, [templateError, addToast]);
+  }, [templateError, addSnackbarMessage]);
 
   useEffect(() => {
     if (settingsError?.id) {
-      addToast({
+      addSnackbarMessage({
         message: settingsError.message,
-        severity: ALERT_SEVERITY.ERROR,
         id: settingsError.id,
       });
     }
-  }, [settingsError, addToast]);
+  }, [settingsError, addSnackbarMessage]);
 
   useEffect(() => {
     if (mediaError?.id) {
-      addToast({
+      addSnackbarMessage({
         message: mediaError.message,
-        severity: ALERT_SEVERITY.ERROR,
         id: mediaError.id,
       });
     }
-  }, [mediaError, addToast]);
+  }, [mediaError, addSnackbarMessage]);
 
   return (
-    <Toaster
-      activeToasts={activeToasts}
-      handleRemoveToast={removeToast}
-      isAllowEarlyDismiss
+    <SnackbarContainer
+      activeSnackbarMessage={activeSnackbarMessage}
+      handleDismissMessage={removeSnackbarMessage}
     />
   );
 }
 
-export default ToasterView;
+export default SnackbarView;

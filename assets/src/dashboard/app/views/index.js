@@ -20,4 +20,4 @@ export { default as PreviewStoryView } from './previewStory';
 export { default as TemplateDetailsView } from './templateDetails';
 export { default as SavedTemplatesView } from './savedTemplates';
 export { default as StoryAnimTool } from './storyAnimTool';
-export { default as ToasterView } from './toaster';
+export { default as SnackbarView } from './dashboardSnackbar';

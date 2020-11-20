@@ -39,16 +39,11 @@ import {
   ADMIN_TITLE,
 } from '../constants';
 
-import {
-  AppFrame,
-  LeftRail,
-  NavProvider,
-  PageContent,
-  ToastProvider,
-} from '../components';
+import { AppFrame, LeftRail, NavProvider, PageContent } from '../components';
 import ApiProvider from './api/apiProvider';
-import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
 import { ConfigProvider } from './config';
+import { Route, RouterProvider, matchPath, useRouteHistory } from './router';
+import { SnackbarProvider } from './snackbar';
 import {
   EditorSettingsView,
   ExploreTemplatesView,
@@ -56,7 +51,7 @@ import {
   SavedTemplatesView,
   StoryAnimTool,
   TemplateDetailsView,
-  ToasterView,
+  SnackbarView,
 } from './views';
 
 const AppContent = () => {
@@ -114,7 +109,7 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
-      <ToasterView />
+      <SnackbarView />
     </AppFrame>
   );
 };
@@ -132,7 +127,7 @@ function App({ config }) {
       <ThemeProvider theme={activeTheme}>
         <ThemeGlobals.OverrideFocusOutline />
         <ConfigProvider config={config}>
-          <ToastProvider>
+          <SnackbarProvider>
             <ApiProvider>
               <NavProvider>
                 <RouterProvider>
@@ -142,7 +137,7 @@ function App({ config }) {
                 </RouterProvider>
               </NavProvider>
             </ApiProvider>
-          </ToastProvider>
+          </SnackbarProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>
