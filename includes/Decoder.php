@@ -79,7 +79,7 @@ class Decoder {
 		if ( 0 === strpos( $string, '__WEB_STORIES_ENCODED__' ) ) {
 			$string = str_replace( '__WEB_STORIES_ENCODED__', '', $string );
 
-			return mb_convert_encoding( base64_decode( $string ), 'UTF-8', 'UTF-16LE' );
+			return urldecode( base64_decode( $string ) );
 		}
 
 		return $string;

@@ -19,13 +19,8 @@
  */
 import base64Encode from '../base64Encode';
 
-// see https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa.
-function fromBinary(binary) {
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = binary.charCodeAt(i);
-  }
-  return String.fromCharCode(...new Uint16Array(bytes.buffer));
+function base64Decode(str) {
+  return decodeURIComponent(atob(str)).replace('__WEB_STORIES_ENCODED__', '');
 }
 
 describe('base64Encode', () => {
@@ -36,10 +31,10 @@ describe('base64Encode', () => {
   it('converts Unicode characters', () => {
     const actual = base64Encode('Hello 🌍 - これはサンプルです。');
     expect(actual).toStrictEqual(
-      '__WEB_STORIES_ENCODED__SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw'
+      '__WEB_STORIES_ENCODED__SGVsbG8lMjAlRjAlOUYlOEMlOEQlMjAtJTIwJUUzJTgxJTkzJUUzJTgyJThDJUUzJTgxJUFGJUUzJTgyJUI1JUUzJTgzJUIzJUUzJTgzJTk3JUUzJTgzJUFCJUUzJTgxJUE3JUUzJTgxJTk5JUUzJTgwJTgy'
     ); // Hello 🌍 - これはサンプルです。
-    expect(
-      fromBinary(atob(actual.replace('__WEB_STORIES_ENCODED__', '')))
-    ).toStrictEqual('Hello 🌍 - これはサンプルです。');
+    expect(base64Decode(actual)).toStrictEqual(
+      'Hello 🌍 - これはサンプルです。'
+    );
   });
 });
