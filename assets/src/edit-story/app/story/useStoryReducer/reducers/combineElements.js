@@ -97,6 +97,7 @@ function combineElements(state, { firstElement, secondId }) {
     // If relevant, maintain border, too.
     if (canMaskHaveBorder(secondElement)) {
       propsFromFirst.push('border');
+      propsFromFirst.push('borderRadius');
     }
   }
   const mediaProps = objectPick(element, propsFromFirst);

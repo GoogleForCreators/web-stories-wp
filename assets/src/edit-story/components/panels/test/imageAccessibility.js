@@ -37,6 +37,17 @@ describe('Panels/ImageAccessibility', () => {
     return renderPanel(ImageAccessibility, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:imageAccessibility',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <ImageAccessibility /> panel', () => {
     const { getByRole } = renderImageAccessibility([defaultElement]);
     const input = getByRole('textbox', { name: /Edit: Assistive text/i });

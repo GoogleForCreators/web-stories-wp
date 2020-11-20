@@ -86,7 +86,11 @@ function SlugPanel() {
       : link;
 
   return (
-    <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
+    <SimplePanel
+      name="permalink"
+      title={__('Permalink', 'web-stories')}
+      collapsedByDefault={false}
+    >
       <Row>
         <BoxedTextInput
           label={__('URL Slug', 'web-stories')}

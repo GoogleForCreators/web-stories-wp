@@ -127,6 +127,17 @@ describe('Panels/Preset', () => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-color',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <ColorPresetPanel /> panel', () => {
     const { getByText } = setupPanel();
     const element = getByText(PANEL_LABEL);
@@ -365,7 +376,6 @@ describe('Panels/Preset', () => {
         extraStylePresets,
         extraStateProps
       );
-
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 
@@ -384,7 +394,6 @@ describe('Panels/Preset', () => {
         colors: [TEST_COLOR],
       };
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
-
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
       expect(applyPreset).toBeDefined();
 

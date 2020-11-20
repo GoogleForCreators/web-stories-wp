@@ -30,6 +30,7 @@ export { ReactComponent as ArrowLeft } from './arrow_left.svg';
 export { ReactComponent as ArrowRight } from './arrow_right.svg';
 export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
+export { ReactComponent as BorderLockLine } from './border_lock_line.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';
 export { ReactComponent as DefaultImage } from './default_image.svg';

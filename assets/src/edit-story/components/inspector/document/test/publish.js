@@ -82,6 +82,16 @@ function setupPanel(
 }
 
 describe('PublishPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:publishing',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
   it('should render PublishPanel', () => {
     const { getByText } = setupPanel();
     const publishPanel = getByText('Publishing');

@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import {
-  TYPOGRAPHY_PRESET_SIZES,
-  TEXT_SIZES,
-  HEADLINE_SIZES,
-  DISPLAY_SIZES,
-} from './typography';
-
-export const THEME_CONSTANTS = {
-  TYPOGRAPHY_PRESET_SIZES,
-  TEXT_SIZES,
-  HEADLINE_SIZES,
-  DISPLAY_SIZES,
-};
+export const TOOLBAR_HEIGHT = 32;
+export const MENU_WIDTH = 160;
+export const MENU_FOLDED_WIDTH = 36;

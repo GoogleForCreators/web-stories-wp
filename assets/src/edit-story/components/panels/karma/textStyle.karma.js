@@ -41,12 +41,34 @@ describe('Text Style Panel', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    localStorage.clear();
     await fixture.render();
     await addText();
   });
 
   afterEach(() => {
     fixture.restore();
+  });
+
+  describe('Panel state', () => {
+    it('should have the style panel always expanded', async () => {
+      await fixture.snapshot('Default panels state with only style panel open');
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.collapse
+      );
+      // Expect the inputs not to be visible since tha panel is collapsed.
+      expect(
+        () => fixture.editor.inspector.designPanel.textStyle.lineHeight
+      ).toThrow();
+      await fixture.snapshot('Collapsed style panel');
+
+      // Add a new text now.
+      await fixture.events.click(fixture.editor.library.textAdd);
+      // Expect the inputs to be visible again, since the panel should be expanded again.
+      expect(
+        fixture.editor.inspector.designPanel.textStyle.lineHeight
+      ).toBeDefined();
+    });
   });
 
   describe('Font controls', () => {

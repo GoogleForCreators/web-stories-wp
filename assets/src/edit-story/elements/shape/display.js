@@ -18,23 +18,66 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
-import { elementFillContent, elementWithBackgroundColor } from '../shared';
+import {
+  elementFillContent,
+  elementWithBackgroundColor,
+  elementWithBorderRadius,
+  elementWithOutsideBorder,
+} from '../shared';
 import StoryPropTypes from '../../types';
+import { useTransformHandler } from '../../components/transform';
+import { isOutsideBorder } from '../../components/elementBorder/utils';
 
 const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
+  ${elementWithBorderRadius}
+  ${elementWithOutsideBorder}
 `;
 
-function ShapeDisplay({ element: { isDefaultBackground, backgroundColor } }) {
+function ShapeDisplay({
+  element: { id, isDefaultBackground, backgroundColor, border, borderRadius },
+}) {
+  const ref = useRef();
+
+  useTransformHandler(id, (transform) => {
+    // Since outside border is applied directly to the element, we need to
+    // adjust the size of the element according to the border width.
+    if (ref.current) {
+      if (transform) {
+        const { resize } = transform;
+        if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          const [width, height] = resize;
+          if (isOutsideBorder(border)) {
+            ref.current.style.width = width + border.left + border.right + 'px';
+            ref.current.style.height =
+              height + border.top + border.bottom + 'px';
+          }
+        }
+      } else {
+        ref.current.style.width = '';
+        ref.current.style.height = '';
+      }
+    }
+  });
+
   if (isDefaultBackground) {
     return <Element />;
   }
-  return <Element backgroundColor={backgroundColor} />;
+
+  return (
+    <Element
+      ref={ref}
+      backgroundColor={backgroundColor}
+      borderRadius={borderRadius}
+      border={border}
+    />
+  );
 }
 
 ShapeDisplay.propTypes = {
