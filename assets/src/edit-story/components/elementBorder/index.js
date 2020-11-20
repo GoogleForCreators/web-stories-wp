@@ -19,13 +19,20 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
-import { getBorderStyle, isOutsideBorder, shouldDisplayBorder } from './utils';
+import { useTransformHandler } from '../transform';
+import {
+  getBorderColor,
+  getBorderStyle,
+  isOutsideBorder,
+  shouldDisplayBorder,
+} from './utils';
 
 const borderElementCSS = css`
   top: 0;
@@ -38,6 +45,7 @@ const borderElementCSS = css`
 `;
 
 const Border = styled.div`
+  --element-border-color: ${({ color }) => getBorderColor({ color })};
   ${borderElementCSS}
   &:after {
     ${({ position }) =>
@@ -46,6 +54,7 @@ const Border = styled.div`
       content: ' ';
     `}
     ${(props) => !isOutsideBorder(props) && getBorderStyle(props)}
+    border-color: var(--element-border-color);
   }
 }
 `;
@@ -55,6 +64,29 @@ export default function WithBorder({ element, previewMode = false, children }) {
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
+  const ref = useRef(null);
+  const { id } = element;
+
+  useTransformHandler(id, (transform) => {
+    const target = ref.current;
+    if (target) {
+      if (transform === null) {
+        target.style.cssText = '';
+      } else {
+        const { color, style } = transform;
+        if (color && style) {
+          const {
+            color: { r, g, b, a },
+          } = color;
+          target.style.setProperty(
+            '--element-border-color',
+            `rgba(${r}, ${g}, ${b}, ${a !== undefined ? a : 1})`
+          );
+        }
+      }
+    }
+  });
+
   if (!shouldDisplayBorder(element)) {
     return children;
   }
@@ -74,6 +106,7 @@ export default function WithBorder({ element, previewMode = false, children }) {
   }
   return (
     <Border
+      ref={ref}
       {...border}
       borderRadius={borderRadius}
       previewMode={previewMode}
