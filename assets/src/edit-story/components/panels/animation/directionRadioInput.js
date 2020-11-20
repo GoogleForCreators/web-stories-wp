@@ -55,13 +55,16 @@ const Icon = styled.div`
 
 const RotationIcon = () => (
   <Svg size="19px" viewBox="0 0 19 18">
-    <path d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9" />
+    <path
+      strokeLinecap="round"
+      d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9"
+    />
   </Svg>
 );
 
 const DirectionIcon = () => (
-  <Svg size="10px" viewBox="0 0 10 11">
-    <path d="M5 11L5 1M5 1L9 5M5 1L1 5" />
+  <Svg size="16px" viewBox="0 0 10 11">
+    <path strokeLinecap="round" d="M5 11L5 1M5 1L9 5M5 1L1 5" />
   </Svg>
 );
 
@@ -85,8 +88,8 @@ const DirectionIndicator = styled(Direction)``;
 
 const Fieldset = styled.fieldset`
   position: relative;
-  height: 63px;
-  width: 63px;
+  height: 80px;
+  width: 80px;
   background-color: ${({ theme }) => theme.colors.bg.workspace};
   border: 1px solid ${({ theme }) => theme.colors.fg.v9};
   border-radius: 4px;

@@ -117,6 +117,8 @@ export const AXIS = {
 export const FIELD_TYPES = {
   DROPDOWN: 'dropdown',
   HIDDEN: 'hidden',
+  ROTATION_PICKER: 'rotation_picker',
+  DIRECTION_PICKER: 'direction_picker',
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',

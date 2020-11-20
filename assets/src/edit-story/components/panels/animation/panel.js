@@ -40,7 +40,7 @@ import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
 import { SimplePanel } from '../panel';
 import { Note } from '../shared';
-import EffectPanel from './effectPanel';
+import EffectPanel, { getEffectName } from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
@@ -57,22 +57,30 @@ function AnimationPanel({
     [pushUpdateForObject]
   );
 
-  const handleRemoveEffect = useCallback(
-    (animation) => {
-      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, true);
-    },
-    [pushUpdateForObject]
-  );
-
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
   const backgroundScale = isBackground && selectedElements[0].scale;
-  const handleAddEffect = useCallback(
+  const updatedAnimations = useMemo(() => {
+    // Combining local element updates with the
+    // page level applied updates
+    const updated = selectedElements
+      .map((element) => element.animation)
+      .filter(Boolean);
+    return selectedElementAnimations
+      .map((anim) => ({
+        ...(updated.find((a) => a.id === anim.id) || anim),
+      }))
+      .filter((a) => !a.delete);
+  }, [selectedElements, selectedElementAnimations]);
+
+  const elAnimationId = updatedAnimations[0]?.id;
+  const handleAddOrUpdateElementEffect = useCallback(
     ({ animation, ...options }) => {
       if (!animation) {
         return;
       }
 
+      const id = elAnimationId || uuidv4();
       const defaults = getAnimationEffectDefaults(animation);
 
       // Background Zoom's `scale from` initial value should match
@@ -89,7 +97,7 @@ function AnimationPanel({
       pushUpdateForObject(
         ANIMATION_PROPERTY,
         {
-          id: uuidv4(),
+          id,
           type: animation,
           ...defaults,
           ...options,
@@ -98,21 +106,20 @@ function AnimationPanel({
         true
       );
     },
-    [pushUpdateForObject, isBackground, backgroundScale]
+    [elAnimationId, isBackground, pushUpdateForObject, backgroundScale]
   );
 
-  const updatedAnimations = useMemo(() => {
-    // Combining local element updates with the
-    // page level applied updates
-    const updated = selectedElements
-      .map((element) => element.animation)
-      .filter(Boolean);
-    return selectedElementAnimations
-      .map((anim) => ({
-        ...(updated.find((a) => a.id === anim.id) || anim),
-      }))
-      .filter((a) => !a.delete);
-  }, [selectedElements, selectedElementAnimations]);
+  const handleRemoveEffect = useCallback(() => {
+    pushUpdateForObject(
+      ANIMATION_PROPERTY,
+      {
+        ...updatedAnimations[0],
+        delete: true,
+      },
+      null,
+      true
+    );
+  }, [pushUpdateForObject, updatedAnimations]);
 
   return selectedElements.length > 1 ? (
     <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
@@ -121,24 +128,21 @@ function AnimationPanel({
       </Row>
     </SimplePanel>
   ) : (
-    <>
-      <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
-        <Row>
-          <EffectChooserDropdown
-            onAnimationSelected={handleAddEffect}
-            isBackgroundEffects={isBackground}
-          />
-        </Row>
-      </SimplePanel>
-      {updatedAnimations.map((animation) => (
-        <EffectPanel
-          key={animation.id}
-          animation={animation}
-          onChange={handlePanelChange}
-          onRemove={handleRemoveEffect}
+    <SimplePanel name="animation" title={__('Animation', 'web-stories')}>
+      <Row>
+        <EffectChooserDropdown
+          onAnimationSelected={handleAddOrUpdateElementEffect}
+          selectedEffectTitle={getEffectName(updatedAnimations[0]?.type)}
+          onNoEffectSelected={handleRemoveEffect}
         />
-      ))}
-    </>
+      </Row>
+      {updatedAnimations[0] && (
+        <EffectPanel
+          animation={updatedAnimations[0]}
+          onChange={handlePanelChange}
+        />
+      )}
+    </SimplePanel>
   );
 }
 

@@ -34,6 +34,7 @@ import { ColorPreset } from './colorPreset';
 import { SizePosition } from './sizePosition';
 import { BorderRadius } from './borderRadius';
 import { Border } from './border';
+import { Animation } from './animationPanel';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
@@ -153,6 +154,14 @@ export class DesignPanel extends Container {
   get videoOptions() {
     // @todo: implement
     return null;
+  }
+
+  get animation() {
+    return this._get(
+      this.getByRole('region', { name: /Animation/ }),
+      'animation',
+      Animation
+    );
   }
 
   get layerPanel() {
