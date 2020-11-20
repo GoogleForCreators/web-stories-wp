@@ -92,11 +92,6 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
         />
       </Row>
       <Row>
-        <Note>
-          {__('Description for indexability and accessibility', 'web-stories')}
-        </Note>
-      </Row>
-      <Row>
         <ExpandedTextInput
           placeholder={__('Include any burned-in text', 'web-stories')}
           value={title || ''}
@@ -105,6 +100,11 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           aria-label={__('Edit: Video title', 'web-stories')}
           maxLength={MIN_MAX.TITLE.MAX}
         />
+      </Row>
+      <Row>
+        <Note>
+          {__('Description for indexability and accessibility', 'web-stories')}
+        </Note>
       </Row>
     </SimplePanel>
   );
