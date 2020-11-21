@@ -47,7 +47,6 @@ const Border = styled.div`
     `}
     ${(props) => !isOutsideBorder(props) && getBorderStyle(props)}
   }
-}
 `;
 
 export default function WithBorder({ element, previewMode = false, children }) {
