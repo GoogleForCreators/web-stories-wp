@@ -53,7 +53,7 @@ function OptionList({
   onClose = () => {},
   onExpandedChange = () => {},
   focusTrigger = 0,
-  options,
+  options = [],
   primaryOptions,
   primaryLabel,
   priorityOptions = [],
@@ -73,9 +73,9 @@ function OptionList({
    * KEYWORD FILTERING
    */
   const filteredListGroups = useMemo(() => {
-    // If we're seraching, return a single group of search results
+    // If we're searching, return a single group of search results
     // gotten from all available options
-    if (isKeywordFilterable(keyword)) {
+    if (isKeywordFilterable(keyword) && options) {
       return [
         {
           label: searchResultsLabel,
