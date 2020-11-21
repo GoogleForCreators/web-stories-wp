@@ -62,6 +62,9 @@ describe('Image Editor', () => {
       });
 
       it('should allow image to be scaled and moved using mouse', async () => {
+        const image = fixture.editor.canvas.editLayer.media;
+        const originalRect = image.getBoundingClientRect();
+
         // First drag the slider handle 30px right
         const slider = fixture.editor.canvas.editLayer.sizeSlider;
         await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
@@ -71,10 +74,14 @@ describe('Image Editor', () => {
           up(),
         ]);
 
+        // Expect image to be scaled up
+        const scaledUpRect = image.getBoundingClientRect();
+        expect(scaledUpRect.width).toBeGreaterThan(originalRect.width);
+        expect(scaledUpRect.height).toBeGreaterThan(originalRect.height);
+
         await fixture.snapshot('Image scaled up');
 
         // Then drag image 20px left
-        const image = fixture.editor.canvas.editLayer.media;
         await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
           moveRel(image, image.width / 2, image.height / 2),
           down(),
@@ -82,12 +89,19 @@ describe('Image Editor', () => {
           up(),
         ]);
 
+        // Expect image to be moved left, not up or down
+        const movedRect = image.getBoundingClientRect();
+        expect(movedRect.left).toBeLessThan(scaledUpRect.left);
+        expect(movedRect.top).toBe(scaledUpRect.top);
         await fixture.snapshot('Image moved');
 
         // Then click reset button
         const reset = fixture.editor.canvas.editLayer.sizeReset;
         await fixture.events.click(reset);
 
+        // Expect image to be reset
+        const resetRect = image.getBoundingClientRect();
+        expect(resetRect).toEqual(originalRect);
         await fixture.snapshot('Image reset');
       });
 
@@ -98,6 +112,8 @@ describe('Image Editor', () => {
         const image = fixture.editor.canvas.editLayer.media;
         expect(image).toHaveFocus();
 
+        const originalRect = image.getBoundingClientRect();
+
         // Press tab to move focus to slider
         await fixture.events.keyboard.press('tab');
         expect(slider).toHaveFocus();
@@ -106,6 +122,11 @@ describe('Image Editor', () => {
         await fixture.events.keyboard.press('right');
         await fixture.events.keyboard.press('right');
         await fixture.events.keyboard.press('right');
+
+        // Expect image to be scaled up
+        const scaledUpRect = image.getBoundingClientRect();
+        expect(scaledUpRect.width).toBeGreaterThan(originalRect.width);
+        expect(scaledUpRect.height).toBeGreaterThan(originalRect.height);
 
         await fixture.snapshot('Image scaled up');
 
@@ -118,6 +139,10 @@ describe('Image Editor', () => {
         await fixture.events.keyboard.press('left');
         await fixture.events.keyboard.press('left');
 
+        // Expect image to be moved left, not up or down
+        const movedRect = image.getBoundingClientRect();
+        expect(movedRect.left).toBeLessThan(scaledUpRect.left);
+        expect(movedRect.top).toBe(scaledUpRect.top);
         await fixture.snapshot('Image moved');
 
         // Press tab twice to move focus to reset
@@ -128,6 +153,9 @@ describe('Image Editor', () => {
         // Then press enter to activate reset button
         await fixture.events.keyboard.press('Enter');
 
+        // Expect image to be reset
+        const resetRect = image.getBoundingClientRect();
+        expect(resetRect).toEqual(originalRect);
         await fixture.snapshot('Image reset');
       });
 
@@ -135,6 +163,7 @@ describe('Image Editor', () => {
         // Validate that image has focus
         const image = fixture.editor.canvas.editLayer.media;
         expect(image).toHaveFocus();
+        const originalRect = image.getBoundingClientRect();
 
         // Scale image up by scrolling three steps
         await fixture.events.mouse.moveRel(image, 10, 10);
@@ -142,6 +171,10 @@ describe('Image Editor', () => {
         await fixture.events.mouse.wheel({ deltaY: 1 });
         await fixture.events.mouse.wheel({ deltaY: 1 });
 
+        // Expect image to be scaled up
+        const scaledUpRect = image.getBoundingClientRect();
+        expect(scaledUpRect.width).toBeGreaterThan(originalRect.width);
+        expect(scaledUpRect.height).toBeGreaterThan(originalRect.height);
         await fixture.snapshot('Image scaled up');
       });
     });
