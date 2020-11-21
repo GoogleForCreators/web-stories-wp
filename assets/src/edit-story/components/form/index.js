@@ -36,6 +36,7 @@ export { default as Toggle } from './toggle';
 export { default as ToggleButton } from './toggleButton';
 export { default as usePresubmitHandler } from './usePresubmitHandler';
 export { default as DropDown } from './dropDown';
+export { default as AdvancedDropDown } from './advancedDropDown';
 export { default as DateTime } from './dateTime';
 export { default as HelperText } from './helperText';
 export { default as Required } from './required';

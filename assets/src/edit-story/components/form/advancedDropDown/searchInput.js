@@ -30,8 +30,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CloseIcon } from '../../icons/close.svg';
-import { ReactComponent as SearchIcon } from '../../icons/search.svg';
+import { ReactComponent as CloseIcon } from '../../../icons/close.svg';
+import { ReactComponent as SearchIcon } from '../../../icons/search.svg';
 
 const SearchContainer = styled.div`
   position: relative;
@@ -77,11 +77,10 @@ const ClearButton = styled.button`
   }
 `;
 
-const SearchInput = styled.input.attrs({
+const Input = styled.input.attrs({
   type: 'search',
   role: 'combobox',
   ['aria-autocomplete']: 'list',
-  ['aria-owns']: 'editor-font-picker-list',
 })`
   width: 100%;
   padding: 6px 20px 6px 30px;
@@ -110,8 +109,15 @@ const SearchInput = styled.input.attrs({
   }
 `;
 
-const FontSearchInput = forwardRef(function FontSearchInput(
-  { isExpanded, onClose, value, onChange, focusFontListFirstOption = () => {} },
+const SearchInput = forwardRef(function SearchInput(
+  {
+    isExpanded,
+    onClose,
+    value,
+    onChange,
+    focusFontListFirstOption = () => {},
+    ...rest
+  },
   ref
 ) {
   const handleKeyPress = useCallback(
@@ -127,13 +133,14 @@ const FontSearchInput = forwardRef(function FontSearchInput(
 
   return (
     <SearchContainer>
-      <SearchInput
+      <Input
         ref={ref}
         aria-expanded={isExpanded}
         value={value}
         onKeyDown={handleKeyPress}
         placeholder={__('Search', 'web-stories')}
         onChange={onChange}
+        {...rest}
       />
       <SearchIconContainer>
         <SearchIcon />
@@ -147,12 +154,13 @@ const FontSearchInput = forwardRef(function FontSearchInput(
   );
 });
 
-FontSearchInput.propTypes = {
+SearchInput.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   isExpanded: PropTypes.bool,
   onClose: PropTypes.func,
   focusFontListFirstOption: PropTypes.func,
+  listId: PropTypes.string,
 };
 
-export default FontSearchInput;
+export default SearchInput;

@@ -59,7 +59,7 @@ describe('useAutoSave', () => {
     const story = {
       storyId: 1,
       title: 'Story!',
-      author: 1,
+      author: { id: 1, name: 'John Doe' },
       slug: 'story',
       publisherLogo: 1,
       defaultPageDuration: 7,

@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const createFontFilter = (fonts) => (keyword) =>
-  fonts.filter(({ name }) =>
-    name.toLowerCase().includes(keyword.toLowerCase())
-  );
 
-export const isKeywordFilterable = (keyword) => keyword.trim().length >= 2;
+/**
+ * Internal dependencies
+ */
+import { Container } from './container';
 
-export const getOptions = (groups) => groups.flatMap(({ options }) => options);
+/**
+ * The editor's canvas. Includes: display, frames, editor layers, carousel,
+ * navigation buttons, page menu.
+ */
+export class DocumentPanel extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
 
-export const addUniqueEntry = (key) => (array) => [
-  ...new Set(array.concat([key])),
-];
+  get author() {
+    return this.getByRole('button', { name: /Author/ });
+  }
 
-export const getInset = (groups, i, j) =>
-  groups
-    .slice(0, i)
-    .map((group) => group.options.length)
-    .reduce((a, b) => a + b, 0) + j;
+  // @TODO: rest of the fields.
+}
