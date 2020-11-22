@@ -208,6 +208,11 @@ class WebStoriesScraperPlugin {
             '<link rel="canonical" href="index.html">',
             `<link rel="canonical" href="${WEBSITE_LOCATION}${storySlug}/">`
           )
+          // Full URLs for meta[property=og:url].
+          .replace(
+            '<meta property="og:url" content="index.html">',
+            `<meta property="og:url" content="${WEBSITE_LOCATION}${storySlug}/">`
+          )
           // Fix schema data.
           .replace(
             /<script type="application\/ld\+json">(.*)<\/script>/gm,
