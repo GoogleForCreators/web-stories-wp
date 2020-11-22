@@ -30,7 +30,6 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import getStoryMarkup from '../../../edit-story/output/utils/getStoryMarkup';
-import trailingslashit from '../../../edit-story/utils/trailingslashit';
 import {
   STORY_STATUSES,
   STORY_SORT_OPTIONS,
