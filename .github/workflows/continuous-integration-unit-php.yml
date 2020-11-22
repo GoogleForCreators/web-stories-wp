@@ -24,9 +24,9 @@ jobs:
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
-        php: [ '7.0', '5.6' ]
-        wp: [ 'latest' ]
-        coverage: [ false ]
+        php: ['7.0', '5.6']
+        wp: ['latest']
+        coverage: [false]
         include:
           - php: '7.4'
             wp: 'latest'
@@ -36,7 +36,7 @@ jobs:
             wp: '5.3'
 
           - php: '7.4'
-# TODO Change to 5.6 after stable release of WP.
+            # TODO Change to 5.6 after stable release of WP.
             wp: '5.6-RC1'
             experimental: true
 
@@ -44,11 +44,11 @@ jobs:
             wp: 'trunk'
             experimental: true
 
-# Disabled as long as WordPress trunk does not properly support PHP 8
-#          - php: '8.0'
-#            wp: 'trunk'
-#            coverage: false
-#            experimental: true
+    # Disabled as long as WordPress trunk does not properly support PHP 8
+    #          - php: '8.0'
+    #            wp: 'trunk'
+    #            coverage: false
+    #            experimental: true
 
     steps:
       - name: Checkout
