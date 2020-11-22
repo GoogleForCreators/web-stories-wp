@@ -28,10 +28,11 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { clamp } from '../../../../animation';
 import { trackEvent } from '../../../../tracking';
 import { TransformProvider } from '../../../../edit-story/components/transform';
 import { Layout, useToastContext } from '../../../components';
-import { clamp, useTemplateView, usePagePreviewSize } from '../../../utils/';
+import { useTemplateView, usePagePreviewSize } from '../../../utils/';
 import { useConfig } from '../../config';
 import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';

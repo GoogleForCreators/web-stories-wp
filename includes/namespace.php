@@ -26,97 +26,20 @@
 
 namespace Google\Web_Stories;
 
+use WP_REST_Request;
+use WP_REST_Server;
 use WP_Error;
 use WP_REST_Request;
 use WP_Site;
 
-if (
-	! class_exists( '\Google\Web_Stories\Plugin' ) ||
-	! file_exists( WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/edit-story.js' )
-) {
-	/**
-	 * Displays an admin notice about why the plugin is unable to load.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return void
-	 */
-	function _print_missing_build_admin_notice() {
-		?>
-		<div class="notice notice-error">
-			<p>
-				<strong><?php esc_html_e( 'Web Stories plugin could not be initialized.', 'web-stories' ); ?></strong>
-			</p>
-			<p>
-				<?php
-					echo wp_kses(
-						sprintf(
-						/* translators: %s: build commands. */
-							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
-						),
-						[
-							'code' => [],
-						]
-					);
-				?>
-			</p>
-		</div>
-		<?php
-	}
-
-	add_action( 'admin_notices', __NAMESPACE__ . '\_print_missing_build_admin_notice' );
-}
-
-if ( ! class_exists( '\Google\Web_Stories\Plugin' ) ) {
-	// In CLI context, existence of the JS files is not required.
-	if ( ( defined( 'WP_CLI' ) && WP_CLI ) || 'true' === getenv( 'CI' ) || 'cli' === PHP_SAPI ) {
-		$heading = esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' );
-		$body    = sprintf(
-			/* translators: %s: build commands. */
-			esc_html__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
-			'`composer install && npm install && npm run build`'
-		);
-
-		if ( class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::warning( "$heading\n$body" );
-		} else {
-			echo "$heading\n$body\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		}
-	}
-
-	// However, we still need to stop further execution.
-	return;
-}
-
 /**
- * Handles plugin activation.
+ * Run logic to setup a new site with web stories.
  *
- * Throws an error if the site is running on PHP < 5.6
- *
- * @since 1.0.0
- *
- * @param bool $network_wide Whether to activate network-wide.
+ * @since 1.2.0
  *
  * @return void
  */
-function activate( $network_wide = false ) {
-	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
-		wp_die(
-		/* translators: %s: PHP version number */
-			esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_PHP_VERSION ) ),
-			esc_html__( 'Plugin could not be activated', 'web-stories' )
-		);
-	}
-
-	if ( version_compare( get_bloginfo( 'version' ), WEBSTORIES_MINIMUM_WP_VERSION, '<' ) ) {
-		wp_die(
-		/* translators: %s: WordPress version number */
-			esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), WEBSTORIES_MINIMUM_WP_VERSION ) ),
-			esc_html__( 'Plugin could not be activated', 'web-stories' )
-		);
-	}
-
+function setup_new_site() {
 	$story = new Story_Post_Type( new Experiments() );
 	$story->init();
 	$story->add_caps_to_roles();
@@ -126,6 +49,23 @@ function activate( $network_wide = false ) {
 
 	$database_upgrader = new Database_Upgrader();
 	$database_upgrader->init();
+}
+
+/**
+ * Handles plugin activation.
+ *
+ * Throws an error if the site is running on PHP < 5.6
+ *
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ *
+ * @since 1.0.0
+ *
+ * @param bool $network_wide Whether to activate network-wide.
+ *
+ * @return void
+ */
+function activate( $network_wide = false ) {
+	setup_new_site();
 
 	do_action( 'web_stories_activation', $network_wide );
 }
@@ -149,7 +89,7 @@ function new_site( $site ) {
 	}
 	$site_id = (int) $site->blog_id;
 	switch_to_blog( $site_id );
-	activate();
+	setup_new_site();
 	restore_current_blog();
 }
 add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
@@ -191,10 +131,6 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @return void
  */
 function deactivate( $network_wide ) {
-	if ( version_compare( PHP_VERSION, WEBSTORIES_MINIMUM_PHP_VERSION, '<' ) ) {
-		return;
-	}
-
 	unregister_post_type( Story_Post_Type::POST_TYPE_SLUG );
 	if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 		flush_rewrite_rules( false ); // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules
@@ -205,6 +141,83 @@ function deactivate( $network_wide ) {
 
 register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
 register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate' );
+
+
+/**
+ * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
+ * Expected to be called in the context of `array_reduce`.
+ *
+ * Like rest_preload_api_request() in core, but embeds links.
+ *
+ * @link  https://core.trac.wordpress.org/ticket/51722
+ *
+ * @since 1.2.0
+ *
+ * @see   \rest_preload_api_request
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ *
+ * @param array        $memo Reduce accumulator.
+ * @param string|array $path REST API path to preload.
+ *
+ * @return array Modified reduce accumulator.
+ */
+function rest_preload_api_request( $memo, $path ) {
+	// array_reduce() doesn't support passing an array in PHP 5.2,
+	// so we need to make sure we start with one.
+	if ( ! is_array( $memo ) ) {
+		$memo = [];
+	}
+
+	if ( empty( $path ) ) {
+		return $memo;
+	}
+
+	$method = 'GET';
+	if ( is_array( $path ) && 2 === count( $path ) ) {
+		$method = end( $path );
+		$path   = reset( $path );
+
+		if ( ! in_array( $method, [ 'GET', 'OPTIONS' ], true ) ) {
+			$method = 'GET';
+		}
+	}
+
+	$path_parts = wp_parse_url( $path );
+	if ( false === $path_parts ) {
+		return $memo;
+	}
+
+	$request = new WP_REST_Request( $method, $path_parts['path'] );
+	$embed   = false;
+	if ( ! empty( $path_parts['query'] ) ) {
+		$query_params = [];
+		parse_str( $path_parts['query'], $query_params );
+		$embed = isset( $query_params['_embed'] ) ? $query_params['_embed'] : false;
+		$request->set_query_params( $query_params );
+	}
+
+	$response = rest_do_request( $request );
+	if ( 200 === $response->status ) {
+		$server = rest_get_server();
+		$data   = $server->response_to_data( $response, $embed );
+
+		if ( 'OPTIONS' === $method ) {
+			$response = rest_send_allow_header( $response, $server, $request );
+
+			$memo[ $method ][ $path ] = [
+				'body'    => $data,
+				'headers' => $response->headers,
+			];
+		} else {
+			$memo[ $path ] = [
+				'body'    => $data,
+				'headers' => $response->headers,
+			];
+		}
+	}
+
+	return $memo;
+}
 
 global $web_stories;
 

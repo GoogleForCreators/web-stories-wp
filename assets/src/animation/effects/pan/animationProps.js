@@ -37,7 +37,7 @@ export const PanEffectInputPropTypes = {
 export default {
   panDir: {
     label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
+    type: FIELD_TYPES.DIRECTION_PICKER,
     values: [
       DIRECTION.TOP_TO_BOTTOM,
       DIRECTION.BOTTOM_TO_TOP,

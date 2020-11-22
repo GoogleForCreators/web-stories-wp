@@ -200,6 +200,8 @@ class Experiments {
 	/**
 	 * Returns a list of all experiments.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return array List of experiments by group.
@@ -350,6 +352,17 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #4918
+			 * Creation date: 2020-10-27
+			 */
+			[
+				'name'        => 'statusCheck',
+				'label'       => __( 'Status Check', 'web-stories' ),
+				'description' => __( 'Enable status check in editor.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @swissspidy
 			 * Issue: #4805
 			 * Creation date: 2020-10-28
@@ -360,6 +373,17 @@ class Experiments {
 				'label'       => __( 'WAF Compatibility', 'web-stories' ),
 				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
 				'group'       => 'general',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #4081
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'eyeDropper',
+				'label'       => __( 'Eyedropper', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

@@ -33,6 +33,7 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
+import { isOutsideBorder } from '../../components/elementBorder/utils';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -101,6 +102,8 @@ function MediaEdit({ element, box }) {
     focalY,
     isBackground,
     type,
+    border,
+    borderRadius,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
   const [fullMedia, setFullMedia] = useState(null);
@@ -162,6 +165,9 @@ function MediaEdit({ element, box }) {
     cropMediaProps.srcSet = srcSet;
   }
 
+  const borderProps =
+    isOutsideBorder(border) && borderRadius ? { borderRadius, border } : null;
+
   return (
     <Element ref={elementRef}>
       {isImage && (
@@ -176,7 +182,7 @@ function MediaEdit({ element, box }) {
           <source src={resource.src} type={resource.mimeType} />
         </FadedVideo>
       )}
-      <CropBox ref={setCropBox}>
+      <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill={true} applyFlip={false} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (

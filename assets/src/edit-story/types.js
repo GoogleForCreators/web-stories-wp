@@ -34,6 +34,16 @@ export const HexPropType = PropTypes.shape({
   a: PropTypes.number,
 });
 
+export const BorderPropTypes = PropTypes.shape({
+  color: HexPropType.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  right: PropTypes.number,
+  bottom: PropTypes.number,
+  locked: PropTypes.bool.isRequired,
+  position: PropTypes.string.isRequired,
+});
+
 export const ColorStopPropType = PropTypes.shape({
   color: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
@@ -66,12 +76,20 @@ StoryPropTypes.story = PropTypes.shape({
   storyId: PropTypes.number,
   title: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  author: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    name: PropTypes.string.isRequired,
+  }),
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
-  featuredMedia: PropTypes.number.isRequired,
+  featuredMedia: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
   password: PropTypes.string.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
@@ -318,7 +336,35 @@ export default StoryPropTypes;
  * Page object.
  *
  * @typedef {Page} Page
- * @property {Array} elements Array of all elements.
+ * @property {Element[]} elements Array of all elements.
+ */
+
+/**
+ * Element object
+ *
+ * @typedef {Element} Element A story element
+ * @property {string} id  A unique uuid for the element
+ * @property {string} type The type of the element, e.g. video, gif, image
+ * @property {number} x The x position of the element, its top left corner
+ * @property {number} y The y position of the element, its top left corner
+ * @property {number} width The width of the element
+ * @property {number} height The height of the element
+ * @property {Object} flip If the element has been flipped vertical/horizontal
+ * @property {number} rotationAngle The element's rotation angle
+ * @property {Object} mask The type of mask applied to the element
+ * @property {Object} link The url, icon and description of a link applied to element
+ * @property {number} opacity The opacity of the element
+ * @property {boolean} lockAspectRatio Whether the element's aspect ratio is locked
+ * @property {Resource} resource The element's resource object
+ */
+
+/**
+ * Resource object
+ *
+ * @typedef {Resource} Resource Resource data for elements
+ * @property {{ full: { height: number, width: number }, output: Object }} sizes The data for the full-size element
+ * @property {boolean} local Whether the media was uploaded by the user
+ * @property {string} src The source string for the resource
  */
 
 /**
@@ -330,12 +376,12 @@ export default StoryPropTypes;
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
  * @property {Array<Page>} pages Array of all pages.
- * @property {number} author User ID of story author.
+ * @property {Object} author Story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
  * @property {string} modified The modified date of the story.
  * @property {string} content AMP HTML content.
  * @property {string} excerpt Short description.
- * @property {number} featuredMedia Featured media ID.
+ * @property {Object} featuredMedia Featured media object.
  * @property {string} password Password
  */

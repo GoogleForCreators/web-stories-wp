@@ -181,12 +181,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(
-          `${trailingslashit(storyApi)}${story.id}/`,
-          {
-            data: story,
-          }
-        );
+        await dataAdapter.deleteRequest(`${storyApi}${story.id}`);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
@@ -241,7 +236,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
             slug: title,
             date: created || Date.now().toString(),
             modified: modified || Date.now().toString(),
-            featuredMedia: 0,
+            featuredMedia: {
+              id: 0,
+            },
             password: password || '',
             excerpt: excerpt || '',
           },
@@ -295,6 +292,9 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         const storyPropsToSave = await getStoryPropsToSave({
           story: {
             status: 'auto-draft',
+            featuredMedia: {
+              id: 0,
+            },
           },
           pages,
           metadata: {

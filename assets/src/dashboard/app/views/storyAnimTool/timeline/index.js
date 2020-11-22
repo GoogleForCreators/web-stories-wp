@@ -24,12 +24,12 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import {
+  clamp,
   getAnimationProps,
   ANIMATION_TYPES,
   FIELD_TYPES,
 } from '../../../../../animation';
 import { StoryPropType } from '../../../../types';
-import { clamp } from '../../../../utils';
 import {
   AnimationList,
   AnimationPanel,

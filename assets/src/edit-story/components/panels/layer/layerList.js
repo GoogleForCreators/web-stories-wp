@@ -95,7 +95,7 @@ function LayerPanel({ layers }) {
           <ReorderableItem
             position={layer.position}
             onStartReordering={handleStartReordering(layer.id)}
-            disabled={layer.type === 'background'}
+            disabled={layer.isBackground}
           >
             <Layer layer={layer} />
           </ReorderableItem>

@@ -40,9 +40,6 @@ web-stories-scraper
 .stylelintrc
 .svgo.yml
 .test_artifacts
-.travis.yml
-.travis_deploy_key
-.travis_deploy_key.enc
 babel.config.cjs
 codecov.yml
 composer.lock
@@ -55,6 +52,7 @@ package-lock.json
 percy.config.yml
 phpcs.xml
 phpcs.xml.dist
+phpmd.xml
 phpstan.neon.dist
 phpunit.xml
 phpunit.xml.dist

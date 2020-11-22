@@ -35,6 +35,8 @@ import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { useTransformHandler } from '../transform';
+import WithBorder from '../elementBorder';
+import { getBorderPositionCSS, isOutsideBorder } from '../elementBorder/utils';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -94,7 +96,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       }
     : null;
 
-  const { id, opacity, type, isBackground, backgroundOverlay } = element;
+  const {
+    id,
+    opacity,
+    type,
+    isBackground,
+    backgroundOverlay,
+    border = {},
+  } = element;
   const { Display } = getDefinitionForType(type);
   const { Display: Replacement } =
     getDefinitionForType(replacement?.resource.type) || {};
@@ -128,17 +137,27 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
-        <WithMask
-          element={element}
-          fill={true}
-          box={box}
-          style={{
-            opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
-          }}
-          previewMode={previewMode}
-        >
-          <Display element={element} previewMode={previewMode} box={box} />
-        </WithMask>
+        <WithBorder element={element} previewMode={previewMode}>
+          <WithMask
+            element={element}
+            fill={true}
+            box={box}
+            style={{
+              opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
+              ...(isOutsideBorder(border)
+                ? getBorderPositionCSS({
+                    ...border,
+                    width: `${box.width}px`,
+                    height: `${box.height}px`,
+                    skipOutsideBorder: false,
+                  })
+                : null),
+            }}
+            previewMode={previewMode}
+          >
+            <Display element={element} previewMode={previewMode} box={box} />
+          </WithMask>
+        </WithBorder>
         {!previewMode && (
           <ReplacementContainer hasReplacement={Boolean(replacementElement)}>
             {replacementElement && (

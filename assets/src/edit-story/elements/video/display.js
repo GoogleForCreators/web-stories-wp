@@ -93,6 +93,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           loop={loop}
           preload="none"
           ref={ref}
+          data-leaf-element="true"
         >
           <source src={resource.src} type={resource.mimeType} />
           {tracks &&

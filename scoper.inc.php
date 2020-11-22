@@ -101,7 +101,7 @@ return [
 			->files()
 			->ignoreVCS( true )
 			->ignoreDotFiles( true )
-			->name( '*.php' )
+			->notName( '/LICENSE|.*\\.md|.*\\.svg|.*\\.xml|.*\\.dist|composer\\.json|composer\\.lock/' )
 			->exclude(
 				[
 					'bin',
