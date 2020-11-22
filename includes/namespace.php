@@ -27,9 +27,7 @@
 namespace Google\Web_Stories;
 
 use WP_REST_Request;
-use WP_REST_Server;
 use WP_Error;
-use WP_REST_Request;
 use WP_Site;
 
 /**
@@ -147,7 +145,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
  * Expected to be called in the context of `array_reduce`.
  *
- * Like rest_preload_api_request() in core, but embeds links.
+ * Like rest_preload_api_request() in core, but embeds links and removes trailing slashes.
  *
  * @link  https://core.trac.wordpress.org/ticket/51722
  *
@@ -187,7 +185,7 @@ function rest_preload_api_request( $memo, $path ) {
 		return $memo;
 	}
 
-	$request = new WP_REST_Request( $method, $path_parts['path'] );
+	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	$embed   = false;
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];
@@ -232,78 +230,4 @@ $web_stories->register();
 function get_plugin_instance() {
 	global $web_stories;
 	return $web_stories;
-}
-
-/**
- * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
- * Expected to be called in the context of `array_reduce`.
- *
- * Like rest_preload_api_request() in core, but removes trailing slashes.
- *
- * @see \rest_preload_api_request
- * @link https://core.trac.wordpress.org/ticket/51636
- *
- * @since 1.1.0
- *
- * @param array        $memo Reduce accumulator.
- * @param string|array $path REST API path to preload.
- * @return array Modified reduce accumulator.
- */
-function rest_preload_api_request( $memo, $path ) {
-	// array_reduce() doesn't support passing an array in PHP 5.2,
-	// so we need to make sure we start with one.
-	if ( ! is_array( $memo ) ) {
-		$memo = [];
-	}
-
-	if ( empty( $path ) ) {
-		return $memo;
-	}
-
-	$method = 'GET';
-	if ( is_array( $path ) && 2 === count( $path ) ) {
-		$method = end( $path );
-		$path   = reset( $path );
-
-		if ( ! in_array( $method, [ 'GET', 'OPTIONS' ], true ) ) {
-			$method = 'GET';
-		}
-	}
-
-	$path_parts = wp_parse_url( $path );
-	if ( false === $path_parts ) {
-		return $memo;
-	}
-
-	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
-	if ( ! empty( $path_parts['query'] ) ) {
-		parse_str( $path_parts['query'], $query_params );
-		$request->set_query_params( $query_params );
-	}
-
-	$response = rest_do_request( $request );
-	if ( 200 === $response->status ) {
-		$server = rest_get_server();
-		$data   = (array) $response->get_data();
-		$links  = $server::get_compact_response_links( $response );
-		if ( ! empty( $links ) ) {
-			$data['_links'] = $links;
-		}
-
-		if ( 'OPTIONS' === $method ) {
-			$response = rest_send_allow_header( $response, $server, $request );
-
-			$memo[ $method ][ $path ] = [
-				'body'    => $data,
-				'headers' => $response->headers,
-			];
-		} else {
-			$memo[ $path ] = [
-				'body'    => $data,
-				'headers' => $response->headers,
-			];
-		}
-	}
-
-	return $memo;
 }

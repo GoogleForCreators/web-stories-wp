@@ -29,7 +29,6 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import addQueryArgs from '../../utils/addQueryArgs';
-import trailingslashit from '../../utils/trailingslashit';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
@@ -93,7 +92,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${trailingslashit(stories)}${storyId}/`,
+        path: `${stories}${storyId}/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -111,7 +110,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${trailingslashit(stories)}${storyId}/autosaves/`,
+        path: `${stories}${storyId}/autosaves/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -191,7 +190,7 @@ function APIProvider({ children }) {
   const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
-        path: `${trailingslashit(media)}${mediaId}/`,
+        path: `${media}${mediaId}/`,
         data,
         method: 'POST',
       });

@@ -142,7 +142,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     async (story) => {
       try {
         const path = queryString.stringifyUrl({
-          url: `${trailingslashit(storyApi)}${story.id}/`,
+          url: `${storyApi}${story.id}/`,
           query: {
             _embed: 'author',
           },
