@@ -42,7 +42,9 @@ describe('Site Kit integration with dashboard', () => {
       'post_type=web-story&page=stories-dashboard#/editor-settings'
     );
 
-    await expect(page).toMatchElement('[data-testid="sitekit-message"]');
+    await expect(page).toMatch(
+      'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.'
+    );
 
     await percySnapshot(page, 'Stories Dashboard with Site Kit');
   });

@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-/**
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
@@ -50,7 +46,7 @@ describe('Site Kit integration with editor', () => {
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
-    await expect(previewPage).toMatchElement('.i-amphtml-layout-fixed');
+    await expect(previewPage).toMatch('XXX-YYY');
 
     await editorPage.bringToFront();
     await previewPage.close();
