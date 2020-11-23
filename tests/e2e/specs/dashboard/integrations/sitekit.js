@@ -47,10 +47,10 @@ describe('Site Kit integration with dashboard', () => {
       text: 'Editor Settings',
     });
 
+    await percySnapshot(page, 'Stories Dashboard with Site Kit');
+
     await expect(page).toMatch(
       'Site Kit by Google has already enabled Google Analytics for your Web Stories'
     );
-
-    await percySnapshot(page, 'Stories Dashboard with Site Kit');
   });
 });
