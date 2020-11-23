@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const Container = styled.div`
   position: relative;
   margin-top: 28px;
   margin-bottom: 28px;
@@ -30,7 +30,7 @@ const Container = styled.div`
   }
 `;
 
-const Title = styled.h2`
+export const Title = styled.h2`
   flex: 1 1 auto;
   color: ${({ theme }) => theme.colors.fg.white};
   font-family: ${({ theme }) => theme.fonts.label.family};

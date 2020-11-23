@@ -27,13 +27,10 @@ import { useVirtual } from 'react-virtual';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
-import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
-import { FullWidthWrapper } from '../../common/styles';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -45,6 +42,11 @@ import {
   getInUseFontsForPages,
   getTextSetsForFonts,
 } from '../../../../../utils/getInUseFonts';
+import Switch from '../../../../switch';
+import {
+  Container as SectionContainer,
+  Title as SectionTitle,
+} from '../../../common/section';
 import TextSet from './textSet';
 
 const TEXT_SET_ROW_GAP = 12;
@@ -69,6 +71,21 @@ const TextSetRow = styled.div`
   column-gap: 12px;
 `;
 
+const TitleBar = styled.div`
+  display: flex;
+
+  label {
+    margin-top: 14px;
+    margin-bottom: 28px;
+  }
+`;
+
+/* Undo the -1.5em set by the Pane */
+const CategoryWrapper = styled.div`
+  margin-left: -${PANE_PADDING};
+  margin-right: -${PANE_PADDING};
+`;
+
 const CATEGORIES = {
   contact: __('Contact', 'web-stories'),
   editorial: __('Editorial', 'web-stories'),
@@ -78,11 +95,11 @@ const CATEGORIES = {
   step: __('Steps', 'web-stories'),
   table: __('Table', 'web-stories'),
   quote: __('Quote', 'web-stories'),
-  inUse: __('Fonts In Use', 'web-stories'),
 };
 
 function TextSets({ paneRef }) {
   const { textSets } = useLibrary(({ state: { textSets } }) => ({ textSets }));
+  const [showInUse, setShowInUse] = useState(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const storyPages = useStory(({ state: { pages } }) => pages);
@@ -96,17 +113,17 @@ function TextSets({ paneRef }) {
     () =>
       getTextSetsForFonts({
         fonts: getInUseFontsForPages(storyPages),
-        textSets: allTextSets,
+        textSets: selectedCat ? textSets[selectedCat] : allTextSets,
       }),
-    [allTextSets, storyPages]
+    [allTextSets, storyPages, selectedCat, textSets]
   );
 
   const filteredTextSets = useMemo(() => {
-    if (selectedCat === 'inUse') {
+    if (showInUse) {
       return getTextSetsForInUseFonts();
     }
     return selectedCat ? textSets[selectedCat] : allTextSets;
-  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts]);
+  }, [selectedCat, textSets, allTextSets, getTextSetsForInUseFonts, showInUse]);
 
   const categories = useMemo(
     () => [
@@ -114,7 +131,6 @@ function TextSets({ paneRef }) {
         id: cat,
         label: CATEGORIES[cat] ?? cat,
       })),
-      { id: 'inUse', label: CATEGORIES.inUse },
     ],
     [textSets]
   );
@@ -137,15 +153,25 @@ function TextSets({ paneRef }) {
   const title = useMemo(() => __('Text Sets', 'web-stories'), []);
 
   return (
-    <Section id={sectionId} title={title}>
-      <FullWidthWrapper>
+    <SectionContainer id={sectionId}>
+      <TitleBar>
+        <SectionTitle>{title}</SectionTitle>
+        <Switch
+          onChange={(value) => {
+            requestAnimationFrame(() => setShowInUse(value));
+          }}
+          value={showInUse}
+          label={__('Match fonts from story', 'web-stories')}
+        />
+      </TitleBar>
+      <CategoryWrapper>
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
           deselectItem={() => handleSelectedCategory(null)}
         />
-      </FullWidthWrapper>
+      </CategoryWrapper>
       <UnitsProvider
         pageSize={{
           width: TEXT_SET_SIZE,
@@ -181,7 +207,7 @@ function TextSets({ paneRef }) {
           })}
         </TextSetContainer>
       </UnitsProvider>
-    </Section>
+    </SectionContainer>
   );
 }
 
