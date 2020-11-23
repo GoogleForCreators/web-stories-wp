@@ -128,9 +128,6 @@ wp plugin install amp --force --quiet
 echo -e $(status_message "Installing Classic editor plugin...")
 wp plugin install classic-editor --force --quiet
 
-echo -e $(status_message "Installing Sitekit plugin...")
-wp plugin install google-site-kit --force --quiet
-
 # Set pretty permalinks.
 echo -e $(status_message "Setting permalink structure...")
 wp rewrite structure '%postname%' --hard --quiet

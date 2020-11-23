@@ -29,12 +29,10 @@ import {
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
-    await activatePlugin('google-site-kit');
     await activatePlugin('e2e-tests-sitekit-mock');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('google-site-kit');
     await deactivatePlugin('e2e-tests-sitekit-mock');
   });
 
