@@ -262,19 +262,22 @@ describe('Element: Text', () => {
 
     describe('using keyboard only', () => {
       it('should allow selecting a font with arrow keys and Enter', async () => {
+        // Select the third item in the already opened fontpicker,
+        // which happens to be Ubuntu
         await fixture.events.keyboard.press('down');
         await fixture.events.keyboard.press('down');
         await fixture.events.keyboard.press('down');
         await fixture.events.keyboard.press('Enter');
-        await openFontPicker();
 
-        await fixture.events.keyboard.type('Ubuntu');
+        // Then open again and verify, that Ubuntu is listed as selected
+        await openFontPicker();
+        await fixture.events.keyboard.type('ubuntu');
         // Ensure the debounced callback has taken effect.
-        await wait(TIMEOUT);
+        await fixture.events.sleep(TIMEOUT);
+        // 2 selected (in both primary list and recent fonts)
         const selected = fixture.screen.getAllByRole('option', {
-          name: 'Selected Ubuntu',
+          name: /selected ubuntu/i,
         });
-        // 1 selected + 1 recent font.
         expect(selected.length).toBe(2);
       });
 
