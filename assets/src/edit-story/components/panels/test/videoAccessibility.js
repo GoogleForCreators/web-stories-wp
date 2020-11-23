@@ -67,7 +67,7 @@ describe('Panels/VideoAccessibility', () => {
     const { getByPlaceholderText, submit } = renderVideoAccessibility([
       defaultElement,
     ]);
-    const input = getByPlaceholderText('Include any burned-in text');
+    const input = getByPlaceholderText('Video description');
 
     const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
 
