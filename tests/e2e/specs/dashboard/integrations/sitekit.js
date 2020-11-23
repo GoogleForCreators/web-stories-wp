@@ -21,11 +21,11 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * WordPress dependencies
  */
-import {
-  activatePlugin,
-  deactivatePlugin,
-  visitAdminPage,
-} from '@wordpress/e2e-test-utils';
+import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+/**
+ * Internal dependencies
+ */
+import { visitDashboard } from '../../../utils';
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
@@ -37,13 +37,18 @@ describe('Site Kit integration with dashboard', () => {
   });
 
   it('should be able see Site Kit specific message', async () => {
-    await visitAdminPage(
-      'edit.php',
-      'post_type=web-story&page=stories-dashboard#/editor-settings'
+    await visitDashboard();
+
+    const dashboardNavigation = await expect(page).toMatchElement(
+      '[aria-label="Main dashboard navigation"]'
     );
 
+    await expect(dashboardNavigation).toClick('a', {
+      text: 'Editor Settings',
+    });
+
     await expect(page).toMatch(
-      'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.'
+      'Site Kit by Google has already enabled Google Analytics for your Web Stories'
     );
 
     await percySnapshot(page, 'Stories Dashboard with Site Kit');
