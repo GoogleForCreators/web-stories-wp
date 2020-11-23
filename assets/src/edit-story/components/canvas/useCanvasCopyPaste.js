@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { v4 as uuidv4 } from 'uuid';
 import { useCallback } from 'react';
 
 /**
@@ -28,12 +27,12 @@ import useGlobalClipboardHandlers from '../../utils/useGlobalClipboardHandlers';
 import {
   addElementsToClipboard,
   processPastedElements,
-  processPastedNodeList,
 } from '../../utils/copyPaste';
 import useBatchingCallback from '../../utils/useBatchingCallback';
-import useInsertElement from './useInsertElement';
+import usePasteTextContent from '../richText/usePasteTextContent';
 import useAddPastedElements from './useAddPastedElements';
 import useUploadWithPreview from './useUploadWithPreview';
+import useInsertElement from './useInsertElement';
 
 function useCanvasGlobalKeys() {
   const addPastedElements = useAddPastedElements();
@@ -52,8 +51,8 @@ function useCanvasGlobalKeys() {
   );
 
   const uploadWithPreview = useUploadWithPreview();
-
   const insertElement = useInsertElement();
+  const pasteTextContent = usePasteTextContent(insertElement);
 
   const copyCutHandler = useCallback(
     (evt) => {
@@ -80,20 +79,6 @@ function useCanvasGlobalKeys() {
     [addPastedElements, currentPage]
   );
 
-  const rawPasteHandler = useCallback(
-    (content) => {
-      let foundContent = false;
-      // @todo Images.
-      const copiedContent = processPastedNodeList(content.childNodes, '');
-      if (copiedContent.trim().length) {
-        insertElement('text', { id: uuidv4(), content: copiedContent });
-        foundContent = true;
-      }
-      return foundContent;
-    },
-    [insertElement]
-  );
-
   const pasteHandler = useCallback(
     (evt) => {
       const { clipboardData } = evt;
@@ -111,14 +96,17 @@ function useCanvasGlobalKeys() {
             .replace(/<meta[^>]+>/g, '')
             .replace(/<\/?html>/g, '')
             .replace(/<\/?body>/g, '');
-          let addedElements = elementPasteHandler(template.content);
-          if (!addedElements) {
-            addedElements = rawPasteHandler(template.content);
+          // First check if it's a paste of "real" elements copied from this editor
+          let hasAddedElements = elementPasteHandler(template.content);
+          if (!hasAddedElements) {
+            // If not, parse as HTML and insert text with formatting
+            hasAddedElements = pasteTextContent(template.innerHTML);
           }
-          if (addedElements) {
+          if (hasAddedElements) {
             evt.preventDefault();
           }
         }
+
         const { items } = clipboardData;
         /**
          * Loop through all items in clipboard to check if correct type. Ignore text here.
@@ -137,7 +125,7 @@ function useCanvasGlobalKeys() {
         // Ignore.
       }
     },
-    [elementPasteHandler, rawPasteHandler, uploadWithPreview]
+    [elementPasteHandler, pasteTextContent, uploadWithPreview]
   );
 
   useGlobalClipboardHandlers(copyCutHandler, pasteHandler);

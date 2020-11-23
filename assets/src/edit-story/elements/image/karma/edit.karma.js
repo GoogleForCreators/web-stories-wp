@@ -41,6 +41,15 @@ describe('Image Editor', () => {
     frame = fixture.editor.canvas.framesLayer.frame(elementId).node;
   });
 
+  async function getCurrentImageData() {
+    const {
+      state: {
+        currentPage: { elements },
+      },
+    } = await fixture.renderHook(() => useStory());
+    return elements[1];
+  }
+
   afterEach(() => {
     fixture.restore();
   });
@@ -62,6 +71,8 @@ describe('Image Editor', () => {
       });
 
       it('should allow image to be scaled and moved using mouse', async () => {
+        const originalImageData = await getCurrentImageData();
+
         // First drag the slider handle 30px right
         const slider = fixture.editor.canvas.editLayer.sizeSlider;
         await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
@@ -72,6 +83,10 @@ describe('Image Editor', () => {
         ]);
 
         await fixture.snapshot('Image scaled up');
+
+        // Expect global image data to be unchanged while in editor
+        const imageDataAfterScale = await getCurrentImageData();
+        expect(imageDataAfterScale).toEqual(originalImageData);
 
         // Then drag image 20px left
         const image = fixture.editor.canvas.editLayer.media;
@@ -84,17 +99,29 @@ describe('Image Editor', () => {
 
         await fixture.snapshot('Image moved');
 
-        // Then click reset button
-        const reset = fixture.editor.canvas.editLayer.sizeReset;
-        await fixture.events.click(reset);
+        // Expect global image data to still be unchanged while in editor
+        const imageDataAfterDrag = await getCurrentImageData();
+        expect(imageDataAfterDrag).toEqual(originalImageData);
 
-        await fixture.snapshot('Image reset');
+        // Click outside image to exit edit-mode
+        await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+          moveRel(image, -10, -10),
+          down(),
+          up(),
+        ]);
+
+        await fixture.snapshot('Image editor exited');
+
+        // Expect global image data to now be changed after exiting in editor
+        const imageDataAfterExit = await getCurrentImageData();
+        expect(imageDataAfterExit).not.toEqual(originalImageData);
       });
 
       it('should allow image to be scaled and moved using keyboard', async () => {
+        const originalImageData = await getCurrentImageData();
+
         // Validate that image has focus
         const slider = fixture.editor.canvas.editLayer.sizeSlider;
-        const reset = fixture.editor.canvas.editLayer.sizeReset;
         const image = fixture.editor.canvas.editLayer.media;
         expect(image).toHaveFocus();
 
@@ -109,6 +136,10 @@ describe('Image Editor', () => {
 
         await fixture.snapshot('Image scaled up');
 
+        // Expect global image data to be unchanged while in editor
+        const imageDataAfterScale = await getCurrentImageData();
+        expect(imageDataAfterScale).toEqual(originalImageData);
+
         // Press shift-tab to move focus back to image
         await fixture.events.keyboard.shortcut('shift+tab');
         expect(image).toHaveFocus();
@@ -120,15 +151,18 @@ describe('Image Editor', () => {
 
         await fixture.snapshot('Image moved');
 
-        // Press tab twice to move focus to reset
-        await fixture.events.keyboard.press('tab');
-        await fixture.events.keyboard.press('tab');
-        expect(reset).toHaveFocus();
+        // Expect global image data to still be unchanged while in editor
+        const imageDataAfterDrag = await getCurrentImageData();
+        expect(imageDataAfterDrag).toEqual(originalImageData);
 
-        // Then press enter to activate reset button
-        await fixture.events.keyboard.press('Enter');
+        // Click 'esc' to exit edit-mode
+        await fixture.events.keyboard.press('esc');
 
-        await fixture.snapshot('Image reset');
+        await fixture.snapshot('Image editor exited');
+
+        // Expect global image data to now be changed after exiting in editor
+        const imageDataAfterExit = await getCurrentImageData();
+        expect(imageDataAfterExit).not.toEqual(originalImageData);
       });
     });
   });

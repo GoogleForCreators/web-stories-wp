@@ -22,9 +22,11 @@ import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 
-const ADMIN_TOOLBAR_HEIGHT = 32;
-const ADMIN_MENU_WIDTH = 160;
-const ADMIN_MENU_FOLDED_WIDTH = 36;
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS } from '../../theme';
+
 const CONTENT_CLASS = 'WebStories_ReactModal__Content';
 const OVERLAY_CLASS = 'WebStories_ReactModal__Overlay';
 
@@ -32,12 +34,12 @@ export const GlobalStyle = createGlobalStyle`
   .${OVERLAY_CLASS} {
     opacity: 0;
     transition: opacity 0.1s ease-out;
-    top: ${ADMIN_TOOLBAR_HEIGHT}px !important;
-    left: ${ADMIN_MENU_WIDTH}px !important;
+    top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px !important;
+    left: ${THEME_CONSTANTS.WP_ADMIN.MENU_WIDTH}px !important;
   }
 
   body.folded .${OVERLAY_CLASS} {
-    left: ${ADMIN_MENU_FOLDED_WIDTH}px !important;
+    left: ${THEME_CONSTANTS.WP_ADMIN.MENU_FOLDED_WIDTH}px !important;
   }
 
   .${OVERLAY_CLASS}.ReactModal__Overlay--after-open {

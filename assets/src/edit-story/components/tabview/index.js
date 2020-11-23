@@ -28,6 +28,8 @@ import PropTypes from 'prop-types';
 import { useConfig } from '../../app';
 import { useKeyDownEffect, useGlobalKeyDownEffect } from '../keyboard';
 
+const ALERT_ICON_SIZE = 14;
+
 const Tabs = styled.ul.attrs({
   role: 'tablist',
   'aria-orientation': 'horizontal',
@@ -54,11 +56,11 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size};
   font-weight: ${({ theme }) => theme.fonts.tab.weight};
-  word-break: break-word;
   opacity: 0.84;
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
+  position: relative;
 
   ${({ isActive }) =>
     !isActive &&
@@ -84,6 +86,28 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     height: 28px;
     transform-origin: center center;
     transition: transform 0.3s ease;
+
+    &.alert {
+      width: ${ALERT_ICON_SIZE}px;
+      height: auto;
+      position: absolute;
+      left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
+      top: calc(
+        50% -
+          ${({ isActive }) =>
+            isActive
+              ? `${ALERT_ICON_SIZE / 2 - 1}px`
+              : `${ALERT_ICON_SIZE / 2}px`}
+      );
+      overflow: visible;
+      opacity: 1;
+      &.warning {
+        color: ${({ theme }) => theme.colors.fg.warning};
+      }
+      &.error {
+        color: ${({ theme }) => theme.colors.fg.negative};
+      }
+    }
   }
 `;
 

@@ -15,21 +15,14 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
-import { SimplePanel } from '../../panels/panel';
+import { usePrepublishChecklist, ChecklistTab } from '.';
 
 function PrepublishInspector() {
-  return (
-    <SimplePanel name="prepublish" title={__('Prepublish', 'web-stories')}>
-      {__('Coming soon', 'web-stories')}
-    </SimplePanel>
-  );
+  const { checklist } = usePrepublishChecklist();
+
+  return <ChecklistTab checklist={checklist} />;
 }
 
 export default PrepublishInspector;

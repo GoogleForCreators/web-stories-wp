@@ -35,7 +35,11 @@ function StylePanel(props) {
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
   return (
-    <SimplePanel name="style" title={__('Style', 'web-stories')}>
+    <SimplePanel
+      name="style"
+      title={__('Style', 'web-stories')}
+      isPersistable={false}
+    >
       <FontControls {...props} />
       <TextStyleControls {...props} />
       <ColorControls {...props} />

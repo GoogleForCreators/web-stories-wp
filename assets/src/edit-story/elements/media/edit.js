@@ -33,6 +33,8 @@ import { useStory } from '../../app';
 import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
+import useUnmount from '../../utils/useUnmount';
+import { isOutsideBorder } from '../../components/elementBorder/utils';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -101,31 +103,55 @@ function MediaEdit({ element, box }) {
     focalY,
     isBackground,
     type,
+    border,
+    borderRadius,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
   const [fullMedia, setFullMedia] = useState(null);
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
+  const [localProperties, setLocalProperties] = useState({});
+  const lastLocalProperties = useRef({});
 
+  const updateLocalProperties = useCallback((properties) => {
+    const newProps = {
+      ...lastLocalProperties.current,
+      ...properties,
+    };
+    lastLocalProperties.current = newProps;
+    setLocalProperties(lastLocalProperties.current);
+  }, []);
+
+  // Update the true global properties of the current element
+  // This now only happens on unmount
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
   }));
-  const setProperties = useCallback(
-    (properties) => updateElementById({ elementId: id, properties }),
-    [id, updateElementById]
-  );
+  const updateProperties = useCallback(() => {
+    const properties = lastLocalProperties.current;
+    if (Object.keys(properties).length === 0) {
+      return;
+    }
+    updateElementById({ elementId: id, properties });
+  }, [id, updateElementById]);
+
+  useUnmount(updateProperties);
 
   const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
+
+  const localScale = localProperties.scale ?? scale;
+  const localFocalX = localProperties.focalX ?? focalX;
+  const localFocalY = localProperties.focalY ?? focalY;
 
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
     height,
-    scale,
-    flip?.horizontal ? 100 - focalX : focalX,
-    flip?.vertical ? 100 - focalY : focalY
+    localScale,
+    flip?.horizontal ? 100 - localFocalX : localFocalX,
+    flip?.vertical ? 100 - localFocalY : localFocalY
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
@@ -162,6 +188,9 @@ function MediaEdit({ element, box }) {
     cropMediaProps.srcSet = srcSet;
   }
 
+  const borderProps =
+    isOutsideBorder(border) && borderRadius ? { borderRadius, border } : null;
+
   return (
     <Element ref={elementRef}>
       {isImage && (
@@ -176,7 +205,7 @@ function MediaEdit({ element, box }) {
           <source src={resource.src} type={resource.mimeType} />
         </FadedVideo>
       )}
-      <CropBox ref={setCropBox}>
+      <CropBox ref={setCropBox} {...borderProps}>
         <WithMask element={element} fill={true} applyFlip={false} box={box}>
           {isImage && <CropImage {...cropMediaProps} />}
           {isVideo && (
@@ -189,7 +218,7 @@ function MediaEdit({ element, box }) {
 
       {fullMedia && croppedMedia && (
         <EditPanMoveable
-          setProperties={setProperties}
+          setProperties={updateLocalProperties}
           fullMedia={fullMedia}
           croppedMedia={croppedMedia}
           flip={flip}
@@ -207,7 +236,7 @@ function MediaEdit({ element, box }) {
 
       {!isBackground && cropBox && croppedMedia && (
         <EditCropMoveable
-          setProperties={setProperties}
+          setProperties={updateLocalProperties}
           cropBox={cropBox}
           croppedMedia={croppedMedia}
           flip={flip}
@@ -224,12 +253,12 @@ function MediaEdit({ element, box }) {
       )}
 
       <ScalePanel
-        setProperties={setProperties}
+        setProperties={updateLocalProperties}
         x={x}
         y={y}
         width={width}
         height={height}
-        scale={scale || 100}
+        scale={localScale || 100}
       />
     </Element>
   );

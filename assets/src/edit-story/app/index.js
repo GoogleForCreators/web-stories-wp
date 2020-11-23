@@ -39,6 +39,7 @@ import DevTools from '../components/devTools';
 import StatusCheck from '../components/statusCheck';
 import AutoSaveHandler from '../components/autoSaveHandler';
 import ErrorBoundary from '../components/errorBoundary';
+import { PrepublishChecklistProvider } from '../components/inspector/prepublish';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
@@ -69,14 +70,16 @@ function App({ config }) {
                             <AutoSaveHandler />
                             <TransformProvider>
                               <DropTargetsProvider>
-                                <GlobalStyle />
-                                <DevTools />
-                                <DefaultMoveableGlobalStyle />
-                                <CropMoveableGlobalStyle />
-                                <ModalGlobalStyle />
-                                <CalendarStyle />
-                                <KeyboardOnlyOutlines />
-                                <Layout />
+                                <PrepublishChecklistProvider>
+                                  <GlobalStyle />
+                                  <DevTools />
+                                  <DefaultMoveableGlobalStyle />
+                                  <CropMoveableGlobalStyle />
+                                  <ModalGlobalStyle />
+                                  <CalendarStyle />
+                                  <KeyboardOnlyOutlines />
+                                  <Layout />
+                                </PrepublishChecklistProvider>
                               </DropTargetsProvider>
                             </TransformProvider>
                           </MediaProvider>

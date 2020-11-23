@@ -38,21 +38,32 @@ export function shouldDisplayBorder(element) {
   return canMaskHaveBorder(element);
 }
 
-function getBorderPositionCSS({ left, top, right, bottom, position }) {
-  if (BORDER_POSITION.OUTSIDE === position) {
-    return {
-      top: `${-top}px`,
-      height: `calc(100% + ${top + bottom}px)`,
-      left: `${-left}px`,
-      width: `calc(100% + ${left + right}px)`,
-    };
-  }
+export function getBorderPositionCSS({
+  left,
+  top,
+  right,
+  bottom,
+  position,
+  width = '100%',
+  height = '100%',
+  posTop = '0px',
+  posLeft = '0px',
+  skipOutsideBorder = true,
+}) {
   if (BORDER_POSITION.CENTER === position) {
     return {
-      top: `${-top / 2}px`,
-      height: `calc(100% + ${(top + bottom) / 2}px)`,
-      left: `${-left / 2}px`,
-      width: `calc(100% + ${(left + right) / 2}px)`,
+      top: `calc(${posTop} - ${top / 2}px)`,
+      height: `calc(${height} + ${(top + bottom) / 2}px)`,
+      left: `calc(${posLeft} - ${left / 2}px)`,
+      width: `calc(${width} + ${(left + right) / 2}px)`,
+    };
+  }
+  if (isOutsideBorder({ position }) && !skipOutsideBorder) {
+    return {
+      left: `calc(${posLeft} - ${left}px)`,
+      top: `calc(${posTop} - ${top}px)`,
+      width: `calc(${width} + ${left + right}px)`,
+      height: `calc(${height} + ${top + bottom}px)`,
     };
   }
   return '';
@@ -65,11 +76,20 @@ export function getBorderStyle({
   right,
   bottom,
   position,
+  borderRadius,
+  opacity = 100,
+  skipOutsideBorder = true,
 }) {
   const {
     color: { r, g, b, a },
   } = rawColor;
-  const color = `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
+  // In case of inner/center border we need to adjust the opacity based on the layer opacity, too.
+  // Outside border already has opacity applied since it's added to the element directly.
+  opacity = opacity / 100;
+  const adjustedBorderOpacity = a !== undefined ? opacity * a : opacity;
+  const color = isOutsideBorder({ position })
+    ? `rgba(${r},${g},${b},${a === undefined ? 1 : a})`
+    : `rgba(${r},${g},${b},${adjustedBorderOpacity})`;
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
@@ -78,6 +98,22 @@ export function getBorderStyle({
   const borderWidth = `${Math.ceil(top)}px ${Math.ceil(right)}px ${Math.ceil(
     bottom
   )}px ${Math.ceil(left)}px`;
+  const borderStyle = {
+    ...getBorderPositionCSS({
+      left,
+      top,
+      right,
+      bottom,
+      position,
+      skipOutsideBorder,
+    }),
+    borderWidth,
+    borderColor: color,
+    borderStyle: 'solid',
+    borderRadius: borderRadius
+      ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
+      : null,
+  };
   return {
     top: 0,
     left: 0,
@@ -86,9 +122,34 @@ export function getBorderStyle({
     width: '100%',
     height: '100%',
     position: 'absolute',
-    ...getBorderPositionCSS({ left, top, right, bottom, position }),
-    borderWidth,
-    borderColor: color,
-    borderStyle: 'solid',
+    ...borderStyle,
+  };
+}
+
+export function isOutsideBorder(border) {
+  return border?.position === BORDER_POSITION.OUTSIDE;
+}
+
+export function getInnerRadius(outerRadius, oneSide, otherSide) {
+  return outerRadius - Math.min(outerRadius, Math.max(oneSide, otherSide)) / 2;
+}
+
+export function getBorderRadius({ borderRadius, border }) {
+  if (!borderRadius) {
+    return {};
+  }
+  if (border?.position === BORDER_POSITION.CENTER) {
+    const radii = [
+      getInnerRadius(borderRadius.topLeft, border.top, border.left),
+      getInnerRadius(borderRadius.topRight, border.top, border.right),
+      getInnerRadius(borderRadius.bottomRight, border.bottom, border.right),
+      getInnerRadius(borderRadius.bottomLeft, border.bottom, border.left),
+    ];
+    return {
+      borderRadius: radii.map((radius) => `${radius}px`).join(' '),
+    };
+  }
+  return {
+    borderRadius: `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`,
   };
 }

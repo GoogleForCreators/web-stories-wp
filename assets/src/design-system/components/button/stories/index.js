@@ -22,11 +22,10 @@ import { select } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { theme } from '../../../theme';
+import { theme, THEME_CONSTANTS } from '../../../theme';
 import { Headline, Text } from '../../';
 import { Close } from '../../../icons';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
-import { TYPOGRAPHY_PRESET_SIZES } from '../../../theme/typography';
 
 export default {
   title: 'DesignSystem/Components/Button',
@@ -86,7 +85,7 @@ const ButtonCombosToDisplay = () => (
         </Row>
       ));
     })}
-    <Headline as="h3" size={TYPOGRAPHY_PRESET_SIZES.SMALL}>
+    <Headline as="h3" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
       {'Button Demos'}
     </Headline>
     <Row>
