@@ -17,22 +17,12 @@
 /**
  * Internal dependencies
  */
-import {
-  addElementsToClipboard,
-  processPastedElements,
-  processPastedNodeList,
-} from '../copyPaste';
+import { addElementsToClipboard, processPastedElements } from '../copyPaste';
 import { PAGE_WIDTH } from '../../constants';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media';
 import createSolid from '../createSolid';
-
-const getNodeList = (content) => {
-  const template = document.createElement('template');
-  template.innerHTML = content;
-  return template.content.childNodes;
-};
 
 describe('copyPaste utils', () => {
   const PAGE = {
@@ -86,59 +76,6 @@ describe('copyPaste utils', () => {
     isBackground: true,
     backgroundColor: createSolid(1, 1, 1),
   };
-
-  describe('processPastedNodeList', () => {
-    it('should remove disallowed tags from pasted content', () => {
-      const nodeList = getNodeList(
-        '<p><span>Hello</span> <h3>World</h3><section>!</section></p>'
-      );
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual('Hello World!');
-    });
-
-    it('should keep strong, em, and u tags', () => {
-      const nodeList = getNodeList(
-        '<p><strong>Hello</strong> <u>World</u><em>!</em></p>'
-      );
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello</strong> <u>World</u><em>!</em>'
-      );
-    });
-
-    it('should remove all tag attributes', () => {
-      const nodeList = getNodeList(
-        '<p><strong class="foo">Hello</strong> <u style="font-size:36px">World</u><em data-bar="foo-bar">!</em></p>'
-      );
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello</strong> <u>World</u><em>!</em>'
-      );
-    });
-
-    it('should maintain escaped HTML', () => {
-      const nodeList = getNodeList('<p>Use &lt;u&gt; for underline.</p>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        'Use &lt;u&gt; for underline.'
-      );
-    });
-
-    it('should add line break between paragraphs', () => {
-      const nodeList = getNodeList('<p>Hello</p><p>World</p>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual('Hello\nWorld');
-    });
-
-    it('should handle nested tags properly', () => {
-      const nodeList = getNodeList('<strong>Hello <em>World</em>!</strong>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello <em>World</em>!</strong>'
-      );
-    });
-
-    it('should convert `b` and `i` tags to `strong` and `em` respectively', () => {
-      const nodeList = getNodeList('<b>Hello <i>World</i>!</b>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello <em>World</em>!</strong>'
-      );
-    });
-  });
 
   describe('processPastedElements', () => {
     const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
