@@ -29,11 +29,11 @@ import { visitDashboard } from '../../../utils';
 
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
-    await activatePlugin('e2e-tests-sitekit-mock');
+    await activatePlugin('e2e-tests-site-kit-mock');
   });
 
   afterAll(async () => {
-    await deactivatePlugin('e2e-tests-sitekit-mock');
+    await deactivatePlugin('e2e-tests-site-kit-mock');
   });
 
   it('should be able see Site Kit specific message', async () => {
