@@ -41,6 +41,7 @@ import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import useMediaOptimization from '../shared/useMediaOptimization';
+import { DashboardSnackbar } from '..';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import GoogleAdSenseSettings from './googleAdSense';
 import GoogleAdManagerSettings from './googleAdManager';
@@ -437,6 +438,9 @@ function EditorSettings() {
             )}
           </Main>
         </Layout.Scrollable>
+        <Layout.Fixed>
+          <DashboardSnackbar />
+        </Layout.Fixed>
       </Wrapper>
 
       <Dialog

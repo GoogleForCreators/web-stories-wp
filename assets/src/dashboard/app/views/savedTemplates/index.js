@@ -26,7 +26,7 @@ import { Layout, ScrollToTop } from '../../../components';
 import { SAVED_TEMPLATES_STATUSES } from '../../../constants';
 import useStoryView from '../../../utils/useStoryView';
 import useApi from '../../api/useApi';
-import PreviewStory from '../previewStory';
+import { DashboardSnackbar, PreviewStoryView } from '../';
 import Header from './header';
 import Content from './content';
 
@@ -87,7 +87,7 @@ function SavedTemplates() {
 
   if (activePreview.value) {
     return (
-      <PreviewStory story={activePreview.value} handleClose={handleClose} />
+      <PreviewStoryView story={activePreview.value} handleClose={handleClose} />
     );
   }
 
@@ -116,6 +116,7 @@ function SavedTemplates() {
       />
 
       <Layout.Fixed>
+        <DashboardSnackbar />
         <ScrollToTop />
       </Layout.Fixed>
     </Layout.Provider>
