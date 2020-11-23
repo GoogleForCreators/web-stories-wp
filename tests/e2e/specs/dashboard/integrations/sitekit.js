@@ -27,7 +27,7 @@ import {
   visitAdminPage,
 } from '@wordpress/e2e-test-utils';
 
-describe('Sitekit integration with dashboard', () => {
+describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
     await activatePlugin('google-site-kit');
     await activatePlugin('e2e-tests-sitekit-mock');
