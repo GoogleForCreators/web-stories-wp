@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
+import { FULLBLEED_RATIO, PAGE_RATIO, SAFE_ZONE_HEIGHT } from '../../constants';
 import theme from '../../theme';
 
 function isHexColorString(s) {
@@ -48,6 +48,15 @@ function CustomStyles() {
                 overflow: visible;
               }
 
+              @media (max-aspect-ratio: 9 / 16)  {
+                @media (min-aspect-ratio: 1 / 2) {
+                  amp-story-grid-layer#amp-story-grid-layer-bg,
+                  amp-story-grid-layer#amp-story-grid-layer-fullbleed-area {
+                    margin-top: calc((${FULLBLEED_RATIO} * 100% / 2) - ${SAFE_ZONE_HEIGHT}px);
+                  }
+                }
+              }
+
               .page-fullbleed-area,
               .page-background-overlay-area {
                 position: absolute;
@@ -56,29 +65,6 @@ function CustomStyles() {
                 left: 0;
                 height: calc(${safeToFullRatio} * 100%);
                 top: calc((1 - ${safeToFullRatio}) * 100% / 2);
-              }
-
-              @media (max-aspect-ratio: 490 / 874)  {
-                @media (min-aspect-ratio: 435 / 874) {
-                  .page-fullbleed-area {
-                    top: calc((1 - ${safeToFullRatio}) * 85%);
-                  }
-                }
-                @media (min-aspect-ratio: 450 / 874) {
-                  .page-fullbleed-area {
-                    top: calc((1 - ${safeToFullRatio}) * 75%);
-                  }
-                }
-                @media (min-aspect-ratio: 461 / 874) {
-                  .page-fullbleed-area {
-                    top: calc((1 - ${safeToFullRatio}) * 70%);
-                  }
-                }
-                @media (min-aspect-ratio: 475 / 874) {
-                  .page-fullbleed-area {
-                    top: calc((1 - ${safeToFullRatio}) * 60%);
-                  }
-                }
               }
 
               .page-safe-area {
