@@ -32,7 +32,7 @@ import {
   insertStoryTitle,
 } from '../../../utils';
 
-describe('Sitekit integration with editor', () => {
+describe('Site Kit integration with editor', () => {
   beforeAll(async () => {
     await activatePlugin('google-site-kit');
     await activatePlugin('e2e-tests-sitekit-mock');
