@@ -35,7 +35,7 @@ import FontProvider from '../../font/fontProvider';
 import { resolveRelatedTemplateRoute } from '../../router';
 import useRouteHistory from '../../router/useRouteHistory';
 import { ERRORS } from '../../textContent';
-import { PreviewStoryView } from '..';
+import { DashboardSnackbar, PreviewStoryView } from '..';
 import Header from './header';
 import Content from './content';
 
@@ -232,6 +232,9 @@ function TemplateDetails() {
               handlePreviewTemplate,
             }}
           />
+          <Layout.Fixed>
+            <DashboardSnackbar />
+          </Layout.Fixed>
         </Layout.Provider>
       </TransformProvider>
     </FontProvider>

@@ -53,7 +53,6 @@ import {
   SavedTemplatesView,
   StoryAnimTool,
   TemplateDetailsView,
-  SnackbarView,
 } from './views';
 import useApi from './api/useApi';
 
@@ -152,7 +151,6 @@ const AppContent = () => {
           component={<StoryAnimTool />}
         />
       </PageContent>
-      <SnackbarView />
     </AppFrame>
   );
 };
