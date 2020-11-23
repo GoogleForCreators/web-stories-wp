@@ -26,10 +26,11 @@
 
 namespace Google\Web_Stories\Stories_Renderer;
 
-use Google\Web_Stories\Media;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Stories;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Traits\Assets;
 use Iterator;
 
 /**
@@ -39,6 +40,8 @@ use Iterator;
  * @implements Iterator<int, \WP_Post>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
+
+	use Assets;
 
 	/**
 	 * Web Stories stylesheet handle.
@@ -145,7 +148,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function init() {
 
+		add_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
 		$this->story_posts = $this->stories->get_stories();
+		add_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
 	}
 
 	/**
@@ -159,7 +164,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			self::STYLE_HANDLE,
 			WEBSTORIES_PLUGIN_DIR_URL . 'includes/assets/stories.css',
 			[],
-			'v0'
+			WEBSTORIES_VERSION
 		);
 	}
 
@@ -170,10 +175,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function is_amp_request() {
 
-		$amp_is_request  = ( function_exists( 'amp_is_request' ) && amp_is_request() );
-		$is_amp_endpoint = ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() );
-
-		return ( $amp_is_request || $is_amp_endpoint );
+		return ( amp_is_request() || is_amp_endpoint() );
 	}
 
 	/**
@@ -181,42 +183,48 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
+	 * @param array $posts Array of stories.
+	 *
 	 * @return array Returns single story item data.
 	 */
-	protected function get_story_item_data() {
-		$story_data      = [];
-		$story_id        = $this->current()->ID;
-		$author_id       = absint( get_post_field( 'post_author', $story_id ) );
-		$is_circles_view = $this->is_view_type( 'circles' );
-		$image_size      = $is_circles_view ? Media::POSTER_SQUARE_IMAGE_SIZE : Media::POSTER_PORTRAIT_IMAGE_SIZE;
-		$story_title     = '';
-		$author_name     = '';
-		$story_date      = '';
-
-		if ( ! empty( $this->attributes['show_title'] ) && true === $this->attributes['show_title'] ) {
-			$story_title = get_the_title( $story_id );
+	public function prepare_story_modal( array $posts ) {
+		if ( ! $posts ) {
+			return $posts;
 		}
 
-		if ( ! $is_circles_view && ! empty( $this->attributes['show_author'] ) && true === $this->attributes['show_author'] ) {
-			$author_name = get_the_author_meta( 'display_name', $author_id );
+		$transformed_posts = [];
+		$is_circles_view   = $this->is_view_type( 'circles' );
+
+		foreach ( $posts as $a_post ) {
+			$story_title = '';
+			$author_name = '';
+			$story_date  = '';
+			$story_data  = [];
+			$story_id    = $a_post->ID;
+			$author_id   = absint( get_post_field( 'post_author', $story_id ) );
+
+			if ( true === $this->attributes['show_title'] ) {
+				$story_title = get_the_title( $story_id );
+
+				if ( ! $is_circles_view ) {
+					$author_name = get_the_author_meta( 'display_name', $author_id );
+					$story_date  = get_the_date( 'M j, Y', $story_id );
+				}
+			}
+
+			$story_data['id']              = $story_id;
+			$story_data['height']          = '430';
+			$story_data['width']           = '285';
+			$story_data['author']          = $author_name;
+			$story_data['date']            = $story_date;
+			$story_data['classes']         = $this->get_single_story_classes();
+			$story_data['content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
+			$transformed_post              = new Story( $story_data );
+			$transformed_post->load_from_post( $story_id );
+			$transformed_posts[] = $transformed_post;
 		}
 
-		if ( ! $is_circles_view && ! empty( $this->attributes['show_date'] ) && true === $this->attributes['show_date'] ) {
-			$story_date = get_the_date( 'M j, Y', $story_id );
-		}
-
-		$story_data['ID']                   = $story_id;
-		$story_data['url']                  = get_post_permalink( $story_id );
-		$story_data['title']                = $story_title;
-		$story_data['height']               = '430';
-		$story_data['width']                = '285';
-		$story_data['poster']               = get_the_post_thumbnail_url( $story_id, $image_size );
-		$story_data['author']               = $author_name;
-		$story_data['date']                 = $story_date;
-		$story_data['class']                = $this->get_single_story_classes();
-		$story_data['show_content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
-
-		return $story_data;
+		return $transformed_posts;
 	}
 
 	/**
@@ -300,21 +308,19 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$single_story_classes[] = 'has-poster';
 		}
 
-		if ( ! empty( $this->attributes['show_story_poster'] ) &&
-			$this->is_view_type( 'grid' ) &&
-			true === $this->attributes['show_story_poster']
-		) {
+		if ( $this->is_view_type( 'grid' ) && true === $this->attributes['show_story_poster'] ) {
 			$single_story_classes[] = 'has-poster';
 		}
 
 		$single_story_classes = array_filter( $single_story_classes );
+		$classes              = implode( ' ', $single_story_classes );
 
 		/**
 		 * Filters the web stories renderer single story classes.
 		 *
 		 * @param string $class Single story classes.
 		 */
-		return apply_filters( 'web_stories_renderer_single_story_classes', implode( ' ', $single_story_classes ) );
+		return apply_filters( 'web_stories_renderer_single_story_classes', $classes );
 	}
 
 	/**
@@ -344,8 +350,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function render_single_story_content() {
-
-		$story_data           = $this->get_story_item_data();
 		$single_story_classes = $this->get_single_story_classes();
 		$show_story_player    = ( true !== $this->attributes['show_story_poster'] && $this->is_view_type( 'grid' ) );
 
@@ -355,9 +359,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			<?php
 
 			if ( true === $show_story_player ) {
-				$this->render_story_with_story_player( $story_data );
+				$this->render_story_with_story_player();
 			} else {
-				$this->render_story_with_poster( $story_data );
+				$this->render_story_with_poster();
 			}
 			?>
 		</div>
@@ -368,15 +372,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Renders a story with story's poster image.
 	 *
-	 * @param array $story_data Story item data. Contains information like url, height, width, etc of the story.
-	 *
 	 * @return void
 	 */
-	protected function render_story_with_poster( array $story_data ) {
+	protected function render_story_with_poster() {
 
-		$height                    = ( ! empty( $story_data['height'] ) ) ? absint( $story_data['height'] ) : 600;
-		$width                     = ( ! empty( $story_data['width'] ) ) ? absint( $story_data['width'] ) : 360;
-		$poster_style              = sprintf( 'background-image: url(%1$s);', esc_url_raw( $story_data['poster'] ) );
+		$story_data                = $this->current();
+		$height                    = ( ! empty( $story_data->get_height() ) ) ? absint( $story_data->get_height() ) : 600;
+		$width                     = ( ! empty( $story_data->get_width() ) ) ? absint( $story_data->get_width() ) : 360;
+		$poster_url                = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
+		$poster_style              = sprintf( 'background-image: url(%1$s);', esc_url_raw( $poster_url ) );
 		$list_view_image_alignment = '';
 
 		if ( true === $this->is_view_type( 'carousel' ) ) {
@@ -389,13 +393,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		?>
 		<a class="<?php echo esc_attr( $list_view_image_alignment ); ?>"
-			href="<?php echo esc_url( $story_data['url'] ); ?>"
+			href="<?php echo esc_url( $story_data->get_url() ); ?>"
 		>
 			<div
 				class="web-stories-list__story-placeholder"
 				style="<?php echo esc_attr( $poster_style ); ?>"
 			></div>
-			<?php $this->get_content_overlay( $story_data ); ?>
+			<?php $this->get_content_overlay(); ?>
 		</a>
 		<?php
 
@@ -404,79 +408,78 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Renders a story with amp-story-player.
 	 *
-	 * @param array $story_data Story attributes. Contains information like url, height, width, etc of the story.
-	 *
 	 * @return void
 	 */
-	protected function render_story_with_story_player( array $story_data ) {
+	protected function render_story_with_story_player() {
 
-		$height                  = ( ! empty( $story_data['height'] ) ) ? absint( $story_data['height'] ) : 600;
-		$width                   = ( ! empty( $story_data['width'] ) ) ? absint( $story_data['width'] ) : 360;
+		$story_data              = $this->current();
+		$height                  = ( ! empty( $story_data->get_height() ) ) ? absint( $story_data->get_height() ) : 600;
+		$width                   = ( ! empty( $story_data->get_width() ) ) ? absint( $story_data->get_width() ) : 360;
 		$player_style            = sprintf( 'width: %1$spx;height: %2$spx', $width, $height );
 		$story_player_attributes = '';
+		$poster_image_url 	     = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
 		$poster_style            = '';
 
 		if ( $this->is_amp_request() ) {
 			$story_player_attributes = sprintf( 'height=%d width=%d', $height, $width );
 		}
 
-		if ( ! empty( $story_data['poster'] ) ) {
-			$poster_style = sprintf( '--story-player-poster: url(%s)', $story_data['poster'] );
+		if ( ! empty( $poster_image_url ) ) {
+			$poster_style = sprintf( '--story-player-poster: url(%s)', $poster_image_url );
 		}
 
 		?>
 		<amp-story-player style="<?php echo esc_attr( $player_style ); ?>"
 			<?php echo( esc_attr( $story_player_attributes ) ); ?>>
-			<a href="<?php echo esc_url( $story_data['url'] ); ?>" style="<?php echo esc_attr( $poster_style ); ?>">
-				<?php echo esc_html( $story_data['title'] ); ?>
+			<a href="<?php echo esc_url( $story_data->get_url() ); ?>" style="<?php echo esc_attr( $poster_style ); ?>">
+				<?php echo esc_html( $story_data->get_title() ); ?>
 			</a>
 		</amp-story-player>
 
 		<?php
 
-		$this->get_content_overlay( $story_data );
+		$this->get_content_overlay();
 	}
 
 	/**
 	 * Renders the content overlay markup.
 	 *
-	 * @param array $story_data Story item data. Contains information like url, height, width, etc of the story.
-	 *
 	 * @return void
 	 */
-	protected function get_content_overlay( array $story_data ) {
+	protected function get_content_overlay() {
+		$story_data = $this->current();
 
-		if ( empty( $story_data['show_content_overlay'] ) || true !== $story_data['show_content_overlay'] ) {
+		if ( empty( $story_data->get_content_overlay() ) ) {
 			return;
 		}
 
 		?>
 		<div class="story-content-overlay web-stories-list__story-content-overlay">
-			<?php if ( ! empty( $story_data['title'] ) ) { ?>
+			<?php if ( ! empty( $story_data->get_title() ) ) { ?>
 				<div class="story-content-overlay__title">
 					<?php
-					echo esc_html( $story_data['title'] );
+					echo esc_html( $story_data->get_title() );
 					?>
 				</div>
 			<?php } ?>
 
 			<div class="story-content-overlay__author-date">
-				<?php if ( ! empty( $story_data['author'] ) ) { ?>
+				<?php if ( ! empty( $story_data->get_author() ) ) { ?>
 					<div>
 						<?php
 
 						/* translators: %s: author name. */
-						echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story_data['author'] ) );
+						echo esc_html( sprintf( __( 'By %s', 'web-stories' ), $story_data->get_author() ) );
 						?>
 					</div>
 				<?php } ?>
 
-				<?php if ( ! empty( $story_data['date'] ) ) { ?>
+				<?php if ( ! empty( $story_data->get_date() ) ) { ?>
 					<time class="story-content-overlay__date">
 						<?php
 
 						/* translators: %s: publish date. */
-						echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story_data['date'] ) );
+						echo esc_html( sprintf( __( 'On %s', 'web-stories' ), $story_data->get_date() ) );
 						?>
 					</time>
 				<?php } ?>

@@ -87,28 +87,27 @@ class Carousel_Renderer extends Renderer {
 					layout="intrinsic"
 					type="carousel"
 					role="region"
-					aria-label="Basic carousel"
+					aria-label="<?php esc_attr_e( 'Basic carousel', 'web-stories' ); ?>"
 				>
 					<?php
-					do {
-
+					foreach ( $this->story_posts as $key => $story ) {
 						$this->render_single_story_content();
 						$this->next();
-
-					} while ( $this->valid() );
+					}
 					?>
 				</amp-carousel>
 			</div>
 			<?php $this->maybe_render_archive_link(); ?>
 		</div>
 		<?php
+		$content = (string) ob_get_clean();
 
 		/**
 		 * Filters the Carousel renderer stories content.
 		 *
 		 * @param string $content Stories content.
 		 */
-		return apply_filters( 'web_stories_carousel_renderer_stories_content', (string) ob_get_clean() );
+		return apply_filters( 'web_stories_carousel_renderer_stories_content', $content );
 	}
 
 }

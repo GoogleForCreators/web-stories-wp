@@ -101,10 +101,7 @@ class Stories extends \WP_UnitTestCase {
 	 * @covers ::render
 	 */
 	public function test_render() {
-
-		ob_start();
-		self::$testee->render();
-		ob_end_clean();
+		$output = get_echo( [ self::$testee, 'render' ] );
 
 		$this->assertInstanceOf( Generic_Renderer::class, self::$testee->renderer );
 	}

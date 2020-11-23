@@ -17,6 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Stories_Renderer;
 
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Stories;
 
 /**
@@ -37,6 +38,13 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	 * @var int
 	 */
 	private static $story_id;
+
+	/**
+	 * Story Modal.
+	 *
+	 * @var Story
+	 */
+	private $story_model;
 
 	/**
 	 * Runs once before any test in the class run.
@@ -61,8 +69,13 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function setUp() {
 
-		$this->stories = $this->createMock( Stories::class );
-		$this->stories->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
+		$this->story_model = $this->createMock( Story::class );
+
+		$this->story_model->method( 'get_height' )->willReturn( 430 );
+		$this->story_model->method( 'get_width' )->willReturn( 630 );
+
+		$this->stories     = $this->createMock( Stories::class );
+		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$this->story_posts = [ get_post( self::$story_id ) ];
 	}
 

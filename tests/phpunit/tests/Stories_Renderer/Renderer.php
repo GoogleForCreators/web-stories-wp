@@ -26,9 +26,11 @@
 
 namespace Google\Web_Stories\Tests\Stories_Renderer;
 
+use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Tests\Test_Renderer;
 use Google\Web_Stories\Stories;
 use Google\Web_Stories\Tests\Private_Access;
+use Google\Web_Stories\Stories_Renderer\Renderer as AbstractRenderer;
 
 /**
  * Generic_Renderer class.
@@ -54,6 +56,13 @@ class Renderer extends \WP_UnitTestCase_Base {
 	private $stories;
 
 	/**
+	 * Story Model Mock.
+	 *
+	 * @var Story
+	 */
+	private $story_model;
+
+	/**
 	 * Runs once before any test in the class run.
 	 *
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
@@ -72,9 +81,13 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * Runs once before any test in the class run.
 	 */
 	public function setUp() {
+		$this->story_model = $this->createMock( Story::class );
+
+		$this->story_model->method( 'get_height' )->willReturn( 430 );
+		$this->story_model->method( 'get_width' )->willReturn( 630 );
 
 		$this->stories = $this->createMock( Stories::class );
-		$this->stories->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
+		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 	}
 
 	/**
@@ -141,19 +154,12 @@ class Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
-
-		$story_data = [
-			'url'    => 'www.example.com',
-			'title'  => 'Story Title',
-			'poster' => 'www.example.com/image.jpg',
-			'height' => '430',
-			'width'  => '285',
-		];
-
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ] );
+		$renderer->method( 'is_amp_request' )->willReturn( false );
+		$this->set_private_property( $renderer, 'story_posts', [ $this->stories->get_stories() ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_story_player', [ $story_data ] );
+		$this->call_private_method( $renderer, 'render_story_with_story_player' );
 		$output = ob_get_clean();
 
 		$this->assertContains( '<amp-story-player style="width: 285px;height: 430px"', $output );
@@ -175,19 +181,12 @@ class Renderer extends \WP_UnitTestCase_Base {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
-
-		$story_data = [
-			'url'    => 'www.example.com',
-			'title'  => 'Story Title',
-			'poster' => 'www.example.com/image.jpg',
-			'height' => '430',
-			'width'  => '285',
-		];
-
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ] );
+		$renderer->expects( $this->once() )->method( 'is_amp_request' )->willReturn( false );
+		$this->set_private_property( $renderer, 'story_posts', [ $this->stories->get_stories() ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'render_story_with_poster', [ $story_data ] );
+		$this->call_private_method( $renderer, 'render_story_with_poster' );
 		$output = ob_get_clean();
 
 		$this->assertContains( 'web-stories-list__story-placeholder', $output );
@@ -199,10 +198,12 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_get_content_overlay() {
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->stories ] );
+		$renderer->method( 'is_amp_request' )->willReturn( false );
+		$this->set_private_property( $renderer, 'story_posts', [ $this->stories->get_stories() ] );
 
 		ob_start();
-		$this->call_private_method( $renderer, 'get_content_overlay', [ [] ] );
+		$this->call_private_method( $renderer, 'get_content_overlay' );
 		$output = ob_get_clean();
 
 		$this->assertEmpty( $output );
@@ -310,49 +311,4 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$this->assertContains( 'View All Stories', $expected );
 
 	}
-
-	/**
-	 * Utility function to get story item data,
-	 *
-	 * @param Test_Renderer $renderer Test renderer.
-	 *
-	 * @return array
-	 */
-	public function get_story_item_data( $renderer ) {
-
-		$attributes = $this->get_private_property( $renderer, 'attributes' );
-
-		$author_id       = get_post_field( 'post_author', self::$story_id );
-		$is_circles_view = $this->call_private_method( $renderer, 'is_view_type', [ 'list' ] );
-		$image_size      = $is_circles_view ? \Google\Web_Stories\Media::POSTER_SQUARE_IMAGE_SIZE : \Google\Web_Stories\Media::POSTER_PORTRAIT_IMAGE_SIZE;
-		$story_title     = '';
-		$author_name     = '';
-		$story_date      = '';
-
-		if ( ! empty( $attributes['show_title'] ) && ( true === $attributes['show_title'] ) ) {
-			$story_title = get_the_title( self::$story_id );
-		}
-
-		if ( ! $is_circles_view && ! empty( $attributes['show_author'] ) && ( true === $attributes['show_author'] ) ) {
-			$author_name = get_the_author_meta( 'display_name', $author_id );
-		}
-
-		if ( ! $is_circles_view && ! empty( $attributes['show_date'] ) && ( true === $attributes['show_date'] ) ) {
-			$story_date = get_the_date( 'M j, Y', self::$story_id );
-		}
-
-		$story_data['ID']                   = self::$story_id;
-		$story_data['url']                  = get_post_permalink( self::$story_id );
-		$story_data['title']                = $story_title;
-		$story_data['height']               = '430';
-		$story_data['width']                = '285';
-		$story_data['poster']               = get_the_post_thumbnail_url( self::$story_id, $image_size );
-		$story_data['author']               = $author_name;
-		$story_data['date']                 = $story_date;
-		$story_data['class']                = 'test';
-		$story_data['show_content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
-
-		return $story_data;
-	}
-
 }

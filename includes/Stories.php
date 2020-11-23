@@ -94,7 +94,12 @@ class Stories {
 		$stories_query = new WP_Query( $query_args );
 		$posts         = ( ! empty( $stories_query->posts ) && is_array( $stories_query->posts ) ) ? $stories_query->posts : [];
 
-		return $posts;
+		/**
+		 * Filter the stories posts.
+		 *
+		 * @param array $posts Array of stories' posts.
+		 */
+		return apply_filters( 'ws_get_stories_posts', $posts );
 	}
 
 	/**

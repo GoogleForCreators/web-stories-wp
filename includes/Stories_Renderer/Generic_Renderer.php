@@ -30,6 +30,16 @@ use Google\Web_Stories\Embed_Base;
 
 /**
  * Generic_Renderer class.
+ *
+ * This is named as `Generic` as this renderer class
+ * will be used to output multiple view types, like:
+ *
+ * 1. Circle
+ * 2. Grid
+ * 3. List
+ *
+ * Since, markup for all these views type is similar, Generic Renderer
+ * can be used to render the stories.
  */
 class Generic_Renderer extends Renderer {
 
@@ -55,8 +65,8 @@ class Generic_Renderer extends Renderer {
 		parent::assets();
 
 		if ( $this->is_view_type( 'grid' ) && ! $this->is_amp_request() && true !== $this->attributes['show_story_poster'] ) {
-			wp_enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
-			wp_enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
+			$this->enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
+			$this->enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
 		}
 	}
 
@@ -82,13 +92,10 @@ class Generic_Renderer extends Renderer {
 				style="<?php echo esc_attr( $container_style ); ?>"
 			>
 				<?php
-
-				do {
-
+				foreach ( $this->story_posts as $key => $story ) {
 					$this->render_single_story_content();
 					$this->next();
-
-				} while ( $this->valid() );
+				}
 				?>
 
 			</div>
