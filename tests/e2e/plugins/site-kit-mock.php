@@ -14,6 +14,8 @@
 
 namespace Google\Web_Stories\E2E\Sitekit;
 
+define( 'GOOGLESITEKIT_VERSION', '1.0.0' );
+
 /**
  * Mock output for plugin.
  *
