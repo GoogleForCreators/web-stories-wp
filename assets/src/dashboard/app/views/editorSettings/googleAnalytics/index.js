@@ -127,7 +127,7 @@ function GoogleAnalyticsSettings({
       : TEXT.SITE_KIT_PLUGIN_LINK;
 
     if (siteKitActive) {
-      return TEXT.SITE_KIT_IN_USE;
+      return <span data-testid="sitekit-message">{TEXT.SITE_KIT_IN_USE}</span>;
     }
 
     if (siteKitInstalled) {
