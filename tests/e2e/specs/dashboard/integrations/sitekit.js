@@ -38,7 +38,7 @@ describe('Site Kit integration with dashboard', () => {
     await deactivatePlugin('e2e-tests-sitekit-mock');
   });
 
-  it('should be able see sitekit message', async () => {
+  it('should be able see Site Kit specific message', async () => {
     await visitAdminPage(
       'edit.php',
       'post_type=web-story&page=stories-dashboard#/editor-settings'
