@@ -46,6 +46,6 @@ describe('Site Kit integration with dashboard', () => {
 
     await expect(page).toMatchElement('[data-testid="sitekit-message"]');
 
-    await percySnapshot(page, 'Stories Dashboard with sitekit');
+    await percySnapshot(page, 'Stories Dashboard with Site Kit');
   });
 });
