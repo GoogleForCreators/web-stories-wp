@@ -1,136 +1,7 @@
 {
-  "version": 24,
+  "version": 25,
   "pages": [
     {
-      "elements": [
-        {
-          "x": 97,
-          "y": -319,
-          "width": 330,
-          "height": 586,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 180,
-              "g": 17,
-              "b": 31
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "type": "image",
-          "id": "40b3440b-fdf1-4969-8469-4af6e9d49cb2",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page1_bg-red.png",
-            "width": 330,
-            "height": 586,
-            "id": 1297,
-            "title": "fitness_page1_bg-red",
-            "alt": "fitness_page1_bg-red",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 20,
-          "y": 225,
-          "width": 390,
-          "height": 392,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.74,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">NO</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">DAYS</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.03em\">OFF</span>",
-          "fontSize": 178,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page1_logo-generic.png",
-            "width": 79,
-            "height": 22,
-            "id": 1241,
-            "title": "fitness_page1_logo-generic",
-            "alt": "fitness_page1_logo-generic",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 20,
-          "y": 24,
-          "width": 81,
-          "height": 23,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "898ed4f5-c704-459c-be51-be8daeaab737"
-        }
-      ],
-      "type": "page",
-      "id": "2572f4a4-bb11-47e2-9f77-b8371aeabe49",
       "animations": [
         {
           "id": "ece28d4c-1bce-40d3-9532-603264a16bcc",
@@ -182,80 +53,76 @@
           "fill": "both"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 180,
-          "g": 17,
-          "b": 31
-        }
-      },
-      "defaultBackgroundElement": {
-        "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
-        "rotationAngle": 0,
-        "lockAspectRatio": true,
-        "backgroundColor": {
-          "color": {
-            "r": 180,
-            "g": 17,
-            "b": 31
-          }
-        },
-        "x": 10.73767307309668,
-        "y": 73.81953888501366,
-        "width": 146.66666666666666,
-        "height": 146.66666666666666,
-        "mask": {
-          "type": "rectangle"
-        },
-        "isBackground": true,
-        "type": "shape",
-        "id": "5e0a9de6-0c71-42fb-8d26-7beb33ce55c0",
-        "isDefaultBackground": true
-      }
-    },
-    {
       "elements": [
         {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
+          "x": 97,
+          "y": -319,
+          "width": 330,
+          "height": 586,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 26,
-              "g": 26,
-              "b": 26
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "type": "shape",
-          "id": "65bb259e-6b72-4009-af27-3c19ee9d34e7",
-          "isDefaultBackground": true
+          "type": "image",
+          "id": "40b3440b-fdf1-4969-8469-4af6e9d49cb2",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page1_bg-red.png",
+            "width": 330,
+            "height": 586,
+            "id": 1297,
+            "title": "fitness_page1_bg-red",
+            "alt": "fitness_page1_bg-red",
+            "local": false,
+            "sizes": []
+          }
         },
         {
-          "x": 0,
-          "y": 0,
-          "width": 412,
-          "height": 598,
+          "x": 20,
+          "y": 225,
+          "width": 390,
+          "height": 392,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.74,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">NO</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.03em\">DAYS</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.03em\">OFF</span>",
+          "fontSize": 178,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -264,132 +131,50 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page2_figure-formatted.png",
-            "width": 220,
-            "height": 350,
-            "posterId": 0,
-            "id": 265,
-            "title": "fitness_page2_figure-formatted",
-            "alt": "fitness_page2_figure-formatted",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page1_logo-generic.png",
+            "width": 79,
+            "height": 22,
+            "id": 1241,
+            "title": "fitness_page1_logo-generic",
+            "alt": "fitness_page1_logo-generic",
             "local": false,
             "sizes": []
           },
+          "type": "image",
+          "x": 20,
+          "y": 24,
+          "width": 81,
+          "height": 23,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "type": "image",
-          "id": "f7bd8df7-6f90-47c8-8c88-9c9db3183eea"
-        },
-        {
-          "x": 46,
-          "y": 397,
-          "width": 319,
-          "height": 178,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
-          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">“TO GET TO GREATNESS, YOU HAVE TO BE WILLING TO GET OUT OF YOUR COMFORT ZONE .”</span>",
-          "fontSize": 46,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 117,
-          "y": 587,
-          "width": 284,
-          "height": 22,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
-          "id": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
-          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">-ANONYMOUS</span>",
-          "fontSize": 22,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "898ed4f5-c704-459c-be51-be8daeaab737"
         }
       ],
       "type": "page",
-      "id": "708fbc22-f0ca-40ec-9a57-21d9eb0be6b7",
-      "backgroundColor": {
-        "color": {
-          "r": 26,
-          "g": 26,
-          "b": 26
-        }
-      },
+      "id": "2572f4a4-bb11-47e2-9f77-b8371aeabe49",
+      "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+      "defaultBackgroundElement": {
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+        "x": 10.73767307309668,
+        "y": 73.81953888501366,
+        "width": 146.66666666666666,
+        "height": 146.66666666666666,
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "type": "shape",
+        "id": "5e0a9de6-0c71-42fb-8d26-7beb33ce55c0",
+        "isDefaultBackground": true
+      }
+    },
+    {
       "animations": [
         {
           "id": "784c6e0e-6d90-441e-a6fa-8fe07bd1dbb6",
@@ -453,9 +238,7 @@
           "easingPreset": "outQuint",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -463,52 +246,57 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "type": "image",
-          "id": "dd764483-9e29-4aab-bb58-445d1f043d1a",
+          "type": "shape",
+          "id": "65bb259e-6b72-4009-af27-3c19ee9d34e7",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "width": 412,
+          "height": 598,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "resource": {
             "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page3_bg.jpg",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page2_figure-formatted.png",
             "width": 220,
-            "height": 330,
+            "height": 350,
             "posterId": 0,
-            "id": 270,
-            "title": "fitness_page3_bg",
-            "alt": "fitness_page3_bg",
+            "id": 265,
+            "title": "fitness_page2_figure-formatted",
+            "alt": "fitness_page2_figure-formatted",
             "local": false,
             "sizes": []
           },
-          "scale": 150,
-          "focalX": 50,
-          "focalY": 46.89484126984126
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "f7bd8df7-6f90-47c8-8c88-9c9db3183eea"
         },
         {
-          "x": 65,
-          "y": 19,
-          "width": 282,
-          "height": 154,
+          "x": 46,
+          "y": 397,
+          "width": 319,
+          "height": 178,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -526,38 +314,25 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.74,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
-          "id": "8e351291-f603-459c-883b-66ba0d036694",
-          "content": "<span style=\"font-weight: 600; color: rgba(207,19,35,0.4); letter-spacing: -0.03em\">RUN</span>",
-          "fontSize": 209,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
+          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">“TO GET TO GREATNESS, YOU HAVE TO BE WILLING TO GET OUT OF YOUR COMFORT ZONE .”</span>",
+          "fontSize": 46,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 6,
-          "y": 138,
-          "width": 400,
-          "height": 112,
+          "x": 117,
+          "y": 587,
+          "width": 284,
+          "height": 22,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -575,109 +350,25 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.72,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "8e351291-f603-459c-883b-66ba0d036694",
-          "id": "b4571f66-24f3-4908-8c18-8ac378735fb9",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">LIKE YOU</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">MEAN IT</span>",
-          "fontSize": 79,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 88,
-          "y": 261,
-          "width": 235,
-          "height": 42,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Hind",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "e44d4b12-221b-4fbf-96be-8a3c81e26f7c",
+          "id": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
+          "content": "<span style=\"color: #fff; letter-spacing: -0.03em\">-ANONYMOUS</span>",
+          "fontSize": 22,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "2dbd86ab-dab1-4142-996a-5932a57797b3",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "c324efb7-dd3a-4cce-b780-f3fde3cc94f2"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 16,
-          "g": 16,
-          "b": 16,
-          "a": 1
-        }
-      },
+      "id": "708fbc22-f0ca-40ec-9a57-21d9eb0be6b7",
+      "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } }
+    },
+    {
       "animations": [
         {
           "id": "146023c8-8aff-4f58-bbbd-bc3231fa40ad",
@@ -765,151 +456,46 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
-        {
-          "x": -95,
-          "y": -160,
-          "width": 330,
-          "height": 308,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 180,
-              "g": 17,
-              "b": 31
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "type": "image",
-          "id": "0ed58ad7-eed6-4f1a-80a5-7ce92991677f",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page4_bg-red.png",
-            "width": 330,
-            "height": 308,
-            "id": 1299,
-            "title": "fitness_page4_bg-red",
-            "alt": "fitness_page4_bg-red",
-            "local": false,
-            "sizes": []
-          }
-        },
         {
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 180,
-              "g": 17,
-              "b": 31
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": false,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
           "type": "image",
-          "id": "13b1c45d-c6e8-4e59-acde-67f4b2b6ef0c",
+          "id": "dd764483-9e29-4aab-bb58-445d1f043d1a",
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page4_bg.jpg",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page3_bg.jpg",
             "width": 220,
-            "height": 288,
+            "height": 330,
             "posterId": 0,
-            "id": 278,
-            "title": "fitness_page4_bg",
-            "alt": "fitness_page4_bg",
+            "id": 270,
+            "title": "fitness_page3_bg",
+            "alt": "fitness_page3_bg",
             "local": false,
             "sizes": []
           },
-          "scale": 100,
-          "focalX": 49.97721576668946,
-          "focalY": 33.03397382344752
-        },
-        {
-          "x": 162,
-          "y": -129,
-          "width": 235,
-          "height": 702,
-          "opacity": 40,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
+          "scale": 150,
           "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "37864aea-dc9e-42c6-bcf2-c1fbc93de1b1",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">5</span></span>",
-          "fontSize": 540,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "focalY": 46.89484126984126
         },
         {
-          "x": 51,
-          "y": 326,
-          "width": 311,
-          "height": 204,
+          "x": 65,
+          "y": 19,
+          "width": 282,
+          "height": 154,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -927,38 +513,63 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.7,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.74,
+          "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
           "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
-          "id": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">TOP</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">DISTANCE</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNING</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">SHOES</span>",
-          "fontSize": 74,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "8e351291-f603-459c-883b-66ba0d036694",
+          "content": "<span style=\"font-weight: 600; color: rgba(207,19,35,0.4); letter-spacing: -0.03em\">RUN</span>",
+          "fontSize": 209,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 52,
-          "y": 534,
-          "width": 276,
-          "height": 65,
+          "x": 6,
+          "y": 138,
+          "width": 400,
+          "height": 112,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.72,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "8e351291-f603-459c-883b-66ba0d036694",
+          "id": "b4571f66-24f3-4908-8c18-8ac378735fb9",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">LIKE YOU</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">MEAN IT</span>",
+          "fontSize": 79,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 88,
+          "y": 261,
+          "width": 235,
+          "height": 42,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -976,65 +587,39 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.22,
-          "textAlign": "left",
+          "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
-          "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
-          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>",
+          "id": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
+          "content": "<span style=\"color: rgba(136, 136, 136, 1)\">Our lead editor shares tips on how to best start running</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "97a844aa-4ff5-4875-aac0-682bd51b087e",
-      "backgroundColor": {
-        "color": {
-          "r": 180,
-          "g": 17,
-          "b": 31
-        }
-      },
+      "id": "2dbd86ab-dab1-4142-996a-5932a57797b3",
       "defaultBackgroundElement": {
-        "x": 37,
-        "y": 2,
-        "width": 137,
-        "height": 137,
-        "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
         "rotationAngle": 0,
-        "lockAspectRatio": true,
+        "mask": { "type": "rectangle" },
         "backgroundColor": {
-          "color": {
-            "r": 180,
-            "g": 17,
-            "b": 31
-          }
-        },
-        "mask": {
-          "type": "rectangle"
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
         },
         "isBackground": true,
-        "type": "shape",
-        "id": "aef43d55-bf5e-4175-8975-1637ce53d9ca",
-        "isDefaultBackground": true
+        "isDefaultBackground": true,
+        "id": "c324efb7-dd3a-4cce-b780-f3fde3cc94f2"
       },
+      "backgroundColor": { "color": { "r": 16, "g": 16, "b": 16, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "52a6da4c-272b-4755-9cd4-05de38834c4f",
@@ -1120,61 +705,76 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": -46,
-          "y": 475,
+          "x": -95,
+          "y": -160,
           "width": 330,
-          "height": 295,
+          "height": 308,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 180,
-              "g": 17,
-              "b": 31
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
-          "id": "19e74314-7e11-49dd-ab9f-42155fb93091",
+          "id": "0ed58ad7-eed6-4f1a-80a5-7ce92991677f",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page4_bg-red.png",
             "width": 330,
-            "height": 295,
-            "id": 1256,
-            "title": "fitness_page5_bg-no-logo",
-            "alt": "fitness_page5_bg-no-logo",
+            "height": 308,
+            "id": 1299,
+            "title": "fitness_page4_bg-red",
+            "alt": "fitness_page4_bg-red",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": false,
+          "type": "image",
+          "id": "13b1c45d-c6e8-4e59-acde-67f4b2b6ef0c",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page4_bg.jpg",
+            "width": 220,
+            "height": 288,
+            "posterId": 0,
+            "id": 278,
+            "title": "fitness_page4_bg",
+            "alt": "fitness_page4_bg",
             "local": false,
             "sizes": []
           },
           "scale": 100,
-          "focalX": 38.367113188634875,
-          "focalY": 49.953358674938045
+          "focalX": 49.97721576668946,
+          "focalY": 33.03397382344752
         },
         {
-          "x": 22,
-          "y": 16,
-          "width": 311,
-          "height": 102,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "x": 162,
+          "y": -129,
+          "width": 235,
+          "height": 702,
+          "opacity": 40,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1192,38 +792,62 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "37864aea-dc9e-42c6-bcf2-c1fbc93de1b1",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">5</span></span>",
+          "fontSize": 540,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 51,
+          "y": 326,
+          "width": 311,
+          "height": 204,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
-          "id": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
-          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">THE WOVEN</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNER</span>",
+          "basedOn": "9fc66e49-85dd-477d-8bb9-30ae259bc7fe",
+          "id": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">TOP</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">DISTANCE</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNING</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">SHOES</span>",
           "fontSize": 74,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 22,
-          "y": 145,
-          "width": 154,
-          "height": 147,
+          "x": 52,
+          "y": 534,
+          "width": 276,
+          "height": 65,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1241,187 +865,41 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.22,
           "textAlign": "left",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "9832faa6-2c7e-43eb-b75a-b68051da626a",
-          "id": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
-          "content": "<span style=\"color: #fff\">Ideal for runs up to 3 miles, the Woven Runner delivers a lightweight design &amp; breathable slip so you can get in and hit your stride.</span>",
+          "basedOn": "002f9bfc-2f7a-45b0-b900-78251f2746f1",
+          "id": "9832faa6-2c7e-43eb-b75a-b68051da626a",
+          "content": "<span style=\"color: #fff\">Hit the trails with the latest and greatest lightweight mid-distance shoes for the season.</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 225,
-          "y": 310,
-          "width": 235,
-          "height": 367,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.9,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "37864aea-dc9e-42c6-bcf2-c1fbc93de1b1",
-          "id": "a849f15a-ed9b-4589-abe0-c19da7abfcf4",
-          "content": "<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">3</span>",
-          "fontSize": 408,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 21,
-          "y": 319,
-          "width": 100,
-          "height": 32,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 26,
-              "g": 26,
-              "b": 26
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "5ae621aa-0b73-4f4f-888b-ba3787156bf0"
-        },
-        {
-          "x": 33.5,
-          "y": 327,
-          "width": 75,
-          "height": 20,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
-          "id": "d4bdc028-59aa-4adc-8762-570676202dc3",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BUY NOW</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "52b7935e-e379-4596-bfbc-3b1ea5ca3503",
+      "id": "97a844aa-4ff5-4875-aac0-682bd51b087e",
+      "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
       "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
+        "x": 37,
+        "y": 2,
+        "width": 137,
+        "height": 137,
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
         "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+        "mask": { "type": "rectangle" },
         "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "ff86e4bb-4a5c-446d-81c5-0bcd77bd8086"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+        "type": "shape",
+        "id": "aef43d55-bf5e-4175-8975-1637ce53d9ca",
+        "isDefaultBackground": true
+      }
+    },
+    {
       "animations": [
         {
           "id": "52a6da4c-272b-4755-9cd4-05de38834c4f",
@@ -1532,100 +1010,45 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
+          "x": -46,
+          "y": 475,
+          "width": 330,
+          "height": 295,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
-          "id": "05e35040-f294-42da-b67d-dfd39327b2d8",
+          "id": "19e74314-7e11-49dd-ab9f-42155fb93091",
           "resource": {
             "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page6_bg.jpg",
-            "width": 220,
-            "height": 165,
-            "posterId": 0,
-            "id": 288,
-            "title": "fitness_page6_bg",
-            "alt": "fitness_page6_bg",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page5_bg-no-logo.png",
+            "width": 330,
+            "height": 295,
+            "id": 1256,
+            "title": "fitness_page5_bg-no-logo",
+            "alt": "fitness_page5_bg-no-logo",
             "local": false,
             "sizes": []
           },
           "scale": 100,
-          "focalX": 50,
-          "focalY": 50
+          "focalX": 38.367113188634875,
+          "focalY": 49.953358674938045
         },
         {
+          "x": 22,
+          "y": 16,
+          "width": 311,
+          "height": 102,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 130,
-          "focalX": 52.684313245208656,
-          "focalY": 47.775163796764,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2020-06-30T20:40:21",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page6_watch.png",
-            "width": 330,
-            "height": 330,
-            "posterId": 0,
-            "id": 1940,
-            "title": "fitness_page6_watch",
-            "alt": "fitness_page6_watch",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 69,
-          "y": 122,
-          "width": 273,
-          "height": 326,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "ca5cbef2-1ef0-435d-a6e5-4b46e985fb0a"
-        },
-        {
-          "x": 40,
-          "y": 21,
-          "width": 252,
-          "height": 153,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1643,87 +1066,26 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
-          "id": "885a6a97-1fb8-4303-a27c-151395801c5b",
-          "content": "<span style=\"font-weight: 600; color: #cf1323\">THE BEST</span>\n<span style=\"font-weight: 600; color: #1a1a1a\">RUNNING</span>\n<span style=\"font-weight: 600; color: #cf1323\">TECH</span>",
-          "fontSize": 74,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 5,
-          "y": 462,
-          "width": 402,
-          "height": 46,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
           "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
-          "id": "c432d288-5b66-4c40-8141-060cc29f9ee6",
-          "content": "<span style=\"font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em\">THE PERFECT MATE</span>",
-          "fontSize": 46,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
+          "content": "<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">THE WOVEN</span>\n<span style=\"font-weight: 600; color: #fff; letter-spacing: -0.01em\">RUNNER</span>",
+          "fontSize": 74,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 52,
-          "y": 504,
-          "width": 307,
-          "height": 84,
+          "x": 22,
+          "y": 145,
+          "width": 154,
+          "height": 147,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1741,31 +1103,113 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.22,
           "textAlign": "left",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
-          "id": "ae9a760a-a4e8-4759-8407-001b3eb243f3",
-          "content": "<span style=\"color: rgba(26, 26, 26, 1)\">Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.</span>",
+          "basedOn": "9832faa6-2c7e-43eb-b75a-b68051da626a",
+          "id": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
+          "content": "<span style=\"color: #fff\">Ideal for runs up to 3 miles, the Woven Runner delivers a lightweight design &amp; breathable slip so you can get in and hit your stride.</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 225,
+          "y": 310,
+          "width": 235,
+          "height": 367,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.9,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "37864aea-dc9e-42c6-bcf2-c1fbc93de1b1",
+          "id": "a849f15a-ed9b-4589-abe0-c19da7abfcf4",
+          "content": "<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">3</span>",
+          "fontSize": 408,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 21,
+          "y": 319,
+          "width": 100,
+          "height": 32,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "type": "shape",
+          "id": "5ae621aa-0b73-4f4f-888b-ba3787156bf0"
+        },
+        {
+          "x": 33.5,
+          "y": 327,
+          "width": 75,
+          "height": 20,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "7fc0fd6e-ce7e-4be9-925c-c30a39d7cfeb",
+          "id": "d4bdc028-59aa-4adc-8762-570676202dc3",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BUY NOW</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "95ae824a-7060-46cb-a8d2-8d6a721ad1ff",
+      "id": "52b7935e-e379-4596-bfbc-3b1ea5ca3503",
       "defaultBackgroundElement": {
         "type": "shape",
         "x": 1,
@@ -1773,29 +1217,17 @@
         "width": 1,
         "height": 1,
         "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
         },
         "isBackground": true,
         "isDefaultBackground": true,
-        "id": "506b7e72-d072-474a-9fd7-289c1ba8b707"
+        "id": "ff86e4bb-4a5c-446d-81c5-0bcd77bd8086"
       },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "bcb67505-65e6-404f-9524-b1d51f298eb2",
@@ -1897,61 +1329,81 @@
           "easingPreset": "outSine",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 87,
-          "y": -221,
-          "width": 330,
-          "height": 239,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 180,
-              "g": 17,
-              "b": 31
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "image",
-          "id": "1613baad-b2a9-42e7-b0a6-d2f4c6941f65",
+          "id": "05e35040-f294-42da-b67d-dfd39327b2d8",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page6_bg.jpg",
+            "width": 220,
+            "height": 165,
+            "posterId": 0,
+            "id": 288,
+            "title": "fitness_page6_bg",
+            "alt": "fitness_page6_bg",
+            "local": false,
+            "sizes": []
+          },
           "scale": 100,
           "focalX": 50,
-          "focalY": 50,
+          "focalY": 50
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 130,
+          "focalX": 52.684313245208656,
+          "focalY": 47.775163796764,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page7_bg-red.png",
+            "creationDate": "2020-06-30T20:40:21",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page6_watch.png",
             "width": 330,
-            "height": 239,
-            "id": 1301,
-            "title": "fitness_page7_bg-red",
-            "alt": "fitness_page7_bg-red",
+            "height": 330,
+            "posterId": 0,
+            "id": 1940,
+            "title": "fitness_page6_watch",
+            "alt": "fitness_page6_watch",
             "local": false,
             "sizes": []
-          }
+          },
+          "type": "image",
+          "x": 69,
+          "y": 122,
+          "width": 273,
+          "height": 326,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "ca5cbef2-1ef0-435d-a6e5-4b46e985fb0a"
         },
         {
-          "x": 17,
-          "y": 28,
-          "width": 311,
-          "height": 151,
+          "x": 40,
+          "y": 21,
+          "width": 252,
+          "height": 153,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1969,132 +1421,114 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.76,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.7,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
           "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
-          "id": "5d25ecb0-3056-4597-ba08-44e958de6069",
-          "content": "<span style=\"font-weight: 600; color: #fff\">GEAR</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">UP</span>",
-          "fontSize": 100,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "885a6a97-1fb8-4303-a27c-151395801c5b",
+          "content": "<span style=\"font-weight: 600; color: #cf1323\">THE BEST</span>\n<span style=\"font-weight: 600; color: #1a1a1a\">RUNNING</span>\n<span style=\"font-weight: 600; color: #cf1323\">TECH</span>",
+          "fontSize": 74,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
+          "x": 5,
+          "y": 462,
+          "width": 402,
+          "height": 46,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
           },
-          "type": "shape",
-          "x": 226,
-          "y": 140,
-          "width": 31,
-          "height": 31,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "bullseye"
-          },
-          "id": "cc6cc34a-2d46-446b-989c-7b11c51b84b0",
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
+          "type": "text",
+          "basedOn": "7470ab2a-4a73-49aa-aaf5-74cfafb51adb",
+          "id": "c432d288-5b66-4c40-8141-060cc29f9ee6",
+          "content": "<span style=\"font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em\">THE PERFECT MATE</span>",
+          "fontSize": 46,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
+          "x": 52,
+          "y": 504,
+          "width": 307,
+          "height": 84,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Hind",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
           },
-          "type": "shape",
-          "width": 31,
-          "height": 31,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.22,
+          "textAlign": "left",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "bullseye"
-          },
-          "basedOn": "cc6cc34a-2d46-446b-989c-7b11c51b84b0",
-          "id": "e9fa1707-ab8c-4311-9374-af1fcd265b4a",
-          "x": 129,
-          "y": 356,
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
+          "type": "text",
+          "basedOn": "73bdf015-c3f1-41fb-bc24-79a1b881d914",
+          "id": "ae9a760a-a4e8-4759-8407-001b3eb243f3",
+          "content": "<span style=\"color: rgba(26, 26, 26, 1)\">Whether you’re an elite athlete or you just want to track your daily activity, Apple Watch Series 5 helps you train smarter to get results faster.</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "a30a33fc-d687-4e94-8a2c-0f9546a21efe",
-      "backgroundColor": {
-        "color": {
-          "r": 180,
-          "g": 17,
-          "b": 31
-        }
-      },
+      "id": "95ae824a-7060-46cb-a8d2-8d6a721ad1ff",
       "defaultBackgroundElement": {
+        "type": "shape",
         "x": 1,
         "y": 1,
         "width": 1,
         "height": 1,
-        "opacity": 100,
-        "flip": {
-          "vertical": false,
-          "horizontal": false
-        },
         "rotationAngle": 0,
-        "lockAspectRatio": true,
+        "mask": { "type": "rectangle" },
         "backgroundColor": {
-          "color": {
-            "r": 180,
-            "g": 17,
-            "b": 31
-          }
-        },
-        "mask": {
-          "type": "rectangle"
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
         },
         "isBackground": true,
-        "type": "shape",
-        "id": "6b7a12c9-81f2-4cf8-8868-6f5d741646e1",
-        "isDefaultBackground": true
+        "isDefaultBackground": true,
+        "id": "506b7e72-d072-474a-9fd7-289c1ba8b707"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "520e1f89-a825-450d-8378-905763124d20",
@@ -2253,158 +1687,45 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
+          "x": 87,
+          "y": -221,
+          "width": 330,
+          "height": 239,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 26,
-              "g": 26,
-              "b": 26
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "type": "shape",
-          "id": "641d6b05-3e8c-4c1e-8e57-b1d1a528c119",
-          "isDefaultBackground": true
-        },
-        {
-          "x": 0,
-          "y": 447,
-          "width": 207,
-          "height": 210,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
+          "type": "image",
+          "id": "1613baad-b2a9-42e7-b0a6-d2f4c6941f65",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story3-formatted.png",
-            "width": 95,
-            "height": 97,
-            "posterId": 0,
-            "id": 310,
-            "title": "fitness_page8_story3-formatted",
-            "alt": "fitness_page8_story3-formatted",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page7_bg-red.png",
+            "width": 330,
+            "height": 239,
+            "id": 1301,
+            "title": "fitness_page7_bg-red",
+            "alt": "fitness_page7_bg-red",
             "local": false,
             "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "ffd4e077-5c4c-4baa-bc7f-56f09b29d0d6"
+          }
         },
         {
-          "x": 2,
-          "y": 178,
-          "width": 204,
-          "height": 209,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story1-formatted.png",
-            "width": 95,
-            "height": 97,
-            "posterId": 0,
-            "id": 308,
-            "title": "fitness_page8_story1-formatted",
-            "alt": "fitness_page8_story1-formatted",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "90f9d543-7728-49f6-a241-965847b7b4ab"
-        },
-        {
-          "x": -1,
-          "y": 283,
-          "width": 413,
-          "height": 213,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story2-formatted.png",
-            "width": 188,
-            "height": 97,
-            "posterId": 0,
-            "id": 309,
-            "title": "fitness_page8_story2-formatted",
-            "alt": "fitness_page8_story2-formatted",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "f8f33b69-fab8-40e2-ac67-e1dc8bb5f8ca"
-        },
-        {
-          "x": 49,
-          "y": 11,
+          "x": 17,
+          "y": 28,
           "width": 311,
-          "height": 152,
+          "height": 151,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2422,185 +1743,86 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 0.76,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "5d25ecb0-3056-4597-ba08-44e958de6069",
-          "id": "7447a2ba-a336-4618-beb2-8423ebc1ddc3",
-          "content": "<span style=\"font-weight: 600; color: #cf1323; letter-spacing: -0.01em\">MORE</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.01em\">STORIES</span>",
+          "basedOn": "09d35ab8-76f0-4252-838d-4eb54a99c2b3",
+          "id": "5d25ecb0-3056-4597-ba08-44e958de6069",
+          "content": "<span style=\"font-weight: 600; color: #fff\">GEAR</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4)\">UP</span>",
           "fontSize": 100,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 243,
-          "y": 207,
-          "width": 137,
-          "height": 66,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "x": 226,
+          "y": 140,
+          "width": 31,
+          "height": 31,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
-          "id": "96fea994-b71e-442f-b611-16d73f520016",
-          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\">EARBUDS</span>",
-          "fontSize": 22,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "mask": { "type": "bullseye" },
+          "id": "cc6cc34a-2d46-446b-989c-7b11c51b84b0",
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
           }
         },
         {
-          "x": 49,
-          "y": 359,
-          "width": 137,
-          "height": 66,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "width": 31,
+          "height": 31,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
-          "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>",
-          "fontSize": 22,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 242,
-          "y": 488,
-          "width": 157,
-          "height": 66,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Teko",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [300, 400, 500, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
-          "id": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
-          "content": "<span style=\"font-weight: 600; color: #fff\">TRIATHLON</span>\n<span style=\"font-weight: 600; color: #fff\">TRAININING</span>\n<span style=\"font-weight: 600; color: #fff\">IN THE SUMMER</span>",
-          "fontSize": 22,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "mask": { "type": "bullseye" },
+          "basedOn": "cc6cc34a-2d46-446b-989c-7b11c51b84b0",
+          "id": "e9fa1707-ab8c-4311-9374-af1fcd265b4a",
+          "x": 129,
+          "y": 356,
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
           }
         }
       ],
       "type": "page",
-      "id": "d65c11a1-5f71-48ff-8579-85d53f18d461",
-      "backgroundColor": {
-        "color": {
-          "r": 26,
-          "g": 26,
-          "b": 26
-        }
-      },
+      "id": "a30a33fc-d687-4e94-8a2c-0f9546a21efe",
+      "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+      "defaultBackgroundElement": {
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "opacity": 100,
+        "flip": { "vertical": false, "horizontal": false },
+        "rotationAngle": 0,
+        "lockAspectRatio": true,
+        "backgroundColor": { "color": { "r": 180, "g": 17, "b": 31 } },
+        "mask": { "type": "rectangle" },
+        "isBackground": true,
+        "type": "shape",
+        "id": "6b7a12c9-81f2-4cf8-8868-6f5d741646e1",
+        "isDefaultBackground": true
+      }
+    },
+    {
       "animations": [
         {
           "id": "d342c9f9-7b3b-4a3a-9cc1-9c77ab38f866",
@@ -2744,7 +1966,278 @@
           "easingPreset": "outQuint",
           "fill": "both"
         }
-      ]
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "type": "shape",
+          "id": "641d6b05-3e8c-4c1e-8e57-b1d1a528c119",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 0,
+          "y": 447,
+          "width": 207,
+          "height": 210,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story3-formatted.png",
+            "width": 95,
+            "height": 97,
+            "posterId": 0,
+            "id": 310,
+            "title": "fitness_page8_story3-formatted",
+            "alt": "fitness_page8_story3-formatted",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "ffd4e077-5c4c-4baa-bc7f-56f09b29d0d6"
+        },
+        {
+          "x": 2,
+          "y": 178,
+          "width": 204,
+          "height": 209,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story1-formatted.png",
+            "width": 95,
+            "height": 97,
+            "posterId": 0,
+            "id": 308,
+            "title": "fitness_page8_story1-formatted",
+            "alt": "fitness_page8_story1-formatted",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "90f9d543-7728-49f6-a241-965847b7b4ab"
+        },
+        {
+          "x": -1,
+          "y": 283,
+          "width": 413,
+          "height": 213,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fitness/fitness_page8_story2-formatted.png",
+            "width": 188,
+            "height": 97,
+            "posterId": 0,
+            "id": 309,
+            "title": "fitness_page8_story2-formatted",
+            "alt": "fitness_page8_story2-formatted",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "f8f33b69-fab8-40e2-ac67-e1dc8bb5f8ca"
+        },
+        {
+          "x": 49,
+          "y": 11,
+          "width": 311,
+          "height": 152,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.76,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "5d25ecb0-3056-4597-ba08-44e958de6069",
+          "id": "7447a2ba-a336-4618-beb2-8423ebc1ddc3",
+          "content": "<span style=\"font-weight: 600; color: #cf1323; letter-spacing: -0.01em\">MORE</span>\n<span style=\"font-weight: 600; color: rgba(255,255,255,0.4); letter-spacing: -0.01em\">STORIES</span>",
+          "fontSize": 100,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 243,
+          "y": 207,
+          "width": 137,
+          "height": 66,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "0884aabc-ca1e-4b37-a87b-68a6fbf377db",
+          "id": "96fea994-b71e-442f-b611-16d73f520016",
+          "content": "<span style=\"font-weight: 600; color: #fff\">SWEAT</span>\n<span style=\"font-weight: 600; color: #fff\">RESISTENT</span>\n<span style=\"font-weight: 600; color: #fff\">EARBUDS</span>",
+          "fontSize": 22,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 49,
+          "y": 359,
+          "width": 137,
+          "height": 66,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
+          "id": "9b117b87-0269-4c4b-9e0d-8cdbcb0df89a",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\"><span style=\"font-weight: 600\">10 BEST CORETRAINING EXERCISES</span></span>",
+          "fontSize": 22,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 242,
+          "y": 488,
+          "width": 157,
+          "height": 66,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Teko",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [300, 400, 500, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "96fea994-b71e-442f-b611-16d73f520016",
+          "id": "03c44ea1-7ec8-4bdf-8e49-bb43ba83b2f3",
+          "content": "<span style=\"font-weight: 600; color: #fff\">TRIATHLON</span>\n<span style=\"font-weight: 600; color: #fff\">TRAININING</span>\n<span style=\"font-weight: 600; color: #fff\">IN THE SUMMER</span>",
+          "fontSize": 22,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        }
+      ],
+      "type": "page",
+      "id": "d65c11a1-5f71-48ff-8579-85d53f18d461",
+      "backgroundColor": { "color": { "r": 26, "g": 26, "b": 26 } }
     }
   ],
   "autoAdvance": true,
