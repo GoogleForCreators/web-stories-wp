@@ -38,7 +38,7 @@ function SimplePanel({ children, name, title, ...rest }) {
 SimplePanel.propTypes = {
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 };
 
 export default SimplePanel;

@@ -35,82 +35,78 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useFont } from '../../../app/font';
-import useFocusOut from '../../../utils/useFocusOut';
+import useFocusOut from '../../../../utils/useFocusOut';
 import {
-  createFontFilter,
+  createOptionFilter,
   isKeywordFilterable,
   getOptions,
   addUniqueEntry,
   getInset,
-} from './utils';
-import { List, Group, GroupLabel, Option, Selected, NoResult } from './styled';
+} from '../utils';
+import { List, Group, GroupLabel, NoResult } from './styled';
+import DefaultRenderer from './defaultRenderer';
 
-function FontList({
+function OptionList({
   keyword = '',
   value = '',
   onSelect = () => {},
   onClose = () => {},
   onExpandedChange = () => {},
   focusTrigger = 0,
+  options,
+  primaryOptions,
+  primaryLabel,
+  priorityOptions = [],
+  priorityLabel,
+  renderer = DefaultRenderer,
+  onObserve,
+  listId,
 }) {
+  const OptionRenderer = renderer;
   const listRef = useRef(null);
   const optionsRef = useRef([]);
   const [focusIndex, setFocusIndex] = useState(-1);
-  const [userSeenFonts, setUserSeenFonts] = useState([]);
-  const [
-    fonts,
-    recentFonts,
-    curatedFonts,
-    ensureMenuFontsLoaded,
-  ] = useFont(({ state, actions }) => [
-    state.fonts,
-    state.recentFonts,
-    state.curatedFonts,
-    actions.ensureMenuFontsLoaded,
-  ]);
-  const fontMap = useMemo(
-    () =>
-      [...fonts, ...recentFonts, ...curatedFonts].reduce(
-        (lookup, font) => ({
-          ...lookup,
-          [font.name]: font,
-        }),
-        {}
-      ),
-    [fonts, recentFonts, curatedFonts]
-  );
+  const [userSeenOptions, setUserSeenOptions] = useState([]);
 
   /*
    * KEYWORD FILTERING
    */
-  const filteredListGroups = useMemo(
-    () => [
-      {
-        label: __('Recently used', 'web-stories'),
-        options: createFontFilter(recentFonts)(keyword),
-      },
-      {
-        label: __('Recommended', 'web-stories'),
-        options: isKeywordFilterable(keyword)
-          ? createFontFilter(fonts)(keyword)
-          : curatedFonts,
-      },
-    ],
-    [keyword, fonts, curatedFonts, recentFonts]
-  );
+  const filteredListGroups = useMemo(() => {
+    const groups = [];
+    if (priorityOptions?.length) {
+      groups.push({
+        label: priorityLabel,
+        options: createOptionFilter(priorityOptions)(keyword),
+      });
+    }
+    groups.push({
+      label: primaryLabel,
+      options:
+        isKeywordFilterable(keyword) && options
+          ? createOptionFilter(options)(keyword)
+          : primaryOptions,
+    });
+    return groups;
+  }, [
+    keyword,
+    options,
+    priorityOptions,
+    primaryOptions,
+    priorityLabel,
+    primaryLabel,
+  ]);
 
   /*
-   * LAZY FONT LOADING
+   * LAZY OPTIONS LOADING
    */
-  // Add font when observed entry is seen
+  // Add option when observed entry is seen
   const observer = useMemo(
     () =>
       new window.IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setUserSeenFonts(addUniqueEntry(entry.target.dataset.font));
+              setUserSeenOptions(addUniqueEntry(entry.target.dataset.option));
             }
           });
         },
@@ -126,22 +122,26 @@ function FontList({
   // Observe rendered font options
   useLayoutEffect(() => {
     const renderedOptions = optionsRef.current;
-    renderedOptions.forEach((option) => option && observer.observe(option));
+    if (onObserve) {
+      renderedOptions.forEach((option) => option && observer.observe(option));
+    }
     return () => {
-      renderedOptions.forEach((option) => option && observer.unobserve(option));
+      if (onObserve) {
+        renderedOptions.forEach(
+          (option) => option && observer.unobserve(option)
+        );
+      }
       // clear exisiting option references before next update to filteredGroup
       optionsRef.current = [];
     };
-  }, [observer, filteredListGroups]);
+  }, [observer, onObserve, filteredListGroups]);
 
   // load all seen fonts from google service
   useEffect(() => {
-    ensureMenuFontsLoaded(
-      userSeenFonts.filter(
-        (fontName) => fontMap[fontName]?.service === 'fonts.google.com'
-      )
-    );
-  }, [ensureMenuFontsLoaded, userSeenFonts, fontMap]);
+    if (onObserve) {
+      onObserve(userSeenOptions);
+    }
+  }, [onObserve, userSeenOptions]);
 
   /*
    * KEYBOARD ACCESSIBILITY
@@ -156,7 +156,7 @@ function FontList({
         onClose();
       } else if (key === 'Enter') {
         if (filteredOptions[focusIndex]) {
-          onSelect(filteredOptions[focusIndex].name);
+          onSelect(filteredOptions[focusIndex]);
         }
       } else if (key === 'ArrowUp') {
         setFocusIndex((index) => Math.max(0, index - 1));
@@ -208,10 +208,10 @@ function FontList({
     <List
       ref={listRef}
       tabIndex={0}
-      id="editor-font-picker-list"
+      id={listId}
       role="listbox"
       onKeyDown={handleKeyPress}
-      aria-label={__('Font List Selector', 'web-stories')}
+      aria-label={__('Option List Selector', 'web-stories')}
       aria-required={false}
     >
       {filteredListGroups.map((group, i) => {
@@ -223,36 +223,32 @@ function FontList({
               role="group"
               aria-labelledby={groupLabelId}
             >
-              <GroupLabel id={groupLabelId} role="presentation">
-                {group.label}
-              </GroupLabel>
-              {group.options.map((font, j) => (
-                <Option
-                  key={font.name}
-                  ref={(el) =>
-                    (optionsRef.current[
-                      getInset(filteredListGroups, i, j)
-                    ] = el)
-                  }
-                  role="option"
-                  tabIndex={-1}
-                  aria-selected={value === font.name}
-                  aria-posinset={getInset(filteredListGroups, i, j)}
-                  aria-setsize={filteredOptions.length}
-                  data-font={font.name}
-                  onClick={() => onSelect(font.name)}
-                  fontFamily={
-                    font.service.includes('google')
-                      ? `'${font.name}::MENU'`
-                      : font.name
-                  }
-                >
-                  {value === font.name && (
-                    <Selected aria-label={__('Selected', 'web-stories')} />
-                  )}
-                  {font.name}
-                </Option>
-              ))}
+              {group.label && (
+                <GroupLabel id={groupLabelId} role="presentation">
+                  {group.label}
+                </GroupLabel>
+              )}
+              {group.options.map((option, j) => {
+                return (
+                  <OptionRenderer
+                    key={option.id}
+                    role={'option'}
+                    tabIndex="-1"
+                    aria-selected={value === option.id}
+                    aria-posinset={getInset(filteredListGroups, i, j)}
+                    aria-setsize={filteredOptions.length}
+                    data-option={option.id}
+                    onClick={() => onSelect(option)}
+                    ref={(el) =>
+                      (optionsRef.current[
+                        getInset(filteredListGroups, i, j)
+                      ] = el)
+                    }
+                    option={option}
+                    value={value}
+                  />
+                );
+              })}
             </Group>
           )
         );
@@ -261,13 +257,21 @@ function FontList({
   );
 }
 
-FontList.propTypes = {
+OptionList.propTypes = {
   keyword: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onSelect: PropTypes.func,
   onClose: PropTypes.func,
   onExpandedChange: PropTypes.func,
   focusTrigger: PropTypes.number,
+  options: PropTypes.array,
+  primaryOptions: PropTypes.array.isRequired,
+  primaryLabel: PropTypes.string,
+  priorityOptions: PropTypes.array,
+  priorityLabel: PropTypes.string,
+  renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  onObserve: PropTypes.func,
+  listId: PropTypes.string.isRequired,
 };
 
-export default FontList;
+export default OptionList;

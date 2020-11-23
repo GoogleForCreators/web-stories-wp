@@ -56,7 +56,6 @@ const Border = styled.div`
     ${(props) => !isOutsideBorder(props) && getBorderStyle(props)}
     border-color: var(--element-border-color);
   }
-}
 `;
 
 export default function WithBorder({ element, previewMode = false, children }) {

@@ -22,23 +22,21 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import FontPicker from '../';
-import FontContext from '../../../app/font/context';
-import { renderWithTheme } from '../../../testUtils';
-import { curatedFontNames } from '../../../app/font/curatedFonts';
+import DropDown from '../';
+import FontContext from '../../../../app/font/context';
+import { renderWithTheme } from '../../../../testUtils';
+import { curatedFontNames } from '../../../../app/font/curatedFonts';
 import fontsListResponse from './fontsResponse';
 
-const availableCuratedFonts = fontsListResponse.filter(
+const fonts = fontsListResponse.map((font) => {
+  return { ...font, id: font.name };
+});
+const availableCuratedFonts = fonts.filter(
   (font) => curatedFontNames.indexOf(font.name) > 0
 );
 
 function getFontPicker(options) {
   const fontContextValues = {
-    state: {
-      fonts: fontsListResponse,
-      recentFonts: [],
-      curatedFonts: availableCuratedFonts,
-    },
     actions: {
       ensureMenuFontsLoaded: () => {},
     },
@@ -46,19 +44,28 @@ function getFontPicker(options) {
   const props = {
     onChange: jest.fn(),
     value: 'Roboto',
+    'aria-label': 'Edit: Font family',
+    options: fonts,
+    primaryOptions: availableCuratedFonts,
+    primaryLabel: 'Recommended',
+    priorityOptions: [],
+    priorityLabel: 'Recently used',
+    selectedId: 'Roboto',
+    placeholder: 'Roboto',
+    hasSearch: true,
     ...options,
   };
 
   const accessors = renderWithTheme(
     <FontContext.Provider value={fontContextValues}>
-      <FontPicker {...props} />
+      <DropDown {...props} />
     </FontContext.Provider>
   );
 
   return accessors;
 }
 
-describe('Font Picker', () => {
+describe('DropDown: Font Picker', () => {
   // Mock scrollTo
   const scrollTo = jest.fn();
   Object.defineProperty(window.Element.prototype, 'scrollTo', {
@@ -137,7 +144,7 @@ describe('Font Picker', () => {
     });
 
     // The second font in the list.
-    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1]);
   });
 
   it('should close the menu when the Esc key is pressed.', async () => {
@@ -199,7 +206,7 @@ describe('Font Picker', () => {
     });
 
     // Moving down by 2 and back 1 up should end up with the second font: Roboto Condensed.
-    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1].name);
+    expect(onChangeFn).toHaveBeenCalledWith(availableCuratedFonts[1]);
   });
 
   it('should search and filter the list to match the results.', async () => {
