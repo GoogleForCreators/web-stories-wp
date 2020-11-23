@@ -33,7 +33,7 @@ function SnackbarContainer({
       {activeSnackbarMessage.id && (
         <Snackbar.Message
           key={`alert_${activeSnackbarMessage.id}`}
-          ariaLabel={activeSnackbarMessage.message.body}
+          ariaLabel={activeSnackbarMessage.message.title}
           handleDismiss={() => handleDismissMessage(activeSnackbarMessage.id)}
           message={activeSnackbarMessage.message.body}
         />
@@ -43,7 +43,11 @@ function SnackbarContainer({
 }
 
 SnackbarContainer.propTypes = {
-  activeSnackbarMessage: PropTypes.object,
+  activeSnackbarMessage: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    body: PropTypes.string,
+  }),
   handleDismissMessage: PropTypes.func,
 };
 export default SnackbarContainer;

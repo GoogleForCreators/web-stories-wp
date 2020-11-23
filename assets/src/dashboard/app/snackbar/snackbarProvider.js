@@ -31,7 +31,7 @@ const SnackbarProvider = ({ children }) => {
 
   const activeSnack = useMemo(() => {
     const snacksInQueue = Object.values(messages).map((message) => message);
-    return snacksInQueue.length > 0 ? snacksInQueue[0] : [];
+    return snacksInQueue.length > 0 ? snacksInQueue[0] : {};
   }, [messages]);
 
   const removeSnackbarMessage = useCallback((id) => {
@@ -54,10 +54,10 @@ const SnackbarProvider = ({ children }) => {
   }, []);
 
   const addSnackbarMessage = useCallback(
-    ({ message, severity, id }) =>
+    ({ message, id }) =>
       setMessages((existingMessages) => ({
         ...existingMessages,
-        [id]: { message, severity, id },
+        [id]: { message, id },
       })),
     []
   );

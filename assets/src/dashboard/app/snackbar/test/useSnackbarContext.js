@@ -34,11 +34,6 @@ const MESSAGE_2 = {
   id: 2,
 };
 
-const MESSAGE_3 = {
-  message: 'three',
-  id: 3,
-};
-
 describe('useSnackbarContext', () => {
   it('should throw an error if used outside of <SnackbarProvider />', () => {
     expect(() => {
@@ -63,7 +58,7 @@ describe('useSnackbarContext', () => {
       wrapper: SnackbarProvider,
     });
 
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([]);
+    expect(result.current.state.activeSnackbarMessage).toStrictEqual({});
   });
 
   it('should add a new activeMessage when addSnackbarMessage is called and new message has unique id', () => {
@@ -75,12 +70,10 @@ describe('useSnackbarContext', () => {
       result.current.actions.addSnackbarMessage(MESSAGE_1);
     });
 
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-    ]);
+    expect(result.current.state.activeSnackbarMessage).toStrictEqual(MESSAGE_1);
   });
 
-  it('should remove an activeMessage when removeSnackbarMessage is called', () => {
+  it('should display only 1 activeSnackbarMessage at a time, regardless of how many are in the queue', () => {
     const { result } = renderHook(() => useSnackbarContext(), {
       wrapper: SnackbarProvider,
     });
@@ -88,56 +81,29 @@ describe('useSnackbarContext', () => {
     act(() => {
       result.current.actions.addSnackbarMessage(MESSAGE_1);
     });
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-    ]);
+    expect(result.current.state.activeSnackbarMessage).toStrictEqual(MESSAGE_1);
 
+    // A second message is added to the queue but not as an activeSnackbarMessage
     act(() => {
       result.current.actions.addSnackbarMessage(MESSAGE_2);
     });
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-      MESSAGE_2,
-    ]);
 
+    expect(result.current.state.activeSnackbarMessage).toStrictEqual(MESSAGE_1);
+
+    // When the message that was already displayed when the second message is added
+    // is dismissed or times out, the second message becomes the activeSnackbarMessage
+    act(() => {
+      result.current.actions.removeSnackbarMessage(MESSAGE_1.id);
+    });
+
+    expect(result.current.state.activeSnackbarMessage).toStrictEqual(MESSAGE_2);
+
+    // When that message is dismissed or times out and there are no pending messages to display
+    // activeSnackbarMessage returns to empty object
     act(() => {
       result.current.actions.removeSnackbarMessage(MESSAGE_2.id);
     });
 
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-    ]);
-
-    act(() => {
-      result.current.actions.removeSnackbarMessage(MESSAGE_1.id);
-    });
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([]);
-  });
-
-  it('should update messages based on id to isActive: false when removeSnackbarMessages is called', () => {
-    const { result } = renderHook(() => useSnackbarContext(), {
-      wrapper: SnackbarProvider,
-    });
-    act(() => {
-      result.current.actions.addSnackbarMessage(MESSAGE_1);
-    });
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-    ]);
-
-    act(() => {
-      result.current.actions.addSnackbarMessage(MESSAGE_3);
-    });
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-      MESSAGE_3,
-    ]);
-
-    act(() => {
-      result.current.actions.removeSnackbarMessage(MESSAGE_3.id);
-    });
-    expect(result.current.state.activeSnackbarMessage).toStrictEqual([
-      MESSAGE_1,
-    ]);
+    expect(result.current.state.activeSnackbarMessage).toStrictEqual({});
   });
 });
