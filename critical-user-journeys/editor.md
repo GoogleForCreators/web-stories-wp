@@ -12,10 +12,10 @@
 |                                                                   | Upload media via upload button                   | 🚨 **0.00%** *(0 / 3)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 | Creator Can Manipulate an Image/Video on Canvas                   | Apply a solid or gradient overlay                | 🚨 **0.00%** *(0 / 6)*   |
-|                                                                   | Enter edit mode                                  | 🚨 **0.00%** *(0 / 4)*   |
+|                                                                   | Enter edit mode                                  | 🚨 **0.00%** *(0 / 5)*   |
 |                                                                   | Set different poster image                       | 🚨 **0.00%** *(0 / 2)*   |
 |                                                                   | Set overlay color(s) & other gradient properties | 🚨 **0.00%** *(0 / 4)*   |
-|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 16)*  |
+|                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 17)*  |
 | Creator Can Style Text                                            | Apply B                                          | 🚨 **0.00%** *(0 / 19)*  |
 |                                                                   | Apply I                                          | 🚨 **0.00%** *(0 / 10)*  |
 |                                                                   | Apply U                                          | 🚨 **0.00%** *(0 / 9)*   |
@@ -72,4 +72,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | *[total]*                                        | 🚨 **0.00%** *(0 / 4)*   |
 |                                                                   | click close button to close menu                 | 🚨 **0.00%** *(0 / 4)*   |
-| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.55%** *(2 / 366)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🚨 **0.54%** *(2 / 368)* |
