@@ -168,17 +168,17 @@ function App({ config }) {
       <ThemeProvider theme={activeTheme}>
         <ThemeGlobals.OverrideFocusOutline />
         <ConfigProvider config={config}>
-          <SnackbarProvider>
-            <ApiProvider>
-              <NavProvider>
-                <RouterProvider>
+          <ApiProvider>
+            <NavProvider>
+              <RouterProvider>
+                <SnackbarProvider>
                   <GlobalStyle />
                   <KeyboardOnlyOutline />
                   <AppContent />
-                </RouterProvider>
-              </NavProvider>
-            </ApiProvider>
-          </SnackbarProvider>
+                </SnackbarProvider>
+              </RouterProvider>
+            </NavProvider>
+          </ApiProvider>
         </ConfigProvider>
       </ThemeProvider>
     </StyleSheetManager>
