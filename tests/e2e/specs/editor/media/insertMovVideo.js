@@ -36,7 +36,7 @@ describe('Inserting .mov from dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    await clickButton('#menu-item-browse');
+    await expect(page).toClick('button', { text: 'Media Library' });
     await clickButton(
       '.attachments-browser .attachments .attachment:first-of-type'
     );

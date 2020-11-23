@@ -44,11 +44,11 @@ describe('Inserting WebM Video', () => {
       visible: true,
     });
 
-    await clickButton('#menu-item-browse');
+    await expect(page).toClick('button', { text: 'Media Library' });
     await clickButton(
       '.attachments-browser .attachments .attachment[aria-label="small-video"]'
     );
-    await clickButton('.media-button-select');
+    await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 

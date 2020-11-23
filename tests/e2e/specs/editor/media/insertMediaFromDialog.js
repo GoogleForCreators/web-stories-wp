@@ -39,12 +39,12 @@ describe('Inserting Media from Dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    await clickButton('#menu-item-browse');
+    await expect(page).toClick('button', { text: 'Media Library' });
 
     await clickButton(
       '.attachments-browser .attachments .attachment:first-of-type'
     );
-    await clickButton('.media-button-select');
+    await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
