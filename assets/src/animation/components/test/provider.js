@@ -208,9 +208,9 @@ describe('StoryAnimation.Provider', () => {
 
       let unhoist;
       act(() => {
-        unhoist = result.current.actions.hoistWAAPIAnimation(
-          mockWAAPIAnimation()
-        );
+        unhoist = result.current.actions.hoistWAAPIAnimation({
+          animation: mockWAAPIAnimation(),
+        });
       });
       expect(typeof unhoist).toBe('function');
     });
@@ -233,9 +233,9 @@ describe('StoryAnimation.Provider', () => {
       const cancel = jest.fn();
       act(() => {
         let unhoist;
-        unhoist = result.current.actions.hoistWAAPIAnimation(
-          mockWAAPIAnimation({ cancel })
-        );
+        unhoist = result.current.actions.hoistWAAPIAnimation({
+          animation: mockWAAPIAnimation({ cancel }),
+        });
         unhoist();
       });
       expect(cancel).toHaveBeenCalledWith();
@@ -266,7 +266,7 @@ describe('StoryAnimation.Provider', () => {
           },
         });
         act(() => {
-          result.current.actions.hoistWAAPIAnimation(animation);
+          result.current.actions.hoistWAAPIAnimation({ animation });
         });
         return animation;
       });
@@ -313,7 +313,7 @@ describe('StoryAnimation.Provider', () => {
       const unhoists = animations.map((animation) => {
         let unhoist;
         act(() => {
-          unhoist = result.current.actions.hoistWAAPIAnimation(animation);
+          unhoist = result.current.actions.hoistWAAPIAnimation({ animation });
         });
         return unhoist;
       });
@@ -359,7 +359,7 @@ describe('StoryAnimation.Provider', () => {
         );
         animations.forEach((animation) => {
           act(() => {
-            result.current.actions.hoistWAAPIAnimation(animation);
+            result.current.actions.hoistWAAPIAnimation({ animation });
           });
         });
 

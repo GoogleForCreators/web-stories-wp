@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 
 /**
  * WordPress dependencies
@@ -104,13 +104,11 @@ function DisplayLayer() {
     currentPage,
     animationState,
     updateAnimationState,
-    selectedElementAnimations,
     selectedElements,
   } = useStory(({ state, actions }) => {
     return {
       currentPage: state.currentPage,
       animationState: state.animationState,
-      selectedElementAnimations: state.selectedElementAnimations,
       selectedElements: state.selectedElements,
       updateAnimationState: actions.updateAnimationState,
     };
@@ -131,11 +129,16 @@ function DisplayLayer() {
     [updateAnimationState]
   );
 
+  const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
+    selectedElements,
+  ]);
+
   return (
     <StoryAnimation.Provider
       animations={currentPage?.animations}
       elements={currentPage?.elements}
       onWAAPIFinish={resetAnimationState}
+      selectedElementIds={animatedElements}
     >
       <Layer
         data-testid="DisplayLayer"
