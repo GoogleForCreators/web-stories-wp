@@ -22,14 +22,13 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Snackbar } from '../../../design-system';
-import { Z_INDEX } from '../../constants';
 
 function SnackbarContainer({
   activeSnackbarMessage = {},
   handleDismissMessage,
 }) {
   return (
-    <Snackbar.Container customZIndex={Z_INDEX.SNACKBAR}>
+    <Snackbar.Container>
       {activeSnackbarMessage.id && (
         <Snackbar.Message
           key={`alert_${activeSnackbarMessage.id}`}
@@ -43,11 +42,11 @@ function SnackbarContainer({
 }
 
 SnackbarContainer.propTypes = {
+  handleDismissMessage: PropTypes.func.isRequired,
   activeSnackbarMessage: PropTypes.shape({
     id: PropTypes.number,
     title: PropTypes.string,
     body: PropTypes.string,
   }),
-  handleDismissMessage: PropTypes.func,
 };
 export default SnackbarContainer;

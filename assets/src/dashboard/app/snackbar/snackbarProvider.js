@@ -16,18 +16,31 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback, useState } from 'react';
+import { useEffect, useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { createContext } from '../../utils';
+import { useRouteHistory } from '../router';
 
 export const SnackbarContext = createContext(null);
 
 const SnackbarProvider = ({ children }) => {
   const [messages, setMessages] = useState({});
+
+  // When current path is updated, empty existing messages
+  const { currentPath } = useRouteHistory(({ state: { currentPath } }) => ({
+    currentPath,
+  }));
+  const prevCurrentPath = useRef(currentPath);
+
+  useEffect(() => {
+    if (currentPath !== prevCurrentPath.current) {
+      setMessages({});
+    }
+  }, [currentPath]);
 
   const activeSnack = useMemo(() => {
     const snacksInQueue = Object.values(messages).map((message) => message);
