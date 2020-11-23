@@ -43,7 +43,7 @@ describe('Sitekit integration with editor', () => {
     await deactivatePlugin('e2e-tests-sitekit-mock');
   });
 
-  it('should be see analytics tag', async () => {
+  it('should print an analytics tag', async () => {
     await createNewStory();
 
     await insertStoryTitle('Previewing Analytics');
