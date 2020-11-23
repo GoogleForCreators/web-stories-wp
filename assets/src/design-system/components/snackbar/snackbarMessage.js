@@ -56,7 +56,7 @@ const MessageContainer = styled.div`
   color: ${({ theme }) => theme.colors.inverted.fg.primary};
   border: ${({ theme }) =>
     `1px solid ${rgba(theme.colors.standard.white, 0.24)}`};
-  border-radius: ${({ theme }) => theme.borders.radius};
+  border-radius: ${({ theme }) => theme.borders.radius.small};
 
   animation: 0.5s ${slideIn} ease-out;
 `;

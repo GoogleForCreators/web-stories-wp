@@ -82,7 +82,7 @@ export function Modal({
   modalStyles = {},
   onClose,
   overlayStyles,
-  ...props
+  ...rest
 }) {
   const themeContext = useContext(ThemeContext);
 
@@ -100,7 +100,7 @@ export function Modal({
         overlay: { ...customStyles.overlay(themeContext), ...overlayStyles },
         content: { ...customStyles.content, ...contentStyles },
       }}
-      {...props}
+      {...rest}
     >
       {children}
     </ReactModal>
