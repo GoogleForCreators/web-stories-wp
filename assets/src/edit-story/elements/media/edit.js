@@ -34,6 +34,7 @@ import StoryPropTypes from '../../types';
 import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
+import useUnmount from '../../utils/useUnmount';
 import { isOutsideBorder } from '../../components/elementBorder/utils';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
@@ -111,25 +112,52 @@ function MediaEdit({ element, box }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
+  const [localProperties, setLocalProperties] = useState({});
+  const isUpdatedLocally = useRef(false);
+  const lastLocalProperties = useRef({ scale });
 
+  const updateLocalProperties = useCallback((properties) => {
+    const newProps = {
+      ...lastLocalProperties.current,
+      ...(typeof properties === 'function'
+        ? properties(lastLocalProperties.current)
+        : properties),
+    };
+    lastLocalProperties.current = newProps;
+    isUpdatedLocally.current = true;
+    setLocalProperties(lastLocalProperties.current);
+  }, []);
+
+  // Update the true global properties of the current element
+  // This now only happens on unmount
   const { updateElementById } = useStory((state) => ({
     updateElementById: state.actions.updateElementById,
   }));
-  const setProperties = useCallback(
-    (properties) => updateElementById({ elementId: id, properties }),
-    [id, updateElementById]
-  );
+  const updateProperties = useCallback(() => {
+    if (!isUpdatedLocally.current) {
+      return;
+    }
+    isUpdatedLocally.current = false;
+    const properties = lastLocalProperties.current;
+    updateElementById({ elementId: id, properties });
+  }, [id, updateElementById]);
+
+  useUnmount(updateProperties);
 
   const isImage = ['image', 'gif'].includes(type);
   const isVideo = 'video' === type;
+
+  const localScale = localProperties.scale ?? scale;
+  const localFocalX = localProperties.focalX ?? focalX;
+  const localFocalY = localProperties.focalY ?? focalY;
 
   const mediaProps = getMediaSizePositionProps(
     resource,
     width,
     height,
-    scale,
-    flip?.horizontal ? 100 - focalX : focalX,
-    flip?.vertical ? 100 - focalY : focalY
+    localScale,
+    flip?.horizontal ? 100 - localFocalX : localFocalX,
+    flip?.vertical ? 100 - localFocalY : localFocalY
   );
 
   mediaProps.transformFlip = getTransformFlip(flip);
@@ -168,7 +196,7 @@ function MediaEdit({ element, box }) {
 
   const handleWheel = useCallback(
     (evt) => {
-      setProperties(({ scale: oldScale }) => ({
+      updateLocalProperties(({ scale: oldScale }) => ({
         scale: Math.min(
           BG_MAX_SCALE,
           Math.max(BG_MIN_SCALE, oldScale + evt.deltaY)
@@ -177,7 +205,7 @@ function MediaEdit({ element, box }) {
       evt.preventDefault();
       evt.stopPropagation();
     },
-    [setProperties]
+    [updateLocalProperties]
   );
 
   // Cancelable wheel events require a non-passive listener, which React
@@ -219,7 +247,7 @@ function MediaEdit({ element, box }) {
 
       {fullMedia && croppedMedia && (
         <EditPanMoveable
-          setProperties={setProperties}
+          setProperties={updateLocalProperties}
           fullMedia={fullMedia}
           croppedMedia={croppedMedia}
           flip={flip}
@@ -237,7 +265,7 @@ function MediaEdit({ element, box }) {
 
       {!isBackground && cropBox && croppedMedia && (
         <EditCropMoveable
-          setProperties={setProperties}
+          setProperties={updateLocalProperties}
           cropBox={cropBox}
           croppedMedia={croppedMedia}
           flip={flip}
@@ -254,12 +282,12 @@ function MediaEdit({ element, box }) {
       )}
 
       <ScalePanel
-        setProperties={setProperties}
+        setProperties={updateLocalProperties}
         x={x}
         y={y}
         width={width}
         height={height}
-        scale={scale || 100}
+        scale={localScale || 100}
       />
     </Element>
   );
