@@ -127,15 +127,3 @@ export const RenameStoryPropType = PropTypes.shape({
   id: PropTypes.number,
   handleCancelRename: PropTypes.func,
 });
-
-export const SnackbarMessagePropType = PropTypes.shape({
-  message: PropTypes.shape({
-    title: PropTypes.string,
-    body: PropTypes.string.isRequired,
-  }),
-  id: PropTypes.number.isRequired,
-});
-
-export const SnackbarMessagesPropType = PropTypes.arrayOf(
-  SnackbarMessagePropType
-);
