@@ -50,6 +50,8 @@ function OutputElement({ element }) {
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
 
+  // We're adding background styles in case of Fill here so that
+  // the background and the border would match together.
   const bgStyles = {
     backgroundClip: 'content-box',
     ...generatePatternStyles(backgroundColor),
