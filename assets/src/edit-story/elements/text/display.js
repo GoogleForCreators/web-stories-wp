@@ -188,13 +188,6 @@ function TextDisplay({
     }
   });
 
-  const innerElementTracker = useRef(null);
-  useEffect(() => {
-    if (fgRef.current?.children) {
-      innerElementTracker.current = fgRef.current.children[0];
-    }
-  }, [fgRef]);
-
   useColorTransformHandler({
     id,
     targetRef: bgRef,

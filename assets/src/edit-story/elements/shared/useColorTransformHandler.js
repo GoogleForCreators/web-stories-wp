@@ -35,11 +35,12 @@ function useColorTransformHandler({ id, targetRef, expectedStyle }) {
           return;
         }
         if (color && style) {
-          // In case we're changing text color, we need the first child instead of the element itself.
-          if ('color' === style && target.children?.[0]) {
-            target.children[0].style.cssText = convertToCSS(
-              generatePatternStyles(color, style)
-            );
+          // In case we're changing text color, we need the children instead of the element itself.
+          if ('color' === style && target.children?.length > 0) {
+            const toApply = convertToCSS(generatePatternStyles(color, style));
+            for (const node of target.children) {
+              node.style.cssText = toApply;
+            }
           } else {
             target.style.cssText = convertToCSS(
               generatePatternStyles(color, style)

@@ -73,7 +73,7 @@ export default function WithBorder({ element, previewMode = false, children }) {
         target.style.cssText = '';
       } else {
         const { color, style } = transform;
-        if (color && style) {
+        if (color && style === 'border-color') {
           const {
             color: { r, g, b, a },
           } = color;
