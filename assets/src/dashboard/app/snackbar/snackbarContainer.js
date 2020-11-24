@@ -22,13 +22,14 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Snackbar } from '../../../design-system';
+import { DASHBOARD_SNACKBAR_ID } from '../../constants';
 
 function SnackbarContainer({
   activeSnackbarMessage = {},
   handleDismissMessage,
 }) {
   return (
-    <Snackbar.Container>
+    <Snackbar.Container id={DASHBOARD_SNACKBAR_ID}>
       {activeSnackbarMessage?.id && (
         <Snackbar.Message
           key={`alert_${activeSnackbarMessage.id}`}
