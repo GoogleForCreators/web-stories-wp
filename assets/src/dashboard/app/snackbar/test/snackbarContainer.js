@@ -64,6 +64,7 @@ describe('app/snackbar/snackbarContainer', () => {
   });
 
   it('should dismiss alert after 10000ms (default)', async () => {
+    jest.useFakeTimers();
     jest.setTimeout(10500);
 
     const { getByRole } = renderWithProviders(
@@ -74,12 +75,9 @@ describe('app/snackbar/snackbarContainer', () => {
     );
 
     expect(getByRole('alert')).toBeInTheDocument();
-
-    await waitFor(
-      () => expect(mockRemoveSnackbarMessageClick).toHaveBeenCalledTimes(1),
-      {
-        timeout: 10500,
-      }
+    jest.runAllTimers();
+    await waitFor(() =>
+      expect(mockRemoveSnackbarMessageClick).toHaveBeenCalledTimes(1)
     );
   });
 });

@@ -29,7 +29,7 @@ function SnackbarContainer({
 }) {
   return (
     <Snackbar.Container>
-      {activeSnackbarMessage.id && (
+      {activeSnackbarMessage?.id && (
         <Snackbar.Message
           key={`alert_${activeSnackbarMessage.id}`}
           ariaLabel={activeSnackbarMessage.message.title}
