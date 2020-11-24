@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 async function insertStoryTitle(title) {
   await expect(page).toMatchElement('input[placeholder="Add title"]');
   await page.type('input[placeholder="Add title"]', title);
