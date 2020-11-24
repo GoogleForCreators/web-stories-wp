@@ -253,7 +253,7 @@ describe('Media3pPane fetching', () => {
   async function expectMediaElements(section, expectedCount) {
     let mediaElements;
     await waitFor(() => {
-      mediaElements = section.querySelectorAll('.mediaElement');
+      mediaElements = section.querySelectorAll('[data-testid^=mediaElement]');
       if (!mediaElements || mediaElements.length !== expectedCount) {
         throw new Error(
           `Not ready: ${mediaElements?.length} != ${expectedCount}`
@@ -429,7 +429,7 @@ describe('Media3pPane fetching', () => {
     await fixture.events.click(coverrTab);
     await expectMediaElements(coverrSection, MEDIA_PER_PAGE);
 
-    let mediaElements = coverrSection.querySelectorAll('.mediaElement');
+    let mediaElements = coverrSection.querySelectorAll('[data-testid^=mediaElement]');
 
     const firstMediaElement = mediaElements.item(0);
     await fixture.events.focus(firstMediaElement);
@@ -449,7 +449,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(0));
 
@@ -464,7 +464,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(1));
 
@@ -486,7 +486,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(mediaElements.length - 1));
 
@@ -503,7 +503,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(1));
 
@@ -518,7 +518,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(2));
 
@@ -533,7 +533,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(0));
 
@@ -548,7 +548,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(1));
 
@@ -563,7 +563,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(3));
 
@@ -578,7 +578,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(6));
 
@@ -593,7 +593,7 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      let mediaElements = unsplashSection.querySelectorAll('.mediaElement');
+      let mediaElements = unsplashSection.querySelectorAll('[data-testid^=mediaElement]');
 
       await fixture.events.focus(mediaElements.item(6));
 
