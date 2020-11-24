@@ -111,11 +111,15 @@ function AnimationPanel({
         true
       );
 
+      // There's nothing unique to the animation data to signify that it
+      // was changed by the effect chooser, so we track it here.
       playUpdatedAnimation.current = true;
     },
     [elAnimationId, isBackground, pushUpdateForObject, backgroundScale]
   );
 
+  // Play animation of selected elements when effect chooser signals
+  // that it has changed the data and the data comes back changed.
   useEffect(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
