@@ -284,6 +284,54 @@ describe('StoryAnimation.Provider', () => {
       });
     });
 
+    it('calls all selectedElement hoisted Animation methods when called and passed selected elements', () => {
+      const selectedElementIds = ['a', 'b', 'c'];
+      const allElementIds = [...selectedElementIds, 'd', 'e'];
+      const { result } = renderHook(() => useStoryAnimationContext(), {
+        wrapper: createWrapperWithProps(StoryAnimation.Provider, {
+          animations: [],
+          selectedElementIds,
+        }),
+      });
+
+      const animationsWithIds = allElementIds.map((elementId) => {
+        const animation = mockWAAPIAnimation({
+          play: jest.fn(),
+          pause: jest.fn(),
+          currentTime: 0,
+          effect: {
+            getTiming: () => ({
+              duration: 300,
+              delay: 0,
+            }),
+          },
+        });
+        const animationWithElementId = { animation, elementId };
+        act(() => {
+          result.current.actions.hoistWAAPIAnimation({ animation, elementId });
+        });
+        return animationWithElementId;
+      });
+
+      act(() => result.current.actions.WAAPIAnimationMethods.play());
+      act(() => result.current.actions.WAAPIAnimationMethods.pause());
+      act(() =>
+        result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
+      );
+
+      animationsWithIds.forEach(({ animation, elementId }) => {
+        expect(animation.currentTime).toStrictEqual(
+          selectedElementIds.includes(elementId) ? 200 : 0
+        );
+        expect(animation.play).toHaveBeenCalledTimes(
+          selectedElementIds.includes(elementId) ? 1 : 0
+        );
+        expect(animation.pause).toHaveBeenCalledTimes(
+          selectedElementIds.includes(elementId) ? 1 : 0
+        );
+      });
+    });
+
     it('excludes cleaned up animation methods when called', () => {
       const { result } = renderHook(() => useStoryAnimationContext(), {
         wrapper: createWrapperWithProps(StoryAnimation.Provider, {

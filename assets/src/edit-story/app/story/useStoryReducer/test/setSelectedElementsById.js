@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { setupReducer } from './_utils';
 
 describe('setSelectedElementsById', () => {
@@ -144,5 +145,64 @@ describe('setSelectedElementsById', () => {
     const result = setSelectedElementsById({ elementIds: ['e2', 'e1', 'e3'] });
 
     expect(result.selection).toStrictEqual(['e2', 'e3']);
+  });
+
+  it('should not update animationState if nothing has changed', () => {
+    const {
+      restore,
+      setSelectedElementsById,
+      updateAnimationState,
+    } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e3'],
+    });
+
+    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    const result = setSelectedElementsById({ elementIds: ['e3'] });
+
+    expect(result.animationState).toStrictEqual(STORY_ANIMATION_STATE.PLAYING);
+  });
+
+  it('should reset animationState if selection has changed', () => {
+    const {
+      restore,
+      setSelectedElementsById,
+      updateAnimationState,
+    } = setupReducer();
+
+    // Set an initial state.
+    restore({
+      animationState: STORY_ANIMATION_STATE.PLAYING,
+      pages: [
+        {
+          id: '111',
+          elements: [
+            { id: 'e1', isBackground: true },
+            { id: 'e2' },
+            { id: 'e3' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['e2'],
+    });
+
+    updateAnimationState({ animationState: STORY_ANIMATION_STATE.PLAYING });
+    const result = setSelectedElementsById({ elementIds: ['e3'] });
+
+    expect(result.animationState).toStrictEqual(STORY_ANIMATION_STATE.RESET);
   });
 });
