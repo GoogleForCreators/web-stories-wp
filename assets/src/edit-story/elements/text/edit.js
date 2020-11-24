@@ -55,6 +55,7 @@ import {
   getBorderPositionCSS,
 } from '../../components/elementBorder/utils';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   calcFontMetrics,
   generateParagraphTextStyle,
@@ -352,6 +353,11 @@ function TextEdit({
     targetRef: wrapperRef,
     cssVar: '--faux-selection-color',
     expectedStyle: 'color',
+  });
+  useColorTransformHandler({
+    id,
+    targetRef: wrapperRef,
+    expectedStyle: 'background',
   });
 
   const {
