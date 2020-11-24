@@ -29,10 +29,10 @@ async function setAnalyticsCode(code) {
     text: 'Editor Settings',
   });
 
-  await page.evaluate(() => {
+  await page.evaluate((inputValue) => {
     const input = document.getElementById('gaTrackingId');
-    input.value = code;
-  });
+    input.value = inputValue;
+  }, code);
 
   await expect(page).toClick('button', { text: 'Save' });
 }
