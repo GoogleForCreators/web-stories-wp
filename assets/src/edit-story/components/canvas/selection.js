@@ -28,6 +28,7 @@ function Selection() {
     selectedElements: state.state.selectedElements,
     isAnimating: [
       STORY_ANIMATION_STATE.PLAYING,
+      STORY_ANIMATION_STATE.PLAYING_SELECTED,
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));

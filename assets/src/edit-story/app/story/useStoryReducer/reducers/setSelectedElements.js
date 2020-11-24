@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 import { intersect } from './utils';
 
 /**
@@ -64,6 +65,7 @@ function setSelectedElements(state, { elementIds }) {
 
   return {
     ...state,
+    animationState: STORY_ANIMATION_STATE.RESET,
     selection: newSelection,
   };
 }

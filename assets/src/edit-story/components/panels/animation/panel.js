@@ -119,7 +119,7 @@ function AnimationPanel({
   useEffect(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
-        animationState: STORY_ANIMATION_STATE.PLAYING,
+        animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
       });
       playUpdatedAnimation.current = false;
     }

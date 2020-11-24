@@ -167,10 +167,12 @@ function PageMenu() {
   const toggleAnimationState = useCallback(
     () =>
       updateAnimationState({
-        animationState:
-          animationState === STORY_ANIMATION_STATE.PLAYING
-            ? STORY_ANIMATION_STATE.RESET
-            : STORY_ANIMATION_STATE.PLAYING,
+        animationState: [
+          STORY_ANIMATION_STATE.PLAYING,
+          STORY_ANIMATION_STATE.PLAYING_SELECTED,
+        ].includes(animationState)
+          ? STORY_ANIMATION_STATE.RESET
+          : STORY_ANIMATION_STATE.PLAYING,
       }),
     [animationState, updateAnimationState]
   );
@@ -245,7 +247,10 @@ function PageMenu() {
           </WithTooltip>
           <Space />
           {enableAnimation &&
-            (animationState === STORY_ANIMATION_STATE.PLAYING ? (
+            ([
+              STORY_ANIMATION_STATE.PLAYING,
+              STORY_ANIMATION_STATE.PLAYING_SELECTED,
+            ].includes(animationState) ? (
               <WithTooltip
                 style={{ marginLeft: 'auto' }}
                 title={__('Stop', 'web-stories')}

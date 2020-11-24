@@ -50,6 +50,7 @@ function DisplayPage({
 
   useEffect(() => {
     switch (animationState) {
+      case STORY_ANIMATION_STATE.PLAYING_SELECTED:
       case STORY_ANIMATION_STATE.PLAYING:
         WAAPIAnimationMethods.play();
         return;
@@ -137,7 +138,11 @@ function DisplayLayer() {
       animations={currentPage?.animations}
       elements={currentPage?.elements}
       onWAAPIFinish={resetAnimationState}
-      selectedElementIds={animatedElements}
+      selectedElementIds={
+        animationState === STORY_ANIMATION_STATE.PLAYING_SELECTED
+          ? animatedElements
+          : []
+      }
     >
       <Layer
         data-testid="DisplayLayer"
