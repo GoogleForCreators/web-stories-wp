@@ -200,7 +200,7 @@ describe('Clone element integration', () => {
 
   function getMediaElement(imageAlt) {
     return getElementByQueryAndMatcher(
-      '[data-testid="mediaElement-image"] img',
+      '[data-testid^="mediaElement"] img',
       getByAttribute('alt', imageAlt)
     );
   }

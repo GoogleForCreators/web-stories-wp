@@ -33,7 +33,7 @@ describe.skip('prepublish checklist', () => {
   });
   it('should show that there is no cover attached to the story', async () => {
     await createNewStory();
-    await expect(page).toClick('[data-testid="mediaElement"]');
+    await expect(page).toClick('[data-testid^="mediaElement"]');
     await expect(page).toClick('li', { text: 'Checklist' });
     const missingStoryCover = await page.$$eval(
       '#inspector-tab-prepublish > section > div',
