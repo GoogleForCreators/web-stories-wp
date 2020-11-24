@@ -42,10 +42,9 @@ const SnackbarProvider = ({ children }) => {
     }
   }, [currentPath]);
 
-  const activeSnack = useMemo(() => {
-    const snacksInQueue = Object.values(messages).map((message) => message);
-    return snacksInQueue.length > 0 ? snacksInQueue[0] : {};
-  }, [messages]);
+  const activeSnack = useMemo(() => Object.values(messages)?.[0] || {}, [
+    messages,
+  ]);
 
   const removeSnackbarMessage = useCallback((id) => {
     if (id) {
