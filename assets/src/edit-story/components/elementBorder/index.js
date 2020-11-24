@@ -26,7 +26,7 @@ import { useRef } from 'react';
  */
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
-import { useTransformHandler } from '../transform';
+import useCSSVarColorTransformHandler from '../../elements/shared/useCSSVarColorTransformHandler';
 import {
   getBorderColor,
   getBorderStyle,
@@ -66,24 +66,11 @@ export default function WithBorder({ element, previewMode = false, children }) {
   const ref = useRef(null);
   const { id } = element;
 
-  useTransformHandler(id, (transform) => {
-    const target = ref.current;
-    if (target) {
-      if (transform === null) {
-        target.style.cssText = '';
-      } else {
-        const { color, style } = transform;
-        if (color && style === 'border-color') {
-          const {
-            color: { r, g, b, a },
-          } = color;
-          target.style.setProperty(
-            '--element-border-color',
-            `rgba(${r}, ${g}, ${b}, ${a !== undefined ? a : 1})`
-          );
-        }
-      }
-    }
+  useCSSVarColorTransformHandler({
+    id,
+    targetRef: ref,
+    expectedStyle: 'border-color',
+    cssVar: '--element-border-color',
   });
 
   if (!shouldDisplayBorder(element)) {

@@ -117,10 +117,14 @@ export function useFauxSelection(editorState, setEditorState) {
   }, [fauxSelection, editorState, setEditorState]);
 }
 
-export function fauxStylesToCSS(styles) {
+export function fauxStylesToCSS(styles, css) {
   const hasFauxSelection = styles.includes(FAUX_SELECTION);
   if (!hasFauxSelection) {
     return null;
   }
-  return { backgroundColor: 'rgba(169, 169, 169, 0.7)' };
+
+  return {
+    backgroundColor: 'rgba(169, 169, 169, 0.7)',
+    color: css?.color ? `var(--faux-selection-color, ${css.color})` : null,
+  };
 }

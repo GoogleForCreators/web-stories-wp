@@ -54,6 +54,7 @@ import {
   isOutsideBorder,
   getBorderPositionCSS,
 } from '../../components/elementBorder/utils';
+import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import {
   calcFontMetrics,
   generateParagraphTextStyle,
@@ -67,6 +68,8 @@ const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorderRadius}
+
+  --faux-selection-color: '';
 
   span {
     box-decoration-break: clone;
@@ -341,6 +344,14 @@ function TextEdit({
         wrapper.style.height = `${resize[1]}px`;
       }
     }
+  });
+
+  // For instant color change on selection.
+  useCSSVarColorTransformHandler({
+    id,
+    targetRef: wrapperRef,
+    cssVar: '--faux-selection-color',
+    expectedStyle: 'color',
   });
 
   const {
