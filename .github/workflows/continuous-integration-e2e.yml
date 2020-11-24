@@ -9,12 +9,13 @@ on:
 
 jobs:
   e2e:
-    name: ${{ matrix.browser }}
+    name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
     runs-on: ubuntu-latest
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
+        wp: ['latest', '5.3']
 
     steps:
       - name: Checkout
@@ -81,6 +82,7 @@ jobs:
         run: npm run env:start
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
+          WP_VERSION: ${{ matrix.wp }}
 
       - name: Run E2E tests
         run: npm run test:e2e:percy
