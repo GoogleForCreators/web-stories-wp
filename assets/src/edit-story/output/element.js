@@ -31,9 +31,19 @@ import {
   shouldDisplayBorder,
 } from '../components/elementBorder/utils';
 import ElementBorder from '../components/elementBorder/output';
+import generatePatternStyles from '../utils/generatePatternStyles';
+import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {
-  const { id, opacity, type, borderRadius, border } = element;
+  const {
+    id,
+    opacity,
+    type,
+    borderRadius,
+    border,
+    backgroundColor,
+    backgroundTextMode,
+  } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -81,6 +91,10 @@ function OutputElement({ element }) {
             top: 0,
             left: 0,
             ...getBorderRadius({ border, borderRadius }),
+            backgroundClip: 'content-box',
+            ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
+              ? generatePatternStyles(backgroundColor)
+              : null),
           }}
           skipDefaultMask
         >

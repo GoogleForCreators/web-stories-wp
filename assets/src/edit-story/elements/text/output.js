@@ -97,7 +97,6 @@ export function TextOutputWithUnits({
   );
   const fillStyle = {
     ...styles,
-    ...bgColor,
     color: '#000000',
     padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
     overflowWrap: 'break-word',
