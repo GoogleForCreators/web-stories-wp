@@ -26,7 +26,7 @@ import {
   createNewStory,
   previewStory,
   insertStoryTitle,
-  visitDashboard,
+  setAnalyticsCode,
 } from '../../utils';
 
 describe('AMP integrations with editor', () => {
@@ -39,25 +39,7 @@ describe('AMP integrations with editor', () => {
   });
 
   it('should be able to directly preview a story without amp-analytics being stripped', async () => {
-    await visitDashboard();
-
-    const dashboardNavigation = await expect(page).toMatchElement(
-      '[aria-label="Main dashboard navigation"]'
-    );
-
-    await expect(dashboardNavigation).toClick('a', {
-      text: 'Editor Settings',
-    });
-
-    await expect(page).toMatchElement(
-      'input[placeholder="Enter your Google Analytics Tracking ID"]'
-    );
-    await page.type(
-      'input[placeholder="Enter your Google Analytics Tracking ID"]',
-      'UA-10876-1'
-    );
-
-    await expect(page).toClick('button', { text: 'Save' });
+    await setAnalyticsCode('UA-10876-1');
 
     await createNewStory();
 
@@ -76,5 +58,6 @@ describe('AMP integrations with editor', () => {
 
     await editorPage.bringToFront();
     await previewPage.close();
+    await setAnalyticsCode('');
   });
 });
