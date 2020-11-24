@@ -124,10 +124,9 @@ function DisplayLayer() {
     }) => ({ editingElement, setPageContainer, setFullbleedContainer })
   );
 
-  const resetAnimationState = useCallback(
-    () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
-    [updateAnimationState]
-  );
+  const resetAnimationState = useCallback(() => {
+    updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET });
+  }, [updateAnimationState]);
 
   const animatedElements = useMemo(() => selectedElements.map((el) => el.id), [
     selectedElements,
