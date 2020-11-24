@@ -50,6 +50,11 @@ function OutputElement({ element }) {
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
 
+  const bgStyles = {
+    backgroundClip: 'content-box',
+    ...generatePatternStyles(backgroundColor),
+  };
+
   return (
     <div
       style={{
@@ -91,9 +96,8 @@ function OutputElement({ element }) {
             top: 0,
             left: 0,
             ...getBorderRadius({ border, borderRadius }),
-            backgroundClip: 'content-box',
             ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
-              ? generatePatternStyles(backgroundColor)
+              ? bgStyles
               : null),
           }}
           skipDefaultMask

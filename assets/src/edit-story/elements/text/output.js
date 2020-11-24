@@ -113,6 +113,7 @@ export function TextOutputWithUnits({
 
   const highlightStyle = {
     ...fillStyle,
+    ...bgColor,
     margin: 0,
     padding: 0,
     background: 'none',
