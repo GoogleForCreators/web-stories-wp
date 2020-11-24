@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-/**
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
@@ -30,9 +26,10 @@ import {
   createNewStory,
   previewStory,
   insertStoryTitle,
-} from '../../../utils';
+  visitDashboard,
+} from '../../utils';
 
-describe('AMP integration with editor', () => {
+describe('AMP integrations with editor', () => {
   beforeAll(async () => {
     await activatePlugin('amp');
   });
@@ -41,7 +38,27 @@ describe('AMP integration with editor', () => {
     await deactivatePlugin('amp');
   });
 
-  it('should be able to directly preview a story without markup being stripped', async () => {
+  it('should be able to directly preview a story without amp-analytics being stripped', async () => {
+    await visitDashboard();
+
+    const dashboardNavigation = await expect(page).toMatchElement(
+      '[aria-label="Main dashboard navigation"]'
+    );
+
+    await expect(dashboardNavigation).toClick('a', {
+      text: 'Editor Settings',
+    });
+
+    await expect(page).toMatchElement(
+      'input[placeholder="Enter your Google Analytics Tracking ID"]'
+    );
+    await page.type(
+      'input[placeholder="Enter your Google Analytics Tracking ID"]',
+      'UA-10876-1'
+    );
+
+    await expect(page).toClick('button', { text: 'Save' });
+
     await createNewStory();
 
     await insertStoryTitle('Previewing without Publishing');
@@ -54,7 +71,8 @@ describe('AMP integration with editor', () => {
     await expect(previewPage).toMatchElement('p', {
       text: 'Fill in some text',
     });
-    await percySnapshot(previewPage, 'Preview story with amp plugin activated');
+
+    await expect(previewPage).toMatchElement('amp-analytics');
 
     await editorPage.bringToFront();
     await previewPage.close();
