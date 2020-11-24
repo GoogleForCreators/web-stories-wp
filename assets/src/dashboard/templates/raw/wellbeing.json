@@ -1,256 +1,7 @@
 {
-  "version": 24,
+  "version": 25,
   "pages": [
     {
-      "elements": [
-        {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 31,
-              "g": 42,
-              "b": 46
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "type": "shape",
-          "id": "df765066-cd07-49bf-8ef7-02ae6f2b3330",
-          "isDefaultBackground": true
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 91,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 75,
-              "g": 92,
-              "b": 84
-            }
-          },
-          "type": "shape",
-          "x": -128,
-          "y": 305,
-          "width": 540,
-          "height": 618,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-3"
-          },
-          "id": "a413ec38-e047-4458-927f-14364d513d52"
-        },
-        {
-          "x": 26,
-          "y": 200,
-          "width": 360,
-          "height": 475,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 110,
-          "focalX": 55.691190320099714,
-          "focalY": 45.601822039491275,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page1_image1.jpg",
-            "width": 220,
-            "height": 147,
-            "posterId": 0,
-            "id": 646,
-            "title": "wellbeing_page1_image1",
-            "alt": "wellbeing_page1_image1",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "41a5dd8e-e12b-46fb-aef1-63b71a2475bf",
-          "id": "8dbfe563-a930-4de7-90d7-e9681be1e98e"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "type": "shape",
-          "x": -156,
-          "y": -81,
-          "width": 641,
-          "height": 781,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "id": "d1783451-12c7-4e47-99a7-baebb0a45541"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 14,
-              "g": 22,
-              "b": 26
-            }
-          },
-          "type": "shape",
-          "x": 164.5,
-          "y": 24,
-          "width": 83,
-          "height": 37,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "a6c0478f-00b6-4b8a-87e1-681a29605708"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_logo.png",
-            "width": 38,
-            "height": 12,
-            "id": 1693,
-            "title": "wellbeing_icon_logo",
-            "alt": "wellbeing_icon_logo",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 170.5,
-          "y": 30.5,
-          "width": 75,
-          "height": 24,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "8b9f4705-fd93-41ad-bb6e-a47cfee940c4"
-        },
-        {
-          "x": 50,
-          "y": 133,
-          "width": 313,
-          "height": 110,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Source Serif Pro",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [200, 300, 400, 600, 700, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 600],
-              [0, 700],
-              [0, 900],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 600],
-              [1, 700],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "10471072-d960-426c-8336-cd0196d9e099",
-          "id": "dd32270f-eb83-45ff-917b-edf80e86b024",
-          "content": "<span style=\"font-weight: 300; color: #fdf5dc\">Sleep</span>",
-          "fontSize": 110,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        }
-      ],
-      "type": "page",
-      "id": "80cd76d6-6c52-4892-98d7-f414dbb7619e",
       "animations": [
         {
           "id": "066b148d-5e45-40d9-93a9-e6fa57d8422a",
@@ -377,15 +128,6 @@
           "fill": "both"
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 31,
-          "g": 42,
-          "b": 46
-        }
-      }
-    },
-    {
       "elements": [
         {
           "x": 1,
@@ -393,122 +135,138 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "56248b21-6e15-48fa-bc4b-ebd2163c4b6c",
+          "id": "df765066-cd07-49bf-8ef7-02ae6f2b3330",
           "isDefaultBackground": true
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 91,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 31,
-              "g": 42,
-              "b": 46
-            }
-          },
+          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
           "type": "shape",
-          "x": -185,
-          "y": 523,
-          "width": 679,
-          "height": 409,
+          "x": -128,
+          "y": 305,
+          "width": 540,
+          "height": 618,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-3"
+          "mask": { "type": "blob-3" },
+          "id": "a413ec38-e047-4458-927f-14364d513d52"
+        },
+        {
+          "x": 26,
+          "y": 200,
+          "width": 360,
+          "height": 475,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 110,
+          "focalX": 55.691190320099714,
+          "focalY": 45.601822039491275,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page1_image1.jpg",
+            "width": 220,
+            "height": 147,
+            "posterId": 0,
+            "id": 646,
+            "title": "wellbeing_page1_image1",
+            "alt": "wellbeing_page1_image1",
+            "local": false,
+            "sizes": []
           },
-          "id": "8d31d477-7e91-4214-b263-c72d0a726be1"
+          "basedOn": "41a5dd8e-e12b-46fb-aef1-63b71a2475bf",
+          "id": "8dbfe563-a930-4de7-90d7-e9681be1e98e"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186,
-              "a": 0.5
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "shape",
-          "x": -220,
-          "y": 31,
-          "width": 639,
-          "height": 667,
+          "x": -156,
+          "y": -81,
+          "width": 641,
+          "height": 781,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "ec40785b-35e7-4572-8fd5-3bce5b898d50"
+          "mask": { "type": "blob-6" },
+          "id": "d1783451-12c7-4e47-99a7-baebb0a45541"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 216,
-              "g": 216,
-              "b": 216
-            }
-          },
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 14, "g": 22, "b": 26 } },
           "type": "shape",
-          "x": -121,
-          "y": -71,
-          "width": 685,
-          "height": 687,
+          "x": 164.5,
+          "y": 24,
+          "width": 83,
+          "height": 37,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "id": "741aeabf-40d3-4f1b-8ff0-0e9d72639718"
+          "mask": { "type": "rectangle" },
+          "id": "a6c0478f-00b6-4b8a-87e1-681a29605708"
         },
         {
-          "x": 187,
-          "y": 85,
-          "width": 38,
-          "height": 117,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_logo.png",
+            "width": 38,
+            "height": 12,
+            "id": 1693,
+            "title": "wellbeing_icon_logo",
+            "alt": "wellbeing_icon_logo",
+            "local": false,
+            "sizes": []
           },
+          "type": "image",
+          "x": 170.5,
+          "y": 30.5,
+          "width": 75,
+          "height": 24,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "8b9f4705-fd93-41ad-bb6e-a47cfee940c4"
+        },
+        {
+          "x": 50,
+          "y": 133,
+          "width": 313,
+          "height": 110,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -516,152 +274,42 @@
             "family": "Source Serif Pro",
             "service": "fonts.google.com",
             "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
+            "weights": [200, 300, 400, 600, 700, 900],
+            "styles": ["italic", "regular"],
             "variants": [
-              [0, 400],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "6977e93f-f8f3-40ee-ba03-40a671211636",
-          "content": "<span style=\"font-weight: 300; color: #2b393e\">“</span>",
-          "fontSize": 90,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 131,
-          "y": 385,
-          "width": 150,
-          "height": 38,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
               [0, 200],
               [0, 300],
               [0, 400],
-              [0, 500],
               [0, 600],
               [0, 700],
-              [0, 800],
               [0, 900],
-              [1, 100],
               [1, 200],
               [1, 300],
               [1, 400],
-              [1, 500],
               [1, 600],
               [1, 700],
-              [1, 800],
               [1, 900]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "id": "643dd508-0499-4c8e-adab-b48039c98296",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">-\nDALAI LAMA</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 72,
-          "y": 183,
-          "width": 269,
-          "height": 171,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Source Serif Pro",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 400],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "fbe0221c-732c-40ac-83e9-3c982aef987a",
-          "content": "<span style=\"font-weight: 300; color: #2b393e\">Sleep</span>\n<span style=\"font-weight: 300\">is the best</span>\n<span style=\"font-weight: 300\">meditation</span>",
-          "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "10471072-d960-426c-8336-cd0196d9e099",
+          "id": "dd32270f-eb83-45ff-917b-edf80e86b024",
+          "content": "<span style=\"font-weight: 300; color: #fdf5dc\">Sleep</span>",
+          "fontSize": 110,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "e96638f8-1f19-4f34-b7e6-963329aa12fd",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "id": "80cd76d6-6c52-4892-98d7-f414dbb7619e",
+      "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } }
+    },
+    {
       "animations": [
         {
           "id": "ed83f34f-470e-4d84-a927-590e63e8065d",
@@ -725,362 +373,84 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 89,
-          "y": 84,
-          "width": 137,
-          "height": 137,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 75,
-              "g": 92,
-              "b": 84
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "c6e37b7e-ddb8-4028-a66f-dd280351af00",
+          "id": "56248b21-6e15-48fa-bc4b-ebd2163c4b6c",
           "isDefaultBackground": true
         },
         {
-          "x": 0,
-          "y": -57,
-          "width": 413,
-          "height": 453,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
+          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
+          "type": "shape",
+          "x": -185,
+          "y": 523,
+          "width": 679,
+          "height": 409,
           "scale": 100,
-          "focalX": 36.16674990819293,
-          "focalY": 57.85050694492415,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "65e8ce0b-d522-4ca2-89e1-d2cca7752934",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page3_bg.jpg",
-            "width": 220,
-            "height": 147,
-            "posterId": 0,
-            "id": 647,
-            "title": "wellbeing_page3_bg",
-            "alt": "wellbeing_page3_bg",
-            "local": false,
-            "sizes": []
-          }
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-3" },
+          "id": "8d31d477-7e91-4214-b263-c72d0a726be1"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 63,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": {
-            "color": {
-              "r": 75,
-              "g": 92,
-              "b": 84
-            }
+            "color": { "r": 251, "g": 235, "b": 186, "a": 0.5 }
           },
           "type": "shape",
-          "x": -45,
-          "y": 231,
-          "width": 532,
-          "height": 521,
+          "x": -220,
+          "y": 31,
+          "width": 639,
+          "height": 667,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "89b87d99-5afb-46bd-a3aa-14225f858bac"
+          "mask": { "type": "blob-2" },
+          "id": "ec40785b-35e7-4572-8fd5-3bce5b898d50"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": true,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186,
-              "a": 0.5
-            }
-          },
+          "backgroundColor": { "color": { "r": 216, "g": 216, "b": 216 } },
           "type": "shape",
-          "x": 264,
-          "y": 255,
-          "width": 403,
-          "height": 283,
+          "x": -121,
+          "y": -71,
+          "width": 685,
+          "height": 687,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "f48c6b69-fb61-4c9f-aee3-2155a28eda0b"
+          "mask": { "type": "blob-6" },
+          "id": "741aeabf-40d3-4f1b-8ff0-0e9d72639718"
         },
         {
+          "x": 187,
+          "y": 85,
+          "width": 38,
+          "height": 117,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 287,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": -217,
-          "y": 178,
-          "width": 621,
-          "height": 723,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "id": "1d881f00-3727-4531-ba0a-3d6d3459dc8e"
-        },
-        {
-          "x": 367,
-          "y": 581,
-          "width": 8,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
-            "width": 150,
-            "height": 257,
-            "posterId": 0,
-            "id": 640,
-            "title": "wellbeing_icon_arrow_head_light",
-            "alt": "wellbeing_icon_arrow_head_light",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "1806f7cf-7686-4440-ab42-e15435b15644"
-        },
-        {
-          "x": 135,
-          "y": 587,
-          "width": 240,
-          "height": 2,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "74d501d3-4f54-4348-b718-fef474c789f2"
-        },
-        {
-          "x": 38,
-          "y": 444,
-          "width": 319,
-          "height": 76,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
-          "id": "e4b371be-6204-493b-be2d-a94a93a0649b",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">1 in 3 adults don’t get enough sleep. This trend poses many health risks. Studies and reports link lack of sleep to depression, ADHD and more.</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 38,
-          "y": 581,
-          "width": 94,
-          "height": 16,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
-          "id": "a05c550f-a6fd-453c-a498-7c0840c74e80",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN MORE</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 38,
-          "y": 386,
-          "width": 226,
-          "height": 54,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1096,37 +466,107 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "initial",
+          "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "id": "16874f25-165a-4633-90b6-61c465d9b868",
-          "content": "<span style=\"font-weight: 300; color: #fdf5dc\">Can't sleep?</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "6977e93f-f8f3-40ee-ba03-40a671211636",
+          "content": "<span style=\"font-weight: 300; color: #2b393e\">“</span>",
+          "fontSize": 90,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 131,
+          "y": 385,
+          "width": 150,
+          "height": 38,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "643dd508-0499-4c8e-adab-b48039c98296",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">-\nDALAI LAMA</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 72,
+          "y": 183,
+          "width": 269,
+          "height": 171,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "fbe0221c-732c-40ac-83e9-3c982aef987a",
+          "content": "<span style=\"font-weight: 300; color: #2b393e\">Sleep</span>\n<span style=\"font-weight: 300\">is the best</span>\n<span style=\"font-weight: 300\">meditation</span>",
+          "fontSize": 52,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "e6b3eacb-1032-4965-8e57-efe5dbe8b1b7",
-      "backgroundColor": {
-        "color": {
-          "r": 31,
-          "g": 42,
-          "b": 46
-        }
-      },
+      "id": "e96638f8-1f19-4f34-b7e6-963329aa12fd",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "b3ba443b-257b-4e71-a333-503fba14b8c8",
@@ -1213,35 +653,129 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 71,
-          "y": 77,
-          "width": 206,
-          "height": 366,
+          "x": 89,
+          "y": 84,
+          "width": 137,
+          "height": 137,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "scale": 130,
-          "focalX": 50.01420476860542,
-          "focalY": 49.97767879474251,
+          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "type": "shape",
+          "id": "c6e37b7e-ddb8-4028-a66f-dd280351af00",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 0,
+          "y": -57,
+          "width": 413,
+          "height": 453,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 100,
+          "focalX": 36.16674990819293,
+          "focalY": 57.85050694492415,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "id": "65e8ce0b-d522-4ca2-89e1-d2cca7752934",
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page4_bg.jpg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page3_bg.jpg",
             "width": 220,
-            "height": 391,
+            "height": 147,
             "posterId": 0,
-            "id": 648,
-            "title": "wellbeing_page4_bg",
-            "alt": "wellbeing_page4_bg",
+            "id": 647,
+            "title": "wellbeing_page3_bg",
+            "alt": "wellbeing_page3_bg",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 63,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
+          "type": "shape",
+          "x": -45,
+          "y": 231,
+          "width": 532,
+          "height": 521,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-2" },
+          "id": "89b87d99-5afb-46bd-a3aa-14225f858bac"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": true, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": { "r": 251, "g": 235, "b": 186, "a": 0.5 }
+          },
+          "type": "shape",
+          "x": 264,
+          "y": 255,
+          "width": 403,
+          "height": 283,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-2" },
+          "id": "f48c6b69-fb61-4c9f-aee3-2155a28eda0b"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 287,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "x": -217,
+          "y": 178,
+          "width": 621,
+          "height": 723,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-6" },
+          "id": "1d881f00-3727-4531-ba0a-3d6d3459dc8e"
+        },
+        {
+          "x": 367,
+          "y": 581,
+          "width": 8,
+          "height": 14,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
+            "width": 150,
+            "height": 257,
+            "posterId": 0,
+            "id": 640,
+            "title": "wellbeing_icon_arrow_head_light",
+            "alt": "wellbeing_icon_arrow_head_light",
             "local": false,
             "sizes": []
           },
@@ -1252,243 +786,132 @@
             "ratio": 1
           },
           "type": "image",
-          "id": "7744e075-8030-462f-bdd5-15dc4f1ab97d",
-          "isBackground": true,
-          "backgroundOverlay": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0,
-              "a": 0.3
-            }
-          }
+          "id": "1806f7cf-7686-4440-ab42-e15435b15644"
         },
         {
-          "x": 247,
-          "y": 286,
-          "width": 55,
-          "height": 55,
-          "opacity": 20,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
-          "id": "ef7706f9-3cc2-4e95-bece-0933a5e03ba8"
-        },
-        {
-          "x": 263.5,
-          "y": 302.5,
-          "width": 22,
-          "height": 22,
+          "x": 135,
+          "y": 587,
+          "width": 240,
+          "height": 2,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186
-            }
-          },
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
+          "mask": { "type": "rectangle" },
           "type": "shape",
-          "id": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
+          "id": "74d501d3-4f54-4348-b718-fef474c789f2"
         },
         {
-          "x": 56,
-          "y": 460,
-          "width": 55,
-          "height": 55,
-          "opacity": 20,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "ef7706f9-3cc2-4e95-bece-0933a5e03ba8",
-          "id": "dfb406f3-649b-415b-9c58-9f0fb89bccca"
-        },
-        {
-          "x": 72.5,
-          "y": 476.5,
-          "width": 22,
-          "height": 22,
+          "x": 38,
+          "y": 444,
+          "width": 319,
+          "height": 76,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186
-            }
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
-          "id": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": null
-          }
+          "type": "text",
+          "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
+          "id": "e4b371be-6204-493b-be2d-a94a93a0649b",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">1 in 3 adults don’t get enough sleep. This trend poses many health risks. Studies and reports link lack of sleep to depression, ADHD and more.</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 295,
-          "y": 428,
-          "width": 55,
-          "height": 55,
-          "opacity": 20,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "x": 38,
+          "y": 581,
+          "width": 94,
+          "height": 16,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186
-            }
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "dfb406f3-649b-415b-9c58-9f0fb89bccca",
-          "id": "a22243fb-a11d-493a-a04e-8b744a0d9e86"
+          "type": "text",
+          "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
+          "id": "a05c550f-a6fd-453c-a498-7c0840c74e80",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN MORE</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 311.5,
-          "y": 444.5,
-          "width": 22,
-          "height": 22,
+          "x": 38,
+          "y": 386,
+          "width": 226,
+          "height": 54,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "type": "shape",
-          "basedOn": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
-          "id": "95a2a69d-7946-4fd2-97ad-7cd47fe87e04",
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 57,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 31,
-              "g": 42,
-              "b": 46
-            }
-          },
-          "type": "shape",
-          "x": -13,
-          "y": -297,
-          "width": 492,
-          "height": 481,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "414d5315-c8a7-40d3-aebb-1d0362eeea9b"
-        },
-        {
-          "x": 58,
-          "y": 0,
-          "width": 297,
-          "height": 158,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1504,61 +927,24 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
-          "id": "c9c064f6-310e-4d41-b85d-0be6fedc9ea4",
-          "content": "<span style=\"font-weight: 300; color: #fdf5dc\">Aroma Therapy</span>",
-          "fontSize": 79,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "16874f25-165a-4633-90b6-61c465d9b868",
+          "content": "<span style=\"font-weight: 300; color: #fdf5dc\">Can't sleep?</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "0fd64689-3e15-4e91-b9b3-d991204703b1",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "e4224ca8-e130-44df-a647-57d7a6dba4f4"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "id": "e6b3eacb-1032-4965-8e57-efe5dbe8b1b7",
+      "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } }
+    },
+    {
       "animations": [
         {
           "id": "4fc9d707-a4a0-48ab-9f01-5cbf8b163577",
@@ -1633,162 +1019,30 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
+          "x": 71,
+          "y": 77,
+          "width": 206,
+          "height": 366,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "type": "shape",
-          "id": "970e7f88-c07d-4a78-81f9-e66bd4b2bebe",
-          "isDefaultBackground": true
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 115,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186,
-              "a": 0.5
-            }
-          },
-          "type": "shape",
-          "x": -75,
-          "y": 21,
-          "width": 615,
-          "height": 585,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "08a9f14d-e04a-4e73-8c33-ba3baba83813"
-        },
-        {
-          "x": 26,
-          "y": 238,
-          "width": 360,
-          "height": 437,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
           "scale": 130,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
+          "focalX": 50.01420476860542,
+          "focalY": 49.97767879474251,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page5_image1.jpg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page4_bg.jpg",
             "width": 220,
-            "height": 330,
+            "height": 391,
             "posterId": 0,
-            "id": 649,
-            "title": "wellbeing_page5_image1",
-            "alt": "wellbeing_page5_image1",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "8dbfe563-a930-4de7-90d7-e9681be1e98e",
-          "id": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9"
-        },
-        {
-          "x": 133,
-          "y": 26,
-          "width": 240,
-          "height": 2,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 31,
-              "g": 42,
-              "b": 46
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "basedOn": "74d501d3-4f54-4348-b718-fef474c789f2",
-          "id": "f7b6c859-5155-4095-95ab-071d455fe7b6"
-        },
-        {
-          "x": 365,
-          "y": 20,
-          "width": 8,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_arrow_head_dark.png",
-            "width": 150,
-            "height": 257,
-            "posterId": 0,
-            "id": 639,
-            "title": "wellbeing_icon_arrow_head_dark",
-            "alt": "wellbeing_icon_arrow_head_dark",
+            "id": 648,
+            "title": "wellbeing_page4_bg",
+            "alt": "wellbeing_page4_bg",
             "local": false,
             "sizes": []
           },
@@ -1799,108 +1053,152 @@
             "ratio": 1
           },
           "type": "image",
-          "id": "49416c51-ae2e-4b5c-bad0-66da4b9247b4"
+          "id": "7744e075-8030-462f-bdd5-15dc4f1ab97d",
+          "isBackground": true,
+          "backgroundOverlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.3 } }
         },
         {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 306,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "type": "shape",
-          "x": -69,
-          "y": 115,
-          "width": 512,
-          "height": 658,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "id": "83bb4834-fe9a-4cd9-9b51-4a2b33d42f13"
-        },
-        {
-          "x": 35,
-          "y": 128,
-          "width": 338,
-          "height": 57,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "x": 247,
+          "y": 286,
+          "width": 55,
+          "height": 55,
+          "opacity": 20,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 251, "g": 235, "b": 186 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "e4b371be-6204-493b-be2d-a94a93a0649b",
-          "id": "7db74862-4e63-4403-b085-eced23113392",
-          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">Put your phone down and put this smart eye mask on. Heat regulating and soothing, this mask will put you right to sleep.</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "mask": { "type": "circle" },
+          "type": "shape",
+          "basedOn": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
+          "id": "ef7706f9-3cc2-4e95-bece-0933a5e03ba8"
+        },
+        {
+          "x": 263.5,
+          "y": 302.5,
+          "width": 22,
+          "height": 22,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 251, "g": 235, "b": 186 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "type": "shape",
+          "id": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
           }
         },
         {
-          "x": 35,
-          "y": 71,
-          "width": 201,
-          "height": 54,
+          "x": 56,
+          "y": 460,
+          "width": 55,
+          "height": 55,
+          "opacity": 20,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 251, "g": 235, "b": 186 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "type": "shape",
+          "basedOn": "ef7706f9-3cc2-4e95-bece-0933a5e03ba8",
+          "id": "dfb406f3-649b-415b-9c58-9f0fb89bccca"
+        },
+        {
+          "x": 72.5,
+          "y": 476.5,
+          "width": 22,
+          "height": 22,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 251, "g": 235, "b": 186 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "type": "shape",
+          "basedOn": "3016e5bf-a0d2-4d9d-82f0-cb169b5e9189",
+          "id": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
+          "link": { "url": "https://example.com/", "icon": null, "desc": null }
+        },
+        {
+          "x": 295,
+          "y": 428,
+          "width": 55,
+          "height": 55,
+          "opacity": 20,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 251, "g": 235, "b": 186 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "type": "shape",
+          "basedOn": "dfb406f3-649b-415b-9c58-9f0fb89bccca",
+          "id": "a22243fb-a11d-493a-a04e-8b744a0d9e86"
+        },
+        {
+          "x": 311.5,
+          "y": 444.5,
+          "width": 22,
+          "height": 22,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 251, "g": 235, "b": 186 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "type": "shape",
+          "basedOn": "70cd1c38-9462-47f4-9a12-c9585c16acc4",
+          "id": "95a2a69d-7946-4fd2-97ad-7cd47fe87e04",
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
+          }
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 57,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
+          "type": "shape",
+          "x": -13,
+          "y": -297,
+          "width": 492,
+          "height": 481,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-2" },
+          "id": "414d5315-c8a7-40d3-aebb-1d0362eeea9b"
+        },
+        {
+          "x": 58,
+          "y": 0,
+          "width": 297,
+          "height": 158,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1916,100 +1214,40 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
           "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
-          "id": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">Sleep Tech</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 38,
-          "y": 20,
-          "width": 94,
-          "height": 16,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "a05c550f-a6fd-453c-a498-7c0840c74e80",
-          "id": "4a6f10ee-b868-4ec8-80c3-7968bede7d8d",
-          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">LEARN MORE</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "c9c064f6-310e-4d41-b85d-0be6fedc9ea4",
+          "content": "<span style=\"font-weight: 300; color: #fdf5dc\">Aroma Therapy</span>",
+          "fontSize": 79,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "1a57cf2b-d1d0-432c-8b97-3794c41e2098",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
+      "id": "0fd64689-3e15-4e91-b9b3-d991204703b1",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": { "type": "rectangle" },
+        "backgroundColor": {
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "e4224ca8-e130-44df-a647-57d7a6dba4f4"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "1e030933-dbab-4798-bb1c-604952068b4e",
@@ -2146,20 +1384,99 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 95,
-          "y": 110,
-          "width": 206,
-          "height": 309,
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "type": "shape",
+          "id": "970e7f88-c07d-4a78-81f9-e66bd4b2bebe",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 115,
+          "lockAspectRatio": true,
+          "backgroundColor": {
+            "color": { "r": 251, "g": 235, "b": 186, "a": 0.5 }
           },
+          "type": "shape",
+          "x": -75,
+          "y": 21,
+          "width": 615,
+          "height": 585,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-2" },
+          "id": "08a9f14d-e04a-4e73-8c33-ba3baba83813"
+        },
+        {
+          "x": 26,
+          "y": 238,
+          "width": 360,
+          "height": 437,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 130,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page5_image1.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 649,
+            "title": "wellbeing_page5_image1",
+            "alt": "wellbeing_page5_image1",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "8dbfe563-a930-4de7-90d7-e9681be1e98e",
+          "id": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9"
+        },
+        {
+          "x": 133,
+          "y": 26,
+          "width": 240,
+          "height": 2,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "type": "shape",
+          "basedOn": "74d501d3-4f54-4348-b718-fef474c789f2",
+          "id": "f7b6c859-5155-4095-95ab-071d455fe7b6"
+        },
+        {
+          "x": 365,
+          "y": 20,
+          "width": 8,
+          "height": 14,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2167,14 +1484,14 @@
           "focalY": 50,
           "resource": {
             "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page6_bg.jpg",
-            "width": 220,
-            "height": 330,
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_arrow_head_dark.png",
+            "width": 150,
+            "height": 257,
             "posterId": 0,
-            "id": 650,
-            "title": "wellbeing_page6_bg",
-            "alt": "wellbeing_page6_bg",
+            "id": 639,
+            "title": "wellbeing_icon_arrow_head_dark",
+            "alt": "wellbeing_icon_arrow_head_dark",
             "local": false,
             "sizes": []
           },
@@ -2185,122 +1502,32 @@
             "ratio": 1
           },
           "type": "image",
-          "id": "4aac4002-7c41-434c-ab44-7bc43f6e863c",
-          "isBackground": true
+          "id": "49416c51-ae2e-4b5c-bad0-66da4b9247b4"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 354,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 306,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 75,
-              "g": 92,
-              "b": 84
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "type": "shape",
-          "x": 36,
-          "y": 379,
-          "width": 530,
-          "height": 495,
+          "x": -69,
+          "y": 115,
+          "width": 512,
+          "height": 658,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "dc2f00ab-bacf-4593-a6a0-e24b777c116b"
+          "mask": { "type": "blob-6" },
+          "id": "83bb4834-fe9a-4cd9-9b51-4a2b33d42f13"
         },
         {
-          "x": 26,
-          "y": 445,
-          "width": 360,
-          "height": 155,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "id": "2dd45145-0aa5-442c-b900-9b49e454c0a2"
-        },
-        {
-          "x": 53,
-          "y": 469,
-          "width": 250,
-          "height": 33,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Source Serif Pro",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 400],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
-          "id": "561628d6-e00a-473d-8fe8-bc7fea38b5ff",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">Relax in a bath</span>",
-          "fontSize": 26,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 53,
-          "y": 513,
-          "width": 286,
+          "x": 35,
+          "y": 128,
+          "width": 338,
           "height": 57,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2331,89 +1558,110 @@
               [1, 900]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "7db74862-4e63-4403-b085-eced23113392",
-          "id": "f496cd2f-5ffc-400c-b567-18478e0d1e89",
-          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">A study found that taking a hot bath about 90 minutes before bed could help people fall asleep more quickly.</span>",
+          "basedOn": "e4b371be-6204-493b-be2d-a94a93a0649b",
+          "id": "7db74862-4e63-4403-b085-eced23113392",
+          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">Put your phone down and put this smart eye mask on. Heat regulating and soothing, this mask will put you right to sleep.</span>",
           "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
+          "x": 35,
+          "y": 71,
+          "width": 201,
+          "height": 54,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 245,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
           },
-          "type": "shape",
-          "x": 22,
-          "y": 394,
-          "width": 373,
-          "height": 475,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-6"
+          "type": "text",
+          "basedOn": "16874f25-165a-4633-90b6-61c465d9b868",
+          "id": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">Sleep Tech</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 38,
+          "y": 20,
+          "width": 94,
+          "height": 16,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
-          "id": "0aa52870-b073-41b1-888a-accd81a375e2"
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "a05c550f-a6fd-453c-a498-7c0840c74e80",
+          "id": "4a6f10ee-b868-4ec8-80c3-7968bede7d8d",
+          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">LEARN MORE</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "41d961c4-f7af-4d93-a9a1-94bc28287078",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "aceee55e-9440-4b53-90b7-4480bb1722ee"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "id": "1a57cf2b-d1d0-432c-8b97-3794c41e2098",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "f1727b45-bd8a-4b58-bf0f-3f01da3b5c97",
@@ -2488,35 +1736,30 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 70,
-          "y": 2,
+          "x": 95,
+          "y": 110,
           "width": 206,
-          "height": 274,
+          "height": 309,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "scale": 140,
-          "focalX": 73.25925470564026,
-          "focalY": 58.0575453206811,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page7_bg.jpg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page6_bg.jpg",
             "width": 220,
-            "height": 293,
+            "height": 330,
             "posterId": 0,
-            "id": 651,
-            "title": "wellbeing_page7_bg",
-            "alt": "wellbeing_page7_bg",
+            "id": 650,
+            "title": "wellbeing_page6_bg",
+            "alt": "wellbeing_page6_bg",
             "local": false,
             "sizes": []
           },
@@ -2527,75 +1770,50 @@
             "ratio": 1
           },
           "type": "image",
-          "id": "f8dca448-520e-4b47-a0ee-f3aea1cd2e3d",
+          "id": "4aac4002-7c41-434c-ab44-7bc43f6e863c",
           "isBackground": true
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -10,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 354,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 75,
-              "g": 92,
-              "b": 84
-            }
-          },
+          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
           "type": "shape",
-          "x": -211,
-          "y": -130,
-          "width": 577,
-          "height": 577,
+          "x": 36,
+          "y": 379,
+          "width": 530,
+          "height": 495,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "9b7290b8-f166-4e38-8213-97abb1c96ad6"
+          "mask": { "type": "blob-2" },
+          "id": "dc2f00ab-bacf-4593-a6a0-e24b777c116b"
         },
         {
+          "x": 26,
+          "y": 445,
+          "width": 360,
+          "height": 155,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 314,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": -52,
-          "y": -139,
-          "width": 569,
-          "height": 733,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "id": "85a31443-3c26-4c04-9123-c4d86b83e1f0"
+          "mask": { "type": "rectangle" },
+          "type": "shape",
+          "id": "2dd45145-0aa5-442c-b900-9b49e454c0a2"
         },
         {
-          "x": 144,
-          "y": 20,
-          "width": 150,
-          "height": 249,
+          "x": 53,
+          "y": 469,
+          "width": 250,
+          "height": 33,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2611,76 +1829,89 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.83,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "58899538-5ad3-4697-9fb5-bf32e92a4d0a",
-          "content": "<span style=\"font-weight: 300; color: #fbebba\">5</span>",
-          "fontSize": 300,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 64,
-          "y": 287,
-          "width": 284,
-          "height": 108,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Source Serif Pro",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 400],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
-          "textAlign": "center",
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "id": "ceda6811-72ee-421e-9778-5711edabdfc3",
-          "content": "<span style=\"font-weight: 300; color: #fbebba\">Bedtime</span>\n<span style=\"font-weight: 300; color: #fbebba\">Routine Tips</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
+          "id": "561628d6-e00a-473d-8fe8-bc7fea38b5ff",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">Relax in a bath</span>",
+          "fontSize": 26,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 53,
+          "y": 513,
+          "width": 286,
+          "height": 57,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "7db74862-4e63-4403-b085-eced23113392",
+          "id": "f496cd2f-5ffc-400c-b567-18478e0d1e89",
+          "content": "<span style=\"color: rgba(31, 42, 46, 1)\">A study found that taking a hot bath about 90 minutes before bed could help people fall asleep more quickly.</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 245,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "x": 22,
+          "y": 394,
+          "width": 373,
+          "height": 475,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-6" },
+          "id": "0aa52870-b073-41b1-888a-accd81a375e2"
         }
       ],
       "type": "page",
-      "id": "b96f282e-4b4e-465d-a2ec-a7c904c3e5d8",
+      "id": "41d961c4-f7af-4d93-a9a1-94bc28287078",
       "defaultBackgroundElement": {
         "type": "shape",
         "x": 1,
@@ -2688,29 +1919,17 @@
         "width": 1,
         "height": 1,
         "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
         },
         "isBackground": true,
         "isDefaultBackground": true,
-        "id": "fadc0093-2969-4c68-a93a-443622c08d81"
+        "id": "aceee55e-9440-4b53-90b7-4480bb1722ee"
       },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "96faafa5-c561-4e72-9e90-57c677facaf2",
@@ -2749,218 +1968,30 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
+          "x": 70,
+          "y": 2,
+          "width": 206,
+          "height": 274,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 31,
-              "g": 42,
-              "b": 46
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "type": "shape",
-          "id": "18d986e5-e023-466d-b8fc-fce0393071b0",
-          "isDefaultBackground": true
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 99,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 75,
-              "g": 92,
-              "b": 84
-            }
-          },
-          "type": "shape",
-          "x": 55,
-          "y": -296,
-          "width": 443,
-          "height": 653,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-3"
-          },
-          "id": "2694e032-b61e-4adc-97a2-a97f128c88e6"
-        },
-        {
-          "x": 26,
-          "y": -57,
-          "width": 360,
-          "height": 452,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 110,
-          "focalX": 57.1386688259285,
-          "focalY": 47.773251549578646,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
+          "scale": 140,
+          "focalX": 73.25925470564026,
+          "focalY": 58.0575453206811,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page8_image1.jpg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page7_bg.jpg",
             "width": 220,
-            "height": 220,
+            "height": 293,
             "posterId": 0,
-            "id": 652,
-            "title": "wellbeing_page8_image1",
-            "alt": "wellbeing_page8_image1",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9",
-          "id": "a406280f-9a0b-4140-83fb-e9cac472886f"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 263,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 251,
-              "g": 235,
-              "b": 186,
-              "a": 0.5
-            }
-          },
-          "type": "shape",
-          "x": 199,
-          "y": 162,
-          "width": 304,
-          "height": 329,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "f6ced1c2-1877-4093-a039-a8deacce21ea"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 27,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "x": -128,
-          "y": -296,
-          "width": 524,
-          "height": 650,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "id": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 6,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "type": "shape",
-          "width": 315,
-          "height": 331,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "blob-6"
-          },
-          "basedOn": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f",
-          "id": "fed8726d-5c7d-4110-ba07-c436be00523b",
-          "x": 208,
-          "y": 545
-        },
-        {
-          "x": 365,
-          "y": 581,
-          "width": 8,
-          "height": 14,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
-            "width": 150,
-            "height": 257,
-            "posterId": 0,
-            "id": 640,
-            "title": "wellbeing_icon_arrow_head_light",
-            "alt": "wellbeing_icon_arrow_head_light",
+            "id": 651,
+            "title": "wellbeing_page7_bg",
+            "alt": "wellbeing_page7_bg",
             "local": false,
             "sizes": []
           },
@@ -2971,172 +2002,50 @@
             "ratio": 1
           },
           "type": "image",
-          "basedOn": "1806f7cf-7686-4440-ab42-e15435b15644",
-          "id": "26661b52-4485-4e7d-a168-8e0311a2c096"
+          "id": "f8dca448-520e-4b47-a0ee-f3aea1cd2e3d",
+          "isBackground": true
         },
         {
-          "x": 133,
-          "y": 587,
-          "width": 240,
-          "height": 2,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "shape",
-          "basedOn": "74d501d3-4f54-4348-b718-fef474c789f2",
-          "id": "b25e15d6-567c-41ec-ab8e-8c72c69b2b51"
-        },
-        {
-          "x": 38,
-          "y": 581,
-          "width": 94,
-          "height": 16,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "a05c550f-a6fd-453c-a498-7c0840c74e80",
-          "id": "91d4d005-9a56-49d2-8e72-053ef3fa83c3",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN MORE</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 112,
-          "y": 484,
-          "width": 274,
-          "height": 57,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": -10,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
+          "type": "shape",
+          "x": -211,
+          "y": -130,
+          "width": 577,
+          "height": 577,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "e4b371be-6204-493b-be2d-a94a93a0649b",
-          "id": "c832531d-efa9-455f-9cb3-6d9669392c02",
-          "content": "<span style=\"color: #fff\">Improved flexibility, more strength, better concentration, improved posture are all benefits of yoga.</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "mask": { "type": "blob-2" },
+          "id": "9b7290b8-f166-4e38-8213-97abb1c96ad6"
         },
         {
-          "x": 112,
-          "y": 427,
-          "width": 124,
-          "height": 54,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 314,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "x": -52,
+          "y": -139,
+          "width": 569,
+          "height": 733,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-6" },
+          "id": "85a31443-3c26-4c04-9123-c4d86b83e1f0"
+        },
+        {
+          "x": 144,
+          "y": 20,
+          "width": 150,
+          "height": 249,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3152,38 +2061,25 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.83,
           "textAlign": "left",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "4438e06a-84e8-4ff5-95a5-60979c6f5f49",
-          "id": "d9ed4ad5-3559-413c-a7b4-c9e264111621",
-          "content": "<span style=\"font-weight: 300; color: #fbebba\">Yoga</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "58899538-5ad3-4697-9fb5-bf32e92a4d0a",
+          "content": "<span style=\"font-weight: 300; color: #fbebba\">5</span>",
+          "fontSize": 300,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 26,
-          "y": 418,
-          "width": 69,
-          "height": 132,
+          "x": 64,
+          "y": 287,
+          "width": 284,
+          "height": 108,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3199,38 +2095,39 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
           "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "58899538-5ad3-4697-9fb5-bf32e92a4d0a",
-          "id": "4438e06a-84e8-4ff5-95a5-60979c6f5f49",
-          "content": "<span style=\"font-weight: 300; color: #fbebba\">3</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "ceda6811-72ee-421e-9778-5711edabdfc3",
+          "content": "<span style=\"font-weight: 300; color: #fbebba\">Bedtime</span>\n<span style=\"font-weight: 300; color: #fbebba\">Routine Tips</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "a3dd6d21-4f75-4d8a-bacb-ef9d14f61503",
-      "backgroundColor": {
-        "color": {
-          "r": 31,
-          "g": 42,
-          "b": 46
-        }
+      "id": "b96f282e-4b4e-465d-a2ec-a7c904c3e5d8",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": { "type": "rectangle" },
+        "backgroundColor": {
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "fadc0093-2969-4c68-a93a-443622c08d81"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "612dfc01-4abb-424b-af11-18af5c15e8bb",
@@ -3380,9 +2277,7 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -3390,140 +2285,278 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "d982e67d-6773-46a8-81db-fb99f0ee69a1",
+          "id": "18d986e5-e023-466d-b8fc-fce0393071b0",
           "isDefaultBackground": true
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 69,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 99,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 253,
-              "g": 245,
-              "b": 220
-            }
-          },
+          "backgroundColor": { "color": { "r": 75, "g": 92, "b": 84 } },
           "type": "shape",
-          "x": -244,
-          "y": 63,
-          "width": 842,
-          "height": 842,
+          "x": 55,
+          "y": -296,
+          "width": 443,
+          "height": 653,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
+          "mask": { "type": "blob-3" },
+          "id": "2694e032-b61e-4adc-97a2-a97f128c88e6"
+        },
+        {
+          "x": 26,
+          "y": -57,
+          "width": 360,
+          "height": 452,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 110,
+          "focalX": 57.1386688259285,
+          "focalY": 47.773251549578646,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page8_image1.jpg",
+            "width": 220,
+            "height": 220,
+            "posterId": 0,
+            "id": 652,
+            "title": "wellbeing_page8_image1",
+            "alt": "wellbeing_page8_image1",
+            "local": false,
+            "sizes": []
           },
-          "id": "1156e7c9-c922-46f0-b484-65e141757c02"
+          "basedOn": "e5936b3b-e398-4cdd-a2f5-91128b4c10b9",
+          "id": "a406280f-9a0b-4140-83fb-e9cac472886f"
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 7,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 263,
           "lockAspectRatio": true,
           "backgroundColor": {
-            "color": {
-              "r": 31,
-              "g": 42,
-              "b": 46
-            }
+            "color": { "r": 251, "g": 235, "b": 186, "a": 0.5 }
           },
           "type": "shape",
-          "x": 187,
-          "y": 519,
-          "width": 327,
-          "height": 327,
+          "x": 199,
+          "y": 162,
+          "width": 304,
+          "height": 329,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-2"
-          },
-          "id": "ca831afb-f22f-491a-aaf1-ace1e3423d64"
+          "mask": { "type": "blob-2" },
+          "id": "f6ced1c2-1877-4093-a039-a8deacce21ea"
         },
         {
-          "x": 45,
-          "y": 14,
-          "width": 322,
-          "height": 138,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 27,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "x": -128,
+          "y": -296,
+          "width": 524,
+          "height": 650,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-6" },
+          "id": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 6,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "type": "shape",
+          "width": 315,
+          "height": 331,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-6" },
+          "basedOn": "4fe9f1f6-d2dd-491a-90a1-a0ff485c735f",
+          "id": "fed8726d-5c7d-4110-ba07-c436be00523b",
+          "x": 208,
+          "y": 545
+        },
+        {
+          "x": 365,
+          "y": 581,
+          "width": 8,
+          "height": 14,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_icon_arrow_head_light.png",
+            "width": 150,
+            "height": 257,
+            "posterId": 0,
+            "id": 640,
+            "title": "wellbeing_icon_arrow_head_light",
+            "alt": "wellbeing_icon_arrow_head_light",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "1806f7cf-7686-4440-ab42-e15435b15644",
+          "id": "26661b52-4485-4e7d-a168-8e0311a2c096"
+        },
+        {
+          "x": 133,
+          "y": 587,
+          "width": 240,
+          "height": 2,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "type": "shape",
+          "basedOn": "74d501d3-4f54-4348-b718-fef474c789f2",
+          "id": "b25e15d6-567c-41ec-ab8e-8c72c69b2b51"
+        },
+        {
+          "x": 38,
+          "y": 581,
+          "width": 94,
+          "height": 16,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Source Serif Pro",
+            "family": "Work Sans",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
             "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
               [0, 400],
+              [0, 500],
               [0, 600],
-              [0, 700]
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
-          "id": "e34fa932-2407-4d18-8586-e08e1f0d360f",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">Top 4</span>\n<span style=\"font-weight: 300\">wellness retreats</span>\n<span style=\"font-weight: 300\">in the world</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "a05c550f-a6fd-453c-a498-7c0840c74e80",
+          "id": "91d4d005-9a56-49d2-8e72-053ef3fa83c3",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN MORE</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 44,
-          "y": 352,
-          "width": 66,
-          "height": 132,
+          "x": 112,
+          "y": 484,
+          "width": 274,
+          "height": 57,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e4b371be-6204-493b-be2d-a94a93a0649b",
+          "id": "c832531d-efa9-455f-9cb3-6d9669392c02",
+          "content": "<span style=\"color: #fff\">Improved flexibility, more strength, better concentration, improved posture are all benefits of yoga.</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 112,
+          "y": 427,
+          "width": 124,
+          "height": 54,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3539,38 +2572,26 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
           "basedOn": "4438e06a-84e8-4ff5-95a5-60979c6f5f49",
-          "id": "4038789a-8b44-4d77-b5dd-592a1e247933",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">3</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "d9ed4ad5-3559-413c-a7b4-c9e264111621",
+          "content": "<span style=\"font-weight: 300; color: #fbebba\">Yoga</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 46,
-          "y": 158,
-          "width": 66,
+          "x": 26,
+          "y": 418,
+          "width": 69,
           "height": 132,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3586,380 +2607,25 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "4038789a-8b44-4d77-b5dd-592a1e247933",
-          "id": "7d7706a3-01b2-4bcd-8799-e18119b4c17d",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">1</span>",
+          "basedOn": "58899538-5ad3-4697-9fb5-bf32e92a4d0a",
+          "id": "4438e06a-84e8-4ff5-95a5-60979c6f5f49",
+          "content": "<span style=\"font-weight: 300; color: #fbebba\">3</span>",
           "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 314,
-          "y": 255,
-          "width": 63,
-          "height": 132,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Source Serif Pro",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 400],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "4038789a-8b44-4d77-b5dd-592a1e247933",
-          "id": "e02c6ab4-de7d-437d-b2b9-271b7de9b64b",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">2</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 315,
-          "y": 449,
-          "width": 65,
-          "height": 132,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Source Serif Pro",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 600, 700],
-            "styles": ["regular"],
-            "variants": [
-              [0, 400],
-              [0, 600],
-              [0, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e02c6ab4-de7d-437d-b2b9-271b7de9b64b",
-          "id": "7404bfb0-bd86-4b76-8dbb-37fa50a28dfe",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">4</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 126,
-          "y": 485,
-          "width": 169,
-          "height": 34,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "c832531d-efa9-455f-9cb3-6d9669392c02",
-          "id": "6398137c-148c-4469-b521-f3db9fd40b5d",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Six Senses Douro Valley,\nPortugal</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 126,
-          "y": 292,
-          "width": 169,
-          "height": 33,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "6398137c-148c-4469-b521-f3db9fd40b5d",
-          "id": "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Aro Ha, Glenorchy,\nNew Zealand</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 120,
-          "y": 202,
-          "width": 169,
-          "height": 33,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
-          "id": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Kamalaya, Koh Samui,\nThailand</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 121,
-          "y": 387,
-          "width": 169,
-          "height": 33,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
-          "id": "a314d206-0252-40f6-84f4-75b84138df1b",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Amanpuri, Phuket,\nThailand</span>",
-          "fontSize": 13,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "d17e5002-9a42-41ea-a7fc-c2fddc7b58e6",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "id": "a3dd6d21-4f75-4d8a-bacb-ef9d14f61503",
+      "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } }
+    },
+    {
       "animations": [
         {
           "id": "4aa60bff-4ca9-414d-99f8-b4ebe4146b42",
@@ -4197,9 +2863,7 @@
           "easingPreset": "linear",
           "fill": "forwards"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -4207,419 +2871,57 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "fd455062-8efd-4332-ab36-5b66742ce5a1",
+          "id": "d982e67d-6773-46a8-81db-fb99f0ee69a1",
           "isDefaultBackground": true
         },
         {
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 221,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 69,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 253,
-              "g": 245,
-              "b": 220
-            }
-          },
+          "backgroundColor": { "color": { "r": 253, "g": 245, "b": 220 } },
           "type": "shape",
-          "x": -22,
-          "y": -159,
-          "width": 563,
-          "height": 397,
+          "x": -244,
+          "y": 63,
+          "width": 842,
+          "height": 842,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "blob-4"
-          },
-          "id": "909339b8-8ec5-4997-a7e6-688504be7f23"
+          "mask": { "type": "blob-2" },
+          "id": "1156e7c9-c922-46f0-b484-65e141757c02"
         },
         {
-          "x": 33,
-          "y": 115,
-          "width": 108,
-          "height": 108,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 7,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50.728870219890965,
-          "focalY": 43.5860062048976,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "20ab13c0-b782-40f7-8700-a99d9b56008c",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image1.jpg",
-            "width": 220,
-            "height": 330,
-            "posterId": 0,
-            "id": 653,
-            "title": "wellbeing_page10_image1",
-            "alt": "wellbeing_page10_image1",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 33,
-          "y": 242,
-          "width": 108,
-          "height": 108,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
+          "backgroundColor": { "color": { "r": 31, "g": 42, "b": 46 } },
+          "type": "shape",
+          "x": 187,
+          "y": 519,
+          "width": 327,
+          "height": 327,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "creationDate": "2020-06-30T20:23:34",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image2.jpg",
-            "width": 330,
-            "height": 494,
-            "posterId": 0,
-            "id": 1932,
-            "title": "wellbeing_page10_image2",
-            "alt": "wellbeing_page10_image2",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "20ab13c0-b782-40f7-8700-a99d9b56008c",
-          "id": "70006d51-6f37-47b4-9074-b193a473caab"
+          "mask": { "type": "blob-2" },
+          "id": "ca831afb-f22f-491a-aaf1-ace1e3423d64"
         },
         {
-          "x": 33,
-          "y": 369,
-          "width": 108,
-          "height": 108,
+          "x": 45,
+          "y": 14,
+          "width": 322,
+          "height": 138,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 220,
-          "focalX": 73.03206862786772,
-          "focalY": 44.169096549906904,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image3.jpg",
-            "width": 220,
-            "height": 275,
-            "posterId": 0,
-            "id": 655,
-            "title": "wellbeing_page10_image3",
-            "alt": "wellbeing_page10_image3",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "70006d51-6f37-47b4-9074-b193a473caab",
-          "id": "46172f61-dfd3-4105-a3b3-9e6b95e32a4c"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "type": "image",
-          "x": 33,
-          "y": 497,
-          "width": 108,
-          "height": 108,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "b35fc13c-9f8c-4ad5-8e35-839fa4d59a50",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2020-06-23T00:45:25",
-            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image4.png",
-            "width": 54,
-            "height": 55,
-            "posterId": 0,
-            "id": 1609,
-            "title": "wellbeing_page10_image4",
-            "alt": "wellbeing_page10_image4",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 169,
-          "y": 150,
-          "width": 169,
-          "height": 38,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
-          "id": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">10 Ways to bring the outdoors inside.</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 278,
-          "width": 206,
-          "height": 38,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
-          "id": "7ac7ca60-c164-4860-8ea5-837ee07d47b0",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Is snoozing with your pets bad for your health?</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 406,
-          "width": 191,
-          "height": 38,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Work Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
-          "id": "ad0ab4b9-9b87-4624-bfa8-45779fe6cf78",
-          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Perfect supplement for home-made granola.</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 51,
-          "y": 9,
-          "width": 311,
-          "height": 67,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4635,35 +2937,166 @@
               [0, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.1,
           "textAlign": "center",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "id": "d9a1df8f-5d8a-4c1f-90ba-d63b2f720ae0",
-          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">More stories</span>",
-          "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "456cb303-7b53-4844-8ecf-7a07e8c267b9",
+          "id": "e34fa932-2407-4d18-8586-e08e1f0d360f",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">Top 4</span>\n<span style=\"font-weight: 300\">wellness retreats</span>\n<span style=\"font-weight: 300\">in the world</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "width": 191,
-          "height": 37,
+          "x": 44,
+          "y": 352,
+          "width": 66,
+          "height": 132,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "4438e06a-84e8-4ff5-95a5-60979c6f5f49",
+          "id": "4038789a-8b44-4d77-b5dd-592a1e247933",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">3</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 46,
+          "y": 158,
+          "width": 66,
+          "height": 132,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "4038789a-8b44-4d77-b5dd-592a1e247933",
+          "id": "7d7706a3-01b2-4bcd-8799-e18119b4c17d",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">1</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 314,
+          "y": 255,
+          "width": 63,
+          "height": 132,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "4038789a-8b44-4d77-b5dd-592a1e247933",
+          "id": "e02c6ab4-de7d-437d-b2b9-271b7de9b64b",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">2</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 315,
+          "y": 449,
+          "width": 65,
+          "height": 132,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e02c6ab4-de7d-437d-b2b9-271b7de9b64b",
+          "id": "7404bfb0-bd86-4b76-8dbb-37fa50a28dfe",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">4</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 126,
+          "y": 485,
+          "width": 169,
+          "height": 34,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -4694,40 +3127,175 @@
               [1, 900]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "c832531d-efa9-455f-9cb3-6d9669392c02",
+          "id": "6398137c-148c-4469-b521-f3db9fd40b5d",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Six Senses Douro Valley,\nPortugal</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 126,
+          "y": 292,
+          "width": 169,
+          "height": 33,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "6398137c-148c-4469-b521-f3db9fd40b5d",
+          "id": "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Aro Ha, Glenorchy,\nNew Zealand</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 120,
+          "y": 202,
+          "width": 169,
+          "height": 33,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "left",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "content": "<span style=\"color: #2b393e\">10 yummy snack foods that are good for you.</span>",
-          "fontSize": 15,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "basedOn": "e33ab4b1-8411-42c7-a407-b2d85756ff6f",
+          "id": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Kamalaya, Koh Samui,\nThailand</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 121,
+          "y": 387,
+          "width": 169,
+          "height": 33,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
-          "basedOn": "ad0ab4b9-9b87-4624-bfa8-45779fe6cf78",
-          "id": "64006e3b-b381-4321-90f5-b8c5e9efffe9",
-          "x": 169,
-          "y": 533
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
+          "id": "a314d206-0252-40f6-84f4-75b84138df1b",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Amanpuri, Phuket,\nThailand</span>",
+          "fontSize": 13,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "47783f6c-471c-427c-804e-532ace8261d1",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "id": "d17e5002-9a42-41ea-a7fc-c2fddc7b58e6",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "d677b170-cbc4-45e5-a001-2aa7f1e98e5d",
@@ -4901,7 +3469,403 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "type": "shape",
+          "id": "fd455062-8efd-4332-ab36-5b66742ce5a1",
+          "isDefaultBackground": true
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 221,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 253, "g": 245, "b": 220 } },
+          "type": "shape",
+          "x": -22,
+          "y": -159,
+          "width": 563,
+          "height": 397,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "blob-4" },
+          "id": "909339b8-8ec5-4997-a7e6-688504be7f23"
+        },
+        {
+          "x": 33,
+          "y": 115,
+          "width": 108,
+          "height": 108,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 100,
+          "focalX": 50.728870219890965,
+          "focalY": 43.5860062048976,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "id": "20ab13c0-b782-40f7-8700-a99d9b56008c",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image1.jpg",
+            "width": 220,
+            "height": 330,
+            "posterId": 0,
+            "id": 653,
+            "title": "wellbeing_page10_image1",
+            "alt": "wellbeing_page10_image1",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 33,
+          "y": 242,
+          "width": 108,
+          "height": 108,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-30T20:23:34",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image2.jpg",
+            "width": 330,
+            "height": 494,
+            "posterId": 0,
+            "id": 1932,
+            "title": "wellbeing_page10_image2",
+            "alt": "wellbeing_page10_image2",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "20ab13c0-b782-40f7-8700-a99d9b56008c",
+          "id": "70006d51-6f37-47b4-9074-b193a473caab"
+        },
+        {
+          "x": 33,
+          "y": 369,
+          "width": 108,
+          "height": 108,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 220,
+          "focalX": 73.03206862786772,
+          "focalY": 44.169096549906904,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image3.jpg",
+            "width": 220,
+            "height": 275,
+            "posterId": 0,
+            "id": 655,
+            "title": "wellbeing_page10_image3",
+            "alt": "wellbeing_page10_image3",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "70006d51-6f37-47b4-9074-b193a473caab",
+          "id": "46172f61-dfd3-4105-a3b3-9e6b95e32a4c"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "type": "image",
+          "x": 33,
+          "y": 497,
+          "width": 108,
+          "height": 108,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "b35fc13c-9f8c-4ad5-8e35-839fa4d59a50",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "creationDate": "2020-06-23T00:45:25",
+            "src": "https://replaceme.com/images/templates/wellbeing/wellbeing_page10_image4.png",
+            "width": 54,
+            "height": 55,
+            "posterId": 0,
+            "id": 1609,
+            "title": "wellbeing_page10_image4",
+            "alt": "wellbeing_page10_image4",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 169,
+          "y": 150,
+          "width": 169,
+          "height": 38,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "8d0b43ae-5979-4cb2-8b12-524929fe7d9a",
+          "id": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">10 Ways to bring the outdoors inside.</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 278,
+          "width": 206,
+          "height": 38,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
+          "id": "7ac7ca60-c164-4860-8ea5-837ee07d47b0",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Is snoozing with your pets bad for your health?</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 406,
+          "width": 191,
+          "height": 38,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e59766e5-94cd-4a5d-92c3-010f9b5f85ff",
+          "id": "ad0ab4b9-9b87-4624-bfa8-45779fe6cf78",
+          "content": "<span style=\"color: rgba(43, 57, 62, 1)\">Perfect supplement for home-made granola.</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 51,
+          "y": 9,
+          "width": 311,
+          "height": 67,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Source Serif Pro",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 600, 700],
+            "styles": ["regular"],
+            "variants": [
+              [0, 400],
+              [0, 600],
+              [0, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "d9a1df8f-5d8a-4c1f-90ba-d63b2f720ae0",
+          "content": "<span style=\"font-weight: 300; color: #1f2a2e\">More stories</span>",
+          "fontSize": 52,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "width": 191,
+          "height": 37,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Work Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 100],
+              [0, 200],
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 100],
+              [1, 200],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: #2b393e\">10 yummy snack foods that are good for you.</span>",
+          "fontSize": 15,
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "basedOn": "ad0ab4b9-9b87-4624-bfa8-45779fe6cf78",
+          "id": "64006e3b-b381-4321-90f5-b8c5e9efffe9",
+          "x": 169,
+          "y": 533
+        }
+      ],
+      "type": "page",
+      "id": "47783f6c-471c-427c-804e-532ace8261d1",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
     }
   ],
   "autoAdvance": true,
