@@ -29,12 +29,26 @@ async function setAnalyticsCode(code) {
     text: 'Editor Settings',
   });
 
-  await page.evaluate((inputValue) => {
+  const inputSelector =
+    'input[placeholder="Enter your Google Analytics Tracking ID"]';
+
+  await expect(page).toMatchElement(inputSelector);
+  await page.evaluate(() => {
     const input = document.getElementById('gaTrackingId');
-    input.value = inputValue;
-  }, code);
+    input.value = '';
+  });
+
+  // If empty string, type space and remove it.
+  if (code === '') {
+    await page.type(inputSelector, ' ');
+    await page.keyboard.press('Backspace');
+  } else {
+    await page.type(inputSelector, code);
+  }
 
   await expect(page).toClick('button', { text: 'Save' });
+  // Wait for setting to save.
+  await page.waitForTimeout(1000);
 }
 
 export default setAnalyticsCode;
