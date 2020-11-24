@@ -519,11 +519,11 @@ class Story_Post_Type {
 					'hasUploadMediaAction'  => $has_upload_media_action,
 				],
 				'api'              => [
-					'users'       => '/web-stories/v1/users',
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'link'        => '/web-stories/v1/link',
-					'statusCheck' => '/web-stories/v1/status-check',
+					'users'       => '/web-stories/v1/users/',
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'link'        => '/web-stories/v1/link/',
+					'statusCheck' => '/web-stories/v1/status-check/',
 				],
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
