@@ -37,6 +37,7 @@ use Iterator;
  * Renderer class.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  * @implements Iterator<int, \WP_Post>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
@@ -150,7 +151,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		add_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
 		$this->story_posts = $this->stories->get_stories();
-		add_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
+		remove_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
 	}
 
 	/**

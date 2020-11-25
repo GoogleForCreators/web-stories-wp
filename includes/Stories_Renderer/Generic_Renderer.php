@@ -73,6 +73,8 @@ class Generic_Renderer extends Renderer {
 	/**
 	 * Renders the stories output for given attributes.
 	 *
+	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+	 *
 	 * @return string Rendered stories output.
 	 */
 	public function render() {
@@ -92,7 +94,7 @@ class Generic_Renderer extends Renderer {
 				style="<?php echo esc_attr( $container_style ); ?>"
 			>
 				<?php
-				foreach ( $this->story_posts as $key => $story ) {
+				foreach ( $this->story_posts as $story ) {
 					$this->render_single_story_content();
 					$this->next();
 				}
