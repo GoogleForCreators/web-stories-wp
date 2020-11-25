@@ -28,7 +28,7 @@ namespace Google\Web_Stories\Tests\Stories_Renderer;
 
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Tests\Test_Renderer;
-use Google\Web_Stories\Stories;
+use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Tests\Private_Access;
 use Google\Web_Stories\Stories_Renderer\Renderer as AbstractRenderer;
 

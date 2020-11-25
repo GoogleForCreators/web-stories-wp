@@ -18,7 +18,7 @@
 namespace Google\Web_Stories\Tests\Stories_Renderer;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Stories;
+use Google\Web_Stories\Story_Query as Stories;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Stories_Renderer\Generic_Renderer

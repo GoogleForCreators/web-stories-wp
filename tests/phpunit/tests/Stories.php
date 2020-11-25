@@ -17,7 +17,7 @@
 
 namespace Google\Web_Stories\Tests;
 
-use Google\Web_Stories\Stories as Testee;
+use Google\Web_Stories\Story_Query as Testee;
 use Google\Web_Stories\Stories_Renderer\Generic_Renderer;
 use Google\Web_Stories\Story_Post_Type;
 
