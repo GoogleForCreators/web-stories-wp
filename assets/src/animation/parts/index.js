@@ -47,6 +47,7 @@ import pulseProps from '../effects/pulse/animationProps';
 import rotateInProps from '../effects/rotateIn/animationProps';
 import whooshInProps from '../effects/whooshIn/animationProps';
 import zoomEffectProps from '../effects/zoom/animationProps';
+import dropEffectProps from '../effects/drop/animationProps';
 import backgroundZoomEffectProps from '../effects/backgroundZoom/animationProps';
 import backgroundPanEffectProps from '../effects/backgroundPan/animationProps';
 
@@ -161,6 +162,7 @@ export function getAnimationEffectProps(type) {
     [ANIMATION_EFFECTS.FADE_IN.value]: fadeInProps,
     [ANIMATION_EFFECTS.WHOOSH_IN.value]: whooshInProps,
     [ANIMATION_EFFECTS.ZOOM.value]: zoomEffectProps,
+    [ANIMATION_EFFECTS.DROP.value]: dropEffectProps,
     [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: backgroundZoomEffectProps,
     [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: backgroundPanEffectProps,
   };

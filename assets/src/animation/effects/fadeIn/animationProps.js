@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
 import { FIELD_TYPES } from '../../constants';
 import { AnimationInputPropTypes } from '../types';
 
-export const FlyInEffectInputPropTypes = {
+export const FadeInEffectInputPropTypes = {
   duration: PropTypes.shape(AnimationInputPropTypes),
 };
 

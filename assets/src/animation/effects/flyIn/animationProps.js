@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -45,5 +45,11 @@ export default {
       DIRECTION.RIGHT_TO_LEFT,
     ],
     defaultValue: DIRECTION.BOTTOM_TO_TOP,
+  },
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 600,
   },
 };
