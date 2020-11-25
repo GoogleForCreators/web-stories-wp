@@ -82,8 +82,6 @@ class HTML {
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
 		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
-			add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
-
 			return $markup;
 		}
 
