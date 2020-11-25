@@ -122,9 +122,11 @@ export function fauxStylesToCSS(styles, css) {
   if (!hasFauxSelection) {
     return null;
   }
-
-  return {
+  const style = {
     backgroundColor: 'rgba(169, 169, 169, 0.7)',
-    color: css?.color ? `var(--faux-selection-color, ${css.color})` : null,
   };
+  if (css?.color) {
+    style.color = `var(--faux-selection-color, ${css.color})`;
+  }
+  return style;
 }

@@ -70,7 +70,7 @@ const Wrapper = styled.div`
   ${elementWithBackgroundColor}
   ${elementWithBorderRadius}
 
-  --faux-selection-color: '';
+  --faux-selection-color: inherit;
 
   span {
     box-decoration-break: clone;
