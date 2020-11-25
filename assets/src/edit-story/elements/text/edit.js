@@ -214,6 +214,7 @@ function TextEdit({
 
   const wrapperRef = useRef(null);
   const highlightRef = useRef(null);
+  const highlightBgRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
   const boxRef = useRef();
@@ -347,6 +348,9 @@ function TextEdit({
     }
   });
 
+  const hasHighlightBackgroundTextMode =
+    backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+
   // For instant color change on selection.
   useCSSVarColorTransformHandler({
     id,
@@ -354,9 +358,13 @@ function TextEdit({
     cssVar: '--faux-selection-color',
     expectedStyle: 'color',
   });
+
+  const backgroundRef = hasHighlightBackgroundTextMode
+    ? highlightBgRef
+    : wrapperRef;
   useColorTransformHandler({
     id,
-    targetRef: wrapperRef,
+    targetRef: backgroundRef,
     expectedStyle: 'background',
   });
 
@@ -368,9 +376,6 @@ function TextEdit({
   const editorContent = editorState && getContentFromState(editorState);
   const wrapperBackgroundColor =
     backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor;
-
-  const hasHighlightBackgroundTextMode =
-    backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
 
   const wrapperProps = {
     backgroundColor: wrapperBackgroundColor,
@@ -388,6 +393,7 @@ function TextEdit({
         {editorContent && hasHighlightBackgroundTextMode && (
           <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
             <Highlight
+              ref={highlightBgRef}
               dangerouslySetInnerHTML={{ __html: editorContent }}
               {...textProps}
             />
