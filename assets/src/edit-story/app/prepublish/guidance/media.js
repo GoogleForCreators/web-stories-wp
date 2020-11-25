@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '../../../constants';
+import { PAGE_HEIGHT, PAGE_WIDTH, PAGE_RATIO } from '../../../constants';
 import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
@@ -133,12 +133,11 @@ export function mediaElementResolution(element) {
 }
 
 function videoElementResolution(element) {
-  const videoResolutionLow =
-    element.resource?.sizes?.full?.height <= MIN_VIDEO_HEIGHT &&
-    element.resource?.sizes?.full?.width <= MIN_VIDEO_WIDTH;
+  const height = element.resource?.sizes?.full?.height;
+  const width = element.resource?.sizes?.full?.width;
+
   const videoResolutionHigh =
-    element.resource?.sizes?.full?.height >= MAX_VIDEO_HEIGHT &&
-    element.resource?.sizes?.full?.width >= MAX_VIDEO_WIDTH;
+    height >= MAX_VIDEO_HEIGHT && width >= MAX_VIDEO_WIDTH;
 
   if (videoResolutionHigh) {
     return {
@@ -148,6 +147,9 @@ function videoElementResolution(element) {
       help: MESSAGES.MEDIA.VIDEO_RESOLUTION_TOO_HIGH.HELPER_TEXT,
     };
   }
+
+  const videoResolutionLow =
+    height <= MIN_VIDEO_HEIGHT && width <= MIN_VIDEO_WIDTH;
 
   if (videoResolutionLow) {
     return {
@@ -162,12 +164,21 @@ function videoElementResolution(element) {
 }
 
 function lowImageResolution(element, { height, width }) {
-  if (!isFinite(height) || !isFinite(width)) {
-    return undefined;
-  }
+  let heightResTooLow;
+  let widthResTooLow;
 
-  const heightResTooLow = height < 2 * element.height;
-  const widthResTooLow = width < 2 * element.width;
+  // If image is a background, check for 2x resolution constrained within full page
+  if (element.isBackground) {
+    const heightConstrained = width / height > PAGE_RATIO;
+    if (heightConstrained) {
+      heightResTooLow = height < 2 * PAGE_HEIGHT;
+    } else {
+      widthResTooLow = width < 2 * PAGE_WIDTH;
+    }
+  } else {
+    heightResTooLow = height < 2 * element.height;
+    widthResTooLow = width < 2 * element.width;
+  }
 
   if (heightResTooLow || widthResTooLow) {
     return {

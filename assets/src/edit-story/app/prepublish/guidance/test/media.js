@@ -145,6 +145,103 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
   });
 
+  it("should return a undefined if an image element's resolution is high enough (2x pixel density)", () => {
+    const highResolutionImageElement = {
+      id: 910,
+      type: 'image',
+      height: 1000,
+      width: 1000,
+      resource: {
+        sizes: {
+          full: {
+            height: 2000,
+            width: 2000,
+          },
+        },
+      },
+    };
+
+    const result = mediaGuidance.mediaElementResolution(
+      highResolutionImageElement
+    );
+    expect(result).toBeUndefined();
+  });
+
+  it("should return a message if a height-constrained background image element's resolution is too low (<2x pixel density)", () => {
+    const tooLowResolutionImageElement = {
+      id: 910,
+      type: 'image',
+      height: 30,
+      width: 200,
+      resource: {
+        sizes: {
+          full: {
+            height: 618,
+            width: 4120,
+          },
+        },
+      },
+      isBackground: true,
+    };
+
+    const result = mediaGuidance.mediaElementResolution(
+      tooLowResolutionImageElement
+    );
+    expect(result).not.toBeUndefined();
+    expect(result.message).toMatchInlineSnapshot(`"Low image resolution"`);
+    expect(result.type).toStrictEqual('guidance');
+    expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
+  });
+
+  it("should return a message if a width-constrained background image element's resolution is too low (<2x pixel density)", () => {
+    const tooLowResolutionImageElement = {
+      id: 910,
+      type: 'image',
+      height: 300,
+      width: 20,
+      resource: {
+        sizes: {
+          full: {
+            height: 6180,
+            width: 412,
+          },
+        },
+      },
+      isBackground: true,
+    };
+
+    const result = mediaGuidance.mediaElementResolution(
+      tooLowResolutionImageElement
+    );
+    expect(result).not.toBeUndefined();
+    expect(result.message).toMatchInlineSnapshot(`"Low image resolution"`);
+    expect(result.type).toStrictEqual('guidance');
+    expect(result.elementId).toStrictEqual(tooLowResolutionImageElement.id);
+  });
+
+  it("should return undefined if a background image element's resolution high enough (2x pixel density)", () => {
+    const highResolutionImageElement = {
+      id: 910,
+      type: 'image',
+      height: 30,
+      width: 20,
+      resource: {
+        sizes: {
+          full: {
+            height: 1236,
+            width: 824,
+          },
+        },
+      },
+      isBackground: true,
+    };
+
+    const result = mediaGuidance.mediaElementResolution(
+      highResolutionImageElement
+    );
+    expect(result).toBeUndefined();
+  });
+
   it('should return a message if any video resolution is too high to display on most mobile devices (>4k)', () => {
     const tooHighVideoResolution = {
       id: 101,
