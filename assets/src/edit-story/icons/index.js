@@ -66,7 +66,6 @@ export { ReactComponent as OverlayLinear } from './overlay_linear.svg';
 export { ReactComponent as OverlayNone } from './overlay_none.svg';
 export { ReactComponent as OverlayRadial } from './overlay_radial.svg';
 export { ReactComponent as OverlaySolid } from './overlay_solid.svg';
-export { ReactComponent as PageLayouts } from './page_layouts.svg';
 export { ReactComponent as Pause } from './pause.svg';
 export { ReactComponent as Play } from './play.svg';
 export { ReactComponent as PlayCircular } from './play_circular.svg';

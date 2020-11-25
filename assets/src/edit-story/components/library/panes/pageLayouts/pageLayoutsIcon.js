@@ -27,15 +27,15 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { PageLayouts } from '../../../../icons';
+import { Layout } from '../../../../../design-system/icons/editor';
 
-const StyledPageLayouts = styled(PageLayouts)({
+const StyledLayoutIcon = styled(Layout)({
   transform: 'scale(0.71)',
 });
 
 function PageLayoutsIcon() {
   return (
-    <StyledPageLayouts aria-label={__('Page layouts library', 'web-stories')} />
+    <StyledLayoutIcon aria-label={__('Page layouts library', 'web-stories')} />
   );
 }
 
