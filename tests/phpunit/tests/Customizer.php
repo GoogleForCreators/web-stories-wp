@@ -216,7 +216,7 @@ class Customizer extends \WP_UnitTestCase {
 			'show_stories' => true,
 		];
 
-		$output = get_echo( [ $this->customizer, 'render_stories' ] );
+		$output = $this->customizer->render_stories();
 
 		$this->assertEmpty( $output );
 
@@ -228,7 +228,7 @@ class Customizer extends \WP_UnitTestCase {
 			]
 		);
 
-		$output = get_echo( [ $this->customizer, 'render_stories' ] );
+		$output = $this->customizer->render_stories();
 
 		$this->assertNotEmpty( $output );
 

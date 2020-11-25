@@ -528,7 +528,7 @@ class Customizer {
 	/**
 	 * Renders web stories based on the customizer selected options.
 	 *
-	 * @return string
+	 * @return string|null
 	 */
 	public static function render_stories() {
 		$options = get_option( 'story-options' );
