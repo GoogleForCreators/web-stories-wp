@@ -580,7 +580,7 @@ class Customizer {
 
 		$story_arguments['class'] = 'web-stories-list--customizer';
 
-		$stories = new Stories( $story_arguments, $query_arguments );
+		$stories = new Story_Query( $story_arguments, $query_arguments );
 
 		return $stories->render();
 
