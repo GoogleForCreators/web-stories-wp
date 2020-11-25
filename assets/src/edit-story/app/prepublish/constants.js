@@ -238,7 +238,7 @@ export const MESSAGES = {
       HELPER_TEXT: sprintf(
         /* translators: 1: minimum number of story characters. */
         __('Story title should have %d characters or fewer.', 'web-stories'),
-        MAX_STORY_CHARACTERS
+        MAX_STORY_TITLE_LENGTH_CHARS
       ),
     },
   },

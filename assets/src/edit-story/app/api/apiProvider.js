@@ -42,7 +42,7 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, {
+      const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
         _embed: 'wp:featuredmedia,author',
       });
@@ -92,7 +92,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}`,
+        path: `${stories}${storyId}/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -110,7 +110,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}/autosaves`,
+        path: `${stories}${storyId}/autosaves/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -190,7 +190,7 @@ function APIProvider({ children }) {
   const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: `${media}${mediaId}/`,
         data,
         method: 'POST',
       });
@@ -212,7 +212,7 @@ function APIProvider({ children }) {
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: addQueryArgs(`${media}/${mediaId}`, { _method: 'DELETE' }),
+        path: addQueryArgs(`${media}${mediaId}/`, { _method: 'DELETE' }),
         data: { force: true },
         method: 'POST',
       });

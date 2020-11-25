@@ -27,7 +27,6 @@
 namespace Google\Web_Stories;
 
 use WP_REST_Request;
-use WP_REST_Server;
 use WP_Error;
 use WP_Site;
 
@@ -146,7 +145,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  * Append result of internal request to REST API for purpose of preloading data to be attached to a page.
  * Expected to be called in the context of `array_reduce`.
  *
- * Like rest_preload_api_request() in core, but embeds links.
+ * Like rest_preload_api_request() in core, but embeds links and removes trailing slashes.
  *
  * @link  https://core.trac.wordpress.org/ticket/51722
  *
@@ -186,7 +185,7 @@ function rest_preload_api_request( $memo, $path ) {
 		return $memo;
 	}
 
-	$request = new WP_REST_Request( $method, $path_parts['path'] );
+	$request = new WP_REST_Request( $method, untrailingslashit( $path_parts['path'] ) );
 	$embed   = false;
 	if ( ! empty( $path_parts['query'] ) ) {
 		$query_params = [];

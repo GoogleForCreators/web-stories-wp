@@ -37,7 +37,7 @@ const StyledPill = styled.button(
       ? theme.colors.interactiveBg.primaryNormal
       : theme.colors.opacity.footprint};
     border: none;
-    border-radius: 50px;
+    border-radius: ${theme.borders.radius.x_large};
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     color: ${isActive ? theme.colors.bg.primary : theme.colors.fg.secondary};
