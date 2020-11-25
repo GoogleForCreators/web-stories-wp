@@ -220,6 +220,7 @@ function TextEdit({
   const boxRef = useRef();
   const contentRef = useRef();
   const editorHeightRef = useRef(0);
+  const outsideBorderRef = useRef(null);
 
   // x, y, height, rotationAngle changes should not update the content while in edit mode.
   // updateContent should be only called on unmount.
@@ -368,6 +369,13 @@ function TextEdit({
     expectedStyle: 'background',
   });
 
+  // Inner and center color are handled separately, add transform for outside border if relevant.
+  useColorTransformHandler({
+    id,
+    targetRef: isOutsideBorder(border) ? outsideBorderRef : null,
+    expectedStyle: 'border-color',
+  });
+
   const {
     state: { editorState },
     actions: { getContentFromState },
@@ -382,7 +390,11 @@ function TextEdit({
   };
 
   return (
-    <OutsideBorder border={border} borderRadius={borderRadius}>
+    <OutsideBorder
+      ref={outsideBorderRef}
+      border={border}
+      borderRadius={borderRadius}
+    >
       <Wrapper
         ref={wrapperRef}
         onClick={onClick}
