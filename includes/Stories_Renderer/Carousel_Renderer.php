@@ -28,6 +28,10 @@ namespace Google\Web_Stories\Stories_Renderer;
 
 /**
  * Carousel_Renderer class.
+ *
+ * Note: This class is useful to render stories in carousel view type.
+ * Do not instantiate this class directly, pass `view_type` argument
+ * to `Story_Query` which will handle the instantiation of the class.
  */
 class Carousel_Renderer extends Renderer {
 

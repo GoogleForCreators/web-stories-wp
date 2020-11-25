@@ -34,7 +34,7 @@ use WP_Query;
 /**
  * Stories class.
  */
-class Stories {
+class Story_Query {
 
 	/**
 	 * Story attributes

@@ -28,7 +28,7 @@ namespace Google\Web_Stories\Stories_Renderer;
 
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Stories;
+use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Assets;
 use Iterator;
@@ -417,7 +417,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$width                   = ( ! empty( $story_data->get_width() ) ) ? absint( $story_data->get_width() ) : 360;
 		$player_style            = sprintf( 'width: %1$spx;height: %2$spx', $width, $height );
 		$story_player_attributes = '';
-		$poster_image_url 	     = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
+		$poster_image_url        = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
 		$poster_style            = '';
 
 		if ( $this->is_amp_request() ) {
