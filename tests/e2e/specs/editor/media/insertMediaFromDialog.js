@@ -22,7 +22,7 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../../utils';
+import { createNewStory, clickButton } from '../../../utils';
 
 const MODAL = '.media-modal';
 
@@ -39,21 +39,12 @@ describe('Inserting Media from Dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    const btnTab = '#menu-item-browse';
-    await page.waitForSelector(btnTab);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnTab);
-    const btnSelector =
-      '.attachments-browser .attachments .attachment:first-of-type';
-    await page.waitForSelector(btnSelector);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnSelector);
-    const btnSelect = '.media-button-select';
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnSelect);
+    await expect(page).toClick('button', { text: 'Media Library' });
+
+    await clickButton(
+      '.attachments-browser .attachments .attachment:first-of-type'
+    );
+    await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 

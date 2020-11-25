@@ -30,6 +30,7 @@ assignees: ''
 <!-- Please complete the following information. -->
 
 - Plugin Version:
+- WordPress Version:
 - Operating System:
 - Browser:
 

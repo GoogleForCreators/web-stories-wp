@@ -229,7 +229,7 @@ const MediaElement = ({
   return (
     <Container
       ref={ref}
-      data-testid="mediaElement"
+      data-testid={`mediaElement-${type}`}
       data-id={resourceId}
       className={'mediaElement'}
       width={width}
