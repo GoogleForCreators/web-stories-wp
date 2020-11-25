@@ -237,7 +237,6 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
       />
       <div className={`${className} web-stories-embed align${align}`}>
         <ResizableBox
-          showHandle={isSelected}
           size={{
             width,
             height,

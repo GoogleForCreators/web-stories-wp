@@ -25,7 +25,6 @@ import PropTypes from 'prop-types';
 import { __, sprintf } from '@wordpress/i18n';
 import {
   Button,
-  ToolbarGroup,
   BaseControl,
   TextControl,
   PanelBody,
@@ -79,14 +78,13 @@ const EmbedControls = (props) => {
   return (
     <>
       <BlockControls>
-        <ToolbarGroup>
+
           <Button
             className="components-toolbar__control"
             label={__('Edit URL', 'web-stories')}
             icon="edit"
             onClick={switchBackToURLInput}
           />
-        </ToolbarGroup>
       </BlockControls>
       <InspectorControls>
         <PanelBody title={__('Embed Settings', 'web-stories')}>
