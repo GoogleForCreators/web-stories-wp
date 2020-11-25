@@ -85,8 +85,12 @@ function PageLayouts(props) {
 }
 
 PageLayouts.propTypes = {
-  parentRef: PropTypes.object,
-  pages: PropTypes.array,
+  parentRef: PropTypes.object.isRequired,
+  pages: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default PageLayouts;
