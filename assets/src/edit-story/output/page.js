@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -37,10 +38,12 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
+  const enableAnimation = useFeature('enableAnimation');
   const { id, animations, elements, backgroundColor } = page;
 
   const [backgroundElement, ...regularElements] = elements;
-  const animationDuration = getTotalDuration({ animations }) / 1000;
+  const animationDuration =
+    enableAnimation && getTotalDuration({ animations }) / 1000;
   const longestMediaElement = getLongestMediaElement(
     elements,
     animationDuration
