@@ -29,8 +29,8 @@ export const MAX_STORY_TITLE_LENGTH_WORDS = 10;
 export const MAX_STORY_TITLE_LENGTH_CHARS = 40;
 const COVER_DIMENSION_WIDTH_PX = 640;
 const COVER_DIMENSION_HEIGHT_PX = 853;
-const ASPECT_RATIO_LEFT = 3;
-const ASPECT_RATIO_RIGHT = 4;
+export const ASPECT_RATIO_LEFT = 3;
+export const ASPECT_RATIO_RIGHT = 4;
 const PUBLISHER_LOGO_DIMENSION = 96;
 const PUBLISHER_LOGO_RATIO = 1;
 const MIN_FONT_SIZE = 12;
@@ -91,11 +91,8 @@ export const MESSAGES = {
     COVER_WRONG_ASPECT_RATIO: {
       MAIN_TEXT: __('Story cover image wrong aspect ratio', 'web-stories'),
       HELPER_TEXT: sprintf(
-        /* translators: 1: minimum cover dimension width X minimum cover dimension height. 2: cover dimensions aspect ratio. */
-        __(
-          'Should be at least %1$s and maintain a %2$s aspect ratio.',
-          'web-stories'
-        ),
+        /* translators: 1: cover dimensions aspect ratio. */
+        __('Should maintain a %2$s aspect ratio.', 'web-stories'),
         `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
         `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
       ),
