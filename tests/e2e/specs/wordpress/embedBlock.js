@@ -87,36 +87,4 @@ describe('Embed Block', () => {
 
    // await expect(page).toMatch('Embed Settings');
   });
-
-  describe('AMP validation', () => {
-    withDisabledToolbarOnFrontend();
-
-    it('should produce valid AMP when using the AMP plugin', async () => {
-      await activatePlugin('amp');
-
-      await createNewPost({
-        showWelcomeGuide: false,
-      });
-
-      await setPostContent(EMBED_BLOCK_CONTENT);
-
-      const postPermalink = await publishPost();
-
-      expect(postPermalink).not.toBeNull();
-      expect(postPermalink).toStrictEqual(expect.any(String));
-      /**
-      const ampPostPermaLink = postPermalink.includes('?')
-        ? `${postPermalink}&amp`
-        : `${postPermalink}?amp`;
-
-      await Promise.all([
-        page.goto(ampPostPermaLink),
-        page.waitForNavigation(),
-      ]);
-
-      await expect(page).toBeValidAMP();
-       */
-      await deactivatePlugin('amp');
-    });
-  });
 });
