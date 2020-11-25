@@ -161,11 +161,13 @@ function videoElementResolution(element) {
   return undefined;
 }
 
-function imageElementResolution(element) {
-  const heightResTooLow =
-    element.resource?.sizes?.full?.height < 2 * element.height;
-  const widthResTooLow =
-    element.resource?.sizes?.full?.width < 2 * element.width;
+function lowImageResolution(element, { height, width }) {
+  if (!isFinite(height) || !isFinite(width)) {
+    return undefined;
+  }
+
+  const heightResTooLow = height < 2 * element.height;
+  const widthResTooLow = width < 2 * element.width;
 
   if (heightResTooLow || widthResTooLow) {
     return {
@@ -175,25 +177,23 @@ function imageElementResolution(element) {
       help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
     };
   }
+
   return undefined;
+}
+
+function imageElementResolution(element) {
+  return lowImageResolution(element, {
+    height: element.resource?.sizes?.full?.height,
+    width: element.resource?.sizes?.full?.width,
+  });
 }
 
 function gifElementResolution(element) {
   // gif/output uses the MP4 video provided by the 3P Media API for displaying gifs
-  const heightResTooLow =
-    element.resource?.output?.sizes?.mp4?.full?.height < 2 * element.height;
-  const widthResTooLow =
-    element.resource?.output?.sizes?.mp4?.full?.width < 2 * element.width;
-
-  if (heightResTooLow || widthResTooLow) {
-    return {
-      type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      elementId: element.id,
-      message: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
-      help: MESSAGES.MEDIA.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
-    };
-  }
-  return undefined;
+  return lowImageResolution(element, {
+    height: element.resource?.output?.sizes?.mp4?.full?.height,
+    width: element.resource?.output?.sizes?.mp4?.full?.width,
+  });
 }
 
 /**
