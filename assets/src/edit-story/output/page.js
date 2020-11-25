@@ -26,7 +26,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { StoryAnimation } from '../../animation';
+import { getTotalDuration, StoryAnimation } from '../../animation';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
 import StoryPropTypes from '../types';
 import generatePatternStyles from '../utils/generatePatternStyles';
@@ -40,7 +40,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const { id, animations, elements, backgroundColor } = page;
 
   const [backgroundElement, ...regularElements] = elements;
-  const longestMediaElement = getLongestMediaElement(elements);
+  const animationDuration = getTotalDuration({ animations }) / 1000;
+  const longestMediaElement = getLongestMediaElement(
+    elements,
+    animationDuration
+  );
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
@@ -55,7 +59,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`
-    : `${defaultPageDuration}s`;
+    : `${animationDuration || defaultPageDuration}s`;
 
   const hasPageAttachment = page.pageAttachment?.url?.length > 0;
 

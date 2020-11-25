@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { getTotalDuration } from './getTotalDuration';
-export { getMediaBoundOffsets, hasOffsets } from './mediaPositions';
-export { clamp, lerp, progress } from './range';
+
+export function getTotalDuration({ animations = [] }) {
+  return animations.reduce(
+    (total, { duration = 0, delay = 0 }) => Math.max(total, duration + delay),
+    0
+  );
+}
