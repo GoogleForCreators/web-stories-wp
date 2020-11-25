@@ -14,8 +14,13 @@ jobs:
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
-        browser: ['chrome']
-        wp: ['latest', '5.4']
+        include:
+          - browser: 'chrome'
+            wp: 'latest'
+            coverage: true
+          - browser: 'chrome'
+            wp: '5.4'
+            coverage: false
 
     steps:
       - name: Checkout
@@ -89,11 +94,11 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
-        if: ${{ matrix.wp == 'latest' }}
+        if: ${{ matrix.coverage }}
 
       - name: Run E2E tests
         run: npm run test:e2e
-        if: ${{ matrix.wp != 'latest' }}
+        if: ${{ ! matrix.coverage }}
 
       - name: Stop Docker environment
         run: npm run env:stop
