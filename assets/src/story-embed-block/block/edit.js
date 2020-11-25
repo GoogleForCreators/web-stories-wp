@@ -26,7 +26,7 @@ import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { ResizableBox } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
+//import { useViewportMatch } from '@wordpress/compose';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
@@ -61,7 +61,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const showLoadingIndicator = isFetchingData;
   const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
 
-  const isResizable = useViewportMatch('medium');
+  const isResizable = true; //useViewportMatch('medium');
 
   const ref = useRef();
 
@@ -165,7 +165,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   if (showPlaceholder) {
     return (
       <EmbedPlaceholder
-        icon={icon}
+       // icon={icon}
         label={label}
         value={localURL}
         onSubmit={onSubmit}

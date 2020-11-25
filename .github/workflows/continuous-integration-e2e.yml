@@ -15,7 +15,7 @@ jobs:
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
-        wp: ['latest', '5.4']
+        wp: ['latest', '5.3.4']
 
     steps:
       - name: Checkout
