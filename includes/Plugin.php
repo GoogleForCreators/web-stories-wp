@@ -152,6 +152,13 @@ class Plugin {
 	public $integrations = [];
 
 	/**
+	 * Customizer.
+	 *
+	 * @var Customizer
+	 */
+	public $customizer;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -177,6 +184,9 @@ class Plugin {
 
 		$this->admin = new Admin();
 		add_action( 'admin_init', [ $this->admin, 'init' ] );
+
+		$this->customizer = new Customizer();
+		add_action( 'init', [ $this->customizer, 'init' ] );
 
 		$this->media = new Media();
 		add_action( 'init', [ $this->media, 'init' ] );
