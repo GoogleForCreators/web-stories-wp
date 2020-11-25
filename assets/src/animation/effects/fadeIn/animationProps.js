@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -30,21 +30,15 @@ import PropTypes from 'prop-types';
 import { FIELD_TYPES } from '../../constants';
 import { AnimationInputPropTypes } from '../types';
 
-export const PulseEffectInputPropTypes = {
-  scale: PropTypes.shape(AnimationInputPropTypes),
-  iterations: PropTypes.shape(AnimationInputPropTypes),
+export const FlyInEffectInputPropTypes = {
+  duration: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  scale: {
-    label: __('Scale', 'web-stories'),
-    tooltip: 'Valid values are greater than or equal to 0',
-    type: FIELD_TYPES.FLOAT,
-    defaultValue: 0.05,
-  },
-  iterations: {
-    label: __('# of Pulses', 'web-stories'),
+  duration: {
+    label: __('Duration', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
-    defaultValue: 1,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 600,
   },
 };
