@@ -34,6 +34,16 @@ export const HexPropType = PropTypes.shape({
   a: PropTypes.number,
 });
 
+export const BorderPropTypes = PropTypes.shape({
+  color: HexPropType.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  right: PropTypes.number,
+  bottom: PropTypes.number,
+  locked: PropTypes.bool.isRequired,
+  position: PropTypes.string.isRequired,
+});
+
 export const ColorStopPropType = PropTypes.shape({
   color: HexPropType.isRequired,
   position: PropTypes.number.isRequired,
@@ -66,12 +76,20 @@ StoryPropTypes.story = PropTypes.shape({
   storyId: PropTypes.number,
   title: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  author: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    name: PropTypes.string.isRequired,
+  }),
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
   excerpt: PropTypes.string.isRequired,
-  featuredMedia: PropTypes.number.isRequired,
+  featuredMedia: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    url: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+  }),
   password: PropTypes.string.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
@@ -358,12 +376,12 @@ export default StoryPropTypes;
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
  * @property {Array<Page>} pages Array of all pages.
- * @property {number} author User ID of story author.
+ * @property {Object} author Story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
  * @property {string} modified The modified date of the story.
  * @property {string} content AMP HTML content.
  * @property {string} excerpt Short description.
- * @property {number} featuredMedia Featured media ID.
+ * @property {Object} featuredMedia Featured media object.
  * @property {string} password Password
  */

@@ -32,9 +32,16 @@ export const Text = styled.p`
     const asLink =
       as === 'a' &&
       css`
-        color: ${theme.colors.accent.secondary};
+        color: ${theme.colors.fg.linkNormal};
         text-decoration: none;
         cursor: pointer;
+        &:hover {
+          color: ${theme.colors.fg.linkHover};
+        }
+        &:focus {
+          outline: none;
+        }
+        ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
       `;
     return css`
       ${themeHelpers.expandPresetStyles({
@@ -52,10 +59,10 @@ export const Text = styled.p`
 Text.propTypes = {
   as: PropTypes.oneOf(['p', 'a', 'span']),
   isBold: PropTypes.bool,
-  size: PropTypes.oneOf(THEME_CONSTANTS.TEXT_SIZES),
+  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };
 Text.defaultProps = {
   as: 'p',
   isBold: false,
-  size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

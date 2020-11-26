@@ -130,7 +130,16 @@ function getGifUrls(m) {
     throw new Error('Invalid number of urls for asset. Need at least 3: ' + m);
   }
 
-  const imageSizesFromBiggest = sortMediaBySize(m, m.imageUrls);
+  const previewUrl = m.imageUrls
+    .filter(({ imageName }) => imageName.endsWith('preview'))
+    .map(({ url }) => url)
+    .shift();
+
+  // Prevents the static preview image from appearing in this list
+  // which should only contain animated GIFs.
+  const imageUrls = m.imageUrls.filter(({ url }) => url !== previewUrl);
+
+  const imageSizesFromBiggest = sortMediaBySize(m, imageUrls);
   const webmSizes = sortMediaBySize(
     m,
     m.videoUrls.filter(({ mimeType }) => mimeType === 'image/webm')
@@ -164,6 +173,7 @@ function getGifUrls(m) {
         preview: mp4Sizes[webmSizes.length - 1],
       },
     },
+    previewUrl,
   };
 }
 
@@ -197,10 +207,9 @@ function getVideoUrls(m) {
 function sortMediaBySize(m, mediaUrls) {
   const sortedUrls = mediaUrls.sort((x, y) => (y.width ?? 0) - (x.width ?? 0));
   const originalSize = getOriginalSize(sortedUrls);
-  const sizesFromBiggest = sortedUrls.map((u) =>
+  return sortedUrls.map((u) =>
     mediaUrlToImageSizeDescription(m, u, originalSize)
   );
-  return sizesFromBiggest;
 }
 
 function getOriginalSize(mediaUrls) {
@@ -289,8 +298,8 @@ function getVideoResourceFromMedia3p(m) {
 }
 
 function getGifResourceFromMedia3p(m) {
-  const { imageUrls, videoUrls } = getGifUrls(m);
-  const resource = createResource({
+  const { imageUrls, videoUrls, previewUrl } = getGifUrls(m);
+  return createResource({
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
@@ -305,10 +314,10 @@ function getGifResourceFromMedia3p(m) {
       mimeType: videoUrls.mp4.full.mime_type,
       sizes: videoUrls,
       src: videoUrls.mp4.full.source_url,
+      poster: previewUrl,
     },
     attribution: getAttributionFromMedia3p(m),
   });
-  return resource;
 }
 
 /**

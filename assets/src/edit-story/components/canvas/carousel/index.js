@@ -55,11 +55,8 @@ import {
   COMPACT_THUMB_WIDTH,
 } from '../layout';
 import { PAGE_WIDTH, PAGE_HEIGHT, SCROLLBAR_WIDTH } from '../../../constants';
-import useCanvas from '../useCanvas';
 import WithTooltip from '../../tooltip';
 import KeyboardShortcutsMenu from '../../keyboardShortcutsMenu';
-import { ToggleButton } from '../../form';
-import { SafeZone } from '../../../icons';
 import CompactIndicator from './compactIndicator';
 import useCarouselKeys from './useCarouselKeys';
 
@@ -136,21 +133,6 @@ const StyledGridViewButton = styled(GridViewButton).attrs({
   height: '24',
   width: '24',
 })``;
-
-const SafeZoneToggle = styled(ToggleButton).attrs({
-  iconHeight: 24,
-  iconWidth: 24,
-})`
-  height: 24px;
-  width: 24px;
-  margin-bottom: 12px;
-
-  & label {
-    height: 24px;
-    width: 24px;
-    border-radius: 2px;
-  }
-`;
 
 const PageList = styled(Reorderable).attrs({
   area: 'carousel',
@@ -256,12 +238,6 @@ function Carousel() {
     }) => ({ pages, currentPageId, setCurrentPage, arrangePage })
   );
   const { isRTL, version } = useConfig();
-  const { showSafeZone, setShowSafeZone } = useCanvas(
-    ({ state: { showSafeZone }, actions: { setShowSafeZone } }) => ({
-      showSafeZone,
-      setShowSafeZone,
-    })
-  );
   const [hasHorizontalOverflow, setHasHorizontalOverflow] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [isGridViewOpen, setIsGridViewOpen] = useState(false);
@@ -483,25 +459,6 @@ function Carousel() {
             <OverflowButtons>
               <KeyboardShortcutsMenu />
             </OverflowButtons>
-            <WithTooltip
-              title={
-                showSafeZone
-                  ? __('Disable Safe Zone', 'web-stories')
-                  : __('Enable Safe Zone', 'web-stories')
-              }
-              placement="left"
-            >
-              <SafeZoneToggle
-                icon={<SafeZone />}
-                value={showSafeZone}
-                onChange={setShowSafeZone}
-                aria-label={
-                  showSafeZone
-                    ? __('Disable Safe Zone', 'web-stories')
-                    : __('Enable Safe Zone', 'web-stories')
-                }
-              />
-            </WithTooltip>
             <WithTooltip
               title={__('Grid View', 'web-stories')}
               placement="left"

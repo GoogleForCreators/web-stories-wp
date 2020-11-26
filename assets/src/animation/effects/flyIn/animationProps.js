@@ -37,7 +37,7 @@ export const FlyInEffectInputPropTypes = {
 export default {
   flyInDir: {
     label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
+    type: FIELD_TYPES.DIRECTION_PICKER,
     values: [
       DIRECTION.TOP_TO_BOTTOM,
       DIRECTION.BOTTOM_TO_TOP,

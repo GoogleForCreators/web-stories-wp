@@ -23,9 +23,17 @@ import { getDefinitionForType } from '../elements';
 import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
 import { getBox } from '../units/dimensions';
+import {
+  getBorderPositionCSS,
+  getBorderRadius,
+  getBorderStyle,
+  isOutsideBorder,
+  shouldDisplayBorder,
+} from '../components/elementBorder/utils';
+import ElementBorder from '../components/elementBorder/output';
 
 function OutputElement({ element }) {
-  const { id, opacity, type } = element;
+  const { id, opacity, type, borderRadius, border } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
@@ -41,17 +49,30 @@ function OutputElement({ element }) {
         top: `${y}%`,
         width: `${width}%`,
         height: `${height}%`,
+        ...(isOutsideBorder(border)
+          ? getBorderPositionCSS({
+              ...border,
+              width: `${width}%`,
+              height: `${height}%`,
+              posTop: `${y}%`,
+              posLeft: `${x}%`,
+              skipOutsideBorder: false,
+            })
+          : null),
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
         opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
       }}
     >
       <StoryAnimation.AMPWrapper target={id}>
         <WithMask
-          className="mask"
+          className={element.type === 'text' ? undefined : 'mask'}
           element={element}
           box={box}
           id={'el-' + id}
           style={{
+            ...(isOutsideBorder(border)
+              ? getBorderStyle({ ...border, borderRadius, opacity })
+              : null),
             pointerEvents: 'initial',
             width: '100%',
             height: '100%',
@@ -59,6 +80,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
+            ...getBorderRadius({ border, borderRadius }),
           }}
           skipDefaultMask
         >
@@ -76,6 +98,11 @@ function OutputElement({ element }) {
             <Output element={element} box={box} />
           </WithLink>
         </WithMask>
+        {!isOutsideBorder(border) && shouldDisplayBorder(element) && (
+          <ElementBorder
+            border={{ ...element.border, borderRadius, opacity }}
+          />
+        )}
       </StoryAnimation.AMPWrapper>
     </div>
   );

@@ -29,7 +29,7 @@ import RichTextContext from '../../richText/context';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import DropDown from '../../form/dropDown';
-import FontPicker from '../../fontPicker';
+import AdvancedDropDown from '../../form/advancedDropDown';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
@@ -37,7 +37,7 @@ import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
 jest.mock('../../form/dropDown');
-jest.mock('../../fontPicker');
+jest.mock('../../form/advancedDropDown');
 jest.mock('../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
@@ -139,7 +139,7 @@ describe('Panels/TextStyle', () => {
 
     controls = {};
     DropDown.mockImplementation(FakeControl);
-    FontPicker.mockImplementation(FakeControl);
+    AdvancedDropDown.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });
 
@@ -488,7 +488,7 @@ describe('Panels/TextStyle', () => {
   describe('FontControls', () => {
     it('should select font', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      await act(() => controls.font.onChange('Neu Font'));
+      await act(() => controls.font.onChange({ id: 'Neu Font' }));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
           font: {
@@ -520,30 +520,30 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should select font size', async () => {
+    it('should select font size', () => {
       const { getByRole, pushUpdate } = renderTextStyle([textElement]);
       const input = getByRole('textbox', { name: 'Font size' });
 
-      await fireEvent.change(input, { target: { value: '32' } });
-      await fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+      fireEvent.change(input, { target: { value: '32' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({ fontSize: 32 });
     });
 
-    it('should not update font size if empty string is submitted', async () => {
+    it('should not update font size if empty string is submitted', () => {
       const { getByRole, pushUpdate } = renderTextStyle([textElement]);
       const input = getByRole('textbox', { name: 'Font size' });
       const originalFontsize = parseInt(input.value);
-      await fireEvent.change(input, { target: { value: '' } });
-      await fireEvent.keyDown(input, { key: 'Enter', which: 13 });
+      fireEvent.change(input, { target: { value: '' } });
+      fireEvent.keyDown(input, { key: 'Enter', which: 13 });
       expect(pushUpdate).toHaveBeenCalledWith({
         fontSize: originalFontsize,
       });
     });
 
-    it('should set the text bold when the key command is pressed', async () => {
+    it('should set the text bold when the key command is pressed', () => {
       const { pushUpdate, container } = renderTextStyle([textElement]);
 
-      await fireEvent.keyDown(container, {
+      fireEvent.keyDown(container, {
         key: 'b',
         which: 66,
         ctrlKey: true,
@@ -559,10 +559,10 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should set the text underline when the key command is pressed', async () => {
+    it('should set the text underline when the key command is pressed', () => {
       const { pushUpdate, container } = renderTextStyle([textElement]);
 
-      await fireEvent.keyDown(container, {
+      fireEvent.keyDown(container, {
         key: 'u',
         which: 85,
         ctrlKey: true,
@@ -579,10 +579,10 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    it('should set the text italics when the key command is pressed', async () => {
+    it('should set the text italics when the key command is pressed', () => {
       const { pushUpdate, container } = renderTextStyle([textElement]);
 
-      await fireEvent.keyDown(container, {
+      fireEvent.keyDown(container, {
         key: 'i',
         which: 73,
         ctrlKey: true,

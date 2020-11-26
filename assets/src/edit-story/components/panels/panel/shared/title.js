@@ -80,6 +80,7 @@ const Heading = styled.span`
   font-weight: 500;
   font-size: 14px;
   line-height: 19px;
+  width: 100%;
 `;
 
 const HeaderActions = styled.div`

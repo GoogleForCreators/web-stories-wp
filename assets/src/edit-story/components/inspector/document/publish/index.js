@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -29,13 +29,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, DropDown, Label, Media, Required } from '../../../form';
+import { Row, AdvancedDropDown, Label, Media, Required } from '../../../form';
 import useInspector from '../../../inspector/useInspector';
 import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 import PanelTitle from '../../../panels/panel/shared/title';
 import PanelContent from '../../../panels/panel/shared/content';
 import Panel from '../../../panels/panel/panel';
+import { useAPI } from '../../../../app/api';
 import PublishTime from './publishTime';
 
 const LabelWrapper = styled.div`
@@ -52,6 +53,9 @@ const MediaWrapper = styled.div`
 
 function PublishPanel() {
   const {
+    actions: { getAuthors },
+  } = useAPI();
+  const {
     state: { tab, users, isUsersLoading },
     actions: { loadUsers },
   } = useInspector();
@@ -59,26 +63,33 @@ function PublishPanel() {
   const {
     isSaving,
     author,
-    featuredMediaUrl,
+    featuredMedia,
     publisherLogoUrl,
     updateStory,
   } = useStory(
     ({
       state: {
         meta: { isSaving },
-        story: { author = '', featuredMediaUrl = '', publisherLogoUrl = '' },
+        story: {
+          author = {},
+          featuredMedia = { id: 0, url: '', height: 0, width: 0 },
+          publisherLogoUrl = '',
+        },
       },
       actions: { updateStory },
     }) => {
       return {
         isSaving,
         author,
-        featuredMediaUrl,
+        featuredMedia,
         publisherLogoUrl,
         updateStory,
       };
     }
   );
+
+  const [queriedUsers, setQueriedUsers] = useState(null);
+  const [visibleOptions, setVisibleOptions] = useState(null);
 
   useEffect(() => {
     if (tab === 'document') {
@@ -92,11 +103,28 @@ function PublishPanel() {
     (image) =>
       updateStory({
         properties: {
-          featuredMedia: image.id,
-          featuredMediaUrl: image.sizes?.medium?.url || image.url,
+          featuredMedia: {
+            id: image.id,
+            height: image.sizes?.medium?.height || image.height,
+            url: image.sizes?.medium?.url || image.url,
+            width: image.sizes?.medium?.width || image.width,
+          },
         },
       }),
     [updateStory]
+  );
+
+  const getAuthorsBySearch = useCallback(
+    (search) => {
+      return getAuthors(search).then((data) => {
+        const userData = data.map(({ id, name }) => ({
+          id,
+          name,
+        }));
+        setQueriedUsers(userData);
+      });
+    },
+    [getAuthors]
   );
 
   // @todo Enforce square image while selecting in Media Library.
@@ -112,14 +140,37 @@ function PublishPanel() {
     [updateStory]
   );
 
-  const handleChangeValue = useCallback(
-    (prop) => (value) => updateStory({ properties: { [prop]: value } }),
+  useEffect(() => {
+    if (users?.length) {
+      const currentAuthor = users.find(({ id }) => author.id === id);
+      if (!currentAuthor) {
+        setVisibleOptions([author, ...users]);
+      } else {
+        setVisibleOptions(users);
+      }
+    }
+  }, [author, users]);
+
+  const handleChangeAuthor = useCallback(
+    ({ id, name }) => {
+      updateStory({
+        properties: { author: { id, name } },
+      });
+    },
     [updateStory]
   );
 
   const authorLabelId = `author-label-${uuidv4()}`;
+  const dropDownParams = {
+    hasSearch: true,
+    'aria-labelledby': authorLabelId,
+    lightMode: true,
+    onChange: handleChangeAuthor,
+    getOptionsByQuery: getAuthorsBySearch,
+    selectedId: author.id,
+  };
   return (
-    <Panel name="publishing">
+    <Panel name="publishing" collapsedByDefault={false}>
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent padding={'10px 10px 10px 20px'}>
         <PublishTime />
@@ -128,21 +179,19 @@ function PublishPanel() {
             <FieldLabel id={authorLabelId}>
               {__('Author', 'web-stories')}
             </FieldLabel>
-            {isUsersLoading ? (
-              <DropDown
-                aria-labelledby={authorLabelId}
+            {isUsersLoading || !visibleOptions ? (
+              <AdvancedDropDown
                 placeholder={__('Loading…', 'web-stories')}
                 disabled
-                lightMode={true}
+                primaryOptions={[]}
+                {...dropDownParams}
               />
             ) : (
-              <DropDown
-                aria-labelledby={authorLabelId}
-                options={users}
-                value={author}
+              <AdvancedDropDown
+                options={queriedUsers}
+                primaryOptions={visibleOptions}
                 disabled={isSaving}
-                onChange={handleChangeValue('author')}
-                lightMode={true}
+                {...dropDownParams}
               />
             )}
           </Row>
@@ -172,7 +221,7 @@ function PublishPanel() {
           </LabelWrapper>
           <MediaWrapper>
             <Media
-              value={featuredMediaUrl}
+              value={featuredMedia?.url}
               onChange={handleChangeCover}
               title={__('Select as cover image', 'web-stories')}
               buttonInsertText={__('Select as cover image', 'web-stories')}

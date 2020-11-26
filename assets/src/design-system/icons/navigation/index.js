@@ -22,5 +22,6 @@ export { ReactComponent as ArrowAlt } from './arrowAlt.svg';
 export { ReactComponent as Chevron } from './chevron.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './closeAlt.svg';
+export { ReactComponent as DoubleChevron } from './doubleChevron.svg';
 export { ReactComponent as More } from './more.svg';
 export { ReactComponent as MoreFilled } from './moreFilled.svg';

@@ -26,7 +26,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Setup Composer cache
-        uses: pat-s/always-upload-cache@v2.1.0
+        uses: pat-s/always-upload-cache@v2.1.3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -45,15 +45,9 @@ jobs:
 
       - name: Static Analysis (PHPStan)
         run: composer phpstan -- --error-format=checkstyle | cs2pr
-        if: always()
 
       - name: Static Analysis (PHPMD)
         run: composer phpmd
-        if: always()
 
       - name: Normalize composer.json
-        # composer-normalize requires PHP 7.1+. Ignore version conflicts.
-        run: |
-          composer require --no-interaction --dev ergebnis/composer-normalize:2.9.0 --ignore-platform-reqs
-          composer --no-interaction normalize --dry-run
-        if: always()
+        run: composer composer-normalize --no-interaction -- --dry-run

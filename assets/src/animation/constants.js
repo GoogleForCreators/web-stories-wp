@@ -74,6 +74,28 @@ export const ANIMATION_EFFECTS = {
   },
 };
 
+export const BACKGROUND_ANIMATION_EFFECTS = {
+  ZOOM: { value: 'effect-background-zoom', name: ANIMATION_EFFECTS.ZOOM.name },
+};
+
+export const ANIMATION_PARTS = {
+  BLINK_ON: {
+    value: ANIMATION_TYPES.BLINK_ON,
+    name: __('Blink On', 'web-stories'),
+  },
+  BOUNCE: { value: ANIMATION_TYPES.BOUNCE, name: __('Bounce', 'web-stories') },
+  FADE: { value: ANIMATION_TYPES.FADE, name: __('Fade', 'web-stories') },
+  FLIP: { value: ANIMATION_TYPES.FLIP, name: __('Flip', 'web-stories') },
+  FLOAT_ON: {
+    value: ANIMATION_TYPES.FLOAT_ON,
+    name: __('Float On', 'web-stories'),
+  },
+  MOVE: { value: ANIMATION_TYPES.MOVE, name: __('Move', 'web-stories') },
+  PULSE: { value: ANIMATION_TYPES.PULSE, name: __('Pulse', 'web-stories') },
+  SPIN: { value: ANIMATION_TYPES.SPIN, name: __('Spin', 'web-stories') },
+  ZOOM: { value: ANIMATION_TYPES.ZOOM, name: __('Zoom', 'web-stories') },
+};
+
 export const DIRECTION = {
   TOP_TO_BOTTOM: 'topToBottom',
   RIGHT_TO_LEFT: 'rightToLeft',
@@ -95,10 +117,13 @@ export const AXIS = {
 export const FIELD_TYPES = {
   DROPDOWN: 'dropdown',
   HIDDEN: 'hidden',
+  ROTATION_PICKER: 'rotation_picker',
+  DIRECTION_PICKER: 'direction_picker',
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',
   CHECKBOX: 'checkbox',
+  RANGE: 'RANGE',
 };
 
 export const STORY_ANIMATION_STATE = {
@@ -107,3 +132,6 @@ export const STORY_ANIMATION_STATE = {
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
 };
+
+export const BG_MIN_SCALE = 100;
+export const BG_MAX_SCALE = 400;

@@ -44,7 +44,7 @@ function VideoOutput({ element, box }) {
 
   // crossorigin='anonymous' is required to play videos from other domains.
   return (
-    <MediaOutput element={element} box={box}>
+    <MediaOutput element={element} box={box} data-leaf-element="true">
       <amp-video {...props} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
         {tracks &&

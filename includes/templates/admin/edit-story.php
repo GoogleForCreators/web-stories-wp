@@ -35,8 +35,9 @@ $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_b
 
 // Preload common data.
 $preload_paths = [
-	sprintf( '/web-stories/v1/%s/%s?context=edit', $rest_base, $post->ID ),
-	'/web-stories/v1/media?context=edit&per_page=100&page=1&_web_stories_envelope=true',
+	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,author' ) ),
+	'/web-stories/v1/media/?context=edit&per_page=100&page=1&_web_stories_envelope=true',
+	'/web-stories/v1/users/?per_page=100&who=authors',
 ];
 
 /**
@@ -58,7 +59,7 @@ $backup_global_post = $post;
 
 $preload_data = array_reduce(
 	$preload_paths,
-	'rest_preload_api_request',
+	'\Google\Web_Stories\rest_preload_api_request',
 	[]
 );
 

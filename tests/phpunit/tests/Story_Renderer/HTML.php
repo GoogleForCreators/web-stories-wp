@@ -31,6 +31,8 @@ class HTML extends WP_UnitTestCase {
 	use Private_Access;
 
 	public function setUp() {
+		parent::setUp();
+
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
 		remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
@@ -40,6 +42,8 @@ class HTML extends WP_UnitTestCase {
 	public function tearDown() {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
+
+		parent::tearDown();
 	}
 
 	/**
@@ -264,6 +268,46 @@ class HTML extends WP_UnitTestCase {
 		$result = $this->call_private_method( $renderer, 'replace_url_scheme', [ $link ] );
 		$this->assertEquals( $result, $link );
 		unset( $_SERVER['HTTPS'] );
+	}
+
+	/**
+	 * @covers ::print_analytics
+	 */
+	public function test_print_analytics() {
+		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body></html>';
+
+		add_action(
+			'web_stories_print_analytics',
+			static function() {
+				echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
+			}
+		);
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
+
+		remove_all_actions( 'web_stories_print_analytics' );
+
+		$this->assertContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertSame( $expected, $actual );
+	}
+
+	/**
+	 * @covers ::print_analytics
+	 */
+	public function test_print_analytics_no_output() {
+		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
+
+		$story    = new Story();
+		$renderer = new \Google\Web_Stories\Story_Renderer\HTML( $story );
+
+		$actual = $this->call_private_method( $renderer, 'print_analytics', [ $source ] );
+
+		$this->assertNotContains( '<amp-analytics type="gtag" data-credentials="include"', $actual );
+		$this->assertSame( $source, $actual );
 	}
 
 	/**

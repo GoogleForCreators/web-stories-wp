@@ -30,6 +30,7 @@ import {
   createNewStory,
   addRequestInterception,
   publishPost,
+  insertStoryTitle,
 } from '../../utils';
 
 describe('Publishing Flow', () => {
@@ -57,8 +58,7 @@ describe('Publishing Flow', () => {
   it('should guide me towards creating a new post to embed my story', async () => {
     await createNewStory();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type('input[placeholder="Add title"]', 'Publishing Flow Test');
+    await insertStoryTitle('Publishing Flow Test');
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });
@@ -99,11 +99,7 @@ describe('Publishing Flow', () => {
     await activatePlugin('classic-editor');
     await createNewStory();
 
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await page.type(
-      'input[placeholder="Add title"]',
-      'Publishing Flow Test (Shortcode)'
-    );
+    await insertStoryTitle('Publishing Flow Test (Shortcode)');
 
     // Publish story.
     await expect(page).toClick('button', { text: 'Publish' });

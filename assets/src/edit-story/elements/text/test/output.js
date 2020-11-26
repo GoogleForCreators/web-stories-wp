@@ -196,6 +196,34 @@ describe('TextOutput', () => {
       fontFamily: '"Baloo Bhaina 2","Roboto",cursive',
     });
   });
+  it('should not have overflow: hidden style applied', () => {
+    const props = {
+      element: {
+        type: 'text',
+        id: '123',
+        x: 50,
+        y: 100,
+        height: 1920,
+        width: 1080,
+        rotationAngle: 0,
+        content: 'Look Mom! No hands!',
+        color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        padding: {
+          horizontal: 0,
+          vertical: 0,
+        },
+        font: {
+          family: 'Roboto',
+        },
+      },
+      box: { width: 1080, height: 1920, x: 50, y: 100, rotationAngle: 0 },
+    };
+
+    const output = renderViaString(<TextOutput {...props} />);
+    expect(output).not.toHaveStyle({
+      overflow: 'hidden',
+    });
+  });
 
   describe('AMP validation', () => {
     it('should produce valid AMP output', async () => {

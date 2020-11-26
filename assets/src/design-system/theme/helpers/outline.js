@@ -18,9 +18,9 @@
  */
 import { css } from 'styled-components';
 
-export const focusableOutlineCSS = (bg, accent) => css`
-  box-shadow: 0 0 0 2px ${bg};
+export const focusableOutlineCSS = (accent) => css`
+  border: solid 2px transparent;
   &:focus {
-    box-shadow: 0 0 0 2px ${bg}, 0 0 0 4px ${accent};
+    border: solid 2px ${accent};
   }
 `;
