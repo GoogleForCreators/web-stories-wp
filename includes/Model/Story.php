@@ -37,6 +37,13 @@ use WP_Post;
  */
 class Story {
 	/**
+	 * Story ID.
+	 *
+	 * @var int
+	 */
+	protected $id;
+
+	/**
 	 * Title.
 	 *
 	 * @var string
@@ -72,6 +79,48 @@ class Story {
 	 * @var string
 	 */
 	protected $poster_square;
+
+	/**
+	 * Height for displaying story.
+	 *
+	 * @var int
+	 */
+	protected $height;
+
+	/**
+	 * Width for displaying story.
+	 *
+	 * @var int
+	 */
+	protected $width;
+
+	/**
+	 * Classes for story.
+	 *
+	 * @var string
+	 */
+	protected $classes;
+
+	/**
+	 * Date for the story.
+	 *
+	 * @var string
+	 */
+	protected $date;
+
+	/**
+	 * Author of story.
+	 *
+	 * @var string
+	 */
+	protected $author;
+
+	/**
+	 * Whether content overlay is enabled for story.
+	 *
+	 * @var bool
+	 */
+	protected $content_overlay;
 
 	/**
 	 * Story constructor.
@@ -183,5 +232,68 @@ class Story {
 	 */
 	public function get_poster_square() {
 		return $this->poster_square;
+	}
+
+	/**
+	 * Get the story ID.
+	 *
+	 * @return int
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * Check whether content overlay is enabled for story.
+	 *
+	 * @return bool
+	 */
+	public function get_content_overlay() {
+		return $this->content_overlay;
+	}
+
+	/**
+	 * Height for the story.
+	 *
+	 * @return int
+	 */
+	public function get_height() {
+		return $this->height;
+	}
+
+	/**
+	 * Width for the story.
+	 *
+	 * @return int
+	 */
+	public function get_width() {
+		return $this->width;
+	}
+
+	/**
+	 * Get author of the story.
+	 *
+	 * @return string
+	 */
+	public function get_author() {
+		return $this->author;
+	}
+
+	/**
+	 * Date for the story.
+	 *
+	 * @return string
+	 */
+	public function get_date() {
+		return $this->date;
+	}
+
+	/**
+	 * HTML classes for the story.
+	 *
+	 * @return string
+	 */
+	public function get_classes() {
+		return $this->classes;
 	}
 }
