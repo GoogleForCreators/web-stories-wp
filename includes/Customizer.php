@@ -27,7 +27,9 @@
 namespace Google\Web_Stories;
 
 /**
- * Class Database_Upgrader
+ * Class customizer settings.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  *
  * @package Google\Web_Stories
  */
@@ -60,6 +62,10 @@ class Customizer {
 	 * Registers customizer settings for web stories.
 	 *
 	 * @param \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
 	 * @return void
 	 */
@@ -527,6 +533,9 @@ class Customizer {
 
 	/**
 	 * Renders web stories based on the customizer selected options.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
 	 * @return string|void
 	 */
