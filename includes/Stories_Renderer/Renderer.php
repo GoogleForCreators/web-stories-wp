@@ -149,9 +149,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function init() {
 
-		add_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
+		add_filter( 'web_stories_get_stories_posts', [ $this, 'prepare_story_modal' ] );
 		$this->story_posts = $this->stories->get_stories();
-		remove_filter( 'ws_get_stories_posts', [ $this, 'prepare_story_modal' ] );
+		remove_filter( 'web_stories_get_stories_posts', [ $this, 'prepare_story_modal' ] );
 	}
 
 	/**

@@ -99,7 +99,7 @@ class Story_Query {
 		 *
 		 * @param array $posts Array of stories' posts.
 		 */
-		return apply_filters( 'ws_get_stories_posts', $posts );
+		return apply_filters( 'web_stories_get_stories_posts', $posts );
 	}
 
 	/**
