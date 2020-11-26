@@ -73,31 +73,32 @@ class Customizer {
 
 		$this->wp_customize = $wp_customize;
 
-		$options = get_theme_support( 'web-story-options' );
+		$theme_support = get_theme_support( 'web-story-options' );
+		$theme_support = ! empty( $theme_support[0] ) && is_array( $theme_support[0] ) ? $theme_support[0] : [];
 
-		$view_type         = ( ! empty( $options[0]['view-type'] ) && is_array( $options[0]['view-type'] ) ) ? $options[0]['view-type'] : [];
-		$view_type_default = ( ! empty( $options[0]['view-type-default'] ) ) ? $options[0]['view-type-default'] : 'circles';
+		$view_type         = ( ! empty( $theme_support['view-type'] ) && is_array( $theme_support['view-type'] ) ) ? $theme_support['view-type'] : [];
+		$view_type_default = ( ! empty( $theme_support['view-type-default'] ) ) ? $theme_support['view-type-default'] : 'circles';
 
-		$show_title         = ( ! empty( $options[0]['title'] ) ) ? $options[0]['title'] : false;
-		$show_title_default = ( ! empty( $options[0]['title-default'] ) ) ? $options[0]['title-default'] : false;
+		$show_title         = ( ! empty( $theme_support['title'] ) ) ? $theme_support['title'] : false;
+		$show_title_default = ( ! empty( $theme_support['title-default'] ) ) ? $theme_support['title-default'] : false;
 
-		$show_author         = ( ! empty( $options[0]['author'] ) ) ? $options[0]['author'] : false;
-		$show_author_default = ( ! empty( $options[0]['author-default'] ) ) ? $options[0]['author-default'] : false;
+		$show_author         = ( ! empty( $theme_support['author'] ) ) ? $theme_support['author'] : false;
+		$show_author_default = ( ! empty( $theme_support['author-default'] ) ) ? $theme_support['author-default'] : false;
 
-		$show_date         = ( ! empty( $options[0]['date'] ) ) ? $options[0]['date'] : false;
-		$show_date_default = ( ! empty( $options[0]['date-default'] ) ) ? $options[0]['date-default'] : false;
+		$show_date         = ( ! empty( $theme_support['date'] ) ) ? $theme_support['date'] : false;
+		$show_date_default = ( ! empty( $theme_support['date-default'] ) ) ? $theme_support['date-default'] : false;
 
-		$show_stories_archive_link = ( ! empty( $options[0]['stories-archive-link'] ) ) ? $options[0]['stories-archive-link'] : false;
-		$stories_archive_label     = ( ! empty( $options[0]['stories-archive-label'] ) ) ? $options[0]['stories-archive-label'] : 'View all stories';
+		$show_stories_archive_link = ( ! empty( $theme_support['stories-archive-link'] ) ) ? $theme_support['stories-archive-link'] : false;
+		$stories_archive_label     = ( ! empty( $theme_support['stories-archive-label'] ) ) ? $theme_support['stories-archive-label'] : 'View all stories';
 
-		$number_of_stories = ( ! empty( $options[0]['number-of-stories'] ) && is_numeric( $options[0]['number-of-stories'] ) ) ? $options[0]['number-of-stories'] : 5;
+		$number_of_stories = ( ! empty( $theme_support['number-of-stories'] ) && is_numeric( $theme_support['number-of-stories'] ) ) ? $theme_support['number-of-stories'] : 5;
 
-		$order         = ( ! empty( $options[0]['order'] ) && is_array( $options[0]['order'] ) ) ? $options[0]['order'] : [];
-		$order_default = ( ! empty( $options[0]['order-default'] ) ) ? $options[0]['order-default'] : 'latest';
+		$order         = ( ! empty( $theme_support['order'] ) && is_array( $theme_support['order'] ) ) ? $theme_support['order'] : [];
+		$order_default = ( ! empty( $theme_support['order-default'] ) ) ? $theme_support['order-default'] : 'latest';
 
-		$show_story_poster_default = ( ! empty( $options[0]['show-story-poster-default'] ) ) ? $options[0]['show-story-poster-default'] : true;
+		$show_story_poster_default = ( ! empty( $theme_support['show-story-poster-default'] ) ) ? $theme_support['show-story-poster-default'] : true;
 
-		$number_of_columns_default = ( ! empty( $options[0]['grid-columns-default'] ) && is_numeric( $options[0]['grid-columns-default'] ) ) ? $options[0]['grid-columns-default'] : 2;
+		$number_of_columns_default = ( ! empty( $theme_support['grid-columns-default'] ) && is_numeric( $theme_support['grid-columns-default'] ) ) ? $theme_support['grid-columns-default'] : 2;
 
 		// Add Content section.
 		$wp_customize->add_section(
@@ -547,24 +548,25 @@ class Customizer {
 		}
 
 		$theme_support = get_theme_support( 'web-story-options' );
+		$theme_support = ! empty( $theme_support[0] ) && is_array( $theme_support[0] ) ? $theme_support[0] : [];
 
 		$default_array = [
-			'view_type'             => ( ! empty( $theme_support[0]['view-type-default'] ) ) ? $theme_support[0]['view-type-default'] : 'circles',
-			'show_title'            => ( ! empty( $theme_support[0]['title-default'] ) ) ? $theme_support[0]['title-default'] : false,
-			'show_author'           => ( ! empty( $theme_support[0]['author-default'] ) ) ? $theme_support[0]['author-default'] : false,
-			'show_date'             => ( ! empty( $theme_support[0]['date-default'] ) ) ? $theme_support[0]['date-default'] : false,
-			'stories_archive_label' => ( ! empty( $theme_support[0]['stories-archive-label'] ) ) ? $theme_support[0]['stories-archive-label'] : 'View all stories',
-			'show_story_poster'     => ( ! empty( $theme_support[0]['show-story-poster-default'] ) ) ? $theme_support[0]['show-story-poster-default'] : true,
-			'number_of_columns'     => ( ! empty( $theme_support[0]['grid-columns-default'] ) && is_numeric( $theme_support[0]['grid-columns-default'] ) ) ? $theme_support[0]['grid-columns-default'] : 2,
+			'view_type'             => ( ! empty( $theme_support['view-type-default'] ) ) ? $theme_support['view-type-default'] : 'circles',
+			'show_title'            => ( ! empty( $theme_support['title-default'] ) ) ? $theme_support['title-default'] : false,
+			'show_author'           => ( ! empty( $theme_support['author-default'] ) ) ? $theme_support['author-default'] : false,
+			'show_date'             => ( ! empty( $theme_support['date-default'] ) ) ? $theme_support['date-default'] : false,
+			'stories_archive_label' => ( ! empty( $theme_support['stories-archive-label'] ) ) ? $theme_support['stories-archive-label'] : __( 'View all stories', 'web-stories' ),
+			'show_story_poster'     => ( ! empty( $theme_support['show-story-poster-default'] ) ) ? $theme_support['show-story-poster-default'] : true,
+			'number_of_columns'     => ( ! empty( $theme_support['grid-columns-default'] ) && is_numeric( $theme_support['grid-columns-default'] ) ) ? $theme_support['grid-columns-default'] : 2,
 		];
 
 		$query_arguments = [
-			'posts_per_page' => ( ! empty( $theme_support[0]['number-of-stories'] ) && is_numeric( $theme_support[0]['number-of-stories'] ) ) ? $theme_support[0]['number-of-stories'] : 5,
+			'posts_per_page' => ( ! empty( $theme_support['number-of-stories'] ) && is_numeric( $theme_support['number-of-stories'] ) ) ? $theme_support['number-of-stories'] : 5,
 		];
 
 		$query_arguments['posts_per_page'] = ! empty( $options['number_of_stories'] ) ? $options['number_of_stories'] : $query_arguments['posts_per_page'];
 
-		$order_by = ! empty( $theme_support[0]['order-default'] ) ? $theme_support[0]['order-default'] : 'latest';
+		$order_by = ! empty( $theme_support['order-default'] ) ? $theme_support['order-default'] : 'latest';
 		$order_by = ! empty( $options['order'] ) ? $options['order'] : $order_by;
 
 		switch ( $order_by ) {
