@@ -27,6 +27,7 @@
 namespace Google\Web_Stories;
 
 use SimpleXMLElement;
+use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
 
 /**
@@ -206,8 +207,9 @@ class SVG {
 			return $upload;
 		}
 
-		if ( ! $this->sanitize( $upload['tmp_name'] ) ) {
-			return [ 'error' => __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) ];
+		$sanitized = $this->sanitize( $upload['tmp_name'] );
+		if ( is_wp_error( $sanitized ) ) {
+			return [ 'error' => $sanitized->get_error_message() ];
 		}
 
 		$size = $this->get_svg_size( $upload['tmp_name'] );
@@ -259,15 +261,18 @@ class SVG {
 	 *
 	 * @param string $file File path.
 	 *
-	 * @return bool
+	 * @return true|WP_Error
 	 */
 	protected function sanitize( $file ) {
 		$dirty     = $this->get_svg_data( $file );
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
+		$error     = new WP_Error();
 
 		if ( false == $clean ) {
-			return false;
+			$error->add( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+
+			return $error;
 		}
 
 		$errors = $sanitizer->getXmlIssues();
@@ -280,8 +285,11 @@ class SVG {
 			}
 		);
 
+
 		if ( count( $errors ) > 1 ) {
-			return false;
+			$error->add( 'insecure_svg_file', __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) );
+
+			return $error;
 		}
 
 		return true;
