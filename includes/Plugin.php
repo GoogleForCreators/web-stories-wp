@@ -138,13 +138,6 @@ class Plugin {
 	public $analytics;
 
 	/**
-	 * SVG.
-	 *
-	 * @var SVG
-	 */
-	public $svg;
-
-	/**
 	 * Experiments.
 	 *
 	 * @var Experiments
@@ -220,8 +213,9 @@ class Plugin {
 		$this->analytics = new Analytics();
 		add_action( 'init', [ $this->analytics, 'init' ] );
 
-		$this->svg = new SVG( $this->experiments );
-		add_action( 'init', [ $this->svg, 'init' ] );
+		// TODO, make this is a property. Not property as issue with phpmd. 
+		$svg = new SVG( $this->experiments );
+		add_action( 'init', [ $svg, 'init' ] );
 
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.
