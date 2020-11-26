@@ -159,6 +159,7 @@ function ColorPicker({
         pushTransform(id, {
           color: generatedColor,
           style: changedStyle,
+          staticTransformation: true,
         });
       });
     }
