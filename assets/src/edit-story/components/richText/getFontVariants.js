@@ -31,7 +31,7 @@ import { getSelectAllStateFromHTML } from './htmlManipulation';
 function getFontStylesForCharacter(styles) {
   return styles
     .toArray()
-    .map((style) => style.style ?? style)
+    .flatMap((style) => style.style ?? style)
     .filter((style) => style === ITALIC || style.startsWith(WEIGHT));
 }
 
