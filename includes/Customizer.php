@@ -43,7 +43,7 @@ class Customizer {
 	const SECTION_SLUG = 'web_story_options';
 
 	/**
-	 * Experiments instance.
+	 * WP_Customize_Manager instance.
 	 *
 	 * @var \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
@@ -59,7 +59,7 @@ class Customizer {
 	}
 
 	/**
-	 * Registers customizer settings for web stories.
+	 * Registers web stories customizer settings.
 	 *
 	 * @param \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 *
