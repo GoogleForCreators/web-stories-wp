@@ -34,7 +34,7 @@ import { getAllStyleSetsInSelection } from './draftUtils';
  * @return {string} First match or NONE
  */
 export function getPrefixStyleForCharacter(styles, prefix) {
-  const list = styles.toArray().map((style) => style.style ?? style);
+  const list = styles.toArray().flatMap((style) => style.style ?? style);
   const matcher = (style) => style && style.startsWith(prefix);
   if (!list.some(matcher)) {
     return NONE;
