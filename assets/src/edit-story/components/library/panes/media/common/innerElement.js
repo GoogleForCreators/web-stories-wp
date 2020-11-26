@@ -27,6 +27,7 @@ import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
+import Moveable from '../../../../moveable';
 
 const styledTiles = css`
   width: 100%;
@@ -64,6 +65,11 @@ const HiddenPosterImage = styled.img`
   display: none;
 `;
 
+const MediaWrapper = styled.div`
+  z-index: 99999;
+  position: absolute;
+`;
+
 function InnerElement({
   type,
   src,
@@ -78,6 +84,7 @@ function InnerElement({
   const newVideoPosterRef = useRef(null);
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
+  const mediaWrapper = useRef(null);
 
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
@@ -148,14 +155,24 @@ function InnerElement({
     ]
   );
 
+  const frame = {
+    translate: [0, 0],
+  };
+  const onDragStart = ({ set }) => {
+    console.log('starting');
+    // Note: we can't set isDragging true here since a "click" is also considered dragStart.
+    set(frame.translate);
+  };
+
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
     }
   };
+  let media;
   if (['image', 'gif'].includes(type)) {
     const thumbnailURL = getSmallestUrlForWidth(width, resource);
-    return (
+    media = (
       <Image
         key={src}
         src={thumbnailURL}
@@ -167,13 +184,13 @@ function InnerElement({
         loading={'lazy'}
         onClick={onClick(thumbnailURL, mediaBaseColor.current)}
         onLoad={makeMediaVisible}
-        {...dropTargetsBindings(thumbnailURL)}
+        draggable={false}
       />
     );
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
     const displayPoster = poster ? poster : newVideoPosterRef.current;
-    return (
+    media = (
       <>
         <Video
           key={src}
@@ -206,7 +223,31 @@ function InnerElement({
       </>
     );
   }
-  throw new Error('Invalid media element type.');
+  if (!media) {
+    throw new Error('Invalid media element type.');
+  }
+  return (
+    <>
+      <MediaWrapper ref={mediaWrapper}>{media}</MediaWrapper>
+      <Moveable
+        className=""
+        zIndex={10}
+        target={mediaWrapper.current}
+        edge={true}
+        draggable={true}
+        origin={false}
+        pinchable={true}
+        onDragStart={onDragStart}
+        snappable={true}
+        verticalGuidelines={[0, 300, 600, 1000, 1500]}
+        onDrag={({ target, beforeTranslate }) => {
+          frame.translate = beforeTranslate;
+          target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+        }}
+        onDragEnd={() => {}}
+      />
+    </>
+  );
 }
 
 export default InnerElement;
