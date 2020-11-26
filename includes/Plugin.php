@@ -46,110 +46,150 @@ use Google\Web_Stories\Shortcode\Embed_Shortcode;
  * Plugin class.
  */
 class Plugin {
-	/**
-	 * Media object.
-	 *
-	 * @var Media
-	 */
-	public $media;
 
 	/**
-	 * Story Post Type object.
-	 *
-	 * @var  Story_Post_Type
-	 */
-	public $story;
-
-	/**
-	 * Template object.
-	 *
-	 * @var Template_Post_Type
-	 */
-	public $template;
-
-	/**
-	 * Dashboard.
-	 *
-	 * @var Dashboard
-	 */
-	public $dashboard;
-
-	/**
-	 * Settings.
-	 *
-	 * @var Settings
-	 */
-	public $settings;
-
-	/**
-	 * Admin-related functionality.
-	 *
-	 * @var Admin
-	 */
-	public $admin;
-
-	/**
-	 * Gutenberg Blocks.
-	 *
-	 * @var Embed_Block
-	 */
-	public $embed_block;
-
-	/**
-	 * Embed shortcode
-	 *
-	 * @var Embed_Shortcode
-	 */
-	public $embed_shortcode;
-
-	/**
-	 * Embed base
-	 *
-	 * @var Embed_Base
-	 */
-	public $embed_base;
-
-	/**
-	 * Frontend.
-	 *
-	 * @var Discovery
-	 */
-	public $discovery;
-
-	/**
-	 * Tracking.
-	 *
-	 * @var Tracking
-	 */
-	public $tracking;
-
-	/**
-	 * Database Upgrader.
-	 *
-	 * @var Database_Upgrader
-	 */
-	public $database_upgrader;
-
-	/**
-	 * Analytics.
-	 *
-	 * @var Analytics
-	 */
-	public $analytics;
-
-	/**
-	 * Experiments.
-	 *
-	 * @var Experiments
-	 */
-	public $experiments;
-
-	/**
-	 * 3P integrations.
+	 * Array of objects.
 	 *
 	 * @var array
 	 */
-	public $integrations = [];
+	public $objects = [];
+
+	/**
+	 * Array of defined services.
+	 *
+	 * @var array
+	 */
+	const SERVICES = [
+		'settings'          => [
+			'class'    => Settings::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 5,
+		],
+		'experiments'       => [
+			'class'    => Experiments::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 7,
+		],
+		'database_upgrader' => [
+			'class'    => Database_Upgrader::class,
+			'action'   => 'admin_init',
+			'method'   => 'init',
+			'priority' => 5,
+		],
+		'admin'             => [
+			'class'    => Admin::class,
+			'action'   => 'admin_init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'media'             => [
+			'class'    => Media::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'tracking'          => [
+			'class'    => Tracking::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'template'          => [
+			'class'    => Template_Post_Type::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'story'             => [
+			'class'        => Story_Post_Type::class,
+			'action'       => 'init',
+			'method'       => 'init',
+			'priority'     => 10,
+			'dependencies' => [
+				'experiments',
+			],
+		],
+		'embed_base'        => [
+			'class'    => Embed_Base::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 9,
+		],
+		'embed_block'       => [
+			'class'    => Embed_Block::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'embed_shortcode'   => [
+			'class'    => Embed_Shortcode::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'discovery'         => [
+			'class'    => Discovery::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'analytics'         => [
+			'class'    => Analytics::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'activation_flag'   => [
+			'class'  => Activation_Flag::class,
+			'method' => 'init',
+		],
+		'activation_notice' => [
+			'class'        => Activation_Notice::class,
+			'method'       => 'init',
+			'dependencies' => [
+				'activation_flag',
+			],
+		],
+		'amp'               => [
+			'class'    => AMP::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'jetpack'           => [
+			'class'    => Jetpack::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => 10,
+		],
+		'nextgen_gallery'   => [
+			'class'    => NextGen_Gallery::class,
+			'action'   => 'init',
+			'method'   => 'init',
+			'priority' => - 2,
+		],
+		'site_kit'          => [
+			'class'        => Site_Kit::class,
+			'action'       => 'init',
+			'method'       => 'init',
+			'priority'     => 10,
+			'dependencies' => [
+				'analytics',
+			],
+		],
+		'dashboard'         => [
+			'class'        => Dashboard::class,
+			'action'       => 'init',
+			'method'       => 'init',
+			'priority'     => 10,
+			'dependencies' => [
+				'experiments',
+				'site_kit',
+			],
+		],
+	];
 
 	/**
 	 * Initialize plugin functionality.
@@ -162,84 +202,61 @@ class Plugin {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
 
-		// Settings.
-		$this->settings = new Settings();
-		add_action( 'init', [ $this->settings, 'init' ], 5 );
 
-		$this->experiments = new Experiments();
-		add_action( 'init', [ $this->experiments, 'init' ], 7 );
-
-		// Admin-related functionality.
-
-		// Migrations.
-		$this->database_upgrader = new Database_Upgrader();
-		add_action( 'admin_init', [ $this->database_upgrader, 'init' ], 5 );
-
-		$this->admin = new Admin();
-		add_action( 'admin_init', [ $this->admin, 'init' ] );
-
-		$this->media = new Media();
-		add_action( 'init', [ $this->media, 'init' ] );
-
-		$this->tracking = new Tracking();
-		add_action( 'init', [ $this->tracking, 'init' ] );
-
-		$this->template = new Template_Post_Type();
-		add_action( 'init', [ $this->template, 'init' ] );
-
-		$this->story = new Story_Post_Type( $this->experiments );
-		add_action( 'init', [ $this->story, 'init' ] );
+		$this->register_services();
 
 		// REST API endpoints.
 		// High priority so it runs after create_initial_rest_routes().
 		add_action( 'rest_api_init', [ $this, 'register_rest_routes' ], 100 );
+	}
 
-		// Embed base.
-		$this->embed_base = new Embed_Base();
-		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
+	/**
+	 * Register services
+	 *
+	 * @return void
+	 */
+	protected function register_services() {
+		foreach ( $this::SERVICES as $name => $props ) {
+			$this->register_service( $name, $props );
+		}
+	}
 
-		// Gutenberg Blocks.
-		$this->embed_block = new Embed_Block();
-		add_action( 'init', [ $this->embed_block, 'init' ] );
 
-		// Embed shortcode.
-		$this->embed_shortcode = new Embed_Shortcode();
-		add_action( 'init', [ $this->embed_shortcode, 'init' ] );
+	/**
+	 * Return a registered service.
+	 *
+	 * @param string $name Name of service as key.
+	 * @param array  $props Array of props.
+	 *
+	 * @return false|Object
+	 */
+	protected function register_service( $name, array $props = [] ) {
+		if ( isset( $this->objects[ $name ] ) ) {
+			return $this->objects[ $name ];
+		}
+		if ( ! isset( $this::SERVICES[ $name ] ) ) {
+			return false;
+		}
 
-		// Frontend.
-		$this->discovery = new Discovery();
-		add_action( 'init', [ $this->discovery, 'init' ] );
+		if ( ! $props ) {
+			$props = $this::SERVICES[ $name ];
+		}
+		if ( isset( $props['dependencies'] ) ) {
+			$args   = array_map( [ $this, 'register_service' ], $props['dependencies'] );
+			$object = new $props['class']( ...$args );
+		} else {
+			$object = new $props['class']();
+		}
 
-		$this->analytics = new Analytics();
-		add_action( 'init', [ $this->analytics, 'init' ] );
+		if ( isset( $props['action'] ) && $props['action'] ) {
+			add_action( $props['action'], [ $object, $props['method'] ], $props['priority'] );
+		} elseif ( isset( $props['method'] ) && $props['method'] ) {
+			$object->{$props['method']}();
+		}
 
-		// Register activation flag logic outside of 'init' since it hooks into
-		// plugin activation.
-		$activation_flag = new Activation_Flag();
-		$activation_flag->init();
+		$this->objects[ $name ] = $object;
 
-		$activation_notice = new Activation_Notice( $activation_flag );
-		$activation_notice->init();
-
-		$amp = new AMP();
-		add_action( 'init', [ $amp, 'init' ] );
-		$this->integrations['amp'] = $amp;
-
-		$jetpack = new Jetpack();
-		add_action( 'init', [ $jetpack, 'init' ] );
-		$this->integrations['jetpack'] = $jetpack;
-
-		// This runs at init priority -2 because NextGEN inits at -1.
-		$nextgen_gallery = new NextGen_Gallery();
-		add_action( 'init', [ $nextgen_gallery, 'init' ], -2 );
-		$this->integrations['nextgen_gallery'] = $nextgen_gallery;
-
-		$site_kit = new Site_Kit( $this->analytics );
-		add_action( 'init', [ $site_kit, 'init' ] );
-		$this->integrations['site-kit'] = $site_kit;
-
-		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
-		add_action( 'init', [ $this->dashboard, 'init' ] );
+		return $this->objects[ $name ];
 	}
 
 	/**
@@ -267,7 +284,8 @@ class Plugin {
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();
 
-		$status_check = new Status_Check_Controller( $this->experiments );
+		$experiments  = new Experiments();
+		$status_check = new Status_Check_Controller( $experiments );
 		$status_check->register_routes();
 
 		$embed_controller = new Embed_Controller();
