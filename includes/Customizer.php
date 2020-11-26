@@ -571,7 +571,7 @@ class Customizer {
 				$query_arguments['order']   = 'DESC';
 				break;
 			case 'random':
-				$query_arguments['orderby'] = 'rand';
+				$query_arguments['orderby'] = 'rand'; //phpcs:ignore WordPressVIPMinimum.Performance.OrderByRand.orderby_orderby
 				$query_arguments['order']   = 'DESC';
 				break;
 		}
