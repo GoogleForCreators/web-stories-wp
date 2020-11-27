@@ -45,7 +45,7 @@ use Google\Web_Stories\Shortcode\Embed_Shortcode;
 /**
  * Plugin class.
  *
- * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Plugin {
 	/**
