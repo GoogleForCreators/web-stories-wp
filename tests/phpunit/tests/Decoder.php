@@ -22,14 +22,17 @@ namespace Google\Web_Stories\Tests;
  */
 class Decoder extends \WP_UnitTestCase {
 
-	public function test_base64_decode() {
-		// Hello 🌍 - これはサンプルです。
-		$encoded = '__WEB_STORIES_ENCODED__SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw';
+	/**
+	 * @dataProvider get_encoded_data
+	 * @param string $encoded
+	 * @param string $string
+	 */
+	public function test_base64_decode( $encoded, $string ) {
 
 		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );
 
-		$this->assertSame( 'Hello 🌍 - これはサンプルです。', $actual );
+		$this->assertSame( $string, $actual );
 	}
 
 	public function test_base64_decode_no_prefix() {
@@ -50,4 +53,26 @@ class Decoder extends \WP_UnitTestCase {
 
 		$this->assertSame( 'Hello World', $actual );
 	}
+
+	public function get_encoded_data() {
+		return [
+			'converts UTF 16'             => [
+				'__WEB_STORIES_ENCODED__SGVsbG8lMjB3b3JsZCUyMC0lMjAlQzMlOTglQzMlOTklQzMlOUYlQzMlQTYlQzQlODQlQzUlOTIlQzYlOTUlQzYlOUMlQzclODQlQzclODYlQzklQjc=',
+				'Hello world - ØÙßæĄŒƕƜǄǆɷ',
+			],
+			'converts html characters'    => [
+				'__WEB_STORIES_ENCODED__SGVsbG8lMjAlMjZjb3B5JTNCJTI2ZG9sbGFyJTNCJTI2cG91bmQlM0I=',
+				'Hello &copy;&dollar;&pound;',
+			],
+			'converts html'               => [
+				'__WEB_STORIES_ENCODED__SGVsbG8lMjAlM0NhJTIwaHJlZiUzRCUyMiUyMyUyMiUzRXdvcmxkJTNDJTJGYSUzRQ==',
+				'Hello <a href="#">world</a>',
+			],
+			'converts Unicode characters' => [
+				'__WEB_STORIES_ENCODED__SGVsbG8lMjAlRjAlOUYlOEMlOEQlMjAtJTIwJUUzJTgxJTkzJUUzJTgyJThDJUUzJTgxJUFGJUUzJTgyJUI1JUUzJTgzJUIzJUUzJTgzJTk3JUUzJTgzJUFCJUUzJTgxJUE3JUUzJTgxJTk5JUUzJTgwJTgy',
+				'Hello 🌍 - これはサンプルです。',
+			],
+		];
+	}
+
 }
