@@ -83,9 +83,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 	public function setUp() {
 		$this->story_model = $this->createMock( Story::class );
 
-		$this->story_model->method( 'get_height' )->willReturn( 430 );
-		$this->story_model->method( 'get_width' )->willReturn( 630 );
-
 		$this->stories = $this->createMock( Stories::class );
 		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 	}

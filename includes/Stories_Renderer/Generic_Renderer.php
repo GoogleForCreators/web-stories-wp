@@ -105,6 +105,7 @@ class Generic_Renderer extends Renderer {
 		</div>
 		<?php
 		$view_type = $this->get_view_type();
+		$content   = (string) ob_get_clean();
 
 		/**
 		 * Filters the Generic renderer stories content.
@@ -113,7 +114,7 @@ class Generic_Renderer extends Renderer {
 		 *
 		 * @param string $content Stories content.
 		 */
-		return apply_filters( "web_stories_{$view_type}_renderer_stories_content", (string) ob_get_clean() );
+		return apply_filters( "web_stories_{$view_type}_renderer_stories_content", $content );
 	}
 
 }
