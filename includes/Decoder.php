@@ -37,8 +37,6 @@ class Decoder {
 	/**
 	 * Determines whether encoding and decoding of story markup is supported.
 	 *
-	 * Depends on the encodeStoryMarkup feature flag.
-	 *
 	 * @since 1.1.0
 	 *
 	 * @return bool Whether decoding is supported.

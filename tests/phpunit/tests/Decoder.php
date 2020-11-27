@@ -24,8 +24,10 @@ class Decoder extends \WP_UnitTestCase {
 
 	/**
 	 * @dataProvider get_encoded_data
+	 *
 	 * @param string $encoded
 	 * @param string $string
+	 * @covers ::base64_decode
 	 */
 	public function test_base64_decode( $encoded, $string ) {
 
@@ -35,23 +37,12 @@ class Decoder extends \WP_UnitTestCase {
 		$this->assertSame( $string, $actual );
 	}
 
-	public function test_base64_decode_no_prefix() {
-		// Hello 🌍 - これはサンプルです。
-		$encoded = 'SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw';
-
+	/**
+	 * @covers ::supports_decoding
+	 */
+	public function test_supports_decoding() {
 		$decoder = new \Google\Web_Stories\Decoder();
-		$actual  = $decoder->base64_decode( $encoded );
-
-		$this->assertSame( $encoded, $actual );
-	}
-
-	public function test_base64_decode_not_encoded() {
-		$encoded = 'Hello World';
-
-		$decoder = new \Google\Web_Stories\Decoder();
-		$actual  = $decoder->base64_decode( $encoded );
-
-		$this->assertSame( 'Hello World', $actual );
+		$this->assertTrue( $decoder->supports_decoding() );
 	}
 
 	public function get_encoded_data() {
@@ -71,6 +62,14 @@ class Decoder extends \WP_UnitTestCase {
 			'converts Unicode characters' => [
 				'__WEB_STORIES_ENCODED__SGVsbG8lMjAlRjAlOUYlOEMlOEQlMjAtJTIwJUUzJTgxJTkzJUUzJTgyJThDJUUzJTgxJUFGJUUzJTgyJUI1JUUzJTgzJUIzJUUzJTgzJTk3JUUzJTgzJUFCJUUzJTgxJUE3JUUzJTgxJTk5JUUzJTgwJTgy',
 				'Hello 🌍 - これはサンプルです。',
+			],
+			'decode_no_prefix'            => [
+				'SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw',
+				'SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw',
+			],
+			'not_encoded'                 => [
+				'Hello World',
+				'Hello World',
 			],
 		];
 	}
