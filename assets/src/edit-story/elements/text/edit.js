@@ -54,6 +54,8 @@ import {
   isOutsideBorder,
   getBorderPositionCSS,
 } from '../../components/elementBorder/utils';
+import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   calcFontMetrics,
   generateParagraphTextStyle,
@@ -67,6 +69,8 @@ const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorderRadius}
+
+  --faux-selection-color: inherit;
 
   span {
     box-decoration-break: clone;
@@ -210,11 +214,13 @@ function TextEdit({
 
   const wrapperRef = useRef(null);
   const highlightRef = useRef(null);
+  const highlightBgRef = useRef(null);
   const textBoxRef = useRef(null);
   const editorRef = useRef(null);
   const boxRef = useRef();
   const contentRef = useRef();
   const editorHeightRef = useRef(0);
+  const outsideBorderRef = useRef(null);
 
   // x, y, height, rotationAngle changes should not update the content while in edit mode.
   // updateContent should be only called on unmount.
@@ -343,6 +349,33 @@ function TextEdit({
     }
   });
 
+  const hasHighlightBackgroundTextMode =
+    backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+
+  // For instant color change on selection.
+  useCSSVarColorTransformHandler({
+    id,
+    targetRef: wrapperRef,
+    cssVar: '--faux-selection-color',
+    expectedStyle: 'color',
+  });
+
+  const backgroundRef = hasHighlightBackgroundTextMode
+    ? highlightBgRef
+    : wrapperRef;
+  useColorTransformHandler({
+    id,
+    targetRef: backgroundRef,
+    expectedStyle: 'background',
+  });
+
+  // Inner and center color are handled separately, add transform for outside border if relevant.
+  useColorTransformHandler({
+    id,
+    targetRef: isOutsideBorder(border) ? outsideBorderRef : null,
+    expectedStyle: 'border-color',
+  });
+
   const {
     state: { editorState },
     actions: { getContentFromState },
@@ -352,15 +385,16 @@ function TextEdit({
   const wrapperBackgroundColor =
     backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor;
 
-  const hasHighlightBackgroundTextMode =
-    backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
-
   const wrapperProps = {
     backgroundColor: wrapperBackgroundColor,
   };
 
   return (
-    <OutsideBorder border={border} borderRadius={borderRadius}>
+    <OutsideBorder
+      ref={outsideBorderRef}
+      border={border}
+      borderRadius={borderRadius}
+    >
       <Wrapper
         ref={wrapperRef}
         onClick={onClick}
@@ -371,6 +405,7 @@ function TextEdit({
         {editorContent && hasHighlightBackgroundTextMode && (
           <TextBoxPadded ref={highlightRef} {...highlightTextProps}>
             <Highlight
+              ref={highlightBgRef}
               dangerouslySetInnerHTML={{ __html: editorContent }}
               {...textProps}
             />
