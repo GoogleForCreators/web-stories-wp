@@ -171,30 +171,37 @@ function InnerElement({
     translate: [0, 0],
   };
 
-  const onDragStart = ({ set }) => {
+  const onDragStart = ({ set, inputEvent }) => {
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
     setIsDragging(true);
 
     // Position the clone that's being dragged.
     const overlay = overlayRef.current;
-    let offsetX = 0,
-      offsetY = 0;
+    let offsetX1 = 0,
+      offsetY1 = 0;
     for (
       let offsetNode = overlay;
       offsetNode;
       offsetNode = offsetNode.offsetParent
     ) {
-      offsetX += offsetNode.offsetLeft;
-      offsetY += offsetNode.offsetTop;
+      offsetX1 += offsetNode.offsetLeft;
+      offsetY1 += offsetNode.offsetTop;
     }
     const mediaBox = mediaElement.current.getBoundingClientRect();
-    const x = mediaBox.top - offsetX;
-    const y = mediaBox.left - offsetY;
-    cloneRef.current.style.top = `${x}px`;
-    cloneRef.current.style.left = `${y}px`;
+    const x1 = mediaBox.top - offsetX1;
+    const y1 = mediaBox.left - offsetY1;
+    cloneRef.current.style.top = `${x1}px`;
+    cloneRef.current.style.left = `${y1}px`;
     cloneRef.current.style.width = `${mediaBox.width}px`;
     cloneRef.current.style.height = `${mediaBox.height}px`;
+
+    // Drop-targets handling.
+    resourceList.set(resource.id, {
+      url: thumbnailURL,
+      type: 'cached',
+    });
+    setDraggingResource(resource);
   };
 
   const makeMediaVisible = () => {
@@ -296,15 +303,21 @@ function InnerElement({
         pinchable={true}
         onDragStart={onDragStart}
         snappable={true}
-        verticalGuidelines={[0, 300, 600, 1000, 1500]}
-        onDrag={({ beforeTranslate }) => {
+        verticalGuidelines={[0, 100, 300, 400]}
+        onDrag={({ beforeTranslate, inputEvent }) => {
           frame.translate = beforeTranslate;
           if (cloneRef.current) {
             cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
           }
+          handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
         }}
         onDragEnd={() => {
           setIsDragging(false);
+          setDraggingResource(null);
+          handleDrop({
+            ...resource,
+            baseColor: mediaBaseColor.current,
+          });
         }}
       />
     </>
