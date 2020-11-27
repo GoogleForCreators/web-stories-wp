@@ -85,7 +85,7 @@ class HTML {
 			return $markup;
 		}
 
-		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
+		$document = Document::fromHtml( $markup );
 
 		// This  should never actually happen.
 		if ( ! $document ) {
