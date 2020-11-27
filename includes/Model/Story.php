@@ -95,13 +95,6 @@ class Story {
 	protected $author;
 
 	/**
-	 * Whether content overlay is enabled for story.
-	 *
-	 * @var bool
-	 */
-	protected $content_overlay;
-
-	/**
 	 * Story constructor.
 	 *
 	 * @since 1.0.0
@@ -220,15 +213,6 @@ class Story {
 	 */
 	public function get_id() {
 		return $this->id;
-	}
-
-	/**
-	 * Check whether content overlay is enabled for story.
-	 *
-	 * @return bool
-	 */
-	public function get_content_overlay() {
-		return $this->content_overlay;
 	}
 
 	/**

@@ -94,6 +94,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected $width = '285';
 
 	/**
+	 * Whether content overlay is enabled for story.
+	 *
+	 * @var bool
+	 */
+	protected $content_overlay;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Stories $stories Stories instance.
@@ -220,11 +227,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 			if ( true === $this->attributes['show_title'] ) {
 				$story_title = get_the_title( $story_id );
+			}
 
-				if ( ! $is_circles_view ) {
-					$author_name = get_the_author_meta( 'display_name', $author_id );
-					$story_date  = get_the_date( 'M j, Y', $story_id );
-				}
+			if ( ! $is_circles_view ) {
+				$author_name = ( true === $this->attributes['show_author'] ) ? get_the_author_meta( 'display_name', $author_id ) : $author_name;
+				$story_date  = ( true === $this->attributes['show_date'] ) ? get_the_date( 'M j, Y', $story_id ) : $story_date;
 			}
 
 			$story_data['id']              = $story_id;
@@ -462,13 +469,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function get_content_overlay() {
 		$story_data = $this->current();
 
-		if ( empty( $story_data->get_content_overlay() ) ) {
+		if ( empty( $this->content_overlay ) ) {
 			return;
 		}
 
 		?>
 		<div class="story-content-overlay web-stories-list__story-content-overlay">
-			<?php if ( ! empty( $story_data->get_title() ) ) { ?>
+			<?php if ( $this->attributes['show_title'] ) { ?>
 				<div class="story-content-overlay__title">
 					<?php
 					echo esc_html( $story_data->get_title() );
