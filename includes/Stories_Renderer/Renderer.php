@@ -80,6 +80,20 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	private $position = 0;
 
 	/**
+	 * Height for displaying story.
+	 *
+	 * @var int
+	 */
+	protected $height = '430';
+
+	/**
+	 * Width for displaying story.
+	 *
+	 * @var int
+	 */
+	protected $width = '285';
+
+	/**
 	 * Constructor
 	 *
 	 * @param Stories $stories Stories instance.
@@ -214,8 +228,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			}
 
 			$story_data['id']              = $story_id;
-			$story_data['height']          = '430';
-			$story_data['width']           = '285';
 			$story_data['author']          = $author_name;
 			$story_data['date']            = $story_date;
 			$story_data['classes']         = $this->get_single_story_classes();
@@ -378,8 +390,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function render_story_with_poster() {
 
 		$story_data                = $this->current();
-		$height                    = ( ! empty( $story_data->get_height() ) ) ? absint( $story_data->get_height() ) : 600;
-		$width                     = ( ! empty( $story_data->get_width() ) ) ? absint( $story_data->get_width() ) : 360;
+		$height                    = ( ! empty( $this->height ) ) ? absint( $this->height ) : 600;
+		$width                     = ( ! empty( $this->width ) ) ? absint( $this->width ) : 360;
 		$poster_url                = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
 		$poster_style              = sprintf( 'background-image: url(%1$s);', esc_url_raw( $poster_url ) );
 		$list_view_image_alignment = '';
@@ -414,8 +426,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	protected function render_story_with_story_player() {
 
 		$story_data              = $this->current();
-		$height                  = ( ! empty( $story_data->get_height() ) ) ? absint( $story_data->get_height() ) : 600;
-		$width                   = ( ! empty( $story_data->get_width() ) ) ? absint( $story_data->get_width() ) : 360;
+		$height                  = ( ! empty( $this->height ) ) ? absint( $this->height ) : 600;
+		$width                   = ( ! empty( $this->width ) ) ? absint( $this->width ) : 360;
 		$player_style            = sprintf( 'width: %1$spx;height: %2$spx', $width, $height );
 		$story_player_attributes = '';
 		$poster_image_url        = ( 'circles' === $this->get_view_type() ) ? $story_data->get_poster_square() : $story_data->get_poster_portrait();
