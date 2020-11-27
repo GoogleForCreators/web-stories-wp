@@ -54,6 +54,20 @@ describe('Pre-publish checklist - media guidelines (guidance)', () => {
     expect(result.elementId).toStrictEqual(tooSmallVideoElement.id);
   });
 
+  it('should ignore too small element if it is a background', () => {
+    const tooSmallImageElement = {
+      id: 123,
+      type: 'image',
+      height: 50,
+      width: 50,
+      x: 0,
+      y: 0,
+      isBackground: true,
+    };
+    const result = mediaGuidance.mediaElementSizeOnPage(tooSmallImageElement);
+    expect(result).toBeUndefined();
+  });
+
   it('should return a message if a video element is less than 480p', () => {
     const tooLowResolutionVideoElement = {
       id: 789,

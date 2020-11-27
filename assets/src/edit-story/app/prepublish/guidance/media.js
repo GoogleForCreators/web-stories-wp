@@ -44,6 +44,12 @@ const MAX_VIDEO_LENGTH_SECONDS = 60;
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function mediaElementSizeOnPage(element) {
+  // Background elements behave differently since they will always be full screen. They have rect
+  // information that's not valid when the image is applied as a background.
+  if (element.isBackground) {
+    return undefined;
+  }
+
   // use the bounding rectangle for rotated elements
   const { startX, startY, endX, endY } = getBoundRect([element]);
   // get the intersecting area of the element's rectangle and the safe zone's rectangle
