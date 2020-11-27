@@ -187,6 +187,36 @@ class Customizer extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::get_stories_theme_support
+	 */
+	public function test_get_stories_theme_support() {
+
+		add_theme_support( 'web-story-options' );
+
+		$expected = [
+			'view-type'                 => [],
+			'view-type-default'         => 'circles',
+			'grid-columns-default'      => 2,
+			'title'                     => false,
+			'title-default'             => false,
+			'author'                    => false,
+			'author-default'            => false,
+			'date'                      => false,
+			'date-default'              => false,
+			'stories-archive-link'      => true,
+			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
+			'number-of-stories'         => 5,
+			'order'                     => [],
+			'order-default'             => 'oldest',
+			'show-story-poster-default' => true,
+		];
+
+		$output = $this->customizer->get_stories_theme_support();
+
+		$this->assertEquals( $expected, $output );
+	}
+
+	/**
 	 * @covers ::render_stories
 	 */
 	public function test_render_stories() {
