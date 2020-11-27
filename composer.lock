@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d928c8d65aae9d7236901e4388b584fe",
+    "content-hash": "ed4d8c11b7396b6bad33bab4c3b59998",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -3521,7 +3521,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^5.6 || ^7.0",
+        "php": "^5.6 || ^7.0 || ^8.0",
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-json": "*",
