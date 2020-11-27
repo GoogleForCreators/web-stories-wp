@@ -88,7 +88,7 @@ export function getBorderStyle({
   opacity = opacity / 100;
   const adjustedBorderOpacity = a !== undefined ? opacity * a : opacity;
   const color = isOutsideBorder({ position })
-    ? `rgba(${r},${g},${b},${a === undefined ? 1 : a})`
+    ? getBorderColor({ color: rawColor })
     : `rgba(${r},${g},${b},${adjustedBorderOpacity})`;
 
   // We're making the border-width responsive just for the preview,
@@ -152,4 +152,12 @@ export function getBorderRadius({ borderRadius, border }) {
   return {
     borderRadius: `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`,
   };
+}
+
+export function getBorderColor({ color }) {
+  // Border color can be only solid.
+  const {
+    color: { r, g, b, a },
+  } = color;
+  return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 }

@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import React, { useRef, useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -48,6 +48,7 @@ export default function EffectChooserDropdown({
   onNoEffectSelected,
   isBackgroundEffects = false,
   selectedEffectTitle,
+  disabledTypeOptionsMap,
 }) {
   const selectRef = useRef();
   const dropdownRef = useRef();
@@ -74,6 +75,7 @@ export default function EffectChooserDropdown({
             onAnimationSelected={onAnimationSelected}
             onDismiss={() => setIsOpen(false)}
             isBackgroundEffects={isBackgroundEffects}
+            disabledTypeOptionsMap={disabledTypeOptionsMap}
           />
         </Container>
       </Popup>
@@ -82,8 +84,11 @@ export default function EffectChooserDropdown({
 }
 
 EffectChooserDropdown.propTypes = {
-  onAnimationSelected: propTypes.func.isRequired,
-  isBackgroundEffects: propTypes.bool,
-  selectedEffectTitle: propTypes.string,
-  onNoEffectSelected: propTypes.func.isRequired,
+  onAnimationSelected: PropTypes.func.isRequired,
+  isBackgroundEffects: PropTypes.bool,
+  selectedEffectTitle: PropTypes.string,
+  onNoEffectSelected: PropTypes.func.isRequired,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };

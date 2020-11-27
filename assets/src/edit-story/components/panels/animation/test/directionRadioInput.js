@@ -16,13 +16,34 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import { fireEvent } from '@testing-library/react';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import { DIRECTION } from '../../../../../animation';
 import { renderWithTheme } from '../../../../testUtils';
 import { DirectionRadioInput } from '../directionRadioInput';
+
+function DirectionRadioInputUncontrolled({ onChange, directions }) {
+  const [state, setState] = useState(null);
+  return (
+    <DirectionRadioInput
+      value={state}
+      onChange={(e) => {
+        setState(e.target.value);
+        onChange(e);
+      }}
+      directions={directions}
+    />
+  );
+}
+
+DirectionRadioInputUncontrolled.propTypes = {
+  onChange: PropTypes.func,
+  directions: PropTypes.arrayOf(PropTypes.string),
+};
 
 describe('<DirectionRadioInput />', () => {
   it('should render', () => {
@@ -35,6 +56,7 @@ describe('<DirectionRadioInput />', () => {
     const { getAllByRole } = renderWithTheme(
       <DirectionRadioInput
         directions={[DIRECTION.TOP_TO_BOTTOM, DIRECTION.BOTTOM_TO_TOP]}
+        onChange={() => {}}
       />
     );
     const radios = getAllByRole('radio');
@@ -64,7 +86,7 @@ describe('<DirectionRadioInput />', () => {
   it('should update checked when new input clicked', () => {
     const onChange = jest.fn();
     const { getAllByRole, getByRole } = renderWithTheme(
-      <DirectionRadioInput
+      <DirectionRadioInputUncontrolled
         onChange={onChange}
         directions={[DIRECTION.TOP_TO_BOTTOM, DIRECTION.BOTTOM_TO_TOP]}
       />
@@ -89,20 +111,5 @@ describe('<DirectionRadioInput />', () => {
       })
     );
     expect(getByRole('radio', { checked: true })).toBe(radios[0]);
-  });
-
-  it('should allow for a defaultChecked', () => {
-    const directions = Object.values(DIRECTION);
-    const defaultIndex = directions.length - 1;
-    const { getByRole } = renderWithTheme(
-      <DirectionRadioInput
-        defaultChecked={directions[defaultIndex]}
-        directions={directions}
-      />
-    );
-
-    expect(getByRole('radio', { checked: true }).value).toBe(
-      directions[defaultIndex]
-    );
   });
 });

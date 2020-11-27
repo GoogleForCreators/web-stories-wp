@@ -76,6 +76,7 @@ export const ANIMATION_EFFECTS = {
 
 export const BACKGROUND_ANIMATION_EFFECTS = {
   ZOOM: { value: 'effect-background-zoom', name: ANIMATION_EFFECTS.ZOOM.name },
+  PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
 };
 
 export const ANIMATION_PARTS = {

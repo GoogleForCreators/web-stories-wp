@@ -26,6 +26,7 @@ import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
 import { canMaskHaveBorder } from '../../../../masks';
+import { removeAnimationsWithElementIds } from './utils';
 
 /**
  * Combine elements by taking properties from a first item and
@@ -127,10 +128,16 @@ function combineElements(state, { firstElement, secondId }) {
     // Update reference to second element
     .map((el) => (el.id === secondId ? newElement : el));
 
+  const newAnimations = removeAnimationsWithElementIds(page.animations, [
+    firstId,
+    secondId,
+  ]);
+
   const newPage = {
     ...page,
     elements,
     ...newPageProps,
+    animations: newAnimations,
   };
 
   const newPages = [
