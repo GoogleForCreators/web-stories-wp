@@ -192,10 +192,6 @@ class EditLayer extends Container {
   get sizeSlider() {
     return this.getByRole('slider');
   }
-
-  get sizeReset() {
-    return this.getByRole('button', { name: /reset/i });
-  }
 }
 
 /**

@@ -25,6 +25,7 @@ const getDefaultFieldValue = (fieldType) => {
       return false;
     case FIELD_TYPES.NUMBER:
     case FIELD_TYPES.FLOAT:
+    case FIELD_TYPES.RANGE:
       return 0;
     default:
       return '';

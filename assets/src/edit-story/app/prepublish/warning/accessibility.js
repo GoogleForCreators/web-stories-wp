@@ -15,11 +15,6 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import {
@@ -27,7 +22,7 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -90,10 +85,8 @@ export function textElementFontLowContrast(element) {
 
   if (lowContrast) {
     return {
-      message: __(
-        'Low contrast between font and background color',
-        'web-stories'
-      ),
+      message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -111,7 +104,8 @@ export function textElementFontLowContrast(element) {
 export function textElementFontSizeTooSmall(element) {
   if (element.fontSize && element.fontSize < 12) {
     return {
-      message: __('Font size too small', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.FONT_TOO_SMALL.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -134,7 +128,8 @@ export function imageElementLowResolution(element) {
     element.height * scaleMultiplier > element.resource.height
   ) {
     return {
-      message: __('Very low image resolution', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -152,7 +147,8 @@ export function imageElementLowResolution(element) {
 export function videoElementMissingTitle(element) {
   if (!element.title?.length && !element.resource?.title?.length) {
     return {
-      message: __('Video is missing title', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -170,7 +166,8 @@ export function videoElementMissingTitle(element) {
 export function videoElementMissingAlt(element) {
   if (!element.alt?.length && !element.resource?.alt?.length) {
     return {
-      message: __('Video is missing assistive text', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -188,7 +185,8 @@ export function videoElementMissingAlt(element) {
 export function videoElementMissingCaptions(element) {
   if (!element.tracks?.length) {
     return {
-      message: __('Video is missing captions', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.MISSING_CAPTIONS.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -213,7 +211,8 @@ export function pageTooManyLinks(page) {
 
   if (linkCount > MAX_PAGE_LINKS) {
     return {
-      message: __('Too many links on page', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.TOO_MANY_LINKS.HELPER_TEXT,
       pageId: page.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -238,7 +237,8 @@ export function elementLinkTappableRegionTooSmall(element) {
     element.height < LINK_TAPPABLE_REGION_MIN_HEIGHT
   ) {
     return {
-      message: __('Link tappable region is too small', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.LINK_REGION_TOO_SMALL.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
@@ -256,7 +256,8 @@ export function elementLinkTappableRegionTooSmall(element) {
 export function imageElementMissingAlt(element) {
   if (!element.alt?.length && !element.resource?.alt?.length) {
     return {
-      message: __('Image is missing alt text', 'web-stories'),
+      message: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
