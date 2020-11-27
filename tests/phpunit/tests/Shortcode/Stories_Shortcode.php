@@ -48,6 +48,8 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 	 * Run before any test is run and class is being setup.
 	 */
 	public static function wpSetUpBeforeClass( $factory ) {
+		require dirname( dirname( dirname( dirname( __DIR__ ) ) ) ) . '/includes/compat/amp.php';
+
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'   => Story_Post_Type::POST_TYPE_SLUG,
@@ -73,7 +75,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 	 */
 	public function test_render_carousel_view_in_shortcode() {
 		$stories_shortcode = new Testee();
-		$actual = $stories_shortcode->render_stories(
+		$actual            = $stories_shortcode->render_stories(
 			[
 				'view' => 'carousel',
 			]
@@ -88,8 +90,8 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 	 * @covers ::prepare_story_args
 	 */
 	public function test_render_circles_view_in_shortcode() {
-		$stories_Shortcode = new Testee();
-		$actual = $stories_Shortcode->render_stories(
+		$stories_shortcode = new Testee();
+		$actual            = $stories_shortcode->render_stories(
 			[
 				'view' => 'circles',
 			]
@@ -121,17 +123,17 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 	 * @covers ::prepare_story_args
 	 */
 	public function test_max_number_for_stories() {
-		$stories_Shortcode = new Testee();
+		$stories_shortcode = new Testee();
 		$this->set_private_property(
-			$stories_Shortcode,
+			$stories_shortcode,
 			'attributes',
 			[
 				'number' => 1000000,
-				'order'  => 'DESC'
+				'order'  => 'DESC',
 			]
 		);
 
-		$args = $this->call_private_method( $stories_Shortcode, 'prepare_story_args' );
+		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args' );
 		$this->assertSame( 100, $args['posts_per_page'] );
 	}
 }
