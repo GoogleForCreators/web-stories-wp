@@ -26,7 +26,7 @@ class Decoder extends \WP_UnitTestCase {
 		// Hello 🌍 - これはサンプルです。
 		$encoded = '__WEB_STORIES_ENCODED__SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw';
 
-		$decoder = new \Google\Web_Stories\Decoder( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );
 
 		$this->assertSame( 'Hello 🌍 - これはサンプルです。', $actual );
@@ -36,7 +36,7 @@ class Decoder extends \WP_UnitTestCase {
 		// Hello 🌍 - これはサンプルです。
 		$encoded = 'SABlAGwAbABvACAAPNgN3yAALQAgAFMwjDBvMLUw8zDXMOswZzBZMAIw';
 
-		$decoder = new \Google\Web_Stories\Decoder( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );
 
 		$this->assertSame( $encoded, $actual );
@@ -45,7 +45,7 @@ class Decoder extends \WP_UnitTestCase {
 	public function test_base64_decode_not_encoded() {
 		$encoded = 'Hello World';
 
-		$decoder = new \Google\Web_Stories\Decoder( $this->createMock( \Google\Web_Stories\Experiments::class ) );
+		$decoder = new \Google\Web_Stories\Decoder();
 		$actual  = $decoder->base64_decode( $encoded );
 
 		$this->assertSame( 'Hello World', $actual );
