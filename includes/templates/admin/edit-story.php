@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-global $post_type, $post_type_object, $post, $wp_meta_boxes;
+global $post_type, $post_type_object, $post;
 
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
 

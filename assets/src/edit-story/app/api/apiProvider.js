@@ -36,7 +36,7 @@ import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck, metaboxes },
+    api: { stories, media, link, users, statusCheck, metaBoxes },
     encodeMarkup,
   } = useConfig();
 
@@ -262,13 +262,13 @@ function APIProvider({ children }) {
       additionalData.forEach(([key, value]) => formData.append(key, value));
 
       return apiFetch({
-        url: metaboxes,
+        url: metaBoxes,
         method: 'POST',
         body: formData,
         parse: false,
       });
     },
-    [metaboxes]
+    [metaBoxes]
   );
 
   /**

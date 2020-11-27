@@ -67,7 +67,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $extensions = array();
+	protected $extensions = [];
 
 	/**
 	 * Array of required files.
@@ -76,7 +76,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @var array
 	 */
-	protected $required_files = array();
+	protected $required_files = [];
 
 	/**
 	 * Compatibility constructor.
@@ -100,9 +100,9 @@ class Web_Stories_Compatibility {
 		if ( version_compare( PHP_VERSION, $this->get_php_version(), '<' ) ) {
 			/* translators: %s: PHP version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires PHP %s or higher.', 'web-stories' ), $this->get_php_version() ) );
-			$data    = array(
+			$data    = [
 				'title' => $message,
-			);
+			];
 			$this->add_to_error( 'failed_check_php_version', $message, $data );
 
 			return false;
@@ -122,9 +122,9 @@ class Web_Stories_Compatibility {
 		if ( version_compare( get_bloginfo( 'version' ), $this->get_wp_version(), '<' ) ) {
 			/* translators: %s: WordPress version number */
 			$message = esc_html( sprintf( __( 'Web Stories requires WordPress %s or higher.', 'web-stories' ), $this->get_wp_version() ) );
-			$data    = array(
+			$data    = [
 				'title' => $message,
-			);
+			];
 			$this->add_to_error( 'failed_check_wp_version', $message, $data );
 
 			return false;
@@ -151,9 +151,9 @@ class Web_Stories_Compatibility {
 							__( 'You appear to be running an incomplete version of the plugin. Please run %s to finish installation.', 'web-stories' ),
 							'<code>composer install &amp;&amp; npm install &amp;&amp; npm run build</code>'
 						);
-					$data = array(
+					$data = [
 						'title' => esc_html__( 'Web Stories plugin could not be initialized.', 'web-stories' ),
-					);
+					];
 					$this->add_to_error( 'failed_check_required_files', $message, $data );
 
 					return false;
@@ -172,7 +172,7 @@ class Web_Stories_Compatibility {
 	 * @return bool
 	 */
 	public function check_extensions() {
-		$missing_extensions = array();
+		$missing_extensions = [];
 		foreach ( array_keys( $this->get_extensions() ) as $required_extension ) {
 			if ( ! extension_loaded( $required_extension ) ) {
 				$missing_extensions[] = "<code>$required_extension</code>";
@@ -208,7 +208,7 @@ class Web_Stories_Compatibility {
 	 * @return bool
 	 */
 	public function check_classes() {
-		$missing_classes = array();
+		$missing_classes = [];
 		foreach ( $this->get_extensions() as $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'classes' !== $construct_type ) {
@@ -252,7 +252,7 @@ class Web_Stories_Compatibility {
 	 * @return bool
 	 */
 	public function check_functions() {
-		$missing_functions = array();
+		$missing_functions = [];
 		foreach ( $this->get_extensions() as $required_constructs ) {
 			foreach ( $required_constructs as $construct_type => $constructs ) {
 				if ( 'functions' !== $construct_type ) {
