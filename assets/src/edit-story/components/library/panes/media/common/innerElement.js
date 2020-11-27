@@ -18,7 +18,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 /**
  * Internal dependencies
@@ -28,6 +28,8 @@ import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
 import Moveable from '../../../../moveable';
+import InOverlay from "../../../../overlay";
+import getBoundRect from "../../../../../utils/getBoundRect";
 
 const styledTiles = css`
   width: 100%;
@@ -70,6 +72,13 @@ const MediaWrapper = styled.div`
   position: absolute;
 `;
 
+const CloneImg = styled.img`
+  opacity: 1;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+`;
+
 function InnerElement({
   type,
   src,
@@ -85,6 +94,9 @@ function InnerElement({
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
   const mediaWrapper = useRef(null);
+  const cloneRef = useRef(null);
+  const overlayRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
@@ -158,10 +170,31 @@ function InnerElement({
   const frame = {
     translate: [0, 0],
   };
+
   const onDragStart = ({ set }) => {
-    console.log('starting');
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
+    setIsDragging(true);
+
+    // Position the clone that's being dragged.
+    const overlay = overlayRef.current;
+    let offsetX = 0,
+      offsetY = 0;
+    for (
+      let offsetNode = overlay;
+      offsetNode;
+      offsetNode = offsetNode.offsetParent
+    ) {
+      offsetX += offsetNode.offsetLeft;
+      offsetY += offsetNode.offsetTop;
+    }
+    const mediaBox = mediaElement.current.getBoundingClientRect();
+    const x = mediaBox.top - offsetX;
+    const y = mediaBox.left - offsetY;
+    cloneRef.current.style.top = `${x}px`;
+    cloneRef.current.style.left = `${y}px`;
+    cloneRef.current.style.width = `${mediaBox.width}px`;
+    cloneRef.current.style.height = `${mediaBox.height}px`;
   };
 
   const makeMediaVisible = () => {
@@ -170,8 +203,8 @@ function InnerElement({
     }
   };
   let media;
+  const thumbnailURL = getSmallestUrlForWidth(width, resource);
   if (['image', 'gif'].includes(type)) {
-    const thumbnailURL = getSmallestUrlForWidth(width, resource);
     media = (
       <Image
         key={src}
@@ -226,9 +259,33 @@ function InnerElement({
   if (!media) {
     throw new Error('Invalid media element type.');
   }
+  // @todo Make it work for video, too.
   return (
     <>
-      <MediaWrapper ref={mediaWrapper}>{media}</MediaWrapper>
+      <MediaWrapper ref={mediaWrapper} zIndex={10}>
+        {media}
+        {isDragging && (
+          <InOverlay
+            ref={overlayRef}
+            zIndex={3}
+            pointerEvents="initial"
+            render={() => {
+              return (
+                <CloneImg
+                  src={thumbnailURL}
+                  ref={cloneRef}
+                  width={width}
+                  height={height}
+                  alt={alt}
+                  aria-label={alt}
+                  loading={'lazy'}
+                  draggable={false}
+                />
+              );
+            }}
+          />
+        )}
+      </MediaWrapper>
       <Moveable
         className=""
         zIndex={10}
@@ -240,11 +297,15 @@ function InnerElement({
         onDragStart={onDragStart}
         snappable={true}
         verticalGuidelines={[0, 300, 600, 1000, 1500]}
-        onDrag={({ target, beforeTranslate }) => {
+        onDrag={({ beforeTranslate }) => {
           frame.translate = beforeTranslate;
-          target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+          if (cloneRef.current) {
+            cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+          }
         }}
-        onDragEnd={() => {}}
+        onDragEnd={() => {
+          setIsDragging(false);
+        }}
       />
     </>
   );

@@ -70,7 +70,7 @@ const Area = styled.div`
 function Layout() {
   return (
     <LayoutProvider>
-      <Editor>
+      <Editor zIndex={9}>
         <Area area="lib">
           <Library />
         </Area>
