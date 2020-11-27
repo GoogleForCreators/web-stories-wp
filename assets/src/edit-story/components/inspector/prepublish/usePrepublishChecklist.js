@@ -13,8 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { useContext } from 'react';
 /**
  * Internal dependencies
  */
-export { default } from './fontPicker';
+import Context from './context';
+
+function usePrepublishChecklist() {
+  const { checklist, refreshChecklist } = useContext(Context);
+
+  return { checklist, refreshChecklist };
+}
+
+export default usePrepublishChecklist;

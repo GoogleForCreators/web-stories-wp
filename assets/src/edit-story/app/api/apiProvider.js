@@ -42,9 +42,9 @@ function APIProvider({ children }) {
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, {
-        context: `edit`,
-        _embed: 'wp:featuredmedia',
+      const path = addQueryArgs(`${stories}${storyId}/`, {
+        context: 'edit',
+        _embed: 'wp:featuredmedia,author',
       });
 
       return apiFetch({ path });
@@ -61,6 +61,7 @@ function APIProvider({ children }) {
       autoAdvance,
       defaultPageDuration,
       content,
+      author,
       ...rest
     }) => {
       return {
@@ -74,6 +75,7 @@ function APIProvider({ children }) {
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
+        author: author.id,
         ...rest,
       };
     },
@@ -90,7 +92,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}`,
+        path: `${stories}${storyId}/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -108,7 +110,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}/autosaves`,
+        path: `${stories}${storyId}/autosaves/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -188,7 +190,7 @@ function APIProvider({ children }) {
   const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: `${media}${mediaId}/`,
         data,
         method: 'POST',
       });
@@ -210,7 +212,7 @@ function APIProvider({ children }) {
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: addQueryArgs(`${media}/${mediaId}`, { _method: 'DELETE' }),
+        path: addQueryArgs(`${media}${mediaId}/`, { _method: 'DELETE' }),
         data: { force: true },
         method: 'POST',
       });
@@ -235,9 +237,14 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getAllUsers = useCallback(() => {
-    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
-  }, [users]);
+  const getAuthors = useCallback(
+    (search = null) => {
+      return apiFetch({
+        path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
+      });
+    },
+    [users]
+  );
 
   /**
    * Status check, submit html string.
@@ -263,7 +270,7 @@ function APIProvider({ children }) {
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      getAllUsers,
+      getAuthors,
       uploadMedia,
       updateMedia,
       deleteMedia,

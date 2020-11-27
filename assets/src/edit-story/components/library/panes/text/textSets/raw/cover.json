@@ -1,5 +1,5 @@
 {
-  "current": "e8f0424f-1545-4f97-951b-82acd0a94707",
+  "current": "7cf5cb87-0090-4ef4-b047-a745f8f6bfbe",
   "selection": [],
   "story": {
     "stylePresets": {
@@ -151,7 +151,7 @@
       ]
     }
   },
-  "version": 24,
+  "version": 25,
   "pages": [
     {
       "elements": [
@@ -2898,13 +2898,16 @@
           "lockAspectRatio": false,
           "backgroundColor": {
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
+              "r": 255,
+              "g": 255,
+              "b": 255,
+              "a": 0
             }
           },
           "type": "shape",
-          "width": 1,
+          "x": 17,
+          "y": 331,
+          "width": 380,
           "height": 273,
           "scale": 100,
           "focalX": 50,
@@ -2912,97 +2915,22 @@
           "mask": {
             "type": "rectangle"
           },
-          "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
-          "id": "39dd9085-76df-462d-9ca0-f09f3040fe18",
-          "x": 16,
-          "y": 331
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
+          "id": "c5a473d0-ba58-4b35-8445-12b52641c6fa",
+          "border": {
+            "left": 1,
+            "right": 1,
+            "top": 1,
+            "bottom": 1,
+            "lockedWidth": true,
             "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 1,
-          "height": 273,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "39dd9085-76df-462d-9ca0-f09f3040fe18",
-          "id": "e92fc3f9-3b43-4697-8201-392a09e3f9aa",
-          "x": 395,
-          "y": 331
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 380,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "3dd28357-58fb-45fc-b7df-4873dbb58806",
-          "id": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
-          "x": 16,
-          "y": 331
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 0,
-              "g": 0,
-              "b": 0
-            }
-          },
-          "type": "shape",
-          "width": 380,
-          "height": 1,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "ed41ddcd-8d01-42b7-a6a9-d36ef18b9553",
-          "id": "1ef48d77-a32f-4a85-8c75-d132a2ab04b6",
-          "x": 16,
-          "y": 603
+              "color": {
+                "r": 0,
+                "g": 0,
+                "b": 0
+              }
+            },
+            "position": "inside"
+          }
         },
         {
           "opacity": 100,

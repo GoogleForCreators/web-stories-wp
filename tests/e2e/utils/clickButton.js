@@ -13,21 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const createFontFilter = (fonts) => (keyword) =>
-  fonts.filter(({ name }) =>
-    name.toLowerCase().includes(keyword.toLowerCase())
-  );
-
-export const isKeywordFilterable = (keyword) => keyword.trim().length >= 2;
-
-export const getOptions = (groups) => groups.flatMap(({ options }) => options);
-
-export const addUniqueEntry = (key) => (array) => [
-  ...new Set(array.concat([key])),
-];
-
-export const getInset = (groups, i, j) =>
-  groups
-    .slice(0, i)
-    .map((group) => group.options.length)
-    .reduce((a, b) => a + b, 0) + j;
+export default async function clickButton(selector) {
+  await page.waitForSelector(selector);
+  await page.evaluate((btn) => {
+    document.querySelector(btn).click();
+  }, selector);
+}

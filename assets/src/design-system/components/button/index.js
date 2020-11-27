@@ -111,14 +111,16 @@ const ButtonRectangle = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
   min-width: 1px;
   min-height: 1em;
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
   padding: ${({ size }) =>
     size === BUTTON_SIZES.SMALL ? '8px 16px' : '18px 32px'};
 `;
 
 const ButtonSquare = styled(Base)`
   ${({ type }) => type && buttonColors?.[type]};
-  border-radius: 4px;
+  border-radius: ${({ theme }) => theme.borders.radius.small};
+
   ${({ size }) => css`
     width: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
     height: ${size === BUTTON_SIZES.SMALL ? 32 : 56}px;
@@ -131,7 +133,7 @@ const ButtonSquare = styled(Base)`
 `;
 
 const ButtonCircle = styled(ButtonSquare)`
-  border-radius: 50%;
+  border-radius: ${({ theme }) => theme.borders.radius.round};
 `;
 
 const ButtonIcon = styled(Base)`

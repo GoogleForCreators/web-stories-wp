@@ -55,4 +55,61 @@ describe('Inspector Tabs integration', () => {
       await fixture.snapshot('document tab has focus');
     });
   });
+
+  describe('CUJ: Creator can View and Modify Document: Author', () => {
+    it('should allow choosing author', async () => {
+      const { documentTab } = fixture.editor.inspector;
+
+      // Click document tab
+      await fixture.events.mouse.clickOn(documentTab);
+      await waitFor(() => fixture.editor.inspector.documentPanel);
+      await waitFor(() =>
+        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
+          'John Doe'
+        )
+      );
+      fixture.events.click(fixture.editor.inspector.documentPanel.author);
+      // Ensure the debounced callback has taken effect.
+      await fixture.events.sleep(300);
+
+      const options = fixture.screen
+        .getByRole('listbox', {
+          name: /Option List Selector/,
+        })
+        .querySelectorAll('li[role="option"]');
+      expect(options.length).toBe(2);
+      fixture.events.click(options[1]);
+
+      await fixture.events.sleep(300);
+      await waitFor(() =>
+        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
+          'Jane Doe'
+        )
+      );
+    });
+
+    it('should allow searching authors', async () => {
+      const { documentTab } = fixture.editor.inspector;
+
+      // Click document tab
+      await fixture.events.mouse.clickOn(documentTab);
+      await waitFor(() =>
+        expect(fixture.editor.inspector.documentPanel.author.textContent).toBe(
+          'John Doe'
+        )
+      );
+      fixture.events.click(fixture.editor.inspector.documentPanel.author);
+      // Ensure the debounced callback has taken effect.
+      await fixture.events.sleep(300);
+      await fixture.events.keyboard.type('Jane');
+
+      const options = fixture.screen
+        .getByRole('listbox', {
+          name: /Option List Selector/,
+        })
+        .querySelectorAll('li[role="option"]');
+      expect(options.length).toBe(1);
+      expect(options[0].textContent).toBe('Jane Doe');
+    });
+  });
 });
