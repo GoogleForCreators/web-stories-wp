@@ -17,8 +17,6 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Meta_Boxes;
 use Google\Web_Stories\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;

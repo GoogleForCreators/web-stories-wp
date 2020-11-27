@@ -17,9 +17,6 @@
 
 namespace Google\Web_Stories\Tests;
 
-use DOMDocument;
-use Google\Web_Stories\Meta_Boxes;
-
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Post_Type
  */
