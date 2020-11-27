@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import React, { useEffect, useRef } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -54,6 +54,10 @@ import {
   ZoomInAnimation,
   ZoomOutAnimation,
   BaseAnimationCell,
+  PanTopAnimation,
+  PanRightAnimation,
+  PanBottomAnimation,
+  PanLeftAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -74,15 +78,20 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   overflow: hidden;
   font-family: 'Teko', sans-serif;
   font-size: 20px;
+  line-height: 1;
   color: white;
   text-transform: uppercase;
 
-  &:hover {
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &:hover:not([disabled]) {
     cursor: pointer;
   }
 
-  &:hover,
-  &:focus {
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
     ${BaseAnimationCell} {
       display: inline-block;
     }
@@ -115,6 +124,7 @@ export default function EffectChooser({
   onNoEffectSelected,
   onDismiss,
   isBackgroundEffects = false,
+  disabledTypeOptionsMap,
 }) {
   const ref = useRef();
 
@@ -134,17 +144,85 @@ export default function EffectChooser({
           <span>{__('No Effect', 'web-stories')}</span>
         </GridItemFullRow>
         {isBackgroundEffects ? (
-          <GridItemFullRow
-            aria-label={__('Zoom Effect', 'web-stories')}
-            onClick={() =>
-              onAnimationSelected({
-                animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-              })
-            }
-          >
-            <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
-            <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
-          </GridItemFullRow>
+          <>
+            <GridItemFullRow
+              aria-label={__('Zoom Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                })
+              }
+            >
+              <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
+              <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
+            </GridItemFullRow>
+            <GridItem
+              aria-label={__('Pan Left Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.LEFT_TO_RIGHT,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.LEFT_TO_RIGHT)}
+            >
+              <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
+              <PanLeftAnimation>
+                {__('Pan Left', 'web-stories')}
+              </PanLeftAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Right Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.RIGHT_TO_LEFT,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.RIGHT_TO_LEFT)}
+            >
+              <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
+              <PanRightAnimation>
+                {__('Pan Right', 'web-stories')}
+              </PanRightAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Up Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.BOTTOM_TO_TOP,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.BOTTOM_TO_TOP)}
+            >
+              <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
+              <PanBottomAnimation>
+                {__('Pan Up', 'web-stories')}
+              </PanBottomAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Down Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.TOP_TO_BOTTOM,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.TOP_TO_BOTTOM)}
+            >
+              <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
+              <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
+            </GridItem>
+          </>
         ) : (
           <>
             <GridItemFullRow
@@ -339,8 +417,11 @@ export default function EffectChooser({
 }
 
 EffectChooser.propTypes = {
-  onAnimationSelected: propTypes.func.isRequired,
-  onNoEffectSelected: propTypes.func.isRequired,
-  onDismiss: propTypes.func,
-  isBackgroundEffects: propTypes.bool,
+  onAnimationSelected: PropTypes.func.isRequired,
+  onNoEffectSelected: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func,
+  isBackgroundEffects: PropTypes.bool,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };

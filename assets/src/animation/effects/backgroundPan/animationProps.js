@@ -30,15 +30,20 @@ import PropTypes from 'prop-types';
 import { FIELD_TYPES, DIRECTION } from '../../constants';
 import { AnimationInputPropTypes } from '../types';
 
-export const WhooshInEffectInputPropTypes = {
-  whooshInDir: PropTypes.shape(AnimationInputPropTypes),
+export const PanEffectInputPropTypes = {
+  panDir: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  whooshInDir: {
+  panDir: {
     label: __('Direction', 'web-stories'),
     type: FIELD_TYPES.DIRECTION_PICKER,
-    values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
-    defaultValue: DIRECTION.LEFT_TO_RIGHT,
+    values: [
+      DIRECTION.TOP_TO_BOTTOM,
+      DIRECTION.BOTTOM_TO_TOP,
+      DIRECTION.LEFT_TO_RIGHT,
+      DIRECTION.RIGHT_TO_LEFT,
+    ],
+    defaultValue: DIRECTION.BOTTOM_TO_TOP,
   },
 };
