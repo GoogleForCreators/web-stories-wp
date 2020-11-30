@@ -16,3 +16,4 @@
 export { getTotalDuration } from './getTotalDuration';
 export { getMediaBoundOffsets, hasOffsets } from './mediaPositions';
 export { clamp, lerp, progress } from './range';
+export { orderByKeys, getExclusion } from './objectOperations';
