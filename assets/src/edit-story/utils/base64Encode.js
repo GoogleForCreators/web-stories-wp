@@ -15,28 +15,6 @@
  */
 
 /**
- * Convert a Unicode string to a string in which
- * each 16-bit unit occupies only one byte.
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa
- *
- * @param {string} string Input string.
- * @return {string} Converted string.
- */
-function toBinary(string) {
-  const codeUnits = new Uint16Array(string.length);
-  for (let i = 0; i < codeUnits.length; i++) {
-    codeUnits[i] = string.charCodeAt(i);
-  }
-
-  // Not using String.fromCharCode(...new Uint8Array(...)) to avoid RangeError due to too many arguments.
-  return new Uint8Array(codeUnits.buffer).reduce(
-    (data, byte) => data + String.fromCharCode(byte),
-    ''
-  );
-}
-
-/**
  * Base64-encodes a string with Unicode support.
  *
  * Prefixes the encoded result so it can be easily identified
@@ -46,7 +24,7 @@ function toBinary(string) {
  * @return {string} Encoded string.
  */
 function base64Encode(string) {
-  return '__WEB_STORIES_ENCODED__' + btoa(toBinary(string));
+  return '__WEB_STORIES_ENCODED__' + btoa(encodeURIComponent(string));
 }
 
 export default base64Encode;

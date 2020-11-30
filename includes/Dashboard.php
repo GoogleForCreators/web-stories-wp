@@ -83,7 +83,7 @@ class Dashboard {
 	 */
 	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
+		$this->decoder     = new Decoder();
 		$this->site_kit    = $site_kit;
 	}
 
@@ -238,7 +238,7 @@ class Dashboard {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function is_site_kit_plugin_installed() {
 		$all_plugins = get_plugins();
@@ -358,7 +358,7 @@ class Dashboard {
 				'capabilities'        => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
-					
+
 				],
 				'siteKitCapabilities' => [
 					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),

@@ -35,6 +35,7 @@ import templateReducer, {
   defaultTemplatesState,
   ACTION_TYPES as TEMPLATE_ACTION_TYPES,
 } from '../reducer/templates';
+import base64Encode from '../../../edit-story/utils/base64Encode';
 
 export function reshapeTemplateObject(isLocal) {
   return ({
@@ -97,7 +98,7 @@ export function reshapeSavedTemplates({
 const useTemplateApi = (dataAdapter, config) => {
   const [state, dispatch] = useReducer(templateReducer, defaultTemplatesState);
 
-  const { cdnURL, templateApi } = config;
+  const { cdnURL, templateApi, encodeMarkup } = config;
 
   const fetchSavedTemplates = useCallback(() => {
     // Saved Templates = Bookmarked Templates + My Templates
@@ -268,7 +269,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
         await dataAdapter.post(templateApi, {
           data: {
-            content,
+            content: encodeMarkup ? base64Encode(content.raw) : content.raw,
             story_data,
             featured_media,
             style_presets,
@@ -298,7 +299,7 @@ const useTemplateApi = (dataAdapter, config) => {
         });
       }
     },
-    [dataAdapter, templateApi]
+    [dataAdapter, templateApi, encodeMarkup]
   );
 
   const fetchRelatedTemplates = useCallback(

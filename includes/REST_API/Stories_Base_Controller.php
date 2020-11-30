@@ -61,7 +61,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
 		$this->namespace = 'web-stories/v1';
-		$this->decoder   = new Decoder( new Experiments() );
+		$this->decoder   = new Decoder();
 	}
 
 	/**
