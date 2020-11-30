@@ -29,7 +29,7 @@ const NORMAL_WEIGHT = 400;
 const SMALLEST_BOLD = 600;
 const DEFAULT_BOLD = 700;
 
-function weightToStyle(weight) {
+export function weightToStyle(weight) {
   return numericToStyle(WEIGHT, weight);
 }
 

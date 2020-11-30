@@ -147,6 +147,7 @@ function ColorPreview({
   value,
   label,
   colorPickerActions,
+  changedStyle,
 }) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
@@ -322,6 +323,7 @@ function ColorPreview({
           hasOpacity={hasOpacity}
           onClose={onClose}
           renderFooter={colorPickerActions}
+          changedStyle={changedStyle}
         />
       </Popup>
     </>
@@ -335,6 +337,7 @@ ColorPreview.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   colorPickerActions: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorPreview.defaultProps = {

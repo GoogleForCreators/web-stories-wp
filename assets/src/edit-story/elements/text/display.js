@@ -30,6 +30,8 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
+  elementWithBorderRadius,
+  elementWithOutsideBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -40,12 +42,17 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
+import { isOutsideBorder } from '../../components/elementBorder/utils';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
   generateParagraphTextStyle,
   calcFontMetrics,
 } from './util';
 
+const OutsideBorder = styled.div`
+  ${elementWithOutsideBorder}
+`;
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
   ${elementWithFont}
@@ -91,9 +98,12 @@ const FillElement = styled.p`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
 `;
+
 const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
+  ${elementWithBorderRadius}
+  ${elementWithOutsideBorder}
   margin: 0;
 `;
 
@@ -102,13 +112,16 @@ function TextDisplay({
   element: { id, content, backgroundColor, backgroundTextMode, ...rest },
 }) {
   const ref = useRef(null);
+  const outerBorderRef = useRef(null);
+  const bgRef = useRef(null);
+  const fgRef = useRef(null);
 
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { font } = rest;
+  const { border, borderRadius, font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -143,8 +156,12 @@ function TextDisplay({
     maybeEnqueueFontStyle([{ ...fontFaceSetConfigs, font }]);
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
 
+  const isHighLight = backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT;
+  const refWithBorder = isHighLight ? outerBorderRef : bgRef;
+
   useTransformHandler(id, (transform) => {
-    const target = ref.current;
+    // Ref is set in case of high-light mode only, use the fgRef if that's missing.
+    const target = ref?.current || fgRef.current;
     const updatedFontSize = transform?.updates?.fontSize;
     target.style.fontSize = updatedFontSize
       ? `${dataToEditorY(updatedFontSize)}px`
@@ -153,6 +170,34 @@ function TextDisplay({
     target.style.margin = updatedMargin
       ? `${dataToEditorY(-updatedMargin) / 2}px 0`
       : '';
+
+    if (outerBorderRef.current || bgRef.current) {
+      // Depending on the background mode, choose the element that has border assigned to it.
+      if (transform) {
+        const { resize } = transform;
+        if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          const [width, height] = resize;
+          if (isOutsideBorder(border)) {
+            refWithBorder.current.style.width =
+              width + border.left + border.right + 'px';
+            refWithBorder.current.style.height =
+              height + border.top + border.bottom + 'px';
+          }
+        }
+      }
+    }
+  });
+
+  useColorTransformHandler({
+    id,
+    targetRef: bgRef,
+    expectedStyle: 'background',
+  });
+  useColorTransformHandler({ id, targetRef: fgRef, expectedStyle: 'color' });
+  useColorTransformHandler({
+    id,
+    targetRef: refWithBorder,
+    expectedStyle: 'border-color',
   });
 
   // Setting the text color of the entire block to black essentially removes all inline
@@ -162,41 +207,55 @@ function TextDisplay({
     [content]
   );
 
-  if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
+  if (isHighLight) {
+    // We need a separate outside border wrapper for outside border
+    // since the highlight wrapper uses negative margin to position the content.
+    // This, however, would shift the border incorrectly.
     return (
-      <HighlightWrapperElement ref={ref} {...props}>
-        <HighlightElement {...props}>
-          <MarginedElement {...props}>
-            <BackgroundSpan
-              {...props}
-              dangerouslySetInnerHTML={{
-                __html: contentWithoutColor,
-              }}
-            />
-          </MarginedElement>
-        </HighlightElement>
-        <HighlightElement {...props}>
-          <MarginedElement {...props}>
-            <ForegroundSpan
-              {...props}
-              dangerouslySetInnerHTML={{
-                __html: content,
-              }}
-            />
-          </MarginedElement>
-        </HighlightElement>
-      </HighlightWrapperElement>
+      <OutsideBorder
+        ref={outerBorderRef}
+        border={border}
+        borderRadius={borderRadius}
+      >
+        <HighlightWrapperElement ref={ref} {...props}>
+          <HighlightElement {...props}>
+            <MarginedElement {...props}>
+              <BackgroundSpan
+                ref={bgRef}
+                {...props}
+                dangerouslySetInnerHTML={{
+                  __html: contentWithoutColor,
+                }}
+              />
+            </MarginedElement>
+          </HighlightElement>
+          <HighlightElement {...props}>
+            <MarginedElement {...props}>
+              <ForegroundSpan
+                ref={fgRef}
+                {...props}
+                dangerouslySetInnerHTML={{
+                  __html: content,
+                }}
+              />
+            </MarginedElement>
+          </HighlightElement>
+        </HighlightWrapperElement>
+      </OutsideBorder>
     );
   }
 
   return (
     <Background
+      ref={bgRef}
       backgroundColor={
         backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
       }
+      borderRadius={borderRadius}
+      border={border}
     >
       <FillElement
-        ref={ref}
+        ref={fgRef}
         dangerouslySetInnerHTML={{
           __html: content,
         }}

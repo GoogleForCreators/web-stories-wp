@@ -19,13 +19,20 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
-import { getBorderStyle, shouldDisplayBorder } from './utils';
+import useCSSVarColorTransformHandler from '../../elements/shared/useCSSVarColorTransformHandler';
+import {
+  getBorderColor,
+  getBorderStyle,
+  isOutsideBorder,
+  shouldDisplayBorder,
+} from './utils';
 
 const borderElementCSS = css`
   top: 0;
@@ -38,18 +45,16 @@ const borderElementCSS = css`
 `;
 
 const Border = styled.div`
+  --element-border-color: ${({ color }) => getBorderColor({ color })};
   ${borderElementCSS}
   &:after {
-    content: ' ';
-    ${({ color, left, top, right, bottom, position }) =>
-      getBorderStyle({
-        color,
-        left,
-        top,
-        right,
-        bottom,
-        position,
-      })}
+    ${({ position }) =>
+      !isOutsideBorder({ position }) &&
+      `
+      content: ' ';
+    `}
+    ${(props) => !isOutsideBorder(props) && getBorderStyle(props)}
+    border-color: var(--element-border-color);
   }
 `;
 
@@ -58,9 +63,20 @@ export default function WithBorder({ element, previewMode = false, children }) {
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
+  const ref = useRef(null);
+  const { id } = element;
+
+  useCSSVarColorTransformHandler({
+    id,
+    targetRef: ref,
+    expectedStyle: 'border-color',
+    cssVar: '--element-border-color',
+  });
+
   if (!shouldDisplayBorder(element)) {
     return children;
   }
+  const { borderRadius, opacity } = element;
   let border = element.border;
   const { left, top, right, bottom } = border;
 
@@ -75,7 +91,13 @@ export default function WithBorder({ element, previewMode = false, children }) {
     };
   }
   return (
-    <Border {...border} previewMode={previewMode}>
+    <Border
+      ref={ref}
+      {...border}
+      borderRadius={borderRadius}
+      previewMode={previewMode}
+      opacity={opacity}
+    >
       {children}
     </Border>
   );

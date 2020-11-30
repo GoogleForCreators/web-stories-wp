@@ -54,6 +54,17 @@ function setupPanel() {
 }
 
 describe('SlugPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:permalink',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render Slug Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Permalink' });

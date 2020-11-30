@@ -15,24 +15,20 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __, sprintf } from '@wordpress/i18n';
-/**
  * Internal dependencies
  */
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import {
+  PRE_PUBLISH_MESSAGE_TYPES,
+  MESSAGES,
+  MIN_STORY_PAGES,
+  MAX_STORY_PAGES,
+  MAX_STORY_TITLE_LENGTH_CHARS,
+} from '../constants';
 
 /**
  * @typedef {import('../types').Guidance} Guidance
  * @typedef {import('../../../types').Story} Story
  */
-
-const MIN_STORY_PAGES = 4;
-const MAX_STORY_PAGES = 30;
-const MIN_STORY_PAGES_RECOMMENDED = 10;
-const MAX_STORY_PAGES_RECOMMENDED = 20;
-const MAX_STORY_TITLE_LENGTH = 40;
 
 /**
  * Check the number of pages in a Story.
@@ -47,28 +43,18 @@ export function storyPagesCount(story) {
   const hasTooManyPages = story.pages.length > MAX_STORY_PAGES;
   if (hasTooFewPages || hasTooManyPages) {
     const message = hasTooFewPages
-      ? sprintf(
-          /* translators: 1: minimum number of pages. 2: recommended number of pages. */
-          __(
-            'Story has fewer than %1$d pages (ideally, stories should have a minimum of %2$d pages)',
-            'web-stories'
-          ),
-          MIN_STORY_PAGES,
-          MIN_STORY_PAGES_RECOMMENDED
-        )
-      : sprintf(
-          /* translators: 1: maximum number of pages. 2: recommended number of pages. */
-          __(
-            "Story has more than %1$d pages (ideally, stories shouldn't have more than %2$d pages)",
-            'web-stories'
-          ),
-          MAX_STORY_PAGES,
-          MAX_STORY_PAGES_RECOMMENDED
-        );
+      ? {
+          message: MESSAGES.GENERAL_GUIDELINES.STORY_TOO_SHORT.MAIN_TEXT,
+          help: MESSAGES.GENERAL_GUIDELINES.STORY_TOO_SHORT.HELPER_TEXT,
+        }
+      : {
+          message: MESSAGES.GENERAL_GUIDELINES.STORY_TOO_LONG.MAIN_TEXT,
+          help: MESSAGES.GENERAL_GUIDELINES.STORY_TOO_LONG.HELPER_TEXT,
+        };
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      storyId: story.storyId,
-      message,
+      storyId: story.id,
+      ...message,
     };
   }
   return undefined;
@@ -83,15 +69,12 @@ export function storyPagesCount(story) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function storyTitleLength(story) {
-  if (story.title.length > MAX_STORY_TITLE_LENGTH) {
+  if (story.title?.length > MAX_STORY_TITLE_LENGTH_CHARS) {
     return {
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
-      storyId: story.storyId,
-      message: sprintf(
-        /* translators: %d: maximum story title length. */
-        __('Story title is longer than %d characters', 'web-stories'),
-        MAX_STORY_TITLE_LENGTH
-      ),
+      storyId: story.id,
+      message: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.MAIN_TEXT,
+      help: MESSAGES.GENERAL_GUIDELINES.STORY_TITLE_TOO_LONG.HELPER_TEXT,
     };
   }
   return undefined;

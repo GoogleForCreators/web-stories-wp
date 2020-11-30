@@ -67,6 +67,18 @@ describe('Panels/Link', () => {
       url: '',
     },
   };
+
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:link',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should not display metadata fields if URL is missing', () => {
     renderLinkPanel([DEFAULT_ELEMENT]);
     expect(

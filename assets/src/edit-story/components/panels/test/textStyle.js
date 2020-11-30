@@ -29,7 +29,7 @@ import RichTextContext from '../../richText/context';
 import { calculateTextHeight } from '../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../utils/calcRotatedResizeOffset';
 import DropDown from '../../form/dropDown';
-import FontPicker from '../../fontPicker';
+import AdvancedDropDown from '../../form/advancedDropDown';
 import ColorInput from '../../form/color/color';
 import createSolid from '../../../utils/createSolid';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../form';
@@ -37,7 +37,7 @@ import { renderPanel } from './_utils';
 
 jest.mock('../../../utils/textMeasurements');
 jest.mock('../../form/dropDown');
-jest.mock('../../fontPicker');
+jest.mock('../../form/advancedDropDown');
 jest.mock('../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
@@ -139,7 +139,7 @@ describe('Panels/TextStyle', () => {
 
     controls = {};
     DropDown.mockImplementation(FakeControl);
-    FontPicker.mockImplementation(FakeControl);
+    AdvancedDropDown.mockImplementation(FakeControl);
     ColorInput.mockImplementation(FakeControl);
   });
 
@@ -488,7 +488,7 @@ describe('Panels/TextStyle', () => {
   describe('FontControls', () => {
     it('should select font', async () => {
       const { pushUpdate } = renderTextStyle([textElement]);
-      await act(() => controls.font.onChange('Neu Font'));
+      await act(() => controls.font.onChange({ id: 'Neu Font' }));
       expect(pushUpdate).toHaveBeenCalledWith(
         {
           font: {

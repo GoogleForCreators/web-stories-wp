@@ -42,6 +42,17 @@ describe('Panels/VideoAccessibility', () => {
     return renderPanel(VideoAccessibility, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:videoAccessibility',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <VideoAccessibility /> panel', () => {
     const { getByRole } = renderVideoAccessibility([defaultElement]);
     const imageHolder = getByRole('region', { name: /video poster/i });

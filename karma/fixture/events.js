@@ -301,6 +301,10 @@ class Mouse {
         const type = 'up';
         return { type, options };
       },
+      wheel: (options = {}) => {
+        const type = 'wheel';
+        return { type, options };
+      },
       move: (x, y, options = {}) => {
         this._xy = [x, y];
         const type = 'move';
@@ -383,6 +387,18 @@ class Mouse {
    */
   up(options = {}) {
     return this.seq([this._events.up(options)]);
+  }
+
+  /**
+   * The `mouse.wheel` API.
+   *
+   * See https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#mousewheeloptions
+   *
+   * @param {Object} options Accepts `deltaX` and `deltaY` options.
+   * @return {!Promise} Yields when the event is processed.
+   */
+  wheel(options = {}) {
+    return this.seq([this._events.wheel(options)]);
   }
 
   /**

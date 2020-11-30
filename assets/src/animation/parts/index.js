@@ -22,7 +22,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { ANIMATION_TYPES, ANIMATION_EFFECTS, BEZIER } from '../constants';
+import {
+  ANIMATION_TYPES,
+  ANIMATION_EFFECTS,
+  BACKGROUND_ANIMATION_EFFECTS,
+  BEZIER,
+} from '../constants';
 import getDefaultFieldValue from '../utils/getDefaultFieldValue';
 import { EffectDrop } from '../effects/drop';
 import { EffectFadeIn } from '../effects/fadeIn';
@@ -33,12 +38,16 @@ import { EffectTwirlIn } from '../effects/twirlIn';
 import { EffectWhooshIn } from '../effects/whooshIn';
 import { EffectZoom } from '../effects/zoom';
 import { EffectRotateIn } from '../effects/rotateIn';
+import { EffectBackgroundZoom } from '../effects/backgroundZoom';
+import { EffectBackgroundPan } from '../effects/backgroundPan';
 import flyInProps from '../effects/flyIn/animationProps';
 import panProps from '../effects/pan/animationProps';
 import pulseProps from '../effects/pulse/animationProps';
 import rotateInProps from '../effects/rotateIn/animationProps';
 import whooshInProps from '../effects/whooshIn/animationProps';
 import zoomEffectProps from '../effects/zoom/animationProps';
+import backgroundZoomEffectProps from '../effects/backgroundZoom/animationProps';
+import backgroundPanEffectProps from '../effects/backgroundPan/animationProps';
 
 import { AnimationBounce } from './bounce';
 import { AnimationBlinkOn } from './blinkOn';
@@ -100,6 +109,8 @@ export function AnimationPart(type, args) {
       [ANIMATION_EFFECTS.ZOOM.value]: EffectZoom,
       [ANIMATION_EFFECTS.DROP.value]: EffectDrop,
       [ANIMATION_EFFECTS.ROTATE_IN.value]: EffectRotateIn,
+      [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: EffectBackgroundZoom,
+      [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: EffectBackgroundPan,
     }[type?.value || type] || throughput;
 
   args.easing = args.easing || BEZIER[args.easingPreset];
@@ -147,6 +158,8 @@ export function getAnimationEffectProps(type) {
     [ANIMATION_EFFECTS.ROTATE_IN.value]: rotateInProps,
     [ANIMATION_EFFECTS.WHOOSH_IN.value]: whooshInProps,
     [ANIMATION_EFFECTS.ZOOM.value]: zoomEffectProps,
+    [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: backgroundZoomEffectProps,
+    [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: backgroundPanEffectProps,
   };
 
   return {

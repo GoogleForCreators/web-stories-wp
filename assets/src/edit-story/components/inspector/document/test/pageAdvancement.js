@@ -50,6 +50,16 @@ function setupPanel(configs = {}) {
 }
 
 describe('PageAdvancementPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:pageAdvancement',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
   it('should render Page Advancement Panel', () => {
     const { getByRole, updateStory } = setupPanel();
     const element = getByRole('button', { name: 'Page Advancement' });
