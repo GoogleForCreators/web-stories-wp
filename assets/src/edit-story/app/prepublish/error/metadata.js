@@ -17,8 +17,14 @@
 /**
  * Internal dependencies
  */
+import { greatestCommonDivisor } from '../../../utils/greatestCommonDivisor';
 import isElementBelowLimit from '../../../utils/isElementBelowLimit';
-import { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from '../constants';
+import {
+  PRE_PUBLISH_MESSAGE_TYPES,
+  MESSAGES,
+  ASPECT_RATIO_LEFT,
+  ASPECT_RATIO_RIGHT,
+} from '../constants';
 
 const FEATURED_MEDIA_RESOURCE_MIN_HEIGHT = 853;
 const FEATURED_MEDIA_RESOURCE_MIN_WIDTH = 640;
@@ -100,6 +106,39 @@ export function storyCoverPortraitSize(story) {
       storyId: story.id,
       message: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.MAIN_TEXT,
       help: MESSAGES.CRITICAL_METADATA.COVER_TOO_SMALL.HELPER_TEXT,
+    };
+  }
+  return undefined;
+}
+
+/**
+ * Check that the story's cover resource has the correct aspect ratio.
+ * If the resource is too small in either dimension, return an error message.
+ * Otherwise, return undefined.
+ *
+ * @param {Story} story The story being checked for critical metadata
+ * @return {Guidance|undefined} Guidance object for consumption
+ */
+export function storyCoverAspectRatio(story) {
+  if (
+    hasNoFeaturedMedia(story) ||
+    !story.featuredMedia?.width ||
+    !story.featuredMedia?.height
+  ) {
+    return undefined;
+  }
+  const gcd = greatestCommonDivisor(
+    story.featuredMedia?.width,
+    story.featuredMedia?.height
+  );
+  const leftRatio = story.featuredMedia?.width / gcd;
+  const rightRatio = story.featuredMedia?.height / gcd;
+  if (leftRatio !== ASPECT_RATIO_LEFT || rightRatio !== ASPECT_RATIO_RIGHT) {
+    return {
+      type: PRE_PUBLISH_MESSAGE_TYPES.ERROR,
+      storyId: story.id,
+      message: MESSAGES.CRITICAL_METADATA.COVER_WRONG_ASPECT_RATIO.MAIN_TEXT,
+      help: MESSAGES.CRITICAL_METADATA.COVER_WRONG_ASPECT_RATIO.HELPER_TEXT,
     };
   }
   return undefined;

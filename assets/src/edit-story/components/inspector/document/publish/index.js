@@ -105,9 +105,9 @@ function PublishPanel() {
         properties: {
           featuredMedia: {
             id: image.id,
-            height: image.sizes?.medium?.height || image.height,
-            url: image.sizes?.medium?.url || image.url,
-            width: image.sizes?.medium?.width || image.width,
+            height: image.sizes?.full?.height || image.height,
+            url: image.sizes?.full?.url || image.url,
+            width: image.sizes?.full?.width || image.width,
           },
         },
       }),

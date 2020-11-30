@@ -203,4 +203,26 @@ describe('Pre-publish checklist - missing critical metadata (errors)', () => {
     expect(test.message).toMatchInlineSnapshot(`"Story cover image too small"`);
     expect(test.storyId).toStrictEqual(testStory.id);
   });
+
+  it("should return an error-type guidance message if the story's cover image has the wrong ratio", () => {
+    const testStory = {
+      id: 456,
+      featuredMedia: { height: 960, width: 960, url: 'featured-media.com/img' },
+    };
+    const testHappy = metadataGuidelines.storyCoverPortraitSize({
+      id: 345,
+      featuredMedia: {
+        url: 'featured-media.com/img',
+        height: 960,
+        width: 720,
+      },
+    });
+    const test = metadataGuidelines.storyCoverAspectRatio(testStory);
+    expect(testHappy).toBeUndefined();
+    expect(test).not.toBeUndefined();
+    expect(test.message).toMatchInlineSnapshot(
+      `"Story cover image wrong aspect ratio"`
+    );
+    expect(test.storyId).toStrictEqual(testStory.id);
+  });
 });
