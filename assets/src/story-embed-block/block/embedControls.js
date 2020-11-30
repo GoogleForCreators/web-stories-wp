@@ -38,7 +38,7 @@ const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 const FallbackComponent = ({ children }) => children;
 
 const { Button, BaseControl, TextControl, PanelBody, PanelRow } = Components;
-// ToolbarGroup is only available in Gutenberg 7.0 or later, so it does not exsit in WP 5.3.
+// ToolbarGroup is only available in Gutenberg 7.0 or later, so it does not exist in WP 5.3.
 const ToolbarGroup = Components.ToolbarGroup || FallbackComponent;
 
 const EmbedControls = (props) => {
