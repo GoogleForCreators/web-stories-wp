@@ -41,7 +41,8 @@ jest.mock('../wpAdapter', () => ({
           status: 'publish',
           author: 1,
           link: 'https://www.story-link.com',
-          title: { rendered: 'Carlos', raw: 'Carlos' },
+          title: { raw: 'Carlos', rendered: 'Carlos' },
+          content: { raw: 'Content', rendered: 'Content' },
           story_data: { pages: [{ id: 1, elements: [] }] },
           modified_gmt: '1970-01-01T00:00:00.000Z',
           date_gmt: '1970-01-01T00:00:00.000Z',
@@ -51,10 +52,13 @@ jest.mock('../wpAdapter', () => ({
     }),
   post: (path, { data }) => {
     const title = typeof data.title === 'string' ? data.title : data.title.raw;
+    const content =
+      typeof data.content === 'string' ? data.content : data?.content?.raw;
     return Promise.resolve({
       id: data.id || 456,
       status: 'publish',
-      title: { rendered: title, raw: title },
+      title: { raw: title, rendered: title },
+      content: { raw: content, rendered: content },
       author: 1,
       story_data: { pages: [{ id: 1, elements: [] }] },
       modified_gmt: '1970-01-01T00:00:00.000Z',
@@ -68,7 +72,8 @@ jest.mock('../wpAdapter', () => ({
     Promise.resolve({
       id: id,
       status: 'publish',
-      title: { rendered: 'Carlos', raw: 'Carlos' },
+      title: { raw: 'Carlos', rendered: 'Carlos' },
+      content: { raw: 'Content', rendered: 'Content' },
       story_data: { pages: [{ id: 1, elements: [] }] },
       modified_gmt: '1970-01-01T00:00:00.000Z',
       date_gmt: '1970-01-01T00:00:00.000Z',
@@ -123,6 +128,10 @@ describe('ApiProvider', () => {
             raw: 'Carlos',
             rendered: 'Carlos',
           },
+          content: {
+            raw: 'Content',
+            rendered: 'Content',
+          },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
         pages: [
@@ -165,6 +174,7 @@ describe('ApiProvider', () => {
         ],
         status: 'publish',
         title: { raw: 'New Title' },
+        content: { raw: 'Content', rendered: 'Content' },
         link: 'https://www.story-link.com',
         originalStoryData: {
           author: 1,
@@ -200,6 +210,10 @@ describe('ApiProvider', () => {
           title: {
             raw: 'New Title',
             rendered: 'New Title',
+          },
+          content: {
+            raw: undefined,
+            rendered: undefined,
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
@@ -257,6 +271,9 @@ describe('ApiProvider', () => {
           title: {
             raw: 'Carlos',
           },
+          content: {
+            raw: 'Content',
+          },
         },
       });
     });
@@ -289,6 +306,10 @@ describe('ApiProvider', () => {
           title: {
             raw: 'Carlos',
             rendered: 'Carlos',
+          },
+          content: {
+            raw: 'Content',
+            rendered: 'Content',
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },
@@ -328,6 +349,10 @@ describe('ApiProvider', () => {
           title: {
             raw: 'Carlos (Copy)',
             rendered: 'Carlos (Copy)',
+          },
+          content: {
+            raw: 'Content',
+            rendered: 'Content',
           },
           _embedded: { author: [{ id: 1, name: 'admin' }] },
         },

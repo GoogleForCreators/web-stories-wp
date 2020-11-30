@@ -269,7 +269,7 @@ const useTemplateApi = (dataAdapter, config) => {
 
         await dataAdapter.post(templateApi, {
           data: {
-            content: encodeMarkup ? base64Encode(content) : content,
+            content: encodeMarkup ? base64Encode(content.raw) : content.raw,
             story_data,
             featured_media,
             style_presets,
