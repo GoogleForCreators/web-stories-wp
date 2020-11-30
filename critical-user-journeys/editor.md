@@ -23,8 +23,8 @@
 |                                                                   | Set kerning                                      | 🏆 **100.00%** *(5 / 5)*    |
 |                                                                   | Set line height                                  | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Set text color                                   | 🏆 **100.00%** *(5 / 5)*    |
-|                                                                   | Use font picker                                  | 🏔️ **92.31%** *(12 / 13)*  |
-|                                                                   | *[total]*                                        | 🏔️ **91.43%** *(32 / 35)*  |
+|                                                                   | Use font picker                                  | 🏆 **100.00%** *(13 / 13)*  |
+|                                                                   | *[total]*                                        | 🏔️ **94.29%** *(33 / 35)*  |
 | Creator can Add a Page Attachment                                 | Add Page Attachment                              | 🏆 **100.00%** *(2 / 2)*    |
 |                                                                   | Adding link to element in Attachment area        | 🏆 **100.00%** *(1 / 1)*    |
 |                                                                   | Remove Page Attachment                           | 🏆 **100.00%** *(1 / 1)*    |
@@ -72,4 +72,4 @@
 | User can interact with menu using mouse                           | Click toggle button to open                      | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | *[total]*                                        | 🏆 **100.00%** *(4 / 4)*    |
 |                                                                   | click close button to close menu                 | 🏆 **100.00%** *(4 / 4)*    |
-| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **76.09%** *(280 / 368)* |
+| *\[total\]*                                                       | *\[total\]*                                      | 🛴 **76.63%** *(282 / 368)* |
