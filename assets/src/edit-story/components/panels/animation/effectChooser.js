@@ -89,7 +89,7 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   font-family: 'Teko', sans-serif;
   font-size: 20px;
   line-height: 1;
-  color: white;
+  color: ${({ theme }) => theme.colors.fg.white};
   text-transform: uppercase;
   transition: background 0.1s linear;
 
@@ -190,6 +190,15 @@ const BACKGROUND_EFFECTS_LIST = [
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
+const GridLabel = styled.div`
+  grid-column-start: span 4;
+
+  span {
+    color: ${({ theme }) => theme.colors.fg.white};
+    font-weight: 500;
+    font-size: 14px;
+  }
+`;
 
 export default function EffectChooser({
   onAnimationSelected,
@@ -313,6 +322,9 @@ export default function EffectChooser({
   return (
     <Container ref={ref}>
       <Grid>
+        <GridLabel>
+          <span>{__('Select Animation', 'web-stories')}</span>
+        </GridLabel>
         <NoEffect
           onClick={onNoEffectSelected}
           aria-label={__('None', 'web-stories')}
