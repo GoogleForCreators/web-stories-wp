@@ -129,9 +129,6 @@ class Customizer extends \WP_UnitTestCase {
 		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_author]' ) );
 		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_author]' ) );
 
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_square_corners]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_square_corners]' ) );
-
 		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_date]' ) );
 		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_date]' ) );
 

@@ -284,26 +284,6 @@ class Customizer {
 			);
 		}
 
-		$wp_customize->add_setting(
-			'story-options[show_square_corners]',
-			[
-				'default' => false,
-				'type'    => 'option',
-			]
-		);
-
-		$wp_customize->add_control(
-			'story-options[show_square_corners]',
-			[
-				'type'            => 'checkbox',
-				'section'         => self::SECTION_SLUG,
-				'label'           => __( 'Show square corners', 'web-stories' ),
-				'active_callback' => function() {
-					return ( $this->is_option_enabled( 'show_stories' ) && ! $this->is_view_type( 'circles' ) );
-				},
-			]
-		);
-
 		if ( true === $theme_support['stories-archive-link'] ) {
 			$wp_customize->add_setting(
 				'story-options[show_stories_archive_link]',
