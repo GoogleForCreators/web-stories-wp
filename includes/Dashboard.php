@@ -83,7 +83,7 @@ class Dashboard {
 	 */
 	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
+		$this->decoder     = new Decoder();
 		$this->site_kit    = $site_kit;
 	}
 
@@ -204,9 +204,9 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/web-stories/v1/settings',
-			'/web-stories/v1/users/me',
-			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
+			'/web-stories/v1/settings/',
+			'/web-stories/v1/users/me/',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
 		/**
@@ -238,7 +238,7 @@ class Dashboard {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @return boolean 
+	 * @return boolean
 	 */
 	public function is_site_kit_plugin_installed() {
 		$all_plugins = get_plugins();
@@ -346,19 +346,19 @@ class Dashboard {
 				'version'             => WEBSTORIES_VERSION,
 				'encodeMarkup'        => $this->decoder->supports_decoding(),
 				'api'                 => [
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/web-stories/v1/users/me',
-					'users'       => '/web-stories/v1/users',
-					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/web-stories/v1/settings',
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'currentUser' => '/web-stories/v1/users/me/',
+					'users'       => '/web-stories/v1/users/',
+					'templates'   => '/web-stories/v1/web-story-template/',
+					'settings'    => '/web-stories/v1/settings/',
 				],
 				'maxUpload'           => $max_upload_size,
 				'maxUploadFormatted'  => size_format( $max_upload_size ),
 				'capabilities'        => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
-					
+
 				],
 				'siteKitCapabilities' => [
 					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),

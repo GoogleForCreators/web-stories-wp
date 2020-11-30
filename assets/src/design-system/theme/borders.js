@@ -15,5 +15,10 @@
  */
 
 export const borders = {
-  radius: '8px',
+  radius: {
+    small: '4px',
+    medium: '8px',
+    x_large: '50px',
+    round: '50%',
+  },
 };

@@ -38,6 +38,10 @@ export const Text = styled.p`
         &:hover {
           color: ${theme.colors.fg.linkHover};
         }
+        &:focus {
+          outline: none;
+        }
+        ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
       `;
     return css`
       ${themeHelpers.expandPresetStyles({

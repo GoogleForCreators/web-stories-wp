@@ -37,7 +37,7 @@ const DialogBox = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
   overflow-y: auto;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: ${({ theme }) => theme.borders.radius.medium};
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
 `;
 
@@ -61,16 +61,9 @@ const DialogActions = styled.div`
   }
 `;
 
-export function Dialog({
-  children,
-  title,
-  actions,
-  isOpen,
-  onClose,
-  ...props
-}) {
+export function Dialog({ children, title, actions, isOpen, onClose, ...rest }) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} {...props}>
+    <Modal isOpen={isOpen} onClose={onClose} {...rest}>
       <DialogBox>
         {Boolean(title) && (
           <Headline

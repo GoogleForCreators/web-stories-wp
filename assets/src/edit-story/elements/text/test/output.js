@@ -93,7 +93,6 @@ describe('TextOutput', () => {
     expect(output.style).toMatchObject({
       whiteSpace: 'pre-wrap',
       padding: '0% 0%',
-      backgroundColor: 'rgba(255, 0, 0, 0.3)',
       fontSize: '0.258900em',
       textAlign: 'left',
     });

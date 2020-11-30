@@ -31,14 +31,31 @@ import {
   shouldDisplayBorder,
 } from '../components/elementBorder/utils';
 import ElementBorder from '../components/elementBorder/output';
+import generatePatternStyles from '../utils/generatePatternStyles';
+import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {
-  const { id, opacity, type, borderRadius, border } = element;
+  const {
+    id,
+    opacity,
+    type,
+    borderRadius,
+    border,
+    backgroundColor,
+    backgroundTextMode,
+  } = element;
   const { Output } = getDefinitionForType(type);
 
   // Box is calculated based on the 100%:100% basis for width and height
   const box = getBox(element, 100, 100);
   const { x, y, width, height, rotationAngle } = box;
+
+  // We're adding background styles in case of Fill here so that
+  // the background and the border would match together.
+  const bgStyles = {
+    backgroundClip: 'content-box',
+    ...generatePatternStyles(backgroundColor),
+  };
 
   return (
     <div
@@ -81,6 +98,9 @@ function OutputElement({ element }) {
             top: 0,
             left: 0,
             ...getBorderRadius({ border, borderRadius }),
+            ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
+              ? bgStyles
+              : null),
           }}
           skipDefaultMask
         >

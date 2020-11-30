@@ -13,4 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export { getTotalDuration } from './getTotalDuration';
+export { getMediaBoundOffsets, hasOffsets } from './mediaPositions';
 export { clamp, lerp, progress } from './range';

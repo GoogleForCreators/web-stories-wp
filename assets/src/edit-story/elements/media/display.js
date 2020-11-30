@@ -32,6 +32,7 @@ import {
 } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { isOutsideBorder } from '../../components/elementBorder/utils';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
@@ -51,6 +52,11 @@ function MediaDisplay({
   showPlaceholder = false,
 }) {
   const ref = useRef();
+  useColorTransformHandler({
+    id,
+    targetRef: ref,
+    expectedStyle: 'border-color',
+  });
   useTransformHandler(id, (transform) => {
     const target = mediaRef.current;
     if (mediaRef.current) {

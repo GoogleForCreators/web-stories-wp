@@ -19,13 +19,20 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
 import { useUnits } from '../../units';
-import { getBorderStyle, isOutsideBorder, shouldDisplayBorder } from './utils';
+import useCSSVarColorTransformHandler from '../../elements/shared/useCSSVarColorTransformHandler';
+import {
+  getBorderColor,
+  getBorderStyle,
+  isOutsideBorder,
+  shouldDisplayBorder,
+} from './utils';
 
 const borderElementCSS = css`
   top: 0;
@@ -38,6 +45,7 @@ const borderElementCSS = css`
 `;
 
 const Border = styled.div`
+  --element-border-color: ${({ color }) => getBorderColor({ color })};
   ${borderElementCSS}
   &:after {
     ${({ position }) =>
@@ -46,8 +54,8 @@ const Border = styled.div`
       content: ' ';
     `}
     ${(props) => !isOutsideBorder(props) && getBorderStyle(props)}
+    border-color: var(--element-border-color);
   }
-}
 `;
 
 export default function WithBorder({ element, previewMode = false, children }) {
@@ -55,6 +63,16 @@ export default function WithBorder({ element, previewMode = false, children }) {
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
+  const ref = useRef(null);
+  const { id } = element;
+
+  useCSSVarColorTransformHandler({
+    id,
+    targetRef: ref,
+    expectedStyle: 'border-color',
+    cssVar: '--element-border-color',
+  });
+
   if (!shouldDisplayBorder(element)) {
     return children;
   }
@@ -74,6 +92,7 @@ export default function WithBorder({ element, previewMode = false, children }) {
   }
   return (
     <Border
+      ref={ref}
       {...border}
       borderRadius={borderRadius}
       previewMode={previewMode}

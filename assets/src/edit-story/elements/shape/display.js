@@ -32,6 +32,7 @@ import {
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
 import { isOutsideBorder } from '../../components/elementBorder/utils';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
 
 const Element = styled.div`
   ${elementFillContent}
@@ -43,12 +44,13 @@ const Element = styled.div`
 function ShapeDisplay({
   element: { id, isDefaultBackground, backgroundColor, border, borderRadius },
 }) {
-  const ref = useRef();
+  const ref = useRef(null);
+  useColorTransformHandler({ id, targetRef: ref });
 
   useTransformHandler(id, (transform) => {
     // Since outside border is applied directly to the element, we need to
     // adjust the size of the element according to the border width.
-    if (ref.current) {
+    if (ref.current && !isDefaultBackground) {
       if (transform) {
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
@@ -67,7 +69,7 @@ function ShapeDisplay({
   });
 
   if (isDefaultBackground) {
-    return <Element />;
+    return <Element ref={ref} />;
   }
 
   return (

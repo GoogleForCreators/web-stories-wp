@@ -88,6 +88,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={handleChangePoster}
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
+          alt={__('Preview poster image', 'web-stories')}
           type={'image'}
           ariaLabel={__('Edit: Video poster', 'web-stories')}
           canReset
