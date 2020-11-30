@@ -397,7 +397,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
         });
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL, encodeMarkup]
   );
 
   const api = useMemo(

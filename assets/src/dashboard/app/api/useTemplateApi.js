@@ -299,7 +299,7 @@ const useTemplateApi = (dataAdapter, config) => {
         });
       }
     },
-    [dataAdapter, templateApi]
+    [dataAdapter, templateApi, encodeMarkup]
   );
 
   const fetchRelatedTemplates = useCallback(
