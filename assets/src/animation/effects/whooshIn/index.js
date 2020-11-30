@@ -29,9 +29,9 @@ import getOffPageOffset from '../../utils/getOffPageOffset';
 import { DIRECTION } from '../../constants';
 
 export function EffectWhooshIn({
-  duration = 400,
+  duration = 600,
   whooshInDir = DIRECTION.LEFT_TO_RIGHT,
-  easing = 'cubic-bezier(0.0, 0.0, 0.2, 1)',
+  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
   delay,
   element,
 }) {

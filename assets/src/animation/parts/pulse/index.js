@@ -41,8 +41,8 @@ const defaults = {
 
 export function AnimationPulse({
   iterations = 1,
-  scale = 0.5,
-  easing = 'cubic-bezier(0.4, 0.0, 0.2, 1)',
+  scale = 0.05,
+  easing = 'cubic-bezier(0.3, 0.0, 0.0, 1)',
   ...args
 }) {
   const timings = {

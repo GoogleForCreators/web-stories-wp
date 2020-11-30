@@ -15,15 +15,10 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import stripHTML from '../../../utils/stripHTML';
-import { PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import { PRE_PUBLISH_MESSAGE_TYPES, MESSAGES } from '../constants';
 
 const MAX_PAGE_CHARACTER_COUNT = 200;
 const MIN_STORY_CHARACTER_COUNT = 100;
@@ -55,9 +50,10 @@ export function pageTooMuchText(page) {
 
   if (characterCount > MAX_PAGE_CHARACTER_COUNT) {
     return {
-      message: __('Too much text on page', 'web-stories'),
       pageId: page.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      message: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.MAIN_TEXT,
+      help: MESSAGES.TEXT.TOO_MUCH_PAGE_TEXT.HELPER_TEXT,
     };
   }
 
@@ -78,9 +74,10 @@ export function storyTooLittleText(story) {
 
   if (characterCount < MIN_STORY_CHARACTER_COUNT) {
     return {
-      message: __('Too little text in story', 'web-stories'),
       storyId: story.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.GUIDANCE,
+      message: MESSAGES.TEXT.TOO_LITTLE_TEXT.MAIN_TEXT,
+      help: MESSAGES.TEXT.TOO_LITTLE_TEXT.HELPER_TEXT,
     };
   }
 

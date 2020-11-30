@@ -40,7 +40,7 @@ const keyframes = [
 ];
 
 export function EffectTwirlIn({
-  easing = 'cubic-bezier(.2,.75,.4,1)',
+  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
   ...args
 }) {
   const timings = {

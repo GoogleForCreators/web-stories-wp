@@ -24,6 +24,11 @@ import { css } from 'styled-components';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
+import {
+  getBorderStyle,
+  isOutsideBorder,
+  getBorderRadius,
+} from '../../components/elementBorder/utils';
 
 export const elementFillContent = css`
   position: absolute;
@@ -48,6 +53,20 @@ export const elementWithSize = css`
 
 export const elementWithRotation = css`
   transform: ${({ rotationAngle }) => `rotate(${rotationAngle}deg)`};
+`;
+
+export const elementWithBorderRadius = css`
+  ${(props) => getBorderRadius(props)}
+`;
+
+export const elementWithOutsideBorder = css`
+  ${({ border, borderRadius }) =>
+    isOutsideBorder({ position: border?.position }) &&
+    getBorderStyle({
+      ...border,
+      borderRadius,
+    })}
+  background-clip: padding-box;
 `;
 
 export const elementWithBackgroundColor = css`

@@ -62,7 +62,9 @@ function TransformProvider({ children }) {
         lastTransformsRef.current = {};
         setIsAnythingTransforming(false);
       }
-    } else {
+      // isAnythingTransforming is relevant for transformations relevant to Moveable.
+      // Suppress communicating static transformations to the world.
+    } else if (!transform.staticTransformation) {
       setIsAnythingTransforming(true);
     }
   }, []);

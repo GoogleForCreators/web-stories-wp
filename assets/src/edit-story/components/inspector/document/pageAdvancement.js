@@ -69,6 +69,11 @@ function PageAdvancementPanel() {
 
   const [duration, setDuration] = useState(defaultPageDuration);
 
+  // Update duration if changed in global store
+  useEffect(() => {
+    setDuration(defaultPageDuration);
+  }, [defaultPageDuration]);
+
   const updateAutoAdvance = useCallback(
     (value) => updateStory({ properties: { autoAdvance: value } }),
     [updateStory]
@@ -100,6 +105,7 @@ function PageAdvancementPanel() {
     <SimplePanel
       name="pageAdvancement"
       title={__('Page Advancement', 'web-stories')}
+      collapsedByDefault={false}
     >
       <Row>
         <Note>

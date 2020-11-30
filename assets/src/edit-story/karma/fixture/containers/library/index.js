@@ -89,7 +89,6 @@ export class Media extends Container {
   }
 
   item(index) {
-    // TODO: Better query here
-    return this.node.querySelectorAll('[data-testid=mediaElement]')[index];
+    return this.node.querySelectorAll('[data-testid^=mediaElement]')[index];
   }
 }

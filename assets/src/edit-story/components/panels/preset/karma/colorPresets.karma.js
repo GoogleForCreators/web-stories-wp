@@ -25,10 +25,15 @@ describe('Panel: Color Presets', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-color',
+      JSON.stringify({ isCollapsed: false, height: 200 })
+    );
   });
 
   afterEach(() => {
     fixture.restore();
+    localStorage.clear();
   });
 
   describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Display Panel', () => {
