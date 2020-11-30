@@ -96,7 +96,7 @@ export const typography = {
         letterSpacing: 0,
       },
     },
-    text: {
+    paragraph: {
       [PRESET_SIZES.X_LARGE]: {
         weight: 400,
         size: 24,
@@ -128,7 +128,13 @@ export const typography = {
         letterSpacing: 0.16,
       },
     },
-    button: {
+    label: {
+      [PRESET_SIZES.LARGE]: {
+        weight: 500,
+        size: 18,
+        lineHeight: 24,
+        letterSpacing: 0,
+      },
       [PRESET_SIZES.MEDIUM]: {
         weight: 500,
         size: 16,
@@ -141,11 +147,9 @@ export const typography = {
         lineHeight: 20,
         letterSpacing: 0,
       },
-    },
-    label: {
-      [PRESET_SIZES.SMALL]: {
-        weight: 400,
-        size: 14,
+      [PRESET_SIZES.X_SMALL]: {
+        weight: 500,
+        size: 12,
         lineHeight: 20,
         letterSpacing: 0,
       },
