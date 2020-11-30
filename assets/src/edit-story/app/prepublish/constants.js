@@ -91,9 +91,8 @@ export const MESSAGES = {
     COVER_WRONG_ASPECT_RATIO: {
       MAIN_TEXT: __('Story cover image wrong aspect ratio', 'web-stories'),
       HELPER_TEXT: sprintf(
-        /* translators: 1: cover dimensions aspect ratio. */
-        __('Should maintain a %2$s aspect ratio.', 'web-stories'),
-        `${COVER_DIMENSION_WIDTH_PX}x${COVER_DIMENSION_HEIGHT_PX}px`,
+        /* translators: %s: cover dimensions aspect ratio. */
+        __('Should maintain a %s aspect ratio.', 'web-stories'),
         `${ASPECT_RATIO_LEFT}:${ASPECT_RATIO_RIGHT}`
       ),
     },
