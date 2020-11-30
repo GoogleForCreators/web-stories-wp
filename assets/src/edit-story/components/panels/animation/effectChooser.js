@@ -382,7 +382,7 @@ export default function EffectChooser({
               <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
             <GridItemHalfRow
-              aria-label={__('Zoom In Effect', 'web-stories')}
+              aria-label={__('Scale In Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
@@ -391,11 +391,11 @@ export default function EffectChooser({
                 })
               }
             >
-              <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
-              <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
+              <ContentWrapper>{__('Scale In', 'web-stories')}</ContentWrapper>
+              <ZoomInAnimation>{__('Scale In', 'web-stories')}</ZoomInAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
-              aria-label={__('Zoom Out Effect', 'web-stories')}
+              aria-label={__('Scale Out Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
@@ -405,9 +405,9 @@ export default function EffectChooser({
               }
             >
               <ZoomOutAnimation>
-                {__('Zoom Out', 'web-stories')}
+                {__('Scale Out', 'web-stories')}
               </ZoomOutAnimation>
-              <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
+              <ContentWrapper>{__('Scale Out', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
           </>
         )}

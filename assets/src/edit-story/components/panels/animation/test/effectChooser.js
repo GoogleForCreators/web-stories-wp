@@ -73,7 +73,7 @@ describe('<EffectChooser />', function () {
       <EffectChooser onAnimationSelected={onAnimationSelected} />
     );
 
-    fireEvent.click(getByLabelText('Zoom In Effect'));
+    fireEvent.click(getByLabelText('Scale In Effect'));
 
     expect(onAnimationSelected).toHaveBeenCalledWith({
       animation: ANIMATION_EFFECTS.ZOOM.value,
