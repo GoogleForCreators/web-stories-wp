@@ -124,8 +124,8 @@ export function textElementFontSizeTooSmall(element) {
 export function imageElementLowResolution(element) {
   const scaleMultiplier = element.scale / 100;
   if (
-    element.width * scaleMultiplier > element.resource.width ||
-    element.height * scaleMultiplier > element.resource.height
+    element.width * scaleMultiplier > element.resource?.sizes?.full?.width ||
+    element.height * scaleMultiplier > element.resource?.sizes?.full?.height
   ) {
     return {
       message: MESSAGES.ACCESSIBILITY.LOW_IMAGE_RESOLUTION.MAIN_TEXT,
