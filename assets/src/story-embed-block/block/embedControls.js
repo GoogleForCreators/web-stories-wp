@@ -23,14 +23,7 @@ import PropTypes from 'prop-types';
  * WordPress dependencies
  */
 import { __, sprintf } from '@wordpress/i18n';
-import {
-  Button,
-  ToolbarGroup,
-  BaseControl,
-  TextControl,
-  PanelBody,
-  PanelRow,
-} from '@wordpress/components';
+import * as Components from '@wordpress/components';
 import {
   BlockControls,
   InspectorControls,
@@ -41,6 +34,12 @@ import { withInstanceId } from '@wordpress/compose';
 import { createRef, useCallback } from '@wordpress/element';
 
 const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
+
+// eslint-disable-next-line react/jsx-no-useless-fragment
+const FallbackComponent = ({ children }) => <>{children}</>;
+
+const { Button, BaseControl, TextControl, PanelBody, PanelRow } = Components;
+const ToolbarGroup = Components.ToolbarGroup || FallbackComponent;
 
 const EmbedControls = (props) => {
   const {
@@ -182,6 +181,10 @@ const EmbedControls = (props) => {
       </InspectorControls>
     </>
   );
+};
+
+FallbackComponent.propTypes = {
+  children: PropTypes.node,
 };
 
 EmbedControls.propTypes = {
