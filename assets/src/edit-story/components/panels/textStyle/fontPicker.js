@@ -38,7 +38,9 @@ import stripHTML from '../../../utils/stripHTML';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import { Option, Selected } from '../../form/advancedDropDown/list/styled';
+import { useCanvas } from '../../canvas';
 import useRichTextFormatting from './useRichTextFormatting';
+import getClosestFontWeight from './getClosestFontWeight';
 
 function FontPicker({ selectedElements, pushUpdate }) {
   const fontFamily = getCommonValue(
@@ -48,6 +50,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
 
   const {
     textInfo: { fontWeight, isItalic },
+    handlers: { handleResetFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
   const fontStyle = isItalic ? 'italic' : 'normal';
 
@@ -70,6 +73,19 @@ function FontPicker({ selectedElements, pushUpdate }) {
       curatedFonts,
       fonts,
     })
+  );
+
+  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
+    clearEditing,
+  }));
+
+  const resetFontWeight = useCallback(
+    async ({ weights }) => {
+      const newFontWeight = getClosestFontWeight(400, weights);
+      await clearEditing();
+      handleResetFontWeight(newFontWeight);
+    },
+    [clearEditing, handleResetFontWeight]
   );
 
   const handleFontPickerChange = useCallback(
@@ -98,6 +114,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       );
       addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
+      resetFontWeight(newFont);
     },
     [
       addRecentFont,
@@ -107,6 +124,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
+      resetFontWeight,
     ]
   );
 
