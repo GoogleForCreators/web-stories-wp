@@ -37,7 +37,7 @@ export const WhooshInEffectInputPropTypes = {
 export default {
   whooshInDir: {
     label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
+    type: FIELD_TYPES.DIRECTION_PICKER,
     values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
     defaultValue: DIRECTION.LEFT_TO_RIGHT,
   },

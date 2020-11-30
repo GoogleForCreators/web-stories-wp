@@ -38,7 +38,9 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const isBackground = getCommonValue(selectedElements, 'isBackground');
 
   const onChange = useCallback(
-    (value) => pushUpdate({ backgroundColor: value }, true),
+    (value) => {
+      pushUpdate({ backgroundColor: value }, true);
+    },
     [pushUpdate]
   );
 
