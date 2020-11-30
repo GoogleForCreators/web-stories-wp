@@ -365,7 +365,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
 
         const response = await dataAdapter.post(path, {
           data: {
-            content: encodeMarkup ? base64Encode(content) : content,
+            content: encodeMarkup ? base64Encode(content.raw) : content.raw,
             story_data,
             featured_media,
             style_presets,
