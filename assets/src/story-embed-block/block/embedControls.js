@@ -35,8 +35,7 @@ import { createRef, useCallback } from '@wordpress/element';
 
 const POSTER_ALLOWED_MEDIA_TYPES = ['image'];
 
-// eslint-disable-next-line react/jsx-no-useless-fragment
-const FallbackComponent = ({ children }) => <>{children}</>;
+const FallbackComponent = ({ children }) => children;
 
 const { Button, BaseControl, TextControl, PanelBody, PanelRow } = Components;
 // ToolbarGroup is only available in Gutenberg 7.0 or later, so it does not exsit in WP 5.3.
