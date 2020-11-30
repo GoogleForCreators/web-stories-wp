@@ -385,6 +385,17 @@ class Experiments {
 				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @zachhale
+			 * Issue: #5079
+			 * Creation date: 2020-11-04
+			 */
+			[
+				'name'        => 'showPageLayoutsTab',
+				'label'       => __( 'Page layouts tab', 'web-stories' ),
+				'description' => __( 'Enable page layouts tab', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
