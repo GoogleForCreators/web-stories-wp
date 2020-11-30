@@ -29,7 +29,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Row, Button, TextInput } from '../../form';
+import {
+  Row,
+  Button,
+  TextInput,
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '../../form';
 import { SimplePanel } from '../panel';
 import { getCommonValue } from '../utils';
 import { useMediaPicker } from '../../mediaPicker';
@@ -63,11 +69,14 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
 
   const handleRemoveTrack = useCallback(
     (idToDelete) => {
-      const trackIndex = tracks.findIndex(({ id }) => id === idToDelete);
-      const newTracks = [
-        ...tracks.slice(0, trackIndex),
-        ...tracks.slice(trackIndex + 1),
-      ];
+      let newTracks = [];
+      if (idToDelete) {
+        const trackIndex = tracks.findIndex(({ id }) => id === idToDelete);
+        newTracks = [
+          ...tracks.slice(0, trackIndex),
+          ...tracks.slice(trackIndex + 1),
+        ];
+      }
       pushUpdate({ tracks: newTracks }, true);
     },
     [tracks, pushUpdate]
@@ -82,9 +91,22 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
+  const isMixedValue = tracks === MULTIPLE_VALUE;
   return (
     <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
+      {isMixedValue && (
+        <Row>
+          <BoxedTextInput
+            value={MULTIPLE_DISPLAY_VALUE}
+            disabled
+            aria-label={__('Filename', 'web-stories')}
+            clear
+            onChange={() => handleRemoveTrack()}
+          />
+        </Row>
+      )}
       {tracks &&
+        !isMixedValue &&
         tracks.map(({ id, trackName }) => (
           <Row key={`row-filename-${id}`}>
             <BoxedTextInput
