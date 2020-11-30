@@ -210,7 +210,7 @@ function PublishPanel() {
               buttonInsertText={__('Select as publisher logo', 'web-stories')}
               type={'image'}
               size={80}
-              ariaLabel={__('Edit: Publisher logo', 'web-stories')}
+              ariaLabel={__('Publisher logo', 'web-stories')}
             />
           </MediaWrapper>
         </Row>
@@ -226,7 +226,7 @@ function PublishPanel() {
               title={__('Select as cover image', 'web-stories')}
               buttonInsertText={__('Select as cover image', 'web-stories')}
               type={'image'}
-              ariaLabel={__('Edit: Cover image', 'web-stories')}
+              ariaLabel={__('Cover image', 'web-stories')}
             />
           </MediaWrapper>
         </Row>

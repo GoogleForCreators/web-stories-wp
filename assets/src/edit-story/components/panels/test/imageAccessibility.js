@@ -50,7 +50,7 @@ describe('Panels/ImageAccessibility', () => {
 
   it('should render <ImageAccessibility /> panel', () => {
     const { getByRole } = renderImageAccessibility([defaultElement]);
-    const input = getByRole('textbox', { name: /Edit: Assistive text/i });
+    const input = getByRole('textbox', { name: 'Assistive text' });
     expect(input).toBeDefined();
   });
 
@@ -62,7 +62,7 @@ describe('Panels/ImageAccessibility', () => {
         resource: { title: '', alt: 'Hello!', src: '2' },
       },
     ]);
-    const input = getByRole('textbox', { name: /Edit: Assistive text/i });
+    const input = getByRole('textbox', { name: 'Assistive text' });
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');
   });

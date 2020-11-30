@@ -44,7 +44,7 @@ function getFontPicker(options) {
   const props = {
     onChange: jest.fn(),
     value: 'Roboto',
-    'aria-label': 'Edit: Font family',
+    'aria-label': 'Font family',
     options: fonts,
     primaryOptions: availableCuratedFonts,
     primaryLabel: 'Recommended',

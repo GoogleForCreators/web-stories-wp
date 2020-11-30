@@ -68,7 +68,7 @@ describe('Element: Text', () => {
     // Timeout used for submitting / search update + 50ms (250 + 50).
     const TIMEOUT = 300;
     const openFontPicker = async () => {
-      const input = await fixture.screen.getByLabelText('Edit: Font family');
+      const input = await fixture.screen.getByLabelText('Font family');
       await fixture.events.click(input);
     };
 
@@ -282,7 +282,7 @@ describe('Element: Text', () => {
       });
 
       it('should close the font picker with Esc', async () => {
-        const input = await fixture.screen.getByLabelText('Edit: Font family');
+        const input = await fixture.screen.getByLabelText('Font family');
         expect(input.getAttribute('aria-expanded')).toBe('true');
         await fixture.events.keyboard.press('Esc');
         await waitForElementToBeRemoved(
