@@ -27,6 +27,8 @@ function isHexColorString(s) {
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
   const fullToSafeRatio = 1 / safeToFullRatio;
+  const fullBleedHeight = FULLBLEED_RATIO / 2;
+  const safeZoneHeight = SAFE_ZONE_HEIGHT;
 
   // Match page background color to the workspace background color.
   // Validate since we're using dangerouslySetInnerHTML with imported variable.
@@ -50,9 +52,8 @@ function CustomStyles() {
 
               @media (max-aspect-ratio: 9 / 16)  {
                 @media (min-aspect-ratio: 1 / 2) {
-                  amp-story-grid-layer#amp-story-grid-layer-bg,
-                  amp-story-grid-layer#amp-story-grid-layer-fullbleed-area {
-                    margin-top: calc((${FULLBLEED_RATIO} * 100% / 2) - ${SAFE_ZONE_HEIGHT}px);
+                  body.amp-mode-mouse amp-story-grid-layer {
+                    margin-top: calc(${fullBleedHeight} * 100% - ${safeZoneHeight}px);
                   }
                 }
               }
