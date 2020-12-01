@@ -76,13 +76,6 @@ const CloneImg = styled.img`
   position: absolute;
 `;
 
-const TargetBox = styled.div`
-  position: absolute;
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
-  position: absolute;
-`;
-
 function InnerElement({
   type,
   src,
@@ -98,8 +91,6 @@ function InnerElement({
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
   const mediaWrapper = useRef(null);
-  const targetBoxRef = useRef(null);
-  const overlayRef = useRef(null);
 
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
@@ -183,14 +174,8 @@ function InnerElement({
   // @todo Move the whole clone and target part to Moveable, too.
   return (
     <>
-      <MediaWrapper ref={mediaWrapper} zIndex={10}>
-        <TargetBox ref={targetBoxRef} width={width} height={height} />
-        {media}
-      </MediaWrapper>
       {mediaElement.current && (
         <LibraryMoveable
-          overlayRef={overlayRef}
-          targetBoxRef={targetBoxRef}
           mediaBaseColor={mediaBaseColor}
           resource={resource}
           thumbnailURL={thumbnailURL}
@@ -207,6 +192,7 @@ function InnerElement({
           }}
         />
       )}
+      <MediaWrapper ref={mediaWrapper}>{media}</MediaWrapper>
     </>
   );
 }

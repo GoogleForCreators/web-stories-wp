@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -34,9 +35,14 @@ import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 
+const TargetBox = styled.div`
+  position: absolute;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  z-index: 1;
+`;
+
 function LibraryMoveable({
-  overlayRef,
-  targetBoxRef,
   mediaBaseColor,
   resource,
   thumbnailURL,
@@ -48,6 +54,8 @@ function LibraryMoveable({
 
   const [isDragging, setIsDragging] = useState(false);
   const cloneRef = useRef(null);
+  const targetBoxRef = useRef(null);
+  const overlayRef = useRef(null);
 
   const { pageSize } = useLayout(({ state }) => ({
     pageSize: state.canvasPageSize,
@@ -177,8 +185,10 @@ function LibraryMoveable({
   };
 
   // @todo Add 'hide-handles' classname, too.
+  const { width, height } = cloneProps;
   return (
     <>
+      <TargetBox ref={targetBoxRef} width={width} height={height} />
       {isDragging && (
         <InOverlay
           ref={overlayRef}
@@ -207,8 +217,6 @@ function LibraryMoveable({
 }
 
 LibraryMoveable.propTypes = {
-  overlayRef: PropTypes.object,
-  targetBoxRef: PropTypes.object,
   mediaBaseColor: PropTypes.object,
   resource: PropTypes.object,
   thumbnailURL: PropTypes.string,
