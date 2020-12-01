@@ -43,7 +43,7 @@ function getBackgroundColor(isPrimary, isSecondary, theme) {
   return 'transparent';
 }
 
-const Header = styled.h2`
+const Header = styled.h2.attrs({ role: 'button' })`
   background-color: ${({ isPrimary, isSecondary, theme }) =>
     getBackgroundColor(isPrimary, isSecondary, theme)};
   border: 0 solid ${({ theme }) => rgba(theme.colors.fg.gray16, 0.6)};
@@ -54,18 +54,11 @@ const Header = styled.h2`
   margin: 0;
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
+  flex-direction: row;
   user-select: none;
-`;
-
-const HeaderButton = styled.div.attrs({ role: 'button' })`
-  color: inherit;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
   cursor: pointer;
 `;
 
@@ -187,7 +180,6 @@ function Title({
       aria-label={title}
       aria-expanded={!isCollapsed}
       aria-controls={panelContentId}
-      role="button"
       onClick={onToggle}
     >
       {isResizable && (
@@ -201,21 +193,19 @@ function Title({
           tabIndex={ariaHidden ? -1 : 0}
         />
       )}
-      <HeaderButton>
-        <Heading id={panelTitleId}>{children}</Heading>
-        <HeaderActions>
-          {secondaryAction}
-          {canCollapse && (
-            <Toggle
-              isCollapsed={isCollapsed}
-              toggle={onToggle}
-              tabIndex={ariaHidden ? -1 : 0}
-            >
-              <Arrow />
-            </Toggle>
-          )}
-        </HeaderActions>
-      </HeaderButton>
+      <Heading id={panelTitleId}>{children}</Heading>
+      <HeaderActions>
+        {secondaryAction}
+        {canCollapse && (
+          <Toggle
+            isCollapsed={isCollapsed}
+            toggle={onToggle}
+            tabIndex={ariaHidden ? -1 : 0}
+          >
+            <Arrow />
+          </Toggle>
+        )}
+      </HeaderActions>
     </Header>
   );
 }
