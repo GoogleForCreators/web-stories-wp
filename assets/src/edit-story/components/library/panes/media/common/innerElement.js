@@ -67,7 +67,6 @@ const HiddenPosterImage = styled.img`
 `;
 
 const MediaWrapper = styled.div`
-  z-index: 99999;
   position: absolute;
 `;
 
