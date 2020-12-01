@@ -40,7 +40,6 @@ function APIProvider({ children }) {
     api: { stories, media, link, users, statusCheck },
     encodeMarkup,
     cdnURL,
-    useDemoContent,
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -48,12 +47,25 @@ function APIProvider({ children }) {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
         _embed: 'wp:featuredmedia,author',
-        web_stories_demo: useDemoContent ? '1' : '0',
+        web_stories_demo: '0',
       });
 
       return apiFetch({ path });
     },
-    [stories, useDemoContent]
+    [stories]
+  );
+
+  const getDemoStoryById = useCallback(
+    (storyId) => {
+      const path = addQueryArgs(`${stories}${storyId}/`, {
+        context: 'edit',
+        _embed: 'wp:featuredmedia,author',
+        web_stories_demo: '1',
+      });
+
+      return apiFetch({ path });
+    },
+    [stories]
   );
 
   const getStorySaveData = useCallback(
@@ -275,6 +287,7 @@ function APIProvider({ children }) {
     actions: {
       autoSaveById,
       getStoryById,
+      getDemoStoryById,
       getMedia,
       getLinkMetadata,
       saveStoryById,
