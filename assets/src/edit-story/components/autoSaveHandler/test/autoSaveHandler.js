@@ -51,7 +51,7 @@ function setup({
       state: { isUploading },
     },
   };
-  render(
+  const { rerender } = render(
     <ConfigContext.Provider value={configValue}>
       <HistoryContext.Provider value={historyContextValue}>
         <StoryContext.Provider value={storyContextValue}>
@@ -62,8 +62,30 @@ function setup({
       </HistoryContext.Provider>
     </ConfigContext.Provider>
   );
+  const secondarySaveStory = jest.fn();
+  const secondaryStoryContextValue = {
+    state: {
+      story: { status },
+    },
+    actions: { saveStory: secondarySaveStory },
+  };
+  const renderAgain = () => {
+    rerender(
+      <ConfigContext.Provider value={configValue}>
+        <HistoryContext.Provider value={historyContextValue}>
+          <StoryContext.Provider value={secondaryStoryContextValue}>
+            <MediaContext.Provider value={mediaContextValue}>
+              <AutoSaveHandler />
+            </MediaContext.Provider>
+          </StoryContext.Provider>
+        </HistoryContext.Provider>
+      </ConfigContext.Provider>
+    );
+    return secondarySaveStory;
+  };
   return {
     saveStory,
+    renderAgain,
   };
 }
 
@@ -102,5 +124,22 @@ describe('AutoSaveHandler', () => {
     });
     jest.runAllTimers();
     expect(saveStory).toHaveBeenCalledTimes(0);
+  });
+
+  it('should only setup one timeout even if saveStory updates', () => {
+    const { renderAgain, saveStory } = setup({});
+    // The number of invocations of setTimeout might vary due to other components
+    // so the only thing we can check for sure is, that the number doesn't go up by
+    // changing the props in the story handler.
+    const timeoutCallsBefore = setTimeout.mock.calls.length;
+    const secondarySaveStory = renderAgain();
+    const timeoutCallsAfter = setTimeout.mock.calls.length;
+    expect(timeoutCallsAfter).toBe(timeoutCallsBefore);
+
+    expect(secondarySaveStory).not.toBe(saveStory);
+
+    jest.runAllTimers();
+    expect(saveStory).toHaveBeenCalledTimes(0);
+    expect(secondarySaveStory).toHaveBeenCalledTimes(1);
   });
 });

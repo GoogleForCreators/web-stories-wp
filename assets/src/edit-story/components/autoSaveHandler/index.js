@@ -66,7 +66,7 @@ function AutoSaveHandler() {
     );
 
     return () => clearTimeout(timeout);
-  }, [autoSaveInterval, isDraft, status, hasNewChanges, isUploading]);
+  }, [autoSaveInterval, isDraft, hasNewChanges, isUploading]);
 
   return null;
 }
