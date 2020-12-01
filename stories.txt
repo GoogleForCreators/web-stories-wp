@@ -10,3 +10,4 @@ https://stories-labs.dev/webcreators/web-stories/ama-your-questions-i/
 https://stories-labs.dev/webcreators/web-stories/seo-must-knows-for-web-stories/
 https://stories-labs.dev/webcreators/web-stories/convert-video-to-web-story/
 https://stories-labs.dev/webcreators/web-stories/optimize-images-for-web-stories/
+https://stories-labs.dev/webcreators/web-stories/make-web-story-accessible/
