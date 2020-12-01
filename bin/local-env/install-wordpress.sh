@@ -7,6 +7,7 @@ set -e
 WP_DEBUG=${WP_DEBUG-true}
 SCRIPT_DEBUG=${SCRIPT_DEBUG-true}
 WEBSTORIES_DEV_MODE=${WEBSTORIES_DEV_MODE-true}
+WEBSTORIES_SVG_ENABLED=${WEBSTORIES_SVG_ENABLED-true}
 WP_VERSION=${WP_VERSION-"latest"}
 
 # Include useful functions
@@ -160,3 +161,7 @@ if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
   WEBSTORIES_DEV_MODE_RESULT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
+
+wp config set WEBSTORIES_SVG_ENABLED true --raw --type=constant --quiet
+wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
+wp config delete WEBSTORIES_SVG_ENABLED

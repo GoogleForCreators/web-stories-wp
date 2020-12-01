@@ -81,7 +81,7 @@ class SVG {
 	 * @return void
 	 */
 	public function init() {
-		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) ) {
+		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) && ! WEBSTORIES_SVG_ENABLED ) {
 			return;
 		}
 
