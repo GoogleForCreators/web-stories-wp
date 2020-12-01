@@ -43,12 +43,13 @@ const TargetBox = styled.div`
 
 function LibraryMoveable({
   type,
-  resource,
+  resource = null,
   handleDrag,
   handleDragEnd,
   onClick,
   cloneElement,
   cloneProps,
+  originRef,
 }) {
   const CloneElement = cloneElement;
 
@@ -174,8 +175,8 @@ function LibraryMoveable({
     setDraggingResource(null);
   };
 
-  // @todo Add 'hide-handles' classname, too.
   const { width, height } = cloneProps;
+  // @todo Should we add moveable only once the image has loaded?
   return (
     <>
       <TargetBox ref={targetBoxRef} width={width} height={height} />
@@ -189,19 +190,21 @@ function LibraryMoveable({
           }}
         />
       )}
-      <Moveable
-        className="default-moveable"
-        zIndex={10}
-        target={targetBoxRef.current}
-        edge={true}
-        draggable={true}
-        origin={false}
-        pinchable={true}
-        {...snapProps}
-        onDragStart={onDragStart}
-        onDrag={onDrag}
-        onDragEnd={onDragEnd}
-      />
+      {originRef.current && (
+        <Moveable
+          className="default-moveable hide-handles"
+          zIndex={10}
+          target={targetBoxRef.current}
+          edge={true}
+          draggable={true}
+          origin={false}
+          pinchable={true}
+          {...snapProps}
+          onDragStart={onDragStart}
+          onDrag={onDrag}
+          onDragEnd={onDragEnd}
+        />
+      )}
     </>
   );
 }
@@ -212,8 +215,9 @@ LibraryMoveable.propTypes = {
   handleDragEnd: PropTypes.func,
   resource: PropTypes.object,
   onClick: PropTypes.func.isRequired,
-  cloneElement: PropTypes.object,
-  cloneProps: PropTypes.object,
+  cloneElement: PropTypes.object.isRequired,
+  cloneProps: PropTypes.object.isRequired,
+  originRef: PropTypes.object,
 };
 
 export default LibraryMoveable;

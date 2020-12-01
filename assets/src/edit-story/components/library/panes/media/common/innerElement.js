@@ -212,6 +212,7 @@ function InnerElement({
             loading: 'lazy',
             draggable: false,
           }}
+          originRef={mediaElement}
         />
       )}
       <MediaWrapper ref={mediaWrapper}>{media}</MediaWrapper>
