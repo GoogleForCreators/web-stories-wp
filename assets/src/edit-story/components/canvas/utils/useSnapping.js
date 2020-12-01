@@ -26,27 +26,26 @@ import { FULLBLEED_RATIO } from '../../../constants';
 import { useGlobalIsKeyPressed } from '../../keyboard';
 import { useDropTargets } from '../../dropTargets';
 import useCanvas from '../useCanvas';
-import {useTransform} from "../../transform";
 
 function useSnapping({ isDragging, canSnap, otherNodes }) {
-  const { pageContainer } = useTransform((state) => ({
-    pageContainer: state.state.pageContainer,
-  }));
   const {
     canvasWidth,
     canvasHeight,
+    pageContainer,
     canvasContainer,
     designSpaceGuideline,
   } = useCanvas(
     ({
       state: {
         pageSize: { width: canvasWidth, height: canvasHeight },
+        pageContainer,
         canvasContainer,
         designSpaceGuideline,
       },
     }) => ({
       canvasWidth,
       canvasHeight,
+      pageContainer,
       canvasContainer,
       designSpaceGuideline,
     })

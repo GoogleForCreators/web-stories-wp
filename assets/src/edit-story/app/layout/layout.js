@@ -38,6 +38,7 @@ import {
 } from '../../constants';
 import withOverlay from '../../components/overlay/withOverlay';
 import LayoutProvider from './layoutProvider';
+import CanvasProvider from "../../components/canvas/canvasProvider";
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -71,10 +72,12 @@ function Layout() {
   return (
     <LayoutProvider>
       <Editor zIndex={9}>
-        <Area area="lib">
-          <Library />
-        </Area>
-        <Workspace />
+        <CanvasProvider>
+          <Area area="lib">
+            <Library />
+          </Area>
+          <Workspace />
+        </CanvasProvider>
       </Editor>
     </LayoutProvider>
   );

@@ -18,7 +18,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -32,9 +32,10 @@ import Moveable from '../../../../moveable';
 import InOverlay from '../../../../overlay';
 import useInsertElement from '../../../../canvas/useInsertElement';
 import { editorToDataX, editorToDataY } from '../../../../../units';
-import { useTransform } from '../../../../transform';
 import { useLayout } from '../../../../../app/layout';
 import StoryPropTypes from '../../../../../types';
+import useSnapping from '../../../../canvas/utils/useSnapping';
+import { useCanvas } from '../../../../canvas';
 
 const styledTiles = css`
   width: 100%;
@@ -79,8 +80,15 @@ const MediaWrapper = styled.div`
 
 const CloneImg = styled.img`
   opacity: 1;
-  width: 100px;
-  height: 100px;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  position: absolute;
+`;
+
+const TargetBox = styled.div`
+  position: absolute;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
   position: absolute;
 `;
 
@@ -100,6 +108,7 @@ function InnerElement({
   const mediaBaseColor = useRef(null);
   const mediaWrapper = useRef(null);
   const cloneRef = useRef(null);
+  const targetBoxRef = useRef(null);
   const overlayRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -108,7 +117,7 @@ function InnerElement({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer } = useTransform((state) => ({
+  const { pageContainer } = useCanvas((state) => ({
     pageContainer: state.state.pageContainer,
   }));
 
@@ -134,11 +143,6 @@ function InnerElement({
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
-  const measureMediaElement = useCallback(
-    () => mediaElement?.current?.getBoundingClientRect(),
-    [mediaElement]
-  );
-
   const frame = {
     translate: [0, 0],
   };
@@ -160,13 +164,11 @@ function InnerElement({
       offsetX1 += offsetNode.offsetLeft;
       offsetY1 += offsetNode.offsetTop;
     }
-    const mediaBox = measureMediaElement();
+    const mediaBox = targetBoxRef.current.getBoundingClientRect();
     const x1 = mediaBox.top - offsetX1;
     const y1 = mediaBox.left - offsetY1;
     cloneRef.current.style.top = `${x1}px`;
     cloneRef.current.style.left = `${y1}px`;
-    cloneRef.current.style.width = `${mediaBox.width}px`;
-    cloneRef.current.style.height = `${mediaBox.height}px`;
 
     // Drop-targets handling.
     resourceList.set(resource.id, {
@@ -176,6 +178,11 @@ function InnerElement({
     setDraggingResource(resource);
   };
 
+  const snapProps = useSnapping({
+    isDragging: true,
+    canSnap: true,
+    otherNodes: [mediaElement.current],
+  });
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
@@ -241,6 +248,7 @@ function InnerElement({
   return (
     <>
       <MediaWrapper ref={mediaWrapper} zIndex={10}>
+        <TargetBox ref={targetBoxRef} width={width} height={height} />
         {media}
         {isDragging && (
           <InOverlay
@@ -266,20 +274,21 @@ function InnerElement({
       </MediaWrapper>
       {mediaElement.current && (
         <Moveable
-          className="default-moveable hide-handles"
+          className=""
           zIndex={10}
-          target={mediaWrapper.current}
+          target={targetBoxRef.current}
           edge={true}
           draggable={true}
           origin={false}
           pinchable={true}
           onDragStart={onDragStart}
-          snappable={true}
-          verticalGuidelines={[0, 100, 300, 400]}
+          {...snapProps}
           onDrag={({ beforeTranslate, inputEvent }) => {
             frame.translate = beforeTranslate;
             if (cloneRef.current) {
               cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+              // We also have to move the original target ref for snapping to work.
+              targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
             }
             handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
           }}
@@ -310,6 +319,7 @@ function InnerElement({
                 height: editorToDataY(h, pageSize.height),
               });
             }
+            targetBoxRef.current.style.transform = null;
             setIsDragging(false);
             setDraggingResource(null);
           }}
@@ -328,7 +338,7 @@ InnerElement.propTypes = {
   height: PropTypes.number,
   onClick: PropTypes.func.isRequired,
   showVideoDetail: PropTypes.bool,
-  mediaElement: StoryPropTypes.mediaElement,
+  mediaElement: PropTypes.object,
 };
 
 export default InnerElement;
