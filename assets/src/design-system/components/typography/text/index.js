@@ -45,12 +45,12 @@ export const Text = styled.p`
       `;
     return css`
       ${themeHelpers.expandPresetStyles({
-        preset: theme.typography.presets.text[size],
+        preset: theme.typography.presets.paragraph[size],
         theme,
       })};
       font-weight: ${isBold
         ? theme.typography.weight.bold
-        : theme.typography.presets.text[size].weight};
+        : theme.typography.presets.paragraph[size].weight};
       ${asLink};
     `;
   }}

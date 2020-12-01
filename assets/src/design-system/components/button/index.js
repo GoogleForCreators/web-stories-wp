@@ -40,7 +40,7 @@ const Base = styled.button(
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
     ${themeHelpers.expandPresetStyles({
       preset: {
-        ...theme.typography.presets.button[
+        ...theme.typography.presets.label[
           size === BUTTON_SIZES.SMALL
             ? THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
             : THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM
