@@ -53,7 +53,7 @@ function APIProvider({ children }) {
 
       return apiFetch({ path });
     },
-    [stories]
+    [stories, useDemoContent]
   );
 
   const getStorySaveData = useCallback(
