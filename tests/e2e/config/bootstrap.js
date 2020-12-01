@@ -201,6 +201,8 @@ async function runAxeTestsForStoriesEditor() {
       'aria-required-parent',
       'button-name',
       'color-contrast',
+      // Because of multiple #_wpnonce elements.
+      'duplicate-id',
       'label',
       'landmark-banner-is-top-level',
       'landmark-no-duplicate-banner',
