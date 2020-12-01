@@ -18,7 +18,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -26,7 +26,6 @@ import PropTypes from 'prop-types';
  */
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
-import InOverlay from '../../../../overlay';
 import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
 
@@ -99,10 +98,8 @@ function InnerElement({
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
   const mediaWrapper = useRef(null);
-  const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
   const overlayRef = useRef(null);
-  const [isDragging, setIsDragging] = useState(false);
 
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
@@ -181,6 +178,7 @@ function InnerElement({
   if (!media) {
     throw new Error('Invalid media element type.');
   }
+
   // @todo Make it work for video, too.
   // @todo Move the whole clone and target part to Moveable, too.
   return (
@@ -188,38 +186,25 @@ function InnerElement({
       <MediaWrapper ref={mediaWrapper} zIndex={10}>
         <TargetBox ref={targetBoxRef} width={width} height={height} />
         {media}
-        {isDragging && (
-          <InOverlay
-            ref={overlayRef}
-            zIndex={3}
-            pointerEvents="initial"
-            render={() => {
-              return (
-                <CloneImg
-                  src={thumbnailURL}
-                  ref={cloneRef}
-                  width={width}
-                  height={height}
-                  alt={alt}
-                  aria-label={alt}
-                  loading={'lazy'}
-                  draggable={false}
-                />
-              );
-            }}
-          />
-        )}
       </MediaWrapper>
       {mediaElement.current && (
         <LibraryMoveable
-          setIsDragging={setIsDragging}
           overlayRef={overlayRef}
           targetBoxRef={targetBoxRef}
-          cloneRef={cloneRef}
           mediaBaseColor={mediaBaseColor}
           resource={resource}
           thumbnailURL={thumbnailURL}
           onClick={onClick(thumbnailURL, mediaBaseColor.current)}
+          cloneElement={CloneImg}
+          cloneProps={{
+            src: thumbnailURL,
+            width: width,
+            height: height,
+            alt: alt,
+            'aria-label': alt,
+            loading: 'lazy',
+            draggable: false,
+          }}
         />
       )}
     </>

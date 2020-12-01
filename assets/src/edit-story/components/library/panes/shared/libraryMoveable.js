@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 /**
  * Internal dependencies
@@ -32,17 +32,23 @@ import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
 import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
+import InOverlay from '../../../overlay';
 
 function LibraryMoveable({
-  setIsDragging,
   overlayRef,
   targetBoxRef,
-  cloneRef,
   mediaBaseColor,
   resource,
   thumbnailURL,
   onClick,
+  cloneElement,
+  cloneProps,
 }) {
+  const CloneElement = cloneElement;
+
+  const [isDragging, setIsDragging] = useState(false);
+  const cloneRef = useRef(null);
+
   const { pageSize } = useLayout(({ state }) => ({
     pageSize: state.canvasPageSize,
   }));
@@ -172,31 +178,43 @@ function LibraryMoveable({
 
   // @todo Add 'hide-handles' classname, too.
   return (
-    <Moveable
-      className="default-moveable"
-      zIndex={10}
-      target={targetBoxRef.current}
-      edge={true}
-      draggable={true}
-      origin={false}
-      pinchable={true}
-      {...snapProps}
-      onDragStart={onDragStart}
-      onDrag={onDrag}
-      onDragEnd={onDragEnd}
-    />
+    <>
+      {isDragging && (
+        <InOverlay
+          ref={overlayRef}
+          zIndex={3}
+          pointerEvents="initial"
+          render={() => {
+            return <CloneElement ref={cloneRef} {...cloneProps} />;
+          }}
+        />
+      )}
+      <Moveable
+        className="default-moveable"
+        zIndex={10}
+        target={targetBoxRef.current}
+        edge={true}
+        draggable={true}
+        origin={false}
+        pinchable={true}
+        {...snapProps}
+        onDragStart={onDragStart}
+        onDrag={onDrag}
+        onDragEnd={onDragEnd}
+      />
+    </>
   );
 }
 
 LibraryMoveable.propTypes = {
-  setIsDragging: PropTypes.func,
   overlayRef: PropTypes.object,
   targetBoxRef: PropTypes.object,
-  cloneRef: PropTypes.object,
   mediaBaseColor: PropTypes.object,
   resource: PropTypes.object,
   thumbnailURL: PropTypes.string,
   onClick: PropTypes.func.isRequired,
+  cloneElement: PropTypes.object,
+  cloneProps: PropTypes.object,
 };
 
 export default LibraryMoveable;
