@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests;
 
-
 /**
  * @coversDefaultClass \Google\Web_Stories\SVG
  */
@@ -82,7 +81,7 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::wp_generate_attachment_metadata
 	 * @covers ::get_svg_size
 	 */
-	public function test_upload_svg(){
+	public function test_upload_svg() {
 		$svg_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => __DIR__ . '/../data/video-play.svg',
@@ -106,8 +105,8 @@ class SVG extends \WP_UnitTestCase {
 	/**
 	 * @covers ::sanitize
 	 */
-	public function test_sanitize(){
-		$svg  = $this->get_object();
+	public function test_sanitize() {
+		$svg      = $this->get_object();
 		$_results = $this->call_private_method( $svg, 'sanitize', [ __DIR__ . '/../data/animated.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
@@ -118,8 +117,8 @@ class SVG extends \WP_UnitTestCase {
 	/**
 	 * @covers ::sanitize
 	 */
-	public function test_sanitize_invalid_file(){
-		$svg  = $this->get_object();
+	public function test_sanitize_invalid_file() {
+		$svg      = $this->get_object();
 		$_results = $this->call_private_method( $svg, 'sanitize', [ '' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
@@ -127,10 +126,10 @@ class SVG extends \WP_UnitTestCase {
 		$this->assertSame( 'Invalid xml in SVG.', $_results->get_error_message() );
 	}
 
-	protected function get_object(){
+	protected function get_object() {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'is_experiment_enabled' )
-		            ->willReturn( true );
+					->willReturn( true );
 
 		return new \Google\Web_Stories\SVG( $experiments );
 	}

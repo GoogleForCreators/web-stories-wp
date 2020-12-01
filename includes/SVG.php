@@ -81,7 +81,7 @@ class SVG {
 	 * @return void
 	 */
 	public function init() {
-		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) && ! WEBSTORIES_SVG_ENABLED ) {
+		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) && ( defined( 'WEBSTORIES_SVG_ENABLED') && ! WEBSTORIES_SVG_ENABLED ) ) {
 			return;
 		}
 
@@ -105,7 +105,7 @@ class SVG {
 	 *
 	 * @return bool
 	 */
-	public function svg_already_enabled(){
+	public function svg_already_enabled() {
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
