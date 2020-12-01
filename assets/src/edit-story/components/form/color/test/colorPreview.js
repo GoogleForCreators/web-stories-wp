@@ -33,11 +33,9 @@ jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('../getPreviewText', () => jest.fn());
 
 function arrange(children = null) {
-  const { getByRole, getByLabelText, queryByLabelText } = renderWithTheme(
-    children
-  );
-  const button = getByLabelText(/edit/i);
-  const input = queryByLabelText(/enter/i);
+  const { getByRole, queryByLabelText } = renderWithTheme(children);
+  const button = getByRole('button', { name: 'Color' });
+  const input = queryByLabelText('Color', { selector: 'input' });
   const swatch = getByRole('status');
   return {
     button,
@@ -70,7 +68,7 @@ describe('<ColorPreview />', () => {
     );
 
     expect(button).toBeDefined();
-    expect(button).toHaveAttribute('aria-label', 'Edit: Color');
+    expect(button).toHaveAttribute('aria-label', 'Color');
 
     expect(input).toHaveValue('FF0000');
 
@@ -92,7 +90,7 @@ describe('<ColorPreview />', () => {
     );
 
     expect(button).toBeDefined();
-    expect(button).toHaveAttribute('aria-label', 'Edit: Color');
+    expect(button).toHaveAttribute('aria-label', 'Color');
     expect(button).toHaveTextContent('Radial');
 
     expect(input).toBeNull();

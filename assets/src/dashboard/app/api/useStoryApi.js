@@ -43,8 +43,9 @@ import storyReducer, {
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
 import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
+import base64Encode from '../../../edit-story/utils/base64Encode';
 
-const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
+const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const flags = useFeatures();
 
@@ -362,9 +363,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           },
         });
 
+        const storyContent = encodeMarkup
+          ? base64Encode(content?.raw)
+          : content?.raw;
+
         const response = await dataAdapter.post(path, {
           data: {
-            content,
+            content: content?.raw ? storyContent : undefined,
             story_data,
             featured_media,
             style_presets,
@@ -396,7 +401,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         });
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL, encodeMarkup]
   );
 
   const api = useMemo(

@@ -105,9 +105,9 @@ function PublishPanel() {
         properties: {
           featuredMedia: {
             id: image.id,
-            height: image.sizes?.medium?.height || image.height,
-            url: image.sizes?.medium?.url || image.url,
-            width: image.sizes?.medium?.width || image.width,
+            height: image.sizes?.full?.height || image.height,
+            url: image.sizes?.full?.url || image.url,
+            width: image.sizes?.full?.width || image.width,
           },
         },
       }),
@@ -210,7 +210,7 @@ function PublishPanel() {
               buttonInsertText={__('Select as publisher logo', 'web-stories')}
               type={'image'}
               size={80}
-              ariaLabel={__('Edit: Publisher logo', 'web-stories')}
+              ariaLabel={__('Publisher logo', 'web-stories')}
             />
           </MediaWrapper>
         </Row>
@@ -226,7 +226,7 @@ function PublishPanel() {
               title={__('Select as cover image', 'web-stories')}
               buttonInsertText={__('Select as cover image', 'web-stories')}
               type={'image'}
-              ariaLabel={__('Edit: Cover image', 'web-stories')}
+              ariaLabel={__('Cover image', 'web-stories')}
             />
           </MediaWrapper>
         </Row>

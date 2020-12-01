@@ -28,16 +28,18 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import getAllTemplates from '../../../dashboard/templates';
 import addQueryArgs from '../../utils/addQueryArgs';
+import base64Encode from '../../utils/base64Encode';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
-import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
     api: { stories, media, link, users, statusCheck, metaBoxes },
     encodeMarkup,
+    cdnURL,
   } = useConfig();
 
   const getStoryById = useCallback(
@@ -288,6 +290,10 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
+  const getTemplates = useCallback(() => {
+    return getAllTemplates({ cdnURL });
+  }, [cdnURL]);
+
   const state = {
     actions: {
       autoSaveById,
@@ -301,6 +307,7 @@ function APIProvider({ children }) {
       deleteMedia,
       saveMetaBoxes,
       getStatusCheck,
+      getTemplates,
     },
   };
 

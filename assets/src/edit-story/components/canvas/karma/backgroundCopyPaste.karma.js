@@ -232,7 +232,7 @@ describe('Background Copy Paste integration', () => {
   }
   async function setBackgroundColor(hex) {
     await clickBackgroundElement();
-    const hexInput = getInputByAriaLabel(/Enter: Background color/i);
+    const hexInput = getInputByAriaLabel('Background color');
     // First click the input field to focus it
     await fixture.events.click(hexInput);
     // Select all the text

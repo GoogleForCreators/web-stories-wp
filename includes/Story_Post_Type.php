@@ -111,8 +111,8 @@ class Story_Post_Type {
 	 */
 	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
 		$this->meta_boxes  = $meta_boxes;
+		$this->decoder     = new Decoder();
 	}
 
 	/**

@@ -79,7 +79,7 @@ describe('SlugPanel', () => {
 
   it('should allow trailing spaces while typing but not onblur', async () => {
     const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'Edit: URL slug' });
+    const input = getByRole('textbox', { name: 'URL slug' });
 
     fireEvent.change(input, {
       target: { value: 'name with spaces ' },
@@ -108,7 +108,7 @@ describe('SlugPanel', () => {
 
   it('should respect the link limit', async () => {
     const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'Edit: URL slug' });
+    const input = getByRole('textbox', { name: 'URL slug' });
     expect(input).toBeDefined();
 
     const bigSlug = ''.padStart(MIN_MAX.PERMALINK.MAX + 10, '1');

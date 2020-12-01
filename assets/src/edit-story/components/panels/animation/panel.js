@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -36,6 +36,7 @@ import {
   DIRECTION,
   progress,
   hasOffsets,
+  STORY_ANIMATION_STATE,
 } from '../../../../animation';
 import { getAnimationEffectDefaults } from '../../../../animation/parts';
 import StoryPropTypes, { AnimationPropType } from '../../../types';
@@ -51,7 +52,9 @@ function AnimationPanel({
   selectedElements,
   selectedElementAnimations,
   pushUpdateForObject,
+  updateAnimationState,
 }) {
+  const playUpdatedAnimation = useRef(false);
   const handlePanelChange = useCallback(
     (animation, submitArg = false) => {
       pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
@@ -107,9 +110,24 @@ function AnimationPanel({
         null,
         true
       );
+
+      // There's nothing unique to the animation data to signify that it
+      // was changed by the effect chooser, so we track it here.
+      playUpdatedAnimation.current = true;
     },
     [elAnimationId, isBackground, pushUpdateForObject, backgroundScale]
   );
+
+  // Play animation of selected elements when effect chooser signals
+  // that it has changed the data and the data comes back changed.
+  useEffect(() => {
+    if (playUpdatedAnimation.current) {
+      updateAnimationState({
+        animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
+      });
+      playUpdatedAnimation.current = false;
+    }
+  }, [selectedElementAnimations, updateAnimationState]);
 
   const handleRemoveEffect = useCallback(() => {
     pushUpdateForObject(
@@ -172,6 +190,7 @@ AnimationPanel.propTypes = {
   selectedElements: PropTypes.arrayOf(StoryPropTypes.element).isRequired,
   selectedElementAnimations: PropTypes.arrayOf(AnimationPropType),
   pushUpdateForObject: PropTypes.func.isRequired,
+  updateAnimationState: PropTypes.func,
 };
 
 export default AnimationPanel;

@@ -28,7 +28,7 @@ export class Color extends Container {
   }
 
   get button() {
-    return this.getByRole('button', { name: /Edit: /i });
+    return this.getByRole('button', { name: 'Text color' });
   }
 
   get opacity() {
@@ -36,7 +36,7 @@ export class Color extends Container {
   }
 
   get hex() {
-    return this.getByRole('textbox', { name: /Enter: /i });
+    return this.getByRole('textbox', { name: 'Text color' });
   }
 
   get output() {

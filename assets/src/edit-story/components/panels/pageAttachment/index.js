@@ -127,7 +127,7 @@ function PageAttachmentPanel() {
         onFocus={onFocus}
         value={url || ''}
         clear
-        aria-label={__('Edit: Page Attachment link', 'web-stories')}
+        aria-label={__('Page Attachment link', 'web-stories')}
       />
 
       {displayWarning && (
@@ -161,7 +161,7 @@ function PageAttachmentPanel() {
               }
             }}
             value={_ctaText}
-            aria-label={__('Edit: Page Attachment CTA text', 'web-stories')}
+            aria-label={__('Page Attachment CTA text', 'web-stories')}
             clear={Boolean(_ctaText) && !isDefault}
             suffix={isDefault ? __('default', 'web-stories') : null}
             width={isDefault ? 85 : null}

@@ -132,6 +132,7 @@ export const STORY_ANIMATION_STATE = {
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
+  PLAYING_SELECTED: 'playing-selected',
 };
 
 export const BG_MIN_SCALE = 100;

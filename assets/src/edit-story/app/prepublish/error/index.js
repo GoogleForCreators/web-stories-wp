@@ -23,6 +23,7 @@ export default {
     metadataErrors.storyCoverAttached,
     metadataErrors.storyTitle,
     metadataErrors.storyCoverPortraitSize,
+    metadataErrors.storyCoverAspectRatio,
     metadataErrors.publisherLogoSize,
     metadataErrors.linkInPageAttachmentRegion,
   ],
