@@ -58,8 +58,9 @@ function AutoSaveHandler() {
     if (!isDraft || !hasNewChanges || !autoSaveInterval || isUploading) {
       return undefined;
     }
-    // This is only a timeout, as `hasNewChanges` will come back false after the save
-    // This timeout will thus only be re-set when some new change occurs after an autosave.
+    // This is only a timeout (and not an interval), as `hasNewChanges` will come
+    // back false after the save.
+    // This timeout will thus be re-started when some new change occurs after an autosave.
     let timeout = setTimeout(
       () => cachedSaveStory.current(),
       autoSaveInterval * 1000
