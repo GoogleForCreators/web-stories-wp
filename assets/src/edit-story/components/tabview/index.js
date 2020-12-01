@@ -56,29 +56,16 @@ const Tab = styled.li.attrs(({ isActive }) => ({
   font-family: ${({ theme }) => theme.fonts.tab.family};
   font-size: ${({ theme }) => theme.fonts.tab.size};
   font-weight: ${({ theme }) => theme.fonts.tab.weight};
-  opacity: 0.84;
   padding: 12px 0px;
   margin: 0px 16px;
   margin-bottom: -1px;
   position: relative;
-
-  ${({ isActive }) =>
-    !isActive &&
-    `
-    opacity: .34;
-    &:hover { opacity: 1; }
-  `}
 
   ${({ isActive, theme }) =>
     isActive &&
     `
     border-bottom: 1px solid ${theme.colors.accent.primary};
   `}
-
-  &:active,
-  &:hover {
-    opacity: 0.84;
-  }
 
   svg {
     display: block;
@@ -108,6 +95,18 @@ const Tab = styled.li.attrs(({ isActive }) => ({
         color: ${({ theme }) => theme.colors.fg.negative};
       }
     }
+  }
+
+  span,
+  svg:not(.alert) {
+    opacity: ${({ isActive }) => (isActive ? '0.84' : '0.34')};
+  }
+
+  &:hover span,
+  &:hover svg:not(.alert),
+  &:active span,
+  &:active svg:not(.alert) {
+    opacity: 0.84;
   }
 `;
 
@@ -195,7 +194,7 @@ function TabView({
           aria-selected={tab === id}
           onClick={() => tabChanged(id)}
         >
-          {title}
+          {Boolean(title) && <span>{title}</span>}
           {Boolean(Icon) && <Icon isActive={id === tab} />}
         </Tab>
       ))}
