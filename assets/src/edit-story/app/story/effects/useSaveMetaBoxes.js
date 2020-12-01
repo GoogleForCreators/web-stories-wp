@@ -17,42 +17,15 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import usePrevious from '../../../utils/usePrevious';
 import { useAPI } from '../../api';
 import { useConfig } from '../../config';
-
-/**
- * Function returning the current Meta Boxes DOM Node in the editor
- * whether the meta box area is opened or not.
- * If the MetaBox Area is visible returns it, and returns the original container instead.
- *
- * @param {string} location Meta Box location.
- * @return {Element} Container
- */
-function getMetaBoxContainer(location) {
-  // Class name as set in <MetaBoxesArea>
-  const area = document.querySelector(
-    `.web-stories-meta-boxes-area-${location} .metabox-location-${location}`
-  );
-
-  return (
-    area || document.querySelector('#metaboxes .metabox-location-' + location)
-  );
-}
-
-// Returns a prop's previous value.
-function usePrevious(value) {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-}
 
 /**
  * Effect to save meta boxes for a story.
@@ -109,7 +82,10 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
         baseFormData,
         ...locations.map(
           (location) =>
-            new global.FormData(getMetaBoxContainer(location) || undefined)
+            new global.FormData(
+              document.querySelector(`.metabox-location-${location}`) ||
+                undefined
+            )
         ),
       ];
 
