@@ -501,7 +501,7 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-		$demo = isset( $_GET['web-stories-demo'] );
+		$demo = isset( $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$settings = [
 			'id'         => 'edit-story',

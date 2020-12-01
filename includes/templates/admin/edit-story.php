@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $post_type, $post_type_object, $post;
 
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-$demo      = isset( $_GET['web-stories-demo'] ) ? '1' : '0';
+$demo      = isset( $_GET['web-stories-demo'] ) ? '1' : '0'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 
 // Preload common data.
