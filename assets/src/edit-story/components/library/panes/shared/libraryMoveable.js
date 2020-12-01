@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -43,12 +43,6 @@ function LibraryMoveable({
   thumbnailURL,
   onClick,
 }) {
-  const snapProps = useSnapping({
-    isDragging: true,
-    canSnap: true,
-    otherNodes: [],
-  });
-
   const { pageSize } = useLayout(({ state }) => ({
     pageSize: state.canvasPageSize,
   }));
@@ -95,6 +89,24 @@ function LibraryMoveable({
     handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
   };
 
+  const getTargetOffset = useCallback(() => {
+    const overlay = overlayRef.current;
+    let offsetX = 0,
+      offsetY = 0;
+    for (
+      let offsetNode = overlay;
+      offsetNode;
+      offsetNode = offsetNode.offsetParent
+    ) {
+      offsetX += offsetNode.offsetLeft;
+      offsetY += offsetNode.offsetTop;
+    }
+    return {
+      offsetX,
+      offsetY,
+    };
+  }, [overlayRef]);
+
   const onDragStart = ({ set, inputEvent }) => {
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
@@ -102,20 +114,10 @@ function LibraryMoveable({
     startEventTracking(inputEvent);
 
     // Position the clone that's being dragged.
-    const overlay = overlayRef.current;
-    let offsetX1 = 0,
-      offsetY1 = 0;
-    for (
-      let offsetNode = overlay;
-      offsetNode;
-      offsetNode = offsetNode.offsetParent
-    ) {
-      offsetX1 += offsetNode.offsetLeft;
-      offsetY1 += offsetNode.offsetTop;
-    }
+    const { offsetX, offsetY } = getTargetOffset();
     const mediaBox = targetBoxRef.current.getBoundingClientRect();
-    const x1 = mediaBox.left - offsetX1;
-    const y1 = mediaBox.top - offsetY1;
+    const x1 = mediaBox.left - offsetX;
+    const y1 = mediaBox.top - offsetY;
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
   };
@@ -152,6 +154,14 @@ function LibraryMoveable({
     resetMoveable();
     return undefined;
   };
+
+  const { offsetX: snappingOffsetX } = getTargetOffset();
+  const snapProps = useSnapping({
+    isDragging: true,
+    canSnap: true,
+    otherNodes: [],
+    snappingOffsetX,
+  });
 
   const resetMoveable = () => {
     targetBoxRef.current.style.transform = null;
