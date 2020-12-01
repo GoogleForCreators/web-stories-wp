@@ -47,6 +47,7 @@ import {
   Container as SectionContainer,
   Title as SectionTitle,
 } from '../../../common/section';
+import { PANE_PADDING } from '../../shared';
 import TextSet from './textSet';
 
 const TEXT_SET_ROW_GAP = 12;
