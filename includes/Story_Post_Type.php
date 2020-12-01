@@ -102,7 +102,7 @@ class Story_Post_Type {
 	 */
 	public function __construct( Experiments $experiments ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
+		$this->decoder     = new Decoder();
 	}
 
 	/**

@@ -46,6 +46,7 @@ function ColorInput({
   value,
   label,
   colorPickerActions,
+  changedStyle,
 }) {
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
@@ -67,6 +68,7 @@ function ColorInput({
         value={value}
         label={label}
         colorPickerActions={colorPickerActions}
+        changedStyle={changedStyle}
       />
       {hasOpacity && (
         <OpacityPreview value={value} onChange={handleOpacityChange} />
@@ -82,6 +84,7 @@ ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   colorPickerActions: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorInput.defaultProps = {

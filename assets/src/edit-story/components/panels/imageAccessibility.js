@@ -58,7 +58,7 @@ function ImageAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
-          aria-label={__('Edit: Assistive text', 'web-stories')}
+          aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
       </Row>

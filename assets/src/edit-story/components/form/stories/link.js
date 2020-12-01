@@ -51,7 +51,7 @@ export const _default = () => {
       onFocus={() => {}}
       value={value}
       clear
-      aria-label={__('Edit: Test URL', 'web-stories')}
+      aria-label={__('Test URL', 'web-stories')}
     />
   );
 };

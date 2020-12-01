@@ -120,6 +120,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
           colorPickerActions={getColorPickerActions}
           label={__('Text color', 'web-stories')}
           labelId="text-color-label"
+          changedStyle="color"
         />
       </Row>
       <FillRow ref={fillRow}>

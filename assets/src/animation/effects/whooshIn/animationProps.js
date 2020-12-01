@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -37,8 +37,14 @@ export const WhooshInEffectInputPropTypes = {
 export default {
   whooshInDir: {
     label: __('Direction', 'web-stories'),
-    type: FIELD_TYPES.DROPDOWN,
+    type: FIELD_TYPES.DIRECTION_PICKER,
     values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
     defaultValue: DIRECTION.LEFT_TO_RIGHT,
+  },
+  duration: {
+    label: __('Duration', 'web-stories'),
+    type: FIELD_TYPES.NUMBER,
+    unit: _x('ms', 'Time in milliseconds ', 'web-stories'),
+    defaultValue: 600,
   },
 };

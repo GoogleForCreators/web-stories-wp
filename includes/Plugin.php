@@ -271,7 +271,7 @@ class Plugin {
 		$link_controller = new Link_Controller();
 		$link_controller->register_routes();
 
-		$status_check = new Status_Check_Controller( $this->experiments );
+		$status_check = new Status_Check_Controller();
 		$status_check->register_routes();
 
 		$embed_controller = new Embed_Controller();

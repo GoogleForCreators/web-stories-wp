@@ -140,8 +140,12 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         scale: 100,
         resource: {
           type: 'image',
-          width: 99,
-          height: 99,
+          sizes: {
+            full: {
+              width: 99,
+              height: 99,
+            },
+          },
         },
       };
       expect(
@@ -163,8 +167,12 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         scale: 130,
         resource: {
           type: 'image',
-          width: 100,
-          height: 100,
+          sizes: {
+            full: {
+              width: 100,
+              height: 100,
+            },
+          },
         },
       };
       expect(
@@ -186,8 +194,12 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         scale: 100,
         resource: {
           type: 'image',
-          width: 100,
-          height: 100,
+          sizes: {
+            full: {
+              width: 100,
+              height: 100,
+            },
+          },
         },
       };
       expect(

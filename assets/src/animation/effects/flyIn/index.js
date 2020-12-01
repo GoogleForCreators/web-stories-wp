@@ -22,10 +22,10 @@ import getOffPageOffset from '../../utils/getOffPageOffset';
 import { DIRECTION } from '../../constants';
 
 export function EffectFlyIn({
-  duration = 500,
+  duration = 600,
   flyInDir = DIRECTION.TOP_TO_BOTTOM,
   delay,
-  easing,
+  easing = 'cubic-bezier(0.2, 0.6, 0.0, 1)',
   element,
 }) {
   const { offsetTop, offsetLeft, offsetRight, offsetBottom } = getOffPageOffset(

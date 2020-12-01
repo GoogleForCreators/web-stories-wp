@@ -64,7 +64,7 @@ function ExcerptPanel() {
           value={excerpt}
           onTextChange={handleTextChange}
           placeholder={__('Write an excerpt', 'web-stories')}
-          aria-label={__('Edit: Story Excerpt', 'web-stories')}
+          aria-label={__('Story Excerpt', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}
           rows={4}
         />

@@ -111,7 +111,7 @@ function PaddingControls({
           'The Horizontal & Vertical padding',
           'web-stories'
         ),
-        'aria-label': __('Edit: Horizontal & Vertical padding', 'web-stories'),
+        'aria-label': __('Horizontal & Vertical padding', 'web-stories'),
         onChange: (value) =>
           handleChange({
             horizontal: value,
@@ -122,7 +122,7 @@ function PaddingControls({
       }
     : {
         suffix: _x('H', 'The Horizontal padding', 'web-stories'),
-        'aria-label': __('Edit: Horizontal padding', 'web-stories'),
+        'aria-label': __('Horizontal padding', 'web-stories'),
         onChange: (value) =>
           handleChange({
             horizontal: value,
@@ -167,7 +167,7 @@ function PaddingControls({
                 vertical: value,
               })
             }
-            aria-label={__('Edit: Vertical padding', 'web-stories')}
+            aria-label={__('Vertical padding', 'web-stories')}
           />
         </>
       )}

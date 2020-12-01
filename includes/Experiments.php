@@ -363,18 +363,6 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #4805
-			 * Creation date: 2020-10-28
-			 */
-			[
-				'name'        => 'encodeStoryMarkup',
-				/* translators: %s: WAF stands for Web Application Firewall */
-				'label'       => __( 'WAF Compatibility', 'web-stories' ),
-				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
 			 * Author: @spacedmonkey
 			 * Issue: #798
 			 * Creation date: 2020-11-02
@@ -396,6 +384,17 @@ class Experiments {
 				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
 				'group'       => 'editor',
 
+			],
+			/**
+			 * Author: @zachhale
+			 * Issue: #5079
+			 * Creation date: 2020-11-04
+			 */
+			[
+				'name'        => 'showPageLayoutsTab',
+				'label'       => __( 'Page layouts tab', 'web-stories' ),
+				'description' => __( 'Enable page layouts tab', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

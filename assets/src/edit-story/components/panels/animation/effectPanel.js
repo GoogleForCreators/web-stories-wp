@@ -67,7 +67,11 @@ const AnimationGridField = styled.div(
   ]
 );
 
-function EffectPanel({ animation: { id, type, ...config }, onChange }) {
+function EffectPanel({
+  animation: { id, type, ...config },
+  onChange,
+  disabledTypeOptionsMap,
+}) {
   const { props } = getAnimationEffectProps(type);
 
   const handleInputChange = useCallback(
@@ -108,6 +112,7 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
         onChange={(value, submitArg) =>
           handleInputChange({ [field]: value }, submitArg)
         }
+        disabledOptions={disabledTypeOptionsMap[type] || []}
       />
     </AnimationGridField>
   ));
@@ -118,6 +123,9 @@ function EffectPanel({ animation: { id, type, ...config }, onChange }) {
 EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };
 
 export default EffectPanel;

@@ -52,13 +52,26 @@ const WAAPIAnimationStateReducer = (state, action) => {
   return WAAPIAnimationMachine[state][action] || state;
 };
 
-const createOnFinishPromise = (animation) => {
+const createOnFinishPromise = ({ animation }) => {
   return new Promise((resolve) => {
     animation.onfinish = resolve;
   });
 };
 
-function Provider({ animations, elements, children, onWAAPIFinish }) {
+const filterWAAPIAnimations = ({ animations, selectedElementIds }) =>
+  selectedElementIds.length > 0
+    ? animations.filter(({ elementId }) =>
+        selectedElementIds.includes(elementId)
+      )
+    : animations;
+
+function Provider({
+  animations,
+  elements,
+  children,
+  onWAAPIFinish,
+  selectedElementIds = [],
+}) {
   const enableAnimation = useFeature('enableAnimation');
 
   const elementsMap = useMemo(() => {
@@ -112,22 +125,36 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
   );
   const WAAPIAnimationMap = useRef(new Map());
   const [WAAPIAnimations, setWAAPIAnimations] = useState([]);
+  const filteredWAAPIAnimations = useMemo(
+    () =>
+      filterWAAPIAnimations({
+        animations: WAAPIAnimations,
+        selectedElementIds,
+      }),
+    [selectedElementIds, WAAPIAnimations]
+  );
 
-  const hoistWAAPIAnimation = useCallback((WAPPIAnimation) => {
-    const symbol = Symbol();
-    WAAPIAnimationMap.current.set(symbol, WAPPIAnimation);
+  const hoistWAAPIAnimation = useCallback(
+    ({ animation: WAPPIAnimation, elementId }) => {
+      const symbol = Symbol();
+      WAAPIAnimationMap.current.set(symbol, {
+        animation: WAPPIAnimation,
+        elementId,
+      });
 
-    setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
-    return () => {
-      WAPPIAnimation?.cancel();
-      WAAPIAnimationMap.current.delete(symbol);
       setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
-    };
-  }, []);
+      return () => {
+        WAPPIAnimation?.cancel();
+        WAAPIAnimationMap.current.delete(symbol);
+        setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
+      };
+    },
+    []
+  );
 
   const WAAPIAnimationMethods = useMemo(() => {
     const play = () =>
-      WAAPIAnimations.forEach((animation) => {
+      filteredWAAPIAnimations.forEach(({ animation }) => {
         // Sometimes an animation part can get into a
         // stuck state where executing `play` doesn't
         // trigger the animation. A workaround to avoid
@@ -138,9 +165,9 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         animation?.play();
       });
     const pause = () =>
-      WAAPIAnimations.forEach((animation) => animation?.pause());
+      filteredWAAPIAnimations.forEach(({ animation }) => animation?.pause());
     const setCurrentTime = (time) =>
-      WAAPIAnimations.forEach((animation) => {
+      filteredWAAPIAnimations.forEach(({ animation }) => {
         const { duration, delay } =
           (animation.effect?.timing || animation.effect?.getTiming()) ?? {};
         const animationEndTime = (delay || 0) + (duration || 0);
@@ -161,7 +188,7 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
         });
       },
     };
-  }, [WAAPIAnimations]);
+  }, [filteredWAAPIAnimations]);
 
   /**
    * Browser support for `animation.finished` is no good.
@@ -172,20 +199,22 @@ function Provider({ animations, elements, children, onWAAPIFinish }) {
    */
   useEffect(() => {
     let cancel = () => {};
-    if ('idle' === WAAPIAnimationState && WAAPIAnimations.length) {
+    if ('idle' === WAAPIAnimationState && filteredWAAPIAnimations.length) {
       new Promise((resolve, reject) => {
         cancel = reject;
-        Promise.all(WAAPIAnimations.map(createOnFinishPromise)).then(() => {
-          cancel = () => {};
-          resolve();
-        });
+        Promise.all(filteredWAAPIAnimations.map(createOnFinishPromise)).then(
+          () => {
+            cancel = () => {};
+            resolve();
+          }
+        );
       })
         .then(() => dispatchWAAPIAnimationState('complete'))
         /* needed if promise gets canceled to swallow the error */
         .catch(() => {});
     }
     return cancel;
-  }, [WAAPIAnimations, WAAPIAnimationState]);
+  }, [filteredWAAPIAnimations, WAAPIAnimationState]);
 
   onWAAPIFinishRef.current = onWAAPIFinish;
   useEffect(() => {
@@ -224,6 +253,7 @@ Provider.propTypes = {
   elements: PropTypes.arrayOf(StoryPropTypes.element),
   children: PropTypes.node.isRequired,
   onWAAPIFinish: PropTypes.func,
+  selectedElementIds: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Provider;
