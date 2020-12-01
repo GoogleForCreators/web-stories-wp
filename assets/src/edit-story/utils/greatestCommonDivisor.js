@@ -13,18 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import * as metadataErrors from './metadata';
 
-export default {
-  story: [
-    metadataErrors.storyCoverAttached,
-    metadataErrors.storyTitle,
-    metadataErrors.storyCoverPortraitSize,
-    metadataErrors.storyCoverAspectRatio,
-    metadataErrors.publisherLogoSize,
-    metadataErrors.linkInPageAttachmentRegion,
-  ],
-};
+/**
+ * Returns the greatest common divisor for two integers. Useful for determining
+ * aspect ratios without dealing with float precision issues.
+ *
+ * @param {number} x The left number value
+ * @param {number} y The right number value
+ * @return {number|null} The largest positive number that divides both x and y.
+ */
+export function greatestCommonDivisor(x, y) {
+  return y ? greatestCommonDivisor(y, x % y) : x;
+}

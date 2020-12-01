@@ -233,7 +233,7 @@ class Header extends Container {
   }
 
   get title() {
-    return this.getByRole('textbox', { name: 'Edit: Story title' });
+    return this.getByRole('textbox', { name: 'Story title' });
   }
 
   get saveDraft() {

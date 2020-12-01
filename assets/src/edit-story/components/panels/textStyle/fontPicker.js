@@ -152,7 +152,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
   return (
     <AdvancedDropDown
       data-testid="font"
-      aria-label={__('Edit: Font family', 'web-stories')}
+      aria-label={__('Font family', 'web-stories')}
       options={fonts}
       primaryOptions={curatedFonts}
       primaryLabel={__('Recommended', 'web-stories')}

@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import * as metadataErrors from './metadata';
 
-export default {
-  story: [
-    metadataErrors.storyCoverAttached,
-    metadataErrors.storyTitle,
-    metadataErrors.storyCoverPortraitSize,
-    metadataErrors.storyCoverAspectRatio,
-    metadataErrors.publisherLogoSize,
-    metadataErrors.linkInPageAttachmentRegion,
-  ],
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+const titleFormatted = (rawTitle) => {
+  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
 };
+
+export default titleFormatted;

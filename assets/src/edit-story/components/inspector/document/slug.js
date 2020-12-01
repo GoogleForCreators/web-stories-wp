@@ -98,7 +98,7 @@ function SlugPanel() {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={__('Enter slug', 'web-stories')}
-          aria-label={__('Edit: URL slug', 'web-stories')}
+          aria-label={__('URL slug', 'web-stories')}
           minLength={MIN_MAX.PERMALINK.MIN}
           maxLength={MIN_MAX.PERMALINK.MAX}
         />

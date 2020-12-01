@@ -23,7 +23,7 @@ import { select } from '@storybook/addon-knobs';
  * Internal dependencies
  */
 import { theme, THEME_CONSTANTS } from '../../../theme';
-import { Headline, Text } from '../../';
+import { Headline, Text } from '../../typography';
 import { Close } from '../../../icons';
 import { Button, BUTTON_SIZES, BUTTON_TYPES, BUTTON_VARIANTS } from '..';
 
