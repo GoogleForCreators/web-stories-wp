@@ -264,54 +264,57 @@ function InnerElement({
           />
         )}
       </MediaWrapper>
-      <Moveable
-        className=""
-        zIndex={10}
-        target={mediaWrapper.current}
-        edge={true}
-        draggable={true}
-        origin={false}
-        pinchable={true}
-        onDragStart={onDragStart}
-        snappable={true}
-        verticalGuidelines={[0, 100, 300, 400]}
-        onDrag={({ beforeTranslate, inputEvent }) => {
-          frame.translate = beforeTranslate;
-          if (cloneRef.current) {
-            cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-          }
-          handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
-        }}
-        onDragEnd={() => {
-          if (activeDropTargetId) {
-            handleDrop({
-              ...resource,
-              baseColor: mediaBaseColor.current,
-            });
-          } else {
-            const {
-              x,
-              y,
-              width: w,
-              height: h,
-            } = cloneRef.current.getBoundingClientRect();
-            const {
-              x: pageX,
-              y: pageY,
-            } = pageContainer.getBoundingClientRect();
+      {mediaElement.current && (
+        <Moveable
+          className="default-moveable hide-handles"
+          zIndex={10}
+          target={mediaWrapper.current}
+          edge={true}
+          draggable={true}
+          origin={false}
+          pinchable={true}
+          onDragStart={onDragStart}
+          snappable={true}
+          verticalGuidelines={[0, 100, 300, 400]}
+          onDrag={({ beforeTranslate, inputEvent }) => {
+            frame.translate = beforeTranslate;
+            if (cloneRef.current) {
+              cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
+            }
+            handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
+          }}
+          onDragEnd={() => {
+            if (activeDropTargetId) {
+              handleDrop({
+                ...resource,
+                baseColor: mediaBaseColor.current,
+              });
+            } else {
+              const {
+                x,
+                y,
+                width: w,
+                height: h,
+              } = cloneRef.current.getBoundingClientRect();
+              const {
+                x: pageX,
+                y: pageY,
+              } = pageContainer.getBoundingClientRect();
 
-            insertElement(resource.type, {
-              resource,
-              x: editorToDataX(x - pageX, pageSize.width),
-              y: editorToDataY(y - pageY, pageSize.height),
-              width: editorToDataX(w, pageSize.width),
-              height: editorToDataY(h, pageSize.height),
-            });
-          }
-          setIsDragging(false);
-          setDraggingResource(null);
-        }}
-      />
+              // @todo Don't add if dragging out of canvas.
+              insertElement(resource.type, {
+                resource,
+                x: editorToDataX(x - pageX, pageSize.width),
+                y: editorToDataY(y - pageY, pageSize.height),
+                width: editorToDataX(w, pageSize.width),
+                height: editorToDataY(h, pageSize.height),
+              });
+            }
+            setIsDragging(false);
+            setDraggingResource(null);
+          }}
+        />
+      )}
     </>
   );
 }
