@@ -23,7 +23,6 @@ export default {
   story: [distributionWarnings.storyMissingExcerpt],
   page: [accessibilityWarnings.pageTooManyLinks],
   text: [
-    accessibilityWarnings.textElementFontLowContrast,
     accessibilityWarnings.textElementFontSizeTooSmall,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
