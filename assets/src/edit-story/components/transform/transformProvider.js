@@ -30,6 +30,9 @@ function TransformProvider({ children }) {
   const lastTransformsRef = useRef({});
   const [isAnythingTransforming, setIsAnythingTransforming] = useState(false);
 
+  // @todo This is temporarily here since it's used for transforms only but should probably be moved to a better place.
+  const [pageContainer, setPageContainer] = useState(null);
+
   const registerTransformHandler = useCallback((id, handler) => {
     const handlerListMap = transformHandlersRef.current;
     const handlerList = handlerListMap[id] || (handlerListMap[id] = []);
@@ -70,8 +73,10 @@ function TransformProvider({ children }) {
   const state = {
     state: {
       isAnythingTransforming,
+      pageContainer,
     },
     actions: {
+      setPageContainer,
       registerTransformHandler,
       pushTransform,
     },

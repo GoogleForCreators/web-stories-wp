@@ -32,7 +32,7 @@ import {
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '../../../animation';
-import { useStory } from '../../app';
+import { useStory, useTransform } from '../../app';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
 import useCanvas from './useCanvas';
@@ -109,15 +109,17 @@ function DisplayLayer() {
       };
     }
   );
-  const {
-    editingElement,
-    setPageContainer,
-    setFullbleedContainer,
-  } = useCanvas(
-    ({
-      state: { editingElement },
-      actions: { setPageContainer, setFullbleedContainer },
-    }) => ({ editingElement, setPageContainer, setFullbleedContainer })
+  const { setPageContainer } = useTransform(
+    ({ actions: { setPageContainer } }) => ({
+      setPageContainer,
+    })
+  );
+
+  const { editingElement, setFullbleedContainer } = useCanvas(
+    ({ state: { editingElement }, actions: { setFullbleedContainer } }) => ({
+      editingElement,
+      setFullbleedContainer,
+    })
   );
 
   const resetAnimationState = useCallback(

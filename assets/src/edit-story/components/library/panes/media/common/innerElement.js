@@ -18,7 +18,8 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -28,8 +29,12 @@ import resourceList from '../../../../../utils/resourceList';
 import { useDropTargets } from '../../../../dropTargets';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
 import Moveable from '../../../../moveable';
-import InOverlay from "../../../../overlay";
-import getBoundRect from "../../../../../utils/getBoundRect";
+import InOverlay from '../../../../overlay';
+import useInsertElement from '../../../../canvas/useInsertElement';
+import { editorToDataX, editorToDataY } from '../../../../../units';
+import { useTransform } from '../../../../transform';
+import { useLayout } from '../../../../../app/layout';
+import StoryPropTypes from '../../../../../types';
 
 const styledTiles = css`
   width: 100%;
@@ -98,6 +103,15 @@ function InnerElement({
   const overlayRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  const { pageSize } = useLayout(({ state }) => ({
+    pageSize: state.canvasPageSize,
+  }));
+
+  const insertElement = useInsertElement();
+  const { pageContainer } = useTransform((state) => ({
+    pageContainer: state.state.pageContainer,
+  }));
+
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
   const setAverageColor = (color) => {
@@ -116,6 +130,7 @@ function InnerElement({
   }, [resource.poster]);
 
   const {
+    state: { activeDropTargetId },
     actions: { handleDrag, handleDrop, setDraggingResource },
   } = useDropTargets();
 
@@ -124,54 +139,11 @@ function InnerElement({
     [mediaElement]
   );
 
-  const dropTargetsBindings = useMemo(
-    () => (thumbnailURL) => ({
-      draggable: 'true',
-      onDragStart: (e) => {
-        resourceList.set(resource.id, {
-          url: thumbnailURL,
-          type: 'cached',
-        });
-        setDraggingResource(resource);
-        const { x, y, width: w, height: h } = measureMediaElement();
-        const offsetX = e.clientX - x;
-        const offsetY = e.clientY - y;
-        e.dataTransfer.setDragImage(mediaElement?.current, offsetX, offsetY);
-        e.dataTransfer.setData(
-          'resource/media',
-          JSON.stringify({
-            resource,
-            offset: { x: offsetX, y: offsetY, w, h },
-          })
-        );
-      },
-      onDrag: (e) => {
-        handleDrag(resource, e.clientX, e.clientY);
-      },
-      onDragEnd: (e) => {
-        e.preventDefault();
-        setDraggingResource(null);
-        handleDrop({
-          ...resource,
-          baseColor: mediaBaseColor.current,
-        });
-      },
-    }),
-    [
-      resource,
-      setDraggingResource,
-      measureMediaElement,
-      mediaElement,
-      handleDrag,
-      handleDrop,
-    ]
-  );
-
   const frame = {
     translate: [0, 0],
   };
 
-  const onDragStart = ({ set, inputEvent }) => {
+  const onDragStart = ({ set }) => {
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
     setIsDragging(true);
@@ -188,7 +160,7 @@ function InnerElement({
       offsetX1 += offsetNode.offsetLeft;
       offsetY1 += offsetNode.offsetTop;
     }
-    const mediaBox = mediaElement.current.getBoundingClientRect();
+    const mediaBox = measureMediaElement();
     const x1 = mediaBox.top - offsetX1;
     const y1 = mediaBox.left - offsetY1;
     cloneRef.current.style.top = `${x1}px`;
@@ -243,7 +215,6 @@ function InnerElement({
           muted
           onClick={onClick(poster, mediaBaseColor.current)}
           showWithoutDelay={newVideoPosterRef.current}
-          {...dropTargetsBindings(poster)}
         >
           <source
             src={getSmallestUrlForWidth(width, resource)}
@@ -312,16 +283,49 @@ function InnerElement({
           handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
         }}
         onDragEnd={() => {
+          if (activeDropTargetId) {
+            handleDrop({
+              ...resource,
+              baseColor: mediaBaseColor.current,
+            });
+          } else {
+            const {
+              x,
+              y,
+              width: w,
+              height: h,
+            } = cloneRef.current.getBoundingClientRect();
+            const {
+              x: pageX,
+              y: pageY,
+            } = pageContainer.getBoundingClientRect();
+
+            insertElement(resource.type, {
+              resource,
+              x: editorToDataX(x - pageX, pageSize.width),
+              y: editorToDataY(y - pageY, pageSize.height),
+              width: editorToDataX(w, pageSize.width),
+              height: editorToDataY(h, pageSize.height),
+            });
+          }
           setIsDragging(false);
           setDraggingResource(null);
-          handleDrop({
-            ...resource,
-            baseColor: mediaBaseColor.current,
-          });
         }}
       />
     </>
   );
 }
+
+InnerElement.propTypes = {
+  type: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  resource: StoryPropTypes.imageResource,
+  alt: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number,
+  onClick: PropTypes.func.isRequired,
+  showVideoDetail: PropTypes.bool,
+  mediaElement: StoryPropTypes.mediaElement,
+};
 
 export default InnerElement;

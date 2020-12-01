@@ -35,7 +35,6 @@ function CanvasProvider({ children }) {
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
   const [canvasContainer, setCanvasContainer] = useState(null);
-  const [pageContainer, setPageContainer] = useState(null);
   const [fullbleedContainer, setFullbleedContainer] = useState(null);
   const [designSpaceGuideline, setDesignSpaceGuideline] = useState(null);
   const [pageAttachmentContainer, setPageAttachmentContainer] = useState(null);
@@ -158,7 +157,6 @@ function CanvasProvider({ children }) {
   const state = useMemo(
     () => ({
       state: {
-        pageContainer,
         canvasContainer,
         fullbleedContainer,
         nodesById,
@@ -172,7 +170,6 @@ function CanvasProvider({ children }) {
         designSpaceGuideline,
       },
       actions: {
-        setPageContainer,
         setFullbleedContainer,
         getNodeForElement,
         setNodeForElement,
@@ -189,14 +186,12 @@ function CanvasProvider({ children }) {
       },
     }),
     [
-      pageContainer,
       fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
       lastSelectionEvent,
       pageSize,
-      setPageContainer,
       setFullbleedContainer,
       getNodeForElement,
       setNodeForElement,

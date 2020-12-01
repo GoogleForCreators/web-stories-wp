@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import { useDropTargets } from '../dropTargets';
 import { useUnits } from '../../units';
 import { isDragType } from '../../utils/dragEvent';
-import useCanvas from './useCanvas';
+import { useTransform } from '../../app';
 import useInsertElement from './useInsertElement';
 import useInsertTextSet from './useInsertTextSet';
 
@@ -43,7 +43,7 @@ function CanvasElementDropzone({ children }) {
   const { activeDropTargetId } = useDropTargets((state) => ({
     activeDropTargetId: state.state.activeDropTargetId,
   }));
-  const { pageContainer } = useCanvas((state) => ({
+  const { pageContainer } = useTransform((state) => ({
     pageContainer: state.state.pageContainer,
   }));
   const { editorToDataX, editorToDataY } = useUnits((state) => ({
