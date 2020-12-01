@@ -81,7 +81,7 @@ export const _default = () => {
   const activeTheme = useMemo(() => (isDarkTheme ? dark : light), [
     isDarkTheme,
   ]);
-  const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES;
+  const { SMALL } = THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES;
   return (
     <div>
       <FixedButton

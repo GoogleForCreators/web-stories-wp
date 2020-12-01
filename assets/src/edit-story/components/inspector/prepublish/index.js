@@ -15,3 +15,6 @@
  */
 
 export { default } from './prepublishInspector';
+export { default as ChecklistTab } from './checklistTab';
+export { default as PrepublishChecklistProvider } from './prepublishChecklistProvider';
+export { default as usePrepublishChecklist } from './usePrepublishChecklist';

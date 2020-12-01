@@ -92,6 +92,15 @@ export function updateElementWithUpdater(element, properties) {
   return { ...element, ...allowedProperties };
 }
 
+export function removeAnimationsWithElementIds(animations, ids) {
+  return (animations || []).reduce((accum, animation) => {
+    if (ids.some((id) => animation.targets?.includes(id))) {
+      return accum;
+    }
+    return [...accum, animation];
+  }, []);
+}
+
 export function updateAnimations(oldAnimations, animationUpdates) {
   const newAnimations = oldAnimations.reduce((animations, animation) => {
     const updatedAnimation = animationUpdates[animation.id];

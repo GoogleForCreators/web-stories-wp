@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import React, { useRef, useState } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -45,15 +45,24 @@ const Container = styled.div`
 
 export default function EffectChooserDropdown({
   onAnimationSelected,
+  onNoEffectSelected,
   isBackgroundEffects = false,
+  selectedEffectTitle,
+  disabledTypeOptionsMap,
 }) {
   const selectRef = useRef();
   const dropdownRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <DropDownSelect ref={selectRef} onClick={() => setIsOpen(!isOpen)}>
-      <DropDownTitle>{__('Select Animation', 'web-stories')}</DropDownTitle>
+    <DropDownSelect
+      aria-label={__('Animation: Effect Chooser', 'web-stories')}
+      ref={selectRef}
+      onClick={() => setIsOpen(!isOpen)}
+    >
+      <DropDownTitle>
+        {selectedEffectTitle || __('Select Animation', 'web-stories')}
+      </DropDownTitle>
       <DropdownIcon />
       <Popup
         anchor={selectRef}
@@ -62,9 +71,11 @@ export default function EffectChooserDropdown({
       >
         <Container ref={dropdownRef}>
           <EffectChooser
+            onNoEffectSelected={onNoEffectSelected}
             onAnimationSelected={onAnimationSelected}
             onDismiss={() => setIsOpen(false)}
             isBackgroundEffects={isBackgroundEffects}
+            disabledTypeOptionsMap={disabledTypeOptionsMap}
           />
         </Container>
       </Popup>
@@ -73,6 +84,11 @@ export default function EffectChooserDropdown({
 }
 
 EffectChooserDropdown.propTypes = {
-  onAnimationSelected: propTypes.func.isRequired,
-  isBackgroundEffects: propTypes.bool,
+  onAnimationSelected: PropTypes.func.isRequired,
+  isBackgroundEffects: PropTypes.bool,
+  selectedEffectTitle: PropTypes.string,
+  onNoEffectSelected: PropTypes.func.isRequired,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };

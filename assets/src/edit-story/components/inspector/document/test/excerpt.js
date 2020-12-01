@@ -51,6 +51,17 @@ function setupPanel() {
 }
 
 describe('ExcerptPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:excerpt',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render Excerpt Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Excerpt' });

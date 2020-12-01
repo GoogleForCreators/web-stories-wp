@@ -32,7 +32,7 @@ jest.mock('../../../../app/font/useFont');
 import useFont from '../../../../app/font/useFont';
 import useLibrary from '../../useLibrary';
 import FontContext from '../../../../app/font/context';
-import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
+import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
 import { curatedFontNames } from '../../../../app/font/curatedFonts';
 
 describe('TextPane', () => {

@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
  */
 import { Section } from '../../../common';
 import PillGroup from '../../shared/pillGroup';
-import { PANE_PADDING } from '../../shared';
+import { FullWidthWrapper } from '../../common/styles';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
 } from '../../../../../utils/localStore';
@@ -67,12 +67,6 @@ const TextSetRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 12px;
-`;
-
-/* Undo the -1.5em set by the Pane */
-const CategoryWrapper = styled.div`
-  margin-left: -${PANE_PADDING};
-  margin-right: -${PANE_PADDING};
 `;
 
 const CATEGORIES = {
@@ -144,14 +138,14 @@ function TextSets({ paneRef }) {
 
   return (
     <Section id={sectionId} title={title}>
-      <CategoryWrapper>
+      <FullWidthWrapper>
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
           deselectItem={() => handleSelectedCategory(null)}
         />
-      </CategoryWrapper>
+      </FullWidthWrapper>
       <UnitsProvider
         pageSize={{
           width: TEXT_SET_SIZE,

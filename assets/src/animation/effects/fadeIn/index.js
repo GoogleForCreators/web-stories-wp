@@ -19,7 +19,11 @@
  */
 import { AnimationFade } from '../../parts/fade';
 
-export function EffectFadeIn({ duration = 500, delay, easing }) {
+export function EffectFadeIn({
+  duration = 600,
+  delay,
+  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
+}) {
   return AnimationFade({
     fadeFrom: 0,
     fadeTo: 1,
