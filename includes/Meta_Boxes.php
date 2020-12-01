@@ -80,9 +80,6 @@ class Meta_Boxes {
 			return;
 		}
 
-		// We don't currently support the 'Custom Fields' meta box.
-		remove_meta_box( 'postcustom', $screen, $screen->id );
-
 		foreach ( self::LOCATIONS as $context ) {
 			if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ] ) ) {
 				continue;
@@ -98,7 +95,11 @@ class Meta_Boxes {
 						continue;
 					}
 
-					if ( is_array( $meta_box['args'] ) && isset( $meta_box['args']['__back_compat_meta_box'] ) && $meta_box['args']['__back_compat_meta_box'] ) {
+					if (
+						// We don't currently support the 'Custom Fields' meta box.
+						'postcustom' === $meta_box['id'] ||
+						( is_array( $meta_box['args'] ) && ! empty( $meta_box['args']['__back_compat_meta_box'] ) )
+					) {
 						remove_meta_box( $meta_box['id'], $screen, $context );
 					}
 				}
