@@ -18,6 +18,8 @@
  * Internal dependencies
  */
 import { Fixture } from '../../../karma/fixture';
+import { useStory } from '../../../app';
+import { STORY_ANIMATION_STATE } from '../../../../animation';
 
 describe('Animation Panel', function () {
   let fixture;
@@ -72,5 +74,27 @@ describe('Animation Panel', function () {
     );
 
     expect(effectChooser.innerText).toBe('Drop');
+  });
+
+  it('plays the animation when a control in the panel is changed.', async function () {
+    await fixture.events.click(fixture.editor.library.textAdd);
+    const panel = fixture.editor.inspector.designPanel.animation;
+
+    const effectChooser = panel.effectChooser;
+    await fixture.events.click(effectChooser, { clickCount: 1 });
+
+    await fixture.events.click(
+      fixture.screen.getByRole('listitem', { name: /Fade In Effect/ })
+    );
+
+    const { animationState } = await fixture.renderHook(() =>
+      useStory(({ state }) => {
+        return {
+          animationState: state.animationState,
+        };
+      })
+    );
+
+    expect(animationState).toBe(STORY_ANIMATION_STATE.PLAYING_SELECTED);
   });
 });
