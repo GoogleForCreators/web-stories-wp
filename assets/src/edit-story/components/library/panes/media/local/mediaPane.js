@@ -85,6 +85,7 @@ function MediaPane(props) {
     resetWithFetch,
     setMediaType,
     setSearchTerm,
+    uploadVideoPoster,
   } = useLocalMedia(
     ({
       state: {
@@ -95,7 +96,13 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
       },
-      actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
+      actions: {
+        setNextPage,
+        resetWithFetch,
+        setMediaType,
+        setSearchTerm,
+        uploadVideoPoster,
+      },
     }) => {
       return {
         hasMore,
@@ -108,6 +115,7 @@ function MediaPane(props) {
         resetWithFetch,
         setMediaType,
         setSearchTerm,
+        uploadVideoPoster,
       };
     }
   );
@@ -159,6 +167,9 @@ function MediaPane(props) {
         resource,
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
+
+      // Update the video poster on the ride side bar (i.e. Accessibility)
+      uploadVideoPoster(resource.id, mediaPickerEl.url);
     } catch (e) {
       showSnackbar({
         message: e.message,

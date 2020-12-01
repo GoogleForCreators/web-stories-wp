@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
 import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
@@ -41,9 +40,6 @@ export default function useMediaPicker({
   type = '',
   multiple = false,
 }) {
-  const { uploadVideoPoster } = useLocalMedia((state) => ({
-    uploadVideoPoster: state.actions.uploadVideoPoster,
-  }));
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -61,16 +57,16 @@ export default function useMediaPicker({
   });
   useEffect(() => {
     try {
+      // Handles the video processing logic from 3rd party.
+      // The 'success' listener logic will be triggred once user uploaded a
+      // file from the uploader.
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
-        if (attributes.type === 'video') {
-          uploadVideoPoster(attributes.id, attributes.url);
-        }
       };
     } catch (e) {
       // Silence.
     }
-  }, [uploadVideoPoster, updateMedia]);
+  }, [updateMedia]);
 
   const openMediaPicker = (evt) => {
     trackEvent('open_media_modal', 'editor');
@@ -99,6 +95,8 @@ export default function useMediaPicker({
     });
 
     // When an image is selected, run a callback.
+    // The onSelect logic is defined in mediaPane.js/onSelect, which handles the
+    // logic when user click on the button `Insert into page`.
     fileFrame.on('select', () => {
       const mediaPickerEl = fileFrame.state().get('selection').first().toJSON();
       onSelect(mediaPickerEl);
