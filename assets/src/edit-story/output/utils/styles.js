@@ -52,7 +52,8 @@ function CustomStyles() {
 
               @media (max-aspect-ratio: 9 / 16)  {
                 @media (min-aspect-ratio: 1 / 2) {
-                  body.amp-mode-mouse amp-story-grid-layer {
+                  amp-story-grid-layer.grid-layer-bg,
+                  amp-story-grid-layer.grid-layer-fullbleed-area {
                     margin-top: calc(${fullBleedHeight} * 100% - ${safeZoneHeight}px);
                   }
                 }

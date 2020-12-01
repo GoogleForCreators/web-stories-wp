@@ -78,7 +78,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <StoryAnimation.AMPAnimations />
 
         {backgroundElement && (
-          <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+          <amp-story-grid-layer
+            template="vertical"
+            aspect-ratio={ASPECT_RATIO}
+            class="grid-layer-bg"
+          >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
                 <OutputElement element={backgroundElement} />
@@ -95,7 +99,11 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           </amp-story-grid-layer>
         )}
 
-        <amp-story-grid-layer template="vertical" aspect-ratio={ASPECT_RATIO}>
+        <amp-story-grid-layer
+          template="vertical"
+          aspect-ratio={ASPECT_RATIO}
+          class="grid-layer-fullbleed-area"
+        >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {validElements.map((element) => (
