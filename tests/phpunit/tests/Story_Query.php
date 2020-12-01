@@ -86,7 +86,7 @@ class Story_Query extends \WP_UnitTestCase {
 		];
 
 		self::$default_query_args = [
-			'post_type'        => Story_Post_Type::POST_TYPE_SLUG,
+			'post_type'        => Story_CPT::POST_TYPE_SLUG,
 			'posts_per_page'   => 10,
 			'post_status'      => 'publish',
 			'suppress_filters' => false,
