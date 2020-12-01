@@ -22,9 +22,9 @@ use Google\Web_Stories\Stories_Renderer\Generic_Renderer;
 use Google\Web_Stories\Story_Post_Type;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\Stories
+ * @coversDefaultClass \Google\Web_Stories\Story_Query
  */
-class Stories extends \WP_UnitTestCase {
+class Story_Query extends \WP_UnitTestCase {
 
 	/**
 	 * Class in test.

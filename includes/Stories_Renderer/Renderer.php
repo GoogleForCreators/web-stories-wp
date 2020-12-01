@@ -169,10 +169,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function init() {
-
-		add_filter( 'web_stories_get_stories_posts', [ $this, 'prepare_story_modal' ] );
-		$this->story_posts = $this->stories->get_stories();
-		remove_filter( 'web_stories_get_stories_posts', [ $this, 'prepare_story_modal' ] );
+		$this->story_posts = array_map( [ $this, 'prepare_story_modal' ], $this->stories->get_stories() );
 	}
 
 	/**
@@ -205,46 +202,42 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @param array $posts Array of stories.
+	 * @param object $post Array of stories.
 	 *
-	 * @return array Returns single story item data.
+	 * @return object Returns single story item data.
 	 */
-	public function prepare_story_modal( array $posts ) {
-		if ( ! $posts ) {
-			return $posts;
+	public function prepare_story_modal( $post ) {
+		if ( ! ( $post instanceof \WP_Post ) ) {
+			return $post;
 		}
 
-		$transformed_posts = [];
-		$is_circles_view   = $this->is_view_type( 'circles' );
+		$is_circles_view = $this->is_view_type( 'circles' );
+		$a_post          = $post;
+		$story_title     = '';
+		$author_name     = '';
+		$story_date      = '';
+		$story_data      = [];
+		$story_id        = $a_post->ID;
+		$author_id       = absint( get_post_field( 'post_author', $story_id ) );
 
-		foreach ( $posts as $a_post ) {
-			$story_title = '';
-			$author_name = '';
-			$story_date  = '';
-			$story_data  = [];
-			$story_id    = $a_post->ID;
-			$author_id   = absint( get_post_field( 'post_author', $story_id ) );
-
-			if ( true === $this->attributes['show_title'] ) {
-				$story_title = get_the_title( $story_id );
-			}
-
-			if ( ! $is_circles_view ) {
-				$author_name = ( true === $this->attributes['show_author'] ) ? get_the_author_meta( 'display_name', $author_id ) : $author_name;
-				$story_date  = ( true === $this->attributes['show_date'] ) ? get_the_date( 'M j, Y', $story_id ) : $story_date;
-			}
-
-			$story_data['id']              = $story_id;
-			$story_data['author']          = $author_name;
-			$story_data['date']            = $story_date;
-			$story_data['classes']         = $this->get_single_story_classes();
-			$story_data['content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
-			$transformed_post              = new Story( $story_data );
-			$transformed_post->load_from_post( $story_id );
-			$transformed_posts[] = $transformed_post;
+		if ( true === $this->attributes['show_title'] ) {
+			$story_title = get_the_title( $story_id );
 		}
 
-		return $transformed_posts;
+		if ( ! $is_circles_view ) {
+			$author_name = ( true === $this->attributes['show_author'] ) ? get_the_author_meta( 'display_name', $author_id ) : $author_name;
+			$story_date  = ( true === $this->attributes['show_date'] ) ? get_the_date( 'M j, Y', $story_id ) : $story_date;
+		}
+
+		$story_data['id']              = $story_id;
+		$story_data['author']          = $author_name;
+		$story_data['date']            = $story_date;
+		$story_data['classes']         = $this->get_single_story_classes();
+		$story_data['content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
+		$transformed_post              = new Story( $story_data );
+		$transformed_post->load_from_post( $story_id );
+
+		return $transformed_post;
 	}
 
 	/**
