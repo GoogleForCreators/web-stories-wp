@@ -68,24 +68,29 @@ function Update() {
     [saveStory, isSaving]
   );
 
-  const isSavingDraftDisabled =
-    !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges);
+  let text;
+  switch (status) {
+    case 'publish':
+    case 'private':
+      text = __('Update', 'web-stories');
+      break;
+    case 'future':
+      text = __('Schedule', 'web-stories');
+      break;
+    default:
+      text = __('Save draft', 'web-stories');
 
-  if (!['publish', 'private', 'future'].includes(status)) {
-    return (
-      <Outline
-        onClick={() => saveStory({ status: 'draft' })}
-        isDisabled={isSavingDraftDisabled}
-      >
-        {__('Save draft', 'web-stories')}
-      </Outline>
-    );
-  }
+      const isSavingDraftDisabled =
+        !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges);
 
-  let text = __('Update', 'web-stories');
-
-  if (status === 'future') {
-    text = __('Schedule', 'web-stories');
+      return (
+        <Outline
+          onClick={() => saveStory({ status: 'draft' })}
+          isDisabled={isSavingDraftDisabled}
+        >
+          {text}
+        </Outline>
+      );
   }
 
   return (
