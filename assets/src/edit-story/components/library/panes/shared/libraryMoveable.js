@@ -27,7 +27,6 @@ import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '../../../../units';
 import Moveable from '../../../moveable';
 import useSnapping from '../../../canvas/utils/useSnapping';
-import resourceList from '../../../../utils/resourceList';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
@@ -43,9 +42,10 @@ const TargetBox = styled.div`
 `;
 
 function LibraryMoveable({
-  mediaBaseColor,
+  type,
   resource,
-  thumbnailURL,
+  handleDrag,
+  handleDragEnd,
   onClick,
   cloneElement,
   cloneProps,
@@ -67,8 +67,8 @@ function LibraryMoveable({
   }));
 
   const {
-    state: { activeDropTargetId, draggingResource },
-    actions: { handleDrag, handleDrop, setDraggingResource },
+    state: { activeDropTargetId },
+    actions: { setDraggingResource },
   } = useDropTargets();
 
   const frame = {
@@ -86,21 +86,13 @@ function LibraryMoveable({
   };
 
   const onDrag = ({ beforeTranslate, inputEvent }) => {
-    if (!draggingResource) {
-      // Drop-targets handling.
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      setDraggingResource(resource);
-    }
     frame.translate = beforeTranslate;
     if (cloneRef.current) {
       cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
       // We also have to move the original target ref for snapping to work.
       targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
-    handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
+    handleDrag(inputEvent);
   };
 
   const getTargetOffset = useCallback(() => {
@@ -142,11 +134,9 @@ function LibraryMoveable({
       onClick();
       return false;
     }
+    // We only skip Moveable onDragEnd handling if there's an active drop target ID.
     if (activeDropTargetId) {
-      handleDrop({
-        ...resource,
-        baseColor: mediaBaseColor.current,
-      });
+      handleDragEnd();
     } else {
       const {
         x,
@@ -157,7 +147,7 @@ function LibraryMoveable({
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
       // @todo Don't add if dragging out of canvas.
-      insertElement(resource.type, {
+      insertElement(type, {
         resource,
         x: editorToDataX(x - pageX, pageSize.width),
         y: editorToDataY(y - pageY, pageSize.height),
@@ -217,9 +207,10 @@ function LibraryMoveable({
 }
 
 LibraryMoveable.propTypes = {
-  mediaBaseColor: PropTypes.object,
+  type: PropTypes.string.isRequired,
+  handleDrag: PropTypes.func,
+  handleDragEnd: PropTypes.func,
   resource: PropTypes.object,
-  thumbnailURL: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   cloneElement: PropTypes.object,
   cloneProps: PropTypes.object,

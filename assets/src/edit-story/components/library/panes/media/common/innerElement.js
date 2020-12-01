@@ -28,6 +28,8 @@ import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
 import StoryPropTypes from '../../../../../types';
 import LibraryMoveable from '../../shared/libraryMoveable';
+import resourceList from '../../../../../utils/resourceList';
+import { useDropTargets } from '../../../../dropTargets';
 
 const styledTiles = css`
   width: 100%;
@@ -91,6 +93,11 @@ function InnerElement({
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
   const mediaWrapper = useRef(null);
+
+  const {
+    state: { draggingResource },
+    actions: { handleDrag, handleDrop, setDraggingResource },
+  } = useDropTargets();
 
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
@@ -171,14 +178,29 @@ function InnerElement({
   }
 
   // @todo Make it work for video, too.
-  // @todo Move the whole clone and target part to Moveable, too.
   return (
     <>
       {mediaElement.current && (
         <LibraryMoveable
-          mediaBaseColor={mediaBaseColor}
+          handleDrag={(event) => {
+            if (!draggingResource) {
+              // Drop-targets handling.
+              resourceList.set(resource.id, {
+                url: thumbnailURL,
+                type: 'cached',
+              });
+              setDraggingResource(resource);
+            }
+            handleDrag(resource, event.clientX, event.clientY);
+          }}
+          handleDragEnd={() => {
+            handleDrop({
+              ...resource,
+              baseColor: mediaBaseColor.current,
+            });
+          }}
+          type={resource.type}
           resource={resource}
-          thumbnailURL={thumbnailURL}
           onClick={onClick(thumbnailURL, mediaBaseColor.current)}
           cloneElement={CloneImg}
           cloneProps={{
