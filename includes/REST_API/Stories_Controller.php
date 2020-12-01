@@ -63,7 +63,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
 		// $_GET param is available when the response iss preloaded in edit-story.php
-		if ( isset( $_GET['web-stories-demo'] ) && 'edit' === $context && 'auto-draft' === $post->post_status ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $request['web_stories_demo'] ) && '1' === $request['web_stories_demo'] && 'edit' === $context && 'auto-draft' === $post->post_status ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
@@ -75,6 +75,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$data     = $response->get_data();
+
 
 		if ( in_array( 'publisher_logo_url', $fields, true ) ) {
 			$data['publisher_logo_url'] = $this->get_publisher_logo();

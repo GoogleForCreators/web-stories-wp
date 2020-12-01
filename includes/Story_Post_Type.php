@@ -501,6 +501,8 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
+		$demo = isset( $_GET['web-stories-demo'] );
+
 		$settings = [
 			'id'         => 'edit-story',
 			'config'     => [
@@ -513,6 +515,7 @@ class Story_Post_Type {
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 				'maxUpload'        => $max_upload_size,
+				'useDemoContent'   => $demo,
 				'capabilities'     => [
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
