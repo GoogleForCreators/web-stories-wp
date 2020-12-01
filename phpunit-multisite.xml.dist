@@ -12,6 +12,7 @@
 		<ini name="display_errors" value="1" />
 		<ini name="display_startup_errors" value="1" />
 		<const name="WP_TESTS_MULTISITE" value="1" />
+		<const name="WEBSTORIES_SVG_ENABLED" value="true" />
 	</php>
 
 	<testsuites>

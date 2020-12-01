@@ -105,11 +105,13 @@ class SVG {
 	 *
 	 * @return bool
 	 */
-	protected function svg_already_enabled(){
+	public function svg_already_enabled(){
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
-		return in_array( self::MINE_TYPE, $mime_types, true );
+		$enabled = in_array( self::MINE_TYPE, $mime_types, true );
+
+		return apply_filters( 'web_stories_svg_already_enabled', $enabled );
 	}
 
 	/**
@@ -373,7 +375,11 @@ class SVG {
 	protected function get_svg_data( $file ) {
 		$key = md5( $file );
 		if ( ! isset( $this->svgs[ $key ] ) ) {
-			$this->svgs[ $key ] = file_get_contents( $file ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+			if ( is_readable( $file ) ) {
+				$this->svgs[ $key ] = file_get_contents( $file ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+			} else {
+				$this->svgs[ $key ] = '';
+			}
 		}
 
 		return $this->svgs[ $key ];
