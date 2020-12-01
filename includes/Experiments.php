@@ -375,6 +375,17 @@ class Experiments {
 			],
 			/**
 			 * Author: @swissspidy
+			 * Issue: #3134
+			 * Creation date: 2020-10-28
+			 */
+			[
+				'name'        => 'customMetaBoxes',
+				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
+				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
 			 * Issue: #4081
 			 * Creation date: 2020-10-28
 			 */

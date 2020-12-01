@@ -74,6 +74,7 @@ import {
 } from '../../../icons';
 import { getRelativeDisplayDate } from '../../../../date';
 import { generateStoryMenu } from '../../../components/popoverMenu/story-menu-generator';
+import { titleFormatted } from '../../../utils';
 
 const ListView = styled.div`
   width: 100%;
@@ -151,10 +152,6 @@ const toggleSortLookup = {
   [SORT_DIRECTION.DESC]: SORT_DIRECTION.ASC,
   [SORT_DIRECTION.ASC]: SORT_DIRECTION.DESC,
 };
-
-function titleFormatted(rawTitle) {
-  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
-}
 
 function onFocusSelectAll(e) {
   window.getSelection().selectAllChildren(e.target);

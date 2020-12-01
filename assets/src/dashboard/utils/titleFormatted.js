@@ -1,13 +1,4 @@
-<?php
-/**
- * Plugin Name: E2E Tests Demo Plugin
- * Plugin URI:  https://github.com/google/web-stories-wp
- * Description: Demo Plugin that can be installed during E2E tests.
- * Author:      Google
- * Author URI:  https://opensource.google.com/
- */
-
-/**
+/*
  * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,4 +14,13 @@
  * limitations under the License.
  */
 
-// Silence is golden.
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+const titleFormatted = (rawTitle) => {
+  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+};
+
+export default titleFormatted;

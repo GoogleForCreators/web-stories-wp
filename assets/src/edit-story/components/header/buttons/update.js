@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useFeature } from 'flagged';
+
+/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -22,7 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia, useHistory } from '../../../app';
+import { useStory, useLocalMedia, useHistory, useConfig } from '../../../app';
 import { Outline, Primary } from '../../button';
 import { useGlobalKeyDownEffect } from '../../keyboard';
 
@@ -42,6 +47,15 @@ function Update() {
   const {
     state: { hasNewChanges },
   } = useHistory();
+
+  const isMetaBoxesFeatureEnabled = useFeature('customMetaBoxes');
+  const { metaBoxes = {} } = useConfig();
+
+  const hasMetaBoxes =
+    isMetaBoxesFeatureEnabled &&
+    Object.keys(metaBoxes).some((location) =>
+      Boolean(metaBoxes[location]?.length)
+    );
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },
@@ -69,7 +83,9 @@ function Update() {
       return (
         <Outline
           onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={isSaving || isUploading || !hasNewChanges}
+          isDisabled={
+            !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
+          }
         >
           {text}
         </Outline>

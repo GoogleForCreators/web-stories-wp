@@ -31,7 +31,7 @@ import { Text } from '../typography';
 
 const Title = styled(Text)`
   grid-area: title;
-  font-weight: 600;
+  font-weight: 700;
   padding-left: 8px;
 `;
 
@@ -102,7 +102,13 @@ export const Banner = forwardRef(
         isDashboard={isDashboard}
         {...rest}
       >
-        <Title size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.LARGE}>
+        <Title
+          size={
+            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES[
+              isDashboard ? 'LARGE' : 'MEDIUM'
+            ]
+          }
+        >
           {title}
         </Title>
         <CloseButton
