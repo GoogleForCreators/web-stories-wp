@@ -170,9 +170,10 @@ function LibraryMoveable({
     setDraggingResource(null);
   };
 
+  // @todo Add 'hide-handles' classname, too.
   return (
     <Moveable
-      className=""
+      className="default-moveable"
       zIndex={10}
       target={targetBoxRef.current}
       edge={true}
