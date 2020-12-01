@@ -168,7 +168,8 @@ function MediaPane(props) {
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
 
-      // Update the video poster on the ride side bar (i.e. Accessibility)
+      // Upload video poster and update media element afterwards, so that the
+      // poster will correctly show up in places like the Accessibility panel.
       uploadVideoPoster(resource.id, mediaPickerEl.url);
     } catch (e) {
       showSnackbar({

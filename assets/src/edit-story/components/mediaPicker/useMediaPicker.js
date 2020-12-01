@@ -57,9 +57,11 @@ export default function useMediaPicker({
   });
   useEffect(() => {
     try {
-      // Handles the video processing logic from 3rd party.
-      // The 'success' listener logic will be triggred once user uploaded a
-      // file from the uploader.
+      // Handles the video processing logic from WordPress.
+      // The Uploader.success callback is invoked when a user uploads a file.
+      // Race condition concern: please DO NOT upload video poster on this
+      // callback, becuase the video is not guarantee to be ready at the moment.
+      // We should only upload the video poster on the select event.
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
       };

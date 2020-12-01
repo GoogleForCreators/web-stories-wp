@@ -38,8 +38,6 @@ function useUploadVideoFrame({ updateMediaElement }) {
   }));
   const setProperties = useCallback(
     (id, properties) => {
-      // properties is a function in this case, which will carry the poster
-      // value in the return object.
       // function updateElementsByResourceId is defined in
       // reducers/updateElementsByResourceId.js
       updateElementsByResourceId({ id, properties });
