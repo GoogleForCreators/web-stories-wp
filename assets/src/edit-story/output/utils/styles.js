@@ -30,6 +30,11 @@ function CustomStyles() {
   const fullBleedHeight = FULLBLEED_RATIO / 2;
   const safeZoneHeight = SAFE_ZONE_HEIGHT;
 
+  // Need the ratio in text for CSS. The styling cases below 1 / 2 and above
+  // 9 / 16 will be handled by the default styles.
+  const gridLayerExpandLowerBound = '1 / 2';
+  const gridLayerExpandUpperBound = '9 / 16';
+
   // Match page background color to the workspace background color.
   // Validate since we're using dangerouslySetInnerHTML with imported variable.
   const workspaceColor = theme.colors.bg.workspace;
@@ -50,10 +55,9 @@ function CustomStyles() {
                 overflow: visible;
               }
 
-              @media (max-aspect-ratio: 9 / 16)  {
-                @media (min-aspect-ratio: 1 / 2) {
-                  amp-story-grid-layer.grid-layer-bg,
-                  amp-story-grid-layer.grid-layer-fullbleed-area {
+              @media (max-aspect-ratio: ${gridLayerExpandUpperBound})  {
+                @media (min-aspect-ratio: ${gridLayerExpandLowerBound}) {
+                  amp-story-grid-layer.grid-layer {
                     margin-top: calc(${fullBleedHeight} * 100% - ${safeZoneHeight}px);
                   }
                 }

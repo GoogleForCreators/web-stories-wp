@@ -81,7 +81,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
           <amp-story-grid-layer
             template="vertical"
             aspect-ratio={ASPECT_RATIO}
-            class="grid-layer-bg"
+            class="grid-layer"
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
@@ -102,7 +102,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
-          class="grid-layer-fullbleed-area"
+          class="grid-layer"
         >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
