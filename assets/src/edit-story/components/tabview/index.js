@@ -73,27 +73,27 @@ const Tab = styled.li.attrs(({ isActive }) => ({
     height: 28px;
     transform-origin: center center;
     transition: transform 0.3s ease;
+  }
 
-    &.alert {
-      width: ${ALERT_ICON_SIZE}px;
-      height: auto;
-      position: absolute;
-      left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
-      top: calc(
-        50% -
-          ${({ isActive }) =>
-            isActive
-              ? `${ALERT_ICON_SIZE / 2 - 1}px`
-              : `${ALERT_ICON_SIZE / 2}px`}
-      );
-      overflow: visible;
-      opacity: 1;
-      &.warning {
-        color: ${({ theme }) => theme.colors.fg.warning};
-      }
-      &.error {
-        color: ${({ theme }) => theme.colors.fg.negative};
-      }
+  svg.alert {
+    width: ${ALERT_ICON_SIZE}px;
+    height: auto;
+    position: absolute;
+    left: calc(100% + ${ALERT_ICON_SIZE / 2}px);
+    top: calc(
+      50% -
+        ${({ isActive }) =>
+          isActive
+            ? `${ALERT_ICON_SIZE / 2 - 1}px`
+            : `${ALERT_ICON_SIZE / 2}px`}
+    );
+    overflow: visible;
+    opacity: 1;
+    &.warning {
+      color: ${({ theme }) => theme.colors.fg.warning};
+    }
+    &.error {
+      color: ${({ theme }) => theme.colors.fg.negative};
     }
   }
 
