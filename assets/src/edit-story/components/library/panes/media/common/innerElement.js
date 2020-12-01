@@ -25,17 +25,10 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { getSmallestUrlForWidth } from '../../../../../elements/media/util';
-import resourceList from '../../../../../utils/resourceList';
-import { useDropTargets } from '../../../../dropTargets';
 import useAverageColor from '../../../../../elements/media/useAverageColor';
-import Moveable from '../../../../moveable';
 import InOverlay from '../../../../overlay';
-import useInsertElement from '../../../../canvas/useInsertElement';
-import { editorToDataX, editorToDataY } from '../../../../../units';
-import { useLayout } from '../../../../../app/layout';
 import StoryPropTypes from '../../../../../types';
-import useSnapping from '../../../../canvas/utils/useSnapping';
-import { useCanvas } from '../../../../canvas';
+import LibraryMoveable from '../../shared/libraryMoveable';
 
 const styledTiles = css`
   width: 100%;
@@ -112,15 +105,6 @@ function InnerElement({
   const overlayRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const { pageSize } = useLayout(({ state }) => ({
-    pageSize: state.canvasPageSize,
-  }));
-
-  const insertElement = useInsertElement();
-  const { pageContainer } = useCanvas((state) => ({
-    pageContainer: state.state.pageContainer,
-  }));
-
   // Get the base color of the media for using when adding a new image,
   // needed for example when droptargeting to bg.
   const setAverageColor = (color) => {
@@ -138,51 +122,6 @@ function InnerElement({
     }
   }, [resource.poster]);
 
-  const {
-    state: { activeDropTargetId },
-    actions: { handleDrag, handleDrop, setDraggingResource },
-  } = useDropTargets();
-
-  const frame = {
-    translate: [0, 0],
-  };
-
-  const onDragStart = ({ set }) => {
-    // Note: we can't set isDragging true here since a "click" is also considered dragStart.
-    set(frame.translate);
-    setIsDragging(true);
-
-    // Position the clone that's being dragged.
-    const overlay = overlayRef.current;
-    let offsetX1 = 0,
-      offsetY1 = 0;
-    for (
-      let offsetNode = overlay;
-      offsetNode;
-      offsetNode = offsetNode.offsetParent
-    ) {
-      offsetX1 += offsetNode.offsetLeft;
-      offsetY1 += offsetNode.offsetTop;
-    }
-    const mediaBox = targetBoxRef.current.getBoundingClientRect();
-    const x1 = mediaBox.left - offsetX1;
-    const y1 = mediaBox.top - offsetY1;
-    cloneRef.current.style.left = `${x1}px`;
-    cloneRef.current.style.top = `${y1}px`;
-
-    // Drop-targets handling.
-    resourceList.set(resource.id, {
-      url: thumbnailURL,
-      type: 'cached',
-    });
-    setDraggingResource(resource);
-  };
-
-  const snapProps = useSnapping({
-    isDragging: true,
-    canSnap: true,
-    otherNodes: [mediaElement.current],
-  });
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
@@ -201,7 +140,6 @@ function InnerElement({
         alt={alt}
         aria-label={alt}
         loading={'lazy'}
-        onClick={onClick(thumbnailURL, mediaBaseColor.current)}
         onLoad={makeMediaVisible}
         draggable={false}
       />
@@ -245,6 +183,7 @@ function InnerElement({
     throw new Error('Invalid media element type.');
   }
   // @todo Make it work for video, too.
+  // @todo Move the whole clone and target part to Moveable, too.
   return (
     <>
       <MediaWrapper ref={mediaWrapper} zIndex={10}>
@@ -273,57 +212,15 @@ function InnerElement({
         )}
       </MediaWrapper>
       {mediaElement.current && (
-        <Moveable
-          className=""
-          zIndex={10}
-          target={targetBoxRef.current}
-          edge={true}
-          draggable={true}
-          origin={false}
-          pinchable={true}
-          onDragStart={onDragStart}
-          {...snapProps}
-          onDrag={({ beforeTranslate, inputEvent }) => {
-            frame.translate = beforeTranslate;
-            if (cloneRef.current) {
-              cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-              // We also have to move the original target ref for snapping to work.
-              targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
-            }
-            handleDrag(resource, inputEvent.clientX, inputEvent.clientY);
-          }}
-          onDragEnd={() => {
-            if (activeDropTargetId) {
-              handleDrop({
-                ...resource,
-                baseColor: mediaBaseColor.current,
-              });
-            } else {
-              const {
-                x,
-                y,
-                width: w,
-                height: h,
-              } = cloneRef.current.getBoundingClientRect();
-              const {
-                x: pageX,
-                y: pageY,
-              } = pageContainer.getBoundingClientRect();
-
-              // @todo Don't add if dragging out of canvas.
-              insertElement(resource.type, {
-                resource,
-                x: editorToDataX(x - pageX, pageSize.width),
-                y: editorToDataY(y - pageY, pageSize.height),
-                width: editorToDataX(w, pageSize.width),
-                height: editorToDataY(h, pageSize.height),
-              });
-            }
-            targetBoxRef.current.style.transform = null;
-            cloneRef.current.style.transform = null;
-            setIsDragging(false);
-            setDraggingResource(null);
-          }}
+        <LibraryMoveable
+          setIsDragging={setIsDragging}
+          overlayRef={overlayRef}
+          targetBoxRef={targetBoxRef}
+          cloneRef={cloneRef}
+          mediaBaseColor={mediaBaseColor}
+          resource={resource}
+          thumbnailURL={thumbnailURL}
+          onClick={onClick(thumbnailURL, mediaBaseColor.current)}
         />
       )}
     </>
