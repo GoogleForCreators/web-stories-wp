@@ -30,7 +30,7 @@ import MetaBoxesArea from './metaBoxesArea';
 const Wrapper = styled.div``;
 
 function MetaBoxes() {
-  const customMetaBoxes = useFeature('customMetaBoxes');
+  const isFeatureEnabled = useFeature('customMetaBoxes');
 
   const { postType, metaBoxes = {} } = useConfig();
 
@@ -50,11 +50,11 @@ function MetaBoxes() {
     };
   }, [postType]);
 
-  if (!customMetaBoxes) {
+  if (!isFeatureEnabled) {
     return null;
   }
 
-  const locations = ['normal', 'advanced'];
+  const locations = Object.keys(metaBoxes);
 
   return (
     <Wrapper>

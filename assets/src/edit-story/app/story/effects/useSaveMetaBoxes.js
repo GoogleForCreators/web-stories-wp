@@ -69,7 +69,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
   const isFeatureEnabled = useFeature('customMetaBoxes');
   const { metaBoxes = {} } = useConfig();
 
-  const locations = ['normal', 'advanced'];
+  const locations = Object.keys(metaBoxes);
   const hasMetaBoxes = locations.some((location) =>
     Boolean(metaBoxes[location]?.length)
   );
@@ -107,7 +107,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
 
       const formDataToMerge = [
         baseFormData,
-        ...['normal', 'advanced'].map(
+        ...locations.map(
           (location) =>
             new global.FormData(getMetaBoxContainer(location) || undefined)
         ),
@@ -137,6 +137,7 @@ function useSaveMetaBoxes({ story, isSaving, isAutoSaving }) {
     wasAutoSaving,
     isSavingMetaBoxes,
     saveMetaBoxes,
+    locations,
   ]);
 
   return {

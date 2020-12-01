@@ -51,10 +51,11 @@ function Update() {
   const isMetaBoxesFeatureEnabled = useFeature('customMetaBoxes');
   const { metaBoxes = {} } = useConfig();
 
-  const locations = ['normal', 'advanced'];
   const hasMetaBoxes =
     isMetaBoxesFeatureEnabled &&
-    locations.some((location) => Boolean(metaBoxes[location]?.length));
+    Object.keys(metaBoxes).some((location) =>
+      Boolean(metaBoxes[location]?.length)
+    );
 
   useGlobalKeyDownEffect(
     { key: ['mod+s'] },
@@ -79,14 +80,12 @@ function Update() {
       break;
     default:
       text = __('Save draft', 'web-stories');
-
-      const isSavingDraftDisabled =
-        !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges);
-
       return (
         <Outline
           onClick={() => saveStory({ status: 'draft' })}
-          isDisabled={isSavingDraftDisabled}
+          isDisabled={
+            !hasMetaBoxes && (isSaving || isUploading || !hasNewChanges)
+          }
         >
           {text}
         </Outline>
