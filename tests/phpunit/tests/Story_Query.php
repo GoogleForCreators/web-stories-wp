@@ -19,7 +19,7 @@ namespace Google\Web_Stories\Tests;
 
 use Google\Web_Stories\Story_Query as Testee;
 use Google\Web_Stories\Stories_Renderer\Generic_Renderer;
-use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Story_Post_Type as Story_CPT;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Query
@@ -65,7 +65,7 @@ class Story_Query extends \WP_UnitTestCase {
 
 		self::$story_id = $factory->post->create(
 			[
-				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
+				'post_type'    => Story_CPT::POST_TYPE_SLUG,
 				'post_title'   => 'Example title',
 				'post_status'  => 'publish',
 				'post_content' => 'Example content',
