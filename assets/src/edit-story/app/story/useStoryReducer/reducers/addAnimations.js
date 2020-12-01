@@ -37,7 +37,8 @@ function addAnimations(state, { animations }) {
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const oldPage = state.pages[pageIndex];
-  const existingIds = oldPage.animations.map(({ id }) => id);
+  const oldPageAnimations = oldPage.animations || [];
+  const existingIds = oldPageAnimations.map(({ id }) => id);
   const filteredAnimations = animations.filter(
     ({ id }) => !existingIds.includes(id)
   );
@@ -54,7 +55,7 @@ function addAnimations(state, { animations }) {
 
   const newPage = {
     ...oldPage,
-    animations: [...oldPage.animations, ...deduplicatedAnimations],
+    animations: [...oldPageAnimations, ...deduplicatedAnimations],
   };
 
   const newPages = [
