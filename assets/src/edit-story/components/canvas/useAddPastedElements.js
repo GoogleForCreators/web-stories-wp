@@ -27,6 +27,7 @@ function useAddPastedElements() {
     updateCurrentPageProperties,
     deleteElementById,
     combineElements,
+    addAnimations,
   } = useStory(
     ({
       state: { currentPage, selectedElements },
@@ -36,6 +37,7 @@ function useAddPastedElements() {
         updateCurrentPageProperties,
         deleteElementById,
         combineElements,
+        addAnimations,
       },
     }) => {
       return {
@@ -46,12 +48,13 @@ function useAddPastedElements() {
         updateCurrentPageProperties,
         deleteElementById,
         combineElements,
+        addAnimations,
       };
     }
   );
 
   const addPastedElements = useBatchingCallback(
-    (elements) => {
+    (elements, animations = []) => {
       if (elements.length === 0) {
         return false;
       }
@@ -91,6 +94,10 @@ function useAddPastedElements() {
       if (nonBackgroundElements.length) {
         addElements({ elements: nonBackgroundElements });
       }
+
+      // Add any animations associated with the new elements
+      addAnimations({ animations });
+
       return true;
     },
     [
@@ -99,6 +106,7 @@ function useAddPastedElements() {
       updateCurrentPageProperties,
       combineElements,
       deleteElementById,
+      addAnimations,
     ]
   );
 

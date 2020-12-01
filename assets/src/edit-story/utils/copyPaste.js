@@ -33,10 +33,10 @@ const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
  *
  * @param {DocumentFragment} content NodeList representation of the content.
  * @param {Object}           currentPage Current page.
- * @return {[]} Array of found elements.
+ * @return {Object} Object containing found elements and animations arrays.
  */
 export function processPastedElements(content, currentPage) {
-  let foundElements = [];
+  let foundElementsAndAnimations = { animations: [], elements: [] };
   for (let n = content.firstChild; n; n = n.nextSibling) {
     if (
       n.nodeType !== /* COMMENT */ 8 ||
@@ -50,9 +50,18 @@ export function processPastedElements(content, currentPage) {
     if (payload.sentinel !== 'story-elements') {
       continue;
     }
-    foundElements = [
-      ...foundElements,
-      ...payload.items.map(({ x, y, basedOn, ...rest }) => {
+
+    const processedPayload = payload.items.reduce(
+      (accum, { x, y, basedOn, ...rest }) => {
+        const elementId = uuidv4();
+        const elementAnimations = payload.animations
+          .filter((animation) => animation.targets.includes(basedOn))
+          .map((animation) => ({
+            ...animation,
+            targets: [elementId],
+            id: uuidv4(),
+          }));
+
         currentPage.elements.forEach((element) => {
           if (element.id === basedOn || element.basedOn === basedOn) {
             const pastedXY = getPastedCoordinates(x, y);
@@ -60,18 +69,37 @@ export function processPastedElements(content, currentPage) {
             y = pastedXY.y;
           }
         });
+
         return {
-          ...rest,
-          basedOn,
-          id: uuidv4(),
-          x,
-          y,
+          elements: [
+            ...accum.elements,
+            {
+              ...rest,
+              basedOn,
+              id: elementId,
+              x,
+              y,
+            },
+          ],
+          animations: [...accum.animations, ...elementAnimations],
         };
-      }),
-    ];
-    return foundElements;
+      },
+      { animations: [], elements: [] }
+    );
+
+    foundElementsAndAnimations = {
+      animations: [
+        ...foundElementsAndAnimations.animations,
+        ...processedPayload.animations,
+      ],
+      elements: [
+        ...foundElementsAndAnimations.elements,
+        ...processedPayload.elements,
+      ],
+    };
+    return foundElementsAndAnimations;
   }
-  return foundElements;
+  return foundElementsAndAnimations;
 }
 
 /**
@@ -79,9 +107,10 @@ export function processPastedElements(content, currentPage) {
  *
  * @param {Object} page Page which all the elements belong to.
  * @param {Array} elements Array of story elements.
+ * @param {Array} animations Array of story animations.
  * @param {Object} evt Copy/cut event object.
  */
-export function addElementsToClipboard(page, elements, evt) {
+export function addElementsToClipboard(page, elements, animations, evt) {
   if (!elements.length || !evt) {
     return;
   }
@@ -99,6 +128,7 @@ export function addElementsToClipboard(page, elements, evt) {
       basedOn: element.id,
       id: undefined,
     })),
+    animations: animations,
   };
   const serializedPayload = JSON.stringify(payload).replace(
     /--/g,
