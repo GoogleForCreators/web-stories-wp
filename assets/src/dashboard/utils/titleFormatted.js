@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export { Text, Display, Headline } from './typography';
-export { Dialog } from './dialog';
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+const titleFormatted = (rawTitle) => {
+  return rawTitle === '' ? __('(no title)', 'web-stories') : rawTitle;
+};
+
+export default titleFormatted;

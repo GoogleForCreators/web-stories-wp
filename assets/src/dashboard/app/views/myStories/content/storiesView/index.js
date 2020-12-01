@@ -29,22 +29,29 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import {
+  Dialog,
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+} from '../../../../../../design-system';
+
 import { StoriesPropType, StoryActionsPropType } from '../../../../../types';
 import {
   SortPropTypes,
   ViewPropTypes,
 } from '../../../../../utils/useStoryView';
-import { Button, Dialog, useToastContext } from '../../../../../components';
+import { useToastContext } from '../../../../../components';
 import {
   VIEW_STYLE,
   STORY_ITEM_CENTER_ACTION_LABELS,
   STORY_CONTEXT_MENU_ACTIONS,
   STORY_CONTEXT_MENU_ITEMS,
-  BUTTON_TYPES,
   ALERT_SEVERITY,
 } from '../../../../../constants';
 import { StoryGridView, StoryListView } from '../../../shared';
 import { trackEvent } from '../../../../../../tracking';
+import { titleFormatted } from '../../../../../utils';
 
 const ACTIVE_DIALOG_DELETE_STORY = 'DELETE_STORY';
 function StoriesView({
@@ -251,7 +258,8 @@ function StoriesView({
           actions={
             <>
               <Button
-                type={BUTTON_TYPES.DEFAULT}
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={() => {
                   setFocusedStory({ id: activeStory.id });
                   setActiveDialog('');
@@ -259,18 +267,19 @@ function StoriesView({
                 aria-label={sprintf(
                   /* translators: %s: story title */
                   __('Cancel deleting story "%s"', 'web-stories'),
-                  activeStory.title
+                  titleFormatted(activeStory.title)
                 )}
               >
                 {__('Cancel', 'web-stories')}
               </Button>
               <Button
-                type={BUTTON_TYPES.DEFAULT}
+                type={BUTTON_TYPES.PRIMARY}
+                size={BUTTON_SIZES.SMALL}
                 onClick={handleOnDeleteStory}
                 aria-label={sprintf(
                   /* translators: %s: story title */
                   __('Confirm deleting story "%s"', 'web-stories'),
-                  activeStory.title
+                  titleFormatted(activeStory.title)
                 )}
               >
                 {__('Delete', 'web-stories')}
@@ -281,7 +290,7 @@ function StoriesView({
           {sprintf(
             /* translators: %s: story title. */
             __('Are you sure you want to delete "%s"?', 'web-stories'),
-            activeStory.title
+            titleFormatted(activeStory.title)
           )}
         </Dialog>
       )}
