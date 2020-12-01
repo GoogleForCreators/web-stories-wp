@@ -64,7 +64,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-		// $_GET param is available when the response iss preloaded in edit-story.php
 		if ( isset( $request['web_stories_demo'] ) && '1' === $request['web_stories_demo'] && 'edit' === $context && 'auto-draft' === $post->post_status ) {
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
@@ -388,6 +387,12 @@ class Stories_Controller extends Stories_Base_Controller {
 			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
 			'type'        => 'boolean',
 			'default'     => false,
+		];
+
+		$query_params['web_stories_demo'] = [
+			'description' => __( 'Load demo data.', 'web-stories' ),
+			'type'        => 'string',
+			'default'     => '0',
 		];
 
 		return $query_params;
