@@ -186,14 +186,14 @@ export const MESSAGES = {
       ),
     },
     MISSING_IMAGE_ALT_TEXT: {
-      MAIN_TEXT: __('Image missing assistive text', 'web-stories'),
+      MAIN_TEXT: __('Image missing description', 'web-stories'),
       HELPER_TEXT: __(
         'Add meaningful assistive text to images to optimize accessibility and indexability.',
         'web-stories'
       ),
     },
     MISSING_VIDEO_ALT_TEXT: {
-      MAIN_TEXT: __('Video missing assistive text', 'web-stories'),
+      MAIN_TEXT: __('Video missing description', 'web-stories'),
       HELPER_TEXT: __(
         'Add meaningful assistive text to videos to optimize accessibility and indexability.',
         'web-stories'
