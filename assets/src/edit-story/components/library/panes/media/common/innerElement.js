@@ -165,10 +165,10 @@ function InnerElement({
       offsetY1 += offsetNode.offsetTop;
     }
     const mediaBox = targetBoxRef.current.getBoundingClientRect();
-    const x1 = mediaBox.top - offsetX1;
-    const y1 = mediaBox.left - offsetY1;
-    cloneRef.current.style.top = `${x1}px`;
-    cloneRef.current.style.left = `${y1}px`;
+    const x1 = mediaBox.left - offsetX1;
+    const y1 = mediaBox.top - offsetY1;
+    cloneRef.current.style.left = `${x1}px`;
+    cloneRef.current.style.top = `${y1}px`;
 
     // Drop-targets handling.
     resourceList.set(resource.id, {
@@ -320,6 +320,7 @@ function InnerElement({
               });
             }
             targetBoxRef.current.style.transform = null;
+            cloneRef.current.style.transform = null;
             setIsDragging(false);
             setDraggingResource(null);
           }}
