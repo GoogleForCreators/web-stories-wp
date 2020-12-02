@@ -59,9 +59,8 @@ export default function useMediaPicker({
     try {
       // Handles the video processing logic from WordPress.
       // The Uploader.success callback is invoked when a user uploads a file.
-      // Race condition concern: please DO NOT upload video poster on this
-      // callback, becuase the video is not guarantee to be ready at the moment.
-      // We should only upload the video poster on the select event.
+      // Race condition concern: the video content is not guaranteed to be
+      // available in this callback. For the video poster insertion, please check: assets/src/edit-story/components/library/panes/media/local/mediaPane.js
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
       };
@@ -97,8 +96,6 @@ export default function useMediaPicker({
     });
 
     // When an image is selected, run a callback.
-    // The onSelect logic is defined in mediaPane.js/onSelect, which handles the
-    // logic when user click on the button `Insert into page`.
     fileFrame.on('select', () => {
       const mediaPickerEl = fileFrame.state().get('selection').first().toJSON();
       onSelect(mediaPickerEl);
