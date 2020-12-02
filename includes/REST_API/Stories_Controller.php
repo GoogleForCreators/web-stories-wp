@@ -64,7 +64,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-		if ( isset( $request['web_stories_demo'] ) && '1' === $request['web_stories_demo'] && 'edit' === $context && 'auto-draft' === $post->post_status ) {
+		if ( ! empty( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
