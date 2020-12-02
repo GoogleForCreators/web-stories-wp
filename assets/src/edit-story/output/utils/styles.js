@@ -30,10 +30,13 @@ function CustomStyles() {
   const safeRatio = PAGE_RATIO;
   const fullRatio = FULLBLEED_RATIO;
 
-  // The grid layer should stick to the top when the device ratio is between
-  // 493 / 1000 and 9 / 16. The ratio 493 / 1000 can guarantee the grid layer
-  // will respond and not having overlaps with the share button.
-  const gridLayerExpandLowerBound = '493 / 1000';
+  // Make the story content aligned with top of viewport between aspect ratios
+  // 320:678 and 9:16. This ensures that the story's system UI (progress bar,
+  // share button) is either completely overlapping or not overlapping the story
+  // content (i.e. never partially overlapping). The icon height is 48px. Based
+  // on research, the smallest screen size in active use is 320 pixels wide. In
+  // this caes, the minimum screen width that this ratio will work for it 320px.
+  const gridLayerExpandLowerBound = '320 / 678';
   const gridLayerExpandUpperBound = '9 / 16';
 
   // Match page background color to the workspace background color.
