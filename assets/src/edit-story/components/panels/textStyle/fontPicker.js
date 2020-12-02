@@ -158,6 +158,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       primaryLabel={__('Recommended', 'web-stories')}
       priorityOptions={recentFonts}
       priorityLabel={__('Recently used', 'web-stories')}
+      searchResultsLabel={__('Search results', 'web-stories')}
       selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
       placeholder={
         MULTIPLE_VALUE === fontFamily ? MULTIPLE_DISPLAY_VALUE : fontFamily
