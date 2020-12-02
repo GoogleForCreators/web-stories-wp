@@ -26,7 +26,6 @@ import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
 import {
   getBorderStyle,
-  isOutsideBorder,
   getBorderRadius,
 } from '../../components/elementBorder/utils';
 
@@ -61,7 +60,7 @@ export const elementWithBorderRadius = css`
 
 export const elementWithOutsideBorder = css`
   ${({ border, borderRadius }) =>
-    isOutsideBorder({ position: border?.position }) &&
+    border?.color &&
     getBorderStyle({
       ...border,
       borderRadius,

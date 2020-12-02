@@ -31,7 +31,7 @@ import { useFeature } from 'flagged';
  */
 import PageOutput from '../page';
 import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
-import { PAGE_WIDTH, PAGE_HEIGHT, BORDER_POSITION } from '../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '../../constants';
 import { MaskTypes } from '../../masks';
 
 describe('Page output', () => {
@@ -821,7 +821,6 @@ describe('Page output', () => {
                 right: 10,
                 bottom: 10,
                 color: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
-                position: BORDER_POSITION.INSIDE,
               },
             },
           ],

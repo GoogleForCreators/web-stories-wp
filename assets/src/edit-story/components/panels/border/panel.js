@@ -34,7 +34,6 @@ import { useCommonObjectValue } from '../utils';
 import { canMaskHaveBorder } from '../../../masks';
 import { DEFAULT_BORDER } from './shared';
 import WidthControls from './borderWidth';
-import Position from './position';
 
 function BorderStylePanel(props) {
   const { selectedElements, pushUpdate } = props;
@@ -74,7 +73,6 @@ function BorderStylePanel(props) {
       <WidthControls {...props} />
       {hasBorder && (
         <>
-          <Position {...props} />
           <Row>
             <Color
               value={color}

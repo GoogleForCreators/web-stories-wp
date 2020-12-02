@@ -18,7 +18,6 @@
  * Internal dependencies
  */
 import { canMaskHaveBorder } from '../../masks';
-import { BORDER_POSITION } from '../../constants';
 
 export function shouldDisplayBorder(element) {
   const { border } = element;
@@ -43,22 +42,13 @@ export function getBorderPositionCSS({
   top,
   right,
   bottom,
-  position,
   width = '100%',
   height = '100%',
   posTop = '0px',
   posLeft = '0px',
   skipOutsideBorder = true,
 }) {
-  if (BORDER_POSITION.CENTER === position) {
-    return {
-      top: `calc(${posTop} - ${top / 2}px)`,
-      height: `calc(${height} + ${(top + bottom) / 2}px)`,
-      left: `calc(${posLeft} - ${left / 2}px)`,
-      width: `calc(${width} + ${(left + right) / 2}px)`,
-    };
-  }
-  if (isOutsideBorder({ position }) && !skipOutsideBorder) {
+  if (!skipOutsideBorder) {
     return {
       left: `calc(${posLeft} - ${left}px)`,
       top: `calc(${posTop} - ${top}px)`,
@@ -77,19 +67,9 @@ export function getBorderStyle({
   bottom,
   position,
   borderRadius,
-  opacity = 100,
   skipOutsideBorder = true,
 }) {
-  const {
-    color: { r, g, b, a },
-  } = rawColor;
-  // In case of inner/center border we need to adjust the opacity based on the layer opacity, too.
-  // Outside border already has opacity applied since it's added to the element directly.
-  opacity = opacity / 100;
-  const adjustedBorderOpacity = a !== undefined ? opacity * a : opacity;
-  const color = isOutsideBorder({ position })
-    ? getBorderColor({ color: rawColor })
-    : `rgba(${r},${g},${b},${adjustedBorderOpacity})`;
+  const color = getBorderColor({ color: rawColor });
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
@@ -126,28 +106,13 @@ export function getBorderStyle({
   };
 }
 
-export function isOutsideBorder(border) {
-  return border?.position === BORDER_POSITION.OUTSIDE;
-}
-
 export function getInnerRadius(outerRadius, oneSide, otherSide) {
   return outerRadius - Math.min(outerRadius, Math.max(oneSide, otherSide)) / 2;
 }
 
-export function getBorderRadius({ borderRadius, border }) {
+export function getBorderRadius({ borderRadius }) {
   if (!borderRadius) {
     return {};
-  }
-  if (border?.position === BORDER_POSITION.CENTER) {
-    const radii = [
-      getInnerRadius(borderRadius.topLeft, border.top, border.left),
-      getInnerRadius(borderRadius.topRight, border.top, border.right),
-      getInnerRadius(borderRadius.bottomRight, border.bottom, border.right),
-      getInnerRadius(borderRadius.bottomLeft, border.bottom, border.left),
-    ];
-    return {
-      borderRadius: radii.map((radius) => `${radius}px`).join(' '),
-    };
   }
   return {
     borderRadius: `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`,

@@ -31,7 +31,7 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
+import { shouldDisplayBorder } from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 
 const Element = styled.div`
@@ -41,9 +41,8 @@ const Element = styled.div`
   ${elementWithOutsideBorder}
 `;
 
-function ShapeDisplay({
-  element: { id, isDefaultBackground, backgroundColor, border, borderRadius },
-}) {
+function ShapeDisplay({ element }) {
+  const { id, isDefaultBackground, backgroundColor, border, borderRadius } = element;
   const ref = useRef(null);
   useColorTransformHandler({ id, targetRef: ref });
 
@@ -55,7 +54,7 @@ function ShapeDisplay({
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
           const [width, height] = resize;
-          if (isOutsideBorder(border)) {
+          if (shouldDisplayBorder(element)) {
             ref.current.style.width = width + border.left + border.right + 'px';
             ref.current.style.height =
               height + border.top + border.bottom + 'px';

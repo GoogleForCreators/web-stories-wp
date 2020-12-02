@@ -42,7 +42,7 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
+import { shouldDisplayBorder } from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
@@ -177,7 +177,7 @@ function TextDisplay({
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
           const [width, height] = resize;
-          if (isOutsideBorder(border)) {
+          if (shouldDisplayBorder(element)) {
             refWithBorder.current.style.width =
               width + border.left + border.right + 'px';
             refWithBorder.current.style.height =

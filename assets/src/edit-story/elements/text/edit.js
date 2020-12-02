@@ -39,7 +39,6 @@ import {
   elementWithFont,
   elementWithTextParagraphStyle,
   elementWithBackgroundColor,
-  elementWithBorderRadius,
   elementWithOutsideBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -51,8 +50,8 @@ import generatePatternStyles from '../../utils/generatePatternStyles';
 import useRichText from '../../components/richText/useRichText';
 import { useTransformHandler } from '../../components/transform';
 import {
-  isOutsideBorder,
   getBorderPositionCSS,
+  shouldDisplayBorder,
 } from '../../components/elementBorder/utils';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
@@ -68,7 +67,6 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
-  ${elementWithBorderRadius}
 
   --faux-selection-color: inherit;
 
@@ -117,7 +115,6 @@ const Highlight = styled.span`
 const OutsideBorder = styled.div`
   ${elementWithOutsideBorder}
   ${({ border }) =>
-    isOutsideBorder({ position: border?.position }) &&
     getBorderPositionCSS({
       ...border,
       skipOutsideBorder: false,
@@ -372,7 +369,7 @@ function TextEdit({
   // Inner and center color are handled separately, add transform for outside border if relevant.
   useColorTransformHandler({
     id,
-    targetRef: isOutsideBorder(border) ? outsideBorderRef : null,
+    targetRef: shouldDisplayBorder(element) ? outsideBorderRef : null,
     expectedStyle: 'border-color',
   });
 
@@ -399,7 +396,6 @@ function TextEdit({
         ref={wrapperRef}
         onClick={onClick}
         data-testid="textEditor"
-        borderRadius={!isOutsideBorder(border) && borderRadius}
         {...wrapperProps}
       >
         {editorContent && hasHighlightBackgroundTextMode && (

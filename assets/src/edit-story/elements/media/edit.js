@@ -35,13 +35,13 @@ import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import useUnmount from '../../utils/useUnmount';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 import EditPanMoveable from './editPanMoveable';
 import ScalePanel from './scalePanel';
 import { CropBox, MEDIA_MASK_OPACITY } from './';
+import {shouldDisplayBorder} from "../../components/elementBorder/utils";
 
 const Element = styled.div`
   ${elementFillContent}
@@ -218,7 +218,9 @@ function MediaEdit({ element, box }) {
   }, [handleWheel]);
 
   const borderProps =
-    isOutsideBorder(border) && borderRadius ? { borderRadius, border } : null;
+    shouldDisplayBorder(element) && borderRadius
+      ? { borderRadius, border }
+      : null;
 
   return (
     <Element ref={elementRef}>

@@ -31,7 +31,7 @@ import {
   elementWithOutsideBorder,
 } from '../shared';
 import { useTransformHandler } from '../../components/transform';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
+import { shouldDisplayBorder } from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
@@ -46,11 +46,12 @@ const Element = styled.div`
 `;
 
 function MediaDisplay({
-  element: { id, resource, scale, focalX, focalY, border, borderRadius },
+  element,
   mediaRef,
   children,
   showPlaceholder = false,
 }) {
+  const { id, resource, scale, focalX, focalY, border, borderRadius } = element;
   const ref = useRef();
   useColorTransformHandler({
     id,
@@ -75,7 +76,7 @@ function MediaDisplay({
             focalY
           );
           target.style.cssText = getMediaWithScaleCss(newImgProps);
-          if (isOutsideBorder(border)) {
+          if (shouldDisplayBorder(element)) {
             ref.current.style.width =
               resize[0] + border.left + border.right + 'px';
             ref.current.style.height =

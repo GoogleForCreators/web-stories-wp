@@ -19,7 +19,6 @@
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
-import { BORDER_POSITION } from '../../../constants';
 
 describe('Border Panel', () => {
   let fixture;
@@ -77,8 +76,6 @@ describe('Border Panel', () => {
       await fixture.events.keyboard.type('10');
       await fixture.events.keyboard.press('Tab');
 
-      await fixture.events.click(panel.position('outside').button);
-
       const borderColor = panel.borderColor;
       await fixture.events.click(borderColor.opacity, { clickCount: 3 });
       await fixture.events.keyboard.type('30');
@@ -86,16 +83,15 @@ describe('Border Panel', () => {
 
       const [element] = await getSelection();
       const {
-        border: { left, top, right, bottom, color, position },
+        border: { left, top, right, bottom, color },
       } = element;
       expect(left).toBe(10);
       expect(top).toBe(10);
       expect(right).toBe(10);
       expect(bottom).toBe(10);
-      expect(position).toBe(BORDER_POSITION.OUTSIDE);
       expect(color.color.a).toBe(0.3);
 
-      await fixture.snapshot('Media element with outside border');
+      await fixture.snapshot('Media element with border');
     });
   });
 
@@ -110,15 +106,13 @@ describe('Border Panel', () => {
     await fixture.events.keyboard.type('5');
     await fixture.events.keyboard.press('Tab');
 
-    await fixture.events.click(panel.position('center').button);
-
     const [element] = await getSelection();
     const {
-      border: { position },
+      border: { left },
     } = element;
-    expect(position).toBe(BORDER_POSITION.CENTER);
+    expect(left).toBe(5);
 
-    await fixture.snapshot('Shape element with center border');
+    await fixture.snapshot('Shape element with border');
   });
 
   it('should not allow border for non-rectangular shape', async () => {
