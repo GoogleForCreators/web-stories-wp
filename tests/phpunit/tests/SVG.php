@@ -37,7 +37,7 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::init
 	 */
 	public function test_init() {
-		$svg = $this->get_object();
+		$svg = $this->get_svg_object();
 		$svg->init();
 
 		$this->assertSame( 10, has_filter( 'web_stories_allowed_mime_types', [ $svg, 'web_stories_allowed_mime_types' ] ) );
@@ -53,6 +53,8 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::upload_mimes_add_svg
 	 */
 	public function test_upload_mimes_add_svg() {
+		$svg = $this->get_svg_object();
+		$svg->init();
 		$allowed_mime_types = wp_get_mime_types();
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
@@ -62,6 +64,8 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::upload_mimes_add_svg
 	 */
 	public function test_mime_types_add_svg() {
+		$svg = $this->get_svg_object();
+		$svg->init();
 		$allowed_mime_types = get_allowed_mime_types();
 		$mine_types         = array_values( $allowed_mime_types );
 		$this->assertContains( 'image/svg+xml', $mine_types );
@@ -71,6 +75,8 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::filter_list_of_allowed_filetypes
 	 */
 	public function test_filter_list_of_allowed_filetypes() {
+		$svg = $this->get_svg_object();
+		$svg->init();
 		$setting = get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 
 		$this->assertContains( 'svg', $setting );
@@ -91,6 +97,9 @@ class SVG extends \WP_UnitTestCase {
 			]
 		);
 
+		$svg = $this->get_svg_object();
+		$svg->init();
+
 		$attachment_metadata = wp_generate_attachment_metadata( $svg_attachment_id, get_attached_file( $svg_attachment_id ) );
 		$this->assertArrayHasKey( 'width', $attachment_metadata );
 		$this->assertArrayHasKey( 'height', $attachment_metadata );
@@ -107,7 +116,7 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::sanitize
 	 */
 	public function test_sanitize() {
-		$svg      = $this->get_object();
+		$svg      = $this->get_svg_object();
 		$_results = $this->call_private_method( $svg, 'sanitize', [ __DIR__ . '/../data/animated.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
@@ -121,7 +130,7 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::get_xml
 	 */
 	public function test_get_svg_size_invalid_size() {
-		$svg      = $this->get_object();
+		$svg      = $this->get_svg_object();
 		$_results = $this->call_private_method( $svg, 'get_svg_size', [ __DIR__ . '/../data/add.svg' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
@@ -134,7 +143,7 @@ class SVG extends \WP_UnitTestCase {
 	 * @covers ::get_svg_data
 	 */
 	public function test_sanitize_invalid_file() {
-		$svg      = $this->get_object();
+		$svg      = $this->get_svg_object();
 		$_results = $this->call_private_method( $svg, 'sanitize', [ '' ] );
 
 		$this->assertInstanceOf( 'WP_Error', $_results );
@@ -142,7 +151,10 @@ class SVG extends \WP_UnitTestCase {
 		$this->assertSame( 'Invalid xml in SVG.', $_results->get_error_message() );
 	}
 
-	protected function get_object() {
+	/**
+	 * @return \Google\Web_Stories\SVG
+	 */
+	protected function get_svg_object() {
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$experiments->method( 'is_experiment_enabled' )
 					->willReturn( true );

@@ -27,7 +27,6 @@ import { visitAdminPage } from '@wordpress/e2e-test-utils';
  */
 import { withExperimentalFeatures, fileUpload } from '../../utils';
 
-
 describe('SVG Upload', () => {
   withExperimentalFeatures(['enableSVG']);
   it('upload svg via media library.', async () => {
