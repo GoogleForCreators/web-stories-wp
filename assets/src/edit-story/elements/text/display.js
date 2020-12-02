@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -109,7 +110,14 @@ const Background = styled.div`
 
 function TextDisplay({
   element,
-  element: { id, content, backgroundColor, backgroundTextMode, border, ...rest },
+  element: {
+    id,
+    content,
+    backgroundColor,
+    backgroundTextMode,
+    border,
+    ...rest
+  },
   previewMode,
 }) {
   const ref = useRef(null);
@@ -280,6 +288,7 @@ function TextDisplay({
 TextDisplay.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
+  previewMode: PropTypes.bool,
 };
 
 export default TextDisplay;
