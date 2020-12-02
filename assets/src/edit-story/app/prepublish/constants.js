@@ -198,8 +198,11 @@ export const MESSAGES = {
   },
   DISTRIBUTION: {
     MISSING_DESCRIPTION: {
-      MAIN_TEXT: __('Missing story description', 'web-stories'),
-      HELPER_TEXT: __('Add a description for your story.', 'web-stories'),
+      MAIN_TEXT: __('Missing Story Description', 'web-stories'),
+      HELPER_TEXT: __(
+        'Add a Story Description in the Document panel.',
+        'web-stories'
+      ),
     },
   },
   GENERAL_GUIDELINES: {

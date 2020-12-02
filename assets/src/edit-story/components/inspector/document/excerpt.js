@@ -56,7 +56,7 @@ function ExcerptPanel() {
   return (
     <SimplePanel
       name="excerpt"
-      title={__('Excerpt', 'web-stories')}
+      title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
     >
       <Row>
@@ -64,7 +64,7 @@ function ExcerptPanel() {
           value={excerpt}
           onTextChange={handleTextChange}
           placeholder={__('Write an excerpt', 'web-stories')}
-          aria-label={__('Story Excerpt', 'web-stories')}
+          aria-label={__('Story Description', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}
           rows={4}
         />
