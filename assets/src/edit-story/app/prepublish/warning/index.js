@@ -28,13 +28,11 @@ export default {
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
   image: [
-    accessibilityWarnings.imageElementLowResolution,
     accessibilityWarnings.imageElementMissingAlt,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
   shape: [accessibilityWarnings.elementLinkTappableRegionTooSmall],
   gif: [
-    accessibilityWarnings.imageElementLowResolution,
     accessibilityWarnings.imageElementMissingAlt,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
