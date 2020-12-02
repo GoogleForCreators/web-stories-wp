@@ -79,8 +79,9 @@ AnimationWrapper.propTypes = {
 };
 
 function DisplayElement({ element, previewMode, isAnimatable = false }) {
-  const { getBox } = useUnits((state) => ({
+  const { getBox, dataToEditorX } = useUnits((state) => ({
     getBox: state.actions.getBox,
+    dataToEditorX: state.actions.dataToEditorX,
   }));
 
   const [replacement, setReplacement] = useState(null);
@@ -140,6 +141,16 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   const bgOverlayRef = useRef(null);
   useColorTransformHandler({ id, targetRef: bgOverlayRef });
 
+  const { left, top, right, bottom } = border;
+  const responsiveBorder = previewMode
+    ? {
+        ...border,
+        left: dataToEditorX(left),
+        top: dataToEditorX(top),
+        right: dataToEditorX(right),
+        bottom: dataToEditorX(bottom),
+      }
+    : border;
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
@@ -151,7 +162,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
             ...(shouldDisplayBorder(element)
               ? getBorderPositionCSS({
-                  ...border,
+                  ...responsiveBorder,
                   width: `${box.width}px`,
                   height: `${box.height}px`,
                   skipPositioning: false,

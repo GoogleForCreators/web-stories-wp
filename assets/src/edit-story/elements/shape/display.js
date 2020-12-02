@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -33,6 +34,7 @@ import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
 import { shouldDisplayBorder } from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useUnits } from '../../units';
 
 const Element = styled.div`
   ${elementFillContent}
@@ -41,8 +43,19 @@ const Element = styled.div`
   ${elementWithBorder}
 `;
 
-function ShapeDisplay({ element }) {
-  const { id, isDefaultBackground, backgroundColor, border, borderRadius } = element;
+function ShapeDisplay({ element, previewMode }) {
+  const {
+    id,
+    isDefaultBackground,
+    backgroundColor,
+    border,
+    borderRadius,
+  } = element;
+
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+  }));
+
   const ref = useRef(null);
   useColorTransformHandler({ id, targetRef: ref });
 
@@ -71,18 +84,30 @@ function ShapeDisplay({ element }) {
     return <Element ref={ref} />;
   }
 
+  const { left, top, right, bottom } = border;
   return (
     <Element
       ref={ref}
       backgroundColor={backgroundColor}
       borderRadius={borderRadius}
-      border={border}
+      border={
+        previewMode
+          ? {
+              ...border,
+              left: dataToEditorX(left),
+              top: dataToEditorX(top),
+              right: dataToEditorX(right),
+              bottom: dataToEditorX(bottom),
+            }
+          : border
+      }
     />
   );
 }
 
 ShapeDisplay.propTypes = {
   element: StoryPropTypes.elements.shape.isRequired,
+  previewMode: PropTypes.bool,
 };
 
 export default ShapeDisplay;

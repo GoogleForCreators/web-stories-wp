@@ -33,6 +33,7 @@ import {
 import { useTransformHandler } from '../../components/transform';
 import { shouldDisplayBorder } from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
@@ -49,9 +50,15 @@ function MediaDisplay({
   element,
   mediaRef,
   children,
+  previewMode,
   showPlaceholder = false,
 }) {
   const { id, resource, scale, focalX, focalY, border, borderRadius } = element;
+
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+  }));
+
   const ref = useRef();
   useColorTransformHandler({
     id,
@@ -87,10 +94,21 @@ function MediaDisplay({
     }
   });
 
+  const { left, top, right, bottom } = border;
   return (
     <Element
       ref={ref}
-      border={border}
+      border={
+        previewMode
+          ? {
+              ...border,
+              left: dataToEditorX(left),
+              top: dataToEditorX(top),
+              right: dataToEditorX(right),
+              bottom: dataToEditorX(bottom),
+            }
+          : border
+      }
       borderRadius={borderRadius}
       showPlaceholder={showPlaceholder}
     >
@@ -104,6 +122,7 @@ MediaDisplay.propTypes = {
   mediaRef: PropTypes.object,
   children: PropTypes.node.isRequired,
   showPlaceholder: PropTypes.bool,
+  previewMode: PropTypes.bool,
 };
 
 export default MediaDisplay;

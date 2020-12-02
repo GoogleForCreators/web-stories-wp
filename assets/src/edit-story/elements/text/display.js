@@ -109,7 +109,8 @@ const Background = styled.div`
 
 function TextDisplay({
   element,
-  element: { id, content, backgroundColor, backgroundTextMode, ...rest },
+  element: { id, content, backgroundColor, backgroundTextMode, border, ...rest },
+  previewMode,
 }) {
   const ref = useRef(null);
   const outerBorderRef = useRef(null);
@@ -121,7 +122,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { border, borderRadius, font } = rest;
+  const { borderRadius, font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -206,6 +207,17 @@ function TextDisplay({
     () => getHTMLFormatters().setColor(content, createSolid(0, 0, 0)),
     [content]
   );
+
+  const { left, top, right, bottom } = border;
+  border = previewMode
+    ? {
+        ...border,
+        left: dataToEditorX(left),
+        top: dataToEditorX(top),
+        right: dataToEditorX(right),
+        bottom: dataToEditorX(bottom),
+      }
+    : border;
 
   if (isHighLight) {
     // We need a separate outside border wrapper for outside border
