@@ -84,20 +84,19 @@ function ShapeDisplay({ element, previewMode }) {
     return <Element ref={ref} />;
   }
 
-  const { left, top, right, bottom } = border;
   return (
     <Element
       ref={ref}
       backgroundColor={backgroundColor}
       borderRadius={borderRadius}
       border={
-        previewMode
+        previewMode && shouldDisplayBorder(element)
           ? {
               ...border,
-              left: dataToEditorX(left),
-              top: dataToEditorX(top),
-              right: dataToEditorX(right),
-              bottom: dataToEditorX(bottom),
+              left: dataToEditorX(border.left),
+              top: dataToEditorX(border.top),
+              right: dataToEditorX(border.right),
+              bottom: dataToEditorX(border.bottom),
             }
           : border
       }

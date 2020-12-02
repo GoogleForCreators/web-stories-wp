@@ -216,16 +216,16 @@ function TextDisplay({
     [content]
   );
 
-  const { left, top, right, bottom } = border;
-  border = previewMode
-    ? {
-        ...border,
-        left: dataToEditorX(left),
-        top: dataToEditorX(top),
-        right: dataToEditorX(right),
-        bottom: dataToEditorX(bottom),
-      }
-    : border;
+  border =
+    previewMode && shouldDisplayBorder(element)
+      ? {
+          ...border,
+          left: dataToEditorX(border.left),
+          top: dataToEditorX(border.top),
+          right: dataToEditorX(border.right),
+          bottom: dataToEditorX(border.bottom),
+        }
+      : border;
 
   if (isHighLight) {
     // We need a separate outside border wrapper for outside border

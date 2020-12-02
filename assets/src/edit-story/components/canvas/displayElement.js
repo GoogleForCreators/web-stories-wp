@@ -141,16 +141,16 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   const bgOverlayRef = useRef(null);
   useColorTransformHandler({ id, targetRef: bgOverlayRef });
 
-  const { left, top, right, bottom } = border;
-  const responsiveBorder = previewMode
-    ? {
-        ...border,
-        left: dataToEditorX(left),
-        top: dataToEditorX(top),
-        right: dataToEditorX(right),
-        bottom: dataToEditorX(bottom),
-      }
-    : border;
+  const responsiveBorder =
+    previewMode && shouldDisplayBorder(element)
+      ? {
+          ...border,
+          left: dataToEditorX(border.left),
+          top: dataToEditorX(border.top),
+          right: dataToEditorX(border.right),
+          bottom: dataToEditorX(border.bottom),
+        }
+      : border;
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>

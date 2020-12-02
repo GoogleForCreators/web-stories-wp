@@ -94,18 +94,17 @@ function MediaDisplay({
     }
   });
 
-  const { left, top, right, bottom } = border;
   return (
     <Element
       ref={ref}
       border={
-        previewMode
+        previewMode && shouldDisplayBorder(element)
           ? {
               ...border,
-              left: dataToEditorX(left),
-              top: dataToEditorX(top),
-              right: dataToEditorX(right),
-              bottom: dataToEditorX(bottom),
+              left: dataToEditorX(border.left),
+              top: dataToEditorX(border.top),
+              right: dataToEditorX(border.right),
+              bottom: dataToEditorX(border.bottom),
             }
           : border
       }
