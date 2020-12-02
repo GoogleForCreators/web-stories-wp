@@ -38,8 +38,6 @@ function useUploadVideoFrame({ updateMediaElement }) {
   }));
   const setProperties = useCallback(
     (id, properties) => {
-      // function updateElementsByResourceId is defined in
-      // reducers/updateElementsByResourceId.js
       updateElementsByResourceId({ id, properties });
     },
     [updateElementsByResourceId]
