@@ -114,6 +114,7 @@ function TextDisplay({
     backgroundColor,
     backgroundTextMode,
     border,
+    borderRadius,
     ...rest
   },
   previewMode,
@@ -128,7 +129,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { borderRadius, font } = rest;
+  const { font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -215,7 +216,7 @@ function TextDisplay({
   );
 
   border =
-    previewMode && shouldDisplayBorder(element)
+    previewMode && border
       ? {
           ...border,
           left: dataToEditorX(border.left),
@@ -224,6 +225,17 @@ function TextDisplay({
           bottom: dataToEditorX(border.bottom),
         }
       : border;
+
+  borderRadius =
+    previewMode && borderRadius
+      ? {
+          ...borderRadius,
+          topLeft: dataToEditorX(borderRadius.topLeft),
+          topRight: dataToEditorX(borderRadius.topRight),
+          bottomLeft: dataToEditorX(borderRadius.bottomLeft),
+          bottomRight: dataToEditorX(borderRadius.bottomRight),
+        }
+      : borderRadius;
 
   if (isHighLight) {
     // We need a separate outside border wrapper for outside border

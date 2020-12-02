@@ -93,7 +93,7 @@ function MediaDisplay({
     <Element
       ref={ref}
       border={
-        previewMode && shouldDisplayBorder(element)
+        previewMode && border
           ? {
               ...border,
               left: dataToEditorX(border.left),
@@ -103,7 +103,17 @@ function MediaDisplay({
             }
           : border
       }
-      borderRadius={borderRadius}
+      borderRadius={
+        previewMode && borderRadius
+          ? {
+              ...borderRadius,
+              topLeft: dataToEditorX(borderRadius.topLeft),
+              topRight: dataToEditorX(borderRadius.topRight),
+              bottomLeft: dataToEditorX(borderRadius.bottomLeft),
+              bottomRight: dataToEditorX(borderRadius.bottomRight),
+            }
+          : borderRadius
+      }
       showPlaceholder={showPlaceholder}
     >
       {children}
