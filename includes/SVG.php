@@ -306,29 +306,14 @@ class SVG {
 		$dirty     = $this->get_svg_data( $file );
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
-		$error     = new WP_Error();
 
 		if ( false == $clean ) {
-			$error->add( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
-
-			return $error;
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
 		}
 
 		$errors = $sanitizer->getXmlIssues();
-
-		// Work around for library finding href there they are not any.
-		$errors = array_filter(
-			$errors,
-			function ( $value ) {
-				return ( "Suspicious attribute 'href'" !== $value['message'] );
-			}
-		);
-
-
 		if ( count( $errors ) > 1 ) {
-			$error->add( 'insecure_svg_file', __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) );
-
-			return $error;
+			return new WP_Error( 'insecure_svg_file', __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) );
 		}
 
 		return true;
