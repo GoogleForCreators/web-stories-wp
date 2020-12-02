@@ -31,7 +31,6 @@ import {
   elementWithRotation,
 } from '../../elements/shared';
 import { useUnits } from '../../units';
-import { shouldDisplayBorder } from '../elementBorder/utils';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`
