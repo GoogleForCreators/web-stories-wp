@@ -127,7 +127,7 @@ function observeConsoleLogging() {
     // warnings on older WordPress versions (but not on newer ones).
     if (
       text.includes(
-        'React does not recognize the `isSecondary` prop on a DOM element.'
+        'isSecondary'
       )
     ) {
       return;
