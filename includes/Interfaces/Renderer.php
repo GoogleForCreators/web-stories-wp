@@ -28,6 +28,11 @@
 
 namespace Google\Web_Stories\Interfaces;
 
+/**
+ * Interface Renderer.
+ *
+ * @package Google\Web_Stories\Interfaces
+ */
 interface Renderer {
 
 	/**
@@ -41,9 +46,11 @@ interface Renderer {
 	/**
 	 * Render the markup for story.
 	 *
-	 * @return string
+	 * @param array $args Array of rendering related arguments.
+	 *
+	 * @return string Rendering markup.
 	 */
-	public function render();
+	public function render( array $args = [] );
 
 	/**
 	 * Render a single story markup.

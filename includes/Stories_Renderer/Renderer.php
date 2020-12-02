@@ -82,16 +82,16 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Height for displaying story.
 	 *
-	 * @var string
+	 * @var int
 	 */
-	protected $height = '430';
+	protected $height = 430;
 
 	/**
 	 * Width for displaying story.
 	 *
-	 * @var string
+	 * @var int
 	 */
-	protected $width = '285';
+	protected $width = 285;
 
 	/**
 	 * Whether content overlay is enabled for story.
@@ -114,9 +114,19 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Output markup for amp stories.
 	 *
+	 * @param array $args Array of rendering arguments.
+	 *
 	 * @return string
 	 */
-	abstract public function render();
+	public function render( array $args = [] ) {
+		foreach ( $args as $key => $val ) {
+			if ( property_exists( $this, $key ) ) {
+				$this->{$key} = $val;
+			}
+		}
+
+		return '';
+	}
 
 	/**
 	 * Retrieve current story.
@@ -397,7 +407,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$list_view_image_alignment = '';
 
 		if ( true === $this->is_view_type( 'carousel' ) ) {
-			$poster_style = sprintf( '%1$s width: %2$spx; height: %3$spx', $poster_style, $width, $height );
+			$poster_style = sprintf( '%1$s width: %2$spx; height: %3$spx', $poster_style, (string) $width, (string) $height );
 		}
 
 		if ( ! empty( $this->attributes['list_view_image_alignment'] ) ) {
