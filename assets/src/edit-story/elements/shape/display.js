@@ -27,7 +27,7 @@ import {
   elementFillContent,
   elementWithBackgroundColor,
   elementWithBorderRadius,
-  elementWithOutsideBorder,
+  elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
@@ -38,7 +38,7 @@ const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
   ${elementWithBorderRadius}
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
 `;
 
 function ShapeDisplay({ element }) {

@@ -154,7 +154,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                   ...border,
                   width: `${box.width}px`,
                   height: `${box.height}px`,
-                  skipOutsideBorder: false,
+                  skipPositioning: false,
                 })
               : null),
           }}

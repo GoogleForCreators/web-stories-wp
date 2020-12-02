@@ -39,7 +39,7 @@ import {
   elementWithFont,
   elementWithTextParagraphStyle,
   elementWithBackgroundColor,
-  elementWithOutsideBorder,
+  elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -113,11 +113,11 @@ const Highlight = styled.span`
 `;
 
 const OutsideBorder = styled.div`
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
   ${({ border }) =>
     getBorderPositionCSS({
       ...border,
-      skipOutsideBorder: false,
+      skipPositioning: false,
     })}
   overflow: hidden;
 `;

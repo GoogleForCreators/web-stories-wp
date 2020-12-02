@@ -58,7 +58,7 @@ export const elementWithBorderRadius = css`
   ${(props) => getBorderRadius(props)}
 `;
 
-export const elementWithOutsideBorder = css`
+export const elementWithBorder = css`
   ${({ border, borderRadius }) =>
     border?.color &&
     getBorderStyle({

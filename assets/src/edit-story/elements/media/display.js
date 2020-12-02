@@ -28,7 +28,7 @@ import StoryPropTypes from '../../types';
 import {
   elementFillContent,
   elementWithBorderRadius,
-  elementWithOutsideBorder,
+  elementWithBorder,
 } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import { shouldDisplayBorder } from '../../components/elementBorder/utils';
@@ -42,7 +42,7 @@ const Element = styled.div`
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
 `;
 
 function MediaDisplay({

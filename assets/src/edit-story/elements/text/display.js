@@ -31,7 +31,7 @@ import {
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
   elementWithBorderRadius,
-  elementWithOutsideBorder,
+  elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -51,7 +51,7 @@ import {
 } from './util';
 
 const OutsideBorder = styled.div`
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
 `;
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
@@ -103,7 +103,7 @@ const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
   ${elementWithBorderRadius}
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
   margin: 0;
 `;
 

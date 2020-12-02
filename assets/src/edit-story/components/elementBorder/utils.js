@@ -46,9 +46,9 @@ export function getBorderPositionCSS({
   height = '100%',
   posTop = '0px',
   posLeft = '0px',
-  skipOutsideBorder = true,
+  skipPositioning = true,
 }) {
-  if (!skipOutsideBorder) {
+  if (!skipPositioning) {
     return {
       left: `calc(${posLeft} - ${left}px)`,
       top: `calc(${posTop} - ${top}px)`,
@@ -67,7 +67,7 @@ export function getBorderStyle({
   bottom,
   position,
   borderRadius,
-  skipOutsideBorder = true,
+  skipPositioning = true,
 }) {
   const color = getBorderColor({ color: rawColor });
 
@@ -85,7 +85,7 @@ export function getBorderStyle({
       right,
       bottom,
       position,
-      skipOutsideBorder,
+      skipPositioning,
     }),
     borderWidth,
     borderColor: color,
