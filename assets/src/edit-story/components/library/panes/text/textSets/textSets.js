@@ -15,6 +15,11 @@
  */
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * External dependencies
  */
 import { useState, useMemo, useCallback } from 'react';
@@ -24,12 +29,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { useVirtual } from 'react-virtual';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-/**
  * Internal dependencies
  */
+import { FullWidthWrapper } from '../../common/styles';
 import PillGroup from '../../shared/pillGroup';
 import localStore, {
   LOCAL_STORAGE_PREFIX,
@@ -47,7 +49,6 @@ import {
   Container as SectionContainer,
   Title as SectionTitle,
 } from '../../../common/section';
-import { PANE_PADDING } from '../../shared';
 import TextSet from './textSet';
 
 const TEXT_SET_ROW_GAP = 12;
@@ -79,12 +80,6 @@ const TitleBar = styled.div`
     margin-top: 14px;
     margin-bottom: 28px;
   }
-`;
-
-/* Undo the -1.5em set by the Pane */
-const CategoryWrapper = styled.div`
-  margin-left: -${PANE_PADDING};
-  margin-right: -${PANE_PADDING};
 `;
 
 const CATEGORIES = {
@@ -165,14 +160,14 @@ function TextSets({ paneRef }) {
           label={__('Match fonts from story', 'web-stories')}
         />
       </TitleBar>
-      <CategoryWrapper>
+      <FullWidthWrapper>
         <PillGroup
           items={categories}
           selectedItemId={selectedCat}
           selectItem={handleSelectedCategory}
           deselectItem={() => handleSelectedCategory(null)}
         />
-      </CategoryWrapper>
+      </FullWidthWrapper>
       <UnitsProvider
         pageSize={{
           width: TEXT_SET_SIZE,
