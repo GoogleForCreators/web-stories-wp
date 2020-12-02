@@ -42,12 +42,12 @@ describe('SVG Upload', () => {
       await page.click('.upload-flash-bypass > a');
     }
 
-    await fileUpload('#async-upload', 'close', 'svg');
+    const filename = await fileUpload('#async-upload', 'close', 'svg');
     await expect(page).toClick('#html-upload');
 
     await page.waitForNavigation();
     await page.waitForSelector('.attachments .attachment');
-    await expect(page).toMatchElement('.attachment[aria-label="close"]');
+    await expect(page).toMatch(filename);
     await percySnapshot(page, 'SVG uploaded');
   });
 });
