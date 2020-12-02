@@ -102,6 +102,7 @@ class SVG extends \WP_UnitTestCase {
 		$this->assertSame( $attachment_metadata['height'], 64 );
 	}
 
+
 	/**
 	 * @covers ::sanitize
 	 */
@@ -115,7 +116,22 @@ class SVG extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::get_svg_size
+	 * @covers ::get_svg_data
+	 * @covers ::get_xml
+	 */
+	public function test_get_svg_size_invalid_size() {
+		$svg      = $this->get_object();
+		$_results = $this->call_private_method( $svg, 'get_svg_size', [ __DIR__ . '/../data/add.svg' ] );
+
+		$this->assertInstanceOf( 'WP_Error', $_results );
+		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
+		$this->assertSame( 'Unable to generate SVG image size.', $_results->get_error_message() );
+	}
+
+	/**
 	 * @covers ::sanitize
+	 * @covers ::get_svg_data
 	 */
 	public function test_sanitize_invalid_file() {
 		$svg      = $this->get_object();

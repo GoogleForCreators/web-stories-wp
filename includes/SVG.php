@@ -81,7 +81,7 @@ class SVG {
 	 * @return void
 	 */
 	public function init() {
-		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) && ( defined( 'WEBSTORIES_SVG_ENABLED') && ! WEBSTORIES_SVG_ENABLED ) ) {
+		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) && ( defined( 'WEBSTORIES_SVG_ENABLED' ) && ! WEBSTORIES_SVG_ENABLED ) ) {
 			return;
 		}
 
@@ -111,6 +111,14 @@ class SVG {
 
 		$enabled = in_array( self::MINE_TYPE, $mime_types, true );
 
+		/**
+		 * Filter the check to see if svg support is already enabled.
+		 * This filter allows plugin developers to hotwire this check.
+		 *
+		 * @since 1.2.0
+		 *
+		 * @param bool $enabled Whether the svg support is already enabled.
+		 */
 		return apply_filters( 'web_stories_svg_already_enabled', $enabled );
 	}
 
@@ -198,8 +206,12 @@ class SVG {
 		if ( false === $file ) {
 			return $metadata;
 		}
-		// Default image meta.
+
 		$size = $this->get_svg_size( $file );
+		// Check if image size failed to generate and return if so.
+		if ( is_wp_error( $size ) ) {
+			return $metadata;
+		}
 
 		return [
 			'width'    => $size['width'],
@@ -214,11 +226,11 @@ class SVG {
 	 * Hook into upload and error if size could not be generated.
 	 *
 	 * @param array $upload {
-	 *                      Array of upload data.
+	 *      Array of upload data.
 	 *
-	 * @type string $file   Filename of the newly-uploaded file.
-	 * @type string $url    URL of the newly-uploaded file.
-	 * @type string $type   Mime type of the newly-uploaded file.
+	 *      @type string $file   Filename of the newly-uploaded file.
+	 *      @type string $url    URL of the newly-uploaded file.
+	 *      @type string $type   Mime type of the newly-uploaded file.
 	 * }
 	 *
 	 * @return string[]
@@ -234,8 +246,8 @@ class SVG {
 		}
 
 		$size = $this->get_svg_size( $upload['tmp_name'] );
-		if ( ! $size['width'] || ! $size['height'] ) {
-			return [ 'error' => __( 'Unable to generate SVG image size.', 'web-stories' ) ];
+		if ( is_wp_error( $size ) ) {
+			return [ 'error' => $size->get_error_message() ];
 		}
 
 		return $upload;
@@ -245,33 +257,39 @@ class SVG {
 	/**
 	 * Get SVG image size.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @param string $file Path to SVG file.
 	 *
-	 * @return array
+	 * @return array|WP_Error
 	 */
 	protected function get_svg_size( $file ) {
 		$svg = $this->get_svg_data( $file );
 		$xml = $this->get_xml( $svg );
 
-		$width  = 0;
-		$height = 0;
-		if ( false !== $xml ) {
-			$attributes = $xml->attributes();
-			$width      = isset( $attributes->width ) ? (int) $attributes->width : 0;
-			$height     = isset( $attributes->height ) ? (int) $attributes->height : 0;
-			$view_box   = isset( $attributes->viewBox ) ? (string) $attributes->viewBox : '';
+		if ( false === $xml ) {
+			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
+		}
 
+		$attributes = $xml->attributes();
+		$width      = isset( $attributes->width ) ? (int) $attributes->width : 0;
+		$height     = isset( $attributes->height ) ? (int) $attributes->height : 0;
+
+		// If height and width are not set, try the viewport attribute.
+		if ( ! $width || ! $height ) {
+			$view_box = isset( $attributes->viewBox ) ? (string) $attributes->viewBox : '';
 			if ( empty( $view_box ) ) {
 				$view_box = isset( $attributes->viewbox ) ? (string) $attributes->viewbox : '';
 			}
-
-			if ( ( ! $width || ! $height ) && $view_box ) {
-				$pieces = explode( ' ', $view_box );
-				if ( count( $pieces ) === 4 ) {
-					$width  = $pieces[2];
-					$height = $pieces[3];
-				}
+			$pieces = explode( ' ', $view_box );
+			if ( count( $pieces ) === 4 ) {
+				$width  = $pieces[2];
+				$height = $pieces[3];
 			}
+		}
+
+		if ( ! $width || ! $height ) {
+			return new WP_Error( 'invalid_svg_size', __( 'Unable to generate SVG image size.', 'web-stories' ) );
 		}
 
 		return compact( 'width', 'height' );
@@ -353,7 +371,7 @@ class SVG {
 	 *
 	 * @param string $svg String of xml.
 	 *
-	 * @return mixed
+	 * @return SimpleXMLElement|false
 	 */
 	protected function get_xml( $svg ) {
 		$errors = libxml_use_internal_errors( true );
