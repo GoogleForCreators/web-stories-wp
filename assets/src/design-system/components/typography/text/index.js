@@ -38,15 +38,19 @@ export const Text = styled.p`
         &:hover {
           color: ${theme.colors.fg.linkHover};
         }
+        &:focus {
+          outline: none;
+        }
+        ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)}
       `;
     return css`
       ${themeHelpers.expandPresetStyles({
-        preset: theme.typography.presets.text[size],
+        preset: theme.typography.presets.paragraph[size],
         theme,
       })};
       font-weight: ${isBold
         ? theme.typography.weight.bold
-        : theme.typography.presets.text[size].weight};
+        : theme.typography.presets.paragraph[size].weight};
       ${asLink};
     `;
   }}
@@ -55,10 +59,10 @@ export const Text = styled.p`
 Text.propTypes = {
   as: PropTypes.oneOf(['p', 'a', 'span']),
   isBold: PropTypes.bool,
-  size: PropTypes.oneOf(THEME_CONSTANTS.TEXT_SIZES),
+  size: PropTypes.oneOf(THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES),
 };
 Text.defaultProps = {
   as: 'p',
   isBold: false,
-  size: THEME_CONSTANTS.TYPOGRAPHY_PRESET_SIZES.MEDIUM,
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM,
 };

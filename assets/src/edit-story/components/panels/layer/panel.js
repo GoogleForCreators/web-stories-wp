@@ -42,6 +42,7 @@ function LayerPanel() {
       )}
       resizeable
       ariaHidden
+      collapsedByDefault={false}
     >
       <PanelTitle isSecondary isResizable>
         {__('Layers', 'web-stories')}

@@ -1,306 +1,7 @@
 {
-  "version": 24,
+  "version": 25,
   "pages": [
     {
-      "elements": [
-        {
-          "x": 19,
-          "y": 117,
-          "width": 206,
-          "height": 138,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "scale": 140,
-          "focalX": 51.403743315508024,
-          "focalY": 50.84033613445378,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page1_bg.jpg",
-            "width": 220,
-            "height": 147,
-            "poster": "",
-            "posterId": 0,
-            "id": 220,
-            "title": "travel_page1_bg",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "ca140433-52d1-4423-896f-2e5c856cb22f",
-          "isBackground": true
-        },
-        {
-          "x": 0,
-          "y": 263,
-          "width": 412,
-          "height": 42,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "d5ca2488-668b-4e21-a7d8-05c17084742b",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">EXPERIENCE</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": -0.5,
-          "y": 309,
-          "width": 413,
-          "height": 99,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "3c00f665-e2ff-4393-aef4-6ca790f599fd",
-          "content": "<span style=\"font-weight: 700; color: #fff\">THAILAND</span>",
-          "fontSize": 99,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 20,
-          "y": 545,
-          "width": 128,
-          "height": 56,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "7de325ef-2490-4e19-9c9c-7031bffa4b05"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "creationDate": "2020-06-17T21:30:34",
-            "src": "https://replaceme.com/images/templates/travel/travel_icon_logo.png",
-            "width": 32,
-            "height": 10,
-            "posterId": 0,
-            "id": 1469,
-            "title": "travel_icon_logo",
-            "alt": "travel_icon_logo",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 54,
-          "y": 563.5,
-          "width": 60,
-          "height": 19,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "a6b25c2c-a676-404b-ab44-5bd5b49598f5"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "type": "shape",
-          "x": 412,
-          "y": -57,
-          "width": 412,
-          "height": 246,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "cfa7515e-1238-4be7-ab33-3657543f7b87"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "type": "shape",
-          "width": 412,
-          "height": 246,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "cfa7515e-1238-4be7-ab33-3657543f7b87",
-          "id": "187db729-f157-4714-8ef0-a2951894e5c5",
-          "x": 412,
-          "y": 186
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "type": "shape",
-          "width": 412,
-          "height": 246,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "187db729-f157-4714-8ef0-a2951894e5c5",
-          "id": "e7e33f6b-d3d1-443a-bdc4-ef55adbf7fd2",
-          "x": 411,
-          "y": 430
-        }
-      ],
-      "type": "page",
-      "id": "fca5c47a-e26f-4feb-b2a3-f6d8b6c68996",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "e36e376f-3cdb-43f8-b1c7-cdf3a0098132"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
       "animations": [
         {
           "id": "8ee3cb5c-62a6-400b-86c4-ea77d19a01b9",
@@ -454,228 +155,220 @@
           "easingPreset": "inOutCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 43,
-          "y": 0,
-          "width": 137,
-          "height": 137,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "id": "143182cf-804b-4d71-93d8-d4a53c9e6ed6",
-          "isDefaultBackground": true
-        },
-        {
-          "x": -4,
-          "y": -61,
-          "width": 417,
-          "height": 468,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "a81f2dcc-b5a3-4be6-8a06-bb42ac828ed0"
-        },
-        {
-          "x": 57,
-          "y": 16,
-          "width": 265,
-          "height": 265,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "bfd53cf2-f8e8-41f0-8449-48772b5194bb",
-          "content": "<span style=\"color: #fff\">I TRAVEL TO FIND MYSELF IN THE EYES AND HEARTS OF OTHERS”</span>",
-          "fontSize": 53,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 33,
-          "y": 16,
-          "width": 19,
-          "height": 51,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "90e3970e-a7be-4ecb-91a6-4f6065f28de1",
-          "content": "<span style=\"color: #fff\">“</span>",
-          "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 58,
-          "y": 351,
+          "x": 19,
+          "y": 117,
           "width": 206,
-          "height": 23,
+          "height": 138,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "scale": 140,
+          "focalX": 51.403743315508024,
+          "focalY": 50.84033613445378,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page1_bg.jpg",
+            "width": 220,
+            "height": 147,
+            "poster": "",
+            "posterId": 0,
+            "id": 220,
+            "title": "travel_page1_bg",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "ca140433-52d1-4423-896f-2e5c856cb22f",
+          "isBackground": true
+        },
+        {
+          "x": 0,
+          "y": 263,
+          "width": 412,
+          "height": 42,
           "font": {
             "service": "fonts.google.com",
-            "family": "Lora",
+            "family": "Playfair Display",
             "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "88df74ed-7334-4e91-957c-c48b8da344e4",
-          "content": "<span style=\"color: #fff\">– Anonymous</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "d5ca2488-668b-4e21-a7d8-05c17084742b",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">EXPERIENCE</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 70,
-          "y": 333,
-          "width": 272,
-          "height": 416,
-          "type": "image",
+          "x": -0.5,
+          "y": 309,
+          "width": 413,
+          "height": 99,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": true,
-            "horizontal": false
-          },
-          "rotationAngle": 90,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 120,
-          "focalX": 49.958297992927974,
-          "focalY": 47.911921059829645,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "8a21c4e7-4e9b-4811-9b8b-f36d0297a9e4",
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "3c00f665-e2ff-4393-aef4-6ca790f599fd",
+          "content": "<span style=\"font-weight: 700; color: #fff\">THAILAND</span>",
+          "fontSize": 99,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 20,
+          "y": 545,
+          "width": 128,
+          "height": 56,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 9, "g": 66, "b": 40 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "7de325ef-2490-4e19-9c9c-7031bffa4b05"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "resource": {
             "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page2_image1.jpg",
-            "width": 220,
-            "height": 331,
-            "poster": "",
+            "mimeType": "image/png",
+            "creationDate": "2020-06-17T21:30:34",
+            "src": "https://replaceme.com/images/templates/travel/travel_icon_logo.png",
+            "width": 32,
+            "height": 10,
             "posterId": 0,
-            "id": 222,
-            "title": "travel_page2_image1",
-            "alt": "",
+            "id": 1469,
+            "title": "travel_icon_logo",
+            "alt": "travel_icon_logo",
             "local": false,
             "sizes": []
-          }
+          },
+          "type": "image",
+          "x": 54,
+          "y": 563.5,
+          "width": 60,
+          "height": 19,
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "a6b25c2c-a676-404b-ab44-5bd5b49598f5"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 9, "g": 66, "b": 40 } },
+          "type": "shape",
+          "x": 412,
+          "y": -57,
+          "width": 412,
+          "height": 246,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "cfa7515e-1238-4be7-ab33-3657543f7b87"
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 9, "g": 66, "b": 40 } },
+          "type": "shape",
+          "width": 412,
+          "height": 246,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "cfa7515e-1238-4be7-ab33-3657543f7b87",
+          "id": "187db729-f157-4714-8ef0-a2951894e5c5",
+          "x": 412,
+          "y": 186
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 9, "g": 66, "b": 40 } },
+          "type": "shape",
+          "width": 412,
+          "height": 246,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "187db729-f157-4714-8ef0-a2951894e5c5",
+          "id": "e7e33f6b-d3d1-443a-bdc4-ef55adbf7fd2",
+          "x": 411,
+          "y": 430
         }
       ],
       "type": "page",
-      "id": "3cdf0fde-f515-477d-8688-472c4cc5a8b3",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
+      "id": "fca5c47a-e26f-4feb-b2a3-f6d8b6c68996",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": { "type": "rectangle" },
+        "backgroundColor": {
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "e36e376f-3cdb-43f8-b1c7-cdf3a0098132"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "b26fd356-c198-4442-be43-7f21245c07d2",
@@ -765,110 +458,44 @@
           "easingPreset": "inOutCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 90,
-          "y": 86,
+          "x": 43,
+          "y": 0,
           "width": 137,
           "height": 137,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "id": "b39e1373-e1d4-40ee-bd0c-298924b61a3e",
+          "id": "143182cf-804b-4d71-93d8-d4a53c9e6ed6",
           "isDefaultBackground": true
         },
         {
-          "x": 0,
-          "y": 284,
-          "width": 324,
-          "height": 392,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 49.81801455703381,
-          "focalY": 44.55730329866608,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "4c694857-df14-4ba9-8791-9b13935dbbbe",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page3_image1.jpg",
-            "width": 220,
-            "height": 275,
-            "poster": "",
-            "posterId": 0,
-            "id": 223,
-            "title": "travel_page3_image1",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 236,
-          "y": 284,
-          "width": 88,
-          "height": 88,
+          "x": -4,
+          "y": -61,
+          "width": 417,
+          "height": 468,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
+          "backgroundColor": { "color": { "r": 9, "g": 66, "b": 40 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "6e549d8a-d851-45c5-b168-f3e681261bab",
-          "lockAspectRatio": true
+          "mask": { "type": "rectangle" },
+          "id": "a81f2dcc-b5a3-4be6-8a06-bb42ac828ed0"
         },
         {
-          "x": 256.5,
-          "y": 308,
-          "width": 47,
-          "height": 40,
+          "x": 57,
+          "y": 16,
+          "width": 265,
+          "height": 265,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -876,37 +503,51 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "content": "<span style=\"color: #fff\">LEARN</span>\n<span style=\"color: #fff\">MORE</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "bfd53cf2-f8e8-41f0-8449-48772b5194bb",
+          "content": "<span style=\"color: #fff\">I TRAVEL TO FIND MYSELF IN THE EYES AND HEARTS OF OTHERS”</span>",
+          "fontSize": 53,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 41,
-          "y": 140,
-          "width": 247,
-          "height": 92,
+          "x": 33,
+          "y": 16,
+          "width": 19,
+          "height": 51,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "90e3970e-a7be-4ecb-91a6-4f6065f28de1",
+          "content": "<span style=\"color: #fff\">“</span>",
+          "fontSize": 52,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 58,
+          "y": 351,
+          "width": 206,
+          "height": 23,
           "font": {
             "service": "fonts.google.com",
             "family": "Lora",
@@ -914,80 +555,56 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "883808f1-b87b-4b35-b0f1-0945e0faef2e",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">The cheapest and most authentic way to experience Thai life. Prepare yourself, some like it hot!</span>",
+          "id": "88df74ed-7334-4e91-957c-c48b8da344e4",
+          "content": "<span style=\"color: #fff\">– Anonymous</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 41,
-          "y": 15,
-          "width": 143,
-          "height": 104,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
+          "x": 70,
+          "y": 333,
+          "width": 272,
+          "height": 416,
+          "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "6258d646-a291-498f-81ab-3095f352bb26",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">STREET\nFOOD</span>",
-          "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "flip": { "vertical": true, "horizontal": false },
+          "rotationAngle": 90,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 120,
+          "focalX": 49.958297992927974,
+          "focalY": 47.911921059829645,
+          "mask": { "type": "rectangle" },
+          "id": "8a21c4e7-4e9b-4811-9b8b-f36d0297a9e4",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page2_image1.jpg",
+            "width": 220,
+            "height": 331,
+            "poster": "",
+            "posterId": 0,
+            "id": 222,
+            "title": "travel_page2_image1",
+            "alt": "",
+            "local": false,
+            "sizes": []
           }
         }
       ],
       "type": "page",
-      "id": "80b4f7b3-c54a-4e40-9a75-c937cedfed4b",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "id": "3cdf0fde-f515-477d-8688-472c4cc5a8b3",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "3b26b562-b0cb-45d6-88d4-5bc16c95fa86",
@@ -1102,80 +719,75 @@
           "easingPreset": "inOutCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 91,
-          "y": 69,
-          "width": 206,
-          "height": 138,
+          "x": 90,
+          "y": 86,
+          "width": 137,
+          "height": 137,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "id": "b39e1373-e1d4-40ee-bd0c-298924b61a3e",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 0,
+          "y": 284,
+          "width": 324,
+          "height": 392,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
           "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
+          "focalX": 49.81801455703381,
+          "focalY": 44.55730329866608,
+          "mask": { "type": "rectangle" },
+          "id": "4c694857-df14-4ba9-8791-9b13935dbbbe",
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page4_bg.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page3_image1.jpg",
             "width": 220,
-            "height": 147,
+            "height": 275,
             "poster": "",
             "posterId": 0,
-            "id": 224,
-            "title": "travel_page4_bg",
+            "id": 223,
+            "title": "travel_page3_image1",
             "alt": "",
             "local": false,
             "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "a920881d-6fab-4d96-8884-0df9f0b6a8fd",
-          "isBackground": true
+          }
         },
         {
-          "x": 39,
-          "y": 0,
-          "width": 334,
-          "height": 168,
+          "x": 236,
+          "y": 284,
+          "width": 88,
+          "height": 88,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
+          "backgroundColor": { "color": { "r": 254, "g": 200, "b": 90 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "3d3b38a3-d8db-4a86-a4e2-0be30e92b177"
+          "mask": { "type": "rectangle" },
+          "id": "6e549d8a-d851-45c5-b168-f3e681261bab",
+          "lockAspectRatio": true
         },
         {
-          "x": 67,
-          "y": 28,
-          "width": 139,
-          "height": 26,
+          "x": 256.5,
+          "y": 308,
+          "width": 47,
+          "height": 40,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -1183,37 +795,25 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
+          "lineHeight": 1,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "1b892512-7510-4c09-a750-7dfd21ece74a",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">FLOATING MARKET</span>",
+          "id": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
+          "content": "<span style=\"color: #fff\">LEARN</span>\n<span style=\"color: #fff\">MORE</span>",
           "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 68,
-          "y": 66,
-          "width": 267,
-          "height": 69,
+          "x": 41,
+          "y": 140,
+          "width": 247,
+          "height": 92,
           "font": {
             "service": "fonts.google.com",
             "family": "Lora",
@@ -1221,65 +821,52 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "d773e2ce-05a7-4195-a815-cfd66e93f66a",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Experience the unique floating market, where all goods are sold from boats.</span>",
+          "id": "883808f1-b87b-4b35-b0f1-0945e0faef2e",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">The cheapest and most authentic way to experience Thai life. Prepare yourself, some like it hot!</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 41,
+          "y": 15,
+          "width": 143,
+          "height": 104,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "6258d646-a291-498f-81ab-3095f352bb26",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">STREET\nFOOD</span>",
+          "fontSize": 52,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "6302fb0d-8f99-4498-91eb-bca15d67ae84",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "3769638a-e9e5-4ff0-96dc-9b3df5d78215"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "id": "80b4f7b3-c54a-4e40-9a75-c937cedfed4b",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "8ee3cb5c-62a6-400b-86c4-ea77d19a01b9",
@@ -1355,35 +942,30 @@
           "easingPreset": "outCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 53,
-          "y": 17,
+          "x": 91,
+          "y": 69,
           "width": 206,
-          "height": 140,
+          "height": 138,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "scale": 100,
-          "focalX": 49.18364448416392,
-          "focalY": 49.97767879474251,
+          "focalX": 50,
+          "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page5_bg.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page4_bg.jpg",
             "width": 220,
-            "height": 149,
+            "height": 147,
             "poster": "",
             "posterId": 0,
-            "id": 225,
-            "title": "travel_page5_bg",
+            "id": 224,
+            "title": "travel_page4_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1394,52 +976,30 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "3b0ede46-334e-4bc5-abb7-f09dec3d6d48",
+          "id": "a920881d-6fab-4d96-8884-0df9f0b6a8fd",
           "isBackground": true
         },
         {
-          "x": 103,
-          "y": 13,
-          "width": 206,
-          "height": 42,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
+          "x": 39,
+          "y": 0,
+          "width": 334,
+          "height": 168,
+          "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "65283dae-40f2-4ace-8b0a-0d9f2066a38a",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">CAPTURE</span>",
-          "fontSize": 42,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "mask": { "type": "rectangle" },
+          "id": "3d3b38a3-d8db-4a86-a4e2-0be30e92b177"
         },
         {
-          "x": 0,
-          "y": 58,
-          "width": 411,
-          "height": 98,
+          "x": 67,
+          "y": 28,
+          "width": 139,
+          "height": 26,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -1447,37 +1007,25 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "95c08a42-48cd-4112-b0e2-f24362adc7bc",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BANGKOK</span>",
-          "fontSize": 98,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "1b892512-7510-4c09-a750-7dfd21ece74a",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">FLOATING MARKET</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 74,
-          "y": 558,
-          "width": 264,
-          "height": 46,
+          "x": 68,
+          "y": 66,
+          "width": 267,
+          "height": 69,
           "font": {
             "service": "fonts.google.com",
             "family": "Lora",
@@ -1485,35 +1033,23 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1.3,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "7dae1bd9-9f88-4ae8-93eb-f3d908cace09",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Tips and tricks for caturing this iconic city in a day.</span>",
+          "id": "d773e2ce-05a7-4195-a815-cfd66e93f66a",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Experience the unique floating market, where all goods are sold from boats.</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "22081c00-a02f-4085-84de-0f4a31253222",
+      "id": "6302fb0d-8f99-4498-91eb-bca15d67ae84",
       "defaultBackgroundElement": {
         "type": "shape",
         "x": 1,
@@ -1521,29 +1057,17 @@
         "width": 1,
         "height": 1,
         "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
         },
         "isBackground": true,
         "isDefaultBackground": true,
-        "id": "4d03120b-e736-4b71-b5bc-81159357f030"
+        "id": "3769638a-e9e5-4ff0-96dc-9b3df5d78215"
       },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "7f51ec50-918c-469b-b1ea-dde8b69a44b7",
@@ -1656,35 +1180,30 @@
           "easingPreset": "inOutCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 44,
-          "y": 57,
+          "x": 53,
+          "y": 17,
           "width": 206,
-          "height": 116,
+          "height": 140,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "scale": 130,
-          "focalX": 31.508137400282983,
-          "focalY": 50.08072617756131,
+          "scale": 100,
+          "focalX": 49.18364448416392,
+          "focalY": 49.97767879474251,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page6_bg.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page5_bg.jpg",
             "width": 220,
-            "height": 124,
+            "height": 149,
             "poster": "",
             "posterId": 0,
-            "id": 227,
-            "title": "travel_page6_bg",
+            "id": 225,
+            "title": "travel_page5_bg",
             "alt": "",
             "local": false,
             "sizes": []
@@ -1695,14 +1214,40 @@
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "id": "117a9caa-d0cc-47d0-b00e-ee623bbcd5fc",
+          "id": "3b0ede46-334e-4bc5-abb7-f09dec3d6d48",
           "isBackground": true
         },
         {
-          "x": 45,
-          "y": 404,
-          "width": 246,
-          "height": 108,
+          "x": 103,
+          "y": 13,
+          "width": 206,
+          "height": 42,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "65283dae-40f2-4ace-8b0a-0d9f2066a38a",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">CAPTURE</span>",
+          "fontSize": 42,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 0,
+          "y": 58,
+          "width": 411,
+          "height": 98,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -1710,164 +1255,49 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "c40c8eae-e683-4fa6-a632-e1d652279a37",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">TOP 5\nCHIANG MAI</span>",
-          "fontSize": 54,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "95c08a42-48cd-4112-b0e2-f24362adc7bc",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">BANGKOK</span>",
+          "fontSize": 98,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 45,
-          "y": 521,
-          "width": 303,
-          "height": 84,
+          "x": 74,
+          "y": 558,
+          "width": 264,
+          "height": 46,
           "font": {
-            "service": "system",
-            "family": "Arial",
-            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"]
+            "service": "fonts.google.com",
+            "family": "Lora",
+            "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
-          "lineHeight": 1.2,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "lineHeight": 1.3,
+          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "ca20176a-3245-4735-9b1c-66017aa9e528",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">If you only have one day to see as many sights as you can, we’ve compiled a list of walkable must-see destinations.</span>",
+          "id": "7dae1bd9-9f88-4ae8-93eb-f3d908cace09",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">Tips and tricks for caturing this iconic city in a day.</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 178,
-          "y": -36,
-          "width": 17,
-          "height": 17,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "4393667f-c2ab-417b-a901-81c9aa4e3bb3"
-        },
-        {
-          "x": 181,
-          "y": -33,
-          "width": 11,
-          "height": 11,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "circle"
-          },
-          "id": "e024d5d3-7398-454a-b28c-52e111e33f1b"
-        },
-        {
-          "x": 136,
-          "y": -56,
-          "width": 264,
-          "height": 442,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/travel/travel_page6_image1.png",
-            "width": 220,
-            "height": 371,
-            "poster": "",
-            "posterId": 0,
-            "id": 228,
-            "title": "travel_page6_image1",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "a518c941-56a4-4e2d-afcd-893c88dc31ae"
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "c2d56aca-cb1a-41eb-bbdc-41dc2c4f597c",
+      "id": "22081c00-a02f-4085-84de-0f4a31253222",
       "defaultBackgroundElement": {
         "type": "shape",
         "x": 1,
@@ -1875,29 +1305,17 @@
         "width": 1,
         "height": 1,
         "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
+        "mask": { "type": "rectangle" },
         "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
         },
         "isBackground": true,
         "isDefaultBackground": true,
-        "id": "64ea1430-5f03-4155-be5d-16faaa4b098e"
+        "id": "4d03120b-e736-4b71-b5bc-81159357f030"
       },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "8a8750b9-3a1e-4437-a699-61a7189393d5",
@@ -2022,188 +1440,48 @@
           "easingPreset": "outCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 7,
-          "y": 62,
-          "width": 137,
-          "height": 137,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "id": "9012bef0-e5e3-4910-8412-a10ce18e23a6",
-          "isDefaultBackground": true
-        },
-        {
-          "x": 42,
-          "y": 381,
-          "width": 152,
-          "height": 104,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "6258d646-a291-498f-81ab-3095f352bb26",
-          "id": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">TEMPLE\nNAME</span>",
-          "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 42,
-          "y": 501,
-          "width": 300,
-          "height": 92,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Lora",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "883808f1-b87b-4b35-b0f1-0945e0faef2e",
-          "id": "bc7d8800-b421-4a19-9db0-f594e9b0bd8d",
-          "content": "<span style=\"color: #094228\">The courtyard around the 3 Kings Monument is the best place to give early morning Alms to the Monks in Central Chiang Mai.</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 0,
-          "y": -57,
-          "width": 327,
-          "height": 402,
+          "x": 44,
+          "y": 57,
+          "width": 206,
+          "height": 116,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 100,
-          "focalX": 50.000000000000014,
-          "focalY": 57.36776812717045,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "37a09535-568f-4dc6-a07d-57f3ac1c9d39",
+          "scale": 130,
+          "focalX": 31.508137400282983,
+          "focalY": 50.08072617756131,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page7_image1.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page6_bg.jpg",
             "width": 220,
-            "height": 330,
+            "height": 124,
             "poster": "",
             "posterId": 0,
-            "id": 229,
-            "title": "travel_page7_image1",
+            "id": 227,
+            "title": "travel_page6_bg",
             "alt": "",
             "local": false,
             "sizes": []
-          }
-        },
-        {
-          "x": 238.734375,
-          "y": 257,
-          "width": 88,
-          "height": 88,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
           },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 9,
-              "g": 66,
-              "b": 40
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
           "mask": {
-            "type": "rectangle"
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
           },
-          "id": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
-          "lockAspectRatio": true
+          "id": "117a9caa-d0cc-47d0-b00e-ee623bbcd5fc",
+          "isBackground": true
         },
         {
-          "x": 238.734375,
-          "y": 290.5,
-          "width": 88,
-          "height": 21,
+          "x": 45,
+          "y": 404,
+          "width": 246,
+          "height": 108,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -2211,43 +1489,133 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1,
-          "textAlign": "center",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "id": "4f71e74f-fd3f-4840-9ea4-8c0f59363952",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">NO. 3</span>",
-          "fontSize": 21,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "c40c8eae-e683-4fa6-a632-e1d652279a37",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">TOP 5\nCHIANG MAI</span>",
+          "fontSize": 54,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 45,
+          "y": 521,
+          "width": 303,
+          "height": 84,
+          "font": {
+            "service": "system",
+            "family": "Arial",
+            "fallbacks": ["Helvetica Neue", "Helvetica", "sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1.2,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "id": "ca20176a-3245-4735-9b1c-66017aa9e528",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">If you only have one day to see as many sights as you can, we’ve compiled a list of walkable must-see destinations.</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 178,
+          "y": -36,
+          "width": 17,
+          "height": 17,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "id": "4393667f-c2ab-417b-a901-81c9aa4e3bb3"
+        },
+        {
+          "x": 181,
+          "y": -33,
+          "width": 11,
+          "height": 11,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 254, "g": 200, "b": 90 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "circle" },
+          "id": "e024d5d3-7398-454a-b28c-52e111e33f1b"
+        },
+        {
+          "x": 136,
+          "y": -56,
+          "width": 264,
+          "height": 442,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/travel/travel_page6_image1.png",
+            "width": 220,
+            "height": 371,
+            "poster": "",
+            "posterId": 0,
+            "id": 228,
+            "title": "travel_page6_image1",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "a518c941-56a4-4e2d-afcd-893c88dc31ae"
         }
       ],
       "type": "page",
-      "id": "7b7d7662-fb1f-46b5-94e0-b01029a666a5",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
+      "id": "c2d56aca-cb1a-41eb-bbdc-41dc2c4f597c",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": { "type": "rectangle" },
+        "backgroundColor": {
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "64ea1430-5f03-4155-be5d-16faaa4b098e"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "6dc0bf5f-05b8-4dc2-9549-206464cf974b",
@@ -2362,148 +1730,27 @@
           "easingPreset": "outCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 12,
-          "y": 130,
-          "width": 206,
-          "height": 138,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page8_bg.jpg",
-            "width": 220,
-            "height": 147,
-            "poster": "",
-            "posterId": 0,
-            "id": 230,
-            "title": "travel_page8_bg",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "3f23fce9-2fb5-4f17-acec-f0f6f524967d",
-          "isBackground": true
-        },
-        {
-          "x": 0,
-          "y": -58,
-          "width": 324,
-          "height": 436,
+          "x": 7,
+          "y": 62,
+          "width": 137,
+          "height": 137,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 159,
-              "g": 208,
-              "b": 255,
-              "a": 0.5
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "f60ae332-db13-481f-ace7-107885b1c202"
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "id": "9012bef0-e5e3-4910-8412-a10ce18e23a6",
+          "isDefaultBackground": true
         },
         {
-          "x": 236,
-          "y": 290,
-          "width": 88,
-          "height": 88,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
-          "id": "5f598141-8e1c-4486-8d73-9fd9e8934c48",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 258,
-          "y": 314,
-          "width": 50,
-          "height": 40,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
-          "id": "28b135fd-63b8-456c-985d-3dfe542fffd7",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN\nMORE</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 40,
-          "y": 31,
-          "width": 195,
+          "x": 42,
+          "y": 381,
+          "width": 152,
           "height": 104,
           "font": {
             "service": "fonts.google.com",
@@ -2512,38 +1759,26 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "6258d646-a291-498f-81ab-3095f352bb26",
-          "id": "30716193-c4ff-4619-b485-8108d250c8b8",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">ISLAND\nHOPPING</span>",
+          "id": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">TEMPLE\nNAME</span>",
           "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 41,
-          "y": 152,
-          "width": 250,
-          "height": 138,
+          "x": 42,
+          "y": 501,
+          "width": 300,
+          "height": 92,
           "font": {
             "service": "fonts.google.com",
             "family": "Lora",
@@ -2551,66 +1786,101 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1.3,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "883808f1-b87b-4b35-b0f1-0945e0faef2e",
-          "id": "41d3069f-61de-4998-8487-036ea86917a6",
-          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">The main island hopping hubs are Phuket, Krabi, Koh Phi Phi, and Koh Lipe. Other favorites include Ko Tao, Ko Pha-Ngan, Ko Samui and Surat Thani.</span>",
+          "id": "bc7d8800-b421-4a19-9db0-f594e9b0bd8d",
+          "content": "<span style=\"color: #094228\">The courtyard around the 3 Kings Monument is the best place to give early morning Alms to the Monks in Central Chiang Mai.</span>",
           "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 0,
+          "y": -57,
+          "width": 327,
+          "height": 402,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 100,
+          "focalX": 50.000000000000014,
+          "focalY": 57.36776812717045,
+          "mask": { "type": "rectangle" },
+          "id": "37a09535-568f-4dc6-a07d-57f3ac1c9d39",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page7_image1.jpg",
+            "width": 220,
+            "height": 330,
+            "poster": "",
+            "posterId": 0,
+            "id": 229,
+            "title": "travel_page7_image1",
+            "alt": "",
+            "local": false,
+            "sizes": []
           }
+        },
+        {
+          "x": 238.734375,
+          "y": 257,
+          "width": 88,
+          "height": 88,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 9, "g": 66, "b": 40 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
+          "lockAspectRatio": true
+        },
+        {
+          "x": 238.734375,
+          "y": 290.5,
+          "width": 88,
+          "height": 21,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
+          "id": "4f71e74f-fd3f-4840-9ea4-8c0f59363952",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">NO. 3</span>",
+          "fontSize": 21,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "1659f169-eb29-498a-bd00-6aea80d7ace7",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "6f8d6dec-a10b-43d5-a74f-0bac45722dab"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "id": "7b7d7662-fb1f-46b5-94e0-b01029a666a5",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "fe867ad0-a4d2-49fa-a968-386920a4c342",
@@ -2750,608 +2020,181 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 33,
-          "y": 97,
-          "width": 137,
-          "height": 137,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "id": "55fcd4fb-1af4-4540-ac57-a783f94f6864",
-          "isDefaultBackground": true
-        },
-        {
-          "x": 170,
-          "y": 59,
+          "x": 12,
+          "y": 130,
           "width": 206,
-          "height": 20,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
-          "id": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">1. PHUKET</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 205,
-          "width": 206,
-          "height": 20,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
-          "id": "840cd415-bf08-4186-9649-932beb2e6778",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">2. KOH PHI PHI</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 351,
-          "width": 206,
-          "height": 20,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
-          "id": "bbe6302e-87c0-49d2-b16b-ff787059c187",
-          "content": "<span style=\"color: #094228\">3. KOH LIPE</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 497,
-          "width": 195,
-          "height": 20,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
-          "id": "44db08e2-0900-40a6-9e52-3ab2325aeab2",
-          "content": "<span style=\"color: #094228\">4. KO SAMUI</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 89,
-          "width": 207,
-          "height": 23,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Lora",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "d773e2ce-05a7-4195-a815-cfd66e93f66a",
-          "id": "adc642e3-a739-4349-9646-cb06d88f51a4",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Start your journey here</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 235,
-          "width": 207,
-          "height": 23,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Lora",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "adc642e3-a739-4349-9646-cb06d88f51a4",
-          "id": "919e9a80-e851-49fe-9660-c67937a14e13",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Scoot around the island</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 170,
-          "y": 381,
-          "width": 187,
-          "height": 23,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Lora",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "adc642e3-a739-4349-9646-cb06d88f51a4",
-          "id": "63b0bbbf-6ef4-42c1-b017-d7db0db07039",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Best red curry</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 171,
-          "y": 528,
-          "width": 187,
-          "height": 23,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Lora",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "adc642e3-a739-4349-9646-cb06d88f51a4",
-          "id": "300c43cc-b0b0-45de-97ba-1775028d50bb",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Semi-secluded island</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": -2.5,
-          "y": 162,
-          "width": 417,
-          "height": 1,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 241,
-              "g": 241,
-              "b": 241
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "d90985a8-8ba6-45b1-8e8a-ef2fa073dac9"
-        },
-        {
-          "x": -2.5,
-          "y": 309,
-          "width": 417,
-          "height": 1,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 241,
-              "g": 241,
-              "b": 241
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "d90985a8-8ba6-45b1-8e8a-ef2fa073dac9",
-          "id": "359fca2c-a5ab-448c-b9e6-11dd47517650"
-        },
-        {
-          "x": -1,
-          "y": 454,
-          "width": 417,
-          "height": 1,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 241,
-              "g": 241,
-              "b": 241
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "359fca2c-a5ab-448c-b9e6-11dd47517650",
-          "id": "2a391259-057a-4976-b90d-2c6140e2a222"
-        },
-        {
-          "x": 0,
-          "y": 17,
-          "width": 140,
-          "height": 146,
+          "height": 138,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 210,
-          "focalX": 71.09866593641652,
-          "focalY": 42.12316471707116,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image1.jpg",
-            "width": 220,
-            "height": 165,
-            "poster": "",
-            "posterId": 0,
-            "id": 231,
-            "title": "travel_page9_image1",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 0,
-          "y": 164,
-          "width": 140,
-          "height": 146,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 130,
-          "focalX": 38.57638552918454,
-          "focalY": 50.00000000000002,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
-          "id": "d16ef169-d80c-4e70-817a-9e3bf66d1428",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image2.jpg",
-            "width": 220,
-            "height": 124,
-            "poster": "",
-            "posterId": 0,
-            "id": 232,
-            "title": "travel_page9_image2",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 0,
-          "y": 309,
-          "width": 140,
-          "height": 146,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 110,
-          "focalX": 37.799042537992264,
-          "focalY": 54.72610116975728,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
-          "id": "a7ca1ee4-5f88-45e3-aa3d-ea3cfda6b027",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image4.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page8_bg.jpg",
             "width": 220,
             "height": 147,
             "poster": "",
             "posterId": 0,
-            "id": 234,
-            "title": "travel_page9_image4",
+            "id": 230,
+            "title": "travel_page8_bg",
             "alt": "",
             "local": false,
             "sizes": []
-          }
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "3f23fce9-2fb5-4f17-acec-f0f6f524967d",
+          "isBackground": true
         },
         {
           "x": 0,
-          "y": 454,
-          "width": 140,
-          "height": 146,
-          "type": "image",
+          "y": -58,
+          "width": 324,
+          "height": 436,
+          "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
+            "color": { "r": 159, "g": 208, "b": 255, "a": 0.5 }
           },
-          "scale": 160,
-          "focalX": 68.9811217492273,
-          "focalY": 60.54933296820826,
-          "mask": {
-            "type": "rectangle"
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "f60ae332-db13-481f-ace7-107885b1c202"
+        },
+        {
+          "x": 236,
+          "y": 290,
+          "width": 88,
+          "height": 88,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 254, "g": 200, "b": 90 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "7c4a2686-3bcc-4e41-92ed-f12b899b615b",
+          "id": "5f598141-8e1c-4486-8d73-9fd9e8934c48",
+          "lockAspectRatio": true
+        },
+        {
+          "x": 258,
+          "y": 314,
+          "width": 50,
+          "height": 40,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
           },
-          "basedOn": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
-          "id": "07155f07-19d8-4eca-8817-9b512fd3303f",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page9_image5.jpg",
-            "width": 220,
-            "height": 330,
-            "poster": "",
-            "posterId": 0,
-            "id": 235,
-            "title": "travel_page9_image5",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          }
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "3cf17fb8-a5ae-4f32-8e5f-d3a0513215de",
+          "id": "28b135fd-63b8-456c-985d-3dfe542fffd7",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">LEARN\nMORE</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 40,
+          "y": 31,
+          "width": 195,
+          "height": 104,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "6258d646-a291-498f-81ab-3095f352bb26",
+          "id": "30716193-c4ff-4619-b485-8108d250c8b8",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">ISLAND\nHOPPING</span>",
+          "fontSize": 52,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 41,
+          "y": 152,
+          "width": 250,
+          "height": 138,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Lora",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "883808f1-b87b-4b35-b0f1-0945e0faef2e",
+          "id": "41d3069f-61de-4998-8487-036ea86917a6",
+          "content": "<span style=\"color: rgba(255, 255, 255, 1)\">The main island hopping hubs are Phuket, Krabi, Koh Phi Phi, and Koh Lipe. Other favorites include Ko Tao, Ko Pha-Ngan, Ko Samui and Surat Thani.</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "78da0e6c-6bc7-4680-90a8-2b6bf6e98aaa",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
+      "id": "1659f169-eb29-498a-bd00-6aea80d7ace7",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": { "type": "rectangle" },
+        "backgroundColor": {
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "6f8d6dec-a10b-43d5-a74f-0bac45722dab"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "b2692558-de0c-414e-a5bd-6dabab432aa2",
@@ -3553,98 +2396,28 @@
           "easingPreset": "outCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
-          "x": 82,
-          "y": 63,
+          "x": 33,
+          "y": 97,
           "width": 137,
           "height": 137,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "id": "282588c3-fbc2-4b63-8260-2e58d0e63294",
+          "id": "55fcd4fb-1af4-4540-ac57-a783f94f6864",
           "isDefaultBackground": true
         },
         {
-          "x": 252,
-          "y": 158,
-          "width": 160,
-          "height": 120,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 254,
-              "g": 200,
-              "b": 90
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "b542beff-39c1-4787-a8ad-a2a061c51a60",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 252,
-          "y": 396,
-          "width": 160,
-          "height": 120,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 236,
-              "g": 236,
-              "b": 236
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "basedOn": "b542beff-39c1-4787-a8ad-a2a061c51a60",
-          "id": "12b82d84-167c-49b1-8efd-afae77b857f0",
-          "lockAspectRatio": true
-        },
-        {
-          "x": 277,
-          "y": 199,
-          "width": 81,
-          "height": 40,
+          "x": 170,
+          "y": 59,
+          "width": 206,
+          "height": 20,
           "font": {
             "service": "fonts.google.com",
             "family": "Oswald",
@@ -3652,186 +2425,285 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "backgroundTextMode": "NONE",
           "lineHeight": 1,
           "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "840cd415-bf08-4186-9649-932beb2e6778",
-          "id": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">5 SPICIEST\nDISHES</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 277,
-          "y": 310,
-          "width": 89,
-          "height": 60,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
-          "id": "cb201d61-faec-476e-9d72-14caf813197b",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">HIKES OFF THE BEATEN\nTRAIL</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 277,
-          "y": 428,
-          "width": 88,
-          "height": 60,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "cb201d61-faec-476e-9d72-14caf813197b",
-          "id": "fcdc8182-cfb1-4010-82cd-91b5f235f0fc",
-          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">CATCH THE SWIMMING MONKEYS</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 41,
-          "y": 18,
-          "width": 195,
-          "height": 104,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Oswald",
-            "fallbacks": ["sans-serif"]
-          },
-          "type": "text",
-          "opacity": 99,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundTextMode": "NONE",
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "basedOn": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
-          "id": "e5272870-2b37-4bba-abcf-eab0ffc222a4",
-          "content": "<span style=\"color: #094228\">MORE</span>\n<span style=\"color: #094228\">STORIES</span>",
-          "fontSize": 52,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">1. PHUKET</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 205,
+          "width": 206,
+          "height": 20,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
+          "id": "840cd415-bf08-4186-9649-932beb2e6778",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">2. KOH PHI PHI</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 351,
+          "width": 206,
+          "height": 20,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
+          "id": "bbe6302e-87c0-49d2-b16b-ff787059c187",
+          "content": "<span style=\"color: #094228\">3. KOH LIPE</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 497,
+          "width": 195,
+          "height": 20,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "5cb07f8c-750f-437b-981f-cc3228cdeffd",
+          "id": "44db08e2-0900-40a6-9e52-3ab2325aeab2",
+          "content": "<span style=\"color: #094228\">4. KO SAMUI</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 89,
+          "width": 207,
+          "height": 23,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Lora",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "d773e2ce-05a7-4195-a815-cfd66e93f66a",
+          "id": "adc642e3-a739-4349-9646-cb06d88f51a4",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Start your journey here</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 235,
+          "width": 207,
+          "height": 23,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Lora",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "adc642e3-a739-4349-9646-cb06d88f51a4",
+          "id": "919e9a80-e851-49fe-9660-c67937a14e13",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Scoot around the island</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 170,
+          "y": 381,
+          "width": 187,
+          "height": 23,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Lora",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "adc642e3-a739-4349-9646-cb06d88f51a4",
+          "id": "63b0bbbf-6ef4-42c1-b017-d7db0db07039",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Best red curry</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 171,
+          "y": 528,
+          "width": 187,
+          "height": 23,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Lora",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "adc642e3-a739-4349-9646-cb06d88f51a4",
+          "id": "300c43cc-b0b0-45de-97ba-1775028d50bb",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">Semi-secluded island</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": -2.5,
+          "y": 162,
+          "width": 417,
+          "height": 1,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "d90985a8-8ba6-45b1-8e8a-ef2fa073dac9"
+        },
+        {
+          "x": -2.5,
+          "y": 309,
+          "width": 417,
+          "height": 1,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "d90985a8-8ba6-45b1-8e8a-ef2fa073dac9",
+          "id": "359fca2c-a5ab-448c-b9e6-11dd47517650"
+        },
+        {
+          "x": -1,
+          "y": 454,
+          "width": 417,
+          "height": 1,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 241, "g": 241, "b": 241 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "359fca2c-a5ab-448c-b9e6-11dd47517650",
+          "id": "2a391259-057a-4976-b90d-2c6140e2a222"
         },
         {
           "x": 0,
-          "y": 158,
-          "width": 252,
-          "height": 120,
+          "y": 17,
+          "width": 140,
+          "height": 146,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 230,
-          "focalX": 46.28668252718276,
-          "focalY": 67.71403998512304,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "85439d79-2100-4dc8-9b20-e6e51d2064af",
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 210,
+          "focalX": 71.09866593641652,
+          "focalY": 42.12316471707116,
+          "mask": { "type": "rectangle" },
+          "id": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page10_image1.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page9_image1.jpg",
             "width": 220,
-            "height": 112,
+            "height": 165,
             "poster": "",
             "posterId": 0,
-            "id": 236,
-            "title": "travel_page10_image1",
+            "id": 231,
+            "title": "travel_page9_image1",
             "alt": "",
             "local": false,
             "sizes": []
@@ -3839,246 +2711,103 @@
         },
         {
           "x": 0,
-          "y": 278,
-          "width": 252,
-          "height": 120,
+          "y": 164,
+          "width": 140,
+          "height": 146,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 120,
-          "focalX": 45.07590551296434,
-          "focalY": 41.80970621298839,
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 130,
+          "focalX": 38.57638552918454,
+          "focalY": 50.00000000000002,
+          "mask": { "type": "rectangle" },
+          "basedOn": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
+          "id": "d16ef169-d80c-4e70-817a-9e3bf66d1428",
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page10_image2.jpg",
-            "width": 220,
-            "height": 83,
-            "poster": "",
-            "posterId": 0,
-            "id": 237,
-            "title": "travel_page10_image2",
-            "alt": "",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "85439d79-2100-4dc8-9b20-e6e51d2064af",
-          "id": "19fd443d-f580-436b-82b4-ef2938c55e89"
-        },
-        {
-          "x": 0,
-          "y": 397,
-          "width": 252,
-          "height": 120,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 110,
-          "focalX": 54.65421808442616,
-          "focalY": 38.31609851544505,
-          "mask": {
-            "type": "rectangle"
-          },
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/travel/travel_page10_image3.jpg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page9_image2.jpg",
             "width": 220,
             "height": 124,
             "poster": "",
             "posterId": 0,
-            "id": 238,
-            "title": "travel_page10_image3",
+            "id": 232,
+            "title": "travel_page9_image2",
             "alt": "",
             "local": false,
             "sizes": []
-          },
-          "basedOn": "19fd443d-f580-436b-82b4-ef2938c55e89",
-          "id": "098c9143-7ca0-4b04-866f-02c5c48339d2"
+          }
         },
         {
-          "x": 56,
-          "y": 576,
-          "width": 14,
-          "height": 28,
+          "x": 0,
+          "y": 309,
+          "width": 140,
+          "height": 146,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 110,
+          "focalX": 37.799042537992264,
+          "focalY": 54.72610116975728,
+          "mask": { "type": "rectangle" },
+          "basedOn": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
+          "id": "a7ca1ee4-5f88-45e3-aa3d-ea3cfda6b027",
           "resource": {
             "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/travel/travel_icon_fb.png",
-            "width": 150,
-            "height": 300,
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page9_image4.jpg",
+            "width": 220,
+            "height": 147,
+            "poster": "",
             "posterId": 0,
-            "id": 420,
-            "title": "travel_icon_fb",
-            "alt": "travel_icon_fb",
+            "id": 234,
+            "title": "travel_page9_image4",
+            "alt": "",
             "local": false,
             "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "cf79c6e9-4f9d-4c4e-a455-aaa490458775"
+          }
         },
         {
-          "x": 138,
-          "y": 578,
-          "width": 23,
-          "height": 24,
+          "x": 0,
+          "y": 454,
+          "width": 140,
+          "height": 146,
           "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 160,
+          "focalX": 68.9811217492273,
+          "focalY": 60.54933296820826,
+          "mask": { "type": "rectangle" },
+          "basedOn": "43b28f35-fdc3-4b59-b3da-ad9581cbeb8c",
+          "id": "07155f07-19d8-4eca-8817-9b512fd3303f",
           "resource": {
             "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/travel/travel_icon_insta.png",
-            "width": 150,
-            "height": 156,
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page9_image5.jpg",
+            "width": 220,
+            "height": 330,
+            "poster": "",
             "posterId": 0,
-            "id": 419,
-            "title": "travel_icon_insta",
-            "alt": "travel_icon_insta",
+            "id": 235,
+            "title": "travel_page9_image5",
+            "alt": "",
             "local": false,
             "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "0a44cd76-e684-4cea-a6e8-f50e0557ce46"
-        },
-        {
-          "x": 228,
-          "y": 581,
-          "width": 26,
-          "height": 19,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/travel/travel_icon_yt.png",
-            "width": 150,
-            "height": 106,
-            "posterId": 0,
-            "id": 418,
-            "title": "travel_icon_yt",
-            "alt": "travel_icon_yt",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "81ec3ab2-7eee-4d86-b981-90e8415a9419"
-        },
-        {
-          "x": 322,
-          "y": 579,
-          "width": 26,
-          "height": 22,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/travel/travel_icon_tw.png",
-            "width": 150,
-            "height": 121,
-            "posterId": 0,
-            "id": 417,
-            "title": "travel_icon_tw",
-            "alt": "travel_icon_tw",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "675e2caa-2276-4b8b-9d80-0fcffd623d62"
+          }
         }
       ],
       "type": "page",
-      "id": "9a45a0b2-0261-4298-aef7-c08b99771787",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255
-        }
-      },
+      "id": "78da0e6c-6bc7-4680-90a8-2b6bf6e98aaa",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
+    },
+    {
       "animations": [
         {
           "id": "5d2c8ced-2a5a-4f33-93b7-b1dce1485211",
@@ -4355,7 +3084,398 @@
           "easingPreset": "inOutCubic",
           "fill": "both"
         }
-      ]
+      ],
+      "elements": [
+        {
+          "x": 82,
+          "y": 63,
+          "width": 137,
+          "height": 137,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "id": "282588c3-fbc2-4b63-8260-2e58d0e63294",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 252,
+          "y": 158,
+          "width": 160,
+          "height": 120,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 254, "g": 200, "b": 90 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "b542beff-39c1-4787-a8ad-a2a061c51a60",
+          "lockAspectRatio": true
+        },
+        {
+          "x": 252,
+          "y": 396,
+          "width": 160,
+          "height": 120,
+          "type": "shape",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 236, "g": 236, "b": 236 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "basedOn": "b542beff-39c1-4787-a8ad-a2a061c51a60",
+          "id": "12b82d84-167c-49b1-8efd-afae77b857f0",
+          "lockAspectRatio": true
+        },
+        {
+          "x": 277,
+          "y": 199,
+          "width": 81,
+          "height": 40,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "840cd415-bf08-4186-9649-932beb2e6778",
+          "id": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">5 SPICIEST\nDISHES</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 277,
+          "y": 310,
+          "width": 89,
+          "height": 60,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "7ea7ab1b-9bcd-45d6-941d-2c1143cadf0f",
+          "id": "cb201d61-faec-476e-9d72-14caf813197b",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">HIKES OFF THE BEATEN\nTRAIL</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 277,
+          "y": 428,
+          "width": 88,
+          "height": 60,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "cb201d61-faec-476e-9d72-14caf813197b",
+          "id": "fcdc8182-cfb1-4010-82cd-91b5f235f0fc",
+          "content": "<span style=\"color: rgba(9, 66, 40, 1)\">CATCH THE SWIMMING MONKEYS</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 41,
+          "y": 18,
+          "width": 195,
+          "height": 104,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Oswald",
+            "fallbacks": ["sans-serif"]
+          },
+          "type": "text",
+          "opacity": 99,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundTextMode": "NONE",
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "basedOn": "3932eb5c-e456-43d8-988d-4aa01dd4a8bd",
+          "id": "e5272870-2b37-4bba-abcf-eab0ffc222a4",
+          "content": "<span style=\"color: #094228\">MORE</span>\n<span style=\"color: #094228\">STORIES</span>",
+          "fontSize": 52,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 0,
+          "y": 158,
+          "width": 252,
+          "height": 120,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 230,
+          "focalX": 46.28668252718276,
+          "focalY": 67.71403998512304,
+          "mask": { "type": "rectangle" },
+          "id": "85439d79-2100-4dc8-9b20-e6e51d2064af",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page10_image1.jpg",
+            "width": 220,
+            "height": 112,
+            "poster": "",
+            "posterId": 0,
+            "id": 236,
+            "title": "travel_page10_image1",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 0,
+          "y": 278,
+          "width": 252,
+          "height": 120,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 120,
+          "focalX": 45.07590551296434,
+          "focalY": 41.80970621298839,
+          "mask": { "type": "rectangle" },
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page10_image2.jpg",
+            "width": 220,
+            "height": 83,
+            "poster": "",
+            "posterId": 0,
+            "id": 237,
+            "title": "travel_page10_image2",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "85439d79-2100-4dc8-9b20-e6e51d2064af",
+          "id": "19fd443d-f580-436b-82b4-ef2938c55e89"
+        },
+        {
+          "x": 0,
+          "y": 397,
+          "width": 252,
+          "height": 120,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 110,
+          "focalX": 54.65421808442616,
+          "focalY": 38.31609851544505,
+          "mask": { "type": "rectangle" },
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/travel/travel_page10_image3.jpg",
+            "width": 220,
+            "height": 124,
+            "poster": "",
+            "posterId": 0,
+            "id": 238,
+            "title": "travel_page10_image3",
+            "alt": "",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "19fd443d-f580-436b-82b4-ef2938c55e89",
+          "id": "098c9143-7ca0-4b04-866f-02c5c48339d2"
+        },
+        {
+          "x": 56,
+          "y": 576,
+          "width": 14,
+          "height": 28,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/travel/travel_icon_fb.png",
+            "width": 150,
+            "height": 300,
+            "posterId": 0,
+            "id": 420,
+            "title": "travel_icon_fb",
+            "alt": "travel_icon_fb",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "cf79c6e9-4f9d-4c4e-a455-aaa490458775"
+        },
+        {
+          "x": 138,
+          "y": 578,
+          "width": 23,
+          "height": 24,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/travel/travel_icon_insta.png",
+            "width": 150,
+            "height": 156,
+            "posterId": 0,
+            "id": 419,
+            "title": "travel_icon_insta",
+            "alt": "travel_icon_insta",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "0a44cd76-e684-4cea-a6e8-f50e0557ce46"
+        },
+        {
+          "x": 228,
+          "y": 581,
+          "width": 26,
+          "height": 19,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/travel/travel_icon_yt.png",
+            "width": 150,
+            "height": 106,
+            "posterId": 0,
+            "id": 418,
+            "title": "travel_icon_yt",
+            "alt": "travel_icon_yt",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "81ec3ab2-7eee-4d86-b981-90e8415a9419"
+        },
+        {
+          "x": 322,
+          "y": 579,
+          "width": 26,
+          "height": 22,
+          "type": "image",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/travel/travel_icon_tw.png",
+            "width": 150,
+            "height": 121,
+            "posterId": 0,
+            "id": 417,
+            "title": "travel_icon_tw",
+            "alt": "travel_icon_tw",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "id": "675e2caa-2276-4b8b-9d80-0fcffd623d62"
+        }
+      ],
+      "type": "page",
+      "id": "9a45a0b2-0261-4298-aef7-c08b99771787",
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } }
     }
   ],
   "autoAdvance": true,

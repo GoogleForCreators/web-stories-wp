@@ -43,7 +43,7 @@ const Note = styled.p`
 
 function NoSelectionPanel() {
   return (
-    <Panel name="noselection">
+    <Panel name="noselection" isPersistable={false}>
       <PanelContent hasBorder>
         <Note>{__('Nothing selected', 'web-stories')}</Note>
       </PanelContent>

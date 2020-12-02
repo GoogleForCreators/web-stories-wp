@@ -22,10 +22,10 @@ import { act, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils/index';
 import { curatedFontNames } from '../../../../../../../packages/fonts/src';
+import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
-import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
+import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
 import TextIcon from '../../panes/text/textIcon';
 import { DEFAULT_PRESET } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';

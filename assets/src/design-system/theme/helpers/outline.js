@@ -19,13 +19,8 @@
 import { css } from 'styled-components';
 
 export const focusableOutlineCSS = (accent) => css`
-  padding: 2px;
-  background-clip: content-box;
   border: solid 2px transparent;
   &:focus {
     border: solid 2px ${accent};
-  }
-  * {
-    box-sizing: border-box;
   }
 `;

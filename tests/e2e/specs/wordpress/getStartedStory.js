@@ -40,7 +40,7 @@ describe('Get Started Story', () => {
       await expect(page).toMatch(/Tips to make the most/i);
       await expect(page).toMatch(/to make the most of/i);
 
-      await page.waitForSelector('[data-testid="mediaElement"]');
+      await page.waitForSelector('[data-testid="mediaElement-image"]');
 
       await percySnapshot(page, 'Get Started Story (Admin)');
     });
@@ -65,7 +65,7 @@ describe('Get Started Story', () => {
       await expect(page).toMatch(/Tips to make the most/i);
       await expect(page).toMatch(/to make the most of/i);
 
-      await page.waitForSelector('[data-testid="mediaElement"]');
+      await page.waitForSelector('[data-testid="mediaElement-image"]');
 
       await percySnapshot(page, 'Get Started Story (Author)');
     });

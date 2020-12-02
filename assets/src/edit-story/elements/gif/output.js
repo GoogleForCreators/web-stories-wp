@@ -24,7 +24,7 @@ function GifOutput({ element, box }) {
   const { resource } = element;
 
   return (
-    <MediaOutput element={element} box={box}>
+    <MediaOutput element={element} box={box} data-leaf-element="true">
       <amp-video
         id={`el-${element.id}-media`}
         autoplay="autoplay"

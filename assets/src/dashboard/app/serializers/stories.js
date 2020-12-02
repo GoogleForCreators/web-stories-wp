@@ -34,7 +34,7 @@ export default function reshapeStoryObject(editStoryURL) {
       date_gmt,
       link,
       story_data: storyData,
-      _embedded: { author = [] },
+      _embedded: { author = [] } = {},
     } = originalStoryData;
     if (
       !Array.isArray(storyData.pages) ||

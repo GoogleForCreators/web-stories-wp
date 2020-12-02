@@ -83,7 +83,7 @@ class Dashboard {
 	 */
 	public function __construct( Experiments $experiments, Site_Kit $site_kit ) {
 		$this->experiments = $experiments;
-		$this->decoder     = new Decoder( $this->experiments );
+		$this->decoder     = new Decoder();
 		$this->site_kit    = $site_kit;
 	}
 
@@ -100,6 +100,7 @@ class Dashboard {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'display_link_to_dashboard' ] );
 		add_action( 'load-web-story_page_stories-dashboard', [ $this, 'load_stories_dashboard' ] );
+		add_action( 'is_site_kit_plugin_installed', [ $this, 'is_site_kit_plugin_installed' ] );
 	}
 
 	/**
@@ -203,9 +204,9 @@ class Dashboard {
 		// Preload common data.
 		// TODO Preload templates.
 		$preload_paths = [
-			'/web-stories/v1/settings',
-			'/web-stories/v1/users/me',
-			'/web-stories/v1/web-story?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
+			'/web-stories/v1/settings/',
+			'/web-stories/v1/users/me/',
+			'/web-stories/v1/web-story/?_embed=author&context=edit&order=desc&orderby=modified&page=1&per_page=24&status=publish%2Cdraft%2Cfuture&_web_stories_envelope=true',
 		];
 
 		/**
@@ -230,6 +231,19 @@ class Dashboard {
 			sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 			'after'
 		);
+	}
+
+	/**
+	 * Find status of site kit plugin in site.
+	 *
+	 * @since 1.1.0
+	 *
+	 * @return boolean
+	 */
+	public function is_site_kit_plugin_installed() {
+		$all_plugins = get_plugins();
+
+		return array_key_exists( 'google-site-kit/google-site-kit.php', $all_plugins );
 	}
 
 	/**
@@ -322,30 +336,38 @@ class Dashboard {
 		$settings = [
 			'id'         => 'web-stories-dashboard',
 			'config'     => [
-				'isRTL'              => is_rtl(),
-				'locale'             => ( new Locale() )->get_locale_settings(),
-				'newStoryURL'        => $new_story_url,
-				'editStoryURL'       => $edit_story_url,
-				'wpListURL'          => $classic_wp_list_url,
-				'assetsURL'          => trailingslashit( WEBSTORIES_ASSETS_URL ),
-				'cdnURL'             => trailingslashit( WEBSTORIES_CDN_URL ),
-				'version'            => WEBSTORIES_VERSION,
-				'encodeMarkup'       => $this->decoder->supports_decoding(),
-				'api'                => [
-					'stories'     => sprintf( '/web-stories/v1/%s', $rest_base ),
-					'media'       => '/web-stories/v1/media',
-					'currentUser' => '/web-stories/v1/users/me',
-					'users'       => '/web-stories/v1/users',
-					'templates'   => '/web-stories/v1/web-story-template',
-					'settings'    => '/web-stories/v1/settings',
+				'isRTL'               => is_rtl(),
+				'locale'              => ( new Locale() )->get_locale_settings(),
+				'newStoryURL'         => $new_story_url,
+				'editStoryURL'        => $edit_story_url,
+				'wpListURL'           => $classic_wp_list_url,
+				'assetsURL'           => trailingslashit( WEBSTORIES_ASSETS_URL ),
+				'cdnURL'              => trailingslashit( WEBSTORIES_CDN_URL ),
+				'version'             => WEBSTORIES_VERSION,
+				'encodeMarkup'        => $this->decoder->supports_decoding(),
+				'api'                 => [
+					'stories'     => sprintf( '/web-stories/v1/%s/', $rest_base ),
+					'media'       => '/web-stories/v1/media/',
+					'currentUser' => '/web-stories/v1/users/me/',
+					'users'       => '/web-stories/v1/users/',
+					'templates'   => '/web-stories/v1/web-story-template/',
+					'settings'    => '/web-stories/v1/settings/',
 				],
-				'maxUpload'          => $max_upload_size,
-				'maxUploadFormatted' => size_format( $max_upload_size ),
-				'capabilities'       => [
+				'maxUpload'           => $max_upload_size,
+				'maxUploadFormatted'  => size_format( $max_upload_size ),
+				'capabilities'        => [
 					'canManageSettings' => current_user_can( 'manage_options' ),
 					'canUploadFiles'    => current_user_can( 'upload_files' ),
+
 				],
-				'siteKitStatus'      => $this->site_kit->get_plugin_status(),
+				'siteKitCapabilities' => [
+					'siteKitInstalled'      => $this->is_site_kit_plugin_installed(),
+					'siteKitActive'         => defined( 'GOOGLESITEKIT_VERSION' ),
+					'analyticsModuleActive' => false, // TODO: copy the logic from Analytics.php we need to share somehow.
+					'canInstallPlugins'     => current_user_can( 'install_plugins' ),
+					'canActivatePlugins'    => current_user_can( 'activate_plugin', 'google-site-kit/google-site-kit.php' ),
+				],
+				'siteKitStatus'       => $this->site_kit->get_plugin_status(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

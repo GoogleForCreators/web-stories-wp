@@ -31,7 +31,7 @@ import getOffPageOffset from '../../utils/getOffPageOffset';
 import { DIRECTION } from '../../constants';
 
 export function EffectRotateIn({
-  duration = 700,
+  duration = 1000,
   rotateInDir = DIRECTION.LEFT_TO_RIGHT,
   numberOfRotations = 1,
   stopAngle = 0,

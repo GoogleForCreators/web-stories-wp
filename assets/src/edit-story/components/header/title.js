@@ -82,7 +82,7 @@ function Title() {
       onBlur={handleBlur}
       onChange={handleChange}
       placeholder={__('Add title', 'web-stories')}
-      aria-label={__('Edit: Story title', 'web-stories')}
+      aria-label={__('Story title', 'web-stories')}
     />
   );
 }

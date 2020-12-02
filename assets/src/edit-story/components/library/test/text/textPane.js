@@ -23,11 +23,11 @@ import { FlagsProvider } from 'flagged';
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils/index';
 import { curatedFontNames } from '../../../../../../../packages/fonts/src';
-import useFont from '../../../../app/font/useFont';
+import { renderWithTheme } from '../../../../testUtils/index';
 import FontContext from '../../../../app/font/context';
-import fontsListResponse from '../../../fontPicker/test/fontsResponse.json';
+import useFont from '../../../../app/font/useFont';
+import fontsListResponse from '../../../form/advancedDropDown/test/fontsResponse.json';
 import TextPane from '../../panes/text/textPane';
 import { PRESETS } from '../../panes/text/textPresets';
 import useLibrary from '../../useLibrary';

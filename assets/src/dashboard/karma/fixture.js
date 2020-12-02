@@ -37,6 +37,15 @@ const defaultConfig = {
   capabilities: {
     canManageSettings: true,
     canUploadFiles: true,
+    canInstallPlugins: true,
+    siteKitPluginStatus: false,
+  },
+  siteKitCapabilities: {
+    analyticsModuleActive: false,
+    canActivatePlugins: true,
+    canInstallPlugins: true,
+    siteKitActive: false,
+    siteKitInstalled: false,
   },
   maxUpload: 104857600,
   maxUploadFormatted: '100 MB',

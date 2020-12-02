@@ -40,33 +40,53 @@ export function EffectDrop({
   const keyframes = [
     {
       offset: 0,
-      transform: `translateY(${maxBounceHeight}%)`,
-      easing: 'cubic-bezier(.75,.05,.86,.08)',
+      transform: `translate3d(0, ${maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
     },
     {
-      offset: 0.3,
-      transform: 'translateY(0)',
-      easing: 'cubic-bezier(.22,.61,.35,1)',
+      offset: 0.29,
+      transform: 'translate3d(0, 0%, 0)',
+      easing: 'cubic-bezier(0, 0, .5, 1)',
     },
     {
-      offset: 0.52,
-      transform: `translateY(${0.6 * maxBounceHeight}%)`,
-      easing: 'cubic-bezier(.75,.05,.86,.08)',
+      offset: 0.45,
+      transform: `translate3d(0, ${0.2812 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
     },
     {
-      offset: 0.74,
-      transform: 'translateY(0)',
-      easing: 'cubic-bezier(.22,.61,.35,1)',
+      offset: 0.61,
+      transform: 'translate3d(0, 0%, 0)',
+      easing: 'cubic-bezier(0, 0, .5, 1)',
     },
     {
-      offset: 0.83,
-      transform: `translateY(${0.3 * maxBounceHeight}%)`,
-      easing: 'cubic-bezier(.75,.05,.86,.08)',
+      offset: 0.71,
+      transform: `translate3d(0, ${0.0956 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
+    },
+    {
+      offset: 0.8,
+      transform: 'translate3d(0, 0%, 0)',
+      easing: 'cubic-bezier(0, 0, .5, 1)',
+    },
+    {
+      offset: 0.85,
+      transform: `translate3d(0, ${0.0359 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
+    },
+    {
+      offset: 0.92,
+      transform: 'translate3d(0, 0%, 0)',
+      easing: 'cubic-bezier(0, 0, .5, 1)',
+    },
+    {
+      offset: 0.96,
+      transform: `translate3d(0, ${0.0156 * maxBounceHeight}%, 0)`,
+      easing: 'cubic-bezier(.5, 0, 1, 1)',
     },
     {
       offset: 1,
-      transform: 'translateY(0)',
-      easing: 'cubic-bezier(.22,.61,.35,1)',
+      transform: 'none',
+      easing: 'cubic-bezier(0, 0, .5, 1)',
     },
   ];
 
