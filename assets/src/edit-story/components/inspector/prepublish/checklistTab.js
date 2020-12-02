@@ -58,7 +58,8 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 215px;
+  width: 200px;
+  max-width: calc(100% - 10px);
 `;
 
 const PanelTitle = styled.span`
@@ -73,6 +74,8 @@ const Row = styled.div`
   margin-bottom: 16px;
   margin-left: ${({ pageGroup }) => (pageGroup ? '16px' : '0')};
   font-size: ${({ theme }) => theme.fonts.body2.size};
+  width: calc(100% - 10px);
+  max-width: 210px;
 `;
 
 const HelperText = styled.span`
