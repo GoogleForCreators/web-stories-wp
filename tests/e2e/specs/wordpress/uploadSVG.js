@@ -15,32 +15,29 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { visitAdminPage } from '@wordpress/e2e-test-utils';
-
-/**
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
-
+/**
+ * WordPress dependencies
+ */
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { withExperimentalFeatures } from '../../utils';
+import { withExperimentalFeatures, fileUpload } from '../../utils';
+
 
 describe('SVG Upload', () => {
   withExperimentalFeatures(['enableSVG']);
   it('upload svg via media library.', async () => {
     await visitAdminPage('media-new.php');
 
-    const elementHandle = await page.$('#html-upload-ui #async-upload');
-    await elementHandle.uploadFile('../../assets/arrow.svg');
+    await fileUpload('#html-upload-ui #async-upload', 'close', 'svg');
     await expect(page).toClick('#html-upload');
 
     await page.waitForNavigation();
-
+    await expect(page).toMatchElement('.attachment[aria-label="close"]');
     await percySnapshot(page, 'SVG uploaded');
-    await expect(page).toMatchElement('.attachment[aria-label="arrow"]');
   });
 });
