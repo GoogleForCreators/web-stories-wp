@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO, SAFE_ZONE_HEIGHT } from '../../constants';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '../../constants';
 import theme from '../../theme';
 
 function isHexColorString(s) {
@@ -27,12 +27,13 @@ function isHexColorString(s) {
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
   const fullToSafeRatio = 1 / safeToFullRatio;
-  const fullBleedHeight = FULLBLEED_RATIO / 2;
-  const safeZoneHeight = SAFE_ZONE_HEIGHT;
+  const safeRatio = PAGE_RATIO;
+  const fullRatio = FULLBLEED_RATIO;
 
-  // Need the ratio in text for CSS. The styling cases below 1 / 2 and above
-  // 9 / 16 will be handled by the default styles.
-  const gridLayerExpandLowerBound = '1 / 2';
+  // The grid layer should stick to the top when the device ratio is between
+  // 493 / 1000 and 9 / 16. The ratio 493 / 1000 can guarantee the grid layer
+  // will respond and not having overlaps with the share button.
+  const gridLayerExpandLowerBound = '493 / 1000';
   const gridLayerExpandUpperBound = '9 / 16';
 
   // Match page background color to the workspace background color.
@@ -58,7 +59,7 @@ function CustomStyles() {
               @media (max-aspect-ratio: ${gridLayerExpandUpperBound})  {
                 @media (min-aspect-ratio: ${gridLayerExpandLowerBound}) {
                   amp-story-grid-layer.grid-layer {
-                    margin-top: calc(${fullBleedHeight} * 100% - ${safeZoneHeight}px);
+                    margin-top: calc((100vw / ${fullRatio} - 100vw / ${safeRatio}) / 2);
                   }
                 }
               }

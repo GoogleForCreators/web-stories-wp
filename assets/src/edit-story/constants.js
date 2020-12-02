@@ -27,7 +27,6 @@ export const INSPECTOR_MAX_WIDTH = 280;
 export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
-export const SAFE_ZONE_HEIGHT = 68;
 
 export const PAGE_RATIO = 2 / 3;
 export const PAGE_WIDTH = 412;
