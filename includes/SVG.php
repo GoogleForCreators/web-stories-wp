@@ -48,7 +48,7 @@ class SVG {
 	 *
 	 * @var string
 	 */
-	const MINE_TYPE = 'image/svg+xml';
+	const MIME_TYPE = 'image/svg+xml';
 
 	/**
 	 * Array of SimpleXMLElements.
@@ -109,7 +109,7 @@ class SVG {
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
-		$enabled = in_array( self::MINE_TYPE, $mime_types, true );
+		$enabled = in_array( self::MIME_TYPE, $mime_types, true );
 
 		/**
 		 * Filter the check to see if svg support is already enabled.
@@ -131,8 +131,8 @@ class SVG {
 	 */
 	public function upload_mimes_add_svg( array $mime_types ) {
 		// allow SVG file upload.
-		$mime_types['svg']  = self::MINE_TYPE;
-		$mime_types['svgz'] = self::MINE_TYPE;
+		$mime_types['svg']  = self::MIME_TYPE;
+		$mime_types['svgz'] = self::MIME_TYPE;
 
 		return $mime_types;
 	}
@@ -147,7 +147,7 @@ class SVG {
 	 */
 	public function mime_types_add_svg( array $mime_types ) {
 		// allow SVG files.
-		$mime_types['svg'] = self::MINE_TYPE;
+		$mime_types['svg'] = self::MIME_TYPE;
 
 		return $mime_types;
 	}
@@ -160,7 +160,7 @@ class SVG {
 	 * @return array
 	 */
 	public function web_stories_allowed_mime_types( array $mime_types ) {
-		$mime_types['image'][] = self::MINE_TYPE;
+		$mime_types['image'][] = self::MIME_TYPE;
 
 		return $mime_types;
 	}
@@ -199,7 +199,7 @@ class SVG {
 		$attachment = get_post( $attachment_id );
 		$mime_type  = get_post_mime_type( $attachment );
 
-		if ( self::MINE_TYPE !== $mime_type ) {
+		if ( self::MIME_TYPE !== $mime_type ) {
 			return $metadata;
 		}
 		$file = get_attached_file( $attachment_id );
@@ -236,7 +236,7 @@ class SVG {
 	 * @return string[]
 	 */
 	public function wp_handle_upload( $upload ) {
-		if ( self::MINE_TYPE !== $upload['type'] ) {
+		if ( self::MIME_TYPE !== $upload['type'] ) {
 			return $upload;
 		}
 
@@ -343,7 +343,7 @@ class SVG {
 		if ( 'image/svg' === $real_mime ) {
 			$wp_check_filetype_and_ext = [
 				'ext'             => self::EXT,
-				'type'            => self::MINE_TYPE,
+				'type'            => self::MIME_TYPE,
 				'proper_filename' => false,
 			];
 		}
