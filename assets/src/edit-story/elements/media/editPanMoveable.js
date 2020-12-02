@@ -61,7 +61,7 @@ function EditPanMoveable({
 
   // Refresh moveables to ensure that the selection rect is always correct.
   useEffect(() => {
-    moveableRef.current.updateRect();
+    moveableRef.current && moveableRef.current.updateRect();
   });
 
   useKeyDownEffect(

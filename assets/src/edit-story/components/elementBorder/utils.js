@@ -19,8 +19,7 @@
  */
 import { canMaskHaveBorder } from '../../masks';
 
-export function shouldDisplayBorder(element) {
-  const { border } = element;
+function hasBorder({ border }) {
   if (!border) {
     return false;
   }
@@ -33,7 +32,13 @@ export function shouldDisplayBorder(element) {
   if (!left && !top && !right && !bottom) {
     return false;
   }
+  return true;
+}
 
+export function shouldDisplayBorder(element) {
+  if (!hasBorder(element)) {
+    return false;
+  }
   return canMaskHaveBorder(element);
 }
 
@@ -65,10 +70,13 @@ export function getBorderStyle({
   top,
   right,
   bottom,
-  position,
   borderRadius,
   skipPositioning = true,
 }) {
+  // If there's no border, return the radius only.
+  if (!hasBorder({ border: { color: rawColor, left, top, right, bottom } })) {
+    return getBorderRadius({ borderRadius });
+  }
   const color = getBorderColor({ color: rawColor });
 
   // We're making the border-width responsive just for the preview,
@@ -84,7 +92,6 @@ export function getBorderStyle({
       top,
       right,
       bottom,
-      position,
       skipPositioning,
     }),
     borderWidth,

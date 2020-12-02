@@ -31,7 +31,6 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
-  elementWithBorderRadius,
   elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -103,7 +102,6 @@ const FillElement = styled.p`
 const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
-  ${elementWithBorderRadius}
   ${elementWithBorder}
   margin: 0;
 `;

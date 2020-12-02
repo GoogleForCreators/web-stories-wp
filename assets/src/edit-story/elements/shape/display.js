@@ -27,7 +27,6 @@ import PropTypes from 'prop-types';
 import {
   elementFillContent,
   elementWithBackgroundColor,
-  elementWithBorderRadius,
   elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -39,7 +38,6 @@ import { useUnits } from '../../units';
 const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
-  ${elementWithBorderRadius}
   ${elementWithBorder}
 `;
 
