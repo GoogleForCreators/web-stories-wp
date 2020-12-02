@@ -64,19 +64,19 @@ describe('ExcerptPanel', () => {
 
   it('should render Excerpt Panel', () => {
     const { getByRole } = setupPanel();
-    const element = getByRole('button', { name: 'Excerpt' });
+    const element = getByRole('button', { name: 'Story Description' });
     expect(element).toBeDefined();
   });
 
   it('should display textbox', () => {
     const { getByRole } = setupPanel();
-    const input = getByRole('textbox', { name: 'Story Excerpt' });
+    const input = getByRole('textbox', { name: 'Story Description' });
     expect(input).toBeDefined();
   });
 
   it('should respect excerpt character limit', async () => {
     const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'Story Excerpt' });
+    const input = getByRole('textbox', { name: 'Story Description' });
 
     const bigExcerpt = ''.padStart(EXCERPT_MAX_LENGTH + 10, '1');
 
