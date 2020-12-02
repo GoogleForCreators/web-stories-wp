@@ -32,7 +32,17 @@ describe('SVG Upload', () => {
   it('upload svg via media library.', async () => {
     await visitAdminPage('media-new.php');
 
-    await fileUpload('#html-upload-ui #async-upload', 'close', 'svg');
+    const display = await page.evaluate(() => {
+      const el = document.querySelector('#html-upload-ui');
+      return getComputedStyle(el).display;
+    });
+
+    if (display !== 'block') {
+      // ensure we use "built-in uploader" as it has `input[type=file]`
+      await page.click('.upload-flash-bypass > a');
+    }
+
+    await fileUpload('#async-upload', 'close', 'svg');
     await expect(page).toClick('#html-upload');
 
     await page.waitForNavigation();
