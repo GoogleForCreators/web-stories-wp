@@ -161,6 +161,6 @@ if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
 
-wp config set WEBSTORIES_SVG_ENABLED true --raw --type=constant --quiet
+wp option patch insert web_stories_experiments enableSVG 1
 wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
-wp config delete WEBSTORIES_SVG_ENABLED
+wp option patch insert web_stories_experiments enableSVG 0

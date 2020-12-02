@@ -65,11 +65,6 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
 }
 
-// Used for e2e tests.
-if ( ! defined( 'WEBSTORIES_SVG_ENABLED' ) ) {
-	define( 'WEBSTORIES_SVG_ENABLED', false );
-}
-
 /**
  * Setup web stories compatibility class.
  *
