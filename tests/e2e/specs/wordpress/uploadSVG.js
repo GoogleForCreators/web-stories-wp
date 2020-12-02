@@ -46,8 +46,10 @@ describe('SVG Upload', () => {
     await expect(page).toClick('#html-upload');
 
     await page.waitForNavigation();
-    await page.waitForSelector('.attachments .attachment');
-    await expect(page).toMatch(filename);
+
+    const attachmentSelector = '.attachment[aria-label="' + filename + '"]';
+    await page.waitForSelector(attachmentSelector);
+    await expect(page).toMatch(attachmentSelector);
     await percySnapshot(page, 'SVG uploaded');
   });
 });
