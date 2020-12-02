@@ -46,6 +46,7 @@ describe('SVG Upload', () => {
     await expect(page).toClick('#html-upload');
 
     await page.waitForNavigation();
+    await page.waitForSelector('.attachments .attachment');
     await expect(page).toMatchElement('.attachment[aria-label="close"]');
     await percySnapshot(page, 'SVG uploaded');
   });
