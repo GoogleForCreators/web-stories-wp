@@ -77,12 +77,12 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 function web_stories_get_compat_instance() {
 	$error      = new WP_Error();
 	$extensions = array(
-		'date'   => array(
+		'date'      => array(
 			'classes' => array(
 				'DateTimeImmutable',
 			),
 		),
-		'dom'    => array(
+		'dom'       => array(
 			'classes' => array(
 				'DOMAttr',
 				'DOMComment',
@@ -94,24 +94,24 @@ function web_stories_get_compat_instance() {
 				'DOMXPath',
 			),
 		),
-		'json'   => array(
+		'json'      => array(
 			'functions' => array(
 				'json_decode',
 				'json_encode',
 			),
 		),
-		'libxml' => array(
+		'libxml'    => array(
 			'functions' => array(
 				'libxml_use_internal_errors',
 				'libxml_clear_errors',
 			),
 		),
-		'simplexml'=> array(
+		'simplexml' => array(
 			'functions' => array(
 				'simplexml_load_string',
 			),
 		),
-		'spl'    => array(
+		'spl'       => array(
 			'functions' => array(
 				'spl_autoload_register',
 			),
