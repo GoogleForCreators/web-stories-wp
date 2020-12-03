@@ -175,19 +175,9 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( $url ) {
-		$post_id = $this->url_to_post_id( $url );
+		$post = $this->url_to_post( $url );
 
-		if ( ! $post_id ) {
-			return false;
-		}
-
-		$post = get_post( $post_id );
-
-		if ( ! $post instanceof WP_Post ) {
-			return false;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+		if ( ! $post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
 			return false;
 		}
 
@@ -195,20 +185,22 @@ class Embed_Controller extends WP_REST_Controller {
 	}
 
 	/**
-	 * Examines a URL and try to determine the post ID it represents.
+	 * Examines a URL and try to determine the post it represents.
 	 *
 	 * Checks are supposedly from the hosted site blog.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @see get_oembed_response_data_for_url
+	 * @see url_to_postid
 	 *
 	 * @since 1.2.0
 	 *
 	 * @param string $url Permalink to check.
-	 * @return int|false Post ID, or false on failure.
+	 * @return WP_Post|null Post object on success, null otherwise.
 	 */
-	private function url_to_post_id( $url ) {
+	private function url_to_post( $url ) {
+		$post          = null;
 		$switched_blog = false;
 
 		if ( is_multisite() ) {
@@ -254,6 +246,10 @@ class Embed_Controller extends WP_REST_Controller {
 			$post_id = url_to_postid( $url );
 		}
 
+		if ( $post_id ) {
+			$post = get_post( $post_id );
+		}
+
 		if ( ! $post_id ) {
 			// url_to_postid() does not recognize plain permalinks like https://example.com/?web-story=my-story.
 			// Let's check for that ourselves.
@@ -278,23 +274,20 @@ class Embed_Controller extends WP_REST_Controller {
 						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
 						$post = get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
 					}
-
-					if ( $post instanceof WP_Post ) {
-						$post_id = $post->ID;
-					}
 				}
 			}
 		}
+
 
 		if ( $switched_blog ) {
 			restore_current_blog();
 		}
 
-		if ( ! $post_id ) {
-			return false;
+		if ( ! $post instanceof WP_Post ) {
+			return null;
 		}
 
-		return $post_id;
+		return $post;
 	}
 
 	/**
