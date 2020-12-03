@@ -83,7 +83,7 @@ describe('Embed Block', () => {
     await page.keyboard.type(
       'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
     );
-    await page.keyboard.press('Enter');
+    await expect(page).toClick('button', { text: 'Embed' });
 
     // Wait a little longer for embed REST API request to come back.
     await page.setDefaultTimeout(10000);
