@@ -53,11 +53,12 @@ function OptionList({
   onClose = () => {},
   onExpandedChange = () => {},
   focusTrigger = 0,
-  options,
+  options = [],
   primaryOptions,
   primaryLabel,
   priorityOptions = [],
   priorityLabel,
+  searchResultsLabel,
   renderer = DefaultRenderer,
   onObserve,
   listId,
@@ -72,21 +73,32 @@ function OptionList({
    * KEYWORD FILTERING
    */
   const filteredListGroups = useMemo(() => {
-    const groups = [];
-    if (priorityOptions?.length) {
-      groups.push({
-        label: priorityLabel,
-        options: createOptionFilter(priorityOptions)(keyword),
-      });
+    // If we're searching, return a single group of search results
+    // gotten from all available options
+    if (isKeywordFilterable(keyword) && options) {
+      return [
+        {
+          label: searchResultsLabel,
+          options: createOptionFilter(options)(keyword),
+        },
+      ];
     }
-    groups.push({
-      label: primaryLabel,
-      options:
-        isKeywordFilterable(keyword) && options
-          ? createOptionFilter(options)(keyword)
-          : primaryOptions,
-    });
-    return groups;
+    // Otherwise return primary options in one group possibly preceeded
+    // by an optional list of priority options if such exist.
+    return [
+      ...(priorityOptions?.length
+        ? [
+            {
+              label: priorityLabel,
+              options: priorityOptions,
+            },
+          ]
+        : []),
+      {
+        label: primaryLabel,
+        options: primaryOptions,
+      },
+    ];
   }, [
     keyword,
     options,
@@ -94,6 +106,7 @@ function OptionList({
     primaryOptions,
     priorityLabel,
     primaryLabel,
+    searchResultsLabel,
   ]);
 
   /*
@@ -269,6 +282,7 @@ OptionList.propTypes = {
   primaryLabel: PropTypes.string,
   priorityOptions: PropTypes.array,
   priorityLabel: PropTypes.string,
+  searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onObserve: PropTypes.func,
   listId: PropTypes.string.isRequired,

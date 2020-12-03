@@ -43,6 +43,7 @@ use WP_Screen;
  *
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ * @SuppressWarnings(PHPMD.ExcessiveClassLength)
  * @SuppressWarnings(PHPMD.TooManyFields)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
@@ -94,14 +95,23 @@ class Story_Post_Type {
 	private $decoder;
 
 	/**
+	 * Meta boxes instance.
+	 *
+	 * @var Meta_Boxes
+	 */
+	private $meta_boxes;
+
+	/**
 	 * Dashboard constructor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
+	 * @param Meta_Boxes  $meta_boxes Meta_Boxes instance.
 	 */
-	public function __construct( Experiments $experiments ) {
+	public function __construct( Experiments $experiments, Meta_Boxes $meta_boxes ) {
 		$this->experiments = $experiments;
+		$this->meta_boxes  = $meta_boxes;
 		$this->decoder     = new Decoder();
 	}
 
@@ -109,6 +119,8 @@ class Story_Post_Type {
 	 * Registers the post type for stories.
 	 *
 	 * @todo refactor
+	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
 	 *
@@ -177,6 +189,10 @@ class Story_Post_Type {
 		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
+
+		// Custom Meta Boxes Support.
+		$metabox = new Meta_Boxes();
+		$metabox->init();
 
 		add_filter( 'rest_' . self::POST_TYPE_SLUG . '_collection_params', [ $this, 'filter_rest_collection_params' ], 10, 2 );
 
@@ -450,7 +466,13 @@ class Story_Post_Type {
 			WEBSTORIES_VERSION
 		);
 
-		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, [ Tracking::SCRIPT_HANDLE ] );
+		$script_dependencies = [ Tracking::SCRIPT_HANDLE ];
+
+		if ( $this->experiments->is_experiment_enabled( 'customMetaBoxes' ) ) {
+			$script_dependencies[] = 'postbox';
+		}
+
+		$this->enqueue_script( self::WEB_STORIES_SCRIPT_HANDLE, $script_dependencies );
 		$this->enqueue_style( self::WEB_STORIES_SCRIPT_HANDLE, [ 'roboto' ] );
 
 		wp_localize_script(
@@ -504,7 +526,7 @@ class Story_Post_Type {
 		$demo = isset( $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$settings = [
-			'id'         => 'edit-story',
+			'id'         => 'web-stories-editor',
 			'config'     => [
 				'autoSaveInterval' => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 				'isRTL'            => is_rtl(),
@@ -527,12 +549,14 @@ class Story_Post_Type {
 					'media'       => '/web-stories/v1/media/',
 					'link'        => '/web-stories/v1/link/',
 					'statusCheck' => '/web-stories/v1/status-check/',
+					'metaBoxes'   => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 				],
 				'metadata'         => [
 					'publisher' => $this->get_publisher_data(),
 				],
 				'version'          => WEBSTORIES_VERSION,
 				'encodeMarkup'     => $this->decoder->supports_decoding(),
+				'metaBoxes'        => $this->meta_boxes->get_meta_boxes_per_location(),
 			],
 			'flags'      => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),

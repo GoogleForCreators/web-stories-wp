@@ -14,6 +14,11 @@
  * limitations under the License.
  */
 
+/**
+ * Internal dependencies
+ */
+import * as Icons from './icons';
+
 export * from './components';
-export * as Icons from './icons';
 export * from './theme';
+export { Icons };

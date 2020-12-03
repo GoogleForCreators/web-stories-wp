@@ -44,6 +44,8 @@ use Google\Web_Stories\Shortcode\Embed_Shortcode;
 
 /**
  * Plugin class.
+ *
+ * @SuppressWarnings(PHPMD.TooManyFields)
  */
 class Plugin {
 	/**
@@ -152,6 +154,13 @@ class Plugin {
 	public $integrations = [];
 
 	/**
+	 * Meta boxes.
+	 *
+	 * @var Meta_Boxes
+	 */
+	public $meta_boxes;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -187,7 +196,10 @@ class Plugin {
 		$this->template = new Template_Post_Type();
 		add_action( 'init', [ $this->template, 'init' ] );
 
-		$this->story = new Story_Post_Type( $this->experiments );
+		$this->meta_boxes = new Meta_Boxes();
+		add_action( 'admin_init', [ $this->meta_boxes, 'init' ] );
+
+		$this->story = new Story_Post_Type( $this->experiments, $this->meta_boxes );
 		add_action( 'init', [ $this->story, 'init' ] );
 
 		// REST API endpoints.

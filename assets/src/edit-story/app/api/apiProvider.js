@@ -37,7 +37,7 @@ import Context from './context';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck },
+    api: { stories, media, link, users, statusCheck, metaBoxes },
     encodeMarkup,
     cdnURL,
   } = useConfig();
@@ -262,6 +262,31 @@ function APIProvider({ children }) {
     [users]
   );
 
+  // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
+  const saveMetaBoxes = useCallback(
+    (story, formData) => {
+      // Additional data needed for backward compatibility.
+      // If we do not provide this data, the post will be overridden with the default values.
+      const additionalData = [
+        story.comment_status ? ['comment_status', story.comment_status] : false,
+        story.ping_status ? ['ping_status', story.ping_status] : false,
+        story.sticky ? ['sticky', story.sticky] : false,
+        // TODO: Adapt once https://github.com/google/web-stories-wp/pull/5039 is merged.
+        story.author ? ['post_author', story.author] : false,
+      ].filter(Boolean);
+
+      additionalData.forEach(([key, value]) => formData.append(key, value));
+
+      return apiFetch({
+        url: metaBoxes,
+        method: 'POST',
+        body: formData,
+        parse: false,
+      });
+    },
+    [metaBoxes]
+  );
+
   /**
    * Status check, submit html string.
    *
@@ -295,6 +320,7 @@ function APIProvider({ children }) {
       uploadMedia,
       updateMedia,
       deleteMedia,
+      saveMetaBoxes,
       getStatusCheck,
       getTemplates,
     },
