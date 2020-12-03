@@ -67,10 +67,6 @@ const HiddenPosterImage = styled.img`
   display: none;
 `;
 
-const MediaWrapper = styled.div`
-  position: absolute;
-`;
-
 const CloneImg = styled.img`
   opacity: 1;
   width: ${({ width }) => `${width}px`};
@@ -92,7 +88,6 @@ function InnerElement({
   const newVideoPosterRef = useRef(null);
   const hiddenPoster = useRef(null);
   const mediaBaseColor = useRef(null);
-  const mediaWrapper = useRef(null);
 
   const {
     state: { draggingResource },
@@ -215,7 +210,7 @@ function InnerElement({
           originRef={mediaElement}
         />
       )}
-      <MediaWrapper ref={mediaWrapper}>{media}</MediaWrapper>
+      {media}
     </>
   );
 }
