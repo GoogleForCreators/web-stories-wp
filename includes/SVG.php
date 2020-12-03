@@ -407,7 +407,7 @@ class SVG {
 		$key = md5( $file );
 		if ( ! isset( $this->svgs[ $key ] ) ) {
 			if ( is_readable( $file ) ) {
-				$this->svgs[ $key ] = file_get_contents( $file ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
+				$this->svgs[ $key ] = (string) file_get_contents( $file ); // phpcs:ignore WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown
 			} else {
 				$this->svgs[ $key ] = '';
 			}
