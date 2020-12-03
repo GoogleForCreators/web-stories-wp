@@ -173,14 +173,16 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		return rest_get_server()->dispatch( $request );
 	}
 
-	public function test_not_logged_in() {
+	public function test_missing_param() {
 		$response = $this->dispatch_request();
-		$this->assertEquals( 400, $response->get_status() );
+
+		$this->assertErrorResponse( 'rest_missing_callback_param', $response, 400 );
 	}
 
-	public function test_not_logged_in_empty_string() {
+	public function test_not_logged_in() {
 		$response = $this->dispatch_request( '' );
-		$this->assertEquals( 401, $response->get_status() );
+
+		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
 	}
 
 	public function test_without_permission() {
@@ -188,37 +190,33 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 
 		$response = $this->dispatch_request( self::VALID_URL );
 
-		$this->assertEquals( 403, $response->get_status() );
-		$data = $response->get_data();
-		$this->assertEquals( $data['code'], 'rest_forbidden' );
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertErrorResponse( 'rest_forbidden', $response, 403 );
 	}
 
 	public function test_url_empty_string() {
 		wp_set_current_user( self::$editor );
+
 		$response = $this->dispatch_request( '' );
-		$data     = $response->get_data();
 
 		$this->assertEquals( 0, $this->request_count );
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
 	public function test_invalid_url() {
 		wp_set_current_user( self::$editor );
-		$response = $this->dispatch_request( self::INVALID_URL );
-		$data     = $response->get_data();
 
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_url' );
+		$response = $this->dispatch_request( self::INVALID_URL );
+
+		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
 	public function test_empty_url() {
 		wp_set_current_user( self::$editor );
-		$response = $this->dispatch_request( self::VALID_URL_EMPTY_DOCUMENT );
-		$data     = $response->get_data();
 
-		$this->assertEquals( 404, $response->get_status() );
-		$this->assertEquals( $data['code'], 'rest_invalid_story' );
+		$response = $this->dispatch_request( self::VALID_URL_EMPTY_DOCUMENT );
+
+		$this->assertErrorResponse( 'rest_invalid_story', $response, 404 );
 	}
 
 	public function test_valid_url() {
