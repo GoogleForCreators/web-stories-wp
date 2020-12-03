@@ -45,6 +45,18 @@ describe('Element', () => {
       expect(textElement.font).toMatchObject(TEXT_ELEMENT_DEFAULT_FONT);
     });
 
+    it('exposes optional overrides', () => {
+      const atts = {
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 100,
+      };
+      const overrides = { id: 'a' };
+      const textElement = createNewElement('text', atts, overrides);
+      expect(textElement.id).toStrictEqual('a');
+    });
+
     it('should throw if trying to create unknown element type', () => {
       const unknownElementCreator = () => createNewElement('puppy');
       expect(unknownElementCreator).toThrow(/unknown element type: puppy/i);
@@ -83,6 +95,7 @@ describe('Element', () => {
         id: expect.not.stringMatching(oldPage.id),
         type: 'page',
         otherProperty: '45',
+        animations: [],
         elements: [
           expect.objectContaining({
             id: expect.not.stringMatching(oldElements[0].id),
@@ -105,6 +118,34 @@ describe('Element', () => {
           }),
         ],
       });
+    });
+
+    it('should update animation ids to new element ids', () => {
+      const oldElements = [
+        { id: 'a', isBackground: true, x: 10, y: 20, type: 'shape' },
+        { id: 'b', x: 110, y: 120, type: 'text' },
+        { id: 'c', x: 210, y: 220, type: 'image' },
+      ];
+      const oldAnimations = [
+        { id: 'anim_id', targets: ['a'], duration: 1000, type: 'ANIM_TYPE' },
+      ];
+      const oldPage = {
+        id: '1',
+        type: 'page',
+        elements: oldElements,
+        animations: oldAnimations,
+        otherProperty: '45',
+      };
+      const newPage = duplicatePage(oldPage);
+
+      // Expect same structure but new id's!
+      expect(newPage.animations).toStrictEqual([
+        {
+          ...oldAnimations[0],
+          id: expect.any(String),
+          targets: [newPage.elements[0].id],
+        },
+      ]);
     });
   });
 });
