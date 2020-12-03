@@ -147,7 +147,7 @@ export function removeDuplicates(entries = []) {
 
 /**
  * Takes to sets of entries and returns unique entries
- * of right set not present in left set.
+ * (keying on id) of right set not present in left set.
  *
  * @param {Array<Entry>} left - base set of entries
  * @param {Array<Entry>} right - new entries
