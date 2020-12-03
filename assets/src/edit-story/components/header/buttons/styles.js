@@ -22,10 +22,10 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { ReactComponent as Warning } from '../../../../design-system/icons/alert/warning.svg';
+import { Warning } from '../../../../design-system/icons';
 
 export const WarningIcon = styled(Warning)`
-  color: white;
+  color: $(({theme}) => theme.colors.fg.white);
   width: 14px;
   height: 14px;
   margin-left: 8px;
