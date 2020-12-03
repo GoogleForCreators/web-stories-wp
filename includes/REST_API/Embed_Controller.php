@@ -168,8 +168,6 @@ class Embed_Controller extends WP_REST_Controller {
 	/**
 	 * Retrieves the story metadata for a given URL on the current site.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $url  The URL that should be inspected for metadata.
@@ -177,6 +175,40 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( $url ) {
+		$post_id = $this->url_to_post_id( $url );
+
+		if ( ! $post_id ) {
+			return false;
+		}
+
+		$post = get_post( $post_id );
+
+		if ( ! $post instanceof WP_Post ) {
+			return false;
+		}
+
+		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+			return false;
+		}
+
+		return $this->get_data_from_document( $post->post_content );
+	}
+
+	/**
+	 * Examines a URL and try to determine the post ID it represents.
+	 *
+	 * Checks are supposedly from the hosted site blog.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
+	 * @see get_oembed_response_data_for_url
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $url Permalink to check.
+	 * @return int|false Post ID, or false on failure.
+	 */
+	private function url_to_post_id( $url ) {
 		$switched_blog = false;
 
 		if ( is_multisite() ) {
@@ -232,11 +264,11 @@ class Embed_Controller extends WP_REST_Controller {
 			if ( $url_host === $home_url_host ) {
 				$values = [];
 				if (
-					preg_match(
-						'#[?&](' . preg_quote( Story_Post_Type::POST_TYPE_SLUG, '#' ) . ')=([^&]+)#',
-						$url,
-						$values
-					)
+				preg_match(
+					'#[?&](' . preg_quote( Story_Post_Type::POST_TYPE_SLUG, '#' ) . ')=([^&]+)#',
+					$url,
+					$values
+				)
 				) {
 					$slug = $values[2];
 
@@ -254,30 +286,15 @@ class Embed_Controller extends WP_REST_Controller {
 			}
 		}
 
-		if ( ! $post_id ) {
-			if ( $switched_blog ) {
-				restore_current_blog();
-			}
-
-			return false;
-		}
-
-		$post = get_post( $post_id );
-		if ( ! $post instanceof WP_Post ) {
-			return false;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
-			return false;
-		}
-
-		$data = $this->get_data_from_document( $post->post_content );
-
 		if ( $switched_blog ) {
 			restore_current_blog();
 		}
 
-		return $data;
+		if ( ! $post_id ) {
+			return false;
+		}
+
+		return $post_id;
 	}
 
 	/**
