@@ -141,9 +141,11 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickUnderline: selectionActions.toggleUnderlineInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
-        // clear editor to save any pending updates then update font weight on selectedElements
+        // when editing, resetting font weight needs to save before resetting
         handleResetFontWeight: async (weight) => {
+          // clear editing to save any pending updates
           await clearEditing();
+          // queue push until selectedElements are saved and content is updated
           queuePush(htmlFormatters.setFontWeight, weight);
         },
       };
