@@ -19,8 +19,7 @@
  */
 import { canMaskHaveBorder } from '../../masks';
 
-export function shouldDisplayBorder(element) {
-  const { border } = element;
+function hasBorder({ border }) {
   if (!border) {
     return false;
   }
@@ -33,7 +32,13 @@ export function shouldDisplayBorder(element) {
   if (!left && !top && !right && !bottom) {
     return false;
   }
+  return true;
+}
 
+export function shouldDisplayBorder(element) {
+  if (!hasBorder(element)) {
+    return false;
+  }
   return canMaskHaveBorder(element);
 }
 
@@ -65,10 +70,13 @@ export function getBorderStyle({
   top,
   right,
   bottom,
-  position,
   borderRadius,
   skipPositioning = true,
 }) {
+  // If there's no border, return the radius only.
+  if (!hasBorder({ border: { color: rawColor, left, top, right, bottom } })) {
+    return getBorderRadius({ borderRadius });
+  }
   const color = getBorderColor({ color: rawColor });
 
   // We're making the border-width responsive just for the preview,
@@ -84,7 +92,6 @@ export function getBorderStyle({
       top,
       right,
       bottom,
-      position,
       skipPositioning,
     }),
     borderWidth,
@@ -125,4 +132,52 @@ export function getBorderColor({ color }) {
     color: { r, g, b, a },
   } = color;
   return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
+}
+
+/**
+ * Returns border values based on if it's preview or not.
+ *
+ * @param {Object} border Original border.
+ * @param {boolean} previewMode If it's preview mode.
+ * @param {Function} converter Function to convert the border values.
+ * @return {Object} New border values.
+ */
+export function getResponsiveBorder(border, previewMode, converter) {
+  if (!previewMode || !border) {
+    return border;
+  }
+  const { left, top, right, bottom } = border;
+  return {
+    ...border,
+    left: converter(left),
+    top: converter(top),
+    right: converter(right),
+    bottom: converter(bottom),
+  };
+}
+
+/**
+ * Returns border values based on if it's preview or not.
+ *
+ * @param {Object} borderRadius Original borderRadius.
+ * @param {boolean} previewMode If it's preview mode.
+ * @param {Function} converter Function to convert the values.
+ * @return {Object} New border radius values.
+ */
+export function getResponsiveBorderRadius(
+  borderRadius,
+  previewMode,
+  converter
+) {
+  if (!previewMode || !borderRadius) {
+    return borderRadius;
+  }
+  const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
+  return {
+    ...borderRadius,
+    topLeft: converter(topLeft),
+    topRight: converter(topRight),
+    bottomLeft: converter(bottomLeft),
+    bottomRight: converter(bottomRight),
+  };
 }

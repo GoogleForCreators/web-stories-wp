@@ -38,6 +38,7 @@ import { useTransformHandler } from '../transform';
 import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
 import {
   getBorderPositionCSS,
+  getResponsiveBorder,
   shouldDisplayBorder,
 } from '../elementBorder/utils';
 
@@ -141,16 +142,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   const bgOverlayRef = useRef(null);
   useColorTransformHandler({ id, targetRef: bgOverlayRef });
 
-  const responsiveBorder =
-    previewMode && shouldDisplayBorder(element)
-      ? {
-          ...border,
-          left: dataToEditorX(border.left),
-          top: dataToEditorX(border.top),
-          right: dataToEditorX(border.right),
-          bottom: dataToEditorX(border.bottom),
-        }
-      : border;
   return (
     <Wrapper ref={wrapperRef} data-element-id={id} {...box}>
       <AnimationWrapper id={id} isAnimatable={isAnimatable}>
@@ -162,7 +153,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
             ...(shouldDisplayBorder(element)
               ? getBorderPositionCSS({
-                  ...responsiveBorder,
+                  ...getResponsiveBorder(border, previewMode, dataToEditorX),
                   width: `${box.width}px`,
                   height: `${box.height}px`,
                   skipPositioning: false,

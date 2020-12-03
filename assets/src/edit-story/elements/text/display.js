@@ -31,7 +31,6 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
-  elementWithBorderRadius,
   elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
@@ -43,7 +42,11 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
-import { shouldDisplayBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
@@ -103,7 +106,6 @@ const FillElement = styled.p`
 const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
-  ${elementWithBorderRadius}
   ${elementWithBorder}
   margin: 0;
 `;
@@ -116,6 +118,7 @@ function TextDisplay({
     backgroundColor,
     backgroundTextMode,
     border,
+    borderRadius,
     ...rest
   },
   previewMode,
@@ -130,7 +133,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { borderRadius, font } = rest;
+  const { font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -216,17 +219,6 @@ function TextDisplay({
     [content]
   );
 
-  border =
-    previewMode && shouldDisplayBorder(element)
-      ? {
-          ...border,
-          left: dataToEditorX(border.left),
-          top: dataToEditorX(border.top),
-          right: dataToEditorX(border.right),
-          bottom: dataToEditorX(border.bottom),
-        }
-      : border;
-
   if (isHighLight) {
     // We need a separate outside border wrapper for outside border
     // since the highlight wrapper uses negative margin to position the content.
@@ -234,8 +226,12 @@ function TextDisplay({
     return (
       <OutsideBorder
         ref={outerBorderRef}
-        border={border}
-        borderRadius={borderRadius}
+        border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+        borderRadius={getResponsiveBorderRadius(
+          borderRadius,
+          previewMode,
+          dataToEditorX
+        )}
       >
         <HighlightWrapperElement ref={ref} {...props}>
           <HighlightElement {...props}>

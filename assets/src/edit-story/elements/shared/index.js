@@ -60,7 +60,6 @@ export const elementWithBorderRadius = css`
 
 export const elementWithBorder = css`
   ${({ border, borderRadius }) =>
-    border?.color &&
     getBorderStyle({
       ...border,
       borderRadius,

@@ -25,13 +25,13 @@ import PropTypes from 'prop-types';
  */
 import { useRef } from 'react';
 import StoryPropTypes from '../../types';
-import {
-  elementFillContent,
-  elementWithBorderRadius,
-  elementWithBorder,
-} from '../shared';
+import { elementFillContent, elementWithBorder } from '../shared';
 import { useTransformHandler } from '../../components/transform';
-import { shouldDisplayBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
@@ -39,7 +39,6 @@ import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
-  ${elementWithBorderRadius}
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
@@ -97,18 +96,12 @@ function MediaDisplay({
   return (
     <Element
       ref={ref}
-      border={
-        previewMode && shouldDisplayBorder(element)
-          ? {
-              ...border,
-              left: dataToEditorX(border.left),
-              top: dataToEditorX(border.top),
-              right: dataToEditorX(border.right),
-              bottom: dataToEditorX(border.bottom),
-            }
-          : border
-      }
-      borderRadius={borderRadius}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
       showPlaceholder={showPlaceholder}
     >
       {children}
