@@ -64,7 +64,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-		if ( ! empty( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
+		if ( wp_validate_boolean( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
@@ -391,8 +391,8 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$query_params['web_stories_demo'] = [
 			'description' => __( 'Load demo data.', 'web-stories' ),
-			'type'        => 'string',
-			'default'     => '0',
+			'type'        => 'boolean',
+			'default'     => false,
 		];
 
 		return $query_params;

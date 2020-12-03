@@ -523,7 +523,7 @@ class Story_Post_Type {
 			'preview_nonce' => wp_create_nonce( 'post_preview_' . $story_id ),
 		];
 
-		$demo = isset( $_GET['web-stories-demo'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$is_demo = ( isset( $_GET['web-stories-demo'] ) && boolval( $_GET['web-stories-demo'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		$settings = [
 			'id'         => 'web-stories-editor',
@@ -537,7 +537,7 @@ class Story_Post_Type {
 				'storyId'          => $story_id,
 				'previewLink'      => get_preview_post_link( $story_id, $preview_query_args ),
 				'maxUpload'        => $max_upload_size,
-				'isDemo'           => $demo,
+				'isDemo'           => $is_demo,
 				'capabilities'     => [
 					'hasPublishAction'      => $has_publish_action,
 					'hasAssignAuthorAction' => $has_assign_author_action,
