@@ -85,11 +85,13 @@ describe('Embed Block', () => {
     );
     await expect(page).toClick('button', { text: 'Embed' });
 
-    // Wait a little longer for embed REST API request to come back.
-    await page.setDefaultTimeout(10000);
-    await page.waitForSelector('amp-story-player');
-    await page.setDefaultTimeout(3000);
+    await page.waitForTimeout(10000);
+    await expect(page).not.toMatch(
+      'Sorry, this content could not be embedded.'
+    );
 
+    // Wait a little longer for embed REST API request to come back.
+    await page.waitForSelector('amp-story-player');
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
   });
