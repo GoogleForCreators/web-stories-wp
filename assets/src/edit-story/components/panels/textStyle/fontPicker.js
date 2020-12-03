@@ -38,7 +38,6 @@ import stripHTML from '../../../utils/stripHTML';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import { Option, Selected } from '../../form/advancedDropDown/list/styled';
-import { useCanvas } from '../../canvas';
 import useRichTextFormatting from './useRichTextFormatting';
 import getClosestFontWeight from './getClosestFontWeight';
 
@@ -75,19 +74,6 @@ function FontPicker({ selectedElements, pushUpdate }) {
     })
   );
 
-  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
-    clearEditing,
-  }));
-
-  const resetFontWeight = useCallback(
-    async ({ weights }) => {
-      const newFontWeight = getClosestFontWeight(400, weights);
-      await clearEditing();
-      handleResetFontWeight(newFontWeight);
-    },
-    [clearEditing, handleResetFontWeight]
-  );
-
   const handleFontPickerChange = useCallback(
     async ({ id }) => {
       const fontObj = fonts.find((item) => item.value === id);
@@ -102,6 +88,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
           'metrics',
         ]),
       };
+
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
@@ -114,7 +101,9 @@ function FontPicker({ selectedElements, pushUpdate }) {
       );
       addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
-      resetFontWeight(newFont);
+
+      const newFontWeight = getClosestFontWeight(400, fontObj.weights);
+      await handleResetFontWeight(newFontWeight);
     },
     [
       addRecentFont,
@@ -124,7 +113,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
-      resetFontWeight,
+      handleResetFontWeight,
     ]
   );
 
