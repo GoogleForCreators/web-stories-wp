@@ -170,7 +170,7 @@ export const MESSAGES = {
     TOO_MANY_LINKS: {
       MAIN_TEXT: __('Too many links on a page', 'web-stories'),
       HELPER_TEXT: __(
-        'Avoid having more than one link per page.',
+        'Avoid having more than three links per page.',
         'web-stories'
       ),
     },
@@ -182,25 +182,17 @@ export const MESSAGES = {
       ),
     },
     MISSING_IMAGE_ALT_TEXT: {
-      MAIN_TEXT: __('Image missing alt text', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: %s: alt. */
-        __(
-          'Add meaningful “%s” text to images to optimize accessibility and indexability.',
-          'web-stories'
-        ),
-        'alt'
+      MAIN_TEXT: __('Image missing description', 'web-stories'),
+      HELPER_TEXT: __(
+        'Add meaningful assistive text to images to optimize accessibility and indexability.',
+        'web-stories'
       ),
     },
     MISSING_VIDEO_ALT_TEXT: {
-      MAIN_TEXT: __('Video missing alt text', 'web-stories'),
-      HELPER_TEXT: sprintf(
-        /* translators: %s: alt. */
-        __(
-          'Add meaningful “%s” text to videos to optimize accessibility and indexability.',
-          'web-stories'
-        ),
-        'alt'
+      MAIN_TEXT: __('Video missing description', 'web-stories'),
+      HELPER_TEXT: __(
+        'Add meaningful assistive text to videos to optimize accessibility and indexability.',
+        'web-stories'
       ),
     },
   },

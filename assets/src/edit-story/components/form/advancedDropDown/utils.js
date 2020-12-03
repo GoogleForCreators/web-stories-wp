@@ -15,7 +15,7 @@
  */
 export const createOptionFilter = (options) => (keyword) =>
   options.filter(({ name }) =>
-    name.toLowerCase().includes(keyword.toLowerCase())
+    name.toLowerCase().startsWith(keyword.toLowerCase())
   );
 
 export const isKeywordFilterable = (keyword) => keyword.trim().length >= 2;

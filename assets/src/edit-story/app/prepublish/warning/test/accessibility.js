@@ -317,19 +317,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         accessibilityChecks.videoElementMissingAlt(element)
       ).toBeUndefined();
     });
-
-    it('should return undefined if video resource has alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'image',
-        resource: {
-          alt: 'Image is about things',
-        },
-      };
-      expect(
-        accessibilityChecks.videoElementMissingAlt(element)
-      ).toBeUndefined();
-    });
   });
 
   describe('videoElementMissingCaptions', () => {
@@ -552,19 +539,6 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         type: 'image',
         alt: 'Image is about things',
         resource: {},
-      };
-      expect(
-        accessibilityChecks.imageElementMissingAlt(element)
-      ).toBeUndefined();
-    });
-
-    it('should return undefined if image resource has alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'image',
-        resource: {
-          alt: 'Image is about things',
-        },
       };
       expect(
         accessibilityChecks.imageElementMissingAlt(element)
