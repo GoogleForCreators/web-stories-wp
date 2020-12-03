@@ -31,7 +31,11 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { shouldDisplayBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { useUnits } from '../../units';
 
@@ -86,28 +90,12 @@ function ShapeDisplay({ element, previewMode }) {
     <Element
       ref={ref}
       backgroundColor={backgroundColor}
-      borderRadius={
-        previewMode && borderRadius
-          ? {
-              ...borderRadius,
-              topLeft: dataToEditorX(borderRadius.topLeft),
-              topRight: dataToEditorX(borderRadius.topRight),
-              bottomLeft: dataToEditorX(borderRadius.bottomLeft),
-              bottomRight: dataToEditorX(borderRadius.bottomRight),
-            }
-          : borderRadius
-      }
-      border={
-        previewMode && border
-          ? {
-              ...border,
-              left: dataToEditorX(border.left),
-              top: dataToEditorX(border.top),
-              right: dataToEditorX(border.right),
-              bottom: dataToEditorX(border.bottom),
-            }
-          : border
-      }
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
     />
   );
 }

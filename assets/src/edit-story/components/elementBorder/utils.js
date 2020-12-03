@@ -133,3 +133,51 @@ export function getBorderColor({ color }) {
   } = color;
   return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
 }
+
+/**
+ * Returns border values based on if it's preview or not.
+ *
+ * @param {Object} border Original border.
+ * @param {boolean} previewMode If it's preview mode.
+ * @param {Function} converter Function to convert the border values.
+ * @return {Object} New border values.
+ */
+export function getResponsiveBorder(border, previewMode, converter) {
+  if (!previewMode || !border) {
+    return border;
+  }
+  const { left, top, right, bottom } = border;
+  return {
+    ...border,
+    left: converter(left),
+    top: converter(top),
+    right: converter(right),
+    bottom: converter(bottom),
+  };
+}
+
+/**
+ * Returns border values based on if it's preview or not.
+ *
+ * @param {Object} borderRadius Original borderRadius.
+ * @param {boolean} previewMode If it's preview mode.
+ * @param {Function} converter Function to convert the values.
+ * @return {Object} New border radius values.
+ */
+export function getResponsiveBorderRadius(
+  borderRadius,
+  previewMode,
+  converter
+) {
+  if (!previewMode || !borderRadius) {
+    return borderRadius;
+  }
+  const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
+  return {
+    ...borderRadius,
+    topLeft: converter(topLeft),
+    topRight: converter(topRight),
+    bottomLeft: converter(bottomLeft),
+    bottomRight: converter(bottomRight),
+  };
+}

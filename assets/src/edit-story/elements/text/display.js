@@ -42,7 +42,11 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
-import { shouldDisplayBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
@@ -215,28 +219,6 @@ function TextDisplay({
     [content]
   );
 
-  border =
-    previewMode && border
-      ? {
-          ...border,
-          left: dataToEditorX(border.left),
-          top: dataToEditorX(border.top),
-          right: dataToEditorX(border.right),
-          bottom: dataToEditorX(border.bottom),
-        }
-      : border;
-
-  borderRadius =
-    previewMode && borderRadius
-      ? {
-          ...borderRadius,
-          topLeft: dataToEditorX(borderRadius.topLeft),
-          topRight: dataToEditorX(borderRadius.topRight),
-          bottomLeft: dataToEditorX(borderRadius.bottomLeft),
-          bottomRight: dataToEditorX(borderRadius.bottomRight),
-        }
-      : borderRadius;
-
   if (isHighLight) {
     // We need a separate outside border wrapper for outside border
     // since the highlight wrapper uses negative margin to position the content.
@@ -244,8 +226,12 @@ function TextDisplay({
     return (
       <OutsideBorder
         ref={outerBorderRef}
-        border={border}
-        borderRadius={borderRadius}
+        border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+        borderRadius={getResponsiveBorderRadius(
+          borderRadius,
+          previewMode,
+          dataToEditorX
+        )}
       >
         <HighlightWrapperElement ref={ref} {...props}>
           <HighlightElement {...props}>

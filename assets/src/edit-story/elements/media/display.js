@@ -27,7 +27,11 @@ import { useRef } from 'react';
 import StoryPropTypes from '../../types';
 import { elementFillContent, elementWithBorder } from '../shared';
 import { useTransformHandler } from '../../components/transform';
-import { shouldDisplayBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
@@ -92,28 +96,12 @@ function MediaDisplay({
   return (
     <Element
       ref={ref}
-      border={
-        previewMode && border
-          ? {
-              ...border,
-              left: dataToEditorX(border.left),
-              top: dataToEditorX(border.top),
-              right: dataToEditorX(border.right),
-              bottom: dataToEditorX(border.bottom),
-            }
-          : border
-      }
-      borderRadius={
-        previewMode && borderRadius
-          ? {
-              ...borderRadius,
-              topLeft: dataToEditorX(borderRadius.topLeft),
-              topRight: dataToEditorX(borderRadius.topRight),
-              bottomLeft: dataToEditorX(borderRadius.bottomLeft),
-              bottomRight: dataToEditorX(borderRadius.bottomRight),
-            }
-          : borderRadius
-      }
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
       showPlaceholder={showPlaceholder}
     >
       {children}
