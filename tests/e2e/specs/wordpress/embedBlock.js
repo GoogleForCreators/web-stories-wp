@@ -92,6 +92,13 @@ describe('Embed Block', () => {
     withDisabledToolbarOnFrontend();
 
     it('should produce valid AMP when using the AMP plugin', async () => {
+      page.on('requestfailed', (request) => {
+        console.log(
+          `url: ${request.url()}, errText: ${
+            request.failure().errorText
+          }, method: ${request.method()}`
+        );
+      });
       await activatePlugin('amp');
 
       await createNewPost({
