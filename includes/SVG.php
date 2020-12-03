@@ -39,7 +39,7 @@ use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
  */
 class SVG {
 	/**
-	 * File extenstion.
+	 * File extension.
 	 *
 	 * @since 1.2.0
 	 *
@@ -329,7 +329,7 @@ class SVG {
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
 
-		if ( false == $clean ) {
+		if ( false === $clean ) {
 			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
 		}
 
