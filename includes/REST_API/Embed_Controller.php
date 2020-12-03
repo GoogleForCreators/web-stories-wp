@@ -93,7 +93,7 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_proxy_item( $request ) {
-		$url = untrailingslashit( $request['url'] );
+		$url = urldecode( untrailingslashit( $request['url'] ) );
 
 		if ( empty( $url ) ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
