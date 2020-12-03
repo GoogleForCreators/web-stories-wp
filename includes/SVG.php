@@ -39,7 +39,7 @@ use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
  */
 class SVG {
 	/**
-	 * File extenstion.
+	 * File extension.
 	 *
 	 * @since 1.2.0
 	 *
