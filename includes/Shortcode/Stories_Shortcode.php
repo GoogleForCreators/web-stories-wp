@@ -82,7 +82,7 @@ class Stories_Shortcode {
 				'list_view_image_alignment' => 'left',
 				'class'                     => '',
 				'number'                    => 10,
-				'order'                     => 'DESC',
+				'order'                     => 'latest',
 			],
 			$attributes
 		);
@@ -124,8 +124,7 @@ class Stories_Shortcode {
 
 		// Show 100 stories at most to avoid 500 errors.
 		$args['posts_per_page'] = min( (int) $this->attributes['number'], 100 );
-		$args['order']          = 'ASC' === $this->attributes['order'] ? 'ASC' : 'DESC';
-		$order_by               = $args['order'];
+		$order_by               = $this->attributes['order'];
 
 		switch ( $order_by ) {
 			case 'oldest':
