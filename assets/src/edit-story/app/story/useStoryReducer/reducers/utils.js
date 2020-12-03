@@ -127,8 +127,10 @@ export function updateAnimations(oldAnimations, animationUpdates) {
 }
 
 /**
- * @typedef {{ id: string, [prop: string]: any}} Entry
- * @property {string} id - unique identifier for entry
+ * Entry must have {id: string, ...} prop on it. WIP
+ * on enforcing this with jsdocs.
+ *
+ * @typedef {Object.<string, any>} Entry
  */
 
 /**
