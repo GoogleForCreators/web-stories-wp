@@ -152,6 +152,35 @@ class SVG extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::wp_check_filetype_and_ext
+	 */
+	public function test_wp_check_filetype_and_ext() {
+		$svg = $this->get_svg_object();
+		$svg->init();
+		$filepath = __DIR__ . '/../data/animated.svg';
+		$data     = wp_check_filetype_and_ext( $filepath, $filepath );
+		$this->assertArrayHasKey( 'ext', $data );
+		$this->assertArrayHasKey( 'type', $data );
+		$this->assertArrayHasKey( 'proper_filename', $data );
+
+		$this->assertSame( $data['ext'], 'svg' );
+		$this->assertSame( $data['type'], 'image/svg+xml' );
+	}
+
+	/**
+	 * @covers ::wp_handle_upload
+	 */
+	public function test_wp_handle_upload() {
+		$svg    = $this->get_svg_object();
+		$upload = [
+			'tmp_name' => __DIR__ . '/../data/video-play.svg',
+			'type'     => 'image/svg+xml',
+		];
+		$data   = $svg->wp_handle_upload( $upload );
+		$this->assertSame( $data, $upload );
+	}
+
+	/**
 	 * @return \Google\Web_Stories\SVG
 	 */
 	protected function get_svg_object() {
@@ -161,6 +190,4 @@ class SVG extends \WP_UnitTestCase {
 
 		return new \Google\Web_Stories\SVG( $experiments );
 	}
-
-
 }

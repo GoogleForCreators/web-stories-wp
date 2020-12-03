@@ -329,7 +329,7 @@ class SVG {
 		$sanitizer = new Sanitizer();
 		$clean     = $sanitizer->sanitize( $dirty );
 
-		if ( false === $clean ) {
+		if ( empty( $clean ) ) {
 			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
 		}
 
