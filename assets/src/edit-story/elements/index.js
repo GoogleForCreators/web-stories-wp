@@ -34,7 +34,7 @@ import * as shapeElement from './shape';
 import * as videoElement from './video';
 import * as gifElement from './gif';
 
-export const createNewElement = (type, attributes = {}) => {
+export const createNewElement = (type, attributes = {}, overrides = {}) => {
   const element = getDefinitionForType(type);
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
@@ -45,6 +45,7 @@ export const createNewElement = (type, attributes = {}) => {
     ...attributes,
     type,
     id: uuidv4(),
+    ...overrides,
   };
 };
 
@@ -73,14 +74,29 @@ export const createPage = (pageProps = null) => {
 };
 
 export const duplicatePage = (oldPage) => {
-  const { elements: oldElements, ...rest } = oldPage;
+  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
 
   // Ensure all existing elements get new ids
-  const elements = oldElements.map(({ type, ...attrs }) =>
-    createNewElement(type, attrs)
-  );
+  let elementIdTransferMap = {};
+  const elements = oldElements.map(({ type, ...attrs }) => {
+    const id = uuidv4();
+    elementIdTransferMap[attrs.id] = id;
+    return createNewElement(type, attrs, { id });
+  });
+  const animations = (oldAnimations || [])
+    .map((animation) => ({
+      ...animation,
+      id: uuidv4(),
+      targets: animation.targets
+        .map((target) => elementIdTransferMap[target])
+        .filter((v) => v),
+    }))
+    // This is just a safety measure to remove animations with no targets from schema.
+    .filter((animation) => animation.targets.length);
+
   const newAttributes = {
     elements,
+    animations,
     ...rest,
   };
 
