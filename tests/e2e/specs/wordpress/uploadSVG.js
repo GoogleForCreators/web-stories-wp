@@ -45,7 +45,7 @@ describe('SVG Upload', () => {
     const filename = await fileUpload('#async-upload', 'close', 'svg');
     await expect(page).toClick('#html-upload');
 
-    await page.waitForNavigation({ waitUntil: 'networkidle0' });
+    await page.waitForNavigation();
 
     const attachmentSelector = '.attachment[aria-label="' + filename + '"]';
     await page.waitForSelector(attachmentSelector);
