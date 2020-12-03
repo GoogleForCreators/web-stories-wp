@@ -223,6 +223,38 @@ class Embed_Controller extends WP_REST_Controller {
 		}
 
 		if ( ! $post_id ) {
+			// url_to_postid() does not recognize plain permalinks like https://example.com/?web-story=my-story.
+			// Let's check for that ourselves.
+
+			$url_host      = str_replace( 'www.', '', wp_parse_url( $url, PHP_URL_HOST ) );
+			$home_url_host = str_replace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
+
+			if ( $url_host === $home_url_host ) {
+				$values = [];
+				if (
+					preg_match(
+						'#[?&](' . preg_quote( Story_Post_Type::POST_TYPE_SLUG, '#' ) . ')=([^&]+)#',
+						$url,
+						$values
+					)
+				) {
+					$slug = $values[2];
+
+					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
+						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
+					} else {
+						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
+						$post = get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
+					}
+
+					if ( $post instanceof WP_Post ) {
+						$post_id = $post->ID;
+					}
+				}
+			}
+		}
+
+		if ( ! $post_id ) {
 			if ( $switched_blog ) {
 				restore_current_blog();
 			}
