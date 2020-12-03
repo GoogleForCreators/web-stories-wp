@@ -234,14 +234,16 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				$story_date  = ( true === $this->attributes['show_date'] ) ? get_the_date( 'M j, Y', $story_id ) : $story_date;
 			}
 
-			$story_data['id']              = $story_id;
-			$story_data['author']          = $author_name;
-			$story_data['date']            = $story_date;
-			$story_data['classes']         = $this->get_single_story_classes();
-			$story_data['content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
-			$transformed_post              = new Story( $story_data );
+			$story_data['id']      = $story_id;
+			$story_data['author']  = $author_name;
+			$story_data['date']    = $story_date;
+			$story_data['classes'] = $this->get_single_story_classes();
+			$transformed_post      = new Story( $story_data );
 			$transformed_post->load_from_post( $story_id );
 			$transformed_posts[] = $transformed_post;
+
+			$this->content_overlay = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
+
 		}
 
 		return $transformed_posts;

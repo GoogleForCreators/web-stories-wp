@@ -102,12 +102,12 @@ class Stories_Shortcode {
 
 		$attrs['view_type']                 = (string) $this->attributes['view'];
 		$attrs['number_of_columns']         = (int) $this->attributes['columns'];
-		$attrs['show_title']                = (bool) 'true' === $this->attributes['title'];
-		$attrs['show_author']               = (bool) 'true' === $this->attributes['author'];
-		$attrs['show_date']                 = (bool) 'true' === $this->attributes['date'];
-		$attrs['show_story_poster']         = (bool) 'true' === $this->attributes['story_poster'];
-		$attrs['show_story_archive_link']   = (bool) 'true' === $this->attributes['archive_link'];
-		$attrs['show_story_archive_label']  = (bool) 'true' === $this->attributes['archive_label'];
+		$attrs['show_title']                = (bool) ( 'true' === $this->attributes['title'] );
+		$attrs['show_author']               = (bool) ( 'true' === $this->attributes['author'] );
+		$attrs['show_date']                 = (bool) ( 'true' === $this->attributes['date'] );
+		$attrs['show_story_poster']         = (bool) ( 'true' === $this->attributes['story_poster'] );
+		$attrs['show_story_archive_link']   = (bool) ( 'true' === $this->attributes['archive_link'] );
+		$attrs['show_story_archive_label']  = (bool) ( 'true' === $this->attributes['archive_label'] );
 		$attrs['list_view_image_alignment'] = (string) $this->attributes['list_view_image_alignment'];
 		$attrs['class']                     = (string) $this->attributes['class'];
 
