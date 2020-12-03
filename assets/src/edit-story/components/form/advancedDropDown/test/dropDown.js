@@ -217,13 +217,15 @@ describe('DropDown: Font Picker', () => {
 
     expect(queryAllByRole('option')).toHaveLength(availableCuratedFonts.length);
 
+    // Search for "Ab" which is the prefix of 3 fonts, but the substring of 5 fonts
+    // only the 3 with prefix should match
     act(() => {
       fireEvent.change(getByRole('combobox'), {
-        target: { value: 'Yrsa' },
+        target: { value: 'Ab' },
       });
     });
 
-    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(1), {
+    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(3), {
       timeout: 500,
     });
   });
