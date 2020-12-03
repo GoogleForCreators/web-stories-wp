@@ -103,9 +103,10 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
 
   const push = useCallback(
     (updater, ...args) =>
-      pushUpdate(({ content }) => {
-        return { content: updater(content, ...args) };
-      }, true),
+      pushUpdate(
+        ({ content }) => ({ content: updater(content, ...args) }),
+        true
+      ),
     [pushUpdate]
   );
 
