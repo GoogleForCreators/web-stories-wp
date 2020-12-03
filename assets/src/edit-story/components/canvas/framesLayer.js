@@ -30,7 +30,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { STORY_ANIMATION_STATE } from '../../../animation';
-import { PAGE_WIDTH, DESIGN_SPACE_MARGIN } from '../../constants';
+import { PAGE_WIDTH, PAGE_HEIGHT, DESIGN_SPACE_MARGIN } from '../../constants';
 import { useStory, useDropTargets } from '../../app';
 import withOverlay from '../overlay/withOverlay';
 import PageMenu from './pagemenu';
@@ -70,7 +70,14 @@ const Hint = styled.div`
 `;
 
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
-const DesignSpaceGuideline = styled.div`
+const DesignSpaceGuideline = styled.div.attrs({
+  'data-top': 0,
+  'data-middle': PAGE_HEIGHT / 2,
+  'data-bottom': PAGE_HEIGHT,
+  'data-left': DESIGN_SPACE_MARGIN,
+  'data-center': PAGE_WIDTH / 2,
+  'data-right': PAGE_WIDTH - DESIGN_SPACE_MARGIN,
+})`
   border: 1px solid ${({ theme }) => theme.colors.callout};
   left: ${marginRatio}%;
   right: ${marginRatio}%;

@@ -15,13 +15,56 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useRef } from 'react';
+
+/**
  * Internal dependencies
  */
 import useBatchingCallback from '../../../utils/useBatchingCallback';
 import { useDropTargets } from '../../dropTargets';
 import { useUnits } from '../../../units';
 import { useStory } from '../../../app';
+import { useTransformHandler } from '../../transform';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
+
+function getSnappingProperty(min, mid, max, dim) {
+  if (min !== undefined) {
+    return min;
+  }
+  if (mid !== undefined) {
+    return mid - Math.floor(dim / 2);
+  }
+  if (max !== undefined) {
+    return max - dim;
+  }
+  return null;
+}
+
+function getSnappingProperties(snapCoordinates, width, height) {
+  if (!snapCoordinates) {
+    return null;
+  }
+
+  const x = getSnappingProperty(
+    snapCoordinates.left,
+    snapCoordinates.center,
+    snapCoordinates.right,
+    width
+  );
+  const y = getSnappingProperty(
+    snapCoordinates.top,
+    snapCoordinates.middle,
+    snapCoordinates.bottom,
+    height
+  );
+
+  return {
+    ...(x !== null ? { x } : {}),
+    ...(y !== null ? { y } : {}),
+  };
+}
 
 function useSingleSelectionDrag({
   setIsDragging,
@@ -40,10 +83,19 @@ function useSingleSelectionDrag({
     updateSelectedElements: state.actions.updateSelectedElements,
   }));
 
-  const { editorToDataX, editorToDataY } = useUnits(
-    ({ actions: { editorToDataX, editorToDataY } }) => ({
+  const {
+    editorToDataX,
+    editorToDataY,
+    dataToEditorX,
+    dataToEditorY,
+  } = useUnits(
+    ({
+      actions: { editorToDataX, editorToDataY, dataToEditorX, dataToEditorY },
+    }) => ({
       editorToDataX,
       editorToDataY,
+      dataToEditorX,
+      dataToEditorY,
     })
   );
 
@@ -55,6 +107,11 @@ function useSingleSelectionDrag({
     },
     [setIsDragging, setDraggingResource, resetMoveable]
   );
+
+  const snapCoordinates = useRef();
+  useTransformHandler(selectedElement.id, (transform) => {
+    snapCoordinates.current = transform?.snap;
+  });
 
   const onDrag = ({ target, beforeTranslate, clientX, clientY }) => {
     setIsDragging(true);
@@ -90,15 +147,22 @@ function useSingleSelectionDrag({
       return undefined;
     }
 
-    const roundToZero = (num) => (Math.abs(num) <= 1 ? 0 : num);
-
     // When dragging finishes, set the new properties based on the original + what moved meanwhile.
     const [deltaX, deltaY] = frame.translate;
     if (deltaX !== 0 || deltaY !== 0) {
+      // Here we convert the original coordinate to editor pixels, before adding delta and converting
+      // back to data pixels - this ensures proper rounding!
       const properties = {
-        x: roundToZero(selectedElement.x + editorToDataX(deltaX)),
-        y: roundToZero(selectedElement.y + editorToDataY(deltaY)),
+        x: editorToDataX(Math.round(dataToEditorX(selectedElement.x)) + deltaX),
+        y: editorToDataY(Math.round(dataToEditorY(selectedElement.y)) + deltaY),
+        // However, we then check to see if we get more accurate final coordinates from snapping
+        ...getSnappingProperties(
+          snapCoordinates.current,
+          selectedElement.width,
+          selectedElement.height
+        ),
       };
+
       updateSelectedElements({ properties });
       if (isDropSource(selectedElement.type)) {
         handleDrop(selectedElement.resource, selectedElement.id);

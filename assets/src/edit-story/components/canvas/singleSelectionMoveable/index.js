@@ -193,6 +193,10 @@ function SingleSelectionMoveable({
   );
 
   const snapProps = useSnapping({
+    ref: moveable,
+    target: targetEl,
+    selectedElement,
+    pushTransform,
     isDragging,
     otherNodes,
     canSnap: canSnap && actionsEnabled,

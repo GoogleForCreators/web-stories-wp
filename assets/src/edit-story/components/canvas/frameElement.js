@@ -61,6 +61,22 @@ const EmptyFrame = styled.div`
   pointer-events: none;
 `;
 
+function getDataCoordinates({ x, y, width, height, rotationAngle }) {
+  // Any rotation is ignored for this purpose
+  if (rotationAngle !== 0) {
+    return null;
+  }
+
+  return {
+    'data-top': y,
+    'data-middle': y + Math.floor(height / 2),
+    'data-bottom': y + height,
+    'data-left': x,
+    'data-center': x + Math.floor(width / 2),
+    'data-right': x + width,
+  };
+}
+
 function FrameElement({ element }) {
   const { id, type } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
@@ -129,6 +145,7 @@ function FrameElement({ element }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
+        {...getDataCoordinates(element)}
         onMouseDown={(evt) => {
           if (isSelected) {
             elementRef.current.focus({ preventScroll: true });

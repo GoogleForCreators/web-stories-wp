@@ -41,14 +41,14 @@ export const elementFillContent = css`
 export const elementWithPosition = css`
   position: absolute;
   z-index: 1;
-  left: ${({ x }) => `${x}px`};
-  top: ${({ y }) => `${y}px`};
+  left: ${({ x }) => `${Math.round(x)}px`};
+  top: ${({ y }) => `${Math.round(y)}px`};
 `;
 
 // TODO: removed round/ceil, calculateFitTextFontSize needs to be improved?
 export const elementWithSize = css`
-  width: ${({ width }) => `${width}px`};
-  height: ${({ height }) => `${height}px`};
+  width: ${({ width }) => `${Math.round(width)}px`};
+  height: ${({ height }) => `${Math.round(height)}px`};
 `;
 
 export const elementWithRotation = css`
