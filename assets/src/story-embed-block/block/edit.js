@@ -99,7 +99,7 @@ function StoryEmbedEdit({
       try {
         setIsFetchingData(true);
         // Normalize input URL.
-        const urlToEmbed = encodeURIComponent((new URL(url)).toString());
+        const urlToEmbed = encodeURIComponent(new URL(url).toString());
 
         const data = await apiFetch({
           path: `web-stories/v1/embed?url=${urlToEmbed}`,
