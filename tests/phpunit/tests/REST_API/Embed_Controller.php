@@ -273,8 +273,20 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	public function test_local_url_pretty_permalinks() {
-		wp_set_current_user( self::$editor );
 		$this->set_permalink_structure( '/%postname%/' );
+
+		// Without (re-)registering the post type here there won't be any rewrite rules for it
+		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
+		// instead of "http://example.org/web-stories/embed-controller-test-story/".
+		// @todo Investigate why this is  needed (leakage between tests?).
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type->init();
+
+		flush_rewrite_rules( false );
+
+		wp_set_current_user( self::$editor );
 
 		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
