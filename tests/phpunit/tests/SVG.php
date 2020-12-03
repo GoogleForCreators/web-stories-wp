@@ -23,16 +23,6 @@ namespace Google\Web_Stories\Tests;
 class SVG extends \WP_UnitTestCase {
 	use Private_Access;
 
-	public function setUp() {
-		parent::setUp();
-		add_filter( 'web_stories_svg_already_enabled', '__return_false' );
-	}
-
-	public function tearDown() {
-		parent::tearDown();
-		remove_filter( 'web_stories_svg_already_enabled', '__return_false' );
-	}
-
 	/**
 	 * @covers ::init
 	 */

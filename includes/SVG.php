@@ -109,17 +109,7 @@ class SVG {
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
-		$enabled = in_array( self::MIME_TYPE, $mime_types, true );
-
-		/**
-		 * Filter the check to see if svg support is already enabled.
-		 * This filter allows plugin developers to hotwire this check.
-		 *
-		 * @since 1.2.0
-		 *
-		 * @param bool $enabled Whether the svg support is already enabled.
-		 */
-		return apply_filters( 'web_stories_svg_already_enabled', $enabled );
+		return in_array( self::MIME_TYPE, $mime_types, true );
 	}
 
 	/**
