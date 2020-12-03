@@ -37,6 +37,13 @@ use WP_Post;
  */
 class Story {
 	/**
+	 * Story ID.
+	 *
+	 * @var int
+	 */
+	protected $id;
+
+	/**
 	 * Title.
 	 *
 	 * @var string
@@ -72,6 +79,20 @@ class Story {
 	 * @var string
 	 */
 	protected $poster_square;
+
+	/**
+	 * Date for the story.
+	 *
+	 * @var string
+	 */
+	protected $date;
+
+	/**
+	 * Author of story.
+	 *
+	 * @var string
+	 */
+	protected $author;
 
 	/**
 	 * Story constructor.
@@ -184,4 +205,32 @@ class Story {
 	public function get_poster_square() {
 		return $this->poster_square;
 	}
+
+	/**
+	 * Get the story ID.
+	 *
+	 * @return int
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * Get author of the story.
+	 *
+	 * @return string
+	 */
+	public function get_author() {
+		return $this->author;
+	}
+
+	/**
+	 * Date for the story.
+	 *
+	 * @return string
+	 */
+	public function get_date() {
+		return $this->date;
+	}
+
 }
