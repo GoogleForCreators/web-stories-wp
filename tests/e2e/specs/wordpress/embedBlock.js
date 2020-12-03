@@ -85,6 +85,9 @@ describe('Embed Block', () => {
     );
     await page.keyboard.press('Enter');
 
+    await page.waitForSelector('amp-story-player');
+
+    await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
   });
 
