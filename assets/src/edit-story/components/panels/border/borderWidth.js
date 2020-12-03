@@ -106,7 +106,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         <BoxedNumeric
           value={border.left}
           onChange={(value) => handleChange('left', value)}
-          aria-label={__('Edit: Left border', 'web-stories')}
+          aria-label={__('Left border', 'web-stories')}
         />
         <LabelText>{__('Left', 'web-stories')}</LabelText>
       </Label>
@@ -115,7 +115,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         <BoxedNumeric
           value={border.top}
           onChange={(value) => handleChange('top', value)}
-          aria-label={__('Edit: Top border', 'web-stories')}
+          aria-label={__('Top border', 'web-stories')}
         />
         <LabelText>{__('Top', 'web-stories')}</LabelText>
       </Label>
@@ -124,7 +124,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         <BoxedNumeric
           value={border.right}
           onChange={(value) => handleChange('right', value)}
-          aria-label={__('Edit: Right border', 'web-stories')}
+          aria-label={__('Right border', 'web-stories')}
         />
         <LabelText>{__('Right', 'web-stories')}</LabelText>
       </Label>
@@ -133,7 +133,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         <BoxedNumeric
           value={border.bottom}
           onChange={(value) => handleChange('bottom', value)}
-          aria-label={__('Edit: Bottom border', 'web-stories')}
+          aria-label={__('Bottom border', 'web-stories')}
         />
         <LabelText>{__('Bottom', 'web-stories')}</LabelText>
       </Label>

@@ -76,7 +76,7 @@ describe('Page Attachment', () => {
   };
 
   const setPageAttachmentLink = async (link) => {
-    const input = fixture.screen.getByLabelText('Edit: Page Attachment link');
+    const input = fixture.screen.getByLabelText('Page Attachment link');
     await fixture.events.click(input, { clickCount: 3 });
     if ('' === link) {
       await fixture.events.keyboard.press('Del');
@@ -87,9 +87,7 @@ describe('Page Attachment', () => {
   };
 
   const setCtaText = async (text) => {
-    const input = fixture.screen.getByLabelText(
-      'Edit: Page Attachment CTA text'
-    );
+    const input = fixture.screen.getByLabelText('Page Attachment CTA text');
     await fixture.events.click(input, { clickCount: 3 });
     await fixture.events.keyboard.type(text);
     await input.dispatchEvent(new window.Event('blur'));
@@ -134,7 +132,7 @@ describe('Page Attachment', () => {
       await addElement(false);
       await moveElementToBottom();
 
-      const input = fixture.screen.getByLabelText('Edit: Element link');
+      const input = fixture.screen.getByLabelText('Element link');
       await fixture.events.click(input);
 
       // Verify that the warning is displayed.

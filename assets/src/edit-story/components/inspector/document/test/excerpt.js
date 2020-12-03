@@ -51,6 +51,17 @@ function setupPanel() {
 }
 
 describe('ExcerptPanel', () => {
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:excerpt',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render Excerpt Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Excerpt' });
@@ -59,13 +70,13 @@ describe('ExcerptPanel', () => {
 
   it('should display textbox', () => {
     const { getByRole } = setupPanel();
-    const input = getByRole('textbox', { name: 'Edit: Story Excerpt' });
+    const input = getByRole('textbox', { name: 'Story Excerpt' });
     expect(input).toBeDefined();
   });
 
   it('should respect excerpt character limit', async () => {
     const { getByRole, updateStory } = setupPanel();
-    const input = getByRole('textbox', { name: 'Edit: Story Excerpt' });
+    const input = getByRole('textbox', { name: 'Story Excerpt' });
 
     const bigExcerpt = ''.padStart(EXCERPT_MAX_LENGTH + 10, '1');
 

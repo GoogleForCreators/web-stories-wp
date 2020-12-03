@@ -121,6 +121,17 @@ describe('Panels/Preset', () => {
     return els.length > 0 && els.every(({ type }) => elType === type);
   });
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-style',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
     const element = getByText(PANEL_LABEL);

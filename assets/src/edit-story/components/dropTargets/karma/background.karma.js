@@ -455,7 +455,7 @@ describe('Background Drop-Target integration', () => {
 });
 
 function getMediaLibraryElementByIndex(fixture, index) {
-  return fixture.querySelectorAll('[data-testid=mediaElement]')[index];
+  return fixture.querySelectorAll('[data-testid^=mediaElement]')[index];
 }
 
 async function addDummyImage(fixture, index) {

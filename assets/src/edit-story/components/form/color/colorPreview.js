@@ -23,11 +23,6 @@ import { useCallback, useEffect, useState, useRef, useMemo } from 'react';
 import { parseToRgb, getLuminance } from 'polished';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import { KEYBOARD_USER_SELECTOR } from '../../../utils/keyboardOnlyOutline';
@@ -152,6 +147,7 @@ function ColorPreview({
   value,
   label,
   colorPickerActions,
+  changedStyle,
 }) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
@@ -178,12 +174,9 @@ function ColorPreview({
   // Allow editing always in case of solid color of if color type is missing (mixed)
   const isEditable = !colorType || colorType === 'solid';
 
-  const editLabel = __('Edit', 'web-stories');
-  const inputLabel = __('Enter', 'web-stories');
-
   const buttonProps = {
     onClick: () => setPickerOpen(true),
-    'aria-label': `${editLabel}: ${label}`,
+    'aria-label': label,
   };
 
   const validateAndSubmitInput = useCallback(
@@ -298,7 +291,7 @@ function ColorPreview({
           <TextualInput
             ref={inputRef}
             type="text"
-            aria-label={`${inputLabel}: ${label}`}
+            aria-label={label}
             value={inputValue ?? ''}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
@@ -330,6 +323,7 @@ function ColorPreview({
           hasOpacity={hasOpacity}
           onClose={onClose}
           renderFooter={colorPickerActions}
+          changedStyle={changedStyle}
         />
       </Popup>
     </>
@@ -343,6 +337,7 @@ ColorPreview.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   colorPickerActions: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 ColorPreview.defaultProps = {

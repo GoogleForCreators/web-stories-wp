@@ -37,9 +37,20 @@ describe('Panels/ImageAccessibility', () => {
     return renderPanel(ImageAccessibility, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:imageAccessibility',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <ImageAccessibility /> panel', () => {
     const { getByRole } = renderImageAccessibility([defaultElement]);
-    const input = getByRole('textbox', { name: /Edit: Assistive text/i });
+    const input = getByRole('textbox', { name: 'Assistive text' });
     expect(input).toBeDefined();
   });
 
@@ -51,7 +62,7 @@ describe('Panels/ImageAccessibility', () => {
         resource: { title: '', alt: 'Hello!', src: '2' },
       },
     ]);
-    const input = getByRole('textbox', { name: /Edit: Assistive text/i });
+    const input = getByRole('textbox', { name: 'Assistive text' });
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(input).toHaveValue('');
   });

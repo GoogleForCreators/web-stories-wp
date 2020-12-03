@@ -37,14 +37,13 @@ import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../form';
-import FontPicker from '../../fontPicker';
 import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
-import objectPick from '../../../utils/objectPick';
 import stripHTML from '../../../utils/stripHTML';
 import clamp from '../../../utils/clamp';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
+import FontPicker from './fontPicker';
 
 const MIN_MAX = {
   FONT_SIZE: {
@@ -74,17 +73,11 @@ function FontControls({ selectedElements, pushUpdate }) {
     handlers: { handleSelectFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
-  const {
-    fonts,
-    addRecentFont,
-    maybeEnqueueFontStyle,
-    getFontByName,
-  } = useFont(
+  const { fonts = [], maybeEnqueueFontStyle, getFontByName } = useFont(
     ({
-      actions: { addRecentFont, maybeEnqueueFontStyle, getFontByName },
+      actions: { maybeEnqueueFontStyle, getFontByName },
       state: { fonts },
     }) => ({
-      addRecentFont,
       maybeEnqueueFontStyle,
       getFontByName,
       fonts,
@@ -95,44 +88,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     fontFamily,
   ]);
   const fontStyle = isItalic ? 'italic' : 'normal';
-
-  const handleFontPickerChange = useCallback(
-    async (value) => {
-      const fontObj = fonts.find((item) => item.value === value);
-      const newFont = {
-        family: value,
-        ...objectPick(fontObj, [
-          'service',
-          'fallbacks',
-          'weights',
-          'styles',
-          'variants',
-          'metrics',
-        ]),
-      };
-      await maybeEnqueueFontStyle(
-        selectedElements.map(({ content }) => {
-          return {
-            font: newFont,
-            fontStyle,
-            fontWeight,
-            content: stripHTML(content),
-          };
-        })
-      );
-      addRecentFont(fontObj);
-      pushUpdate({ font: newFont }, true);
-    },
-    [
-      addRecentFont,
-      fontStyle,
-      fontWeight,
-      fonts,
-      maybeEnqueueFontStyle,
-      pushUpdate,
-      selectedElements,
-    ]
-  );
 
   const handleFontWeightPickerChange = useCallback(
     async (value) => {
@@ -163,12 +118,8 @@ function FontControls({ selectedElements, pushUpdate }) {
       {fonts && (
         <Row>
           <FontPicker
-            data-testid="font"
-            aria-label={__('Font family', 'web-stories')}
-            options={fonts}
-            value={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
-            placeholder={MULTIPLE_DISPLAY_VALUE}
-            onChange={handleFontPickerChange}
+            selectedElements={selectedElements}
+            pushUpdate={pushUpdate}
           />
         </Row>
       )}

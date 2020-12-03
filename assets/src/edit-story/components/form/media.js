@@ -140,6 +140,7 @@ function MediaInput({
   title,
   buttonInsertText,
   type,
+  alt,
   value,
   ariaLabel,
   disabled,
@@ -203,7 +204,7 @@ function MediaInput({
       {...(canReset && resettableProps)}
     >
       {value && !isMultiple ? (
-        <Img src={value} circle={circle} />
+        <Img src={value} circle={circle} alt={alt} />
       ) : (
         <DefaultImage size={size} />
       )}
@@ -237,6 +238,7 @@ MediaInput.propTypes = {
   type: PropTypes.string,
   buttonInsertText: PropTypes.string,
   title: PropTypes.string,
+  alt: PropTypes.string,
   loading: PropTypes.bool,
   canReset: PropTypes.bool,
 };
@@ -253,6 +255,7 @@ MediaInput.defaultProps = {
   buttonInsertText: __('Choose an image', 'web-stories'),
   title: __('Choose an image', 'web-stories'),
   ariaLabel: __('Choose an image', 'web-stories'),
+  alt: __('Preview image', 'web-stories'),
   canReset: false,
 };
 

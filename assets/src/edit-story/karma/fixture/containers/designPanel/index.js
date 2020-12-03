@@ -32,6 +32,7 @@ import { Layers } from './layers';
 import { TextStylePreset } from './textStylePreset';
 import { ColorPreset } from './colorPreset';
 import { SizePosition } from './sizePosition';
+import { BorderRadius } from './borderRadius';
 import { Border } from './border';
 import { Animation } from './animationPanel';
 
@@ -93,6 +94,14 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /Saved colors/ }),
       'colorPreset',
       ColorPreset
+    );
+  }
+
+  get borderRadius() {
+    return this._get(
+      this.getByRole('region', { name: /Corner radius/ }),
+      'borderRadius',
+      BorderRadius
     );
   }
 
