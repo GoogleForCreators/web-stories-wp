@@ -27,7 +27,7 @@ import { createPage } from '../../../elements';
 import { migrate } from '../../../migration';
 
 // When ID is set, load story from API.
-function useLoadStory({ storyId, shouldLoad, restore, useDemoContent }) {
+function useLoadStory({ storyId, shouldLoad, restore, isDemo }) {
   const {
     actions: { getStoryById, getDemoStoryById },
   } = useAPI();
@@ -37,7 +37,7 @@ function useLoadStory({ storyId, shouldLoad, restore, useDemoContent }) {
 
   useEffect(() => {
     if (storyId && shouldLoad) {
-      const callback = useDemoContent ? getDemoStoryById : getStoryById;
+      const callback = isDemo ? getDemoStoryById : getStoryById;
       callback(storyId).then((post) => {
         const {
           title: { raw: title },
@@ -148,7 +148,7 @@ function useLoadStory({ storyId, shouldLoad, restore, useDemoContent }) {
     storyId,
     shouldLoad,
     restore,
-    useDemoContent,
+    isDemo,
     getStoryById,
     getDemoStoryById,
     clearHistory,

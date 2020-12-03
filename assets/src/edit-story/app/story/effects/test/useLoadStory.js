@@ -74,7 +74,7 @@ describe('useLoadStory', () => {
           storyId: 11,
           shouldLoad: true,
           restore,
-          useDemoContent: false,
+          isDemo: false,
         }),
       { wrapper: ContextWrapper }
     );
