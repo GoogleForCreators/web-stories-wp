@@ -15,6 +15,11 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import { exclusion } from './utils';
+
+/**
  * Add animations to current page.
  *
  * Animations are expected to a be list of element objects with at least an id property.
@@ -38,24 +43,15 @@ function addAnimations(state, { animations }) {
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const oldPage = state.pages[pageIndex];
   const oldPageAnimations = oldPage.animations || [];
-  const existingIds = oldPageAnimations.map(({ id }) => id);
-  const filteredAnimations = animations.filter(
-    ({ id }) => !existingIds.includes(id)
-  );
-  // Use only last of multiple animations with same id by turning into an object and getting the values.
-  const deduplicatedAnimations = Object.values(
-    Object.fromEntries(
-      filteredAnimations.map((animation) => [animation.id, animation])
-    )
-  );
+  const newAnimations = exclusion(oldPageAnimations, animations);
 
-  if (deduplicatedAnimations.length === 0) {
+  if (newAnimations.length === 0) {
     return state;
   }
 
   const newPage = {
     ...oldPage,
-    animations: [...oldPageAnimations, ...deduplicatedAnimations],
+    animations: [...oldPageAnimations, ...newAnimations],
   };
 
   const newPages = [

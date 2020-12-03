@@ -77,6 +77,13 @@ describe('copyPaste utils', () => {
     backgroundColor: createSolid(1, 1, 1),
   };
 
+  const ANIMATION = {
+    type: 'BOUNCE',
+    targets: ['shape'],
+    duration: 1000,
+    delay: 0,
+  };
+
   describe('processPastedElements', () => {
     const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -87,6 +94,7 @@ describe('copyPaste utils', () => {
       const payload = JSON.stringify({
         sentinel: 'story-elements',
         items: [TEXT_ELEMENT, IMAGE_ELEMENT, SHAPE_ELEMENT],
+        animations: [ANIMATION],
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
       const htmlContent = '<div>Foo</div>';
       const innerHTML = `<!-- ${payload} -->${htmlContent}`;
@@ -95,9 +103,12 @@ describe('copyPaste utils', () => {
     });
 
     it('should detect elements as expected', () => {
-      const processedElements = processPastedElements(template.content, {
-        elements: [],
-      });
+      const { elements: processedElements } = processPastedElements(
+        template.content,
+        {
+          elements: [],
+        }
+      );
       expect(processedElements).toHaveLength(3);
       expect(processedElements[0]).toStrictEqual({
         ...TEXT_ELEMENT,
@@ -113,6 +124,19 @@ describe('copyPaste utils', () => {
       });
     });
 
+    it('should detect animations as expected and update target to new element id', () => {
+      const { elements, animations } = processPastedElements(template.content, {
+        elements: [],
+        animations: [],
+      });
+      expect(animations).toHaveLength(1);
+      expect(animations[0]).toStrictEqual({
+        ...ANIMATION,
+        id: expect.any(String),
+        targets: [elements[2].id],
+      });
+    });
+
     it('should set the position values based on the origin elements correctly', () => {
       const currentPage = {
         elements: [
@@ -124,7 +148,7 @@ describe('copyPaste utils', () => {
           },
         ],
       };
-      const processedElements = processPastedElements(
+      const { elements: processedElements } = processPastedElements(
         template.content,
         currentPage
       );
@@ -150,7 +174,7 @@ describe('copyPaste utils', () => {
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
       templateIncorrectSentinel.innerHTML = `<!-- ${payload} -->`;
 
-      const processedElements = processPastedElements(
+      const { elements: processedElements } = processPastedElements(
         templateIncorrectSentinel.content,
         {
           elements: [],
@@ -167,7 +191,7 @@ describe('copyPaste utils', () => {
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
 
       templateWithoutComment.innerHTML = `${payload}`;
-      const processedElements = processPastedElements(
+      const { elements: processedElements } = processPastedElements(
         templateWithoutComment.content,
         {
           elements: [],
@@ -245,6 +269,37 @@ describe('copyPaste utils', () => {
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
       expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
+    });
+
+    it('should add animations to clipboard', () => {
+      const setData = jest.fn();
+      const evt = {
+        clipboardData: {
+          setData,
+        },
+      };
+
+      const elements = [
+        {
+          ...SHAPE_ELEMENT,
+          id: '1',
+        },
+      ];
+      const animations = [
+        {
+          id: 'a',
+          targets: ['1'],
+          type: 'ANIMATION_TYPE',
+        },
+      ];
+      addElementsToClipboard(PAGE, elements, animations, evt);
+
+      expect(setData).toHaveBeenCalledTimes(2);
+      expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
+      expect(setData).toHaveBeenCalledWith(
+        'text/html',
+        expect.stringMatching(/"type":"ANIMATION_TYPE"/)
+      );
     });
 
     it('should not add anything if none are passed', () => {

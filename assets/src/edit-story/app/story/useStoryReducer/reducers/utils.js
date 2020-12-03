@@ -125,3 +125,36 @@ export function updateAnimations(oldAnimations, animationUpdates) {
 
   return newAnimations;
 }
+
+/**
+ * @typedef {{ id: string, [prop: string]: any}} Entry
+ * @property {string} id - unique identifier for entry
+ */
+
+/**
+ * Remove duplicate entries. Uses last instance if
+ * multiple entries share the same id.
+ *
+ * @param {Array<Entry>} entries - set of entries with possible duplicate Ids
+ * @return {Array<Entry>} New set of entries with only unique Ids
+ */
+export function removeDuplicates(entries = []) {
+  // Use only last of multiple elements with same id by turning into an object and getting the values.
+  return Object.values(
+    Object.fromEntries(entries.map((entry) => [entry.id, entry]))
+  );
+}
+
+/**
+ * Takes to sets of entries and returns unique entries
+ * of right set not present in left set.
+ *
+ * @param {Array<Entry>} left - base set of entries
+ * @param {Array<Entry>} right - new entries
+ * @return {Array<Entry>} - right exclusion of sets set
+ */
+export function exclusion(left = [], right = []) {
+  const rightSet = removeDuplicates(right);
+  const leftJoinKeys = left.map(({ id }) => id);
+  return rightSet.filter(({ id }) => !leftJoinKeys.includes(id));
+}

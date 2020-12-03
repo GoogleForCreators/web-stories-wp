@@ -128,7 +128,7 @@ export function addElementsToClipboard(page, elements, animations, evt) {
       basedOn: element.id,
       id: undefined,
     })),
-    animations: animations,
+    animations,
   };
   const serializedPayload = JSON.stringify(payload).replace(
     /--/g,
