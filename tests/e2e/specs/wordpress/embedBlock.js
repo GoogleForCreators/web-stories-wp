@@ -85,7 +85,10 @@ describe('Embed Block', () => {
     );
     await page.keyboard.press('Enter');
 
+    // Wait a little longer for embed REST API request to come back.
+    await page.setDefaultTimeout(10000);
     await page.waitForSelector('amp-story-player');
+    await page.setDefaultTimeout(3000);
 
     await expect(page).toMatchElement('amp-story-player');
     await expect(page).toMatch('Embed Settings');
