@@ -123,8 +123,8 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     const pushArgs = queuedPushRef.current;
     if (pushArgs) {
       push(...pushArgs);
+      queuedPushRef.current = null;
     }
-    queuedPushRef.current = null;
   }, [selectedElements, queuedPushRef, push]);
 
   const handlers = useMemo(() => {
