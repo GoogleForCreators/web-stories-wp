@@ -36,8 +36,10 @@ class Test_Renderer extends Renderer {
 	/**
 	 * Render method
 	 *
+	 * @param array $args Rendering args.
+	 *
 	 * @return void
 	 */
-	public function render() {}
+	public function render( array $args = [] ) {}
 
 }

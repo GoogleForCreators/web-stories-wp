@@ -69,14 +69,17 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 *
+	 * @param array $args Array of rendering arguments.
+	 *
 	 * @return string Rendered stories output.
 	 */
-	public function render() {
+	public function render( array $args = [] ) {
 
 		if ( ! $this->valid() ) {
 			return '';
 		}
 
+		parent::render( $args );
 		$container_classes = $this->get_container_classes();
 		$container_style   = $this->get_container_styles();
 
