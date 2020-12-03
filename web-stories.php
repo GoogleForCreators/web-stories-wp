@@ -103,8 +103,12 @@ function web_stories_get_compat_instance() {
 		'libxml' => array(
 			'functions' => array(
 				'libxml_use_internal_errors',
-				'simplexml_load_string',
 				'libxml_clear_errors',
+			),
+		),
+		'simplexml'=> array(
+			'functions' => array(
+				'simplexml_load_string',
 			),
 		),
 		'spl'    => array(

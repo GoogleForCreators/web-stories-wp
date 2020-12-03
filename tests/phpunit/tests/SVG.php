@@ -40,6 +40,16 @@ class SVG extends \WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers ::svg_already_enabled
+	 */
+	public function test_svg_already_enabled() {
+		$svg      = $this->get_svg_object();
+		$_results = $this->call_private_method( $svg, 'svg_already_enabled' );
+
+		$this->assertFalse( $_results );
+	}
+
+	/**
 	 * @covers ::upload_mimes_add_svg
 	 */
 	public function test_upload_mimes_add_svg() {
@@ -51,7 +61,7 @@ class SVG extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::upload_mimes_add_svg
+	 * @covers ::mime_types_add_svg
 	 */
 	public function test_mime_types_add_svg() {
 		$svg = $this->get_svg_object();
