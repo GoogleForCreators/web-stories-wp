@@ -222,8 +222,12 @@ class Embed_Controller extends WP_REST_Controller {
 
 			// In case of subdirectory configs, set the path.
 			if ( ! is_subdomain_install() ) {
+				// Get "sub-site" part of "http://example.org/sub-site/web-stories/my-story/".
+				// But given just "http://example.org/web-stories/my-story/", don't treat "web-stories" as site path.
+				// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
+				// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
 				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
-				$path    = reset( $path );
+				$path    = count( $path ) > 2 ? reset( $path ) : false;
 				$network = get_network();
 				if ( $path && $network instanceof \WP_Network ) {
 					$qv['path'] = $network->path . $path . '/';
@@ -277,7 +281,6 @@ class Embed_Controller extends WP_REST_Controller {
 				}
 			}
 		}
-
 
 		if ( $switched_blog ) {
 			restore_current_blog();

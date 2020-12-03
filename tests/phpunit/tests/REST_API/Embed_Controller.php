@@ -29,8 +29,9 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	protected $server;
 
 	protected static $story_id;
-	protected static $editor;
 	protected static $subscriber;
+	protected static $editor;
+	protected static $admin;
 
 	const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
 	const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
@@ -55,6 +56,9 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 				'user_email' => 'editor@example.com',
 			]
 		);
+		self::$admin      = $factory->user->create(
+			[ 'role' => 'administrator' ]
+		);
 
 		// When running the tests, we don't have unfiltered_html capabilities.
 		// This change avoids HTML in post_content being stripped in our test posts because of KSES.
@@ -78,6 +82,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 	public static function wpTearDownAfterClass() {
 		self::delete_user( self::$subscriber );
 		self::delete_user( self::$editor );
+		self::delete_user( self::$admin );
 	}
 
 	public function setUp() {
@@ -291,6 +296,48 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 
 		$response = $this->dispatch_request( get_permalink( self::$story_id ) );
 		$data     = $response->get_data();
+
+		$expected = [
+			'title'  => '',
+			'poster' => 'https:/example.com/poster.png',
+		];
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	/**
+	 * @group ms-required
+	 */
+	public function test_local_url_pretty_permalinks_multisite() {
+		$this->set_permalink_structure( '/%postname%/' );
+
+		// Without (re-)registering the post type here there won't be any rewrite rules for it
+		// and get_permalink() will return "http://example.org/?web-story=embed-controller-test-story"
+		// instead of "http://example.org/web-stories/embed-controller-test-story/".
+		// @todo Investigate why this is  needed (leakage between tests?).
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes      = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+		$story_post_type = new \Google\Web_Stories\Story_Post_Type( $experiments, $meta_boxes );
+		$story_post_type->init();
+
+		flush_rewrite_rules( false );
+
+		wp_set_current_user( self::$admin );
+
+		$permalink = get_permalink( self::$story_id );
+
+		$blog_id = (int) self::factory()->blog->create();
+		add_user_to_blog( $blog_id, self::$admin, 'administrator' );
+		switch_to_blog( $blog_id );
+
+		$this->set_permalink_structure( '/%postname%/' );
+
+		$response = $this->dispatch_request( $permalink );
+		$data     = $response->get_data();
+
+		restore_current_blog();
 
 		$expected = [
 			'title'  => '',
