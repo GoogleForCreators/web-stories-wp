@@ -78,6 +78,8 @@ class Story_Post_Type extends \WP_UnitTestCase {
 
 	public function tearDown() {
 		$this->set_permalink_structure( '' );
+		$_SERVER['REQUEST_URI'] = '';
+
 		parent::tearDown();
 	}
 

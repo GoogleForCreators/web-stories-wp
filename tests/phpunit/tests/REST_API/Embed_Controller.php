@@ -112,6 +112,7 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 		$story_post_type->remove_caps_from_roles();
 
 		$this->set_permalink_structure( '' );
+		$_SERVER['REQUEST_URI'] = '';
 
 		parent::tearDown();
 	}
