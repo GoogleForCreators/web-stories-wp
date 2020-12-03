@@ -45,11 +45,11 @@ describe('SVG Upload', () => {
     const filename = await fileUpload('#async-upload', 'close', 'svg');
     await expect(page).toClick('#html-upload');
 
-    await page.waitForNavigation();
+    await page.waitForNavigation({ waitUntil: 'networkidle0' });
 
     const attachmentSelector = '.attachment[aria-label="' + filename + '"]';
     await page.waitForSelector(attachmentSelector);
-    await expect(page).toMatch(attachmentSelector);
+    await expect(page).toMatchElement(attachmentSelector);
     await percySnapshot(page, 'SVG uploaded');
   });
 });
