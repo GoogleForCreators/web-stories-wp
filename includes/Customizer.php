@@ -518,7 +518,7 @@ class Customizer {
 		$theme_support = wp_parse_args( $theme_support, $default_theme_support );
 
 		$theme_support['view-type']            = is_array( $theme_support['view-type'] ) ? $theme_support['view-type'] : [];
-		$theme_support['order']                = is_array( $theme_support['order'] ) ? $theme_support['order'] : [];
+		$theme_support['order']                = is_array( $theme_support['order'] ) ? array_keys( $theme_support['order'] ) : [];
 		$theme_support['number-of-stories']    = is_numeric( $theme_support['number-of-stories'] ) ? $theme_support['number-of-stories'] : 5;
 		$theme_support['grid-columns-default'] = is_numeric( $theme_support['grid-columns-default'] ) ? $theme_support['grid-columns-default'] : 2;
 
