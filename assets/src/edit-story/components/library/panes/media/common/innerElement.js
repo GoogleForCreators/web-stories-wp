@@ -117,6 +117,14 @@ function InnerElement({
     }
   };
   let media;
+  const cloneProps = {
+    width: width,
+    height: height,
+    alt: alt,
+    'aria-label': alt,
+    loading: 'lazy',
+    draggable: false,
+  };
   const thumbnailURL = getSmallestUrlForWidth(width, resource);
   if (['image', 'gif'].includes(type)) {
     media = (
@@ -133,6 +141,7 @@ function InnerElement({
         draggable={false}
       />
     );
+    cloneProps.src = thumbnailURL;
   } else if (type === 'video') {
     const { lengthFormatted, poster, mimeType } = resource;
     const displayPoster = poster ? poster : newVideoPosterRef.current;
@@ -167,6 +176,7 @@ function InnerElement({
         {showVideoDetail && <Duration>{lengthFormatted}</Duration>}
       </>
     );
+    cloneProps.src = poster;
   }
   if (!media) {
     throw new Error('Invalid media element type.');
@@ -198,15 +208,7 @@ function InnerElement({
           resource={resource}
           onClick={onClick(thumbnailURL, mediaBaseColor.current)}
           cloneElement={CloneImg}
-          cloneProps={{
-            src: thumbnailURL,
-            width: width,
-            height: height,
-            alt: alt,
-            'aria-label': alt,
-            loading: 'lazy',
-            draggable: false,
-          }}
+          cloneProps={cloneProps}
           originRef={mediaElement}
         />
       )}
