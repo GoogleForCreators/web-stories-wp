@@ -125,6 +125,25 @@ class Stories_Shortcode {
 		// Show 100 stories at most to avoid 500 errors.
 		$args['posts_per_page'] = min( (int) $this->attributes['number'], 100 );
 		$args['order']          = 'ASC' === $this->attributes['order'] ? 'ASC' : 'DESC';
+		$order_by               = $args['order'];
+
+		switch ( $order_by ) {
+			case 'oldest':
+				$args['order'] = 'ASC';
+				break;
+			case 'alphabetical':
+				$args['orderby'] = 'title';
+				$args['order']   = 'ASC';
+				break;
+			case 'reverse-alphabetical':
+				$args['orderby'] = 'title';
+				$args['order']   = 'DESC';
+				break;
+			case 'random':
+				$args['orderby'] = 'rand'; //phpcs:ignore WordPressVIPMinimum.Performance.OrderByRand.orderby_orderby
+				$args['order']   = 'DESC';
+				break;
+		}
 
 		return $args;
 	}
