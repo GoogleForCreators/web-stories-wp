@@ -152,7 +152,7 @@ return [
 					'tests',
 				]
 			)
-			->in( 'vendor/enshrined/svg-sanitize' )
+			->in( 'vendor/enshrined/svg-sanitize/src' )
 			->append( [ 'vendor/enshrined/svg-sanitize/composer.json' ] ),
 
 		// Symfony mbstring polyfill.
