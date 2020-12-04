@@ -270,7 +270,8 @@ export default function EffectChooser({
 
   useFocusOut(ref, () => onDismiss?.(), []);
 
-  useKeyDownEffect(ref, { key: 'esc' }, onDismiss, [onDismiss]);
+  // TODO tab+shift should also dismiss
+  useKeyDownEffect(ref, { key: ['esc', 'tab'] }, onDismiss, [onDismiss]);
 
   // Set initial focus
   useEffect(() => {
