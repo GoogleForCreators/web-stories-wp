@@ -53,6 +53,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       } = await uploadFile(obj);
       // Meta data cannot be sent as part of upload.
       await updateMedia(posterId, {
+        web_stories_parent: id,
         meta: {
           web_stories_is_poster: true,
         },

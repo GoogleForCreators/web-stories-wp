@@ -70,6 +70,32 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	}
 
 	/**
+	 * Updates a single attachment.
+	 *
+	 * Override the existing method so we can set parent id.
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
+	 */
+	public function update_item( $request ) {
+
+		if ( $request['web_stories_parent'] && get_post( $request['web_stories_parent'] ) ) {
+			$args   = [
+				'ID'          => $request['id'],
+				'post_parent' => $request['web_stories_parent']
+			];
+			$result = wp_update_post( $args, true );
+			if ( is_wp_error( $result ) ) {
+				return $result;
+			}
+		}
+
+		return parent::update_item( $request );;
+	}
+
+	/**
 	 * Retrieves the query params for the posts collection.
 	 *
 	 * @since 1.0.0
