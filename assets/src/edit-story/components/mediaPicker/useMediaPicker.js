@@ -27,7 +27,6 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
 import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
@@ -41,9 +40,6 @@ export default function useMediaPicker({
   type = '',
   multiple = false,
 }) {
-  const { uploadVideoPoster } = useLocalMedia((state) => ({
-    uploadVideoPoster: state.actions.uploadVideoPoster,
-  }));
   const {
     actions: { updateMedia },
   } = useAPI();
@@ -61,16 +57,17 @@ export default function useMediaPicker({
   });
   useEffect(() => {
     try {
+      // Handles the video processing logic from WordPress.
+      // The Uploader.success callback is invoked when a user uploads a file.
+      // Race condition concern: the video content is not guaranteed to be
+      // available in this callback. For the video poster insertion, please check: assets/src/edit-story/components/library/panes/media/local/mediaPane.js
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
-        if (attributes.type === 'video') {
-          uploadVideoPoster(attributes.id, attributes.url);
-        }
       };
     } catch (e) {
       // Silence.
     }
-  }, [uploadVideoPoster, updateMedia]);
+  }, [updateMedia]);
 
   const openMediaPicker = (evt) => {
     trackEvent('open_media_modal', 'editor');
