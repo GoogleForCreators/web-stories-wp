@@ -155,13 +155,19 @@ const FOREGROUND_EFFECTS_LIST = [
   'Zoom Out',
 ];
 
+const PAN_MAPPING = {
+  [DIRECTION.LEFT_TO_RIGHT]: `Pan ${DIRECTION.LEFT_TO_RIGHT}`,
+  [DIRECTION.RIGHT_TO_LEFT]: `Pan ${DIRECTION.RIGHT_TO_LEFT}`,
+  [DIRECTION.BOTTOM_TO_TOP]: `Pan ${DIRECTION.BOTTOM_TO_TOP}`,
+  [DIRECTION.TOP_TO_BOTTOM]: `Pan ${DIRECTION.TOP_TO_BOTTOM}`,
+};
 const BACKGROUND_EFFECTS_LIST = [
   'No Effect',
   'Zoom',
-  `Pan ${DIRECTION.LEFT_TO_RIGHT}`,
-  `Pan ${DIRECTION.RIGHT_TO_LEFT}`,
-  `Pan ${DIRECTION.BOTTOM_TO_TOP}`,
-  `Pan ${DIRECTION.TOP_TO_BOTTOM}`,
+  PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT],
+  PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT],
+  PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP],
+  PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
 ];
 
 // TODO figure out what the key is for pan direction, add to helper
@@ -328,13 +334,13 @@ export default function EffectChooser({
             <GridItem
               aria-label={__('Pan Left Effect', 'web-stories')}
               onClick={(event) =>
-                handleOnSelect(event, 'Pan leftToRight', {
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                'Pan leftToRight'
+                PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
               )}
             >
               <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
@@ -345,13 +351,13 @@ export default function EffectChooser({
             <GridItem
               aria-label={__('Pan Right Effect', 'web-stories')}
               onClick={(event) =>
-                handleOnSelect(event, 'Pan rightToLeft', {
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                'Pan rightToLeft'
+                PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
               )}
             >
               <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
@@ -362,13 +368,13 @@ export default function EffectChooser({
             <GridItem
               aria-label={__('Pan Up Effect', 'web-stories')}
               onClick={(event) =>
-                handleOnSelect(event, 'Pan bottomToTop', {
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.BOTTOM_TO_TOP,
                 })
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                'Pan bottomToTop'
+                PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
               )}
             >
               <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
@@ -379,13 +385,13 @@ export default function EffectChooser({
             <GridItem
               aria-label={__('Pan Down Effect', 'web-stories')}
               onClick={(event) =>
-                handleOnSelect(event, 'Pan topToBottom', {
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.TOP_TO_BOTTOM,
                 })
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                'Pan topToBottom'
+                PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
               )}
             >
               <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
