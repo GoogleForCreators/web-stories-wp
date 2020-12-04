@@ -26,7 +26,8 @@
 
 namespace Google\Web_Stories;
 
-use SimpleXMLElement;
+use DOMDocument;
+use DOMElement;
 use WP_Error;
 use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
 
@@ -292,15 +293,14 @@ class SVG {
 			return new WP_Error( 'invalid_xml_svg', __( 'Invalid xml in SVG.', 'web-stories' ) );
 		}
 
-		$attributes = $xml->attributes();
-		$width      = isset( $attributes->width ) ? (int) $attributes->width : 0;
-		$height     = isset( $attributes->height ) ? (int) $attributes->height : 0;
+		$width  = (int) $xml->getAttribute( 'width' );
+		$height = (int) $xml->getAttribute( 'height' );
 
 		// If height and width are not set, try the viewport attribute.
 		if ( ! $width || ! $height ) {
-			$view_box = isset( $attributes->viewBox ) ? (string) $attributes->viewBox : '';
+			$view_box = $xml->getAttribute( 'viewBox' );
 			if ( empty( $view_box ) ) {
-				$view_box = isset( $attributes->viewbox ) ? (string) $attributes->viewbox : '';
+				$view_box = $xml->getAttribute( 'viewbox' );
 			}
 			$pieces = explode( ' ', $view_box );
 			if ( 4 === count( $pieces ) ) {
@@ -382,16 +382,26 @@ class SVG {
 	 *
 	 * @param string $svg String of xml.
 	 *
-	 * @return SimpleXMLElement|false
+	 * @return DOMElement|false
 	 */
 	protected function get_xml( $svg ) {
-		$errors = libxml_use_internal_errors( true );
+		$dom                      = new DOMDocument();
+		$dom->preserveWhiteSpace  = false;
+		$dom->strictErrorChecking = false;
 
-		$xml = simplexml_load_string( $svg );
+		$errors = libxml_use_internal_errors( true );
+		$loaded = $dom->loadXML( $svg );
+		if ( ! $loaded ) {
+			return false;
+		}
+		$node = $dom->getElementsByTagName( 'svg' )->item( 0 );
+		if ( ! $node ) {
+			return false;
+		}
 		libxml_clear_errors();
 		libxml_use_internal_errors( $errors );
 
-		return $xml;
+		return $node;
 	}
 
 	/**
