@@ -45,18 +45,6 @@ describe('Element', () => {
       expect(textElement.font).toMatchObject(TEXT_ELEMENT_DEFAULT_FONT);
     });
 
-    it('exposes optional overrides', () => {
-      const atts = {
-        x: 10,
-        y: 10,
-        width: 100,
-        height: 100,
-      };
-      const overrides = { id: 'a' };
-      const textElement = createNewElement('text', atts, overrides);
-      expect(textElement.id).toStrictEqual('a');
-    });
-
     it('should throw if trying to create unknown element type', () => {
       const unknownElementCreator = () => createNewElement('puppy');
       expect(unknownElementCreator).toThrow(/unknown element type: puppy/i);

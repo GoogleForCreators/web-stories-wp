@@ -34,7 +34,7 @@ import * as shapeElement from './shape';
 import * as videoElement from './video';
 import * as gifElement from './gif';
 
-export const createNewElement = (type, attributes = {}, overrides = {}) => {
+export const createNewElement = (type, attributes = {}) => {
   const element = getDefinitionForType(type);
   if (!element) {
     throw new Error(`Unknown element type: ${type}`);
@@ -45,7 +45,6 @@ export const createNewElement = (type, attributes = {}, overrides = {}) => {
     ...attributes,
     type,
     id: uuidv4(),
-    ...overrides,
   };
 };
 
@@ -79,9 +78,9 @@ export const duplicatePage = (oldPage) => {
   // Ensure all existing elements get new ids
   let elementIdTransferMap = {};
   const elements = oldElements.map(({ type, ...attrs }) => {
-    const id = uuidv4();
-    elementIdTransferMap[attrs.id] = id;
-    return createNewElement(type, attrs, { id });
+    const newElement = createNewElement(type, attrs);
+    elementIdTransferMap[attrs.id] = newElement.id;
+    return newElement;
   });
   const animations = (oldAnimations || [])
     .map((animation) => ({
