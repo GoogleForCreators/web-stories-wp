@@ -84,7 +84,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		if ( $request['web_stories_parent'] && get_post( $request['web_stories_parent'] ) ) {
 			$args   = [
 				'ID'          => $request['id'],
-				'post_parent' => $request['web_stories_parent']
+				'post_parent' => $request['web_stories_parent'],
 			];
 			$result = wp_update_post( $args, true );
 			if ( is_wp_error( $result ) ) {
@@ -92,7 +92,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			}
 		}
 
-		return parent::update_item( $request );;
+		return parent::update_item( $request );
+
 	}
 
 	/**
