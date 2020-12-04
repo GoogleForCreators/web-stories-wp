@@ -50,7 +50,6 @@ describe('Site Kit integration with dashboard', () => {
     await page.waitForResponse((response) =>
       response.url().includes('web-stories/v1/media')
     );
-    await expect(page).not.toMatch('Loading…');
 
     await percySnapshot(page, 'Stories Dashboard with Site Kit');
 
