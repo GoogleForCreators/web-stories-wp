@@ -27,6 +27,8 @@ import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
  */
 import { visitDashboard } from '../../../utils';
 
+const percyCSS = `.loading-indicator { display: none; }`;
+
 describe('Site Kit integration with dashboard', () => {
   beforeAll(async () => {
     await activatePlugin('e2e-tests-site-kit-mock');
@@ -47,7 +49,7 @@ describe('Site Kit integration with dashboard', () => {
       text: 'Editor Settings',
     });
 
-    await percySnapshot(page, 'Stories Dashboard with Site Kit');
+    await percySnapshot(page, 'Stories Dashboard with Site Kit', { percyCSS });
 
     await expect(page).toMatch(
       'Site Kit by Google has already enabled Google Analytics for your Web Stories'
