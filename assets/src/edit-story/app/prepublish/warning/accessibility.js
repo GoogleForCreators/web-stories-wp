@@ -22,7 +22,20 @@ import {
   calculateLuminanceFromStyleColor,
   checkContrastFromLuminances,
 } from '../../../utils/contrastUtils';
+import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
+import {
+  PAGE_HEIGHT,
+  PAGE_RATIO,
+  FULLBLEED_RATIO,
+  PAGE_WIDTH,
+} from '../../../constants';
+import { getBox } from '../../../units/dimensions';
+import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
+import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
+
+const safeZoneDiff =
+  (PAGE_WIDTH / FULLBLEED_RATIO - PAGE_WIDTH / PAGE_RATIO) / 2;
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -32,6 +45,7 @@ const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
  * @typedef {import('../../../types').Page} Page
  * @typedef {import('../../../types').Element} Element
  * @typedef {import('../types').Guidance} Guidance
+ * @typedef {import('../types').Page} Page
  */
 
 let spansFromContentBuffer;
@@ -91,6 +105,98 @@ export function textElementFontLowContrast(element) {
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };
   }
+
+  return undefined;
+}
+
+function getOverlapBgColor(bgImage, overlapBox, callback) {
+  bgImage.crossOrigin = 'anonymous';
+  const bgCanvas = document.createElement('canvas');
+  bgCanvas.width = bgImage.width;
+  bgCanvas.height = bgImage.height;
+
+  const cropCanvas = document.createElement('canvas');
+  cropCanvas.width = overlapBox.sWidth; // size of the new image / text container
+  cropCanvas.height = overlapBox.sHeight;
+
+  const bgCtx = bgCanvas.getContext('2d');
+  const cropCtx = cropCanvas.getContext('2d');
+
+  const croppedImage = new Image();
+  croppedImage.crossOrigin = 'anonymous';
+
+  bgCtx.drawImage(bgImage, 0, 0, bgImage.width, bgImage.height);
+
+  const imageData = bgCtx.getImageData(
+    overlapBox.sx,
+    overlapBox.sy,
+    overlapBox.sWidth,
+    overlapBox.sHeight
+  );
+
+  cropCtx.putImageData(imageData, 0, 0);
+
+  // src must be attached to the image
+  croppedImage.src = cropCanvas.toDataURL();
+
+  return getMediaBaseColor({ type: 'image', src: croppedImage.src }, callback);
+}
+
+/**
+ * Check story for a background image and text elements.
+ * Check the luminosity of the dominant color of the background image part where the text element is.
+ * Check the contrast of that luminosity against the luminosity of the text color.
+ * If the contrast is too low, return guidance. Otherwise return undefined.
+ *
+ * @param {Page} page
+ * @return {Guidance|undefined} The guidance object for consumption
+ */
+
+export function pageBackgroundWithTextLowContrast(page) {
+  page.elements.map((element, index) => {
+    if (element.type === 'text') {
+      const textBoxBound = getBoundRect([element]);
+      const potentialBackgroundElements = page.elements.slice(0, index);
+
+      // todo: generalize for any image or shape behind text
+      // let mostVisuallySignificantOverlap;
+
+      potentialBackgroundElements.forEach((bgElem) => {
+        if (bgElem.type === 'image' && bgElem.isBackground) {
+          const { resource, scale, focalX, focalY } = bgElem;
+          const bgBox = getBox(bgElem, PAGE_WIDTH, PAGE_HEIGHT);
+          const { width, height } = bgBox;
+
+          const bgMediaSize = getMediaSizePositionProps(
+            resource,
+            width,
+            height,
+            scale,
+            focalX,
+            focalY
+          );
+
+          const overlapBox = {
+            sx: Math.abs(bgMediaSize.offsetX) + Math.abs(textBoxBound.startX),
+            sy:
+              Math.abs(bgMediaSize.offsetY) +
+              Math.abs(textBoxBound.startY + safeZoneDiff),
+            sWidth: textBoxBound.width,
+            sHeight: textBoxBound.height,
+          };
+
+          const [bgImage] = document.querySelectorAll(
+            `[data-element-id="${bgElem.id}"] img`
+          );
+
+          getOverlapBgColor(bgImage, overlapBox, (colors) =>
+            // eslint-disable-next-line no-console
+            console.log('stolen colors: ', colors)
+          );
+        }
+      });
+    }
+  });
 
   return undefined;
 }
