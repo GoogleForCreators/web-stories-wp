@@ -96,7 +96,9 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   &:hover:not([disabled]) {
     cursor: pointer;
   }
-
+  &:focus:not([disabled]) {
+    outline: -webkit-focus-ring-color auto 1px !important;
+  }
   &:hover:not([disabled]),
   &:focus:not([disabled]) {
     ${BaseAnimationCell} {
@@ -153,12 +155,12 @@ const BACKGROUND_EFFECTS_LIST = [
   'Pan Down',
 ];
 
-// const BACKGROUND_PAN_DIRECTION_MAPPING = {
-//   [DIRECTION.LEFT_TO_RIGHT]: 'Right',
-//   [DIRECTION.TOP_TO_BOTTOM]: 'Down',
-//   [DIRECTION.RIGHT_TO_LEFT]: 'Left',
-//   [DIRECTION.BOTTOM_TO_TOP]: 'Up',
-// };
+const BACKGROUND_PAN_DIRECTION_MAPPING = {
+  [DIRECTION.LEFT_TO_RIGHT]: 'Right',
+  [DIRECTION.TOP_TO_BOTTOM]: 'Down',
+  [DIRECTION.RIGHT_TO_LEFT]: 'Left',
+  [DIRECTION.BOTTOM_TO_TOP]: 'Up',
+};
 
 export default function EffectChooser({
   onAnimationSelected,
@@ -177,17 +179,29 @@ export default function EffectChooser({
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   }, []);
 
-  // TODO limit options for keyboard navigation to enabled list
   const getBackgroundOptions = useCallback(() => {
-    // const bgEffectsListCopy = [...BACKGROUND_EFFECTS_LIST];
+    // right now only background pan effects are potentially disabled
+    if (disabledTypeOptionsMap?.['effect-background-pan']) {
+      const filteredList = [...BACKGROUND_EFFECTS_LIST].filter(
+        // eslint-disable-next-line consistent-return
+        (currentEffect) => {
+          const isDisabled = disabledTypeOptionsMap[
+            'effect-background-pan'
+          ].find((disabledOption) =>
+            currentEffect.endsWith(
+              BACKGROUND_PAN_DIRECTION_MAPPING[disabledOption]
+            )
+          );
 
-    // if (disabledTypeOptionsMap?.['effect-background-pan']) {
-    //   disabledTypeOptionsMap['effect-background-pan'].map((disabledOption) => {
-    //     const mappedName = BACKGROUND_PAN_DIRECTION_MAPPING[disabledOption];
-    //   });
-    // }
+          if (!isDisabled) {
+            return currentEffect;
+          }
+        }
+      );
+      return filteredList;
+    }
     return BACKGROUND_EFFECTS_LIST;
-  }, []);
+  }, [disabledTypeOptionsMap]);
 
   const availableListOptions = useMemo(
     () =>
@@ -213,7 +227,6 @@ export default function EffectChooser({
 
   useEffect(() => {
     previousEffectValueRef.current = getPreviousEffectValue();
-
     return () => {
       previousEffectValueRef.current = null;
     };
@@ -242,7 +255,6 @@ export default function EffectChooser({
     [availableListOptions, focusedIndex]
   );
 
-  // TODO add in tab and tab+shift?
   const handleUpDown = useCallback(
     ({ key }) => {
       if (key === 'ArrowUp' && focusedIndex !== 0) {
@@ -254,10 +266,7 @@ export default function EffectChooser({
     [focusedIndex, handleMoveFocus, listLength]
   );
 
-  // TODO how to flag shift to control focus with tab?
-  useKeyDownEffect(ref, { key: ['up', 'down', 'tab'] }, handleUpDown, [
-    handleUpDown,
-  ]);
+  useKeyDownEffect(ref, { key: ['up', 'down'] }, handleUpDown, [handleUpDown]);
 
   useFocusOut(ref, () => onDismiss?.(), []);
 
@@ -265,7 +274,7 @@ export default function EffectChooser({
 
   // Set initial focus
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && focusedIndex !== null) {
       ref.current.firstChild?.children?.[focusedIndex]?.focus();
     }
   }, [focusedValue, focusedIndex]);
