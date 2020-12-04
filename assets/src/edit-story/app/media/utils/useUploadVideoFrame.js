@@ -46,6 +46,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const processData = async (id, src) => {
     try {
       const obj = await getFirstFrameOfVideo(src);
+      obj.name = getFileName(src) + '-poster.jpeg';
       const {
         id: posterId,
         source_url: poster,
@@ -96,6 +97,15 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // TODO Display error message to user as video poster upload has as failed.
     }
   };
+
+  /**
+   * Helper function get the file name from url.
+   *
+   * @param url
+   * @return {string}
+   */
+  const getFileName = (url) =>
+    url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
 
   /**
    * Uploads the video's first frame as an attachment.
