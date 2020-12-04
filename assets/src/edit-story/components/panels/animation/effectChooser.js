@@ -169,7 +169,7 @@ export default function EffectChooser({
   value = '',
   direction,
 }) {
-  const [focusedValue, setFocusedValue] = useState();
+  const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
   const previousEffectValueRef = useRef();
 
@@ -242,7 +242,7 @@ export default function EffectChooser({
     [availableListOptions, focusedIndex]
   );
 
-  // TODO add in tab and tab+shift
+  // TODO add in tab and tab+shift?
   const handleUpDown = useCallback(
     ({ key }) => {
       if (key === 'ArrowUp' && focusedIndex !== 0) {
@@ -254,7 +254,7 @@ export default function EffectChooser({
     [focusedIndex, handleMoveFocus, listLength]
   );
 
-  // TODO how to flag shift to control focus with tab
+  // TODO how to flag shift to control focus with tab?
   useKeyDownEffect(ref, { key: ['up', 'down', 'tab'] }, handleUpDown, [
     handleUpDown,
   ]);
