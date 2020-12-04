@@ -128,6 +128,13 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
+/**
+ * Because the effect chooser is hard coded these two effects lists help keep track of the current index
+ * current index is how we track focus for up and down arrows and setting active list item when menu is opened.
+ * These values map to the value prop and then if a direction is present,
+ * it's added to the name in order of appearance in the dropdown to track index properly and uniquely
+ */
+
 const FOREGROUND_EFFECTS_LIST = [
   'No Effect',
   'Drop',
