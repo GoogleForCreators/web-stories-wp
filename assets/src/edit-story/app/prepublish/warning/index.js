@@ -21,7 +21,10 @@ import * as distributionWarnings from './distribution';
 
 export default {
   story: [distributionWarnings.storyMissingExcerpt],
-  page: [accessibilityWarnings.pageTooManyLinks],
+  page: [
+    accessibilityWarnings.pageTooManyLinks,
+    accessibilityWarnings.pageBackgroundWithTextLowContrast,
+  ],
   text: [
     accessibilityWarnings.textElementFontSizeTooSmall,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
