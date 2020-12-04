@@ -38,12 +38,18 @@ function ShapeStylePanel({ selectedElements, pushUpdate }) {
   const isBackground = getCommonValue(selectedElements, 'isBackground');
 
   const onChange = useCallback(
-    (value) => pushUpdate({ backgroundColor: value }, true),
+    (value) => {
+      pushUpdate({ backgroundColor: value }, true);
+    },
     [pushUpdate]
   );
 
   return (
-    <SimplePanel name="style" title={__('Style', 'web-stories')}>
+    <SimplePanel
+      name="style"
+      title={__('Style', 'web-stories')}
+      isPersistable={false}
+    >
       <Row>
         <Color
           hasGradient

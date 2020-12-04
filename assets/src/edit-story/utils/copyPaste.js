@@ -25,54 +25,8 @@ import { renderToStaticMarkup } from 'react-dom/server';
  */
 import { getDefinitionForType } from '../elements';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '../constants';
-import escapeHTML from './escapeHTML';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
-const ALLOWED_CONTENT_NODES = ['strong', 'em', 'u'];
-const TAG_REPLACEMENTS = {
-  b: 'strong',
-  i: 'em',
-};
-
-/**
- * Gets content of one node.
- *
- * @param {string} content Content.
- * @param {Node}   node Node to process.
- * @return {string} Content.
- */
-function getNodeContent(content, node) {
-  const originalTag = node.tagName?.toLowerCase();
-  const tag = TAG_REPLACEMENTS[originalTag] ?? originalTag;
-  const stripTags = !ALLOWED_CONTENT_NODES.includes(tag);
-  if (!stripTags) {
-    content += `<${tag}>`;
-  }
-  if (node.childNodes.length > 0) {
-    if ('p' === tag && content.trim().length) {
-      content += '\n';
-    }
-    content = processPastedNodeList(node.childNodes, content);
-  } else {
-    content += escapeHTML(node.textContent);
-  }
-  if (!stripTags) {
-    content += `</${tag}>`;
-  }
-  return content;
-}
-
-/**
- * Processes pasted node list.
- *
- * @param {NodeList} nodeList Node list to process.
- * @param {string}   content Initial content.
- * @return {string} Processed content.
- */
-export function processPastedNodeList(nodeList, content) {
-  const nodeArray = Array.from(nodeList);
-  return nodeArray.reduce(getNodeContent, content);
-}
 
 /**
  * Processes pasted content to find story elements.

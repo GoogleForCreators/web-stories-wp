@@ -35,13 +35,17 @@ describe('Panel: Style Presets', () => {
   };
 
   beforeEach(async () => {
-    localStorage.clear();
     fixture = new Fixture();
     await fixture.render();
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:stylepreset-style',
+      JSON.stringify({ isCollapsed: false, height: 200 })
+    );
   });
 
   afterEach(() => {
     fixture.restore();
+    localStorage.clear();
   });
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Display Panel', () => {

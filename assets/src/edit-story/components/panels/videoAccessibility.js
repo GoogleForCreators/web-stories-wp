@@ -88,8 +88,9 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           onChange={handleChangePoster}
           title={__('Select as video poster', 'web-stories')}
           buttonInsertText={__('Set as video poster', 'web-stories')}
+          alt={__('Preview poster image', 'web-stories')}
           type={'image'}
-          ariaLabel={__('Edit: Video poster', 'web-stories')}
+          ariaLabel={__('Video poster', 'web-stories')}
           canReset
         />
       </Row>
@@ -99,7 +100,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={title || ''}
           onChange={(value) => pushUpdate({ title: value || null })}
           clear
-          aria-label={__('Edit: Video title', 'web-stories')}
+          aria-label={__('Video title', 'web-stories')}
           maxLength={MIN_MAX.TITLE.MAX}
         />
       </Row>
@@ -109,7 +110,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
-          aria-label={__('Edit: Assistive text', 'web-stories')}
+          aria-label={__('Assistive text', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
       </Row>

@@ -42,6 +42,17 @@ describe('Panels/VideoAccessibility', () => {
     return renderPanel(VideoAccessibility, ...args);
   }
 
+  beforeAll(() => {
+    localStorage.setItem(
+      'web_stories_ui_panel_settings:videoAccessibility',
+      JSON.stringify({ isCollapsed: false })
+    );
+  });
+
+  afterAll(() => {
+    localStorage.clear();
+  });
+
   it('should render <VideoAccessibility /> panel', () => {
     const { getByRole } = renderVideoAccessibility([defaultElement]);
     const imageHolder = getByRole('region', { name: /video poster/i });
@@ -109,11 +120,11 @@ describe('Panels/VideoAccessibility', () => {
         },
       },
     ]);
-    const title = getByRole('textbox', { name: 'Edit: Video title' });
+    const title = getByRole('textbox', { name: 'Video title' });
     expect(title.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(title).toHaveValue('');
 
-    const alt = getByRole('textbox', { name: 'Edit: Assistive text' });
+    const alt = getByRole('textbox', { name: 'Assistive text' });
     expect(alt.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
     expect(alt).toHaveValue('');
   });

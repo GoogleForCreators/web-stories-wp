@@ -30,9 +30,10 @@ import APIContext from '../../../api/context';
 import HistoryContext from '../../../history/context';
 
 const getStoryById = jest.fn();
+const getDemoStoryById = jest.fn();
 const clearHistory = jest.fn();
 
-const apiContextValue = { actions: { getStoryById } };
+const apiContextValue = { actions: { getStoryById, getDemoStoryById } };
 const historyContextValue = { actions: { clearHistory } };
 
 function ContextWrapper({ children }) {
@@ -52,6 +53,7 @@ ContextWrapper.propTypes = {
 describe('useLoadStory', () => {
   beforeEach(() => {
     getStoryById.mockReset();
+    getDemoStoryById.mockReset();
     clearHistory.mockReset();
   });
 
@@ -67,7 +69,13 @@ describe('useLoadStory', () => {
 
     const restore = jest.fn();
     await renderHook(
-      () => useLoadStory({ storyId: 11, shouldLoad: true, restore }),
+      () =>
+        useLoadStory({
+          storyId: 11,
+          shouldLoad: true,
+          restore,
+          isDemo: false,
+        }),
       { wrapper: ContextWrapper }
     );
     expect(restore.mock.calls[0][0].story).toStrictEqual(

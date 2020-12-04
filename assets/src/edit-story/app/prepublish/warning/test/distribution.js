@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { MESSAGES } from '../../constants';
 import * as distributionChecks from '../distribution';
 
 describe('Pre-publish checklist - distribution issues (warnings)', () => {
@@ -26,7 +27,8 @@ describe('Pre-publish checklist - distribution issues (warnings)', () => {
         id: 'storyid',
       };
       expect(distributionChecks.storyMissingExcerpt(story)).toStrictEqual({
-        message: 'Missing story excerpt',
+        message: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT,
+        help: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT,
         storyId: story.id,
         type: 'warning',
       });
@@ -38,7 +40,8 @@ describe('Pre-publish checklist - distribution issues (warnings)', () => {
         excerpt: '',
       };
       expect(distributionChecks.storyMissingExcerpt(story)).toStrictEqual({
-        message: 'Missing story excerpt',
+        message: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.MAIN_TEXT,
+        help: MESSAGES.DISTRIBUTION.MISSING_DESCRIPTION.HELPER_TEXT,
         storyId: story.id,
         type: 'warning',
       });

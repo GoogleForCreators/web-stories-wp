@@ -40,8 +40,11 @@ export function AnimationMove({
   const animationName = `x-${offsetX}-y-${offsetY}-${ANIMATION_TYPES.MOVE}`;
   const keyframes = {
     transform: [
-      `translate(${defaultUnit(offsetX, 'px')}, ${defaultUnit(offsetY, 'px')})`,
-      'translate(0%, 0%)',
+      `translate3d(${defaultUnit(offsetX, 'px')}, ${defaultUnit(
+        offsetY,
+        'px'
+      )}, 0)`,
+      'none',
     ],
   };
 

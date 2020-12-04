@@ -44,6 +44,17 @@
 .wp-block-web-stories-embed.aligncenter .components-resizable-box__container {
   margin: auto;
 }
+
+.wp-block-web-stories-embed
+  .components-resizable-box__container.hide-resize-handle
+  .components-resizable-box__handle {
+  display: none;
+}
+.wp-block-web-stories-embed
+  .components-resizable-box__container.show-resize-handle
+  .components-resizable-box__handle {
+  display: block;
+}
 /* Embed Preview Component */
 
 .web-stories-embed-preview {

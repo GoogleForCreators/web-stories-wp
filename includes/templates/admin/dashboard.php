@@ -29,10 +29,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require_once __DIR__ . '/error-no-js.php';
-
 ?>
 
-<div id="web-stories-dashboard" class="hide-if-no-js">
-	<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+<div class="web-stories-wp">
+	<h1 class="screen-reader-text hide-if-no-js"><?php esc_html_e( 'Web Stories', 'web-stories' ); ?></h1>
+	<div id="web-stories-dashboard" class="web-stories-dashboard-app-container hide-if-no-js">
+		<h1 class="loading-message"><?php esc_html_e( 'Please wait...', 'web-stories' ); ?></h1>
+	</div>
+
+	<?php // JavaScript is disabled. ?>
+	<div class="wrap hide-if-js web-stories-wp-no-js">
+		<h1 class="wp-heading-inline"><?php esc_html_e( 'Web Stories', 'web-stories' ); ?></h1>
+		<div class="notice notice-error notice-alt">
+			<p><?php esc_html_e( 'Web Stories for WordPress requires JavaScript. Please enable JavaScript in your browser settings.', 'web-stories' ); ?></p>
+		</div>
+	</div>
 </div>
