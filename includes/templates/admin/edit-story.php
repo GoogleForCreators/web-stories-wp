@@ -32,10 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $post_type, $post_type_object, $post;
 
 $rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
+$demo      = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 // Preload common data.
 $preload_paths = [
-	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,author' ) ),
+	sprintf( '/web-stories/v1/%s/%s/?context=edit&_embed=%s&web_stories_demo=%s', $rest_base, $post->ID, urlencode( 'wp:featuredmedia,author' ), $demo ),
 	'/web-stories/v1/media/?context=edit&per_page=100&page=1&_web_stories_envelope=true',
 	'/web-stories/v1/users/?per_page=100&who=authors',
 ];
