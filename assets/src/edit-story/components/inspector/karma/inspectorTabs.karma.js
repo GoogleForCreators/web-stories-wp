@@ -108,6 +108,7 @@ describe('Inspector Tabs integration', () => {
           name: /Option List Selector/,
         })
         .querySelectorAll('li[role="option"]');
+
       expect(options.length).toBe(1);
       expect(options[0].textContent).toBe('Jane Doe');
     });

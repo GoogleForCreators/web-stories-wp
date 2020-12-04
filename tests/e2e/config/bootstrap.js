@@ -122,11 +122,7 @@ function observeConsoleLogging() {
     // Ignore warning about isSecondary prop on button component as used by AMP plugin.
     // The prop is only supported in newer versions of Gutenberg, and as such will trigger
     // warnings on older WordPress versions (but not on newer ones).
-    if (
-      text.includes(
-        'React does not recognize the `isSecondary` prop on a DOM element.'
-      )
-    ) {
+    if (text.includes('isSecondary')) {
       return;
     }
 

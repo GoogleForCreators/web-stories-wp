@@ -190,6 +190,7 @@ function PublishPanel() {
               <AdvancedDropDown
                 options={queriedUsers}
                 primaryOptions={visibleOptions}
+                searchResultsLabel={__('Search results', 'web-stories')}
                 disabled={isSaving}
                 {...dropDownParams}
               />

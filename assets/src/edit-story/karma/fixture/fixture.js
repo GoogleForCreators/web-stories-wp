@@ -641,6 +641,34 @@ class APIProviderFixture {
         []
       );
 
+      const getDemoStoryById = useCallback(
+        // @todo: put this to __db__/
+        () =>
+          asyncResponse({
+            title: { raw: '' },
+            status: 'draft',
+            author: 1,
+            slug: '',
+            date_gmt: '2020-05-06T22:32:37',
+            modified: '2020-05-06T22:32:37',
+            excerpt: { raw: '' },
+            link: 'http://stories.local/?post_type=web-story&p=1',
+            story_data: {
+              version: DATA_VERSION,
+              pages: this._pages,
+            },
+            featured_media: 0,
+            featured_media_url: '',
+            publisher_logo_url:
+              'http://stories .local/wp-content/plugins/web-stories/assets/images/logo.png',
+            permalink_template: 'http://stories3.local/stories/%pagename%/',
+            style_presets: { textStyles: [], colors: [] },
+            password: '',
+            _embedded: { author: [{ id: 1, name: 'John Doe' }] },
+          }),
+        []
+      );
+
       const autoSaveById = useCallback(
         () => jasmine.createSpy('autoSaveById'),
         []
@@ -716,6 +744,7 @@ class APIProviderFixture {
         actions: {
           autoSaveById,
           getStoryById,
+          getDemoStoryById,
           getMedia,
           getLinkMetadata,
           saveStoryById,

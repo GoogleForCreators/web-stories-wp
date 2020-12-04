@@ -47,6 +47,20 @@ function APIProvider({ children }) {
       const path = addQueryArgs(`${stories}${storyId}/`, {
         context: 'edit',
         _embed: 'wp:featuredmedia,author',
+        web_stories_demo: false,
+      });
+
+      return apiFetch({ path });
+    },
+    [stories]
+  );
+
+  const getDemoStoryById = useCallback(
+    (storyId) => {
+      const path = addQueryArgs(`${stories}${storyId}/`, {
+        context: 'edit',
+        _embed: 'wp:featuredmedia,author',
+        web_stories_demo: true,
       });
 
       return apiFetch({ path });
@@ -298,6 +312,7 @@ function APIProvider({ children }) {
     actions: {
       autoSaveById,
       getStoryById,
+      getDemoStoryById,
       getMedia,
       getLinkMetadata,
       saveStoryById,
