@@ -35,7 +35,7 @@ function CustomStyles() {
   // share button) is either completely overlapping or not overlapping the story
   // content (i.e. never partially overlapping). The icon height is 48px. Based
   // on research, the smallest screen size in active use is 320 pixels wide. In
-  // this caes, the minimum screen width that this ratio will work for it 320px.
+  // this case, the minimum screen width that this ratio will work for it 320px.
   const gridLayerExpandLowerBound = '320 / 678';
   const gridLayerExpandUpperBound = '9 / 16';
 
@@ -62,7 +62,7 @@ function CustomStyles() {
               @media (max-aspect-ratio: ${gridLayerExpandUpperBound})  {
                 @media (min-aspect-ratio: ${gridLayerExpandLowerBound}) {
                   amp-story-grid-layer.grid-layer {
-                    margin-top: calc((100vw / ${fullRatio} - 100vw / ${safeRatio}) / 2);
+                    margin-top: calc((100% / ${fullRatio} - 100% / ${safeRatio}) / 2);
                   }
                 }
               }
