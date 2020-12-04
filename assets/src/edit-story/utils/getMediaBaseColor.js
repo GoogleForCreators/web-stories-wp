@@ -40,7 +40,7 @@ export function getMediaBaseColor(resource, onBaseColor) {
   );
 }
 
-function setOrCreateImage(src) {
+export function setOrCreateImage(src) {
   return new Promise((resolve, reject) => {
     let imgNode = document.body[BASE_COLOR_NODE];
     if (!imgNode) {

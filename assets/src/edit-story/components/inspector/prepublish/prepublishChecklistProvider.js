@@ -24,22 +24,34 @@ import PropTypes from 'prop-types';
 import { useStory } from '../../../app';
 import { getPrepublishErrors } from '../../../app/prepublish';
 import usePrevious from '../../../utils/usePrevious';
+import { useLayout } from '../../../app/layout';
 import Context from './context';
 
 function PrepublishChecklistProvider({ children }) {
+  const { pageSize } = useLayout(({ state: { canvasPageSize } }) => ({
+    pageSize: canvasPageSize,
+  }));
+
   const story = useStory(({ state: { story, pages } }) => {
     return { ...story, pages };
   });
 
-  const [currentList, setCurrentList] = useState(() =>
+  const [currentList, setCurrentList] = useState(() => {
     // use lazy initialization to prevent checklist from running on every update
-    getPrepublishErrors(story)
-  );
+    const pagesWithSize = story.pages.map((page) => ({
+      ...page,
+      pageSize,
+    }));
+    return getPrepublishErrors({ ...story, pages: pagesWithSize });
+  });
 
-  const handleRefreshList = useCallback(
-    () => setCurrentList(getPrepublishErrors(story)),
-    [story]
-  );
+  const handleRefreshList = useCallback(() => {
+    const pagesWithSize = story.pages.map((page) => ({
+      ...page,
+      pageSize,
+    }));
+    setCurrentList(getPrepublishErrors({ ...story, pages: pagesWithSize }));
+  }, [story, pageSize]);
 
   const prevPages = usePrevious(story.pages);
 

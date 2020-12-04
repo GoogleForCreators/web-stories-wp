@@ -24,18 +24,10 @@ import {
 } from '../../../utils/contrastUtils';
 import getBoundRect from '../../../utils/getBoundRect';
 import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
-import {
-  PAGE_HEIGHT,
-  PAGE_RATIO,
-  FULLBLEED_RATIO,
-  PAGE_WIDTH,
-} from '../../../constants';
+import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
 import { getBox } from '../../../units/dimensions';
 import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
-import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
-
-const safeZoneDiff =
-  (PAGE_WIDTH / FULLBLEED_RATIO - PAGE_WIDTH / PAGE_RATIO) / 2;
+import { setOrCreateImage } from '../../../utils/getMediaBaseColor';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -109,37 +101,84 @@ export function textElementFontLowContrast(element) {
   return undefined;
 }
 
-function getOverlapBgColor(bgImage, overlapBox, callback) {
-  bgImage.crossOrigin = 'anonymous';
-  const bgCanvas = document.createElement('canvas');
-  bgCanvas.width = bgImage.width;
-  bgCanvas.height = bgImage.height;
+const STYLES = {
+  boxSizing: 'border-box',
+  visibility: 'hidden',
+  position: 'fixed',
+  contain: 'layout paint',
+  top: '-9999px',
+  left: '-9999px',
+  zIndex: -1,
+};
 
-  const cropCanvas = document.createElement('canvas');
-  cropCanvas.width = overlapBox.sWidth; // size of the new image / text container
-  cropCanvas.height = overlapBox.sHeight;
+const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
 
-  const bgCtx = bgCanvas.getContext('2d');
-  const cropCtx = cropCanvas.getContext('2d');
+export function getImagePartData(bgImgNode, overlapBox) {
+  const src = bgImgNode.src;
+  return new Promise((resolve, reject) => {
+    let imgNode = document.body[BASE_COLOR_NODE];
+    if (!imgNode) {
+      imgNode = document.createElement('div');
+      imgNode.id = '__web-stories-base-color';
+      Object.assign(imgNode, STYLES);
+      document.body.appendChild(imgNode);
+      document.body[BASE_COLOR_NODE] = imgNode;
+    }
+    imgNode.innerHTML = '';
 
-  const croppedImage = new Image();
-  croppedImage.crossOrigin = 'anonymous';
+    const img = new Image();
+    // Necessary to avoid tainting canvas with CORS image data.
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      const node = document.body[BASE_COLOR_NODE];
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = bgImgNode.width;
+        canvas.height = bgImgNode.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(
+          node.firstElementChild,
+          0,
+          0,
+          bgImgNode.width,
+          bgImgNode.height
+        );
+        const imageData = ctx.getImageData(
+          overlapBox.x,
+          overlapBox.y,
+          overlapBox.width,
+          overlapBox.height
+        );
+        resolve(imageData);
+      } catch (e) {
+        reject(e);
+      }
+    };
+    img.onerror = (e) => {
+      reject(new Error('set image error: ' + e.message));
+    };
 
-  bgCtx.drawImage(bgImage, 0, 0, bgImage.width, bgImage.height);
+    img.src = src;
+    imgNode.appendChild(img);
+  });
+}
 
-  const imageData = bgCtx.getImageData(
-    overlapBox.sx,
-    overlapBox.sy,
-    overlapBox.sWidth,
-    overlapBox.sHeight
-  );
-
-  cropCtx.putImageData(imageData, 0, 0);
-
-  // src must be attached to the image
-  croppedImage.src = cropCanvas.toDataURL();
-
-  return getMediaBaseColor({ type: 'image', src: croppedImage.src }, callback);
+function getOverlapBgColor(bgImage, overlapBox) {
+  return getImagePartData(bgImage, overlapBox)
+    .then((imgData) => {
+      const cropCanvas = document.createElement('canvas');
+      cropCanvas.width = overlapBox.sWidth; // size of the new image / text container
+      cropCanvas.height = overlapBox.sHeight;
+      const cropCtx = cropCanvas.getContext('2d');
+      const cropImage = new Image();
+      cropImage.crossOrigin = 'anonymous';
+      cropCtx.putImageData(imgData, 0, 0);
+      cropImage.src = cropCanvas.toDataURL();
+      return setOrCreateImage(cropImage.src).then((colors) => colors);
+    })
+    .catch(() => {
+      // ignore errors for now
+    });
 }
 
 /**
@@ -153,9 +192,13 @@ function getOverlapBgColor(bgImage, overlapBox, callback) {
  */
 
 export function pageBackgroundWithTextLowContrast(page) {
+  const { pageSize } = page;
+  const safeZoneDiff =
+    (pageSize.width / FULLBLEED_RATIO - pageSize.width / PAGE_RATIO) / 2;
   page.elements.map((element, index) => {
     if (element.type === 'text') {
-      const textBoxBound = getBoundRect([element]);
+      const textBox = getBox(element, pageSize.width, pageSize.height);
+      const textBoxBound = getBoundRect([textBox]);
       const potentialBackgroundElements = page.elements.slice(0, index);
 
       // todo: generalize for any image or shape behind text
@@ -164,10 +207,10 @@ export function pageBackgroundWithTextLowContrast(page) {
       potentialBackgroundElements.forEach((bgElem) => {
         if (bgElem.type === 'image' && bgElem.isBackground) {
           const { resource, scale, focalX, focalY } = bgElem;
-          const bgBox = getBox(bgElem, PAGE_WIDTH, PAGE_HEIGHT);
+          const bgBox = getBox(bgElem, pageSize.width, pageSize.height);
           const { width, height } = bgBox;
 
-          const bgMediaSize = getMediaSizePositionProps(
+          const bgMediaPos = getMediaSizePositionProps(
             resource,
             width,
             height,
@@ -177,9 +220,9 @@ export function pageBackgroundWithTextLowContrast(page) {
           );
 
           const overlapBox = {
-            sx: Math.abs(bgMediaSize.offsetX) + Math.abs(textBoxBound.startX),
+            sx: Math.abs(bgMediaPos.offsetX) + Math.abs(textBoxBound.startX),
             sy:
-              Math.abs(bgMediaSize.offsetY) +
+              Math.abs(bgMediaPos.offsetY) +
               Math.abs(textBoxBound.startY + safeZoneDiff),
             sWidth: textBoxBound.width,
             sHeight: textBoxBound.height,
@@ -189,10 +232,11 @@ export function pageBackgroundWithTextLowContrast(page) {
             `[data-element-id="${bgElem.id}"] img`
           );
 
-          getOverlapBgColor(bgImage, overlapBox, (colors) =>
+          getOverlapBgColor(
+            bgImage,
+            overlapBox
             // eslint-disable-next-line no-console
-            console.log('stolen colors: ', colors)
-          );
+          ).then((colors) => console.log('stolen colors: ', colors));
         }
       });
     }
