@@ -49,6 +49,8 @@ export function getEffectName(type) {
 export function getEffectDirection(effect = {}) {
   if (effect.zoomFrom || effect.zoomFrom === 0) {
     return effect.zoomFrom;
+  } else if (effect.zoomDir) {
+    return effect.zoomDir;
   } else if (effect.flyInDir) {
     return effect.flyInDir;
   } else if (effect.rotateInDir) {
