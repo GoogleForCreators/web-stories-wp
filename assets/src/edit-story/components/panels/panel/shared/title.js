@@ -23,6 +23,11 @@ import { useCallback, useEffect } from 'react';
 import { rgba } from 'polished';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import useInspector from '../../../inspector/useInspector';
@@ -164,6 +169,9 @@ function Title({
     }
   }, [setExpandToHeight, height, resizeable]);
 
+  const titleLabel = isCollapsed
+    ? __('Expand panel', 'web-stories')
+    : __('Collapse panel', 'web-stories');
   const toggle = isCollapsed ? expand : collapse;
   const onToggle = useCallback(() => {
     toggle();
@@ -200,6 +208,7 @@ function Title({
         {canCollapse && (
           <Toggle
             isCollapsed={isCollapsed}
+            aria-label={titleLabel}
             toggle={onToggle}
             tabIndex={ariaHidden ? -1 : 0}
           >
