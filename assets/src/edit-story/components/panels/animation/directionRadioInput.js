@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
@@ -25,7 +26,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DIRECTION, ROTATION } from '../../../../animation';
+import {
+  DIRECTION,
+  ROTATION,
+  SCALE_DIRECTION,
+  SCALE_DIRECTION_MAP,
+} from '../../../../animation';
 
 const Svg = styled.svg`
   display: block;
@@ -70,7 +76,8 @@ const DirectionIcon = () => (
 
 const Direction = ({ className, direction }) => (
   <Icon className={className} direction={direction}>
-    {Object.values(DIRECTION).includes(direction) ? (
+    {Object.values(DIRECTION).includes(direction) ||
+    Object.values(SCALE_DIRECTION).includes(direction) ? (
       <DirectionIcon />
     ) : (
       <RotationIcon />
@@ -143,6 +150,35 @@ const Label = styled.label`
           right: 0;
           transform: translate(-10%, -10%);
         `;
+
+      case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+        return css`
+          bottom: 0;
+          left: 0;
+          transform: rotate(45deg);
+        `;
+
+      case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+        return css`
+          top: 0;
+          left: 0;
+          transform: rotate(135deg);
+        `;
+
+      case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+        return css`
+          top: 0;
+          right: 0;
+          transform: rotate(225deg);
+        `;
+
+      case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+        return css`
+          bottom: 0;
+          right: 0;
+          transform: rotate(315deg);
+        `;
+
       default:
         return css`
           bottom: 0;
@@ -195,32 +231,55 @@ const translations = {
   [DIRECTION.BOTTOM_TO_TOP]: __('bottom to top', 'web-stories'),
   [ROTATION.CLOCKWISE]: __('clockwise', 'web-stories'),
   [ROTATION.COUNTER_CLOCKWISE]: __('counterclockwise', 'web-stories'),
+  [SCALE_DIRECTION.SCALE_IN]: __('scale in', 'web-stories'),
+  [SCALE_DIRECTION.SCALE_OUT]: __('scale out', 'web-stories'),
 };
 
 export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
+  const flattenedDirections = useMemo(() => {
+    const dir = [];
+    if (
+      directions.includes(SCALE_DIRECTION.SCALE_IN) &&
+      directions.includes(SCALE_DIRECTION.SCALE_OUT)
+    ) {
+      dir.push(
+        ...SCALE_DIRECTION_MAP.SCALE_IN,
+        ...SCALE_DIRECTION_MAP.SCALE_OUT
+      );
+    } else {
+      dir.push(...directions);
+    }
+    return dir;
+  }, [directions]);
+  console.log(flattenedDirections);
   return (
     <Fieldset>
       <Figure />
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
       <RadioGroup>
-        {directions.map((direction) => (
-          <Label
-            key={direction}
-            aria-label={translations[direction]}
-            htmlFor={direction}
-            direction={direction}
-          >
-            <HiddenInput
-              id={direction}
-              type="radio"
-              name="direction"
-              value={direction}
-              onChange={onChange}
-              checked={value === direction}
-            />
-            <DirectionIndicator direction={direction} />
-          </Label>
-        ))}
+        {flattenedDirections.map(
+          (direction) => (
+            console.warn(value, direction),
+            (
+              <Label
+                key={direction}
+                aria-label={translations[direction]}
+                htmlFor={direction}
+                direction={direction}
+              >
+                <HiddenInput
+                  id={direction}
+                  type="radio"
+                  name="direction"
+                  value={direction}
+                  onChange={onChange}
+                  checked={value === direction}
+                />
+                <DirectionIndicator direction={direction} />
+              </Label>
+            )
+          )
+        )}
       </RadioGroup>
     </Fieldset>
   );
@@ -229,6 +288,7 @@ export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
 const directionPropType = PropTypes.oneOf([
   ...Object.values(DIRECTION),
   ...Object.values(ROTATION),
+  ...Object.values(SCALE_DIRECTION),
 ]);
 
 DirectionRadioInput.propTypes = {

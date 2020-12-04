@@ -16,11 +16,12 @@
 /**
  * External dependencies
  */
+import { useState } from 'react';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { DIRECTION, ROTATION } from '../../../../../animation';
+import { DIRECTION, ROTATION, SCALE_DIRECTION } from '../../../../../animation';
 import { DirectionRadioInput } from '../directionRadioInput';
 
 export default {
@@ -50,6 +51,20 @@ export const Rotation = () => {
       <DirectionRadioInput
         directions={[ROTATION.CLOCKWISE, ROTATION.COUNTER_CLOCKWISE]}
         defaultChecked={ROTATION.CLOCKWISE}
+      />
+    </Panel>
+  );
+};
+
+export const Scale = () => {
+  const [value, setValue] = useState(SCALE_DIRECTION.SCALE_IN);
+  return (
+    <Panel>
+      <DirectionRadioInput
+        value={value}
+        onChange={({ target }) => setValue(target.value)}
+        directions={[SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT]}
+        defaultChecked={SCALE_DIRECTION.SCALE_IN}
       />
     </Panel>
   );

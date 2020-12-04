@@ -104,6 +104,26 @@ export const DIRECTION = {
   LEFT_TO_RIGHT: 'leftToRight',
 };
 
+export const SCALE_DIRECTION = {
+  SCALE_IN: 'scaleIn',
+  SCALE_OUT: 'scaleOut',
+  SCALE_OUT_TOP_RIGHT: 'scaleOutTopRight',
+  SCALE_OUT_BOTTOM_LEFT: 'scaleOutBottomLeft',
+  SCALE_IN_TOP_LEFT: 'scaleInTopLeft',
+  SCALE_IN_BOTTOM_RIGHT: 'scaleInBottomRight',
+};
+
+export const SCALE_DIRECTION_MAP = {
+  SCALE_IN: [
+    SCALE_DIRECTION.SCALE_IN_TOP_LEFT,
+    SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT,
+  ],
+  SCALE_OUT: [
+    SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT,
+    SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT,
+  ],
+};
+
 export const ROTATION = {
   CLOCKWISE: 'clockwise',
   COUNTER_CLOCKWISE: 'counterClockwise',
