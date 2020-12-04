@@ -48,7 +48,7 @@ import { FileProvider } from './file';
 import { useLocalMedia, useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
-import Layout from './layout';
+import Layout, { LayoutProvider } from './layout';
 import { Media3pApiProvider } from './media/media3p/api';
 
 function App({ config }) {
@@ -70,16 +70,18 @@ function App({ config }) {
                             <AutoSaveHandler />
                             <TransformProvider>
                               <DropTargetsProvider>
-                                <PrepublishChecklistProvider>
-                                  <GlobalStyle />
-                                  <DevTools />
-                                  <DefaultMoveableGlobalStyle />
-                                  <CropMoveableGlobalStyle />
-                                  <ModalGlobalStyle />
-                                  <CalendarStyle />
-                                  <KeyboardOnlyOutlines />
-                                  <Layout />
-                                </PrepublishChecklistProvider>
+                                <LayoutProvider>
+                                  <PrepublishChecklistProvider>
+                                    <GlobalStyle />
+                                    <DevTools />
+                                    <DefaultMoveableGlobalStyle />
+                                    <CropMoveableGlobalStyle />
+                                    <ModalGlobalStyle />
+                                    <CalendarStyle />
+                                    <KeyboardOnlyOutlines />
+                                    <Layout />
+                                  </PrepublishChecklistProvider>
+                                </LayoutProvider>
                               </DropTargetsProvider>
                             </TransformProvider>
                           </MediaProvider>
