@@ -76,7 +76,7 @@ const UploadLabelAsCta = styled(DefaultButton).attrs({
   }
 `;
 
-const LoadingIndicator = styled.div.attrs({ className: 'loading-indicator' })`
+const LoadingIndicator = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
