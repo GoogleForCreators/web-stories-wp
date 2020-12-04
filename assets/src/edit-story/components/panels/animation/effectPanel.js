@@ -55,6 +55,8 @@ export function getEffectDirection(effect = {}) {
     return effect.rotateInDir;
   } else if (effect.whooshInDir) {
     return effect.whooshInDir;
+  } else if (effect.panDir) {
+    return effect.panDir;
   }
   return false;
 }

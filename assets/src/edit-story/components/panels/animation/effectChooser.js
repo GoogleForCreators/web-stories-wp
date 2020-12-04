@@ -89,18 +89,16 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   color: white;
   text-transform: uppercase;
 
-  &:disabled {
+  &[aria-disabled='true'] {
     opacity: 0.6;
   }
 
-  &:hover:not([disabled]) {
+  &:hover:not([aria-disabled='true']) {
     cursor: pointer;
   }
-  &:focus:not([disabled]) {
-    outline: -webkit-focus-ring-color auto 1px !important;
-  }
-  &:hover:not([disabled]),
-  &:focus:not([disabled]) {
+
+  &:hover:not([aria-disabled='true']),
+  &:focus:not([aria-disabled='true']) {
     ${BaseAnimationCell} {
       display: inline-block;
     }
@@ -118,6 +116,10 @@ const Grid = styled.div.attrs({ role: 'list' })`
   grid-template-columns: repeat(4, 58px);
   padding: 15px;
   position: relative;
+  /* Specify outline override here so we can give priority with extra selectors */
+  & > button[role='listitem']:focus {
+    outline: -webkit-focus-ring-color auto 1px !important;
+  }
 `;
 
 const GridItemFullRow = styled(GridItem)`
@@ -156,19 +158,13 @@ const FOREGROUND_EFFECTS_LIST = [
 const BACKGROUND_EFFECTS_LIST = [
   'No Effect',
   'Zoom',
-  'Pan Left',
-  'Pan Right',
-  'Pan Up',
-  'Pan Down',
+  `Pan ${DIRECTION.LEFT_TO_RIGHT}`,
+  `Pan ${DIRECTION.RIGHT_TO_LEFT}`,
+  `Pan ${DIRECTION.BOTTOM_TO_TOP}`,
+  `Pan ${DIRECTION.TOP_TO_BOTTOM}`,
 ];
 
-const BACKGROUND_PAN_DIRECTION_MAPPING = {
-  [DIRECTION.LEFT_TO_RIGHT]: 'Right',
-  [DIRECTION.TOP_TO_BOTTOM]: 'Down',
-  [DIRECTION.RIGHT_TO_LEFT]: 'Left',
-  [DIRECTION.BOTTOM_TO_TOP]: 'Up',
-};
-
+// TODO figure out what the key is for pan direction, add to helper
 export default function EffectChooser({
   onAnimationSelected,
   onNoEffectSelected,
@@ -186,36 +182,41 @@ export default function EffectChooser({
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   }, []);
 
-  const getBackgroundOptions = useCallback(() => {
+  const getDisabledBackgroundEffects = useCallback(() => {
     // right now only background pan effects are potentially disabled
-    if (disabledTypeOptionsMap?.['effect-background-pan']) {
-      const filteredList = [...BACKGROUND_EFFECTS_LIST].filter(
-        // eslint-disable-next-line consistent-return
-        (currentEffect) => {
-          const isDisabled = disabledTypeOptionsMap[
-            'effect-background-pan'
-          ].find((disabledOption) =>
-            currentEffect.endsWith(
-              BACKGROUND_PAN_DIRECTION_MAPPING[disabledOption]
-            )
-          );
+    const listWithDisabledOptions = [...BACKGROUND_EFFECTS_LIST].filter(
+      // eslint-disable-next-line consistent-return
+      (currentEffect) => {
+        const isDisabled = disabledTypeOptionsMap[
+          'effect-background-pan'
+        ].find((disabledOption) => currentEffect.endsWith(disabledOption));
 
-          if (!isDisabled) {
-            return currentEffect;
-          }
+        if (isDisabled) {
+          return currentEffect;
         }
-      );
-      return filteredList;
-    }
-    return BACKGROUND_EFFECTS_LIST;
+      }
+    );
+    return listWithDisabledOptions;
   }, [disabledTypeOptionsMap]);
 
-  const availableListOptions = useMemo(
-    () =>
-      isBackgroundEffects ? getBackgroundOptions() : FOREGROUND_EFFECTS_LIST,
-    [getBackgroundOptions, isBackgroundEffects]
-  );
+  const availableListOptions = isBackgroundEffects
+    ? BACKGROUND_EFFECTS_LIST
+    : FOREGROUND_EFFECTS_LIST;
   const listLength = availableListOptions.length;
+
+  const disabledBackgroundEffects = useMemo(() => {
+    if (isBackgroundEffects) {
+      if (disabledTypeOptionsMap?.['effect-background-pan']) {
+        return getDisabledBackgroundEffects();
+      }
+      return [];
+    }
+    return [];
+  }, [
+    disabledTypeOptionsMap,
+    getDisabledBackgroundEffects,
+    isBackgroundEffects,
+  ]);
 
   // set existing active effect with a ref, specify when dropdown is opened which version of an effect it is since some have many options
   const getPreviousEffectValue = useCallback(() => {
@@ -285,7 +286,22 @@ export default function EffectChooser({
     if (ref.current && focusedIndex !== null) {
       ref.current.firstChild?.children?.[focusedIndex]?.focus();
     }
-  }, [focusedValue, focusedIndex]);
+  }, [focusedValue, focusedIndex, disabledBackgroundEffects]);
+
+  const handleOnSelect = useCallback(
+    (event, effect, animation) => {
+      const isEffectDisabled = disabledBackgroundEffects.includes(effect);
+
+      if (isEffectDisabled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return () => {};
+      }
+
+      return onAnimationSelected(animation);
+    },
+    [disabledBackgroundEffects, onAnimationSelected]
+  );
 
   return (
     <Container ref={ref}>
@@ -300,8 +316,8 @@ export default function EffectChooser({
           <>
             <GridItemFullRow
               aria-label={__('Zoom Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, 'Zoom', {
                   animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
                 })
               }
@@ -311,15 +327,15 @@ export default function EffectChooser({
             </GridItemFullRow>
             <GridItem
               aria-label={__('Pan Left Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, 'Pan leftToRight', {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.LEFT_TO_RIGHT)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                'Pan leftToRight'
+              )}
             >
               <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
               <PanLeftAnimation>
@@ -328,15 +344,15 @@ export default function EffectChooser({
             </GridItem>
             <GridItem
               aria-label={__('Pan Right Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, 'Pan rightToLeft', {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.RIGHT_TO_LEFT)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                'Pan rightToLeft'
+              )}
             >
               <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
               <PanRightAnimation>
@@ -345,15 +361,15 @@ export default function EffectChooser({
             </GridItem>
             <GridItem
               aria-label={__('Pan Up Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, 'Pan bottomToTop', {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.BOTTOM_TO_TOP,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.BOTTOM_TO_TOP)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                'Pan bottomToTop'
+              )}
             >
               <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
               <PanBottomAnimation>
@@ -362,15 +378,15 @@ export default function EffectChooser({
             </GridItem>
             <GridItem
               aria-label={__('Pan Down Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, 'Pan topToBottom', {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.TOP_TO_BOTTOM,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.TOP_TO_BOTTOM)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                'Pan topToBottom'
+              )}
             >
               <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
               <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
