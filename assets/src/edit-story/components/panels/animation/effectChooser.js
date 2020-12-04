@@ -66,6 +66,7 @@ import {
   PanBottomAnimation,
   PanLeftAnimation,
 } from './effectChooserElements';
+import { isNullOrUndefinedOrEmptyString } from './utils/isNullOrUndefinedOrEmptyString';
 
 const Container = styled.div`
   background: black;
@@ -253,11 +254,8 @@ export default function EffectChooser({
     }
   }, []);
 
-  const isNullOrUndefined = (val) =>
-    val === null || val === undefined || val === '';
-
   const focusedIndex = useMemo(() => {
-    if (isNullOrUndefined(focusedValue)) {
+    if (isNullOrUndefinedOrEmptyString(focusedValue)) {
       return 0;
     }
     const newFocusIndex = availableListOptions.indexOf(focusedValue);
