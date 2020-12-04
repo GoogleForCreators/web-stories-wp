@@ -21,7 +21,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -36,6 +42,7 @@ import {
   DIRECTION,
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
+import { useKeyDownEffect } from '../../keyboard';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -119,20 +126,149 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
+const FOREGROUND_EFFECTS_LIST = [
+  'No Effect',
+  'Drop',
+  'Fade In',
+  `Fly In ${DIRECTION.LEFT_TO_RIGHT}`,
+  `Fly In ${DIRECTION.TOP_TO_BOTTOM}`,
+  `Fly In ${DIRECTION.RIGHT_TO_LEFT}`,
+  `Fly In ${DIRECTION.BOTTOM_TO_TOP}`,
+  'Pulse',
+  `Rotate In ${DIRECTION.LEFT_TO_RIGHT}`,
+  `Rotate In ${DIRECTION.RIGHT_TO_LEFT}`,
+  'Twirl In',
+  `Whoosh In ${DIRECTION.LEFT_TO_RIGHT}`,
+  `Whoosh In ${DIRECTION.RIGHT_TO_LEFT}`,
+  'Zoom In',
+  'Zoom Out',
+];
+
+const BACKGROUND_EFFECTS_LIST = [
+  'No Effect',
+  'Zoom',
+  'Pan Left',
+  'Pan Right',
+  'Pan Up',
+  'Pan Down',
+];
+
+// const BACKGROUND_PAN_DIRECTION_MAPPING = {
+//   [DIRECTION.LEFT_TO_RIGHT]: 'Right',
+//   [DIRECTION.TOP_TO_BOTTOM]: 'Down',
+//   [DIRECTION.RIGHT_TO_LEFT]: 'Left',
+//   [DIRECTION.BOTTOM_TO_TOP]: 'Up',
+// };
+
 export default function EffectChooser({
   onAnimationSelected,
   onNoEffectSelected,
   onDismiss,
   isBackgroundEffects = false,
   disabledTypeOptionsMap,
+  value = '',
+  direction,
 }) {
+  const [focusedValue, setFocusedValue] = useState();
   const ref = useRef();
+  const previousEffectValueRef = useRef();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   }, []);
 
+  // TODO limit options for keyboard navigation to enabled list
+  const getBackgroundOptions = useCallback(() => {
+    // const bgEffectsListCopy = [...BACKGROUND_EFFECTS_LIST];
+
+    // if (disabledTypeOptionsMap?.['effect-background-pan']) {
+    //   disabledTypeOptionsMap['effect-background-pan'].map((disabledOption) => {
+    //     const mappedName = BACKGROUND_PAN_DIRECTION_MAPPING[disabledOption];
+    //   });
+    // }
+    return BACKGROUND_EFFECTS_LIST;
+  }, []);
+
+  const availableListOptions = useMemo(
+    () =>
+      isBackgroundEffects ? getBackgroundOptions() : FOREGROUND_EFFECTS_LIST,
+    [getBackgroundOptions, isBackgroundEffects]
+  );
+  const listLength = availableListOptions.length;
+
+  // set existing active effect with a ref, specify when dropdown is opened which version of an effect it is since some have many options
+  const getPreviousEffectValue = useCallback(() => {
+    if (direction || direction === 0) {
+      let indicator;
+      if (typeof direction === 'number') {
+        indicator = direction > 0 ? 'Out' : 'In';
+      } else {
+        indicator = direction;
+      }
+
+      return `${value} ${indicator}`.trim();
+    }
+    return value;
+  }, [direction, value]);
+
+  useEffect(() => {
+    previousEffectValueRef.current = getPreviousEffectValue();
+
+    return () => {
+      previousEffectValueRef.current = null;
+    };
+  }, [getPreviousEffectValue]);
+
+  // Once the correct effect w/ direction is found, set focusedValue to trigger effect hook to find proper index.
+  useEffect(() => {
+    if (previousEffectValueRef.current) {
+      setFocusedValue(previousEffectValueRef.current);
+    }
+  }, []);
+
+  const isNullOrUndefined = (val) =>
+    val === null || val === undefined || val === '';
+
+  const focusedIndex = useMemo(() => {
+    if (isNullOrUndefined(focusedValue)) {
+      return 0;
+    }
+    const newFocusIndex = availableListOptions.indexOf(focusedValue);
+    return newFocusIndex >= 0 ? newFocusIndex : 0;
+  }, [availableListOptions, focusedValue]);
+
+  const handleMoveFocus = useCallback(
+    (offset) => setFocusedValue(availableListOptions[focusedIndex + offset]),
+    [availableListOptions, focusedIndex]
+  );
+
+  // TODO add in tab and tab+shift
+  const handleUpDown = useCallback(
+    ({ key }) => {
+      if (key === 'ArrowUp' && focusedIndex !== 0) {
+        handleMoveFocus(-1);
+      } else if (key === 'ArrowDown' && focusedIndex < listLength - 1) {
+        handleMoveFocus(1);
+      }
+    },
+    [focusedIndex, handleMoveFocus, listLength]
+  );
+
+  // TODO how to flag shift to control focus with tab
+  useKeyDownEffect(ref, { key: ['up', 'down', 'tab'] }, handleUpDown, [
+    handleUpDown,
+  ]);
+
   useFocusOut(ref, () => onDismiss?.(), []);
+
+  useKeyDownEffect(ref, { key: 'esc' }, onDismiss, [onDismiss]);
+
+  // Set initial focus
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.firstChild?.children?.[focusedIndex]?.focus();
+    }
+  }, [focusedValue, focusedIndex]);
 
   return (
     <Container ref={ref}>
@@ -419,9 +555,15 @@ export default function EffectChooser({
 EffectChooser.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,
   onNoEffectSelected: PropTypes.func.isRequired,
+  direction: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
   onDismiss: PropTypes.func,
   isBackgroundEffects: PropTypes.bool,
   disabledTypeOptionsMap: PropTypes.objectOf(
     PropTypes.arrayOf(PropTypes.string)
   ),
+  value: PropTypes.string,
 };

@@ -22,14 +22,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
 import { DropDownSelect, DropDownTitle } from '../../form/dropDown';
 import { Dropdown as DropdownIcon } from '../../../icons';
+import { isKeyboardUser } from '../../../utils/keyboardOnlyOutline';
 import Popup, { Placement } from '../../popup';
 import { ScrollBarStyles } from '../../library/common/scrollbarStyles';
 import EffectChooser from './effectChooser';
@@ -49,10 +51,19 @@ export default function EffectChooserDropdown({
   isBackgroundEffects = false,
   selectedEffectTitle,
   disabledTypeOptionsMap,
+  direction,
 }) {
   const selectRef = useRef();
   const dropdownRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeDropDown = useCallback(() => {
+    setIsOpen(false);
+    if (isKeyboardUser()) {
+      // Return keyboard focus to button when closing dropdown
+      selectRef.current.focus();
+    }
+  }, []);
 
   return (
     <DropDownSelect
@@ -73,9 +84,11 @@ export default function EffectChooserDropdown({
           <EffectChooser
             onNoEffectSelected={onNoEffectSelected}
             onAnimationSelected={onAnimationSelected}
-            onDismiss={() => setIsOpen(false)}
+            onDismiss={closeDropDown}
             isBackgroundEffects={isBackgroundEffects}
             disabledTypeOptionsMap={disabledTypeOptionsMap}
+            value={selectedEffectTitle}
+            direction={direction}
           />
         </Container>
       </Popup>
@@ -85,6 +98,11 @@ export default function EffectChooserDropdown({
 
 EffectChooserDropdown.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,
+  direction: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
   isBackgroundEffects: PropTypes.bool,
   selectedEffectTitle: PropTypes.string,
   onNoEffectSelected: PropTypes.func.isRequired,

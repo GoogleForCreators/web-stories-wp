@@ -43,7 +43,7 @@ import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
 import { SimplePanel } from '../panel';
 import { Note } from '../shared';
-import EffectPanel, { getEffectName } from './effectPanel';
+import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
@@ -173,6 +173,7 @@ function AnimationPanel({
           onNoEffectSelected={handleRemoveEffect}
           isBackgroundEffects={isBackground}
           disabledTypeOptionsMap={disabledTypeOptionsMap}
+          direction={getEffectDirection(updatedAnimations[0])}
         />
       </Row>
       {updatedAnimations[0] && (

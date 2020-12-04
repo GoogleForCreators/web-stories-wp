@@ -45,6 +45,19 @@ export function getEffectName(type) {
     ].find((o) => o.value === type)?.name || ''
   );
 }
+
+export function getEffectDirection(effect = {}) {
+  if (effect.zoomFrom || effect.zoomFrom === 0) {
+    return effect.zoomFrom;
+  } else if (effect.flyInDir) {
+    return effect.flyInDir;
+  } else if (effect.rotateInDir) {
+    return effect.rotateInDir;
+  } else if (effect.whooshInDir) {
+    return effect.whooshInDir;
+  }
+  return false;
+}
 const AnimationGrid = styled.div`
   display: grid;
   grid-gap: 15px;
