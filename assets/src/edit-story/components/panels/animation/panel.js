@@ -174,6 +174,7 @@ function AnimationPanel({
           isBackgroundEffects={isBackground}
           disabledTypeOptionsMap={disabledTypeOptionsMap}
           direction={getEffectDirection(updatedAnimations[0])}
+          selectedEffectType={updatedAnimations[0]?.type}
         />
       </Row>
       {updatedAnimations[0] && (

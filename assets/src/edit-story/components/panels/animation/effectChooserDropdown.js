@@ -50,6 +50,7 @@ export default function EffectChooserDropdown({
   onNoEffectSelected,
   isBackgroundEffects = false,
   selectedEffectTitle,
+  selectedEffectType,
   disabledTypeOptionsMap,
   direction,
 }) {
@@ -87,7 +88,7 @@ export default function EffectChooserDropdown({
             onDismiss={closeDropDown}
             isBackgroundEffects={isBackgroundEffects}
             disabledTypeOptionsMap={disabledTypeOptionsMap}
-            value={selectedEffectTitle}
+            value={selectedEffectType}
             direction={direction}
           />
         </Container>
@@ -105,6 +106,7 @@ EffectChooserDropdown.propTypes = {
   ]),
   isBackgroundEffects: PropTypes.bool,
   selectedEffectTitle: PropTypes.string,
+  selectedEffectType: PropTypes.string,
   onNoEffectSelected: PropTypes.func.isRequired,
   disabledTypeOptionsMap: PropTypes.objectOf(
     PropTypes.arrayOf(PropTypes.string)
