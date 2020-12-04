@@ -29,13 +29,16 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
 
+        # TODO: Use npm ci
+        # See https://github.com/npm/cli/issues/1905
+        # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
         run: |
-          # TODO: Use npm ci
-          # See https://github.com/npm/cli/issues/1905
           npm install
+          npm install puppeteer
         env:
           CI: true
+          PUPPETEER_PRODUCT: chrome
 
       # FIXME: https://github.com/google/web-stories-wp/issues/4364
       - name: Increase max number of file watchers

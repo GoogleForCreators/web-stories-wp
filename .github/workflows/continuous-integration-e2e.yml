@@ -65,14 +65,16 @@ jobs:
             ${{ runner.os }}-composer-
             ${{ runner.os }}-
 
+        # TODO: Use npm ci
+        # See https://github.com/npm/cli/issues/1905
+        # TODO: Remove need for `npm install puppeteer`.
       - name: Install dependencies
         run: |
           # Ensure latest version of npm 7
           # See https://github.com/npm/cli/issues/2147
           npm i -g npm@7
-          # TODO: Use npm ci
-          # See https://github.com/npm/cli/issues/1905
           npm install
+          npm install puppeteer
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
         env:
           CI: true
@@ -94,7 +96,6 @@ jobs:
         run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
-          PUPPETEER_PRODUCT: ${{ matrix.browser }}
         if: ${{ matrix.coverage }}
 
       - name: Run E2E tests
