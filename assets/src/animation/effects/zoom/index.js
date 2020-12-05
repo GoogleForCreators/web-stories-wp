@@ -18,17 +18,17 @@
  * Internal dependencies
  */
 import { AnimationZoom } from '../../parts/zoom';
+import { SCALE_DIRECTION } from '../../constants';
 
 export function EffectZoom({
-  zoomFrom = 0,
-  zoomTo = 1,
+  scaleDirection = SCALE_DIRECTION.SCALE_IN,
   duration = 1000,
   delay,
   easing,
 }) {
   return AnimationZoom({
-    zoomFrom,
-    zoomTo,
+    zoomFrom: scaleDirection === SCALE_DIRECTION.SCALE_OUT ? 1 / 3 : 3,
+    zoomTo: 1,
     duration,
     delay,
     easing,

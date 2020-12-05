@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { DIRECTION } from '../../../../../animation';
+import { DIRECTION, SCALE_DIRECTION } from '../../../../../animation';
 import { renderWithTheme } from '../../../../testUtils';
 import { DirectionRadioInput } from '../directionRadioInput';
 
@@ -111,5 +111,19 @@ describe('<DirectionRadioInput />', () => {
       })
     );
     expect(getByRole('radio', { checked: true })).toBe(radios[0]);
+  });
+
+  it('should render the correct number of arrows for scale direction', () => {
+    const onChange = jest.fn();
+    const { getAllByRole } = renderWithTheme(
+      <DirectionRadioInputUncontrolled
+        onChange={onChange}
+        directions={[SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT]}
+      />
+    );
+
+    const radios = getAllByRole('radio');
+
+    expect(radios).toHaveLength(4);
   });
 });

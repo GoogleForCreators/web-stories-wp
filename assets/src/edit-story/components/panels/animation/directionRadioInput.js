@@ -57,6 +57,15 @@ const Icon = styled.div`
         return 'rotate(0deg)';
     }
   }};
+
+  ${({ selected }) =>
+    selected &&
+    css`
+      svg {
+        stroke: ${({ theme }) => theme.colors.activeDirection};
+        stroke-width: 2px;
+      }
+    `}
 `;
 
 const RotationIcon = () => (
@@ -74,8 +83,8 @@ const DirectionIcon = () => (
   </Svg>
 );
 
-const Direction = ({ className, direction }) => (
-  <Icon className={className} direction={direction}>
+const Direction = ({ className, direction, selected }) => (
+  <Icon className={className} direction={direction} selected={selected}>
     {Object.values(DIRECTION).includes(direction) ||
     Object.values(SCALE_DIRECTION).includes(direction) ? (
       <DirectionIcon />
@@ -84,11 +93,6 @@ const Direction = ({ className, direction }) => (
     )}
   </Icon>
 );
-
-Direction.propTypes = {
-  className: PropTypes.string,
-  direction: PropTypes.oneOf(Object.values(DIRECTION)),
-};
 
 // Must be a styled component to add component selectors in css
 const DirectionIndicator = styled(Direction)``;
@@ -155,7 +159,7 @@ const Label = styled.label`
         return css`
           bottom: 0;
           left: 0;
-          transform: rotate(45deg);
+          transform: rotate(-135deg);
         `;
 
       case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
@@ -169,7 +173,7 @@ const Label = styled.label`
         return css`
           top: 0;
           right: 0;
-          transform: rotate(225deg);
+          transform: rotate(-315deg);
         `;
 
       case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
@@ -191,11 +195,6 @@ const Label = styled.label`
   ${DirectionIndicator} {
     stroke: ${({ theme }) => theme.colors.fg.v9};
     stroke-width: 1px;
-  }
-
-  input:checked ~ ${DirectionIndicator} {
-    stroke: ${({ theme }) => theme.colors.activeDirection};
-    stroke-width: 2px;
   }
 
   input:focus ~ ${DirectionIndicator} {
@@ -235,6 +234,21 @@ const translations = {
   [SCALE_DIRECTION.SCALE_OUT]: __('scale out', 'web-stories'),
 };
 
+const valueForInternalValue = (value) => {
+  switch (value) {
+    case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+      return SCALE_DIRECTION.SCALE_IN;
+    case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+      return SCALE_DIRECTION.SCALE_IN;
+    case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+      return SCALE_DIRECTION.SCALE_OUT;
+    case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+      return SCALE_DIRECTION.SCALE_OUT;
+    default:
+      return value;
+  }
+};
+
 export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
   const flattenedDirections = useMemo(() => {
     const dir = [];
@@ -251,35 +265,32 @@ export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
     }
     return dir;
   }, [directions]);
-  console.log(flattenedDirections);
   return (
     <Fieldset>
       <Figure />
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
       <RadioGroup>
-        {flattenedDirections.map(
-          (direction) => (
-            console.warn(value, direction),
-            (
-              <Label
-                key={direction}
-                aria-label={translations[direction]}
-                htmlFor={direction}
-                direction={direction}
-              >
-                <HiddenInput
-                  id={direction}
-                  type="radio"
-                  name="direction"
-                  value={direction}
-                  onChange={onChange}
-                  checked={value === direction}
-                />
-                <DirectionIndicator direction={direction} />
-              </Label>
-            )
-          )
-        )}
+        {flattenedDirections.map((direction) => (
+          <Label
+            key={direction}
+            aria-label={translations[direction]}
+            htmlFor={direction}
+            direction={direction}
+          >
+            <HiddenInput
+              id={direction}
+              type="radio"
+              name="direction"
+              value={valueForInternalValue(direction)}
+              onChange={onChange}
+              checked={value === direction || direction?.includes(value)}
+            />
+            <DirectionIndicator
+              direction={direction}
+              selected={value === direction || direction?.includes(value)}
+            />
+          </Label>
+        ))}
       </RadioGroup>
     </Fieldset>
   );
@@ -295,4 +306,10 @@ DirectionRadioInput.propTypes = {
   value: directionPropType,
   directions: PropTypes.arrayOf(directionPropType),
   onChange: PropTypes.func,
+};
+
+Direction.propTypes = {
+  className: PropTypes.string,
+  direction: directionPropType,
+  selected: PropTypes.bool,
 };
