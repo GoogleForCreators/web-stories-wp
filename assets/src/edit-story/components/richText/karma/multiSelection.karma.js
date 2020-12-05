@@ -147,7 +147,7 @@ describe('Styling multiple text fields', () => {
       expect(bold.checked).toBe(false);
       expect(italic.checked).toBe(false);
       expect(underline.checked).toBe(false);
-      expect(fontWeight.value).toBe(MULTIPLE_DISPLAY_VALUE);
+      expect(fontWeight.value).toBe('Mixed');
       expect(letterSpacing.value).toBe('');
       expect(letterSpacing.placeholder).toBe(MULTIPLE_DISPLAY_VALUE);
       expect(fontColor.output).toBe('');
