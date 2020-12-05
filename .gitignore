@@ -11,5 +11,8 @@ third-party/
 vendor/
 .DS_Store
 phpcs.xml
-public/stories
+public/stories/*
 public/sitemap.xml
+
+# Stories with custom modifications
+!public/stories/a-day-in-the-life-of-dap-the-contract

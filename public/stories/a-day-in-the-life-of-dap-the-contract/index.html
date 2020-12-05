@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html amp lang="en-US" i-amphtml-layout transformed="self;v=1">
+
+<head>
+	<meta charset="utf-8">
+	<link rel="preconnect" href="https://cdn.ampproject.org">
+	<link rel="preload" as="script" href="https://cdn.ampproject.org/v0.js">
+	<link rel="preload" as="script" href="https://cdn.ampproject.org/v0/amp-story-1.0.js">
+	<style amp-runtime i-amphtml-version="012011200012001">
+		html {
+			overflow-x: hidden !important
+		}
+
+		html.i-amphtml-fie {
+			height: 100% !important;
+			width: 100% !important
+		}
+
+		html:not([amp4ads]),
+		html:not([amp4ads]) body {
+			height: auto !important
+		}
+
+		html:not([amp4ads]) body {
+			margin: 0 !important
+		}
+
+		body {
+			-webkit-text-size-adjust: 100%;
+			-moz-text-size-adjust: 100%;
+			-ms-text-size-adjust: 100%;
+			text-size-adjust: 100%
+		}
+
+		html.i-amphtml-singledoc.i-amphtml-embedded {
+			-ms-touch-action: pan-y;
+			touch-action: pan-y
+		}
+
+		html.i-amphtml-fie>body,
+		html.i-amphtml-singledoc>body {
+			overflow: visible !important
+		}
+
+		html.i-amphtml-fie:not(.i-amphtml-inabox)>body,
+		html.i-amphtml-singledoc:not(.i-amphtml-inabox)>body {
+			position: relative !important
+		}
+
+		html.i-amphtml-webview>body {
+			overflow-x: hidden !important;
+			overflow-y: visible !important;
+			min-height: 100vh !important
+		}
+
+		html.i-amphtml-ios-embed-legacy>body {
+			overflow-x: hidden !important;
+			overflow-y: auto !important;
+			position: absolute !important
+		}
+
+		html.i-amphtml-ios-embed {
+			overflow-y: auto !important;
+			position: static
+		}
+
+		#i-amphtml-wrapper {
+			overflow-x: hidden !important;
+			overflow-y: auto !important;
+			position: absolute !important;
+			top: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			bottom: 0 !important;
+			margin: 0 !important;
+			display: block !important
+		}
+
+		html.i-amphtml-ios-embed.i-amphtml-ios-overscroll,
+		html.i-amphtml-ios-embed.i-amphtml-ios-overscroll>#i-amphtml-wrapper {
+			-webkit-overflow-scrolling: touch !important
+		}
+
+		#i-amphtml-wrapper>body {
+			position: relative !important;
+			border-top: 1px solid transparent !important
+		}
+
+		#i-amphtml-wrapper+body {
+			visibility: visible
+		}
+
+		#i-amphtml-wrapper+body .i-amphtml-lightbox-element,
+		#i-amphtml-wrapper+body[i-amphtml-lightbox] {
+			visibility: hidden
+		}
+
+		#i-amphtml-wrapper+body[i-amphtml-lightbox] .i-amphtml-lightbox-element {
+			visibility: visible
+		}
+
+		#i-amphtml-wrapper.i-amphtml-scroll-disabled,
+		.i-amphtml-scroll-disabled {
+			overflow-x: hidden !important;
+			overflow-y: hidden !important
+		}
+
+		amp-instagram {
+			padding: 54px 0px 0px !important;
+			background-color: #fff
+		}
+
+		amp-iframe iframe {
+			box-sizing: border-box !important
+		}
+
+		[amp-access][amp-access-hide] {
+			display: none
+		}
+
+		[subscriptions-dialog],
+		body:not(.i-amphtml-subs-ready) [subscriptions-action],
+		body:not(.i-amphtml-subs-ready) [subscriptions-section] {
+			display: none !important
+		}
+
+		amp-experiment,
+		amp-live-list>[update] {
+			display: none
+		}
+
+		.i-amphtml-jank-meter {
+			position: fixed;
+			background-color: rgba(232, 72, 95, 0.5);
+			bottom: 0;
+			right: 0;
+			color: #fff;
+			font-size: 16px;
+			z-index: 1000;
+			padding: 5px
+		}
+
+		amp-list[resizable-children]>.i-amphtml-loading-container.amp-hidden {
+			display: none !important
+		}
+
+		amp-list [fetch-error],
+		amp-list[load-more] [load-more-button],
+		amp-list[load-more] [load-more-end],
+		amp-list[load-more] [load-more-failed],
+		amp-list[load-more] [load-more-loading] {
+			display: none
+		}
+
+		amp-list[diffable] div[role=list] {
+			display: block
+		}
+
+		amp-story-page,
+		amp-story[standalone] {
+			min-height: 1px !important;
+			display: block !important;
+			height: 100% !important;
+			margin: 0 !important;
+			padding: 0 !important;
+			overflow: hidden !important;
+			width: 100% !important
+		}
+
+		amp-story[standalone] {
+			background-color: #202125 !important;
+			position: relative !important
+		}
+
+		amp-story-page {
+			background-color: #757575
+		}
+
+		amp-story .amp-active>div,
+		amp-story .i-amphtml-loader-background {
+			display: none !important
+		}
+
+		amp-story-page:not(:first-of-type):not([distance]):not([active]) {
+			transform: translateY(1000vh) !important
+		}
+
+		amp-autocomplete {
+			position: relative !important;
+			display: inline-block !important
+		}
+
+		amp-autocomplete>input,
+		amp-autocomplete>textarea {
+			padding: 0.5rem;
+			border: 1px solid rgba(0, 0, 0, 0.33)
+		}
+
+		.i-amphtml-autocomplete-results,
+		amp-autocomplete>input,
+		amp-autocomplete>textarea {
+			font-size: 1rem;
+			line-height: 1.5rem
+		}
+
+		[amp-fx^=fly-in] {
+			visibility: hidden
+		}
+
+		amp-script[nodom] {
+			position: fixed !important;
+			top: 0 !important;
+			width: 1px !important;
+			height: 1px !important;
+			overflow: hidden !important;
+			visibility: hidden
+		}
+
+		/*# sourceURL=/css/ampdoc.css*/
+		[hidden] {
+			display: none !important
+		}
+
+		.i-amphtml-element {
+			display: inline-block
+		}
+
+		.i-amphtml-blurry-placeholder {
+			transition: opacity 0.3s cubic-bezier(0.0, 0.0, 0.2, 1) !important;
+			pointer-events: none
+		}
+
+		[layout=nodisplay]:not(.i-amphtml-element) {
+			display: none !important
+		}
+
+		.i-amphtml-layout-fixed,
+		[layout=fixed][width][height]:not(.i-amphtml-layout-fixed) {
+			display: inline-block;
+			position: relative
+		}
+
+		.i-amphtml-layout-responsive,
+		[layout=responsive][width][height]:not(.i-amphtml-layout-responsive),
+		[width][height][heights]:not([layout]):not(.i-amphtml-layout-responsive),
+		[width][height][sizes]:not([layout]):not(.i-amphtml-layout-responsive) {
+			display: block;
+			position: relative
+		}
+
+		.i-amphtml-layout-intrinsic,
+		[layout=intrinsic][width][height]:not(.i-amphtml-layout-intrinsic) {
+			display: inline-block;
+			position: relative;
+			max-width: 100%
+		}
+
+		.i-amphtml-layout-intrinsic .i-amphtml-sizer {
+			max-width: 100%
+		}
+
+		.i-amphtml-intrinsic-sizer {
+			max-width: 100%;
+			display: block !important
+		}
+
+		.i-amphtml-layout-container,
+		.i-amphtml-layout-fixed-height,
+		[layout=container],
+		[layout=fixed-height][height]:not(.i-amphtml-layout-fixed-height) {
+			display: block;
+			position: relative
+		}
+
+		.i-amphtml-layout-fill,
+		.i-amphtml-layout-fill.i-amphtml-notbuilt,
+		[layout=fill]:not(.i-amphtml-layout-fill) {
+			display: block;
+			overflow: hidden !important;
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0
+		}
+
+		.i-amphtml-layout-flex-item,
+		[layout=flex-item]:not(.i-amphtml-layout-flex-item) {
+			display: block;
+			position: relative;
+			-ms-flex: 1 1 auto;
+			flex: 1 1 auto
+		}
+
+		.i-amphtml-layout-fluid {
+			position: relative
+		}
+
+		.i-amphtml-layout-size-defined {
+			overflow: hidden !important
+		}
+
+		.i-amphtml-layout-awaiting-size {
+			position: absolute !important;
+			top: auto !important;
+			bottom: auto !important
+		}
+
+		i-amphtml-sizer {
+			display: block !important
+		}
+
+		@supports (aspect-ratio:1/1) {
+			i-amphtml-sizer.i-amphtml-disable-for-ar {
+				display: none !important
+			}
+		}
+
+		.i-amphtml-blurry-placeholder,
+		.i-amphtml-fill-content {
+			display: block;
+			height: 0;
+			max-height: 100%;
+			max-width: 100%;
+			min-height: 100%;
+			min-width: 100%;
+			width: 0;
+			margin: auto
+		}
+
+		.i-amphtml-layout-size-defined .i-amphtml-fill-content {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0
+		}
+
+		.i-amphtml-replaced-content,
+		.i-amphtml-screen-reader {
+			padding: 0 !important;
+			border: none !important
+		}
+
+		.i-amphtml-screen-reader {
+			position: fixed !important;
+			top: 0px !important;
+			left: 0px !important;
+			width: 4px !important;
+			height: 4px !important;
+			opacity: 0 !important;
+			overflow: hidden !important;
+			margin: 0 !important;
+			display: block !important;
+			visibility: visible !important
+		}
+
+		.i-amphtml-screen-reader~.i-amphtml-screen-reader {
+			left: 8px !important
+		}
+
+		.i-amphtml-screen-reader~.i-amphtml-screen-reader~.i-amphtml-screen-reader {
+			left: 12px !important
+		}
+
+		.i-amphtml-screen-reader~.i-amphtml-screen-reader~.i-amphtml-screen-reader~.i-amphtml-screen-reader {
+			left: 16px !important
+		}
+
+		.i-amphtml-unresolved {
+			position: relative;
+			overflow: hidden !important
+		}
+
+		.i-amphtml-select-disabled {
+			-webkit-user-select: none !important;
+			-ms-user-select: none !important;
+			user-select: none !important
+		}
+
+		.i-amphtml-notbuilt,
+		[layout]:not(.i-amphtml-element),
+		[width][height][heights]:not([layout]):not(.i-amphtml-element),
+		[width][height][sizes]:not([layout]):not(.i-amphtml-element) {
+			position: relative;
+			overflow: hidden !important;
+			color: transparent !important
+		}
+
+		.i-amphtml-notbuilt:not(.i-amphtml-layout-container)>*,
+		[layout]:not([layout=container]):not(.i-amphtml-element)>*,
+		[width][height][heights]:not([layout]):not(.i-amphtml-element)>*,
+		[width][height][sizes]:not([layout]):not(.i-amphtml-element)>* {
+			display: none
+		}
+
+		amp-img:not(.i-amphtml-element)[i-amphtml-ssr]>img.i-amphtml-fill-content {
+			display: block
+		}
+
+		.i-amphtml-notbuilt:not(.i-amphtml-layout-container),
+		[layout]:not([layout=container]):not(.i-amphtml-element),
+		[width][height][heights]:not([layout]):not(.i-amphtml-element),
+		[width][height][sizes]:not([layout]):not(.i-amphtml-element) {
+			color: transparent !important;
+			line-height: 0 !important
+		}
+
+		.i-amphtml-ghost {
+			visibility: hidden !important
+		}
+
+		.i-amphtml-element>[placeholder],
+		[layout]:not(.i-amphtml-element)>[placeholder],
+		[width][height][heights]:not([layout]):not(.i-amphtml-element)>[placeholder],
+		[width][height][sizes]:not([layout]):not(.i-amphtml-element)>[placeholder] {
+			display: block
+		}
+
+		.i-amphtml-element>[placeholder].amp-hidden,
+		.i-amphtml-element>[placeholder].hidden {
+			visibility: hidden
+		}
+
+		.i-amphtml-element:not(.amp-notsupported)>[fallback],
+		.i-amphtml-layout-container>[placeholder].amp-hidden,
+		.i-amphtml-layout-container>[placeholder].hidden {
+			display: none
+		}
+
+		.i-amphtml-layout-size-defined>[fallback],
+		.i-amphtml-layout-size-defined>[placeholder] {
+			position: absolute !important;
+			top: 0 !important;
+			left: 0 !important;
+			right: 0 !important;
+			bottom: 0 !important;
+			z-index: 1
+		}
+
+		.i-amphtml-notbuilt>[placeholder] {
+			display: block !important
+		}
+
+		.i-amphtml-hidden-by-media-query {
+			display: none !important
+		}
+
+		.i-amphtml-element-error {
+			background: red !important;
+			color: #fff !important;
+			position: relative !important
+		}
+
+		.i-amphtml-element-error:before {
+			content: attr(error-message)
+		}
+
+		i-amp-scroll-container,
+		i-amphtml-scroll-container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			display: block
+		}
+
+		i-amp-scroll-container.amp-active,
+		i-amphtml-scroll-container.amp-active {
+			overflow: auto;
+			-webkit-overflow-scrolling: touch
+		}
+
+		.i-amphtml-loading-container {
+			display: block !important;
+			pointer-events: none;
+			z-index: 1
+		}
+
+		.i-amphtml-notbuilt>.i-amphtml-loading-container {
+			display: block !important
+		}
+
+		.i-amphtml-loading-container.amp-hidden {
+			visibility: hidden
+		}
+
+		.i-amphtml-element>[overflow] {
+			cursor: pointer;
+			position: relative;
+			z-index: 2;
+			visibility: hidden;
+			display: initial;
+			line-height: normal
+		}
+
+		.i-amphtml-element>[overflow].amp-visible {
+			visibility: visible
+		}
+
+		template {
+			display: none !important
+		}
+
+		.amp-border-box,
+		.amp-border-box *,
+		.amp-border-box :after,
+		.amp-border-box :before {
+			box-sizing: border-box
+		}
+
+		amp-pixel {
+			display: none !important
+		}
+
+		amp-analytics,
+		amp-auto-ads,
+		amp-story-auto-ads {
+			position: fixed !important;
+			top: 0 !important;
+			width: 1px !important;
+			height: 1px !important;
+			overflow: hidden !important;
+			visibility: hidden
+		}
+
+		html.i-amphtml-fie>amp-analytics {
+			position: initial !important
+		}
+
+		[visible-when-invalid]:not(.visible),
+		form [submit-error],
+		form [submit-success],
+		form [submitting] {
+			display: none
+		}
+
+		amp-accordion {
+			display: block !important
+		}
+
+		amp-accordion>section {
+			float: none !important
+		}
+
+		amp-accordion>section>* {
+			float: none !important;
+			display: block !important;
+			overflow: hidden !important;
+			position: relative !important
+		}
+
+		amp-accordion,
+		amp-accordion>section {
+			margin: 0
+		}
+
+		amp-accordion:not(.i-amphtml-built)>section>:last-child {
+			display: none !important
+		}
+
+		amp-accordion:not(.i-amphtml-built)>section[expanded]>:last-child {
+			display: block !important
+		}
+
+		/*# sourceURL=/css/ampshared.css*/
+	</style>
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<meta name="amp-story-generator-name" content="Web Stories for WordPress">
+	<meta name="amp-story-generator-version" content="1.1.1">
+	<meta name="description"
+		content="A day in the life of the rapper DAP The Contract. DAP takes us from his apartment in Brooklyn, NY to his studio where he livestreams a show and jams with his band.">
+	<meta property="og:locale" content="en-US">
+	<meta property="og:type" content="article">
+	<meta property="og:title" content="A Day in the Life of Rapper DAP The Contract">
+	<meta property="og:url" content="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/">
+	<meta property="og:site_name" content="Google Web Creators">
+	<meta property="og:description"
+		content="A day in the life of the rapper DAP The Contract. DAP takes us from his apartment in Brooklyn, NY to his studio where he livestreams a show and jams with his band.">
+	<meta property="article:published_time" content="2020-11-06T07:42:05-08:00">
+	<meta property="article:modified_time" content="2020-12-03T18:48:42-08:00">
+	<meta property="og:image"
+		content="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/DAP_Poster_Image.jpg">
+	<meta property="og:image:width" content="541">
+	<meta property="og:image:height" content="960">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta property="twitter:image"
+		content="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/DAP_Poster_Image-541x853.jpg">
+	<meta name="generator" content="WordPress 5.5.3">
+	<script async src="https://cdn.ampproject.org/v0.js"></script>
+	<script async src="https://cdn.ampproject.org/v0/amp-story-1.0.js" custom-element="amp-story"></script>
+	<script src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js" async custom-element="amp-analytics"></script>
+	<script async src="https://cdn.ampproject.org/v0/amp-video-0.1.js" custom-element="amp-video"></script>
+	<link rel="dns-prefetch" href="//s.w.org">
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?display=swap&amp;family=Oswald%3Awght%40700&amp;family=Roboto+Condensed"
+		rel="stylesheet">
+	<style amp-custom>
+		amp-story-page {
+			background-color: #1b1d1c
+		}
+
+		amp-story-grid-layer {
+			overflow: visible
+		}
+
+		.page-fullbleed-area {
+			position: absolute;
+			overflow: hidden;
+			width: 100%;
+			left: 0;
+			height: calc(1.18518518519 * 100%);
+			top: calc((1 - 1.18518518519) * 100% / 2)
+		}
+
+		.page-safe-area {
+			overflow: visible;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			height: calc(.84375 * 100%);
+			margin: auto 0
+		}
+
+		.mask {
+			position: absolute;
+			overflow: hidden
+		}
+
+		.fill {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: 0
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-489e8bb {
+			background-color: #473832
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-a3e4cc3 {
+			position: absolute;
+			pointer-events: none;
+			left: -19.41748%;
+			top: 32.20065%;
+			width: 109.46602%;
+			height: 38.99676%;
+			transform: rotate(270deg);
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-da117c5 {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: 3.74057649667% 0;
+			font-family: 'Oswald', sans-serif;
+			font-size: 1.132686em;
+			line-height: 1;
+			text-align: left;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-b6f1f48 {
+			position: absolute;
+			pointer-events: none;
+			left: 11.8932%;
+			top: 89.64401%;
+			width: 68.93204%;
+			height: 12.62136%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-564fb9f {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: -.108934859155% 0;
+			font-family: 'Roboto Condensed', sans-serif;
+			font-size: .355987em;
+			line-height: 1.2;
+			text-align: left;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-4b5443c {
+			color: #ffd949
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-f2ee0c5 {
+			background-color: #515253
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-d51007b {
+			position: absolute;
+			width: 100%;
+			height: 100.56122%;
+			left: 0%;
+			top: -.28061%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-1ec6fe2 {
+			position: absolute;
+			pointer-events: none;
+			left: -17.23301%;
+			top: 76.61812%;
+			width: 29.12621%;
+			height: .97087%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-26cdd3c {
+			position: absolute;
+			pointer-events: none;
+			left: 16.99029%;
+			top: 71.35922%;
+			width: 50%;
+			height: 11.48867%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-3b6e047 {
+			position: absolute;
+			pointer-events: none;
+			left: 17.23301%;
+			top: 86.08414%;
+			width: 79.12621%;
+			height: 11.97411%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-e9e1b17 {
+			background-color: #403334
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-1bf13ae {
+			background-color: #413334
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-88eb140 {
+			background-color: #464646
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-a7d56c3 {
+			position: absolute;
+			pointer-events: none;
+			left: 13.83495%;
+			top: 76.05178%;
+			width: 79.12621%;
+			height: 23.78641%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-8d31520 {
+			position: absolute;
+			pointer-events: none;
+			left: 13.83495%;
+			top: 55.17799%;
+			width: 72.3301%;
+			height: 19.7411%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-a48c97b {
+			background-color: #322520
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-36b775c {
+			background-color: #332533
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-72e5bc0 {
+			position: absolute;
+			pointer-events: none;
+			left: 8.98058%;
+			top: -4.85437%;
+			width: 82.28155%;
+			height: 28.80259%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-ec2a36f {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: 3.62566371681% 0;
+			font-family: 'Oswald', sans-serif;
+			font-size: .825243em;
+			line-height: 1;
+			text-align: left;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-fd709d3 {
+			font-weight: 700;
+			color: #2e2727
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-fb66a66 {
+			position: absolute;
+			pointer-events: none;
+			left: 8.98058%;
+			top: 23.78641%;
+			width: 79.12621%;
+			height: 11.8123%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-b4c32c7 {
+			color: #2e2727
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-c529fce {
+			position: absolute;
+			pointer-events: none;
+			left: 19.66019%;
+			top: 44.33657%;
+			width: 9.95146%;
+			height: 6.6343%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-9b9f754 {
+			position: absolute;
+			pointer-events: none;
+			left: 73.30097%;
+			top: 66.99029%;
+			width: 9.95146%;
+			height: 6.6343%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-0638832 {
+			position: absolute;
+			pointer-events: none;
+			left: 55.82524%;
+			top: 67.96117%;
+			width: 9.95146%;
+			height: 6.6343%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-6b66eed {
+			position: absolute;
+			width: 100%;
+			height: 102.22232%;
+			left: 0%;
+			top: -1.11116%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-3fd9696 {
+			background-color: #312a28
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-0be11ca {
+			position: absolute;
+			pointer-events: none;
+			left: 11.65049%;
+			top: 85.27508%;
+			width: 79.12621%;
+			height: 11.8123%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-f8071de {
+			position: absolute;
+			pointer-events: none;
+			left: 11.65049%;
+			top: 64.40129%;
+			width: 72.3301%;
+			height: 19.7411%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-ef0443c {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: 3.07651006711% 0;
+			font-family: 'Oswald', sans-serif;
+			font-size: .776699em;
+			line-height: 1.1;
+			text-align: initial;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-02f4139 {
+			background-color: #3f3838
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-93b7db0 {
+			position: absolute;
+			pointer-events: none;
+			left: -.48544%;
+			top: 60.35599%;
+			width: 103.8835%;
+			height: 50.32362%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-c273035 {
+			position: absolute;
+			pointer-events: none;
+			left: 11.8932%;
+			top: 83.98058%;
+			width: 79.12621%;
+			height: 11.97411%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-3ca6652 {
+			position: absolute;
+			pointer-events: none;
+			left: 11.65049%;
+			top: -1.13269%;
+			width: 84.46602%;
+			height: 22.97735%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-64e14fb {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: 3.01867816092% 0;
+			font-family: 'Oswald', sans-serif;
+			font-size: .889968em;
+			line-height: 1.1;
+			text-align: initial;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-a8a43b7 {
+			position: absolute;
+			pointer-events: none;
+			left: -20.38835%;
+			top: 69.33657%;
+			width: 29.12621%;
+			height: .97087%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-23cf6ac {
+			background-color: #ffd949
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-127af1a {
+			position: absolute;
+			pointer-events: none;
+			left: 13.83495%;
+			top: 64.07767%;
+			width: 50%;
+			height: 11.32686%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-fe2bdcc {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: 4.45048543689% 0;
+			font-family: 'Oswald', sans-serif;
+			font-size: .776699em;
+			line-height: 1.1;
+			text-align: initial;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-09d78d6 {
+			background-color: #635448
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-3aa3e82 {
+			background-color: #bf9380
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-a183bc7 {
+			background-color: #594c45
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-1a36d0b {
+			position: absolute;
+			pointer-events: none;
+			left: -.48544%;
+			top: 28.64078%;
+			width: 103.8835%;
+			height: 82.03883%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-485c3fb {
+			background-image: linear-gradient(0turn, #000 0%, rgba(198, 0, 255, 0) 100%)
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-b66668e {
+			position: absolute;
+			pointer-events: none;
+			left: 11.65049%;
+			top: 88.83495%;
+			width: 79.12621%;
+			height: 7.9288%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-03e0028 {
+			background-color: #211418
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-0e01dfe {
+			position: absolute;
+			pointer-events: none;
+			left: 0%;
+			top: -9.25926%;
+			width: 100%;
+			height: 118.51852%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-4a19350 {
+			position: absolute;
+			width: 100.06072%;
+			height: 100%;
+			left: -.03036%;
+			top: 0%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-f36c5e0 {
+			position: absolute;
+			pointer-events: none;
+			left: -15.53398%;
+			top: 1.45631%;
+			width: 109.46602%;
+			height: 33.81877%;
+			transform: rotate(270deg);
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-3896ee7 {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: 3.20620842572% 0;
+			font-family: 'Oswald', sans-serif;
+			font-size: .970874em;
+			line-height: 1;
+			text-align: left;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-14af73e {
+			font-weight: 700;
+			color: #fff
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-30873f6 {
+			font-weight: 700;
+			color: #ffd949
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-ed5198d {
+			position: absolute;
+			pointer-events: none;
+			left: 18.68932%;
+			top: 56.47249%;
+			width: 40.04854%;
+			height: 26.69903%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-4e7ea7e {
+			position: absolute;
+			width: 101.18578%;
+			height: 100%;
+			left: -.59289%;
+			top: 0%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-ba7950a {
+			position: absolute;
+			pointer-events: none;
+			left: 18.68932%;
+			top: 93.04207%;
+			width: 4.85437%;
+			height: 3.72168%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-32092d0 {
+			position: absolute;
+			width: 100%;
+			height: 102.24195%;
+			left: 0%;
+			top: -1.12097%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-2d055e8 {
+			position: absolute;
+			pointer-events: none;
+			left: 18.68932%;
+			top: 98.38188%;
+			width: 4.85437%;
+			height: 3.39806%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-b4a1233 {
+			position: absolute;
+			width: 100%;
+			height: 100.26039%;
+			left: 0%;
+			top: -.13019%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-b12ceb3 {
+			position: absolute;
+			pointer-events: none;
+			left: 18.68932%;
+			top: 87.86408%;
+			width: 4.85437%;
+			height: 3.39806%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-c33942b {
+			position: absolute;
+			width: 100%;
+			height: 100.07438%;
+			left: 0%;
+			top: -.03719%
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-8a7ae38 {
+			position: absolute;
+			pointer-events: none;
+			left: 27.42718%;
+			top: 93.20388%;
+			width: 79.12621%;
+			height: 3.8835%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-22ab832 {
+			position: absolute;
+			pointer-events: none;
+			left: 27.42718%;
+			top: 87.86408%;
+			width: 79.12621%;
+			height: 3.8835%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-7c7ace6 {
+			position: absolute;
+			pointer-events: none;
+			left: 27.42718%;
+			top: 98.38188%;
+			width: 79.12621%;
+			height: 3.8835%;
+			opacity: 1
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-a1b70b8 {
+			pointer-events: initial;
+			width: 100%;
+			height: 100%;
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-254c3af {
+			width: 100%;
+			height: 100%;
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-0de6699 {
+			white-space: pre-wrap;
+			overflow-wrap: break-word;
+			word-break: break-word;
+			margin: -.0905866564417% 0;
+			font-family: 'Roboto Condensed', sans-serif;
+			font-size: .339806em;
+			line-height: 1.2;
+			text-align: left;
+			padding: 0% 0%;
+			color: #000
+		}
+
+		:root:not(#_):not(#_):not(#_):not(#_):not(#_) .amp-wp-4bbb41a {
+			color: #fff
+		}
+
+
+		/** ANIMATIONS **/
+		#page1-from,
+		#page1-morning,
+		#page1-tomic {
+			display: inline-block;
+			overflow: hidden;
+ 			line-height: 0.94;
+		}
+
+		#page1-from span,
+		#page1-morning span,
+		#page1-tomic span {
+			display: inline-block;
+			transform: translateY(-100%);
+		}
+
+		[active] #page1-from span,
+		[active] #page1-morning span,
+		[active] #page1-tomic span {
+			transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+			transform: translateY(0);
+		}
+
+		[active] #page1-morning span {
+			transition-delay: 0.4s;
+		}
+
+		[active] #page1-tomic span {
+			transition-delay: 0.6s;
+		}
+
+		#page1-musicaljourney,
+		#page1-dap,
+		#page1-soundon {
+			display: inline-block;
+			transform: translateY(5vh);
+			opacity: 0;
+		}
+
+		[active] #page1-musicaljourney,
+		[active] #page1-dap,
+		[active] #page1-soundon {
+			transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+			transform: translateY(0);
+			transition-delay: 0.9s;
+			opacity: 1;
+		}
+
+		[active] #page1-soundon {
+			transition-delay: 1.1s;
+		}
+
+		#page2-container {
+			display: inline-block;
+			overflow: hidden;
+			height: 1em;
+			width: 1.1em;
+		}
+
+		#page2-container span {
+			display: inline-block;
+			transform: translateY(0);
+		}
+
+		[active] #page2-container span {
+			transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+			transition-delay: 0.3s;
+			transform: translateY(-100%);
+		}
+
+		#page5-heading,
+		#page5-text {
+			opacity: 0;
+		}
+
+		[active] #page5-heading,
+		[active] #page5-text {
+			opacity: 1;
+			transition: opacity 3s ease-out;
+		}
+
+		#page7-1,
+		#page7-2,
+		#page7-3 {
+			display: inline-block;
+			overflow: hidden;
+			line-height: 0.95em;
+		}
+
+		#page7-1 span,
+		#page7-2 span,
+		#page7-3 span {
+			display: inline-block;
+			transform: translateY(-100%);
+		}
+
+		[active] #page7-1 span,
+		[active] #page7-2 span,
+		[active] #page7-3 span {
+			transform: translateY(0);
+			transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		[active] #page7-2 span {
+			transition-delay: 0.3s;
+		}
+
+		[active] #page7-3 span {
+			transition-delay: 0.6s;
+		}
+
+		#page7-text {
+			opacity: 0;
+		}
+
+		[active] #page7-text {
+			opacity: 1;
+			transition: opacity 2s ease-out;
+			transition-delay: 0.9s;
+		}
+
+		#page7-p1,
+		#page7-p2,
+		#page7-p3 {
+			transform: scale(0);
+		}
+
+		[active] #page7-p1,
+		[active] #page7-p2,
+		[active] #page7-p3 {
+			transform: scale(1);
+			transition: transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		[active] #page7-p1 {
+			transition-delay: 1s;
+		}
+
+		[active] #page7-p2 {
+			transition-delay: 1.2s;
+		}
+
+		[active] #page7-p3 {
+			transition-delay: 1.4s;
+		}
+
+		#el-cbd5575d-f650-4056-923a-05d4b6ac0019,
+		#el-ebb1acc2-ab96-47a4-aa89-de162395683b,
+		#el-887858c4-37c4-47b3-a4ea-ee74a089456b {
+			opacity: 0;
+		}
+
+
+		[active] #el-cbd5575d-f650-4056-923a-05d4b6ac0019,
+		[active] #el-ebb1acc2-ab96-47a4-aa89-de162395683b,
+		[active] #el-887858c4-37c4-47b3-a4ea-ee74a089456b {
+			opacity: 1;
+			transition: opacity 2.6s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		#page9-counter {
+			display: inline-block;
+			overflow: hidden;
+			width: 1.1em;
+    		height: 1em;
+		}
+
+		#page9-counter span {
+			display: inline-block;
+		}
+
+		[active] #page9-counter > span {
+			transform: translateY(-23em);
+			transition: transform 11s ease-in-out;
+		}
+
+		#el-58b0678f-2155-4cb9-b5bc-9a30353aed17 {
+			transform: translateY(4vh);
+			opacity: 0;
+		}
+
+		[active] #el-58b0678f-2155-4cb9-b5bc-9a30353aed17 {
+			transform: translateY(0);
+			opacity: 1;
+			transition: opacity 2.6s cubic-bezier(0.22, 1, 0.36, 1), transform 2.6s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		#page13-more,
+		#page13-dap,
+		#page13-contract {
+			display: inline-block;
+			overflow: hidden;
+ 			line-height: 0.94;
+		}
+
+		#page13-more span,
+		#page13-dap span,
+		#page13-contract span {
+			display: inline-block;
+			transform: translateX(-100%);
+		}
+
+		[active] #page13-more span,
+		[active] #page13-dap span,
+		[active] #page13-contract span {
+			transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+			transform: translateX(0);
+		}
+
+		[active] #page13-dap span {
+			transition-delay: 0.4s;
+		}
+
+		[active] #page13-contract span {
+			transition-delay: 0.6s;
+		}
+
+		#page13-image amp-img {
+			transform: translateY(-100%);
+		}
+
+		[active] #page13-image amp-img {
+			transform: translateY(0);
+			transition: transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+		}
+
+		/*# sourceURL=amp-custom.css */
+	</style>
+	<title>A Day in the Life of Rapper DAP The Contract – Google Web Creators</title>
+	<script
+		type="application/ld+json">{"@context":"http://schema.org","publisher":{"@type":"Organization","name":"Google Web Creators","logo":{"@type":"ImageObject","url":"https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/googlewebcreators-logo-avatar-96x96.png"}},"@type":"Article","mainEntityOfPage":"https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract","headline":"A Day in the Life of Rapper DAP The Contract","datePublished":"2020-11-06T15:42:05-08:00","dateModified":"2020-12-04T02:48:42-08:00","author":{"@type":"Person","name":"jkleinpass"},"image":"https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/DAP_Poster_Image-541x853.jpg"}</script>
+	<link rel="canonical" href="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/">
+	<style amp-boilerplate>
+		body {
+			-webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+			-moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+			-ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+			animation: -amp-start 8s steps(1, end) 0s 1 normal both
+		}
+
+		@-webkit-keyframes -amp-start {
+			from {
+				visibility: hidden
+			}
+
+			to {
+				visibility: visible
+			}
+		}
+
+		@-moz-keyframes -amp-start {
+			from {
+				visibility: hidden
+			}
+
+			to {
+				visibility: visible
+			}
+		}
+
+		@-ms-keyframes -amp-start {
+			from {
+				visibility: hidden
+			}
+
+			to {
+				visibility: visible
+			}
+		}
+
+		@-o-keyframes -amp-start {
+			from {
+				visibility: hidden
+			}
+
+			to {
+				visibility: visible
+			}
+		}
+
+		@keyframes -amp-start {
+			from {
+				visibility: hidden
+			}
+
+			to {
+				visibility: visible
+			}
+		}
+	</style><noscript>
+		<style amp-boilerplate>
+			body {
+				-webkit-animation: none;
+				-moz-animation: none;
+				-ms-animation: none;
+				animation: none
+			}
+		</style>
+	</noscript>
+	<!--
+AMP optimization could not be completed due to the following:
+ - CannotRemoveBoilerplate: Cannot remove boilerplate because of an unsupported layout: amp-story
+-->
+</head>
+<body>
+	<amp-story standalone publisher="Google Web Creators" publisher-logo-src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/googlewebcreators-logo-avatar-96x96.png" title="A Day in the Life of Rapper DAP The Contract" poster-portrait-src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/DAP_Poster_Image-541x853.jpg" poster-square-src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/DAP_Poster_Image-541x640.jpg" poster-landscape-src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/assets/DAP_Poster_Image-541x640.jpg" class="i-amphtml-layout-container" i-amphtml-layout="container">
+
+		<amp-story-page id="3ee30b71-8a94-43bc-a48c-e7a179a8a6d0" auto-advance-after="el-df89c3d8-165d-47d4-b06e-d0ddb551caa0-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-489e8bb" data-amp-original-style="background-color:rgb(71,56,50)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-df89c3d8-165d-47d4-b06e-d0ddb551caa0" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100%;height:100.56122%;left:0%;top:-0.28061%" class="amp-wp-d51007b"><amp-video autoplay="autoplay" poster="assets/image-6.jpeg" artwork="assets/image-6.jpeg" title="DAP is performing music in a small garage like room" layout="fill" id="el-df89c3d8-165d-47d4-b06e-d0ddb551caa0-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-01-Clean.mp4"></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:-0.48544%;top:28.64078%;width:103.8835%;height:82.03883%;opacity:1" class="amp-wp-1a36d0b"><div class="mask amp-wp-a1b70b8" id="el-9f148b7c-e1a6-48cb-b13f-2556d0b38a98" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div class="fill amp-wp-485c3fb" data-amp-original-style="background-image:linear-gradient(0turn, #000 0%, rgba(198,0,255,0) 100%)"></div></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:-19.41748%;top:32.20065%;width:109.46602%;height:38.99676%;transform:rotate(270deg);opacity:1" class="amp-wp-a3e4cc3"><div id="el-48df6802-a4cd-46d7-b06c-7cd8a6a848c1" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-da117c5" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:3.740576496674057% 0;font-family:'Oswald',sans-serif;font-size:1.132686em;line-height:1;text-align:left;padding:0% 0%;color:#000000"><span id="page1-from" data-amp-original-style="font-weight: 700; color: #fff" class="amp-wp-14af73e"><span>FROM </span></span>
+<span id="page1-morning" data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6"><span>MORNING</span></span>
+<span id="page1-tomic" data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6"><span>TO MIC</span></span></p></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:11.8932%;top:89.64401%;width:68.93204%;height:12.62136%;opacity:1" class="amp-wp-b6f1f48"><div id="el-1c5c41cd-716f-450d-846c-0b129f672d70" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-564fb9f" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.10893485915492933% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.355987em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span id="page1-musicaljourney" data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">A day-long musical journey </span>
+<span id="page1-dap" data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">with DAP The Contract.</span>
+<span id="page1-soundon" data-amp-original-style="color: #ffd949" class="amp-wp-4b5443c">Turn your sound on!</span></p></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="ece704ac-335d-4c4d-9591-4891df38be32" auto-advance-after="el-428ebe4b-8463-481c-8652-81868b8030df-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-f2ee0c5" data-amp-original-style="background-color:rgb(81,82,83)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-428ebe4b-8463-481c-8652-81868b8030df" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100%;height:100.56122%;left:0%;top:-0.28061%" class="amp-wp-d51007b"><amp-video autoplay="autoplay" poster="assets/image-7.jpeg" artwork="assets/image-7.jpeg" title="DAP's dog jumps on his bed and tries to wake him up" layout="fill" id="el-428ebe4b-8463-481c-8652-81868b8030df-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-02-Clean.mp4"><track srclang label kind="captions" src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/tracks/DAP_caption_sl_2.vtt" default></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:-17.23301%;top:76.61812%;width:29.12621%;height:0.97087%;opacity:1" class="amp-wp-1ec6fe2"><div class="mask amp-wp-a1b70b8" id="el-a42b8862-de29-4bd7-9b33-0a05109d8757" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div class="fill amp-wp-23cf6ac" data-amp-original-style="background-color:#ffd949"></div></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:16.99029%;top:71.35922%;width:50%;height:11.48867%;opacity:1" class="amp-wp-26cdd3c"><div id="el-2d45d824-f471-4e12-b6da-7601728fa8d0" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-fe2bdcc" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:4.450485436893202% 0;font-family:'Oswald',sans-serif;font-size:0.776699em;line-height:1.1;text-align:initial;padding:0% 0%;color:#000000"><span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">8:<span id="page2-container"><span>19</span><span>20</span></span> AM</span></p></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:17.23301%;top:86.08414%;width:79.12621%;height:11.97411%;opacity:1" class="amp-wp-3b6e047"><div id="el-57325930-09c7-4665-a9d8-3f5fb9978f40" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Waking up.</span>
+<span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">DAP's apartment</span>
+<span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Brooklyn, NY.</span></p></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="66ba725d-b6bf-47c0-9964-98c252e17b42" auto-advance-after="el-2fb76785-7e26-4a3f-954b-9d27af4c62c3-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-e9e1b17" data-amp-original-style="background-color:rgb(64,51,52)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-2fb76785-7e26-4a3f-954b-9d27af4c62c3" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-28.jpeg" artwork="assets/image-28.jpeg" title="DAP sits down in front of the camera to introduce himself. He is wearing a bright orange cord shirt and sunglasses." layout="fill" id="el-2fb76785-7e26-4a3f-954b-9d27af4c62c3-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-03-Clean-1.mp4"><track srclang label kind="captions" src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/tracks/DAP_caption_sl_3.vtt" default></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="3c6962f0-7e6e-4ee8-ac8a-91d750d540e0" auto-advance-after="el-84aa7f55-90a8-4dd7-8be4-b672a2d4b5d5-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-1bf13ae" data-amp-original-style="background-color:rgb(65,51,52)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-84aa7f55-90a8-4dd7-8be4-b672a2d4b5d5" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-23.jpeg" artwork="assets/image-23.jpeg" title="DAP leaves his apartment, takes the elevator and walks his dog outside" layout="fill" id="el-84aa7f55-90a8-4dd7-8be4-b672a2d4b5d5-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-04-Clean_small.mp4"><track srclang label kind="captions" src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/tracks/DAP_caption_sl_4.vtt" default></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="73178e04-8647-4fb2-9d1f-94b81a3a2f2a" auto-advance-after="el-cccb158b-a49e-4cc0-af48-2c055161f577-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-88eb140" data-amp-original-style="background-color:rgb(70,70,70)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-cccb158b-a49e-4cc0-af48-2c055161f577" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-24.jpeg" artwork="assets/image-24.jpeg" title="A black and white photo of DAP in his graduation gown. Afterwards we see a portrait shot of DAP wearing a cap and he rides his bike down a suburban tree-lined road.." layout="fill" id="el-cccb158b-a49e-4cc0-af48-2c055161f577-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-05-Clean_small.mp4"></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:-0.48544%;top:28.64078%;width:103.8835%;height:82.03883%;opacity:1" class="amp-wp-1a36d0b"><div class="mask amp-wp-a1b70b8" id="el-79f55f94-3d82-491a-af1a-240a6d09a9c4" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div class="fill amp-wp-485c3fb" data-amp-original-style="background-image:linear-gradient(0turn, #000 0%, rgba(198,0,255,0) 100%)"></div></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:13.83495%;top:76.05178%;width:79.12621%;height:23.78641%;opacity:1" class="amp-wp-a7d56c3"><div id="el-e9c639de-5c0c-4c31-b619-084eddd45248" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p id="page5-text" class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">DAP's currently focused on taking </span>
+<span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">(and passing) the New York Bar exam. But his music career is taking off as well. He's recorded with Mark Ronson</span>
+<span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">and recently opened for Skepta and Burna Boy.</span></p></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:13.83495%;top:55.17799%;width:72.3301%;height:19.7411%;opacity:1" class="amp-wp-8d31520"><div id="el-f30653e3-92a0-483d-9b67-ecbc19c613e9" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p id="page5-heading" class="fill amp-wp-ef0443c" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:3.0765100671140924% 0;font-family:'Oswald',sans-serif;font-size:0.776699em;line-height:1.1;text-align:initial;padding:0% 0%;color:#000000"><span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">RENAISSANCE</span>
+<span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">MAN</span></p></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="9e9166ff-e5a9-45b2-9c47-1af8898dddff" auto-advance-after="el-8296cee0-b3e1-482c-a757-2034f4262a48-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-a48c97b" data-amp-original-style="background-color:rgb(50,37,32)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-8296cee0-b3e1-482c-a757-2034f4262a48" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-25.jpeg" artwork="assets/image-25.jpeg" title="DAP in his studio" alt="DAPs sits at his desks with his headphones on his head, studying and producing music.." layout="fill" id="el-8296cee0-b3e1-482c-a757-2034f4262a48-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-06-Clean_small.mp4"><track srclang label kind="captions" src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/tracks/DAP_caption_sl_6.vtt" default></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="f51deb2f-4fbd-4027-b341-67a22c8ad28e" auto-advance-after="el-d6ef09ff-d072-4390-bdeb-724d2eee1a37-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-36b775c" data-amp-original-style="background-color:rgb(51,37,51)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-d6ef09ff-d072-4390-bdeb-724d2eee1a37" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-8.jpeg" artwork="assets/image-8.jpeg" title="DAP in his studio. He is surrounded by a microphone, his laptop, an electronic piano and several LPs" layout="fill" id="el-d6ef09ff-d072-4390-bdeb-724d2eee1a37-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-07-Clean.mp4"></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:8.98058%;top:-4.85437%;width:82.28155%;height:28.80259%;opacity:1" class="amp-wp-72e5bc0"><div id="el-ce7893e8-5ad3-4f8b-b1c3-cdd3b97d89f4" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-ec2a36f" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:3.6256637168141586% 0;font-family:'Oswald',sans-serif;font-size:0.825243em;line-height:1;text-align:left;padding:0% 0%;color:#000000"><span id="page7-1" data-amp-original-style="font-weight: 700; color: #2e2727" class="amp-wp-fd709d3"><span>DAP'S</span></span>
+<span id="page7-2" data-amp-original-style="font-weight: 700; color: #2e2727" class="amp-wp-fd709d3"><span>HOME</span></span>
+<span id="page7-3" data-amp-original-style="font-weight: 700; color: #2e2727" class="amp-wp-fd709d3"><span>SETUP</span></span></p></div></div>
+<div data-amp-original-style="position:absolute;pointer-events:none;left:8.98058%;top:23.78641%;width:79.12621%;height:11.8123%;opacity:1" class="amp-wp-fb66a66"><div id="el-c2adec6a-b679-43a6-9409-1ad10215c0c4" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p id="page7-text" class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #2e2727" class="amp-wp-b4c32c7">DAP's apartment is equipped </span>
+<span data-amp-original-style="color: #2e2727" class="amp-wp-b4c32c7">with everything he needs </span>
+<span data-amp-original-style="color: #2e2727" class="amp-wp-b4c32c7">to record at home.</span></p></div></div>
+<div id="page7-p1" data-amp-original-style="position:absolute;pointer-events:none;left:19.66019%;top:44.33657%;width:9.95146%;height:6.6343%;opacity:1" class="amp-wp-c529fce">
+	<div class="mask amp-wp-a1b70b8" id="el-29bcf888-b47f-4d42-9d78-f6f89e9a8772" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0">
+		<div data-amp-original-style="position:absolute;width:100%;height:102.22232%;left:0%;top:-1.11116%" class="amp-wp-6b66eed">
+			<amp-img layout="fill" src="assets/Poi.png" alt="Poi" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img>
+		</div>
+	</div>
+</div>
+<div id="page7-p2" data-amp-original-style="position:absolute;pointer-events:none;left:73.30097%;top:66.99029%;width:9.95146%;height:6.6343%;opacity:1" class="amp-wp-9b9f754">
+	<div class="mask amp-wp-a1b70b8" id="el-e3629d9b-6bf6-4bc2-a496-055cf2a994f9" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0">
+		<div data-amp-original-style="position:absolute;width:100%;height:102.22232%;left:0%;top:-1.11116%" class="amp-wp-6b66eed">
+			<amp-img layout="fill" src="assets/Poi.png" alt="Poi" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img>
+		</div>
+	</div>
+</div>
+<div id="page7-p3" data-amp-original-style="position:absolute;pointer-events:none;left:55.82524%;top:67.96117%;width:9.95146%;height:6.6343%;opacity:1" class="amp-wp-0638832">
+	<div class="mask amp-wp-a1b70b8" id="el-c7af06f8-93ad-4241-8595-8876943b7272" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0">
+		<div data-amp-original-style="position:absolute;width:100%;height:102.22232%;left:0%;top:-1.11116%" class="amp-wp-6b66eed">
+			<amp-img layout="fill" src="assets/Poi.png" alt="Poi" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img>
+		</div>
+	</div>
+</div>
+</div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="f2885a0c-6126-41af-ab9e-de7af7eb6a06" auto-advance-after="el-0db319ee-90b6-42c2-bd01-ef4941650574-media" class="i-amphtml-layout-container" i-amphtml-layout="container">
+			<amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container">
+				<div class="page-fullbleed-area amp-wp-3fd9696" data-amp-original-style="background-color:rgb(49,42,40)">
+					<div class="page-safe-area">
+						<div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe">
+							<div class="mask amp-wp-a1b70b8" id="el-0db319ee-90b6-42c2-bd01-ef4941650574" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0">
+								<div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350">
+									<amp-video autoplay="autoplay" poster="assets/image-26.jpeg" artwork="assets/image-26.jpeg" title="DAP and his band are practicing for one of his shows in a crowded home-studio.." layout="fill" id="el-0db319ee-90b6-42c2-bd01-ef4941650574-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-08-Clean_small.mp4"></amp-video>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</amp-story-grid-layer>
+			<amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container">
+				<div class="page-fullbleed-area"><div class="page-safe-area">
+					<div data-amp-original-style="position:absolute;pointer-events:none;left:-0.48544%;top:28.64078%;width:103.8835%;height:82.03883%;opacity:1" class="amp-wp-1a36d0b">
+						<div class="mask amp-wp-a1b70b8" id="el-fe420f63-7542-461a-985e-dd6fb1ce8b84" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0">
+							<div class="fill amp-wp-485c3fb" data-amp-original-style="background-image:linear-gradient(0turn, #000 0%, rgba(198,0,255,0) 100%)"></div>
+						</div>
+					</div>
+					<div data-amp-original-style="position:absolute;pointer-events:none;left:11.65049%;top:85.27508%;width:79.12621%;height:11.8123%;opacity:1" class="amp-wp-0be11ca">
+						<div id="el-cbd5575d-f650-4056-923a-05d4b6ac0019" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">When he's not studying or recording at</span>
+<span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">home, you can find DAP here, working on his live show.</span></p></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:11.65049%;top:64.40129%;width:72.3301%;height:19.7411%;opacity:1" class="amp-wp-f8071de"><div id="el-ebb1acc2-ab96-47a4-aa89-de162395683b" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-ef0443c" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:3.0765100671140924% 0;font-family:'Oswald',sans-serif;font-size:0.776699em;line-height:1.1;text-align:initial;padding:0% 0%;color:#000000"><span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">REHEARSAL</span>
+<span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">SPACE</span></p></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="d92d5f5c-ecb7-4cc1-8964-835476a8adfa" auto-advance-after="el-7b83a4c6-4fe9-4154-b88d-dd398167d053-media" class="i-amphtml-layout-container" i-amphtml-layout="container">
+			<amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-02f4139" data-amp-original-style="background-color:rgb(63,56,56)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-7b83a4c6-4fe9-4154-b88d-dd398167d053" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-74.jpeg" artwork="assets/image-74.jpeg" title="A timelapse shot of DAP and his band setting up for a show." layout="fill" id="el-7b83a4c6-4fe9-4154-b88d-dd398167d053-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-09-Clean_small.mp4"></amp-video></div></div></div></div></div></amp-story-grid-layer>
+			<amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:-0.48544%;top:60.35599%;width:103.8835%;height:50.32362%;opacity:1" class="amp-wp-93b7db0"><div class="mask amp-wp-a1b70b8" id="el-25ac72a0-86f8-490b-ab07-6a38f62b9161" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div class="fill amp-wp-485c3fb" data-amp-original-style="background-image:linear-gradient(0turn, #000 0%, rgba(198,0,255,0) 100%)"></div></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:11.8932%;top:83.98058%;width:79.12621%;height:11.97411%;opacity:1" class="amp-wp-c273035"><div id="el-887858c4-37c4-47b3-a4ea-ee74a089456b" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">DAP had to get creative. Livestreams are how he stays connected to his fans and debuts new music.</span></p></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:11.65049%;top:-1.13269%;width:84.46602%;height:22.97735%;opacity:1" class="amp-wp-3ca6652"><div id="el-13368e0c-5886-41af-b098-fc64035748c9" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-64e14fb" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:3.01867816091954% 0;font-family:'Oswald',sans-serif;font-size:0.889968em;line-height:1.1;text-align:initial;padding:0% 0%;color:#000000"><span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">SETTING UP</span>
+<span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">THE SHOW</span></p></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:-20.38835%;top:69.33657%;width:29.12621%;height:0.97087%;opacity:1" class="amp-wp-a8a43b7"><div class="mask amp-wp-a1b70b8" id="el-1337de8d-5ba8-4444-bc20-7426c352335c" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div class="fill amp-wp-23cf6ac" data-amp-original-style="background-color:#ffd949"></div></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:13.83495%;top:64.07767%;width:50%;height:11.32686%;opacity:1" class="amp-wp-127af1a"><div id="el-52d461ab-8348-4e51-852e-8d9797797dff" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-fe2bdcc" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:4.450485436893202% 0;font-family:'Oswald',sans-serif;font-size:0.776699em;line-height:1.1;text-align:initial;padding:0% 0%;color:#000000"><span data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6">7:<span id="page9-counter"><span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span>32</span><span>33</span><span>34</span><span>35</span><span>36</span><span>37</span><span>38</span><span>39</span><span>40</span></span></span> PM</span></p></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="063f1ef7-f31a-4546-836f-dfae78b5c386" auto-advance-after="el-fd26a5b9-cca2-4826-a91c-816d40511aed-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-09d78d6" data-amp-original-style="background-color:rgb(99,84,72)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-fd26a5b9-cca2-4826-a91c-816d40511aed" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-12.jpeg" artwork="assets/image-12.jpeg" title="DAP performs with his drummer and guitarist in a vintage looking venue that is decorated like a cosy living room." layout="fill" id="el-fd26a5b9-cca2-4826-a91c-816d40511aed-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-10-Clean.mp4"><track srclang label kind="captions" src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/tracks/DAP_captions_sl_10.vtt" default></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="7c712961-0e44-42e5-afbc-c91fcbd4b8dc" auto-advance-after="el-9b507585-e8be-4e82-ba8c-f00edaa875a3-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-3aa3e82" data-amp-original-style="background-color:rgb(191,147,128)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-9b507585-e8be-4e82-ba8c-f00edaa875a3" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-13.jpeg" artwork="assets/image-13.jpeg" title="The camera pans along the drummer, guitarist and bassist and eventually ends on a close-up of DAP himself." layout="fill" id="el-9b507585-e8be-4e82-ba8c-f00edaa875a3-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-11-Clean.mp4"><track srclang label kind="captions" src="https://wp.stories.google/stories/a-day-in-the-life-of-dap-the-contract/tracks/DAP_captions_sl_11.vtt" default></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="ad963819-0375-4777-bbaf-54fe6185d4a1" auto-advance-after="el-9c292006-3c2c-4abf-bd7e-0180ea8243b4-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-a183bc7" data-amp-original-style="background-color:rgb(89,76,69)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-9c292006-3c2c-4abf-bd7e-0180ea8243b4" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-11.jpeg" artwork="assets/image-11.jpeg" title="DAP dances in front of his drummer to his band playing music" layout="fill" id="el-9c292006-3c2c-4abf-bd7e-0180ea8243b4-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-12-Clean.mp4"></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:-0.48544%;top:28.64078%;width:103.8835%;height:82.03883%;opacity:1" class="amp-wp-1a36d0b"><div class="mask amp-wp-a1b70b8" id="el-4d295c5b-f752-465f-89f5-6159e4e0dde9" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div class="fill amp-wp-485c3fb" data-amp-original-style="background-image:linear-gradient(0turn, #000 0%, rgba(198,0,255,0) 100%)"></div></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:11.65049%;top:88.83495%;width:79.12621%;height:7.9288%;opacity:1" class="amp-wp-b66668e"><div id="el-58b0678f-2155-4cb9-b5bc-9a30353aed17" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Look out for DAP's new EP, Powers</span>
+<span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Vol. 2, this November.</span></p></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-story-page id="c1bb5dd1-a4fb-49e9-810f-e06ec62581ba" autoo-advance-after="el-3e17d431-24b4-4da7-b8fa-b55775dfd6b1-media" class="i-amphtml-layout-container" i-amphtml-layout="container"><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area amp-wp-03e0028" data-amp-original-style="background-color:rgb(33,20,24)"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:0%;top:-9.25926%;width:100%;height:118.51852%;opacity:1" class="amp-wp-0e01dfe"><div class="mask amp-wp-a1b70b8" id="el-3e17d431-24b4-4da7-b8fa-b55775dfd6b1" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><div data-amp-original-style="position:absolute;width:100.06072%;height:100%;left:-0.03036%;top:0%" class="amp-wp-4a19350"><amp-video autoplay="autoplay" poster="assets/image-10.jpeg" artwork="assets/image-10.jpeg" title="A headshot of DAP in front of a red background." layout="fill" id="el-3e17d431-24b4-4da7-b8fa-b55775dfd6b1-media" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"><source type="video/mp4" src="assets/ADayInLife-Screen-13-Clean.mp4"></amp-video></div></div></div></div></div></amp-story-grid-layer><amp-story-grid-layer template="vertical" aspect-ratio="412:618" class="i-amphtml-layout-container" i-amphtml-layout="container"><div class="page-fullbleed-area"><div class="page-safe-area"><div data-amp-original-style="position:absolute;pointer-events:none;left:-15.53398%;top:1.45631%;width:109.46602%;height:33.81877%;transform:rotate(270deg);opacity:1" class="amp-wp-f36c5e0"><div id="el-ad6268b5-0a77-40e4-933e-0be7832229cc" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><p class="fill amp-wp-3896ee7" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:3.206208425720621% 0;font-family:'Oswald',sans-serif;font-size:0.970874em;line-height:1;text-align:left;padding:0% 0%;color:#000000"><span id="page13-more" data-amp-original-style="font-weight: 700; color: #fff" class="amp-wp-14af73e"><span>MORE</span></span>
+<span id="page13-dap" data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6"><span>DAP THE</span></span>
+<span id="page13-contract" data-amp-original-style="font-weight: 700; color: #ffd949" class="amp-wp-30873f6"><span>CONTRACT</span></span></p></div></div>
+<div data-amp-original-style="position:absolute;pointer-events:none;left:18.68932%;top:56.47249%;width:40.04854%;height:26.69903%;opacity:1" class="amp-wp-ed5198d"><div class="mask amp-wp-a1b70b8" id="el-c5114164-91b6-4b5b-a0ce-7ee0906f34a1" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><a href="https://www.dapthecontract.com/shop" data-tooltip-icon="http://static1.squarespace.com/static/54d7dfb1e4b021e818a1d6bc/t/5d1b857ee7353d0001057b44/1562084741746/dapshare-04.png?format=1500w" data-tooltip-text="SHOP — DAP The Contract" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><div id="page13-image" data-amp-original-style="position:absolute;width:101.18578%;height:100%;left:-0.59289%;top:0%" class="amp-wp-4e7ea7e"><amp-img layout="fill" src="assets/image-1254.png" alt="DAP's Album cover features a drawn profile of DAP in black and white." srcset="assets/image-1254.png 512w, assets/image-1254-300x296.png 300w, assets/image-1254-150x148.png 150w" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img></div></a></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:18.68932%;top:93.04207%;width:4.85437%;height:3.72168%;opacity:1" class="amp-wp-ba7950a"><div class="mask amp-wp-a1b70b8" id="el-e30289df-af2d-496c-971b-4547403d295b" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><a href="https://music.apple.com/us/artist/dap-the-contract/1059172340" data-tooltip-icon="https://is5-ssl.mzstatic.com/image/thumb/Music124/v4/99/37/8f/99378fcd-1d59-6003-055d-6854fe08fffd/pr_source.png/1200x630cw.png" data-tooltip-text="‎DAP The Contract on Apple Music" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><div data-amp-original-style="position:absolute;width:100%;height:102.24195%;left:0%;top:-1.12097%" class="amp-wp-32092d0"><amp-img layout="fill" src="assets/Apple-music-1.png" alt="Apple-music" srcset="assets/Apple-music-1.png 512w, assets/Apple-music-1-255x300.png 255w, assets/Apple-music-1-150x176.png 150w" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img></div></a></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:18.68932%;top:98.38188%;width:4.85437%;height:3.39806%;opacity:1" class="amp-wp-2d055e8"><div class="mask amp-wp-a1b70b8" id="el-d20f5c46-ea5f-47e3-b7b9-786c763768a3" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><a href="https://www.instagram.com/dapthecontract/" data-tooltip-icon="https://stories-labs.dev/webcreators/wp-content/uploads/sites/66/2020/11/image-1254-300x296.png" data-tooltip-text="DAP The Contract on Instagram" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><div data-amp-original-style="position:absolute;width:100%;height:100.26039%;left:0%;top:-0.13019%" class="amp-wp-b4a1233"><amp-img layout="fill" src="assets/instagram-1.png" alt="instagram" srcset="assets/instagram-1.png 512w, assets/instagram-1-285x300.png 285w, assets/instagram-1-150x158.png 150w" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img></div></a></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:18.68932%;top:87.86408%;width:4.85437%;height:3.39806%;opacity:1" class="amp-wp-b12ceb3"><div class="mask amp-wp-a1b70b8" id="el-c555f286-2b92-4884-a9c9-e40fa0cc8137" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0"><a href="https://open.spotify.com/artist/12OwAxjoznv1QOdIGR9R73?si=MMSOIa0_QTGIWchhpBrpjQ" data-tooltip-icon="https://i.scdn.co/image/f5686012bd334a5aa8a0541362653624e711bc87" data-tooltip-text="DAP The Contract on Spotify" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><div data-amp-original-style="position:absolute;width:100%;height:100.07438%;left:0%;top:-0.03719%" class="amp-wp-c33942b"><amp-img layout="fill" src="assets/spotify-1.png" alt="spotify" srcset="assets/spotify-1.png 512w, assets/spotify-1-286x300.png 286w, assets/spotify-1-150x158.png 150w" class="i-amphtml-layout-fill i-amphtml-layout-size-defined" i-amphtml-layout="fill"></amp-img></div></a></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:27.42718%;top:93.20388%;width:79.12621%;height:3.8835%;opacity:1" class="amp-wp-8a7ae38"><div id="el-4362f983-fc81-4d23-b18c-695f5c5cdb2f" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><a href="https://music.apple.com/us/artist/dap-the-contract/1059172340" data-tooltip-icon="https://is5-ssl.mzstatic.com/image/thumb/Music124/v4/99/37/8f/99378fcd-1d59-6003-055d-6854fe08fffd/pr_source.png/1200x630cw.png" data-tooltip-text="‎DAP The Contract on Apple Music" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Listen on Apple Music</span></p></a></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:27.42718%;top:87.86408%;width:79.12621%;height:3.8835%;opacity:1" class="amp-wp-22ab832"><div id="el-44148a80-47bf-4719-8fd7-72b23bb51ac7" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><a href="https://open.spotify.com/artist/12OwAxjoznv1QOdIGR9R73?si=MMSOIa0_QTGIWchhpBrpjQ" data-tooltip-icon="https://i.scdn.co/image/f5686012bd334a5aa8a0541362653624e711bc87" data-tooltip-text="DAP The Contract on Spotify" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Listen on Spotify</span></p></a></div></div><div data-amp-original-style="position:absolute;pointer-events:none;left:27.42718%;top:98.38188%;width:79.12621%;height:3.8835%;opacity:1" class="amp-wp-7c7ace6"><div id="el-be0cac22-2a0f-47c8-830f-22bda9986232" data-amp-original-style="pointer-events:initial;width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-a1b70b8"><a href="https://www.instagram.com/dapthecontract/" data-tooltip-icon="https://stories-labs.dev/webcreators/wp-content/uploads/sites/66/2020/11/image-1254-300x296.png" data-tooltip-text="DAP The Contract on Instagram" target="_blank" rel="noreferrer noopener" data-amp-original-style="width:100%;height:100%;display:block;position:absolute;top:0;left:0" class="amp-wp-254c3af"><p class="fill amp-wp-0de6699" data-amp-original-style="white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;margin:-0.09058665644171768% 0;font-family:'Roboto Condensed',sans-serif;font-size:0.339806em;line-height:1.2;text-align:left;padding:0% 0%;color:#000000"><span data-amp-original-style="color: #fff" class="amp-wp-4bbb41a">Follow on Instagram</span></p></a></div></div></div></div></amp-story-grid-layer></amp-story-page>
+
+		<amp-analytics type="gtag" data-credentials="include" class="i-amphtml-layout-fixed i-amphtml-layout-size-defined" style="width:1px;height:1px;" i-amphtml-layout="fixed">
+			<script type="application/json">
+				{"vars":{"gtag_id":"UA-173172028-1","config":{"UA-173172028-1":{"groups":"default"}}},"triggers":{"storyProgress":{"on":"story-page-visible","request":"event","vars":{"event_name":"custom","event_action":"story_progress","event_category":"${title}","event_label":"${storyPageIndex}","event_value":"${storyProgress}","send_to":"UA-173172028-1"}},"storyEnd":{"on":"story-last-page-visible","request":"event","vars":{"event_name":"custom","event_action":"story_complete","event_category":"${title}","event_label":"${storyPageCount}","send_to":"UA-173172028-1"}},"trackFocusState":{"on":"story-focus","tagName":"a","request":"click ","vars":{"event_name":"custom","event_action":"story_focus","event_category":"${title}","send_to":"UA-173172028-1"}},"trackClickThrough":{"on":"story-click-through","tagName":"a","request":"click ","vars":{"event_name":"custom","event_action":"story_click_through","event_category":"${title}","send_to":"UA-173172028-1"}},"storyOpen":{"on":"story-open","request":"event","vars":{"event_name":"custom","event_action":"story_open","event_category":"${title}","send_to":"UA-173172028-1"}},"storyClose":{"on":"story-close","request":"event","vars":{"event_name":"custom","event_action":"story_close","event_category":"${title}","send_to":"UA-173172028-1"}},"audioMuted":{"on":"story-audio-muted","request":"event","vars":{"event_name":"custom","event_action":"story_audio_muted","event_category":"${title}","send_to":"UA-173172028-1"}},"audioUnmuted":{"on":"story-audio-unmuted","request":"event","vars":{"event_name":"custom","event_action":"story_audio_unmuted","event_category":"${title}","send_to":"UA-173172028-1"}},"pageAttachmentEnter":{"on":"story-page-attachment-enter","request":"event","vars":{"event_name":"custom","event_action":"story_page_attachment_enter","event_category":"${title}","send_to":"UA-173172028-1"}},"pageAttachmentExit":{"on":"story-page-attachment-exit","request":"event","vars":{"event_name":"custom","event_action":"story_page_attachment_exit","event_category":"${title}","send_to":"UA-173172028-1"}},"storyBookendEnter":{"on":"story-bookend-enter","request":"event","vars":{"event_name":"custom","event_action":"story_bookend_enter","event_category":"${title}","send_to":"UA-173172028-1"}},"storyBookendExit":{"on":"story-bookend-exit","request":"event","vars":{"event_name":"custom","event_action":"story_bookend_exit","event_category":"${title}","send_to":"UA-173172028-1"}}}}			</script>
+		</amp-analytics>
+		<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{"vars":{"gtag_id":"UA-174115079-1","config":{"UA-174115079-1":{"groups":"default"}}},"triggers":{"storyProgress":{"on":"story-page-visible","vars":{"event_name":"custom","event_action":"story_progress","event_category":"${title}","event_label":"${storyPageId}","send_to":"UA-174115079-1"}},"storyEnd":{"on":"story-last-page-visible","vars":{"event_name":"custom","event_action":"story_complete","event_category":"${title}","send_to":"UA-174115079-1"}}}}</script></amp-analytics>
+	</amp-story>
+</body>
+</html>
