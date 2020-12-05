@@ -167,14 +167,14 @@ function getOverlapBgColor(bgImage, overlapBox) {
   return getImagePartData(bgImage, overlapBox)
     .then((imgData) => {
       const cropCanvas = document.createElement('canvas');
-      cropCanvas.width = overlapBox.sWidth; // size of the new image / text container
-      cropCanvas.height = overlapBox.sHeight;
+      cropCanvas.width = overlapBox.width; // size of the new image / text container
+      cropCanvas.height = overlapBox.height;
       const cropCtx = cropCanvas.getContext('2d');
       const cropImage = new Image();
       cropImage.crossOrigin = 'anonymous';
       cropCtx.putImageData(imgData, 0, 0);
       cropImage.src = cropCanvas.toDataURL();
-      return setOrCreateImage(cropImage.src).then((colors) => colors);
+      return setOrCreateImage(cropImage.src);
     })
     .catch(() => {
       // ignore errors for now
@@ -210,7 +210,7 @@ export function pageBackgroundWithTextLowContrast(page) {
           const bgBox = getBox(bgElem, pageSize.width, pageSize.height);
           const { width, height } = bgBox;
 
-          const bgMediaPos = getMediaSizePositionProps(
+          const bgMediaSize = getMediaSizePositionProps(
             resource,
             width,
             height,
@@ -220,12 +220,12 @@ export function pageBackgroundWithTextLowContrast(page) {
           );
 
           const overlapBox = {
-            sx: Math.abs(bgMediaPos.offsetX) + Math.abs(textBoxBound.startX),
-            sy:
-              Math.abs(bgMediaPos.offsetY) +
+            x: Math.abs(bgMediaSize.offsetX) + Math.abs(textBoxBound.startX),
+            y:
+              Math.abs(bgMediaSize.offsetY) +
               Math.abs(textBoxBound.startY + safeZoneDiff),
-            sWidth: textBoxBound.width,
-            sHeight: textBoxBound.height,
+            width: textBoxBound.width,
+            height: textBoxBound.height,
           };
 
           const [bgImage] = document.querySelectorAll(
