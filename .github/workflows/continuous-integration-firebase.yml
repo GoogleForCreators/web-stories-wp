@@ -43,6 +43,9 @@ jobs:
       - name: Download Web Stories
         run: cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ./public/stories/
 
+      - name: Undo changes to local stories
+        run: git checkout public/stories/**/*.html
+
       - name: Compress Images
         uses: calibreapp/image-actions@1.1.0
         with:
