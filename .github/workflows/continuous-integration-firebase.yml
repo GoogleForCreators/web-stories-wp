@@ -44,7 +44,8 @@ jobs:
         run: cat ./stories.txt | xargs -I{} node ./web-stories-scraper/index.js {} ./public/stories/
 
       - name: Undo changes to local stories
-        run: git checkout public/stories/**/*.html
+        run: |
+          git checkout public/stories/a-day-in-the-life-of-dap-the-contract/index.html
 
       - name: Compress Images
         uses: calibreapp/image-actions@1.1.0
