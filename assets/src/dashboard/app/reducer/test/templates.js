@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { ERRORS } from '../../textContent';
 import templateReducer, {
   ACTION_TYPES,
   defaultTemplatesState as initialState,
@@ -196,7 +197,7 @@ describe('templateReducer', () => {
         type: ACTION_TYPES.FETCH_TEMPLATES_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Load Templates',
+            title: ERRORS.LOAD_TEMPLATES.TITLE,
             body: 'test error message',
           },
           code: 'test-error-code',
@@ -208,7 +209,7 @@ describe('templateReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Load Templates',
+          title: ERRORS.LOAD_TEMPLATES.TITLE,
           body: 'test error message',
         },
         id: MOCK_ERROR_ID,
@@ -224,7 +225,7 @@ describe('templateReducer', () => {
         type: ACTION_TYPES.CREATE_TEMPLATE_FROM_STORY_FAILURE,
         payload: {
           message: {
-            title: 'Unable to Create Template from Story',
+            title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
             body: 'test error message',
           },
           code: 'test-error-code',
@@ -236,7 +237,7 @@ describe('templateReducer', () => {
       ...initialState,
       error: {
         message: {
-          title: 'Unable to Create Template from Story',
+          title: ERRORS.CREATE_TEMPLATE_FROM_STORY.TITLE,
           body: 'test error message',
         },
         id: MOCK_ERROR_ID,
