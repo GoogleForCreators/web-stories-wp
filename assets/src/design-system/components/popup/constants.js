@@ -14,10 +14,21 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Dialog } from './dialog';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export * from './tooltip';
-export { Text, Display, Headline } from './typography';
+export const PLACEMENT = {
+  // TOP
+  TOP: 'top',
+  TOP_START: 'top-start',
+  TOP_END: 'top-end',
+  // BOTTOM
+  BOTTOM: 'bottom',
+  BOTTOM_START: 'bottom-start',
+  BOTTOM_END: 'bottom-end',
+  // RIGHT
+  RIGHT: 'right',
+  RIGHT_START: 'right-start',
+  RIGHT_END: 'right-end',
+  // LEFT
+  LEFT: 'left',
+  LEFT_START: 'left-start',
+  LEFT_END: 'left-end',
+};
