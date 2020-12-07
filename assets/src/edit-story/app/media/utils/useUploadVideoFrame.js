@@ -101,8 +101,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
   /**
    * Helper function get the file name from url.
    *
-   * @param url
-   * @return {string}
+   * @param {string} url URL to file.
+   * @return {string} Filename excluding file extendation.
    */
   const getFileName = (url) =>
     url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
