@@ -209,17 +209,6 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 1897
-			 * Creation date: 2020-05-21
-			 */
-			[
-				'name'        => 'enableAnimation',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable user facing animations', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28

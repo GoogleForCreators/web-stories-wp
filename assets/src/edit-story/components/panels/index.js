@@ -91,9 +91,7 @@ function intersect(a, b) {
   return a.filter((v) => b.includes(v));
 }
 
-export function getPanels(elements, options = {}) {
-  const { enableAnimation } = options;
-
+export function getPanels(elements) {
   if (elements.length === 0) {
     return [{ type: NO_SELECTION, Panel: NoSelectionPanel }];
   }
@@ -111,10 +109,7 @@ export function getPanels(elements, options = {}) {
         Panel: BackgroundSizePositionPanel,
       });
       panels.push({ type: BACKGROUND_OVERLAY, Panel: BackgroundOverlayPanel });
-
-      if (enableAnimation) {
-        panels.push({ type: ANIMATION, Panel: AnimationPanel });
-      }
+      panels.push({ type: ANIMATION, Panel: AnimationPanel });
     }
 
     // If the selected element's type is video / image , display accessibility panel, too.
@@ -151,7 +146,7 @@ export function getPanels(elements, options = {}) {
     .map((type) => {
       switch (type) {
         case ANIMATION:
-          return enableAnimation ? { type, Panel: AnimationPanel } : null;
+          return { type, Panel: AnimationPanel };
         case BACKGROUND_SIZE_POSITION:
           // Only display when isBackground.
           return null;

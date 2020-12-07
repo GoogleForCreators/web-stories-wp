@@ -38,12 +38,10 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
 function OutputPage({ page, autoAdvance, defaultPageDuration }) {
-  const enableAnimation = useFeature('enableAnimation');
   const { id, animations, elements, backgroundColor } = page;
 
   const [backgroundElement, ...regularElements] = elements;
-  const animationDuration =
-    enableAnimation && getTotalDuration({ animations }) / 1000;
+  const animationDuration = getTotalDuration({ animations }) / 1000;
   const nonMediaPageDuration = Math.max(
     animationDuration || 0,
     defaultPageDuration
