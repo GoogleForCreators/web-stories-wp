@@ -28,7 +28,6 @@ export default {
   ],
   page: [mediaGuidance.videoElementSizeOnPage, textGuidance.pageTooMuchText],
   video: [
-    mediaGuidance.mediaElementSizeOnPage,
     mediaGuidance.mediaElementResolution,
     mediaGuidance.videoElementLength,
   ],
