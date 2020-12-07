@@ -44,9 +44,13 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
   const [backgroundElement, ...regularElements] = elements;
   const animationDuration =
     enableAnimation && getTotalDuration({ animations }) / 1000;
+  const nonMediaPageDuration = Math.max(
+    animationDuration || 0,
+    defaultPageDuration
+  );
   const longestMediaElement = getLongestMediaElement(
     elements,
-    animationDuration
+    nonMediaPageDuration
   );
 
   // If the background element has base color set, it's media, use that.
@@ -62,7 +66,7 @@ function OutputPage({ page, autoAdvance, defaultPageDuration }) {
 
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`
-    : `${animationDuration || defaultPageDuration}s`;
+    : `${nonMediaPageDuration}s`;
 
   const hasPageAttachment = page.pageAttachment?.url?.length > 0;
 
