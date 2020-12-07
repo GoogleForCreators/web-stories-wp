@@ -21,7 +21,13 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -36,6 +42,7 @@ import {
   DIRECTION,
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
+import { useKeyDownEffect } from '../../keyboard';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -59,6 +66,7 @@ import {
   PanBottomAnimation,
   PanLeftAnimation,
 } from './effectChooserElements';
+import { isNullOrUndefinedOrEmptyString } from './utils/isNullOrUndefinedOrEmptyString';
 
 const Container = styled.div`
   background: black;
@@ -82,16 +90,16 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   color: white;
   text-transform: uppercase;
 
-  &:disabled {
+  &[aria-disabled='true'] {
     opacity: 0.6;
   }
 
-  &:hover:not([disabled]) {
+  &:hover:not([aria-disabled='true']) {
     cursor: pointer;
   }
 
-  &:hover:not([disabled]),
-  &:focus:not([disabled]) {
+  &:hover:not([aria-disabled='true']),
+  &:focus:not([aria-disabled='true']) {
     ${BaseAnimationCell} {
       display: inline-block;
     }
@@ -109,6 +117,10 @@ const Grid = styled.div.attrs({ role: 'list' })`
   grid-template-columns: repeat(4, 58px);
   padding: 15px;
   position: relative;
+  /* Specify outline override here so we can give priority with extra selectors */
+  & > button[role='listitem']:focus {
+    outline: -webkit-focus-ring-color auto 1px !important;
+  }
 `;
 
 const GridItemFullRow = styled(GridItem)`
@@ -119,20 +131,180 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
+/**
+ * Because the effect chooser is hard coded these two effects lists help keep track of the current index
+ * current index is how we track focus for up and down arrows and setting active list item when menu is opened.
+ * These values map to the value prop and then if a direction is present,
+ * it's added to the name in order of appearance in the dropdown to track index properly and uniquely
+ */
+
+const FOREGROUND_EFFECTS_LIST = [
+  'No Effect',
+  ANIMATION_EFFECTS.DROP.value,
+  ANIMATION_EFFECTS.FADE_IN.value,
+  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
+  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
+  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
+  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.BOTTOM_TO_TOP}`,
+  ANIMATION_EFFECTS.PULSE.value,
+  `${ANIMATION_EFFECTS.ROTATE_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
+  `${ANIMATION_EFFECTS.ROTATE_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
+  ANIMATION_EFFECTS.TWIRL_IN.value,
+  `${ANIMATION_EFFECTS.WHOOSH_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
+  `${ANIMATION_EFFECTS.WHOOSH_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
+  `${ANIMATION_EFFECTS.ZOOM.value} In`,
+  `${ANIMATION_EFFECTS.ZOOM.value} Out`,
+];
+
+const PAN_MAPPING = {
+  [DIRECTION.LEFT_TO_RIGHT]: `${BACKGROUND_ANIMATION_EFFECTS.PAN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
+  [DIRECTION.RIGHT_TO_LEFT]: `${BACKGROUND_ANIMATION_EFFECTS.PAN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
+  [DIRECTION.BOTTOM_TO_TOP]: `${BACKGROUND_ANIMATION_EFFECTS.PAN.value} ${DIRECTION.BOTTOM_TO_TOP}`,
+  [DIRECTION.TOP_TO_BOTTOM]: `${BACKGROUND_ANIMATION_EFFECTS.PAN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
+};
+const BACKGROUND_EFFECTS_LIST = [
+  'No Effect',
+  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+  PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT],
+  PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT],
+  PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP],
+  PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
+];
+
 export default function EffectChooser({
   onAnimationSelected,
   onNoEffectSelected,
   onDismiss,
   isBackgroundEffects = false,
   disabledTypeOptionsMap,
+  value = '',
+  direction,
 }) {
+  const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
+  const previousEffectValueRef = useRef();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   }, []);
 
+  const getDisabledBackgroundEffects = useCallback(() => {
+    // right now only background pan effects are potentially disabled
+    const listWithDisabledOptions = [...BACKGROUND_EFFECTS_LIST].filter(
+      // eslint-disable-next-line consistent-return
+      (currentEffect) => {
+        const isDisabled = disabledTypeOptionsMap[
+          'effect-background-pan'
+        ].find((disabledOption) => currentEffect.endsWith(disabledOption));
+
+        if (isDisabled) {
+          return currentEffect;
+        }
+      }
+    );
+    return listWithDisabledOptions;
+  }, [disabledTypeOptionsMap]);
+
+  const availableListOptions = isBackgroundEffects
+    ? BACKGROUND_EFFECTS_LIST
+    : FOREGROUND_EFFECTS_LIST;
+  const listLength = availableListOptions.length;
+
+  const disabledBackgroundEffects = useMemo(() => {
+    if (isBackgroundEffects) {
+      if (disabledTypeOptionsMap?.['effect-background-pan']) {
+        return getDisabledBackgroundEffects();
+      }
+      return [];
+    }
+    return [];
+  }, [
+    disabledTypeOptionsMap,
+    getDisabledBackgroundEffects,
+    isBackgroundEffects,
+  ]);
+
+  // set existing active effect with a ref, specify when dropdown is opened which version of an effect it is since some have many options
+  const getPreviousEffectValue = useCallback(() => {
+    if (direction || direction === 0) {
+      let indicator;
+      if (typeof direction === 'number') {
+        indicator = direction > 0 ? 'Out' : 'In';
+      } else {
+        indicator = direction;
+      }
+
+      return `${value} ${indicator}`.trim();
+    }
+    return value;
+  }, [direction, value]);
+
+  useEffect(() => {
+    previousEffectValueRef.current = getPreviousEffectValue();
+    return () => {
+      previousEffectValueRef.current = null;
+    };
+  }, [getPreviousEffectValue]);
+
+  // Once the correct effect w/ direction is found, set focusedValue to trigger effect hook to find proper index.
+  useEffect(() => {
+    if (previousEffectValueRef.current) {
+      setFocusedValue(previousEffectValueRef.current);
+    }
+  }, []);
+
+  const focusedIndex = useMemo(() => {
+    if (isNullOrUndefinedOrEmptyString(focusedValue)) {
+      return 0;
+    }
+    const newFocusIndex = availableListOptions.indexOf(focusedValue);
+    return newFocusIndex >= 0 ? newFocusIndex : 0;
+  }, [availableListOptions, focusedValue]);
+
+  const handleMoveFocus = useCallback(
+    (offset) => setFocusedValue(availableListOptions[focusedIndex + offset]),
+    [availableListOptions, focusedIndex]
+  );
+
+  const handleUpDown = useCallback(
+    ({ key }) => {
+      if (key === 'ArrowUp' && focusedIndex !== 0) {
+        handleMoveFocus(-1);
+      } else if (key === 'ArrowDown' && focusedIndex < listLength - 1) {
+        handleMoveFocus(1);
+      }
+    },
+    [focusedIndex, handleMoveFocus, listLength]
+  );
+
+  useKeyDownEffect(ref, { key: ['up', 'down'] }, handleUpDown, [handleUpDown]);
+
   useFocusOut(ref, () => onDismiss?.(), []);
+
+  // TODO tab+shift should also dismiss
+  useKeyDownEffect(ref, { key: ['esc', 'tab'] }, onDismiss, [onDismiss]);
+
+  // Set initial focus
+  useEffect(() => {
+    if (ref.current && focusedIndex !== null) {
+      ref.current.firstChild?.children?.[focusedIndex]?.focus();
+    }
+  }, [focusedValue, focusedIndex, disabledBackgroundEffects]);
+
+  const handleOnSelect = useCallback(
+    (event, effect, animation) => {
+      const isEffectDisabled = disabledBackgroundEffects.includes(effect);
+
+      if (isEffectDisabled) {
+        event.preventDefault();
+        event.stopPropagation();
+        return () => {};
+      }
+
+      return onAnimationSelected(animation);
+    },
+    [disabledBackgroundEffects, onAnimationSelected]
+  );
 
   return (
     <Container ref={ref}>
@@ -147,8 +319,8 @@ export default function EffectChooser({
           <>
             <GridItemFullRow
               aria-label={__('Zoom Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
                   animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
                 })
               }
@@ -158,15 +330,15 @@ export default function EffectChooser({
             </GridItemFullRow>
             <GridItem
               aria-label={__('Pan Left Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.LEFT_TO_RIGHT)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
+              )}
             >
               <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
               <PanLeftAnimation>
@@ -175,15 +347,15 @@ export default function EffectChooser({
             </GridItem>
             <GridItem
               aria-label={__('Pan Right Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.RIGHT_TO_LEFT)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
+              )}
             >
               <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
               <PanRightAnimation>
@@ -192,15 +364,15 @@ export default function EffectChooser({
             </GridItem>
             <GridItem
               aria-label={__('Pan Up Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.BOTTOM_TO_TOP,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.BOTTOM_TO_TOP)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
+              )}
             >
               <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
               <PanBottomAnimation>
@@ -209,15 +381,15 @@ export default function EffectChooser({
             </GridItem>
             <GridItem
               aria-label={__('Pan Down Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
+              onClick={(event) =>
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM], {
                   animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
                   panDir: DIRECTION.TOP_TO_BOTTOM,
                 })
               }
-              disabled={disabledTypeOptionsMap[
-                BACKGROUND_ANIMATION_EFFECTS.PAN.value
-              ]?.includes(DIRECTION.TOP_TO_BOTTOM)}
+              aria-disabled={disabledBackgroundEffects.includes(
+                PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
+              )}
             >
               <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
               <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
@@ -419,9 +591,15 @@ export default function EffectChooser({
 EffectChooser.propTypes = {
   onAnimationSelected: PropTypes.func.isRequired,
   onNoEffectSelected: PropTypes.func.isRequired,
+  direction: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
   onDismiss: PropTypes.func,
   isBackgroundEffects: PropTypes.bool,
   disabledTypeOptionsMap: PropTypes.objectOf(
     PropTypes.arrayOf(PropTypes.string)
   ),
+  value: PropTypes.string,
 };
