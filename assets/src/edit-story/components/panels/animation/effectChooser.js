@@ -171,7 +171,6 @@ const BACKGROUND_EFFECTS_LIST = [
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
 ];
 
-// TODO figure out what the key is for pan direction, add to helper
 export default function EffectChooser({
   onAnimationSelected,
   onNoEffectSelected,
