@@ -51,6 +51,7 @@ function LibraryMoveable({
   cloneElement,
   cloneProps,
   originRef,
+  active = false,
 }) {
   const CloneElement = cloneElement;
 
@@ -128,6 +129,7 @@ function LibraryMoveable({
     const y1 = mediaBox.top - offsetY;
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
+    cloneRef.current.style.opacity = 1;
   };
 
   const onDragEnd = ({ inputEvent }) => {
@@ -181,7 +183,7 @@ function LibraryMoveable({
   return (
     <>
       <TargetBox ref={targetBoxRef} width={width} height={height} />
-      {isDragging && (
+      {(isDragging || active) && (
         <InOverlay
           ref={overlayRef}
           zIndex={1}
@@ -218,6 +220,7 @@ LibraryMoveable.propTypes = {
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
   originRef: PropTypes.object,
+  active: PropTypes.bool,
 };
 
 export default LibraryMoveable;

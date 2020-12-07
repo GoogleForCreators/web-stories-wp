@@ -38,8 +38,8 @@ import {
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
 import withOverlay from '../../components/overlay/withOverlay';
+import CanvasProvider from '../../components/canvas/canvasProvider';
 import LayoutProvider from './layoutProvider';
-import CanvasProvider from "../../components/canvas/canvasProvider";
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),

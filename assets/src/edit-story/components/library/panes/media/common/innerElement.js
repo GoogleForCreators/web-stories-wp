@@ -68,7 +68,7 @@ const HiddenPosterImage = styled.img`
 `;
 
 const CloneImg = styled.img`
-  opacity: 1;
+  opacity: 0;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   position: absolute;
@@ -84,6 +84,7 @@ function InnerElement({
   onClick,
   showVideoDetail,
   mediaElement,
+  active,
 }) {
   const newVideoPosterRef = useRef(null);
   const hiddenPoster = useRef(null);
@@ -182,22 +183,23 @@ function InnerElement({
     throw new Error('Invalid media element type.');
   }
 
-  // @todo Make it work for video, too.
+  const dragHandler = (event) => {
+    if (!draggingResource) {
+      // Drop-targets handling.
+      resourceList.set(resource.id, {
+        url: thumbnailURL,
+        type: 'cached',
+      });
+      setDraggingResource(resource);
+    }
+    handleDrag(resource, event.clientX, event.clientY);
+  };
   return (
     <>
       {mediaElement.current && (
         <LibraryMoveable
-          handleDrag={(event) => {
-            if (!draggingResource) {
-              // Drop-targets handling.
-              resourceList.set(resource.id, {
-                url: thumbnailURL,
-                type: 'cached',
-              });
-              setDraggingResource(resource);
-            }
-            handleDrag(resource, event.clientX, event.clientY);
-          }}
+          active={active}
+          handleDrag={dragHandler}
           handleDragEnd={() => {
             handleDrop({
               ...resource,
@@ -227,6 +229,7 @@ InnerElement.propTypes = {
   onClick: PropTypes.func.isRequired,
   showVideoDetail: PropTypes.bool,
   mediaElement: PropTypes.object,
+  active: PropTypes.bool.isRequired,
 };
 
 export default InnerElement;

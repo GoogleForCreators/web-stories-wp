@@ -252,6 +252,7 @@ const MediaElement = ({
           height={height}
           onClick={onClick}
           showVideoDetail={showVideoDetail}
+          active={active}
         />
         {attribution}
         {local && (
