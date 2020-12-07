@@ -193,30 +193,28 @@ function InnerElement({
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
+
   return (
     <>
       {media}
-      {mediaElement.current && (
-        <LibraryMoveable
-          active={active}
-          handleDrag={dragHandler}
-          handleDragEnd={() => {
-            handleDrop({
-              ...resource,
-              baseColor: mediaBaseColor.current,
-            });
-          }}
-          type={resource.type}
-          resource={resource}
-          onClick={onClick(
-            type === 'image' ? thumbnailURL : poster,
-            mediaBaseColor.current
-          )}
-          cloneElement={CloneImg}
-          cloneProps={cloneProps}
-          originRef={mediaElement}
-        />
-      )}
+      <LibraryMoveable
+        active={active}
+        handleDrag={dragHandler}
+        handleDragEnd={() => {
+          handleDrop({
+            ...resource,
+            baseColor: mediaBaseColor.current,
+          });
+        }}
+        type={resource.type}
+        resource={resource}
+        onClick={onClick(
+          type === 'image' ? thumbnailURL : poster,
+          mediaBaseColor.current
+        )}
+        cloneElement={CloneImg}
+        cloneProps={cloneProps}
+      />
     </>
   );
 }

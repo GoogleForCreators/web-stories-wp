@@ -49,7 +49,6 @@ function LibraryMoveable({
   onClick,
   cloneElement,
   cloneProps,
-  originRef,
   active = false,
 }) {
   const CloneElement = cloneElement;
@@ -181,7 +180,6 @@ function LibraryMoveable({
   };
 
   const { width, height } = cloneProps;
-  // @todo Should we add moveable only once the image has loaded?
   return (
     <>
       <TargetBox
@@ -191,31 +189,27 @@ function LibraryMoveable({
         onClick={onClick}
       />
       {(isDragging || active) && (
-        <>
-          <InOverlay
-            ref={overlayRef}
-            zIndex={1}
-            pointerEvents="initial"
-            render={() => {
-              return <CloneElement ref={cloneRef} {...cloneProps} />;
-            }}
-          />
-          {originRef.current && (
-            <Moveable
-              className="default-moveable hide-handles"
-              target={targetBoxRef.current}
-              edge={true}
-              draggable={true}
-              origin={false}
-              pinchable={true}
-              {...snapProps}
-              onDragStart={onDragStart}
-              onDrag={onDrag}
-              onDragEnd={onDragEnd}
-            />
-          )}
-        </>
+        <InOverlay
+          ref={overlayRef}
+          zIndex={1}
+          pointerEvents="initial"
+          render={() => {
+            return <CloneElement ref={cloneRef} {...cloneProps} />;
+          }}
+        />
       )}
+      <Moveable
+        className="default-moveable"
+        target={targetBoxRef.current}
+        edge={true}
+        draggable={true}
+        origin={false}
+        pinchable={true}
+        {...snapProps}
+        onDragStart={onDragStart}
+        onDrag={onDrag}
+        onDragEnd={onDragEnd}
+      />
     </>
   );
 }
@@ -228,7 +222,6 @@ LibraryMoveable.propTypes = {
   onClick: PropTypes.func.isRequired,
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
-  originRef: PropTypes.object,
   active: PropTypes.bool,
 };
 
