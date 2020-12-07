@@ -23,15 +23,30 @@
 import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
+import CanvasContext from '../../canvas/context';
 
-const renderMediaElement = (resource, providerType) =>
-  renderWithTheme(
-    <MediaElement
-      resource={resource}
-      onInsert={() => {}}
-      providerType={providerType}
-    />
+const renderMediaElement = (resource, providerType) => {
+  const canvasContext = {
+    state: {
+      pageSize: {
+        width: 200,
+        height: 200,
+      },
+      designSpaceGuideline: document.body,
+      canvasContainer: document.body,
+      pageContainer: document.body,
+    },
+  };
+  return renderWithTheme(
+    <CanvasContext.Provider value={canvasContext}>
+      <MediaElement
+        resource={resource}
+        onInsert={() => {}}
+        providerType={providerType}
+      />
+    </CanvasContext.Provider>
   );
+};
 
 describe('MediaElement', () => {
   it("should render dropdown menu's more icon for uploaded image", () => {
