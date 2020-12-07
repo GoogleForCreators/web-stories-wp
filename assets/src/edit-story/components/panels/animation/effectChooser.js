@@ -147,6 +147,16 @@ const NoEffect = styled(GridItemFullRow)`
     font-weight: normal;
   `}
 `;
+const GridLabel = styled.div`
+  grid-column-start: span 4;
+  padding: 15px 15px 0 18px;
+  span {
+    color: ${({ theme }) => theme.colors.fg.white};
+    font-weight: 500;
+    font-size: 14px;
+  }
+`;
+
 /**
  * Because the effect chooser is hard coded these two effects lists help keep track of the current index
  * current index is how we track focus for up and down arrows and setting active list item when menu is opened.
@@ -158,7 +168,7 @@ const getDirectionalEffect = (effect, direction) =>
   direction ? `${effect} ${direction}`.trim() : effect;
 
 const FOREGROUND_EFFECTS_LIST = [
-  'No Effect',
+  false, // arbitrary value to maintain order of focusable children 'No Effect',
   ANIMATION_EFFECTS.DROP.value,
   ANIMATION_EFFECTS.FADE_IN.value,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
@@ -182,7 +192,8 @@ const PAN_MAPPING = {
   [DIRECTION.TOP_TO_BOTTOM]: `${BACKGROUND_ANIMATION_EFFECTS.PAN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
 };
 const BACKGROUND_EFFECTS_LIST = [
-  'No Effect',
+  false, // arbitrary value to maintain order of focusable children 'No Effect',
+  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
   PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT],
   PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT],
   PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP],
@@ -190,15 +201,6 @@ const BACKGROUND_EFFECTS_LIST = [
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
-const GridLabel = styled.div`
-  grid-column-start: span 4;
-  padding-left: 3px;
-  span {
-    color: ${({ theme }) => theme.colors.fg.white};
-    font-weight: 500;
-    font-size: 14px;
-  }
-`;
 
 export default function EffectChooser({
   onAnimationSelected,
@@ -298,9 +300,9 @@ export default function EffectChooser({
   // Set initial focus
   useEffect(() => {
     if (ref.current && focusedIndex !== null) {
-      ref.current.firstChild?.children?.[focusedIndex]?.focus();
+      ref.current.children?.[focusedIndex]?.focus();
     }
-  }, [focusedValue, focusedIndex, disabledBackgroundEffects]);
+  }, [focusedIndex, disabledBackgroundEffects]);
 
   const handleOnSelect = useCallback(
     (event, directionalEffect, animation) => {
@@ -320,11 +322,11 @@ export default function EffectChooser({
   );
 
   return (
-    <Container ref={ref}>
-      <Grid>
-        <GridLabel>
-          <span>{__('Select Animation', 'web-stories')}</span>
-        </GridLabel>
+    <Container>
+      <GridLabel>
+        <span>{__('Select Animation', 'web-stories')}</span>
+      </GridLabel>
+      <Grid ref={ref}>
         <NoEffect
           onClick={onNoEffectSelected}
           aria-label={__('None', 'web-stories')}
