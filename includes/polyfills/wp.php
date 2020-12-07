@@ -24,7 +24,7 @@
  * limitations under the License.
  */
 
-if ( ! function_exists( 'wp_after_insert_post' ) ) {
+if ( ! function_exists( '\wp_after_insert_post' ) ) {
 	/**
 	 * Fires actions after a post, its terms and meta data has been saved.
 	 *
