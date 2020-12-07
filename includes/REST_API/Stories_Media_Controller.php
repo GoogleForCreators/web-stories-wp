@@ -87,7 +87,6 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 
 		if ( ! $parent_post ) {
 			return parent::update_item( $request );
-
 		}
 
 		if ( 'revision' === get_post_type( $parent_post ) ) {
@@ -97,37 +96,23 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 				[ 'status' => 400 ]
 			);
 		}
+
 		$post_id           = $request['id'];
 		$attachment_before = $this->get_post( $post_id );
 		if ( is_wp_error( $attachment_before ) ) {
 			return $attachment_before;
 		}
+
 		$args   = [
 			'ID'          => $post_id,
 			'post_parent' => $parent_post,
 		];
 		$result = wp_update_post( $args, true );
-
 		if ( is_wp_error( $result ) ) {
 			return $result;
 		}
 
-		$attachment = $this->get_post( $post_id );
-		if ( is_wp_error( $attachment ) ) {
-			return $attachment;
-		}
-
-		$request->set_param( 'context', 'edit' );
-
-		/** This action is documented in wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php */
-		do_action( 'rest_after_insert_attachment', $attachment, $request, false );
-
-		/** This action is documented in wp-includes/post.php */
-		do_action( 'wp_after_insert_post', $post_id, $attachment, true, $attachment_before );
-
-		$response = $this->prepare_item_for_response( $attachment, $request );
-
-		return rest_ensure_response( $response );
+		return parent::update_item( $request );
 	}
 
 	/**
