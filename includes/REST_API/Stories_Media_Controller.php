@@ -99,7 +99,9 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		}
 
 		$attachment_before = $this->get_post( $request['id'] );
-
+		if ( is_wp_error( $attachment_before ) ) {
+			return $attachment_before;
+		}
 		$args   = [
 			'ID'          => $request['id'],
 			'post_parent' => $parent_post,
