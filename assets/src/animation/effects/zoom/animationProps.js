@@ -37,7 +37,9 @@ export const ZoomEffectInputPropTypes = {
 export default {
   scaleDirection: {
     label: __('Direction', 'web-stories'),
-    tooltip: __('Valid values are scaleIn or scaleOut', 'web-stories'),
+    tooltip:
+      /* translators: 1: scaleIn. 2: scaleOut */
+      sprintf(__('Valid values are %1$s or %2$s', 'web-stories'), 'scaleIn', 'scaleOut'),
     type: FIELD_TYPES.DIRECTION_PICKER,
     values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
     defaultValue: SCALE_DIRECTION.SCALE_IN,
