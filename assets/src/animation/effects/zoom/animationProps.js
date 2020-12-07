@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -37,9 +37,12 @@ export const ZoomEffectInputPropTypes = {
 export default {
   scaleDirection: {
     label: __('Direction', 'web-stories'),
-    tooltip:
+    tooltip: sprintf(
       /* translators: 1: scaleIn. 2: scaleOut */
-      sprintf(__('Valid values are %1$s or %2$s', 'web-stories'), 'scaleIn', 'scaleOut'),
+      __('Valid values are %1$s or %2$s', 'web-stories'),
+      'scaleIn',
+      'scaleOut'
+    ),
     type: FIELD_TYPES.DIRECTION_PICKER,
     values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
     defaultValue: SCALE_DIRECTION.SCALE_IN,
