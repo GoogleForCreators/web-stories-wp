@@ -66,17 +66,6 @@ export default function EffectChooserDropdown({
     }
   }, []);
 
-  const handleAnimationSelected = useCallback(
-    (animation) => {
-      if (isKeyboardUser()) {
-        // if keyboard is in use, we want to re-return focus back to dropdown after update is made
-        selectRef.current.focus();
-      }
-      onAnimationSelected(animation);
-    },
-    [onAnimationSelected]
-  );
-
   return (
     <DropDownSelect
       aria-label={__('Animation: Effect Chooser', 'web-stories')}
@@ -95,7 +84,7 @@ export default function EffectChooserDropdown({
         <Container ref={dropdownRef}>
           <EffectChooser
             onNoEffectSelected={onNoEffectSelected}
-            onAnimationSelected={handleAnimationSelected}
+            onAnimationSelected={onAnimationSelected}
             onDismiss={closeDropDown}
             isBackgroundEffects={isBackgroundEffects}
             disabledTypeOptionsMap={disabledTypeOptionsMap}
