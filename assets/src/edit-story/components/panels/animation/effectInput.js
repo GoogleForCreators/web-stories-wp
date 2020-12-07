@@ -26,7 +26,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES, SCALE_DIRECTION } from '../../../../animation';
+import { FIELD_TYPES } from '../../../../animation';
 import { GeneralAnimationPropTypes } from '../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../form';
