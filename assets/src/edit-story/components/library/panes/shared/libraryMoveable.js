@@ -33,6 +33,7 @@ import useInsertElement from '../../../canvas/useInsertElement';
 import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
+import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -138,7 +139,8 @@ function LibraryMoveable({
     // We only skip Moveable onDragEnd handling if there's an active drop target ID.
     if (activeDropTargetId) {
       handleDragEnd();
-    } else {
+      // Only continue if the clone is at least partially on the page.
+    } else if (!isTargetOutOfContainer(cloneRef.current, pageContainer)) {
       const {
         x,
         y,
@@ -147,7 +149,6 @@ function LibraryMoveable({
       } = cloneRef.current.getBoundingClientRect();
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
-      // @todo Don't add if dragging out of canvas.
       insertElement(type, {
         resource,
         x: editorToDataX(x - pageX, pageSize.width),
