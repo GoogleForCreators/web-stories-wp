@@ -97,13 +97,13 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 				[ 'status' => 400 ]
 			);
 		}
-
-		$attachment_before = $this->get_post( $request['id'] );
+		$post_id           = $request['id'];
+		$attachment_before = $this->get_post( $post_id );
 		if ( is_wp_error( $attachment_before ) ) {
 			return $attachment_before;
 		}
 		$args   = [
-			'ID'          => $request['id'],
+			'ID'          => $post_id,
 			'post_parent' => $parent_post,
 		];
 		$result = wp_update_post( $args, true );
@@ -112,7 +112,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return $result;
 		}
 
-		$attachment = $this->get_post( $request['id'] );
+		$attachment = $this->get_post( $post_id );
 		if ( is_wp_error( $attachment ) ) {
 			return $attachment;
 		}
@@ -122,7 +122,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		/** This action is documented in wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php */
 		do_action( 'rest_after_insert_attachment', $attachment, $request, false );
 
-		wp_after_insert_post( $attachment, true, $attachment_before );
+		/** This action is documented in wp-includes/post.php */
+		do_action( 'wp_after_insert_post', $post_id, $attachment, true, $attachment_before );
 
 		$response = $this->prepare_item_for_response( $attachment, $request );
 
