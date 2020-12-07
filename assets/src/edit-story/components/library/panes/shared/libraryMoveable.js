@@ -183,7 +183,7 @@ function LibraryMoveable({
       {isDragging && (
         <InOverlay
           ref={overlayRef}
-          zIndex={3}
+          zIndex={1}
           pointerEvents="initial"
           render={() => {
             return <CloneElement ref={cloneRef} {...cloneProps} />;
@@ -193,7 +193,6 @@ function LibraryMoveable({
       {originRef.current && (
         <Moveable
           className="default-moveable hide-handles"
-          zIndex={10}
           target={targetBoxRef.current}
           edge={true}
           draggable={true}
