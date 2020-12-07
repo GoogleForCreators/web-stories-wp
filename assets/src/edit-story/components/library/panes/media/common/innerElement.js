@@ -127,6 +127,7 @@ function InnerElement({
     draggable: false,
   };
   const thumbnailURL = getSmallestUrlForWidth(width, resource);
+  const { lengthFormatted, poster, mimeType } = resource;
   if (['image', 'gif'].includes(type)) {
     media = (
       <Image
@@ -144,7 +145,6 @@ function InnerElement({
     );
     cloneProps.src = thumbnailURL;
   } else if (type === 'video') {
-    const { lengthFormatted, poster, mimeType } = resource;
     const displayPoster = poster ? poster : newVideoPosterRef.current;
     media = (
       <>
@@ -157,7 +157,6 @@ function InnerElement({
           preload="none"
           aria-label={alt}
           muted
-          onClick={onClick(poster, mediaBaseColor.current)}
           showWithoutDelay={newVideoPosterRef.current}
         >
           <source
@@ -209,7 +208,10 @@ function InnerElement({
           }}
           type={resource.type}
           resource={resource}
-          onClick={onClick(thumbnailURL, mediaBaseColor.current)}
+          onClick={onClick(
+            type === 'image' ? thumbnailURL : poster,
+            mediaBaseColor.current
+          )}
           cloneElement={CloneImg}
           cloneProps={cloneProps}
           originRef={mediaElement}

@@ -184,30 +184,37 @@ function LibraryMoveable({
   // @todo Should we add moveable only once the image has loaded?
   return (
     <>
-      <TargetBox ref={targetBoxRef} width={width} height={height} />
+      <TargetBox
+        ref={targetBoxRef}
+        width={width}
+        height={height}
+        onClick={onClick}
+      />
       {(isDragging || active) && (
-        <InOverlay
-          ref={overlayRef}
-          zIndex={1}
-          pointerEvents="initial"
-          render={() => {
-            return <CloneElement ref={cloneRef} {...cloneProps} />;
-          }}
-        />
-      )}
-      {originRef.current && (
-        <Moveable
-          className="default-moveable hide-handles"
-          target={targetBoxRef.current}
-          edge={true}
-          draggable={true}
-          origin={false}
-          pinchable={true}
-          {...snapProps}
-          onDragStart={onDragStart}
-          onDrag={onDrag}
-          onDragEnd={onDragEnd}
-        />
+        <>
+          <InOverlay
+            ref={overlayRef}
+            zIndex={1}
+            pointerEvents="initial"
+            render={() => {
+              return <CloneElement ref={cloneRef} {...cloneProps} />;
+            }}
+          />
+          {originRef.current && (
+            <Moveable
+              className="default-moveable hide-handles"
+              target={targetBoxRef.current}
+              edge={true}
+              draggable={true}
+              origin={false}
+              pinchable={true}
+              {...snapProps}
+              onDragStart={onDragStart}
+              onDrag={onDrag}
+              onDragEnd={onDragEnd}
+            />
+          )}
+        </>
       )}
     </>
   );
