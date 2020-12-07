@@ -196,6 +196,7 @@ function InnerElement({
   };
   return (
     <>
+      {media}
       {mediaElement.current && (
         <LibraryMoveable
           active={active}
@@ -214,7 +215,6 @@ function InnerElement({
           originRef={mediaElement}
         />
       )}
-      {media}
     </>
   );
 }

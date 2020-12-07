@@ -39,7 +39,6 @@ const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
-  z-index: 1;
 `;
 
 function LibraryMoveable({
@@ -91,6 +90,10 @@ function LibraryMoveable({
   const onDrag = ({ beforeTranslate, inputEvent }) => {
     frame.translate = beforeTranslate;
     if (cloneRef.current) {
+      if (!cloneRef.current.style.opacity) {
+        // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
+        cloneRef.current.style.opacity = 1;
+      }
       cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
       // We also have to move the original target ref for snapping to work.
       targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
@@ -129,7 +132,6 @@ function LibraryMoveable({
     const y1 = mediaBox.top - offsetY;
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
-    cloneRef.current.style.opacity = 1;
   };
 
   const onDragEnd = ({ inputEvent }) => {
