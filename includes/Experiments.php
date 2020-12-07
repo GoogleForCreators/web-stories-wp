@@ -287,17 +287,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2095
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showPrePublishTab',
-				'label'       => __( 'Pre-Publish', 'web-stories' ),
-				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */

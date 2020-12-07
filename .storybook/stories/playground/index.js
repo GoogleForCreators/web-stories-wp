@@ -56,8 +56,4 @@ const config = {
   },
 };
 
-export const _default = () => (
-  <FlagsProvider features={{ showPrePublishTab: true }}>
-    <App config={config} />
-  </FlagsProvider>
-);
+export const _default = () => <App config={config} />;

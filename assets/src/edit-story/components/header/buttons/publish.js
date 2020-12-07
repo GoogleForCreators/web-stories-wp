@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from 'react';
-import { useFeatures } from 'flagged';
+
 /**
  * WordPress dependencies
  */
@@ -57,11 +57,11 @@ function Publish() {
   const { capabilities } = useConfig();
 
   const { checklist, refreshChecklist } = usePrepublishChecklist();
-  const { showPrePublishTab } = useFeatures();
 
-  const tooltip = showPrePublishTab
-    ? checklist.some(({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type) &&
-      __('There are items in the checklist to resolve', 'web-stories')
+  const tooltip = checklist.some(
+    ({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type
+  )
+    ? __('There are items in the checklist to resolve', 'web-stories')
     : null;
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
