@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
@@ -32,6 +32,7 @@ import {
   SCALE_DIRECTION,
   SCALE_DIRECTION_MAP,
 } from '../../../../animation';
+import useRadioNavigation from '../../form/shared/useRadioNavigation';
 
 const Svg = styled.svg`
   display: block;
@@ -250,26 +251,33 @@ const valueForInternalValue = (value) => {
 };
 
 export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
+  const inputRef = useRef();
+
   const flattenedDirections = useMemo(() => {
     const dir = [];
     if (
       directions.includes(SCALE_DIRECTION.SCALE_IN) &&
       directions.includes(SCALE_DIRECTION.SCALE_OUT)
     ) {
+      // Controlling order these get added to flattenedDirections makes sure the indexable order makes sense for keyboard users
       dir.push(
-        ...SCALE_DIRECTION_MAP.SCALE_IN,
-        ...SCALE_DIRECTION_MAP.SCALE_OUT
+        SCALE_DIRECTION_MAP.SCALE_IN[0],
+        SCALE_DIRECTION_MAP.SCALE_OUT[0],
+        SCALE_DIRECTION_MAP.SCALE_IN[1],
+        SCALE_DIRECTION_MAP.SCALE_OUT[1]
       );
     } else {
       dir.push(...directions);
     }
     return dir;
   }, [directions]);
+  useRadioNavigation(inputRef);
+
   return (
     <Fieldset>
       <Figure />
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
-      <RadioGroup>
+      <RadioGroup ref={inputRef}>
         {flattenedDirections.map((direction) => (
           <Label
             key={direction}
