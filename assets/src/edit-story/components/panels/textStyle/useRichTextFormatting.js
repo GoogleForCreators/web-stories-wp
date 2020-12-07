@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useRef, useEffect } from 'react';
 
 /**
  * Internal dependencies
@@ -30,6 +30,7 @@ import {
 } from '../../richText/htmlManipulation';
 import { MULTIPLE_VALUE } from '../../form';
 import { useGlobalKeyDownEffect } from '../../keyboard';
+import { useCanvas } from '../../canvas';
 
 /**
  * Equality function for *primitives and color patterns* only.
@@ -83,6 +84,10 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     actions: { selectionActions },
   } = useRichText();
 
+  const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
+    clearEditing,
+  }));
+
   const textInfo = useMemo(() => {
     if (hasCurrentEditor) {
       return selectionInfo;
@@ -105,7 +110,26 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     [pushUpdate]
   );
 
+  const queuedPushRef = useRef(null);
+  const queuePush = useCallback(
+    (...args) => {
+      queuedPushRef.current = args;
+    },
+    [queuedPushRef]
+  );
+
+  // when selected elements update, run any queued pushes
+  useEffect(() => {
+    const pushArgs = queuedPushRef.current;
+    if (pushArgs) {
+      push(...pushArgs);
+      queuedPushRef.current = null;
+    }
+  }, [selectedElements, queuedPushRef, push]);
+
   const handlers = useMemo(() => {
+    const htmlFormatters = getHTMLFormatters();
+
     if (hasCurrentEditor) {
       return {
         // This particular function ignores the flag argument.
@@ -118,10 +142,15 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
         handleClickUnderline: selectionActions.toggleUnderlineInSelection,
         handleSetLetterSpacing: selectionActions.setLetterSpacingInSelection,
         handleSetColor: selectionActions.setColorInSelection,
+        // when editing, resetting font weight needs to save before resetting
+        handleResetFontWeight: async (weight) => {
+          // clear editing to save any pending updates
+          await clearEditing();
+          // queue push until selectedElements are saved and content is updated
+          queuePush(htmlFormatters.setFontWeight, weight);
+        },
       };
     }
-
-    const htmlFormatters = getHTMLFormatters();
 
     return {
       handleClickBold: (flag) => push(htmlFormatters.toggleBold, flag),
@@ -133,8 +162,10 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       handleSetLetterSpacing: (letterSpacing) =>
         push(htmlFormatters.setLetterSpacing, letterSpacing),
       handleSetColor: (color) => push(htmlFormatters.setColor, color),
+      handleResetFontWeight: (weight) =>
+        push(htmlFormatters.setFontWeight, weight),
     };
-  }, [hasCurrentEditor, selectionActions, push]);
+  }, [hasCurrentEditor, selectionActions, push, clearEditing, queuePush]);
 
   useGlobalKeyDownEffect(
     { key: ['mod+b', 'mod+u', 'mod+i'] },

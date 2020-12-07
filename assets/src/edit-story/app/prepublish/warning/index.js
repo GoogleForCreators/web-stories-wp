@@ -23,18 +23,15 @@ export default {
   story: [distributionWarnings.storyMissingExcerpt],
   page: [accessibilityWarnings.pageTooManyLinks],
   text: [
-    accessibilityWarnings.textElementFontLowContrast,
     accessibilityWarnings.textElementFontSizeTooSmall,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
   image: [
-    accessibilityWarnings.imageElementLowResolution,
     accessibilityWarnings.imageElementMissingAlt,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
   shape: [accessibilityWarnings.elementLinkTappableRegionTooSmall],
   gif: [
-    accessibilityWarnings.imageElementLowResolution,
     accessibilityWarnings.imageElementMissingAlt,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],

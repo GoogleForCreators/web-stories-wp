@@ -160,6 +160,36 @@ describe('Text Style Panel', () => {
         expect(elements[1].font.family).toBe('Yrsa');
       });
 
+      it('should reset font weight when font family is updated', async () => {
+        await fixture.events.keyboard.type('Yrsa');
+        // Ensure the debounced callback has taken effect.
+        await fixture.events.sleep(TIMEOUT);
+        const option = fixture.screen.getByText('Yrsa');
+        await fixture.events.click(option);
+        await fixture.events.sleep(TIMEOUT);
+
+        const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
+        expect(fontWeight.value).toBe('Regular');
+
+        await fixture.events.click(fontWeight.select);
+        await fixture.events.click(fontWeight.option('Bold'));
+        await fixture.events.sleep(TIMEOUT);
+        expect(fontWeight.value).toBe('Bold');
+
+        await openFontPicker();
+
+        await fixture.events.keyboard.type('Roboto');
+        // Ensure the debounced callback has taken effect.
+        await fixture.events.sleep(TIMEOUT);
+        const option2 = fixture.screen.getByText('Roboto');
+        await fixture.events.click(option2);
+        await fixture.events.sleep(600);
+        const updatedFontWeight =
+          fixture.editor.inspector.designPanel.textStyle.fontWeight;
+
+        expect(updatedFontWeight.value).toBe('Regular');
+      });
+
       it('should display only the fonts from curated list by default', () => {
         const options = getOptions();
         expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);

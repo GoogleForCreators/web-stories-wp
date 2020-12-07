@@ -39,6 +39,7 @@ import { useFont } from '../../../app/font';
 import { getCommonValue } from '../utils';
 import { Option, Selected } from '../../form/advancedDropDown/list/styled';
 import useRichTextFormatting from './useRichTextFormatting';
+import getClosestFontWeight from './getClosestFontWeight';
 
 function FontPicker({ selectedElements, pushUpdate }) {
   const fontFamily = getCommonValue(
@@ -48,6 +49,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
 
   const {
     textInfo: { fontWeight, isItalic },
+    handlers: { handleResetFontWeight },
   } = useRichTextFormatting(selectedElements, pushUpdate);
   const fontStyle = isItalic ? 'italic' : 'normal';
 
@@ -86,6 +88,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
           'metrics',
         ]),
       };
+
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
@@ -98,6 +101,9 @@ function FontPicker({ selectedElements, pushUpdate }) {
       );
       addRecentFont(fontObj);
       pushUpdate({ font: newFont }, true);
+
+      const newFontWeight = getClosestFontWeight(400, fontObj.weights);
+      await handleResetFontWeight(newFontWeight);
     },
     [
       addRecentFont,
@@ -107,6 +113,7 @@ function FontPicker({ selectedElements, pushUpdate }) {
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
+      handleResetFontWeight,
     ]
   );
 

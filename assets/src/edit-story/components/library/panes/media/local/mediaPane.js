@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 /**
@@ -56,6 +56,7 @@ import { DropDown } from '../../../../form';
 import { Placement } from '../../../../popup';
 import { PANE_PADDING } from '../../shared';
 import { useSnackbar } from '../../../../../app';
+import MissingUploadPermissionDialog from './missingUploadPermissionDialog';
 import paneId from './paneId';
 
 export const ROOT_MARGIN = 300;
@@ -85,6 +86,7 @@ function MediaPane(props) {
     resetWithFetch,
     setMediaType,
     setSearchTerm,
+    uploadVideoPoster,
   } = useLocalMedia(
     ({
       state: {
@@ -95,7 +97,13 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
       },
-      actions: { setNextPage, resetWithFetch, setMediaType, setSearchTerm },
+      actions: {
+        setNextPage,
+        resetWithFetch,
+        setMediaType,
+        setSearchTerm,
+        uploadVideoPoster,
+      },
     }) => {
       return {
         hasMore,
@@ -108,6 +116,7 @@ function MediaPane(props) {
         resetWithFetch,
         setMediaType,
         setSearchTerm,
+        uploadVideoPoster,
       };
     }
   );
@@ -130,6 +139,8 @@ function MediaPane(props) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+
+  const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
 
   const onClose = resetWithFetch;
 
@@ -159,6 +170,10 @@ function MediaPane(props) {
         resource,
         mediaPickerEl.sizes?.medium?.url || mediaPickerEl.url
       );
+
+      // Upload video poster and update media element afterwards, so that the
+      // poster will correctly show up in places like the Accessibility panel.
+      uploadVideoPoster(resource.id, mediaPickerEl.url);
     } catch (e) {
       showSnackbar({
         message: e.message,
@@ -170,6 +185,7 @@ function MediaPane(props) {
     onSelect,
     onClose,
     type: allowedMimeTypes,
+    onPermissionError: () => setIsPermissionDialogOpen(true),
   });
 
   /**
@@ -271,6 +287,11 @@ function MediaPane(props) {
             searchTerm={searchTerm}
           />
         )}
+
+        <MissingUploadPermissionDialog
+          open={isPermissionDialogOpen}
+          onClose={() => setIsPermissionDialogOpen(false)}
+        />
       </PaneInner>
     </StyledPane>
   );
