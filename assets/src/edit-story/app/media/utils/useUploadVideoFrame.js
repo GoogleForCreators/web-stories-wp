@@ -99,10 +99,10 @@ function useUploadVideoFrame({ updateMediaElement }) {
   };
 
   /**
-   * Helper function get the file name from url.
+   * Helper function get the file name without the extension from a url.
    *
    * @param {string} url URL to file.
-   * @return {string} Filename excluding file extendation.
+   * @return {string} File name without the extension.
    */
   const getFileName = (url) =>
     url.substring(url.lastIndexOf('/') + 1, url.lastIndexOf('.'));
