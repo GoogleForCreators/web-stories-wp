@@ -27,12 +27,12 @@ import { loginUser, switchUserToAdmin } from '@wordpress/e2e-test-utils';
 /**
  * Internal dependencies
  */
-import { createNewStory, previewStory, addTextElement } from '../../utils';
-
-async function insertStoryTitle(title) {
-  await expect(page).toMatchElement('input[placeholder="Add title"]');
-  await page.type('input[placeholder="Add title"]', title);
-}
+import {
+  createNewStory,
+  previewStory,
+  addTextElement,
+  insertStoryTitle,
+} from '../../utils';
 
 async function publishStory() {
   await expect(page).toClick('button', { text: 'Publish' });

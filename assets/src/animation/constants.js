@@ -67,7 +67,7 @@ export const ANIMATION_EFFECTS = {
     value: 'effect-whoosh-in',
     name: __('Whoosh In', 'web-stories'),
   },
-  ZOOM: { value: 'effect-zoom', name: __('Zoom', 'web-stories') },
+  ZOOM: { value: 'effect-zoom', name: __('Scale', 'web-stories') },
   ROTATE_IN: {
     value: 'effect-rotate-in',
     name: __('Rotate In', 'web-stories'),
@@ -75,7 +75,11 @@ export const ANIMATION_EFFECTS = {
 };
 
 export const BACKGROUND_ANIMATION_EFFECTS = {
-  ZOOM: { value: 'effect-background-zoom', name: ANIMATION_EFFECTS.ZOOM.name },
+  ZOOM: {
+    value: 'effect-background-zoom',
+    name: __('Zoom', 'web-stories'),
+  },
+  PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
 };
 
 export const ANIMATION_PARTS = {
@@ -117,6 +121,8 @@ export const AXIS = {
 export const FIELD_TYPES = {
   DROPDOWN: 'dropdown',
   HIDDEN: 'hidden',
+  ROTATION_PICKER: 'rotation_picker',
+  DIRECTION_PICKER: 'direction_picker',
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',
@@ -129,6 +135,7 @@ export const STORY_ANIMATION_STATE = {
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
+  PLAYING_SELECTED: 'playing-selected',
 };
 
 export const BG_MIN_SCALE = 100;

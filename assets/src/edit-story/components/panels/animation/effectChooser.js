@@ -22,7 +22,7 @@ import { __ } from '@wordpress/i18n';
  * External dependencies
  */
 import React, { useEffect, useRef } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 /**
@@ -34,7 +34,6 @@ import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
-  ROTATION,
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
 import {
@@ -52,13 +51,13 @@ import {
   TwirlInAnimation,
   WhooshInLeftAnimation,
   WhooshInRightAnimation,
-  PanRightAnimation,
-  PanBottomAnimation,
-  PanTopAnimation,
-  PanLeftAnimation,
   ZoomInAnimation,
   ZoomOutAnimation,
   BaseAnimationCell,
+  PanTopAnimation,
+  PanRightAnimation,
+  PanBottomAnimation,
+  PanLeftAnimation,
 } from './effectChooserElements';
 
 const Container = styled.div`
@@ -79,15 +78,20 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   overflow: hidden;
   font-family: 'Teko', sans-serif;
   font-size: 20px;
+  line-height: 1;
   color: white;
   text-transform: uppercase;
 
-  &:hover {
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &:hover:not([disabled]) {
     cursor: pointer;
   }
 
-  &:hover,
-  &:focus {
+  &:hover:not([disabled]),
+  &:focus:not([disabled]) {
     ${BaseAnimationCell} {
       display: inline-block;
     }
@@ -117,8 +121,10 @@ const GridItemHalfRow = styled(GridItem)`
 
 export default function EffectChooser({
   onAnimationSelected,
+  onNoEffectSelected,
   onDismiss,
   isBackgroundEffects = false,
+  disabledTypeOptionsMap,
 }) {
   const ref = useRef();
 
@@ -131,18 +137,92 @@ export default function EffectChooser({
   return (
     <Container ref={ref}>
       <Grid>
+        <GridItemFullRow
+          onClick={onNoEffectSelected}
+          aria-label={__('No Effect', 'web-stories')}
+        >
+          <span>{__('No Effect', 'web-stories')}</span>
+        </GridItemFullRow>
         {isBackgroundEffects ? (
-          <GridItemFullRow
-            aria-label={__('Zoom Effect', 'web-stories')}
-            onClick={() =>
-              onAnimationSelected({
-                animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-              })
-            }
-          >
-            <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
-            <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
-          </GridItemFullRow>
+          <>
+            <GridItemFullRow
+              aria-label={__('Zoom Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                })
+              }
+            >
+              <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
+              <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
+            </GridItemFullRow>
+            <GridItem
+              aria-label={__('Pan Left Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.LEFT_TO_RIGHT,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.LEFT_TO_RIGHT)}
+            >
+              <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
+              <PanLeftAnimation>
+                {__('Pan Left', 'web-stories')}
+              </PanLeftAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Right Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.RIGHT_TO_LEFT,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.RIGHT_TO_LEFT)}
+            >
+              <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
+              <PanRightAnimation>
+                {__('Pan Right', 'web-stories')}
+              </PanRightAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Up Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.BOTTOM_TO_TOP,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.BOTTOM_TO_TOP)}
+            >
+              <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
+              <PanBottomAnimation>
+                {__('Pan Up', 'web-stories')}
+              </PanBottomAnimation>
+            </GridItem>
+            <GridItem
+              aria-label={__('Pan Down Effect', 'web-stories')}
+              onClick={() =>
+                onAnimationSelected({
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.TOP_TO_BOTTOM,
+                })
+              }
+              disabled={disabledTypeOptionsMap[
+                BACKGROUND_ANIMATION_EFFECTS.PAN.value
+              ]?.includes(DIRECTION.TOP_TO_BOTTOM)}
+            >
+              <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
+              <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
+            </GridItem>
+          </>
         ) : (
           <>
             <GridItemFullRow
@@ -233,14 +313,11 @@ export default function EffectChooser({
               <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
             </GridItemFullRow>
             <GridItemHalfRow
-              aria-label={__(
-                'Rotate In Counter Clockwise Effect',
-                'web-stories'
-              )}
+              aria-label={__('Rotate In Left Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-                  rotateInDir: ROTATION.COUNTER_CLOCKWISE,
+                  rotateInDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
             >
@@ -250,11 +327,11 @@ export default function EffectChooser({
               </RotateInLeftAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
-              aria-label={__('Rotate In Clockwise Effect', 'web-stories')}
+              aria-label={__('Rotate In Right Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ROTATE_IN.value,
-                  rotateInDir: ROTATION.CLOCKWISE,
+                  rotateInDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
             >
@@ -304,58 +381,8 @@ export default function EffectChooser({
               </WhooshInRightAnimation>
               <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
-            <GridItem
-              aria-label={__('Pan from Left Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.LEFT_TO_RIGHT,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <PanLeftAnimation>{__('Pan', 'web-stories')}</PanLeftAnimation>
-            </GridItem>
-            <GridItem
-              aria-label={__('Pan from Top Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.TOP_TO_BOTTOM,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <PanTopAnimation>{__('Pan', 'web-stories')}</PanTopAnimation>
-            </GridItem>
-            <GridItem
-              aria-label={__('Pan from Bottom Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.BOTTOM_TO_TOP,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>{' '}
-              <PanBottomAnimation>
-                {__('Pan', 'web-stories')}
-              </PanBottomAnimation>
-            </GridItem>
-            <GridItem
-              aria-label={__('Pan from Right Effect', 'web-stories')}
-              onClick={() =>
-                onAnimationSelected({
-                  animation: ANIMATION_EFFECTS.PAN.value,
-                  panDir: DIRECTION.RIGHT_TO_LEFT,
-                })
-              }
-            >
-              <ContentWrapper>{__('Pan', 'web-stories')}</ContentWrapper>
-              <PanRightAnimation>{__('Pan', 'web-stories')}</PanRightAnimation>
-            </GridItem>
             <GridItemHalfRow
-              aria-label={__('Zoom In Effect', 'web-stories')}
+              aria-label={__('Scale In Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
@@ -364,11 +391,11 @@ export default function EffectChooser({
                 })
               }
             >
-              <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
-              <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
+              <ContentWrapper>{__('Scale In', 'web-stories')}</ContentWrapper>
+              <ZoomInAnimation>{__('Scale In', 'web-stories')}</ZoomInAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
-              aria-label={__('Zoom Out Effect', 'web-stories')}
+              aria-label={__('Scale Out Effect', 'web-stories')}
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
@@ -378,9 +405,9 @@ export default function EffectChooser({
               }
             >
               <ZoomOutAnimation>
-                {__('Zoom Out', 'web-stories')}
+                {__('Scale Out', 'web-stories')}
               </ZoomOutAnimation>
-              <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
+              <ContentWrapper>{__('Scale Out', 'web-stories')}</ContentWrapper>
             </GridItemHalfRow>
           </>
         )}
@@ -390,7 +417,11 @@ export default function EffectChooser({
 }
 
 EffectChooser.propTypes = {
-  onAnimationSelected: propTypes.func.isRequired,
-  onDismiss: propTypes.func,
-  isBackgroundEffects: propTypes.bool,
+  onAnimationSelected: PropTypes.func.isRequired,
+  onNoEffectSelected: PropTypes.func.isRequired,
+  onDismiss: PropTypes.func,
+  isBackgroundEffects: PropTypes.bool,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };

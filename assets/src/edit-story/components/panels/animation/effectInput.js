@@ -16,7 +16,8 @@
 
 /**
  * External dependencies
- */
+ */ import { useCallback } from 'react';
+
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { rgba } from 'polished';
@@ -25,11 +26,12 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../../../animation/constants';
-import { GeneralAnimationPropTypes } from '../../../../animation/outputs/types';
+import { FIELD_TYPES } from '../../../../animation';
+import { GeneralAnimationPropTypes } from '../../../../animation/outputs';
 import { AnimationFormPropTypes } from '../../../../animation/types';
 import { DropDown, BoxedNumeric } from '../../form';
 import RangeInput from '../../rangeInput';
+import { DirectionRadioInput } from './directionRadioInput';
 
 const RangeContainer = styled.div`
   width: 100%;
@@ -44,8 +46,18 @@ const Label = styled.label`
   letter-spacing: ${({ theme }) => theme.fonts.body2.letterSpacing};
 `;
 
-function EffectInput({ effectProps, effectConfig, field, onChange }) {
+function EffectInput({
+  effectProps,
+  effectConfig,
+  field,
+  onChange,
+  disabledOptions,
+}) {
   const rangeId = `range-${uuidv4()}`;
+  const directionControlOnChange = useCallback(
+    ({ nativeEvent: { target } }) => onChange(target.value, true),
+    [onChange]
+  );
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
@@ -75,6 +87,16 @@ function EffectInput({ effectProps, effectConfig, field, onChange }) {
           />
         </RangeContainer>
       );
+    case FIELD_TYPES.DIRECTION_PICKER:
+      return (
+        <DirectionRadioInput
+          value={effectConfig[field] || effectProps[field].defaultValue}
+          directions={effectProps[field].values?.filter(
+            (v) => !disabledOptions.includes(v)
+          )}
+          onChange={directionControlOnChange}
+        />
+      );
     default:
       return (
         <BoxedNumeric
@@ -97,6 +119,7 @@ EffectInput.propTypes = {
   effectConfig: PropTypes.shape(GeneralAnimationPropTypes).isRequired,
   field: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabledOptions: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default EffectInput;

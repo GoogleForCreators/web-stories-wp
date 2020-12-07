@@ -82,6 +82,7 @@ function BorderStylePanel(props) {
                 handleChange(value, 'color');
               }}
               label={__('Border color', 'web-stories')}
+              changedStyle="border-color"
             />
           </Row>
         </>

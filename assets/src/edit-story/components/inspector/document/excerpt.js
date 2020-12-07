@@ -54,13 +54,17 @@ function ExcerptPanel() {
   );
 
   return (
-    <SimplePanel name="excerpt" title={__('Excerpt', 'web-stories')}>
+    <SimplePanel
+      name="excerpt"
+      title={__('Story Description', 'web-stories')}
+      collapsedByDefault={false}
+    >
       <Row>
         <TextArea
           value={excerpt}
           onTextChange={handleTextChange}
-          placeholder={__('Write an excerpt', 'web-stories')}
-          aria-label={__('Edit: Story Excerpt', 'web-stories')}
+          placeholder={__('Write a description of the story', 'web-stories')}
+          aria-label={__('Story Description', 'web-stories')}
           maxLength={EXCERPT_MAX_LENGTH}
           rows={4}
         />
@@ -68,7 +72,7 @@ function ExcerptPanel() {
       <Row>
         <Note>
           {__(
-            'Stories with an excerpt tend to do better on search and have a wider reach.',
+            'Stories with a description tend to do better on search and have a wider reach.',
             'web-stories'
           )}
         </Note>

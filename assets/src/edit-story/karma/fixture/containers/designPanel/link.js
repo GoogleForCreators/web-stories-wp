@@ -28,18 +28,18 @@ export class Link extends AbstractPanel {
   }
 
   get address() {
-    return this.getByRole('textbox', { name: /Edit: Element link/i });
+    return this.getByRole('textbox', { name: 'Element link' });
   }
 
   get addressClear() {
-    return this.queryByRole('button', { name: /Clear input/i });
+    return this.queryByRole('button', { name: 'Clear input' });
   }
 
   get icon() {
-    return this.queryByRole('button', { name: /Edit link icon/i });
+    return this.queryByRole('button', { name: 'Edit link icon' });
   }
 
   get description() {
-    return this.queryByRole('textbox', { name: /Edit: link description/i });
+    return this.queryByRole('textbox', { name: 'Link description' });
   }
 }

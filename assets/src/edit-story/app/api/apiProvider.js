@@ -28,23 +28,39 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * Internal dependencies
  */
+import getAllTemplates from '../../../dashboard/templates';
 import addQueryArgs from '../../utils/addQueryArgs';
+import base64Encode from '../../utils/base64Encode';
 import { DATA_VERSION } from '../../migration';
 import { useConfig } from '../config';
 import Context from './context';
-import base64Encode from './base64Encode';
 
 function APIProvider({ children }) {
   const {
-    api: { stories, media, link, users, statusCheck },
+    api: { stories, media, link, users, statusCheck, metaBoxes },
     encodeMarkup,
+    cdnURL,
   } = useConfig();
 
   const getStoryById = useCallback(
     (storyId) => {
-      const path = addQueryArgs(`${stories}/${storyId}`, {
-        context: `edit`,
-        _embed: 'wp:featuredmedia',
+      const path = addQueryArgs(`${stories}${storyId}/`, {
+        context: 'edit',
+        _embed: 'wp:featuredmedia,author',
+        web_stories_demo: false,
+      });
+
+      return apiFetch({ path });
+    },
+    [stories]
+  );
+
+  const getDemoStoryById = useCallback(
+    (storyId) => {
+      const path = addQueryArgs(`${stories}${storyId}/`, {
+        context: 'edit',
+        _embed: 'wp:featuredmedia,author',
+        web_stories_demo: true,
       });
 
       return apiFetch({ path });
@@ -61,6 +77,7 @@ function APIProvider({ children }) {
       autoAdvance,
       defaultPageDuration,
       content,
+      author,
       ...rest
     }) => {
       return {
@@ -74,6 +91,7 @@ function APIProvider({ children }) {
         style_presets: stylePresets,
         publisher_logo: publisherLogo,
         content: encodeMarkup ? base64Encode(content) : content,
+        author: author.id,
         ...rest,
       };
     },
@@ -90,7 +108,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}`,
+        path: `${stories}${storyId}/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -108,7 +126,7 @@ function APIProvider({ children }) {
     (story) => {
       const { storyId } = story;
       return apiFetch({
-        path: `${stories}/${storyId}/autosaves`,
+        path: `${stories}${storyId}/autosaves/`,
         data: getStorySaveData(story),
         method: 'POST',
       });
@@ -188,7 +206,7 @@ function APIProvider({ children }) {
   const updateMedia = useCallback(
     (mediaId, data) => {
       return apiFetch({
-        path: `${media}/${mediaId}`,
+        path: `${media}${mediaId}/`,
         data,
         method: 'POST',
       });
@@ -210,7 +228,7 @@ function APIProvider({ children }) {
       // `?_method=DELETE` is an alternative solution to override the request method.
       // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
       return apiFetch({
-        path: addQueryArgs(`${media}/${mediaId}`, { _method: 'DELETE' }),
+        path: addQueryArgs(`${media}${mediaId}/`, { _method: 'DELETE' }),
         data: { force: true },
         method: 'POST',
       });
@@ -235,9 +253,39 @@ function APIProvider({ children }) {
     [link]
   );
 
-  const getAllUsers = useCallback(() => {
-    return apiFetch({ path: addQueryArgs(users, { per_page: '-1' }) });
-  }, [users]);
+  const getAuthors = useCallback(
+    (search = null) => {
+      return apiFetch({
+        path: addQueryArgs(users, { per_page: '100', who: 'authors', search }),
+      });
+    },
+    [users]
+  );
+
+  // See https://github.com/WordPress/gutenberg/blob/148e2b28d4cdd4465c4fe68d97fcee154a6b209a/packages/edit-post/src/store/effects.js#L72-L126
+  const saveMetaBoxes = useCallback(
+    (story, formData) => {
+      // Additional data needed for backward compatibility.
+      // If we do not provide this data, the post will be overridden with the default values.
+      const additionalData = [
+        story.comment_status ? ['comment_status', story.comment_status] : false,
+        story.ping_status ? ['ping_status', story.ping_status] : false,
+        story.sticky ? ['sticky', story.sticky] : false,
+        // TODO: Adapt once https://github.com/google/web-stories-wp/pull/5039 is merged.
+        story.author ? ['post_author', story.author] : false,
+      ].filter(Boolean);
+
+      additionalData.forEach(([key, value]) => formData.append(key, value));
+
+      return apiFetch({
+        url: metaBoxes,
+        method: 'POST',
+        body: formData,
+        parse: false,
+      });
+    },
+    [metaBoxes]
+  );
 
   /**
    * Status check, submit html string.
@@ -256,18 +304,25 @@ function APIProvider({ children }) {
     [statusCheck, encodeMarkup]
   );
 
+  const getTemplates = useCallback(() => {
+    return getAllTemplates({ cdnURL });
+  }, [cdnURL]);
+
   const state = {
     actions: {
       autoSaveById,
       getStoryById,
+      getDemoStoryById,
       getMedia,
       getLinkMetadata,
       saveStoryById,
-      getAllUsers,
+      getAuthors,
       uploadMedia,
       updateMedia,
       deleteMedia,
+      saveMetaBoxes,
       getStatusCheck,
+      getTemplates,
     },
   };
 

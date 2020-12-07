@@ -86,7 +86,11 @@ function SlugPanel() {
       : link;
 
   return (
-    <SimplePanel name="permalink" title={__('Permalink', 'web-stories')}>
+    <SimplePanel
+      name="permalink"
+      title={__('Permalink', 'web-stories')}
+      collapsedByDefault={false}
+    >
       <Row>
         <BoxedTextInput
           label={__('URL Slug', 'web-stories')}
@@ -94,7 +98,7 @@ function SlugPanel() {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={__('Enter slug', 'web-stories')}
-          aria-label={__('Edit: URL slug', 'web-stories')}
+          aria-label={__('URL slug', 'web-stories')}
           minLength={MIN_MAX.PERMALINK.MIN}
           maxLength={MIN_MAX.PERMALINK.MAX}
         />

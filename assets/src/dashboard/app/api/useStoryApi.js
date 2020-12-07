@@ -43,8 +43,9 @@ import storyReducer, {
 } from '../reducer/stories';
 import { getStoryPropsToSave, addQueryArgs } from '../../utils';
 import { reshapeStoryObject, reshapeStoryPreview } from '../serializers';
+import base64Encode from '../../../edit-story/utils/base64Encode';
 
-const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
+const useStoryApi = (dataAdapter, { editStoryURL, storyApi, encodeMarkup }) => {
   const [state, dispatch] = useReducer(storyReducer, defaultStoriesState);
   const flags = useFeatures();
 
@@ -141,7 +142,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
     async (story) => {
       try {
         const path = queryString.stringifyUrl({
-          url: `${storyApi}/${story.id}`,
+          url: `${storyApi}${story.id}/`,
           query: {
             _embed: 'author',
           },
@@ -156,6 +157,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         const response = await dataAdapter.post(path, {
           data,
         });
+
         dispatch({
           type: STORY_ACTION_TYPES.UPDATE_STORY,
           payload: reshapeStoryObject(editStoryURL)(response),
@@ -179,7 +181,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
   const trashStory = useCallback(
     async (story) => {
       try {
-        await dataAdapter.deleteRequest(`${storyApi}/${story.id}`);
+        await dataAdapter.deleteRequest(`${storyApi}${story.id}`);
         dispatch({
           type: STORY_ACTION_TYPES.TRASH_STORY,
           payload: { id: story.id, storyStatus: story.status },
@@ -361,9 +363,13 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
           },
         });
 
+        const storyContent = encodeMarkup
+          ? base64Encode(content?.raw)
+          : content?.raw;
+
         const response = await dataAdapter.post(path, {
           data: {
-            content,
+            content: content?.raw ? storyContent : undefined,
             story_data,
             featured_media,
             style_presets,
@@ -395,7 +401,7 @@ const useStoryApi = (dataAdapter, { editStoryURL, storyApi }) => {
         });
       }
     },
-    [storyApi, dataAdapter, editStoryURL]
+    [storyApi, dataAdapter, editStoryURL, encodeMarkup]
   );
 
   const api = useMemo(

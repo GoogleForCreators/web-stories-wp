@@ -129,6 +129,7 @@ const darkTheme = {
     quaternary: brand.gray[60],
     positive: brand.green[90],
     negative: brand.red[90],
+    storyPreview: '#202125',
   },
   interactiveBg: {
     active: brand.violet[70],
@@ -180,8 +181,8 @@ const lightTheme = {
     secondary: brand.gray[70],
     tertiary: brand.gray[50],
     disable: brand.gray[30],
-    linkNormal: brand.blue[80],
-    linkHover: brand.blue[90],
+    linkNormal: brand.blue[50],
+    linkHover: brand.blue[60],
     positive: brand.green[80],
     negative: brand.red[80],
   },
@@ -192,6 +193,7 @@ const lightTheme = {
     quaternary: brand.gray[20],
     positive: brand.green[10],
     negative: brand.red[10],
+    storyPreview: '#202125',
   },
   interactiveBg: {
     active: brand.violet[10],

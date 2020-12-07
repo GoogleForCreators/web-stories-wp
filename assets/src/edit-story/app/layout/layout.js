@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Library from '../../components/library';
 import Workspace from '../../components/workspace';
+import MetaBoxes from '../../integrations/wordpress/components/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -54,8 +55,9 @@ const Editor = withOverlay(styled.section.attrs({
   width: 100%;
 
   display: grid;
-  grid-template-areas: 'lib canv insp';
-  grid-template-columns:
+  grid:
+    'lib   canv        insp' 1fr
+    'lib   metaboxes   insp' auto /
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
@@ -68,16 +70,20 @@ const Area = styled.div`
   z-index: 2;
 `;
 
+// TODO: Fix meta boxes layout.
 function Layout() {
   return (
     <LayoutProvider>
-      <Editor zIndex={9}>
+      <Editor zIndex={3}>
         <CanvasProvider>
           <Area area="lib">
             <Library />
           </Area>
           <Workspace />
         </CanvasProvider>
+        <Area area="metaboxes">
+          <MetaBoxes />
+        </Area>
       </Editor>
     </LayoutProvider>
   );

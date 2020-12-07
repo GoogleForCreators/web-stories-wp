@@ -35,9 +35,9 @@ describe('Publish integration', () => {
     it('should be warned when trying to publish without a title', async () => {
       await fixture.events.click(fixture.editor.canvas.header.publish);
 
-      await fixture.snapshot('Publish without title dialog');
-
       await fixture.events.sleep(500);
+
+      await fixture.snapshot('Publish without title dialog');
 
       await fixture.events.click(
         fixture.editor.getByRoleIn(fixture.document, 'button', {

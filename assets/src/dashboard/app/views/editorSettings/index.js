@@ -27,13 +27,15 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useApi from '../../api/useApi';
-import { Layout, Dialog, Button } from '../../../components';
 import {
+  Dialog,
+  Button,
   BUTTON_TYPES,
-  MIN_IMG_WIDTH,
-  MIN_IMG_HEIGHT,
-} from '../../../constants';
+  BUTTON_SIZES,
+} from '../../../../design-system';
+import useApi from '../../api/useApi';
+import { Layout } from '../../../components';
+import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
@@ -86,6 +88,7 @@ function EditorSettings() {
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
+    siteKitCapabilities = {},
     maxUpload,
     maxUploadFormatted,
   } = useConfig();
@@ -316,6 +319,7 @@ function EditorSettings() {
               <GoogleAnalyticsSettings
                 handleUpdate={handleUpdateGoogleAnalyticsId}
                 googleAnalyticsId={googleAnalyticsId}
+                siteKitCapabilities={siteKitCapabilities}
               />
             )}
             {canManageSettings && (
@@ -349,14 +353,16 @@ function EditorSettings() {
         actions={
           <>
             <Button
-              type={BUTTON_TYPES.DEFAULT}
+              type={BUTTON_TYPES.TERTIARY}
               onClick={() => setActiveDialog(null)}
+              size={BUTTON_SIZES.SMALL}
             >
               {__('Cancel', 'web-stories')}
             </Button>
             <Button
-              type={BUTTON_TYPES.DEFAULT}
+              type={BUTTON_TYPES.PRIMARY}
               onClick={handleDialogConfirmRemoveLogo}
+              size={BUTTON_SIZES.SMALL}
             >
               {__('Delete Logo', 'web-stories')}
             </Button>

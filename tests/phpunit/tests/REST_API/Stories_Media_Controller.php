@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Story_Post_Type;
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -82,7 +81,10 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
 
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->add_caps_to_roles();
 	}
 
@@ -91,7 +93,10 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		global $wp_rest_server;
 		$wp_rest_server = null;
 
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->remove_caps_from_roles();
 
 		parent::tearDown();

@@ -73,7 +73,10 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 
 		$this->request_count = 0;
 
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->add_caps_to_roles();
 	}
 
@@ -84,7 +87,10 @@ class Embed_Controller extends \WP_Test_REST_TestCase {
 
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
-		$story_post_type = new Story_Post_Type( new Experiments() );
+		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$meta_boxes  = $this->createMock( \Google\Web_Stories\Meta_Boxes::class );
+
+		$story_post_type = new Story_Post_type( $experiments, $meta_boxes );
 		$story_post_type->remove_caps_from_roles();
 
 		parent::tearDown();
