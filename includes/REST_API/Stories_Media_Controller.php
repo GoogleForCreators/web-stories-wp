@@ -80,20 +80,50 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
+		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
+		// Hence we are working around this here.
+		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
+		unset( $request['post'] );
 
-		if ( $request['web_stories_parent'] && get_post( $request['web_stories_parent'] ) ) {
-			$args   = [
-				'ID'          => $request['id'],
-				'post_parent' => $request['web_stories_parent'],
-			];
-			$result = wp_update_post( $args, true );
-			if ( is_wp_error( $result ) ) {
-				return $result;
-			}
+		if ( ! $parent_post ) {
+			return parent::update_item( $request );
+
 		}
 
-		return parent::update_item( $request );
+		if ( 'revision' === get_post_type( $parent_post ) ) {
+			return new WP_Error(
+				'rest_invalid_param',
+				__( 'Invalid parent type.', 'web-stories' ),
+				[ 'status' => 400 ]
+			);
+		}
 
+		$attachment_before = get_post( $request['id'] );
+
+		$args   = [
+			'ID'          => $request['id'],
+			'post_parent' => $parent_post,
+		];
+		$result = wp_update_post( $args, true );
+
+		if ( is_wp_error( $result ) ) {
+			return $result;
+		}
+
+		$attachment = get_post( $request['id'] );
+
+		$request->set_param( 'context', 'edit' );
+
+		/** This action is documented in wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php */
+		do_action( 'rest_after_insert_attachment', $attachment, $request, false );
+
+		if ( function_exists( 'wp_after_insert_post' ) ) {
+			wp_after_insert_post( $attachment, true, $attachment_before );
+		}
+
+		$response = $this->prepare_item_for_response( $attachment, $request );
+
+		return rest_ensure_response( $response );
 	}
 
 	/**

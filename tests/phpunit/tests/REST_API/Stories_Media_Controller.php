@@ -175,9 +175,35 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		);
 		wp_set_current_user( self::$user_id );
 		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media/' . $poster_attachment_id );
-		$request->set_param( 'web_stories_parent', $video_attachment_id );
+		$request->set_param( 'post', $video_attachment_id );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertArrayHasKey( 'post', $data );
+	}
+
+	/**
+	 * @covers ::update_item
+	 */
+	public function test_update_item_with_revision() {
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		$revision_id          = self::factory()->post->create_object(
+			[
+				'post_type' => 'revision',
+			]
+		);
+
+
+		wp_set_current_user( self::$user_id );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media/' . $poster_attachment_id );
+		$request->set_param( 'post', $revision_id );
+		$response = rest_get_server()->dispatch( $request );
+		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 }
