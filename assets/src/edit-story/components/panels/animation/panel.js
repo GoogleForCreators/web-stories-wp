@@ -26,6 +26,7 @@ import { useCallback, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { shallowEqual } from 'react-pure-render';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
@@ -127,14 +128,26 @@ function AnimationPanel({
 
   // Play animation of selected elements when effect chooser signals
   // that it has changed the data and the data comes back changed.
-  useEffect(() => {
+  //
+  // Currently, animations get reset whenever the designInspector
+  // gains focus, adding this debouncer and scheduling it after
+  // the all the focus updates go through prevents the reset from
+  // overriding this play call.
+  const activeElement = document.activeElement;
+  const [dedbouncedUpdateAnimationState] = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
       });
       playUpdatedAnimation.current = false;
     }
-  }, [selectedElementAnimations, updateAnimationState]);
+  }, 100);
+  useEffect(dedbouncedUpdateAnimationState, [
+    selectedElementAnimations,
+    updateAnimationState,
+    activeElement,
+    dedbouncedUpdateAnimationState,
+  ]);
 
   const handleRemoveEffect = useCallback(() => {
     pushUpdateForObject(

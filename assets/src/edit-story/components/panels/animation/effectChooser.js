@@ -97,11 +97,12 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
 
   &:hover:not([aria-disabled='true']) {
     cursor: pointer;
-    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
   }
 
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
+    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+
     ${BaseAnimationCell} {
       display: inline-block;
     }
@@ -157,8 +158,8 @@ const FOREGROUND_EFFECTS_LIST = [
   ANIMATION_EFFECTS.FADE_IN.value,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
-  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.BOTTOM_TO_TOP}`,
+  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
   ANIMATION_EFFECTS.PULSE.value,
   `${ANIMATION_EFFECTS.ROTATE_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
   `${ANIMATION_EFFECTS.ROTATE_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
@@ -195,7 +196,6 @@ export default function EffectChooser({
 }) {
   const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
-  const previousEffectValueRef = useRef();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
@@ -264,19 +264,10 @@ export default function EffectChooser({
     return 0;
   }, [activeEffectListValue]);
 
-  useEffect(() => {
-    previousEffectValueRef.current = activeEffectListValue;
-    return () => {
-      previousEffectValueRef.current = null;
-    };
-  }, [activeEffectListValue]);
-
   // Once the correct effect w/ direction is found, set focusedValue to trigger effect hook to find proper index.
   useEffect(() => {
-    if (previousEffectValueRef.current) {
-      setFocusedValue(previousEffectValueRef.current);
-    }
-  }, []);
+    setFocusedValue(activeEffectListValue);
+  }, [activeEffectListValue, setFocusedValue]);
 
   const focusedIndex = useMemo(() => {
     if (isNullOrUndefinedOrEmptyString(focusedValue)) {
