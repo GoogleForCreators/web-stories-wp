@@ -98,7 +98,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			);
 		}
 
-		$attachment_before = get_post( $request['id'] );
+		$attachment_before = $this->get_post( $request['id'] );
 
 		$args   = [
 			'ID'          => $request['id'],
@@ -110,16 +110,17 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return $result;
 		}
 
-		$attachment = get_post( $request['id'] );
+		$attachment = $this->get_post( $request['id'] );
+		if ( is_wp_error( $attachment ) ) {
+			return $attachment;
+		}
 
 		$request->set_param( 'context', 'edit' );
 
 		/** This action is documented in wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php */
 		do_action( 'rest_after_insert_attachment', $attachment, $request, false );
 
-		if ( function_exists( 'wp_after_insert_post' ) ) {
-			wp_after_insert_post( $attachment, true, $attachment_before );
-		}
+		wp_after_insert_post( $attachment, true, $attachment_before );
 
 		$response = $this->prepare_item_for_response( $attachment, $request );
 
