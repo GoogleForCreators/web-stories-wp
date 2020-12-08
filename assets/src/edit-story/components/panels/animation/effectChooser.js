@@ -44,6 +44,7 @@ import {
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
 import { useKeyDownEffect } from '../../keyboard';
+import WithTooltip from '../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -191,6 +192,11 @@ const BACKGROUND_EFFECTS_LIST = [
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
 
+const backgroundTooltip = __(
+  'The background image is too small to animate. Double click on the bg & scale the image before applying the animation.',
+  'web-stories'
+);
+
 export default function EffectChooser({
   onAnimationSelected,
   onNoEffectSelected,
@@ -333,10 +339,12 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 1}
             >
-              <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
-              <PanLeftAnimation>
-                {__('Pan Left', 'web-stories')}
-              </PanLeftAnimation>
+              <WithTooltip title={backgroundTooltip} placement="left">
+                <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
+                <PanLeftAnimation>
+                  {__('Pan Left', 'web-stories')}
+                </PanLeftAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItem
               aria-label={__('Pan Right Effect', 'web-stories')}
@@ -351,10 +359,14 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 2}
             >
-              <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
-              <PanRightAnimation>
-                {__('Pan Right', 'web-stories')}
-              </PanRightAnimation>
+              <WithTooltip title={backgroundTooltip} placement="left">
+                <ContentWrapper>
+                  {__('Pan Right', 'web-stories')}
+                </ContentWrapper>
+                <PanRightAnimation>
+                  {__('Pan Right', 'web-stories')}
+                </PanRightAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItem
               aria-label={__('Pan Up Effect', 'web-stories')}
@@ -369,10 +381,12 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 3}
             >
-              <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
-              <PanBottomAnimation>
-                {__('Pan Up', 'web-stories')}
-              </PanBottomAnimation>
+              <WithTooltip title={backgroundTooltip} placement="left">
+                <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
+                <PanBottomAnimation>
+                  {__('Pan Up', 'web-stories')}
+                </PanBottomAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItem
               aria-label={__('Pan Down Effect', 'web-stories')}
@@ -387,8 +401,12 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 4}
             >
-              <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
-              <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
+              <WithTooltip title={backgroundTooltip} placement="left">
+                <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
+                <PanTopAnimation>
+                  {__('Pan Down', 'web-stories')}
+                </PanTopAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItemHalfRow
               aria-label={__('Zoom In Effect', 'web-stories')}
