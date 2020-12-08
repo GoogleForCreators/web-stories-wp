@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import error from './error';
-import warning, { async as asyncWarnings } from './warning';
+import warning from './warning';
 import guidance from './guidance';
 
 /**
@@ -72,8 +72,17 @@ async function getPrepublishErrors(story) {
           pageChecklist.forEach((getPageGuidance) => {
             try {
               const guidanceMessage = getPageGuidance(currentPage);
-              if (guidanceMessage !== undefined) {
-                currentPageGuidance.push({ ...guidanceMessage, page: pageNum });
+              if (guidanceMessage instanceof Promise) {
+                const guidanceMessagePromise = guidanceMessage.then(
+                  (message) => message && { ...message, page: pageNum, pageId }
+                );
+                currentPageGuidance.push(guidanceMessagePromise);
+              } else if (guidanceMessage !== undefined) {
+                currentPageGuidance.push({
+                  ...guidanceMessage,
+                  page: pageNum,
+                  pageId,
+                });
               }
             } catch (e) {
               // ignore errors
@@ -89,7 +98,13 @@ async function getPrepublishErrors(story) {
             elementsChecklist.forEach((getElementGuidance) => {
               try {
                 const guidanceMessage = getElementGuidance(element);
-                if (guidanceMessage !== undefined) {
+                if (guidanceMessage instanceof Promise) {
+                  const guidanceMessagePromise = guidanceMessage.then(
+                    (message) =>
+                      message && { ...message, page: pageNum, pageId }
+                  );
+                  currentPageGuidance.push(guidanceMessagePromise);
+                } else if (guidanceMessage !== undefined) {
                   currentPageElementGuidance.push({
                     ...guidanceMessage,
                     // provide the page the element is on
@@ -120,54 +135,8 @@ async function getPrepublishErrors(story) {
       return [...storyGuidance, ...pageGuidance, ...elementGuidance];
     })
     .flat();
-
-  const asyncResult = await getPrepublishErrorsAsync(story);
-
-  return [...checklistResult, ...asyncResult];
-}
-
-async function getPrepublishErrorsAsync(story) {
-  const asyncChecklistPromises = [
-    /* asyncErrors, */ asyncWarnings /*, asyncGuidance */,
-  ]
-    .map((byType) => {
-      const {
-        /* story: asyncStoryChecklist = [] */
-        page: asyncPageChecklist = [],
-        /* ...asyncElementChecklistByType */
-      } = byType;
-
-      const guidancePromises = [];
-
-      story.pages.forEach((currentPage, index) => {
-        const pageNum = index + 1;
-        const { id: pageId } = currentPage;
-
-        asyncPageChecklist.forEach((getPageGuidanceAsync) => {
-          guidancePromises.push(
-            getPageGuidanceAsync(currentPage).then(
-              (message) =>
-                message && {
-                  ...message,
-                  pageId,
-                  page: pageNum,
-                }
-            )
-          );
-        });
-      });
-
-      return guidancePromises;
-    })
-    .flat();
-
-  let awaitedResults = [];
-  try {
-    awaitedResults = await Promise.all(asyncChecklistPromises);
-  } catch (e) {
-    // ignore errors
-  }
-  return awaitedResults.filter(Boolean);
+  const awaitedResult = await Promise.all(checklistResult);
+  return [...awaitedResult.filter(Boolean)];
 }
 
 export default getPrepublishErrors;
