@@ -130,7 +130,7 @@ function EffectPanel({
           handleInputChange({ [field]: value }, submitArg)
         }
         disabledOptions={disabledTypeOptionsMap[type]?.options || []}
-        tooltip={disabledTypeOptionsMap[type]?.tooltip || ''}
+        tooltip={disabledTypeOptionsMap[type]?.tooltip}
       />
     </AnimationGridField>
   ));
@@ -142,9 +142,10 @@ EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
   disabledTypeOptionsMap: PropTypes.objectOf(
-    PropTypes.objectOf(
-      PropTypes.oneOf([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-    )
+    PropTypes.shape({
+      tooltip: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.string),
+    })
   ),
 };
 

@@ -696,9 +696,10 @@ EffectChooser.propTypes = {
   onDismiss: PropTypes.func,
   isBackgroundEffects: PropTypes.bool,
   disabledTypeOptionsMap: PropTypes.objectOf(
-    PropTypes.objectOf(
-      PropTypes.oneOf([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
-    )
+    PropTypes.shape({
+      tooltip: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.string),
+    })
   ),
   value: PropTypes.string,
 };

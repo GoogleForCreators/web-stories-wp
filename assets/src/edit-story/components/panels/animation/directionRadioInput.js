@@ -314,7 +314,7 @@ export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
                 disabled={isDisabled}
               />
               <WithTooltip
-                title={isDisabled && tooltip}
+                title={isDisabled ? tooltip : ''}
                 placement={getPrefixFromCamelCase(direction)}
               >
                 <DirectionIndicator
