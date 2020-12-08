@@ -166,10 +166,9 @@ export function textElementFontLowContrast(element) {
  * Check the contrast of that luminosity against the luminosity of the text color.
  * If the contrast is too low, return guidance. Otherwise return undefined.
  *
- * @param {Page} page
+ * @param {Page} page The page object being checked for warnings
  * @return {Guidance|undefined} The guidance object for consumption
  */
-
 export async function pageBackgroundTextLowContrast(page) {
   const { pageSize, id: pageId } = page;
   const safeZoneDiff =

@@ -39,7 +39,6 @@ import DevTools from '../components/devTools';
 import StatusCheck from '../components/statusCheck';
 import AutoSaveHandler from '../components/autoSaveHandler';
 import ErrorBoundary from '../components/errorBoundary';
-import { PrepublishChecklistProvider } from '../components/inspector/prepublish';
 import { useHistory, HistoryProvider } from './history';
 import { useAPI, APIProvider } from './api';
 import { useConfig, ConfigProvider } from './config';
@@ -48,7 +47,7 @@ import { FileProvider } from './file';
 import { useLocalMedia, useMedia, MediaProvider } from './media';
 import { useStory, StoryProvider } from './story';
 import { useSnackbar, SnackbarProvider } from './snackbar';
-import Layout, { LayoutProvider } from './layout';
+import Layout from './layout';
 import { Media3pApiProvider } from './media/media3p/api';
 
 function App({ config }) {
@@ -70,18 +69,14 @@ function App({ config }) {
                             <AutoSaveHandler />
                             <TransformProvider>
                               <DropTargetsProvider>
-                                <LayoutProvider>
-                                  <PrepublishChecklistProvider>
-                                    <GlobalStyle />
-                                    <DevTools />
-                                    <DefaultMoveableGlobalStyle />
-                                    <CropMoveableGlobalStyle />
-                                    <ModalGlobalStyle />
-                                    <CalendarStyle />
-                                    <KeyboardOnlyOutlines />
-                                    <Layout />
-                                  </PrepublishChecklistProvider>
-                                </LayoutProvider>
+                                <GlobalStyle />
+                                <DevTools />
+                                <DefaultMoveableGlobalStyle />
+                                <CropMoveableGlobalStyle />
+                                <ModalGlobalStyle />
+                                <CalendarStyle />
+                                <KeyboardOnlyOutlines />
+                                <Layout />
                               </DropTargetsProvider>
                             </TransformProvider>
                           </MediaProvider>

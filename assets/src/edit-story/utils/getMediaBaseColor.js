@@ -59,18 +59,17 @@ export function getMediaBaseColor(resource, onBaseColor) {
   );
 }
 
-function defaultImgOnload(nodeKey, resolve, reject) {
+function getDefaultOnloadCallback(nodeKey, resolve) {
   return () => {
     const node = document.body[nodeKey];
-    try {
-      resolve(thief.getColor(node.firstElementChild));
-    } catch (e) {
-      reject(e);
-    }
+    resolve(thief.getColor(node.firstElementChild));
   };
 }
 
-export function setOrCreateImage(imageData, onloadCallback = defaultImgOnload) {
+export function setOrCreateImage(
+  imageData,
+  getOnloadCallback = getDefaultOnloadCallback
+) {
   const { src, id, height, width } = imageData;
   return new Promise((resolve, reject) => {
     const NODE_KEY = getImgNodeKey(id);
@@ -87,10 +86,10 @@ export function setOrCreateImage(imageData, onloadCallback = defaultImgOnload) {
     const img = new Image();
     // Necessary to avoid tainting canvas with CORS image data.
     img.crossOrigin = 'anonymous';
-    img.onload = onloadCallback(NODE_KEY, resolve, reject);
-    img.onerror = (e) => {
+    img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve));
+    img.addEventListener('error', (e) => {
       reject(new Error('Set image error: ' + e.message));
-    };
+    });
     img.width = width;
     img.height = height;
     img.src = src;
