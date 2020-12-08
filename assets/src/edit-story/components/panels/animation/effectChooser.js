@@ -192,11 +192,6 @@ const BACKGROUND_EFFECTS_LIST = [
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
 
-const backgroundTooltip = __(
-  'The background image is too small to animate. Double click on the bg & scale the image before applying the animation.',
-  'web-stories'
-);
-
 export default function EffectChooser({
   onAnimationSelected,
   onNoEffectSelected,
@@ -337,9 +332,18 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
               )}
-              active={activeEffectListIndex === 1}
+              active={activeEffectListIndex === 2}
             >
-              <WithTooltip title={backgroundTooltip} placement="left">
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
+                  ) &&
+                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
+                    ?.tooltip
+                }
+                placement="left"
+              >
                 <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
                 <PanLeftAnimation>
                   {__('Pan Left', 'web-stories')}
@@ -359,7 +363,16 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 2}
             >
-              <WithTooltip title={backgroundTooltip} placement="left">
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
+                  ) &&
+                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
+                    ?.tooltip
+                }
+                placement="left"
+              >
                 <ContentWrapper>
                   {__('Pan Right', 'web-stories')}
                 </ContentWrapper>
@@ -381,7 +394,16 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 3}
             >
-              <WithTooltip title={backgroundTooltip} placement="left">
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
+                  ) &&
+                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
+                    ?.tooltip
+                }
+                placement="left"
+              >
                 <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
                 <PanBottomAnimation>
                   {__('Pan Up', 'web-stories')}
@@ -401,7 +423,16 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 4}
             >
-              <WithTooltip title={backgroundTooltip} placement="left">
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
+                  ) &&
+                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
+                    ?.tooltip
+                }
+                placement="left"
+              >
                 <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
                 <PanTopAnimation>
                   {__('Pan Down', 'web-stories')}
@@ -665,7 +696,9 @@ EffectChooser.propTypes = {
   onDismiss: PropTypes.func,
   isBackgroundEffects: PropTypes.bool,
   disabledTypeOptionsMap: PropTypes.objectOf(
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.objectOf(
+      PropTypes.oneOf([PropTypes.string, PropTypes.arrayOf(PropTypes.string)])
+    )
   ),
   value: PropTypes.string,
 };
