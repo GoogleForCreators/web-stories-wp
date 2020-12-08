@@ -183,22 +183,10 @@ const PAN_MAPPING = {
 };
 const BACKGROUND_EFFECTS_LIST = [
   'No Effect',
-  getDirectionalEffect(
-    BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.LEFT_TO_RIGHT
-  ),
-  getDirectionalEffect(
-    BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.RIGHT_TO_LEFT
-  ),
-  getDirectionalEffect(
-    BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.BOTTOM_TO_TOP
-  ),
-  getDirectionalEffect(
-    BACKGROUND_ANIMATION_EFFECTS.PAN.value,
-    DIRECTION.TOP_TO_BOTTOM
-  ),
+  PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT],
+  PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT],
+  PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP],
+  PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
   `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
@@ -219,58 +207,36 @@ export default function EffectChooser({
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
   }, []);
 
-  const getDisabledBackgroundEffects = useCallback(
-    () => {
-      const disabledDirectionalEffects = Object.entries(
-        disabledTypeOptionsMap
-      ).reduce(
-        (directionalEffects, [effect, directions]) => [
-          ...directionalEffects,
-          ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
-        ],
-        []
-      );
-      return BACKGROUND_EFFECTS_LIST.filter((directionalEffect) =>
-        disabledDirectionalEffects.includes(directionalEffect)
-      );
-    },
-
-    // const isDisabled = disabledTypeOptionsMap[
-    //   'effect-background-pan'
-    // ].find((disabledOption) => currentEffect.endsWith(disabledOption));
-
-    // if (isDisabled) {
-    //   return currentEffect;
-    // }
-    // return undefined;
-    // });
-    [disabledTypeOptionsMap]
-  );
+  const getDisabledBackgroundEffects = useCallback(() => {
+    const disabledDirectionalEffects = Object.entries(
+      disabledTypeOptionsMap
+    ).reduce(
+      (directionalEffects, [effect, directions]) => [
+        ...directionalEffects,
+        ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
+      ],
+      []
+    );
+    return BACKGROUND_EFFECTS_LIST.filter((directionalEffect) =>
+      disabledDirectionalEffects.includes(directionalEffect)
+    );
+  }, [disabledTypeOptionsMap]);
 
   const availableListOptions = isBackgroundEffects
     ? BACKGROUND_EFFECTS_LIST
     : FOREGROUND_EFFECTS_LIST;
   const listLength = availableListOptions.length;
 
-  const disabledBackgroundEffects = useMemo(() => {
-    if (isBackgroundEffects) {
-      if (disabledTypeOptionsMap?.['effect-background-pan']) {
-        return getDisabledBackgroundEffects();
-      }
-      return [];
-    }
-    return [];
-  }, [
-    disabledTypeOptionsMap,
-    getDisabledBackgroundEffects,
-    isBackgroundEffects,
-  ]);
+  const disabledBackgroundEffects = useMemo(
+    () => (isBackgroundEffects ? getDisabledBackgroundEffects() : []),
+    [getDisabledBackgroundEffects, isBackgroundEffects]
+  );
 
   // set existing active effect with a ref, specify when dropdown is opened which version of an effect it is since some have many options
-  const activeEffectListValue = useMemo(() => `${value} ${direction}`.trim(), [
-    direction,
-    value,
-  ]);
+  const activeEffectListValue = useMemo(
+    () => getDirectionalEffect(value, direction),
+    [direction, value]
+  );
 
   const activeEffectListIndex = useMemo(() => {
     const bgListIndex = BACKGROUND_EFFECTS_LIST.indexOf(activeEffectListValue);
@@ -429,29 +395,33 @@ export default function EffectChooser({
               onClick={(event) =>
                 handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
                   animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  zoomDirection: SCALE_DIRECTION.SCALE_IN.value,
+                  zoomDirection: SCALE_DIRECTION.SCALE_IN,
                 })
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                SCALE_DIRECTION.SCALE_IN
+                getDirectionalEffect(
+                  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  SCALE_DIRECTION.SCALE_IN
+                )
               )}
               active={activeEffectListIndex === 5}
             >
               <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
-              <ZoomOutAnimation>
-                {__('Zoom In', 'web-stories')}
-              </ZoomOutAnimation>
+              <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
             </GridItemHalfRow>
             <GridItemHalfRow
               aria-label={__('Zoom Out Effect', 'web-stories')}
               onClick={(event) =>
                 handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
                   animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  zoomDirection: SCALE_DIRECTION.SCALE_OUT.value,
+                  zoomDirection: SCALE_DIRECTION.SCALE_OUT,
                 })
               }
               aria-disabled={disabledBackgroundEffects.includes(
-                SCALE_DIRECTION.SCALE_OUT
+                getDirectionalEffect(
+                  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  SCALE_DIRECTION.SCALE_OUT
+                )
               )}
               active={activeEffectListIndex === 6}
             >

@@ -47,10 +47,10 @@ export function getEffectName(type) {
 }
 
 export function getEffectDirection(effect = {}) {
-  if (effect.zoomFrom || effect.zoomFrom === 0) {
-    return effect.zoomFrom;
-  } else if (effect.zoomDir) {
-    return effect.zoomDir;
+  if (effect.zoomDirection) {
+    return effect.zoomDirection;
+  } else if (effect.scaleDirection) {
+    return effect.scaleDirection;
   } else if (effect.flyInDir) {
     return effect.flyInDir;
   } else if (effect.rotateInDir) {

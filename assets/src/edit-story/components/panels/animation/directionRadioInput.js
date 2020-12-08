@@ -256,18 +256,22 @@ export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
   const flattenedDirections = useMemo(() => {
     const dir = [];
     if (
-      directions.includes(SCALE_DIRECTION.SCALE_IN) &&
-      directions.includes(SCALE_DIRECTION.SCALE_OUT)
+      !directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
+      !directions.includes(SCALE_DIRECTION.SCALE_IN)
     ) {
-      // Controlling order these get added to flattenedDirections makes sure the indexable order makes sense for keyboard users
-      dir.push(
-        SCALE_DIRECTION_MAP.SCALE_IN[0],
-        SCALE_DIRECTION_MAP.SCALE_OUT[0],
-        SCALE_DIRECTION_MAP.SCALE_IN[1],
-        SCALE_DIRECTION_MAP.SCALE_OUT[1]
-      );
-    } else {
       dir.push(...directions);
+    } else {
+      // Controlling order these get added to flattenedDirections makes sure the indexable order makes sense for keyboard users
+      directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
+        dir.push(
+          SCALE_DIRECTION_MAP.SCALE_OUT[0],
+          SCALE_DIRECTION_MAP.SCALE_OUT[1]
+        );
+      directions.includes(SCALE_DIRECTION.SCALE_IN) &&
+        dir.push(
+          SCALE_DIRECTION_MAP.SCALE_IN[0],
+          SCALE_DIRECTION_MAP.SCALE_IN[1]
+        );
     }
     return dir;
   }, [directions]);

@@ -179,8 +179,8 @@ function AnimationPanel({
           !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
         ].filter(Boolean),
         [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: [
-          normalizedScale < 0.01 && SCALE_DIRECTION.SCALE_IN,
-          normalizedScale > 0.99 && SCALE_DIRECTION.SCALE_OUT,
+          normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
+          normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
         ].filter(Boolean),
       };
     }
