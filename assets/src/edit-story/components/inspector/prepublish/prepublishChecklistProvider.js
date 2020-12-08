@@ -36,32 +36,29 @@ function PrepublishChecklistProvider({ children }) {
     return { ...story, pages };
   });
 
-  const [currentList, setCurrentList] = useState(() => {
-    // use lazy initialization to prevent checklist from running on every update
-    const pagesWithSize = story.pages.map((page) => ({
-      ...page,
-      pageSize,
-    }));
-    return getPrepublishErrors({ ...story, pages: pagesWithSize });
-  });
+  const [currentList, setCurrentList] = useState([]);
 
-  const handleRefreshList = useCallback(() => {
+  const handleRefreshList = useCallback(async () => {
     const pagesWithSize = story.pages.map((page) => ({
       ...page,
       pageSize,
     }));
-    setCurrentList(getPrepublishErrors({ ...story, pages: pagesWithSize }));
+    setCurrentList(
+      await getPrepublishErrors({ ...story, pages: pagesWithSize })
+    );
   }, [story, pageSize]);
 
   const prevPages = usePrevious(story.pages);
+  const prevPageSize = usePrevious(pageSize);
 
   const refreshOnInitialLoad = prevPages?.length === 0 && story.pages?.length;
+  const refreshOnPageSizeChange = prevPageSize?.width !== pageSize?.width;
 
   useEffect(() => {
-    if (refreshOnInitialLoad) {
+    if (refreshOnInitialLoad || refreshOnPageSizeChange) {
       handleRefreshList();
     }
-  }, [handleRefreshList, refreshOnInitialLoad]);
+  }, [handleRefreshList, refreshOnInitialLoad, refreshOnPageSizeChange]);
 
   return (
     <Context.Provider

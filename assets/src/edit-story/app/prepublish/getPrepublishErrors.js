@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import error from './error';
-import warning from './warning';
+import warning, { async as asyncWarnings } from './warning';
 import guidance from './guidance';
 
 /**
@@ -32,7 +32,7 @@ import guidance from './guidance';
  * @return {Guidance[]} The array of checklist items to be rectified.
  */
 
-function getPrepublishErrors(story) {
+async function getPrepublishErrors(story) {
   if (!story) {
     return [];
   }
@@ -120,7 +120,54 @@ function getPrepublishErrors(story) {
       return [...storyGuidance, ...pageGuidance, ...elementGuidance];
     })
     .flat();
-  return checklistResult;
+
+  const asyncResult = await getPrepublishErrorsAsync(story);
+
+  return [...checklistResult, ...asyncResult];
+}
+
+async function getPrepublishErrorsAsync(story) {
+  const asyncChecklistPromises = [
+    /* asyncErrors, */ asyncWarnings /*, asyncGuidance */,
+  ]
+    .map((byType) => {
+      const {
+        /* story: asyncStoryChecklist = [] */
+        page: asyncPageChecklist = [],
+        /* ...asyncElementChecklistByType */
+      } = byType;
+
+      const guidancePromises = [];
+
+      story.pages.forEach((currentPage, index) => {
+        const pageNum = index + 1;
+        const { id: pageId } = currentPage;
+
+        asyncPageChecklist.forEach((getPageGuidanceAsync) => {
+          guidancePromises.push(
+            getPageGuidanceAsync(currentPage).then(
+              (message) =>
+                message && {
+                  ...message,
+                  pageId,
+                  page: pageNum,
+                }
+            )
+          );
+        });
+      });
+
+      return guidancePromises;
+    })
+    .flat();
+
+  let awaitedResults = [];
+  try {
+    awaitedResults = await Promise.all(asyncChecklistPromises);
+  } catch (e) {
+    // ignore errors
+  }
+  return awaitedResults.filter(Boolean);
 }
 
 export default getPrepublishErrors;

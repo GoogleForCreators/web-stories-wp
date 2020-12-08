@@ -55,6 +55,72 @@ function getSpansFromContent(content) {
   );
 }
 
+function getOverlapBgColor({ elementId, pageId, bgImage, overlapBox }) {
+  function getOnloadCallback(nodeKey, resolve, reject) {
+    return () => {
+      try {
+        const node = document.body[nodeKey];
+        const canvas = document.createElement('canvas');
+        canvas.width = bgImage.width;
+        canvas.height = bgImage.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(
+          node.firstElementChild,
+          0,
+          0,
+          bgImage.width,
+          bgImage.height
+        );
+        const imageData = ctx.getImageData(
+          overlapBox.x,
+          overlapBox.y,
+          overlapBox.width,
+          overlapBox.height
+        );
+        resolve(imageData);
+      } catch (e) {
+        reject(e);
+      }
+    };
+  }
+  return setOrCreateImage(
+    { src: bgImage.src, id: pageId },
+    getOnloadCallback
+  ).then((imgData) => {
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = overlapBox.width; // size of the new image / text container
+    cropCanvas.height = overlapBox.height;
+    const cropCtx = cropCanvas.getContext('2d');
+    const cropImage = new Image();
+    cropImage.crossOrigin = 'anonymous';
+    cropCtx.putImageData(imgData, 0, 0);
+    cropImage.src = cropCanvas.toDataURL();
+    return setOrCreateImage({ src: cropImage.src, id: elementId });
+  });
+}
+
+function textBgColorsLowContrast({ bgColor, textColors }) {
+  return textColors.some((styleColor) => {
+    const [r, g, b] = bgColor;
+    const textLuminance = calculateLuminanceFromStyleColor(styleColor);
+    const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
+    const contrastCheck = checkContrastFromLuminances(
+      textLuminance,
+      backgroundLuminance
+    );
+    return !contrastCheck.WCAG_AA;
+  });
+}
+
+// function cleanUpDom(ids) {
+//   ids.forEach((id) => {
+//     const element = document.getElementById(`__web-stories-text-bg-${id}`);
+//     if (element) {
+//       element.remove();
+//     }
+//   });
+// }
+
 /**
  * Check text element for low contrast between font and background color
  *
@@ -67,7 +133,6 @@ export function textElementFontLowContrast(element) {
   }
 
   // get background luminance from text fill
-  // @todo: look for background image/color
   const backgroundLuminance = calculateLuminanceFromRGB(
     element.backgroundColor.color
   );
@@ -101,86 +166,6 @@ export function textElementFontLowContrast(element) {
   return undefined;
 }
 
-const STYLES = {
-  boxSizing: 'border-box',
-  visibility: 'hidden',
-  position: 'fixed',
-  contain: 'layout paint',
-  top: '-9999px',
-  left: '-9999px',
-  zIndex: -1,
-};
-
-const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
-
-export function getImagePartData(bgImgNode, overlapBox) {
-  const src = bgImgNode.src;
-  return new Promise((resolve, reject) => {
-    let imgNode = document.body[BASE_COLOR_NODE];
-    if (!imgNode) {
-      imgNode = document.createElement('div');
-      imgNode.id = '__web-stories-base-color';
-      Object.assign(imgNode, STYLES);
-      document.body.appendChild(imgNode);
-      document.body[BASE_COLOR_NODE] = imgNode;
-    }
-    imgNode.innerHTML = '';
-
-    const img = new Image();
-    // Necessary to avoid tainting canvas with CORS image data.
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      const node = document.body[BASE_COLOR_NODE];
-      try {
-        const canvas = document.createElement('canvas');
-        canvas.width = bgImgNode.width;
-        canvas.height = bgImgNode.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(
-          node.firstElementChild,
-          0,
-          0,
-          bgImgNode.width,
-          bgImgNode.height
-        );
-        const imageData = ctx.getImageData(
-          overlapBox.x,
-          overlapBox.y,
-          overlapBox.width,
-          overlapBox.height
-        );
-        resolve(imageData);
-      } catch (e) {
-        reject(e);
-      }
-    };
-    img.onerror = (e) => {
-      reject(new Error('set image error: ' + e.message));
-    };
-
-    img.src = src;
-    imgNode.appendChild(img);
-  });
-}
-
-function getOverlapBgColor(bgImage, overlapBox) {
-  return getImagePartData(bgImage, overlapBox)
-    .then((imgData) => {
-      const cropCanvas = document.createElement('canvas');
-      cropCanvas.width = overlapBox.width; // size of the new image / text container
-      cropCanvas.height = overlapBox.height;
-      const cropCtx = cropCanvas.getContext('2d');
-      const cropImage = new Image();
-      cropImage.crossOrigin = 'anonymous';
-      cropCtx.putImageData(imgData, 0, 0);
-      cropImage.src = cropCanvas.toDataURL();
-      return setOrCreateImage(cropImage.src);
-    })
-    .catch(() => {
-      // ignore errors for now
-    });
-}
-
 /**
  * Check story for a background image and text elements.
  * Check the luminosity of the dominant color of the background image part where the text element is.
@@ -191,56 +176,87 @@ function getOverlapBgColor(bgImage, overlapBox) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 
-export function pageBackgroundWithTextLowContrast(page) {
-  const { pageSize } = page;
+export async function pageBackgroundTextLowContrast(page) {
+  const { pageSize, id: pageId } = page;
   const safeZoneDiff =
-    (pageSize.width / FULLBLEED_RATIO - pageSize.width / PAGE_RATIO) / 2;
-  page.elements.map((element, index) => {
+    (pageSize?.width / FULLBLEED_RATIO - pageSize?.width / PAGE_RATIO) / 2;
+
+  const compareColorsPromises = [];
+
+  page.elements.forEach((element, index) => {
     if (element.type === 'text') {
-      const textBox = getBox(element, pageSize.width, pageSize.height);
+      const { id: elementId } = element;
+      const spans = getSpansFromContent(element.content);
+      const textColors = spans.map(
+        (span) => span.style?.color || 'rgb(0, 0, 0)'
+      );
+      const textBox = getBox(element, pageSize?.width, pageSize?.height);
       const textBoxBound = getBoundRect([textBox]);
       const potentialBackgroundElements = page.elements.slice(0, index);
 
       // todo: generalize for any image or shape behind text
       // let mostVisuallySignificantOverlap;
 
-      potentialBackgroundElements.forEach((bgElem) => {
-        if (bgElem.type === 'image' && bgElem.isBackground) {
-          const { resource, scale, focalX, focalY } = bgElem;
-          const bgBox = getBox(bgElem, pageSize.width, pageSize.height);
-          const { width, height } = bgBox;
+      // if there are no visually significant elements between the text and the background
+      // check the isBackground element for contrast issues
+      const bgElem = potentialBackgroundElements.find(
+        (elem) => elem.isBackground
+      );
 
-          const bgMediaSize = getMediaSizePositionProps(
-            resource,
-            width,
-            height,
-            scale,
-            focalX,
-            focalY
-          );
+      if (bgElem && bgElem.type === 'image') {
+        const { resource, scale, focalX, focalY } = bgElem;
+        const bgBox = getBox(bgElem, pageSize?.width, pageSize?.height);
+        const { width, height } = bgBox;
 
-          const overlapBox = {
-            x: Math.abs(bgMediaSize.offsetX) + Math.abs(textBoxBound.startX),
-            y:
-              Math.abs(bgMediaSize.offsetY) +
-              Math.abs(textBoxBound.startY + safeZoneDiff),
-            width: textBoxBound.width,
-            height: textBoxBound.height,
-          };
+        const bgMediaSize = getMediaSizePositionProps(
+          resource,
+          width,
+          height,
+          scale,
+          focalX,
+          focalY
+        );
 
-          const [bgImage] = document.querySelectorAll(
-            `[data-element-id="${bgElem.id}"] img`
-          );
+        const overlapBox = {
+          x: Math.abs(bgMediaSize.offsetX) + Math.abs(textBoxBound.startX),
+          y:
+            Math.abs(bgMediaSize.offsetY) +
+            Math.abs(textBoxBound.startY + safeZoneDiff),
+          width: textBoxBound.width,
+          height: textBoxBound.height,
+        };
 
-          getOverlapBgColor(
-            bgImage,
-            overlapBox
-            // eslint-disable-next-line no-console
-          ).then((colors) => console.log('stolen colors: ', colors));
-        }
-      });
+        const [bgImage] = document.querySelectorAll(
+          `[data-element-id="${bgElem.id}"] img`
+        );
+
+        const compareColorsPromise = getOverlapBgColor({
+          elementId,
+          pageId,
+          bgImage,
+          overlapBox,
+        })
+          .then((bgColor) => ({ bgColor, textColors, elementId, pageId }))
+          .catch(() => {
+            // ignore errors
+          });
+        compareColorsPromises.push(compareColorsPromise);
+      }
     }
   });
+
+  if (compareColorsPromises.length > 0) {
+    const results = await Promise.all(compareColorsPromises);
+    const lowContrastElement = results.find(textBgColorsLowContrast);
+    if (lowContrastElement) {
+      return {
+        message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
+        elementId: lowContrastElement.elementId,
+        type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      };
+    }
+  }
 
   return undefined;
 }

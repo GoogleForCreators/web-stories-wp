@@ -19,12 +19,13 @@
 import * as accessibilityWarnings from './accessibility';
 import * as distributionWarnings from './distribution';
 
+export const async = {
+  page: [accessibilityWarnings.pageBackgroundTextLowContrast],
+};
+
 export default {
   story: [distributionWarnings.storyMissingExcerpt],
-  page: [
-    accessibilityWarnings.pageTooManyLinks,
-    accessibilityWarnings.pageBackgroundWithTextLowContrast,
-  ],
+  page: [accessibilityWarnings.pageTooManyLinks],
   text: [
     accessibilityWarnings.textElementFontSizeTooSmall,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
