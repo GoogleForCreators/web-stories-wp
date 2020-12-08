@@ -80,10 +80,10 @@ function Layout() {
             <Library />
           </Area>
           <Workspace />
+          <Area area="metaboxes">
+            <MetaBoxes />
+          </Area>
         </CanvasProvider>
-        <Area area="metaboxes">
-          <MetaBoxes />
-        </Area>
       </Editor>
     </LayoutProvider>
   );
