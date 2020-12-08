@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useEffect, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -30,8 +31,7 @@ import {
   elementWithFont,
   elementWithBackgroundColor,
   elementWithTextParagraphStyle,
-  elementWithBorderRadius,
-  elementWithOutsideBorder,
+  elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
@@ -42,7 +42,11 @@ import {
 } from '../../components/richText/htmlManipulation';
 import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
@@ -51,7 +55,7 @@ import {
 } from './util';
 
 const OutsideBorder = styled.div`
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
 `;
 const HighlightWrapperElement = styled.div`
   ${elementFillContent}
@@ -102,14 +106,22 @@ const FillElement = styled.p`
 const Background = styled.div`
   ${elementWithBackgroundColor}
   ${elementFillContent}
-  ${elementWithBorderRadius}
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
   margin: 0;
 `;
 
 function TextDisplay({
   element,
-  element: { id, content, backgroundColor, backgroundTextMode, ...rest },
+  element: {
+    id,
+    content,
+    backgroundColor,
+    backgroundTextMode,
+    border,
+    borderRadius,
+    ...rest
+  },
+  previewMode,
 }) {
   const ref = useRef(null);
   const outerBorderRef = useRef(null);
@@ -121,7 +133,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { border, borderRadius, font } = rest;
+  const { font } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -177,7 +189,7 @@ function TextDisplay({
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
           const [width, height] = resize;
-          if (isOutsideBorder(border)) {
+          if (shouldDisplayBorder(element)) {
             refWithBorder.current.style.width =
               width + border.left + border.right + 'px';
             refWithBorder.current.style.height =
@@ -214,8 +226,12 @@ function TextDisplay({
     return (
       <OutsideBorder
         ref={outerBorderRef}
-        border={border}
-        borderRadius={borderRadius}
+        border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+        borderRadius={getResponsiveBorderRadius(
+          borderRadius,
+          previewMode,
+          dataToEditorX
+        )}
       >
         <HighlightWrapperElement ref={ref} {...props}>
           <HighlightElement {...props}>
@@ -268,6 +284,7 @@ function TextDisplay({
 TextDisplay.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
+  previewMode: PropTypes.bool,
 };
 
 export default TextDisplay;

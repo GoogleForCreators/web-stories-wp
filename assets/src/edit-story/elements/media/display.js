@@ -25,32 +25,39 @@ import PropTypes from 'prop-types';
  */
 import { useRef } from 'react';
 import StoryPropTypes from '../../types';
-import {
-  elementFillContent,
-  elementWithBorderRadius,
-  elementWithOutsideBorder,
-} from '../shared';
+import { elementFillContent, elementWithBorder } from '../shared';
 import { useTransformHandler } from '../../components/transform';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
 const Element = styled.div`
   ${elementFillContent}
-  ${elementWithBorderRadius}
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
 `;
 
 function MediaDisplay({
-  element: { id, resource, scale, focalX, focalY, border, borderRadius },
+  element,
   mediaRef,
   children,
+  previewMode,
   showPlaceholder = false,
 }) {
+  const { id, resource, scale, focalX, focalY, border, borderRadius } = element;
+
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+  }));
+
   const ref = useRef();
   useColorTransformHandler({
     id,
@@ -75,7 +82,7 @@ function MediaDisplay({
             focalY
           );
           target.style.cssText = getMediaWithScaleCss(newImgProps);
-          if (isOutsideBorder(border)) {
+          if (shouldDisplayBorder(element)) {
             ref.current.style.width =
               resize[0] + border.left + border.right + 'px';
             ref.current.style.height =
@@ -89,8 +96,12 @@ function MediaDisplay({
   return (
     <Element
       ref={ref}
-      border={border}
-      borderRadius={borderRadius}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
       showPlaceholder={showPlaceholder}
     >
       {children}
@@ -103,6 +114,7 @@ MediaDisplay.propTypes = {
   mediaRef: PropTypes.object,
   children: PropTypes.node.isRequired,
   showPlaceholder: PropTypes.bool,
+  previewMode: PropTypes.bool,
 };
 
 export default MediaDisplay;
