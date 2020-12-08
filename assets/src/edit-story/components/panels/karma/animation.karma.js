@@ -86,6 +86,8 @@ describe('Animation Panel', function () {
     await fixture.events.click(
       fixture.screen.getByRole('listitem', { name: /Fade In Effect/ })
     );
+    // Wait for the debounce
+    await fixture.events.sleep(200);
 
     const { animationState } = await fixture.renderHook(() =>
       useStory(({ state }) => {
