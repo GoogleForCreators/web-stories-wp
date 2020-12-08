@@ -329,6 +329,19 @@ export default function EffectChooser({
                   panDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
+              active={activeEffectListIndex === 1}
+            >
+              <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
+              <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
+            </GridItemFullRow>
+            <GridItem
+              aria-label={__('Pan Left Effect', 'web-stories')}
+              onClick={(event) =>
+                handleOnSelect(event, PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT], {
+                  animation: BACKGROUND_ANIMATION_EFFECTS.PAN.value,
+                  panDir: DIRECTION.LEFT_TO_RIGHT,
+                })
+              }
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
               )}
@@ -338,9 +351,11 @@ export default function EffectChooser({
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
-                  ) &&
-                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
-                    ?.tooltip
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
                 }
                 placement="left"
               >
@@ -361,15 +376,17 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
               )}
-              active={activeEffectListIndex === 2}
+              active={activeEffectListIndex === 3}
             >
               <WithTooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
-                  ) &&
-                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
-                    ?.tooltip
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
                 }
                 placement="left"
               >
@@ -392,15 +409,17 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
               )}
-              active={activeEffectListIndex === 3}
+              active={activeEffectListIndex === 4}
             >
               <WithTooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
-                  ) &&
-                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
-                    ?.tooltip
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
                 }
                 placement="left"
               >
@@ -421,15 +440,17 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
               )}
-              active={activeEffectListIndex === 4}
+              active={activeEffectListIndex === 5}
             >
               <WithTooltip
                 title={
                   disabledBackgroundEffects.includes(
                     PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
-                  ) &&
-                  disabledTypeOptionsMap[BACKGROUND_ANIMATION_EFFECTS.PAN.value]
-                    ?.tooltip
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
                 }
                 placement="left"
               >
@@ -439,46 +460,6 @@ export default function EffectChooser({
                 </PanTopAnimation>
               </WithTooltip>
             </GridItem>
-            <GridItemHalfRow
-              aria-label={__('Zoom In Effect', 'web-stories')}
-              onClick={(event) =>
-                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
-                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  zoomDirection: SCALE_DIRECTION.SCALE_IN,
-                })
-              }
-              aria-disabled={disabledBackgroundEffects.includes(
-                getDirectionalEffect(
-                  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  SCALE_DIRECTION.SCALE_IN
-                )
-              )}
-              active={activeEffectListIndex === 5}
-            >
-              <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
-              <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
-            </GridItemHalfRow>
-            <GridItemHalfRow
-              aria-label={__('Zoom Out Effect', 'web-stories')}
-              onClick={(event) =>
-                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
-                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  zoomDirection: SCALE_DIRECTION.SCALE_OUT,
-                })
-              }
-              aria-disabled={disabledBackgroundEffects.includes(
-                getDirectionalEffect(
-                  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  SCALE_DIRECTION.SCALE_OUT
-                )
-              )}
-              active={activeEffectListIndex === 6}
-            >
-              <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
-              <ZoomOutAnimation>
-                {__('Zoom Out', 'web-stories')}
-              </ZoomOutAnimation>
-            </GridItemHalfRow>
           </>
         ) : (
           <>
