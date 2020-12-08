@@ -43,7 +43,7 @@ const TargetBox = styled.div`
 
 function LibraryMoveable({
   type,
-  resource = null,
+  elementProps = {},
   handleDrag,
   handleDragEnd,
   onClick,
@@ -153,7 +153,7 @@ function LibraryMoveable({
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
       insertElement(type, {
-        resource,
+        ...elementProps,
         x: editorToDataX(x - pageX, pageSize.width),
         y: editorToDataY(y - pageY, pageSize.height),
         width: editorToDataX(w, pageSize.width),
@@ -218,7 +218,7 @@ LibraryMoveable.propTypes = {
   type: PropTypes.string.isRequired,
   handleDrag: PropTypes.func,
   handleDragEnd: PropTypes.func,
-  resource: PropTypes.object,
+  elementProps: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,

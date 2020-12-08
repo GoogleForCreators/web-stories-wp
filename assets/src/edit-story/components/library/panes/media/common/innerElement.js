@@ -207,7 +207,12 @@ function InnerElement({
           });
         }}
         type={resource.type}
-        resource={resource}
+        elementProps={{
+          resource: {
+            ...resource,
+            baseColor: mediaBaseColor.current,
+          },
+        }}
         onClick={onClick(
           type === 'image' ? thumbnailURL : poster,
           mediaBaseColor.current
