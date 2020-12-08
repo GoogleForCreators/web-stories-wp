@@ -36,10 +36,7 @@ function hasBorder({ border }) {
 }
 
 export function shouldDisplayBorder(element) {
-  if (!hasBorder(element)) {
-    return false;
-  }
-  return canMaskHaveBorder(element);
+  return hasBorder(element) && canMaskHaveBorder(element);
 }
 
 export function getBorderPositionCSS({
