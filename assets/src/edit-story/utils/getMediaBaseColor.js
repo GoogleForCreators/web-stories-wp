@@ -33,7 +33,7 @@ const STYLES = {
 const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
 const IMG_NODE = '__WEB_STORIES_IMG_NODE';
 
-function getImgNodeId(elementId) {
+export function getImgNodeId(elementId) {
   if (elementId === undefined) {
     return '__web-stories-base-color';
   }

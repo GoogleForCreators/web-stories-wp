@@ -27,7 +27,10 @@ import { MESSAGES, PRE_PUBLISH_MESSAGE_TYPES } from '../constants';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../constants';
 import { getBox } from '../../../units/dimensions';
 import getMediaSizePositionProps from '../../../elements/media/getMediaSizePositionProps';
-import { setOrCreateImage } from '../../../utils/getMediaBaseColor';
+import {
+  setOrCreateImage,
+  getImgNodeId,
+} from '../../../utils/getMediaBaseColor';
 
 const MAX_PAGE_LINKS = 3;
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
@@ -111,15 +114,6 @@ function textBgColorsLowContrast({ bgColor, textColors }) {
     return !contrastCheck.WCAG_AA;
   });
 }
-
-// function cleanUpDom(ids) {
-//   ids.forEach((id) => {
-//     const element = document.getElementById(`__web-stories-text-bg-${id}`);
-//     if (element) {
-//       element.remove();
-//     }
-//   });
-// }
 
 /**
  * Check text element for low contrast between font and background color
@@ -226,9 +220,11 @@ export async function pageBackgroundTextLowContrast(page) {
           height: textBoxBound.height,
         };
 
-        const [bgImage] = document.querySelectorAll(
-          `[data-element-id="${bgElem.id}"] img`
-        );
+        const bgImage = {
+          src: bgElem.resource.src,
+          width: bgMediaSize.width,
+          height: bgMediaSize.height,
+        };
 
         const compareColorsPromise = getOverlapBgColor({
           elementId,
@@ -247,6 +243,7 @@ export async function pageBackgroundTextLowContrast(page) {
 
   if (compareColorsPromises.length > 0) {
     const results = await Promise.all(compareColorsPromises);
+    results.forEach(cleanupDOM);
     const lowContrastElement = results.find(textBgColorsLowContrast);
     if (lowContrastElement) {
       return {
@@ -259,6 +256,14 @@ export async function pageBackgroundTextLowContrast(page) {
   }
 
   return undefined;
+}
+
+function cleanupDOM({ elementId, pageId }) {
+  const nodes = [
+    document.getElementById(getImgNodeId(elementId)),
+    document.getElementById(getImgNodeId(pageId)),
+  ];
+  nodes.forEach((node) => node?.remove());
 }
 
 /**
