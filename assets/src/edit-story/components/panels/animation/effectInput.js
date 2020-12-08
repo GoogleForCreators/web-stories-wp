@@ -54,15 +54,18 @@ function EffectInput({
   disabledOptions,
 }) {
   const rangeId = `range-${uuidv4()}`;
+
   const directionControlOnChange = useCallback(
     ({ nativeEvent: { target } }) => onChange(target.value, true),
     [onChange]
   );
+
+  let valueForField = effectConfig[field] || effectProps[field].defaultValue;
   switch (effectProps[field].type) {
     case FIELD_TYPES.DROPDOWN:
       return (
         <DropDown
-          value={effectConfig[field] || effectProps[field].defaultValue}
+          value={valueForField}
           onChange={(value) => onChange(value, true)}
           options={effectProps[field].values.map((v) => ({
             value: v,
@@ -77,7 +80,7 @@ function EffectInput({
           <RangeInput
             id={rangeId}
             aria-label={effectProps[field].label}
-            value={effectConfig[field] || effectProps[field].defaultValue}
+            value={valueForField}
             handleChange={(value) => onChange(value, true)}
             minorStep={0.01}
             majorStep={0.1}
@@ -90,7 +93,7 @@ function EffectInput({
     case FIELD_TYPES.DIRECTION_PICKER:
       return (
         <DirectionRadioInput
-          value={effectConfig[field] || effectProps[field].defaultValue}
+          value={valueForField}
           directions={effectProps[field].values?.filter(
             (v) => !disabledOptions.includes(v)
           )}
@@ -103,7 +106,7 @@ function EffectInput({
           aria-label={effectProps[field].label}
           suffix={effectProps[field].label}
           symbol={effectProps[field].unit}
-          value={effectConfig[field] || effectProps[field].defaultValue}
+          value={valueForField}
           min={0}
           onChange={onChange}
           canBeNegative={false}

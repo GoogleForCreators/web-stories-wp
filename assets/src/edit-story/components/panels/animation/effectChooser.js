@@ -40,6 +40,7 @@ import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
+  SCALE_DIRECTION,
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
 import { useKeyDownEffect } from '../../keyboard';
@@ -592,8 +593,7 @@ export default function EffectChooser({
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
-                  zoomFrom: 0,
-                  zoomTo: 1,
+                  scaleDirection: SCALE_DIRECTION.SCALE_IN,
                 })
               }
               active={activeEffectListIndex === 13}
@@ -606,8 +606,7 @@ export default function EffectChooser({
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
-                  zoomFrom: 2,
-                  zoomTo: 1,
+                  scaleDirection: SCALE_DIRECTION.SCALE_OUT,
                 })
               }
               active={activeEffectListIndex === 14}

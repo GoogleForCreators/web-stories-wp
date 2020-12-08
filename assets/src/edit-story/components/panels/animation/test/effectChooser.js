@@ -21,7 +21,11 @@ import { fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { ANIMATION_EFFECTS, DIRECTION } from '../../../../../animation';
+import {
+  ANIMATION_EFFECTS,
+  DIRECTION,
+  SCALE_DIRECTION,
+} from '../../../../../animation';
 import { renderWithTheme } from '../../../../testUtils';
 import EffectChooser from '../effectChooser';
 
@@ -77,8 +81,7 @@ describe('<EffectChooser />', function () {
 
     expect(onAnimationSelected).toHaveBeenCalledWith({
       animation: ANIMATION_EFFECTS.ZOOM.value,
-      zoomFrom: 0,
-      zoomTo: 1,
+      scaleDirection: SCALE_DIRECTION.SCALE_IN,
     });
   });
 });
