@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Dialog } from './dialog';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export * from './tooltip';
-export { Text, Display, Headline } from './typography';
+/**
+ * Determines if the current platform is a Mac or not.
+ *
+ * @return {boolean} True if platform is a Mac.
+ */
+export function isPlatformMacOS() {
+  const { platform } = global.navigator;
+  return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
+}

@@ -42,6 +42,7 @@ import { WPBODY_ID } from '../../../constants';
 import { StoryPropType } from '../../../types';
 import { useResizeEffect } from '../../../utils';
 import useApi from '../../api/useApi';
+import { ERRORS } from '../../textContent';
 
 const AMP_LOCAL_STORAGE = 'amp-story-state';
 const PREVIEW_CONTAINER_ID = 'previewContainer';
@@ -142,7 +143,7 @@ const PreviewStory = ({ story, handleClose }) => {
       localStorage.removeItem(AMP_LOCAL_STORAGE);
     }
     if (!story || !story.pages.length) {
-      setPreviewError(__('Unable to Render Preview', 'web-stories'));
+      setPreviewError(ERRORS.RENDER_PREVIEW.TITLE);
     } else {
       createStoryPreview(story);
     }

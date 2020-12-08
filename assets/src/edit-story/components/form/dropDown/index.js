@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 
@@ -69,14 +69,10 @@ export const DropDownSelect = styled.button`
 
   ${({ disabled }) =>
     disabled &&
-    `
+    css`
       pointer-events: none;
       opacity: 0.3;
     `}
-
-  :focus {
-    outline: none !important;
-  }
 
   svg {
     width: 28px;

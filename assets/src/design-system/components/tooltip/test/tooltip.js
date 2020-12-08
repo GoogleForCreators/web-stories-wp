@@ -14,10 +14,20 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Dialog } from './dialog';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export * from './tooltip';
-export { Text, Display, Headline } from './typography';
+/**
+ * Internal dependencies
+ */
+import { renderWithProviders } from '../../../testUtils/renderWithProviders';
+import { Tooltip } from '../';
+
+describe('<Tooltip />', function () {
+  it('should be not visible when the mouse is not hovering over the container', function () {
+    const { queryAllByText } = renderWithProviders(
+      <Tooltip title={'Some tooltip text'}>
+        <button>{'hover to see tooltip'}</button>
+      </Tooltip>
+    );
+
+    expect(queryAllByText('Some tooltip text')).toHaveLength(0);
+  });
+});

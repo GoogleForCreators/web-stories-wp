@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-export * from './button';
-export { Dialog } from './dialog';
-export { Modal } from './modal';
-export { Pill } from './pill';
-export * as Snackbar from './snackbar';
-export * from './tooltip';
-export { Text, Display, Headline } from './typography';
+export { getXTransforms, getYTransforms, getTransforms } from './getTransforms';
+export { getXOffset, getYOffset, getOffset } from './getOffset';

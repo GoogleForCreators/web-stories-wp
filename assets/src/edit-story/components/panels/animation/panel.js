@@ -25,6 +25,7 @@ import { __ } from '@wordpress/i18n';
 import { useCallback, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { shallowEqual } from 'react-pure-render';
 
 /**
  * Internal dependencies
@@ -43,7 +44,7 @@ import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
 import { SimplePanel } from '../panel';
 import { Note } from '../shared';
-import EffectPanel, { getEffectName } from './effectPanel';
+import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
@@ -55,12 +56,6 @@ function AnimationPanel({
   updateAnimationState,
 }) {
   const playUpdatedAnimation = useRef(false);
-  const handlePanelChange = useCallback(
-    (animation, submitArg = false) => {
-      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
-    },
-    [pushUpdateForObject]
-  );
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
@@ -79,6 +74,18 @@ function AnimationPanel({
   }, [selectedElements, selectedElementAnimations]);
 
   const elAnimationId = updatedAnimations[0]?.id;
+
+  const handlePanelChange = useCallback(
+    (animation, submitArg = false) => {
+      if (shallowEqual(animation, updatedAnimations[0])) {
+        return;
+      }
+      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
+      playUpdatedAnimation.current = true;
+    },
+    [pushUpdateForObject, updatedAnimations]
+  );
+
   const handleAddOrUpdateElementEffect = useCallback(
     ({ animation, ...options }) => {
       if (!animation) {
@@ -173,6 +180,8 @@ function AnimationPanel({
           onNoEffectSelected={handleRemoveEffect}
           isBackgroundEffects={isBackground}
           disabledTypeOptionsMap={disabledTypeOptionsMap}
+          direction={getEffectDirection(updatedAnimations[0])}
+          selectedEffectType={updatedAnimations[0]?.type}
         />
       </Row>
       {updatedAnimations[0] && (
