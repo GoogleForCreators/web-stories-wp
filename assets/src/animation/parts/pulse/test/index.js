@@ -17,14 +17,14 @@
 /**
  * Internal dependencies
  */
-import { PULSE_INTENSITY, generatePulseKeyframes } from '../index';
+import { generatePulseKeyframes } from '../index';
 
 describe('Pulse Effect', () => {
   describe('generatePulseKeyframes', () => {
     it('should return correct keyframes based on scale', () => {
       // scale > 1
       let scale = 2;
-      let intensity = PULSE_INTENSITY * scale;
+      let intensity = scale;
       let shrink = 1 - intensity;
       let expand = 1 + intensity;
 
@@ -37,7 +37,7 @@ describe('Pulse Effect', () => {
 
       // scale < 1
       scale = 0.5;
-      intensity = PULSE_INTENSITY * scale;
+      intensity = scale;
       shrink = 1 - intensity;
       expand = 1 + intensity;
 

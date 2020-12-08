@@ -20,11 +20,9 @@
 import { ANIMATION_TYPES } from '../../constants';
 import SimpleAnimation from '../simpleAnimation';
 
-export const PULSE_INTENSITY = 0.1;
-
 export function generatePulseKeyframes(scale) {
   const baseScale = 1.0;
-  const intensity = PULSE_INTENSITY * scale;
+  const intensity = scale;
 
   return [
     { transform: `scale(${baseScale})`, offset: 0.0 },
