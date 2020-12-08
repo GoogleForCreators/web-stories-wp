@@ -81,6 +81,10 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('textbox', { name: /Font size/ });
   }
 
+  get collapse() {
+    return this.getByRole('button', { name: 'Style' });
+  }
+
   get fill() {
     return this._get(
       this.getByRole('checkbox', { name: /Set text background mode: Fill/i }),

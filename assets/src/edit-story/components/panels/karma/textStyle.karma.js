@@ -53,6 +53,14 @@ describe('Text Style Panel', () => {
   describe('Panel state', () => {
     it('should have the style panel always expanded', async () => {
       await fixture.snapshot('Default panels state with only style panel open');
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.collapse
+      );
+      // Expect the inputs not to be visible since tha panel is collapsed.
+      expect(
+        () => fixture.editor.inspector.designPanel.textStyle.lineHeight
+      ).toThrow();
+      await fixture.snapshot('Collapsed style panel');
 
       // Add a new text now.
       await fixture.events.click(fixture.editor.library.textAdd);
