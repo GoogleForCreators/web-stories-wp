@@ -291,6 +291,14 @@ export class Fixture {
       }
     });
 
+    // Check to see if Roboto font is loaded.
+    await waitFor(async () => {
+      await document.fonts.load('0 Roboto', '');
+      if (!document.fonts.check(' 0 Roboto', '')) {
+        throw new Error('Not ready: Roboto font could not be loaded');
+      }
+    });
+
     // @todo: find a stable way to wait for the story to fully render. Can be
     // implemented via `waitFor`.
   }
