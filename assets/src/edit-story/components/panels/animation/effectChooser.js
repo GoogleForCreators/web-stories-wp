@@ -193,7 +193,6 @@ const PAN_MAPPING = {
 };
 const BACKGROUND_EFFECTS_LIST = [
   false, // arbitrary value to maintain order of focusable children 'No Effect',
-  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
   PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT],
   PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT],
   PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP],
