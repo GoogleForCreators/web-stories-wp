@@ -39,6 +39,8 @@ const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  top: 0;
+  left: 0;
 `;
 
 function LibraryMoveable({
@@ -97,7 +99,7 @@ function LibraryMoveable({
       // We also have to move the original target ref for snapping to work.
       targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
-    handleDrag(inputEvent);
+    handleDrag && handleDrag(inputEvent);
   };
 
   const getTargetOffset = useCallback(() => {
@@ -140,7 +142,7 @@ function LibraryMoveable({
       return false;
     }
     // We only skip Moveable onDragEnd handling if there's an active drop target ID.
-    if (activeDropTargetId) {
+    if (activeDropTargetId && handleDragEnd) {
       handleDragEnd();
       // Only continue if the clone is at least partially on the page.
     } else if (!isTargetOutOfContainer(cloneRef.current, pageContainer)) {

@@ -27,6 +27,7 @@ import styled, { css } from 'styled-components';
 import useLibrary from '../../useLibrary';
 import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
+import LibraryMoveable from '../shared/libraryMoveable';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -65,13 +66,12 @@ const AspectInner = styled.div`
   padding-bottom: 95.5%;
 `;
 
-const ShapePreviewContainer = styled.button`
+const ShapePreviewContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.fg.gray24};
   border-radius: 4px;
   display: flex;
@@ -83,6 +83,22 @@ const ShapePreviewContainer = styled.button`
     display: inline-block;
     width: 36px;
     height: 36px;
+  }
+`;
+
+const ShapeClone = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: ${({ width }) => `${width}px`};
+  height: ${({ height }) => `${height}px`};
+  svg {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    path {
+      fill: #c4c4c4;
+    }
   }
 `;
 
@@ -147,20 +163,25 @@ function ShapePreview({ mask, isPreview }) {
   return (
     <Aspect>
       <AspectInner>
-        <ShapePreviewContainer
-          key={mask.type}
-          draggable={true}
-          aria-label={mask.name}
-          onClick={() => {
-            // Shapes inserted with a specific size.
-            insertElement('shape', shapeData);
-          }}
-          onDragStart={onDragStart}
-        >
+        <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />
           {svg}
         </ShapePreviewContainer>
       </AspectInner>
+      <LibraryMoveable
+        type={'shape'}
+        elementProps={shapeData}
+        onClick={() => {
+          // Shapes inserted with a specific size.
+          insertElement('shape', shapeData);
+        }}
+        cloneElement={ShapeClone}
+        cloneProps={{
+          width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
+          height: DEFAULT_ELEMENT_WIDTH,
+          children: svg,
+        }}
+      />
     </Aspect>
   );
 }
