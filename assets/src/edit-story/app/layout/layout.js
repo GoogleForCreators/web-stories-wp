@@ -74,7 +74,7 @@ const Area = styled.div`
 function Layout() {
   return (
     <LayoutProvider>
-      <Editor>
+      <Editor zIndex={3}>
         <CanvasProvider>
           <Area area="lib">
             <Library />
