@@ -18,7 +18,6 @@
  * Text Domain: web-stories
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
- *            
  */
 
 /**
@@ -65,6 +64,19 @@ unset( $cdn_version );
 if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 	define( 'WEBSTORIES_DEV_MODE', false );
 }
+
+/**
+ * Makes sure that AMP__VERSION const is defined.
+ *
+ * @return void
+ */
+function web_stories_backfill_consts() {
+	if ( ! defined( 'AMP__VERSION' ) ) {
+		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
+	}
+}
+add_action( 'plugins_loaded', 'web_stories_backfill_consts', 100 );
+
 
 /**
  * Setup web stories compatibility class.
