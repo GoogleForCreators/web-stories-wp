@@ -20,39 +20,38 @@
 import { exclusion } from './utils';
 
 /**
- * Add elements to current page.
+ * Add animations to current page.
  *
- * Elements are expected to a be list of element objects with at least an id property.
- * If any element id already exists on the page, element is skipped (not even updated).
- * If multiple elements in the new list have the same id, only the latter is used.
+ * Animations are expected to a be list of element objects with at least an id property.
+ * If any animation id already exists on the page, animation is skipped (not even updated).
+ * If multiple animations in the new list have the same id, only the latter is used.
  *
- * If elements aren't a list or an empty list (after duplicates have been filtered), nothing happens.
+ * If animations aren't a list or an empty list (after duplicates have been filtered), nothing happens.
  *
- * Elements will be added to the front (end) of the list of elements on the current page.
- *
- * Selection is set to be exactly the new elements.
+ * Animations will be added to the end of the list of animations on the current page.
  *
  * @param {Object} state Current state
  * @param {Object} payload Action payload
- * @param {Array.<Object>} payload.elements Elements to insert on the given page.
+ * @param {Array.<Object>} payload.animations Elements to insert on the given page.
  * @return {Object} New state
  */
-function addElements(state, { elements }) {
-  if (!Array.isArray(elements)) {
+function addAnimations(state, { animations }) {
+  if (!Array.isArray(animations)) {
     return state;
   }
 
   const pageIndex = state.pages.findIndex(({ id }) => id === state.current);
   const oldPage = state.pages[pageIndex];
-  const newElements = exclusion(oldPage.elements, elements);
+  const oldPageAnimations = oldPage.animations || [];
+  const newAnimations = exclusion(oldPageAnimations, animations);
 
-  if (newElements.length === 0) {
+  if (newAnimations.length === 0) {
     return state;
   }
 
   const newPage = {
     ...oldPage,
-    elements: [...oldPage.elements, ...newElements],
+    animations: [...oldPageAnimations, ...newAnimations],
   };
 
   const newPages = [
@@ -61,13 +60,10 @@ function addElements(state, { elements }) {
     ...state.pages.slice(pageIndex + 1),
   ];
 
-  const newSelection = newElements.map(({ id }) => id);
-
   return {
     ...state,
     pages: newPages,
-    selection: newSelection,
   };
 }
 
-export default addElements;
+export default addAnimations;
