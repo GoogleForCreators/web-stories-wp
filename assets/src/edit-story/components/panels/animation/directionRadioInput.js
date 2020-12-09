@@ -34,7 +34,7 @@ import {
 } from '../../../../animation';
 import useRadioNavigation from '../../form/shared/useRadioNavigation';
 import WithTooltip from '../../tooltip';
-import { useConfig } from '../../../../activation-notice/app/config';
+import { useConfig } from '../../../app/config';
 
 const Svg = styled.svg`
   display: block;
