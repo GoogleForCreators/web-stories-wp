@@ -33,12 +33,9 @@ import { Note, ExpandedTextInput } from './shared';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
 
-const DEFAULT_RESOURCE = { poster: null, title: null, alt: null };
+const DEFAULT_RESOURCE = { poster: null, alt: null };
 export const MIN_MAX = {
   ALT_TEXT: {
-    MAX: 1000,
-  },
-  TITLE: {
     MAX: 1000,
   },
 };
@@ -52,7 +49,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
 
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
-  const title = getCommonValue(selectedElements, 'title', resource.title);
+  const alt = getCommonValue(selectedElements, 'alt', resource.alt);
 
   const handleChangePoster = useCallback(
     (image) => {
@@ -69,7 +66,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     ({ resource: newResource }) => ({
       resource: {
         ...newResource,
-        title: newResource.title?.slice(0, MIN_MAX.TITLE.MAX),
+        alt: newResource.alt?.slice(0, MIN_MAX.ALT_TEXT.MAX),
       },
     }),
     []
@@ -95,20 +92,10 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
       <Row>
         <ExpandedTextInput
           placeholder={__('Video description', 'web-stories')}
-          value={title || ''}
-          onChange={(value) => pushUpdate({ title: value || null })}
-          clear
-          aria-label={__('Video title', 'web-stories')}
-          maxLength={MIN_MAX.TITLE.MAX}
-        />
-      </Row>
-      <Row>
-        <ExpandedTextInput
-          placeholder={__('Assistive text', 'web-stories')}
           value={alt || ''}
           onChange={(value) => pushUpdate({ alt: value || null })}
           clear
-          aria-label={__('Edit: Assistive text', 'web-stories')}
+          aria-label={__('Video description', 'web-stories')}
           maxLength={MIN_MAX.ALT_TEXT.MAX}
         />
       </Row>
