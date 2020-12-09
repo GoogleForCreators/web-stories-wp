@@ -36,6 +36,7 @@ function VideoOutput({ element, box }) {
     autoPlay: 'autoplay',
     poster: defaultForUndefined(element.poster, resource.poster),
     artwork: defaultForUndefined(element.poster, resource.poster),
+    title: defaultForUndefined(element.alt, resource.alt),
     alt: defaultForUndefined(element.alt, resource.alt),
     layout: 'fill',
     loop: loop ? 'loop' : undefined,
@@ -43,11 +44,7 @@ function VideoOutput({ element, box }) {
 
   return (
     <MediaOutput element={element} box={box} data-leaf-element="true">
-      <amp-video
-        title={videoProps.alt}
-        {...videoProps}
-        id={`el-${element.id}-media`}
-      >
+      <amp-video {...videoProps} id={`el-${element.id}-media`}>
         <source {...sourceProps} />
         {tracks &&
           tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
