@@ -36,6 +36,7 @@ import {
   BG_MAX_SCALE,
   BG_MIN_SCALE,
   DIRECTION,
+  SCALE_DIRECTION,
   progress,
   hasOffsets,
   STORY_ANIMATION_STATE,
@@ -166,12 +167,20 @@ function AnimationPanel({
   const disabledTypeOptionsMap = useMemo(() => {
     if (selectedElements[0]?.isBackground) {
       const hasOffset = hasOffsets({ element: selectedElements[0] });
+      const normalizedScale = progress(selectedElements[0]?.scale || 0, [
+        BG_MIN_SCALE,
+        BG_MAX_SCALE,
+      ]);
       return {
         [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: [
           !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
           !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
           !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
           !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+        ].filter(Boolean),
+        [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: [
+          normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
+          normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
         ].filter(Boolean),
       };
     }

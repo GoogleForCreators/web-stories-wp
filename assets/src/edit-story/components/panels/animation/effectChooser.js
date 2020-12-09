@@ -153,11 +153,15 @@ const NoEffect = styled(GridItemFullRow)`
  * it's added to the name in order of appearance in the dropdown to track index properly and uniquely
  */
 
+const getDirectionalEffect = (effect, direction) =>
+  `${effect} ${direction}`.trim();
+
 const FOREGROUND_EFFECTS_LIST = [
   'No Effect',
   ANIMATION_EFFECTS.DROP.value,
   ANIMATION_EFFECTS.FADE_IN.value,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
+
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.BOTTOM_TO_TOP}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
@@ -167,8 +171,8 @@ const FOREGROUND_EFFECTS_LIST = [
   ANIMATION_EFFECTS.TWIRL_IN.value,
   `${ANIMATION_EFFECTS.WHOOSH_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
   `${ANIMATION_EFFECTS.WHOOSH_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
-  `${ANIMATION_EFFECTS.ZOOM.value} In`,
-  `${ANIMATION_EFFECTS.ZOOM.value} Out`,
+  `${ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
+  `${ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
 
 const PAN_MAPPING = {
@@ -179,11 +183,12 @@ const PAN_MAPPING = {
 };
 const BACKGROUND_EFFECTS_LIST = [
   'No Effect',
-  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
   PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT],
   PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT],
   PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP],
   PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM],
+  `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_IN}`,
+  `${BACKGROUND_ANIMATION_EFFECTS.ZOOM.value} ${SCALE_DIRECTION.SCALE_OUT}`,
 ];
 
 export default function EffectChooser({
@@ -203,20 +208,18 @@ export default function EffectChooser({
   }, []);
 
   const getDisabledBackgroundEffects = useCallback(() => {
-    // right now only background pan effects are potentially disabled
-    const listWithDisabledOptions = [...BACKGROUND_EFFECTS_LIST].filter(
-      // eslint-disable-next-line consistent-return
-      (currentEffect) => {
-        const isDisabled = disabledTypeOptionsMap[
-          'effect-background-pan'
-        ].find((disabledOption) => currentEffect.endsWith(disabledOption));
-
-        if (isDisabled) {
-          return currentEffect;
-        }
-      }
+    const disabledDirectionalEffects = Object.entries(
+      disabledTypeOptionsMap
+    ).reduce(
+      (directionalEffects, [effect, directions]) => [
+        ...directionalEffects,
+        ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
+      ],
+      []
     );
-    return listWithDisabledOptions;
+    return BACKGROUND_EFFECTS_LIST.filter((directionalEffect) =>
+      disabledDirectionalEffects.includes(directionalEffect)
+    );
   }, [disabledTypeOptionsMap]);
 
   const availableListOptions = isBackgroundEffects
@@ -224,34 +227,16 @@ export default function EffectChooser({
     : FOREGROUND_EFFECTS_LIST;
   const listLength = availableListOptions.length;
 
-  const disabledBackgroundEffects = useMemo(() => {
-    if (isBackgroundEffects) {
-      if (disabledTypeOptionsMap?.['effect-background-pan']) {
-        return getDisabledBackgroundEffects();
-      }
-      return [];
-    }
-    return [];
-  }, [
-    disabledTypeOptionsMap,
-    getDisabledBackgroundEffects,
-    isBackgroundEffects,
-  ]);
+  const disabledBackgroundEffects = useMemo(
+    () => (isBackgroundEffects ? getDisabledBackgroundEffects() : []),
+    [getDisabledBackgroundEffects, isBackgroundEffects]
+  );
 
   // set existing active effect with a ref, specify when dropdown is opened which version of an effect it is since some have many options
-  const activeEffectListValue = useMemo(() => {
-    if (direction || direction === 0) {
-      let indicator;
-      if (typeof direction === 'number') {
-        indicator = direction > 0 ? 'Out' : 'In';
-      } else {
-        indicator = direction;
-      }
-
-      return `${value} ${indicator}`.trim();
-    }
-    return value;
-  }, [direction, value]);
+  const activeEffectListValue = useMemo(
+    () => getDirectionalEffect(value, direction),
+    [direction, value]
+  );
 
   const activeEffectListIndex = useMemo(() => {
     const bgListIndex = BACKGROUND_EFFECTS_LIST.indexOf(activeEffectListValue);
@@ -335,18 +320,6 @@ export default function EffectChooser({
         </NoEffect>
         {isBackgroundEffects ? (
           <>
-            <GridItemFullRow
-              aria-label={__('Zoom Effect', 'web-stories')}
-              onClick={(event) =>
-                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
-                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                })
-              }
-              active={activeEffectListIndex === 1}
-            >
-              <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
-              <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
-            </GridItemFullRow>
             <GridItem
               aria-label={__('Pan Left Effect', 'web-stories')}
               onClick={(event) =>
@@ -358,7 +331,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
               )}
-              active={activeEffectListIndex === 2}
+              active={activeEffectListIndex === 1}
             >
               <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
               <PanLeftAnimation>
@@ -376,7 +349,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
               )}
-              active={activeEffectListIndex === 3}
+              active={activeEffectListIndex === 2}
             >
               <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
               <PanRightAnimation>
@@ -394,7 +367,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
               )}
-              active={activeEffectListIndex === 4}
+              active={activeEffectListIndex === 3}
             >
               <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
               <PanBottomAnimation>
@@ -412,11 +385,51 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
               )}
-              active={activeEffectListIndex === 5}
+              active={activeEffectListIndex === 4}
             >
               <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
               <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
             </GridItem>
+            <GridItemHalfRow
+              aria-label={__('Zoom In Effect', 'web-stories')}
+              onClick={(event) =>
+                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
+                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  zoomDirection: SCALE_DIRECTION.SCALE_IN,
+                })
+              }
+              aria-disabled={disabledBackgroundEffects.includes(
+                getDirectionalEffect(
+                  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  SCALE_DIRECTION.SCALE_IN
+                )
+              )}
+              active={activeEffectListIndex === 5}
+            >
+              <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
+              <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
+            </GridItemHalfRow>
+            <GridItemHalfRow
+              aria-label={__('Zoom Out Effect', 'web-stories')}
+              onClick={(event) =>
+                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
+                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  zoomDirection: SCALE_DIRECTION.SCALE_OUT,
+                })
+              }
+              aria-disabled={disabledBackgroundEffects.includes(
+                getDirectionalEffect(
+                  BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                  SCALE_DIRECTION.SCALE_OUT
+                )
+              )}
+              active={activeEffectListIndex === 6}
+            >
+              <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
+              <ZoomOutAnimation>
+                {__('Zoom Out', 'web-stories')}
+              </ZoomOutAnimation>
+            </GridItemHalfRow>
           </>
         ) : (
           <>
