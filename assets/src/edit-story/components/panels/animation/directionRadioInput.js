@@ -41,11 +41,6 @@ const Svg = styled.svg`
   width: ${({ size }) => size};
   fill: none;
   transform-origin: 50% 50%;
-`;
-
-const Icon = styled.div`
-  padding: 6px;
-  border-radius: 4px;
   transform: ${({ direction }) => {
     switch (direction) {
       case DIRECTION.RIGHT_TO_LEFT:
@@ -56,23 +51,41 @@ const Icon = styled.div`
         return 'rotate(90deg)';
       case ROTATION.COUNTER_CLOCKWISE:
         return 'rotateX(180deg) rotateZ(90deg)';
+      case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+        return 'rotate(-135deg)';
+      case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+        return 'rotate(135deg)';
+      case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+        return 'rotate(-315deg)';
+      case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+        return 'rotate(315deg)';
       default:
         return 'rotate(0deg)';
     }
   }};
+`;
 
-  ${({ selected }) =>
+const Icon = styled.div`
+  padding: 6px;
+  border-radius: 4px;
+  stroke: #e4e5e6;
+  stroke-width: 1px;
+  ${({ selected, disabled }) =>
     selected &&
+    !disabled &&
     css`
-      svg {
-        stroke: ${({ theme }) => theme.colors.activeDirection};
-        stroke-width: 2px;
-      }
+      background-color: #51389d;
+    `}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      stroke: #5e6668;
     `}
 `;
 
-const RotationIcon = () => (
-  <Svg size="16px" viewBox="0 0 19 18">
+const RotationIcon = ({ direction }) => (
+  <Svg size="16px" viewBox="0 0 19 18" direction={direction}>
     <path
       strokeLinecap="round"
       d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9"
@@ -80,28 +93,31 @@ const RotationIcon = () => (
   </Svg>
 );
 
-const DirectionIcon = () => (
-  <Svg size="13px" viewBox="0 0 10 11">
+const DirectionIcon = ({ direction }) => (
+  <Svg size="13px" viewBox="0 0 10 11" direction={direction}>
     <path strokeLinecap="round" d="M5 11L5 1M5 1L9 5M5 1L1 5" />
   </Svg>
 );
 
-const Direction = ({ className, direction, selected }) => (
-  <Icon className={className} direction={direction} selected={selected}>
-    {Object.values(DIRECTION).includes(direction) ||
-    Object.values(SCALE_DIRECTION).includes(direction) ? (
-      <DirectionIcon />
+const Direction = ({ className, direction, selected, disabled }) => (
+  <Icon
+    className={className}
+    direction={direction}
+    selected={selected}
+    disabled={disabled}
+  >
+    {[...Object.values(DIRECTION), ...Object.values(SCALE_DIRECTION)].includes(
+      direction
+    ) ? (
+      <DirectionIcon direction={direction} />
     ) : (
-      <RotationIcon />
+      <RotationIcon direction={direction} />
     )}
   </Icon>
 );
 
 // Must be a styled component to add component selectors in css
-const DirectionIndicator = styled(Direction)`
-  stroke: #e4e5e6;
-  stroke-width: 1px;
-`;
+const DirectionIndicator = styled(Direction)``;
 
 const Fieldset = styled.fieldset`
   position: relative;
@@ -162,30 +178,23 @@ const Label = styled.label`
 
       case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
         return css`
-          bottom: 0;
-          left: 0;
-          transform: rotate(-135deg);
+          bottom: 4px;
+          left: 4px;
         `;
-
       case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
         return css`
-          top: 0;
-          left: 0;
-          transform: rotate(135deg);
+          top: 4px;
+          left: 4px;
         `;
-
       case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
         return css`
-          top: 0;
-          right: 0;
-          transform: rotate(-315deg);
+          top: 4px;
+          right: 4px;
         `;
-
       case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
         return css`
-          bottom: 0;
-          right: 0;
-          transform: rotate(315deg);
+          bottom: 4px;
+          right: 4px;
         `;
 
       default:
@@ -196,14 +205,6 @@ const Label = styled.label`
         `;
     }
   }}
-
-  input:disabled ~ * > ${DirectionIndicator} {
-    stroke: #5e6668;
-  }
-
-  input:checked:not(:disabled) ~ * > ${DirectionIndicator} {
-    background-color: #51389d;
-  }
 
   input:focus ~ * > ${DirectionIndicator} {
     outline: 2px auto ${({ theme }) => theme.colors.accent.primary};
@@ -263,7 +264,13 @@ const getPrefixFromCamelCase = (camelCase = '') =>
     ?.toLocaleLowerCase()
     ?.split(' ')?.[0];
 
-export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
+export const DirectionRadioInput = ({
+  value,
+  directions = [],
+  onChange,
+  disabled,
+  tooltip,
+}) => {
   const inputRef = useRef();
 
   const flattenedDirections = useMemo(() => {
@@ -320,6 +327,7 @@ export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
                 <DirectionIndicator
                   direction={direction}
                   selected={value === direction || direction?.includes(value)}
+                  disabled={isDisabled}
                 />
               </WithTooltip>
             </Label>
@@ -348,4 +356,13 @@ Direction.propTypes = {
   className: PropTypes.string,
   direction: directionPropType,
   selected: PropTypes.bool,
+  disabled: PropTypes.bool,
+};
+
+DirectionIcon.propTypes = {
+  direction: directionPropType,
+};
+
+RotationIcon.propTypes = {
+  direction: directionPropType,
 };
