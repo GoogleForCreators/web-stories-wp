@@ -32,8 +32,6 @@ import { AnimationInputPropTypes } from '../types';
 
 export const RotateInEffectInputPropTypes = {
   rotateInDir: PropTypes.shape(AnimationInputPropTypes),
-  stopAngle: PropTypes.shape(AnimationInputPropTypes),
-  numberOfRotations: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
@@ -42,15 +40,5 @@ export default {
     type: FIELD_TYPES.DIRECTION_PICKER,
     values: [DIRECTION.LEFT_TO_RIGHT, DIRECTION.RIGHT_TO_LEFT],
     defaultValue: DIRECTION.LEFT_TO_RIGHT,
-  },
-  stopAngle: {
-    label: __('Angle', 'web-stories'),
-    type: FIELD_TYPES.NUMBER,
-    defaultValue: 0,
-  },
-  numberOfRotations: {
-    label: __('Rotations', 'web-stories'),
-    type: FIELD_TYPES.NUMBER,
-    defaultValue: 1,
   },
 };
