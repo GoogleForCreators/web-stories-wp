@@ -9,10 +9,10 @@ index 8f4515700..bb367c9c6 100644
 -    }
 +    },
 +    "files": [
-+        "${WP_TESTS_DIR}/includes/phpunit7/MockObject/Builder/NamespaceMatch.php",
-+        "${WP_TESTS_DIR}/includes/phpunit7/MockObject/Builder/ParametersMatch.php",
-+        "${WP_TESTS_DIR}/includes/phpunit7/MockObject/InvocationMocker.php",
-+        "${WP_TESTS_DIR}/includes/phpunit7/MockObject/MockMethod.php"
++        "tests/wordpress-tests-lib/includes/phpunit7/MockObject/Builder/NamespaceMatch.php",
++        "tests/wordpress-tests-lib/includes/phpunit7/MockObject/Builder/ParametersMatch.php",
++        "tests/wordpress-tests-lib/includes/phpunit7/MockObject/InvocationMocker.php",
++        "tests/wordpress-tests-lib/includes/phpunit7/MockObject/MockMethod.php"
 +    ],
 +    "exclude-from-classmap": [
 +      "vendor/phpunit/phpunit/src/Framework/MockObject/Builder/NamespaceMatch.php",
