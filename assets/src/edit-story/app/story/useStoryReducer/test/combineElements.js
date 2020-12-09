@@ -515,6 +515,111 @@ describe('combineElements', () => {
       });
     });
   });
+
+  describe('combine elements with border radius', () => {
+    it('should not preserve border if combining with background element', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState6();
+      restore(state);
+
+      // Combine element 456 into 123
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '123',
+      });
+
+      expect(result.pages[0].elements[0]).toStrictEqual({
+        id: '123',
+        isBackground: true,
+        flip: {},
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should preserve the origin element border if combining into rectangle', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState6();
+      restore(state);
+
+      // Combine element 456 into 101
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '101',
+      });
+
+      expect(result.pages[0].elements[2]).toStrictEqual({
+        flip: {},
+        focalX: 50,
+        focalY: 50,
+        height: 10,
+        id: '101',
+        mask: {
+          type: MaskTypes.RECTANGLE,
+        },
+        borderRadius: {
+          topLeft: 10,
+          topRight: 10,
+          bottomRight: 10,
+          bottomLeft: 10,
+        },
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+      });
+    });
+
+    it('should not preserve the border of origin element when combining with non-rectangular', () => {
+      const { restore, combineElements } = setupReducer();
+
+      const state = getDefaultState6();
+      restore(state);
+
+      // Combine element 456 into 789
+      const result = combineElements({
+        firstElement: state.pages[0].elements[1],
+        secondId: '789',
+      });
+
+      expect(result.pages[0].elements[1]).toStrictEqual({
+        height: 10,
+        id: '789',
+        resource: {
+          src: '1',
+          type: 'image',
+        },
+        mask: {
+          type: 'circle',
+        },
+        scale: 100,
+        type: 'image',
+        width: 10,
+        x: 10,
+        y: 10,
+        flip: {},
+        focalX: 50,
+        focalY: 50,
+      });
+    });
+  });
 });
 
 function getDefaultState1() {
@@ -743,6 +848,73 @@ function getDefaultState5() {
               left: 2,
               right: 2,
               bottom: 2,
+            },
+          },
+        ],
+      },
+    ],
+    current: '111',
+  };
+}
+
+// Page with rectangular element with border radius, circular without, rectangle without.
+function getDefaultState6() {
+  return {
+    pages: [
+      {
+        id: '111',
+        elements: [
+          {
+            id: '123',
+            type: 'image',
+            backgroundOverlay: { color: { r: 0, g: 0, b: 0 } },
+            isBackground: true,
+            x: 1,
+            y: 1,
+            width: 1,
+            height: 1,
+          },
+          {
+            id: '456',
+            type: 'image',
+            resource: { type: 'image', src: '1' },
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            borderRadius: {
+              topLeft: 10,
+              topRight: 10,
+              bottomRight: 10,
+              bottomLeft: 10,
+            },
+          },
+          {
+            id: '789',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            mask: {
+              type: MaskTypes.CIRCLE,
+            },
+          },
+          {
+            id: '101',
+            type: 'shape',
+            x: 10,
+            y: 10,
+            width: 10,
+            height: 10,
+            mask: {
+              type: MaskTypes.RECTANGLE,
+            },
+            borderRadius: {
+              topLeft: 1,
+              topRight: 1,
+              bottomRight: 1,
+              bottomLeft: 1,
             },
           },
         ],

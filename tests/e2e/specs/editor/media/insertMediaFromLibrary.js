@@ -31,8 +31,11 @@ describe('Inserting Media from Media Library', () => {
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
+    await page.waitForSelector('[data-testid="mediaElement-image"]');
     // Clicking will only act on the first element.
-    await expect(page).toClick('[data-testid="mediaElement"]');
+    await expect(page).toClick('[data-testid="mediaElement-image"]');
+
+    await page.waitForSelector('[data-testid="frameElement"]:nth-of-type(2)');
 
     // First match is for the background element, second for the image.
     await expect(page).toMatchElement(

@@ -23,6 +23,7 @@ import { useMemo, useEffect } from 'react';
 /**
  * Internal dependencies
  */
+import useConfig from '../config/useConfig';
 import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';
@@ -32,8 +33,10 @@ import useHistoryEntry from './effects/useHistoryEntry';
 import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
+import useSaveMetaBoxes from './effects/useSaveMetaBoxes';
 
 function StoryProvider({ storyId, children }) {
+  const { isDemo } = useConfig();
   const [hashPageId, setHashPageId] = useHashState('page', null);
   const {
     state: reducerState,
@@ -98,7 +101,7 @@ function StoryProvider({ storyId, children }) {
     const animations = (currentPage.animations || []).reduce(
       (acc, { targets, ...properties }) => {
         if (targets.some((id) => selection.includes(id))) {
-          return [...acc, { ...properties }];
+          return [...acc, { targets, ...properties }];
         }
 
         return acc;
@@ -116,7 +119,7 @@ function StoryProvider({ storyId, children }) {
 
   // This effect loads and initialises the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;
-  useLoadStory({ restore, shouldLoad, storyId });
+  useLoadStory({ restore, shouldLoad, storyId, isDemo });
 
   // These effects send updates to and restores state from history.
   useHistoryEntry({ pages, current, selection, story, capabilities });
@@ -139,6 +142,13 @@ function StoryProvider({ storyId, children }) {
     story,
   });
 
+  // Legacy Meta Boxes support.
+  const { isSavingMetaBoxes } = useSaveMetaBoxes({
+    story,
+    isSaving,
+    isAutoSaving,
+  });
+
   const state = {
     state: {
       pages,
@@ -154,7 +164,7 @@ function StoryProvider({ storyId, children }) {
       animationState,
       capabilities,
       meta: {
-        isSaving: isSaving || isAutoSaving,
+        isSaving: isSaving || isAutoSaving || isSavingMetaBoxes,
         isFreshlyPublished,
       },
     },

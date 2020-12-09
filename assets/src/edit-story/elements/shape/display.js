@@ -18,27 +18,91 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { elementFillContent, elementWithBackgroundColor } from '../shared';
+import {
+  elementFillContent,
+  elementWithBackgroundColor,
+  elementWithBorder,
+} from '../shared';
 import StoryPropTypes from '../../types';
+import { useTransformHandler } from '../../components/transform';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useUnits } from '../../units';
 
 const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
+  ${elementWithBorder}
 `;
 
-function ShapeDisplay({ element: { isDefaultBackground, backgroundColor } }) {
+function ShapeDisplay({ element, previewMode }) {
+  const {
+    id,
+    isDefaultBackground,
+    backgroundColor,
+    border,
+    borderRadius,
+  } = element;
+
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+  }));
+
+  const ref = useRef(null);
+  useColorTransformHandler({ id, targetRef: ref });
+
+  useTransformHandler(id, (transform) => {
+    // Since outside border is applied directly to the element, we need to
+    // adjust the size of the element according to the border width.
+    if (ref.current && !isDefaultBackground) {
+      if (transform) {
+        const { resize } = transform;
+        if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          const [width, height] = resize;
+          if (shouldDisplayBorder(element)) {
+            ref.current.style.width = width + border.left + border.right + 'px';
+            ref.current.style.height =
+              height + border.top + border.bottom + 'px';
+          }
+        }
+      } else {
+        ref.current.style.width = '';
+        ref.current.style.height = '';
+      }
+    }
+  });
+
   if (isDefaultBackground) {
-    return <Element />;
+    return <Element ref={ref} />;
   }
-  return <Element backgroundColor={backgroundColor} />;
+
+  return (
+    <Element
+      ref={ref}
+      backgroundColor={backgroundColor}
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+    />
+  );
 }
 
 ShapeDisplay.propTypes = {
   element: StoryPropTypes.elements.shape.isRequired,
+  previewMode: PropTypes.bool,
 };
 
 export default ShapeDisplay;

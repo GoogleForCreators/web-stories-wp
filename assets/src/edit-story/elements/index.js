@@ -73,14 +73,29 @@ export const createPage = (pageProps = null) => {
 };
 
 export const duplicatePage = (oldPage) => {
-  const { elements: oldElements, ...rest } = oldPage;
+  const { elements: oldElements, animations: oldAnimations, ...rest } = oldPage;
 
   // Ensure all existing elements get new ids
-  const elements = oldElements.map(({ type, ...attrs }) =>
-    createNewElement(type, attrs)
-  );
+  let elementIdTransferMap = {};
+  const elements = oldElements.map(({ type, ...attrs }) => {
+    const newElement = createNewElement(type, attrs);
+    elementIdTransferMap[attrs.id] = newElement.id;
+    return newElement;
+  });
+  const animations = (oldAnimations || [])
+    .map((animation) => ({
+      ...animation,
+      id: uuidv4(),
+      targets: animation.targets
+        .map((target) => elementIdTransferMap[target])
+        .filter((v) => v),
+    }))
+    // This is just a safety measure to remove animations with no targets from schema.
+    .filter((animation) => animation.targets.length);
+
   const newAttributes = {
     elements,
+    animations,
     ...rest,
   };
 

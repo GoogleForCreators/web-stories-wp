@@ -79,7 +79,6 @@ function RichTextEditor({ content, onChange }, ref) {
 
   // Handle basic key commands such as bold, italic and underscore.
   const handleKeyCommand = getHandleKeyCommand();
-
   return (
     <Editor
       ref={editorRef}
@@ -88,6 +87,7 @@ function RichTextEditor({ content, onChange }, ref) {
       handleKeyCommand={handleKeyCommand}
       handlePastedText={handlePastedText}
       customStyleFn={customInlineDisplay}
+      spellCheck
       stripPastedStyles
     />
   );

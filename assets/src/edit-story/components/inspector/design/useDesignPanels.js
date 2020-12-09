@@ -35,6 +35,7 @@ function useDesignPanels() {
     selectedElementAnimations,
     deleteSelectedElements,
     updateElementsById,
+    updateAnimationState,
   } = useStory(
     ({
       state: {
@@ -42,7 +43,11 @@ function useDesignPanels() {
         selectedElements,
         selectedElementAnimations,
       },
-      actions: { deleteSelectedElements, updateElementsById },
+      actions: {
+        deleteSelectedElements,
+        updateElementsById,
+        updateAnimationState,
+      },
     }) => {
       return {
         selectedElementIds,
@@ -50,6 +55,7 @@ function useDesignPanels() {
         selectedElementAnimations,
         deleteSelectedElements,
         updateElementsById,
+        updateAnimationState,
       };
     }
   );
@@ -109,6 +115,7 @@ function useDesignPanels() {
       deleteSelectedElements,
       selectedElements,
       selectedElementAnimations,
+      updateAnimationState,
     },
   };
 }

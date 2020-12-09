@@ -67,11 +67,19 @@ export const ANIMATION_EFFECTS = {
     value: 'effect-whoosh-in',
     name: __('Whoosh In', 'web-stories'),
   },
-  ZOOM: { value: 'effect-zoom', name: __('Zoom', 'web-stories') },
+  ZOOM: { value: 'effect-zoom', name: __('Scale', 'web-stories') },
   ROTATE_IN: {
     value: 'effect-rotate-in',
     name: __('Rotate In', 'web-stories'),
   },
+};
+
+export const BACKGROUND_ANIMATION_EFFECTS = {
+  ZOOM: {
+    value: 'effect-background-zoom',
+    name: __('Zoom', 'web-stories'),
+  },
+  PAN: { value: 'effect-background-pan', name: ANIMATION_EFFECTS.PAN.name },
 };
 
 export const ANIMATION_PARTS = {
@@ -99,6 +107,26 @@ export const DIRECTION = {
   LEFT_TO_RIGHT: 'leftToRight',
 };
 
+export const SCALE_DIRECTION = {
+  SCALE_IN: 'scaleIn',
+  SCALE_OUT: 'scaleOut',
+  SCALE_OUT_TOP_RIGHT: 'scaleOutTopRight',
+  SCALE_OUT_BOTTOM_LEFT: 'scaleOutBottomLeft',
+  SCALE_IN_TOP_LEFT: 'scaleInTopLeft',
+  SCALE_IN_BOTTOM_RIGHT: 'scaleInBottomRight',
+};
+
+export const SCALE_DIRECTION_MAP = {
+  SCALE_IN: [
+    SCALE_DIRECTION.SCALE_IN_TOP_LEFT,
+    SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT,
+  ],
+  SCALE_OUT: [
+    SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT,
+    SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT,
+  ],
+};
+
 export const ROTATION = {
   CLOCKWISE: 'clockwise',
   COUNTER_CLOCKWISE: 'counterClockwise',
@@ -113,10 +141,13 @@ export const AXIS = {
 export const FIELD_TYPES = {
   DROPDOWN: 'dropdown',
   HIDDEN: 'hidden',
+  ROTATION_PICKER: 'rotation_picker',
+  DIRECTION_PICKER: 'direction_picker',
   NUMBER: 'number',
   FLOAT: 'float',
   TEXT: 'text',
   CHECKBOX: 'checkbox',
+  RANGE: 'RANGE',
 };
 
 export const STORY_ANIMATION_STATE = {
@@ -124,4 +155,8 @@ export const STORY_ANIMATION_STATE = {
   PAUSED: 'paused',
   SCRUBBING: 'scrubbing',
   PLAYING: 'playing',
+  PLAYING_SELECTED: 'playing-selected',
 };
+
+export const BG_MIN_SCALE = 100;
+export const BG_MAX_SCALE = 400;

@@ -26,7 +26,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { Button } from '..';
-import { STORY_ANIMATION_STATE } from '../../../animation';
+import { clamp, STORY_ANIMATION_STATE } from '../../../animation';
 import { resolveRoute } from '../../app/router';
 import {
   BUTTON_TYPES,
@@ -34,7 +34,7 @@ import {
   KEYBOARD_USER_SELECTOR,
 } from '../../constants';
 import { PageSizePropType, StoryPropType } from '../../types';
-import { clamp, useFocusOut } from '../../utils';
+import { useFocusOut } from '../../utils';
 import PreviewErrorBoundary from '../previewErrorBoundary';
 import PreviewPage from '../previewPage';
 import { ActionLabel } from './types';

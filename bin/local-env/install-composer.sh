@@ -1,5 +1,5 @@
 #!/bin/bash
-COMPOSER_VERSION=`curl -Ls -w %{url_effective} -o /dev/null https://github.com/composer/composer/releases/latest | rev | cut -d '/' -f 1 | rev`
+COMPOSER_VERSION='1.10.17'
 
 # Exit if any command fails
 set -e
@@ -30,7 +30,7 @@ fi
 # Check if the current Composer version is up to date.
 if [ "$CI" != "true" ] && ! [[ "$(composer --version)" == "Composer version $COMPOSER_VERSION "* ]]; then
 	echo -en $(status_message "Updating Composer..." )
-	composer self-update
+	composer self-update $COMPOSER_VERSION
 	echo ' done!'
 fi
 

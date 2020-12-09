@@ -23,9 +23,17 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useRef } from 'react';
 import StoryPropTypes from '../../types';
-import { elementFillContent } from '../shared';
+import { elementFillContent, elementWithBorder } from '../shared';
 import { useTransformHandler } from '../../components/transform';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
+import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useUnits } from '../../units';
 import { getMediaWithScaleCss } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';
 
@@ -34,14 +42,28 @@ const Element = styled.div`
   ${({ showPlaceholder }) => showPlaceholder && `background-color: #C4C4C4;`}
   color: transparent;
   overflow: hidden;
+  ${elementWithBorder}
 `;
 
 function MediaDisplay({
-  element: { id, resource, scale, focalX, focalY },
+  element,
   mediaRef,
   children,
+  previewMode,
   showPlaceholder = false,
 }) {
+  const { id, resource, scale, focalX, focalY, border, borderRadius } = element;
+
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+  }));
+
+  const ref = useRef();
+  useColorTransformHandler({
+    id,
+    targetRef: ref,
+    expectedStyle: 'border-color',
+  });
   useTransformHandler(id, (transform) => {
     const target = mediaRef.current;
     if (mediaRef.current) {
@@ -50,6 +72,7 @@ function MediaDisplay({
       } else {
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
+          // @todo this needs to resize the outside border element separately now.
           const newImgProps = getMediaSizePositionProps(
             resource,
             resize[0],
@@ -59,11 +82,31 @@ function MediaDisplay({
             focalY
           );
           target.style.cssText = getMediaWithScaleCss(newImgProps);
+          if (shouldDisplayBorder(element)) {
+            ref.current.style.width =
+              resize[0] + border.left + border.right + 'px';
+            ref.current.style.height =
+              resize[1] + border.top + border.bottom + 'px';
+          }
         }
       }
     }
   });
-  return <Element showPlaceholder={showPlaceholder}>{children}</Element>;
+
+  return (
+    <Element
+      ref={ref}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
+      showPlaceholder={showPlaceholder}
+    >
+      {children}
+    </Element>
+  );
 }
 
 MediaDisplay.propTypes = {
@@ -71,6 +114,7 @@ MediaDisplay.propTypes = {
   mediaRef: PropTypes.object,
   children: PropTypes.node.isRequired,
   showPlaceholder: PropTypes.bool,
+  previewMode: PropTypes.bool,
 };
 
 export default MediaDisplay;

@@ -29,7 +29,7 @@ export class Border extends AbstractPanel {
   }
 
   width(side) {
-    return this.getByRole('textbox', { name: `Edit: ${side} border` });
+    return this.getByRole('textbox', { name: `${side} border` });
   }
 
   position(mode) {

@@ -76,7 +76,10 @@ StoryPropTypes.story = PropTypes.shape({
   storyId: PropTypes.number,
   title: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  author: PropTypes.number.isRequired,
+  author: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    name: PropTypes.string.isRequired,
+  }),
   slug: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   modified: PropTypes.string.isRequired,
@@ -373,7 +376,7 @@ export default StoryPropTypes;
  * @property {string} title Story title.
  * @property {string} status Post status, draft or published.
  * @property {Array<Page>} pages Array of all pages.
- * @property {number} author User ID of story author.
+ * @property {Object} author Story author.
  * @property {string} slug The slug of the story.
  * @property {string} date The publish date of the story.
  * @property {string} modified The modified date of the story.

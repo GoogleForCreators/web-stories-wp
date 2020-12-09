@@ -28,11 +28,12 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { clamp } from '../../../animation';
 import {
   DASHBOARD_TOP_MARGIN,
   DEFAULT_DASHBOARD_TOP_SPACE,
 } from '../../constants/pageStructure';
-import { clamp, throttleToAnimationFrame } from '../../utils';
+import { throttleToAnimationFrame } from '../../utils';
 
 export const SQUISH_LENGTH = DASHBOARD_TOP_MARGIN;
 export const SQUISH_CSS_VAR = '--squish-progress';

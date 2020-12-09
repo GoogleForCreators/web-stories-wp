@@ -21,17 +21,13 @@ import { useCallback, useMemo, useReducer } from 'react';
 import queryString from 'query-string';
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * Internal dependencies
  */
 import settingsReducer, {
   defaultSettingsState,
   ACTION_TYPES as SETTINGS_ACTION_TYPES,
 } from '../reducer/settings';
+import { ERRORS } from '../textContent';
 
 export default function useSettingsApi(
   dataAdapter,
@@ -45,8 +41,8 @@ export default function useSettingsApi(
         type: SETTINGS_ACTION_TYPES.FETCH_SETTINGS_FAILURE,
         payload: {
           message: {
-            body: __('Cannot connect to data source', 'web-stories'),
-            title: __('Unable to find settings data', 'web-stories'),
+            body: ERRORS.LOAD_SETTINGS.DEFAULT_MESSAGE,
+            title: ERRORS.LOAD_SETTINGS.TITLE,
           },
         },
       });
@@ -72,7 +68,7 @@ export default function useSettingsApi(
         payload: {
           message: {
             body: err.message,
-            title: __('Unable to find settings data', 'web-stories'),
+            title: ERRORS.LOAD_SETTINGS.TITLE,
           },
         },
       });
@@ -129,7 +125,7 @@ export default function useSettingsApi(
           payload: {
             message: {
               body: err.message,
-              title: __('Unable to update settings data', 'web-stories'),
+              title: ERRORS.UPDATE_EDITOR_SETTINGS.TITLE,
             },
           },
         });

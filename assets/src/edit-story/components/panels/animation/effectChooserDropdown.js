@@ -22,36 +22,62 @@ import { __ } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import React, { useRef, useState } from 'react';
-import propTypes from 'prop-types';
+import React, { useCallback, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
 import { DropDownSelect, DropDownTitle } from '../../form/dropDown';
 import { Dropdown as DropdownIcon } from '../../../icons';
+import { isKeyboardUser } from '../../../utils/keyboardOnlyOutline';
 import Popup, { Placement } from '../../popup';
 import { ScrollBarStyles } from '../../library/common/scrollbarStyles';
 import EffectChooser from './effectChooser';
 
 const Container = styled.div`
   overflow-y: scroll;
-  height: 240px;
+  max-height: 240px;
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 8px;
 
   ${ScrollBarStyles}
 `;
 
-export default function EffectChooserDropdown({ onAnimationSelected }) {
+export default function EffectChooserDropdown({
+  onAnimationSelected,
+  onNoEffectSelected,
+  isBackgroundEffects = false,
+  selectedEffectTitle,
+  selectedEffectType,
+  disabledTypeOptionsMap,
+  direction,
+}) {
   const selectRef = useRef();
   const dropdownRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
 
+  const closeDropDown = useCallback(() => {
+    setIsOpen(false);
+    if (isKeyboardUser()) {
+      // Return keyboard focus to button when closing dropdown
+      selectRef.current.focus();
+    }
+  }, []);
+
   return (
-    <DropDownSelect ref={selectRef} onClick={() => setIsOpen(!isOpen)}>
-      <DropDownTitle>{__('Select Animation', 'web-stories')}</DropDownTitle>
-      <DropdownIcon />
+    <>
+      <DropDownSelect
+        aria-label={__('Animation: Effect Chooser', 'web-stories')}
+        ref={selectRef}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <DropDownTitle>
+          {selectedEffectTitle || __('Select Animation', 'web-stories')}
+        </DropDownTitle>
+        <DropdownIcon />
+      </DropDownSelect>
       <Popup
         anchor={selectRef}
         isOpen={isOpen}
@@ -59,15 +85,32 @@ export default function EffectChooserDropdown({ onAnimationSelected }) {
       >
         <Container ref={dropdownRef}>
           <EffectChooser
+            onNoEffectSelected={onNoEffectSelected}
             onAnimationSelected={onAnimationSelected}
-            onDismiss={() => setIsOpen(false)}
+            onDismiss={closeDropDown}
+            isBackgroundEffects={isBackgroundEffects}
+            disabledTypeOptionsMap={disabledTypeOptionsMap}
+            value={selectedEffectType}
+            direction={direction}
           />
         </Container>
       </Popup>
-    </DropDownSelect>
+    </>
   );
 }
 
 EffectChooserDropdown.propTypes = {
-  onAnimationSelected: propTypes.func.isRequired,
+  onAnimationSelected: PropTypes.func.isRequired,
+  direction: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
+  isBackgroundEffects: PropTypes.bool,
+  selectedEffectTitle: PropTypes.string,
+  selectedEffectType: PropTypes.string,
+  onNoEffectSelected: PropTypes.func.isRequired,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };

@@ -31,10 +31,10 @@ jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
-  const { queryByLabelText } = renderWithTheme(
+  const { queryByLabelText, getByRole } = renderWithTheme(
     <Color label="Color" onChange={onChange} {...props} />
   );
-  const colorPreview = queryByLabelText(/Edit: Color/);
+  const colorPreview = getByRole('button', { name: 'Color' });
   const opacityInput = queryByLabelText(/Opacity/);
   return {
     colorPreview,

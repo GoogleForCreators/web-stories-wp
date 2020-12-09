@@ -23,6 +23,7 @@ import {
   moveArrayElement,
   getAbsolutePosition,
   objectWithout,
+  exclusion,
 } from '../utils';
 import { LAYER_DIRECTIONS } from '../../../../../constants';
 
@@ -202,5 +203,29 @@ describe('objectWithout', () => {
     const result = objectWithout(input, 'c');
     expect(input).toStrictEqual({ a: 1, b: 2 });
     expect(result).toStrictEqual({ a: 1, b: 2 });
+  });
+});
+
+describe('exclusion', () => {
+  it('should return entries from right not present in left', () => {
+    const left = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+    const right = [{ id: 'a' }, { id: 'd' }, { id: 'e' }];
+    expect(exclusion(left, right)).toStrictEqual([{ id: 'd' }, { id: 'e' }]);
+  });
+
+  it('should return only last instance of entries with duplicate keys', () => {
+    const left = [];
+    const right = [
+      { id: 'a', prop: 1 },
+      { id: 'a', prop: 2 },
+      { id: 'a', prop: 3 },
+    ];
+    expect(exclusion(left, right)).toStrictEqual([{ id: 'a', prop: 3 }]);
+  });
+
+  it('should return an empty array if no new entries present', () => {
+    const left = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+    const right = [{ id: 'a' }, { id: 'b' }, { id: 'c' }];
+    expect(exclusion(left, right)).toStrictEqual([]);
   });
 });

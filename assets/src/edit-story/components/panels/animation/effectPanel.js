@@ -15,15 +15,11 @@
  */
 
 /**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
  * External dependencies
  */
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -31,28 +27,67 @@ import PropTypes from 'prop-types';
 import {
   ANIMATION_EFFECTS,
   ANIMATION_PARTS,
-} from '../../../../animation/constants';
+  BACKGROUND_ANIMATION_EFFECTS,
+  FIELD_TYPES,
+} from '../../../../animation';
 import {
   getAnimationEffectProps,
   AnimationProps,
 } from '../../../../animation/parts';
-import { Row, Button } from '../../form';
-import { Panel, PanelTitle, PanelContent } from '../panel';
 import EffectInput from './effectInput';
 
-function getEffectName(type) {
+export function getEffectName(type) {
   return (
     [
       ...Object.values(ANIMATION_EFFECTS),
       ...Object.values(ANIMATION_PARTS),
+      ...Object.values(BACKGROUND_ANIMATION_EFFECTS),
     ].find((o) => o.value === type)?.name || ''
   );
 }
 
+export function getEffectDirection(effect = {}) {
+  if (effect.zoomFrom || effect.zoomFrom === 0) {
+    return effect.zoomFrom;
+  } else if (effect.zoomDir) {
+    return effect.zoomDir;
+  } else if (effect.flyInDir) {
+    return effect.flyInDir;
+  } else if (effect.rotateInDir) {
+    return effect.rotateInDir;
+  } else if (effect.whooshInDir) {
+    return effect.whooshInDir;
+  } else if (effect.panDir) {
+    return effect.panDir;
+  }
+  return false;
+}
+const AnimationGrid = styled.div`
+  display: grid;
+  grid-gap: 15px;
+  grid-template-columns: auto auto;
+  grid-auto-rows: 32px;
+`;
+
+const AnimationGridField = styled.div(
+  ({ isRotationComponent, isHalfWidthField }) => [
+    {
+      gridColumn: '1/3',
+    },
+    isRotationComponent && {
+      gridRow: '1/3',
+      gridColumn: 'auto',
+    },
+    isHalfWidthField && {
+      gridColumn: 'auto',
+    },
+  ]
+);
+
 function EffectPanel({
   animation: { id, type, ...config },
   onChange,
-  onRemove,
+  disabledTypeOptionsMap,
 }) {
   const { props } = getAnimationEffectProps(type);
 
@@ -71,17 +106,22 @@ function EffectPanel({
     [id, type, config, onChange]
   );
 
-  const handleRemoveClick = useCallback(() => {
-    onRemove({
-      id,
-      type,
-      ...config,
-      delete: true,
-    });
-  }, [id, type, config, onRemove]);
+  const containsVisualPicker = useMemo(() => {
+    return Object.keys(props).reduce((memo, current) => {
+      return (
+        props[current].type === FIELD_TYPES.DIRECTION_PICKER ||
+        props[current].type === FIELD_TYPES.ROTATION_PICKER ||
+        memo
+      );
+    }, false);
+  }, [props]);
 
-  const content = Object.keys(props).map((field) => (
-    <Row key={field} expand>
+  const content = Object.keys(props).map((field, index) => (
+    <AnimationGridField
+      key={field}
+      isRotationComponent={containsVisualPicker && index === 0}
+      isHalfWidthField={containsVisualPicker && (index === 1 || index === 2)}
+    >
       <EffectInput
         effectProps={props}
         effectConfig={config}
@@ -89,30 +129,20 @@ function EffectPanel({
         onChange={(value, submitArg) =>
           handleInputChange({ [field]: value }, submitArg)
         }
+        disabledOptions={disabledTypeOptionsMap[type] || []}
       />
-    </Row>
+    </AnimationGridField>
   ));
 
-  return (
-    <Panel key={id} name={type}>
-      <PanelTitle
-        secondaryAction={
-          <Button onClick={handleRemoveClick}>
-            {__('Delete', 'web-stories')}
-          </Button>
-        }
-      >
-        {getEffectName(type)}
-      </PanelTitle>
-      <PanelContent>{content}</PanelContent>
-    </Panel>
-  );
+  return <AnimationGrid>{content}</AnimationGrid>;
 }
 
 EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
-  onRemove: PropTypes.func.isRequired,
+  disabledTypeOptionsMap: PropTypes.objectOf(
+    PropTypes.arrayOf(PropTypes.string)
+  ),
 };
 
 export default EffectPanel;
