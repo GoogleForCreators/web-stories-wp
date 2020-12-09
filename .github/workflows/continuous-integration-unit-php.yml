@@ -90,7 +90,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --no-suggest --no-progress --no-interaction --no-scripts
+          composer update --prefer-dist --no-suggest --no-progress --no-interaction --no-scripts
           composer dump-autoload --no-interaction
 
       - name: Shutdown default MySQL service
