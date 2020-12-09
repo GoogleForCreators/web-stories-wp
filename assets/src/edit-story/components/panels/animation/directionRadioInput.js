@@ -34,6 +34,7 @@ import {
 } from '../../../../animation';
 import useRadioNavigation from '../../form/shared/useRadioNavigation';
 import WithTooltip from '../../tooltip';
+import { useConfig } from '../../../../activation-notice/app/config';
 
 const Svg = styled.svg`
   display: block;
@@ -292,11 +293,15 @@ const SCALE_NAV_ORDER = [
 
 const sortInputOrderForKeyboardUsability = (
   directions,
-  directionOrder = STANDARD_NAV_ORDER
-) =>
-  directions.sort(
-    (a, b) => directionOrder.indexOf(a) - directionOrder.indexOf(b)
+  directionOrder,
+  isRTL
+) => {
+  const referenceOrder = isRTL ? directionOrder.reverse() : directionOrder;
+
+  return directions.sort(
+    (a, b) => referenceOrder.indexOf(a) - referenceOrder.indexOf(b)
   );
+};
 
 export const DirectionRadioInput = ({
   value,
@@ -306,6 +311,7 @@ export const DirectionRadioInput = ({
   tooltip,
 }) => {
   const inputRef = useRef();
+  const { isRTL } = useConfig();
 
   const flattenedDirections = useMemo(() => {
     const dir = [];
@@ -313,7 +319,13 @@ export const DirectionRadioInput = ({
       !directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
       !directions.includes(SCALE_DIRECTION.SCALE_IN)
     ) {
-      dir.push(...sortInputOrderForKeyboardUsability(directions));
+      dir.push(
+        ...sortInputOrderForKeyboardUsability(
+          directions,
+          STANDARD_NAV_ORDER,
+          isRTL
+        )
+      );
     } else {
       const scaleDir = [];
 
@@ -322,11 +334,11 @@ export const DirectionRadioInput = ({
       directions.includes(SCALE_DIRECTION.SCALE_IN) &&
         scaleDir.push(...SCALE_DIRECTION_MAP.SCALE_IN);
       dir.push(
-        ...sortInputOrderForKeyboardUsability(scaleDir, SCALE_NAV_ORDER)
+        ...sortInputOrderForKeyboardUsability(scaleDir, SCALE_NAV_ORDER, isRTL)
       );
     }
     return dir;
-  }, [directions]);
+  }, [directions, isRTL]);
 
   useRadioNavigation(inputRef);
 
