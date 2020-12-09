@@ -67,15 +67,17 @@ export default function EffectChooserDropdown({
   }, []);
 
   return (
-    <DropDownSelect
-      aria-label={__('Animation: Effect Chooser', 'web-stories')}
-      ref={selectRef}
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <DropDownTitle>
-        {selectedEffectTitle || __('Select Animation', 'web-stories')}
-      </DropDownTitle>
-      <DropdownIcon />
+    <>
+      <DropDownSelect
+        aria-label={__('Animation: Effect Chooser', 'web-stories')}
+        ref={selectRef}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <DropDownTitle>
+          {selectedEffectTitle || __('Select Animation', 'web-stories')}
+        </DropDownTitle>
+        <DropdownIcon />
+      </DropDownSelect>
       <Popup
         anchor={selectRef}
         isOpen={isOpen}
@@ -93,7 +95,7 @@ export default function EffectChooserDropdown({
           />
         </Container>
       </Popup>
-    </DropDownSelect>
+    </>
   );
 }
 

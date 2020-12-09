@@ -29,7 +29,7 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
@@ -40,6 +40,7 @@ import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
+  SCALE_DIRECTION,
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
 import { useKeyDownEffect } from '../../keyboard';
@@ -79,7 +80,7 @@ const ContentWrapper = styled.div`
 
 const GridItem = styled.button.attrs({ role: 'listitem' })`
   border: none;
-  background: #333;
+  background: ${({ active }) => (active ? '#5732A3' : '#333')};
   border-radius: 4px;
   height: ${GRID_ITEM_HEIGHT}px;
   position: relative;
@@ -89,6 +90,7 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
   line-height: 1;
   color: white;
   text-transform: uppercase;
+  transition: background 0.1s linear;
 
   &[aria-disabled='true'] {
     opacity: 0.6;
@@ -100,6 +102,8 @@ const GridItem = styled.button.attrs({ role: 'listitem' })`
 
   &:hover:not([aria-disabled='true']),
   &:focus:not([aria-disabled='true']) {
+    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+
     ${BaseAnimationCell} {
       display: inline-block;
     }
@@ -131,6 +135,17 @@ const GridItemHalfRow = styled(GridItem)`
   grid-column-start: span 2;
 `;
 
+const NoEffect = styled(GridItemFullRow)`
+  ${({ theme }) => css`
+    padding: 8px 15px;
+    height: auto;
+    text-transform: capitalize;
+    font-family: ${theme.fonts.paragraph.small.family};
+    font-size: ${theme.fonts.paragraph.small.size};
+    line-height: ${theme.fonts.paragraph.small.lineHeight};
+    font-weight: normal;
+  `}
+`;
 /**
  * Because the effect chooser is hard coded these two effects lists help keep track of the current index
  * current index is how we track focus for up and down arrows and setting active list item when menu is opened.
@@ -144,8 +159,8 @@ const FOREGROUND_EFFECTS_LIST = [
   ANIMATION_EFFECTS.FADE_IN.value,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
-  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.BOTTOM_TO_TOP}`,
+  `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
   ANIMATION_EFFECTS.PULSE.value,
   `${ANIMATION_EFFECTS.ROTATE_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
   `${ANIMATION_EFFECTS.ROTATE_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
@@ -182,7 +197,6 @@ export default function EffectChooser({
 }) {
   const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
-  const previousEffectValueRef = useRef();
 
   useEffect(() => {
     loadStylesheet(`${GOOGLE_MENU_FONT_URL}?family=Teko`).catch(function () {});
@@ -225,7 +239,7 @@ export default function EffectChooser({
   ]);
 
   // set existing active effect with a ref, specify when dropdown is opened which version of an effect it is since some have many options
-  const getPreviousEffectValue = useCallback(() => {
+  const activeEffectListValue = useMemo(() => {
     if (direction || direction === 0) {
       let indicator;
       if (typeof direction === 'number') {
@@ -239,19 +253,22 @@ export default function EffectChooser({
     return value;
   }, [direction, value]);
 
-  useEffect(() => {
-    previousEffectValueRef.current = getPreviousEffectValue();
-    return () => {
-      previousEffectValueRef.current = null;
-    };
-  }, [getPreviousEffectValue]);
+  const activeEffectListIndex = useMemo(() => {
+    const bgListIndex = BACKGROUND_EFFECTS_LIST.indexOf(activeEffectListValue);
+    if (bgListIndex > -1) {
+      return bgListIndex;
+    }
+    const fgListIndex = FOREGROUND_EFFECTS_LIST.indexOf(activeEffectListValue);
+    if (fgListIndex > -1) {
+      return fgListIndex;
+    }
+    return 0;
+  }, [activeEffectListValue]);
 
   // Once the correct effect w/ direction is found, set focusedValue to trigger effect hook to find proper index.
   useEffect(() => {
-    if (previousEffectValueRef.current) {
-      setFocusedValue(previousEffectValueRef.current);
-    }
-  }, []);
+    setFocusedValue(activeEffectListValue);
+  }, [activeEffectListValue, setFocusedValue]);
 
   const focusedIndex = useMemo(() => {
     if (isNullOrUndefinedOrEmptyString(focusedValue)) {
@@ -309,12 +326,13 @@ export default function EffectChooser({
   return (
     <Container ref={ref}>
       <Grid>
-        <GridItemFullRow
+        <NoEffect
           onClick={onNoEffectSelected}
-          aria-label={__('No Effect', 'web-stories')}
+          aria-label={__('None', 'web-stories')}
+          active={activeEffectListIndex === 0}
         >
-          <span>{__('No Effect', 'web-stories')}</span>
-        </GridItemFullRow>
+          <span>{__('None', 'web-stories')}</span>
+        </NoEffect>
         {isBackgroundEffects ? (
           <>
             <GridItemFullRow
@@ -324,6 +342,7 @@ export default function EffectChooser({
                   animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
                 })
               }
+              active={activeEffectListIndex === 1}
             >
               <ContentWrapper>{__('Zoom', 'web-stories')}</ContentWrapper>
               <ZoomOutAnimation>{__('Zoom', 'web-stories')}</ZoomOutAnimation>
@@ -339,6 +358,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
               )}
+              active={activeEffectListIndex === 2}
             >
               <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
               <PanLeftAnimation>
@@ -356,6 +376,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
               )}
+              active={activeEffectListIndex === 3}
             >
               <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
               <PanRightAnimation>
@@ -373,6 +394,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
               )}
+              active={activeEffectListIndex === 4}
             >
               <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
               <PanBottomAnimation>
@@ -390,6 +412,7 @@ export default function EffectChooser({
               aria-disabled={disabledBackgroundEffects.includes(
                 PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
               )}
+              active={activeEffectListIndex === 5}
             >
               <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
               <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
@@ -402,6 +425,7 @@ export default function EffectChooser({
               onClick={() =>
                 onAnimationSelected({ animation: ANIMATION_EFFECTS.DROP.value })
               }
+              active={activeEffectListIndex === 1}
             >
               <ContentWrapper>{__('Drop', 'web-stories')}</ContentWrapper>
               <DropAnimation>{__('Drop', 'web-stories')}</DropAnimation>
@@ -413,6 +437,7 @@ export default function EffectChooser({
                   animation: ANIMATION_EFFECTS.FADE_IN.value,
                 })
               }
+              active={activeEffectListIndex === 2}
             >
               <ContentWrapper>{__('Fade in', 'web-stories')}</ContentWrapper>
               <FadeInAnimation>{__('Fade in', 'web-stories')}</FadeInAnimation>
@@ -425,6 +450,7 @@ export default function EffectChooser({
                   flyInDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
+              active={activeEffectListIndex === 3}
             >
               <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
               <FlyInLeftAnimation>
@@ -439,6 +465,7 @@ export default function EffectChooser({
                   flyInDir: DIRECTION.TOP_TO_BOTTOM,
                 })
               }
+              active={activeEffectListIndex === 4}
             >
               <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
               <FlyInTopAnimation>
@@ -453,6 +480,7 @@ export default function EffectChooser({
                   flyInDir: DIRECTION.BOTTOM_TO_TOP,
                 })
               }
+              active={activeEffectListIndex === 5}
             >
               <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
               <FlyInBottomAnimation>
@@ -467,6 +495,7 @@ export default function EffectChooser({
                   flyInDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
+              active={activeEffectListIndex === 6}
             >
               <ContentWrapper>{__('Fly in', 'web-stories')}</ContentWrapper>
               <FlyInRightAnimation>
@@ -480,6 +509,7 @@ export default function EffectChooser({
                   animation: ANIMATION_EFFECTS.PULSE.value,
                 })
               }
+              active={activeEffectListIndex === 7}
             >
               <ContentWrapper>{__('Pulse', 'web-stories')}</ContentWrapper>
               <PulseAnimation>{__('Pulse', 'web-stories')}</PulseAnimation>
@@ -492,6 +522,7 @@ export default function EffectChooser({
                   rotateInDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
+              active={activeEffectListIndex === 8}
             >
               <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
               <RotateInLeftAnimation>
@@ -506,6 +537,7 @@ export default function EffectChooser({
                   rotateInDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
+              active={activeEffectListIndex === 9}
             >
               <ContentWrapper>{__('Rotate', 'web-stories')}</ContentWrapper>
               <RotateInRightAnimation>
@@ -519,6 +551,7 @@ export default function EffectChooser({
                   animation: ANIMATION_EFFECTS.TWIRL_IN.value,
                 })
               }
+              active={activeEffectListIndex === 10}
             >
               <ContentWrapper>{__('Twirl In', 'web-stories')}</ContentWrapper>
               <TwirlInAnimation>
@@ -533,6 +566,7 @@ export default function EffectChooser({
                   whooshInDir: DIRECTION.LEFT_TO_RIGHT,
                 })
               }
+              active={activeEffectListIndex === 11}
             >
               <ContentWrapper>{__('Whoosh In', 'web-stories')}</ContentWrapper>
               <WhooshInLeftAnimation>
@@ -547,6 +581,7 @@ export default function EffectChooser({
                   whooshInDir: DIRECTION.RIGHT_TO_LEFT,
                 })
               }
+              active={activeEffectListIndex === 12}
             >
               <WhooshInRightAnimation>
                 {__('Whoosh In', 'web-stories')}
@@ -558,10 +593,10 @@ export default function EffectChooser({
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
-                  zoomFrom: 0,
-                  zoomTo: 1,
+                  scaleDirection: SCALE_DIRECTION.SCALE_IN,
                 })
               }
+              active={activeEffectListIndex === 13}
             >
               <ContentWrapper>{__('Scale In', 'web-stories')}</ContentWrapper>
               <ZoomInAnimation>{__('Scale In', 'web-stories')}</ZoomInAnimation>
@@ -571,10 +606,10 @@ export default function EffectChooser({
               onClick={() =>
                 onAnimationSelected({
                   animation: ANIMATION_EFFECTS.ZOOM.value,
-                  zoomFrom: 2,
-                  zoomTo: 1,
+                  scaleDirection: SCALE_DIRECTION.SCALE_OUT,
                 })
               }
+              active={activeEffectListIndex === 14}
             >
               <ZoomOutAnimation>
                 {__('Scale Out', 'web-stories')}

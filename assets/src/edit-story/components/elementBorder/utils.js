@@ -18,10 +18,8 @@
  * Internal dependencies
  */
 import { canMaskHaveBorder } from '../../masks';
-import { BORDER_POSITION } from '../../constants';
 
-export function shouldDisplayBorder(element) {
-  const { border } = element;
+function hasBorder({ border }) {
   if (!border) {
     return false;
   }
@@ -34,8 +32,11 @@ export function shouldDisplayBorder(element) {
   if (!left && !top && !right && !bottom) {
     return false;
   }
+  return true;
+}
 
-  return canMaskHaveBorder(element);
+export function shouldDisplayBorder(element) {
+  return hasBorder(element) && canMaskHaveBorder(element);
 }
 
 export function getBorderPositionCSS({
@@ -43,22 +44,13 @@ export function getBorderPositionCSS({
   top,
   right,
   bottom,
-  position,
   width = '100%',
   height = '100%',
   posTop = '0px',
   posLeft = '0px',
-  skipOutsideBorder = true,
+  skipPositioning = true,
 }) {
-  if (BORDER_POSITION.CENTER === position) {
-    return {
-      top: `calc(${posTop} - ${top / 2}px)`,
-      height: `calc(${height} + ${(top + bottom) / 2}px)`,
-      left: `calc(${posLeft} - ${left / 2}px)`,
-      width: `calc(${width} + ${(left + right) / 2}px)`,
-    };
-  }
-  if (isOutsideBorder({ position }) && !skipOutsideBorder) {
+  if (!skipPositioning) {
     return {
       left: `calc(${posLeft} - ${left}px)`,
       top: `calc(${posTop} - ${top}px)`,
@@ -75,21 +67,14 @@ export function getBorderStyle({
   top,
   right,
   bottom,
-  position,
   borderRadius,
-  opacity = 100,
-  skipOutsideBorder = true,
+  skipPositioning = true,
 }) {
-  const {
-    color: { r, g, b, a },
-  } = rawColor;
-  // In case of inner/center border we need to adjust the opacity based on the layer opacity, too.
-  // Outside border already has opacity applied since it's added to the element directly.
-  opacity = opacity / 100;
-  const adjustedBorderOpacity = a !== undefined ? opacity * a : opacity;
-  const color = isOutsideBorder({ position })
-    ? getBorderColor({ color: rawColor })
-    : `rgba(${r},${g},${b},${adjustedBorderOpacity})`;
+  // If there's no border, return the radius only.
+  if (!hasBorder({ border: { color: rawColor, left, top, right, bottom } })) {
+    return getBorderRadius({ borderRadius });
+  }
+  const color = getBorderColor({ color: rawColor });
 
   // We're making the border-width responsive just for the preview,
   // since the calculation is not 100% precise here, we're opting to the safe side by rounding the widths up
@@ -104,8 +89,7 @@ export function getBorderStyle({
       top,
       right,
       bottom,
-      position,
-      skipOutsideBorder,
+      skipPositioning,
     }),
     borderWidth,
     borderColor: color,
@@ -126,28 +110,13 @@ export function getBorderStyle({
   };
 }
 
-export function isOutsideBorder(border) {
-  return border?.position === BORDER_POSITION.OUTSIDE;
-}
-
 export function getInnerRadius(outerRadius, oneSide, otherSide) {
   return outerRadius - Math.min(outerRadius, Math.max(oneSide, otherSide)) / 2;
 }
 
-export function getBorderRadius({ borderRadius, border }) {
+export function getBorderRadius({ borderRadius }) {
   if (!borderRadius) {
     return {};
-  }
-  if (border?.position === BORDER_POSITION.CENTER) {
-    const radii = [
-      getInnerRadius(borderRadius.topLeft, border.top, border.left),
-      getInnerRadius(borderRadius.topRight, border.top, border.right),
-      getInnerRadius(borderRadius.bottomRight, border.bottom, border.right),
-      getInnerRadius(borderRadius.bottomLeft, border.bottom, border.left),
-    ];
-    return {
-      borderRadius: radii.map((radius) => `${radius}px`).join(' '),
-    };
   }
   return {
     borderRadius: `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`,
@@ -160,4 +129,52 @@ export function getBorderColor({ color }) {
     color: { r, g, b, a },
   } = color;
   return `rgba(${r},${g},${b},${a === undefined ? 1 : a})`;
+}
+
+/**
+ * Returns border values based on if it's preview or not.
+ *
+ * @param {Object} border Original border.
+ * @param {boolean} previewMode If it's preview mode.
+ * @param {Function} converter Function to convert the border values.
+ * @return {Object} New border values.
+ */
+export function getResponsiveBorder(border, previewMode, converter) {
+  if (!previewMode || !border) {
+    return border;
+  }
+  const { left, top, right, bottom } = border;
+  return {
+    ...border,
+    left: converter(left),
+    top: converter(top),
+    right: converter(right),
+    bottom: converter(bottom),
+  };
+}
+
+/**
+ * Returns border values based on if it's preview or not.
+ *
+ * @param {Object} borderRadius Original borderRadius.
+ * @param {boolean} previewMode If it's preview mode.
+ * @param {Function} converter Function to convert the values.
+ * @return {Object} New border radius values.
+ */
+export function getResponsiveBorderRadius(
+  borderRadius,
+  previewMode,
+  converter
+) {
+  if (!previewMode || !borderRadius) {
+    return borderRadius;
+  }
+  const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
+  return {
+    ...borderRadius,
+    topLeft: converter(topLeft),
+    topRight: converter(topRight),
+    bottomLeft: converter(bottomLeft),
+    bottomRight: converter(bottomRight),
+  };
 }

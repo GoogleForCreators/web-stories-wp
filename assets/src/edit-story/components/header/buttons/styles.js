@@ -15,22 +15,24 @@
  */
 
 /**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
  * Internal dependencies
  */
-import { AnimationZoom } from '../../parts/zoom';
-import { SCALE_DIRECTION } from '../../constants';
+import { Warning } from '../../../../design-system/icons';
 
-export function EffectZoom({
-  scaleDirection = SCALE_DIRECTION.SCALE_IN,
-  duration = 1000,
-  delay,
-  easing,
-}) {
-  return AnimationZoom({
-    zoomFrom: scaleDirection === SCALE_DIRECTION.SCALE_OUT ? 1 / 3 : 3,
-    zoomTo: 1,
-    duration,
-    delay,
-    easing,
-  });
-}
+export const WarningIcon = styled(Warning)`
+  color: $(({theme}) => theme.colors.fg.white);
+  width: 14px;
+  height: 14px;
+  margin-left: 8px;
+`;
+
+export const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

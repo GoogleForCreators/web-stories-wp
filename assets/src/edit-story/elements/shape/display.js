@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -26,24 +27,37 @@ import { useRef } from 'react';
 import {
   elementFillContent,
   elementWithBackgroundColor,
-  elementWithBorderRadius,
-  elementWithOutsideBorder,
+  elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { useTransformHandler } from '../../components/transform';
-import { isOutsideBorder } from '../../components/elementBorder/utils';
+import {
+  getResponsiveBorder,
+  getResponsiveBorderRadius,
+  shouldDisplayBorder,
+} from '../../components/elementBorder/utils';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useUnits } from '../../units';
 
 const Element = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
-  ${elementWithBorderRadius}
-  ${elementWithOutsideBorder}
+  ${elementWithBorder}
 `;
 
-function ShapeDisplay({
-  element: { id, isDefaultBackground, backgroundColor, border, borderRadius },
-}) {
+function ShapeDisplay({ element, previewMode }) {
+  const {
+    id,
+    isDefaultBackground,
+    backgroundColor,
+    border,
+    borderRadius,
+  } = element;
+
+  const { dataToEditorX } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+  }));
+
   const ref = useRef(null);
   useColorTransformHandler({ id, targetRef: ref });
 
@@ -55,7 +69,7 @@ function ShapeDisplay({
         const { resize } = transform;
         if (resize && resize[0] !== 0 && resize[1] !== 0) {
           const [width, height] = resize;
-          if (isOutsideBorder(border)) {
+          if (shouldDisplayBorder(element)) {
             ref.current.style.width = width + border.left + border.right + 'px';
             ref.current.style.height =
               height + border.top + border.bottom + 'px';
@@ -76,14 +90,19 @@ function ShapeDisplay({
     <Element
       ref={ref}
       backgroundColor={backgroundColor}
-      borderRadius={borderRadius}
-      border={border}
+      borderRadius={getResponsiveBorderRadius(
+        borderRadius,
+        previewMode,
+        dataToEditorX
+      )}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
     />
   );
 }
 
 ShapeDisplay.propTypes = {
   element: StoryPropTypes.elements.shape.isRequired,
+  previewMode: PropTypes.bool,
 };
 
 export default ShapeDisplay;

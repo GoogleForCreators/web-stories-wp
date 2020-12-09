@@ -43,7 +43,7 @@ export default {
     defaultValue: 0.05,
   },
   iterations: {
-    label: __('# of Pulses', 'web-stories'),
+    label: __('Pulses', 'web-stories'),
     type: FIELD_TYPES.NUMBER,
     defaultValue: 1,
   },
