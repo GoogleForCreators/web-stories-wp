@@ -268,7 +268,7 @@ export const DirectionRadioInput = ({
   value,
   directions = [],
   onChange,
-  disabled,
+  disabled = [],
   tooltip,
 }) => {
   const inputRef = useRef();
@@ -303,7 +303,7 @@ export const DirectionRadioInput = ({
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
       <RadioGroup ref={inputRef}>
         {flattenedDirections.map((direction) => {
-          const isDisabled = disabled.includes(direction);
+          const isDisabled = disabled?.includes(direction);
           return (
             <Label
               key={direction}

@@ -52,7 +52,7 @@ import EffectChooserDropdown from './effectChooserDropdown';
 const ANIMATION_PROPERTY = 'animation';
 
 const backgroundAnimationTooltip = __(
-  'The bg image is too small to animate. Double click on the bg & scale the image before applying the animation.',
+  'The background image is too small to animate. Double click on the bg & scale the image before applying the animation.',
   'web-stories'
 );
 
