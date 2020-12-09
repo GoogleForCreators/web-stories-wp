@@ -26,6 +26,8 @@ import { createNewStory, clickButton } from '../../../utils';
 
 const MODAL = '.media-modal';
 
+const percyCSS = `.attachment-details .uploaded { display: none; }`;
+
 describe('Inserting .mov from dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
   it('should not list the .mov', async () => {
@@ -42,7 +44,7 @@ describe('Inserting .mov from dialog', () => {
     );
 
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-    await percySnapshot(page, 'Avoid inserting .mov files');
+    await percySnapshot(page, 'Avoid inserting .mov files', { percyCSS });
 
     const closeBtnSelector = '.media-modal-close';
     await page.click(closeBtnSelector);

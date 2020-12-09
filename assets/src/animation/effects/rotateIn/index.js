@@ -30,11 +30,12 @@ import { AnimationSpin } from '../../parts/spin';
 import getOffPageOffset from '../../utils/getOffPageOffset';
 import { DIRECTION } from '../../constants';
 
+const numberOfRotations = 1;
+const stopAngle = 0;
+
 export function EffectRotateIn({
   duration = 1000,
   rotateInDir = DIRECTION.LEFT_TO_RIGHT,
-  numberOfRotations = 1,
-  stopAngle = 0,
   easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
   delay,
   element,
