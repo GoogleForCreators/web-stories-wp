@@ -111,6 +111,9 @@ EffectChooserDropdown.propTypes = {
   selectedEffectType: PropTypes.string,
   onNoEffectSelected: PropTypes.func.isRequired,
   disabledTypeOptionsMap: PropTypes.objectOf(
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.shape({
+      tooltip: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.string),
+    })
   ),
 };
