@@ -52,6 +52,7 @@ function EffectInput({
   field,
   onChange,
   disabledOptions,
+  tooltip,
 }) {
   const rangeId = `range-${uuidv4()}`;
 
@@ -94,10 +95,10 @@ function EffectInput({
       return (
         <DirectionRadioInput
           value={valueForField}
-          directions={effectProps[field].values?.filter(
-            (v) => !disabledOptions.includes(v)
-          )}
+          directions={effectProps[field].values}
           onChange={directionControlOnChange}
+          disabled={disabledOptions}
+          tooltip={tooltip}
         />
       );
     default:
@@ -123,6 +124,7 @@ EffectInput.propTypes = {
   field: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabledOptions: PropTypes.arrayOf(PropTypes.string),
+  tooltip: PropTypes.string,
 };
 
 export default EffectInput;

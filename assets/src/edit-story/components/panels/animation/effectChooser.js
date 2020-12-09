@@ -44,6 +44,7 @@ import {
 } from '../../../../animation';
 import useFocusOut from '../../../utils/useFocusOut';
 import { useKeyDownEffect } from '../../keyboard';
+import WithTooltip from '../../tooltip';
 import {
   GRID_ITEM_HEIGHT,
   PANEL_WIDTH,
@@ -154,14 +155,13 @@ const NoEffect = styled(GridItemFullRow)`
  */
 
 const getDirectionalEffect = (effect, direction) =>
-  `${effect} ${direction}`.trim();
+  direction ? `${effect} ${direction}`.trim() : effect;
 
 const FOREGROUND_EFFECTS_LIST = [
   'No Effect',
   ANIMATION_EFFECTS.DROP.value,
   ANIMATION_EFFECTS.FADE_IN.value,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.LEFT_TO_RIGHT}`,
-
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.TOP_TO_BOTTOM}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.BOTTOM_TO_TOP}`,
   `${ANIMATION_EFFECTS.FLY_IN.value} ${DIRECTION.RIGHT_TO_LEFT}`,
@@ -208,15 +208,15 @@ export default function EffectChooser({
   }, []);
 
   const getDisabledBackgroundEffects = useCallback(() => {
-    const disabledDirectionalEffects = Object.entries(
-      disabledTypeOptionsMap
-    ).reduce(
-      (directionalEffects, [effect, directions]) => [
-        ...directionalEffects,
-        ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
-      ],
-      []
-    );
+    const disabledDirectionalEffects = Object.entries(disabledTypeOptionsMap)
+      .map(([effect, val]) => [effect, val.options])
+      .reduce(
+        (directionalEffects, [effect, directions]) => [
+          ...directionalEffects,
+          ...(directions || []).map((dir) => getDirectionalEffect(effect, dir)),
+        ],
+        []
+      );
     return BACKGROUND_EFFECTS_LIST.filter((directionalEffect) =>
       disabledDirectionalEffects.includes(directionalEffect)
     );
@@ -294,8 +294,10 @@ export default function EffectChooser({
   }, [focusedValue, focusedIndex, disabledBackgroundEffects]);
 
   const handleOnSelect = useCallback(
-    (event, effect, animation) => {
-      const isEffectDisabled = disabledBackgroundEffects.includes(effect);
+    (event, directionalEffect, animation) => {
+      const isEffectDisabled = disabledBackgroundEffects.includes(
+        directionalEffect
+      );
 
       if (isEffectDisabled) {
         event.preventDefault();
@@ -333,10 +335,23 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 1}
             >
-              <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
-              <PanLeftAnimation>
-                {__('Pan Left', 'web-stories')}
-              </PanLeftAnimation>
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.LEFT_TO_RIGHT]
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>{__('Pan Left', 'web-stories')}</ContentWrapper>
+                <PanLeftAnimation>
+                  {__('Pan Left', 'web-stories')}
+                </PanLeftAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItem
               aria-label={__('Pan Right Effect', 'web-stories')}
@@ -351,10 +366,25 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 2}
             >
-              <ContentWrapper>{__('Pan Right', 'web-stories')}</ContentWrapper>
-              <PanRightAnimation>
-                {__('Pan Right', 'web-stories')}
-              </PanRightAnimation>
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.RIGHT_TO_LEFT]
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>
+                  {__('Pan Right', 'web-stories')}
+                </ContentWrapper>
+                <PanRightAnimation>
+                  {__('Pan Right', 'web-stories')}
+                </PanRightAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItem
               aria-label={__('Pan Up Effect', 'web-stories')}
@@ -369,10 +399,23 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 3}
             >
-              <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
-              <PanBottomAnimation>
-                {__('Pan Up', 'web-stories')}
-              </PanBottomAnimation>
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.BOTTOM_TO_TOP]
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>{__('Pan Up', 'web-stories')}</ContentWrapper>
+                <PanBottomAnimation>
+                  {__('Pan Up', 'web-stories')}
+                </PanBottomAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItem
               aria-label={__('Pan Down Effect', 'web-stories')}
@@ -387,16 +430,38 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 4}
             >
-              <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
-              <PanTopAnimation>{__('Pan Down', 'web-stories')}</PanTopAnimation>
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    PAN_MAPPING[DIRECTION.TOP_TO_BOTTOM]
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.PAN.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>{__('Pan Down', 'web-stories')}</ContentWrapper>
+                <PanTopAnimation>
+                  {__('Pan Down', 'web-stories')}
+                </PanTopAnimation>
+              </WithTooltip>
             </GridItem>
             <GridItemHalfRow
               aria-label={__('Zoom In Effect', 'web-stories')}
               onClick={(event) =>
-                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
-                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  zoomDirection: SCALE_DIRECTION.SCALE_IN,
-                })
+                handleOnSelect(
+                  event,
+                  getDirectionalEffect(
+                    BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                    SCALE_DIRECTION.SCALE_IN
+                  ),
+                  {
+                    animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                    zoomDirection: SCALE_DIRECTION.SCALE_IN,
+                  }
+                )
               }
               aria-disabled={disabledBackgroundEffects.includes(
                 getDirectionalEffect(
@@ -406,16 +471,41 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 5}
             >
-              <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
-              <ZoomInAnimation>{__('Zoom In', 'web-stories')}</ZoomInAnimation>
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    getDirectionalEffect(
+                      BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                      SCALE_DIRECTION.SCALE_IN
+                    )
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>{__('Zoom In', 'web-stories')}</ContentWrapper>
+                <ZoomInAnimation>
+                  {__('Zoom In', 'web-stories')}
+                </ZoomInAnimation>
+              </WithTooltip>
             </GridItemHalfRow>
             <GridItemHalfRow
               aria-label={__('Zoom Out Effect', 'web-stories')}
               onClick={(event) =>
-                handleOnSelect(event, BACKGROUND_ANIMATION_EFFECTS.ZOOM.value, {
-                  animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
-                  zoomDirection: SCALE_DIRECTION.SCALE_OUT,
-                })
+                handleOnSelect(
+                  event,
+                  getDirectionalEffect(
+                    BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                    SCALE_DIRECTION.SCALE_OUT
+                  ),
+                  {
+                    animation: BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                    zoomDirection: SCALE_DIRECTION.SCALE_OUT,
+                  }
+                )
               }
               aria-disabled={disabledBackgroundEffects.includes(
                 getDirectionalEffect(
@@ -425,10 +515,26 @@ export default function EffectChooser({
               )}
               active={activeEffectListIndex === 6}
             >
-              <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
-              <ZoomOutAnimation>
-                {__('Zoom Out', 'web-stories')}
-              </ZoomOutAnimation>
+              <WithTooltip
+                title={
+                  disabledBackgroundEffects.includes(
+                    getDirectionalEffect(
+                      BACKGROUND_ANIMATION_EFFECTS.ZOOM.value,
+                      SCALE_DIRECTION.SCALE_OUT
+                    )
+                  )
+                    ? disabledTypeOptionsMap[
+                        BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
+                      ]?.tooltip
+                    : ''
+                }
+                placement="left"
+              >
+                <ContentWrapper>{__('Zoom Out', 'web-stories')}</ContentWrapper>
+                <ZoomOutAnimation>
+                  {__('Zoom Out', 'web-stories')}
+                </ZoomOutAnimation>
+              </WithTooltip>
             </GridItemHalfRow>
           </>
         ) : (
@@ -647,7 +753,10 @@ EffectChooser.propTypes = {
   onDismiss: PropTypes.func,
   isBackgroundEffects: PropTypes.bool,
   disabledTypeOptionsMap: PropTypes.objectOf(
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.shape({
+      tooltip: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.string),
+    })
   ),
   value: PropTypes.string,
 };
