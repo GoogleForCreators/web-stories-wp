@@ -257,12 +257,24 @@ const valueForInternalValue = (value) => {
       return value;
   }
 };
+const isInternalScaleDirection = (value) =>
+  [...SCALE_DIRECTION_MAP.SCALE_IN, ...SCALE_DIRECTION_MAP.SCALE_OUT].includes(
+    value
+  );
 
-const getPrefixFromCamelCase = (camelCase = '') =>
+const splitCamelCase = (camelCase = '') =>
   camelCase
     ?.replace(/([a-z])([A-Z])/g, '$1 $2')
     ?.toLocaleLowerCase()
-    ?.split(' ')?.[0];
+    ?.split(' ') || [];
+
+const getPrefixFromCamelCase = (camelCase = '') =>
+  splitCamelCase(camelCase)?.[0];
+
+const getPostfixFromCamelCase = (camelCase = '') => {
+  const split = splitCamelCase(camelCase);
+  return split[split.length - 1];
+};
 
 export const DirectionRadioInput = ({
   value,
@@ -303,7 +315,9 @@ export const DirectionRadioInput = ({
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
       <RadioGroup ref={inputRef}>
         {flattenedDirections.map((direction) => {
-          const isDisabled = disabled?.includes(direction);
+          const isDisabled = disabled?.includes(
+            valueForInternalValue(direction)
+          );
           return (
             <Label
               key={direction}
@@ -322,7 +336,11 @@ export const DirectionRadioInput = ({
               />
               <WithTooltip
                 title={isDisabled ? tooltip : ''}
-                placement={getPrefixFromCamelCase(direction)}
+                placement={
+                  isInternalScaleDirection(direction)
+                    ? getPostfixFromCamelCase(direction)
+                    : getPrefixFromCamelCase(direction)
+                }
               >
                 <DirectionIndicator
                   direction={direction}
