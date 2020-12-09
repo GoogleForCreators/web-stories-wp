@@ -36,7 +36,9 @@ jobs:
             wp: '5.3'
 
           - php: '7.4'
-            wp: '5.6'
+            # TODO Change to 5.6 after stable release of WP.
+            wp: '5.6-RC1'
+            experimental: true
 
           - php: '7.4'
             wp: 'trunk'
@@ -88,7 +90,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install --no-suggest --no-progress --no-interaction
+          composer install --no-suggest --no-progress --no-interaction --no-scripts
           composer dump-autoload --no-interaction
 
       - name: Shutdown default MySQL service
