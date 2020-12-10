@@ -22,13 +22,13 @@ import { Modal } from '../';
 
 describe('DesignSystem/Components/Modal', () => {
   it('should not render a modal by default', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <Modal onClose={jest.fn}>
         <p>{'modal child'}</p>
       </Modal>
     );
 
-    expect(queryAllByRole('dialog', { hidden: true })).toHaveLength(0);
+    expect(queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
   });
 
   it('should render a modal when isOpen is true', () => {

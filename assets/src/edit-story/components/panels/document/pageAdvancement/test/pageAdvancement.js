@@ -63,7 +63,7 @@ describe('PageAdvancementPanel', () => {
   it('should render Page Advancement Panel', () => {
     const { getByRole, updateStory } = setupPanel();
     const element = getByRole('button', { name: 'Page Advancement' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
     fireEvent.click(getByRole('radio', { name: 'Auto' }));
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
@@ -77,7 +77,7 @@ describe('PageAdvancementPanel', () => {
       autoAdvance: true,
     });
     const element = getByRole('button', { name: 'Page Advancement' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
 
     const slider = getByRole('slider', { name: 'Default Page Duration' });
 

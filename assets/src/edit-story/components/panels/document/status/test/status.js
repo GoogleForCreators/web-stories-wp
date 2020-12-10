@@ -70,17 +70,17 @@ describe('StatusPanel', () => {
   it('should render Status Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Status & Visibility' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
 
     const radioOption = getByRole('radio', { name: 'Draft' });
-    expect(radioOption).toBeDefined();
+    expect(radioOption).toBeInTheDocument();
   });
 
   it('should not render the status option without correct permissions', () => {
     const { queryByText } = setupPanel({
       hasPublishAction: false,
     });
-    expect(queryByText('Public')).toBeNull();
+    expect(queryByText('Public')).not.toBeInTheDocument();
   });
 
   it('should update the story when clicking on status', () => {

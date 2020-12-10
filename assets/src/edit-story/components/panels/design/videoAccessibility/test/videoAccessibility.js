@@ -56,7 +56,7 @@ describe('Panels/VideoAccessibility', () => {
   it('should render <VideoAccessibility /> panel', () => {
     const { getByRole } = renderVideoAccessibility([defaultElement]);
     const imageHolder = getByRole('region', { name: /video poster/i });
-    expect(imageHolder).toBeDefined();
+    expect(imageHolder).toBeInTheDocument();
   });
 
   it('should simulate a click on <VideoAccessibility />', () => {
