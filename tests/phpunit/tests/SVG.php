@@ -249,7 +249,7 @@ class SVG extends \WP_UnitTestCase {
 	 */
 	public function test_get_xml_invalid_file() {
 		$svg      = $this->get_svg_object();
-		$_results = $this->call_private_method( $svg, 'get_xml', [ '' ] );
+		$_results = $this->call_private_method( $svg, 'get_xml', [ '<invalid' ] );
 
 		$this->assertFalse( $_results );
 	}
