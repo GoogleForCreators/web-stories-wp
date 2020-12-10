@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * External dependencies
@@ -27,25 +27,24 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { FIELD_TYPES } from '../../constants';
+import { FIELD_TYPES, SCALE_DIRECTION } from '../../constants';
 import { AnimationInputPropTypes } from '../types';
 
 export const ZoomEffectInputPropTypes = {
-  zoomFrom: PropTypes.shape(AnimationInputPropTypes),
-  zoomTo: PropTypes.shape(AnimationInputPropTypes),
+  scaleDirection: PropTypes.shape(AnimationInputPropTypes),
 };
 
 export default {
-  zoomFrom: {
-    label: __('From', 'web-stories'),
-    tooltip: __('Valid values range from 0 to 1', 'web-stories'),
-    type: FIELD_TYPES.FLOAT,
-    defaultValue: 0,
-  },
-  zoomTo: {
-    label: __('To', 'web-stories'),
-    tooltip: __('Valid values range from 0 to 1', 'web-stories'),
-    type: FIELD_TYPES.FLOAT,
-    defaultValue: 1,
+  scaleDirection: {
+    label: __('Direction', 'web-stories'),
+    tooltip: sprintf(
+      /* translators: 1: scaleIn. 2: scaleOut */
+      __('Valid values are %1$s or %2$s', 'web-stories'),
+      'scaleIn',
+      'scaleOut'
+    ),
+    type: FIELD_TYPES.DIRECTION_PICKER,
+    values: [SCALE_DIRECTION.SCALE_IN, SCALE_DIRECTION.SCALE_OUT],
+    defaultValue: SCALE_DIRECTION.SCALE_IN,
   },
 };

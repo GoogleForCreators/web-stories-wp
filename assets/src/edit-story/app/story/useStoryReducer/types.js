@@ -43,6 +43,7 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 
 // Manipulate animation state.
 export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
+export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
 
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';

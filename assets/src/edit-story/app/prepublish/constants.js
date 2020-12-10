@@ -160,7 +160,7 @@ export const MESSAGES = {
         'web-stories'
       ),
     },
-    MISSING_VIDEO_TITLE: {
+    MISSING_VIDEO_DESCRIPTION: {
       MAIN_TEXT: __('Video missing description', 'web-stories'),
       HELPER_TEXT: __(
         'Add a video description. Descriptions help with indexability and accessibility (for videos without captions). Include any burned-in text inside of the video.',
@@ -188,18 +188,14 @@ export const MESSAGES = {
         'web-stories'
       ),
     },
-    MISSING_VIDEO_ALT_TEXT: {
-      MAIN_TEXT: __('Video missing description', 'web-stories'),
-      HELPER_TEXT: __(
-        'Add meaningful assistive text to videos to optimize accessibility and indexability.',
-        'web-stories'
-      ),
-    },
   },
   DISTRIBUTION: {
     MISSING_DESCRIPTION: {
-      MAIN_TEXT: __('Missing story description', 'web-stories'),
-      HELPER_TEXT: __('Add a description for your story.', 'web-stories'),
+      MAIN_TEXT: __('Missing Story Description', 'web-stories'),
+      HELPER_TEXT: __(
+        'Add a Story Description in the Document panel.',
+        'web-stories'
+      ),
     },
   },
   GENERAL_GUIDELINES: {

@@ -45,6 +45,23 @@ export function getEffectName(type) {
     ].find((o) => o.value === type)?.name || ''
   );
 }
+
+export function getEffectDirection(effect = {}) {
+  if (effect.zoomDirection) {
+    return effect.zoomDirection;
+  } else if (effect.scaleDirection) {
+    return effect.scaleDirection;
+  } else if (effect.flyInDir) {
+    return effect.flyInDir;
+  } else if (effect.rotateInDir) {
+    return effect.rotateInDir;
+  } else if (effect.whooshInDir) {
+    return effect.whooshInDir;
+  } else if (effect.panDir) {
+    return effect.panDir;
+  }
+  return false;
+}
 const AnimationGrid = styled.div`
   display: grid;
   grid-gap: 15px;
@@ -112,7 +129,8 @@ function EffectPanel({
         onChange={(value, submitArg) =>
           handleInputChange({ [field]: value }, submitArg)
         }
-        disabledOptions={disabledTypeOptionsMap[type] || []}
+        disabledOptions={disabledTypeOptionsMap[type]?.options || []}
+        tooltip={disabledTypeOptionsMap[type]?.tooltip}
       />
     </AnimationGridField>
   ));
@@ -124,7 +142,10 @@ EffectPanel.propTypes = {
   animation: PropTypes.shape(AnimationProps),
   onChange: PropTypes.func.isRequired,
   disabledTypeOptionsMap: PropTypes.objectOf(
-    PropTypes.arrayOf(PropTypes.string)
+    PropTypes.shape({
+      tooltip: PropTypes.string,
+      options: PropTypes.arrayOf(PropTypes.string),
+    })
   ),
 };
 

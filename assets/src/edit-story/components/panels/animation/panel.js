@@ -25,6 +25,8 @@ import { __ } from '@wordpress/i18n';
 import { useCallback, useMemo, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { shallowEqual } from 'react-pure-render';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
@@ -34,6 +36,7 @@ import {
   BG_MAX_SCALE,
   BG_MIN_SCALE,
   DIRECTION,
+  SCALE_DIRECTION,
   progress,
   hasOffsets,
   STORY_ANIMATION_STATE,
@@ -43,10 +46,15 @@ import StoryPropTypes, { AnimationPropType } from '../../../types';
 import { Row } from '../../form';
 import { SimplePanel } from '../panel';
 import { Note } from '../shared';
-import EffectPanel, { getEffectName } from './effectPanel';
+import EffectPanel, { getEffectName, getEffectDirection } from './effectPanel';
 import EffectChooserDropdown from './effectChooserDropdown';
 
 const ANIMATION_PROPERTY = 'animation';
+
+const backgroundAnimationTooltip = __(
+  'The background image is too small to animate. Double click on the bg & scale the image before applying the animation.',
+  'web-stories'
+);
 
 function AnimationPanel({
   selectedElements,
@@ -55,12 +63,6 @@ function AnimationPanel({
   updateAnimationState,
 }) {
   const playUpdatedAnimation = useRef(false);
-  const handlePanelChange = useCallback(
-    (animation, submitArg = false) => {
-      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
-    },
-    [pushUpdateForObject]
-  );
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
@@ -79,6 +81,18 @@ function AnimationPanel({
   }, [selectedElements, selectedElementAnimations]);
 
   const elAnimationId = updatedAnimations[0]?.id;
+
+  const handlePanelChange = useCallback(
+    (animation, submitArg = false) => {
+      if (shallowEqual(animation, updatedAnimations[0])) {
+        return;
+      }
+      pushUpdateForObject(ANIMATION_PROPERTY, animation, null, submitArg);
+      playUpdatedAnimation.current = true;
+    },
+    [pushUpdateForObject, updatedAnimations]
+  );
+
   const handleAddOrUpdateElementEffect = useCallback(
     ({ animation, ...options }) => {
       if (!animation) {
@@ -120,14 +134,26 @@ function AnimationPanel({
 
   // Play animation of selected elements when effect chooser signals
   // that it has changed the data and the data comes back changed.
-  useEffect(() => {
+  //
+  // Currently, animations get reset whenever the designInspector
+  // gains focus, adding this debouncer and scheduling it after
+  // the all the focus updates go through prevents the reset from
+  // overriding this play call.
+  const activeElement = document.activeElement;
+  const [dedbouncedUpdateAnimationState] = useDebouncedCallback(() => {
     if (playUpdatedAnimation.current) {
       updateAnimationState({
         animationState: STORY_ANIMATION_STATE.PLAYING_SELECTED,
       });
       playUpdatedAnimation.current = false;
     }
-  }, [selectedElementAnimations, updateAnimationState]);
+  }, 100);
+  useEffect(dedbouncedUpdateAnimationState, [
+    selectedElementAnimations,
+    updateAnimationState,
+    activeElement,
+    dedbouncedUpdateAnimationState,
+  ]);
 
   const handleRemoveEffect = useCallback(() => {
     pushUpdateForObject(
@@ -146,13 +172,27 @@ function AnimationPanel({
   const disabledTypeOptionsMap = useMemo(() => {
     if (selectedElements[0]?.isBackground) {
       const hasOffset = hasOffsets({ element: selectedElements[0] });
+      const normalizedScale = progress(selectedElements[0]?.scale || 0, [
+        BG_MIN_SCALE,
+        BG_MAX_SCALE,
+      ]);
       return {
-        [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: [
-          !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
-          !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
-          !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
-          !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
-        ].filter(Boolean),
+        [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: {
+          tooltip: backgroundAnimationTooltip,
+          options: [
+            !hasOffset.bottom && DIRECTION.TOP_TO_BOTTOM,
+            !hasOffset.left && DIRECTION.RIGHT_TO_LEFT,
+            !hasOffset.top && DIRECTION.BOTTOM_TO_TOP,
+            !hasOffset.right && DIRECTION.LEFT_TO_RIGHT,
+          ].filter(Boolean),
+        },
+        [BACKGROUND_ANIMATION_EFFECTS.ZOOM.value]: {
+          tooltip: backgroundAnimationTooltip,
+          options: [
+            normalizedScale <= 0.01 && SCALE_DIRECTION.SCALE_IN,
+            normalizedScale >= 0.99 && SCALE_DIRECTION.SCALE_OUT,
+          ].filter(Boolean),
+        },
       };
     }
     return {};
@@ -173,6 +213,8 @@ function AnimationPanel({
           onNoEffectSelected={handleRemoveEffect}
           isBackgroundEffects={isBackground}
           disabledTypeOptionsMap={disabledTypeOptionsMap}
+          direction={getEffectDirection(updatedAnimations[0])}
+          selectedEffectType={updatedAnimations[0]?.type}
         />
       </Row>
       {updatedAnimations[0] && (

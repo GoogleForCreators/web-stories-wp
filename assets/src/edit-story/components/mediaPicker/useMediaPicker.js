@@ -27,9 +27,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import useLocalMedia from '../../app/media/local/useLocalMedia';
 import { useConfig } from '../../app/config';
-import { useSnackbar } from '../../app/snackbar';
 import { useAPI } from '../../app/api';
 import { trackEvent } from '../../../tracking';
 
@@ -38,19 +36,16 @@ export default function useMediaPicker({
   buttonInsertText = __('Insert into page', 'web-stories'),
   onSelect = () => {},
   onClose = () => {},
+  onPermissionError = () => {},
   type = '',
   multiple = false,
 }) {
-  const { uploadVideoPoster } = useLocalMedia((state) => ({
-    uploadVideoPoster: state.actions.uploadVideoPoster,
-  }));
   const {
     actions: { updateMedia },
   } = useAPI();
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const { showSnackbar } = useSnackbar();
   useEffect(() => {
     try {
       // Work around that forces default tab as upload tab.
@@ -61,27 +56,24 @@ export default function useMediaPicker({
   });
   useEffect(() => {
     try {
+      // Handles the video processing logic from WordPress.
+      // The Uploader.success callback is invoked when a user uploads a file.
+      // Race condition concern: the video content is not guaranteed to be
+      // available in this callback. For the video poster insertion, please check: assets/src/edit-story/components/library/panes/media/local/mediaPane.js
       wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, { media_source: 'editor' });
-        if (attributes.type === 'video') {
-          uploadVideoPoster(attributes.id, attributes.url);
-        }
       };
     } catch (e) {
       // Silence.
     }
-  }, [uploadVideoPoster, updateMedia]);
+  }, [updateMedia]);
 
   const openMediaPicker = (evt) => {
     trackEvent('open_media_modal', 'editor');
 
     // If a user does not have the rights to upload to the media library, do not show the media picker.
     if (!hasUploadMediaAction) {
-      const message = __(
-        'Sorry, you are unable to upload files.',
-        'web-stories'
-      );
-      showSnackbar({ message });
+      onPermissionError();
       evt.preventDefault();
       return false;
     }

@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
@@ -25,7 +26,14 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { DIRECTION, ROTATION } from '../../../../animation';
+import {
+  DIRECTION,
+  ROTATION,
+  SCALE_DIRECTION,
+  SCALE_DIRECTION_MAP,
+} from '../../../../animation';
+import useRadioNavigation from '../../form/shared/useRadioNavigation';
+import WithTooltip from '../../tooltip';
 
 const Svg = styled.svg`
   display: block;
@@ -33,10 +41,6 @@ const Svg = styled.svg`
   width: ${({ size }) => size};
   fill: none;
   transform-origin: 50% 50%;
-`;
-
-const Icon = styled.div`
-  padding: 4px;
   transform: ${({ direction }) => {
     switch (direction) {
       case DIRECTION.RIGHT_TO_LEFT:
@@ -47,14 +51,41 @@ const Icon = styled.div`
         return 'rotate(90deg)';
       case ROTATION.COUNTER_CLOCKWISE:
         return 'rotateX(180deg) rotateZ(90deg)';
+      case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+        return 'rotate(-135deg)';
+      case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+        return 'rotate(135deg)';
+      case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+        return 'rotate(-315deg)';
+      case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+        return 'rotate(315deg)';
       default:
         return 'rotate(0deg)';
     }
   }};
 `;
 
-const RotationIcon = () => (
-  <Svg size="19px" viewBox="0 0 19 18">
+const Icon = styled.div`
+  padding: 6px;
+  border-radius: 4px;
+  stroke: #e4e5e6;
+  stroke-width: 1px;
+  ${({ selected, disabled }) =>
+    selected &&
+    !disabled &&
+    css`
+      background-color: #51389d;
+    `}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      stroke: #5e6668;
+    `}
+`;
+
+const RotationIcon = ({ direction }) => (
+  <Svg size="16px" viewBox="0 0 19 18" direction={direction}>
     <path
       strokeLinecap="round"
       d="M1 17.5V17.5C1 10.5964 6.59644 5 13.5 5L17.5 5M17.5 5L13.5 1M17.5 5L13.5 9"
@@ -62,26 +93,28 @@ const RotationIcon = () => (
   </Svg>
 );
 
-const DirectionIcon = () => (
-  <Svg size="16px" viewBox="0 0 10 11">
+const DirectionIcon = ({ direction }) => (
+  <Svg size="13px" viewBox="0 0 10 11" direction={direction}>
     <path strokeLinecap="round" d="M5 11L5 1M5 1L9 5M5 1L1 5" />
   </Svg>
 );
 
-const Direction = ({ className, direction }) => (
-  <Icon className={className} direction={direction}>
-    {Object.values(DIRECTION).includes(direction) ? (
-      <DirectionIcon />
+const Direction = ({ className, direction, selected, disabled }) => (
+  <Icon
+    className={className}
+    direction={direction}
+    selected={selected}
+    disabled={disabled}
+  >
+    {[...Object.values(DIRECTION), ...Object.values(SCALE_DIRECTION)].includes(
+      direction
+    ) ? (
+      <DirectionIcon direction={direction} />
     ) : (
-      <RotationIcon />
+      <RotationIcon direction={direction} />
     )}
   </Icon>
 );
-
-Direction.propTypes = {
-  className: PropTypes.string,
-  direction: PropTypes.oneOf(Object.values(DIRECTION)),
-};
 
 // Must be a styled component to add component selectors in css
 const DirectionIndicator = styled(Direction)``;
@@ -90,9 +123,7 @@ const Fieldset = styled.fieldset`
   position: relative;
   height: 80px;
   width: 80px;
-  background-color: ${({ theme }) => theme.colors.bg.workspace};
-  border: 1px solid ${({ theme }) => theme.colors.fg.v9};
-  border-radius: 4px;
+  border: 1px solid #393d3f;
 `;
 
 const Figure = styled.div`
@@ -100,9 +131,10 @@ const Figure = styled.div`
   display: block;
   top: 50%;
   left: 50%;
-  width: 18px;
-  height: 26px;
+  width: 8px;
+  height: 8px;
   background: ${({ theme }) => theme.colors.fg.v9};
+  background: #e4e5e6;
   border-radius: 2px;
   transform: translate(-50%, -50%);
 `;
@@ -116,53 +148,65 @@ const Label = styled.label`
       case DIRECTION.RIGHT_TO_LEFT:
         return css`
           top: 50%;
-          right: 0;
+          right: 4px;
           transform: translateY(-50%);
         `;
       case DIRECTION.TOP_TO_BOTTOM:
         return css`
-          top: 0;
+          top: 4px;
           left: 50%;
           transform: translateX(-50%);
         `;
       case DIRECTION.LEFT_TO_RIGHT:
         return css`
           top: 50%;
-          left: 0;
+          left: 4px;
           transform: translateY(-50%);
         `;
       case ROTATION.CLOCKWISE:
         return css`
-          top: 0;
-          left: 0;
+          top: 4px;
+          left: 4px;
           transform: translateX(20%);
         `;
       case ROTATION.COUNTER_CLOCKWISE:
         return css`
-          bottom: 0;
-          right: 0;
+          bottom: 4px;
+          right: 4px;
           transform: translate(-10%, -10%);
         `;
+
+      case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+        return css`
+          bottom: 4px;
+          left: 4px;
+        `;
+      case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+        return css`
+          top: 4px;
+          left: 4px;
+        `;
+      case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+        return css`
+          top: 4px;
+          right: 4px;
+        `;
+      case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+        return css`
+          bottom: 4px;
+          right: 4px;
+        `;
+
       default:
         return css`
-          bottom: 0;
+          bottom: 4px;
           left: 50%;
           transform: translateX(-50%);
         `;
     }
   }}
 
-  ${DirectionIndicator} {
-    stroke: ${({ theme }) => theme.colors.fg.v9};
-    stroke-width: 1px;
-  }
-
-  input:checked ~ ${DirectionIndicator} {
-    stroke: ${({ theme }) => theme.colors.activeDirection};
-    stroke-width: 2px;
-  }
-
-  input:focus ~ ${DirectionIndicator} {
+  input:focus ~ * > ${DirectionIndicator} {
     outline: 2px auto ${({ theme }) => theme.colors.accent.primary};
   }
 `;
@@ -195,32 +239,118 @@ const translations = {
   [DIRECTION.BOTTOM_TO_TOP]: __('bottom to top', 'web-stories'),
   [ROTATION.CLOCKWISE]: __('clockwise', 'web-stories'),
   [ROTATION.COUNTER_CLOCKWISE]: __('counterclockwise', 'web-stories'),
+  [SCALE_DIRECTION.SCALE_IN]: __('scale in', 'web-stories'),
+  [SCALE_DIRECTION.SCALE_OUT]: __('scale out', 'web-stories'),
 };
 
-export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
+const valueForInternalValue = (value) => {
+  switch (value) {
+    case SCALE_DIRECTION.SCALE_IN_TOP_LEFT:
+      return SCALE_DIRECTION.SCALE_IN;
+    case SCALE_DIRECTION.SCALE_IN_BOTTOM_RIGHT:
+      return SCALE_DIRECTION.SCALE_IN;
+    case SCALE_DIRECTION.SCALE_OUT_BOTTOM_LEFT:
+      return SCALE_DIRECTION.SCALE_OUT;
+    case SCALE_DIRECTION.SCALE_OUT_TOP_RIGHT:
+      return SCALE_DIRECTION.SCALE_OUT;
+    default:
+      return value;
+  }
+};
+const isInternalScaleDirection = (value) =>
+  [...SCALE_DIRECTION_MAP.SCALE_IN, ...SCALE_DIRECTION_MAP.SCALE_OUT].includes(
+    value
+  );
+
+const splitCamelCase = (camelCase = '') =>
+  camelCase
+    ?.replace(/([a-z])([A-Z])/g, '$1 $2')
+    ?.toLocaleLowerCase()
+    ?.split(' ') || [];
+
+const getPrefixFromCamelCase = (camelCase = '') =>
+  splitCamelCase(camelCase)?.[0];
+
+const getPostfixFromCamelCase = (camelCase = '') => {
+  const split = splitCamelCase(camelCase);
+  return split[split.length - 1];
+};
+
+export const DirectionRadioInput = ({
+  value,
+  directions = [],
+  onChange,
+  disabled = [],
+  tooltip,
+}) => {
+  const inputRef = useRef();
+
+  const flattenedDirections = useMemo(() => {
+    const dir = [];
+    if (
+      !directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
+      !directions.includes(SCALE_DIRECTION.SCALE_IN)
+    ) {
+      dir.push(...directions);
+    } else {
+      // Controlling order these get added to flattenedDirections makes sure the indexable order makes sense for keyboard users
+      directions.includes(SCALE_DIRECTION.SCALE_OUT) &&
+        dir.push(
+          SCALE_DIRECTION_MAP.SCALE_OUT[0],
+          SCALE_DIRECTION_MAP.SCALE_OUT[1]
+        );
+      directions.includes(SCALE_DIRECTION.SCALE_IN) &&
+        dir.push(
+          SCALE_DIRECTION_MAP.SCALE_IN[0],
+          SCALE_DIRECTION_MAP.SCALE_IN[1]
+        );
+    }
+    return dir;
+  }, [directions]);
+  useRadioNavigation(inputRef);
+
   return (
     <Fieldset>
       <Figure />
       <HiddenLegend>{__('Which Direction?', 'web-stories')}</HiddenLegend>
-      <RadioGroup>
-        {directions.map((direction) => (
-          <Label
-            key={direction}
-            aria-label={translations[direction]}
-            htmlFor={direction}
-            direction={direction}
-          >
-            <HiddenInput
-              id={direction}
-              type="radio"
-              name="direction"
-              value={direction}
-              onChange={onChange}
-              checked={value === direction}
-            />
-            <DirectionIndicator direction={direction} />
-          </Label>
-        ))}
+      <RadioGroup ref={inputRef}>
+        {flattenedDirections.map((direction) => {
+          const isDisabled = disabled?.includes(
+            valueForInternalValue(direction)
+          );
+          return (
+            <Label
+              key={direction}
+              aria-label={translations[direction]}
+              htmlFor={direction}
+              direction={direction}
+            >
+              <HiddenInput
+                id={direction}
+                type="radio"
+                name="direction"
+                value={valueForInternalValue(direction)}
+                onChange={onChange}
+                checked={value === direction || direction?.includes(value)}
+                disabled={isDisabled}
+              />
+              <WithTooltip
+                title={isDisabled ? tooltip : ''}
+                placement={
+                  isInternalScaleDirection(direction)
+                    ? getPostfixFromCamelCase(direction)
+                    : getPrefixFromCamelCase(direction)
+                }
+              >
+                <DirectionIndicator
+                  direction={direction}
+                  selected={value === direction || direction?.includes(value)}
+                  disabled={isDisabled}
+                />
+              </WithTooltip>
+            </Label>
+          );
+        })}
       </RadioGroup>
     </Fieldset>
   );
@@ -229,10 +359,28 @@ export const DirectionRadioInput = ({ value, directions = [], onChange }) => {
 const directionPropType = PropTypes.oneOf([
   ...Object.values(DIRECTION),
   ...Object.values(ROTATION),
+  ...Object.values(SCALE_DIRECTION),
 ]);
 
 DirectionRadioInput.propTypes = {
   value: directionPropType,
   directions: PropTypes.arrayOf(directionPropType),
+  disabled: PropTypes.arrayOf(directionPropType),
   onChange: PropTypes.func,
+  tooltip: PropTypes.string,
+};
+
+Direction.propTypes = {
+  className: PropTypes.string,
+  direction: directionPropType,
+  selected: PropTypes.bool,
+  disabled: PropTypes.bool,
+};
+
+DirectionIcon.propTypes = {
+  direction: directionPropType,
+};
+
+RotationIcon.propTypes = {
+  direction: directionPropType,
 };

@@ -67,7 +67,6 @@ function FontControls({ selectedElements, pushUpdate }) {
     ({ font }) => font?.family
   );
   const fontSize = getCommonValue(selectedElements, 'fontSize');
-
   const {
     textInfo: { fontWeight, isItalic },
     handlers: { handleSelectFontWeight },
@@ -83,6 +82,7 @@ function FontControls({ selectedElements, pushUpdate }) {
       fonts,
     })
   );
+
   const fontWeights = useMemo(() => getFontWeights(getFontByName(fontFamily)), [
     getFontByName,
     fontFamily,

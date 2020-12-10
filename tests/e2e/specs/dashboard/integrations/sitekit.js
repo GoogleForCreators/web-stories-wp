@@ -47,6 +47,10 @@ describe('Site Kit integration with dashboard', () => {
       text: 'Editor Settings',
     });
 
+    await page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/media')
+    );
+
     await percySnapshot(page, 'Stories Dashboard with Site Kit');
 
     await expect(page).toMatch(

@@ -37,6 +37,7 @@ import TitleMissingDialog from '../titleMissingDialog';
 import useHeader from '../use';
 import { usePrepublishChecklist } from '../../inspector/prepublish';
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
+import { ButtonContent, WarningIcon } from './styles';
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(
@@ -105,7 +106,10 @@ function Publish() {
       onClick={handlePublish}
       isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
     >
-      {text}
+      <ButtonContent>
+        {text}
+        {tooltip && <WarningIcon />}
+      </ButtonContent>
     </Primary>
   );
 

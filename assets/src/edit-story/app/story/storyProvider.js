@@ -101,7 +101,7 @@ function StoryProvider({ storyId, children }) {
     const animations = (currentPage.animations || []).reduce(
       (acc, { targets, ...properties }) => {
         if (targets.some((id) => selection.includes(id))) {
-          return [...acc, { ...properties }];
+          return [...acc, { targets, ...properties }];
         }
 
         return acc;

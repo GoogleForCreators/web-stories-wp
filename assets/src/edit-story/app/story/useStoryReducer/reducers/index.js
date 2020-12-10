@@ -40,6 +40,7 @@ export { default as toggleElement } from './toggleElement';
 
 // Manipulate animation state
 export { default as updateAnimationState } from './updateAnimationState';
+export { default as addAnimations } from './addAnimations';
 
 // Manipulate entire internal state.
 export { default as restore } from './restore';
