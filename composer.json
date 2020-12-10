@@ -68,6 +68,9 @@
       "sabberworm/php-css-parser": {
         "Add additional validation for size unit <https://github.com/sabberworm/PHP-CSS-Parser/pull/193>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/3bc5ded67d77a52b81608cfc97f23b1bb0678e2f%5E...468da3441945e9c1bf402a3340b1d8326723f7d9.patch",
         "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
+      },
+      "ampproject/amp-wp": {
+        "Patch missing const": "patches/amp_version.patch"
       }
     },
     "patches-ignore": {
@@ -86,9 +89,7 @@
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
       "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
     },
-    "files": [
-      "includes/polyfills/mbstring.php"
-    ]
+    "files": ["includes/polyfills/mbstring.php"]
   },
   "autoload-dev": {
     "psr-4": {
@@ -111,12 +112,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-install-cmd": [
-      "@prefix-dependencies"
-    ],
-    "post-update-cmd": [
-      "@prefix-dependencies"
-    ],
+    "post-install-cmd": ["@prefix-dependencies"],
+    "post-update-cmd": ["@prefix-dependencies"],
     "composer-normalize": "composer-normalize",
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",

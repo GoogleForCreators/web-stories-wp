@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "204d0a7df69b7056b370f766872c2260",
+    "content-hash": "9a2795e00ab07f75d945c8ef7c295435",
     "packages": [
         {
             "name": "ampproject/amp-wp",
-            "version": "2.0.7",
+            "version": "2.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "d61a8cf0882be82b7039997702e80cfbe167809f"
+                "reference": "09af21aeb5f2309071be58b89edc02bbdb09f72c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/d61a8cf0882be82b7039997702e80cfbe167809f",
-                "reference": "d61a8cf0882be82b7039997702e80cfbe167809f",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/09af21aeb5f2309071be58b89edc02bbdb09f72c",
+                "reference": "09af21aeb5f2309071be58b89edc02bbdb09f72c",
                 "shasum": ""
             },
             "require": {
@@ -32,7 +32,7 @@
                 "ext-libxml": "*",
                 "ext-spl": "*",
                 "fasterimage/fasterimage": "1.5.0",
-                "php": "^5.6 || ^7.0",
+                "php": "^5.6 || ^7.0 || ^8.0",
                 "sabberworm/php-css-parser": "dev-master#bfdd976"
             },
             "require-dev": {
@@ -67,6 +67,9 @@
                         "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
                         "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
                     }
+                },
+                "patches_applied": {
+                    "Patch missing const": "patches/amp_version.patch"
                 }
             },
             "autoload": {
@@ -105,7 +108,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2020-11-19T21:39:32+00:00"
+            "time": "2020-12-09T21:56:42+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
