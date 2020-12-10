@@ -54,6 +54,7 @@ export function EffectWhooshIn({
     duration,
     delay,
     easing,
+    element,
   });
 
   const {

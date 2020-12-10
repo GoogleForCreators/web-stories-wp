@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { AnimationMove } from '../../parts/move';
-import getOffPageOffset from '../../utils/getOffPageOffset';
+import { getOffPageOffset } from '../../utils';
 import { DIRECTION } from '../../constants';
 
 export function EffectFlyIn({
@@ -52,5 +52,6 @@ export function EffectFlyIn({
     duration,
     delay,
     easing,
+    element,
   });
 }

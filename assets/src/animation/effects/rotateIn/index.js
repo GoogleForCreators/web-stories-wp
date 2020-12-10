@@ -27,7 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { AnimationMove } from '../../parts/move';
 import { AnimationSpin } from '../../parts/spin';
-import getOffPageOffset from '../../utils/getOffPageOffset';
+import { getOffPageOffset } from '../../utils';
 import { DIRECTION } from '../../constants';
 
 const numberOfRotations = 1;
@@ -59,6 +59,7 @@ export function EffectRotateIn({
     duration,
     delay,
     easing,
+    element,
   });
 
   const {
@@ -76,6 +77,7 @@ export function EffectRotateIn({
     duration,
     delay,
     easing,
+    element,
   });
 
   return {
