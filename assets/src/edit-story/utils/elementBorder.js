@@ -106,7 +106,7 @@ export function getInnerRadius(outerRadius, oneSide, otherSide) {
 }
 
 function getPercentage(value, fullValue) {
-  if (!value) {
+  if (!value || !fullValue) {
     return 0;
   }
   return (value / fullValue) * 100;
