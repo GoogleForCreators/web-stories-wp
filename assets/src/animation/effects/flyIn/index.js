@@ -17,9 +17,9 @@
 /**
  * Internal dependencies
  */
+import { DIRECTION } from '../../constants';
 import { AnimationMove } from '../../parts/move';
 import { getOffPageOffset } from '../../utils';
-import { DIRECTION } from '../../constants';
 
 export function EffectFlyIn({
   duration = 600,

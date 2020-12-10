@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import SimpleAnimation from '../../parts/simpleAnimation';
-import { getOffPageOffset, getGlobalSpace } from '../../utils';
+import { getGlobalSpace, getOffPageOffset } from '../../utils';
 
 const getMinTopOffset = (element) =>
   getOffPageOffset({

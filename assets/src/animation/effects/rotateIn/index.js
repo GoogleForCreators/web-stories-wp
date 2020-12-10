@@ -18,17 +18,13 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
+import { DIRECTION } from '../../constants';
 import { AnimationMove } from '../../parts/move';
 import { AnimationSpin } from '../../parts/spin';
 import { getOffPageOffset } from '../../utils';
-import { DIRECTION } from '../../constants';
 
 const numberOfRotations = 1;
 const stopAngle = 0;

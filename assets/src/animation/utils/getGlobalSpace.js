@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * @typedef {import('../../edit-story/types').Element} Element
+ */
+
 /**
  * Just the functional equivalent of your baseline template literal.
  *
@@ -25,7 +30,7 @@
  * @param {Array<any>} args arguments in template tag
  * @return {string} string result
  */
-function literal(strings, ...args) {
+export function literal(strings, ...args) {
   return strings
     .reduce((accum, str, i) => accum.concat([str, args[i]]), [])
     .join('');
@@ -45,14 +50,14 @@ function literal(strings, ...args) {
  * ];
  * ```
  *
- * @param {*} element story element to derive counter transforms off of.
+ * @param {Element} element story element to derive counter transforms off of.
  * @return {(s: string[], ...args: any[]) => string} template string tag that resets transform space.
  */
 export function getGlobalSpace(element = {}) {
   function global(...template) {
-    return `rotate(${-1 * element?.rotationAngle}deg) 
-    ${literal(...template)} 
-    rotate(${element?.rotationAngle}deg)`;
+    return `rotate(${-1 * element?.rotationAngle}deg) ${literal(
+      ...template
+    )} rotate(${element?.rotationAngle}deg)`;
   }
   return element?.rotationAngle ? global : literal;
 }
