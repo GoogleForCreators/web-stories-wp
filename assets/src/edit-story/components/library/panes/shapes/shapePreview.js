@@ -28,6 +28,7 @@ import useLibrary from '../../useLibrary';
 import { PAGE_WIDTH } from '../../../../constants';
 import createSolidFromString from '../../../../utils/createSolidFromString';
 import LibraryMoveable from '../shared/libraryMoveable';
+import { useUnits } from '../../../../units';
 
 // By default, the element should be 33% of the page.
 const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -114,6 +115,10 @@ function ShapePreview({ mask, isPreview }) {
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
 
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
@@ -150,16 +155,6 @@ function ShapePreview({ mask, isPreview }) {
     </svg>
   );
 
-  // Callback that sets the drag image and adds information about the shape
-  // to be used in an [insertElement] call on the drop handler.
-  const onDragStart = (e) => {
-    const { x, y } = pathRef.current.getBoundingClientRect();
-    const offsetX = e.clientX - x;
-    const offsetY = e.clientY - y;
-    e.dataTransfer.setDragImage(pathRef.current, offsetX, offsetY);
-    e.dataTransfer.setData('shape', JSON.stringify(shapeData));
-  };
-
   return (
     <Aspect>
       <AspectInner>
@@ -177,8 +172,8 @@ function ShapePreview({ mask, isPreview }) {
         }}
         cloneElement={ShapeClone}
         cloneProps={{
-          width: DEFAULT_ELEMENT_WIDTH * mask.ratio,
-          height: DEFAULT_ELEMENT_WIDTH,
+          width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * mask.ratio),
+          height: dataToEditorY(DEFAULT_ELEMENT_WIDTH),
           children: svg,
         }}
       />
