@@ -106,8 +106,7 @@ jobs:
       - name: Update PHPUnit
         run: |
           git apply patches/composer.patch
-          composer remove --dev --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit
-          composer require --dev --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5
+          composer require --dev --ignore-platform-reqs --no-interaction phpunit/phpunit:^7.5
         if: ${{ matrix.php == '8.0' }}
 
       - name: Run tests
