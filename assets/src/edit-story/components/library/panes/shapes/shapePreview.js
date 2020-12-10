@@ -91,6 +91,7 @@ const ShapeClone = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   svg {

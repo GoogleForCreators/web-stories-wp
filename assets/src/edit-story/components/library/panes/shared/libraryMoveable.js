@@ -90,7 +90,11 @@ function LibraryMoveable({
 
   const onDrag = ({ beforeTranslate, inputEvent }) => {
     frame.translate = beforeTranslate;
-    if (cloneRef.current) {
+    // Don't display the clone right away since otherwise it will be triggered for a click as well.
+    if (
+      cloneRef.current &&
+      inputEvent.timeStamp - eventTracker.current.timeStamp > 300
+    ) {
       if (!cloneRef.current.style.opacity) {
         // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
         cloneRef.current.style.opacity = 1;
