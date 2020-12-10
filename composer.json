@@ -11,7 +11,7 @@
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.5",
+    "ampproject/amp-wp": "^2.0.8",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "mcaskill/composer-exclude-files": "^2.0",
