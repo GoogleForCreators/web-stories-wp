@@ -47,7 +47,8 @@ const createGrid = ({ columns, gap, minWidth }) => css`
   }
 `;
 
-const Aspect = styled.div`
+// Using button directly breaks the DOM nesting for tests.
+const Aspect = styled.div.attrs({ role: 'button' })`
   position: relative;
   flex-grow: 0;
   flex-shrink: 0;

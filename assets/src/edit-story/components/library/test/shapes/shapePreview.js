@@ -46,7 +46,7 @@ describe('ShapePreview', () => {
     }));
   });
 
-  it('should be draggable', () => {
+  it('should render', () => {
     let shapePreviewElement;
     act(() => {
       const { getByLabelText } = renderWithTheme(
@@ -55,6 +55,6 @@ describe('ShapePreview', () => {
       shapePreviewElement = getByLabelText(rectangleMask.name);
     });
 
-    expect(shapePreviewElement).toHaveAttribute('draggable');
+    expect(shapePreviewElement).toBeInTheDocument();
   });
 });
