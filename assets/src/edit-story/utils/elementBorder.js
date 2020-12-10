@@ -126,7 +126,11 @@ function getCornerPercentages(borderRadius, measure) {
   )}%`;
 }
 
-export function getBorderRadius({ borderRadius, width, height }) {
+export function getBorderRadius(element) {
+  if (!canMaskHaveBorder(element)) {
+    return {};
+  }
+  const { borderRadius, width, height } = element;
   if (!borderRadius) {
     return {};
   }
