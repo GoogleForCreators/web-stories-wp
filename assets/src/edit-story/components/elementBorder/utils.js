@@ -61,19 +61,13 @@ export function getBorderPositionCSS({
   return '';
 }
 
-export function getBorderStyle({
-  color: rawColor,
-  left,
-  top,
-  right,
-  bottom,
-  borderRadius,
-  skipPositioning = true,
-}) {
+export function getBorderStyle(element) {
   // If there's no border, return the radius only.
-  if (!hasBorder({ border: { color: rawColor, left, top, right, bottom } })) {
-    return getBorderRadius({ borderRadius });
+  if (!hasBorder(element)) {
+    return getBorderRadius(element);
   }
+  const { border, borderRadius } = element;
+  const { color: rawColor, left, top, right, bottom } = border;
   const color = getBorderColor({ color: rawColor });
 
   // We're making the border-width responsive just for the preview,
@@ -89,7 +83,6 @@ export function getBorderStyle({
       top,
       right,
       bottom,
-      skipPositioning,
     }),
     borderWidth,
     borderColor: color,

@@ -61,7 +61,7 @@ export const elementWithBorderRadius = css`
 export const elementWithBorder = css`
   ${({ border, borderRadius }) =>
     getBorderStyle({
-      ...border,
+      border,
       borderRadius,
     })}
   background-clip: padding-box;

@@ -85,9 +85,7 @@ function OutputElement({ element }) {
           box={box}
           id={'el-' + id}
           style={{
-            ...(shouldDisplayBorder(element)
-              ? getBorderStyle({ ...border, borderRadius, opacity })
-              : null),
+            ...(shouldDisplayBorder(element) ? getBorderStyle(element) : null),
             pointerEvents: 'initial',
             width: '100%',
             height: '100%',
@@ -95,7 +93,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
-            ...getBorderRadius({ border, borderRadius }),
+            ...getBorderRadius(element),
             ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
               ? bgStyles
               : null),

@@ -104,7 +104,6 @@ function MediaEdit({ element, box }) {
     focalY,
     isBackground,
     type,
-    border,
     borderRadius,
   } = element;
   const { x, y, width, height, rotationAngle } = box;
@@ -218,9 +217,7 @@ function MediaEdit({ element, box }) {
   }, [handleWheel]);
 
   const borderProps =
-    shouldDisplayBorder(element) && borderRadius
-      ? { borderRadius, border }
-      : null;
+    shouldDisplayBorder(element) && borderRadius ? element : null;
 
   return (
     <Element ref={elementRef}>
