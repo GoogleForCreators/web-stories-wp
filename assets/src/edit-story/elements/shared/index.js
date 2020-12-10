@@ -27,7 +27,7 @@ import { calcFontMetrics, generateFontFamily } from '../text/util';
 import {
   getBorderStyle,
   getBorderRadius,
-} from '../../components/elementBorder/utils';
+} from '../../utils/elementBorder';
 
 export const elementFillContent = css`
   position: absolute;

@@ -35,7 +35,7 @@ import {
   getResponsiveBorder,
   getResponsiveBorderRadius,
   shouldDisplayBorder,
-} from '../../components/elementBorder/utils';
+} from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { useUnits } from '../../units';
 

@@ -35,7 +35,7 @@ import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '../../../animation';
 import useUnmount from '../../utils/useUnmount';
-import { shouldDisplayBorder } from '../../components/elementBorder/utils';
+import { shouldDisplayBorder } from '../../utils/elementBorder';
 import EditCropMoveable from './editCropMoveable';
 import { calculateSrcSet, mediaWithScale } from './util';
 import getMediaSizePositionProps from './getMediaSizePositionProps';

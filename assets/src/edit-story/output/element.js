@@ -28,7 +28,7 @@ import {
   getBorderRadius,
   getBorderStyle,
   shouldDisplayBorder,
-} from '../components/elementBorder/utils';
+} from '../utils/elementBorder';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
@@ -37,7 +37,6 @@ function OutputElement({ element }) {
     id,
     opacity,
     type,
-    borderRadius,
     border,
     backgroundColor,
     backgroundTextMode,

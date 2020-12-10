@@ -40,7 +40,7 @@ import {
   getBorderPositionCSS,
   getResponsiveBorder,
   shouldDisplayBorder,
-} from '../elementBorder/utils';
+} from '../../utils/elementBorder';
 
 const Wrapper = styled.div`
   ${elementWithPosition}

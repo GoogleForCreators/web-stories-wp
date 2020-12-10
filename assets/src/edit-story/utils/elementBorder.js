@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { canMaskHaveBorder } from '../../masks';
+import { canMaskHaveBorder } from '../masks';
 
 function hasBorder({ border }) {
   if (!border) {
