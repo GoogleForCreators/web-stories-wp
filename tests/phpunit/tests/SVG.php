@@ -37,8 +37,8 @@ class SVG extends \WP_UnitTestCase {
 				[
 					$svg,
 					'web_stories_allowed_mime_types',
-				] 
-			) 
+				]
+			)
 		);
 		$this->assertSame( 10, has_filter( 'upload_mimes', [ $svg, 'upload_mimes_add_svg' ] ) );
 		$this->assertSame( 10, has_filter( 'mime_types', [ $svg, 'mime_types_add_svg' ] ) );
@@ -50,8 +50,8 @@ class SVG extends \WP_UnitTestCase {
 				[
 					$svg,
 					'wp_generate_attachment_metadata',
-				] 
-			) 
+				]
+			)
 		);
 		$this->assertSame( 10, has_filter( 'wp_check_filetype_and_ext', [ $svg, 'wp_check_filetype_and_ext' ] ) );
 		$this->assertSame(
@@ -61,8 +61,8 @@ class SVG extends \WP_UnitTestCase {
 				[
 					$svg,
 					'filter_list_of_allowed_filetypes',
-				] 
-			) 
+				]
+			)
 		);
 	}
 
@@ -228,6 +228,30 @@ class SVG extends \WP_UnitTestCase {
 		$this->assertInstanceOf( 'WP_Error', $_results );
 		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
 		$this->assertSame( 'Unable to generate SVG image size.', $_results->get_error_message() );
+	}
+
+	/**
+	 * @covers ::get_svg_size
+	 * @covers ::get_svg_data
+	 * @covers ::get_xml
+	 */
+	public function test_get_svg_size_invalid_viewbox() {
+		$svg      = $this->get_svg_object();
+		$_results = $this->call_private_method( $svg, 'get_svg_size', [ __DIR__ . '/../data/add-invalid.svg' ] );
+
+		$this->assertInstanceOf( 'WP_Error', $_results );
+		$this->assertSame( 'invalid_svg_size', $_results->get_error_code() );
+		$this->assertSame( 'Unable to generate SVG image size.', $_results->get_error_message() );
+	}
+
+	/**
+	 * @covers ::get_xml
+	 */
+	public function test_get_xml_invalid_file() {
+		$svg      = $this->get_svg_object();
+		$_results = $this->call_private_method( $svg, 'get_xml', [ '' ] );
+
+		$this->assertFalse( $_results );
 	}
 
 	/**
