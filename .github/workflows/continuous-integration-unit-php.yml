@@ -88,8 +88,15 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer install --prefer-dist --no-suggest --no-progress --no-interaction --no-scripts
+          composer dump-autoload --no-interaction
+        if: ${{ matrix.php != '8.0' }}
+
+      - name: Install dependencies ( PHP 8.0 )
+        run: |
           composer install --prefer-dist --no-suggest --no-progress --no-interaction
           composer dump-autoload --no-interaction
+        if: ${{ matrix.php == '8.0' }}
 
       - name: Shutdown default MySQL service
         run: sudo service mysql stop
