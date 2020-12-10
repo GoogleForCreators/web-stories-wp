@@ -1,0 +1,25 @@
+diff --git a/composer.json b/composer.json
+index 8f4515700..bb367c9c6 100644
+--- a/composer.json
++++ b/composer.json
+@@ -94,7 +94,19 @@
+     "psr-4": {
+       "Google\\Web_Stories\\Tests\\": "tests/phpunit/includes",
+       "PHPStan\\WordPress\\": "tests/phpstan/src"
+-    }
++    },
++    "files": [
++        "/tmp/wordpress-tests-lib/includes/phpunit7/MockObject/Builder/NamespaceMatch.php",
++        "/tmp/wordpress-tests-lib/includes/phpunit7/MockObject/Builder/ParametersMatch.php",
++        "/tmp/wordpress-tests-lib/includes/phpunit7/MockObject/InvocationMocker.php",
++        "/tmp/wordpress-tests-lib/includes/phpunit7/MockObject/MockMethod.php"
++    ],
++    "exclude-from-classmap": [
++      "vendor/phpunit/phpunit/src/Framework/MockObject/Builder/NamespaceMatch.php",
++      "vendor/phpunit/phpunit/src/Framework/MockObject/Builder/ParametersMatch.php",
++      "vendor/phpunit/phpunit/src/Framework/MockObject/InvocationMocker.php",
++      "vendor/phpunit/phpunit/src/Framework/MockObject/MockMethod.php"
++    ]
+   },
+   "repositories": [
+     {

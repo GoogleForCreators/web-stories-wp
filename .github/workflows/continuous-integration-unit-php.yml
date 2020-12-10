@@ -35,18 +35,12 @@ jobs:
           - php: '5.6'
             wp: '5.3'
 
-          - php: '7.4'
-            wp: '5.6'
+          - php: '8.0'
+            wp: 'latest'
 
           - php: '7.4'
             wp: 'trunk'
             experimental: true
-
-    # Disabled as long as WordPress trunk does not properly support PHP 8
-    #          - php: '8.0'
-    #            wp: 'trunk'
-    #            coverage: false
-    #            experimental: true
 
     steps:
       - name: Checkout
@@ -104,6 +98,15 @@ jobs:
 
       - name: Set up tests
         run: bash bin/install-wp-tests.sh wordpress_test root '' 127.0.0.1:${{ job.services.mysql.ports['3306'] }} ${{ matrix.wp }} true
+
+      # 1. Installs PHPUnit 7.5 and patches it to run on PHP 8.
+      # 2. Dumps autoloader so mcaskill/composer-plugin-exclude-files is triggered.
+      - name: Update PHPUnit
+        run: |
+          composer require --dev --ignore-platform-reqs --no-interaction --no-scripts --update-with-all-dependencies phpunit/phpunit:^7.5
+          git apply patches/composer.patch
+          composer dump-autoload --no-interaction
+        if: ${{ matrix.php == '8.0' }}
 
       - name: Run tests
         run: |
