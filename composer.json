@@ -71,7 +71,8 @@
         "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
       },
       "enshrined/svg-sanitize": {
-        "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/master...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch"
+        "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch",
+        "Fix a PHP 8 deprecation warning <https://github.com/darylldoyle/svg-sanitizer/pull/45>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...c23734ebfa35aa40e975e76415da3698329ae7b2.patch"
       }
     },
     "patches-ignore": {

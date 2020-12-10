@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4adb09209e162bc781e766cad3d8f342",
+    "content-hash": "fc7d1814bce9ded215cfeccc62a9a4ad",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -227,7 +227,8 @@
             "type": "library",
             "extra": {
                 "patches_applied": {
-                    "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/master...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch"
+                    "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch",
+                    "Fix a PHP 8 deprecation warning <https://github.com/darylldoyle/svg-sanitizer/pull/45>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...c23734ebfa35aa40e975e76415da3698329ae7b2.patch"
                 }
             },
             "autoload": {
