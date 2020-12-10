@@ -145,7 +145,7 @@ function PageMenu() {
     pageSize: state.state.pageSize,
   }));
   const { isRTL } = useConfig();
-  const { showTextMagicAndHelperMode, enableAnimation } = useFeatures();
+  const { showTextMagicAndHelperMode } = useFeatures();
 
   const handleDeletePage = useCallback(() => deleteCurrentPage(), [
     deleteCurrentPage,
@@ -246,37 +246,36 @@ function PageMenu() {
             </Icon>
           </WithTooltip>
           <Space />
-          {enableAnimation &&
-            ([
-              STORY_ANIMATION_STATE.PLAYING,
-              STORY_ANIMATION_STATE.PLAYING_SELECTED,
-            ].includes(animationState) ? (
-              <WithTooltip
-                style={{ marginLeft: 'auto' }}
-                title={__('Stop', 'web-stories')}
+          {[
+            STORY_ANIMATION_STATE.PLAYING,
+            STORY_ANIMATION_STATE.PLAYING_SELECTED,
+          ].includes(animationState) ? (
+            <WithTooltip
+              style={{ marginLeft: 'auto' }}
+              title={__('Stop', 'web-stories')}
+            >
+              <Icon
+                onClick={toggleAnimationState}
+                disabled={!hasAnimations}
+                aria-label={__('Stop Page Animations', 'web-stories')}
               >
-                <Icon
-                  onClick={toggleAnimationState}
-                  disabled={!hasAnimations}
-                  aria-label={__('Stop Page Animations', 'web-stories')}
-                >
-                  <StopCircular />
-                </Icon>
-              </WithTooltip>
-            ) : (
-              <WithTooltip
-                style={{ marginLeft: 'auto' }}
-                title={__('Play', 'web-stories')}
+                <StopCircular />
+              </Icon>
+            </WithTooltip>
+          ) : (
+            <WithTooltip
+              style={{ marginLeft: 'auto' }}
+              title={__('Play', 'web-stories')}
+            >
+              <Icon
+                onClick={toggleAnimationState}
+                disabled={!hasAnimations}
+                aria-label={__('Play Page Animations', 'web-stories')}
               >
-                <Icon
-                  onClick={toggleAnimationState}
-                  disabled={!hasAnimations}
-                  aria-label={__('Play Page Animations', 'web-stories')}
-                >
-                  <PlayCircular />
-                </Icon>
-              </WithTooltip>
-            ))}
+                <PlayCircular />
+              </Icon>
+            </WithTooltip>
+          )}
         </Options>
         {showTextMagicAndHelperMode && (
           <Options>
