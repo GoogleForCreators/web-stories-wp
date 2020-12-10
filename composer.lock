@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a2795e00ab07f75d945c8ef7c295435",
+    "content-hash": "204d0a7df69b7056b370f766872c2260",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -67,9 +67,6 @@
                         "Validate name-start code points for identifier <https://github.com/sabberworm/PHP-CSS-Parser/pull/185>": "https://github.com/sabberworm/PHP-CSS-Parser/compare/d42b64793f2edaffeb663c63e9de79069cdc0831%5E...113df5d55e94e21c6402021dfa959924941d4c29.patch",
                         "Fix parsing CSS selectors which contain commas <https://github.com/westonruter/PHP-CSS-Parser/pull/1>": "https://github.com/westonruter/PHP-CSS-Parser/compare/master...10a2501c119abafced3e4014aa3c0a3453a86f67.patch"
                     }
-                },
-                "patches_applied": {
-                    "Patch missing const": "patches/amp_version.patch"
                 }
             },
             "autoload": {
