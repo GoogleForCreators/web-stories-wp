@@ -90,13 +90,6 @@ jobs:
         run: |
           composer install --prefer-dist --no-suggest --no-progress --no-interaction --no-scripts
           composer dump-autoload --no-interaction
-        if: ${{ matrix.php != '8.0' }}
-
-      - name: Install dependencies ( PHP 8.0 )
-        run: |
-          composer install --prefer-dist --no-suggest --no-progress --no-interaction
-          composer dump-autoload --no-interaction
-        if: ${{ matrix.php == '8.0' }}
 
       - name: Shutdown default MySQL service
         run: sudo service mysql stop
@@ -114,6 +107,7 @@ jobs:
         run: |
           git apply patches/composer.patch
           composer remove --dev --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit
+          composer remove --dev --ignore-platform-reqs --no-interaction --no-scripts ampproject/amp-wp
           composer require --dev --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5
         if: ${{ matrix.php == '8.0' }}
 
