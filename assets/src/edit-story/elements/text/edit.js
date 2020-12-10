@@ -139,7 +139,7 @@ function TextEdit({
     height: elementHeight,
     ...rest
   } = element;
-  const { font } = rest;
+  const { font, width: elementWidth } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -391,6 +391,8 @@ function TextEdit({
       ref={outsideBorderRef}
       border={border}
       borderRadius={borderRadius}
+      width={elementWidth}
+      height={elementHeight}
     >
       <Wrapper
         ref={wrapperRef}

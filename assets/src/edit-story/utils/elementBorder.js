@@ -66,7 +66,7 @@ export function getBorderStyle(element) {
   if (!hasBorder(element)) {
     return getBorderRadius(element);
   }
-  const { border, borderRadius } = element;
+  const { border } = element;
   const { color: rawColor, left, top, right, bottom } = border;
   const color = getBorderColor({ color: rawColor });
 
@@ -87,9 +87,7 @@ export function getBorderStyle(element) {
     borderWidth,
     borderColor: color,
     borderStyle: 'solid',
-    borderRadius: borderRadius
-      ? `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`
-      : null,
+    ...getBorderRadius(element),
   };
   return {
     top: 0,
@@ -107,12 +105,36 @@ export function getInnerRadius(outerRadius, oneSide, otherSide) {
   return outerRadius - Math.min(outerRadius, Math.max(oneSide, otherSide)) / 2;
 }
 
-export function getBorderRadius({ borderRadius }) {
+function getPercentage(value, fullValue) {
+  if (!value) {
+    return 0;
+  }
+  return (value / fullValue) * 100;
+}
+
+function getCornerPercentages(borderRadius, measure) {
+  if (!borderRadius) {
+    return '0%';
+  }
+  const { topLeft, topRight, bottomRight, bottomLeft } = borderRadius;
+  return `${getPercentage(topLeft, measure)}% ${getPercentage(
+    topRight,
+    measure
+  )}% ${getPercentage(bottomRight, measure)}% ${getPercentage(
+    bottomLeft,
+    measure
+  )}%`;
+}
+
+export function getBorderRadius({ borderRadius, width, height }) {
   if (!borderRadius) {
     return {};
   }
   return {
-    borderRadius: `${borderRadius.topLeft}px ${borderRadius.topRight}px ${borderRadius.bottomRight}px ${borderRadius.bottomLeft}px`,
+    borderRadius: `${getCornerPercentages(
+      borderRadius,
+      width
+    )} / ${getCornerPercentages(borderRadius, height)}`,
   };
 }
 
@@ -143,31 +165,5 @@ export function getResponsiveBorder(border, previewMode, converter) {
     top: converter(top),
     right: converter(right),
     bottom: converter(bottom),
-  };
-}
-
-/**
- * Returns border values based on if it's preview or not.
- *
- * @param {Object} borderRadius Original borderRadius.
- * @param {boolean} previewMode If it's preview mode.
- * @param {Function} converter Function to convert the values.
- * @return {Object} New border radius values.
- */
-export function getResponsiveBorderRadius(
-  borderRadius,
-  previewMode,
-  converter
-) {
-  if (!previewMode || !borderRadius) {
-    return borderRadius;
-  }
-  const { topLeft, topRight, bottomLeft, bottomRight } = borderRadius;
-  return {
-    ...borderRadius,
-    topLeft: converter(topLeft),
-    topRight: converter(topRight),
-    bottomLeft: converter(bottomLeft),
-    bottomRight: converter(bottomRight),
   };
 }

@@ -29,7 +29,6 @@ import { elementFillContent, elementWithBorder } from '../shared';
 import { useTransformHandler } from '../../components/transform';
 import {
   getResponsiveBorder,
-  getResponsiveBorderRadius,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
@@ -52,7 +51,17 @@ function MediaDisplay({
   previewMode,
   showPlaceholder = false,
 }) {
-  const { id, resource, scale, focalX, focalY, border, borderRadius } = element;
+  const {
+    id,
+    resource,
+    scale,
+    focalX,
+    focalY,
+    border,
+    borderRadius,
+    width,
+    height,
+  } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -97,11 +106,9 @@ function MediaDisplay({
     <Element
       ref={ref}
       border={getResponsiveBorder(border, previewMode, dataToEditorX)}
-      borderRadius={getResponsiveBorderRadius(
-        borderRadius,
-        previewMode,
-        dataToEditorX
-      )}
+      borderRadius={borderRadius}
+      width={width}
+      height={height}
       showPlaceholder={showPlaceholder}
     >
       {children}
