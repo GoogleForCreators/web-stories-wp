@@ -394,12 +394,15 @@ class SVG {
 		if ( ! $loaded ) {
 			return false;
 		}
+
 		$node = $dom->getElementsByTagName( 'svg' )->item( 0 );
+
+		libxml_clear_errors();
+		libxml_use_internal_errors( $errors );
+
 		if ( ! $node ) {
 			return false;
 		}
-		libxml_clear_errors();
-		libxml_use_internal_errors( $errors );
 
 		return $node;
 	}
