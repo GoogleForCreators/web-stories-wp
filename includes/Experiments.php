@@ -218,6 +218,7 @@ class Experiments {
 				'label'       => __( 'Animations', 'web-stories' ),
 				'description' => __( 'Enable user facing animations', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @carlos-kelly
@@ -306,6 +307,7 @@ class Experiments {
 				'label'       => __( 'Pre-Publish', 'web-stories' ),
 				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @dmmulroy
