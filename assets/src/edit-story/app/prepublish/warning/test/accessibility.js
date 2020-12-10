@@ -208,7 +208,7 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
     });
   });
 
-  describe('videoElementMissingTitle', () => {
+  describe('videoElementMissingDescription', () => {
     it('should return a warning if video element missing title', () => {
       const element = {
         id: 'elementid',
@@ -216,29 +216,29 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         resource: {},
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.HELPER_TEXT,
+        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
     });
 
-    it('should return a warning if video element has empty title', () => {
+    it('should return a warning if video element has empty descriiption', () => {
       const element = {
         id: 'elementid',
         type: 'video',
-        title: '',
+        alt: '',
         resource: {
-          title: '',
+          alt: '',
         },
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toStrictEqual({
-        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.HELPER_TEXT,
+        message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
+        help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
         elementId: element.id,
         type: 'warning',
       });
@@ -248,11 +248,11 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       const element = {
         id: 'elementid',
         type: 'video',
-        title: 'Video title',
+        alt: 'Video description',
         resource: {},
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toBeUndefined();
     });
 
@@ -261,60 +261,11 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         id: 'elementid',
         type: 'video',
         resource: {
-          title: 'Video title',
+          alt: 'Video description',
         },
       };
       expect(
-        accessibilityChecks.videoElementMissingTitle(element)
-      ).toBeUndefined();
-    });
-  });
-
-  describe('videoElementMissingAlt', () => {
-    it('should return a warning if video element missing alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'video',
-        resource: {},
-      };
-      expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
-        {
-          message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.MAIN_TEXT,
-          help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.HELPER_TEXT,
-          elementId: element.id,
-          type: 'warning',
-        }
-      );
-    });
-
-    it('should return a warning if video element has empty alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'video',
-        alt: '',
-        resource: {
-          alt: '',
-        },
-      };
-      expect(accessibilityChecks.videoElementMissingAlt(element)).toStrictEqual(
-        {
-          message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.MAIN_TEXT,
-          help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.HELPER_TEXT,
-          elementId: element.id,
-          type: 'warning',
-        }
-      );
-    });
-
-    it('should return undefined if video element has alt', () => {
-      const element = {
-        id: 'elementid',
-        type: 'video',
-        alt: 'Video is about things',
-        resource: {},
-      };
-      expect(
-        accessibilityChecks.videoElementMissingAlt(element)
+        accessibilityChecks.videoElementMissingDescription(element)
       ).toBeUndefined();
     });
   });

@@ -56,7 +56,7 @@ export const defaultAttributes = {
     posterId: null,
     poster: null,
     id: 0,
-    title: '',
+    alt: '',
   },
 };
 

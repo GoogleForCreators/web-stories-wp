@@ -139,35 +139,16 @@ export function imageElementLowResolution(element) {
 }
 
 /**
- * Check video element for doesn’t include title
+ * Check video element for doesn’t include description.
  *
  * @param {Element} element The video element being checked for warnings
  * @return {Guidance|undefined} The guidance object for consumption
  */
-export function videoElementMissingTitle(element) {
-  if (!element.title?.length && !element.resource?.title?.length) {
+export function videoElementMissingDescription(element) {
+  if (!element.alt?.length && !element.resource?.alt?.length) {
     return {
-      message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.MAIN_TEXT,
-      help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_TITLE.HELPER_TEXT,
-      elementId: element.id,
-      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-    };
-  }
-
-  return undefined;
-}
-
-/**
- * Check video element for doesn’t include assistive text
- *
- * @param {Element} element The video element being checked for warnings
- * @return {Guidance|undefined} The guidance object for consumption
- */
-export function videoElementMissingAlt(element) {
-  if (!element.alt?.length) {
-    return {
-      message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.MAIN_TEXT,
-      help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_ALT_TEXT.HELPER_TEXT,
+      message: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.MISSING_VIDEO_DESCRIPTION.HELPER_TEXT,
       elementId: element.id,
       type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
     };

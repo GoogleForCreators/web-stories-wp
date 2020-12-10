@@ -98,10 +98,11 @@ function StoryEmbedEdit({
 
       try {
         setIsFetchingData(true);
-        const urlObj = new URL(url);
+        // Normalize input URL.
+        const urlToEmbed = encodeURIComponent(new URL(url).toString());
 
         const data = await apiFetch({
-          path: `web-stories/v1/embed?url=${urlObj.toString()}`,
+          path: `web-stories/v1/embed?url=${urlToEmbed}`,
         });
 
         setCannotEmbed(!data?.title);
