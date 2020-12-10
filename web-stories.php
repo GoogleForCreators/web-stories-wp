@@ -66,20 +66,6 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
 }
 
 /**
- * Makes sure that AMP__VERSION const is defined.
- *
- * @return void
- */
-function web_stories_backfill_consts() {
-	if ( ! defined( 'AMP__VERSION' ) ) {
-		define( 'AMP__VERSION', WEBSTORIES_AMP_VERSION );
-		define( 'AMP_PLUGIN_MOCKED', true );
-	}
-}
-add_action( 'plugins_loaded', 'web_stories_backfill_consts', 100 );
-
-
-/**
  * Setup web stories compatibility class.
  *
  * @SuppressWarnings(PHPMD.MissingImport)
