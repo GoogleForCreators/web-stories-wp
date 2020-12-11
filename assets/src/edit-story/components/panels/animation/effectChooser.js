@@ -270,16 +270,24 @@ export default function EffectChooser({
 
   const handleUpDown = useCallback(
     ({ key }) => {
-      if (key === 'ArrowUp' && focusedIndex !== 0) {
+      if ((key === 'ArrowUp' || key === 'ArrowLeft') && focusedIndex !== 0) {
         handleMoveFocus(-1);
-      } else if (key === 'ArrowDown' && focusedIndex < listLength - 1) {
+      } else if (
+        (key === 'ArrowDown' || key === 'ArrowRight') &&
+        focusedIndex < listLength - 1
+      ) {
         handleMoveFocus(1);
       }
     },
     [focusedIndex, handleMoveFocus, listLength]
   );
 
-  useKeyDownEffect(ref, { key: ['up', 'down'] }, handleUpDown, [handleUpDown]);
+  useKeyDownEffect(
+    ref,
+    { key: ['up', 'down', 'left', 'right'] },
+    handleUpDown,
+    [handleUpDown]
+  );
 
   useFocusOut(ref, () => onDismiss?.(), []);
 
