@@ -89,7 +89,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return parent::create_item( $request );
 		}
 
-		$response          = parent::create_item( $request );
+		$response = parent::create_item( $request );
 		if ( is_wp_error( $response ) ) {
 			return $response;
 		}

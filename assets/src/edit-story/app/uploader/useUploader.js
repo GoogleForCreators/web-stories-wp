@@ -121,7 +121,7 @@ function useUploader() {
       const additionalData = {
         post: storyId,
         media_source: 'editor',
-        ..._additionalData
+        ..._additionalData,
       };
 
       return uploadMedia(file, additionalData);
