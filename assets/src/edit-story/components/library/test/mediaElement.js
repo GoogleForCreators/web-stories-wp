@@ -36,6 +36,7 @@ const renderMediaElement = (resource, providerType) => {
       designSpaceGuideline: document.body,
       canvasContainer: document.body,
       pageContainer: document.body,
+      nodesById: [],
     },
   };
   const storyContext = {
@@ -43,6 +44,9 @@ const renderMediaElement = (resource, providerType) => {
       currentPage: {
         elements: [],
       },
+    },
+    actions: {
+      addElement: jest.fn(),
     },
   };
   return renderWithTheme(
