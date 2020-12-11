@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Media;
+use Google\Web_Stories\Database_Upgrader;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
@@ -193,13 +194,27 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return;
 		}
 
-		$meta_query = (array) $query->get( 'meta_query' );
+		$version = get_option( Database_Upgrader::OPTION, '0.0.0' );
+		if ( version_compare( '3.0.4', $version, '>=' ) ) {
+			$tax_query = (array) $query->get( 'tax_query' );
 
-		$meta_query[] = [
-			'key'     => Media::POSTER_POST_META_KEY,
-			'compare' => 'NOT EXISTS',
-		];
+			$tax_query[] = [
+				'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
+				'field'    => 'slug',
+				'terms'    => 'poster-generation',
+			];
 
-		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
+			$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
+		} else {
+
+			$meta_query = (array) $query->get( 'meta_query' );
+
+			$meta_query[] = [
+				'key'     => Media::POSTER_POST_META_KEY,
+				'compare' => 'NOT EXISTS',
+			];
+
+			$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
+		}
 	}
 }
