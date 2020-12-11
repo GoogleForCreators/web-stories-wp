@@ -34,6 +34,7 @@ import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
+import { useGlobalKeyDownEffect } from '../../../keyboard';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -54,6 +55,7 @@ function LibraryMoveable({
   const CloneElement = cloneElement;
 
   const [isDragging, setIsDragging] = useState(false);
+  const [didManuallyReset, setDidManuallyReset] = useState(false);
   const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
   const overlayRef = useRef(null);
@@ -86,16 +88,29 @@ function LibraryMoveable({
     };
   };
 
-  const resetMoveable = () => {
+  const resetMoveable = useCallback(() => {
     targetBoxRef.current.style.transform = null;
     cloneRef.current.style.transform = null;
     // Hide the clone, too.
     cloneRef.current.style.opacity = 0;
     setIsDragging(false);
     setDraggingResource(null);
-  };
+  }, [setDraggingResource]);
+
+  useGlobalKeyDownEffect(
+    'esc',
+    () => {
+      setDidManuallyReset(true);
+      isDragging && resetMoveable();
+    },
+    [isDragging, resetMoveable]
+  );
 
   const onDrag = ({ beforeTranslate, inputEvent }) => {
+    // This is needed if the user clicks "Esc" but continues dragging.
+    if (didManuallyReset) {
+      return false;
+    }
     frame.translate = beforeTranslate;
     if (cloneRef.current) {
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
@@ -110,6 +125,7 @@ function LibraryMoveable({
       targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
     handleDrag(inputEvent);
+    return undefined;
   };
 
   const getTargetOffset = useCallback(() => {
@@ -131,6 +147,7 @@ function LibraryMoveable({
   }, [overlayRef]);
 
   const onDragStart = ({ set, inputEvent }) => {
+    setDidManuallyReset(false);
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
     setIsDragging(true);
@@ -146,6 +163,9 @@ function LibraryMoveable({
   };
 
   const onDragEnd = ({ inputEvent }) => {
+    if (didManuallyReset) {
+      return false;
+    }
     if (isMouseUpAClick(inputEvent, eventTracker.current)) {
       resetMoveable();
       onClick();
