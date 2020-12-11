@@ -35,6 +35,8 @@ import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import { useGlobalKeyDownEffect } from '../../../keyboard';
+import { useStory } from '../../../../app/story';
+import objectWithout from '../../../../utils/objectWithout';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -65,14 +67,19 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer } = useCanvas((state) => ({
+  const { pageContainer, nodesById } = useCanvas((state) => ({
     pageContainer: state.state.pageContainer,
+    nodesById: state.state.nodesById,
   }));
 
   const {
     state: { activeDropTargetId },
     actions: { setDraggingResource },
   } = useDropTargets();
+
+  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
+    backgroundElement: currentPage.elements[0] ?? {},
+  }));
 
   const frame = {
     translate: [0, 0],
@@ -200,7 +207,9 @@ function LibraryMoveable({
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
-    otherNodes: [],
+    otherNodes: Object.values(
+      objectWithout(nodesById, [backgroundElement.id])
+    ),
     snappingOffsetX,
   });
 
