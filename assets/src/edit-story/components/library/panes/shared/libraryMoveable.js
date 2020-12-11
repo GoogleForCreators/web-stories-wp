@@ -89,9 +89,12 @@ function LibraryMoveable({
   const onDrag = ({ beforeTranslate, inputEvent }) => {
     frame.translate = beforeTranslate;
     if (cloneRef.current) {
-      if (!cloneRef.current.style.opacity) {
+      if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
         // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
         cloneRef.current.style.opacity = 1;
+      } else if (activeDropTargetId) {
+        // If there's an active drop target, let's hide the clone.
+        cloneRef.current.style.opacity = 0;
       }
       cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
       // We also have to move the original target ref for snapping to work.
