@@ -325,7 +325,10 @@ export default function EffectChooser({
       <GridLabel>
         <span>{__('Select Animation', 'web-stories')}</span>
       </GridLabel>
-      <Grid ref={ref}>
+      <Grid
+        ref={ref}
+        aria-label={__('Available Animations To Select', 'web-stories')}
+      >
         <NoEffect
           onClick={onNoEffectSelected}
           aria-label={__('None', 'web-stories')}
