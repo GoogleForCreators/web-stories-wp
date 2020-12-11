@@ -90,6 +90,10 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		}
 
 		$response          = parent::create_item( $request );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
 		$data              = $response->get_data();
 		$post_id           = $data['id'];
 		$attachment_before = $this->get_post( $post_id );
