@@ -96,7 +96,7 @@ class Carousel_Renderer extends Renderer {
 					layout="intrinsic"
 					type="carousel"
 					role="region"
-					aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
+					aria-label="<?php esc_attr_e( 'Basic carousel', 'web-stories' ); ?>"
 				>
 					<?php
 					foreach ( $this->story_posts as $story ) {
