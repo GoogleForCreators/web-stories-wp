@@ -35,10 +35,30 @@ function hasBorder({ border }) {
   return true;
 }
 
+/**
+ * Check if border should be displayed for an element.
+ *
+ * @param {Object} element Element object.
+ * @return {boolean} If should be displayed.
+ */
 export function shouldDisplayBorder(element) {
   return hasBorder(element) && canMaskHaveBorder(element);
 }
 
+/**
+ * Gets the CSS values for an element with border.
+ *
+ * @param {Object} obj An object with params relevant to border.
+ * @param {number} obj.left Left border width.
+ * @param {number} obj.top Top border width.
+ * @param {number} obj.right Right border width.
+ * @param {number} obj.bottom Bottom border width.
+ * @param {string} obj.width Original element width.
+ * @param {string} obj.height Original element height.
+ * @param {string} obj.posTop Element top position, needed for output mainly.
+ * @param {string} obj.posLeft Element left position, needed for output mainly.
+ * @return {Object} Positioning CSS.
+ */
 export function getBorderPositionCSS({
   left,
   top,
@@ -48,19 +68,21 @@ export function getBorderPositionCSS({
   height = '100%',
   posTop = '0px',
   posLeft = '0px',
-  skipPositioning = true,
 }) {
-  if (!skipPositioning) {
-    return {
-      left: `calc(${posLeft} - ${left}px)`,
-      top: `calc(${posTop} - ${top}px)`,
-      width: `calc(${width} + ${left + right}px)`,
-      height: `calc(${height} + ${top + bottom}px)`,
-    };
-  }
-  return '';
+  return {
+    left: `calc(${posLeft} - ${left}px)`,
+    top: `calc(${posTop} - ${top}px)`,
+    width: `calc(${width} + ${left + right}px)`,
+    height: `calc(${height} + ${top + bottom}px)`,
+  };
 }
 
+/**
+ * Gets style for the element with border.
+ *
+ * @param {Object} element Element.
+ * @return {Object} Border style.
+ */
 export function getBorderStyle(element) {
   // If there's no border, return the radius only.
   if (!hasBorder(element)) {
@@ -78,12 +100,6 @@ export function getBorderStyle(element) {
     bottom
   )}px ${Math.ceil(left)}px`;
   const borderStyle = {
-    ...getBorderPositionCSS({
-      left,
-      top,
-      right,
-      bottom,
-    }),
     borderWidth,
     borderColor: color,
     borderStyle: 'solid',
@@ -99,10 +115,6 @@ export function getBorderStyle(element) {
     position: 'absolute',
     ...borderStyle,
   };
-}
-
-export function getInnerRadius(outerRadius, oneSide, otherSide) {
-  return outerRadius - Math.min(outerRadius, Math.max(oneSide, otherSide)) / 2;
 }
 
 function getPercentage(value, fullValue) {
@@ -126,11 +138,20 @@ function getCornerPercentages(borderRadius, measure) {
   )}%`;
 }
 
+/**
+ * Gets border radius from pixel units.
+ *
+ * @param {Object} element Element.
+ * @return {{}|{borderRadius: string}} Border radius value for CSS.
+ */
 export function getBorderRadius(element) {
   const { borderRadius, width, height } = element;
   if (!borderRadius || !canMaskHaveBorder(element)) {
     return {};
   }
+  /* We're using the format
+    `border-radius: topLeft topRight bottomRight bottomLeft / topLeft topRight bottomRight bottomLeft`
+    here so that we could convert one px value for border into % value which required two values per each corner. */
   return {
     borderRadius: `${getCornerPercentages(
       borderRadius,
@@ -139,6 +160,13 @@ export function getBorderRadius(element) {
   };
 }
 
+/**
+ * Gets the border color from rgba object.
+ *
+ * @param {Object} color Solid color object.
+ * @param {Object} color.color Color object consisting rgba values.
+ * @return {string} rgba value for CSS.
+ */
 export function getBorderColor({ color }) {
   // Border color can be only solid.
   const {

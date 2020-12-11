@@ -70,7 +70,6 @@ function OutputElement({ element }) {
               height: `${height}%`,
               posTop: `${y}%`,
               posLeft: `${x}%`,
-              skipPositioning: false,
             })
           : null),
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,

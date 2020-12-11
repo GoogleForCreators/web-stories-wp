@@ -156,7 +156,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                   ...getResponsiveBorder(border, previewMode, dataToEditorX),
                   width: `${box.width}px`,
                   height: `${box.height}px`,
-                  skipPositioning: false,
                 })
               : null),
           }}
