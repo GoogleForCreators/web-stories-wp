@@ -41,6 +41,7 @@ use Google\Web_Stories\Block\Embed_Block;
 use Google\Web_Stories\REST_API\Stories_Settings_Controller;
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
+use Google\Web_Stories\Shortcode\Stories_Shortcode;
 
 /**
  * Plugin class.
@@ -256,6 +257,9 @@ class Plugin {
 		// Embed shortcode.
 		$this->embed_shortcode = new Embed_Shortcode();
 		add_action( 'init', [ $this->embed_shortcode, 'init' ] );
+
+		$story_shortcode = new Stories_Shortcode();
+		add_action( 'init', [ $story_shortcode, 'init' ] );
 
 		// Frontend.
 		$this->discovery = new Discovery();
