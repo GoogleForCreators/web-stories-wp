@@ -58,15 +58,24 @@ function getSpansFromContent(content) {
   );
 }
 
+// const TO_RADIANS = Math.PI / 180;
+
 function getOverlapBgColor({ elementId, pageId, bgImage, overlapBox }) {
   function getOnloadCallback(nodeKey, resolve, reject) {
     return () => {
       try {
         const node = document.body[nodeKey];
         const canvas = document.createElement('canvas');
+
         canvas.width = bgImage.width;
         canvas.height = bgImage.height;
+
         const ctx = canvas.getContext('2d');
+
+        if (bgImage.rotationAngle) {
+          // TODO rotation angles and image flip
+        }
+
         ctx.drawImage(
           node.firstElementChild,
           0,
@@ -74,12 +83,14 @@ function getOverlapBgColor({ elementId, pageId, bgImage, overlapBox }) {
           bgImage.width,
           bgImage.height
         );
+
         const imageData = ctx.getImageData(
           overlapBox.x,
           overlapBox.y,
           overlapBox.width,
           overlapBox.height
         );
+
         resolve(imageData);
       } catch (e) {
         reject(e);
@@ -102,9 +113,137 @@ function getOverlapBgColor({ elementId, pageId, bgImage, overlapBox }) {
   });
 }
 
-function textBgColorsLowContrast({ bgColor, textColors }) {
+function getOverlappingArea(a, b) {
+  const dx = Math.min(a.endX, b.endX) - Math.max(a.startX, b.startX);
+  const dy = Math.min(a.endY, b.endY) - Math.max(a.startY, b.startY);
+  if (dx >= 0 && dy >= 0) {
+    return dx * dy;
+  }
+  return 0;
+}
+
+function isOverlapSignificant(overlapArea, textBoxArea) {
+  return overlapArea >= 0.5 * textBoxArea;
+}
+
+function getMostOverlapForElement(
+  textElement,
+  potentialBackgroundElements,
+  pageSize
+) {
+  const textPos = getBox(textElement, pageSize?.width, pageSize?.height);
+  const textBox = getBoundRect([textPos]);
+  const textBoxArea = textBox.width * textBox.height;
+
+  const elementOverlaps = [...potentialBackgroundElements]
+    .filter(({ isBackground }) => !isBackground)
+    .map((element, index) => {
+      const bgPos = getBox(element, pageSize?.width, pageSize?.height);
+      const bgBox = getBoundRect([bgPos]);
+      const overlappingArea = getOverlappingArea(textBox, bgBox);
+      return { element, area: overlappingArea, index };
+    });
+
+  elementOverlaps.sort((a, b) => {
+    const { area: aArea, index: bIndex } = a;
+    const { area: bArea, index: aIndex } = b;
+
+    // a is in front of b and has a greater overlap, or its overlap is significant
+    if (
+      aIndex > bIndex &&
+      (aArea > bArea || isOverlapSignificant(aArea, textBoxArea))
+    ) {
+      return 1;
+    }
+    // b is in front of a and has a greater overlap, or its overlap is significant
+    if (
+      bIndex > aIndex &&
+      (bArea > aArea || isOverlapSignificant(bArea, textBoxArea))
+    ) {
+      return -1;
+    }
+    return 0;
+  });
+
+  const [mostOverlappingElement] = elementOverlaps;
+
+  if (mostOverlappingElement) {
+    const {
+      area: overlapArea,
+      element: overlappingElement,
+    } = mostOverlappingElement;
+
+    if (isOverlapSignificant(overlapArea, textBoxArea)) {
+      return overlappingElement;
+    }
+  }
+
+  const pageBackground = potentialBackgroundElements.find(
+    (element) => element.isBackground
+  );
+  return pageBackground;
+}
+
+function getTextImageBackgroundColor({ background, text, page }) {
+  const { pageSize, id: pageId } = page;
+  const { id: elementId } = text;
+  const safeZoneDiff =
+    (pageSize?.width / FULLBLEED_RATIO - pageSize?.width / PAGE_RATIO) / 2;
+
+  const textPos = getBox(text, pageSize?.width, pageSize?.height);
+  const textBox = getBoundRect([textPos]);
+
+  const { resource, scale, focalX, focalY } = background;
+  const bgPos = getBox(background, pageSize?.width, pageSize?.height);
+  const { width, height } = bgPos;
+
+  const bgBox = getBoundRect([bgPos]);
+
+  const bgMediaBox = getMediaSizePositionProps(
+    resource,
+    width,
+    height,
+    scale,
+    focalX,
+    focalY
+  );
+
+  const bgImage = {
+    src: background.resource.src,
+    width: bgMediaBox.width,
+    height: bgMediaBox.height,
+    rotationAngle: background.isBackground
+      ? undefined
+      : background.rotationAngle,
+  };
+
+  const overlapBox = {
+    x: background.isBackground
+      ? Math.abs(bgMediaBox.offsetX) + Math.abs(textBox.startX)
+      : Math.abs(bgMediaBox.offsetX) + Math.abs(textBox.startX) - bgBox.startX,
+    y: background.isBackground
+      ? Math.abs(bgMediaBox.offsetY) + Math.abs(textBox.startY + safeZoneDiff)
+      : Math.abs(bgMediaBox.offsetY) +
+        Math.abs(textBox.startY + safeZoneDiff) -
+        (bgBox.startY + safeZoneDiff),
+    width: textBox.width,
+    height: textBox.height,
+  };
+
+  return getOverlapBgColor({
+    elementId,
+    pageId,
+    bgImage,
+    bgBox,
+    overlapBox,
+  }).catch(() => {
+    // ignore errors
+  });
+}
+
+function textBgColorsLowContrast({ backgroundColor, textColors }) {
   return textColors.some((styleColor) => {
-    const [r, g, b] = bgColor;
+    const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
     const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
     const contrastCheck = checkContrastFromLuminances(
@@ -113,6 +252,26 @@ function textBgColorsLowContrast({ bgColor, textColors }) {
     );
     return !contrastCheck.WCAG_AA;
   });
+}
+
+function getTextShapeBackgroundColor({ background }) {
+  const { color } = background.backgroundColor;
+  if (color) {
+    const { r, g, b } = color;
+    return [r, g, b];
+  }
+  return undefined;
+}
+
+function getBackgroundColorByType(element) {
+  switch (element.type) {
+    case 'image':
+      return getTextImageBackgroundColor;
+    case 'shape':
+      return getTextShapeBackgroundColor;
+    default:
+      return () => undefined;
+  }
 }
 
 /**
@@ -170,79 +329,70 @@ export function textElementFontLowContrast(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export async function pageBackgroundTextLowContrast(page) {
-  const { pageSize, id: pageId } = page;
-  const safeZoneDiff =
-    (pageSize?.width / FULLBLEED_RATIO - pageSize?.width / PAGE_RATIO) / 2;
-
-  const compareColorsPromises = [];
+  const backgroundColorPromises = [];
 
   page.elements.forEach((element, index) => {
-    if (element.type === 'text') {
-      const { id: elementId } = element;
+    if (element.type === 'text' && element.backgroundTextMode === 'NONE') {
+      const potentialBackgroundElements = page.elements.slice(0, index);
+
+      const mostVisuallySignificantOverlap = getMostOverlapForElement(
+        element,
+        potentialBackgroundElements,
+        page.pageSize
+      );
+
       const spans = getSpansFromContent(element.content);
       const textColors = spans.map(
         (span) => span.style?.color || 'rgb(0, 0, 0)'
       );
-      const textBox = getBox(element, pageSize?.width, pageSize?.height);
-      const textBoxBound = getBoundRect([textBox]);
-      const potentialBackgroundElements = page.elements.slice(0, index);
 
-      // todo: generalize for any image or shape behind text
-      // let mostVisuallySignificantOverlap;
+      const args = {
+        background: mostVisuallySignificantOverlap,
+        text: element,
+        page,
+      };
 
-      // if there are no visually significant elements between the text and the background
-      // check the isBackground element for contrast issues
-      const bgElem = potentialBackgroundElements.find(
-        (elem) => elem.isBackground
+      const ids = {
+        elementId: element.id,
+        pageId: page.id,
+      };
+
+      const getBackgroundColor = getBackgroundColorByType(
+        mostVisuallySignificantOverlap
       );
 
-      if (bgElem && bgElem.type === 'image') {
-        const { resource, scale, focalX, focalY } = bgElem;
-        const bgBox = getBox(bgElem, pageSize?.width, pageSize?.height);
-        const { width, height } = bgBox;
+      const backgroundColor = getBackgroundColor(args);
 
-        const bgMediaSize = getMediaSizePositionProps(
-          resource,
-          width,
-          height,
-          scale,
-          focalX,
-          focalY
-        );
+      let backgroundColorResult;
 
-        const overlapBox = {
-          x: Math.abs(bgMediaSize.offsetX) + Math.abs(textBoxBound.startX),
-          y:
-            Math.abs(bgMediaSize.offsetY) +
-            Math.abs(textBoxBound.startY + safeZoneDiff),
-          width: textBoxBound.width,
-          height: textBoxBound.height,
+      if (backgroundColor instanceof Promise) {
+        backgroundColorResult = backgroundColor.then((resolvedBgColor) => {
+          cleanupDOM(ids);
+          return {
+            backgroundColor: resolvedBgColor,
+            textColors,
+            ...ids,
+          };
+        });
+      } else if (backgroundColor !== undefined) {
+        backgroundColorResult = {
+          backgroundColor,
+          textColors,
+          ...ids,
         };
+      }
 
-        const bgImage = {
-          src: bgElem.resource.src,
-          width: bgMediaSize.width,
-          height: bgMediaSize.height,
-        };
-
-        const compareColorsPromise = getOverlapBgColor({
-          elementId,
-          pageId,
-          bgImage,
-          overlapBox,
-        })
-          .then((bgColor) => ({ bgColor, textColors, elementId, pageId }))
-          .catch(() => {
-            // ignore errors
-          });
-        compareColorsPromises.push(compareColorsPromise);
+      if (backgroundColorResult !== undefined) {
+        backgroundColorPromises.push(backgroundColorResult);
       }
     }
   });
 
-  if (compareColorsPromises.length > 0) {
-    const results = await Promise.all(compareColorsPromises);
-    results.forEach(cleanupDOM);
+  if (backgroundColorPromises.length > 0) {
+    const results = await Promise.all(backgroundColorPromises).catch(() => {
+      // ignore errors with finding colors
+    });
+
     const lowContrastElement = results.find(textBgColorsLowContrast);
     if (lowContrastElement) {
       return {
