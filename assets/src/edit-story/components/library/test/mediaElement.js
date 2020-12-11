@@ -24,6 +24,7 @@ import { Simulate } from 'react-dom/test-utils';
 import MediaElement from '../panes/media/common/mediaElement';
 import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../canvas/context';
+import StoryContext from '../../../app/story/context';
 
 const renderMediaElement = (resource, providerType) => {
   const canvasContext = {
@@ -37,14 +38,23 @@ const renderMediaElement = (resource, providerType) => {
       pageContainer: document.body,
     },
   };
+  const storyContext = {
+    state: {
+      currentPage: {
+        elements: [],
+      },
+    },
+  };
   return renderWithTheme(
-    <CanvasContext.Provider value={canvasContext}>
-      <MediaElement
-        resource={resource}
-        onInsert={() => {}}
-        providerType={providerType}
-      />
-    </CanvasContext.Provider>
+    <StoryContext.Provider value={storyContext}>
+      <CanvasContext.Provider value={canvasContext}>
+        <MediaElement
+          resource={resource}
+          onInsert={() => {}}
+          providerType={providerType}
+        />
+      </CanvasContext.Provider>
+    </StoryContext.Provider>
   );
 };
 

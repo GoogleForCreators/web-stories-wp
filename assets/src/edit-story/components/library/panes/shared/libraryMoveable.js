@@ -207,9 +207,7 @@ function LibraryMoveable({
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
-    otherNodes: Object.values(
-      objectWithout(nodesById, [backgroundElement.id])
-    ),
+    otherNodes: Object.values(objectWithout(nodesById, [backgroundElement.id])),
     snappingOffsetX,
   });
 
