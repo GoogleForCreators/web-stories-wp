@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useFeature } from 'flagged';
 import PropTypes from 'prop-types';
 import {
   useCallback,
@@ -34,7 +33,7 @@ import { v4 as uuidv4 } from 'uuid';
 import StoryPropTypes from '../../edit-story/types';
 import { clamp } from '../../animation';
 import { createContext } from '../../edit-story/utils/context';
-import { AnimationPart, throughput } from '../parts';
+import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
 
 const Context = createContext(null);
@@ -72,8 +71,6 @@ function Provider({
   onWAAPIFinish,
   selectedElementIds = [],
 }) {
-  const enableAnimation = useFeature('enableAnimation');
-
   const elementsMap = useMemo(() => {
     return (elements || []).reduce((map, element) => {
       map.set(element.id, element);
@@ -91,15 +88,13 @@ function Provider({
 
         map.set(t, [
           ...generatedParts,
-          enableAnimation
-            ? AnimationPart(type, { ...args, element })
-            : throughput(),
+          AnimationPart(type, { ...args, element }),
         ]);
       });
 
       return map;
     }, new Map());
-  }, [animations, enableAnimation, elementsMap]);
+  }, [animations, elementsMap]);
 
   const providerId = useMemo(() => uuidv4(), []);
 
