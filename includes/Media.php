@@ -279,8 +279,11 @@ class Media {
 				'get_callback'    => [ $this, 'get_callback_media_source' ],
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
-					'type'        => 'string',
-					'enum'        => [ 'editor' ],
+					'type'        => 'array',
+					'items'       => [
+						'type' => 'string',
+						'enum' => [ 'editor', 'poster-generation' ],
+					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -323,19 +326,17 @@ class Media {
 	 *
 	 * @param array $prepared Prepared data before response.
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public function get_callback_media_source( $prepared ) {
 		$id = $prepared['id'];
 
 		$terms = wp_get_object_terms( $id, self::STORY_MEDIA_TAXONOMY );
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
-			$term = array_shift( $terms );
-
-			return $term->slug;
+			return wp_list_pluck( $terms, 'slug' );
 		}
 
-		return '';
+		return [];
 	}
 
 	/**
