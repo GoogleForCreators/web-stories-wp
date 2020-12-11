@@ -78,7 +78,7 @@ function LibraryMoveable({
   } = useDropTargets();
 
   const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage.elements[0] ?? {},
+    backgroundElement: currentPage?.elements?.[0] ?? {},
   }));
 
   const frame = {
