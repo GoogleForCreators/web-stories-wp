@@ -34,10 +34,9 @@ import { Note } from '../shared';
 
 const DEFAULT_RESOURCE = {
   poster: null,
-  alt: null,
 };
 
-function PosterPanel({ selectedElements, pushUpdate }) {
+function VideoPosterPanel({ selectedElements, pushUpdate }) {
   const resource = useCommonObjectValue(
     selectedElements,
     'resource',
@@ -58,7 +57,7 @@ function PosterPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="poster" title={__('Poster', 'web-stories')}>
+    <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
       <Row>
         <Media
           value={poster}
@@ -83,9 +82,9 @@ function PosterPanel({ selectedElements, pushUpdate }) {
   );
 }
 
-PosterPanel.propTypes = {
+VideoPosterPanel.propTypes = {
   selectedElements: PropTypes.array.isRequired,
   pushUpdate: PropTypes.func.isRequired,
 };
 
-export default PosterPanel;
+export default VideoPosterPanel;

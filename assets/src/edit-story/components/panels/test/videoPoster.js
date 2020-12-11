@@ -43,7 +43,7 @@ describe('Panels/Poster', () => {
 
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:poster',
+      'web_stories_ui_panel_settings:videoPoster',
       JSON.stringify({ isCollapsed: false })
     );
   });

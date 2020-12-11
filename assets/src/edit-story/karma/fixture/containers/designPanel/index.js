@@ -23,18 +23,18 @@ import { getByLabelText } from '@testing-library/react';
  * Internal dependencies
  */
 import { Container } from '../container';
-import { TextStyle } from './textStyle';
 import { Alignment } from './alignment';
-import { BackgroundOverlay } from './backgroundOverlay';
-import { Link } from './link';
-import { Layers } from './layers';
-import { TextStylePreset } from './textStylePreset';
-import { ColorPreset } from './colorPreset';
-import { SizePosition } from './sizePosition';
-import { BorderRadius } from './borderRadius';
-import { Border } from './border';
 import { Animation } from './animationPanel';
-import { Poster } from './poster';
+import { BackgroundOverlay } from './backgroundOverlay';
+import { Border } from './border';
+import { BorderRadius } from './borderRadius';
+import { ColorPreset } from './colorPreset';
+import { Layers } from './layers';
+import { Link } from './link';
+import { SizePosition } from './sizePosition';
+import { TextStyle } from './textStyle';
+import { TextStylePreset } from './textStylePreset';
+import { VideoPoster } from './videoPoster';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -72,11 +72,11 @@ export class DesignPanel extends Container {
     return this._get(this.getByRole('region', { name: /Link/ }), 'link', Link);
   }
 
-  get poster() {
+  get videoPoster() {
     return this._get(
-      this.getByRole('region', { name: 'Poster' }),
-      'poster',
-      Poster
+      this.getByRole('region', { name: /Poster/ }),
+      'videoPoster',
+      VideoPoster
     );
   }
 

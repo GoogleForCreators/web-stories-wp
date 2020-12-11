@@ -33,7 +33,6 @@ import { getCommonValue, useCommonObjectValue } from './utils';
 import { ExpandedTextInput, Note } from './shared';
 
 const DEFAULT_RESOURCE = {
-  poster: null,
   alt: null,
 };
 

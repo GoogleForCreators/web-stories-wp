@@ -38,7 +38,7 @@ describe('Panels/VideoOptions', () => {
 
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:poster',
+      'web_stories_ui_panel_settings:videePoster',
       JSON.stringify({ isCollapsed: false })
     );
   });

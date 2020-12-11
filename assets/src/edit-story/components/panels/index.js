@@ -19,26 +19,26 @@
  */
 import { elementTypes } from '../../elements';
 import AnimationPanel from './animation';
-import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BackgroundOverlayPanel from './backgroundOverlay';
+import BackgroundSizePositionPanel from './backgroundSizePosition';
 import BorderRadiusPanel from './borderRadius';
 import BorderStylePanel from './border';
 import CaptionsPanel from './captions';
-import PosterPanel from './poster';
+import ColorPresetPanel from './preset/colorPreset';
+import ElementAlignmentPanel from './alignment';
 import ImageAccessibilityPanel from './imageAccessibility';
-import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
+import LinkPanel from './link';
+import NoSelectionPanel from './noSelection';
 import PageAttachmentPanel from './pageAttachment';
 import PageStylePanel from './pageStyle';
 import ShapeStylePanel from './shapeStyle';
 import SizePositionPanel from './sizePosition';
+import StylePresetPanel from './preset/stylePreset';
 import TextStylePanel from './textStyle';
 import VideoAccessibilityPanel from './videoAccessibility';
-import NoSelectionPanel from './noSelection';
-import ElementAlignmentPanel from './alignment';
 import VideoOptionsPanel from './videoOptions';
-import StylePresetPanel from './preset/stylePreset';
-import ColorPresetPanel from './preset/colorPreset';
+import VideoPosterPanel from './poster';
 export { default as LayerPanel } from './layer';
 
 const ANIMATION = 'animation';
@@ -58,7 +58,7 @@ const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
 const TEXT = 'text';
 const TEXT_STYLE = 'textStyle';
-const POSTER = 'poster';
+const VIDEO_POSTER = 'videoPoster';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
@@ -80,31 +80,18 @@ export const PanelTypes = {
   BORDER_RADIUS,
   BORDER,
   LINK,
-  POSTER,
   VIDEO_OPTIONS,
-  CAPTIONS,
+  VIDEO_POSTER,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
+  CAPTIONS,
   ANIMATION,
 };
 
 const ALL = Object.values(PanelTypes);
 
-function reorderPanels(panels) {
-  const orderedPanels = [VIDEO_OPTIONS, POSTER, VIDEO_ACCESSIBILITY, CAPTIONS];
-  for (const panel of orderedPanels) {
-    if (!panels.includes(panel)) {
-      return panels;
-    }
-  }
-  return panels
-    .filter((panel) => !orderedPanels.includes(panel))
-    .concat(orderedPanels);
-}
-
 function intersect(a, b) {
-  const panels = a.filter((v) => b.includes(v));
-  return reorderPanels(panels);
+  return a.filter((v) => b.includes(v));
 }
 
 export function getPanels(elements, options = {}) {
@@ -136,7 +123,7 @@ export function getPanels(elements, options = {}) {
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
-      panels.push({ type: POSTER, Panel: PosterPanel });
+      panels.push({ type: VIDEO_POSTER, Panel: VideoPosterPanel });
       panels.push({ type: CAPTIONS, Panel: CaptionsPanel });
       panels.push({
         type: VIDEO_ACCESSIBILITY,
@@ -190,10 +177,10 @@ export function getPanels(elements, options = {}) {
           return { type, Panel: BorderRadiusPanel };
         case BORDER:
           return { type, Panel: BorderStylePanel };
-        case POSTER:
-          return { type, Panel: PosterPanel };
         case VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
+        case VIDEO_POSTER:
+          return { type, Panel: VideoPosterPanel };
         case CAPTIONS:
           return { type, Panel: CaptionsPanel };
         case VIDEO_ACCESSIBILITY:
