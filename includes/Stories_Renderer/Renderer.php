@@ -31,6 +31,10 @@ use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Assets;
+use Google\Web_Stories\Stories_Renderer\FieldState\GridView;
+use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
+use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
+use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
 use Iterator;
 
 /**
@@ -180,6 +184,34 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function init() {
 		$this->story_posts = array_map( [ $this, 'prepare_story_modal' ], $this->stories->get_stories() );
+	}
+
+	/**
+	 * Return the fields state.
+	 *
+	 * @return \Google\Web_Stories\Interfaces\FieldState
+	 */
+	public function field() {
+		$view = isset( $this->attributes['view_type'] ) ? $this->attributes['view_type'] : 'grid';
+
+		switch ( $view ) {
+			case 'grid':
+				$field_state = new GridView();
+				break;
+			case 'list':
+				$field_state = new ListView();
+				break;
+			case 'circles':
+				$field_state = new CircleView();
+				break;
+			case 'carousel':
+				$field_state = new CarouselView();
+				break;
+			default:
+				$field_state = apply_filters( 'web_stories_default_fieldstate', new GridView() );
+		}
+
+		return $field_state;
 	}
 
 	/**

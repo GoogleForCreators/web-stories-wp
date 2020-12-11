@@ -28,6 +28,8 @@
 
 namespace Google\Web_Stories\Interfaces;
 
+use Google\Web_Stories\Interfaces\FieldState;
+
 /**
  * Interface Renderer.
  *
@@ -58,4 +60,12 @@ interface Renderer {
 	 * @return mixed
 	 */
 	public function render_single_story_content();
+
+	/**
+	 * This should return the fields state
+	 * for the current view type.
+	 *
+	 * @return FieldState
+	 */
+	public function field();
 }
