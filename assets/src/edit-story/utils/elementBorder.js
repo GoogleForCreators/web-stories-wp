@@ -129,13 +129,12 @@ function getCornerPercentages(borderRadius, measure) {
     return '0%';
   }
   const { topLeft, topRight, bottomRight, bottomLeft } = borderRadius;
-  return `${getPercentage(topLeft, measure)}% ${getPercentage(
-    topRight,
-    measure
-  )}% ${getPercentage(bottomRight, measure)}% ${getPercentage(
-    bottomLeft,
-    measure
-  )}%`;
+  return {
+    topLeft: getPercentage(topLeft, measure),
+    topRight: getPercentage(topRight, measure),
+    bottomRight: getPercentage(bottomRight, measure),
+    bottomLeft: getPercentage(bottomLeft, measure),
+  };
 }
 
 /**
@@ -151,12 +150,11 @@ export function getBorderRadius(element) {
   }
   /* We're using the format
     `border-radius: topLeft topRight bottomRight bottomLeft / topLeft topRight bottomRight bottomLeft`
-    here so that we could convert one px value for border into % value which required two values per each corner. */
+    here so that we could convert one px value for border into % value which requires two values per each corner. */
+  const wValues = getCornerPercentages(borderRadius, width);
+  const hValues = getCornerPercentages(borderRadius, height);
   return {
-    borderRadius: `${getCornerPercentages(
-      borderRadius,
-      width
-    )} / ${getCornerPercentages(borderRadius, height)}`,
+    borderRadius: `${wValues.topLeft}% ${wValues.topRight}% ${wValues.bottomRight}% ${wValues.bottomLeft}% / ${hValues.topLeft}% ${hValues.topRight}% ${hValues.bottomRight}% ${hValues.bottomLeft}%`,
   };
 }
 
