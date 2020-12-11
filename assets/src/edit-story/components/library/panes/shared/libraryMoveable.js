@@ -86,6 +86,15 @@ function LibraryMoveable({
     };
   };
 
+  const resetMoveable = () => {
+    targetBoxRef.current.style.transform = null;
+    cloneRef.current.style.transform = null;
+    // Hide the clone, too.
+    cloneRef.current.style.opacity = 0;
+    setIsDragging(false);
+    setDraggingResource(null);
+  };
+
   const onDrag = ({ beforeTranslate, inputEvent }) => {
     frame.translate = beforeTranslate;
     if (cloneRef.current) {
@@ -174,13 +183,6 @@ function LibraryMoveable({
     otherNodes: [],
     snappingOffsetX,
   });
-
-  const resetMoveable = () => {
-    targetBoxRef.current.style.transform = null;
-    cloneRef.current.style.transform = null;
-    setIsDragging(false);
-    setDraggingResource(null);
-  };
 
   const { width, height } = cloneProps;
   return (
