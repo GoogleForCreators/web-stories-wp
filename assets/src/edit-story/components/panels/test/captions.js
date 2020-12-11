@@ -46,7 +46,7 @@ describe('Panels/Captions', () => {
 
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:caption',
+      'web_stories_ui_panel_settings:captions',
       JSON.stringify({ isCollapsed: false })
     );
   });

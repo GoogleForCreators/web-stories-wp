@@ -35,10 +35,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const loop = getCommonValue(selectedElements, 'loop');
 
   return (
-    <SimplePanel
-      name="videoOptions"
-      title={__('Video settings', 'web-stories')}
-    >
+    <SimplePanel name="videoOptions" title={__('Playback', 'web-stories')}>
       <Switch
         value={loop}
         onLabel={__('Loop', 'web-stories')}

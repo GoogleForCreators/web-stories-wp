@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -28,12 +27,16 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Media, Row, usePresubmitHandler } from '../form';
-import { Note, ExpandedTextInput } from './shared';
+import { Row, usePresubmitHandler } from '../form';
 import { SimplePanel } from './panel';
 import { getCommonValue, useCommonObjectValue } from './utils';
+import { ExpandedTextInput, Note } from './shared';
 
-const DEFAULT_RESOURCE = { poster: null, alt: null };
+const DEFAULT_RESOURCE = {
+  poster: null,
+  alt: null,
+};
+
 export const MIN_MAX = {
   ALT_TEXT: {
     MAX: 1000,
@@ -46,21 +49,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     'resource',
     DEFAULT_RESOURCE
   );
-
-  const rawPoster = getCommonValue(selectedElements, 'poster');
-  const poster = getCommonValue(selectedElements, 'poster', resource.poster);
   const alt = getCommonValue(selectedElements, 'alt', resource.alt);
-
-  const handleChangePoster = useCallback(
-    (image) => {
-      const newPoster = image?.sizes?.medium?.url || image?.url;
-      if (newPoster === rawPoster) {
-        return;
-      }
-      pushUpdate({ poster: newPoster }, true);
-    },
-    [pushUpdate, rawPoster]
-  );
 
   usePresubmitHandler(
     ({ resource: newResource }) => ({
@@ -75,20 +64,8 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   return (
     <SimplePanel
       name="videoAccessibility"
-      title={__('Accessibility', 'web-stories')}
+      title={__('Description', 'web-stories')}
     >
-      <Row>
-        <Media
-          value={poster}
-          onChange={handleChangePoster}
-          title={__('Select as video poster', 'web-stories')}
-          buttonInsertText={__('Set as video poster', 'web-stories')}
-          alt={__('Preview poster image', 'web-stories')}
-          type={'image'}
-          ariaLabel={__('Video poster', 'web-stories')}
-          canReset
-        />
-      </Row>
       <Row>
         <ExpandedTextInput
           placeholder={__('Video description', 'web-stories')}

@@ -24,6 +24,7 @@ import BackgroundOverlayPanel from './backgroundOverlay';
 import BorderRadiusPanel from './borderRadius';
 import BorderStylePanel from './border';
 import CaptionsPanel from './captions';
+import PosterPanel from './poster';
 import ImageAccessibilityPanel from './imageAccessibility';
 import LinkPanel from './link';
 import LayerStylePanel from './layerStyle';
@@ -57,6 +58,7 @@ const SIZE_POSITION = 'sizePosition';
 const SHAPE_STYLE = 'shapeStyle';
 const TEXT = 'text';
 const TEXT_STYLE = 'textStyle';
+const POSTER = 'poster';
 const VIDEO_OPTIONS = 'videoOptions';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
@@ -78,6 +80,7 @@ export const PanelTypes = {
   BORDER_RADIUS,
   BORDER,
   LINK,
+  POSTER,
   VIDEO_OPTIONS,
   CAPTIONS,
   IMAGE_ACCESSIBILITY,
@@ -87,8 +90,21 @@ export const PanelTypes = {
 
 const ALL = Object.values(PanelTypes);
 
+function reorderPanels(panels) {
+  const orderedPanels = [VIDEO_OPTIONS, POSTER, VIDEO_ACCESSIBILITY, CAPTIONS];
+  for (const panel of orderedPanels) {
+    if (!panels.includes(panel)) {
+      return panels;
+    }
+  }
+  return panels
+    .filter((panel) => !orderedPanels.includes(panel))
+    .concat(orderedPanels);
+}
+
 function intersect(a, b) {
-  return a.filter((v) => b.includes(v));
+  const panels = a.filter((v) => b.includes(v));
+  return reorderPanels(panels);
 }
 
 export function getPanels(elements, options = {}) {
@@ -120,10 +136,8 @@ export function getPanels(elements, options = {}) {
     // If the selected element's type is video / image , display accessibility panel, too.
     if ('video' === elements[0].type) {
       panels.push({ type: VIDEO_OPTIONS, Panel: VideoOptionsPanel });
-      panels.push({
-        type: CAPTIONS,
-        Panel: CaptionsPanel,
-      });
+      panels.push({ type: POSTER, Panel: PosterPanel });
+      panels.push({ type: CAPTIONS, Panel: CaptionsPanel });
       panels.push({
         type: VIDEO_ACCESSIBILITY,
         Panel: VideoAccessibilityPanel,
@@ -176,6 +190,8 @@ export function getPanels(elements, options = {}) {
           return { type, Panel: BorderRadiusPanel };
         case BORDER:
           return { type, Panel: BorderStylePanel };
+        case POSTER:
+          return { type, Panel: PosterPanel };
         case VIDEO_OPTIONS:
           return { type, Panel: VideoOptionsPanel };
         case CAPTIONS:

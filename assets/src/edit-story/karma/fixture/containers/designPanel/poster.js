@@ -22,7 +22,7 @@ import { AbstractPanel } from './abstractPanel';
 /**
  * The video accessibility panel containing inputs for adding poster and title.
  */
-export class VideoAccessibility extends AbstractPanel {
+export class Poster extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
   }

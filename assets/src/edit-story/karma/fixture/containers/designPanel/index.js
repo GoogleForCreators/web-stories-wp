@@ -27,7 +27,6 @@ import { TextStyle } from './textStyle';
 import { Alignment } from './alignment';
 import { BackgroundOverlay } from './backgroundOverlay';
 import { Link } from './link';
-import { VideoAccessibility } from './videoAccessibility';
 import { Layers } from './layers';
 import { TextStylePreset } from './textStylePreset';
 import { ColorPreset } from './colorPreset';
@@ -35,7 +34,7 @@ import { SizePosition } from './sizePosition';
 import { BorderRadius } from './borderRadius';
 import { Border } from './border';
 import { Animation } from './animationPanel';
-
+import { Poster } from './poster';
 /**
  * The editor's canvas. Includes: display, frames, editor layers, carousel,
  * navigation buttons, page menu.
@@ -73,11 +72,11 @@ export class DesignPanel extends Container {
     return this._get(this.getByRole('region', { name: /Link/ }), 'link', Link);
   }
 
-  get videoAccessibility() {
+  get poster() {
     return this._get(
-      this.getByRole('region', { name: /accessibility/i }),
-      'videoAccessibility',
-      VideoAccessibility
+      this.getByRole('region', { name: 'Poster' }),
+      'poster',
+      Poster
     );
   }
 
