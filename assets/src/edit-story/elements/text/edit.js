@@ -114,7 +114,7 @@ const Highlight = styled.span`
 
 const OutsideBorder = styled.div`
   ${elementWithBorder}
-  ${({ border }) => getBorderPositionCSS(border)}
+  ${({ border }) => border && getBorderPositionCSS(border)}
   overflow: hidden;
 `;
 
