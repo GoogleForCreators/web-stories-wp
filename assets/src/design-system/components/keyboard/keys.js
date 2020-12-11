@@ -15,11 +15,13 @@
  */
 
 /**
- * Determines if the current platform is a Mac or not.
- *
- * @return {boolean} True if platform is a Mac.
+ * See https://craig.is/killing/mice#keys for the supported key codes.
  */
-export function isPlatformMacOS() {
-  const { platform } = global.navigator;
-  return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
-}
+const keys = {
+  undo: 'mod+z',
+  redo: 'shift+mod+z',
+  delete: ['del', 'backspace'],
+  clone: 'mod+d',
+};
+
+export default keys;
