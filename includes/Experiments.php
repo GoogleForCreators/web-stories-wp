@@ -209,17 +209,6 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 1897
-			 * Creation date: 2020-05-21
-			 */
-			[
-				'name'        => 'enableAnimation',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable user facing animations', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28
@@ -294,17 +283,6 @@ class Experiments {
 				'name'        => 'showAnimationTab',
 				'label'       => __( 'Animations', 'web-stories' ),
 				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
-			 * Issue: #2095
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showPrePublishTab',
-				'label'       => __( 'Pre-Publish', 'web-stories' ),
-				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**

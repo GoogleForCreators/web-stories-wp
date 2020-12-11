@@ -27,6 +27,7 @@ function useAddPastedElements() {
     updateCurrentPageProperties,
     deleteElementById,
     combineElements,
+    addAnimations,
   } = useStory(
     ({
       state: { currentPage, selectedElements },
@@ -36,6 +37,7 @@ function useAddPastedElements() {
         updateCurrentPageProperties,
         deleteElementById,
         combineElements,
+        addAnimations,
       },
     }) => {
       return {
@@ -46,12 +48,13 @@ function useAddPastedElements() {
         updateCurrentPageProperties,
         deleteElementById,
         combineElements,
+        addAnimations,
       };
     }
   );
 
   const addPastedElements = useBatchingCallback(
-    (elements) => {
+    (elements, animations = []) => {
       if (elements.length === 0) {
         return false;
       }
@@ -60,6 +63,7 @@ function useAddPastedElements() {
       const newBackgroundElement = elements.find(
         ({ isBackground }) => isBackground
       );
+      let newAnimations = animations;
       if (newBackgroundElement) {
         const existingBgElement = currentPage.elements[0];
         if (newBackgroundElement.isDefaultBackground) {
@@ -75,6 +79,13 @@ function useAddPastedElements() {
             },
           });
         } else {
+          // Since background will maintain id, we update any
+          // new animations to have the proper target
+          newAnimations = animations.map((animation) =>
+            animation.targets.includes(newBackgroundElement.id)
+              ? { ...animation, targets: [existingBgElement.id] }
+              : animation
+          );
           // The user has pasted a media background from another page:
           // Merge this element into the existing background element on this page
           combineElements({
@@ -91,6 +102,10 @@ function useAddPastedElements() {
       if (nonBackgroundElements.length) {
         addElements({ elements: nonBackgroundElements });
       }
+
+      // Add any animations associated with the new elements
+      addAnimations({ animations: newAnimations });
+
       return true;
     },
     [
@@ -99,6 +114,7 @@ function useAddPastedElements() {
       updateCurrentPageProperties,
       combineElements,
       deleteElementById,
+      addAnimations,
     ]
   );
 

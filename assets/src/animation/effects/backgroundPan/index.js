@@ -37,9 +37,16 @@ export function EffectBackgroundPan({
 
   const animationName = `direction-${panDir}-${BACKGROUND_ANIMATION_EFFECTS.PAN.value}`;
 
-  const offsets = getMediaBoundOffsets({ element });
   const translateToOriginX = 'translate3d(0%, 0, 0)';
   const translateToOriginY = 'translate3d(0, 0%, 0)';
+  const offsets = element
+    ? getMediaBoundOffsets({ element })
+    : {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      };
   const translate = {
     from: {
       [DIRECTION.RIGHT_TO_LEFT]: `translate3d(${offsets.left}%, 0, 0)`,
