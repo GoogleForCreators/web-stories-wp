@@ -250,6 +250,9 @@ class Plugin {
 		$story_shortcode = new Stories_Shortcode();
 		add_action( 'init', [ $story_shortcode, 'init' ] );
 
+		$customizer = new Customizer();
+		add_action( 'init', [ $customizer, 'init' ] );
+
 		// Frontend.
 		$this->discovery = new Discovery();
 		add_action( 'init', [ $this->discovery, 'init' ] );
