@@ -57,7 +57,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
+    <SimplePanel name="poster" title={__('Poster', 'web-stories')}>
       <Row>
         <Media
           value={poster}

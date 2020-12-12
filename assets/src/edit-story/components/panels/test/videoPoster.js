@@ -43,7 +43,7 @@ describe('Panels/Poster', () => {
 
   beforeAll(() => {
     localStorage.setItem(
-      'web_stories_ui_panel_settings:videoPoster',
+      'web_stories_ui_panel_settings:poster',
       JSON.stringify({ isCollapsed: false })
     );
   });
@@ -54,15 +54,15 @@ describe('Panels/Poster', () => {
 
   it('should render <Poster /> panel', () => {
     const { getByRole } = renderPoster([defaultElement]);
-    const imageHolder = getByRole('region', { name: 'Video poster' });
-    expect(imageHolder).toBeDefined();
+    const videoPoster = getByRole('region', { name: 'Video poster' });
+    expect(videoPoster).toBeDefined();
   });
 
   it('should simulate a click on <Poster />', () => {
     const { getByRole, pushUpdate } = renderPoster([defaultElement]);
-    const imageHolder = getByRole('region', { name: 'Video poster' });
-    imageHolder.focus();
-    expect(imageHolder).toHaveFocus();
+    const videoPoster = getByRole('region', { name: 'Video poster' });
+    videoPoster.focus();
+    expect(videoPoster).toHaveFocus();
     const menuToggle = getByRole('button', { name: 'More' });
     fireEvent.click(menuToggle);
     const editMenuItem = getByRole('menuitem', { name: 'Edit' });
