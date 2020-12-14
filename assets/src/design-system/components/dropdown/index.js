@@ -20,6 +20,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useDebouncedCallback } from 'use-debounce';
 
 /**
  * Internal dependencies
@@ -45,19 +46,26 @@ export const Dropdown = ({
 }) => {
   const selectRef = useRef();
 
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, _setIsOpen] = useState(true);
   const [anchorHeight, setAnchorHeight] = useState(null);
 
-  const handleSelectClick = useCallback((e) => {
-    e.preventDefault();
-    setIsOpen((prevIsOpen) => !prevIsOpen);
-  }, []);
+  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
+    leading: true,
+    trailing: false,
+  });
+
+  const handleSelectClick = useCallback(
+    (event) => {
+      event.preventDefault();
+      setIsOpen((prevIsOpen) => !prevIsOpen);
+    },
+    [setIsOpen]
+  );
 
   const handleDismissMenu = useCallback(() => {
     setIsOpen(false);
-    //Does this have a negative impact by not shielding it for keyboard only?
     selectRef.current.focus();
-  }, []);
+  }, [setIsOpen]);
 
   const handleMenuItemClick = useCallback(
     (event, menuItem) => {
