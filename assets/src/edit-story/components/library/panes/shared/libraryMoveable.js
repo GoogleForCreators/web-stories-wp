@@ -26,7 +26,6 @@ import styled from 'styled-components';
  */
 import { editorToDataX, editorToDataY } from '../../../../units';
 import Moveable from '../../../moveable';
-import useSnapping from '../../../canvas/utils/useSnapping';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
@@ -34,9 +33,7 @@ import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
-import { useGlobalKeyDownEffect } from '../../../keyboard';
-import { useStory } from '../../../../app/story';
-import objectWithout from '../../../../utils/objectWithout';
+import { useKeyDownEffect } from '../../../keyboard';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -69,7 +66,7 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer, nodesById } = useCanvas((state) => ({
+  const { pageContainer } = useCanvas((state) => ({
     pageContainer: state.state.pageContainer,
     nodesById: state.state.nodesById,
   }));
@@ -78,10 +75,6 @@ function LibraryMoveable({
     state: { activeDropTargetId },
     actions: { setDraggingResource },
   } = useDropTargets();
-
-  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage?.elements?.[0] ?? {},
-  }));
 
   const frame = {
     translate: [0, 0],
@@ -106,11 +99,14 @@ function LibraryMoveable({
     setDraggingResource(null);
   }, [setDraggingResource]);
 
-  useGlobalKeyDownEffect(
+  // We only need to use this effect while dragging since the active element is document.body
+  // and using just that interferes with other handlers.
+  useKeyDownEffect(
+    isDragging ? document.body : { current: null },
     'esc',
     () => {
       setDidManuallyReset(true);
-      isDragging && resetMoveable();
+      resetMoveable();
     },
     [isDragging, resetMoveable]
   );
@@ -209,13 +205,14 @@ function LibraryMoveable({
     return undefined;
   };
 
-  const { offsetX: snappingOffsetX } = getTargetOffset();
+  // @todo Add this back once all elements are using Moveable in the Library.
+  /*const { offsetX: snappingOffsetX } = getTargetOffset();
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
     otherNodes: Object.values(objectWithout(nodesById, [backgroundElement.id])),
     snappingOffsetX,
-  });
+  });*/
 
   const { width, height } = cloneProps;
   return (
@@ -243,7 +240,6 @@ function LibraryMoveable({
         draggable={true}
         origin={false}
         pinchable={true}
-        {...snapProps}
         onDragStart={onDragStart}
         onDrag={onDrag}
         onDragEnd={onDragEnd}
