@@ -14,54 +14,71 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
-import { FlagsProvider } from 'flagged';
+import {
+  fireEvent,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
+import Modal from 'react-modal';
+
+/**
+ * Internal dependencies
+ */
 import { renderWithTheme } from '../../../testUtils';
 import ConfigContext from '../../../app/config/context';
 import APIContext from '../../../app/api/context';
 import StatusCheck from '../statusCheck';
-/**
- * External dependencies
- */
 
 function setup(response) {
   const configValue = { api: { statusCheck: '' }, metadata: { publisher: '' } };
 
-  const apiValue = {
-    actions: {
-      getStatusCheck: () => response,
-    },
-  };
+  const getStatusCheck = () => response;
+  const apiValue = { actions: { getStatusCheck } };
 
   const { queryAllByRole, container } = renderWithTheme(
-    <FlagsProvider
-      features={{
-        statusCheck: true,
-      }}
-    >
-      <ConfigContext.Provider value={configValue}>
-        <APIContext.Provider value={apiValue}>
-          <StatusCheck />
-        </APIContext.Provider>
-      </ConfigContext.Provider>
-    </FlagsProvider>
+    <ConfigContext.Provider value={configValue}>
+      <APIContext.Provider value={apiValue}>
+        <StatusCheck />
+      </APIContext.Provider>
+    </ConfigContext.Provider>
   );
   return { queryAllByRole, container };
 }
 
 describe('statusCheck', () => {
-  it('successful', () => {
-    setup(Promise.resolve({ success: true }));
-    // todo add a test here.
-    expect(true).toBeTrue();
+  let modalWrapper;
+
+  beforeAll(() => {
+    modalWrapper = document.createElement('aside');
+    document.documentElement.appendChild(modalWrapper);
+    Modal.setAppElement(modalWrapper);
   });
-  it('failure', () => {
+
+  afterAll(() => {
+    document.documentElement.removeChild(modalWrapper);
+  });
+
+  it('should do nothing if successfull', () => {
+    setup(Promise.resolve({ success: true }));
+
+    const dialog = screen.queryByRole('dialog');
+    expect(dialog).toBeNull();
+  });
+
+  it('should display dismissible dialog if failed', async () => {
     setup(Promise.reject(new Error('api failed')));
-    // todo add a test here.
-    expect(true).toBeTrue();
+
+    await new Promise((r) => setTimeout(r, 1000));
+
+    const dialog = screen.getByRole('dialog');
+    expect(dialog).toBeDefined();
+
+    const dismiss = screen.getByRole('button', { name: /Dismiss/i });
+    expect(dismiss).toBeDefined();
+    fireEvent.click(dismiss);
+
+    await waitForElementToBeRemoved(dialog);
   });
 });
