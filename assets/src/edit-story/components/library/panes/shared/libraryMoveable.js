@@ -29,7 +29,7 @@ import Moveable from '../../../moveable';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
-import { useCanvas } from '../../../canvas';
+import { useCanvas, useInsertTextSet } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
@@ -39,6 +39,9 @@ const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  top: 0;
+  left: 0;
+  z-index: 1;
 `;
 
 function LibraryMoveable({
@@ -49,6 +52,7 @@ function LibraryMoveable({
   onClick,
   cloneElement,
   cloneProps,
+  elements = [],
   active = false,
 }) {
   const CloneElement = cloneElement;
@@ -77,6 +81,8 @@ function LibraryMoveable({
   const frame = {
     translate: [0, 0],
   };
+
+  const { insertTextSetByOffset } = useInsertTextSet();
 
   const eventTracker = useRef({});
   const startEventTracking = (evt) => {
@@ -187,13 +193,27 @@ function LibraryMoveable({
       } = cloneRef.current.getBoundingClientRect();
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
-      insertElement(type, {
-        ...elementProps,
-        x: editorToDataX(x - pageX, pageSize.width),
-        y: editorToDataY(y - pageY, pageSize.height),
-        width: editorToDataX(w, pageSize.width),
-        height: editorToDataY(h, pageSize.height),
-      });
+      if (type === 'textSet') {
+        insertTextSetByOffset(
+          elements,
+          {
+            offsetX: editorToDataX(x - pageX),
+            offsetY: editorToDataY(y - pageY),
+          },
+          {
+            width: editorToDataX(width),
+            height: editorToDataY(height),
+          }
+        );
+      } else {
+        insertElement(type, {
+          ...elementProps,
+          x: editorToDataX(x - pageX, pageSize.width),
+          y: editorToDataY(y - pageY, pageSize.height),
+          width: editorToDataX(w, pageSize.width),
+          height: editorToDataY(h, pageSize.height),
+        });
+      }
     }
     resetMoveable();
     return undefined;

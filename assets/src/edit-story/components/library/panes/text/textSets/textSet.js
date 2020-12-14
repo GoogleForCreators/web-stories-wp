@@ -35,11 +35,10 @@ import { TEXT_SET_SIZE } from '../../../../../constants';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useLibrary from '../../../useLibrary';
 import { dataToEditorX, dataToEditorY } from '../../../../../units';
+import LibraryMoveable from '../../shared/libraryMoveable';
 import TextSetElements from './textSetElements';
 
-const TextSetItem = styled.button`
-  border: 0;
-  outline: 0;
+const TextSetItem = styled.div`
   position: relative;
   width: ${TEXT_SET_SIZE}px;
   height: ${TEXT_SET_SIZE}px;
@@ -99,7 +98,7 @@ function TextSet({ elements }) {
   const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
-
+  const cloneSet = <TextSetElements isForDisplay elements={elements} />;
   return (
     <DragWrapper>
       <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
@@ -114,13 +113,21 @@ function TextSet({ elements }) {
 
       <TextSetItem
         role="listitem"
-        draggable={true}
-        onDragStart={handleDragStart}
         aria-label={__('Insert Text Set', 'web-stories')}
-        onClick={() => insertTextSet(elements)}
       >
         <TextSetElements isForDisplay elements={elements} />
       </TextSetItem>
+      <LibraryMoveable
+        type={'textSet'}
+        elements={elements}
+        elementProps={{}}
+        onClick={() => insertTextSet(elements)}
+        cloneElement={cloneSet}
+        cloneProps={{
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE,
+        }}
+      />
     </DragWrapper>
   );
 }
