@@ -21,7 +21,7 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\FieldState;
+namespace Google\Web_Stories\Stories_Renderer\FieldState;
 
 use Google\Web_Stories\Interfaces\Field;
 use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
