@@ -42,8 +42,10 @@ const Paragraph = styled.p`
   letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
 `;
 
-const SUPPORT_URL =
-  'https://wordpress.org/support/plugin/web-stories/#new-topic-0';
+const SUPPORT_URL = __(
+  'https://wordpress.org/support/plugin/web-stories/#new-topic-0',
+  'web-stories'
+);
 
 function StatusCheckFailed({ open, onClose }) {
   const onSupportClick = useCallback((evt) => {
