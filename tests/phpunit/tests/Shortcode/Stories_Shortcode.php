@@ -136,4 +136,31 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args' );
 		$this->assertSame( 100, $args['posts_per_page'] );
 	}
+
+	/**
+	 * @covers ::render_stories
+	 */
+	public function test_shortcode_default_attrs() {
+		$shortcode_obj = new Testee();
+
+		$default = [
+			'view'                      => 'circles',
+			'columns'                   => 1,
+			'title'                     => 'false',
+			'author'                    => 'false',
+			'date'                      => 'false',
+			'story_poster'              => 'true',
+			'archive_link'              => 'false',
+			'archive_label'             => __( 'View all stories', 'web-stories' ),
+			'list_view_image_alignment' => 'left',
+			'class'                     => '',
+			'number'                    => 10,
+			'order'                     => 'DESC',
+		];
+
+		$this->call_private_method( $shortcode_obj, 'render_stories', [ [] ] );
+		$attrs = $this->get_private_property( $shortcode_obj, 'attributes' );
+
+		$this->assertSameSets( $default, $attrs );
+	}
 }
