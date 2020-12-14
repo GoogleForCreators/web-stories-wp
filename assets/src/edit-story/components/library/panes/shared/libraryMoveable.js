@@ -26,7 +26,6 @@ import styled from 'styled-components';
  */
 import { editorToDataX, editorToDataY } from '../../../../units';
 import Moveable from '../../../moveable';
-import useSnapping from '../../../canvas/utils/useSnapping';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
@@ -35,8 +34,6 @@ import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import { useKeyDownEffect } from '../../../keyboard';
-import { useStory } from '../../../../app/story';
-import objectWithout from '../../../../utils/objectWithout';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -67,7 +64,7 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer, nodesById } = useCanvas((state) => ({
+  const { pageContainer } = useCanvas((state) => ({
     pageContainer: state.state.pageContainer,
     nodesById: state.state.nodesById,
   }));
@@ -76,10 +73,6 @@ function LibraryMoveable({
     state: { activeDropTargetId },
     actions: { setDraggingResource },
   } = useDropTargets();
-
-  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage?.elements?.[0] ?? {},
-  }));
 
   const frame = {
     translate: [0, 0],
@@ -206,13 +199,14 @@ function LibraryMoveable({
     return undefined;
   };
 
-  const { offsetX: snappingOffsetX } = getTargetOffset();
+  // @todo Add this back once all elements are using Moveable in the Library.
+  /*const { offsetX: snappingOffsetX } = getTargetOffset();
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
     otherNodes: Object.values(objectWithout(nodesById, [backgroundElement.id])),
     snappingOffsetX,
-  });
+  });*/
 
   const { width, height } = cloneProps;
   return (
@@ -240,7 +234,6 @@ function LibraryMoveable({
         draggable={true}
         origin={false}
         pinchable={true}
-        {...snapProps}
         onDragStart={onDragStart}
         onDrag={onDrag}
         onDragEnd={onDragEnd}
