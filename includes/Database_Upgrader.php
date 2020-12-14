@@ -68,7 +68,7 @@ class Database_Upgrader {
 			'3.0.1' => 'rewrite_flush',
 			'3.0.2' => 'rewrite_flush',
 			'3.0.3' => 'yoast_reindex_stories',
-			'3.0.5' => 'delete_post_meta',
+			'3.0.4' => 'add_poster_generation_media_source',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -334,14 +334,29 @@ class Database_Upgrader {
 	}
 
 	/**
-	 * Delete old post meta.
+	 * Migration media post meta to taxonomy term.
 	 *
 	 * @global wpdb $wpdb WordPress database abstraction object.
 	 *
 	 * @return void
 	 */
-	protected function delete_post_meta() {
-		delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
+	protected function add_poster_generation_media_source() {
+		global $wpdb;
+
+		wp_insert_term( 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+
+		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s",
+				Media::POSTER_POST_META_KEY
+			)
+		);
+
+		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+			foreach ( $post_ids as $post_id ) {
+				wp_set_object_terms( (int) $post_id, 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+			}
+		}
 	}
 
 	/**
