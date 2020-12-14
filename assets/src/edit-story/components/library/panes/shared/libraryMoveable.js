@@ -34,7 +34,7 @@ import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
-import { useGlobalKeyDownEffect } from '../../../keyboard';
+import { useKeyDownEffect } from '../../../keyboard';
 import { useStory } from '../../../../app/story';
 import objectWithout from '../../../../utils/objectWithout';
 
@@ -104,11 +104,14 @@ function LibraryMoveable({
     setDraggingResource(null);
   }, [setDraggingResource]);
 
-  useGlobalKeyDownEffect(
+  // We only need to use this effect while dragging since the active element is document.body
+  // and using just that interferes with other handlers.
+  useKeyDownEffect(
+    isDragging ? document.body : { current: null },
     'esc',
     () => {
       setDidManuallyReset(true);
-      isDragging && resetMoveable();
+      resetMoveable();
     },
     [isDragging, resetMoveable]
   );
