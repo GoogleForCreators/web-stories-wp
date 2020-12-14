@@ -54,7 +54,8 @@ describe('Shape library integration', () => {
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(triangle, 10, 10),
       down(),
-      moveRel(frame, 50, 50),
+      /* The steps give time for Moveable to react and display a clone to drag */
+      moveRel(frame, 50, 50, { steps: 20 }),
       up(),
     ]);
 
