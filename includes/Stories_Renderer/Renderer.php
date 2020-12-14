@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Stories_Renderer;
 
+use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Story_Query as Stories;
@@ -189,7 +190,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Return the fields state.
 	 *
-	 * @return \Google\Web_Stories\Interfaces\FieldState
+	 * @return FieldState
 	 */
 	public function field() {
 		$view = isset( $this->attributes['view_type'] ) ? $this->attributes['view_type'] : 'grid';
