@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Media;
-use Google\Web_Stories\Database_Upgrader;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
@@ -74,7 +73,7 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	}
 
 	/**
-	 * Updates a single attachment.
+	 * Creates a single attachment.
 	 *
 	 * Override the existing method so we can set parent id.
 	 *
@@ -83,25 +82,23 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
 	 */
-	public function update_item( $request ) {
+	public function create_item( $request ) {
 		// WP_REST_Attachments_Controller doesn't allow setting an attachment as the parent post.
 		// Hence we are working around this here.
 		$parent_post = ! empty( $request['post'] ) ? (int) $request['post'] : null;
 		unset( $request['post'] );
 
 		if ( ! $parent_post ) {
-			return parent::update_item( $request );
+			return parent::create_item( $request );
 		}
 
-		if ( 'revision' === get_post_type( $parent_post ) ) {
-			return new WP_Error(
-				'rest_invalid_param',
-				__( 'Invalid parent type.', 'web-stories' ),
-				[ 'status' => 400 ]
-			);
+		$response = parent::create_item( $request );
+		if ( is_wp_error( $response ) ) {
+			return $response;
 		}
 
-		$post_id           = $request['id'];
+		$data              = $response->get_data();
+		$post_id           = $data['id'];
 		$attachment_before = $this->get_post( $post_id );
 		if ( is_wp_error( $attachment_before ) ) {
 			return $attachment_before;
@@ -116,7 +113,10 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return $result;
 		}
 
-		return parent::update_item( $request );
+		$data['post'] = $parent_post;
+		$response->set_data( $data );
+
+		return $response;
 	}
 
 	/**
@@ -194,27 +194,14 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return;
 		}
 
-		$version = get_option( Database_Upgrader::OPTION, '0.0.0' );
-		if ( version_compare( '3.0.4', $version, '>=' ) ) {
-			$tax_query = (array) $query->get( 'tax_query' );
+		$tax_query = (array) $query->get( 'tax_query' );
 
-			$tax_query[] = [
-				'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
-				'field'    => 'slug',
-				'terms'    => 'poster-generation',
-			];
+		$tax_query[] = [
+			'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
+			'field'    => 'slug',
+			'terms'    => 'poster-generation',
+		];
 
-			$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
-		} else {
-
-			$meta_query = (array) $query->get( 'meta_query' );
-
-			$meta_query[] = [
-				'key'     => Media::POSTER_POST_META_KEY,
-				'compare' => 'NOT EXISTS',
-			];
-
-			$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
-		}
+		$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 }
