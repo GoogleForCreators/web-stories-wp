@@ -100,7 +100,7 @@ class Customizer extends \WP_UnitTestCase {
 			'carousel' => __( 'Carousel', 'web-stories' ),
 		];
 
-		$this->assertEquals( $expected_view_choices, $this->wp_customize->get_control( 'story-options[view_type]' )->choices );
+		$this->assertSame( $expected_view_choices, $this->wp_customize->get_control( 'story-options[view_type]' )->choices );
 
 		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[number_of_stories]' ) );
 		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[number_of_stories]' ) );
