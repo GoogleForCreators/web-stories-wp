@@ -60,7 +60,7 @@ class BaseField implements Field {
 	public function __construct( array $args ) {
 		$this->label    = isset( $args['label'] ) ? $args['label'] : '';
 		$this->readonly = isset( $args['readonly'] ) ? (bool) $args['readonly'] : true;
-		$this->show     = true;
+		$this->show     = isset( $args['show'] ) ? (bool) $args['show'] : true;
 	}
 
 	/**
