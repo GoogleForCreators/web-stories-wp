@@ -420,13 +420,7 @@ class Media {
 	 * @return bool
 	 */
 	protected function is_poster( $post_id ) {
-		$version = get_option( Database_Upgrader::OPTION, '0.0.0' );
-		if ( version_compare( '3.0.4', $version, '<' ) ) {
-			return (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
-		}
-
 		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
-
 		if ( is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
