@@ -161,6 +161,6 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 		$this->call_private_method( $shortcode_obj, 'render_stories', [ [] ] );
 		$attrs = $this->get_private_property( $shortcode_obj, 'attributes' );
 
-		$this->assertSameSets( $default, $attrs );
+		$this->assertSame( $default, $attrs );
 	}
 }
