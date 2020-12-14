@@ -83,6 +83,7 @@ class Story_Query extends \WP_UnitTestCase {
 			'stories_archive_label'     => 'View all stories',
 			'list_view_image_alignment' => 'left',
 			'class'                     => '',
+			'circle_size'               => 150,
 		];
 
 		self::$default_query_args = [
