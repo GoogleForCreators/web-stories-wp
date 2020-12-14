@@ -280,7 +280,7 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor' ],
+					'enum'        => [ 'editor', 'poster-generation' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
