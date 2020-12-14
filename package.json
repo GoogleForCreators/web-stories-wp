@@ -176,7 +176,7 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-prettier": "^1.1.2",
     "stylelint-processor-styled-components": "^1.10.0",
-    "stylis-plugin-rtl": "^1.0.0",
+    "stylis-plugin-rtl": "^2.0.1",
     "terser-webpack-plugin": "^4.2.3",
     "thread-loader": "^3.0.1",
     "webpack": "^4.44.2",
