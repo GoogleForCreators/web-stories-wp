@@ -68,7 +68,7 @@ class Database_Upgrader {
 			'3.0.1' => 'rewrite_flush',
 			'3.0.2' => 'rewrite_flush',
 			'3.0.3' => 'yoast_reindex_stories',
-			'3.0.4' => 'migration_post_meta',
+			'3.0.4' => 'add_poster_generation_media_source',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -340,7 +340,7 @@ class Database_Upgrader {
 	 *
 	 * @return void
 	 */
-	protected function migration_post_meta() {
+	protected function add_poster_generation_media_source() {
 		global $wpdb;
 
 		wp_insert_term( 'poster-generation', Media::STORY_MEDIA_TAXONOMY );

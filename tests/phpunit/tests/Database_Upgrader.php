@@ -258,9 +258,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers ::migration_post_meta
+	 * @covers ::add_poster_generation_media_source
 	 */
-	public function test_migration_post_meta() {
+	public function test_add_poster_generation_media_source() {
 
 
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -287,7 +287,7 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$object = new \Google\Web_Stories\Database_Upgrader();
 
-		$this->call_private_method( $object, 'migration_post_meta' );
+		$this->call_private_method( $object, 'add_poster_generation_media_source' );
 
 		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
 		$slugs = wp_list_pluck( $terms, 'slug' );
