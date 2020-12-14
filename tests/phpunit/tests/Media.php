@@ -69,7 +69,7 @@ class Media extends \WP_UnitTestCase {
 		$this->assertArrayHasKey( 'media_source', $data );
 		$this->assertEquals( $poster_attachment_id, $data['featured_media'] );
 		$this->assertEquals( wp_get_attachment_url( $poster_attachment_id ), $data['featured_media_src']['src'] );
-		$this->assertEqualSets( [ 'editor' ], $data['media_source'] );
+		$this->assertEquals( 'editor', $data['media_source'] );
 	}
 
 	/**

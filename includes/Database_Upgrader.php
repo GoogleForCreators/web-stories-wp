@@ -354,7 +354,7 @@ class Database_Upgrader {
 
 		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
-				wp_set_object_terms( (int) $post_id, [ 'editor', 'poster-generation' ], Media::STORY_MEDIA_TAXONOMY );
+				wp_set_object_terms( (int) $post_id, 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
 			}
 		}
 	}

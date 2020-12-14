@@ -291,8 +291,8 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
 		$slugs = wp_list_pluck( $terms, 'slug' );
-		$this->assertCount( 2, $terms );
-		$this->assertEqualSets( [ 'editor', 'poster-generation' ], $slugs );
+		$this->assertCount( 1, $terms );
+		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
 	}
 
 	/**
