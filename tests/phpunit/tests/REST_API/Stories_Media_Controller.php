@@ -222,7 +222,7 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 		$result     = $controller->filter_poster_attachments( $query );
 		$this->assertNull( $result );
 		$tax_query = $query->get( 'tax_query' );
-		$this->assertSame( "", $tax_query );
+		$this->assertSame( '', $tax_query );
 	}
 
 	/**
