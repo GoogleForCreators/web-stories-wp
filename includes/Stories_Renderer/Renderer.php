@@ -209,7 +209,17 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				$field_state = new CarouselView();
 				break;
 			default:
-				$field_state = apply_filters( 'web_stories_default_fieldstate', new GridView() );
+				$default_field_state = new CircleView();
+				/**
+				 * Filters the fieldstate object.
+				 *
+				 * This depicts
+				 *
+				 * @since 2.0.0
+				 *
+				 * @param FieldState $default_field_state Field states for circle view.
+				 */
+				$field_state = apply_filters( 'web_stories_default_fieldstate', $default_field_state );
 		}
 
 		return $field_state;

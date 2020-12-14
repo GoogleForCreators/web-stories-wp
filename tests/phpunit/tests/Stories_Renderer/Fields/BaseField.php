@@ -56,14 +56,14 @@ class BaseField extends \WP_UnitTestCase_Base {
 	 * @covers ::readonly
 	 */
 	public function test_readonly() {
-		$this->assertSame( true, self::$testee->readonly() );
+		$this->assertTrue( self::$testee->readonly() );
 	}
 
 	/**
 	 * @covers ::show
 	 */
 	public function test_show() {
-		$this->assertSame( true, self::$testee->show() );
+		$this->assertTrue( self::$testee->show() );
 	}
 }
 

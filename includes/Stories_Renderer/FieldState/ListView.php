@@ -109,7 +109,7 @@ class ListView extends BaseFieldState {
 		return $this->prepare_field(
 			[
 				'label'    => $label,
-				'show'     => false,
+				'show'     => true,
 				'readonly' => false,
 			]
 		);
