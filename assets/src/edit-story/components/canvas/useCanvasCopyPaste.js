@@ -37,15 +37,21 @@ import useInsertElement from './useInsertElement';
 function useCanvasGlobalKeys() {
   const addPastedElements = useAddPastedElements();
 
-  const { currentPage, selectedElements, deleteSelectedElements } = useStory(
+  const {
+    currentPage,
+    selectedElements,
+    deleteSelectedElements,
+    selectedElementAnimations,
+  } = useStory(
     ({
-      state: { currentPage, selectedElements },
+      state: { currentPage, selectedElements, selectedElementAnimations },
       actions: { deleteSelectedElements },
     }) => {
       return {
         currentPage,
         selectedElements,
         deleteSelectedElements,
+        selectedElementAnimations,
       };
     }
   );
@@ -61,20 +67,33 @@ function useCanvasGlobalKeys() {
         return;
       }
 
-      addElementsToClipboard(currentPage, selectedElements, evt);
+      addElementsToClipboard(
+        currentPage,
+        selectedElements,
+        selectedElementAnimations,
+        evt
+      );
 
       if (eventType === 'cut') {
         deleteSelectedElements();
       }
       evt.preventDefault();
     },
-    [currentPage, deleteSelectedElements, selectedElements]
+    [
+      currentPage,
+      deleteSelectedElements,
+      selectedElements,
+      selectedElementAnimations,
+    ]
   );
 
   const elementPasteHandler = useBatchingCallback(
     (content) => {
-      const elements = processPastedElements(content, currentPage);
-      return addPastedElements(elements);
+      const { elements, animations } = processPastedElements(
+        content,
+        currentPage
+      );
+      return addPastedElements(elements, animations);
     },
     [addPastedElements, currentPage]
   );

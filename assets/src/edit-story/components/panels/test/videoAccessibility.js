@@ -36,7 +36,7 @@ jest.mock('../../mediaPicker', () => ({
 describe('Panels/VideoAccessibility', () => {
   const defaultElement = {
     type: 'video',
-    resource: { posterId: 0, title: '', poster: '', alt: '' },
+    resource: { posterId: 0, poster: '', alt: '' },
   };
   function renderVideoAccessibility(...args) {
     return renderPanel(VideoAccessibility, ...args);
@@ -74,11 +74,11 @@ describe('Panels/VideoAccessibility', () => {
     expect(pushUpdate).toHaveBeenCalledWith({ poster: 'media1' }, true);
   });
 
-  it('should trim "alt" to maximum allowed length if exceeding', () => {
+  it('should trim video description to maximum allowed length if exceeding', () => {
     const { getByPlaceholderText, submit } = renderVideoAccessibility([
       defaultElement,
     ]);
-    const input = getByPlaceholderText('Assistive text');
+    const input = getByPlaceholderText('Video description');
 
     const bigText = ''.padStart(MIN_MAX.ALT_TEXT.MAX + 10, '1');
 
@@ -91,41 +91,19 @@ describe('Panels/VideoAccessibility', () => {
     );
   });
 
-  it('should trim "title" to maximum allowed length if exceeding', () => {
-    const { getByPlaceholderText, submit } = renderVideoAccessibility([
-      defaultElement,
-    ]);
-    const input = getByPlaceholderText('Title');
-
-    const bigText = ''.padStart(MIN_MAX.TITLE.MAX + 10, '1');
-
-    fireEvent.change(input, { target: { value: bigText } });
-    const submits = submit({
-      resource: { posterId: 0, poster: '', title: bigText },
-    });
-    expect(submits[defaultElement.id].resource.title).toHaveLength(
-      MIN_MAX.TITLE.MAX
-    );
-  });
-
   it('should display Mixed as placeholder in case of mixed value multi-selection', () => {
     const { getByRole } = renderVideoAccessibility([
       defaultElement,
       {
         resource: {
           posterId: 0,
-          title: 'Hello, video!',
           poster: '',
           alt: 'Hello!',
         },
       },
     ]);
-    const title = getByRole('textbox', { name: 'Video title' });
-    expect(title.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-    expect(title).toHaveValue('');
-
-    const alt = getByRole('textbox', { name: 'Assistive text' });
-    expect(alt.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-    expect(alt).toHaveValue('');
+    const description = getByRole('textbox', { name: 'Video description' });
+    expect(description.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
+    expect(description).toHaveValue('');
   });
 });

@@ -16,7 +16,9 @@
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 	</rule>
 
-	<rule ref="WordPress-VIP-Go" />
+	<rule ref="WordPress-VIP-Go">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>

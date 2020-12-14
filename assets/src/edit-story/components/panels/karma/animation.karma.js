@@ -26,7 +26,6 @@ describe('Animation Panel', function () {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableAnimation: true });
     await fixture.render();
   });
 

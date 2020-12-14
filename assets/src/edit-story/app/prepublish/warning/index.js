@@ -36,8 +36,7 @@ export default {
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],
   video: [
-    accessibilityWarnings.videoElementMissingTitle,
-    accessibilityWarnings.videoElementMissingAlt,
+    accessibilityWarnings.videoElementMissingDescription,
     accessibilityWarnings.videoElementMissingCaptions,
     accessibilityWarnings.elementLinkTappableRegionTooSmall,
   ],

@@ -46,7 +46,7 @@ class Plugin extends \WP_UnitTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_is_am_endpoint_polyfill_on_wp_action() {
+	public function test_is_amp_endpoint_polyfill_on_wp_action() {
 		$this->assertFalse( function_exists( '\is_amp_endpoint' ) );
 		$this->go_to( '/' );
 		$this->assertTrue( function_exists( '\is_amp_endpoint' ) );

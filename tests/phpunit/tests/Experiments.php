@@ -177,8 +177,8 @@ class Experiments extends \WP_UnitTestCase {
 	 * @covers ::is_experiment_enabled
 	 */
 	public function test_is_experiment_enabled() {
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableAnimation' => true ], false );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableBookmarkActions' => true ], false );
 		$experiments = new \Google\Web_Stories\Experiments();
-		$this->assertTrue( $experiments->is_experiment_enabled( 'enableAnimation' ) );
+		$this->assertTrue( $experiments->is_experiment_enabled( 'enableBookmarkActions' ) );
 	}
 }

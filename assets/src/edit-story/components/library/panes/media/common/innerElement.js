@@ -183,6 +183,9 @@ function InnerElement({
   }
 
   const dragHandler = (event) => {
+    if (type === 'video' && !mediaElement.current?.paused) {
+      mediaElement.current.pause();
+    }
     if (!draggingResource) {
       // Drop-targets handling.
       resourceList.set(resource.id, {

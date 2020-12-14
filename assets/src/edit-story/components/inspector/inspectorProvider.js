@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
-import { useFeatures } from 'flagged';
 import { useDebouncedCallback } from 'use-debounce/lib';
 
 /**
@@ -54,7 +53,6 @@ function InspectorProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const { showPrePublishTab } = useFeatures();
   const { checklist, refreshChecklist } = usePrepublishChecklist();
   const [refreshChecklistDebounced] = useDebouncedCallback(
     refreshChecklist,
@@ -156,16 +154,13 @@ function InspectorProvider({ children }) {
           title: __('Document', 'web-stories'),
           Pane: DocumentInspector,
         },
-        ...(showPrePublishTab
-          ? [
-              {
-                icon: checklist.length > 0 ? prepublishAlert : undefined,
-                id: PREPUBLISH,
-                title: __('Checklist', 'web-stories'),
-                Pane: PrepublishInspector,
-              },
-            ]
-          : []),
+
+        {
+          icon: checklist.length > 0 ? prepublishAlert : undefined,
+          id: PREPUBLISH,
+          title: __('Checklist', 'web-stories'),
+          Pane: PrepublishInspector,
+        },
       ],
     },
   };

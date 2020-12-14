@@ -34,6 +34,9 @@ import { useCanvas } from '../../../canvas';
 import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
+import { useGlobalKeyDownEffect } from '../../../keyboard';
+import { useStory } from '../../../../app/story';
+import objectWithout from '../../../../utils/objectWithout';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -56,6 +59,7 @@ function LibraryMoveable({
   const CloneElement = cloneElement;
 
   const [isDragging, setIsDragging] = useState(false);
+  const [didManuallyReset, setDidManuallyReset] = useState(false);
   const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
   const overlayRef = useRef(null);
@@ -65,14 +69,19 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer } = useCanvas((state) => ({
+  const { pageContainer, nodesById } = useCanvas((state) => ({
     pageContainer: state.state.pageContainer,
+    nodesById: state.state.nodesById,
   }));
 
   const {
     state: { activeDropTargetId },
     actions: { setDraggingResource },
   } = useDropTargets();
+
+  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
+    backgroundElement: currentPage?.elements?.[0] ?? {},
+  }));
 
   const frame = {
     translate: [0, 0],
@@ -88,22 +97,48 @@ function LibraryMoveable({
     };
   };
 
+  const resetMoveable = useCallback(() => {
+    targetBoxRef.current.style.transform = null;
+    cloneRef.current.style.transform = null;
+    // Hide the clone, too.
+    cloneRef.current.style.opacity = 0;
+    setIsDragging(false);
+    setDraggingResource(null);
+  }, [setDraggingResource]);
+
+  useGlobalKeyDownEffect(
+    'esc',
+    () => {
+      setDidManuallyReset(true);
+      isDragging && resetMoveable();
+    },
+    [isDragging, resetMoveable]
+  );
+
   const onDrag = ({ beforeTranslate, inputEvent }) => {
+    // This is needed if the user clicks "Esc" but continues dragging.
+    if (didManuallyReset) {
+      return false;
+    }
     frame.translate = beforeTranslate;
     // Don't display the clone right away since otherwise it will be triggered for a click as well.
     if (
       cloneRef.current &&
       inputEvent.timeStamp - eventTracker.current.timeStamp > 300
     ) {
-      if (!cloneRef.current.style.opacity) {
+      if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
         // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
         cloneRef.current.style.opacity = 1;
+      } else if (activeDropTargetId) {
+        // If there's an active drop target, let's hide the clone.
+        cloneRef.current.style.opacity = 0;
       }
       cloneRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
       // We also have to move the original target ref for snapping to work.
       targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
-    handleDrag && handleDrag(inputEvent);
+    handleDrag?.(inputEvent);
+    return undefined;
   };
 
   const getTargetOffset = useCallback(() => {
@@ -125,6 +160,7 @@ function LibraryMoveable({
   }, [overlayRef]);
 
   const onDragStart = ({ set, inputEvent }) => {
+    setDidManuallyReset(false);
     // Note: we can't set isDragging true here since a "click" is also considered dragStart.
     set(frame.translate);
     setIsDragging(true);
@@ -140,6 +176,9 @@ function LibraryMoveable({
   };
 
   const onDragEnd = ({ inputEvent }) => {
+    if (didManuallyReset) {
+      return false;
+    }
     if (isMouseUpAClick(inputEvent, eventTracker.current)) {
       resetMoveable();
       onClick();
@@ -174,16 +213,9 @@ function LibraryMoveable({
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
-    otherNodes: [],
+    otherNodes: Object.values(objectWithout(nodesById, [backgroundElement.id])),
     snappingOffsetX,
   });
-
-  const resetMoveable = () => {
-    targetBoxRef.current.style.transform = null;
-    cloneRef.current.style.transform = null;
-    setIsDragging(false);
-    setDraggingResource(null);
-  };
 
   const { width, height } = cloneProps;
   return (

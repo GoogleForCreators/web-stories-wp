@@ -76,6 +76,13 @@ class Story_Post_Type extends \WP_UnitTestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
+	public function tearDown() {
+		$this->set_permalink_structure( '' );
+		$_SERVER['REQUEST_URI'] = '';
+
+		parent::tearDown();
+	}
+
 	/**
 	 * @covers ::init
 	 */
