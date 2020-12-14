@@ -23,6 +23,7 @@ use WP_REST_Request;
  * @coversDefaultClass \Google\Web_Stories\Media
  */
 class Media extends \WP_UnitTestCase {
+	use Private_Access;
 	/**
 	 * @covers ::init
 	 */
@@ -235,5 +236,32 @@ class Media extends \WP_UnitTestCase {
 
 		wp_delete_attachment( $video_attachment_id );
 		$this->assertNull( get_post( $poster_attachment_id ) );
+	}
+
+	/**
+	 * @covers ::is_poster
+	 */
+	public function test_is_poster() {
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		$media = new \Google\Web_Stories\Media();
+
+		$result1 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
+		$this->assertFalse( $result1 );
+
+		wp_set_object_terms( $poster_attachment_id, 'editor', \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
+		$result2 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
+		$this->assertFalse( $result2 );
+
+		wp_set_object_terms( $poster_attachment_id, 'poster-generation', \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
+		$result3 = $this->call_private_method( $media, 'is_poster', [ $poster_attachment_id ] );
+		$this->assertTrue( $result3 );
 	}
 }
