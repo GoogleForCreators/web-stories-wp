@@ -39,6 +39,8 @@ const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  max-width: 100%;
+  max-height: 100%;
   top: 0;
   left: 0;
 `;
