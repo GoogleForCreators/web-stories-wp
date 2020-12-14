@@ -199,7 +199,8 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 		$tax_query[] = [
 			'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
 			'field'    => 'slug',
-			'terms'    => 'poster-generation',
+			'terms'    => [ 'poster-generation' ],
+			'operator' => 'NOT IN',
 		];
 
 		$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
