@@ -39,13 +39,6 @@ class BaseField extends \WP_UnitTestCase_Base {
 	}
 
 	/**
-	 * @covers ::__construct
-	 */
-	public function test_instance() {
-		$this->assertInstanceOf( Testee::class, self::$testee );
-	}
-
-	/**
 	 * @covers ::label
 	 */
 	public function test_label() {
