@@ -154,6 +154,7 @@ class Story_Query {
 			'stories_archive_label'     => __( 'View all stories', 'web-stories' ),
 			'list_view_image_alignment' => 'left',
 			'class'                     => '',
+			'circle_size'               => 150,
 		];
 
 		return wp_parse_args( $this->story_attributes, $default_attributes );
