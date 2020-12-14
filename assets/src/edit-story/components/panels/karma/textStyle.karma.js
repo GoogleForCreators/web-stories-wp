@@ -350,13 +350,14 @@ describe('Text Style Panel', () => {
       });
 
       describe('using keyboard only', () => {
-        it('should allow selecting a font with arrow keys and Enter', async () => {
+        fit('should allow selecting a font with arrow keys and Enter', async () => {
           // Select the third item in the already opened fontpicker,
           // which happens to be Ubuntu
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('Enter');
+          await fixture.events.sleep(TIMEOUT);
 
           // Then open again and verify, that Ubuntu is listed as selected
           await openFontPicker();
