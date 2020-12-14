@@ -50,7 +50,7 @@ const Space = styled.div`
 `;
 
 const Label = styled.label`
-  height: 60px;
+  height: ${({ locked }) => !locked && '60px'};
   width: ${({ locked }) => (locked ? '50%' : null)};
 `;
 
@@ -68,7 +68,7 @@ const LabelText = styled.span`
 `;
 
 const ToggleWrapper = styled.div`
-  height: 60px;
+  height: ${({ locked }) => !locked && '60px'};
 `;
 
 function WidthControls({ selectedElements, pushUpdateForObject }) {
@@ -151,7 +151,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
         </>
       )}
       <Space />
-      <ToggleWrapper>
+      <ToggleWrapper locked={lockBorder}>
         <Toggle
           icon={<Lock />}
           uncheckedIcon={<Unlock />}
