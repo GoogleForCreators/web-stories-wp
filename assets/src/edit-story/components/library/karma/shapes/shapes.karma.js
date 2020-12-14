@@ -50,11 +50,11 @@ describe('Shape library integration', () => {
     // Switch to the shapes tab and drag the triangle to the canvas
     await fixture.events.click(fixture.editor.library.shapesTab);
     const triangle = fixture.editor.library.shapes.shape('Triangle');
-    const canvas = fixture.editor.canvas.framesLayer.container;
+    const frame = fixture.editor.canvas.framesLayer.frames[0].node;
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
       moveRel(triangle, 10, 10),
       down(),
-      moveRel(canvas, 50, 50),
+      moveRel(frame, 50, 50),
       up(),
     ]);
 
