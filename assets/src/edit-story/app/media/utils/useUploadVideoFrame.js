@@ -53,7 +53,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         media_details: { width: posterWidth, height: posterHeight },
       } = await uploadFile(obj, {
         post: id,
-        media_source: ['editor', 'poster-generation'],
+        media_source: 'poster-generation',
       });
       await updateMedia(id, {
         featured_media: posterId,
