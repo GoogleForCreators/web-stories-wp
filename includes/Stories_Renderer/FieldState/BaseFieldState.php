@@ -112,6 +112,8 @@ abstract class BaseFieldState implements FieldState {
 	/**
 	 * Prepare a field object.
 	 *
+	 * @param array $args Arguments to build field.
+	 *
 	 * @return BaseField
 	 */
 	protected function prepare_field( array $args ) {
