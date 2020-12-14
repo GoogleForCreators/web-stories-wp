@@ -106,7 +106,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     onSelect: handleChangeTrack,
     type: 'text/vtt',
     title: captionText,
-    buttonInsertText: __('Description', 'web-stories'),
+    buttonInsertText: __('Select caption', 'web-stories'),
   });
 
   return (

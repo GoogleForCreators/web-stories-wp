@@ -139,7 +139,7 @@ export class Fixture {
       'link',
       'pageAttachment',
       'pageStyle',
-      'poster',
+      'videoPoster',
       'size',
       'shapeStyle',
       'text',

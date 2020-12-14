@@ -72,7 +72,7 @@ export class DesignPanel extends Container {
     return this._get(this.getByRole('region', { name: /Link/ }), 'link', Link);
   }
 
-  get poster() {
+  get videoPoster() {
     return this._get(
       this.getByRole('region', { name: /Poster/ }),
       'poster',

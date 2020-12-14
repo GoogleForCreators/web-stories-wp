@@ -57,7 +57,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
   );
 
   return (
-    <SimplePanel name="poster" title={__('Poster', 'web-stories')}>
+    <SimplePanel name="videoPoster" title={__('Poster', 'web-stories')}>
       <Row>
         <Media
           value={poster}
@@ -73,7 +73,7 @@ function VideoPosterPanel({ selectedElements, pushUpdate }) {
       <Row>
         <Note>
           {__(
-            'For improved loadaing experience on slower connections.',
+            'For improved loading experience on slower connections.',
             'web-stories'
           )}
         </Note>

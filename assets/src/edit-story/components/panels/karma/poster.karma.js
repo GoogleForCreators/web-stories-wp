@@ -35,7 +35,7 @@ describe('Poster Panel', () => {
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Set different poster image', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.media.item(5)); // item 5 is a video
-      vaPanel = fixture.editor.inspector.designPanel.poster;
+      vaPanel = fixture.editor.inspector.designPanel.videoPoster;
 
       // Create fake media browser
       window.wp = {
