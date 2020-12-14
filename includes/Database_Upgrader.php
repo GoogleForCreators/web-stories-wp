@@ -341,21 +341,7 @@ class Database_Upgrader {
 	 * @return void
 	 */
 	protected function delete_post_meta() {
-		global $wpdb;
-
-
-		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->prepare(
-				"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s",
-				Media::POSTER_POST_META_KEY
-			)
-		);
-
-		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
-			foreach ( $post_ids as $post_id ) {
-				delete_post_meta( (int) $post_id, Media::POSTER_POST_META_KEY );
-			}
-		}
+		delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
 	}
 
 	/**
