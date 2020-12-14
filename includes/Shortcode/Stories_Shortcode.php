@@ -72,7 +72,7 @@ class Stories_Shortcode {
 		$this->attributes = shortcode_atts(
 			[
 				'view'                      => 'circles',
-				'columns'                   => 2,
+				'columns'                   => 1,
 				'title'                     => 'false',
 				'author'                    => 'false',
 				'date'                      => 'false',
