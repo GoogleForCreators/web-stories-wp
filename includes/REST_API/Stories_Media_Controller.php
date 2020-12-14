@@ -194,7 +194,10 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return;
 		}
 
-		$tax_query = (array) $query->get( 'tax_query' );
+		$tax_query = $query->get( 'tax_query' );
+		if ( is_string( $tax_query ) || empty( $tax_query ) ) {
+			$tax_query = [];
+		}
 
 		$tax_query[] = [
 			'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
