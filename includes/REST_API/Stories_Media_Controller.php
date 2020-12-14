@@ -194,13 +194,18 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 			return;
 		}
 
-		$meta_query = (array) $query->get( 'meta_query' );
+		$tax_query = $query->get( 'tax_query' );
+		if ( is_string( $tax_query ) || empty( $tax_query ) ) {
+			$tax_query = [];
+		}
 
-		$meta_query[] = [
-			'key'     => Media::POSTER_POST_META_KEY,
-			'compare' => 'NOT EXISTS',
+		$tax_query[] = [
+			'taxonomy' => Media::STORY_MEDIA_TAXONOMY,
+			'field'    => 'slug',
+			'terms'    => [ 'poster-generation' ],
+			'operator' => 'NOT IN',
 		];
 
-		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
+		$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 }

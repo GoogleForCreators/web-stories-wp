@@ -368,7 +368,7 @@ class Media {
 	public function get_thumbnail_data( $thumbnail_id ) {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
-		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
+		$generated                     = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
 
@@ -392,10 +392,27 @@ class Media {
 		}
 
 		// Used in favor of slow meta queries.
-		$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
-
+		$is_poster = $this->is_poster( $post_id );
 		if ( $is_poster ) {
 			wp_delete_attachment( $post_id, true );
 		}
+	}
+
+	/**
+	 * Helper util to check if attachment is a poster.
+	 *
+	 * @param int $post_id Attachment ID.
+	 *
+	 * @return bool
+	 */
+	protected function is_poster( $post_id ) {
+		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
+		if ( is_array( $terms ) && ! empty( $terms ) ) {
+			$slugs = wp_list_pluck( $terms, 'slug' );
+
+			return in_array( 'poster-generation', $slugs, true );
+		}
+
+		return false;
 	}
 }
