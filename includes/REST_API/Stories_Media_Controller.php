@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Media;
 use Google\Web_Stories\Traits\Types;
 use WP_Error;
 use WP_REST_Request;
@@ -61,7 +62,9 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
+		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 		$response = parent::get_items( $request );
+		remove_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
 
 		if ( $request['_web_stories_envelope'] && ! is_wp_error( $response ) ) {
 			$response = rest_get_server()->envelope_response( $response, false );
@@ -171,5 +174,33 @@ class Stories_Media_Controller extends \WP_REST_Attachments_Controller {
 	 */
 	protected function get_media_types() {
 		return $this->get_allowed_mime_types();
+	}
+
+	/**
+	 * Filters the current query to hide all automatically extracted poster image attachments.
+	 *
+	 * Reduces unnecessary noise in the media library.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param \WP_Query $query WP_Query instance, passed by reference.
+	 *
+	 * @return void
+	 */
+	public function filter_poster_attachments( &$query ) {
+		$post_type = (array) $query->get( 'post_type' );
+
+		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
+			return;
+		}
+
+		$meta_query = (array) $query->get( 'meta_query' );
+
+		$meta_query[] = [
+			'key'     => Media::POSTER_POST_META_KEY,
+			'compare' => 'NOT EXISTS',
+		];
+
+		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 }

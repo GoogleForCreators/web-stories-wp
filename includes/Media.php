@@ -213,41 +213,11 @@ class Media {
 			false
 		);
 
-		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
-
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
-	}
-
-	/**
-	 * Filters the current query to hide all automatically extracted poster image attachments.
-	 *
-	 * Reduces unnecessary noise in the media library.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param \WP_Query $query WP_Query instance, passed by reference.
-	 *
-	 * @return void
-	 */
-	public function filter_poster_attachments( &$query ) {
-		$post_type = (array) $query->get( 'post_type' );
-
-		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
-			return;
-		}
-
-		$meta_query = (array) $query->get( 'meta_query' );
-
-		$meta_query[] = [
-			'key'     => self::POSTER_POST_META_KEY,
-			'compare' => 'NOT EXISTS',
-		];
-
-		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 
 	/**
