@@ -86,6 +86,7 @@ export const _default = () => {
         placeholder={text('placeholder', 'select a value')}
         dropdownLabel={text('dropdownLabel', 'label')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+        isRTL={boolean('isRTL')}
         disabled={boolean('disabled')}
         selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
@@ -108,6 +109,7 @@ export const LightTheme = () => {
       placeholder={text('placeholder', 'select a value')}
       dropdownLabel={text('dropdownLabel', 'label')}
       isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+      isRTL={boolean('isRTL')}
       disabled={boolean('disabled')}
       selectedValue={selectedValue}
       onMenuItemClick={(event, newValue) => {

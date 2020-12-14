@@ -16,8 +16,7 @@
 
 export const DEFAULT_ANCHOR_HEIGHT = 20;
 export const DEFAULT_DROPDOWN_HEIGHT = 208;
-export const KEYS_MOVE_UP = ['ArrowUp', 'ArrowLeft'];
-export const KEYS_MOVE_DOWN = ['ArrowDown', 'ArrowRight'];
+
 export const KEYS_SHIFT_FOCUS = ['up', 'down', 'left', 'right'];
 export const KEYS_CLOSE_MENU = ['esc', 'tab'];
 export const KEYS_SELECT_ITEM = ['space', 'enter'];

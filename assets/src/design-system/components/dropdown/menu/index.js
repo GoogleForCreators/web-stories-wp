@@ -33,6 +33,7 @@ export const DropdownMenu = ({
   dropdownHeight,
   menuStylesOverride,
   hasMenuRole,
+  isRTL,
   items,
   onMenuItemClick,
   onDismissMenu,
@@ -49,6 +50,7 @@ export const DropdownMenu = ({
   const { focusedIndex } = useDropdownMenu({
     activeValue,
     handleMenuItemSelect,
+    isRTL,
     items,
     listRef,
     onDismissMenu,
@@ -101,6 +103,7 @@ DropdownMenu.propTypes = {
   dropdownHeight: PropTypes.number,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   hasMenuRole: PropTypes.bool,
+  isRTL: PropTypes.bool,
   items: DROPDOWN_ITEMS,
   onMenuItemClick: PropTypes.func.isRequired,
   onDismissMenu: PropTypes.func.isRequired,

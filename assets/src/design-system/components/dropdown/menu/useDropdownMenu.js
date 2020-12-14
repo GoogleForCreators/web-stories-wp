@@ -26,8 +26,6 @@ import { isNullOrUndefinedOrEmptyString } from '../../../utils/isNullOrUndefined
 import { useKeyDownEffect } from '../../keyboard';
 import {
   KEYS_CLOSE_MENU,
-  KEYS_MOVE_DOWN,
-  KEYS_MOVE_UP,
   KEYS_SELECT_ITEM,
   KEYS_SHIFT_FOCUS,
 } from '../constants';
@@ -35,6 +33,7 @@ import {
 export default function useDropdownMenu({
   activeValue,
   handleMenuItemSelect,
+  isRTL,
   items = [],
   listRef,
   onDismissMenu,
@@ -59,16 +58,19 @@ export default function useDropdownMenu({
 
   const handleFocusChange = useCallback(
     ({ key }) => {
-      if (KEYS_MOVE_UP.indexOf(key) !== -1 && focusedIndex !== 0) {
+      if (
+        ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
+        focusedIndex !== 0
+      ) {
         handleMoveFocus(-1);
       } else if (
-        KEYS_MOVE_DOWN.indexOf(key) !== -1 &&
+        ['ArrowDown', isRTL ? 'ArrowLeft' : 'ArrowRight'].includes(key) &&
         focusedIndex < listLength - 1
       ) {
         handleMoveFocus(1);
       }
     },
-    [focusedIndex, handleMoveFocus, listLength]
+    [focusedIndex, handleMoveFocus, isRTL, listLength]
   );
 
   const handleMenuItemEnter = useCallback(

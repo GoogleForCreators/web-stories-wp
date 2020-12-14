@@ -120,6 +120,7 @@ Dropdown.propTypes = {
   dropdownLabel: PropTypes.string,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
+  isRTL: PropTypes.bool,
   items: DROPDOWN_ITEMS,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
