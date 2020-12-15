@@ -40,7 +40,6 @@ const TargetBox = styled.div`
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
   top: 0;
-  left: 0;
   z-index: 1;
 `;
 
@@ -133,7 +132,7 @@ function LibraryMoveable({
       // We also have to move the original target ref for snapping to work.
       targetBoxRef.current.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`;
     }
-    handleDrag(inputEvent);
+    handleDrag?.(inputEvent);
     return undefined;
   };
 
@@ -164,9 +163,9 @@ function LibraryMoveable({
 
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
-    const mediaBox = targetBoxRef.current.getBoundingClientRect();
-    const x1 = mediaBox.left - offsetX;
-    const y1 = mediaBox.top - offsetY;
+    const targetBox = targetBoxRef.current.getBoundingClientRect();
+    const x1 = targetBox.left - offsetX;
+    const y1 = targetBox.top - offsetY;
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
   };
@@ -197,12 +196,12 @@ function LibraryMoveable({
         insertTextSetByOffset(
           elements,
           {
-            offsetX: editorToDataX(x - pageX),
-            offsetY: editorToDataY(y - pageY),
+            offsetX: editorToDataX(x - pageX, pageSize.width),
+            offsetY: editorToDataY(y - pageY, pageSize.height),
           },
           {
-            width: editorToDataX(width),
-            height: editorToDataY(height),
+            width: editorToDataX(width, pageSize.width),
+            height: editorToDataY(height, pageSize.height),
           }
         );
       } else {
@@ -247,17 +246,19 @@ function LibraryMoveable({
           }}
         />
       )}
-      <Moveable
-        className="default-moveable hide-handles"
-        target={targetBoxRef.current}
-        edge={true}
-        draggable={true}
-        origin={false}
-        pinchable={true}
-        onDragStart={onDragStart}
-        onDrag={onDrag}
-        onDragEnd={onDragEnd}
-      />
+      {targetBoxRef.current && (
+        <Moveable
+          className="default-moveable hide-handles"
+          target={targetBoxRef.current}
+          edge={true}
+          draggable={true}
+          origin={false}
+          pinchable={true}
+          onDragStart={onDragStart}
+          onDrag={onDrag}
+          onDragEnd={onDragEnd}
+        />
+      )}
     </>
   );
 }

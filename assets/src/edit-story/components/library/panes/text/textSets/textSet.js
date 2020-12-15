@@ -54,6 +54,11 @@ const DragWrapper = styled.div.attrs({
   role: 'listitem',
 })``;
 
+const Clone = styled.div`
+  position: absolute;
+  opacity: 0;
+`;
+
 const DragContainer = styled.div`
   position: absolute;
   top: -9999px;
@@ -98,7 +103,6 @@ function TextSet({ elements }) {
   const { width: pageWidth, height: pageHeight } = canvasPageSize;
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
-  const cloneSet = <TextSetElements isForDisplay elements={elements} />;
   return (
     <DragWrapper>
       <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
@@ -122,10 +126,11 @@ function TextSet({ elements }) {
         elements={elements}
         elementProps={{}}
         onClick={() => insertTextSet(elements)}
-        cloneElement={cloneSet}
+        cloneElement={Clone}
         cloneProps={{
           width: TEXT_SET_SIZE,
           height: TEXT_SET_SIZE,
+          children: <TextSetElements isForDisplay elements={elements} />,
         }}
       />
     </DragWrapper>
