@@ -44,14 +44,7 @@ import { getResourceFromAttachment } from '../utils';
  * @return {LocalMediaContext} Context.
  */
 export default function useContextValueProvider(reducerState, reducerActions) {
-  const {
-    processing,
-    processed,
-    media,
-    pageToken,
-    mediaType,
-    searchTerm,
-  } = reducerState;
+  const { media, pageToken, mediaType, searchTerm } = reducerState;
   const {
     fetchMediaStart,
     fetchMediaSuccess,
@@ -108,10 +101,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   const { uploadMedia, isUploading } = useUploadMedia({ media, setMedia });
   const { uploadVideoFrame } = useUploadVideoFrame({
     updateMediaElement,
-    setProcessing,
-    removeProcessing,
-    processing,
-    processed,
   });
 
   const {
@@ -138,7 +127,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const uploadVideoPoster = useCallback(
     (id, src) => {
-      // eslint-disable-next-line no-shadow
       const { processed, processing } = stateRef.current;
 
       const process = async () => {
@@ -156,17 +144,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const processor = useCallback(
     ({ mimeType, posterId, id, src, local }) => {
-      const process = async () => {
-        if (
-          allowedVideoMimeTypes.includes(mimeType) &&
-          !local &&
-          !posterId &&
-          id
-        ) {
-          await uploadVideoPoster(id, src);
-        }
-      };
-      process();
+      if (
+        allowedVideoMimeTypes.includes(mimeType) &&
+        !local &&
+        !posterId &&
+        id
+      ) {
+        uploadVideoPoster(id, src);
+      }
     },
     [allowedVideoMimeTypes, uploadVideoPoster]
   );

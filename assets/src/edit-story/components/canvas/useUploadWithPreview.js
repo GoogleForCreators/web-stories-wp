@@ -18,12 +18,10 @@
  * External dependencies
  */
 import { useCallback } from 'react';
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * Internal dependencies
  */
@@ -47,14 +45,13 @@ function useUploadWithPreview() {
 
   const onLocalFile = useCallback(
     ({ resource }) => {
-      const element = insertElement(resource.type, { resource });
-      return element;
+      return insertElement(resource.type, { resource });
     },
     [insertElement]
   );
 
   const onUploadedFile = useCallback(
-    async ({ resource, element }) => {
+    ({ resource, element }) => {
       const blobUrl = element.resource.src;
       const keysToUpdate = objectPick(resource, [
         'src',
@@ -82,7 +79,7 @@ function useUploadWithPreview() {
         },
       });
       if (resource.type === 'video') {
-        await uploadVideoPoster(resource.id, resource.src);
+        uploadVideoPoster(resource.id, resource.src);
       }
     },
     [updateElementsByResourceId, uploadVideoPoster]
