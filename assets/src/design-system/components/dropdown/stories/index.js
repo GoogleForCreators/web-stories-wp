@@ -28,7 +28,11 @@ import { useState } from 'react';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
 import { Dropdown } from '..';
-import { basicDropdownItems, effectChooserData } from './sampleData';
+import {
+  basicDropdownItems,
+  effectChooserData,
+  nestedDropdownItems,
+} from './sampleData';
 
 export default {
   title: 'DesignSystem/Components/Dropdown',
@@ -107,6 +111,29 @@ export const LightTheme = () => {
     <Dropdown
       emptyText={'No options available'}
       items={basicDropdownItems}
+      hint={text('hint', 'default hint text')}
+      placeholder={text('placeholder', 'select a value')}
+      dropdownLabel={text('dropdownLabel', 'label')}
+      isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+      isRTL={boolean('isRTL')}
+      disabled={boolean('disabled')}
+      selectedValue={selectedValue}
+      onMenuItemClick={(event, newValue) => {
+        action('onMenuItemClick', event);
+        setSelectedValue(newValue);
+      }}
+      placement={select('placement', Object.values(PLACEMENT))}
+    />
+  );
+};
+
+export const SubMenus = () => {
+  const [selectedValue, setSelectedValue] = useState('alien-3');
+
+  return (
+    <Dropdown
+      emptyText={'No options available'}
+      items={nestedDropdownItems}
       hint={text('hint', 'default hint text')}
       placeholder={text('placeholder', 'select a value')}
       dropdownLabel={text('dropdownLabel', 'label')}

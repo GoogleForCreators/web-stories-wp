@@ -118,3 +118,37 @@ export const effectChooserData = [
     width: 'full',
   },
 ];
+
+export const nestedDropdownItems = [
+  {
+    sectionLabel: 'aliens',
+    items: [
+      { value: 'alien-1', label: 'ET' },
+      { value: 'alien-2', label: 'Stitch' },
+      { value: 'alien-3', label: 'Groot' },
+      { value: 'alien-4', label: 'The Worm Guys' },
+      { value: 'alien-5', label: "Na'vi" },
+      { value: 'alien-6', label: 'Arachnids' },
+      { value: 'alien-7', label: 'The Predator' },
+      { value: 'alien-8', label: 'Xenomorph' },
+    ],
+  },
+  {
+    sectionLabel: 'dragons',
+    items: [
+      { value: 'dragon-1', label: 'Smaug' },
+      { value: 'dragon-2', label: 'Mushu' },
+      { value: 'dragon-3', label: 'Toothless' },
+      { value: 'dragon-4', label: 'Falkor' },
+      { value: 'dragon-5', label: 'Drogon' },
+      { value: 'dragon-6', label: 'Kalessin' },
+    ],
+  },
+  {
+    sectionLabel: 'dogs',
+    items: [
+      { value: 'dog-1', label: 'Snoopy' },
+      { value: 'dog-2', label: 'Scooby' },
+    ],
+  },
+];

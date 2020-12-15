@@ -39,6 +39,7 @@ export const DropdownMenu = ({
   onMenuItemClick,
   onDismissMenu,
   renderItem,
+  subsectionItems,
   activeValue,
 }) => {
   const listRef = useRef();
@@ -52,7 +53,7 @@ export const DropdownMenu = ({
     activeValue,
     handleMenuItemSelect,
     isRTL,
-    items,
+    items: subsectionItems || items,
     listRef,
     onDismissMenu,
   });
@@ -62,6 +63,18 @@ export const DropdownMenu = ({
       listRef.current?.children?.[focusedIndex]?.focus();
     }
   }, [focusedIndex]);
+
+  const renderMenuLabel = (label) => {
+    return (
+      <ListItem
+        id={`dropdownMenuLabel-${label}`}
+        role="presentation"
+        tabIndex={0}
+      >
+        {label}
+      </ListItem>
+    );
+  };
 
   const renderMenuItem = (item) => {
     const isSelected = item.value === activeValue;
@@ -98,7 +111,23 @@ export const DropdownMenu = ({
         {items.length === 0 ? (
           <EmptyList>{emptyText}</EmptyList>
         ) : (
-          items.map(renderMenuItem)
+          items.map((item) => {
+            if (item.items) {
+              return Object.keys(item).map((nestedKey) => {
+                if (
+                  nestedKey === 'sectionLabel' &&
+                  typeof item[nestedKey] === 'string'
+                ) {
+                  return renderMenuLabel(item[nestedKey]);
+                }
+                if (nestedKey === 'items') {
+                  return item[nestedKey]?.map(renderMenuItem);
+                }
+              });
+            }
+
+            return renderMenuItem(item);
+          })
         )}
       </List>
     </MenuContainer>

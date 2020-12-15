@@ -32,8 +32,6 @@ import { DROPDOWN_ITEMS } from './types';
 
 const DropdownContainer = styled.div``;
 
-// isKeepMenuOpenOnSelection boolean to override closing dropdown on selection made
-
 /**
  *
  * @param {Object} props All props.
@@ -68,6 +66,18 @@ export const Dropdown = ({
   const [isOpen, _setIsOpen] = useState(false);
   const [anchorHeight, setAnchorHeight] = useState(null);
 
+  const subsectionItems = useMemo(
+    () =>
+      items.some((item) => item.items) &&
+      items.reduce((prev, current) => {
+        if (!current.items) {
+          return prev;
+        }
+        return prev.concat({ label: current.sectionLabel }, ...current.items);
+      }, []),
+    [items]
+  );
+  console.log({ subsectionItems });
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
     leading: true,
     trailing: false,
@@ -97,12 +107,14 @@ export const Dropdown = ({
     [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
   );
 
-  const activeItem = useMemo(
-    () =>
-      selectedValue &&
-      items.find((item) => item?.value.toString() === selectedValue.toString()),
-    [items, selectedValue]
-  );
+  const activeItem = useMemo(() => {
+    if (!selectedValue) {
+      return null;
+    }
+    return [...(subsectionItems ? subsectionItems : items)].find((item) => {
+      return item?.value?.toString() === selectedValue.toString();
+    });
+  }, [items, selectedValue, subsectionItems]);
 
   useEffect(() => {
     if (selectRef?.current) {
@@ -134,6 +146,7 @@ export const Dropdown = ({
             items={items}
             onDismissMenu={handleDismissMenu}
             onMenuItemClick={handleMenuItemClick}
+            subsectionItems={subsectionItems}
             {...rest}
           />
         </Popup>

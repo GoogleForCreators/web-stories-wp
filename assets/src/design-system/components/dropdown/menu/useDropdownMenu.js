@@ -46,7 +46,7 @@ export default function useDropdownMenu({
       return 0;
     }
     const foundIndex = items.findIndex((item) => {
-      return item.value.toString() === focusedValue.toString();
+      return item?.value?.toString() === focusedValue.toString();
     });
     return foundIndex;
   }, [items, focusedValue]);
