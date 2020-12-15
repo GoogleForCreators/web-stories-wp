@@ -55,6 +55,7 @@ const Base = styled.button(
     }
     &:active {
       background-color: ${theme.colors.interactiveBg.active};
+      color: ${theme.colors.interactiveFg.active};
     }
 
     &:disabled {
@@ -63,19 +64,21 @@ const Base = styled.button(
       color: ${theme.colors.fg.disable};
     }
 
-    transition: background-color 0.6s ease 0s;
+    transition: background-color 0.6s ease 0s, color 0.6s ease 0s;
   `
 );
 
 const primaryColors = ({ theme }) => css`
   background-color: ${theme.colors.interactiveBg.brandNormal};
-
+  color: ${theme.colors.interactiveFg.brandNormal};
   &:hover,
   &:focus {
     background-color: ${theme.colors.interactiveBg.brandHover};
+    color: ${theme.colors.interactiveFg.brandHover};
   }
   &:active {
     background-color: ${theme.colors.interactiveBg.active};
+    color: ${theme.colors.interactiveFg.active};
   }
 `;
 
