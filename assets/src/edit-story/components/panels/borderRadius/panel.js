@@ -71,6 +71,7 @@ const BorderRow = styled(Row)`
 
 const Icon = styled.div`
   flex: 0 0 32px;
+  opacity: 0.24;
   text-align: center;
   height: ${ROW_HEIGHT}px;
   margin-bottom: -${ROW_HEIGHT * 2}px;
@@ -141,12 +142,15 @@ function BorderRadiusPanel({ selectedElements, pushUpdateForObject }) {
     return null;
   }
 
+  const firstInputLabel = lockRadius
+    ? __('Corner radius', 'web-stories')
+    : __('Top left corner radius', 'web-stories');
   return (
     <SimplePanel name="borderRadius" title={__('Corner radius', 'web-stories')}>
       <BorderRow>
         <BoxedNumeric
           value={borderRadius.topLeft}
-          aria-label={__('Top left corner radius', 'web-stories')}
+          aria-label={firstInputLabel}
           onChange={(value) => handleChange('topLeft', value)}
         />
         {!lockRadius && (

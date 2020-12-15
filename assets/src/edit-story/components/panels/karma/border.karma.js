@@ -42,7 +42,7 @@ describe('Border Panel', () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       const panel = fixture.editor.inspector.designPanel.border;
 
-      await fixture.events.click(panel.width('Left'), { clickCount: 3 });
+      await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('2');
       await fixture.events.keyboard.press('tab');
 
@@ -72,7 +72,7 @@ describe('Border Panel', () => {
       // Add media element and basic border.
       await fixture.events.click(fixture.editor.library.media.item(0));
       const panel = fixture.editor.inspector.designPanel.border;
-      await fixture.events.click(panel.width('Left'), { clickCount: 3 });
+      await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
       await fixture.events.keyboard.press('Tab');
 
@@ -102,15 +102,15 @@ describe('Border Panel', () => {
     );
 
     const panel = fixture.editor.inspector.designPanel.border;
-    await fixture.events.click(panel.width('Right'), { clickCount: 3 });
+    await fixture.events.click(panel.width(), { clickCount: 3 });
     await fixture.events.keyboard.type('5');
     await fixture.events.keyboard.press('Tab');
 
     const [element] = await getSelection();
     const {
-      border: { left },
+      border: { right },
     } = element;
-    expect(left).toBe(5);
+    expect(right).toBe(5);
 
     await fixture.snapshot('Shape element with border');
   });
