@@ -15,63 +15,84 @@
  */
 
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+import { ThemeProvider } from 'styled-components';
+
+/**
  * Internal dependencies
  */
 import { TranslateWithMarkup } from '../../../i18n';
-import { Plain } from '../button';
-import Dialog from '../dialog';
 import Link from '../link';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  Dialog,
+  Text,
+  theme as designSystemTheme,
+  THEME_CONSTANTS,
+} from '../../../design-system';
 
-const Paragraph = styled.p`
-  font-family: ${({ theme }) => theme.fonts.body1.family};
-  font-size: ${({ theme }) => theme.fonts.body1.size};
-  line-height: ${({ theme }) => theme.fonts.body1.lineHeight};
-  letter-spacing: ${({ theme }) => theme.fonts.body1.letterSpacing};
-`;
+const link = __(
+  'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
+  'web-stories'
+);
+
+const robotoTransitionalTheme = {
+  ...designSystemTheme,
+  typography: {
+    ...designSystemTheme.typography,
+    family: { primary: '"Roboto", sans-serif' },
+  },
+};
 
 function TitleMissingDialog({ open, onIgnore, onFix, onClose }) {
-  const link = __(
-    'https://amp.dev/documentation/guides-and-tutorials/start/create_successful_stories/#title',
-    'web-stories'
-  );
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      title={__('Missing title', 'web-stories')}
-      actions={
-        <>
-          <Plain onClick={onFix}>{__('Add a title', 'web-stories')}</Plain>
-          <Plain onClick={onIgnore}>
-            {__('Publish without title', 'web-stories')}
-          </Plain>
-        </>
-      }
-    >
-      <Paragraph>
-        <TranslateWithMarkup
-          mapping={{
-            a: <Link href={link} target="_blank" rel="noopener noreferrer" />,
-          }}
-        >
-          {__(
-            'We recommend adding a title to the story prior to publishing. <a>Learn more</a>.',
-            'web-stories'
-          )}
-        </TranslateWithMarkup>
-      </Paragraph>
-    </Dialog>
+    <ThemeProvider theme={robotoTransitionalTheme}>
+      <Dialog
+        onClose={onClose}
+        isOpen={open}
+        title={__('Missing title', 'web-stories')}
+        actions={
+          <>
+            <Button
+              size={BUTTON_SIZES.SMALL}
+              type={BUTTON_TYPES.TERTIARY}
+              onClick={onIgnore}
+            >
+              {__('Publish without title', 'web-stories')}
+            </Button>
+            <Button
+              size={BUTTON_SIZES.SMALL}
+              type={BUTTON_TYPES.PRIMARY}
+              onClick={onFix}
+            >
+              {__('Add a title', 'web-stories')}
+            </Button>
+          </>
+        }
+      >
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          <TranslateWithMarkup
+            mapping={{
+              a: <Link href={link} target="_blank" rel="noopener noreferrer" />,
+            }}
+          >
+            {__(
+              'We recommend adding a title to the story prior to publishing. <a>Learn more</a>.',
+              'web-stories'
+            )}
+          </TranslateWithMarkup>
+        </Text>
+      </Dialog>
+    </ThemeProvider>
   );
 }
 
