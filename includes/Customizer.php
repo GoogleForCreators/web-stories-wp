@@ -356,36 +356,20 @@ class Customizer {
 	 *
 	 * @return array An array of view type choices.
 	 */
-	private function get_view_type_choices( $view_type ) {
+	private function get_view_type_choices( array $view_type ) {
+		$view_type_choices = [
+			'circles'  => __( 'Circles', 'web-stories' ),
+			'grid'     => __( 'Grid', 'web-stories' ),
+			'list'     => __( 'List', 'web-stories' ),
+			'carousel' => __( 'Carousel', 'web-stories' ),
+		];
 
 		if ( empty( $view_type ) ) {
-			return [ 'circles' => __( 'Circles', 'web-stories' ) ];
+			return $view_type_choices;
 		}
 
-		$view_type = array_keys( $view_type );
-
-		$view_type_choices = [];
-
-		if ( in_array( 'circles', $view_type ) ) {
-			$view_type_choices['circles'] = __( 'Circles', 'web-stories' );
-		}
-
-		if ( in_array( 'grid', $view_type ) ) {
-			$view_type_choices['grid'] = __( 'Grid', 'web-stories' );
-		}
-
-		if ( in_array( 'list', $view_type ) ) {
-			$view_type_choices['list'] = __( 'List', 'web-stories' );
-		}
-
-		if ( in_array( 'carousel', $view_type ) ) {
-			$view_type_choices['carousel'] = __( 'Carousel', 'web-stories' );
-		}
-
-		return $view_type_choices;
-
+		return array_intersect_key( $view_type, $view_type_choices );
 	}
-
 
 	/**
 	 * Gets the order choices.
@@ -394,39 +378,19 @@ class Customizer {
 	 *
 	 * @return array An array of order choices.
 	 */
-	private function get_order_choices( $order ) {
-
-		$order_choices = [];
+	private function get_order_choices( array $order ) {
+		$order_choices = [
+			'latest'               => __( 'Latest', 'web-stories' ),
+			'oldest'               => __( 'Oldest', 'web-stories' ),
+			'alphabetical'         => __( 'A -> Z', 'web-stories' ),
+			'reverse-alphabetical' => __( 'Z -> A', 'web-stories' ),
+		];
 
 		if ( empty( $order ) ) {
-			return [
-				'latest'               => __( 'Latest', 'web-stories' ),
-				'oldest'               => __( 'Oldest', 'web-stories' ),
-				'alphabetical'         => __( 'A -> Z', 'web-stories' ),
-				'reverse-alphabetical' => __( 'Z -> A', 'web-stories' ),
-			];
+			return $order_choices;
 		}
 
-		$order = array_keys( $order );
-
-		if ( in_array( 'latest', $order ) ) {
-			$order_choices['latest'] = __( 'Latest', 'web-stories' );
-		}
-
-		if ( in_array( 'oldest', $order ) ) {
-			$order_choices['oldest'] = __( 'Oldest', 'web-stories' );
-		}
-
-		if ( in_array( 'alphabetical', $order ) ) {
-			$order_choices['alphabetical'] = __( 'A -> Z', 'web-stories' );
-		}
-
-		if ( in_array( 'reverse-alphabetical', $order ) ) {
-			$order_choices['reverse-alphabetical'] = __( 'Z -> A', 'web-stories' );
-		}
-
-		return $order_choices;
-
+		return array_intersect_key( $order_choices, $order );
 	}
 
 	/**
@@ -462,7 +426,7 @@ class Customizer {
 	 * @return \WP_Error
 	 */
 	public function validate_number_of_stories( $validity, $value ) {
-		$value = intval( $value );
+		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 20 ) {
 			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 20.', 'web-stories' ) );
