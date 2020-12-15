@@ -18,6 +18,7 @@
 
 namespace Google\Web_Stories\Tests;
 
+use Google\Web_Stories\Customizer as TheCustomizer;
 use WP_Error;
 
 /**
@@ -98,7 +99,7 @@ class Customizer extends \WP_UnitTestCase {
 		$this->add_web_stories_theme_support();
 
 		$this->customizer_mock->expects( $this->once() )->method( 'add_section' )->with(
-			$this->customizer::SECTION_SLUG,
+			TheCustomizer::SECTION_SLUG,
 			[
 				'title'          => esc_html__( 'Web Story Options', 'web-stories' ),
 				'theme_supports' => 'web-story-options',
