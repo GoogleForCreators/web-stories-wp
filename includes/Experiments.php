@@ -350,6 +350,7 @@ class Experiments {
 				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
 				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
