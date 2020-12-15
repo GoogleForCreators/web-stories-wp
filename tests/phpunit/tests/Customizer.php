@@ -32,6 +32,13 @@ class Customizer extends \WP_UnitTestCase {
 	 */
 	public $wp_customize;
 
+	/**
+	 * Customizer mock object.
+	 *
+	 * @var \PHPUnit\Framework\MockObject\MockObject|\WP_Customize_Manager
+	 */
+	private $customizer_mock;
+
 	public static function wpSetUpBeforeClass() {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
 	}
@@ -43,25 +50,16 @@ class Customizer extends \WP_UnitTestCase {
 
 		global $wp_customize;
 
-		$this->customizer   = new \Google\Web_Stories\Customizer();
-		$this->wp_customize = new \WP_Customize_Manager();
-		$wp_customize       = $this->wp_customize;
-
-	}
-
-	public function test_init() {
-
-		$this->customizer->init();
-		$this->assertSame( 10, has_action( 'customize_register', [ $this->customizer, 'register_customizer_settings' ] ) );
+		$this->customizer      = new \Google\Web_Stories\Customizer();
+		$this->wp_customize    = new \WP_Customize_Manager();
+		$wp_customize          = $this->wp_customize;
+		$this->customizer_mock = $this->createMock( \WP_Customize_Manager::class );
 	}
 
 	/**
-	 * @covers ::register_customizer_settings
-	 * @covers ::get_order_choices
-	 * @covers ::get_view_type_choices
+	 * Add theme support for web stories.
 	 */
-	public function test_register_customizer_settings() {
-
+	private function add_web_stories_theme_support() {
 		add_theme_support(
 			'web-story-options',
 			[
@@ -82,65 +80,140 @@ class Customizer extends \WP_UnitTestCase {
 				'show-story-poster-default' => true,
 			]
 		);
+	}
 
-		$this->customizer->register_customizer_settings( $this->wp_customize );
+	public function test_init() {
 
-		$this->assertNotEmpty( $this->wp_customize->get_section( \Google\Web_Stories\Customizer::SECTION_SLUG ) );
+		$this->customizer->init();
+		$this->assertSame( 10, has_action( 'customize_register', [
+			$this->customizer,
+			'register_customizer_settings'
+		] ) );
+	}
 
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_stories]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_stories]' ) );
+	/**
+	 * @covers ::register_customizer_settings
+	 */
+	public function test_customizer_web_stories_section_added() {
+		$this->add_web_stories_theme_support();
 
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[view_type]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[view_type]' ) );
+		$this->customizer_mock->expects( $this->once() )->method( 'add_section' )->with(
+			$this->customizer::SECTION_SLUG,
+			[
+				'title'          => esc_html__( 'Web Story Options', 'web-stories' ),
+				'theme_supports' => 'web-story-options',
+			]
+		);
 
-		$expected_view_choices = [
-			'circles'  => __( 'Circles', 'web-stories' ),
-			'grid'     => __( 'Grid', 'web-stories' ),
-			'list'     => __( 'List', 'web-stories' ),
-			'carousel' => __( 'Carousel', 'web-stories' ),
-		];
+		$this->customizer->register_customizer_settings( $this->customizer_mock );
+	}
 
-		$this->assertSame( $expected_view_choices, $this->wp_customize->get_control( 'story-options[view_type]' )->choices );
+	/**
+	 * @covers ::register_customizer_settings
+	 */
+	public function test_customizer_settings_added() {
+		$this->add_web_stories_theme_support();
+		$this->customizer_mock->expects( $this->exactly( 12 ) )->method( 'add_setting' );
+		$this->customizer->register_customizer_settings( $this->customizer_mock );
+	}
 
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[number_of_stories]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[number_of_stories]' ) );
+	/**
+	 * @covers ::register_customizer_settings
+	 */
+	public function test_customizer_show_stories_settings_added() {
+		$this->add_web_stories_theme_support();
+		$this->customizer_mock->expects( $this->exactly( 12 ) )->
+		method( 'add_setting' )->
+		withConsecutive(
+			[
+				'story-options[show_stories]',
+				[
+					'default' => false,
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[view_type]',
+				[
+					'default' => 'circles',
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[number_of_stories]',
+				[
+					'default'           => 5,
+					'type'              => 'option',
+					'validate_callback' => [ $this->customizer, 'validate_number_of_stories' ],
+				]
+			],
+			[
+				'story-options[number_of_columns]',
+				[
+					'default'           => 4,
+					'type'              => 'option',
+					'validate_callback' => [ $this->customizer, 'validate_number_of_columns' ],
+				]
+			],
+			[
+				'story-options[order]',
+				[
+					'default' => 'oldest',
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[list_view_image_alignment]',
+				[
+					'type'    => 'option',
+					'default' => 'left',
+				]
+			],
+			[
+				'story-options[show_title]',
+				[
+					'default' => false,
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[show_author]',
+				[
+					'default' => false,
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[show_date]',
+				[
+					'default' => false,
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[show_stories_archive_link]',
+				[
+					'default' => false,
+					'type'    => 'option',
+				]
+			],
+			[
+				'story-options[stories_archive_label]',
+				[
+					'type'    => 'option',
+					'default' => 'View all stories',
+				]
+			],
+			[
+				'story-options[show_story_poster]',
+				[
+					'type'    => 'option',
+					'default' => true,
+				]
+			]
+		);
 
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[number_of_columns]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[number_of_columns]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[order]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[order]' ) );
-
-		$expected_order_choices = [
-			'latest'               => __( 'Latest', 'web-stories' ),
-			'oldest'               => __( 'Oldest', 'web-stories' ),
-			'alphabetical'         => __( 'A -> Z', 'web-stories' ),
-			'reverse-alphabetical' => __( 'Z -> A', 'web-stories' ),
-		];
-
-		$this->assertEquals( $expected_order_choices, $this->wp_customize->get_control( 'story-options[order]' )->choices );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[list_view_image_alignment]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[list_view_image_alignment]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_title]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_title]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_author]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_author]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_date]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_date]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_stories_archive_link]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_stories_archive_link]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[stories_archive_label]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[stories_archive_label]' ) );
-
-		$this->assertNotEmpty( $this->wp_customize->get_setting( 'story-options[show_story_poster]' ) );
-		$this->assertNotEmpty( $this->wp_customize->get_control( 'story-options[show_story_poster]' ) );
-
+		$this->customizer->register_customizer_settings( $this->customizer_mock );
 	}
 
 	/**
