@@ -33,7 +33,26 @@ import { DROPDOWN_ITEMS } from './types';
 const DropdownContainer = styled.div``;
 
 // isKeepMenuOpenOnSelection boolean to override closing dropdown on selection made
-// add proper aria labeling
+
+/**
+ *
+ * @param {Object} props All props.
+ * @param {string} props.ariaLabel Specific label to use as select button's aria label only.
+ * @param {string} props.emptyText If the array of items is empty this text will display when menu is expanded.
+ * @param {string} props.hint Hint text to display below a dropdown (optional). If not present, no hint text will display.
+ * @param {boolean} props.isKeepMenuOpenOnSelection If true, when a new selection is made the internal functionality to close the menu will not fire, by default is false.
+ * @param {boolean} props.disabled If true, menu will not be openable
+ * @param {string} props.dropdownLabel Text shown in button with selected value's label or placeholder. Will be used as aria label if no separate ariaLabel is passed in.
+ * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
+ * @param {Array} props.items All options, should contain objects with a label, value, anything else you need can be added and accessed through renderItem.
+ * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding dropdown menu styles (container div > ul > li).
+ * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option.
+ * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
+ * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
+ * @param {string} props.selectedValue the selected value of the dropdown. Should correspond to a value in the options array of objects.
+ *
+ */
+
 export const Dropdown = ({
   hint,
   isKeepMenuOpenOnSelection,
