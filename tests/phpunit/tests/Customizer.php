@@ -86,10 +86,16 @@ class Customizer extends \WP_UnitTestCase {
 	public function test_init() {
 
 		$this->customizer->init();
-		$this->assertSame( 10, has_action( 'customize_register', [
-			$this->customizer,
-			'register_customizer_settings'
-		] ) );
+		$this->assertSame(
+			10,
+			has_action(
+				'customize_register',
+				[
+					$this->customizer,
+					'register_customizer_settings',
+				] 
+			) 
+		);
 	}
 
 	/**
@@ -131,14 +137,14 @@ class Customizer extends \WP_UnitTestCase {
 				[
 					'default' => false,
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[view_type]',
 				[
 					'default' => 'circles',
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[number_of_stories]',
@@ -146,7 +152,7 @@ class Customizer extends \WP_UnitTestCase {
 					'default'           => 5,
 					'type'              => 'option',
 					'validate_callback' => [ $this->customizer, 'validate_number_of_stories' ],
-				]
+				],
 			],
 			[
 				'story-options[number_of_columns]',
@@ -154,63 +160,63 @@ class Customizer extends \WP_UnitTestCase {
 					'default'           => 4,
 					'type'              => 'option',
 					'validate_callback' => [ $this->customizer, 'validate_number_of_columns' ],
-				]
+				],
 			],
 			[
 				'story-options[order]',
 				[
 					'default' => 'oldest',
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[list_view_image_alignment]',
 				[
 					'type'    => 'option',
 					'default' => 'left',
-				]
+				],
 			],
 			[
 				'story-options[show_title]',
 				[
 					'default' => false,
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[show_author]',
 				[
 					'default' => false,
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[show_date]',
 				[
 					'default' => false,
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[show_stories_archive_link]',
 				[
 					'default' => false,
 					'type'    => 'option',
-				]
+				],
 			],
 			[
 				'story-options[stories_archive_label]',
 				[
 					'type'    => 'option',
 					'default' => 'View all stories',
-				]
+				],
 			],
 			[
 				'story-options[show_story_poster]',
 				[
 					'type'    => 'option',
 					'default' => true,
-				]
+				],
 			]
 		);
 
