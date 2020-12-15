@@ -17,22 +17,30 @@
  * External dependencies
  */
 import { percySnapshot } from '@percy/puppeteer';
+
 /**
  * WordPress dependencies
  */
 import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
+
 /**
  * Internal dependencies
  */
 import { createNewStory } from '../../utils';
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
 describe('Status Check', () => {
+  let removeErrorMessage;
   beforeAll(async () => {
     await activatePlugin('e2e-tests-disable-rest-api');
+    removeErrorMessage = addAllowedErrorMessage(
+      'the server responded with a status of 500'
+    );
   });
 
   afterAll(async () => {
     await deactivatePlugin('e2e-tests-disable-rest-api');
+    removeErrorMessage();
   });
 
   it('should show error dialog', async () => {
