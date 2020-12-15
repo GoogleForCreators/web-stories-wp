@@ -70,8 +70,6 @@ describe('statusCheck', () => {
   it('should display dismissible dialog if failed', async () => {
     setup(Promise.reject(new Error('api failed')));
 
-    await new Promise((r) => setTimeout(r, 1000));
-
     const dialog = screen.getByRole('dialog');
     expect(dialog).toBeDefined();
 
