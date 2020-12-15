@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b326cf3ee12087d81fa935f46cd19fc",
+    "content-hash": "34e989c58bc18325763e539a6f5b0ffe",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -729,16 +729,16 @@
         },
         {
             "name": "dg/bypass-finals",
-            "version": "v1.1.0",
+            "version": "v1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/bypass-finals.git",
-                "reference": "10658aeefaa9e458fa55c184f6846aa95eabe135"
+                "reference": "ed66d2f960126d9912d5ce1b0d3671acbfcd0586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/10658aeefaa9e458fa55c184f6846aa95eabe135",
-                "reference": "10658aeefaa9e458fa55c184f6846aa95eabe135",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/ed66d2f960126d9912d5ce1b0d3671acbfcd0586",
+                "reference": "ed66d2f960126d9912d5ce1b0d3671acbfcd0586",
                 "shasum": ""
             },
             "require": {
@@ -773,7 +773,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2018-07-20T09:34:06+00:00"
+            "time": "2020-05-08T12:36:31+00:00"
         },
         {
             "name": "doctrine/instantiator",
