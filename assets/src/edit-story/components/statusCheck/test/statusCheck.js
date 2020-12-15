@@ -20,7 +20,6 @@ import {
   fireEvent,
   screen,
   waitForElementToBeRemoved,
-  waitFor,
 } from '@testing-library/react';
 import Modal from 'react-modal';
 
@@ -61,24 +60,26 @@ describe('statusCheck', () => {
     document.documentElement.removeChild(modalWrapper);
   });
 
-  it('should do nothing if successfull', () => {
+  it('should do nothing if successfull', async () => {
     setup(Promise.resolve({ success: true }));
 
-    const dialog = screen.queryByRole('dialog');
-    expect(dialog).toBeNull();
+    // This seems to be the best way to validate, that a certain
+    // element does *not* appear. Not very elegant, though.
+    await expect(screen.findByRole('dialog')).rejects.toThrow(
+      /Unable to find role="dialog"/
+    );
   });
 
   it('should display dismissible dialog if failed', async () => {
     setup(Promise.reject(new Error('api failed')));
 
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeDefined();
-    });
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).not.toBeNull();
 
     const dismiss = screen.getByRole('button', { name: /Dismiss/i });
     expect(dismiss).toBeDefined();
     fireEvent.click(dismiss);
 
-    await waitForElementToBeRemoved(() => screen.getByRole('dialog'));
+    await waitForElementToBeRemoved(dialog);
   });
 });
