@@ -481,9 +481,7 @@ class Customizer {
 	public function validate_number_of_columns( $validity, $value ) {
 		$value = intval( $value );
 
-		if ( $value <= 0 ) {
-			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 4.', 'web-stories' ) );
-		} elseif ( $value > 5 ) {
+		if ( $value <= 0 || $value > 5 ) {
 			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 4.', 'web-stories' ) );
 		}
 		return $validity;
