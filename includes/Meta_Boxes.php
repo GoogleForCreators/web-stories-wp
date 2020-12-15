@@ -158,7 +158,7 @@ class Meta_Boxes {
 		foreach ( self::LOCATIONS as $context ) {
 			$meta_boxes_per_location[ $context ] = [];
 
-			if ( ! isset( $wp_meta_boxes[ $screen->id ][ $context ] ) ) {
+			if ( ! isset( $_wp_meta_boxes[ $screen->id ][ $context ] ) ) {
 				continue;
 			}
 
