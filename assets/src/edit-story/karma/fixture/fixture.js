@@ -293,8 +293,9 @@ export class Fixture {
 
     // Check to see if Roboto font is loaded.
     await waitFor(async () => {
-      await document.fonts.load('0 Roboto', '');
-      if (!document.fonts.check(' 0 Roboto', '')) {
+      const font = '12px Roboto';
+      await document.fonts.load(font, '');
+      if (!document.fonts.check(font, '')) {
         throw new Error('Not ready: Roboto font could not be loaded');
       }
     });
