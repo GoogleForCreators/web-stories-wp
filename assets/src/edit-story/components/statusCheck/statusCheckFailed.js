@@ -56,7 +56,7 @@ function StatusCheckFailed({ open, onClose }) {
     <Dialog
       open={open}
       onClose={onClose}
-      title={__('Error: Unable to save your story', 'web-stories')}
+      title={__('Unable to save your story', 'web-stories')}
       actions={<Plain onClick={onClose}>{__('Dismiss', 'web-stories')}</Plain>}
     >
       <Paragraph>
@@ -73,7 +73,7 @@ function StatusCheckFailed({ open, onClose }) {
           }}
         >
           {__(
-            'We are currently unable to save your story, any changes you make may be lost. This may be due to temporary issues connecting to the WordPress. <a>Submit a new support topic</a> for additional help.',
+            'We are currently unable to save your story, any changes you make may be lost. This may be due to temporary issues connecting to WordPress. <a>Submit a new support topic</a> for additional help.',
             'web-stories'
           )}
         </TranslateWithMarkup>
