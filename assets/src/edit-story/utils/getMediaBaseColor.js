@@ -59,10 +59,14 @@ export function getMediaBaseColor(resource, onBaseColor) {
   );
 }
 
-function getDefaultOnloadCallback(nodeKey, resolve) {
+function getDefaultOnloadCallback(nodeKey, resolve, reject) {
   return () => {
-    const node = document.body[nodeKey];
-    resolve(thief.getColor(node.firstElementChild));
+    try {
+      const node = document.body[nodeKey];
+      resolve(thief.getColor(node.firstElementChild));
+    } catch (error) {
+      reject(new Error(`Get color error: `, error.message));
+    }
   };
 }
 
@@ -86,7 +90,7 @@ export function setOrCreateImage(
     const img = new Image();
     // Necessary to avoid tainting canvas with CORS image data.
     img.crossOrigin = 'anonymous';
-    img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve));
+    img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve, reject));
     img.addEventListener('error', (e) => {
       reject(new Error('Set image error: ' + e.message));
     });

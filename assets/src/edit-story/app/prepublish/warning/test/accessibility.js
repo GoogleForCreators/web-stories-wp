@@ -507,16 +507,4 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
       ).toBeUndefined();
     });
   });
-
-  describe('font contrast check against background image', () => {
-    it.todo(
-      'should return the average color of the part of the background image with text on it'
-    );
-    it.todo(
-      'should return the luminosity of the part of the background image with text on it'
-    );
-    it.todo(
-      'should return guidance if the contrast between the part of the background image and the text color is too low'
-    );
-  });
 });

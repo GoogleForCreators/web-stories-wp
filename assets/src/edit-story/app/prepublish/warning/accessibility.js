@@ -58,61 +58,6 @@ function getSpansFromContent(content) {
   );
 }
 
-// const TO_RADIANS = Math.PI / 180;
-
-function getOverlapBgColor({ elementId, pageId, bgImage, overlapBox }) {
-  function getOnloadCallback(nodeKey, resolve, reject) {
-    return () => {
-      try {
-        const node = document.body[nodeKey];
-        const canvas = document.createElement('canvas');
-
-        canvas.width = bgImage.width;
-        canvas.height = bgImage.height;
-
-        const ctx = canvas.getContext('2d');
-
-        if (bgImage.rotationAngle) {
-          // TODO rotation angles and image flip
-        }
-
-        ctx.drawImage(
-          node.firstElementChild,
-          0,
-          0,
-          bgImage.width,
-          bgImage.height
-        );
-
-        const imageData = ctx.getImageData(
-          overlapBox.x,
-          overlapBox.y,
-          overlapBox.width,
-          overlapBox.height
-        );
-
-        resolve(imageData);
-      } catch (e) {
-        reject(e);
-      }
-    };
-  }
-  return setOrCreateImage(
-    { src: bgImage.src, id: pageId },
-    getOnloadCallback
-  ).then((imgData) => {
-    const cropCanvas = document.createElement('canvas');
-    cropCanvas.width = overlapBox.width; // size of the new image / text container
-    cropCanvas.height = overlapBox.height;
-    const cropCtx = cropCanvas.getContext('2d');
-    const cropImage = new Image();
-    cropImage.crossOrigin = 'anonymous';
-    cropCtx.putImageData(imgData, 0, 0);
-    cropImage.src = cropCanvas.toDataURL();
-    return setOrCreateImage({ src: cropImage.src, id: elementId });
-  });
-}
-
 function getOverlappingArea(a, b) {
   const dx = Math.min(a.endX, b.endX) - Math.max(a.startX, b.startX);
   const dy = Math.min(a.endY, b.endY) - Math.max(a.startY, b.startY);
@@ -194,10 +139,8 @@ function getTextImageBackgroundColor({ background, text, page }) {
   const textBox = getBoundRect([textPos]);
 
   const { resource, scale, focalX, focalY } = background;
-  const bgPos = getBox(background, pageSize?.width, pageSize?.height);
-  const { width, height } = bgPos;
-
-  const bgBox = getBoundRect([bgPos]);
+  const bgBox = getBox(background, pageSize?.width, pageSize?.height);
+  const { width, height } = bgBox;
 
   const bgMediaBox = getMediaSizePositionProps(
     resource,
@@ -209,23 +152,26 @@ function getTextImageBackgroundColor({ background, text, page }) {
   );
 
   const bgImage = {
+    offsetX: bgMediaBox.offsetX,
+    offsetY: bgMediaBox.offsetY,
     src: background.resource.src,
     width: bgMediaBox.width,
     height: bgMediaBox.height,
     rotationAngle: background.isBackground
       ? undefined
       : background.rotationAngle,
+    flip: background.flip,
   };
 
   const overlapBox = {
     x: background.isBackground
-      ? Math.abs(bgMediaBox.offsetX) + Math.abs(textBox.startX)
-      : Math.abs(bgMediaBox.offsetX) + Math.abs(textBox.startX) - bgBox.startX,
+      ? bgMediaBox.offsetX + Math.abs(textBox.startX)
+      : bgMediaBox.offsetX + Math.abs(textBox.startX) - bgBox.x,
     y: background.isBackground
-      ? Math.abs(bgMediaBox.offsetY) + Math.abs(textBox.startY + safeZoneDiff)
-      : Math.abs(bgMediaBox.offsetY) +
+      ? bgMediaBox.offsetY + Math.abs(textBox.startY + safeZoneDiff)
+      : bgMediaBox.offsetY +
         Math.abs(textBox.startY + safeZoneDiff) -
-        (bgBox.startY + safeZoneDiff),
+        (bgBox.y + safeZoneDiff),
     width: textBox.width,
     height: textBox.height,
   };
@@ -238,6 +184,74 @@ function getTextImageBackgroundColor({ background, text, page }) {
     overlapBox,
   }).catch(() => {
     // ignore errors
+  });
+}
+
+const TO_RADIANS = Math.PI / 180;
+function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
+  function getOnloadCallback(nodeKey, resolve, reject) {
+    return () => {
+      try {
+        const node = document.body[nodeKey];
+        const canvas = document.createElement('canvas');
+
+        canvas.width = bgImage.width;
+        canvas.height = bgImage.height;
+
+        const ctx = canvas.getContext('2d');
+
+        if (bgImage.rotationAngle) {
+          const translationOffsetX = bgImage.offsetX + bgBox.width / 2;
+          const translationOffsetY = bgImage.offsetY + bgBox.height / 2;
+          ctx.translate(translationOffsetX, translationOffsetY);
+          ctx.rotate(bgImage.rotationAngle * TO_RADIANS);
+          ctx.translate(-translationOffsetX, -translationOffsetY);
+        }
+
+        let xPos = 0,
+          yPos = 0;
+
+        const { flip } = bgImage;
+        if (flip.vertical || flip.horizontal) {
+          xPos = flip.horizontal ? bgImage.width * -1 : 0;
+          yPos = flip.vertical ? bgImage.height * -1 : 0;
+          ctx.scale(flip.horizontal ? -1 : 1, flip.vertical ? -1 : 1);
+        }
+
+        ctx.drawImage(
+          node.firstElementChild,
+          xPos,
+          yPos,
+          bgImage.width,
+          bgImage.height
+        );
+
+        const imageData = ctx.getImageData(
+          overlapBox.x,
+          overlapBox.y,
+          overlapBox.width,
+          overlapBox.height
+        );
+
+        resolve(imageData);
+      } catch (e) {
+        reject(e);
+      }
+    };
+  }
+  return setOrCreateImage(
+    { src: bgImage.src, id: pageId },
+    getOnloadCallback
+  ).then((imgData) => {
+    const cropCanvas = document.createElement('canvas');
+    cropCanvas.width = overlapBox.width; // size of the new image / text container
+    cropCanvas.height = overlapBox.height;
+    const cropCtx = cropCanvas.getContext('2d');
+    const cropImage = new Image();
+    cropImage.crossOrigin = 'anonymous';
+    cropCtx.putImageData(imgData, 0, 0);
+    cropImage.src = cropCanvas.toDataURL();
+    return setOrCreateImage({ src: cropImage.src, id: elementId });
   });
 }
 
