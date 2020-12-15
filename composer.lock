@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e52f7780d533a9e07a011d44721015f6",
+    "content-hash": "3fd72a9a4e730cf29af06d5a3d754ddd",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -175,7 +175,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-02-18T05:45:04+00:00"
+            "time": "2021-02-23T04:40:08+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -838,6 +838,58 @@
                 "source": "https://github.com/dealerdirect/phpcodesniffer-composer-installer"
             },
             "time": "2020-12-07T18:04:37+00:00"
+        },
+        {
+            "name": "dg/bypass-finals",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dg/bypass-finals.git",
+                "reference": "10658aeefaa9e458fa55c184f6846aa95eabe135"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/10658aeefaa9e458fa55c184f6846aa95eabe135",
+                "reference": "10658aeefaa9e458fa55c184f6846aa95eabe135",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "nette/tester": "^2.0.2"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0",
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                }
+            ],
+            "description": "Removes final keyword from source code on-the-fly and allows mocking of final methods and classes",
+            "keywords": [
+                "finals",
+                "mocking",
+                "phpunit",
+                "testing",
+                "unit"
+            ],
+            "support": {
+                "issues": "https://github.com/dg/bypass-finals/issues",
+                "source": "https://github.com/dg/bypass-finals/tree/master"
+            },
+            "time": "2018-07-20T09:34:06+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2082,6 +2134,7 @@
                 "barrelstrength/sprout-forms": "<3.9",
                 "baserproject/basercms": ">=4,<=4.3.6|>=4.4,<4.4.1",
                 "bolt/bolt": "<3.7.1",
+                "bolt/core": "<4.1.13",
                 "brightlocal/phpwhois": "<=4.2.5",
                 "buddypress/buddypress": "<5.1.2",
                 "bugsnag/bugsnag-laravel": ">=2,<2.0.2",
@@ -2377,7 +2430,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-16T17:17:25+00:00"
+            "time": "2021-02-18T21:02:27+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

@@ -27,6 +27,7 @@
   "require-dev": {
     "automattic/vipwpcs": "^2.1",
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+    "dg/bypass-finals": "1.1",
     "php-stubs/wordpress-stubs": "^5.5",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
