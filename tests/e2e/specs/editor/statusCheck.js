@@ -13,49 +13,102 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
- * WordPress dependencies
- */
-import { activatePlugin, deactivatePlugin } from '@wordpress/e2e-test-utils';
 
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../utils';
+import { addRequestInterception, createNewStory } from '../../utils';
 import { addAllowedErrorMessage } from '../../config/bootstrap';
+
+async function interceptStatusCheck(status, body) {
+  await page.setRequestInterception(true);
+  return addRequestInterception((request) => {
+    if (request.url().includes('/web-stories/v1/status-check/')) {
+      request.respond({
+        status: 403,
+        body,
+      });
+      return;
+    }
+
+    request.continue();
+  });
+}
 
 describe('Status Check', () => {
   let removeErrorMessage;
-  beforeAll(async () => {
-    await activatePlugin('e2e-tests-disable-rest-api');
+  beforeAll(() => {
     removeErrorMessage = addAllowedErrorMessage(
-      'the server responded with a status of 500'
+      'the server responded with a status of 403'
     );
   });
 
-  afterAll(async () => {
-    await deactivatePlugin('e2e-tests-disable-rest-api');
+  afterAll(() => {
     removeErrorMessage();
   });
 
-  it('should show error dialog', async () => {
-    await createNewStory();
+  describe('200 OK', () => {
+    it('should not display error dialog', async () => {
+      await createNewStory();
 
-    const statusCheckFailure = await page.$$eval(
-      '[role="dialog"] h1',
-      (elements) => {
-        return elements.some((el) =>
-          el.textContent.includes('Unable to save your story')
-        );
-      }
-    );
-    expect(statusCheckFailure).toBeTrue();
+      await expect(page).not.toMatch('Unable to save your story');
+    });
+  });
 
-    await percySnapshot(page, 'Status check error dialog');
+  describe('Invalid JSON response', () => {
+    let stopRequestInterception;
+
+    beforeAll(async () => {
+      stopRequestInterception = await interceptStatusCheck(
+        200,
+        'This is some unexpected content before the actual response.{"success":true}'
+      );
+    });
+
+    afterAll(async () => {
+      await page.setRequestInterception(false);
+      stopRequestInterception();
+    });
+
+    it('should display error dialog', async () => {
+      await createNewStory();
+      await expect(page).toMatch('Unable to save your story');
+    });
+  });
+
+  describe('403 Forbidden (WAF)', () => {
+    let stopRequestInterception;
+
+    beforeAll(async () => {
+      stopRequestInterception = await interceptStatusCheck(403, 'Forbidden');
+    });
+
+    afterAll(async () => {
+      await page.setRequestInterception(false);
+      stopRequestInterception();
+    });
+
+    it('should display error dialog', async () => {
+      await createNewStory();
+      await expect(page).toMatch('Unable to save your story');
+    });
+  });
+
+  describe('500 Internal Server Error', () => {
+    let stopRequestInterception;
+
+    beforeAll(async () => {
+      stopRequestInterception = await interceptStatusCheck(403, 'Forbidden');
+    });
+
+    afterAll(async () => {
+      await page.setRequestInterception(false);
+      stopRequestInterception();
+    });
+
+    it('should display error dialog', async () => {
+      await createNewStory();
+      await expect(page).toMatch('Unable to save your story');
+    });
   });
 });
