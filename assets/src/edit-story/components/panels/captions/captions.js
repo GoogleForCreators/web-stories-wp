@@ -110,7 +110,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   });
 
   return (
-    <SimplePanel name="captions" title={__('Captions', 'web-stories')}>
+    <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
       {isMixedValue && (
         <Row>
           <BoxedTextInput
