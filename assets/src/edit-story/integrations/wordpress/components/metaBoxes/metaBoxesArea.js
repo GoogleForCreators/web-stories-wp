@@ -94,7 +94,6 @@ const Wrapper = styled.div`
   .postbox .handle-order-lower {
     color: ${({ theme }) => rgba(theme.colors.fg.white, 0.84)};
 
-    &[aria-disabled='true'],
     &[aria-disabled='true'] {
       color: ${({ theme }) => rgba(theme.colors.fg.white, 0.3)};
     }
