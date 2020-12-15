@@ -35,11 +35,18 @@ describe('Status Check', () => {
     await deactivatePlugin('e2e-tests-disable-rest-api');
   });
 
-  // eslint-disable-next-line jest/expect-expect
   it('should show error dialog', async () => {
     await createNewStory();
 
-    // TODO add check for dialog here.
+    const statusCheckFailure = await page.$$eval(
+      '[role="dialog"] h1',
+      (elements) => {
+        return elements.some((el) =>
+          el.textContent.includes('Unable to save your story')
+        );
+      }
+    );
+    expect(statusCheckFailure).toBeTrue();
 
     await percySnapshot(page, 'Status check error dialog');
   });
