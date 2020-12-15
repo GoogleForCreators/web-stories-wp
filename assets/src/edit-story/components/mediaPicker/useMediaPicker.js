@@ -91,16 +91,16 @@ export default function useMediaPicker({
     });
 
     // When an image is selected, run a callback.
-    fileFrame.once('select', () => {
+    fileFrame?.once('select', () => {
       const mediaPickerEl = fileFrame.state().get('selection').first().toJSON();
       onSelect(mediaPickerEl);
     });
 
     if (onClose) {
-      fileFrame.once('close', onClose);
+      fileFrame?.once('close', onClose);
     }
 
-    fileFrame.once('content:activate:browse', () => {
+    fileFrame?.once('content:activate:browse', () => {
       // Force-refresh media modal contents every time
       // to avoid stale data.
       fileFrame?.content?.get()?.collection?._requery(true);
