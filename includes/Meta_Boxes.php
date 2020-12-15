@@ -37,7 +37,7 @@ class Meta_Boxes {
 	 *
 	 * @var string[]
 	 */
-	const LOCATIONS = [ 'normal', 'advanced' ];
+	const LOCATIONS = [ 'normal', 'advanced', 'side' ];
 
 	/**
 	 * Meta box priorities.
