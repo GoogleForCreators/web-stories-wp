@@ -22,6 +22,7 @@ import { useEffect, useCallback, useState } from 'react';
 /**
  * Internal dependencies
  */
+import { trackEvent } from '../../../tracking';
 import { useAPI } from '../../app';
 import { getContent } from './utils';
 import StatusCheckFailed from './statusCheckFailed';
@@ -34,8 +35,14 @@ function StatusCheck() {
   const closeDialog = useCallback(() => setShowDialog(false), []);
 
   useEffect(() => {
-    // If it succeeds, do nothing. Only in case of failure do we want to alert the user.
-    getStatusCheck(getContent()).catch(() => setShowDialog(true));
+    // If it succeeds, do nothing.
+    // Only in case of failure do we want to alert the user and track the error.
+    getStatusCheck(getContent()).catch((error) => {
+      setShowDialog(true);
+      trackEvent('error', 'editor', '', '', {
+        error,
+      });
+    });
   }, [getStatusCheck]);
 
   return <StatusCheckFailed open={showDialog} onClose={closeDialog} />;
