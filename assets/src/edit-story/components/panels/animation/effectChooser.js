@@ -35,6 +35,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import loadStylesheet from '../../../utils/loadStylesheet';
+import { useConfig } from '../../../app/config';
 import { GOOGLE_MENU_FONT_URL } from '../../../app/font';
 import {
   ANIMATION_EFFECTS,
@@ -210,6 +211,7 @@ export default function EffectChooser({
   value = '',
   direction,
 }) {
+  const { isRTL } = useConfig();
   const [focusedValue, setFocusedValue] = useState(null);
   const ref = useRef();
 
@@ -280,16 +282,27 @@ export default function EffectChooser({
 
   const handleUpDown = useCallback(
     ({ key }) => {
-      if (key === 'ArrowUp' && focusedIndex !== 0) {
+      if (
+        ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
+        focusedIndex !== 0
+      ) {
         handleMoveFocus(-1);
-      } else if (key === 'ArrowDown' && focusedIndex < listLength - 1) {
+      } else if (
+        ['ArrowDown', isRTL ? 'ArrowLeft' : 'ArrowRight'].includes(key) &&
+        focusedIndex < listLength - 1
+      ) {
         handleMoveFocus(1);
       }
     },
-    [focusedIndex, handleMoveFocus, listLength]
+    [focusedIndex, handleMoveFocus, listLength, isRTL]
   );
 
-  useKeyDownEffect(ref, { key: ['up', 'down'] }, handleUpDown, [handleUpDown]);
+  useKeyDownEffect(
+    ref,
+    { key: ['up', 'down', 'left', 'right'] },
+    handleUpDown,
+    [handleUpDown]
+  );
 
   useFocusOut(ref, () => onDismiss?.(), []);
 
