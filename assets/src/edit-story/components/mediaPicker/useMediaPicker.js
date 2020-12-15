@@ -49,7 +49,7 @@ export default function useMediaPicker({
   useEffect(() => {
     try {
       // Work around that forces default tab as upload tab.
-      wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
+      global.wp.media.controller.Library.prototype.defaults.contentUserSetting = false;
     } catch (e) {
       // Silence.
     }
@@ -79,7 +79,7 @@ export default function useMediaPicker({
     }
 
     // Create the media frame.
-    const fileFrame = wp.media({
+    const fileFrame = global.wp.media({
       title,
       library: {
         type,
