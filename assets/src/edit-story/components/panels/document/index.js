@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ExpandedTextInput } from './expandedTextInput';
-export { default as FlipControls } from './flipControls';
-export { default as Note } from './note';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as getColorPickerActions } from './getColorPickerActions';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
+
+export { default as ExcerptPanel } from './excerpt';
+export { default as PageAdvancementPanel } from './pageAdvancement';
+export { default as PublishPanel } from './publish';
+export { default as SlugPanel } from './slug';
+export { default as StatusPanel } from './status';

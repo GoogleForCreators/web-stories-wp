@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ExpandedTextInput } from './expandedTextInput';
-export { default as FlipControls } from './flipControls';
-export { default as Note } from './note';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as getColorPickerActions } from './getColorPickerActions';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
+
+/**
+ * Internal dependencies
+ */
+import ColorPresetActions from '../design/preset/colorPreset/colorPresetActions';
+
+function getColorPickerActions(color) {
+  return <ColorPresetActions color={color} />;
+}
+
+export default getColorPickerActions;

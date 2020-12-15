@@ -13,11 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ExpandedTextInput } from './expandedTextInput';
-export { default as FlipControls } from './flipControls';
-export { default as Note } from './note';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as getColorPickerActions } from './getColorPickerActions';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
+
+/**
+ * Internal dependencies
+ */
+import { useStory } from '../../../../app';
+
+function useLayers() {
+  const { currentPage } = useStory((state) => ({
+    currentPage: state.state.currentPage,
+  }));
+
+  if (!currentPage) {
+    return [];
+  }
+
+  const layers = currentPage.elements.map((layer, index) => ({
+    ...layer,
+    position: index,
+  }));
+  layers.reverse();
+  return layers;
+}
+
+export default useLayers;

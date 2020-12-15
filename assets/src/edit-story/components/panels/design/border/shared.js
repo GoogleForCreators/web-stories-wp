@@ -13,11 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ExpandedTextInput } from './expandedTextInput';
-export { default as FlipControls } from './flipControls';
-export { default as Note } from './note';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as getColorPickerActions } from './getColorPickerActions';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
+
+/**
+ * Internal dependencies
+ */
+import createSolid from '../../../../utils/createSolid';
+
+export const DEFAULT_BORDER = {
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  lockedWidth: true,
+  color: createSolid(0, 0, 0),
+};
