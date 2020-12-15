@@ -25,16 +25,17 @@ import PropTypes from 'prop-types';
  */
 import { Checkmark } from '../../../icons';
 import { DROPDOWN_ITEMS, DROPDOWN_VALUE_TYPE } from '../types';
-import { MenuContainer, List, ListItem } from './components';
+import { EmptyList, MenuContainer, List, ListItem } from './components';
 import useDropdownMenu from './useDropdownMenu';
 
 export const DropdownMenu = ({
   anchorHeight,
   dropdownHeight,
+  emptyText,
   menuStylesOverride,
   hasMenuRole,
   isRTL,
-  items,
+  items = [],
   onMenuItemClick,
   onDismissMenu,
   renderItem,
@@ -77,7 +78,9 @@ export const DropdownMenu = ({
           renderItem(item, isSelected)
         ) : (
           <span>
-            {isSelected && <Checkmark />}
+            {isSelected && (
+              <Checkmark data-testid={'dropdownMenuItem_active_icon'} />
+            )}
             {item.label}
           </span>
         )}
@@ -92,7 +95,11 @@ export const DropdownMenu = ({
       styleOverride={menuStylesOverride}
     >
       <List ref={listRef} role={hasMenuRole ? 'menu' : 'listbox'}>
-        {items.map(renderMenuItem)}
+        {items.length === 0 ? (
+          <EmptyList>{emptyText}</EmptyList>
+        ) : (
+          items.map(renderMenuItem)
+        )}
       </List>
     </MenuContainer>
   );
@@ -101,6 +108,7 @@ export const DropdownMenu = ({
 DropdownMenu.propTypes = {
   anchorHeight: PropTypes.number,
   dropdownHeight: PropTypes.number,
+  emptyText: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   hasMenuRole: PropTypes.bool,
   isRTL: PropTypes.bool,

@@ -81,6 +81,7 @@ export const _default = () => {
   return (
     <DarkThemeProvider>
       <Dropdown
+        emptyText={'No options available'}
         items={basicDropdownItems}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
@@ -104,6 +105,7 @@ export const LightTheme = () => {
 
   return (
     <Dropdown
+      emptyText={'No options available'}
       items={basicDropdownItems}
       hint={text('hint', 'default hint text')}
       placeholder={text('placeholder', 'select a value')}
@@ -126,6 +128,7 @@ export const OverriddenAnimationProofOfConcept = () => {
   return (
     <DarkThemeProvider>
       <Dropdown
+        emptyText={'No options available'}
         items={effectChooserData}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}

@@ -47,6 +47,8 @@ MenuContainer.propTypes = {
   styleOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
+export const EmptyList = styled.div``;
+
 export const List = styled.ul`
   list-style-type: none;
   padding: 0;

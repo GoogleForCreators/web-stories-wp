@@ -26,6 +26,7 @@ const SelectButton = styled.button``;
 export const DropdownSelect = forwardRef(function DropdownSelect(
   {
     activeItemLabel,
+    ariaLabel,
     disabled,
     dropdownLabel,
     isOpen,
@@ -36,6 +37,7 @@ export const DropdownSelect = forwardRef(function DropdownSelect(
 ) {
   return (
     <SelectButton
+      aria-label={ariaLabel || dropdownLabel}
       aria-pressed={isOpen}
       aria-haspopup={true}
       aria-expanded={isOpen}
@@ -52,6 +54,7 @@ export const DropdownSelect = forwardRef(function DropdownSelect(
 
 DropdownSelect.propTypes = {
   activeItemLabel: PropTypes.string,
+  ariaLabel: PropTypes.string,
   dropdownLabel: PropTypes.string,
   onSelectClick: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
