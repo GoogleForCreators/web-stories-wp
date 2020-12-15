@@ -29,7 +29,7 @@ import { dataPixels } from '../../../../../units';
 
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../elements');
+jest.mock('../../../../../elements');
 
 describe('Panels/SizePosition', () => {
   let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;

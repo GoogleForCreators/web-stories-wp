@@ -26,7 +26,7 @@ import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../../form';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../mediaPicker', () => ({
+jest.mock('../../../../mediaPicker', () => ({
   useMediaPicker: ({ onSelect }) => {
     const image = { url: 'media1' };
     return () => onSelect(image);

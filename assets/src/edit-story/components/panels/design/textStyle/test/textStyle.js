@@ -36,10 +36,10 @@ import CanvasContext from '../../../../canvas/context';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../form';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../utils/textMeasurements');
-jest.mock('../../form/dropDown');
-jest.mock('../../form/advancedDropDown');
-jest.mock('../../form/color/color');
+jest.mock('../../../../../utils/textMeasurements');
+jest.mock('../../../../form/dropDown');
+jest.mock('../../../../form/advancedDropDown');
+jest.mock('../../../../form/color/color');
 
 const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
