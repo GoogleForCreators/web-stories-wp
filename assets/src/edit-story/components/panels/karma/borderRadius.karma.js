@@ -46,7 +46,7 @@ describe('Border Radius Panel', () => {
       );
 
       const panel = fixture.editor.inspector.designPanel.borderRadius;
-      await fixture.events.click(panel.radius('Top left'), { clickCount: 3 });
+      await fixture.events.click(panel.radius(), { clickCount: 3 });
       await fixture.events.keyboard.type('30');
       await fixture.events.keyboard.press('tab');
 
@@ -116,12 +116,17 @@ describe('Border Radius Panel', () => {
     );
 
     const panel = fixture.editor.inspector.designPanel.borderRadius;
-    await fixture.events.click(panel.radius('Bottom right'), {
+    await fixture.events.click(panel.radius(), {
       clickCount: 3,
     });
     await fixture.events.keyboard.type('50');
     await fixture.events.keyboard.press('tab');
 
+    const [element] = await getSelection();
+    const {
+      borderRadius: { topLeft },
+    } = element;
+    expect(topLeft).toBe(50);
     await fixture.snapshot('Shape element with locked border radius');
   });
 

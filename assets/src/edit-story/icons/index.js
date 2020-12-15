@@ -30,7 +30,6 @@ export { ReactComponent as ArrowLeft } from './arrow_left.svg';
 export { ReactComponent as ArrowRight } from './arrow_right.svg';
 export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as Bold } from './bold_icon.svg';
-export { ReactComponent as BorderLockLine } from './border_lock_line.svg';
 export { ReactComponent as Close } from './close.svg';
 export { ReactComponent as CloseAlt } from './close_icon.svg';
 export { ReactComponent as DefaultImage } from './default_image.svg';
@@ -83,6 +82,7 @@ export { ReactComponent as TextHelper } from './text_helper.svg'; // todo: remov
 export { ReactComponent as Underline } from './underline_icon.svg';
 export { ReactComponent as Undo } from './undo.svg';
 export { ReactComponent as UndoAlt } from './undo_icon.svg';
+export { ReactComponent as Union } from './union.svg';
 export { ReactComponent as Unlock } from './unlock.svg';
 export { ReactComponent as Upload } from './upload.svg';
 export { ReactComponent as Video } from './video.svg';
