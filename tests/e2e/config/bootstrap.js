@@ -101,7 +101,7 @@ const ALLOWED_ERROR_MESSAGES = [
 export function addAllowedErrorMessage(message) {
   ALLOWED_ERROR_MESSAGES.push(message);
   return () => {
-    const index = ALLOWED_ERROR_MESSAGES.findIndex(message);
+    const index = ALLOWED_ERROR_MESSAGES.findIndex((msg) => msg === message);
     ALLOWED_ERROR_MESSAGES.splice(index, 1);
   };
 }
