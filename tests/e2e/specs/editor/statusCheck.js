@@ -25,7 +25,7 @@ async function interceptStatusCheck(status, body) {
   return addRequestInterception((request) => {
     if (request.url().includes('/web-stories/v1/status-check/')) {
       request.respond({
-        status: 403,
+        status,
         body,
       });
       return;
@@ -39,7 +39,7 @@ describe('Status Check', () => {
   let removeErrorMessage;
   beforeAll(() => {
     removeErrorMessage = addAllowedErrorMessage(
-      'the server responded with a status of 403'
+      'the server responded with a status of'
     );
   });
 
@@ -98,7 +98,7 @@ describe('Status Check', () => {
     let stopRequestInterception;
 
     beforeAll(async () => {
-      stopRequestInterception = await interceptStatusCheck(403, 'Forbidden');
+      stopRequestInterception = await interceptStatusCheck(500, 'Forbidden');
     });
 
     afterAll(async () => {
