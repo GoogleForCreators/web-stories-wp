@@ -18,6 +18,7 @@ global.webStoriesEditorSettings = {};
 global.webStoriesDashboardSettings = {};
 
 global.wp = {};
+// eslint-disable-next-line jest/prefer-spy-on
 global.wp.media = jest.fn();
 
 global.IntersectionObserver = class IntersectionObserver {
