@@ -46,7 +46,7 @@ export const Dropdown = ({
 }) => {
   const selectRef = useRef();
 
-  const [isOpen, _setIsOpen] = useState(true);
+  const [isOpen, _setIsOpen] = useState(false);
   const [anchorHeight, setAnchorHeight] = useState(null);
 
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
@@ -87,7 +87,8 @@ export const Dropdown = ({
 
   useEffect(() => {
     if (selectRef?.current) {
-      setAnchorHeight(selectRef?.current?.getBoundingClientRect().height);
+      const { height = null } = selectRef?.current?.getBoundingClientRect();
+      setAnchorHeight(height);
     }
   }, []);
 
