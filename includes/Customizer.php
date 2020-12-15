@@ -464,9 +464,7 @@ class Customizer {
 	public function validate_number_of_stories( $validity, $value ) {
 		$value = intval( $value );
 
-		if ( $value <= 0 ) {
-			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 20.', 'web-stories' ) );
-		} elseif ( $value > 20 ) {
+		if ( $value <= 0 || $value > 20 ) {
 			$validity->add( 'invalid_number', __( 'The number of stories must be between 1 and 20.', 'web-stories' ) );
 		}
 		return $validity;
