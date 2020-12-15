@@ -295,6 +295,42 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
 	}
 
+
+	/**
+	 * @covers ::remove_unneeded_attachment_meta
+	 */
+	public function test_remove_unneeded_attachment_meta() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+
+		$this->call_private_method( $object, 'remove_unneeded_attachment_meta' );
+
+		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, true );
+
+		$this->assertSame( '', $meta );
+	}
+
 	/**
 	 * @group ms-required
 	 */
