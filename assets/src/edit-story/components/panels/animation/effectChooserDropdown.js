@@ -18,22 +18,21 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 /**
  * External dependencies
  */
 import React, { useCallback, useRef, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 /**
  * Internal dependencies
  */
-import { DropDownSelect, DropDownTitle } from '../../form/dropDown';
 import { Dropdown as DropdownIcon } from '../../../icons';
 import { isKeyboardUser } from '../../../utils/keyboardOnlyOutline';
-import Popup, { Placement } from '../../popup';
+import { DropDownSelect, DropDownTitle } from '../../form/dropDown';
 import { ScrollBarStyles } from '../../library/common/scrollbarStyles';
+import Popup, { Placement } from '../../popup';
 import EffectChooser from './effectChooser';
 
 const Container = styled.div`
@@ -56,7 +55,18 @@ export default function EffectChooserDropdown({
 }) {
   const selectRef = useRef();
   const dropdownRef = useRef();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, _setIsOpen] = useState(false);
+
+  // Prevents following race condition:
+  // -> mouseDown on select
+  // -> focusOut popup fires -> isOpen = false
+  // -> mouseUp on select
+  // -> select click fires -> isOpen = !isOpen
+  // while maintaining immediate first call to isOpen setter
+  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
+    leading: true,
+    trailing: false,
+  });
 
   const closeDropDown = useCallback(() => {
     setIsOpen(false);
@@ -64,7 +74,7 @@ export default function EffectChooserDropdown({
       // Return keyboard focus to button when closing dropdown
       selectRef.current.focus();
     }
-  }, []);
+  }, [setIsOpen]);
 
   return (
     <>
