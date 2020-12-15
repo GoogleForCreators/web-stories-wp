@@ -70,9 +70,10 @@ function useUploader() {
    * Uploads a file.
    *
    * @param {Object} file File object.
+   * @param {Object} _additionalData Additional Data object.
    */
   const uploadFile = useCallback(
-    (file) => {
+    (file, _additionalData = {}) => {
       if (!hasUploadMediaAction) {
         const message = __(
           'Sorry, you are unable to upload files.',
@@ -120,6 +121,7 @@ function useUploader() {
       const additionalData = {
         post: storyId,
         media_source: 'editor',
+        ..._additionalData,
       };
 
       return uploadMedia(file, additionalData);
