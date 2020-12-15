@@ -20,6 +20,7 @@ import {
   fireEvent,
   screen,
   waitForElementToBeRemoved,
+  waitFor,
 } from '@testing-library/react';
 import Modal from 'react-modal';
 
@@ -70,13 +71,14 @@ describe('statusCheck', () => {
   it('should display dismissible dialog if failed', async () => {
     setup(Promise.reject(new Error('api failed')));
 
-    const dialog = screen.getByRole('dialog');
-    expect(dialog).toBeDefined();
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeDefined();
+    });
 
     const dismiss = screen.getByRole('button', { name: /Dismiss/i });
     expect(dismiss).toBeDefined();
     fireEvent.click(dismiss);
 
-    await waitForElementToBeRemoved(dialog);
+    await waitForElementToBeRemoved(() => screen.getByRole('dialog'));
   });
 });
