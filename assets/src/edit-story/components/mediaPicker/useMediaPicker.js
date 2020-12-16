@@ -38,8 +38,8 @@ import { trackEvent } from '../../../tracking';
  * @param {string} [props.title] Media modal title.
  * @param {string} [props.buttonInsertText] Text to use for the "Insert" button.
  * @param {Function} props.onSelect Selection callback. Used to process the inserted image.
- * @param {Function} props.onClose Close Callback.
- * @param {Function} props.onPermissionError Callback for when user does not have upload permissions.
+ * @param {Function?} props.onClose Close Callback.
+ * @param {Function?} props.onPermissionError Callback for when user does not have upload permissions.
  * @param {string} props.type Media type.
  * @param {boolean} props.multiple Whether multi-selection should be allowed.
  * @return {Function} Callback to open the media picker.
@@ -87,7 +87,9 @@ export default function useMediaPicker({
 
       // If a user does not have the rights to upload to the media library, do not show the media picker.
       if (!hasUploadMediaAction) {
-        onPermissionError();
+        if (onPermissionError) {
+          onPermissionError();
+        }
         evt.preventDefault();
       }
 
