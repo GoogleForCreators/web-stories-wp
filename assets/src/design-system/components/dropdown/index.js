@@ -21,6 +21,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDebouncedCallback } from 'use-debounce';
+import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * WordPress dependencies
+ */
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -28,7 +34,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { Popup, PLACEMENT } from '../popup';
 import { DropdownSelect } from './select';
 import { DropdownMenu } from './menu';
-import { DROPDOWN_ITEMS } from './types';
+import { MENU_OPTIONS } from './types';
 
 const DropdownContainer = styled.div``;
 
@@ -52,6 +58,8 @@ const DropdownContainer = styled.div``;
  */
 
 export const Dropdown = ({
+  ariaLabel,
+  dropdownLabel,
   hint,
   isKeepMenuOpenOnSelection,
   disabled,
@@ -68,16 +76,16 @@ export const Dropdown = ({
 
   const subsectionItems = useMemo(
     () =>
-      items.some((item) => item.items) &&
+      items.some((item) => item.options) &&
       items.reduce((prev, current) => {
-        if (!current.items) {
+        if (!current.options) {
           return prev;
         }
-        return prev.concat({ label: current.sectionLabel }, ...current.items);
+        return prev.concat(...current.options);
       }, []),
     [items]
   );
-  console.log({ subsectionItems });
+
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
     leading: true,
     trailing: false,
@@ -123,6 +131,7 @@ export const Dropdown = ({
     }
   }, []);
 
+  const listId = `list-${uuidv4()}`;
   return (
     <DropdownContainer>
       <DropdownSelect
@@ -144,6 +153,12 @@ export const Dropdown = ({
             activeValue={activeItem?.value}
             anchorHeight={anchorHeight}
             items={items}
+            listId={listId}
+            menuAriaLabel={sprintf(
+              /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
+              __('%s Option List Selector', 'web-stories'),
+              ariaLabel || dropdownLabel
+            )}
             onDismissMenu={handleDismissMenu}
             onMenuItemClick={handleMenuItemClick}
             subsectionItems={subsectionItems}
@@ -157,16 +172,21 @@ export const Dropdown = ({
 };
 
 Dropdown.propTypes = {
+  ariaLabel: PropTypes.string,
   disabled: PropTypes.bool,
   dropdownLabel: PropTypes.string,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
   isRTL: PropTypes.bool,
-  items: DROPDOWN_ITEMS,
+  items: MENU_OPTIONS,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,
   placement: PropTypes.string,
-  renderItem: PropTypes.func,
-  selectedValue: PropTypes.string,
+  renderItem: PropTypes.object,
+  selectedValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+    PropTypes.number,
+  ]),
 };

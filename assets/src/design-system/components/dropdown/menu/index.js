@@ -17,16 +17,24 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
  */
-import { Checkmark } from '../../../icons';
-import { DROPDOWN_ITEMS, DROPDOWN_VALUE_TYPE } from '../types';
-import { EmptyList, MenuContainer, List, ListItem } from './components';
+import { DROPDOWN_ITEM, MENU_OPTIONS, DROPDOWN_VALUE_TYPE } from '../types';
+import {
+  EmptyList,
+  GroupLabel,
+  GroupList,
+  MenuContainer,
+  List,
+} from './components';
 import useDropdownMenu from './useDropdownMenu';
+import { getInset } from './utils';
+import { DefaultListItem } from './defaultListItem';
 
 export const DropdownMenu = ({
   anchorHeight,
@@ -36,20 +44,24 @@ export const DropdownMenu = ({
   hasMenuRole,
   isRTL,
   items = [],
+  listId,
   onMenuItemClick,
   onDismissMenu,
-  renderItem,
+  renderItem = DefaultListItem,
   subsectionItems,
   activeValue,
+  menuAriaLabel,
 }) => {
+  const ListItem = renderItem;
   const listRef = useRef();
+  const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(
     (event, { value }) => onMenuItemClick(event, value),
     [onMenuItemClick]
   );
 
-  const { focusedIndex } = useDropdownMenu({
+  const { focusedIndex, listLength } = useDropdownMenu({
     activeValue,
     handleMenuItemSelect,
     isRTL,
@@ -59,77 +71,90 @@ export const DropdownMenu = ({
   });
 
   useEffect(() => {
-    if (listRef.current && focusedIndex !== null) {
-      listRef.current?.children?.[focusedIndex]?.focus();
+    const listEl = listRef.current;
+    if (!listEl || focusedIndex === null) {
+      return;
     }
+    if (focusedIndex === -1) {
+      listEl.scrollTo(0, 0);
+      return;
+    }
+
+    const highlighedOptionEl = optionsRef.current[focusedIndex];
+    if (!highlighedOptionEl) {
+      return;
+    }
+
+    highlighedOptionEl.focus();
+    listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
   }, [focusedIndex]);
 
   const renderMenuLabel = (label) => {
     return (
-      <ListItem
-        id={`dropdownMenuLabel-${label}`}
-        role="presentation"
-        tabIndex={0}
-      >
+      <GroupLabel id={`dropdownMenuLabel-${label}`} role="presentation">
         {label}
-      </ListItem>
+      </GroupLabel>
     );
   };
 
-  const renderMenuItem = (item) => {
-    const isSelected = item.value === activeValue;
+  const renderMenuItem = useCallback(
+    (item, itemIndex, groupIndex = 0) => {
+      const isSelected = item.value === activeValue;
+      const itemInset = getInset(items, groupIndex, itemIndex);
+      return (
+        <ListItem
+          aria-posinset={itemInset}
+          aria-selected={isSelected}
+          aria-setsize={listLength}
+          id={`dropdownMenuItem-${item.value}`}
+          key={item.value}
+          role={hasMenuRole ? 'menuitem' : 'option'}
+          onClick={(event) => handleMenuItemSelect(event, item)}
+          tabIndex={0}
+          ref={(el) => (optionsRef.current[itemInset] = el)}
+          option={item}
+          isSelected={isSelected}
+        />
+      );
+    },
+    [activeValue, handleMenuItemSelect, hasMenuRole, items, listLength]
+  );
 
-    return (
-      <ListItem
-        id={`dropdownMenuItem-${item.value}`}
-        key={item.value}
-        role={hasMenuRole ? 'menuitem' : 'option'}
-        onClick={(event) => handleMenuItemSelect(event, item)}
-        tabIndex={0}
-      >
-        {renderItem ? (
-          renderItem(item, isSelected)
-        ) : (
-          <span>
-            {isSelected && (
-              <Checkmark data-testid={'dropdownMenuItem_active_icon'} />
+  const MenuContent = useMemo(() => {
+    if (!items || items.length === 0) {
+      return <EmptyList>{emptyText}</EmptyList>;
+    } else if (subsectionItems) {
+      return items.map((itemGroup, groupIndex) => {
+        const groupLabelId = `group-${uuidv4()}`;
+        return (
+          <GroupList
+            key={itemGroup.label || `menuGroup_${groupIndex}`}
+            aria-labelledby={groupLabelId}
+            role="group"
+          >
+            {itemGroup?.label && renderMenuLabel(itemGroup.label)}
+            {itemGroup?.options.map((item, itemIndex) =>
+              renderMenuItem(item, itemIndex, groupIndex)
             )}
-            {item.label}
-          </span>
-        )}
-      </ListItem>
-    );
-  };
+          </GroupList>
+        );
+      });
+    } else {
+      return <List role={'group'}>{items.map(renderMenuItem)}</List>;
+    }
+  }, [emptyText, items, renderMenuItem, subsectionItems]);
 
   return (
     <MenuContainer
+      id={listId}
       anchorHeight={anchorHeight}
       dropdownHeight={dropdownHeight}
       styleOverride={menuStylesOverride}
+      ref={listRef}
+      role={hasMenuRole ? 'menu' : 'listbox'}
+      aria-label={menuAriaLabel}
     >
-      <List ref={listRef} role={hasMenuRole ? 'menu' : 'listbox'}>
-        {items.length === 0 ? (
-          <EmptyList>{emptyText}</EmptyList>
-        ) : (
-          items.map((item) => {
-            if (item.items) {
-              return Object.keys(item).map((nestedKey) => {
-                if (
-                  nestedKey === 'sectionLabel' &&
-                  typeof item[nestedKey] === 'string'
-                ) {
-                  return renderMenuLabel(item[nestedKey]);
-                }
-                if (nestedKey === 'items') {
-                  return item[nestedKey]?.map(renderMenuItem);
-                }
-              });
-            }
-
-            return renderMenuItem(item);
-          })
-        )}
-      </List>
+      {MenuContent}
     </MenuContainer>
   );
 };
@@ -141,9 +166,15 @@ DropdownMenu.propTypes = {
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   hasMenuRole: PropTypes.bool,
   isRTL: PropTypes.bool,
-  items: DROPDOWN_ITEMS,
+  items: MENU_OPTIONS,
+  listId: PropTypes.string.isRequired,
+  menuAriaLabel: PropTypes.string,
   onMenuItemClick: PropTypes.func.isRequired,
   onDismissMenu: PropTypes.func.isRequired,
-  renderItem: PropTypes.func,
+  renderItem: PropTypes.object,
   activeValue: DROPDOWN_VALUE_TYPE,
+  subsectionItems: PropTypes.oneOfType([
+    PropTypes.arrayOf(DROPDOWN_ITEM),
+    PropTypes.bool,
+  ]),
 };

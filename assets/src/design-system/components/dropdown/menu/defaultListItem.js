@@ -13,32 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
-export const DROPDOWN_VALUE_TYPE = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-  PropTypes.bool,
-]);
+/**
+ * Internal dependencies
+ */
+import { Checkmark } from '../../../icons';
+import { DROPDOWN_ITEM } from '../types';
+import { ListItem } from './components';
 
-export const DROPDOWN_ITEM = PropTypes.shape({
-  label: PropTypes.string,
-  value: DROPDOWN_VALUE_TYPE,
+export const DefaultListItem = forwardRef(function DefaultListItem(
+  { option, isSelected, ...rest },
+  ref
+) {
+  return (
+    <ListItem {...rest} ref={ref}>
+      {isSelected && <Checkmark data-testid={'dropdownMenuItem_active_icon'} />}
+      {option?.label}
+    </ListItem>
+  );
 });
 
-export const DROPDOWN_ITEMS = PropTypes.arrayOf(DROPDOWN_ITEM);
-
-export const NESTED_DROPDOWN_ITEM = PropTypes.shape({
-  label: PropTypes.string,
-  options: DROPDOWN_ITEMS,
-});
-
-export const NESTED_DROPDOWN_ITEMS = PropTypes.arrayOf(NESTED_DROPDOWN_ITEM);
-
-export const MENU_OPTIONS = PropTypes.oneOfType([
-  DROPDOWN_ITEMS,
-  NESTED_DROPDOWN_ITEMS,
-]);
+DefaultListItem.propTypes = {
+  option: DROPDOWN_ITEM,
+  isSelected: PropTypes.bool,
+};

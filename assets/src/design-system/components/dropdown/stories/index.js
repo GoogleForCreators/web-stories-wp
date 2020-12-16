@@ -20,14 +20,15 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, select, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
-import { useState } from 'react';
-
+import { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
 import { Dropdown } from '..';
+import { DROPDOWN_ITEM } from '../types';
 import {
   basicDropdownItems,
   effectChooserData,
@@ -38,45 +39,38 @@ export default {
   title: 'DesignSystem/Components/Dropdown',
 };
 
-const StyledEffectListItem = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${({ active }) => (active ? '#5732A3' : 'inherit')};
+const StyledEffectListItem = styled.li`
+  border: none;
+  background: ${({ active }) => (active ? '#5732A3' : '#333')};
   border-radius: 4px;
-  border: 1px solid white;
+  height: 48px;
   position: relative;
-  height: 100%;
   overflow: hidden;
+  font-family: 'Teko', sans-serif;
   font-size: 20px;
   line-height: 1;
+  color: white;
   text-transform: uppercase;
   transition: background 0.1s linear;
-  color: white;
-  width: ${({ width }) => (width === 'full' ? 248 : 120)}px;
+  grid-column-start: ${({ width }) => (width === 'full' ? 'span 4' : 'span 2')};
+
+  &:focus {
+    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+  }
 `;
 
 const styleOverrideForAnimationEffectMenu = css`
   width: 276px;
+  display: inline-block;
+  background: black;
 
   ul {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: stretch;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
-    background: black;
-  }
-
-  li {
-    margin: 8px 0;
-    height: 48px;
-    display: inline;
-    width: fit-content;
-    &:focus > div {
-      background: #b488fc;
-    }
+    display: grid;
+    justify-content: center;
+    gap: 15px 3px;
+    grid-template-columns: repeat(4, 58px);
+    padding: 15px;
+    position: relative;
   }
 `;
 
@@ -150,6 +144,26 @@ export const SubMenus = () => {
   );
 };
 
+const RenderItemOverride = forwardRef(function RenderItemOverride(
+  { option, isSelected, ...rest },
+  ref
+) {
+  return (
+    <StyledEffectListItem
+      ref={ref}
+      width={option.width}
+      active={isSelected}
+      {...rest}
+    >
+      {option.label}
+    </StyledEffectListItem>
+  );
+});
+RenderItemOverride.propTypes = {
+  option: DROPDOWN_ITEM,
+  isSelected: PropTypes.boolean,
+};
+
 export const OverriddenAnimationProofOfConcept = () => {
   const [selectedValue, setSelectedValue] = useState(null);
   return (
@@ -169,11 +183,7 @@ export const OverriddenAnimationProofOfConcept = () => {
         }}
         placement={select('placement', Object.values(PLACEMENT))}
         menuStylesOverride={styleOverrideForAnimationEffectMenu}
-        renderItem={(item, isSelected) => (
-          <StyledEffectListItem width={item.width} active={isSelected}>
-            {item.label}
-          </StyledEffectListItem>
-        )}
+        renderItem={RenderItemOverride}
       />
     </DarkThemeProvider>
   );

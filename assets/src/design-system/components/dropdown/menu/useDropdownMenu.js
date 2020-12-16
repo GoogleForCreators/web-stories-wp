@@ -99,7 +99,8 @@ export default function useDropdownMenu({
     () => ({
       focusedValue,
       focusedIndex,
+      listLength,
     }),
-    [focusedIndex, focusedValue]
+    [focusedIndex, focusedValue, listLength]
   );
 }

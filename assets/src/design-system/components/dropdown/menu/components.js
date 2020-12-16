@@ -54,6 +54,10 @@ export const List = styled.ul`
   padding: 0;
 `;
 
+export const GroupLabel = styled.li``;
+
+export const GroupList = styled.ul``;
+
 export const ListItem = styled.li`
   width: 100%;
 `;

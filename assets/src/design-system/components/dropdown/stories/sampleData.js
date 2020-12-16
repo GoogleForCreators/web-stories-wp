@@ -121,8 +121,8 @@ export const effectChooserData = [
 
 export const nestedDropdownItems = [
   {
-    sectionLabel: 'aliens',
-    items: [
+    label: 'aliens',
+    options: [
       { value: 'alien-1', label: 'ET' },
       { value: 'alien-2', label: 'Stitch' },
       { value: 'alien-3', label: 'Groot' },
@@ -134,8 +134,8 @@ export const nestedDropdownItems = [
     ],
   },
   {
-    sectionLabel: 'dragons',
-    items: [
+    label: 'dragons',
+    options: [
       { value: 'dragon-1', label: 'Smaug' },
       { value: 'dragon-2', label: 'Mushu' },
       { value: 'dragon-3', label: 'Toothless' },
@@ -145,8 +145,8 @@ export const nestedDropdownItems = [
     ],
   },
   {
-    sectionLabel: 'dogs',
-    items: [
+    label: 'dogs',
+    options: [
       { value: 'dog-1', label: 'Snoopy' },
       { value: 'dog-2', label: 'Scooby' },
     ],
