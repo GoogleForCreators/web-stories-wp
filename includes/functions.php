@@ -32,5 +32,6 @@ namespace Google\Web_Stories;
  */
 function stories( $args = [] ) {
 	$story_query = new Story_Query( $args );
+	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $story_query->render();
 }
