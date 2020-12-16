@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { useCallback, useEffect, useMemo } from 'react';
-import { useFeatures } from 'flagged';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { getPanels } from '../../panels';
 import useHandlers from '../../../utils/useHandlers';
 import updateProperties from './updateProperties';
+import getDesignPanelsForSelection from './getDesignPanelsForSelection';
 
 function useDesignPanels() {
   const {
@@ -60,10 +59,8 @@ function useDesignPanels() {
     }
   );
 
-  const flags = useFeatures();
-  const panels = useMemo(() => getPanels(selectedElements, flags), [
+  const panels = useMemo(() => getDesignPanelsForSelection(selectedElements), [
     selectedElements,
-    flags,
   ]);
   const [submitHandlers, registerSubmitHandler] = useHandlers();
   const onSetProperties = useCallback(
