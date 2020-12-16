@@ -52,7 +52,7 @@ import { useTransformHandler } from '../../components/transform';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,
-} from '../../components/elementBorder/utils';
+} from '../../utils/elementBorder';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
@@ -114,11 +114,7 @@ const Highlight = styled.span`
 
 const OutsideBorder = styled.div`
   ${elementWithBorder}
-  ${({ border }) =>
-    getBorderPositionCSS({
-      ...border,
-      skipPositioning: false,
-    })}
+  ${({ border }) => border && getBorderPositionCSS(border)}
   overflow: hidden;
 `;
 
@@ -139,7 +135,7 @@ function TextEdit({
     height: elementHeight,
     ...rest
   } = element;
-  const { font } = rest;
+  const { font, width: elementWidth } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -391,6 +387,8 @@ function TextEdit({
       ref={outsideBorderRef}
       border={border}
       borderRadius={borderRadius}
+      width={elementWidth}
+      height={elementHeight}
     >
       <Wrapper
         ref={wrapperRef}

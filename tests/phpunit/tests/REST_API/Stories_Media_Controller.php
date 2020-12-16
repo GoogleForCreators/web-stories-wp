@@ -154,9 +154,9 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 	}
 
 	/**
-	 * @covers ::update_item
+	 * @covers ::create_item
 	 */
-	public function test_update_item() {
+	public function test_create_item() {
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
@@ -165,46 +165,81 @@ class Stories_Media_Controller extends \WP_Test_REST_TestCase {
 				'post_title'     => 'Test Image',
 			]
 		);
-		$video_attachment_id  = self::factory()->attachment->create_object(
-			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
-				'post_parent'    => 0,
-				'post_mime_type' => 'image/jpeg',
-				'post_title'     => 'Test Image',
-			]
-		);
+
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media/' . $poster_attachment_id );
-		$request->set_param( 'post', $video_attachment_id );
+
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
+		$request->set_header( 'Content-Type', 'image/jpeg' );
+		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
+		$request->set_param( 'title', 'My title is very cool' );
+		$request->set_param( 'caption', 'This is a better caption.' );
+		$request->set_param( 'description', 'Without a description, my attachment is descriptionless.' );
+		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
+		$request->set_param( 'post', $poster_attachment_id );
+
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/test-image.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
+
+		$this->assertEquals( 201, $response->get_status() );
+		$this->assertEquals( 'image', $data['media_type'] );
+
 		$this->assertArrayHasKey( 'post', $data );
-		$this->assertSame( $data['post'], $video_attachment_id );
+		$this->assertSame( $data['post'], $poster_attachment_id );
 	}
 
 	/**
-	 * @covers ::update_item
+	 * @covers ::create_item
 	 */
-	public function test_update_item_with_revision() {
-		$poster_attachment_id = self::factory()->attachment->create_object(
+	public function test_create_item_with_revision() {
+		$revision_id = self::factory()->post->create_object(
 			[
-				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
-				'post_parent'    => 0,
-				'post_mime_type' => 'image/jpeg',
-				'post_title'     => 'Test Image',
+				'post_type'   => 'revision',
+				'post_author' => self::$user_id,
 			]
 		);
-		$revision_id          = self::factory()->post->create_object(
-			[
-				'post_type' => 'revision',
-			]
-		);
-
-
 		wp_set_current_user( self::$user_id );
-		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media/' . $poster_attachment_id );
+		$request = new WP_REST_Request( \WP_REST_Server::CREATABLE, '/web-stories/v1/media' );
+		$request->set_header( 'Content-Type', 'image/jpeg' );
+		$request->set_header( 'Content-Disposition', 'attachment; filename=canola.jpg' );
+		$request->set_param( 'title', 'My title is very cool' );
+		$request->set_param( 'caption', 'This is a better caption.' );
+		$request->set_param( 'description', 'Without a description, my attachment is descriptionless.' );
+		$request->set_param( 'alt_text', 'Alt text is stored outside post schema.' );
 		$request->set_param( 'post', $revision_id );
+
+		$request->set_body( file_get_contents( DIR_TESTDATA . '/images/test-image.jpg' ) );
 		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
+		$this->assertErrorResponse( 'rest_cannot_edit', $response, 403 );
+	}
+
+	/**
+	 * @covers ::filter_poster_attachments
+	 */
+	public function test_filter_poster_attachments() {
+		$controller = new \Google\Web_Stories\REST_API\Stories_Media_Controller( 'attachment' );
+		$query      = new \WP_Query();
+		$result     = $controller->filter_poster_attachments( $query );
+		$this->assertNull( $result );
+		$tax_query = $query->get( 'tax_query' );
+		$this->assertSame( '', $tax_query );
+	}
+
+	/**
+	 * @covers ::filter_poster_attachments
+	 */
+	public function test_filter_poster_attachments_with_attachments() {
+		$controller = new \Google\Web_Stories\REST_API\Stories_Media_Controller( 'attachment' );
+		$query      = new \WP_Query();
+		$query->set( 'post_type', 'attachment' );
+		$result = $controller->filter_poster_attachments( $query );
+		$this->assertNull( $result );
+		$tax_query = $query->get( 'tax_query' );
+		$this->assertTrue( is_array( $tax_query ) );
+		$data = array_shift( $tax_query );
+		$this->assertArrayHasKey( 'taxonomy', $data );
+		$this->assertArrayHasKey( 'field', $data );
+		$this->assertArrayHasKey( 'terms', $data );
+		$this->assertArrayHasKey( 'operator', $data );
 	}
 }
