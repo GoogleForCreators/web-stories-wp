@@ -145,20 +145,6 @@ class Media {
 
 		register_meta(
 			'post',
-			self::POSTER_POST_META_KEY,
-			[
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'type'              => 'boolean',
-				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => false,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
-			]
-		);
-
-		register_meta(
-			'post',
 			self::POSTER_ID_POST_META_KEY,
 			[
 				'sanitize_callback' => 'absint',
@@ -213,41 +199,11 @@ class Media {
 			false
 		);
 
-		add_action( 'pre_get_posts', [ $this, 'filter_poster_attachments' ] );
-
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
-	}
-
-	/**
-	 * Filters the current query to hide all automatically extracted poster image attachments.
-	 *
-	 * Reduces unnecessary noise in the media library.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param \WP_Query $query WP_Query instance, passed by reference.
-	 *
-	 * @return void
-	 */
-	public function filter_poster_attachments( &$query ) {
-		$post_type = (array) $query->get( 'post_type' );
-
-		if ( ! in_array( 'any', $post_type, true ) && ! in_array( 'attachment', $post_type, true ) ) {
-			return;
-		}
-
-		$meta_query = (array) $query->get( 'meta_query' );
-
-		$meta_query[] = [
-			'key'     => self::POSTER_POST_META_KEY,
-			'compare' => 'NOT EXISTS',
-		];
-
-		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPressVIPMinimum.Hooks.PreGetPosts.PreGetPosts
 	}
 
 	/**
@@ -280,7 +236,7 @@ class Media {
 				'schema'          => [
 					'description' => __( 'Media source. ', 'web-stories' ),
 					'type'        => 'string',
-					'enum'        => [ 'editor' ],
+					'enum'        => [ 'editor', 'poster-generation' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
 				'update_callback' => [ $this, 'update_callback_media_source' ],
@@ -412,7 +368,7 @@ class Media {
 	public function get_thumbnail_data( $thumbnail_id ) {
 		$img_src                       = wp_get_attachment_image_src( $thumbnail_id, 'full' );
 		list ( $src, $width, $height ) = $img_src;
-		$generated                     = (bool) get_post_meta( $thumbnail_id, self::POSTER_POST_META_KEY, true );
+		$generated                     = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
 
@@ -436,10 +392,27 @@ class Media {
 		}
 
 		// Used in favor of slow meta queries.
-		$is_poster = (bool) get_post_meta( $post_id, self::POSTER_POST_META_KEY, true );
-
+		$is_poster = $this->is_poster( $post_id );
 		if ( $is_poster ) {
 			wp_delete_attachment( $post_id, true );
 		}
+	}
+
+	/**
+	 * Helper util to check if attachment is a poster.
+	 *
+	 * @param int $post_id Attachment ID.
+	 *
+	 * @return bool
+	 */
+	protected function is_poster( $post_id ) {
+		$terms = wp_get_object_terms( $post_id, self::STORY_MEDIA_TAXONOMY );
+		if ( is_array( $terms ) && ! empty( $terms ) ) {
+			$slugs = wp_list_pluck( $terms, 'slug' );
+
+			return in_array( 'poster-generation', $slugs, true );
+		}
+
+		return false;
 	}
 }

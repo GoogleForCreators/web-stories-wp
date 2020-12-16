@@ -29,6 +29,8 @@ namespace Google\Web_Stories;
 /**
  * Class Database_Upgrader
  *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
  * @package Google\Web_Stories
  */
 class Database_Upgrader {
@@ -66,6 +68,8 @@ class Database_Upgrader {
 			'3.0.1' => 'rewrite_flush',
 			'3.0.2' => 'rewrite_flush',
 			'3.0.3' => 'yoast_reindex_stories',
+			'3.0.4' => 'add_poster_generation_media_source',
+			'3.0.5' => 'remove_unneeded_attachment_meta',
 		];
 
 		$version = get_option( self::OPTION, '0.0.0' );
@@ -328,6 +332,43 @@ class Database_Upgrader {
 				$builder->build_for_id_and_type( $post_id, 'post', $indexable_before );
 			}
 		}
+	}
+
+	/**
+	 * Migration media post meta to taxonomy term.
+	 *
+	 * @global wpdb $wpdb WordPress database abstraction object.
+	 *
+	 * @return void
+	 */
+	protected function add_poster_generation_media_source() {
+		global $wpdb;
+
+		wp_insert_term( 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+
+		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s",
+				Media::POSTER_POST_META_KEY
+			)
+		);
+
+		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+			foreach ( $post_ids as $post_id ) {
+				wp_set_object_terms( (int) $post_id, 'poster-generation', Media::STORY_MEDIA_TAXONOMY );
+			}
+		}
+	}
+
+	/**
+	 * Delete old attachment post meta.
+	 *
+	 * @global wpdb $wpdb WordPress database abstraction object.
+	 *
+	 * @return void
+	 */
+	protected function remove_unneeded_attachment_meta() {
+		delete_post_meta_by_key( Media::POSTER_POST_META_KEY );
 	}
 
 	/**

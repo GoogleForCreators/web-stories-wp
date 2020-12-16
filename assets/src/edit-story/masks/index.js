@@ -469,6 +469,9 @@ export function getMaskByType(type) {
 }
 
 function getDefaultElementMask(type) {
+  if (!type) {
+    return null;
+  }
   const { isMaskable } = getDefinitionForType(type);
   return isMaskable ? DEFAULT_MASK : null;
 }
