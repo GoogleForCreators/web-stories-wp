@@ -43,6 +43,13 @@ class Customizer {
 	const SECTION_SLUG = 'web_story_options';
 
 	/**
+	 * Customizer web stories options key.
+	 *
+	 * @var string
+	 */
+	const STORY_OPTION = 'story-options';
+
+	/**
 	 * WP_Customize_Manager instance.
 	 *
 	 * @var \WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
@@ -85,7 +92,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'story-options[show_stories]',
+			self::STORY_OPTION . '[show_stories]',
 			[
 				'default' => false,
 				'type'    => 'option',
@@ -93,7 +100,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_control(
-			'story-options[show_stories]',
+			self::STORY_OPTION . '[show_stories]',
 			[
 				'type'    => 'checkbox',
 				'section' => self::SECTION_SLUG,
@@ -102,7 +109,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'story-options[view_type]',
+			self::STORY_OPTION . '[view_type]',
 			[
 				'default' => $theme_support['view-type-default'],
 				'type'    => 'option',
@@ -110,7 +117,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_control(
-			'story-options[view_type]',
+			self::STORY_OPTION . '[view_type]',
 			[
 				'section'         => self::SECTION_SLUG,
 				'label'           => __( 'Story view type', 'web-stories' ),
@@ -123,7 +130,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'story-options[number_of_stories]',
+			self::STORY_OPTION . '[number_of_stories]',
 			[
 				'default'           => $theme_support['number-of-stories'],
 				'type'              => 'option',
@@ -132,7 +139,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_control(
-			'story-options[number_of_stories]',
+			self::STORY_OPTION . '[number_of_stories]',
 			[
 				'type'            => 'number',
 				'section'         => self::SECTION_SLUG,
@@ -148,7 +155,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'story-options[number_of_columns]',
+			self::STORY_OPTION . '[number_of_columns]',
 			[
 				'default'           => $theme_support['grid-columns-default'],
 				'type'              => 'option',
@@ -157,7 +164,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_control(
-			'story-options[number_of_columns]',
+			self::STORY_OPTION . '[number_of_columns]',
 			[
 				'type'            => 'number',
 				'section'         => self::SECTION_SLUG,
@@ -173,7 +180,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'story-options[order]',
+			self::STORY_OPTION . '[order]',
 			[
 				'default' => $theme_support['order-default'],
 				'type'    => 'option',
@@ -181,7 +188,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_control(
-			'story-options[order]',
+			self::STORY_OPTION . '[order]',
 			[
 				'section'         => self::SECTION_SLUG,
 				'label'           => __( 'Order by', 'web-stories' ),
@@ -194,7 +201,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_setting(
-			'story-options[list_view_image_alignment]',
+			self::STORY_OPTION . '[list_view_image_alignment]',
 			[
 				'type'    => 'option',
 				'default' => 'left',
@@ -202,7 +209,7 @@ class Customizer {
 		);
 
 		$wp_customize->add_control(
-			'story-options[list_view_image_alignment]',
+			self::STORY_OPTION . '[list_view_image_alignment]',
 			[
 				'type'            => 'radio',
 				'section'         => self::SECTION_SLUG,
@@ -220,7 +227,7 @@ class Customizer {
 		if ( true === $theme_support['title'] ) {
 
 			$wp_customize->add_setting(
-				'story-options[show_title]',
+				self::STORY_OPTION . '[show_title]',
 				[
 					'default' => $theme_support['title-default'],
 					'type'    => 'option',
@@ -228,7 +235,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_control(
-				'story-options[show_title]',
+				self::STORY_OPTION . '[show_title]',
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
@@ -242,7 +249,7 @@ class Customizer {
 
 		if ( true === $theme_support['author'] ) {
 			$wp_customize->add_setting(
-				'story-options[show_author]',
+				self::STORY_OPTION . '[show_author]',
 				[
 					'default' => $theme_support['author-default'],
 					'type'    => 'option',
@@ -250,7 +257,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_control(
-				'story-options[show_author]',
+				self::STORY_OPTION . '[show_author]',
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
@@ -264,7 +271,7 @@ class Customizer {
 
 		if ( true === $theme_support['date'] ) {
 			$wp_customize->add_setting(
-				'story-options[show_date]',
+				self::STORY_OPTION . '[show_date]',
 				[
 					'default' => $theme_support['date-default'],
 					'type'    => 'option',
@@ -272,7 +279,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_control(
-				'story-options[show_date]',
+				self::STORY_OPTION . '[show_date]',
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
@@ -286,7 +293,7 @@ class Customizer {
 
 		if ( true === $theme_support['stories-archive-link'] ) {
 			$wp_customize->add_setting(
-				'story-options[show_stories_archive_link]',
+				self::STORY_OPTION . '[show_stories_archive_link]',
 				[
 					'default' => false,
 					'type'    => 'option',
@@ -294,7 +301,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_control(
-				'story-options[show_stories_archive_link]',
+				self::STORY_OPTION . '[show_stories_archive_link]',
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
@@ -306,7 +313,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_setting(
-				'story-options[stories_archive_label]',
+				self::STORY_OPTION . '[stories_archive_label]',
 				[
 					'type'    => 'option',
 					'default' => $theme_support['stories-archive-label'],
@@ -314,7 +321,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_control(
-				'story-options[stories_archive_label]',
+				self::STORY_OPTION . '[stories_archive_label]',
 				[
 					'type'            => 'text',
 					'section'         => self::SECTION_SLUG,
@@ -326,7 +333,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_setting(
-				'story-options[show_story_poster]',
+				self::STORY_OPTION . '[show_story_poster]',
 				[
 					'default' => $theme_support['show-story-poster-default'],
 					'type'    => 'option',
@@ -334,7 +341,7 @@ class Customizer {
 			);
 
 			$wp_customize->add_control(
-				'story-options[show_story_poster]',
+				self::STORY_OPTION . '[show_story_poster]',
 				[
 					'type'            => 'checkbox',
 					'section'         => self::SECTION_SLUG,
@@ -401,7 +408,7 @@ class Customizer {
 	 * @return boolean Returns true if the given option is enabled otherwise false.
 	 */
 	private function is_option_enabled( $option_name ) {
-		$setting = $this->wp_customize->get_setting( "story-options[{$option_name}]" );
+		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
 		return ( $setting instanceof \WP_Customize_Setting && true === $setting->value() );
 	}
 
@@ -413,7 +420,7 @@ class Customizer {
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
 	private function is_view_type( $view_type ) {
-		$setting = $this->wp_customize->get_setting( 'story-options[view_type]' );
+		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . '[view_type]' );
 		return ( $setting instanceof \WP_Customize_Setting && $view_type === $setting->value() );
 	}
 
@@ -498,7 +505,7 @@ class Customizer {
 	 * @return string|void
 	 */
 	public static function render_stories() {
-		$options = get_option( 'story-options' );
+		$options = get_option( self::STORY_OPTION );
 
 		if ( empty( $options['show_stories'] ) || true !== $options['show_stories'] ) {
 			return;
