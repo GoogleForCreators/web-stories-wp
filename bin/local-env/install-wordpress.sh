@@ -84,10 +84,6 @@ container chmod 767 \
 	/var/www/html/wp-content/uploads \
 	/var/www/html/wp-content/upgrade
 
-# Let's make sure we have some media in the media library to work with.
-echo -e $(status_message "Import default set of media assets...")
-# TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
-
 CURRENT_WP_VERSION=$(wp core version | tr -d '\r')
 echo -e $(status_message "Current WordPress version: $CURRENT_WP_VERSION...")
 
@@ -156,8 +152,10 @@ if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
 
-# Imports videos and adds a poster image for them.
-echo -e $(status_message "Importing default media items...")
+# Let's make sure we have some media in the media library to work with.
+echo -e $(status_message "Import default set of media assets...")
+# TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
+
 # Since MOV files are not allowed in the editor, only the WEBM one needs a poster.
 wp media import /var/www/html/wp-content/e2e-assets/small-video.mov
 
