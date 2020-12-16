@@ -106,7 +106,7 @@ export default function useMediaPicker({
       });
 
       // When an image is selected, run a callback.
-      fileFrame?.once('select', () => {
+      fileFrame.once('select', () => {
         const mediaPickerEl = fileFrame
           .state()
           .get('selection')
@@ -116,14 +116,14 @@ export default function useMediaPicker({
       });
 
       if (onClose) {
-        fileFrame?.once('close', onClose);
+        fileFrame.once('close', onClose);
       }
 
-      fileFrame?.once('content:activate:browse', () => {
+      fileFrame.once('content:activate:browse', () => {
         // Force-refresh media modal contents every time
         // to avoid stale data.
-        fileFrame?.content?.get()?.collection?._requery(true);
-        fileFrame?.content?.get()?.options?.selection?.reset();
+        fileFrame.content?.get()?.collection?._requery(true);
+        fileFrame.content?.get()?.options?.selection?.reset();
       });
 
       // Finally, open the modal
