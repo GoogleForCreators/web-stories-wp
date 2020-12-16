@@ -21,25 +21,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+namespace Google\Web_Stories;
 
-use Google\Web_Stories\Customizer;
-
-if ( ! function_exists( 'web_stories_customizer' ) ) {
-	/**
-	 * Fetch stories based on customizer settings.
-	 *
-	 * @param bool $echo Whether to display the stories.
-	 *
-	 * @return string|void
-	 */
-	function web_stories_customizer( $echo = true ) {
-		$stories = Customizer::render_stories();
-
-		if ( ! $echo ) {
-			return $stories;
-		}
-
-		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $stories;
-	}
+/**
+ * Fetch stories based on customizer settings.
+ *
+ * @param array $args Arguments for fetching stories.
+ *
+ * @return string|void
+ */
+function stories( $args = [] ) {
+	$story_query = new Story_Query( $args );
+	echo $story_query->render();
 }
