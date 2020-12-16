@@ -215,7 +215,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 				 *
 				 * This depicts
 				 *
-				 * @since 2.0.0
+				 * @since 1.3.0
 				 *
 				 * @param FieldState $default_field_state Field states for circle view.
 				 */
