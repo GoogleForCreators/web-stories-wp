@@ -166,7 +166,7 @@ WEBM_VIDEO_POSTER_ID=$(wp media import /var/www/html/wp-content/e2e-assets/small
 
 # So the poster is marked as such and hidden in the editor.
 wp post term add $WEBM_VIDEO_POSTER_ID web_story_media_source "poster-generation"
-wp post meta $WEBM_VIDEO_ID web_stories_poster_id $WEBM_VIDEO_POSTER_ID
+wp post meta add $WEBM_VIDEO_ID web_stories_poster_id $WEBM_VIDEO_POSTER_ID
 
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
