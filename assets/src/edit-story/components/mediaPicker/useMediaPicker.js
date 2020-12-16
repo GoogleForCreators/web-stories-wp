@@ -31,6 +31,19 @@ import { useConfig } from '../../app/config';
 import { useAPI } from '../../app/api';
 import { trackEvent } from '../../../tracking';
 
+/**
+ * Custom hook to open the WordPress media modal.
+ *
+ * @param {Object} props Props.
+ * @param {string} [props.title] Media modal title.
+ * @param {string} [props.buttonInsertText] Text to use for the "Insert" button.
+ * @param {Function} props.onSelect Selection callback. Used to process the inserted image.
+ * @param {Function} props.onClose Close Callback.
+ * @param {Function} props.onPermissionError Callback for when user does not have upload permissions.
+ * @param {string} props.type Media type.
+ * @param {boolean} props.multiple Whether multi-selection should be allowed.
+ * @return {Function} Callback to open the media picker.
+ */
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
