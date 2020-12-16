@@ -124,43 +124,51 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 	 */
 	public function test_max_number_for_stories() {
 		$stories_shortcode = new Testee();
-		$this->set_private_property(
-			$stories_shortcode,
-			'attributes',
-			[
-				'number' => 1000000,
-				'order'  => 'DESC',
-			]
-		);
+		$attributes        = [
+			'number' => 1000000,
+			'order'  => 'DESC',
+		];
 
-		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args' );
+		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args', [ $attributes ] );
 		$this->assertSame( 100, $args['posts_per_page'] );
 	}
 
 	/**
-	 * @covers ::render_stories
+	 * @covers ::prepare_story_attrs
 	 */
-	public function test_shortcode_default_attrs() {
-		$shortcode_obj = new Testee();
+	public function test_prepare_story_attrs() {
+		$shortcode = new Testee();
 
-		$default = [
-			'view'                      => 'circles',
-			'columns'                   => 1,
-			'title'                     => 'false',
-			'author'                    => 'false',
-			'date'                      => 'false',
-			'story_poster'              => 'true',
-			'archive_link'              => 'false',
-			'archive_label'             => __( 'View all stories', 'web-stories' ),
+		$expected = [
+			'view_type'                 => 'grid',
+			'number_of_columns'         => 2,
+			'show_title'                => true,
+			'show_author'               => true,
+			'show_date'                 => true,
+			'show_story_poster'         => true,
+			'show_story_archive_link'   => false,
+			'show_story_archive_label'  => true,
 			'list_view_image_alignment' => 'left',
-			'class'                     => '',
-			'number'                    => 10,
-			'order'                     => 'DESC',
+			'class'                     => 'dummy',
+			'circle_size'               => 200,
 		];
 
-		$this->call_private_method( $shortcode_obj, 'render_stories', [ [] ] );
-		$attrs = $this->get_private_property( $shortcode_obj, 'attributes' );
+		$attributes = [
+			'view'                      => 'grid',
+			'columns'                   => 2,
+			'title'                     => 'true',
+			'author'                    => 'true',
+			'date'                      => 'true',
+			'story_poster'              => 'true',
+			'archive_link'              => 'randomtext',
+			'archive_label'             => 'true',
+			'list_view_image_alignment' => 'left',
+			'class'                     => 'dummy',
+			'circle_size'               => '200',
+		];
 
-		$this->assertSame( $default, $attrs );
+		$actual = $this->call_private_method( $shortcode, 'prepare_story_attrs', [ $attributes ] );
+
+		$this->assertEquals( $expected, $actual );
 	}
 }

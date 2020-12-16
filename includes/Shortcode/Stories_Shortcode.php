@@ -36,13 +36,6 @@ use Google\Web_Stories\Story_Query as Stories;
 class Stories_Shortcode {
 
 	/**
-	 * Shortcode attributes.
-	 *
-	 * @var array
-	 */
-	private $attributes;
-
-	/**
 	 * Shortcode name.
 	 *
 	 * @var string
@@ -64,12 +57,12 @@ class Stories_Shortcode {
 	 * This will render the stories according to given
 	 * shortcode attributes.
 	 *
-	 * @param array $attributes Shortcode attributes.
+	 * @param array $attrs Shortcode attributes.
 	 *
 	 * @return string Story markup.
 	 */
-	public function render_stories( array $attributes ) {
-		$this->attributes = shortcode_atts(
+	public function render_stories( array $attrs ) {
+		$attributes = shortcode_atts(
 			[
 				'view'                      => 'circles',
 				'columns'                   => 1,
@@ -81,13 +74,15 @@ class Stories_Shortcode {
 				'archive_label'             => __( 'View all stories', 'web-stories' ),
 				'list_view_image_alignment' => 'left',
 				'class'                     => '',
+				'circle_size'               => 150,
 				'number'                    => 10,
 				'order'                     => 'DESC',
 			],
-			$attributes
+			$attrs,
+			self::SHORTCODE_NAME
 		);
 
-		$stories = new Stories( $this->prepare_story_attrs(), $this->prepare_story_args() );
+		$stories = new Stories( $this->prepare_story_attrs( $attributes ), $this->prepare_story_args( $attributes ) );
 
 		return $stories->render();
 	}
@@ -95,37 +90,40 @@ class Stories_Shortcode {
 	/**
 	 * Prepare story attributes.
 	 *
+	 * @param array $attributes Shortcode attributes.
+	 *
 	 * @return array Attributes to pass to Story_Query class.
 	 */
-	private function prepare_story_attrs() {
-		$attrs = [];
+	private function prepare_story_attrs( array $attributes ) {
 
-		$attrs['view_type']                 = (string) $this->attributes['view'];
-		$attrs['number_of_columns']         = (int) $this->attributes['columns'];
-		$attrs['show_title']                = (bool) 'true' === $this->attributes['title'];
-		$attrs['show_author']               = (bool) 'true' === $this->attributes['author'];
-		$attrs['show_date']                 = (bool) 'true' === $this->attributes['date'];
-		$attrs['show_story_poster']         = (bool) 'true' === $this->attributes['story_poster'];
-		$attrs['show_story_archive_link']   = (bool) 'true' === $this->attributes['archive_link'];
-		$attrs['show_story_archive_label']  = (bool) 'true' === $this->attributes['archive_label'];
-		$attrs['list_view_image_alignment'] = (string) $this->attributes['list_view_image_alignment'];
-		$attrs['class']                     = (string) $this->attributes['class'];
-
-		return $attrs;
+		return [
+			'view_type'                 => (string) $attributes['view'],
+			'number_of_columns'         => (int) $attributes['columns'],
+			'show_title'                => ( 'true' === $attributes['title'] ),
+			'show_author'               => ( 'true' === $attributes['author'] ),
+			'show_date'                 => ( 'true' === $attributes['date'] ),
+			'show_story_poster'         => ( 'true' === $attributes['story_poster'] ),
+			'show_story_archive_link'   => ( 'true' === $attributes['archive_link'] ),
+			'show_story_archive_label'  => ( 'true' === $attributes['archive_label'] ),
+			'list_view_image_alignment' => (string) $attributes['list_view_image_alignment'],
+			'class'                     => (string) $attributes['class'],
+			'circle_size'               => (int) $attributes['circle_size'],
+		];
 	}
 
 	/**
 	 * Prepare story arguments.
 	 *
+	 * @param array $attributes Array of arguments for Story Query.
+	 *
 	 * @return array Array of story arguments to pass to Story_Query.
 	 */
-	private function prepare_story_args() {
-		$args = [];
+	private function prepare_story_args( array $attributes ) {
 
-		// Show 100 stories at most to avoid 500 errors.
-		$args['posts_per_page'] = min( (int) $this->attributes['number'], 100 );
-		$args['order']          = 'ASC' === $this->attributes['order'] ? 'ASC' : 'DESC';
-
-		return $args;
+		return [
+			// Show 100 stories at most to avoid 500 errors.
+			'posts_per_page' => min( (int) $attributes['number'], 100 ),
+			'order'          => 'ASC' === $attributes['order'] ? 'ASC' : 'DESC',
+		];
 	}
 }
