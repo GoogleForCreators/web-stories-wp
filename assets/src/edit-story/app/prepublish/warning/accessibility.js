@@ -67,11 +67,12 @@ function getOverlappingArea(a, b) {
   return 0;
 }
 
+const OVERLAP_RATIO = 1 / 3;
 function isOverlapSignificant(overlapArea, textBoxArea) {
-  return overlapArea >= 0.5 * textBoxArea;
+  return overlapArea >= OVERLAP_RATIO * textBoxArea;
 }
 
-function getMostOverlapForElement(
+function getBackgroundsForElement(
   textElement,
   potentialBackgroundElements,
   pageSize
@@ -81,52 +82,28 @@ function getMostOverlapForElement(
   const textBoxArea = textBox.width * textBox.height;
 
   const elementOverlaps = [...potentialBackgroundElements]
-    .filter(({ isBackground }) => !isBackground)
     .map((element, index) => {
       const bgPos = getBox(element, pageSize?.width, pageSize?.height);
       const bgBox = getBoundRect([bgPos]);
       const overlappingArea = getOverlappingArea(textBox, bgBox);
       return { element, area: overlappingArea, index };
-    });
+    })
+    // elements are ordered from lowest to highest
+    // so the first elements in the reversed array are occluding the text box area behind it;
+    .reverse();
 
-  elementOverlaps.sort((a, b) => {
-    const { area: aArea, index: bIndex } = a;
-    const { area: bArea, index: aIndex } = b;
-
-    // a is in front of b and has a greater overlap, or its overlap is significant
-    if (
-      aIndex > bIndex &&
-      (aArea > bArea || isOverlapSignificant(aArea, textBoxArea))
-    ) {
-      return 1;
+  let unoccludedArea = textBoxArea;
+  const significantElements = [];
+  for (const overlap of elementOverlaps) {
+    if (!isOverlapSignificant(unoccludedArea, textBoxArea)) {
+      break;
     }
-    // b is in front of a and has a greater overlap, or its overlap is significant
-    if (
-      bIndex > aIndex &&
-      (bArea > aArea || isOverlapSignificant(bArea, textBoxArea))
-    ) {
-      return -1;
+    if (isOverlapSignificant(overlap.area, textBoxArea)) {
+      significantElements.push(overlap.element);
     }
-    return 0;
-  });
-
-  const [mostOverlappingElement] = elementOverlaps;
-
-  if (mostOverlappingElement) {
-    const {
-      area: overlapArea,
-      element: overlappingElement,
-    } = mostOverlappingElement;
-
-    if (isOverlapSignificant(overlapArea, textBoxArea)) {
-      return overlappingElement;
-    }
+    unoccludedArea -= overlap.area;
   }
-
-  const pageBackground = potentialBackgroundElements.find(
-    (element) => element.isBackground
-  );
-  return pageBackground;
+  return significantElements;
 }
 
 function getTextImageBackgroundColor({ background, text, page }) {
@@ -255,8 +232,8 @@ function getOverlapBgColor({ elementId, pageId, bgImage, bgBox, overlapBox }) {
   });
 }
 
-function textBgColorsLowContrast({ backgroundColor, textColors }) {
-  return textColors.some((styleColor) => {
+function textBgColorsLowContrast({ backgroundColor, textColors, ...ids }) {
+  const someTextHasLowContrast = textColors.some((styleColor) => {
     const [r, g, b] = backgroundColor;
     const textLuminance = calculateLuminanceFromStyleColor(styleColor);
     const backgroundLuminance = calculateLuminanceFromRGB({ r, g, b });
@@ -266,6 +243,16 @@ function textBgColorsLowContrast({ backgroundColor, textColors }) {
     );
     return !contrastCheck.WCAG_AA;
   });
+
+  if (someTextHasLowContrast) {
+    return {
+      message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
+      help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
+      type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
+      ...ids,
+    };
+  }
+  return undefined;
 }
 
 function getTextShapeBackgroundColor({ background }) {
@@ -349,55 +336,55 @@ export async function pageBackgroundTextLowContrast(page) {
     if (element.type === 'text' && element.backgroundTextMode === 'NONE') {
       const potentialBackgroundElements = page.elements.slice(0, index);
 
-      const mostVisuallySignificantOverlap = getMostOverlapForElement(
-        element,
-        potentialBackgroundElements,
-        page.pageSize
-      );
-
       const spans = getSpansFromContent(element.content);
       const textColors = spans.map(
         (span) => span.style?.color || 'rgb(0, 0, 0)'
       );
 
-      const args = {
-        background: mostVisuallySignificantOverlap,
-        text: element,
-        page,
-      };
-
-      const ids = {
-        elementId: element.id,
-        pageId: page.id,
-      };
-
-      const getBackgroundColor = getBackgroundColorByType(
-        mostVisuallySignificantOverlap
+      const textBackgrounds = getBackgroundsForElement(
+        element,
+        potentialBackgroundElements,
+        page.pageSize
       );
 
-      const backgroundColor = getBackgroundColor(args);
+      for (const backgroundElement of textBackgrounds) {
+        const args = {
+          background: backgroundElement,
+          text: element,
+          page,
+        };
 
-      let backgroundColorResult;
+        const ids = {
+          elementId: element.id,
+          pageId: page.id,
+        };
 
-      if (backgroundColor instanceof Promise) {
-        backgroundColorResult = backgroundColor.then((resolvedBgColor) => {
-          cleanupDOM(ids);
-          return {
-            backgroundColor: resolvedBgColor,
+        const getBackgroundColor = getBackgroundColorByType(backgroundElement);
+
+        const backgroundColor = getBackgroundColor(args);
+
+        let backgroundColorResult;
+
+        if (backgroundColor instanceof Promise) {
+          backgroundColorResult = backgroundColor.then((resolvedBgColor) => {
+            cleanupDOM(ids);
+            return {
+              backgroundColor: resolvedBgColor,
+              textColors,
+              ...ids,
+            };
+          });
+        } else if (backgroundColor !== undefined) {
+          backgroundColorResult = {
+            backgroundColor,
             textColors,
             ...ids,
           };
-        });
-      } else if (backgroundColor !== undefined) {
-        backgroundColorResult = {
-          backgroundColor,
-          textColors,
-          ...ids,
-        };
-      }
+        }
 
-      if (backgroundColorResult !== undefined) {
-        backgroundColorPromises.push(backgroundColorResult);
+        if (backgroundColorResult !== undefined) {
+          backgroundColorPromises.push(backgroundColorResult);
+        }
       }
     }
   });
@@ -407,15 +394,7 @@ export async function pageBackgroundTextLowContrast(page) {
       // ignore errors with finding colors
     });
 
-    const lowContrastElement = results.find(textBgColorsLowContrast);
-    if (lowContrastElement) {
-      return {
-        message: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.MAIN_TEXT,
-        help: MESSAGES.ACCESSIBILITY.LOW_CONTRAST.HELPER_TEXT,
-        elementId: lowContrastElement.elementId,
-        type: PRE_PUBLISH_MESSAGE_TYPES.WARNING,
-      };
-    }
+    return results.map(textBgColorsLowContrast).filter(Boolean);
   }
 
   return undefined;

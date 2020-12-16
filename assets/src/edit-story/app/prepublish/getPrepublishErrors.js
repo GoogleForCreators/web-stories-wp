@@ -67,6 +67,24 @@ async function getPrepublishErrors(story) {
           const pageNum = currentIndex + 1;
           const { id: pageId, elements } = currentPage;
 
+          function prepareResult(result) {
+            if (result != undefined) {
+              if (Array.isArray(result)) {
+                return result.map((message) => ({
+                  ...message,
+                  page: pageNum,
+                  pageId,
+                }));
+              }
+              return {
+                ...result,
+                page: pageNum,
+                pageId,
+              };
+            }
+            return result;
+          }
+
           // get guidance for the page object
           const currentPageGuidance = [];
           pageChecklist.forEach((getPageGuidance) => {
@@ -74,15 +92,11 @@ async function getPrepublishErrors(story) {
               const guidanceMessage = getPageGuidance(currentPage);
               if (guidanceMessage instanceof Promise) {
                 const guidanceMessagePromise = guidanceMessage.then(
-                  (message) => message && { ...message, page: pageNum, pageId }
+                  prepareResult
                 );
                 currentPageGuidance.push(guidanceMessagePromise);
               } else if (guidanceMessage !== undefined) {
-                currentPageGuidance.push({
-                  ...guidanceMessage,
-                  page: pageNum,
-                  pageId,
-                });
+                currentPageGuidance.push(prepareResult(guidanceMessage));
               }
             } catch (e) {
               // ignore errors
@@ -100,17 +114,13 @@ async function getPrepublishErrors(story) {
                 const guidanceMessage = getElementGuidance(element);
                 if (guidanceMessage instanceof Promise) {
                   const guidanceMessagePromise = guidanceMessage.then(
-                    (message) =>
-                      message && { ...message, page: pageNum, pageId }
+                    prepareResult
                   );
                   currentPageGuidance.push(guidanceMessagePromise);
                 } else if (guidanceMessage !== undefined) {
-                  currentPageElementGuidance.push({
-                    ...guidanceMessage,
-                    // provide the page the element is on
-                    pageId,
-                    page: pageNum,
-                  });
+                  currentPageElementGuidance.push(
+                    prepareResult(guidanceMessage)
+                  );
                 }
               } catch (e) {
                 // ignore errors
@@ -134,9 +144,11 @@ async function getPrepublishErrors(story) {
 
       return [...storyGuidance, ...pageGuidance, ...elementGuidance];
     })
+    // the checks may return arrays
     .flat();
   const awaitedResult = await Promise.all(checklistResult);
-  return [...awaitedResult.filter(Boolean)];
+  // promises may return arrays
+  return [...awaitedResult.flat().filter(Boolean)];
 }
 
 export default getPrepublishErrors;
