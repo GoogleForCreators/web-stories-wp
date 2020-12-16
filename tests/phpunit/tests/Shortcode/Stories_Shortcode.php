@@ -130,6 +130,7 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 		];
 
 		$args = $this->call_private_method( $stories_shortcode, 'prepare_story_args', [ $attributes ] );
+		$this->assertArrayHasKey( 'posts_per_page', $args );
 		$this->assertSame( 100, $args['posts_per_page'] );
 	}
 
@@ -169,6 +170,6 @@ class Stories_Shortcode extends \WP_UnitTestCase {
 
 		$actual = $this->call_private_method( $shortcode, 'prepare_story_attrs', [ $attributes ] );
 
-		$this->assertEquals( $expected, $actual );
+		$this->assertEqualSets( $expected, $actual );
 	}
 }
