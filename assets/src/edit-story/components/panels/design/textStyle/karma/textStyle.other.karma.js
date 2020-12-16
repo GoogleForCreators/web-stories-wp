@@ -357,6 +357,7 @@ describe('Text Style Panel', () => {
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('Enter');
+          await fixture.events.sleep(TIMEOUT);
 
           // Then open again and verify, that Ubuntu is listed as selected
           await openFontPicker();
