@@ -81,7 +81,7 @@
     "@babel/plugin-proposal-class-properties": "^7.12.1",
     "@babel/plugin-proposal-private-methods": "^7.12.1",
     "@babel/preset-env": "^7.12.7",
-    "@babel/preset-react": "^7.12.5",
+    "@babel/preset-react": "^7.12.10",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@percy/puppeteer": "^1.1.0",
     "@prettier/plugin-xml": "^0.12.0",
