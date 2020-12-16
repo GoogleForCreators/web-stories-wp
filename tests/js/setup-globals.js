@@ -19,7 +19,28 @@ global.webStoriesDashboardSettings = {};
 
 global.wp = {};
 // eslint-disable-next-line jest/prefer-spy-on
-global.wp.media = jest.fn();
+global.wp.media = jest.fn(() => ({
+  state: () => ({
+    get: () => ({
+      first: () => ({
+        toJSON: () => ({ url: 'http://dummy:url/' }),
+      }),
+    }),
+  }),
+  on: (type, callback) => callback(),
+  once: (type, callback) => callback(),
+  open: () => {},
+}));
+
+global.wp.media.controller = {
+  Library: {
+    prototype: {
+      defaults: {
+        contentUserSetting: jest.fn(),
+      },
+    },
+  },
+};
 
 global.IntersectionObserver = class IntersectionObserver {
   observe() {}
