@@ -157,15 +157,15 @@ echo -e $(status_message "Import default set of media assets...")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
 
 # Since MOV files are not allowed in the editor, only the WEBM one needs a poster.
-wp media import /var/www/html/wp-content/e2e-assets/small-video.mov
+wp media import /var/www/html/wp-content/e2e-assets/small-video.mov --quiet
 
 WEBM_VIDEO_ID=$(wp media import /var/www/html/wp-content/e2e-assets/small-video.webm --porcelain)
 WEBM_VIDEO_POSTER_ID=$(wp media import /var/www/html/wp-content/e2e-assets/small-video-poster.jpg --post_id=$WEBM_VIDEO_ID --featured_image --porcelain)
 
 # So the poster is marked as such and hidden in the editor.
-wp post term add $WEBM_VIDEO_POSTER_ID web_story_media_source "poster-generation"
-wp post meta add $WEBM_VIDEO_ID web_stories_poster_id $WEBM_VIDEO_POSTER_ID
+wp post term add $WEBM_VIDEO_POSTER_ID web_story_media_source "poster-generation" --quiet
+wp post meta add $WEBM_VIDEO_ID web_stories_poster_id $WEBM_VIDEO_POSTER_ID --quiet
 
-wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
-wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
-wp media import /var/www/html/wp-content/e2e-assets/example-3.png
+wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg --quiet
+wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg --quiet
+wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
