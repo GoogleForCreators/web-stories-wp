@@ -17,24 +17,61 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { PAGE_RATIO } from '../../../../constants';
+import { PageSizePropType } from '../../../../types';
+import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
+import useFocusOut from '../../../../utils/useFocusOut';
+import { STORY_ANIMATION_STATE } from '../../../../../animation';
 
-export const PAGE_LAYOUT_PANE_WIDTH = 158;
-export const PAGE_LAYOUT_ROW_GAP = 12;
-
-const PageLayoutPlaceholder = styled.div`
-  height: ${PAGE_LAYOUT_PANE_WIDTH / PAGE_RATIO}px;
-  width: ${PAGE_LAYOUT_PANE_WIDTH}px;
-  background-color: ${({ theme }) => theme.colors.bg.white};
+const PageLayoutWrapper = styled.div`
+  position: relative;
+  height: ${({ cardSize }) => cardSize.height}px;
+  width: ${({ cardSize }) => cardSize.width}px;
+  cursor: pointer;
 `;
 
-function PageLayout() {
-  return <PageLayoutPlaceholder />;
+function PageLayout(props) {
+  const { page, pageSize } = props;
+
+  const onClick = () => {};
+
+  const [active, setActive] = useState(false);
+  const containElem = useRef(null);
+
+  useFocusOut(containElem, () => setActive(false), []);
+
+  return (
+    <PageLayoutWrapper
+      ref={containElem}
+      cardSize={pageSize}
+      isActive={active}
+      onFocus={() => setActive(true)}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      onClick={onClick}
+    >
+      <PreviewErrorBoundary>
+        <PreviewPage
+          pageSize={pageSize}
+          page={page}
+          animationState={
+            active ? STORY_ANIMATION_STATE.PLAYING : STORY_ANIMATION_STATE.RESET
+          }
+        />
+      </PreviewErrorBoundary>
+    </PageLayoutWrapper>
+  );
 }
+
+PageLayout.propTypes = {
+  page: PropTypes.object.isRequired,
+  pageSize: PageSizePropType.isRequired,
+};
 
 export default PageLayout;

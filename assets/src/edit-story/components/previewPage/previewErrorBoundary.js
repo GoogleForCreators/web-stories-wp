@@ -17,28 +17,31 @@
 /**
  * External dependencies
  */
-import { memo } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 
-/**
- * Internal dependencies
- */
-import DisplayElement from '../../edit-story/components/canvas/displayElement';
-import StoryPropTypes from '../../edit-story/types';
+export default class PreviewErrorBoundary extends Component {
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+  };
 
-function PreviewPageElements({ page }) {
-  return page.elements.map(({ id, ...rest }) => (
-    <DisplayElement
-      previewMode
-      key={id}
-      page={page}
-      element={{ id, ...rest }}
-      isAnimatable
-    />
-  ));
+  state = {
+    hasError: false,
+  };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // eslint-disable-next-line no-console
+    console.error(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      //return <div />;
+    }
+    return this.props.children;
+  }
 }
-
-PreviewPageElements.propTypes = {
-  page: StoryPropTypes.page.isRequired,
-};
-
-export default memo(PreviewPageElements);

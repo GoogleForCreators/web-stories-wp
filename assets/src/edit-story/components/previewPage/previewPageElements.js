@@ -17,31 +17,28 @@
 /**
  * External dependencies
  */
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { memo } from 'react';
 
-export default class PreviewErrorBoundary extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-  };
+/**
+ * Internal dependencies
+ */
+import DisplayElement from '../canvas/displayElement';
+import StoryPropTypes from '../../types';
 
-  state = {
-    hasError: false,
-  };
-
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error, errorInfo) {
-    // eslint-disable-next-line no-console
-    console.error(error, errorInfo);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return <div />;
-    }
-    return this.props.children;
-  }
+function PreviewPageElements({ page }) {
+  return page.elements.map(({ id, ...rest }) => (
+    <DisplayElement
+      previewMode
+      key={id}
+      page={page}
+      element={{ id, ...rest }}
+      isAnimatable
+    />
+  ));
 }
+
+PreviewPageElements.propTypes = {
+  page: StoryPropTypes.page.isRequired,
+};
+
+export default memo(PreviewPageElements);
