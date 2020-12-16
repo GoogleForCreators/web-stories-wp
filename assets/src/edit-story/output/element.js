@@ -28,7 +28,7 @@ import {
   getBorderRadius,
   getBorderStyle,
   shouldDisplayBorder,
-} from '../components/elementBorder/utils';
+} from '../utils/elementBorder';
 import generatePatternStyles from '../utils/generatePatternStyles';
 import { BACKGROUND_TEXT_MODE } from '../constants';
 
@@ -37,7 +37,6 @@ function OutputElement({ element }) {
     id,
     opacity,
     type,
-    borderRadius,
     border,
     backgroundColor,
     backgroundTextMode,
@@ -71,7 +70,6 @@ function OutputElement({ element }) {
               height: `${height}%`,
               posTop: `${y}%`,
               posLeft: `${x}%`,
-              skipPositioning: false,
             })
           : null),
         transform: rotationAngle ? `rotate(${rotationAngle}deg)` : null,
@@ -85,9 +83,7 @@ function OutputElement({ element }) {
           box={box}
           id={'el-' + id}
           style={{
-            ...(shouldDisplayBorder(element)
-              ? getBorderStyle({ ...border, borderRadius, opacity })
-              : null),
+            ...(shouldDisplayBorder(element) ? getBorderStyle(element) : null),
             pointerEvents: 'initial',
             width: '100%',
             height: '100%',
@@ -95,7 +91,7 @@ function OutputElement({ element }) {
             position: 'absolute',
             top: 0,
             left: 0,
-            ...getBorderRadius({ border, borderRadius }),
+            ...getBorderRadius(element),
             ...(backgroundTextMode === BACKGROUND_TEXT_MODE.FILL
               ? bgStyles
               : null),

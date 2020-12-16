@@ -37,9 +37,11 @@ import {
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
+import withOverlay from '../../components/overlay/withOverlay';
+import CanvasProvider from '../../components/canvas/canvasProvider';
 import LayoutProvider from './layoutProvider';
 
-const Editor = styled.section.attrs({
+const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -59,7 +61,7 @@ const Editor = styled.section.attrs({
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
-`;
+`);
 
 const Area = styled.div`
   grid-area: ${({ area }) => area};
@@ -72,11 +74,13 @@ const Area = styled.div`
 function Layout() {
   return (
     <LayoutProvider>
-      <Editor>
-        <Area area="lib">
-          <Library />
-        </Area>
-        <Workspace />
+      <Editor zIndex={3}>
+        <CanvasProvider>
+          <Area area="lib">
+            <Library />
+          </Area>
+          <Workspace />
+        </CanvasProvider>
         <Area area="metaboxes">
           <MetaBoxes />
         </Area>

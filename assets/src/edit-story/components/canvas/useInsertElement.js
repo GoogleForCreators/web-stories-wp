@@ -160,6 +160,10 @@ function getElementProperties(
   if (!isNum(y)) {
     y = 0;
   }
+
+  // When dragging an element to canvas, this means that the element will always be
+  // positioned inside the design space, even if the user drags it partially outside.
+  // @todo Remove this behavior when all the elements use Moveable for dragging.
   x = dataPixels(Math.min(x, PAGE_WIDTH - width));
   y = dataPixels(Math.min(y, PAGE_HEIGHT - height));
 
