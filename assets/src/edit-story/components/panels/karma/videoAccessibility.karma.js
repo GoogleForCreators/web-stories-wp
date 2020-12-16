@@ -49,6 +49,7 @@ describe('Video Accessibility Panel', () => {
             }),
           }),
           on: (type, callback) => callback(),
+          once: (type, callback) => callback(),
           open: () => {},
         }),
       };
