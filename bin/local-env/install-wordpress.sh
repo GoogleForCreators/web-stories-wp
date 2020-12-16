@@ -84,12 +84,16 @@ container chmod 767 \
 	/var/www/html/wp-content/uploads \
 	/var/www/html/wp-content/upgrade
 
-# Let's make sure we have some images in the media library to work with.
+# Let's make sure we have some media in the media library to work with.
 echo -e $(status_message "Import default set of media assets...")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
+
+# Imports videos and adds a poster image for them.
+# Since MOV files are not allowed in the editor, only the WEBM one needs a poster.
 wp media import /var/www/html/wp-content/e2e-assets/small-video.mov
 WEBM_VIDEO_ID=wp media import /var/www/html/wp-content/e2e-assets/small-video.webm --porcelain
 wp media import /var/www/html/wp-content/e2e-assets/small-video-poster.jpg --post_id=$WEBM_VIDEO_ID --featured_image
+
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png
