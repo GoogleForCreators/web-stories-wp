@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 /**
  * WordPress dependencies
@@ -47,9 +47,9 @@ import { trackEvent } from '../../../tracking';
 export default function useMediaPicker({
   title = __('Upload to Story', 'web-stories'),
   buttonInsertText = __('Insert into page', 'web-stories'),
-  onSelect = () => {},
-  onClose = () => {},
-  onPermissionError = () => {},
+  onSelect,
+  onClose,
+  onPermissionError,
   type = '',
   multiple = false,
 }) {
@@ -81,53 +81,65 @@ export default function useMediaPicker({
     }
   }, [updateMedia]);
 
-  const openMediaPicker = (evt) => {
-    trackEvent('open_media_modal', 'editor');
+  const openMediaPicker = useCallback(
+    (evt) => {
+      trackEvent('open_media_modal', 'editor');
 
-    // If a user does not have the rights to upload to the media library, do not show the media picker.
-    if (!hasUploadMediaAction) {
-      onPermissionError();
+      // If a user does not have the rights to upload to the media library, do not show the media picker.
+      if (!hasUploadMediaAction) {
+        onPermissionError();
+        evt.preventDefault();
+      }
+
+      // Create the media frame.
+      const fileFrame = global.wp.media({
+        title,
+        library: {
+          type,
+        },
+        button: {
+          text: buttonInsertText,
+        },
+        multiple,
+      });
+
+      // When an image is selected, run a callback.
+      fileFrame?.once('select', () => {
+        const mediaPickerEl = fileFrame
+          .state()
+          .get('selection')
+          .first()
+          .toJSON();
+        onSelect(mediaPickerEl);
+      });
+
+      if (onClose) {
+        fileFrame?.once('close', onClose);
+      }
+
+      fileFrame?.once('content:activate:browse', () => {
+        // Force-refresh media modal contents every time
+        // to avoid stale data.
+        fileFrame?.content?.get()?.collection?._requery(true);
+        fileFrame?.content?.get()?.options?.selection?.reset();
+      });
+
+      // Finally, open the modal
+      fileFrame.open();
+
       evt.preventDefault();
-      return false;
-    }
-
-    // Create the media frame.
-    const fileFrame = global.wp.media({
-      title,
-      library: {
-        type,
-      },
-      button: {
-        text: buttonInsertText,
-      },
+    },
+    [
+      hasUploadMediaAction,
+      onPermissionError,
+      onClose,
+      onSelect,
+      buttonInsertText,
       multiple,
-    });
-
-    // When an image is selected, run a callback.
-    fileFrame?.once('select', () => {
-      const mediaPickerEl = fileFrame.state().get('selection').first().toJSON();
-      onSelect(mediaPickerEl);
-    });
-
-    if (onClose) {
-      fileFrame?.once('close', onClose);
-    }
-
-    fileFrame?.once('content:activate:browse', () => {
-      // Force-refresh media modal contents every time
-      // to avoid stale data.
-      fileFrame?.content?.get()?.collection?._requery(true);
-      fileFrame?.content?.get()?.options?.selection?.reset();
-    });
-
-    // Finally, open the modal
-    fileFrame.open();
-
-    evt.preventDefault();
-
-    // Might be useful to return the media frame here.
-    return fileFrame;
-  };
+      type,
+      title,
+    ]
+  );
 
   return openMediaPicker;
 }
