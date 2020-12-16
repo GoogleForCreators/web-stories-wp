@@ -31,10 +31,13 @@ import { STORY_ANIMATION_STATE } from '../../../../../animation';
 
 const PageLayoutWrapper = styled.div`
   position: relative;
-  height: ${({ cardSize }) => cardSize.height}px;
-  width: ${({ cardSize }) => cardSize.width}px;
+  height: ${({ pageSize }) => pageSize.height}px;
+  width: ${({ pageSize }) => pageSize.width}px;
   cursor: pointer;
 `;
+PageLayoutWrapper.propTypes = {
+  pageSize: PageSizePropType.isRequired,
+};
 
 function PageLayout(props) {
   const { page, pageSize } = props;
@@ -49,8 +52,7 @@ function PageLayout(props) {
   return (
     <PageLayoutWrapper
       ref={containElem}
-      cardSize={pageSize}
-      isActive={active}
+      pageSize={pageSize}
       onFocus={() => setActive(true)}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
