@@ -39,7 +39,7 @@ import {
   usePresubmitHandler,
 } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
-import { metricsForNewPadding } from '../../utils/metricsForNewPadding';
+import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 
 export const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
 
@@ -79,7 +79,7 @@ function PaddingControls({
   const handleChange = useCallback(
     (newPadding, submit = false) => {
       pushUpdate(({ x, y, width, height }) =>
-        metricsForNewPadding({
+        metricsForTextPadding({
           x,
           y,
           height,

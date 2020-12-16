@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export function metricsForNewPadding({
+export function metricsForTextPadding({
   currentPadding,
   newPadding,
   x,

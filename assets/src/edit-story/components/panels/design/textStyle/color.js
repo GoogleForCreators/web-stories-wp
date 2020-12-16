@@ -39,7 +39,7 @@ import {
   getCommonValue,
   getColorPickerActions,
 } from '../../shared';
-import { metricsForNewPadding } from '../../utils/metricsForNewPadding';
+import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 import useRichTextFormatting from './useRichTextFormatting';
 import { DEFAULT_PADDING } from './padding';
 
@@ -145,7 +145,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
           mode === BACKGROUND_TEXT_MODE.HIGHLIGHT
         ) {
           const newPadding = DEFAULT_PADDING_FOR_MODE[mode];
-          const { horizontal, vertical, ...rest } = metricsForNewPadding({
+          const { horizontal, vertical, ...rest } = metricsForTextPadding({
             x,
             y,
             height,

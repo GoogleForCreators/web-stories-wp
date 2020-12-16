@@ -16,12 +16,12 @@
 /**
  * Internal dependencies
  */
-import { metricsForNewPadding } from '../metricsForNewPadding';
+import { metricsForTextPadding } from '../metricsForTextPadding';
 
-describe('metricsForNewPadding()', function () {
+describe('metricsForTextPadding()', function () {
   it('should calculate metrics for new padding with no existing padding.', function () {
     expect(
-      metricsForNewPadding({
+      metricsForTextPadding({
         newPadding: { horizontal: 10, vertical: 8 },
         currentPadding: { horizontal: 0, vertical: 0 },
         width: 100,
@@ -39,7 +39,7 @@ describe('metricsForNewPadding()', function () {
 
   it('should calculate metrics for shrinking (new padding is smaller than current).', function () {
     expect(
-      metricsForNewPadding({
+      metricsForTextPadding({
         newPadding: { horizontal: 10, vertical: 8 },
         currentPadding: { horizontal: 32, vertical: 14 },
         width: 100,
@@ -57,7 +57,7 @@ describe('metricsForNewPadding()', function () {
 
   it('should calculate metrics for growing (new padding is smaller than current).', function () {
     expect(
-      metricsForNewPadding({
+      metricsForTextPadding({
         newPadding: { horizontal: 64, vertical: 28 },
         currentPadding: { horizontal: 32, vertical: 14 },
         width: 100,
