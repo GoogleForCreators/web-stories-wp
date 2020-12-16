@@ -88,7 +88,8 @@ container chmod 767 \
 echo -e $(status_message "Import default set of media assets...")
 # TODO: use glob pattern to import items. See https://developer.wordpress.org/cli/commands/media/import/.
 wp media import /var/www/html/wp-content/e2e-assets/small-video.mov
-wp media import /var/www/html/wp-content/e2e-assets/small-video.webm
+WEBM_VIDEO_ID=wp media import /var/www/html/wp-content/e2e-assets/small-video.webm --porcelain
+wp media import /var/www/html/wp-content/e2e-assets/small-video-poster.jpg --post_id=$WEBM_VIDEO_ID
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png
