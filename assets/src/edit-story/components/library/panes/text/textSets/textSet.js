@@ -50,20 +50,9 @@ const TextSetItem = styled.div`
   }
 `;
 
-const DragWrapper = styled.div.attrs({
-  role: 'listitem',
-})``;
-
-const Clone = styled.div`
-  position: absolute;
-  opacity: 0;
-`;
-
 const DragContainer = styled.div`
   position: absolute;
-  top: -9999px;
-  left: 0;
-  z-index: -1;
+  opacity: 0;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   background-color: ${({ theme }) => rgba(theme.colors.bg.white, 0.2)};
@@ -104,17 +93,7 @@ function TextSet({ elements }) {
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
-    <DragWrapper>
-      <DragContainer ref={elementRef} width={dragWidth} height={dragHeight}>
-        <TextSetElements
-          elements={elements}
-          pageSize={{
-            width: pageWidth,
-            height: pageHeight,
-          }}
-        />
-      </DragContainer>
-
+    <>
       <TextSetItem
         role="listitem"
         aria-label={__('Insert Text Set', 'web-stories')}
@@ -126,14 +105,22 @@ function TextSet({ elements }) {
         elements={elements}
         elementProps={{}}
         onClick={() => insertTextSet(elements)}
-        cloneElement={Clone}
+        cloneElement={DragContainer}
         cloneProps={{
-          width: TEXT_SET_SIZE,
-          height: TEXT_SET_SIZE,
-          children: <TextSetElements isForDisplay elements={elements} />,
+          width: dragWidth,
+          height: dragHeight,
+          children: (
+            <TextSetElements
+              elements={elements}
+              pageSize={{
+                width: pageWidth,
+                height: pageHeight,
+              }}
+            />
+          ),
         }}
       />
-    </DragWrapper>
+    </>
   );
 }
 
