@@ -62,7 +62,7 @@ describe('getElementProperties', () => {
     });
 
     expect(result.x).toBe(PAGE_WIDTH - BASIC_SHAPE.width);
-    expect(result.y).toBe(FULLBLEED_HEIGHT - BASIC_SHAPE.height);
+    expect(result.y).toBe(Math.floor(FULLBLEED_HEIGHT - BASIC_SHAPE.height));
   });
 
   it('should keey x,y unmodified if already within page boundary', () => {
