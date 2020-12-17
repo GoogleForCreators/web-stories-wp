@@ -33,7 +33,7 @@ class Ad_Manager {
 	/**
 	 * Initializes all hooks.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -44,7 +44,7 @@ class Ad_Manager {
 	/**
 	 * Returns the Google Ad_Manager slot ID.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return string Slot ID.
 	 */
@@ -53,16 +53,28 @@ class Ad_Manager {
 	}
 
 	/**
+	 * Returns if Google manager is enabled.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return bool
+	 */
+	private function is_enabled() {
+		return ( 'admanager' === (string) get_option( Settings::SETTING_NAME_ADLOADER_TYPE, 'none' ) );
+	}
+
+	/**
 	 * Prints the <amp-story-auto-ads> tag for single stories.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
 	public function print_ad_manager_tag() {
-		$slot = $this->get_slot_id();
+		$slot    = $this->get_slot_id();
+		$enabled = $this->is_enabled();
 
-		if ( ! $slot ) {
+		if ( ! $enabled || ! $slot ) {
 			return;
 		}
 		?>

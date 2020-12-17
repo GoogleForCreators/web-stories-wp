@@ -61,6 +61,13 @@ class Settings {
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
 
 	/**
+	 * Type of adloader.
+	 *
+	 * @var string
+	 */
+	const SETTING_NAME_ADLOADER_TYPE = 'web_stories_adloader_type';
+
+	/**
 	 * AdSense Publisher ID setting name.
 	 *
 	 * @var string
@@ -121,6 +128,18 @@ class Settings {
 				'description'  => __( 'Google Analytics Tracking ID', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_ADLOADER_TYPE,
+			[
+				'description'  => __( 'Type ad loader', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => 'none',
+				'enum'         => [ 'none', 'adsense', 'admanager' ],
 				'show_in_rest' => true,
 			]
 		);

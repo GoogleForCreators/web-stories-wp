@@ -33,7 +33,7 @@ class AdSense {
 	/**
 	 * Initializes all hooks.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -44,7 +44,7 @@ class AdSense {
 	/**
 	 * Returns the Google AdSense publisher ID.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return string Publisher ID.
 	 */
@@ -55,7 +55,7 @@ class AdSense {
 	/**
 	 * Returns the Google AdSense slot ID.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return string Slot ID.
 	 */
@@ -64,17 +64,29 @@ class AdSense {
 	}
 
 	/**
+	 * Returns if Google AdSense is enabled.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @return bool
+	 */
+	private function is_enabled() {
+		return ( 'adsense' === (string) get_option( Settings::SETTING_NAME_ADLOADER_TYPE, 'none' ) );
+	}
+
+	/**
 	 * Prints the <amp-story-auto-ads> tag for single stories.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
 	public function print_adsense_tag() {
 		$publisher = $this->get_publisher_id();
 		$slot      = $this->get_slot_id();
+		$enabled   = $this->is_enabled();
 
-		if ( ! $publisher || ! $slot ) {
+		if ( ! $enabled || ! $publisher || ! $slot ) {
 			return;
 		}
 		?>
