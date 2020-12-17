@@ -19,7 +19,6 @@
  */
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -119,13 +118,16 @@ export const DropdownMenu = ({
     }
     const isManyGroups = options.length > 1;
     return options.map(({ label, group }, groupIndex) => {
-      const groupLabelId = isManyGroups ? `group-${uuidv4()}` : listId; // convinced the many version of this is not doing anythign
+      const groupAria = isManyGroups
+        ? { 'aria-label': label }
+        : { 'aria-labelledby': listId };
+
       return (
         <List
           key={label || `menuGroup_${groupIndex}`}
-          aria-labelledby={groupLabelId}
           role="group"
           isNested={isManyGroups}
+          {...groupAria}
         >
           {label && renderMenuLabel(label)}
           {group.map((groupOption, optionIndex) =>
