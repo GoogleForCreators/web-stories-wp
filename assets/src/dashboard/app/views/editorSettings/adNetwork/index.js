@@ -42,7 +42,7 @@ import { Dropdown } from '../../../../components';
 import { DROPDOWN_TYPES } from '../../../../constants';
 import { TranslateWithMarkup } from '../../../../../i18n';
 
-const SortDropdown = styled(Dropdown)`
+const AdNetworkDropdown = styled(Dropdown)`
   & button {
      border: ${({ theme, error }) =>
        error
@@ -106,9 +106,7 @@ const OPTIONS = [
 function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   const [adNetwork, setAdNetwork] = useState(adNetworkRaw);
 
-  useEffect(() => {
-    setAdNetwork(adNetworkRaw);
-  }, [adNetworkRaw]);
+  useEffect(() => setAdNetwork(adNetworkRaw), [adNetworkRaw]);
 
   let message;
   let link;
@@ -145,10 +143,8 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
       </div>
       <FormContainer>
         <InlineForm>
-          <VisuallyHiddenLabel htmlFor="adManagerSlotId">
-            {TEXT.SLOT_ID_LABEL}
-          </VisuallyHiddenLabel>
-          <SortDropdown
+          <VisuallyHiddenLabel>{TEXT.SLOT_ID_LABEL}</VisuallyHiddenLabel>
+          <AdNetworkDropdown
             ariaLabel={TEXT.SLOT_ID_LABEL}
             items={OPTIONS}
             type={DROPDOWN_TYPES.MENU}

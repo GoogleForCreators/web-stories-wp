@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import AdNetworkSettings, { TEXT } from '../';
+import AdNetworkSettings, { TEXT, LINK } from '../';
 
 describe('Editor Settings: Ad network settings <AdNetworkSettings />', function () {
   let adNetwork;
@@ -41,5 +41,32 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
+
+    const helperLink = getByText(LINK.HELPER_LINK_NONE);
+    expect(helperLink).toBeInTheDocument();
+  });
+
+  it('should render ad network settings and link adsense', function () {
+    const { getByText } = renderWithProviders(
+      <AdNetworkSettings adNetwork={'adsense'} handleUpdate={mockUpdate} />
+    );
+
+    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
+
+    const helperLink = getByText(LINK.HELPER_LINK_ADSENSE);
+    expect(helperLink).toBeInTheDocument();
+  });
+
+  it('should render ad network settings and link admanager', function () {
+    const { getByText } = renderWithProviders(
+      <AdNetworkSettings adNetwork={'admanager'} handleUpdate={mockUpdate} />
+    );
+
+    const sectionHeader = getByText(TEXT.SECTION_HEADING);
+    expect(sectionHeader).toBeInTheDocument();
+
+    const helperLink = getByText(LINK.HELPER_LINK_ADMANAGER);
+    expect(helperLink).toBeInTheDocument();
   });
 });
