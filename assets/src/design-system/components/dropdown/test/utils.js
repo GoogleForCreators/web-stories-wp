@@ -59,24 +59,11 @@ describe('Dropdown/utils getOptions', () => {
   });
 
   it('should shape and sanititize basic dropdown options even when some data is bad', () => {
-    const basicDropdownOptions = [
-      {
-        label: 'label item one',
-        value: 'label-item-one',
-      },
-      {
-        label: 'label item two',
-        value: 'label-item-two',
-      },
-      {
-        label: 'label item three',
-        value: 'label-item-three',
-      },
+    const groupedOptions = getOptions([
+      ...basicDropdownOptions,
       'just a string',
       { label: 'bad data sneaking through', somethingNew: [1, 2, 3] },
-    ];
-
-    const groupedOptions = getOptions(basicDropdownOptions);
+    ]);
 
     expect(groupedOptions).toStrictEqual([
       {
