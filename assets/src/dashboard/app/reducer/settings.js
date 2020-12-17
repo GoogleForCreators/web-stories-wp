@@ -28,6 +28,7 @@ export const defaultSettingsState = {
   adSensePublisherId: '',
   adSenseSlotId: '',
   adManagerSlotId: '',
+  adLoaderType: 'none',
   publisherLogoIds: [],
 };
 
@@ -51,6 +52,7 @@ function settingsReducer(state, action) {
         adSensePublisherId: action.payload.adSensePublisherId,
         adSenseSlotId: action.payload.adSenseSlotId,
         adManagerSlotId: action.payload.adManagerSlotId,
+        adLoaderType: action.payload.adLoaderType,
         publisherLogoIds: [
           ...new Set([
             action.payload.activePublisherLogoId,

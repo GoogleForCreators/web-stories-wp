@@ -61,6 +61,7 @@ export default function useSettingsApi(
           adSensePublisherId: response.web_stories_adsense_publisher_id,
           adSenseSlotId: response.web_stories_adsense_slot_id,
           adManagerSlotId: response.web_stories_ad_manager_slot_id,
+          adLoaderType: response.web_stories_adloader_type,
           activePublisherLogoId: response.web_stories_active_publisher_logo,
           publisherLogoIds: response.web_stories_publisher_logos,
         },
@@ -84,6 +85,7 @@ export default function useSettingsApi(
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
+      adLoaderType,
       publisherLogoIds,
       publisherLogoIdToRemove,
       publisherLogoToMakeDefault,
@@ -104,6 +106,10 @@ export default function useSettingsApi(
 
         if (adManagerSlotId !== undefined) {
           query.web_stories_ad_manager_slot_id = adManagerSlotId;
+        }
+
+        if (adLoaderType !== undefined) {
+          query.web_stories_adloader_type = adLoaderType;
         }
 
         if (publisherLogoIds) {
@@ -136,6 +142,7 @@ export default function useSettingsApi(
             adSensePublisherId: response.web_stories_adsense_publisher_id,
             adSenseSlotId: response.web_stories_adsense_slot_id,
             adManagerSlotId: response.web_stories_ad_manager_slot_id,
+            adLoaderType: response.web_stories_adloader_type,
             activePublisherLogoId: response.web_stories_active_publisher_logo,
             publisherLogoIds: response.web_stories_publisher_logos,
           },
