@@ -210,8 +210,8 @@ function GoogleAdSenseSettings({
 GoogleAdSenseSettings.propTypes = {
   handleUpdatePublisherId: PropTypes.func,
   handleUpdateSlotId: PropTypes.func,
-  adSensePublisherId: PropTypes.string,
-  adSenseSlotId: PropTypes.string,
+  publisherId: PropTypes.string,
+  slotId: PropTypes.string,
 };
 
 export default GoogleAdSenseSettings;
