@@ -46,9 +46,7 @@ async function uploadFile(file) {
   // Wait for media modal to appear and upload file.
   await expect(page).toUploadFile('.media-modal input[type=file]', tmpFileName);
 
-  // Either would mean the upload failed.
   await expect(page).not.toMatchElement('.media-modal .upload-error');
-  await expect(page).not.toMatch(/Post-processing failed/i);
 
   // Upload successful!
   await page.waitForSelector(`.media-modal li[aria-label="${newBaseName}"]`);
