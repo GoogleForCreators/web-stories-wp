@@ -24,14 +24,18 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 
 import useDropdownMenu from '../menu/useDropdownMenu';
-import { basicDropdownOptions } from '../stories/sampleData';
+import {
+  basicDropdownOptions,
+  nestedDropdownOptions,
+} from '../stories/sampleData';
+import { getOptions } from '../utils';
 
 describe('useDropdownMenu()', function () {
   it('should have the default options initially selected', function () {
     const { result } = renderHook(() =>
       useDropdownMenu({
         handleMenuItemSelect: () => {},
-        items: basicDropdownOptions,
+        options: getOptions(basicDropdownOptions),
         listRef: { current: null },
         onDismissMenu: () => {},
       })
@@ -46,7 +50,7 @@ describe('useDropdownMenu()', function () {
       useDropdownMenu({
         activeValue: basicDropdownOptions[2].value,
         handleMenuItemSelect: () => {},
-        items: basicDropdownOptions,
+        options: getOptions(basicDropdownOptions),
         listRef: { current: null },
         onDismissMenu: () => {},
       })
@@ -54,5 +58,20 @@ describe('useDropdownMenu()', function () {
 
     expect(result.current.focusedIndex).toBe(2);
     expect(result.current.focusedValue).toBe(basicDropdownOptions[2].value);
+  });
+
+  it('should return focused index matching activeValue passed in initially if present in a nested list', function () {
+    const { result } = renderHook(() =>
+      useDropdownMenu({
+        activeValue: 'dog-2',
+        handleMenuItemSelect: () => {},
+        options: getOptions(nestedDropdownOptions),
+        listRef: { current: null },
+        onDismissMenu: () => {},
+      })
+    );
+
+    expect(result.current.focusedIndex).toBe(15);
+    expect(result.current.focusedValue).toBe('dog-2');
   });
 });

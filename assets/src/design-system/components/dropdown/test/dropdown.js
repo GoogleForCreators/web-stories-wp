@@ -18,7 +18,12 @@
  * External dependencies
  */
 
-import { act, fireEvent, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -28,6 +33,7 @@ import { Dropdown } from '../';
 import { basicDropdownOptions } from '../stories/sampleData';
 
 // TODO: fix tests to wait properly for menu to hide
+/* eslint-disable jest/no-disabled-tests */
 describe('Dropdown <Dropdown />', () => {
   // Mock scrollTo
   const scrollTo = jest.fn();
@@ -38,7 +44,7 @@ describe('Dropdown <Dropdown />', () => {
 
   it('should render a closed <Dropdown /> menu with a select button on default', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
-      <Dropdown items={basicDropdownOptions} dropdownLabel={'label'} />
+      <Dropdown options={basicDropdownOptions} dropdownLabel={'label'} />
     );
 
     const select = getByRole('button');
@@ -50,7 +56,7 @@ describe('Dropdown <Dropdown />', () => {
 
   it('should show placeholder value when no selected value is found', () => {
     const { getByText } = renderWithProviders(
-      <Dropdown items={basicDropdownOptions} placeholder={'select a value'} />
+      <Dropdown options={basicDropdownOptions} placeholder={'select a value'} />
     );
 
     const placeholder = getByText('select a value');
@@ -60,7 +66,7 @@ describe('Dropdown <Dropdown />', () => {
   it("should show selectedValue's associated label when selectedValue is present", () => {
     const { getByText } = renderWithProviders(
       <Dropdown
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         placeholder={'select a value'}
         dropdownLabel={'label'}
         selectedValue={basicDropdownOptions[2].value}
@@ -74,7 +80,7 @@ describe('Dropdown <Dropdown />', () => {
   it("should show placeholder when selectedValue's associated label cannot be found", () => {
     const { getByText } = renderWithProviders(
       <Dropdown
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         placeholder={'select a value'}
         dropdownLabel={'label'}
         selectedValue={'value that is not found in items'}
@@ -88,7 +94,7 @@ describe('Dropdown <Dropdown />', () => {
   it('should show label value when provided', () => {
     const { getByText } = renderWithProviders(
       <Dropdown
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         placeholder={'select a value'}
         dropdownLabel={'my label'}
       />
@@ -102,7 +108,7 @@ describe('Dropdown <Dropdown />', () => {
     const { getByRole } = renderWithProviders(
       <Dropdown
         emptyText={'No options available'}
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         dropdownLabel={'label'}
       />
     );
@@ -122,7 +128,7 @@ describe('Dropdown <Dropdown />', () => {
         emptyText={'No options available'}
         dropdownLabel={'label'}
         isKeepMenuOpenOnSelection={false}
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         selectedValue={basicDropdownOptions[2].value}
       />
     );
@@ -141,14 +147,53 @@ describe('Dropdown <Dropdown />', () => {
     expect(scrollTo).toHaveBeenCalledWith(0, expect.any(Number));
   });
 
-  // todo
-  it.skip('should clean badly grouped data', () => {});
+  it('should clean badly grouped data', () => {
+    const nestedOptions = [
+      {
+        label: 'section 1',
+        options: [
+          { value: 'one', label: '1' },
+          { value: 'two', label: '2' },
+        ],
+        somethingExtra: [1, 2, 3, 4, 5],
+      },
+      {
+        label: 'section 2',
+        options: [
+          { value: 'three', label: '3' },
+          { value: 'four', label: '4' },
+          { value: 'five', label: '5' },
+        ],
+      },
+      'should be ignored',
+    ];
+    const { getByRole, getAllByRole, queryAllByText } = renderWithProviders(
+      <Dropdown
+        emptyText={'No options available'}
+        dropdownLabel={'label'}
+        isKeepMenuOpenOnSelection={false}
+        options={nestedOptions}
+      />
+    );
+
+    const select = getByRole('button');
+    expect(select).toBeInTheDocument();
+    fireEvent.click(select);
+
+    const menuItems = getAllByRole('option');
+    expect(menuItems).toHaveLength(5);
+
+    const menuLabels = getAllByRole('presentation');
+    expect(menuLabels).toHaveLength(2);
+
+    expect(queryAllByText('should be ignored')).toHaveLength(0);
+  });
 
   // Mouse events
   it('should not expand menu when disabled is true', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <Dropdown
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         dropdownLabel={'my label'}
         disabled={true}
       />
@@ -166,23 +211,24 @@ describe('Dropdown <Dropdown />', () => {
   it('should trigger onMenuItemClick when item is clicked', () => {
     const onClickMock = jest.fn();
 
-    const wrapper = renderWithProviders(
+    const { getByRole, getAllByRole } = renderWithProviders(
       <Dropdown
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         selectedValue={null}
+        dropdownLabel={'my dropdown label'}
         onMenuItemClick={onClickMock}
       />
     );
 
     // Fire click event
-    const select = wrapper.getByRole('button');
+    const select = getByRole('button');
     fireEvent.click(select);
 
-    const menu = wrapper.getByRole('listbox');
+    const menu = getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
-    const menuItems = wrapper.getAllByRole('option');
-    expect(menuItems).toHaveLength(basicDropdownOptions.length);
+    const menuItems = getAllByRole('option');
+    expect(menuItems).toHaveLength(12);
 
     fireEvent.click(menuItems[3]);
 
@@ -196,22 +242,24 @@ describe('Dropdown <Dropdown />', () => {
   });
 
   it.skip('should close active menu when select is clicked', async () => {
-    const { getByRole } = await renderWithProviders(
+    const wrapper = renderWithProviders(
       <Dropdown
         dropdownLabel={'label'}
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         selectedValue={basicDropdownOptions[1].value}
       />
     );
-    const select = getByRole('button');
+    const select = wrapper.getByRole('button');
     fireEvent.click(select);
 
-    const menu = getByRole('listbox');
+    const menu = wrapper.getByRole('listbox');
     expect(menu).toBeInTheDocument();
 
     fireEvent.click(select);
 
-    await waitFor(() => expect(menu).not.toBeInTheDocument());
+    await waitForElementToBeRemoved(() =>
+      expect(wrapper.queryByRole('listbox')).not.toBeInTheDocument()
+    );
   });
 
   // Keyboard events
@@ -223,7 +271,7 @@ describe('Dropdown <Dropdown />', () => {
         emptyText={'No options available'}
         dropdownLabel={'label'}
         isKeepMenuOpenOnSelection={true}
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         onMenuItemClick={onClickMock}
         selectedValue={null}
       />
@@ -276,7 +324,7 @@ describe('Dropdown <Dropdown />', () => {
       <Dropdown
         emptyText={'No options available'}
         dropdownLabel={'label'}
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         onMenuItemClick={onClickMock}
         selectedValue={basicDropdownOptions[0].value}
       />
@@ -321,7 +369,7 @@ describe('Dropdown <Dropdown />', () => {
     const { getByRole } = await renderWithProviders(
       <Dropdown
         dropdownLabel={'label'}
-        items={basicDropdownOptions}
+        options={basicDropdownOptions}
         selectedValue={basicDropdownOptions[1].value}
       />
     );

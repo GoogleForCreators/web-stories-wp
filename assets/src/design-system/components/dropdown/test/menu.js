@@ -28,6 +28,9 @@ import PropTypes from 'prop-types';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { DropdownMenu } from '../menu';
 import { basicDropdownOptions } from '../stories/sampleData';
+import { getOptions } from '../utils';
+
+const groupedOptions = getOptions(basicDropdownOptions);
 
 describe('Dropdown <DropdownMenu />', () => {
   const onClickMock = jest.fn();
@@ -44,7 +47,7 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={basicDropdownOptions}
+        options={groupedOptions}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
@@ -63,7 +66,7 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={[]}
+        options={[]}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
@@ -79,7 +82,7 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={basicDropdownOptions}
+        options={groupedOptions}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
@@ -113,7 +116,7 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={basicDropdownOptions}
+        options={groupedOptions}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={basicDropdownOptions[2].value}

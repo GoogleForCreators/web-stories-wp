@@ -24,16 +24,10 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
-import { DROPDOWN_ITEM, MENU_OPTIONS, DROPDOWN_VALUE_TYPE } from '../types';
-import {
-  EmptyList,
-  GroupLabel,
-  GroupList,
-  MenuContainer,
-  List,
-} from './components';
+import { MENU_OPTIONS, DROPDOWN_VALUE_TYPE } from '../types';
+import { getInset } from '../utils';
+import { EmptyList, GroupLabel, MenuContainer, List } from './components';
 import useDropdownMenu from './useDropdownMenu';
-import { getInset } from './utils';
 import { DefaultListItem } from './defaultListItem';
 
 export const DropdownMenu = ({
@@ -48,7 +42,6 @@ export const DropdownMenu = ({
   onMenuItemClick,
   onDismissMenu,
   renderItem = DefaultListItem,
-  flattenedGroupedOptions,
   activeValue,
   menuAriaLabel,
 }) => {
@@ -65,7 +58,7 @@ export const DropdownMenu = ({
     activeValue,
     handleMenuItemSelect,
     isRTL,
-    options: flattenedGroupedOptions || options,
+    options,
     listRef,
     onDismissMenu,
   });
@@ -123,30 +116,25 @@ export const DropdownMenu = ({
   const MenuContent = useMemo(() => {
     if (!options || options.length === 0) {
       return <EmptyList>{emptyText}</EmptyList>;
-    } else if (flattenedGroupedOptions) {
-      return options.map(({ label, options: groupOptions }, groupIndex) => {
-        const groupLabelId = `group-${uuidv4()}`;
-        return (
-          <GroupList
-            key={label || `menuGroup_${groupIndex}`}
-            aria-labelledby={groupLabelId}
-            role="group"
-          >
-            {label && renderMenuLabel(label)}
-            {groupOptions.map((groupOption, optionIndex) =>
-              renderMenuItem(groupOption, optionIndex, groupIndex)
-            )}
-          </GroupList>
-        );
-      });
-    } else {
+    }
+    const isManyGroups = options.length > 1;
+    return options.map(({ label, group }, groupIndex) => {
+      const groupLabelId = isManyGroups ? `group-${uuidv4()}` : listId; // convinced the many version of this is not doing anythign
       return (
-        <List role={'group'} aria-labelledby={listId}>
-          {options.map(renderMenuItem)}
+        <List
+          key={label || `menuGroup_${groupIndex}`}
+          aria-labelledby={groupLabelId}
+          role="group"
+          isNested={isManyGroups}
+        >
+          {label && renderMenuLabel(label)}
+          {group.map((groupOption, optionIndex) =>
+            renderMenuItem(groupOption, optionIndex, groupIndex)
+          )}
         </List>
       );
-    }
-  }, [options, flattenedGroupedOptions, emptyText, renderMenuItem, listId]);
+    });
+  }, [options, emptyText, renderMenuItem, listId]);
 
   return (
     <MenuContainer
@@ -177,8 +165,4 @@ DropdownMenu.propTypes = {
   onDismissMenu: PropTypes.func.isRequired,
   renderItem: PropTypes.object,
   activeValue: DROPDOWN_VALUE_TYPE,
-  flattenedGroupedOptions: PropTypes.oneOfType([
-    PropTypes.arrayOf(DROPDOWN_ITEM),
-    PropTypes.bool,
-  ]),
 };

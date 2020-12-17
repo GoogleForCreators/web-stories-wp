@@ -151,4 +151,13 @@ export const nestedDropdownOptions = [
       { value: 'dog-2', label: 'Scooby' },
     ],
   },
+  {
+    label: 'tricky content',
+    options: [
+      { value: 0, label: '0 as a number' },
+      { value: false, label: 'false as a boolean' },
+      { value: true, label: 'true as a boolean' },
+      { value: undefined, label: "undefined and shouldn't come through" },
+    ],
+  },
 ];

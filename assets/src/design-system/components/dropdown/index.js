@@ -17,10 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useDebouncedCallback } from 'use-debounce';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -35,6 +34,7 @@ import { Popup, PLACEMENT } from '../popup';
 import { DropdownSelect } from './select';
 import { DropdownMenu } from './menu';
 import { MENU_OPTIONS } from './types';
+import useDropdown from './useDropdown';
 
 const DropdownContainer = styled.div``;
 
@@ -71,38 +71,25 @@ export const Dropdown = ({
 }) => {
   const selectRef = useRef();
 
-  const [isOpen, _setIsOpen] = useState(false);
   const [anchorHeight, setAnchorHeight] = useState(null);
 
-  const flattenedGroupedOptions = useMemo(
-    () =>
-      options.some((option) => option.options) &&
-      options.reduce((prev, current) => {
-        if (!current.options) {
-          return prev;
-        }
-        return prev.concat(...current.options);
-      }, []),
-    [options]
-  );
-
-  const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
-    leading: true,
-    trailing: false,
+  const { activeOption, isOpen, normalizedOptions } = useDropdown({
+    options,
+    selectedValue,
   });
 
   const handleSelectClick = useCallback(
     (event) => {
       event.preventDefault();
-      setIsOpen((prevIsOpen) => !prevIsOpen);
+      isOpen.set((prevIsOpen) => !prevIsOpen);
     },
-    [setIsOpen]
+    [isOpen]
   );
 
   const handleDismissMenu = useCallback(() => {
-    setIsOpen(false);
+    isOpen.set(false);
     selectRef.current.focus();
-  }, [setIsOpen]);
+  }, [isOpen]);
 
   const handleMenuItemClick = useCallback(
     (event, menuItem) => {
@@ -114,15 +101,6 @@ export const Dropdown = ({
     },
     [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
   );
-
-  const activeOption = useMemo(() => {
-    if (!selectedValue) {
-      return null;
-    }
-    return [
-      ...(flattenedGroupedOptions ? flattenedGroupedOptions : options),
-    ].find((option) => option?.value?.toString() === selectedValue.toString());
-  }, [options, selectedValue, flattenedGroupedOptions]);
 
   useEffect(() => {
     if (selectRef?.current) {
@@ -138,7 +116,7 @@ export const Dropdown = ({
         activeItemLabel={activeOption?.label}
         ariaLabel={ariaLabel}
         dropdownLabel={dropdownLabel}
-        isOpen={isOpen}
+        isOpen={isOpen.value}
         disabled={disabled}
         onSelectClick={handleSelectClick}
         ref={selectRef}
@@ -147,14 +125,13 @@ export const Dropdown = ({
       {!disabled && (
         <Popup
           anchor={selectRef}
-          isOpen={isOpen}
+          isOpen={isOpen.value}
           placement={placement}
           fillWidth={240}
         >
           <DropdownMenu
             activeValue={activeOption?.value}
             anchorHeight={anchorHeight}
-            options={options}
             listId={listId}
             menuAriaLabel={sprintf(
               /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
@@ -163,7 +140,7 @@ export const Dropdown = ({
             )}
             onDismissMenu={handleDismissMenu}
             onMenuItemClick={handleMenuItemClick}
-            flattenedGroupedOptions={flattenedGroupedOptions}
+            options={normalizedOptions}
             {...rest}
           />
         </Popup>

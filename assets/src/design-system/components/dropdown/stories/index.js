@@ -75,7 +75,9 @@ const styleOverrideForAnimationEffectMenu = css`
 `;
 
 export const _default = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState(
+    basicDropdownOptions[2].value
+  );
   return (
     <DarkThemeProvider>
       <Dropdown
@@ -122,7 +124,7 @@ export const LightTheme = () => {
 };
 
 export const SubMenus = () => {
-  const [selectedValue, setSelectedValue] = useState();
+  const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
     <Dropdown
@@ -161,7 +163,7 @@ const RenderItemOverride = forwardRef(function RenderItemOverride(
 });
 RenderItemOverride.propTypes = {
   option: DROPDOWN_ITEM,
-  isSelected: PropTypes.boolean,
+  isSelected: PropTypes.bool,
 };
 
 export const OverriddenAnimationProofOfConcept = () => {
