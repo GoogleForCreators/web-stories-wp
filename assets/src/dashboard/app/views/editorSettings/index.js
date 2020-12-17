@@ -42,7 +42,7 @@ import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import GoogleAdSenseSettings from './googleAdSense';
 import GoogleAdManagerSettings from './googleAdManager';
-import AdLoaderSettings from './adLoaderType';
+import AdNetworkSettings from './adNetwork';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
@@ -57,7 +57,7 @@ function EditorSettings() {
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
-    adLoaderType,
+    adNetwork,
     fetchMediaById,
     uploadMedia,
     activePublisherLogoId,
@@ -77,7 +77,7 @@ function EditorSettings() {
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
-          adLoaderType,
+          adNetwork,
           publisherLogoIds,
           activePublisherLogoId,
         },
@@ -90,7 +90,7 @@ function EditorSettings() {
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
-      adLoaderType,
+      adNetwork,
       fetchMediaById,
       uploadMedia,
       activePublisherLogoId,
@@ -177,7 +177,7 @@ function EditorSettings() {
   );
 
   const handleUpdateAdLoader = useCallback(
-    (newAdLoaderType) => updateSettings({ adLoaderType: newAdLoaderType }),
+    (newAdNetwork) => updateSettings({ adNetwork: newAdNetwork }),
     [updateSettings]
   );
 
@@ -376,12 +376,12 @@ function EditorSettings() {
               selected={optedIn}
             />
             {canManageSettings && (
-              <AdLoaderSettings
+              <AdNetworkSettings
                 handleUpdate={handleUpdateAdLoader}
-                adLoaderType={adLoaderType}
+                adNetwork={adNetwork}
               />
             )}
-            {canManageSettings && 'adsense' === adLoaderType && (
+            {canManageSettings && 'adsense' === adNetwork && (
               <GoogleAdSenseSettings
                 handleUpdatePublisherId={handleUpdateAdSensePublisherId}
                 handleUpdateSlotId={handleUpdateAdSenseSlotId}
@@ -389,7 +389,7 @@ function EditorSettings() {
                 slotId={adSenseSlotId}
               />
             )}
-            {canManageSettings && 'admanager' === adLoaderType && (
+            {canManageSettings && 'admanager' === adNetwork && (
               <GoogleAdManagerSettings
                 handleUpdate={handleUpdateAdManagerSlotId}
                 slotId={adManagerSlotId}

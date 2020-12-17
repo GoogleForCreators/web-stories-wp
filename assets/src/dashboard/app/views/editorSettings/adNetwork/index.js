@@ -73,12 +73,12 @@ const OPTIONS = [
   },
 ];
 
-function AdLoaderSettings({ adLoaderType: adLoaderTypeRaw, handleUpdate }) {
-  const [adLoaderType, setAdLoaderType] = useState(adLoaderTypeRaw);
+function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
+  const [adNetwork, setAdNetwork] = useState(adNetworkRaw);
 
   useEffect(() => {
-    setAdLoaderType(adLoaderTypeRaw);
-  }, [adLoaderTypeRaw]);
+    setAdNetwork(adNetworkRaw);
+  }, [adNetworkRaw]);
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -92,17 +92,17 @@ function AdLoaderSettings({ adLoaderType: adLoaderTypeRaw, handleUpdate }) {
             ariaLabel={TEXT.SLOT_ID_LABEL}
             items={OPTIONS}
             type={DROPDOWN_TYPES.MENU}
-            value={adLoaderType}
-            onChange={(newAdLoaderType) => handleUpdate(newAdLoaderType.value)}
+            value={adNetwork}
+            onChange={(newAdNetwork) => handleUpdate(newAdNetwork.value)}
           />
         </InlineForm>
       </FormContainer>
     </SettingForm>
   );
 }
-AdLoaderSettings.propTypes = {
+AdNetworkSettings.propTypes = {
   handleUpdate: PropTypes.func,
-  adLoaderType: PropTypes.string,
+  adNetwork: PropTypes.string,
 };
 
-export default AdLoaderSettings;
+export default AdNetworkSettings;
