@@ -25,6 +25,8 @@ import { useCallback } from 'react';
 import useBatchingCallback from '../../utils/useBatchingCallback';
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
+import { DANGER_ZONE_HEIGHT, FULLBLEED_HEIGHT } from '../../units/dimensions';
+import { PAGE_WIDTH } from '../../constants';
 import useInsertElement from './useInsertElement';
 
 function useInsertTextSet() {
@@ -65,11 +67,27 @@ function useInsertTextSet() {
         return;
       }
 
-      const positionedTextSet = elements.map((element) => ({
-        ...element,
-        x: element.normalizedOffsetX + offsetX,
-        y: element.normalizedOffsetY + offsetY,
-      }));
+      const positionedTextSet = elements
+        .map((element) => {
+          // Skip adding any elements that are outside of page.
+          const x = element.normalizedOffsetX + offsetX;
+          const y = element.normalizedOffsetY + offsetY;
+          const { width, height } = element;
+          if (
+            x > PAGE_WIDTH ||
+            x + width < 0 ||
+            y > FULLBLEED_HEIGHT ||
+            y + height < -DANGER_ZONE_HEIGHT
+          ) {
+            return null;
+          }
+          return {
+            ...element,
+            x,
+            y,
+          };
+        })
+        .filter((el) => el);
 
       insertTextSet(positionedTextSet);
     },
