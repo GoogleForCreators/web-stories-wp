@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from 'react';
 import { rgba } from 'polished';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -63,30 +62,9 @@ function TextSet({ elements }) {
     insertTextSet: state.actions.insertTextSet,
   }));
 
-  const elementRef = useRef();
-
   const { canvasPageSize } = useLayout(({ state }) => ({
     canvasPageSize: state.canvasPageSize,
   }));
-
-  const handleDragStart = useCallback(
-    (e) => {
-      const { x, y } = e.target.getBoundingClientRect();
-      const offsetX = e.clientX - x;
-      const offsetY = e.clientY - y;
-
-      e.dataTransfer.setDragImage(elementRef.current, offsetX, offsetY);
-      e.dataTransfer.setData(
-        'textset',
-        JSON.stringify({
-          grabOffsetX: -offsetX,
-          grabOffsetY: -offsetY,
-          elements,
-        })
-      );
-    },
-    [elements]
-  );
 
   const { textSetHeight, textSetWidth } = elements[0];
   const { width: pageWidth, height: pageHeight } = canvasPageSize;

@@ -194,17 +194,10 @@ function LibraryMoveable({
       const { x: pageX, y: pageY } = pageContainer.getBoundingClientRect();
 
       if (type === 'textSet') {
-        insertTextSetByOffset(
-          elements,
-          {
-            offsetX: editorToDataX(x - pageX, pageSize.width),
-            offsetY: editorToDataY(y - pageY, pageSize.height),
-          },
-          {
-            width: editorToDataX(width, pageSize.width),
-            height: editorToDataY(height, pageSize.height),
-          }
-        );
+        insertTextSetByOffset(elements, {
+          offsetX: editorToDataX(x - pageX, pageSize.width),
+          offsetY: editorToDataY(y - pageY, pageSize.height),
+        });
       } else {
         insertElement(type, {
           ...elementProps,
@@ -274,6 +267,8 @@ LibraryMoveable.propTypes = {
   cloneElement: PropTypes.object.isRequired,
   cloneProps: PropTypes.object.isRequired,
   active: PropTypes.bool,
+  previewSize: PropTypes.object,
+  elements: PropTypes.array,
 };
 
 export default LibraryMoveable;
