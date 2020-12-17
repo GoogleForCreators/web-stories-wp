@@ -42,6 +42,7 @@ import useTelemetryOptIn from '../shared/useTelemetryOptIn';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import GoogleAdSenseSettings from './googleAdSense';
 import GoogleAdManagerSettings from './googleAdManager';
+import AdLoaderSettings from './adLoaderType';
 import { Main, Wrapper } from './components';
 import PublisherLogoSettings from './publisherLogo';
 import TelemetrySettings from './telemetry';
@@ -56,6 +57,7 @@ function EditorSettings() {
     adSensePublisherId,
     adSenseSlotId,
     adManagerSlotId,
+    adLoaderType,
     fetchMediaById,
     uploadMedia,
     activePublisherLogoId,
@@ -75,6 +77,7 @@ function EditorSettings() {
           adSensePublisherId,
           adSenseSlotId,
           adManagerSlotId,
+          adLoaderType,
           publisherLogoIds,
           activePublisherLogoId,
         },
@@ -87,6 +90,7 @@ function EditorSettings() {
       adSensePublisherId,
       adSenseSlotId,
       adManagerSlotId,
+      adLoaderType,
       fetchMediaById,
       uploadMedia,
       activePublisherLogoId,
@@ -169,6 +173,11 @@ function EditorSettings() {
   const handleUpdateAdManagerSlotId = useCallback(
     (newAdManagerSlotId) =>
       updateSettings({ adManagerSlotId: newAdManagerSlotId }),
+    [updateSettings]
+  );
+
+  const handleUpdateAdLoader = useCallback(
+    (newAdLoaderType) => updateSettings({ adLoaderType: newAdLoaderType }),
     [updateSettings]
   );
 
@@ -367,6 +376,12 @@ function EditorSettings() {
               selected={optedIn}
             />
             {canManageSettings && (
+              <AdLoaderSettings
+                handleUpdate={handleUpdateAdLoader}
+                adLoaderType={adLoaderType}
+              />
+            )}
+            {canManageSettings && 'adsense' === adLoaderType && (
               <GoogleAdSenseSettings
                 handleUpdatePublisherId={handleUpdateAdSensePublisherId}
                 handleUpdateSlotId={handleUpdateAdSenseSlotId}
@@ -374,7 +389,7 @@ function EditorSettings() {
                 slotId={adSenseSlotId}
               />
             )}
-            {canManageSettings && (
+            {canManageSettings && 'admanager' === adLoaderType && (
               <GoogleAdManagerSettings
                 handleUpdate={handleUpdateAdManagerSlotId}
                 slotId={adManagerSlotId}
