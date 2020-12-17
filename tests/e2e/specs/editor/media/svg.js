@@ -20,38 +20,56 @@
 import { percySnapshot } from '@percy/puppeteer';
 
 /**
+ * WordPress dependencies
+ */
+import { visitAdminPage } from '@wordpress/e2e-test-utils';
+
+/**
  * Internal dependencies
  */
 import {
-  createNewStory,
-  clickButton,
   withExperimentalFeatures,
+  uploadFile,
+  createNewStory,
 } from '../../../utils';
 
-const MODAL = '.media-modal';
-
-describe('Inserting SVG Image', () => {
+describe('SVG', () => {
   withExperimentalFeatures(['enableSVG']);
-  it('should insert an svg by clicking on media dialog it', async () => {
+
+  it('should insert an existing SVG from media dialog', async () => {
     await createNewStory();
 
     await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
 
-    // Clicking will only act on the first element.
     await expect(page).toClick('button', { text: 'Upload' });
-
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-
+    await expect(page).toMatch('Upload to Story');
     await expect(page).toClick('button', { text: 'Media Library' });
-    await clickButton(
+
+    await expect(page).toClick(
       '.attachments-browser .attachments .attachment[aria-label="video-play"]'
     );
+
     await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await percySnapshot(page, 'Inserting SVG from Dialog');
+  });
+
+  it('should upload an SVG file via media dialog', async () => {
+    await createNewStory();
+
+    await expect(page).not.toMatchElement('[data-testid="FrameElement"]');
+
+    await expect(page).toClick('button', { text: 'Upload' });
+    await expect(page).toMatch('Upload to Story');
+
+    await uploadFile('close.svg');
+
+    await expect(page).toClick('button', { text: 'Insert into page' });
+
+    await expect(page).toMatchElement('[data-testid="imageElement"]');
+
+    await percySnapshot(page, 'Uploading SVG to editor');
   });
 });
