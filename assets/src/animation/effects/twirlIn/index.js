@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import SimpleAnimation from '../../parts/simpleAnimation';
+import { getGlobalSpace } from '../../utils';
 
 const defaultTimings = {
   delay: 0,
@@ -28,21 +29,22 @@ const defaultTimings = {
 
 const animationName = `twirl-in`;
 
-const keyframes = [
-  {
-    transform: 'rotate(-540deg) scale(0.1)',
-    opacity: 0,
-  },
-  {
-    transform: 'none',
-    opacity: 1,
-  },
-];
-
 export function EffectTwirlIn({
-  easing = 'cubic-bezier(.2,.75,.4,1)',
+  easing = 'cubic-bezier(0.4, 0.4, 0.0, 1)',
+  element,
   ...args
 }) {
+  const global = getGlobalSpace(element);
+  const keyframes = [
+    {
+      transform: global`rotate(-540deg) scale(0.1)`,
+      opacity: 0,
+    },
+    {
+      transform: 'none',
+      opacity: 1,
+    },
+  ];
   const timings = {
     ...defaultTimings,
     ...args,

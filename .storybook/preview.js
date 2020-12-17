@@ -22,7 +22,6 @@ import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { FlagsProvider } from 'flagged';
 import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
@@ -35,7 +34,6 @@ import { GlobalStyle as ModalGlobalStyle } from '../assets/src/edit-story/compon
 import dashboardTheme, {
   GlobalStyle as DashboardGlobalStyle,
 } from '../assets/src/dashboard/theme';
-import { GlobalStyle as DashboardModalGlobalStyle } from '../assets/src/dashboard/components/modal';
 import DashboardKeyboardOnlyOutline from '../assets/src/dashboard/utils/keyboardOnlyOutline';
 import { ConfigProvider } from '../assets/src/dashboard/app/config';
 import ApiProvider from '../assets/src/dashboard/app/api/apiProvider';
@@ -91,26 +89,23 @@ addDecorator((story, { id }) => {
 
   if (isDashboardStorybook) {
     return (
-      <FlagsProvider features={{ enableAnimation: true }}>
-        <ThemeProvider
-          theme={{
-            DEPRECATED_THEME: dashboardTheme,
-            ...designSystemTheme,
-            colors: lightMode,
-          }}
+      <ThemeProvider
+        theme={{
+          DEPRECATED_THEME: dashboardTheme,
+          ...designSystemTheme,
+          colors: lightMode,
+        }}
+      >
+        <ConfigProvider
+          config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
         >
-          <ConfigProvider
-            config={{ api: { stories: 'stories' }, editStoryURL: 'editStory' }}
-          >
-            <ApiProvider>
-              <DashboardGlobalStyle />
-              <DashboardModalGlobalStyle />
-              <DashboardKeyboardOnlyOutline />
-              {story()}
-            </ApiProvider>
-          </ConfigProvider>
-        </ThemeProvider>
-      </FlagsProvider>
+          <ApiProvider>
+            <DashboardGlobalStyle />
+            <DashboardKeyboardOnlyOutline />
+            {story()}
+          </ApiProvider>
+        </ConfigProvider>
+      </ThemeProvider>
     );
   }
 
@@ -121,13 +116,11 @@ addDecorator((story, { id }) => {
   }
 
   return (
-    <FlagsProvider features={{ enableAnimation: true }}>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <CropMoveableGlobalStyle />
-        <ModalGlobalStyle />
-        {story()}
-      </ThemeProvider>
-    </FlagsProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <CropMoveableGlobalStyle />
+      <ModalGlobalStyle />
+      {story()}
+    </ThemeProvider>
   );
 });

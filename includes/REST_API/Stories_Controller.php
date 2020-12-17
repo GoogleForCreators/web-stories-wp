@@ -52,6 +52,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares a single story output for response. Add post_content_filtered field to output.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param WP_Post         $post Post object.
@@ -62,8 +64,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	public function prepare_item_for_response( $post, $request ) {
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 
-		// $_GET param is available when the response iss preloaded in edit-story.php
-		if ( isset( $_GET['web-stories-demo'] ) && 'edit' === $context && 'auto-draft' === $post->post_status ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( wp_validate_boolean( $request['web_stories_demo'] ) && 'auto-draft' === $post->post_status ) {
 			$demo         = new Demo_Content();
 			$demo_content = $demo->get_content();
 			if ( ! empty( $demo_content ) ) {
@@ -384,6 +385,12 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		$query_params['_web_stories_envelope'] = [
 			'description' => __( 'Envelope request for preloading.', 'web-stories' ),
+			'type'        => 'boolean',
+			'default'     => false,
+		];
+
+		$query_params['web_stories_demo'] = [
+			'description' => __( 'Load demo data.', 'web-stories' ),
 			'type'        => 'boolean',
 			'default'     => false,
 		];

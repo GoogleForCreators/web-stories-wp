@@ -94,6 +94,10 @@ class MouseWithDnd {
       this._dndMode = DndMode.OFF;
     }
   }
+
+  async wheel(options = {}) {
+    await this._mouse.wheel(options);
+  }
 }
 
 /**

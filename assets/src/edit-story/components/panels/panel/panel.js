@@ -26,6 +26,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react';
  * Internal dependencies
  */
 import localStore, { LOCAL_STORAGE_PREFIX } from '../../../utils/localStore';
+import { useStory } from '../../../app/story';
 import panelContext from './context';
 
 export const PANEL_COLLAPSED_THRESHOLD = 10;
@@ -41,17 +42,35 @@ function Panel({
   children,
   resizeable = false,
   canCollapse = true,
+  collapsedByDefault = true,
   initialHeight = null,
   ariaLabel = null,
   ariaHidden = false,
+  isPersistable = true,
 }) {
+  const { selectedElementIds } = useStory(
+    ({ state: { selectedElementIds } }) => {
+      return {
+        selectedElementIds,
+      };
+    }
+  );
+
   const persisted = useMemo(
-    () => localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`),
-    [name]
+    () =>
+      isPersistable
+        ? localStore.getItemByKey(`${LOCAL_STORAGE_PREFIX.PANEL}:${name}`)
+        : null,
+    [name, isPersistable]
   );
-  const [isCollapsed, setIsCollapsed] = useState(
-    Boolean(persisted?.isCollapsed)
-  );
+  const [isCollapsed, setIsCollapsed] = useState(() => {
+    // If not persisted, always default to expanded.
+    if (!isPersistable) {
+      return false;
+    }
+    // If isCollapsed is not defined, return the default value.
+    return persisted?.isCollapsed ?? collapsedByDefault;
+  });
   const [expandToHeight, setExpandToHeight] = useState(
     persisted?.expandToHeight || initialHeight
   );
@@ -75,6 +94,7 @@ function Panel({
   const expand = useCallback(
     (restoreHeight = true) => {
       setIsCollapsed(false);
+      setManuallyChanged(true);
       if (restoreHeight && resizeable) {
         setHeight(expandToHeight);
       }
@@ -82,13 +102,12 @@ function Panel({
     [resizeable, expandToHeight]
   );
 
-  // Expand panel on first mount if collapse not persisted
+  // Expand panel on first mount/on selection change if it can't be persisted.
   useEffect(() => {
-    if (persisted?.isCollapsed) {
-      return;
+    if (!isPersistable) {
+      expand(true);
     }
-    expand(true);
-  }, [canCollapse, expand, persisted]);
+  }, [expand, isPersistable, selectedElementIds]);
 
   useEffect(() => {
     if (resizeable && height <= PANEL_COLLAPSED_THRESHOLD && !isCollapsed) {
@@ -106,7 +125,7 @@ function Panel({
 
   // Persist when user collapses
   useEffect(() => {
-    if (!manuallyChanged) {
+    if (!isPersistable || !manuallyChanged) {
       return;
     }
 
@@ -116,7 +135,14 @@ function Panel({
       isCollapsed,
       expandToHeight,
     });
-  }, [name, isCollapsed, height, expandToHeight, manuallyChanged]);
+  }, [
+    name,
+    isCollapsed,
+    height,
+    expandToHeight,
+    manuallyChanged,
+    isPersistable,
+  ]);
 
   const manuallySetHeight = useCallback(
     (h) => {
@@ -186,9 +212,10 @@ Panel.propTypes = {
   initialHeight: PropTypes.number,
   resizeable: PropTypes.bool,
   canCollapse: PropTypes.bool,
+  collapsedByDefault: PropTypes.bool,
   ariaLabel: PropTypes.string,
   ariaHidden: PropTypes.bool,
-  isPersisted: PropTypes.bool,
+  isPersistable: PropTypes.bool,
 };
 
 export default Panel;

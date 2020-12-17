@@ -22,9 +22,11 @@ import { percySnapshot } from '@percy/puppeteer';
 /**
  * Internal dependencies
  */
-import { createNewStory } from '../../../utils';
+import { createNewStory, clickButton } from '../../../utils';
 
 const MODAL = '.media-modal';
+
+const percyCSS = `.attachment-details .uploaded { display: none; }`;
 
 describe('Inserting .mov from dialog', () => {
   // Uses the existence of the element's frame element as an indicator for successful insertion.
@@ -36,16 +38,13 @@ describe('Inserting .mov from dialog', () => {
     await page.waitForSelector(MODAL, {
       visible: true,
     });
-    const btnTab = '#menu-item-browse';
-    await page.waitForSelector(btnTab);
-    await page.evaluate((selector) => {
-      document.querySelector(selector).click();
-    }, btnTab);
-    const btnSelector =
-      '.attachments-browser .attachments .attachment:first-of-type';
-    await page.waitForSelector(btnSelector);
+    await expect(page).toClick('button', { text: 'Media Library' });
+    await clickButton(
+      '.attachments-browser .attachments .attachment:first-of-type'
+    );
+
     await expect(page).not.toMatchElement('.type-video.subtype-quicktime');
-    await percySnapshot(page, 'Avoid inserting .mov files');
+    await percySnapshot(page, 'Avoid inserting .mov files', { percyCSS });
 
     const closeBtnSelector = '.media-modal-close';
     await page.click(closeBtnSelector);

@@ -32,8 +32,12 @@ import { TRANSITION_DURATION } from '../../dialog';
 import { useStory, useLocalMedia, useConfig } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { Primary } from '../../button';
+import WithTooltip from '../../tooltip';
 import TitleMissingDialog from '../titleMissingDialog';
 import useHeader from '../use';
+import { usePrepublishChecklist } from '../../inspector/prepublish';
+import { PRE_PUBLISH_MESSAGE_TYPES } from '../../../app/prepublish';
+import { ButtonContent, WarningIcon } from './styles';
 
 function Publish() {
   const { isSaving, date, storyId, saveStory, title } = useStory(
@@ -51,6 +55,14 @@ function Publish() {
   const { titleInput } = useHeader();
   const [showDialog, setShowDialog] = useState(false);
   const { capabilities } = useConfig();
+
+  const { checklist, refreshChecklist } = usePrepublishChecklist();
+
+  const tooltip = checklist.some(
+    ({ type }) => PRE_PUBLISH_MESSAGE_TYPES.ERROR === type
+  )
+    ? __('There are items in the checklist to resolve', 'web-stories')
+    : null;
 
   const refreshPostEditURL = useRefreshPostEditURL(storyId);
   const hasFutureDate = Date.now() < Date.parse(date);
@@ -88,14 +100,26 @@ function Publish() {
     ? __('Schedule', 'web-stories')
     : __('Publish', 'web-stories');
 
+  const button = (
+    <Primary
+      onPointerEnter={refreshChecklist}
+      onClick={handlePublish}
+      isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
+    >
+      <ButtonContent>
+        {text}
+        {tooltip && <WarningIcon />}
+      </ButtonContent>
+    </Primary>
+  );
+
+  const wrappedWithTooltip = (
+    <WithTooltip title={tooltip}>{button}</WithTooltip>
+  );
+
   return (
     <>
-      <Primary
-        onClick={handlePublish}
-        isDisabled={!capabilities?.hasPublishAction || isSaving || isUploading}
-      >
-        {text}
-      </Primary>
+      {tooltip ? wrappedWithTooltip : button}
       <TitleMissingDialog
         open={Boolean(showDialog)}
         onIgnore={publish}

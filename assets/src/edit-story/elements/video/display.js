@@ -75,11 +75,16 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
   );
 
   return (
-    <MediaDisplay element={element} mediaRef={ref} showPlaceholder={true}>
+    <MediaDisplay
+      element={element}
+      mediaRef={ref}
+      showPlaceholder={true}
+      previewMode={previewMode}
+    >
       {previewMode ? (
         <Image
           src={poster || resource.poster}
-          alt={resource.title}
+          alt={element.alt || resource.alt}
           style={style}
           {...videoProps}
           ref={ref}
@@ -93,6 +98,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           loop={loop}
           preload="none"
           ref={ref}
+          data-testid="videoElement"
           data-leaf-element="true"
         >
           <source src={resource.src} type={resource.mimeType} />
@@ -104,7 +110,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
                 kind={kind}
                 src={src}
                 key={key}
-                default={i == 0}
+                default={i === 0}
               />
             ))}
         </Video>

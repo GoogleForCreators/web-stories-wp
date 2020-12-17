@@ -19,7 +19,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.2
+        uses: actions/setup-node@v2.1.3
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
 
@@ -43,7 +43,7 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run integration tests
-        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --coverage
+        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
 

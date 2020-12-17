@@ -20,6 +20,7 @@
 import * as types from './types';
 import * as reducers from './reducers';
 
+/* eslint-disable complexity */
 function reducer(state, { type, payload }) {
   switch (type) {
     case types.ADD_PAGE: {
@@ -94,6 +95,10 @@ function reducer(state, { type, payload }) {
       return reducers.updateAnimationState(state, payload);
     }
 
+    case types.ADD_ANIMATIONS: {
+      return reducers.addAnimations(state, payload);
+    }
+
     case types.RESTORE: {
       return reducers.restore(state, payload);
     }
@@ -102,5 +107,6 @@ function reducer(state, { type, payload }) {
       return state;
   }
 }
+/* eslint-enable complexity */
 
 export default reducer;

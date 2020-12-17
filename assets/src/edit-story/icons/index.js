@@ -82,6 +82,7 @@ export { ReactComponent as TextHelper } from './text_helper.svg'; // todo: remov
 export { ReactComponent as Underline } from './underline_icon.svg';
 export { ReactComponent as Undo } from './undo.svg';
 export { ReactComponent as UndoAlt } from './undo_icon.svg';
+export { ReactComponent as Union } from './union.svg';
 export { ReactComponent as Unlock } from './unlock.svg';
 export { ReactComponent as Upload } from './upload.svg';
 export { ReactComponent as Video } from './video.svg';

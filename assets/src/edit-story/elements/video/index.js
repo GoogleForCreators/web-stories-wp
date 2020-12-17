@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
+import PanelTypes from '../../components/panels/design/types';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import {
   MEDIA_DEFAULT_ATTRIBUTES,
@@ -56,7 +56,7 @@ export const defaultAttributes = {
     posterId: null,
     poster: null,
     id: 0,
-    title: '',
+    alt: '',
   },
 };
 

@@ -27,7 +27,12 @@ import { useGlobalIsKeyPressed } from '../../keyboard';
 import { useDropTargets } from '../../dropTargets';
 import useCanvas from '../useCanvas';
 
-function useSnapping({ isDragging, canSnap, otherNodes }) {
+function useSnapping({
+  isDragging,
+  canSnap,
+  otherNodes,
+  snappingOffsetX = null,
+}) {
   const {
     canvasWidth,
     canvasHeight,
@@ -93,7 +98,9 @@ function useSnapping({ isDragging, canSnap, otherNodes }) {
   const canvasRect = canvasContainer.getBoundingClientRect();
   const pageRect = pageContainer.getBoundingClientRect();
 
-  const offsetX = Math.ceil(pageRect.x - canvasRect.x);
+  const canvasOffsetX = snappingOffsetX ? snappingOffsetX : canvasRect.x;
+
+  const offsetX = Math.ceil(pageRect.x - canvasOffsetX);
   const offsetY = Math.floor(pageRect.y - canvasRect.y);
 
   const verticalGuidelines = canSnap

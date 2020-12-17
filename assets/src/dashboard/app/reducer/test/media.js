@@ -17,6 +17,7 @@
 /**
  * Internal dependencies
  */
+import { ERRORS } from '../../textContent';
 import mediaReducer, { ACTION_TYPES } from '../media';
 
 describe('mediaReducer', () => {
@@ -55,7 +56,7 @@ describe('mediaReducer', () => {
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to fetch media',
+          title: ERRORS.LOAD_MEDIA.TITLE,
         },
         code: 'my_error_code',
       },
@@ -65,7 +66,7 @@ describe('mediaReducer', () => {
       error: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to fetch media',
+          title: ERRORS.LOAD_MEDIA.TITLE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',
@@ -82,7 +83,7 @@ describe('mediaReducer', () => {
       payload: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to add media',
+          title: ERRORS.UPLOAD_PUBLISHER_LOGO.TITLE,
         },
         code: 'my_error_code',
       },
@@ -92,7 +93,7 @@ describe('mediaReducer', () => {
       error: {
         message: {
           body: 'The response is not a valid JSON response.',
-          title: 'Unable to add media',
+          title: ERRORS.UPLOAD_PUBLISHER_LOGO.TITLE,
         },
         id: MOCK_ERROR_ID,
         code: 'my_error_code',

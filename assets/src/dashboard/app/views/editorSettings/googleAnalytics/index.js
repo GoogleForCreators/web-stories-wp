@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -41,27 +41,52 @@ import {
   SettingHeading,
   TextInputHelperText,
   VisuallyHiddenLabel,
+  HelperText,
 } from '../components';
 
 export const TEXT = {
   CONTEXT: __(
-    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on <a>analytics for your Web Stories</a>.",
+    "The story editor will append a default, configurable AMP analytics configuration to your story. If you're interested in going beyond what the default configuration is, read this article on<a>analytics for your Web Stories</a>.",
     'web-stories'
   ),
   CONTEXT_LINK:
     'https://blog.amp.dev/2019/08/28/analytics-for-your-amp-stories/',
   SECTION_HEADING: __('Google Analytics Tracking ID', 'web-stories'),
   PLACEHOLDER: __('Enter your Google Analytics Tracking ID', 'web-stories'),
-  LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
+  ARIA_LABEL: __('Enter your Google Analytics Tracking ID', 'web-stories'),
   INPUT_ERROR: __('Invalid ID format', 'web-stories'),
   SUBMIT_BUTTON: __('Save', 'web-stories'),
+  SITE_KIT_NOT_INSTALLED: __(
+    'Install<a>Site Kit by Google</a> to easily enable Google Analytics for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_INSTALLED: __(
+    'Use Site Kit by Google to easily<a>activate Google Analytics</a> for Web Stories.',
+    'web-stories'
+  ),
+  SITE_KIT_IN_USE: __(
+    'Site Kit by Google has already enabled Google Analytics for your Web Stories, all changes to your analytics tracking should occur there.',
+    'web-stories'
+  ),
+  SITE_KIT_ADMIN_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/', // TODO get a direct link to WP admin (it's a modal)
+  SITE_KIT_PLUGIN_LINK: 'https://wordpress.org/plugins/google-site-kit/',
 };
 
-function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
+function GoogleAnalyticsSettings({
+  googleAnalyticsId,
+  handleUpdate,
+  siteKitCapabilities = {},
+}) {
   const [analyticsId, setAnalyticsId] = useState(googleAnalyticsId);
   const [inputError, setInputError] = useState('');
   const canSave = analyticsId !== googleAnalyticsId && !inputError;
   const disableSaveButton = !canSave;
+
+  const {
+    canInstallPlugins,
+    siteKitActive,
+    siteKitInstalled,
+  } = siteKitCapabilities;
 
   useEffect(() => {
     setAnalyticsId(googleAnalyticsId);
@@ -96,21 +121,61 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
     [handleOnSave]
   );
 
+  const siteKitDisplayText = useMemo(() => {
+    const siteKitLink = canInstallPlugins
+      ? TEXT.SITE_KIT_ADMIN_PLUGIN_LINK
+      : TEXT.SITE_KIT_PLUGIN_LINK;
+
+    if (siteKitActive) {
+      return TEXT.SITE_KIT_IN_USE;
+    }
+
+    if (siteKitInstalled) {
+      return (
+        <TranslateWithMarkup
+          mapping={{
+            a: (
+              <InlineLink href={siteKitLink} rel="noreferrer" target="_blank" />
+            ),
+          }}
+        >
+          {TEXT.SITE_KIT_INSTALLED}
+        </TranslateWithMarkup>
+      );
+    }
+    return (
+      <TranslateWithMarkup
+        mapping={{
+          a: <InlineLink href={siteKitLink} rel="noreferrer" target="_blank" />,
+        }}
+      >
+        {TEXT.SITE_KIT_NOT_INSTALLED}
+      </TranslateWithMarkup>
+    );
+  }, [canInstallPlugins, siteKitActive, siteKitInstalled]);
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+      <div>
+        <SettingHeading htmlFor="gaTrackingID">
+          {TEXT.SECTION_HEADING}
+        </SettingHeading>
+        <HelperText>{siteKitDisplayText}</HelperText>
+      </div>
       <FormContainer>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="gaTrackingId">
-            {TEXT.LABEL}
+            {TEXT.ARIA_LABEL}
           </VisuallyHiddenLabel>
           <GoogleAnalyticsTextInput
-            name="gaTrackingId"
+            label={TEXT.ARIA_LABEL}
+            id="gaTrackingId"
             value={analyticsId}
             onChange={handleUpdateId}
             onKeyDown={handleOnKeyDown}
             placeholder={TEXT.PLACEHOLDER}
             error={inputError}
+            disabled={siteKitInstalled}
           />
           <SaveButton isDisabled={disableSaveButton} onClick={handleOnSave}>
             {TEXT.SUBMIT_BUTTON}
@@ -120,7 +185,13 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
         <TextInputHelperText>
           <TranslateWithMarkup
             mapping={{
-              a: <InlineLink href={TEXT.CONTEXT_LINK} />,
+              a: (
+                <InlineLink
+                  href={TEXT.CONTEXT_LINK}
+                  rel="noreferrer"
+                  target="_blank"
+                />
+              ),
             }}
           >
             {TEXT.CONTEXT}
@@ -133,6 +204,13 @@ function GoogleAnalyticsSettings({ googleAnalyticsId, handleUpdate }) {
 GoogleAnalyticsSettings.propTypes = {
   handleUpdate: PropTypes.func,
   googleAnalyticsId: PropTypes.string,
+  siteKitCapabilities: PropTypes.shape({
+    analyticsModuleActive: PropTypes.bool,
+    canActivatePlugins: PropTypes.bool,
+    canInstallPlugins: PropTypes.bool,
+    siteKitActive: PropTypes.bool,
+    siteKitInstalled: PropTypes.bool,
+  }),
 };
 
 export default GoogleAnalyticsSettings;

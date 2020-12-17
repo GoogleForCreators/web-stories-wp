@@ -93,7 +93,7 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_proxy_item( $request ) {
-		$url = untrailingslashit( $request['url'] );
+		$url = urldecode( untrailingslashit( $request['url'] ) );
 
 		if ( empty( $url ) ) {
 			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
@@ -168,8 +168,6 @@ class Embed_Controller extends WP_REST_Controller {
 	/**
 	 * Retrieves the story metadata for a given URL on the current site.
 	 *
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $url  The URL that should be inspected for metadata.
@@ -177,6 +175,32 @@ class Embed_Controller extends WP_REST_Controller {
 	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( $url ) {
+		$post = $this->url_to_post( $url );
+
+		if ( ! $post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
+			return false;
+		}
+
+		return $this->get_data_from_document( $post->post_content );
+	}
+
+	/**
+	 * Examines a URL and try to determine the post it represents.
+	 *
+	 * Checks are supposedly from the hosted site blog.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
+	 * @see get_oembed_response_data_for_url
+	 * @see url_to_postid
+	 *
+	 * @since 1.2.0
+	 *
+	 * @param string $url Permalink to check.
+	 * @return WP_Post|null Post object on success, null otherwise.
+	 */
+	private function url_to_post( $url ) {
+		$post          = null;
 		$switched_blog = false;
 
 		if ( is_multisite() ) {
@@ -198,8 +222,12 @@ class Embed_Controller extends WP_REST_Controller {
 
 			// In case of subdirectory configs, set the path.
 			if ( ! is_subdomain_install() ) {
+				// Get "sub-site" part of "http://example.org/sub-site/web-stories/my-story/".
+				// But given just "http://example.org/web-stories/my-story/", don't treat "web-stories" as site path.
+				// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
+				// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
 				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
-				$path    = reset( $path );
+				$path    = count( $path ) > 2 ? reset( $path ) : false;
 				$network = get_network();
 				if ( $path && $network instanceof \WP_Network ) {
 					$qv['path'] = $network->path . $path . '/';
@@ -222,30 +250,47 @@ class Embed_Controller extends WP_REST_Controller {
 			$post_id = url_to_postid( $url );
 		}
 
+		if ( $post_id ) {
+			$post = get_post( $post_id );
+		}
+
 		if ( ! $post_id ) {
-			if ( $switched_blog ) {
-				restore_current_blog();
+			// url_to_postid() does not recognize plain permalinks like https://example.com/?web-story=my-story.
+			// Let's check for that ourselves.
+
+			$url_host      = str_replace( 'www.', '', wp_parse_url( $url, PHP_URL_HOST ) );
+			$home_url_host = str_replace( 'www.', '', wp_parse_url( home_url(), PHP_URL_HOST ) );
+
+			if ( $url_host === $home_url_host ) {
+				$values = [];
+				if (
+				preg_match(
+					'#[?&](' . preg_quote( Story_Post_Type::POST_TYPE_SLUG, '#' ) . ')=([^&]+)#',
+					$url,
+					$values
+				)
+				) {
+					$slug = $values[2];
+
+					if ( function_exists( 'wpcom_vip_get_page_by_path' ) ) {
+						$post = wpcom_vip_get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
+					} else {
+						// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions
+						$post = get_page_by_path( $slug, OBJECT, Story_Post_Type::POST_TYPE_SLUG );
+					}
+				}
 			}
-
-			return false;
 		}
-
-		$post = get_post( $post_id );
-		if ( ! $post instanceof WP_Post ) {
-			return false;
-		}
-
-		if ( Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
-			return false;
-		}
-
-		$data = $this->get_data_from_document( $post->post_content );
 
 		if ( $switched_blog ) {
 			restore_current_blog();
 		}
 
-		return $data;
+		if ( ! $post instanceof WP_Post ) {
+			return null;
+		}
+
+		return $post;
 	}
 
 	/**

@@ -26,7 +26,8 @@ import { useCallback, useEffect, useRef, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 import { ResizableBox } from '@wordpress/components';
-import { useViewportMatch } from '@wordpress/compose';
+import * as compose from '@wordpress/compose';
+import { withViewportMatch } from '@wordpress/viewport';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
@@ -42,7 +43,13 @@ import './edit.css';
 
 const MIN_SIZE = 20;
 
-function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
+function StoryEmbedEdit({
+  attributes,
+  setAttributes,
+  className,
+  isSelected,
+  _isResizable,
+}) {
   const {
     url: outerURL,
     width = 360,
@@ -61,7 +68,9 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
   const showLoadingIndicator = isFetchingData;
   const showPlaceholder = !localURL || !outerURL || editingURL || cannotEmbed;
 
-  const isResizable = useViewportMatch('medium');
+  const isResizable = compose.useViewportMatch
+    ? compose.useViewportMatch('medium')
+    : _isResizable;
 
   const ref = useRef();
 
@@ -89,13 +98,14 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
 
       try {
         setIsFetchingData(true);
-        const urlObj = new URL(url);
+        // Normalize input URL.
+        const urlToEmbed = encodeURIComponent(new URL(url).toString());
 
         const data = await apiFetch({
-          path: `web-stories/v1/embed?url=${urlObj.toString()}`,
+          path: `web-stories/v1/embed?url=${urlToEmbed}`,
         });
 
-        setCannotEmbed(!data?.title);
+        setCannotEmbed(!(typeof data?.title === 'string'));
         setStoryData(data);
         setAttributes({
           url: localURL,
@@ -237,7 +247,7 @@ function StoryEmbedEdit({ attributes, setAttributes, className, isSelected }) {
       />
       <div className={`${className} web-stories-embed align${align}`}>
         <ResizableBox
-          showHandle={isSelected}
+          className={isSelected ? 'show-resize-handle' : 'hide-resize-handle'}
           size={{
             width,
             height,
@@ -289,6 +299,7 @@ StoryEmbedEdit.propTypes = {
   setAttributes: PropTypes.func.isRequired,
   className: PropTypes.string.isRequired,
   isSelected: PropTypes.bool,
+  _isResizable: PropTypes.bool,
 };
 
-export default StoryEmbedEdit;
+export default withViewportMatch({ _isResizable: 'medium' })(StoryEmbedEdit);

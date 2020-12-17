@@ -21,8 +21,10 @@ import { dark as darkMode, light as lightMode } from './colors';
 import { THEME_CONSTANTS } from './constants';
 import * as themeHelpers from './helpers';
 import { typography } from './typography';
+import { borders } from './borders';
 
 export const theme = {
+  borders,
   typography,
   colors: { ...darkMode },
 };

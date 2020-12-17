@@ -17,22 +17,12 @@
 /**
  * Internal dependencies
  */
-import {
-  addElementsToClipboard,
-  processPastedElements,
-  processPastedNodeList,
-} from '../copyPaste';
+import { addElementsToClipboard, processPastedElements } from '../copyPaste';
 import { PAGE_WIDTH } from '../../constants';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media';
 import createSolid from '../createSolid';
-
-const getNodeList = (content) => {
-  const template = document.createElement('template');
-  template.innerHTML = content;
-  return template.content.childNodes;
-};
 
 describe('copyPaste utils', () => {
   const PAGE = {
@@ -87,58 +77,12 @@ describe('copyPaste utils', () => {
     backgroundColor: createSolid(1, 1, 1),
   };
 
-  describe('processPastedNodeList', () => {
-    it('should remove disallowed tags from pasted content', () => {
-      const nodeList = getNodeList(
-        '<p><span>Hello</span> <h3>World</h3><section>!</section></p>'
-      );
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual('Hello World!');
-    });
-
-    it('should keep strong, em, and u tags', () => {
-      const nodeList = getNodeList(
-        '<p><strong>Hello</strong> <u>World</u><em>!</em></p>'
-      );
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello</strong> <u>World</u><em>!</em>'
-      );
-    });
-
-    it('should remove all tag attributes', () => {
-      const nodeList = getNodeList(
-        '<p><strong class="foo">Hello</strong> <u style="font-size:36px">World</u><em data-bar="foo-bar">!</em></p>'
-      );
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello</strong> <u>World</u><em>!</em>'
-      );
-    });
-
-    it('should maintain escaped HTML', () => {
-      const nodeList = getNodeList('<p>Use &lt;u&gt; for underline.</p>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        'Use &lt;u&gt; for underline.'
-      );
-    });
-
-    it('should add line break between paragraphs', () => {
-      const nodeList = getNodeList('<p>Hello</p><p>World</p>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual('Hello\nWorld');
-    });
-
-    it('should handle nested tags properly', () => {
-      const nodeList = getNodeList('<strong>Hello <em>World</em>!</strong>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello <em>World</em>!</strong>'
-      );
-    });
-
-    it('should convert `b` and `i` tags to `strong` and `em` respectively', () => {
-      const nodeList = getNodeList('<b>Hello <i>World</i>!</b>');
-      expect(processPastedNodeList(nodeList, '')).toStrictEqual(
-        '<strong>Hello <em>World</em>!</strong>'
-      );
-    });
-  });
+  const ANIMATION = {
+    type: 'BOUNCE',
+    targets: ['shape'],
+    duration: 1000,
+    delay: 0,
+  };
 
   describe('processPastedElements', () => {
     const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
@@ -150,6 +94,7 @@ describe('copyPaste utils', () => {
       const payload = JSON.stringify({
         sentinel: 'story-elements',
         items: [TEXT_ELEMENT, IMAGE_ELEMENT, SHAPE_ELEMENT],
+        animations: [ANIMATION],
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
       const htmlContent = '<div>Foo</div>';
       const innerHTML = `<!-- ${payload} -->${htmlContent}`;
@@ -158,9 +103,12 @@ describe('copyPaste utils', () => {
     });
 
     it('should detect elements as expected', () => {
-      const processedElements = processPastedElements(template.content, {
-        elements: [],
-      });
+      const { elements: processedElements } = processPastedElements(
+        template.content,
+        {
+          elements: [],
+        }
+      );
       expect(processedElements).toHaveLength(3);
       expect(processedElements[0]).toStrictEqual({
         ...TEXT_ELEMENT,
@@ -176,6 +124,19 @@ describe('copyPaste utils', () => {
       });
     });
 
+    it('should detect animations as expected and update target to new element id', () => {
+      const { elements, animations } = processPastedElements(template.content, {
+        elements: [],
+        animations: [],
+      });
+      expect(animations).toHaveLength(1);
+      expect(animations[0]).toStrictEqual({
+        ...ANIMATION,
+        id: expect.any(String),
+        targets: [elements[2].id],
+      });
+    });
+
     it('should set the position values based on the origin elements correctly', () => {
       const currentPage = {
         elements: [
@@ -187,7 +148,7 @@ describe('copyPaste utils', () => {
           },
         ],
       };
-      const processedElements = processPastedElements(
+      const { elements: processedElements } = processPastedElements(
         template.content,
         currentPage
       );
@@ -213,7 +174,7 @@ describe('copyPaste utils', () => {
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
       templateIncorrectSentinel.innerHTML = `<!-- ${payload} -->`;
 
-      const processedElements = processPastedElements(
+      const { elements: processedElements } = processPastedElements(
         templateIncorrectSentinel.content,
         {
           elements: [],
@@ -230,7 +191,7 @@ describe('copyPaste utils', () => {
       }).replace(/--/g, DOUBLE_DASH_ESCAPE);
 
       templateWithoutComment.innerHTML = `${payload}`;
-      const processedElements = processPastedElements(
+      const { elements: processedElements } = processPastedElements(
         templateWithoutComment.content,
         {
           elements: [],
@@ -255,7 +216,7 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(PAGE, elements, evt);
+      addElementsToClipboard(PAGE, elements, [], evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
@@ -277,7 +238,7 @@ describe('copyPaste utils', () => {
           isDefaultBackground: true,
         },
       ];
-      addElementsToClipboard(PAGE, elements, evt);
+      addElementsToClipboard(PAGE, elements, [], evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
@@ -303,11 +264,42 @@ describe('copyPaste utils', () => {
           id: '1',
         },
       ];
-      addElementsToClipboard(PAGE, elements, evt);
+      addElementsToClipboard(PAGE, elements, [], evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
       expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
       expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
+    });
+
+    it('should add animations to clipboard', () => {
+      const setData = jest.fn();
+      const evt = {
+        clipboardData: {
+          setData,
+        },
+      };
+
+      const elements = [
+        {
+          ...SHAPE_ELEMENT,
+          id: '1',
+        },
+      ];
+      const animations = [
+        {
+          id: 'a',
+          targets: ['1'],
+          type: 'ANIMATION_TYPE',
+        },
+      ];
+      addElementsToClipboard(PAGE, elements, animations, evt);
+
+      expect(setData).toHaveBeenCalledTimes(2);
+      expect(setData).toHaveBeenCalledWith('text/plain', 'shape');
+      expect(setData).toHaveBeenCalledWith(
+        'text/html',
+        expect.stringMatching(/"type":"ANIMATION_TYPE"/)
+      );
     });
 
     it('should not add anything if none are passed', () => {
@@ -317,7 +309,7 @@ describe('copyPaste utils', () => {
           setData,
         },
       };
-      addElementsToClipboard(PAGE, [], evt);
+      addElementsToClipboard(PAGE, [], [], evt);
       expect(setData).toHaveBeenCalledTimes(0);
     });
   });

@@ -29,6 +29,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Library from '../../components/library';
 import Workspace from '../../components/workspace';
+import MetaBoxes from '../../integrations/wordpress/components/metaBoxes';
 import {
   CANVAS_MIN_WIDTH,
   LIBRARY_MIN_WIDTH,
@@ -36,9 +37,11 @@ import {
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
+import withOverlay from '../../components/overlay/withOverlay';
+import CanvasProvider from '../../components/canvas/canvasProvider';
 import LayoutProvider from './layoutProvider';
 
-const Editor = styled.section.attrs({
+const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
 })`
   font-family: ${({ theme }) => theme.fonts.body1.family};
@@ -52,12 +55,13 @@ const Editor = styled.section.attrs({
   width: 100%;
 
   display: grid;
-  grid-template-areas: 'lib canv insp';
-  grid-template-columns:
+  grid:
+    'lib   canv        insp' 1fr
+    'lib   metaboxes   insp' auto /
     minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr)
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
-`;
+`);
 
 const Area = styled.div`
   grid-area: ${({ area }) => area};
@@ -66,14 +70,20 @@ const Area = styled.div`
   z-index: 2;
 `;
 
+// TODO: Fix meta boxes layout.
 function Layout() {
   return (
     <LayoutProvider>
-      <Editor>
-        <Area area="lib">
-          <Library />
+      <Editor zIndex={3}>
+        <CanvasProvider>
+          <Area area="lib">
+            <Library />
+          </Area>
+          <Workspace />
+        </CanvasProvider>
+        <Area area="metaboxes">
+          <MetaBoxes />
         </Area>
-        <Workspace />
       </Editor>
     </LayoutProvider>
   );

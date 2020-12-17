@@ -1,155 +1,7 @@
 {
-  "version": 24,
+  "version": 25,
   "pages": [
     {
-      "elements": [
-        {
-          "x": 1,
-          "y": 1,
-          "width": 1,
-          "height": 1,
-          "type": "shape",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
-          "isBackground": true,
-          "id": "95a99f3f-ccbd-4b61-b676-25a8dec8577b",
-          "isDefaultBackground": true
-        },
-        {
-          "x": 65,
-          "y": 69,
-          "width": 347,
-          "height": 456,
-          "type": "image",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": true
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51,
-              "a": 0
-            }
-          },
-          "scale": 170,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "6978fba6-59ce-46bc-b862-92ce2b9795bb",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page1_hero.jpg",
-            "width": 220,
-            "height": 297,
-            "posterId": 0,
-            "id": 32,
-            "title": "fashion_page1_hero",
-            "alt": "fashion_page1_hero",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": -180,
-          "y": 216,
-          "width": 580,
-          "height": 192,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.96,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "a32c17e0-a46b-4821-bbdb-8dc064ac097d",
-          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">FASHION</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">ON THE GO</span>",
-          "fontSize": 100,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page1_logo-generic.png",
-            "width": 32,
-            "height": 10,
-            "id": 1145,
-            "title": "fashion_page1_logo-generic",
-            "alt": "fashion_page1_logo-generic",
-            "local": false,
-            "sizes": []
-          },
-          "type": "image",
-          "x": 27,
-          "y": 30,
-          "width": 75,
-          "height": 22,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "id": "f18e9cbe-088b-4366-99a7-3eec4b8d4c66"
-        }
-      ],
-      "type": "page",
-      "id": "1f51fc35-c1d6-46ea-9580-b38672124162",
       "animations": [
         {
           "id": "e4a11b13-34b6-4213-9e45-55ce9dbf4bfd",
@@ -275,15 +127,6 @@
           "iterations": 1
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 236,
-          "b": 227
-        }
-      }
-    },
-    {
       "elements": [
         {
           "x": 1,
@@ -292,64 +135,75 @@
           "height": 1,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "id": "6a6e5101-6d92-4c64-b1b6-124cf9cce0b1",
+          "id": "95a99f3f-ccbd-4b61-b676-25a8dec8577b",
           "isDefaultBackground": true
         },
         {
+          "x": 65,
+          "y": 69,
+          "width": 347,
+          "height": 456,
+          "type": "image",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": true },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51, "a": 0 } },
+          "scale": 170,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "6978fba6-59ce-46bc-b862-92ce2b9795bb",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page1_hero.jpg",
+            "width": 220,
+            "height": 297,
+            "posterId": 0,
+            "id": 32,
+            "title": "fashion_page1_hero",
+            "alt": "fashion_page1_hero",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": -180,
+          "y": 216,
+          "width": 580,
+          "height": 192,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
-          "type": "shape",
-          "x": 206,
-          "y": 278,
-          "width": 270,
-          "height": 270,
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": -90,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.96,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "id": "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
+          "id": "a32c17e0-a46b-4821-bbdb-8dc064ac097d",
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">FASHION</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">ON THE GO</span>",
+          "fontSize": 100,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 307,
-          "y": 385,
-          "width": 68,
-          "height": 53,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -358,107 +212,34 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page2_arrow.png",
-            "width": 31,
-            "height": 24,
-            "posterId": 0,
-            "id": 83,
-            "title": "fashion_page2_arrow",
-            "alt": "fashion_page2_arrow",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page1_logo-generic.png",
+            "width": 32,
+            "height": 10,
+            "id": 1145,
+            "title": "fashion_page1_logo-generic",
+            "alt": "fashion_page1_logo-generic",
             "local": false,
             "sizes": []
           },
+          "type": "image",
+          "x": 27,
+          "y": 30,
+          "width": 75,
+          "height": 22,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "type": "image",
-          "id": "99696270-286f-4c14-b062-aad2a021672a"
-        },
-        {
-          "x": 18,
-          "y": 524,
-          "width": 229,
-          "height": 28,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "basedOn": "d773925c-2f95-44c0-9b0e-0743d45476f2",
-          "id": "61d23551-31e3-4aad-ac15-b8fc5e4be2ec",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">— ANONYMOUS</span>",
-          "fontSize": 28,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 18,
-          "y": 11,
-          "width": 371,
-          "height": 250,
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "type": "text",
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "id": "d773925c-2f95-44c0-9b0e-0743d45476f2",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">“WHEN WE DRESS WELL, WE NATURALLY BOOST OUR CONFIDENCE”</span>",
-          "fontSize": 50,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "f18e9cbe-088b-4366-99a7-3eec4b8d4c66"
         }
       ],
       "type": "page",
-      "id": "cda99980-6722-4141-9616-25e523a98722",
+      "id": "1f51fc35-c1d6-46ea-9580-b38672124162",
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+    },
+    {
       "animations": [
         {
           "id": "9ffb6b02-a02b-4135-95a5-1a44b2d1dfbe",
@@ -665,15 +446,6 @@
           "iterations": 1
         }
       ],
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 236,
-          "b": 227
-        }
-      }
-    },
-    {
       "elements": [
         {
           "x": 1,
@@ -682,117 +454,71 @@
           "height": 1,
           "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 33,
-              "g": 33,
-              "b": 33
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "id": "589a577a-fcac-49cf-964e-96e092ecf511",
+          "id": "6a6e5101-6d92-4c64-b1b6-124cf9cce0b1",
           "isDefaultBackground": true
         },
         {
-          "x": -55,
-          "y": -60,
-          "width": 442,
-          "height": 678,
-          "type": "image",
-          "opacity": 95,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 170,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "6cca5fcd-80d5-4181-b9e6-2979b80c2b99",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page3_bg.jpg",
-            "width": 220,
-            "height": 261,
-            "posterId": 0,
-            "id": 53,
-            "title": "fashion_page3_bg",
-            "alt": "fashion_page3_bg",
-            "local": false,
-            "sizes": []
-          }
-        },
-        {
-          "x": 0,
-          "y": 330,
-          "width": 412,
-          "height": 290,
-          "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "type": "linear",
-            "stops": [
-              {
-                "color": {
-                  "r": 33,
-                  "g": 33,
-                  "b": 33,
-                  "a": 0.75
-                },
-                "position": 0
-              },
-              {
-                "color": {
-                  "r": 33,
-                  "g": 33,
-                  "b": 33,
-                  "a": 0
-                },
-                "position": 1
-              }
-            ],
-            "rotation": 0.5
-          },
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 108, "b": 74 } },
+          "type": "shape",
+          "x": 206,
+          "y": 278,
+          "width": 270,
+          "height": 270,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "id": "6fc327a4-8e5d-48e8-8285-899267ec1183"
+          "mask": { "type": "burst" },
+          "id": "a3d11546-e7a9-432f-8b88-be8c7ccdb721"
         },
         {
-          "x": 8,
-          "y": -13,
-          "width": 405,
-          "height": 510,
+          "x": 307,
+          "y": 385,
+          "width": 68,
+          "height": 53,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page2_arrow.png",
+            "width": 31,
+            "height": 24,
+            "posterId": 0,
+            "id": 83,
+            "title": "fashion_page2_arrow",
+            "alt": "fashion_page2_arrow",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "99696270-286f-4c14-b062-aad2a021672a"
+        },
+        {
+          "x": 18,
+          "y": 524,
+          "width": 229,
+          "height": 28,
           "font": {
             "service": "fonts.google.com",
             "family": "Playfair Display",
@@ -800,82 +526,55 @@
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 0.96,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "792955f1-699b-499a-bf65-d88b60d613af",
-          "content": "<span style=\"color: #ffece3\">S/S PREV</span>\n<span style=\"color: #ffece3\">IEW</span>",
-          "fontSize": 178,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "d773925c-2f95-44c0-9b0e-0743d45476f2",
+          "id": "61d23551-31e3-4aad-ac15-b8fc5e4be2ec",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">— ANONYMOUS</span>",
+          "fontSize": 28,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 16,
-          "y": 531,
-          "width": 239,
-          "height": 48,
+          "x": 18,
+          "y": 11,
+          "width": 371,
+          "height": 250,
           "font": {
             "service": "fonts.google.com",
-            "family": "DM Sans",
-            "fallbacks": ["sans-serif"]
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
           "type": "text",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.22,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "id": "9bd1600f-5d9d-4beb-bdfb-817b118a8852",
-          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 236, 227, 1)\">PREVIEW THE LATEST LOOKS OF THE SEASON</span></span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "d773925c-2f95-44c0-9b0e-0743d45476f2",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">“WHEN WE DRESS WELL, WE NATURALLY BOOST OUR CONFIDENCE”</span>",
+          "fontSize": 50,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "99ae5466-855b-4d84-9379-c401969ade38",
-      "backgroundColor": {
-        "color": {
-          "r": 33,
-          "g": 33,
-          "b": 33
-        }
-      },
+      "id": "cda99980-6722-4141-9616-25e523a98722",
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+    },
+    {
       "animations": [
         {
           "id": "8eb55f90-5f97-4cd4-90de-38e91bfc506e",
@@ -1024,531 +723,141 @@
           "fill": "both",
           "iterations": 1
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
+          "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "type": "shape",
-          "id": "178de0c9-6a64-450e-bc47-5f38e6884665",
+          "id": "589a577a-fcac-49cf-964e-96e092ecf511",
           "isDefaultBackground": true
         },
         {
-          "x": 17,
-          "y": 13,
-          "width": 143,
-          "height": 74,
+          "x": -55,
+          "y": -60,
+          "width": 442,
+          "height": 678,
+          "type": "image",
+          "opacity": 95,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 170,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "6cca5fcd-80d5-4181-b9e6-2979b80c2b99",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page3_bg.jpg",
+            "width": 220,
+            "height": 261,
+            "posterId": 0,
+            "id": 53,
+            "title": "fashion_page3_bg",
+            "alt": "fashion_page3_bg",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 0,
+          "y": 330,
+          "width": 412,
+          "height": 290,
+          "type": "shape",
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": {
+            "type": "linear",
+            "stops": [
+              {
+                "color": { "r": 33, "g": 33, "b": 33, "a": 0.75 },
+                "position": 0
+              },
+              { "color": { "r": 33, "g": 33, "b": 33, "a": 0 }, "position": 1 }
+            ],
+            "rotation": 0.5
           },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "id": "6fc327a4-8e5d-48e8-8285-899267ec1183"
+        },
+        {
+          "x": 8,
+          "y": -13,
+          "width": 405,
+          "height": 510,
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 0.96,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "id": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MJ</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">KEPLER</span>",
-          "fontSize": 37,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "792955f1-699b-499a-bf65-d88b60d613af",
+          "content": "<span style=\"color: #ffece3\">S/S PREV</span>\n<span style=\"color: #ffece3\">IEW</span>",
+          "fontSize": 178,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 17,
-          "y": 97,
-          "width": 143,
-          "height": 18,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
+          "x": 16,
+          "y": 531,
+          "width": 239,
+          "height": 48,
           "font": {
+            "service": "fonts.google.com",
             "family": "DM Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
-            ]
+            "fallbacks": ["sans-serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
+          "type": "text",
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.22,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "id": "a2a90d9e-2bce-44d3-95cd-77f33c55e144",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.02em\">A RICH HISTORY</span>",
-          "fontSize": 18,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 122,
-          "y": 225,
-          "width": 273,
-          "height": 33,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "8c45242f-9941-4fdc-b5de-3339a36585bf",
-          "content": "<span style=\"color: #212121\">MONOGRAM CANVAS</span>",
-          "fontSize": 26,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 132,
-          "y": 66,
-          "width": 263,
-          "height": 171,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "acb2ccae-1faf-4192-bf28-19614324ed25",
-          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1896</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 18,
-          "y": 251,
-          "width": 131,
-          "height": 85,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
-          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1901</span>",
-          "fontSize": 66,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 19,
-          "y": 329,
-          "width": 195,
-          "height": 33,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "2c548d81-abe2-4f74-9292-9910382fb293",
-          "content": "<span style=\"color: #212121\">THE HOBO BAG</span>",
-          "fontSize": 26,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 264,
-          "y": 353,
-          "width": 131,
-          "height": 85,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
-          "id": "9156bf8e-3cdd-41fb-99c2-f6206f95ec1b",
-          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1930</span>",
-          "fontSize": 66,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 164,
-          "y": 432,
-          "width": 230,
-          "height": 32,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "right",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
-          "id": "78ef1efb-0ca7-4067-9a38-a646987fd096",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE KEPLER BAG</span>",
-          "fontSize": 26,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 20,
-          "y": 571,
-          "width": 272,
-          "height": 32,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "8c45242f-9941-4fdc-b5de-3339a36585bf",
-          "id": "f5593520-3bb3-49d6-bfbd-c9fe2af7ee51",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE STARGAZE BAG</span>",
-          "fontSize": 26,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 18,
-          "y": 451,
-          "width": 195,
-          "height": 129,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "left",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "acb2ccae-1faf-4192-bf28-19614324ed25",
-          "id": "a10cc4c5-ee6f-43dd-a391-ce72a14a43b7",
-          "content": "<span style=\"color: #ff6c4a\">1966</span>",
-          "fontSize": 100,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "9bd1600f-5d9d-4beb-bdfb-817b118a8852",
+          "content": "<span style=\"letter-spacing: 0.0002em\"><span style=\"color: rgba(255, 236, 227, 1)\">PREVIEW THE LATEST LOOKS OF THE SEASON</span></span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "22e2ed54-fa70-43c5-81e8-81ad672bd6ad",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 236,
-          "b": 227
-        }
-      },
+      "id": "99ae5466-855b-4d84-9379-c401969ade38",
+      "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } }
+    },
+    {
       "animations": [
         {
           "id": "cd496dbb-da8b-41f2-93d9-1badcdb81289",
@@ -1846,9 +1155,7 @@
           "easingPreset": "inOutCubic",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -1856,155 +1163,66 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 33,
-              "g": 33,
-              "b": 33
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "db53e416-f618-4f22-9043-0e05f05094e1",
+          "id": "178de0c9-6a64-450e-bc47-5f38e6884665",
           "isDefaultBackground": true
         },
         {
-          "x": -190,
-          "y": 396,
-          "width": 512,
-          "height": 171,
+          "x": 17,
+          "y": 13,
+          "width": 143,
+          "height": 74,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">KEPLER</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": -395,
-          "y": -425,
-          "width": 924,
-          "height": 171,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "id": "875e2b60-1738-425a-8d7d-95f648bb3af6",
-          "content": "<span style=\"color: rgba(255,236,227,0.35); letter-spacing: -0.01em\">THE HANDBAG</span>",
-          "fontSize": 132,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 176,
-          "y": 464,
-          "width": 131,
-          "height": 26,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "service": "fonts.google.com",
             "family": "Playfair Display",
-            "fallbacks": ["serif"]
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "id": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
-          "content": "<span style=\"color: #ff6c4a; letter-spacing: 0.02em\">MJ KEPLER</span>",
-          "fontSize": 21,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MJ</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">KEPLER</span>",
+          "fontSize": 37,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 176,
-          "y": 493,
-          "width": 216,
-          "height": 50,
+          "x": 17,
+          "y": 97,
+          "width": 143,
+          "height": 18,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2023,161 +1241,308 @@
               [1, 700]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.25,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
-          "id": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
-          "content": "<span style=\"color: #ffece3; letter-spacing: 0.02em\">THE KEPLER HANDBAG $450</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "a2a90d9e-2bce-44d3-95cd-77f33c55e144",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.02em\">A RICH HISTORY</span>",
+          "fontSize": 18,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 177,
-          "y": 578,
-          "width": 131,
-          "height": 20,
+          "x": 122,
+          "y": 225,
+          "width": 273,
+          "height": 33,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "DM Sans",
+            "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
             "styles": ["regular", "italic"],
             "variants": [
               [0, 400],
-              [1, 400],
               [0, 500],
-              [1, 500],
+              [0, 600],
               [0, 700],
-              [1, 700]
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "8c45242f-9941-4fdc-b5de-3339a36585bf",
+          "content": "<span style=\"color: #212121\">MONOGRAM CANVAS</span>",
+          "fontSize": 26,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 132,
+          "y": 66,
+          "width": 263,
+          "height": 171,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
-          "lineHeight": 1.25,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "acb2ccae-1faf-4192-bf28-19614324ed25",
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1896</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 18,
+          "y": 251,
+          "width": 131,
+          "height": 85,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
-          "id": "67777589-1517-4a00-9e95-11e262bf02dd",
-          "content": "<span style=\"color: #ffece3; letter-spacing: 0.01em\">LEARN MORE</span>",
-          "fontSize": 16,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1901</span>",
+          "fontSize": 66,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 288,
-          "y": 582,
-          "width": 25,
-          "height": 12,
+          "x": 19,
+          "y": 329,
+          "width": 195,
+          "height": 33,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page5_arrow.png",
-            "width": 8,
-            "height": 4,
-            "posterId": 0,
-            "id": 143,
-            "title": "fashion_page5_arrow",
-            "alt": "fashion_page5_arrow",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "87ae3605-e8e2-4d0f-8700-f84de19e4f01"
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page5_handbag-alt.png",
-            "width": 272,
-            "height": 251,
-            "id": 1147,
-            "title": "fashion_page5_handbag-alt",
-            "alt": "fashion_page5_handbag-alt",
-            "local": false,
-            "sizes": []
+          "type": "text",
+          "id": "2c548d81-abe2-4f74-9292-9910382fb293",
+          "content": "<span style=\"color: #212121\">THE HOBO BAG</span>",
+          "fontSize": 26,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 264,
+          "y": 353,
+          "width": 131,
+          "height": 85,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
-          "type": "image",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e6ee6ead-43e0-45a4-aeef-1bcb7c914fcd",
+          "id": "9156bf8e-3cdd-41fb-99c2-f6206f95ec1b",
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">1930</span>",
+          "fontSize": 66,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
           "x": 164,
-          "y": 15,
-          "width": 439,
-          "height": 405,
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
+          "y": 432,
+          "width": 230,
+          "height": 32,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
-          "id": "f7d6b29f-d15e-4ac3-8372-bd389741dd92"
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "right",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
+          "id": "78ef1efb-0ca7-4067-9a38-a646987fd096",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE KEPLER BAG</span>",
+          "fontSize": 26,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 20,
+          "y": 571,
+          "width": 272,
+          "height": 32,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "8c45242f-9941-4fdc-b5de-3339a36585bf",
+          "id": "f5593520-3bb3-49d6-bfbd-c9fe2af7ee51",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE STARGAZE BAG</span>",
+          "fontSize": 26,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 18,
+          "y": 451,
+          "width": 195,
+          "height": 129,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "left",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "acb2ccae-1faf-4192-bf28-19614324ed25",
+          "id": "a10cc4c5-ee6f-43dd-a391-ce72a14a43b7",
+          "content": "<span style=\"color: #ff6c4a\">1966</span>",
+          "fontSize": 100,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "06f93f32-41a9-4fcd-9d03-08ea29f591e4",
-      "backgroundColor": {
-        "color": {
-          "r": 33,
-          "g": 33,
-          "b": 33
-        }
-      },
+      "id": "22e2ed54-fa70-43c5-81e8-81ad672bd6ad",
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+    },
+    {
       "animations": [
         {
           "id": "31ebab8d-38c2-4fd2-ba40-dcddb6e0b4d1",
@@ -2392,9 +1757,7 @@
           "fill": "both",
           "iterations": 1
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -2402,38 +1765,24 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "dc3c80d7-8757-4231-826a-0d0c34f6e15e",
+          "id": "db53e416-f618-4f22-9043-0e05f05094e1",
           "isDefaultBackground": true
         },
         {
-          "x": 15,
-          "y": -1,
-          "width": 381,
-          "height": 153,
+          "x": -190,
+          "y": 396,
+          "width": 512,
+          "height": 171,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
@@ -2441,354 +1790,53 @@
             "family": "Playfair Display",
             "fallbacks": ["serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "id": "735394cc-0da6-479c-951d-14579f0766ef",
-          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">TOP 5</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">COLLECTIONS</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">THIS SEASON</span>",
-          "fontSize": 51,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
+          "content": "<span style=\"color: #ffece3; letter-spacing: -0.01em\">KEPLER</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 44,
-          "y": 204,
-          "width": 254,
-          "height": 48,
+          "x": -395,
+          "y": -425,
+          "width": 924,
+          "height": 171,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
-          "id": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
-          "content": "<span style=\"color: #212121\">MJ KEPLER</span>",
-          "fontSize": 48,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
+          "id": "875e2b60-1738-425a-8d7d-95f648bb3af6",
+          "content": "<span style=\"color: rgba(255,236,227,0.35); letter-spacing: -0.01em\">THE HANDBAG</span>",
+          "fontSize": 132,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 180,
-          "y": 294,
-          "width": 170,
-          "height": 48,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
-          "id": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
-          "content": "<span style=\"color: #212121\">JARDIN</span>",
-          "fontSize": 48,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 15,
-          "y": 382,
-          "width": 296,
-          "height": 48,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
-          "id": "dc565020-6358-44d9-9aac-a8eb90e76415",
-          "content": "<span style=\"color: #212121\">RICK MARKS</span>",
-          "fontSize": 48,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 107,
+          "x": 176,
           "y": 464,
-          "width": 136,
-          "height": 48,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "dc565020-6358-44d9-9aac-a8eb90e76415",
-          "id": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
-          "content": "<span style=\"color: #212121\">PRAG</span>",
-          "fontSize": 48,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 70,
-          "y": 554,
-          "width": 251,
-          "height": 48,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
-          "id": "7726e175-d97f-42ed-bb2e-a581f4135332",
-          "content": "<span style=\"color: #212121\">RAG’N TAG</span>",
-          "fontSize": 48,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 242,
-          "y": 175,
-          "width": 60,
-          "height": 60,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
-            "width": 28,
-            "height": 28,
-            "posterId": 0,
-            "id": 158,
-            "title": "fashion_page6_pinwheel-outline",
-            "alt": "fashion_page6_pinwheel-outline",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "id": "b9736281-90de-4a2e-b813-7faddcba9dd9"
-        },
-        {
-          "x": 254.5,
-          "y": 187,
-          "width": 35,
+          "width": 131,
           "height": 26,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2797,53 +1845,116 @@
             "family": "Playfair Display",
             "fallbacks": ["serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
-          "id": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1</span></span>",
-          "fontSize": 36,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: 0.02em\">MJ KEPLER</span>",
+          "fontSize": 21,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 150,
-          "y": 263,
-          "width": 60,
-          "height": 60,
+          "x": 176,
+          "y": 493,
+          "width": 216,
+          "height": 50,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "DM Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.25,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "f19846b4-b351-4607-a8f9-c7e69ff7a6f3",
+          "id": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
+          "content": "<span style=\"color: #ffece3; letter-spacing: 0.02em\">THE KEPLER HANDBAG $450</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 177,
+          "y": 578,
+          "width": 131,
+          "height": 20,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "DM Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.25,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "61b42950-25ca-46cf-83bf-1e04cdc0cd94",
+          "id": "67777589-1517-4a00-9e95-11e262bf02dd",
+          "content": "<span style=\"color: #ffece3; letter-spacing: 0.01em\">LEARN MORE</span>",
+          "fontSize": 16,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 288,
+          "y": 582,
+          "width": 25,
+          "height": 12,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
-            "width": 28,
-            "height": 28,
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page5_arrow.png",
+            "width": 8,
+            "height": 4,
             "posterId": 0,
-            "id": 158,
-            "title": "fashion_page6_pinwheel-outline",
-            "alt": "fashion_page6_pinwheel-outline",
+            "id": 143,
+            "title": "fashion_page5_arrow",
+            "alt": "fashion_page5_arrow",
             "local": false,
             "sizes": []
           },
@@ -2854,293 +1965,47 @@
             "ratio": 1
           },
           "type": "image",
-          "basedOn": "b9736281-90de-4a2e-b813-7faddcba9dd9",
-          "id": "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"
+          "id": "87ae3605-e8e2-4d0f-8700-f84de19e4f01"
         },
         {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page5_handbag-alt.png",
+            "width": 272,
+            "height": 251,
+            "id": 1147,
+            "title": "fashion_page5_handbag-alt",
+            "alt": "fashion_page5_handbag-alt",
+            "local": false,
+            "sizes": []
+          },
+          "type": "image",
           "x": 164,
-          "y": 271,
-          "width": 32,
-          "height": 38,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
-          "id": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">2</span></span>",
-          "fontSize": 36,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 280,
-          "y": 353,
-          "width": 60,
-          "height": 60,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
-            "width": 28,
-            "height": 28,
-            "posterId": 0,
-            "id": 158,
-            "title": "fashion_page6_pinwheel-outline",
-            "alt": "fashion_page6_pinwheel-outline",
-            "local": false,
-            "sizes": []
-          },
+          "y": 15,
+          "width": 439,
+          "height": 405,
           "mask": {
             "type": "rectangle",
             "name": "Rectangle",
             "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
             "ratio": 1
           },
-          "type": "image",
-          "basedOn": "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa",
-          "id": "1995d229-c3c4-4f57-8e19-dc65b333e87a"
-        },
-        {
-          "x": 288.5,
-          "y": 360,
-          "width": 43,
-          "height": 36,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
-          "id": "53f8e685-93b5-4971-bb76-03d52602eb47",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">3</span></span>",
-          "fontSize": 36,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 77,
-          "y": 434,
-          "width": 60,
-          "height": 60,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
-            "width": 28,
-            "height": 28,
-            "posterId": 0,
-            "id": 158,
-            "title": "fashion_page6_pinwheel-outline",
-            "alt": "fashion_page6_pinwheel-outline",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "basedOn": "1995d229-c3c4-4f57-8e19-dc65b333e87a",
-          "id": "8368daee-25c0-47fa-a3f8-f1d087aff0ea"
-        },
-        {
-          "x": 82,
-          "y": 440,
-          "width": 51,
-          "height": 36,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "53f8e685-93b5-4971-bb76-03d52602eb47",
-          "id": "c8f479d6-429d-4ea4-93e8-ce8dfb37a5d5",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">4</span></span>",
-          "fontSize": 36,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 302,
-          "y": 524,
-          "width": 60,
-          "height": 60,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
-            "width": 28,
-            "height": 28,
-            "posterId": 0,
-            "id": 158,
-            "title": "fashion_page6_pinwheel-outline",
-            "alt": "fashion_page6_pinwheel-outline",
-            "local": false,
-            "sizes": []
-          },
-          "mask": {
-            "type": "rectangle",
-            "name": "Rectangle",
-            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
-            "ratio": 1
-          },
-          "type": "image",
-          "basedOn": "8368daee-25c0-47fa-a3f8-f1d087aff0ea",
-          "id": "797bc565-14f8-4635-aef9-d3aaa1d4f61f"
-        },
-        {
-          "x": 311,
-          "y": 530,
-          "width": 42,
-          "height": 36,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "service": "fonts.google.com",
-            "family": "Playfair Display",
-            "fallbacks": ["serif"]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1,
-          "textAlign": "center",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "53f8e685-93b5-4971-bb76-03d52602eb47",
-          "id": "175d2727-d683-4601-8405-f0a2ee56a654",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">5</span></span>",
-          "fontSize": 36,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "f7d6b29f-d15e-4ac3-8372-bd389741dd92"
         }
       ],
       "type": "page",
-      "id": "e39c480a-e017-4c6e-b48c-4dc1ef00f6ab",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 236,
-          "b": 227
-        }
-      },
+      "id": "06f93f32-41a9-4fcd-9d03-08ea29f591e4",
+      "backgroundColor": { "color": { "r": 33, "g": 33, "b": 33 } }
+    },
+    {
       "animations": [
         {
           "id": "7a7f69b6-b7d3-407b-b048-53f838ed2f47",
@@ -3618,9 +2483,7 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -3628,78 +2491,50 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
           "type": "shape",
-          "id": "68541aa4-d532-4f23-b89e-7dc34882f49b",
+          "id": "dc3c80d7-8757-4231-826a-0d0c34f6e15e",
           "isDefaultBackground": true
         },
         {
-          "x": -1,
-          "y": -57,
-          "width": 386,
-          "height": 426,
-          "opacity": 90,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "x": 15,
+          "y": -1,
+          "width": 381,
+          "height": 153,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": false,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
-          "scale": 250,
-          "focalX": 46.86957537007236,
-          "focalY": 44.74151693332471,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "7ecf93c5-2286-495d-86e9-30cdf0bf32b3",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_hero.jpg",
-            "width": 220,
-            "height": 274,
-            "posterId": 0,
-            "id": 196,
-            "title": "fashion_page7_hero",
-            "alt": "fashion_page7_hero",
-            "local": false,
-            "sizes": []
-          }
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "id": "735394cc-0da6-479c-951d-14579f0766ef",
+          "content": "<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">TOP 5</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">COLLECTIONS</span>\n<span style=\"color: #ff6c4a; letter-spacing: -0.01em\">THIS SEASON</span>",
+          "fontSize": 51,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 19,
-          "y": 400,
-          "width": 135,
-          "height": 51,
+          "x": 44,
+          "y": 204,
+          "width": 254,
+          "height": 48,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3724,13 +2559,51 @@
               [1, 900]
             ]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
+          "id": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
+          "content": "<span style=\"color: #212121\">MJ KEPLER</span>",
+          "fontSize": 48,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 180,
+          "y": 294,
+          "width": 170,
+          "height": 48,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "initial",
           "scale": 100,
@@ -3738,24 +2611,150 @@
           "focalY": 50,
           "type": "text",
           "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
-          "id": "9ce78e9e-7568-45de-bef3-1f9438a11568",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">PRAG</span>",
-          "fontSize": 51,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
+          "content": "<span style=\"color: #212121\">JARDIN</span>",
+          "fontSize": 48,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 9,
-          "y": 302,
-          "width": 134,
-          "height": 134,
+          "x": 15,
+          "y": 382,
+          "width": 296,
+          "height": 48,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "f40e6fac-12c9-4259-a5af-8de9d1fd1c64",
+          "id": "dc565020-6358-44d9-9aac-a8eb90e76415",
+          "content": "<span style=\"color: #212121\">RICK MARKS</span>",
+          "fontSize": 48,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 107,
+          "y": 464,
+          "width": 136,
+          "height": 48,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "dc565020-6358-44d9-9aac-a8eb90e76415",
+          "id": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
+          "content": "<span style=\"color: #212121\">PRAG</span>",
+          "fontSize": 48,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 70,
+          "y": 554,
+          "width": 251,
+          "height": 48,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "d6fea8bd-8f0a-414b-a845-722d436a6d43",
+          "id": "7726e175-d97f-42ed-bb2e-a581f4135332",
+          "content": "<span style=\"color: #212121\">RAG’N TAG</span>",
+          "fontSize": 48,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 242,
+          "y": 175,
+          "width": 60,
+          "height": 60,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -3764,13 +2763,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_pinwheel.png",
-            "width": 123,
-            "height": 123,
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "width": 28,
+            "height": 28,
             "posterId": 0,
-            "id": 198,
-            "title": "fashion_page7_pinwheel",
-            "alt": "fashion_page7_pinwheel",
+            "id": 158,
+            "title": "fashion_page6_pinwheel-outline",
+            "alt": "fashion_page6_pinwheel-outline",
             "local": false,
             "sizes": []
           },
@@ -3781,18 +2780,15 @@
             "ratio": 1
           },
           "type": "image",
-          "id": "e03c6326-6b3a-4a11-b7f1-80decd115e08"
+          "id": "b9736281-90de-4a2e-b813-7faddcba9dd9"
         },
         {
-          "x": 37,
-          "y": 315,
-          "width": 75,
-          "height": 78,
+          "x": 254.5,
+          "y": 187,
+          "width": 35,
+          "height": 26,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3801,13 +2797,7 @@
             "family": "Playfair Display",
             "fallbacks": ["serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1,
           "textAlign": "center",
           "scale": 100,
@@ -3815,138 +2805,33 @@
           "focalY": 50,
           "type": "text",
           "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
-          "id": "8c86903b-0df0-4c1e-a75a-23f1e79522b3",
+          "id": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
           "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1</span></span>",
-          "fontSize": 78,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "fontSize": 36,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 22,
-          "y": 468,
-          "width": 363,
-          "height": 132,
+          "x": 150,
+          "y": 263,
+          "width": 60,
+          "height": 60,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "DM Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.3,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "id": "43b205d1-376b-4eaf-b493-e55d70f8703e",
-          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus. Proin malesuada maximus felis, non lacinia est porttitor ante eget scelerisque.</span>",
-          "fontSize": 17,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 22,
-          "y": 637,
-          "width": 131,
-          "height": 20,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "DM Sans",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [400, 500, 700],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [1, 400],
-              [0, 500],
-              [1, 500],
-              [0, 700],
-              [1, 700]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.25,
-          "textAlign": "initial",
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "type": "text",
-          "basedOn": "67777589-1517-4a00-9e95-11e262bf02dd",
-          "id": "46ec18b4-8061-467f-88a0-fb2abd494061",
-          "content": "<span style=\"color: #212121; letter-spacing: 0.01em\">LEARN MORE</span>",
-          "fontSize": 16,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
-        },
-        {
-          "x": 137,
-          "y": 641,
-          "width": 25,
-          "height": 12,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": false,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "resource": {
             "type": "image",
             "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_arrow.png",
-            "width": 8,
-            "height": 4,
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "width": 28,
+            "height": 28,
             "posterId": 0,
-            "id": 203,
-            "title": "fashion_page7_arrow",
-            "alt": "fashion_page7_arrow",
+            "id": 158,
+            "title": "fashion_page6_pinwheel-outline",
+            "alt": "fashion_page6_pinwheel-outline",
             "local": false,
             "sizes": []
           },
@@ -3957,18 +2842,232 @@
             "ratio": 1
           },
           "type": "image",
-          "id": "08232848-6452-4121-8ffa-724c8e587687"
+          "basedOn": "b9736281-90de-4a2e-b813-7faddcba9dd9",
+          "id": "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa"
+        },
+        {
+          "x": 164,
+          "y": 271,
+          "width": 32,
+          "height": 38,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "3873fcaf-3c89-43dd-ba61-47bfed747b3e",
+          "id": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">2</span></span>",
+          "fontSize": 36,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 280,
+          "y": 353,
+          "width": 60,
+          "height": 60,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "width": 28,
+            "height": 28,
+            "posterId": 0,
+            "id": 158,
+            "title": "fashion_page6_pinwheel-outline",
+            "alt": "fashion_page6_pinwheel-outline",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "9cc65a3f-90c8-4a6b-8994-2db0da03e2aa",
+          "id": "1995d229-c3c4-4f57-8e19-dc65b333e87a"
+        },
+        {
+          "x": 288.5,
+          "y": 360,
+          "width": 43,
+          "height": 36,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "e614554a-4201-4bdd-9ced-c5fe97c758c8",
+          "id": "53f8e685-93b5-4971-bb76-03d52602eb47",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">3</span></span>",
+          "fontSize": 36,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 77,
+          "y": 434,
+          "width": 60,
+          "height": 60,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "width": 28,
+            "height": 28,
+            "posterId": 0,
+            "id": 158,
+            "title": "fashion_page6_pinwheel-outline",
+            "alt": "fashion_page6_pinwheel-outline",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "1995d229-c3c4-4f57-8e19-dc65b333e87a",
+          "id": "8368daee-25c0-47fa-a3f8-f1d087aff0ea"
+        },
+        {
+          "x": 82,
+          "y": 440,
+          "width": 51,
+          "height": 36,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "53f8e685-93b5-4971-bb76-03d52602eb47",
+          "id": "c8f479d6-429d-4ea4-93e8-ce8dfb37a5d5",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">4</span></span>",
+          "fontSize": 36,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 302,
+          "y": 524,
+          "width": 60,
+          "height": 60,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page6_pinwheel-outline.png",
+            "width": 28,
+            "height": 28,
+            "posterId": 0,
+            "id": 158,
+            "title": "fashion_page6_pinwheel-outline",
+            "alt": "fashion_page6_pinwheel-outline",
+            "local": false,
+            "sizes": []
+          },
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "basedOn": "8368daee-25c0-47fa-a3f8-f1d087aff0ea",
+          "id": "797bc565-14f8-4635-aef9-d3aaa1d4f61f"
+        },
+        {
+          "x": 311,
+          "y": 530,
+          "width": 42,
+          "height": 36,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "service": "fonts.google.com",
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "53f8e685-93b5-4971-bb76-03d52602eb47",
+          "id": "175d2727-d683-4601-8405-f0a2ee56a654",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">5</span></span>",
+          "fontSize": 36,
+          "padding": { "horizontal": 0, "vertical": 0 }
         }
       ],
       "type": "page",
-      "id": "050444c7-6097-410f-8147-0c195b051a27",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 236,
-          "b": 227
-        }
-      },
+      "id": "e39c480a-e017-4c6e-b48c-4dc1ef00f6ab",
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+    },
+    {
       "animations": [
         {
           "id": "127c30e0-7296-4257-b7e9-8382c5576d90",
@@ -4234,9 +3333,7 @@
           "easingPreset": "linear",
           "fill": "both"
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -4244,53 +3341,132 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": true
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 255,
-              "b": 255
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
+          "type": "shape",
+          "id": "68541aa4-d532-4f23-b89e-7dc34882f49b",
+          "isDefaultBackground": true
+        },
+        {
+          "x": -1,
+          "y": -57,
+          "width": 386,
+          "height": 426,
+          "opacity": 90,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": false,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 250,
+          "focalX": 46.86957537007236,
+          "focalY": 44.74151693332471,
+          "mask": { "type": "rectangle" },
           "type": "image",
-          "id": "a879eb64-3b0f-49f7-93de-e63359e6fb1a",
+          "id": "7ecf93c5-2286-495d-86e9-30cdf0bf32b3",
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page8_bg.jpg",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_hero.jpg",
             "width": 220,
-            "height": 291,
+            "height": 274,
             "posterId": 0,
-            "id": 207,
-            "title": "fashion_page8_bg",
-            "alt": "fashion_page8_bg",
+            "id": 196,
+            "title": "fashion_page7_hero",
+            "alt": "fashion_page7_hero",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 19,
+          "y": 400,
+          "width": 135,
+          "height": 51,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "ecfb31af-00a8-4533-b86a-e268e7b2a573",
+          "id": "9ce78e9e-7568-45de-bef3-1f9438a11568",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">PRAG</span>",
+          "fontSize": 51,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 9,
+          "y": 302,
+          "width": 134,
+          "height": 134,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_pinwheel.png",
+            "width": 123,
+            "height": 123,
+            "posterId": 0,
+            "id": 198,
+            "title": "fashion_page7_pinwheel",
+            "alt": "fashion_page7_pinwheel",
             "local": false,
             "sizes": []
           },
-          "scale": 120,
-          "focalX": 54.19913419913419,
-          "focalY": 58.333333333333336
+          "mask": {
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
+          },
+          "type": "image",
+          "id": "e03c6326-6b3a-4a11-b7f1-80decd115e08"
         },
         {
-          "x": -378,
-          "y": 191,
-          "width": 875,
-          "height": 143,
+          "x": 37,
+          "y": 315,
+          "width": 75,
+          "height": 78,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": -90,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
@@ -4298,312 +3474,134 @@
             "family": "Playfair Display",
             "fallbacks": ["serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1,
+          "textAlign": "center",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "735394cc-0da6-479c-951d-14579f0766ef",
+          "id": "8c86903b-0df0-4c1e-a75a-23f1e79522b3",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(255, 108, 74, 1)\">1</span></span>",
+          "fontSize": 78,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 22,
+          "y": 468,
+          "width": 363,
+          "height": 132,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "DM Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
+            ]
           },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
-          "id": "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5",
-          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">GET THE LOOK</span></span>",
-          "fontSize": 110,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "id": "43b205d1-376b-4eaf-b493-e55d70f8703e",
+          "content": "<span style=\"color: rgba(133, 130, 128, 1)\">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel dui erat. Curabitur sit amet venenatis felis. In ac ornare lacus. Integer vitae lacus a lectus eleifend finibus. Proin malesuada maximus felis, non lacinia est porttitor ante eget scelerisque.</span>",
+          "fontSize": 17,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
+          "x": 22,
+          "y": 637,
+          "width": 131,
+          "height": 20,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "DM Sans",
+            "service": "fonts.google.com",
+            "fallbacks": ["sans-serif"],
+            "weights": [400, 500, 700],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700]
+            ]
           },
-          "type": "shape",
-          "x": 131,
-          "y": 110,
-          "width": 32,
-          "height": 32,
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.25,
+          "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "id": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3"
+          "type": "text",
+          "basedOn": "67777589-1517-4a00-9e95-11e262bf02dd",
+          "id": "46ec18b4-8061-467f-88a0-fb2abd494061",
+          "content": "<span style=\"color: #212121; letter-spacing: 0.01em\">LEARN MORE</span>",
+          "fontSize": 16,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
+          "x": 137,
+          "y": 641,
+          "width": 25,
+          "height": 12,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 24,
+          "lockAspectRatio": false,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page7_arrow.png",
+            "width": 8,
+            "height": 4,
+            "posterId": 0,
+            "id": 203,
+            "title": "fashion_page7_arrow",
+            "alt": "fashion_page7_arrow",
+            "local": false,
+            "sizes": []
+          },
           "mask": {
-            "type": "burst"
+            "type": "rectangle",
+            "name": "Rectangle",
+            "path": "M 0,0 1,0 1,1 0,1 0,0 Z",
+            "ratio": 1
           },
-          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
-          "id": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
-          "x": 135,
-          "y": 114,
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "type": "shape",
-          "width": 32,
-          "height": 32,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
-          "id": "8c069227-c1ab-41cf-96b2-7d2ab9e03ef5",
-          "x": 191,
-          "y": 249
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "basedOn": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
-          "id": "508d68d8-d633-4bc5-9937-cce7bb74930e",
-          "x": 195,
-          "y": 253,
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "type": "shape",
-          "width": 32,
-          "height": 32,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
-          "id": "830924ad-11c5-47d8-962f-42db6c1ed5d3",
-          "x": 291,
-          "y": 381
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "basedOn": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
-          "id": "8eb53cc7-ce88-4d10-be25-43a29e030ce4",
-          "x": 295,
-          "y": 385,
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": "Example Domain"
-          }
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "type": "shape",
-          "width": 32,
-          "height": 32,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "basedOn": "830924ad-11c5-47d8-962f-42db6c1ed5d3",
-          "id": "191717bc-a737-4bcc-b07b-8eb1d58d1379",
-          "x": 157,
-          "y": 542
-        },
-        {
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 108,
-              "b": 74
-            }
-          },
-          "type": "shape",
-          "width": 24,
-          "height": 24,
-          "scale": 100,
-          "focalX": 50,
-          "focalY": 50,
-          "mask": {
-            "type": "burst"
-          },
-          "basedOn": "8eb53cc7-ce88-4d10-be25-43a29e030ce4",
-          "id": "11becc4b-a92d-41ee-a39f-4a034cea7813",
-          "x": 161,
-          "y": 546,
-          "link": {
-            "url": "https://example.com/",
-            "icon": null,
-            "desc": null
-          }
+          "type": "image",
+          "id": "08232848-6452-4121-8ffa-724c8e587687"
         }
       ],
       "type": "page",
-      "id": "9e35d123-c307-4474-abd6-bb80a265bb2a",
-      "defaultBackgroundElement": {
-        "type": "shape",
-        "x": 1,
-        "y": 1,
-        "width": 1,
-        "height": 1,
-        "rotationAngle": 0,
-        "mask": {
-          "type": "rectangle"
-        },
-        "backgroundColor": {
-          "color": {
-            "r": 255,
-            "g": 255,
-            "b": 255,
-            "a": 1
-          }
-        },
-        "isBackground": true,
-        "isDefaultBackground": true,
-        "id": "452a4add-0155-44fd-8521-042dcbf88594"
-      },
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 1
-        }
-      },
+      "id": "050444c7-6097-410f-8147-0c195b051a27",
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
+    },
+    {
       "animations": [
         {
           "id": "be590edb-ee8e-4193-a127-207ab9e73571",
@@ -4888,9 +3886,7 @@
           "fill": "both",
           "iterations": 1
         }
-      ]
-    },
-    {
+      ],
       "elements": [
         {
           "x": 1,
@@ -4898,485 +3894,239 @@
           "width": 1,
           "height": 1,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": true },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 255,
-              "g": 236,
-              "b": 227
-            }
-          },
-          "mask": {
-            "type": "rectangle"
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "mask": { "type": "rectangle" },
           "isBackground": true,
-          "type": "shape",
-          "id": "55d761b2-f2ae-4878-8c07-57908d3ab5ca",
-          "isDefaultBackground": true
+          "type": "image",
+          "id": "a879eb64-3b0f-49f7-93de-e63359e6fb1a",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page8_bg.jpg",
+            "width": 220,
+            "height": 291,
+            "posterId": 0,
+            "id": 207,
+            "title": "fashion_page8_bg",
+            "alt": "fashion_page8_bg",
+            "local": false,
+            "sizes": []
+          },
+          "scale": 120,
+          "focalX": 54.19913419913419,
+          "focalY": 58.333333333333336
         },
         {
-          "x": 29,
-          "y": 5,
-          "width": 213,
-          "height": 129,
+          "x": -378,
+          "y": 191,
+          "width": 875,
+          "height": 143,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": -90,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Playfair Display",
             "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
+            "family": "Playfair Display",
+            "fallbacks": ["serif"]
           },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "initial",
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
           "type": "text",
-          "basedOn": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
-          "id": "421f76ac-4c4d-4a44-ad77-622facf57db5",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MORE</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">STORIES</span>",
-          "fontSize": 50,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "basedOn": "bad4432f-b82b-4579-bb2d-d9858f7feec2",
+          "id": "faf0a8bb-fa80-40b7-b423-80b8bd4cd7a5",
+          "content": "<span style=\"letter-spacing: -0.0001em\"><span style=\"color: rgba(33, 33, 33, 1)\">GET THE LOOK</span></span>",
+          "fontSize": 110,
+          "padding": { "horizontal": 0, "vertical": 0 }
         },
         {
-          "x": 148,
-          "y": 188,
-          "width": 217,
-          "height": 44,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "type": "shape",
+          "x": 131,
+          "y": 110,
+          "width": 32,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
-          "id": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">HOW TO PULL OFF THE</span>\n<span style=\"letter-spacing: -0.01em\">ALL DENIM LOOK</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "mask": { "type": "burst" },
+          "id": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3"
         },
         {
-          "x": 148,
-          "y": 299,
-          "width": 249,
-          "height": 43,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 255, "g": 108, "b": 74 } },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
-          "id": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE BEST STREET </span><span style=\"letter-spacing: -0.01em\">STYLES FROM NYFW</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
+          "mask": { "type": "burst" },
+          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
+          "id": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
+          "x": 135,
+          "y": 114,
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
           }
         },
         {
-          "x": 148,
-          "y": 416,
-          "width": 227,
-          "height": 44,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "type": "shape",
+          "width": 32,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "basedOn": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
-          "id": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE LATEST TRENDS </span><span style=\"letter-spacing: -0.01em\">IN SNEAKER LAND</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          }
+          "mask": { "type": "burst" },
+          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
+          "id": "8c069227-c1ab-41cf-96b2-7d2ab9e03ef5",
+          "x": 191,
+          "y": 249
         },
         {
-          "x": 30,
-          "y": 163,
-          "width": 94,
-          "height": 94,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
+          "backgroundColor": { "color": { "r": 255, "g": 108, "b": 74 } },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "id": "d01ae69c-43cc-455e-bb63-250642795201",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/png",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item1-cropped.png",
-            "width": 43,
-            "height": 43,
-            "posterId": 0,
-            "id": 253,
-            "title": "fashion_page9_item1-cropped",
-            "alt": "fashion_page9_item1-cropped",
-            "local": false,
-            "sizes": []
+          "mask": { "type": "burst" },
+          "basedOn": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
+          "id": "508d68d8-d633-4bc5-9937-cce7bb74930e",
+          "x": 195,
+          "y": 253,
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
           }
         },
         {
-          "x": 30,
-          "y": 274,
-          "width": 94,
-          "height": 94,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 130,
-          "focalX": 41.611295124593894,
-          "focalY": 35.212817670108095,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "basedOn": "d01ae69c-43cc-455e-bb63-250642795201",
-          "id": "c77c788b-cba9-421d-8a9a-2e8b604e99b8",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item2.jpg",
-            "width": 220,
-            "height": 331,
-            "posterId": 0,
-            "id": 246,
-            "title": "fashion_page9_item2",
-            "alt": "fashion_page9_item2",
-            "local": false,
-            "sizes": []
-          }
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "type": "shape",
+          "width": 32,
+          "height": 32,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "burst" },
+          "basedOn": "6f7115f5-66d3-47b1-ad9c-ef16c1aabdf3",
+          "id": "830924ad-11c5-47d8-962f-42db6c1ed5d3",
+          "x": 291,
+          "y": 381
         },
         {
-          "x": 29,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 108, "b": 74 } },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "burst" },
+          "basedOn": "f8d34cbd-6ead-46c3-aef2-1113b01df08e",
+          "id": "8eb53cc7-ce88-4d10-be25-43a29e030ce4",
+          "x": 295,
           "y": 385,
-          "width": 94,
-          "height": 94,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 220,
-          "focalX": 53.074903314458275,
-          "focalY": 63.289037207094864,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "basedOn": "c77c788b-cba9-421d-8a9a-2e8b604e99b8",
-          "id": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item3.jpg",
-            "width": 229,
-            "height": 157,
-            "posterId": 0,
-            "id": 247,
-            "title": "fashion_page9_item3",
-            "alt": "fashion_page9_item3",
-            "local": false,
-            "sizes": []
+          "link": {
+            "url": "https://example.com/",
+            "icon": null,
+            "desc": "Example Domain"
           }
         },
         {
-          "width": 94,
-          "height": 94,
           "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
-          "backgroundColor": {
-            "color": {
-              "r": 51,
-              "g": 51,
-              "b": 51
-            }
-          },
-          "scale": 210,
-          "focalX": 50.23363426439001,
-          "focalY": 56.7630971270795,
-          "mask": {
-            "type": "rectangle"
-          },
-          "type": "image",
-          "resource": {
-            "type": "image",
-            "mimeType": "image/jpeg",
-            "creationDate": "2020-06-29T20:54:29",
-            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item4.jpg",
-            "width": 330,
-            "height": 494,
-            "posterId": 0,
-            "id": 1854,
-            "title": "fashion_page9_item4",
-            "alt": "fashion_page9_item4",
-            "local": false,
-            "sizes": []
-          },
-          "basedOn": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
-          "id": "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
-          "x": 29,
-          "y": 496
-        },
-        {
-          "width": 195,
-          "height": 22,
-          "opacity": 100,
-          "flip": {
-            "vertical": false,
-            "horizontal": false
-          },
-          "rotationAngle": 0,
-          "lockAspectRatio": true,
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "Playfair Display",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [400, 500, 600, 700, 800, 900],
-            "styles": ["regular", "italic"],
-            "variants": [
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "backgroundColor": {
-            "color": {
-              "r": 196,
-              "g": 196,
-              "b": 196
-            }
-          },
-          "lineHeight": 1.1,
-          "textAlign": "initial",
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "type": "shape",
+          "width": 32,
+          "height": 32,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "type": "text",
-          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE 90’S BACK!</span>",
-          "fontSize": 20,
-          "padding": {
-            "horizontal": 0,
-            "vertical": 0
-          },
-          "basedOn": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
-          "id": "0785511b-324d-4a52-90bc-1fa6d5a8a0e6",
-          "x": 148,
-          "y": 531
+          "mask": { "type": "burst" },
+          "basedOn": "830924ad-11c5-47d8-962f-42db6c1ed5d3",
+          "id": "191717bc-a737-4bcc-b07b-8eb1d58d1379",
+          "x": 157,
+          "y": 542
+        },
+        {
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 108, "b": 74 } },
+          "type": "shape",
+          "width": 24,
+          "height": 24,
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "burst" },
+          "basedOn": "8eb53cc7-ce88-4d10-be25-43a29e030ce4",
+          "id": "11becc4b-a92d-41ee-a39f-4a034cea7813",
+          "x": 161,
+          "y": 546,
+          "link": { "url": "https://example.com/", "icon": null, "desc": null }
         }
       ],
       "type": "page",
-      "id": "a9ed1626-720d-4b66-bfbd-40441c83390c",
-      "backgroundColor": {
-        "color": {
-          "r": 255,
-          "g": 236,
-          "b": 227
-        }
+      "id": "9e35d123-c307-4474-abd6-bb80a265bb2a",
+      "defaultBackgroundElement": {
+        "type": "shape",
+        "x": 1,
+        "y": 1,
+        "width": 1,
+        "height": 1,
+        "rotationAngle": 0,
+        "mask": { "type": "rectangle" },
+        "backgroundColor": {
+          "color": { "r": 255, "g": 255, "b": 255, "a": 1 }
+        },
+        "isBackground": true,
+        "isDefaultBackground": true,
+        "id": "452a4add-0155-44fd-8521-042dcbf88594"
       },
+      "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255, "a": 1 } }
+    },
+    {
       "animations": [
         {
           "id": "abb31802-bff0-42bc-a6d9-c37b95cd3431",
@@ -5620,7 +4370,372 @@
           "fill": "both",
           "iterations": 1
         }
-      ]
+      ],
+      "elements": [
+        {
+          "x": 1,
+          "y": 1,
+          "width": 1,
+          "height": 1,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } },
+          "mask": { "type": "rectangle" },
+          "isBackground": true,
+          "type": "shape",
+          "id": "55d761b2-f2ae-4878-8c07-57908d3ab5ca",
+          "isDefaultBackground": true
+        },
+        {
+          "x": 29,
+          "y": 5,
+          "width": 213,
+          "height": 129,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.3,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "64b41c08-0817-4b98-aa55-0aaa9ea205e8",
+          "id": "421f76ac-4c4d-4a44-ad77-622facf57db5",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">MORE</span>\n<span style=\"color: #212121; letter-spacing: -0.01em\">STORIES</span>",
+          "fontSize": 50,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 148,
+          "y": 188,
+          "width": 217,
+          "height": 44,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "2c548d81-abe2-4f74-9292-9910382fb293",
+          "id": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">HOW TO PULL OFF THE</span>\n<span style=\"letter-spacing: -0.01em\">ALL DENIM LOOK</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 148,
+          "y": 299,
+          "width": 249,
+          "height": 43,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "1043803d-625c-4b7a-a5ad-1cdecfbb1c62",
+          "id": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE BEST STREET </span><span style=\"letter-spacing: -0.01em\">STYLES FROM NYFW</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 148,
+          "y": 416,
+          "width": 227,
+          "height": 44,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "basedOn": "87b77bd3-8bc3-44ca-af6f-661e45522a7c",
+          "id": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE LATEST TRENDS </span><span style=\"letter-spacing: -0.01em\">IN SNEAKER LAND</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 }
+        },
+        {
+          "x": 30,
+          "y": 163,
+          "width": 94,
+          "height": 94,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "id": "d01ae69c-43cc-455e-bb63-250642795201",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/png",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item1-cropped.png",
+            "width": 43,
+            "height": 43,
+            "posterId": 0,
+            "id": 253,
+            "title": "fashion_page9_item1-cropped",
+            "alt": "fashion_page9_item1-cropped",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 30,
+          "y": 274,
+          "width": 94,
+          "height": 94,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 130,
+          "focalX": 41.611295124593894,
+          "focalY": 35.212817670108095,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "basedOn": "d01ae69c-43cc-455e-bb63-250642795201",
+          "id": "c77c788b-cba9-421d-8a9a-2e8b604e99b8",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item2.jpg",
+            "width": 220,
+            "height": 331,
+            "posterId": 0,
+            "id": 246,
+            "title": "fashion_page9_item2",
+            "alt": "fashion_page9_item2",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "x": 29,
+          "y": 385,
+          "width": 94,
+          "height": 94,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 220,
+          "focalX": 53.074903314458275,
+          "focalY": 63.289037207094864,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "basedOn": "c77c788b-cba9-421d-8a9a-2e8b604e99b8",
+          "id": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item3.jpg",
+            "width": 229,
+            "height": 157,
+            "posterId": 0,
+            "id": 247,
+            "title": "fashion_page9_item3",
+            "alt": "fashion_page9_item3",
+            "local": false,
+            "sizes": []
+          }
+        },
+        {
+          "width": 94,
+          "height": 94,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundColor": { "color": { "r": 51, "g": 51, "b": 51 } },
+          "scale": 210,
+          "focalX": 50.23363426439001,
+          "focalY": 56.7630971270795,
+          "mask": { "type": "rectangle" },
+          "type": "image",
+          "resource": {
+            "type": "image",
+            "mimeType": "image/jpeg",
+            "creationDate": "2020-06-29T20:54:29",
+            "src": "https://replaceme.com/images/templates/fashion/fashion_page9_item4.jpg",
+            "width": 330,
+            "height": 494,
+            "posterId": 0,
+            "id": 1854,
+            "title": "fashion_page9_item4",
+            "alt": "fashion_page9_item4",
+            "local": false,
+            "sizes": []
+          },
+          "basedOn": "ba68ba92-edcd-4c5c-a4fe-5263fc994e2b",
+          "id": "40d8eaeb-1fad-4346-b56b-eef002fcb4db",
+          "x": 29,
+          "y": 496
+        },
+        {
+          "width": 195,
+          "height": 22,
+          "opacity": 100,
+          "flip": { "vertical": false, "horizontal": false },
+          "rotationAngle": 0,
+          "lockAspectRatio": true,
+          "backgroundTextMode": "NONE",
+          "font": {
+            "family": "Playfair Display",
+            "service": "fonts.google.com",
+            "fallbacks": ["serif"],
+            "weights": [400, 500, 600, 700, 800, 900],
+            "styles": ["regular", "italic"],
+            "variants": [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+              [0, 900],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+              [1, 800],
+              [1, 900]
+            ]
+          },
+          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "lineHeight": 1.1,
+          "textAlign": "initial",
+          "scale": 100,
+          "focalX": 50,
+          "focalY": 50,
+          "type": "text",
+          "content": "<span style=\"color: #212121; letter-spacing: -0.01em\">THE 90’S BACK!</span>",
+          "fontSize": 20,
+          "padding": { "horizontal": 0, "vertical": 0 },
+          "basedOn": "44e7aa5c-3fe0-43db-8d46-c0a4425eeb18",
+          "id": "0785511b-324d-4a52-90bc-1fa6d5a8a0e6",
+          "x": 148,
+          "y": 531
+        }
+      ],
+      "type": "page",
+      "id": "a9ed1626-720d-4b66-bfbd-40441c83390c",
+      "backgroundColor": { "color": { "r": 255, "g": 236, "b": 227 } }
     }
   ],
   "autoAdvance": true,

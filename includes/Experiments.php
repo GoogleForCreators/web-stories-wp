@@ -209,17 +209,6 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 1897
-			 * Creation date: 2020-05-21
-			 */
-			[
-				'name'        => 'enableAnimation',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable user facing animations', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28
@@ -298,17 +287,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2095
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showPrePublishTab',
-				'label'       => __( 'Pre-Publish', 'web-stories' ),
-				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
@@ -352,27 +330,15 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #4918
-			 * Creation date: 2020-10-27
-			 */
-			[
-				'name'        => 'statusCheck',
-				'label'       => __( 'Status Check', 'web-stories' ),
-				'description' => __( 'Enable status check in editor.', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @swissspidy
-			 * Issue: #4805
+			 * Issue: #3134
 			 * Creation date: 2020-10-28
 			 */
 			[
-				'name'        => 'encodeStoryMarkup',
-				/* translators: %s: WAF stands for Web Application Firewall */
-				'label'       => __( 'WAF Compatibility', 'web-stories' ),
-				'description' => __( 'Encode story markup in the REST API to prevent conflicts with Web Application Firewalls (WAFs).', 'web-stories' ),
-				'group'       => 'general',
+				'name'        => 'customMetaBoxes',
+				'label'       => __( 'Custom Meta Boxes', 'web-stories' ),
+				'description' => __( 'Enable support for custom meta boxes', 'web-stories' ),
+				'group'       => 'editor',
 			],
 			/**
 			 * Author: @swissspidy
@@ -383,6 +349,17 @@ class Experiments {
 				'name'        => 'eyeDropper',
 				'label'       => __( 'Eyedropper', 'web-stories' ),
 				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @zachhale
+			 * Issue: #5079
+			 * Creation date: 2020-11-04
+			 */
+			[
+				'name'        => 'showPageLayoutsTab',
+				'label'       => __( 'Page layouts tab', 'web-stories' ),
+				'description' => __( 'Enable page layouts tab', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

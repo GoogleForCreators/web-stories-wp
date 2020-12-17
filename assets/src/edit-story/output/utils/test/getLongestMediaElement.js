@@ -63,4 +63,27 @@ describe('getLongestMediaElement', () => {
 
     expect(getLongestMediaElement(elements)).toBeUndefined();
   });
+
+  it('should return the media element with the longest duration if longer than minDuration', () => {
+    const elements = [
+      { type: 'video', resource: { length: 1 } },
+      { type: 'video', resource: { length: 10 } },
+      { type: 'video', resource: { length: 15 } },
+    ];
+
+    expect(getLongestMediaElement(elements, 13)).toStrictEqual({
+      type: 'video',
+      resource: { length: 15 },
+    });
+  });
+
+  it('should return undefined if the longest duration is less than the minDuration', () => {
+    const elements = [
+      { type: 'video', resource: { length: 1 } },
+      { type: 'video', resource: { length: 10 } },
+      { type: 'video', resource: { length: 15 } },
+    ];
+
+    expect(getLongestMediaElement(elements, 16)).toBeUndefined();
+  });
 });

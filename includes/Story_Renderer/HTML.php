@@ -82,12 +82,10 @@ class HTML {
 		// If the AMP plugin is installed and available in a version >= than ours,
 		// all sanitization and optimization should be delegated to the AMP plugin.
 		if ( defined( '\AMP__VERSION' ) && version_compare( AMP__VERSION, WEBSTORIES_AMP_VERSION, '>=' ) ) {
-			add_filter( 'amp_content_sanitizers', [ $this, 'add_amp_content_sanitizers' ] );
-
 			return $markup;
 		}
 
-		$document = Document::fromHtml( $markup, get_bloginfo( 'charset' ) );
+		$document = Document::fromHtml( $markup );
 
 		// This  should never actually happen.
 		if ( ! $document ) {
@@ -206,6 +204,10 @@ class HTML {
 	protected function replace_html_head( $content ) {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
+
+		// Replace malformed meta tags with correct tags.
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/>/i', $start_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/>/i', $end_tag, $content );
 
 		$start_tag_pos = strpos( $content, $start_tag );
 		$end_tag_pos   = strpos( $content, $end_tag );

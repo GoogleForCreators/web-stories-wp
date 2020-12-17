@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-export const TIMEZONELESS_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
-
 export const SCROLLBAR_WIDTH = 11;
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 48;
@@ -38,8 +36,6 @@ export const FULLBLEED_RATIO = 9 / 16;
 
 export const DESIGN_SPACE_MARGIN = 48;
 
-export const PAGE_ATTACHMENT_HEIGHT_RATIO = 0.2;
-
 export const COLOR_PRESETS_PER_ROW = 6;
 export const STYLE_PRESETS_PER_ROW = 2;
 
@@ -50,10 +46,6 @@ export const DEFAULT_DPR = 0.5;
 
 // Default 1em value for font size.
 export const DEFAULT_EM = PAGE_HEIGHT * 0.02186;
-
-// @todo Confirm real min-max font sizes.
-export const MIN_FONT_SIZE = 30;
-export const MAX_FONT_SIZE = 200;
 
 export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   scale: 100,
@@ -77,12 +69,6 @@ export const BACKGROUND_TEXT_MODE = {
   NONE: 'NONE',
   FILL: 'FILL',
   HIGHLIGHT: 'HIGHLIGHT',
-};
-
-export const BORDER_POSITION = {
-  INSIDE: 'inside',
-  CENTER: 'center',
-  OUTSIDE: 'outside',
 };
 
 export const FONT_WEIGHT = {
