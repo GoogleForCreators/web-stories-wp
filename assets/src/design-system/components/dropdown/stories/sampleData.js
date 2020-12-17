@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export const basicDropdownItems = [
+export const basicDropdownOptions = [
   {
     label: 'label item one',
     value: 'label-item-one',
@@ -66,7 +66,7 @@ export const basicDropdownItems = [
   },
 ];
 
-export const effectChooserData = [
+export const effectChooserOptions = [
   {
     value: 'none',
     label: 'none',
@@ -119,7 +119,7 @@ export const effectChooserData = [
   },
 ];
 
-export const nestedDropdownItems = [
+export const nestedDropdownOptions = [
   {
     label: 'aliens',
     options: [

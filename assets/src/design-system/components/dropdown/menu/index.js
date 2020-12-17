@@ -43,12 +43,12 @@ export const DropdownMenu = ({
   menuStylesOverride,
   hasMenuRole,
   isRTL,
-  items = [],
+  options = [],
   listId,
   onMenuItemClick,
   onDismissMenu,
   renderItem = DefaultListItem,
-  subsectionItems,
+  flattenedGroupedOptions,
   activeValue,
   menuAriaLabel,
 }) => {
@@ -65,7 +65,7 @@ export const DropdownMenu = ({
     activeValue,
     handleMenuItemSelect,
     isRTL,
-    items: subsectionItems || items,
+    options: flattenedGroupedOptions || options,
     listRef,
     onDismissMenu,
   });
@@ -98,51 +98,55 @@ export const DropdownMenu = ({
   };
 
   const renderMenuItem = useCallback(
-    (item, itemIndex, groupIndex = 0) => {
-      const isSelected = item.value === activeValue;
-      const itemInset = getInset(items, groupIndex, itemIndex);
+    (option, optionIndex, groupIndex = 0) => {
+      const isSelected = option.value === activeValue;
+      const optionInset = getInset(options, groupIndex, optionIndex);
       return (
         <ListItem
-          aria-posinset={itemInset}
+          aria-posinset={optionInset}
           aria-selected={isSelected}
           aria-setsize={listLength}
-          id={`dropdownMenuItem-${item.value}`}
-          key={item.value}
+          id={`dropdownMenuItem-${option.value}`}
+          key={option.value}
           role={hasMenuRole ? 'menuitem' : 'option'}
-          onClick={(event) => handleMenuItemSelect(event, item)}
+          onClick={(event) => handleMenuItemSelect(event, option)}
           tabIndex={0}
-          ref={(el) => (optionsRef.current[itemInset] = el)}
-          option={item}
+          ref={(el) => (optionsRef.current[optionInset] = el)}
+          option={option}
           isSelected={isSelected}
         />
       );
     },
-    [activeValue, handleMenuItemSelect, hasMenuRole, items, listLength]
+    [activeValue, options, listLength, hasMenuRole, handleMenuItemSelect]
   );
 
   const MenuContent = useMemo(() => {
-    if (!items || items.length === 0) {
+    if (!options || options.length === 0) {
       return <EmptyList>{emptyText}</EmptyList>;
-    } else if (subsectionItems) {
-      return items.map((itemGroup, groupIndex) => {
+    } else if (flattenedGroupedOptions) {
+      return options.map(({ label, options: groupOptions }, groupIndex) => {
         const groupLabelId = `group-${uuidv4()}`;
         return (
           <GroupList
-            key={itemGroup.label || `menuGroup_${groupIndex}`}
+            key={label || `menuGroup_${groupIndex}`}
             aria-labelledby={groupLabelId}
             role="group"
           >
-            {itemGroup?.label && renderMenuLabel(itemGroup.label)}
-            {itemGroup?.options.map((item, itemIndex) =>
-              renderMenuItem(item, itemIndex, groupIndex)
+            {label && renderMenuLabel(label)}
+            {groupOptions.map((groupOption, optionIndex) =>
+              renderMenuItem(groupOption, optionIndex, groupIndex)
             )}
           </GroupList>
         );
       });
     } else {
-      return <List role={'group'}>{items.map(renderMenuItem)}</List>;
+      return (
+        <List role={'group'} aria-labelledby={listId}>
+          {options.map(renderMenuItem)}
+        </List>
+      );
     }
-  }, [emptyText, items, renderMenuItem, subsectionItems]);
+  }, [options, flattenedGroupedOptions, emptyText, renderMenuItem, listId]);
 
   return (
     <MenuContainer
@@ -166,14 +170,14 @@ DropdownMenu.propTypes = {
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   hasMenuRole: PropTypes.bool,
   isRTL: PropTypes.bool,
-  items: MENU_OPTIONS,
+  options: MENU_OPTIONS,
   listId: PropTypes.string.isRequired,
   menuAriaLabel: PropTypes.string,
   onMenuItemClick: PropTypes.func.isRequired,
   onDismissMenu: PropTypes.func.isRequired,
   renderItem: PropTypes.object,
   activeValue: DROPDOWN_VALUE_TYPE,
-  subsectionItems: PropTypes.oneOfType([
+  flattenedGroupedOptions: PropTypes.oneOfType([
     PropTypes.arrayOf(DROPDOWN_ITEM),
     PropTypes.bool,
   ]),

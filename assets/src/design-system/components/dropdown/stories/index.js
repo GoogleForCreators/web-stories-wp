@@ -30,9 +30,9 @@ import { PLACEMENT } from '../../popup';
 import { Dropdown } from '..';
 import { DROPDOWN_ITEM } from '../types';
 import {
-  basicDropdownItems,
-  effectChooserData,
-  nestedDropdownItems,
+  basicDropdownOptions,
+  effectChooserOptions,
+  nestedDropdownOptions,
 } from './sampleData';
 
 export default {
@@ -80,7 +80,7 @@ export const _default = () => {
     <DarkThemeProvider>
       <Dropdown
         emptyText={'No options available'}
-        items={basicDropdownItems}
+        options={basicDropdownOptions}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
         dropdownLabel={text('dropdownLabel', 'label')}
@@ -104,7 +104,7 @@ export const LightTheme = () => {
   return (
     <Dropdown
       emptyText={'No options available'}
-      items={basicDropdownItems}
+      options={basicDropdownOptions}
       hint={text('hint', 'default hint text')}
       placeholder={text('placeholder', 'select a value')}
       dropdownLabel={text('dropdownLabel', 'label')}
@@ -122,12 +122,12 @@ export const LightTheme = () => {
 };
 
 export const SubMenus = () => {
-  const [selectedValue, setSelectedValue] = useState('alien-3');
+  const [selectedValue, setSelectedValue] = useState();
 
   return (
     <Dropdown
       emptyText={'No options available'}
-      items={nestedDropdownItems}
+      options={nestedDropdownOptions}
       hint={text('hint', 'default hint text')}
       placeholder={text('placeholder', 'select a value')}
       dropdownLabel={text('dropdownLabel', 'label')}
@@ -170,7 +170,7 @@ export const OverriddenAnimationProofOfConcept = () => {
     <DarkThemeProvider>
       <Dropdown
         emptyText={'No options available'}
-        items={effectChooserData}
+        options={effectChooserOptions}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
         dropdownLabel={text('dropdownLabel', 'label')}

@@ -32,8 +32,7 @@ export const DROPDOWN_ITEM = PropTypes.shape({
 export const DROPDOWN_ITEMS = PropTypes.arrayOf(DROPDOWN_ITEM);
 
 export const NESTED_DROPDOWN_ITEM = PropTypes.shape({
-  label: PropTypes.string,
-  options: DROPDOWN_ITEMS,
+  group: PropTypes.shape({ label: PropTypes.string, options: DROPDOWN_ITEMS }),
 });
 
 export const NESTED_DROPDOWN_ITEMS = PropTypes.arrayOf(NESTED_DROPDOWN_ITEM);

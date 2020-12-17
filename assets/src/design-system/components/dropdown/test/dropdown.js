@@ -25,7 +25,7 @@ import { act, fireEvent, waitFor } from '@testing-library/react';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { Dropdown } from '../';
-import { basicDropdownItems } from '../stories/sampleData';
+import { basicDropdownOptions } from '../stories/sampleData';
 
 // TODO: fix tests to wait properly for menu to hide
 describe('Dropdown <Dropdown />', () => {
@@ -38,7 +38,7 @@ describe('Dropdown <Dropdown />', () => {
 
   it('should render a closed <Dropdown /> menu with a select button on default', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
-      <Dropdown items={basicDropdownItems} dropdownLabel={'label'} />
+      <Dropdown items={basicDropdownOptions} dropdownLabel={'label'} />
     );
 
     const select = getByRole('button');
@@ -50,7 +50,7 @@ describe('Dropdown <Dropdown />', () => {
 
   it('should show placeholder value when no selected value is found', () => {
     const { getByText } = renderWithProviders(
-      <Dropdown items={basicDropdownItems} placeholder={'select a value'} />
+      <Dropdown items={basicDropdownOptions} placeholder={'select a value'} />
     );
 
     const placeholder = getByText('select a value');
@@ -60,21 +60,21 @@ describe('Dropdown <Dropdown />', () => {
   it("should show selectedValue's associated label when selectedValue is present", () => {
     const { getByText } = renderWithProviders(
       <Dropdown
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         placeholder={'select a value'}
         dropdownLabel={'label'}
-        selectedValue={basicDropdownItems[2].value}
+        selectedValue={basicDropdownOptions[2].value}
       />
     );
 
-    const select = getByText(basicDropdownItems[2].label);
+    const select = getByText(basicDropdownOptions[2].label);
     expect(select).toBeDefined();
   });
 
   it("should show placeholder when selectedValue's associated label cannot be found", () => {
     const { getByText } = renderWithProviders(
       <Dropdown
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         placeholder={'select a value'}
         dropdownLabel={'label'}
         selectedValue={'value that is not found in items'}
@@ -88,7 +88,7 @@ describe('Dropdown <Dropdown />', () => {
   it('should show label value when provided', () => {
     const { getByText } = renderWithProviders(
       <Dropdown
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         placeholder={'select a value'}
         dropdownLabel={'my label'}
       />
@@ -102,7 +102,7 @@ describe('Dropdown <Dropdown />', () => {
     const { getByRole } = renderWithProviders(
       <Dropdown
         emptyText={'No options available'}
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         dropdownLabel={'label'}
       />
     );
@@ -122,8 +122,8 @@ describe('Dropdown <Dropdown />', () => {
         emptyText={'No options available'}
         dropdownLabel={'label'}
         isKeepMenuOpenOnSelection={false}
-        items={basicDropdownItems}
-        selectedValue={basicDropdownItems[2].value}
+        items={basicDropdownOptions}
+        selectedValue={basicDropdownOptions[2].value}
       />
     );
 
@@ -132,7 +132,7 @@ describe('Dropdown <Dropdown />', () => {
     fireEvent.click(select);
 
     const activeMenuItem = getByRole('option', {
-      name: `Selected ${basicDropdownItems[2].label}`,
+      name: `Selected ${basicDropdownOptions[2].label}`,
     });
     expect(activeMenuItem).toBeInTheDocument();
 
@@ -148,7 +148,7 @@ describe('Dropdown <Dropdown />', () => {
   it('should not expand menu when disabled is true', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <Dropdown
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         dropdownLabel={'my label'}
         disabled={true}
       />
@@ -168,7 +168,7 @@ describe('Dropdown <Dropdown />', () => {
 
     const wrapper = renderWithProviders(
       <Dropdown
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         selectedValue={null}
         onMenuItemClick={onClickMock}
       />
@@ -182,14 +182,14 @@ describe('Dropdown <Dropdown />', () => {
     expect(menu).toBeInTheDocument();
 
     const menuItems = wrapper.getAllByRole('option');
-    expect(menuItems).toHaveLength(basicDropdownItems.length);
+    expect(menuItems).toHaveLength(basicDropdownOptions.length);
 
     fireEvent.click(menuItems[3]);
 
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(
       expect.anything(),
-      basicDropdownItems[3].value
+      basicDropdownOptions[3].value
     );
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
@@ -199,8 +199,8 @@ describe('Dropdown <Dropdown />', () => {
     const { getByRole } = await renderWithProviders(
       <Dropdown
         dropdownLabel={'label'}
-        items={basicDropdownItems}
-        selectedValue={basicDropdownItems[1].value}
+        items={basicDropdownOptions}
+        selectedValue={basicDropdownOptions[1].value}
       />
     );
     const select = getByRole('button');
@@ -223,7 +223,7 @@ describe('Dropdown <Dropdown />', () => {
         emptyText={'No options available'}
         dropdownLabel={'label'}
         isKeepMenuOpenOnSelection={true}
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         onMenuItemClick={onClickMock}
         selectedValue={null}
       />
@@ -261,7 +261,7 @@ describe('Dropdown <Dropdown />', () => {
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(
       expect.anything(),
-      basicDropdownItems[1].value
+      basicDropdownOptions[1].value
     );
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
@@ -276,9 +276,9 @@ describe('Dropdown <Dropdown />', () => {
       <Dropdown
         emptyText={'No options available'}
         dropdownLabel={'label'}
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         onMenuItemClick={onClickMock}
-        selectedValue={basicDropdownItems[0].value}
+        selectedValue={basicDropdownOptions[0].value}
       />
     );
     const selectButton = getByRole('button');
@@ -309,7 +309,7 @@ describe('Dropdown <Dropdown />', () => {
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(
       expect.anything(),
-      basicDropdownItems[2].value
+      basicDropdownOptions[2].value
     );
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
@@ -321,8 +321,8 @@ describe('Dropdown <Dropdown />', () => {
     const { getByRole } = await renderWithProviders(
       <Dropdown
         dropdownLabel={'label'}
-        items={basicDropdownItems}
-        selectedValue={basicDropdownItems[1].value}
+        items={basicDropdownOptions}
+        selectedValue={basicDropdownOptions[1].value}
       />
     );
     const select = getByRole('button');

@@ -34,26 +34,26 @@ export default function useDropdownMenu({
   activeValue,
   handleMenuItemSelect,
   isRTL,
-  items = [],
+  options = [],
   listRef,
   onDismissMenu,
 }) {
-  const listLength = items.length;
+  const listLength = options.length;
   const [focusedValue, setFocusedValue] = useState(activeValue);
 
   const focusedIndex = useMemo(() => {
     if (isNullOrUndefinedOrEmptyString(focusedValue)) {
       return 0;
     }
-    const foundIndex = items.findIndex((item) => {
+    const foundIndex = options.findIndex((item) => {
       return item?.value?.toString() === focusedValue.toString();
     });
     return foundIndex;
-  }, [items, focusedValue]);
+  }, [options, focusedValue]);
 
   const handleMoveFocus = useCallback(
-    (offset) => setFocusedValue(items[focusedIndex + offset].value),
-    [items, focusedIndex]
+    (offset) => setFocusedValue(options[focusedIndex + offset].value),
+    [options, focusedIndex]
   );
 
   const handleFocusChange = useCallback(

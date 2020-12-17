@@ -42,13 +42,13 @@ const DropdownContainer = styled.div``;
  *
  * @param {Object} props All props.
  * @param {string} props.ariaLabel Specific label to use as select button's aria label only.
- * @param {string} props.emptyText If the array of items is empty this text will display when menu is expanded.
+ * @param {string} props.emptyText If the array of options is empty this text will display when menu is expanded.
  * @param {string} props.hint Hint text to display below a dropdown (optional). If not present, no hint text will display.
  * @param {boolean} props.isKeepMenuOpenOnSelection If true, when a new selection is made the internal functionality to close the menu will not fire, by default is false.
  * @param {boolean} props.disabled If true, menu will not be openable
  * @param {string} props.dropdownLabel Text shown in button with selected value's label or placeholder. Will be used as aria label if no separate ariaLabel is passed in.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
- * @param {Array} props.items All options, should contain objects with a label, value, anything else you need can be added and accessed through renderItem.
+ * @param {Array} props.options All options, should contain objects with a label, value, anything else you need can be added and accessed through renderItem.
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding dropdown menu styles (container div > ul > li).
  * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option.
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
@@ -63,7 +63,7 @@ export const Dropdown = ({
   hint,
   isKeepMenuOpenOnSelection,
   disabled,
-  items = [],
+  options = [],
   onMenuItemClick,
   placement = PLACEMENT.BOTTOM_END,
   selectedValue = '',
@@ -74,16 +74,16 @@ export const Dropdown = ({
   const [isOpen, _setIsOpen] = useState(false);
   const [anchorHeight, setAnchorHeight] = useState(null);
 
-  const subsectionItems = useMemo(
+  const flattenedGroupedOptions = useMemo(
     () =>
-      items.some((item) => item.options) &&
-      items.reduce((prev, current) => {
+      options.some((option) => option.options) &&
+      options.reduce((prev, current) => {
         if (!current.options) {
           return prev;
         }
         return prev.concat(...current.options);
       }, []),
-    [items]
+    [options]
   );
 
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
@@ -115,14 +115,14 @@ export const Dropdown = ({
     [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
   );
 
-  const activeItem = useMemo(() => {
+  const activeOption = useMemo(() => {
     if (!selectedValue) {
       return null;
     }
-    return [...(subsectionItems ? subsectionItems : items)].find((item) => {
-      return item?.value?.toString() === selectedValue.toString();
-    });
-  }, [items, selectedValue, subsectionItems]);
+    return [
+      ...(flattenedGroupedOptions ? flattenedGroupedOptions : options),
+    ].find((option) => option?.value?.toString() === selectedValue.toString());
+  }, [options, selectedValue, flattenedGroupedOptions]);
 
   useEffect(() => {
     if (selectRef?.current) {
@@ -135,7 +135,9 @@ export const Dropdown = ({
   return (
     <DropdownContainer>
       <DropdownSelect
-        activeItemLabel={activeItem?.label}
+        activeItemLabel={activeOption?.label}
+        ariaLabel={ariaLabel}
+        dropdownLabel={dropdownLabel}
         isOpen={isOpen}
         disabled={disabled}
         onSelectClick={handleSelectClick}
@@ -150,9 +152,9 @@ export const Dropdown = ({
           fillWidth={240}
         >
           <DropdownMenu
-            activeValue={activeItem?.value}
+            activeValue={activeOption?.value}
             anchorHeight={anchorHeight}
-            items={items}
+            options={options}
             listId={listId}
             menuAriaLabel={sprintf(
               /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
@@ -161,7 +163,7 @@ export const Dropdown = ({
             )}
             onDismissMenu={handleDismissMenu}
             onMenuItemClick={handleMenuItemClick}
-            subsectionItems={subsectionItems}
+            flattenedGroupedOptions={flattenedGroupedOptions}
             {...rest}
           />
         </Popup>
@@ -178,7 +180,7 @@ Dropdown.propTypes = {
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
   isRTL: PropTypes.bool,
-  items: MENU_OPTIONS,
+  options: MENU_OPTIONS,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,

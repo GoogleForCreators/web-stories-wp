@@ -24,14 +24,14 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 
 import useDropdownMenu from '../menu/useDropdownMenu';
-import { basicDropdownItems } from '../stories/sampleData';
+import { basicDropdownOptions } from '../stories/sampleData';
 
 describe('useDropdownMenu()', function () {
   it('should have the default options initially selected', function () {
     const { result } = renderHook(() =>
       useDropdownMenu({
         handleMenuItemSelect: () => {},
-        items: basicDropdownItems,
+        items: basicDropdownOptions,
         listRef: { current: null },
         onDismissMenu: () => {},
       })
@@ -44,15 +44,15 @@ describe('useDropdownMenu()', function () {
   it('should return focused index matching activeValue passed in initially if present', function () {
     const { result } = renderHook(() =>
       useDropdownMenu({
-        activeValue: basicDropdownItems[2].value,
+        activeValue: basicDropdownOptions[2].value,
         handleMenuItemSelect: () => {},
-        items: basicDropdownItems,
+        items: basicDropdownOptions,
         listRef: { current: null },
         onDismissMenu: () => {},
       })
     );
 
     expect(result.current.focusedIndex).toBe(2);
-    expect(result.current.focusedValue).toBe(basicDropdownItems[2].value);
+    expect(result.current.focusedValue).toBe(basicDropdownOptions[2].value);
   });
 });

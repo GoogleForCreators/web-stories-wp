@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { DropdownMenu } from '../menu';
-import { basicDropdownItems } from '../stories/sampleData';
+import { basicDropdownOptions } from '../stories/sampleData';
 
 describe('Dropdown <DropdownMenu />', () => {
   const onClickMock = jest.fn();
@@ -44,7 +44,7 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
@@ -79,7 +79,7 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
         activeValue={null}
@@ -87,7 +87,7 @@ describe('Dropdown <DropdownMenu />', () => {
     );
 
     const option3 = queryAllByRole('option')[2];
-    expect(option3).toHaveTextContent(basicDropdownItems[2].label);
+    expect(option3).toHaveTextContent(basicDropdownOptions[2].label);
 
     fireEvent.click(option3);
 
@@ -113,10 +113,10 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        items={basicDropdownItems}
+        items={basicDropdownOptions}
         onMenuItemClick={onClickMock}
         onDismissMenu={() => {}}
-        activeValue={basicDropdownItems[2].value}
+        activeValue={basicDropdownOptions[2].value}
         renderItem={OverrideRenderItem}
       />
     );
