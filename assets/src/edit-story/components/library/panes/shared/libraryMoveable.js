@@ -166,9 +166,15 @@ function LibraryMoveable({
 
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
-    const mediaBox = targetBoxRef.current.getBoundingClientRect();
-    const x1 = mediaBox.left - offsetX;
-    const y1 = mediaBox.top - offsetY;
+    const targetBox = targetBoxRef.current.getBoundingClientRect();
+    let x1 = targetBox.left - offsetX;
+    let y1 = targetBox.top - offsetY;
+    // In case of shapes, the clone is larger than the preview
+    // so we position it to center.
+    if ('shape' === type) {
+      x1 = x1 - (cloneProps.width - targetBox.width) / 2;
+      y1 = y1 - (cloneProps.height - targetBox.height) / 2;
+    }
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
   };
