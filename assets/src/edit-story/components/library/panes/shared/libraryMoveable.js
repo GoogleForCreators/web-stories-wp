@@ -51,6 +51,7 @@ function LibraryMoveable({
   onClick,
   cloneElement,
   cloneProps,
+  previewSize,
   elements = [],
   active = false,
 }) {
@@ -227,7 +228,8 @@ function LibraryMoveable({
     snappingOffsetX,
   });*/
 
-  const { width, height } = cloneProps;
+  const targetSize = previewSize ? previewSize : cloneProps;
+  const { width, height } = targetSize;
   return (
     <>
       <TargetBox

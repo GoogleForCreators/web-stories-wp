@@ -93,18 +93,20 @@ function TextSet({ elements }) {
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
   const dragHeight = dataToEditorY(textSetHeight, pageHeight);
   return (
-    <>
-      <TextSetItem
-        role="listitem"
-        aria-label={__('Insert Text Set', 'web-stories')}
-      >
-        <TextSetElements isForDisplay elements={elements} />
-      </TextSetItem>
+    <TextSetItem
+      role="listitem"
+      aria-label={__('Insert Text Set', 'web-stories')}
+    >
+      <TextSetElements isForDisplay elements={elements} />
       <LibraryMoveable
         type={'textSet'}
         elements={elements}
         elementProps={{}}
         onClick={() => insertTextSet(elements)}
+        previewSize={{
+          width: TEXT_SET_SIZE,
+          height: TEXT_SET_SIZE,
+        }}
         cloneElement={DragContainer}
         cloneProps={{
           width: dragWidth,
@@ -120,7 +122,7 @@ function TextSet({ elements }) {
           ),
         }}
       />
-    </>
+    </TextSetItem>
   );
 }
 
