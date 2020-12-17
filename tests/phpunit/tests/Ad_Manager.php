@@ -26,14 +26,14 @@ class Ad_Manager extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADLOADER_TYPE, 'admanager' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'admanager' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_MANAGER_SLOT_ID, '123' );
 	}
 
 	public function tearDown() {
 		parent::tearDown();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADLOADER_TYPE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_MANAGER_SLOT_ID );
 	}
 

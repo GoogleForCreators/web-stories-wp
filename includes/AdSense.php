@@ -71,7 +71,7 @@ class AdSense {
 	 * @return bool
 	 */
 	private function is_enabled() {
-		return ( 'adsense' === (string) get_option( Settings::SETTING_NAME_ADLOADER_TYPE, 'none' ) );
+		return ( 'adsense' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
 	/**

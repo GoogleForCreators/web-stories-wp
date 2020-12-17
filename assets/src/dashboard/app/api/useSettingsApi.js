@@ -61,7 +61,7 @@ export default function useSettingsApi(
           adSensePublisherId: response.web_stories_adsense_publisher_id,
           adSenseSlotId: response.web_stories_adsense_slot_id,
           adManagerSlotId: response.web_stories_ad_manager_slot_id,
-          adLoaderType: response.web_stories_adloader_type,
+          adLoaderType: response.web_stories_ad_network,
           activePublisherLogoId: response.web_stories_active_publisher_logo,
           publisherLogoIds: response.web_stories_publisher_logos,
         },
@@ -109,7 +109,7 @@ export default function useSettingsApi(
         }
 
         if (adLoaderType !== undefined) {
-          query.web_stories_adloader_type = adLoaderType;
+          query.web_stories_ad_network = adLoaderType;
         }
 
         if (publisherLogoIds) {
@@ -142,7 +142,7 @@ export default function useSettingsApi(
             adSensePublisherId: response.web_stories_adsense_publisher_id,
             adSenseSlotId: response.web_stories_adsense_slot_id,
             adManagerSlotId: response.web_stories_ad_manager_slot_id,
-            adLoaderType: response.web_stories_adloader_type,
+            adLoaderType: response.web_stories_ad_network,
             activePublisherLogoId: response.web_stories_active_publisher_logo,
             publisherLogoIds: response.web_stories_publisher_logos,
           },

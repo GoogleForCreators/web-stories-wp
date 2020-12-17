@@ -60,7 +60,7 @@ class Ad_Manager {
 	 * @return bool
 	 */
 	private function is_enabled() {
-		return ( 'admanager' === (string) get_option( Settings::SETTING_NAME_ADLOADER_TYPE, 'none' ) );
+		return ( 'admanager' === (string) get_option( Settings::SETTING_NAME_AD_NETWORK, 'none' ) );
 	}
 
 	/**

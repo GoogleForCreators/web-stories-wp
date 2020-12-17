@@ -26,7 +26,7 @@ class AdSense extends \WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
 
-		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADLOADER_TYPE, 'adsense' );
+		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID, '123' );
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID, '456' );
 	}
@@ -34,7 +34,7 @@ class AdSense extends \WP_UnitTestCase {
 	public function tearDown() {
 		parent::tearDown();
 
-		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADLOADER_TYPE );
+		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_SLOT_ID );
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_ADSENSE_PUBLISHER_ID );
 	}

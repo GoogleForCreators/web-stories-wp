@@ -65,7 +65,7 @@ class Settings {
 	 *
 	 * @var string
 	 */
-	const SETTING_NAME_ADLOADER_TYPE = 'web_stories_adloader_type';
+	const SETTING_NAME_AD_NETWORK = 'web_stories_ad_network';
 
 	/**
 	 * AdSense Publisher ID setting name.
@@ -136,7 +136,7 @@ class Settings {
 
 		register_setting(
 			self::SETTING_GROUP,
-			self::SETTING_NAME_ADLOADER_TYPE,
+			self::SETTING_NAME_AD_NETWORK,
 			[
 				'description'  => __( 'Type ad loader', 'web-stories' ),
 				'type'         => 'string',
