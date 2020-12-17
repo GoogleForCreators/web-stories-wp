@@ -114,7 +114,7 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 **Release Date:** December 17, 2020.
 
-* New feature: status check in the editor
+* New feature: automated site environment compatibility checks.
 * Improved UI for border and corner radius panels.
 * Bug fixes and performance improvements.
 
@@ -150,11 +150,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 
 = 1.2.1 =
 
-This release includes various bug fixes and improvements.
+Bug fixes and performance improvements.
 
 = 1.2.0 =
 
-This release includes initial support for animations and an all-new pre-publish checklist.
+Added basic animations and a pre-publish checklist.
 
 = 1.1.1 =
 
