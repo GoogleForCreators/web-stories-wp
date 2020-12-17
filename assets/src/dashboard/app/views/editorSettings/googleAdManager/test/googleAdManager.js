@@ -62,7 +62,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
       />
     );
 
-    const label = getByLabelText(TEXT.ARIA_LABEL);
+    const label = getByLabelText(TEXT.SLOT_ID_LABEL);
     expect(label).toBeInTheDocument();
   });
 
