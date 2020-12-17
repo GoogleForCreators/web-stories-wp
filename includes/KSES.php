@@ -460,6 +460,7 @@ class KSES {
 				'id'                 => true,
 			],
 			'amp-story-page-attachment' => [
+				'href'  => true,
 				'theme' => true,
 			],
 			'amp-story-grid-layer'      => [

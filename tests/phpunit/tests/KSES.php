@@ -338,6 +338,10 @@ class KSES extends \WP_UnitTestCase {
 				'<p id="foo" animate-in="fly-in-left" animate-in-delay="0.3s" animate-in-duration="0.5s" animate-in-layout="nodisplay">Hello World</p><p id="bar" animate-in="fade-in" animate-in-after="foo">Hello World</p>',
 				'<p id="foo" animate-in="fly-in-left" animate-in-delay="0.3s" animate-in-duration="0.5s" animate-in-layout="nodisplay">Hello World</p><p id="bar" animate-in="fade-in" animate-in-after="foo">Hello World</p>',
 			],
+			'Page Attachment'   => [
+				'<amp-story-page-attachment layout="nodisplay" href="https://www.example.com" data-cta-text="Read more" data-title="My title" theme="dark"></amp-story-page-attachment>',
+				'<amp-story-page-attachment layout="nodisplay" href="https://www.example.com" data-cta-text="Read more" data-title="My title" theme="dark"></amp-story-page-attachment>',
+			],
 		];
 	}
 }
