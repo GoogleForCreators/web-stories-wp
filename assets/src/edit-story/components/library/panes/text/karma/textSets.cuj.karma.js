@@ -94,7 +94,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Editorial')
     );
-    expect(fixture.editor.library.text.textSets.length).toBe(30);
+    expect(fixture.editor.library.text.textSets.length).toBe(15);
   });
 
   it('should position the text sets as expected by category', async () => {
