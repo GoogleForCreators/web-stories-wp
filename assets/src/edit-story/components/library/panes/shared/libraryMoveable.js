@@ -55,6 +55,7 @@ function LibraryMoveable({
 
   const [isDragging, setIsDragging] = useState(false);
   const [didManuallyReset, setDidManuallyReset] = useState(false);
+  const [hover, setHover] = useState(false);
   const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
   const overlayRef = useRef(null);
@@ -216,28 +217,32 @@ function LibraryMoveable({
         width={width}
         height={height}
         onClick={onClick}
+        onPointerOver={() => setHover(true)}
+        onPointerOut={() => setHover(false)}
       />
-      {(isDragging || active) && (
-        <InOverlay
-          ref={overlayRef}
-          zIndex={1}
-          pointerEvents="initial"
-          render={() => {
-            return <CloneElement ref={cloneRef} {...cloneProps} />;
-          }}
-        />
+      {(isDragging || active || hover) && (
+        <>
+          <InOverlay
+            ref={overlayRef}
+            zIndex={1}
+            pointerEvents="initial"
+            render={() => {
+              return <CloneElement ref={cloneRef} {...cloneProps} />;
+            }}
+          />
+          <Moveable
+            className="default-moveable hide-handles"
+            target={targetBoxRef.current}
+            edge={true}
+            draggable={true}
+            origin={false}
+            pinchable={true}
+            onDragStart={onDragStart}
+            onDrag={onDrag}
+            onDragEnd={onDragEnd}
+          />
+        </>
       )}
-      <Moveable
-        className="default-moveable hide-handles"
-        target={targetBoxRef.current}
-        edge={true}
-        draggable={true}
-        origin={false}
-        pinchable={true}
-        onDragStart={onDragStart}
-        onDrag={onDrag}
-        onDragEnd={onDragEnd}
-      />
     </>
   );
 }
