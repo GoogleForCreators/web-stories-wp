@@ -282,6 +282,8 @@ class Database_Upgrader {
 	/**
 	 * Re-index stories in Yoast SEO if permalinks are outdated.
 	 *
+	 * @since 1.2.1
+	 *
 	 * @return void
 	 */
 	protected function yoast_reindex_stories() {
@@ -337,7 +339,9 @@ class Database_Upgrader {
 	/**
 	 * Migration media post meta to taxonomy term.
 	 *
-	 * @global wpdb $wpdb WordPress database abstraction object.
+	 * @since 1.2.1
+	 *
+	 * @global \wpdb $wpdb WordPress database abstraction object.
 	 *
 	 * @return void
 	 */
@@ -363,7 +367,9 @@ class Database_Upgrader {
 	/**
 	 * Delete old attachment post meta.
 	 *
-	 * @global wpdb $wpdb WordPress database abstraction object.
+	 * @since 1.2.1
+	 *
+	 * @global \wpdb $wpdb WordPress database abstraction object.
 	 *
 	 * @return void
 	 */
