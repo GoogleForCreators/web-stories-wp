@@ -116,6 +116,8 @@ class Settings {
 	/**
 	 * Register settings.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
