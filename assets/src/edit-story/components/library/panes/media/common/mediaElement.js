@@ -35,7 +35,7 @@ import InnerElement from './innerElement';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
-const Container = styled.button.attrs((props) => ({
+const Container = styled.div.attrs((props) => ({
   style: {
     width: props.width + 'px',
     height: props.height + 'px',
@@ -252,6 +252,7 @@ const MediaElement = ({
           height={height}
           onClick={onClick}
           showVideoDetail={showVideoDetail}
+          active={active}
         />
         {attribution}
         {local && (

@@ -143,6 +143,8 @@ module.exports = function (config) {
       jasmine: {
         timeoutInterval: 10000,
       },
+      useIframe: false,
+      runInParent: true,
     },
 
     coverageIstanbulReporter: {
@@ -174,6 +176,9 @@ module.exports = function (config) {
 
     // Wait a bit longer for browser to reconnect.
     browserDisconnectTimeout: 10000,
+
+    // Custom context file.
+    customClientContextFile: 'karma/fixture/client_with_context.html',
   });
 };
 

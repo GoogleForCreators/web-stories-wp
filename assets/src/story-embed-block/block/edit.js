@@ -105,7 +105,7 @@ function StoryEmbedEdit({
           path: `web-stories/v1/embed?url=${urlToEmbed}`,
         });
 
-        setCannotEmbed(!data?.title);
+        setCannotEmbed(!(typeof data?.title === 'string'));
         setStoryData(data);
         setAttributes({
           url: localURL,

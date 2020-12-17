@@ -18,17 +18,13 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
+import { DIRECTION } from '../../constants';
 import { AnimationMove } from '../../parts/move';
 import { AnimationSpin } from '../../parts/spin';
-import getOffPageOffset from '../../utils/getOffPageOffset';
-import { DIRECTION } from '../../constants';
+import { getOffPageOffset } from '../../utils';
 
 const numberOfRotations = 1;
 const stopAngle = 0;
@@ -59,6 +55,7 @@ export function EffectRotateIn({
     duration,
     delay,
     easing,
+    element,
   });
 
   const {
@@ -76,6 +73,7 @@ export function EffectRotateIn({
     duration,
     delay,
     easing,
+    element,
   });
 
   return {

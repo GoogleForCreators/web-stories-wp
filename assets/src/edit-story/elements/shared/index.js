@@ -24,10 +24,7 @@ import { css } from 'styled-components';
  */
 import generatePatternStyles from '../../utils/generatePatternStyles';
 import { calcFontMetrics, generateFontFamily } from '../text/util';
-import {
-  getBorderStyle,
-  getBorderRadius,
-} from '../../components/elementBorder/utils';
+import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 
 export const elementFillContent = css`
   position: absolute;
@@ -59,10 +56,12 @@ export const elementWithBorderRadius = css`
 `;
 
 export const elementWithBorder = css`
-  ${({ border, borderRadius }) =>
+  ${({ border, borderRadius, width, height }) =>
     getBorderStyle({
-      ...border,
+      border,
       borderRadius,
+      width,
+      height,
     })}
   background-clip: padding-box;
 `;

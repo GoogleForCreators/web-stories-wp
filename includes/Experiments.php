@@ -209,17 +209,6 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 1897
-			 * Creation date: 2020-05-21
-			 */
-			[
-				'name'        => 'enableAnimation',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable user facing animations', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28
@@ -298,17 +287,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2095
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showPrePublishTab',
-				'label'       => __( 'Pre-Publish', 'web-stories' ),
-				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
@@ -353,24 +331,13 @@ class Experiments {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #4918
-			 * Creation date: 2020-10-27
-			 */
-			[
-				'name'        => 'statusCheck',
-				'label'       => __( 'Status Check', 'web-stories' ),
-				'description' => __( 'Enable status check in editor.', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @spacedmonkey
 			 * Issue: #798
 			 * Creation date: 2020-11-02
 			 */
 			[
 				'name'        => 'enableSVG',
 				'label'       => __( 'SVG upload', 'web-stories' ),
-				'description' => __( 'Enable SVG upload.', 'web-stories' ),
+				'description' => __( 'Enable SVG upload', 'web-stories' ),
 				'group'       => 'general',
 			],
 			/**
@@ -392,9 +359,8 @@ class Experiments {
 			[
 				'name'        => 'eyeDropper',
 				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
 				'group'       => 'editor',
-
 			],
 			/**
 			 * Author: @zachhale

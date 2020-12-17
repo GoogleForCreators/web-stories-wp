@@ -17,6 +17,13 @@
 
 namespace Google\Web_Stories\Tests;
 
+/**
+ * Class Database_Upgrader
+ *
+ * @package Google\Web_Stories\Tests
+ * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
+ *
+ */
 class Database_Upgrader extends \WP_UnitTestCase {
 
 	use Private_Access;
@@ -27,6 +34,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		delete_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION );
 	}
 
+	/**
+	 * @covers ::init
+	 */
 	public function test_init_sets_missing_options() {
 		$object = new \Google\Web_Stories\Database_Upgrader();
 		$object->init();
@@ -34,6 +44,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$this->assertSame( '0.0.0', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
+	/**
+	 * @covers ::init
+	 */
 	public function test_init_does_not_override_previous_version_if_there_was_no_update() {
 		add_option( \Google\Web_Stories\Database_Upgrader::OPTION, WEBSTORIES_DB_VERSION );
 		add_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION, '1.2.3' );
@@ -44,6 +57,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		$this->assertSame( '1.2.3', get_option( $object::PREVIOUS_OPTION ) );
 	}
 
+	/**
+	 * @covers ::v_2_replace_conic_style_presets
+	 */
 	public function test_v_2_replace_conic_style_presets() {
 		$radial_preset = [
 			[
@@ -116,6 +132,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 
+	/**
+	 * @covers ::remove_broken_text_styles
+	 */
 	public function test_remove_broken_text_styles() {
 		$presets = [
 			'textStyles' => [
@@ -168,6 +187,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 
+	/**
+	 * @covers ::unify_color_presets
+	 */
 	public function test_unify_color_presets() {
 		$presets = [
 			'textStyles' => [],
@@ -218,6 +240,9 @@ class Database_Upgrader extends \WP_UnitTestCase {
 		delete_option( \Google\Web_Stories\Story_Post_Type::STYLE_PRESETS_OPTION );
 	}
 
+	/**
+	 * @covers ::update_publisher_logos
+	 */
 	public function test_update_publisher_logos() {
 		$object = new \Google\Web_Stories\Database_Upgrader();
 
@@ -230,6 +255,80 @@ class Database_Upgrader extends \WP_UnitTestCase {
 
 		$this->assertEqualSets( [ 123 ], $all_publisher_logos );
 		$this->assertSame( 123, $active_publisher_logo );
+	}
+
+	/**
+	 * @covers ::add_poster_generation_media_source
+	 */
+	public function test_add_poster_generation_media_source() {
+
+
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+
+		$this->call_private_method( $object, 'add_poster_generation_media_source' );
+
+		$terms = wp_get_post_terms( $poster_attachment_id, \Google\Web_Stories\Media::STORY_MEDIA_TAXONOMY );
+		$slugs = wp_list_pluck( $terms, 'slug' );
+		$this->assertCount( 1, $terms );
+		$this->assertEqualSets( [ 'poster-generation' ], $slugs );
+	}
+
+
+	/**
+	 * @covers ::remove_unneeded_attachment_meta
+	 */
+	public function test_remove_unneeded_attachment_meta() {
+		$video_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-video.mp4',
+				'post_parent'    => 0,
+				'post_mime_type' => 'video/mp4',
+				'post_title'     => 'Test Video',
+			]
+		);
+
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/test-image.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+
+		set_post_thumbnail( $video_attachment_id, $poster_attachment_id );
+		add_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, 'true' );
+		add_post_meta( $video_attachment_id, \Google\Web_Stories\Media::POSTER_ID_POST_META_KEY, $poster_attachment_id );
+
+		$object = new \Google\Web_Stories\Database_Upgrader();
+
+		$this->call_private_method( $object, 'remove_unneeded_attachment_meta' );
+
+		$meta = get_post_meta( $poster_attachment_id, \Google\Web_Stories\Media::POSTER_POST_META_KEY, true );
+
+		$this->assertSame( '', $meta );
 	}
 
 	/**

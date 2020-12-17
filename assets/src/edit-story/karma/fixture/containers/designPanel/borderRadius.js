@@ -28,8 +28,10 @@ export class BorderRadius extends AbstractPanel {
     super(node, path);
   }
 
-  radius(corner) {
-    return this.getByRole('textbox', { name: `${corner} corner radius` });
+  radius(corner = null) {
+    return this.getByRole('textbox', {
+      name: corner ? `${corner} corner radius` : 'Corner radius',
+    });
   }
 
   get lockBorderRadius() {

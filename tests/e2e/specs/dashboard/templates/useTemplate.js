@@ -54,6 +54,9 @@ describe('Template', () => {
     await expect(firstTemplate).toClick('button', { text: 'Use template' });
     await page.waitForNavigation();
 
+    // Wait for media elements to load before continuing.
+    await page.waitForSelector('[data-testid="mediaElement-image"]');
+
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
 
