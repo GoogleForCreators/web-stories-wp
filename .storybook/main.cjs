@@ -32,6 +32,10 @@ module.exports = {
     '@storybook/addon-viewport/register',
     '@storybook/addon-backgrounds/register',
   ],
+  reactOptions: {
+    fastRefresh: true,
+    strictMode: true,
+  },
   //eslint-disable-next-line require-await
   webpackFinal: async (config) => {
     // Modifies storybook's webpack config to use svgr instead of file-loader.
