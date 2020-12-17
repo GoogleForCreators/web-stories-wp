@@ -17,8 +17,9 @@
 /**
  * Internal dependencies
  */
-import { PAGE_WIDTH, PAGE_HEIGHT } from '../../../constants';
+import { PAGE_WIDTH } from '../../../constants';
 import { getElementProperties } from '../useInsertElement';
+import { FULLBLEED_HEIGHT } from '../../../units/dimensions';
 
 const BASIC_SHAPE = {
   id: '8e06a649-ad1f-455d-a76b-ad012aff08ad',
@@ -52,7 +53,7 @@ const BASIC_SHAPE = {
 describe('getElementProperties', () => {
   it('should modify x,y to be within page boundary by default', () => {
     const outOfBoundsX = PAGE_WIDTH + BASIC_SHAPE.width;
-    const outOfBoundsY = PAGE_HEIGHT + BASIC_SHAPE.height;
+    const outOfBoundsY = FULLBLEED_HEIGHT + BASIC_SHAPE.height;
 
     const result = getElementProperties(BASIC_SHAPE.type, {
       ...BASIC_SHAPE,
@@ -61,7 +62,7 @@ describe('getElementProperties', () => {
     });
 
     expect(result.x).toBe(PAGE_WIDTH - BASIC_SHAPE.width);
-    expect(result.y).toBe(PAGE_HEIGHT - BASIC_SHAPE.height);
+    expect(result.y).toBe(FULLBLEED_HEIGHT - BASIC_SHAPE.height);
   });
 
   it('should keey x,y unmodified if already within page boundary', () => {

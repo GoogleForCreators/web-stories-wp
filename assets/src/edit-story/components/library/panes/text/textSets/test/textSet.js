@@ -35,7 +35,7 @@ import { UnitsProvider } from '../../../../../../units';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';
 
-const SETS = [
+const SET = [
   {
     opacity: 100,
     flip: {
@@ -241,13 +241,13 @@ describe('TextSets', () => {
   });
 
   it('should render', () => {
-    const { container } = setup(SETS);
+    const { container } = setup(SET);
     const el1 = container.querySelector('[data-element-id="1"]');
     expect(el1).not.toBeNull();
   });
 
   it('should render the correct elements from the text sets', () => {
-    const { container } = setup(SETS);
+    const { container } = setup(SET);
     const el1 = container.querySelector('[data-element-id="1"]');
     expect(el1).toHaveTextContent('Good design is aesthetic');
     const el2 = container.querySelector('[data-element-id="2"]');
@@ -258,10 +258,11 @@ describe('TextSets', () => {
 
   it('should allow inserting a text set', () => {
     insertTextSet.mockImplementation((elements) => elements);
-    const { queryAllByRole } = setup(SETS);
+    const { queryAllByRole } = setup(SET);
     const sets = queryAllByRole('listitem');
-    expect(sets).toHaveLength(2);
-    fireEvent.click(sets[1]);
+    expect(sets).toHaveLength(1);
+    // Last child is always the moveable targetBox.
+    fireEvent.click(sets[0].lastChild);
 
     expect(insertTextSet).toHaveBeenCalledTimes(1);
 
