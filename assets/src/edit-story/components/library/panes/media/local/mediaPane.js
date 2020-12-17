@@ -175,7 +175,7 @@ function MediaPane(props) {
       if (!resource.posterId) {
         // Upload video poster and update media element afterwards, so that the
         // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, mediaPickerEl.url );
+        uploadVideoPoster(resource.id, mediaPickerEl.url);
       }
     } catch (e) {
       showSnackbar({
