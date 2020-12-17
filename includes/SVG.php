@@ -34,7 +34,7 @@ use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
 /**
  * Class SVG
  *
- * @since 1.2.0
+ * @since 1.3.0
  *
  * @package Google\Web_Stories
  */
@@ -42,7 +42,7 @@ class SVG {
 	/**
 	 * File extension.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @var string
 	 */
@@ -51,7 +51,7 @@ class SVG {
 	/**
 	 * Mime type.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @var string
 	 */
@@ -61,7 +61,7 @@ class SVG {
 	 * Cached list of SVG files and their contents.
 	 * Speeds up access during the same request.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @var string[]
 	 */
@@ -70,7 +70,7 @@ class SVG {
 	/**
 	 * Experiments instance.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @var Experiments Experiments instance.
 	 */
@@ -79,7 +79,7 @@ class SVG {
 	/**
 	 * SVG constructor.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
 	 *
@@ -92,7 +92,7 @@ class SVG {
 	/**
 	 * Register filters and actions.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return void
 	 */
@@ -119,7 +119,7 @@ class SVG {
 	/**
 	 * Helper function to check if svg uploads are already enabled.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @return bool
 	 */
@@ -133,7 +133,7 @@ class SVG {
 	/**
 	 * Enable SVG upload.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param array $mime_types Mime types keyed by the file extension regex corresponding to those types.
 	 *
@@ -150,7 +150,7 @@ class SVG {
 	/**
 	 * Adds SVG to list of mime types and file extensions
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param string[] $mime_types     Mime types keyed by the file extension regex
 	 *                                 corresponding to those types.
@@ -167,7 +167,7 @@ class SVG {
 	/**
 	 * Add SVG to allowed mime types.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
 	 *
@@ -182,7 +182,7 @@ class SVG {
 	/**
 	 * Add svg file type to allow file in multisite.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param string $value List of allowed file types.
 	 *
@@ -201,7 +201,7 @@ class SVG {
 	/**
 	 * Hook into metadata generation and get height and width for SVG file.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param array  $metadata      An array of attachment meta data.
 	 * @param int    $attachment_id Current attachment ID.
@@ -243,7 +243,7 @@ class SVG {
 	/**
 	 * Hook into upload and error if size could not be generated.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param array $upload {
 	 *      Array of upload data.
@@ -277,7 +277,7 @@ class SVG {
 	/**
 	 * Get SVG image size.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
@@ -318,7 +318,7 @@ class SVG {
 	/**
 	 * Sanitize the SVG
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param string $file File path.
 	 *
@@ -344,7 +344,7 @@ class SVG {
 	/**
 	 * Work around for incorrect mime type.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param array       $wp_check_filetype_and_ext {
 	 *                                               Values for the extension, mime type, and corrected filename.
@@ -378,7 +378,7 @@ class SVG {
 	/**
 	 * Get xml document.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param string $svg String of xml.
 	 *
@@ -410,7 +410,7 @@ class SVG {
 	/**
 	 * Get SVG data.
 	 *
-	 * @since 1.2.0
+	 * @since 1.3.0
 	 *
 	 * @param string $file File path.
 	 *
