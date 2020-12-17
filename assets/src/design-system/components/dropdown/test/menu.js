@@ -19,6 +19,8 @@
  */
 
 import { fireEvent } from '@testing-library/react';
+import { forwardRef } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -29,26 +31,31 @@ import { basicDropdownItems } from '../stories/sampleData';
 
 describe('Dropdown <DropdownMenu />', () => {
   const onClickMock = jest.fn();
-  const onDismissMock = jest.fn();
+
+  // Mock scrollTo
+  const scrollTo = jest.fn();
+  Object.defineProperty(window.Element.prototype, 'scrollTo', {
+    writable: true,
+    value: scrollTo,
+  });
 
   it('should render a <DropdownMenu /> list with 12 items', () => {
     const { getByRole, queryAllByRole } = renderWithProviders(
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        isRTL={false}
         items={basicDropdownItems}
         onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
+        onDismissMenu={() => {}}
         activeValue={null}
       />
     );
 
-    const Menu = getByRole('listbox');
-    expect(Menu).toBeInTheDocument();
+    const menu = getByRole('listbox');
+    expect(menu).toBeInTheDocument();
 
-    const ListItems = queryAllByRole('option');
-    expect(ListItems).toHaveLength(12);
+    const options = queryAllByRole('option');
+    expect(options).toHaveLength(12);
   });
 
   it('should return an emptyText message when there are no items to display', () => {
@@ -56,36 +63,15 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        isRTL={false}
         items={[]}
         onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
+        onDismissMenu={() => {}}
         activeValue={null}
       />
     );
 
-    const EmptyMessage = getByText('No options available');
-    expect(EmptyMessage).toBeTruthy();
-  });
-
-  it.skip('should trigger onDismissMenu when esc key is pressed', () => {
-    const wrapper = renderWithProviders(
-      <DropdownMenu
-        hasMenuRole={false}
-        emptyText={'No options available'}
-        isRTL={false}
-        items={basicDropdownItems}
-        onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
-        activeValue={basicDropdownItems[1].value}
-      />
-    );
-
-    const list = wrapper.getByRole('listbox');
-    expect(list).toBeDefined();
-
-    fireEvent.keyPress(list, { key: 'escape', keyCode: 27 });
-    expect(onDismissMock).toHaveBeenCalledTimes(1);
+    const emptyMessage = getByText('No options available');
+    expect(emptyMessage).toBeTruthy();
   });
 
   it('should trigger onMenuItemClick when list item is clicked', () => {
@@ -93,79 +79,45 @@ describe('Dropdown <DropdownMenu />', () => {
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        isRTL={false}
         items={basicDropdownItems}
         onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
+        onDismissMenu={() => {}}
         activeValue={null}
       />
     );
 
-    const ListItem3 = queryAllByRole('option')[2];
-    expect(ListItem3).toHaveTextContent(basicDropdownItems[2].label);
+    const option3 = queryAllByRole('option')[2];
+    expect(option3).toHaveTextContent(basicDropdownItems[2].label);
 
-    fireEvent.click(ListItem3);
+    fireEvent.click(option3);
+
     expect(onClickMock).toHaveBeenCalledTimes(1);
-  });
-
-  it.skip('should trigger onMenuItemClick when keydown "Enter" on a list item', () => {
-    const wrapper = renderWithProviders(
-      <DropdownMenu
-        hasMenuRole={false}
-        emptyText={'No options available'}
-        isRTL={false}
-        items={basicDropdownItems}
-        onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
-        activeValue={basicDropdownItems[0].value}
-      />
-    );
-
-    const ListItem = wrapper.getAllByRole('option')[0];
-    expect(ListItem).toBeDefined();
-
-    fireEvent.keyDown(ListItem, {
-      key: 'Enter',
-      keyCode: 13,
-    });
-    expect(onClickMock).toHaveBeenCalledTimes(1);
-  });
-
-  it('should show an active icon on list item that is active', () => {
-    const { getByTestId, getByText } = renderWithProviders(
-      <DropdownMenu
-        hasMenuRole={false}
-        emptyText={'No options available'}
-        isRTL={false}
-        items={basicDropdownItems}
-        onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
-        activeValue={basicDropdownItems[2].value}
-      />
-    );
-
-    const ActiveListItem = getByText(basicDropdownItems[2].label).closest('li');
-    const ActiveListItemById = getByTestId(
-      'dropdownMenuItem_active_icon'
-    ).closest('li');
-    expect(ActiveListItem).toMatchObject(ActiveListItemById);
   });
 
   it('should override list items when renderMenu is present', () => {
+    const OverrideRenderItem = forwardRef(function DefaultListItem(
+      { isSelected, ...rest },
+      ref
+    ) {
+      return (
+        <li {...rest} ref={ref}>
+          {isSelected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}
+        </li>
+      );
+    });
+    OverrideRenderItem.propTypes = {
+      isSelected: PropTypes.bool,
+    };
+
     const { queryAllByText } = renderWithProviders(
       <DropdownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
-        isRTL={false}
         items={basicDropdownItems}
         onMenuItemClick={onClickMock}
-        onDismissMenu={onDismissMock}
+        onDismissMenu={() => {}}
         activeValue={basicDropdownItems[2].value}
-        renderItem={(item, isSelected) => {
-          return (
-            <div>{isSelected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}</div>
-          );
-        }}
+        renderItem={OverrideRenderItem}
       />
     );
 

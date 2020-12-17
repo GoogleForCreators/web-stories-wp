@@ -39,8 +39,8 @@ describe('Dropdown <DropdownSelect />', () => {
       />
     );
 
-    const DropdownButton = getByRole('button');
-    expect(DropdownButton).toBeDefined();
+    const select = getByRole('button');
+    expect(select).toBeInTheDocument();
   });
 
   it('should not trigger onSelectClick on click if select is disabled', () => {
@@ -54,8 +54,8 @@ describe('Dropdown <DropdownSelect />', () => {
       />
     );
 
-    const DropdownButton = getByLabelText('my label');
-    fireEvent.click(DropdownButton);
+    const select = getByLabelText('my label');
+    fireEvent.click(select);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
   });
@@ -71,10 +71,10 @@ describe('Dropdown <DropdownSelect />', () => {
       />
     );
 
-    const DropdownButton = getByLabelText(
+    const select = getByLabelText(
       'specific label for aria to override visible label'
     );
-    fireEvent.click(DropdownButton);
+    fireEvent.click(select);
 
     expect(onClickMock).toHaveBeenCalledTimes(1);
   });
