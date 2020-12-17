@@ -138,31 +138,33 @@ function ShapePreview({ mask, isPreview }) {
     },
   };
 
-  const svg = (
-    <svg
-      viewBox={`0 0 1 ${
-        1 / (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
-      }`}
-      width={
-        PREVIEW_SIZE *
-        (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
-      }
-      height={PREVIEW_SIZE}
-    >
-      <title>{mask.name}</title>
-      <Path
-        d={isPreview && mask.iconPath ? mask.iconPath : mask.path}
-        ref={pathRef}
-      />
-    </svg>
-  );
+  const getSVG = (displayLabel = true) => {
+    return (
+      <svg
+        viewBox={`0 0 1 ${
+          1 / (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+        }`}
+        width={
+          PREVIEW_SIZE *
+          (isPreview && mask.iconRatio ? mask.iconRatio : mask.ratio)
+        }
+        height={PREVIEW_SIZE}
+      >
+        {displayLabel && <title>{mask.name}</title>}
+        <Path
+          d={isPreview && mask.iconPath ? mask.iconPath : mask.path}
+          ref={pathRef}
+        />
+      </svg>
+    );
+  };
 
   return (
     <Aspect>
       <AspectInner>
         <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
           <ShapePreviewSizer />
-          {svg}
+          {getSVG()}
         </ShapePreviewContainer>
       </AspectInner>
       <LibraryMoveable
@@ -176,7 +178,7 @@ function ShapePreview({ mask, isPreview }) {
         cloneProps={{
           width: dataToEditorX(DEFAULT_ELEMENT_WIDTH * mask.ratio),
           height: dataToEditorY(DEFAULT_ELEMENT_WIDTH),
-          children: svg,
+          children: getSVG(false),
         }}
       />
     </Aspect>
