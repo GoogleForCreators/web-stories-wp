@@ -31,14 +31,16 @@ import { __ } from '@wordpress/i18n';
 import styled from 'styled-components';
 import {
   FormContainer,
+  HelperText,
   InlineForm,
+  InlineLink,
   SettingForm,
   SettingHeading,
-  TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
 import { Dropdown } from '../../../../components';
 import { DROPDOWN_TYPES } from '../../../../constants';
+import { TranslateWithMarkup } from '../../../../../i18n';
 
 const SortDropdown = styled(Dropdown)`
   & button {
@@ -57,8 +59,31 @@ const SortDropdown = styled(Dropdown)`
 export const TEXT = {
   SECTION_HEADING: __('Monetization', 'web-stories'),
   SLOT_ID_LABEL: __('Monetization type', 'web-stories'),
-  SLOT_ID_CONTEXT: __(
-    'Monetize your content by showing ads in your Web Stories. Learn more.',
+  HELPER_MESSAGE_NONE: __(
+    'Monetize your content by showing ads in your Web Stories. <a>Learn more</a>.',
+    'web-stories'
+  ),
+  HELPER_MESSAGE_ADSENSE: __(
+    'Learn more about <a>how to monetize your Web Stories</a> using AdSense.',
+    'web-stories'
+  ),
+  HELPER_MESSAGE_ADMANAGER: __(
+    'Learn how to <a>enable programmatic demand in Web Stories</a> through Ad Manager.',
+    'web-stories'
+  ),
+};
+
+export const LINK = {
+  HELPER_LINK_NONE: __(
+    'https://amp.dev/documentation/guides-and-tutorials/develop/advertise_amp_stories/',
+    'web-stories'
+  ),
+  HELPER_LINK_ADSENSE: __(
+    'https://support.google.com/adsense/answer/10175505',
+    'web-stories'
+  ),
+  HELPER_LINK_ADMANAGER: __(
+    'https://support.google.com/admanager/answer/9416436',
     'web-stories'
   ),
 };
@@ -85,9 +110,39 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
     setAdNetwork(adNetworkRaw);
   }, [adNetworkRaw]);
 
+  let message;
+  let link;
+
+  switch (adNetwork) {
+    case 'admanager':
+      message = TEXT.HELPER_MESSAGE_ADMANAGER;
+      link = LINK.HELPER_LINK_ADMANAGER;
+      break;
+    case 'adsense':
+      message = TEXT.HELPER_MESSAGE_ADSENSE;
+      link = LINK.HELPER_LINK_ADSENSE;
+      break;
+    case 'none':
+    default:
+      message = TEXT.HELPER_MESSAGE_NONE;
+      link = LINK.HELPER_LINK_NONE;
+      break;
+  }
+
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+      <div>
+        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+        <HelperText>
+          <TranslateWithMarkup
+            mapping={{
+              a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
+            }}
+          >
+            {message}
+          </TranslateWithMarkup>
+        </HelperText>
+      </div>
       <FormContainer>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="adManagerSlotId">
@@ -101,7 +156,6 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
             onChange={(newAdNetwork) => handleUpdate(newAdNetwork.value)}
           />
         </InlineForm>
-        <TextInputHelperText>{TEXT.SLOT_ID_CONTEXT}</TextInputHelperText>
       </FormContainer>
     </SettingForm>
   );

@@ -36,10 +36,7 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
 
   it('should render ad network settings and helper text by default', function () {
     const { getByText } = renderWithProviders(
-      <AdNetworkSettings
-        adNetwork={adNetwork}
-        handleUpdate={mockUpdate}
-      />
+      <AdNetworkSettings adNetwork={adNetwork} handleUpdate={mockUpdate} />
     );
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
