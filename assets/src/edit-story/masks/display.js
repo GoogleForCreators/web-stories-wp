@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { shouldDisplayBorder } from '../components/elementBorder/utils';
+import { shouldDisplayBorder } from '../utils/elementBorder';
 import { getElementMask, MaskTypes } from './';
 
 const FILL_STYLE = {

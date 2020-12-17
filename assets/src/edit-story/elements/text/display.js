@@ -44,9 +44,8 @@ import createSolid from '../../utils/createSolid';
 import stripHTML from '../../utils/stripHTML';
 import {
   getResponsiveBorder,
-  getResponsiveBorderRadius,
   shouldDisplayBorder,
-} from '../../components/elementBorder/utils';
+} from '../../utils/elementBorder';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {
   getHighlightLineheight,
@@ -133,7 +132,7 @@ function TextDisplay({
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { font } = rest;
+  const { font, width: elementWidth, height: elementHeight } = rest;
   const fontFaceSetConfigs = useMemo(() => {
     const htmlInfo = getHTMLInfo(content);
     return {
@@ -227,11 +226,9 @@ function TextDisplay({
       <OutsideBorder
         ref={outerBorderRef}
         border={getResponsiveBorder(border, previewMode, dataToEditorX)}
-        borderRadius={getResponsiveBorderRadius(
-          borderRadius,
-          previewMode,
-          dataToEditorX
-        )}
+        borderRadius={borderRadius}
+        width={elementWidth}
+        height={elementHeight}
       >
         <HighlightWrapperElement ref={ref} {...props}>
           <HighlightElement {...props}>
@@ -268,7 +265,9 @@ function TextDisplay({
         backgroundTextMode === BACKGROUND_TEXT_MODE.FILL && backgroundColor
       }
       borderRadius={borderRadius}
-      border={border}
+      border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      width={elementWidth}
+      height={elementHeight}
     >
       <FillElement
         ref={fgRef}

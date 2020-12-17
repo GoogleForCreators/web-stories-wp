@@ -40,7 +40,7 @@ import {
   getBorderPositionCSS,
   getResponsiveBorder,
   shouldDisplayBorder,
-} from '../elementBorder/utils';
+} from '../../utils/elementBorder';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -156,7 +156,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                   ...getResponsiveBorder(border, previewMode, dataToEditorX),
                   width: `${box.width}px`,
                   height: `${box.height}px`,
-                  skipPositioning: false,
                 })
               : null),
           }}

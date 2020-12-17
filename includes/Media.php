@@ -145,20 +145,6 @@ class Media {
 
 		register_meta(
 			'post',
-			self::POSTER_POST_META_KEY,
-			[
-				'sanitize_callback' => 'rest_sanitize_boolean',
-				'type'              => 'boolean',
-				'description'       => __( 'Whether the attachment is a poster image.', 'web-stories' ),
-				'show_in_rest'      => true,
-				'default'           => false,
-				'single'            => true,
-				'object_subtype'    => 'attachment',
-			]
-		);
-
-		register_meta(
-			'post',
 			self::POSTER_ID_POST_META_KEY,
 			[
 				'sanitize_callback' => 'absint',
