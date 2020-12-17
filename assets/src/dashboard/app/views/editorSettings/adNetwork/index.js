@@ -34,6 +34,7 @@ import {
   InlineForm,
   SettingForm,
   SettingHeading,
+  TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
 import { Dropdown } from '../../../../components';
@@ -54,8 +55,12 @@ const SortDropdown = styled(Dropdown)`
 `;
 
 export const TEXT = {
-  SECTION_HEADING: __('Adloader', 'web-stories'),
-  SLOT_ID_LABEL: __('Adloader type', 'web-stories'),
+  SECTION_HEADING: __('Monetization', 'web-stories'),
+  SLOT_ID_LABEL: __('Monetization type', 'web-stories'),
+  SLOT_ID_CONTEXT: __(
+    'Monetize your content by showing ads in your Web Stories. Learn more.',
+    'web-stories'
+  ),
 };
 
 const OPTIONS = [
@@ -96,6 +101,7 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
             onChange={(newAdNetwork) => handleUpdate(newAdNetwork.value)}
           />
         </InlineForm>
+        <TextInputHelperText>{TEXT.SLOT_ID_CONTEXT}</TextInputHelperText>
       </FormContainer>
     </SettingForm>
   );
