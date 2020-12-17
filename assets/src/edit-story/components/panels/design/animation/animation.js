@@ -80,8 +80,6 @@ function AnimationPanel({
       .filter((a) => !a.delete);
   }, [selectedElements, selectedElementAnimations]);
 
-  const elAnimationId = updatedAnimations[0]?.id;
-
   const handlePanelChange = useCallback(
     (animation, submitArg = false) => {
       if (shallowEqual(animation, updatedAnimations[0])) {
@@ -99,8 +97,15 @@ function AnimationPanel({
         return;
       }
 
-      const id = elAnimationId || uuidv4();
+      const id = selectedElementAnimations[0]?.id || uuidv4();
       const defaults = getAnimationEffectDefaults(animation);
+      const persisted =
+        selectedElementAnimations[0]?.type === animation
+          ? {
+              duration: selectedElementAnimations[0]?.duration,
+              delay: selectedElementAnimations[0]?.delay,
+            }
+          : {};
 
       // Background Zoom's `scale from` initial value should match
       // the current background's scale slider
@@ -119,6 +124,7 @@ function AnimationPanel({
           id,
           type: animation,
           ...defaults,
+          ...persisted,
           ...options,
         },
         null,
@@ -129,7 +135,12 @@ function AnimationPanel({
       // was changed by the effect chooser, so we track it here.
       playUpdatedAnimation.current = true;
     },
-    [elAnimationId, isBackground, pushUpdateForObject, backgroundScale]
+    [
+      selectedElementAnimations,
+      isBackground,
+      pushUpdateForObject,
+      backgroundScale,
+    ]
   );
 
   // Play animation of selected elements when effect chooser signals
