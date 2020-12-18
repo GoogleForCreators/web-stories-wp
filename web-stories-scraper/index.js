@@ -45,6 +45,8 @@ if (!existsSync(directory)) {
 
 const WEBSITE_LOCATION = 'https://wp.stories.google/stories/';
 
+const PUBLISHER_NAME = 'Google Web Creators';
+
 /* eslint-disable no-template-curly-in-string */
 const ADDITIONAL_ANALYTICS_CONFIG = {
   vars: {
@@ -181,6 +183,14 @@ class WebStoriesScraperPlugin {
         const filePath = join(directory, resource.getFilename());
 
         let fileContents = readFileSync(filePath, 'utf-8');
+
+        const existingTitle = fileContents.match(
+          /<amp-story[^>]+title="([^"]+)"/
+        )[1];
+        const existingPublisher = fileContents.match(
+          /<amp-story[^>]+publisher="([^"]+)"/
+        )[1];
+
         fileContents = fileContents
           // Remove some clutter.
           .replace(
@@ -243,6 +253,9 @@ class WebStoriesScraperPlugin {
                   `${WEBSITE_LOCATION}${storySlug}/` +
                   fileContents.match(/poster-portrait-src="([^"]+)"/)[1];
               }
+              if (metadata.publisher.name) {
+                metadata.publisher.name = PUBLISHER_NAME;
+              }
               if (metadata.publisher.logo) {
                 metadata.publisher.logo.url =
                   `${WEBSITE_LOCATION}${storySlug}/` +
@@ -263,7 +276,14 @@ class WebStoriesScraperPlugin {
           .replace(
             '</amp-analytics>',
             '</amp-analytics>' + ADDITIONAL_ANALYTICS
-          );
+          )
+          // Consistent titles.
+          .replace(
+            /<title>(.*)<\/title>/,
+            `<title>${existingTitle} - ${PUBLISHER_NAME}</title>`
+          )
+          // Override publisher name.
+          .replace(new RegExp(existingPublisher, 'g'), PUBLISHER_NAME);
 
         writeFileSync(filePath, fileContents);
       }
