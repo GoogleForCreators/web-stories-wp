@@ -261,6 +261,10 @@ class WebStoriesScraperPlugin {
                   `${WEBSITE_LOCATION}${storySlug}/` +
                   fileContents.match(/publisher-logo-src="([^"]+)"/)[1];
               }
+              if (metadata.author) {
+                metadata.author['@type'] = 'Organization';
+                metadata.author['name'] = PUBLISHER_NAME;
+              }
               metadata.mainEntityOfPage = `${WEBSITE_LOCATION}${storySlug}`;
               return `<script type="application/ld+json">${JSON.stringify(
                 metadata
