@@ -27,6 +27,8 @@ import { renderWithTheme } from '../../../../testUtils/index';
 
 jest.mock('../../useLibrary');
 import useLibrary from '../../useLibrary';
+import { PAGE_RATIO, TEXT_SET_SIZE } from '../../../../constants';
+import { UnitsProvider } from '../../../../units';
 
 describe('ShapePreview', () => {
   const insertElement = jest.fn();
@@ -46,15 +48,24 @@ describe('ShapePreview', () => {
     }));
   });
 
-  it('should be draggable', () => {
+  it('should render', () => {
     let shapePreviewElement;
     act(() => {
       const { getByLabelText } = renderWithTheme(
-        <ShapePreview mask={rectangleMask} />
+        <UnitsProvider
+          pageSize={{
+            width: TEXT_SET_SIZE,
+            height: TEXT_SET_SIZE / PAGE_RATIO,
+          }}
+          dataToEditorX={jest.fn()}
+          dataToEditorY={jest.fn()}
+        >
+          <ShapePreview mask={rectangleMask} />
+        </UnitsProvider>
       );
       shapePreviewElement = getByLabelText(rectangleMask.name);
     });
 
-    expect(shapePreviewElement).toHaveAttribute('draggable');
+    expect(shapePreviewElement).toBeInTheDocument();
   });
 });
