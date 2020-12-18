@@ -39,6 +39,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     adManagerSlotId = '';
   });
 
+  // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should render Google Ad Manager input and helper text by default', function () {
     const { getByRole, getByText } = renderWithProviders(
       <GoogleAdManagerSettings
@@ -54,6 +55,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
+  // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should render a visually hidden label for Google Ad Manager input', function () {
     const { getByLabelText } = renderWithProviders(
       <GoogleAdManagerSettings
@@ -66,6 +68,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(label).toBeInTheDocument();
   });
 
+  // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should call mockUpdate when enter is keyed on input', function () {
     let { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
@@ -109,6 +112,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
+  // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should call mockUpdate when the save button is clicked', function () {
     const { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings

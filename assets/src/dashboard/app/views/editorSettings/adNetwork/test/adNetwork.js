@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../../../testUtils';
-import AdNetworkSettings, { TEXT, LINK } from '../';
+import AdNetworkSettings, { TEXT } from '../';
 
 describe('Editor Settings: Ad network settings <AdNetworkSettings />', function () {
   let adNetwork;

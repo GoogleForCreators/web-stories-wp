@@ -29,6 +29,8 @@ import {
 import { renderWithProviders } from '../../../../testUtils';
 import { TEXT as GA_TEXT } from '../googleAnalytics';
 import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
+import { TEXT as AD_NETWORK_TEXT } from '../adNetwork';
+
 import EditorSettings from '../';
 
 const mockFetchSettings = jest.fn();
@@ -43,6 +45,10 @@ function createProviderValues({
   activeLogoId,
   isLoading,
   googleAnalyticsId,
+  adSensePublisherId = '',
+  adSenseSlotId = '',
+  adManagerSlotId = '',
+  adNetwork = 'none',
   logoIds,
   logos,
 }) {
@@ -59,6 +65,10 @@ function createProviderValues({
       state: {
         settings: {
           googleAnalyticsId,
+          adSensePublisherId,
+          adSenseSlotId,
+          adManagerSlotId,
+          adNetwork,
           activePublisherLogoId: activeLogoId,
           publisherLogoIds: logoIds,
         },
@@ -119,6 +129,8 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
     expect(getByTestId('upload-file-input')).toBeInTheDocument();
     expect(mockFetchSettings).toHaveBeenCalledTimes(1);
+
+    expect(getByText(AD_NETWORK_TEXT.SECTION_HEADING)).toBeInTheDocument();
   });
 
   it('should render settings page with publisher logos', function () {
