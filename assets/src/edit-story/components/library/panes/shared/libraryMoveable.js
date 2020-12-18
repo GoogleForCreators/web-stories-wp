@@ -34,6 +34,9 @@ import isMouseUpAClick from '../../../../utils/isMouseUpAClick';
 import InOverlay from '../../../overlay';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import { useKeyDownEffect } from '../../../keyboard';
+import useSnapping from '../../../canvas/utils/useSnapping';
+import { useStory } from '../../../../app/story';
+import objectWithout from '../../../../utils/objectWithout';
 
 const TargetBox = styled.div`
   position: absolute;
@@ -71,11 +74,16 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { fullbleedContainer, pageContainer } = useCanvas((state) => ({
-    fullbleedContainer: state.state.fullbleedContainer,
-    pageContainer: state.state.pageContainer,
-    nodesById: state.state.nodesById,
+  const { backgroundElement } = useStory((state) => ({
+    backgroundElement: state.state.currentPage?.elements?.[0] ?? {},
   }));
+  const { fullbleedContainer, nodesById, pageContainer } = useCanvas(
+    (state) => ({
+      fullbleedContainer: state.state.fullbleedContainer,
+      pageContainer: state.state.pageContainer,
+      nodesById: state.state.nodesById,
+    })
+  );
 
   const {
     state: { activeDropTargetId },
@@ -226,14 +234,13 @@ function LibraryMoveable({
     return undefined;
   };
 
-  // @todo Add this back once all elements are using Moveable in the Library.
-  /*const { offsetX: snappingOffsetX } = getTargetOffset();
+  const { offsetX: snappingOffsetX } = getTargetOffset();
   const snapProps = useSnapping({
     isDragging: true,
     canSnap: true,
     otherNodes: Object.values(objectWithout(nodesById, [backgroundElement.id])),
     snappingOffsetX,
-  });*/
+  });
 
   const targetSize = previewSize ? previewSize : cloneProps;
   const { width, height } = targetSize;
@@ -267,6 +274,7 @@ function LibraryMoveable({
             onDragStart={onDragStart}
             onDrag={onDrag}
             onDragEnd={onDragEnd}
+            {...snapProps}
           />
         </>
       )}
