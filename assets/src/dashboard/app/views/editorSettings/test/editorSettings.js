@@ -208,4 +208,27 @@ describe('Editor Settings: <Editor Settings />', function () {
 
     expect(queryAllByTestId('upload-file-input')).toHaveLength(0);
   });
+
+  it('should render settings page with adsense', function () {
+    const { getByText } = renderWithProviders(
+      <EditorSettings />,
+      createProviderValues({
+        googleAnalyticsId: 'UA-098909-05',
+        canUploadFiles: true,
+        canManageSettings: true,
+        isLoading: false,
+        adSensePublisherId: '123',
+        adSenseSlotId: '456',
+        adManagerSlotId: '',
+        adNetwork: 'adsense',
+        logoIds: [],
+        logos: {},
+      })
+    );
+
+    const helperLink = getByText('how to monetize your Web Stories', {
+      selector: 'a',
+    });
+    expect(helperLink).toBeInTheDocument();
+  });
 });

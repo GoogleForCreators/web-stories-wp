@@ -39,24 +39,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     adManagerSlotId = '';
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should render Google Ad Manager input and helper text by default', function () {
-    const { getByRole, getByText } = renderWithProviders(
-      <GoogleAdManagerSettings
-        adManagerSlotId={adManagerSlotId}
-        handleUpdate={mockUpdate}
-      />
-    );
-
-    const input = getByRole('textbox');
-    expect(input).toBeDefined();
-
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
-    expect(sectionHeader).toBeInTheDocument();
-  });
-
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should render a visually hidden label for Google Ad Manager input', function () {
+  it('should render a visually hidden label for Google Ad Manager input', function () {
     const { getByLabelText } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
@@ -68,8 +51,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should call mockUpdate when enter is keyed on input', function () {
+  it('should call mockUpdate when enter is keyed on input', function () {
     let { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
@@ -79,7 +61,9 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
 
     let input = getByRole('textbox');
 
-    fireEvent.change(input, { target: { value: 'UA-098754-33' } });
+    fireEvent.change(input, {
+      target: { value: '/123456789/a4a/amp_story_dfp_example' },
+    });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
     // rerender to get updated adManagerSlotId prop
@@ -112,8 +96,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should call mockUpdate when the save button is clicked', function () {
+  it('should call mockUpdate when the save button is clicked', function () {
     const { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
@@ -124,7 +107,9 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     const input = getByRole('textbox');
     const button = getByRole('button');
 
-    fireEvent.change(input, { target: { value: 'UA-098754-33' } });
+    fireEvent.change(input, {
+      target: { value: '/123456789/a4a/amp_story_dfp_example' },
+    });
 
     fireEvent.click(button);
 

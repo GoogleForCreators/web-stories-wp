@@ -25,137 +25,266 @@ import { renderWithProviders } from '../../../../../testUtils';
 import GoogleAdSenseSettings, { TEXT } from '../';
 
 describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
-  let googleAnalyticsId;
-  let mockUpdate;
+  let publisherId;
+  let slotId;
+  let mockUpdatePublisherId;
+  let mockUpdateSlotId;
 
   beforeEach(() => {
-    googleAnalyticsId = '';
-    mockUpdate = jest.fn((id) => {
-      googleAnalyticsId = id;
+    publisherId = '';
+    slotId = '';
+    mockUpdatePublisherId = jest.fn((id) => {
+      publisherId = id;
+    });
+    mockUpdateSlotId = jest.fn((id) => {
+      slotId = id;
     });
   });
 
   afterEach(() => {
-    googleAnalyticsId = '';
+    publisherId = '';
+    slotId = '';
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should render google analytics input and helper text by default', function () {
-    const { getByRole, getByText } = renderWithProviders(
+  it('should render google adsenses input and helper text by default', function () {
+    const { getByTestId, getByText } = renderWithProviders(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    const input = getByRole('textbox');
-    expect(input).toBeDefined();
+    const adSensePublisherIdInput = getByTestId('adSensePublisherId');
+    expect(adSensePublisherIdInput).toBeDefined();
 
-    const sectionHeader = getByText(TEXT.SECTION_HEADING);
-    expect(sectionHeader).toBeInTheDocument();
+    const adSenseSlotIdInput = getByTestId('adSenseSlotId');
+    expect(adSenseSlotIdInput).toBeDefined();
+
+    const idLabel = getByText(TEXT.PUBLISHER_ID_LABEL);
+    expect(idLabel).toBeInTheDocument();
+
+    const slotIdLabel = getByText(TEXT.SLOT_ID_LABEL);
+    expect(slotIdLabel).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should render a visually hidden label for google analytics input', function () {
+  it('should render a visually hidden label for inputs', function () {
     const { getByLabelText } = renderWithProviders(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    const label = getByLabelText(TEXT.SLOT_ID_LABEL);
-    expect(label).toBeInTheDocument();
+    const label1 = getByLabelText(TEXT.SLOT_ID_LABEL);
+    expect(label1).toBeInTheDocument();
+
+    const label2 = getByLabelText(TEXT.PUBLISHER_ID_LABEL);
+    expect(label2).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should call mockUpdate when enter is keyed on input', function () {
-    let { getByRole, rerender } = renderWithProviders(
+  it('should call mockUpdatePublisherId when enter is keyed on input', function () {
+    let { getByTestId, rerender } = renderWithProviders(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    let input = getByRole('textbox');
+    let input = getByTestId('adSensePublisherId');
 
-    fireEvent.change(input, { target: { value: 'UA-098754-33' } });
+    fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
-    // rerender to get updated googleAnalyticsId prop
+    // rerender to get updated publisherId prop
     rerender(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(1);
 
     fireEvent.change(input, { target: { value: '' } });
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
-    // rerender to get updated googleAnalyticsId prop
+    // rerender to get updated publisherId prop
     rerender(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(2);
+    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
 
     fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
 
-    expect(mockUpdate).toHaveBeenCalledTimes(2);
+    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
   });
 
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should call mockUpdate when the save button is clicked', function () {
-    const { getByRole, rerender } = renderWithProviders(
+  it('should call mockUpdatePublisherId when the save button is clicked', function () {
+    const { getByTestId, rerender } = renderWithProviders(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    const input = getByRole('textbox');
-    const button = getByRole('button');
+    const input = getByTestId('adSensePublisherId');
+    const button = getByTestId('adSensePublisherIdButton');
 
-    fireEvent.change(input, { target: { value: 'UA-098754-33' } });
+    fireEvent.change(input, { target: { value: 'pub-1234567891234567' } });
 
     fireEvent.click(button);
 
-    // rerender to get updated googleAnalyticsId prop
+    // rerender to get updated publisherId prop
     rerender(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(1);
 
     fireEvent.change(input, { target: { value: '' } });
 
     fireEvent.click(button);
 
-    // rerender to get updated googleAnalyticsId prop
+    // rerender to get updated publisherId prop
     rerender(
       <GoogleAdSenseSettings
-        googleAnalyticsId={googleAnalyticsId}
-        handleUpdate={mockUpdate}
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
       />
     );
 
-    expect(mockUpdate).toHaveBeenCalledTimes(2);
+    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
 
     fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
 
     fireEvent.click(button);
 
-    expect(mockUpdate).toHaveBeenCalledTimes(2);
+    expect(mockUpdatePublisherId).toHaveBeenCalledTimes(2);
+  });
+
+  it('should call mockUpdateSlotId when enter is keyed on input', function () {
+    let { getByTestId, rerender } = renderWithProviders(
+      <GoogleAdSenseSettings
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
+      />
+    );
+
+    let input = getByTestId('adSenseSlotId');
+
+    fireEvent.change(input, { target: { value: '0123456789' } });
+    fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
+
+    // rerender to get updated publisherId prop
+    rerender(
+      <GoogleAdSenseSettings
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
+      />
+    );
+
+    expect(mockUpdateSlotId).toHaveBeenCalledTimes(1);
+
+    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
+
+    // rerender to get updated publisherId prop
+    rerender(
+      <GoogleAdSenseSettings
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
+      />
+    );
+
+    expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
+
+    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+
+    fireEvent.keyDown(input, { key: 'Enter', keyCode: 13 });
+
+    expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
+  });
+
+  it('should call mockUpdateSlotId when the save button is clicked', function () {
+    const { getByTestId, rerender } = renderWithProviders(
+      <GoogleAdSenseSettings
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
+      />
+    );
+
+    const input = getByTestId('adSenseSlotId');
+    const button = getByTestId('adSenseSlotIdButton');
+
+    fireEvent.change(input, { target: { value: '0123456789' } });
+
+    fireEvent.click(button);
+
+    // rerender to get updated publisherId prop
+    rerender(
+      <GoogleAdSenseSettings
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
+      />
+    );
+
+    expect(mockUpdateSlotId).toHaveBeenCalledTimes(1);
+
+    fireEvent.change(input, { target: { value: '' } });
+
+    fireEvent.click(button);
+
+    // rerender to get updated publisherId prop
+    rerender(
+      <GoogleAdSenseSettings
+        publisherId={publisherId}
+        slotId={slotId}
+        handleUpdatePublisherId={mockUpdatePublisherId}
+        handleUpdateSlotId={mockUpdateSlotId}
+      />
+    );
+
+    expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
+
+    fireEvent.change(input, { target: { value: 'NOT A VALID ID!!!' } });
+
+    fireEvent.click(button);
+
+    expect(mockUpdateSlotId).toHaveBeenCalledTimes(2);
   });
 });

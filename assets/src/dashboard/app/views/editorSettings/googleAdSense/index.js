@@ -47,7 +47,6 @@ import {
 import { TranslateWithMarkup } from '../../../../../i18n';
 
 export const TEXT = {
-  SECTION_HEADING: __('Google AdSense', 'web-stories'),
   PUBLISHER_ID_CONTEXT: sprintf(
     /* translators: 1: first example. 2: second example. */
     __(
@@ -167,7 +166,9 @@ function GoogleAdSenseSettings({
               {TEXT.PUBLISHER_ID_LABEL}
             </VisuallyHiddenLabel>
             <SettingsTextInput
+              id="adSensePublisherId"
               name="adSensePublisherId"
+              data-testid="adSensePublisherId"
               value={publisherId}
               onChange={onUpdatePublisherId}
               onKeyDown={onKeyDownPublisherId}
@@ -177,6 +178,7 @@ function GoogleAdSenseSettings({
             <SaveButton
               isDisabled={disablePublisherIdSaveButton}
               onClick={onSavePublisherId}
+              data-testid="adSensePublisherIdButton"
             >
               {TEXT.SUBMIT_BUTTON}
             </SaveButton>
@@ -211,7 +213,9 @@ function GoogleAdSenseSettings({
               {TEXT.SLOT_ID_LABEL}
             </VisuallyHiddenLabel>
             <SettingsTextInput
+              id="adSenseSlotId"
               name="adSenseSlotId"
+              data-testid="adSenseSlotId"
               value={slotId}
               onChange={onUpdateSlotId}
               onKeyDown={onKeyDownSlotId}
@@ -221,6 +225,7 @@ function GoogleAdSenseSettings({
             <SaveButton
               isDisabled={disableSlotIdSaveButton}
               onClick={onSaveSlotId}
+              data-testid="adSenseSlotIdButton"
             >
               {TEXT.SUBMIT_BUTTON}
             </SaveButton>

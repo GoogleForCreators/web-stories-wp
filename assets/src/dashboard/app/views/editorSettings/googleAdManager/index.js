@@ -42,7 +42,6 @@ import {
 } from '../components';
 
 export const TEXT = {
-  SECTION_HEADING: __('Google Ad Manager', 'web-stories'),
   SLOT_ID_CONTEXT: sprintf(
     /* translators: %s: example value. */
     __('Example: %s', 'web-stories'),
@@ -102,7 +101,7 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
             {TEXT.SLOT_ID_LABEL}
           </VisuallyHiddenLabel>
           <SettingsTextInput
-            name="adManagerSlotId"
+            id="adManagerSlotId"
             value={slotId}
             onChange={onUpdateSlotId}
             onKeyDown={onKeyDownSlotId}
