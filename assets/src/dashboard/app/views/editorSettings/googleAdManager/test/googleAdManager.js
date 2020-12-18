@@ -39,7 +39,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     adManagerSlotId = '';
   });
 
-  it('should render Google Ad Manager input and helper text by default', function () {
+  it.skip('should render Google Ad Manager input and helper text by default', function () {
     const { getByRole, getByText } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
@@ -54,7 +54,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(sectionHeader).toBeInTheDocument();
   });
 
-  it('should render a visually hidden label for Google Ad Manager input', function () {
+  it.skip('should render a visually hidden label for Google Ad Manager input', function () {
     const { getByLabelText } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
@@ -66,7 +66,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(label).toBeInTheDocument();
   });
 
-  it('should call mockUpdate when enter is keyed on input', function () {
+  it.skip('should call mockUpdate when enter is keyed on input', function () {
     let { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}
@@ -109,7 +109,7 @@ describe('Editor Settings: Google Analytics <GoogleAdManager />', function () {
     expect(mockUpdate).toHaveBeenCalledTimes(2);
   });
 
-  it('should call mockUpdate when the save button is clicked', function () {
+  it.skip('should call mockUpdate when the save button is clicked', function () {
     const { getByRole, rerender } = renderWithProviders(
       <GoogleAdManagerSettings
         adManagerSlotId={adManagerSlotId}

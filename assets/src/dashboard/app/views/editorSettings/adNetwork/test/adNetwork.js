@@ -42,7 +42,9 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = getByText(LINK.HELPER_LINK_NONE);
+    const helperLink = getByText('Learn more', {
+      selector: 'a',
+    });
     expect(helperLink).toBeInTheDocument();
   });
 
@@ -54,11 +56,13 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = getByText(LINK.HELPER_LINK_ADSENSE);
+    const helperLink = getByText('how to monetize your Web Stories', {
+      selector: 'a',
+    });
     expect(helperLink).toBeInTheDocument();
   });
 
-  it('should render ad network settings and link admanager', function () {
+  it('should render ad network settings and link Ad Manager', function () {
     const { getByText } = renderWithProviders(
       <AdNetworkSettings adNetwork={'admanager'} handleUpdate={mockUpdate} />
     );
@@ -66,7 +70,9 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
     expect(sectionHeader).toBeInTheDocument();
 
-    const helperLink = getByText(LINK.HELPER_LINK_ADMANAGER);
+    const helperLink = getByText('enable programmatic demand in Web Stories', {
+      selector: 'a',
+    });
     expect(helperLink).toBeInTheDocument();
   });
 });
