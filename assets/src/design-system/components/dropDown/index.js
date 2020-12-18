@@ -46,7 +46,6 @@ export const DropDown = ({
   ariaLabel,
   dropDownLabel,
   hint,
-  disabled,
   options = [],
   selectedValue = '',
   ...rest
@@ -73,7 +72,6 @@ export const DropDown = ({
         ariaLabel={ariaLabel}
         dropDownLabel={dropDownLabel}
         isOpen={isOpen.value}
-        disabled={disabled}
         onSelectClick={handleSelectClick}
         ref={selectRef}
         {...rest}
