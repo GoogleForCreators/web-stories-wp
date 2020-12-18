@@ -31,12 +31,13 @@ import { __ } from '@wordpress/i18n';
 import styled from 'styled-components';
 import {
   FormContainer,
-  HelperText,
   InlineForm,
   InlineLink,
   SettingForm,
   SettingHeading,
   VisuallyHiddenLabel,
+  TextInputHelperText,
+  HelperText,
 } from '../components';
 import { Dropdown } from '../../../../components';
 import { DROPDOWN_TYPES } from '../../../../constants';
@@ -55,6 +56,9 @@ const AdNetworkDropdown = styled(Dropdown)`
         : theme.DEPRECATED_THEME.borders.action};
   }
 `;
+const AdNetworkSettingForm = styled(SettingForm)`
+  padding-bottom: 0;
+`;
 
 export const TEXT = {
   SECTION_HEADING: __('Monetization', 'web-stories'),
@@ -71,9 +75,6 @@ export const TEXT = {
     'Learn how to <a>enable programmatic demand in Web Stories</a> through Ad Manager.',
     'web-stories'
   ),
-};
-
-export const LINK = {
   HELPER_LINK_NONE: __(
     'https://amp.dev/documentation/guides-and-tutorials/develop/advertise_amp_stories/',
     'web-stories'
@@ -98,7 +99,7 @@ const OPTIONS = [
     value: 'adsense',
   },
   {
-    label: __('Google Ad manager', 'web-stories'),
+    label: __('Google Ad Manager', 'web-stories'),
     value: 'admanager',
   },
 ];
@@ -111,34 +112,34 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   let message;
   let link;
 
-  switch (adNetwork) {
-    case 'admanager':
-      message = TEXT.HELPER_MESSAGE_ADMANAGER;
-      link = LINK.HELPER_LINK_ADMANAGER;
-      break;
-    case 'adsense':
-      message = TEXT.HELPER_MESSAGE_ADSENSE;
-      link = LINK.HELPER_LINK_ADSENSE;
-      break;
-    case 'none':
-    default:
-      message = TEXT.HELPER_MESSAGE_NONE;
-      link = LINK.HELPER_LINK_NONE;
-      break;
+  if ('admanager' === adNetwork) {
+    message = TEXT.HELPER_MESSAGE_ADMANAGER;
+    link = TEXT.HELPER_LINK_ADMANAGER;
+  } else if ('adsense' === adNetwork) {
+    message = TEXT.HELPER_MESSAGE_ADSENSE;
+    link = TEXT.HELPER_LINK_ADSENSE;
   }
 
   return (
-    <SettingForm onSubmit={(e) => e.preventDefault()}>
+    <AdNetworkSettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
         <HelperText>
-          <TranslateWithMarkup
-            mapping={{
-              a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
-            }}
-          >
-            {message}
-          </TranslateWithMarkup>
+          <TextInputHelperText>
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <InlineLink
+                    href={TEXT.HELPER_LINK_NONE}
+                    rel="noreferrer"
+                    target="_blank"
+                  />
+                ),
+              }}
+            >
+              {TEXT.HELPER_MESSAGE_NONE}
+            </TranslateWithMarkup>
+          </TextInputHelperText>
         </HelperText>
       </div>
       <FormContainer>
@@ -152,8 +153,19 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
             onChange={(newAdNetwork) => handleUpdate(newAdNetwork.value)}
           />
         </InlineForm>
+        {message && (
+          <TextInputHelperText>
+            <TranslateWithMarkup
+              mapping={{
+                a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
+              }}
+            >
+              {message}
+            </TranslateWithMarkup>
+          </TextInputHelperText>
+        )}
       </FormContainer>
-    </SettingForm>
+    </AdNetworkSettingForm>
   );
 }
 AdNetworkSettings.propTypes = {

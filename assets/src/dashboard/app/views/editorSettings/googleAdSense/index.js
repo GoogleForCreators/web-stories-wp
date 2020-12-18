@@ -35,22 +35,31 @@ import {
 import {
   ErrorText,
   FormContainer,
-  GoogleAnalyticsTextInput,
+  SettingsTextInput,
   InlineForm,
+  InlineLink,
   SaveButton,
   SettingForm,
   SettingHeading,
   TextInputHelperText,
   VisuallyHiddenLabel,
 } from '../components';
+import { TranslateWithMarkup } from '../../../../../i18n';
 
 export const TEXT = {
   SECTION_HEADING: __('Google AdSense', 'web-stories'),
   PUBLISHER_ID_CONTEXT: sprintf(
     /* translators: 1: first example. 2: second example. */
-    __('Example: %1$s or %2$s', 'web-stories'),
+    __(
+      'Example: %1$s or %2$s. <a>Find your AdSense Publisher ID</a>',
+      'web-stories'
+    ),
     'pub-1234567891234567',
     'ca-pub-1234567891234567'
+  ),
+  PUBLISHER_ID_CONTEXT_LINK: __(
+    'https://support.google.com/adsense/answer/105516',
+    'web-stories'
   ),
   PUBLISHER_ID_PLACEHOLDER: __('Enter your Publisher ID', 'web-stories'),
   PUBLISHER_ID_LABEL: __('Google AdSense Publisher ID', 'web-stories'),
@@ -151,13 +160,13 @@ function GoogleAdSenseSettings({
   return (
     <>
       <SettingForm onSubmit={(e) => e.preventDefault()}>
-        <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+        <SettingHeading />
         <FormContainer>
           <InlineForm>
             <VisuallyHiddenLabel htmlFor="adSensePublisherId">
               {TEXT.PUBLISHER_ID_LABEL}
             </VisuallyHiddenLabel>
-            <GoogleAnalyticsTextInput
+            <SettingsTextInput
               name="adSensePublisherId"
               value={publisherId}
               onChange={onUpdatePublisherId}
@@ -175,7 +184,23 @@ function GoogleAdSenseSettings({
           {publisherIdInputError && (
             <ErrorText>{publisherIdInputError}</ErrorText>
           )}
-          <TextInputHelperText>{TEXT.PUBLISHER_ID_CONTEXT}</TextInputHelperText>
+          <TextInputHelperText>
+            <TextInputHelperText>
+              <TranslateWithMarkup
+                mapping={{
+                  a: (
+                    <InlineLink
+                      href={TEXT.PUBLISHER_ID_CONTEXT_LINK}
+                      rel="noreferrer"
+                      target="_blank"
+                    />
+                  ),
+                }}
+              >
+                {TEXT.PUBLISHER_ID_CONTEXT}
+              </TranslateWithMarkup>
+            </TextInputHelperText>
+          </TextInputHelperText>
         </FormContainer>
       </SettingForm>
       <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -185,7 +210,7 @@ function GoogleAdSenseSettings({
             <VisuallyHiddenLabel htmlFor="adSenseSlotId">
               {TEXT.SLOT_ID_LABEL}
             </VisuallyHiddenLabel>
-            <GoogleAnalyticsTextInput
+            <SettingsTextInput
               name="adSenseSlotId"
               value={slotId}
               onChange={onUpdateSlotId}

@@ -32,7 +32,7 @@ import { validateAdManagerSlotIdFormat } from '../../../../utils';
 import {
   ErrorText,
   FormContainer,
-  GoogleAnalyticsTextInput,
+  SettingsTextInput,
   InlineForm,
   SaveButton,
   SettingForm,
@@ -95,13 +95,13 @@ function GoogleAdManagerSettings({ slotId: adManagerSlotId, handleUpdate }) {
 
   return (
     <SettingForm onSubmit={(e) => e.preventDefault()}>
-      <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
+      <SettingHeading />
       <FormContainer>
         <InlineForm>
           <VisuallyHiddenLabel htmlFor="adManagerSlotId">
             {TEXT.SLOT_ID_LABEL}
           </VisuallyHiddenLabel>
-          <GoogleAnalyticsTextInput
+          <SettingsTextInput
             name="adManagerSlotId"
             value={slotId}
             onChange={onUpdateSlotId}
