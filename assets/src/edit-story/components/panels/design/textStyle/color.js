@@ -35,13 +35,10 @@ import { Color, Label, Row, ToggleButton } from '../../../form';
 import { useKeyDownEffect } from '../../../keyboard';
 import {
   useCommonColorValue,
-  useCommonObjectValue,
   getCommonValue,
   getColorPickerActions,
 } from '../../shared';
-import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 import useRichTextFormatting from './useRichTextFormatting';
-import { DEFAULT_PADDING } from './padding';
 
 const FillRow = styled(Row)`
   align-items: flex-start;
@@ -64,17 +61,6 @@ const FillToggleButton = styled(ToggleButton)`
 const Space = styled.div`
   flex: ${({ flex }) => flex};
 `;
-
-const DEFAULT_PADDING_FOR_MODE = {
-  [BACKGROUND_TEXT_MODE.FILL]: {
-    vertical: 6,
-    horizontal: 6,
-  },
-  [BACKGROUND_TEXT_MODE.HIGHLIGHT]: {
-    vertical: 10,
-    horizontal: 4,
-  },
-};
 
 const BUTTONS = [
   {
@@ -126,44 +112,14 @@ function ColorControls({ selectedElements, pushUpdate }) {
     [backgroundTextMode, pushUpdate]
   );
 
-  const padding = useCommonObjectValue(
-    selectedElements,
-    'padding',
-    DEFAULT_PADDING
-  );
-
   const handleBackgroundModeButton = useCallback(
     (value, mode) => {
       if (!value) {
         return;
       }
-
-      pushUpdate(({ x, y, width, height }) => {
-        let updates = { backgroundTextMode: mode };
-        if (
-          mode === BACKGROUND_TEXT_MODE.FILL ||
-          mode === BACKGROUND_TEXT_MODE.HIGHLIGHT
-        ) {
-          const newPadding = DEFAULT_PADDING_FOR_MODE[mode];
-          const { horizontal, vertical, ...rest } = metricsForTextPadding({
-            x,
-            y,
-            height,
-            width,
-            currentPadding: padding,
-            newPadding,
-          });
-          updates = {
-            ...updates,
-            ...rest,
-            padding: newPadding,
-          };
-        }
-
-        return updates;
-      }, true);
+      pushUpdate(() => ({ backgroundTextMode: mode }), true);
     },
-    [padding, pushUpdate]
+    [pushUpdate]
   );
 
   return (
