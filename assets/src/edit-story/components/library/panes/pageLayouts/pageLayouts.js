@@ -73,7 +73,6 @@ function PageLayouts(props) {
     const width = PAGE_LAYOUT_PANE_WIDTH;
     const height = Math.round((width / PAGE_RATIO) * 100) / 100;
     const containerHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
-
     return { width, height, containerHeight };
   }, []);
 

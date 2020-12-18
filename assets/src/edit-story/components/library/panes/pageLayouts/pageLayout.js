@@ -31,9 +31,11 @@ import { STORY_ANIMATION_STATE } from '../../../../../animation';
 
 const PageLayoutWrapper = styled.div`
   position: relative;
-  height: ${({ pageSize }) => pageSize.height}px;
+  height: ${({ pageSize }) => pageSize.containerHeight}px;
   width: ${({ pageSize }) => pageSize.width}px;
   cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
 `;
 PageLayoutWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
