@@ -19,18 +19,59 @@
  */
 import { action } from '@storybook/addon-actions';
 import { boolean, select, text } from '@storybook/addon-knobs';
-import { useState } from 'react';
+import styled, { css } from 'styled-components';
+import { useState, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { PLACEMENT } from '../../popup';
+import { DROP_DOWN_ITEM } from '../types';
 import { DropDown } from '..';
-import { basicDropDownOptions } from './sampleData';
+import {
+  basicDropDownOptions,
+  effectChooserOptions,
+  nestedDropDownOptions,
+} from './sampleData';
 
 export default {
   title: 'DesignSystem/Components/DropDown',
 };
+
+const StyledEffectListItem = styled.li`
+  border: none;
+  background: ${({ active }) => (active ? '#5732A3' : '#333')};
+  border-radius: 4px;
+  height: 48px;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  color: white;
+  text-transform: uppercase;
+  transition: background 0.1s linear;
+  grid-column-start: ${({ width }) => (width === 'full' ? 'span 4' : 'span 2')};
+  &:focus {
+    background: ${({ active }) => (active ? '#5732A3' : '#B488FC')};
+  }
+`;
+
+const styleOverrideForAnimationEffectMenu = css`
+  width: 276px;
+  display: inline-block;
+  background: black;
+  ul {
+    display: grid;
+    justify-content: center;
+    gap: 15px 3px;
+    grid-template-columns: repeat(4, 58px);
+    padding: 15px;
+    position: relative;
+  }
+`;
 
 export const _default = () => {
   const [selectedValue, setSelectedValue] = useState(
@@ -78,5 +119,73 @@ export const LightTheme = () => {
       }}
       placement={select('placement', Object.values(PLACEMENT))}
     />
+  );
+};
+
+export const SubMenus = () => {
+  const [selectedValue, setSelectedValue] = useState('dog-2');
+
+  return (
+    <DropDown
+      emptyText={'No options available'}
+      options={nestedDropDownOptions}
+      hint={text('hint', 'default hint text')}
+      placeholder={text('placeholder', 'select a value')}
+      dropDownLabel={text('dropDownLabel', 'label')}
+      isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+      isRTL={boolean('isRTL')}
+      disabled={boolean('disabled')}
+      selectedValue={selectedValue}
+      onMenuItemClick={(event, newValue) => {
+        action('onMenuItemClick', event);
+        setSelectedValue(newValue);
+      }}
+      placement={select('placement', Object.values(PLACEMENT))}
+    />
+  );
+};
+
+const RenderItemOverride = forwardRef(function RenderItemOverride(
+  { option, isSelected, ...rest },
+  ref
+) {
+  return (
+    <StyledEffectListItem
+      ref={ref}
+      width={option.width}
+      active={isSelected}
+      {...rest}
+    >
+      {option.label}
+    </StyledEffectListItem>
+  );
+});
+RenderItemOverride.propTypes = {
+  option: DROP_DOWN_ITEM,
+  isSelected: PropTypes.bool,
+};
+
+export const OverriddenAnimationProofOfConcept = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
+  return (
+    <DarkThemeProvider>
+      <DropDown
+        emptyText={'No options available'}
+        options={effectChooserOptions}
+        hint={text('hint', 'default hint text')}
+        placeholder={text('placeholder', 'select a value')}
+        dropDownLabel={text('dropDownLabel', 'label')}
+        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection', true)}
+        disabled={boolean('disabled')}
+        selectedValue={selectedValue}
+        onMenuItemClick={(event, newValue) => {
+          action('onMenuItemClick', event);
+          setSelectedValue(newValue);
+        }}
+        placement={select('placement', Object.values(PLACEMENT))}
+        menuStylesOverride={styleOverrideForAnimationEffectMenu}
+        renderItem={RenderItemOverride}
+      />
+    </DarkThemeProvider>
   );
 };
