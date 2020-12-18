@@ -15,6 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+
+import { fireEvent } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
@@ -82,5 +88,23 @@ describe('DropDown <DropDown />', () => {
 
     const label = getByText('my label');
     expect(label).toBeDefined();
+  });
+
+  it('should show <DropDown /> menu when a select button is clicked', () => {
+    const { getByRole } = renderWithProviders(
+      <DropDown
+        emptyText={'No options available'}
+        options={basicDropDownOptions}
+        dropDownLabel={'label'}
+      />
+    );
+
+    const select = getByRole('button');
+    expect(select).toBeInTheDocument();
+
+    fireEvent.click(select);
+
+    const menu = getByRole('listbox');
+    expect(menu).toBeInTheDocument();
   });
 });
