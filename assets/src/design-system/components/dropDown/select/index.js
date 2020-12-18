@@ -21,7 +21,15 @@ import { forwardRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+/**
+ * Internal dependencies
+ */
+import { Chevron } from '../../../icons';
 const SelectButton = styled.button``;
+
+const StyledChevron = styled(Chevron)`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
 
 const DropDownSelect = (
   {
@@ -47,6 +55,7 @@ const DropDownSelect = (
   >
     {activeItemLabel || placeholder}
     {dropDownLabel && <span>{dropDownLabel}</span>}
+    <StyledChevron />
   </SelectButton>
 );
 
