@@ -25,12 +25,20 @@ import { useDebouncedCallback } from 'use-debounce';
 import { getOptions } from './utils';
 
 export default function useDropDown({ options = [], selectedValue }) {
-  const [isOpen, _setIsOpen] = useState(false);
+  const [_isOpen, _setIsOpen] = useState(false);
 
   const [setIsOpen] = useDebouncedCallback(_setIsOpen, 300, {
     leading: true,
     trailing: false,
   });
+
+  const isOpen = useMemo(
+    () => ({
+      value: _isOpen,
+      set: setIsOpen,
+    }),
+    [_isOpen, setIsOpen]
+  );
 
   const normalizedOptions = useMemo(() => {
     if (!options || options.length == 0) {
@@ -54,15 +62,5 @@ export default function useDropDown({ options = [], selectedValue }) {
       });
   }, [selectedValue, normalizedOptions]);
 
-  return useMemo(
-    () => ({
-      activeOption,
-      isOpen: {
-        value: isOpen,
-        set: setIsOpen,
-      },
-      normalizedOptions,
-    }),
-    [activeOption, isOpen, normalizedOptions, setIsOpen]
-  );
+  return { activeOption, normalizedOptions, isOpen };
 }
