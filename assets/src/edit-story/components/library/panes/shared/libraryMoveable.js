@@ -71,7 +71,8 @@ function LibraryMoveable({
   }));
 
   const insertElement = useInsertElement();
-  const { pageContainer } = useCanvas((state) => ({
+  const { fullbleedContainer, pageContainer } = useCanvas((state) => ({
+    fullbleedContainer: state.state.fullbleedContainer,
     pageContainer: state.state.pageContainer,
     nodesById: state.state.nodesById,
   }));
@@ -197,7 +198,7 @@ function LibraryMoveable({
     if (activeDropTargetId && handleDragEnd) {
       handleDragEnd();
       // Only continue if the clone is at least partially on the page.
-    } else if (!isTargetOutOfContainer(cloneRef.current, pageContainer)) {
+    } else if (!isTargetOutOfContainer(cloneRef.current, fullbleedContainer)) {
       const {
         x,
         y,
