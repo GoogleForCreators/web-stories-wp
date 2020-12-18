@@ -40,9 +40,7 @@ PageLayoutWrapper.propTypes = {
 };
 
 function PageLayout(props) {
-  const { page, pageSize } = props;
-
-  const onClick = () => {};
+  const { page, pageSize, onClick } = props;
 
   const [active, setActive] = useState(false);
   const containElem = useRef(null);
@@ -74,6 +72,7 @@ function PageLayout(props) {
 PageLayout.propTypes = {
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default PageLayout;

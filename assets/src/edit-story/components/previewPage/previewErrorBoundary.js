@@ -40,7 +40,7 @@ export default class PreviewErrorBoundary extends Component {
 
   render() {
     if (this.state.hasError) {
-      //return <div />;
+      return <div />;
     }
     return this.props.children;
   }

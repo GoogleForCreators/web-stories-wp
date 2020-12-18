@@ -28,6 +28,8 @@ import { useVirtual } from 'react-virtual';
 import { PANE_PADDING } from '../shared';
 import { PAGE_RATIO, FULLBLEED_RATIO } from '../../../../constants';
 import { UnitsProvider } from '../../../../units';
+import { useStory } from '../../../../app';
+import { duplicatePage } from '../../../../elements';
 import PageLayout from './pageLayout';
 
 const PAGE_LAYOUT_PANE_WIDTH = 158;
@@ -52,6 +54,20 @@ const PageLayoutsRow = styled.div`
 
 function PageLayouts(props) {
   const { pages, parentRef } = props;
+
+  const { replaceCurrentPage } = useStory(
+    ({ actions: { replaceCurrentPage } }) => ({
+      replaceCurrentPage,
+    })
+  );
+
+  const copyPage = useCallback(
+    (page) => {
+      const duplicatedPage = duplicatePage(page);
+      replaceCurrentPage({ page: duplicatedPage });
+    },
+    [replaceCurrentPage]
+  );
 
   const pageSize = useMemo(() => {
     const width = PAGE_LAYOUT_PANE_WIDTH;
@@ -94,7 +110,12 @@ function PageLayouts(props) {
                   return null;
                 }
                 return (
-                  <PageLayout key={page.id} page={page} pageSize={pageSize} />
+                  <PageLayout
+                    key={page.id}
+                    page={page}
+                    pageSize={pageSize}
+                    onClick={() => copyPage(page)}
+                  />
                 );
               })}
             </PageLayoutsRow>

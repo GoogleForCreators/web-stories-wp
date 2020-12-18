@@ -19,6 +19,7 @@ export const ADD_PAGE = 'ADD_PAGE';
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const DELETE_PAGE = 'DELETE_PAGE';
 export const ARRANGE_PAGE = 'ARRANGE_PAGE';
+export const REPLACE_CURRENT_PAGE = 'REPLACE_CURRENT_PAGE';
 
 // Manipulate elements on a page.
 export const DELETE_ELEMENTS = 'DELETE_ELEMENTS';
