@@ -39,6 +39,8 @@ const TargetBox = styled.div`
   position: absolute;
   width: ${({ width }) => `${width}px`};
   height: ${({ height }) => `${height}px`};
+  max-width: 100%;
+  max-height: 100%;
   top: 0;
   z-index: 1;
 `;
@@ -122,7 +124,11 @@ function LibraryMoveable({
       return false;
     }
     frame.translate = beforeTranslate;
-    if (cloneRef.current) {
+    // Don't display the clone right away since otherwise it will be triggered for a click as well.
+    if (
+      cloneRef.current &&
+      inputEvent.timeStamp - eventTracker.current.timeStamp > 300
+    ) {
       if (cloneRef.current.style.opacity !== 1 && !activeDropTargetId) {
         // We're not doing it in `onDragStart` since otherwise on clicking it would appear, too.
         cloneRef.current.style.opacity = 1;
@@ -166,8 +172,14 @@ function LibraryMoveable({
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
     const targetBox = targetBoxRef.current.getBoundingClientRect();
-    const x1 = targetBox.left - offsetX;
-    const y1 = targetBox.top - offsetY;
+    let x1 = targetBox.left - offsetX;
+    let y1 = targetBox.top - offsetY;
+    // In case of shapes, the clone is larger than the preview
+    // so we position it to center.
+    if ('shape' === type) {
+      x1 = x1 - (cloneProps.width - targetBox.width) / 2;
+      y1 = y1 - (cloneProps.height - targetBox.height) / 2;
+    }
     cloneRef.current.style.left = `${x1}px`;
     cloneRef.current.style.top = `${y1}px`;
   };
@@ -182,7 +194,7 @@ function LibraryMoveable({
       return false;
     }
     // We only skip Moveable onDragEnd handling if there's an active drop target ID.
-    if (activeDropTargetId) {
+    if (activeDropTargetId && handleDragEnd) {
       handleDragEnd();
       // Only continue if the clone is at least partially on the page.
     } else if (!isTargetOutOfContainer(cloneRef.current, pageContainer)) {
