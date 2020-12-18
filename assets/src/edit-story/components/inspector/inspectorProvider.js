@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { useCallback, useState, useRef, useEffect } from 'react';
 import { useDebouncedCallback } from 'use-debounce/lib';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 /**
  * WordPress dependencies
@@ -48,9 +49,10 @@ function InspectorProvider({ children }) {
   const {
     actions: { getAuthors },
   } = useAPI();
-  const { selectedElementIds, currentPage } = useStory(({ state }) => ({
+  const { selectedElementIds, currentPage, story } = useStory(({ state }) => ({
     selectedElementIds: state.selectedElementIds,
     currentPage: state.currentPage,
+    story: { ...state.story, pages: state.pages },
   }));
 
   const { checklist, refreshChecklist } = usePrepublishChecklist();
@@ -92,10 +94,13 @@ function InspectorProvider({ children }) {
 
   useEffect(() => {
     tabRef.current = tab;
+  }, [tab]);
+
+  useDeepCompareEffect(() => {
     if (tab === PREPUBLISH) {
       refreshChecklistDebounced();
     }
-  }, [tab, refreshChecklistDebounced, refreshChecklist]);
+  }, [story, refreshChecklistDebounced]);
 
   useEffect(() => {
     if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
