@@ -209,17 +209,6 @@ class Experiments {
 	public function get_experiments() {
 		return [
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 1897
-			 * Creation date: 2020-05-21
-			 */
-			[
-				'name'        => 'enableAnimation',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable user facing animations', 'web-stories' ),
-				'group'       => 'general',
-			],
-			/**
 			 * Author: @carlos-kelly
 			 * Issue: 2081
 			 * Creation date: 2020-05-28
@@ -298,17 +287,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2095
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showPrePublishTab',
-				'label'       => __( 'Pre-Publish', 'web-stories' ),
-				'description' => __( 'Enable pre-publish tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
@@ -349,17 +327,6 @@ class Experiments {
 				'name'        => 'incrementalSearchDebounceMedia',
 				'label'       => __( 'Incremental Search', 'web-stories' ),
 				'description' => __( 'Enable incremental search in the Upload and Third-party media tabs.', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @spacedmonkey
-			 * Issue: #4918
-			 * Creation date: 2020-10-27
-			 */
-			[
-				'name'        => 'statusCheck',
-				'label'       => __( 'Status Check', 'web-stories' ),
-				'description' => __( 'Enable status check in editor.', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**

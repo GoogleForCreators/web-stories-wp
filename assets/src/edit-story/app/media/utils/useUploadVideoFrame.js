@@ -51,13 +51,9 @@ function useUploadVideoFrame({ updateMediaElement }) {
         id: posterId,
         source_url: poster,
         media_details: { width: posterWidth, height: posterHeight },
-      } = await uploadFile(obj);
-      // Meta data cannot be sent as part of upload.
-      await updateMedia(posterId, {
+      } = await uploadFile(obj, {
         post: id,
-        meta: {
-          web_stories_is_poster: true,
-        },
+        media_source: 'poster-generation',
       });
       await updateMedia(id, {
         featured_media: posterId,

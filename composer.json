@@ -5,13 +5,13 @@
   "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
   "require": {
-    "php": "^5.6 || ^7.0",
+    "php": "^5.6 || ^7.0 || ^8.0",
     "ext-dom": "*",
     "ext-iconv": "*",
     "ext-json": "*",
     "ext-libxml": "*",
     "ext-mbstring": "*",
-    "ampproject/amp-wp": "^2.0.5",
+    "ampproject/amp-wp": "^2.0.8",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
     "mcaskill/composer-exclude-files": "^2.0",
@@ -86,9 +86,7 @@
       "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
       "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
     },
-    "files": [
-      "includes/polyfills/mbstring.php"
-    ]
+    "files": ["includes/polyfills/mbstring.php"]
   },
   "autoload-dev": {
     "psr-4": {
@@ -111,12 +109,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "post-install-cmd": [
-      "@prefix-dependencies"
-    ],
-    "post-update-cmd": [
-      "@prefix-dependencies"
-    ],
+    "post-install-cmd": ["@prefix-dependencies"],
+    "post-update-cmd": ["@prefix-dependencies"],
     "composer-normalize": "composer-normalize",
     "phpcbf": "phpcbf",
     "phpcs": "phpcs",

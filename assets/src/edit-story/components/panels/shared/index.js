@@ -14,5 +14,10 @@
  * limitations under the License.
  */
 export { default as ExpandedTextInput } from './expandedTextInput';
-export { default as flipControls } from './flipControls';
+export { default as FlipControls } from './flipControls';
 export { default as Note } from './note';
+export { default as getCommonValue } from './getCommonValue';
+export { default as getCommonObjectValue } from './getCommonObjectValue';
+export { default as getColorPickerActions } from './getColorPickerActions';
+export { default as useCommonColorValue } from './useCommonColorValue';
+export { default as useCommonObjectValue } from './useCommonObjectValue';

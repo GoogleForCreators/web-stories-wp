@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import { ANIMATION_TYPES } from '../../constants';
-import { defaultUnit } from '../../utils/defaultUnit';
+import { defaultUnit, getGlobalSpace } from '../../utils';
 import SimpleAnimation from '../simpleAnimation';
 
 const defaults = {
@@ -26,7 +26,13 @@ const defaults = {
   duration: 1000,
 };
 
-export function AnimationSpin({ rotation = 0, stopAngle = 0, ...args }) {
+export function AnimationSpin({
+  rotation = 0,
+  stopAngle = 0,
+  element,
+  ...args
+}) {
+  const global = getGlobalSpace(element);
   const timings = {
     ...defaults,
     ...args,
@@ -34,8 +40,8 @@ export function AnimationSpin({ rotation = 0, stopAngle = 0, ...args }) {
 
   const animationName = `rot-${rotation}-${ANIMATION_TYPES.SPIN}`;
   const keyframes = [
-    { transform: `rotateZ(${defaultUnit(rotation, 'deg')})` },
-    { transform: `rotateZ(${defaultUnit(stopAngle, 'deg')})` },
+    { transform: global`rotateZ(${defaultUnit(rotation, 'deg')})` },
+    { transform: global`rotateZ(${defaultUnit(stopAngle, 'deg')})` },
   ];
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
