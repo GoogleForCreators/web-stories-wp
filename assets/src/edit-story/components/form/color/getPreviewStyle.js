@@ -32,12 +32,8 @@ function getPreviewStyle(pattern) {
     return generatePatternStyles(opaquePattern);
   }
   const {
-    color: { r, g, b, a },
+    color: { r, g, b },
   } = pattern;
-  // If opacity is 0, no extra styling needed:
-  if (a === 0) {
-    return {};
-  }
 
   // Otherwise create color, but with full opacity
   return generatePatternStyles(createSolid(r, g, b));
