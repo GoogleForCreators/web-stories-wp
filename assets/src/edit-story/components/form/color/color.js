@@ -70,10 +70,9 @@ function ColorInput({
         colorPickerActions={colorPickerActions}
         changedStyle={changedStyle}
       />
-      {/* {hasOpacity && (
+      {hasOpacity && (
         <OpacityPreview value={value} onChange={handleOpacityChange} />
-      )} */}
-      <OpacityPreview value={value} onChange={handleOpacityChange} />
+      )}
     </Container>
   );
 }
