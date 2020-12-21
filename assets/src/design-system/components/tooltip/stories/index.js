@@ -19,6 +19,8 @@
  */
 import { boolean, text, select } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
+import { useCallback, useEffect, useState } from 'react';
+
 /**
  * Internal dependencies
  */
@@ -31,6 +33,7 @@ import {
   BUTTON_VARIANTS,
 } from '../../button';
 import { Tooltip, TOOLTIP_PLACEMENT } from '..';
+import { Text } from '../../typography';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',
@@ -44,6 +47,10 @@ const Container = styled.div`
   height: 400px;
   background-color: ${(props) => props.theme.colors.bg.primary};
   padding: 30px;
+
+  p {
+    margin: 10px;
+  }
 `;
 
 const Color = styled.div`
@@ -160,3 +167,95 @@ export const LightMode = () => (
     </Tooltip>
   </Container>
 );
+
+const tooltipTitles = [
+  'initial tooltip title',
+  'secondary tooltip title but quite a bit longer',
+];
+
+export const TooltipWithChangingTextOnClick = () => {
+  const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
+
+  const handleTooltipTextChange = useCallback(() => {
+    setCurrentTooltipIndex((existingIndex) => (existingIndex === 1 ? 0 : 1));
+  }, []);
+
+  return (
+    <Container>
+      <Text>{'Click button to change tooltip title.'}</Text>
+      <Tooltip
+        hasTail={boolean('hasTail', false)}
+        placement={select(
+          'placement',
+          TOOLTIP_PLACEMENT,
+          TOOLTIP_PLACEMENT.TOP
+        )}
+        shortcut={text('Shortcut for icon', 'mod+z')}
+        title={tooltipTitles[currentTooltipIndex]}
+      >
+        <Button
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={handleTooltipTextChange}
+        >
+          {'Switch view'}
+        </Button>
+      </Tooltip>
+    </Container>
+  );
+};
+
+export const TooltipWithChangingTextOnInterval = () => {
+  const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
+  const [isTooltipIntervalActive, setIsTooltipIntervalActive] = useState(false);
+
+  useEffect(() => {
+    let interval;
+    if (isTooltipIntervalActive) {
+      interval = setInterval(
+        () =>
+          setCurrentTooltipIndex((existingIndex) =>
+            existingIndex === 1 ? 0 : 1
+          ),
+        1000
+      );
+    }
+
+    return () => interval && clearInterval(interval);
+  }, [isTooltipIntervalActive]);
+
+  const handleToggleButtonFocus = useCallback(
+    () =>
+      setIsTooltipIntervalActive((currentActiveState) => !currentActiveState),
+    []
+  );
+
+  return (
+    <Container>
+      <Text>
+        {
+          'Place focus on button to begin updating tooltip text with interval behind the scenes, remove focus to stop.'
+        }
+      </Text>
+      <Tooltip
+        hasTail={boolean('hasTail', false)}
+        placement={select(
+          'placement',
+          TOOLTIP_PLACEMENT,
+          TOOLTIP_PLACEMENT.TOP
+        )}
+        shortcut={text('Shortcut for icon')}
+        title={tooltipTitles[currentTooltipIndex]}
+      >
+        <Button
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onFocus={handleToggleButtonFocus}
+          onBlur={handleToggleButtonFocus}
+        >
+          {'Switch view'}
+        </Button>
+      </Tooltip>
+    </Container>
+  );
+};
