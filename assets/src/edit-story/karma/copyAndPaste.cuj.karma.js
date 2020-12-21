@@ -39,6 +39,7 @@ function sequencedForEach(htmlCollection, op) {
       .map((htmlElement, i) => async () => {
         await op(htmlElement, i);
       })
+      // [p1, p2, p3, p4] -> promise.resolve().then(p1).then(p2).then(p3).then(p4)
       .reduce((p, fn) => p.then(fn), Promise.resolve())
       .then(res);
   });
@@ -141,13 +142,13 @@ function sequencedForEach(htmlCollection, op) {
           await fixture.events.click(effectButton, { clickCount: 1 });
 
           // copy and paste animated element with Animations
-          const coppied = await fixture.renderHook(() =>
+          const copied = await fixture.renderHook(() =>
             useStory(({ state }) => ({
               elements: state.selectedElements,
               elementAnimations: state.selectedElementAnimations,
             }))
           );
-          expect(coppied.elementAnimations.length).toEqual(1);
+          expect(copied.elementAnimations.length).toEqual(1);
           await action(fixture);
           const pasted = await fixture.renderHook(() =>
             useStory(({ state }) => ({
@@ -163,7 +164,7 @@ function sequencedForEach(htmlCollection, op) {
             id: cId,
             targets: cTargets,
             ...cPersisted
-          } = coppied.elementAnimations[0];
+          } = copied.elementAnimations[0];
           const {
             id: pId,
             targets: pTargets,
@@ -181,9 +182,9 @@ function sequencedForEach(htmlCollection, op) {
             useStory(({ state }) => state.currentPage)
           );
 
-          // 2 comes from background + initial coppied element
+          // 2 comes from background + initial copied element
           expect(elements.length).toEqual(i + 2);
-          // 1 comes from original coppied element animation
+          // 1 comes from original copied element animation
           expect(animations.length).toEqual(i + 1);
         }
       );
@@ -261,13 +262,13 @@ describe('Background Copy & Paste', () => {
       await fixture.events.click(effectButton, { clickCount: 1 });
 
       // copy background element with animation
-      const coppied = await fixture.renderHook(() =>
+      const copied = await fixture.renderHook(() =>
         useStory(({ state }) => ({
           elements: state.selectedElements,
           elementAnimations: state.selectedElementAnimations,
         }))
       );
-      expect(coppied.elementAnimations.length).toEqual(1);
+      expect(copied.elementAnimations.length).toEqual(1);
       await fixture.events.clipboard.copy();
 
       // Go to second page
@@ -289,7 +290,7 @@ describe('Background Copy & Paste', () => {
         id: cId,
         targets: cTargets,
         ...cPersisted
-      } = coppied.elementAnimations[0];
+      } = copied.elementAnimations[0];
       const {
         id: pId,
         targets: pTargets,
@@ -318,7 +319,7 @@ describe('Background Copy & Paste', () => {
       const setSelectedById = await fixture.renderHook(() =>
         useStory(({ actions }) => actions.setSelectedElementsById)
       );
-      setSelectedById({ elementIds: [coppied.elements[0].id] });
+      setSelectedById({ elementIds: [copied.elements[0].id] });
       // reopen effect chooser
       await openEffectChooser();
     });
