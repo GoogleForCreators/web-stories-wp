@@ -239,6 +239,7 @@ describe('Background Copy Paste integration', () => {
     hexInput.select();
     // Then type hex combo
     await fixture.events.keyboard.type(hex);
+    await fixture.events.keyboard.press('tab');
   }
   function setOverlay(overlayName) {
     const overlayCheckbox = getInputByAriaLabel(

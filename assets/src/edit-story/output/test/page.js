@@ -92,12 +92,12 @@ describe('Page output', () => {
         'aspect-ratio',
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
-      expect(layer.firstElementChild.className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(layer.firstElementChild.firstElementChild.className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(layer.firstElementChild).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(
+        layer.firstElementChild.firstElementChild
+      ).toHaveClass('page-safe-area', { exact: true });
     });
 
     it('should render the layer for background', () => {
@@ -121,12 +121,12 @@ describe('Page output', () => {
         `${PAGE_WIDTH}:${PAGE_HEIGHT}`
       );
       expect(bgLayer.children).toHaveLength(1);
-      expect(bgLayer.children[0].className).toStrictEqual(
-        'page-fullbleed-area'
-      );
-      expect(bgLayer.children[0].children[0].className).toStrictEqual(
-        'page-safe-area'
-      );
+      expect(bgLayer.children[0]).toHaveClass('page-fullbleed-area', {
+        exact: true,
+      });
+      expect(bgLayer.children[0].children[0]).toHaveClass('page-safe-area', {
+        exact: true,
+      });
     });
 
     it('should render the layer for background with overlay', () => {
@@ -926,8 +926,8 @@ describe('Page output', () => {
         y: 100,
         scale: 1,
         rotationAngle: 0,
-        width: 1,
-        height: 1,
+        width: 10,
+        height: 10,
         resource: {
           type: 'image',
           mimeType: 'image/png',
@@ -965,7 +965,9 @@ describe('Page output', () => {
         };
 
         const content = renderToStaticMarkup(<PageOutput {...props} />);
-        expect(content).toContain('border-radius:10px 20px 10px 10px');
+        expect(content).toContain(
+          'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        );
       });
 
       it('should not output border if the element is not rectangular', () => {
@@ -989,7 +991,9 @@ describe('Page output', () => {
         };
 
         const content = renderToStaticMarkup(<PageOutput {...props} />);
-        expect(content).not.toContain('border-width:10px 20px 10px 10px');
+        expect(content).not.toContain(
+          'border-radius:100% 200% 100% 100% / 100% 200% 100% 100%'
+        );
       });
     });
 

@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { PanelTypes } from '../../components/panels';
+import PanelTypes from '../../components/panels/design/types';
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import {
   MEDIA_DEFAULT_ATTRIBUTES,
@@ -64,6 +64,7 @@ export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   ...MEDIA_PANELS,
   PanelTypes.VIDEO_OPTIONS,
-  PanelTypes.CAPTIONS,
+  PanelTypes.VIDEO_POSTER,
   PanelTypes.VIDEO_ACCESSIBILITY,
+  PanelTypes.CAPTIONS,
 ];

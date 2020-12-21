@@ -35,7 +35,7 @@ describe('Popup', () => {
     );
 
     const popup = getByText('Hello World!');
-    expect(popup).toBeDefined();
+    expect(popup).toBeInTheDocument();
   });
 
   it('should not render popup when isOpen set to false', () => {
@@ -50,6 +50,6 @@ describe('Popup', () => {
     );
 
     const popup = queryByText('Hello World!');
-    expect(popup).toBeNull();
+    expect(popup).not.toBeInTheDocument();
   });
 });

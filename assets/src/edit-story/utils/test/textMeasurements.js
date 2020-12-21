@@ -85,7 +85,7 @@ describe('textMeasurements', () => {
     // The "web-stories-content" class ensures that the editor markup and
     // text output do not conflict with each other. For instance,
     // `<b>` is styled with a regular `font-weight: bold`.
-    expect(measurer.classList.contains('web-stories-content')).toBe(true);
+    expect(measurer).toHaveClass('web-stories-content');
 
     // The most important measurer styles.
     expect(measurer).toHaveStyle({

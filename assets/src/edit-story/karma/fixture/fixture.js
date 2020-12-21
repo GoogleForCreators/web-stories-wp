@@ -139,6 +139,7 @@ export class Fixture {
       'link',
       'pageAttachment',
       'pageStyle',
+      'videoPoster',
       'size',
       'shapeStyle',
       'text',
@@ -288,6 +289,15 @@ export class Fixture {
         throw new Error(
           `Not ready: only found ${mediaElements?.length} media elements`
         );
+      }
+    });
+
+    // Check to see if Roboto font is loaded.
+    await waitFor(async () => {
+      const font = '12px Roboto';
+      await document.fonts.load(font, '');
+      if (!document.fonts.check(font, '')) {
+        throw new Error('Not ready: Roboto font could not be loaded');
       }
     });
 

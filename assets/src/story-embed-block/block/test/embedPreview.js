@@ -48,7 +48,9 @@ describe('EmbedPreview', () => {
     const overlay = screen.getByTestId('embed-preview-overlay');
     fireEvent.mouseUp(overlay);
 
-    expect(screen.queryByTestId('embed-preview-overlay')).toBeNull();
+    expect(
+      screen.queryByTestId('embed-preview-overlay')
+    ).not.toBeInTheDocument();
   });
 
   it('should add back overlay when block gets unselected', () => {
@@ -59,7 +61,9 @@ describe('EmbedPreview', () => {
     const overlay = screen.getByTestId('embed-preview-overlay');
     fireEvent.mouseUp(overlay);
 
-    expect(screen.queryByTestId('embed-preview-overlay')).toBeNull();
+    expect(
+      screen.queryByTestId('embed-preview-overlay')
+    ).not.toBeInTheDocument();
 
     rerender(<EmbedPreview url={url} title={title} isSelected={false} />);
     expect(screen.getByTestId('embed-preview-overlay')).toBeInTheDocument();
@@ -72,6 +76,8 @@ describe('EmbedPreview', () => {
     await waitFor(() =>
       expect(screen.getByTestId('amp-story-player')).toHaveFocus()
     );
-    expect(screen.queryByTestId('embed-preview-overlay')).toBeNull();
+    expect(
+      screen.queryByTestId('embed-preview-overlay')
+    ).not.toBeInTheDocument();
   });
 });

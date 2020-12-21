@@ -39,6 +39,11 @@ describe('Autoplay video', () => {
     fixture.restore();
   });
 
+  const clickOnTarget = async (target) => {
+    const { x, y, width, height } = target.getBoundingClientRect();
+    await fixture.events.mouse.click(x + width / 2, y + height / 2);
+  };
+
   it('should render ok', () => {
     expect(
       fixture.container.querySelector('[data-testid="fullbleed"]')
@@ -56,7 +61,7 @@ describe('Autoplay video', () => {
     const video = Array.from(mediaPane.querySelectorAll('video')).filter(
       (el) => el.ariaLabel === 'ranger9'
     );
-    await fixture.events.mouse.clickOn(video[0]);
+    await clickOnTarget(video[0]);
 
     const videoFrame = fixture.editor.canvas.framesLayer.frames[1].node;
     const videoId = videoFrame.dataset.elementId;
