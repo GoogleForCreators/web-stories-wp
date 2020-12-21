@@ -51,7 +51,7 @@ describe('<DirectionRadioInput />', () => {
   it('should render', () => {
     const { getByRole } = renderWithTheme(<DirectionRadioInput />);
     const fieldset = getByRole('group');
-    expect(fieldset).toBeDefined();
+    expect(fieldset).toBeInTheDocument();
   });
 
   it('should render directions supplied as radio inputs', () => {

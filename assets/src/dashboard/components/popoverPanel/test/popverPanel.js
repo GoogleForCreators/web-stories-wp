@@ -67,7 +67,7 @@ describe('CardGrid', () => {
       />
     );
 
-    expect(queryByTestId('pill-fieldset')).toBeNull();
+    expect(queryByTestId('pill-fieldset')).not.toBeInTheDocument();
   });
 
   it('calls the close function when the x icon is pressed', () => {

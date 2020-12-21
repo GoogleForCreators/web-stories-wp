@@ -141,7 +141,7 @@ describe('Panels/Preset', () => {
   it('should render <ColorPresetPanel /> panel', () => {
     const { getByText } = setupPanel();
     const element = getByText(PANEL_LABEL);
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should not display the panel if mixed types multi-selection', () => {
@@ -158,17 +158,17 @@ describe('Panels/Preset', () => {
       ],
     };
     const { queryByText } = setupPanel(null, extraStateProps);
-    expect(queryByText(PANEL_LABEL)).toBeNull();
+    expect(queryByText(PANEL_LABEL)).not.toBeInTheDocument();
   });
 
   describe('Panels/Preset/Header', () => {
     it('should display only Add button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
       const addButton = queryByLabelText('Add color preset');
-      expect(addButton).toBeDefined();
+      expect(addButton).toBeInTheDocument();
 
       const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
-      expect(editButton).toBeNull();
+      expect(editButton).not.toBeInTheDocument();
     });
 
     it('should have functional Edit button if relevant presets exist', () => {
@@ -179,16 +179,16 @@ describe('Panels/Preset', () => {
         extraStylePresets
       );
       const editButton = getByLabelText(EDIT_BUTTON_LABEL);
-      expect(editButton).toBeDefined();
+      expect(editButton).toBeInTheDocument();
 
       fireEvent.click(editButton);
       const exitEditModeButton = getByLabelText('Exit edit mode');
-      expect(exitEditModeButton).toBeDefined();
-      expect(queryByLabelText(EDIT_BUTTON_LABEL)).toBeNull();
+      expect(exitEditModeButton).toBeInTheDocument();
+      expect(queryByLabelText(EDIT_BUTTON_LABEL)).not.toBeInTheDocument();
 
       fireEvent.click(exitEditModeButton);
       const newEditButton = getByLabelText(EDIT_BUTTON_LABEL);
-      expect(newEditButton).toBeDefined();
+      expect(newEditButton).toBeInTheDocument();
     });
 
     it('should add a text color preset', () => {
@@ -377,7 +377,7 @@ describe('Panels/Preset', () => {
         extraStateProps
       );
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
-      expect(applyPreset).toBeDefined();
+      expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
       expect(updateElementsById).toHaveBeenCalledTimes(1);
@@ -395,7 +395,7 @@ describe('Panels/Preset', () => {
       };
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
-      expect(applyPreset).toBeDefined();
+      expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
       expect(pushUpdate).toHaveBeenCalledTimes(1);
@@ -461,7 +461,7 @@ describe('Panels/Preset', () => {
       );
 
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
-      expect(applyPreset).toBeDefined();
+      expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
       expect(updateCurrentPageProperties).toHaveBeenCalledTimes(1);

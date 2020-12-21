@@ -36,8 +36,8 @@ describe('Pill', () => {
         {pillText}
       </Pill>
     );
-    expect(getByRole('checkbox')).toBeDefined();
-    expect(getByText(pillText)).toBeDefined();
+    expect(getByRole('checkbox')).toBeInTheDocument();
+    expect(getByText(pillText)).toBeInTheDocument();
   });
 
   it('should render pill as radio input', () => {
@@ -51,8 +51,8 @@ describe('Pill', () => {
         {pillText}
       </Pill>
     );
-    expect(getByRole('radio')).toBeDefined();
-    expect(getByText(pillText)).toBeDefined();
+    expect(getByRole('radio')).toBeInTheDocument();
+    expect(getByText(pillText)).toBeInTheDocument();
   });
 
   it('should simulate a click on <Pill />', () => {
@@ -83,7 +83,7 @@ describe('Pill', () => {
 
     const label = getByTestId('default-pill-label');
 
-    expect(label).toBeDefined();
+    expect(label).toBeInTheDocument();
   });
 
   it(`should render standard ${PILL_LABEL_TYPES.SWATCH} pill label when labelType is 'swatch'`, () => {
@@ -100,7 +100,7 @@ describe('Pill', () => {
 
     const label = getByTestId('swatch-pill-label');
 
-    expect(label).toBeDefined();
+    expect(label).toBeInTheDocument();
   });
 
   it(`should render standard ${PILL_LABEL_TYPES.FLOATING} pill label when labelType is 'FLOATING'`, () => {
@@ -117,6 +117,6 @@ describe('Pill', () => {
 
     const label = getByTestId('floating-pill-label');
 
-    expect(label).toBeDefined();
+    expect(label).toBeInTheDocument();
   });
 });

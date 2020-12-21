@@ -13,6 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
@@ -62,7 +68,7 @@ describe('paginatedMediaGallery', () => {
   });
 
   it('should render attribution when media is present', () => {
-    const { queryByTestId } = renderWithTheme(
+    const { queryByTestId, queryByText } = renderWithTheme(
       <PaginatedMediaGallery
         providerType={providerType}
         resources={resources}
@@ -73,12 +79,13 @@ describe('paginatedMediaGallery', () => {
         setNextPage={() => {}}
       />
     );
-    expect(queryByTestId('attribution')).toBeDefined();
-    expect(queryByTestId('loading-pill')).toBeNull();
+
+    expect(queryByText(/Powered by/)).toBeInTheDocument();
+    expect(queryByTestId('loading-pill')).not.toBeInTheDocument();
   });
 
-  it('should render the loading pill when media is loading', () => {
-    const { queryByTestId } = renderWithTheme(
+  it('should render the loading pill when media is loading', async () => {
+    const { queryByTestId, queryByText } = renderWithTheme(
       <PaginatedMediaGallery
         providerType={providerType}
         resources={resources}
@@ -89,7 +96,20 @@ describe('paginatedMediaGallery', () => {
         setNextPage={() => {}}
       />
     );
-    expect(queryByTestId('loading-pill')).toBeDefined();
-    expect(queryByTestId('attribution')).toBeNull();
+
+    expect(queryByText(/Powered by/)).toBeInTheDocument();
+    expect(queryByTestId('loading-pill')).not.toBeInTheDocument();
+
+    // The loading indicator only appears (and thus the attribution disappears)
+    // if loading takes too long.
+    await waitFor(
+      () => {
+        expect(queryByText(/Powered by/)).not.toBeInTheDocument();
+        expect(queryByText(/Powered by/)).not.toBeInTheDocument();
+      },
+      {
+        timeout: 1000,
+      }
+    );
   });
 });

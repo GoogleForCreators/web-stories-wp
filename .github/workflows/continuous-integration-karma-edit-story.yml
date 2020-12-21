@@ -6,6 +6,11 @@ on:
       - main
       - release/*
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   karma:
@@ -19,7 +24,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.3
+        uses: actions/setup-node@v2.1.4
         with:
           node-version: ${{ steps.nvm.outputs.NVMRC }}
 
@@ -63,6 +68,7 @@ jobs:
           flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        if: github.event.pull_request.draft == false
 
       - name: Upload CUJ coverage
         uses: actions/upload-artifact@v2

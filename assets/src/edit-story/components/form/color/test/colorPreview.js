@@ -129,7 +129,7 @@ describe('<ColorPreview />', () => {
     fireEvent.click(button);
 
     const previewButton = queryByLabelText(/solid pattern/i);
-    expect(previewButton).toBeDefined();
+    expect(previewButton).toBeInTheDocument();
   });
 
   it('should open the color picker when clicked if multiple', () => {
@@ -148,7 +148,7 @@ describe('<ColorPreview />', () => {
     fireEvent.click(button);
 
     const previewButton = queryByLabelText(/solid pattern/i);
-    expect(previewButton).toBeDefined();
+    expect(previewButton).toBeInTheDocument();
   });
 
   it('should invoke onChange when inputting valid hex', () => {
