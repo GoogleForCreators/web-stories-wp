@@ -57,6 +57,7 @@ function StatusCheckFailed({ open, onClose }) {
       open={open}
       onClose={onClose}
       title={__('Unable to save your story', 'web-stories')}
+      contentLabel={__('Unable to save your story', 'web-stories')}
       actions={<Plain onClick={onClose}>{__('Dismiss', 'web-stories')}</Plain>}
     >
       <Paragraph>

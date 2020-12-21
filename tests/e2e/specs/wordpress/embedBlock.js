@@ -21,7 +21,6 @@ import {
   activatePlugin,
   deactivatePlugin,
   createNewPost,
-  insertBlock,
   setPostContent,
 } from '@wordpress/e2e-test-utils';
 
@@ -32,6 +31,7 @@ import {
   addRequestInterception,
   publishPost,
   withDisabledToolbarOnFrontend,
+  insertBlock,
 } from '../../utils';
 
 const EMBED_BLOCK_CONTENT = `
