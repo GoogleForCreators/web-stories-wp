@@ -13,7 +13,7 @@
 **ChromeOS**: ChromeVox
 **Browser**: [ChromeVox Classic](https://chrome.google.com/webstore/detail/chromevox-classic-extensi/kgejglhpjiefppelpmljglcjbhoiplfn?hl=en) (no longer supported, so use with care, and perhaps only in combination with NVDA/VoiceOver
 
-**VoiceOver**
+### VoiceOver
 
 On a MacBook, press <kbd><kbd>CMD</kbd><kbd>F5</kbd></kbd> to enable VoiceOver. You can configure VoiceOver using the built-in VoiceOver Utility.
 
@@ -31,7 +31,7 @@ VoiceOver key + Space | interact with an element
 
 Note: make sure to [enable full keyboard access](http://www.weba11y.com/blog/2014/07/07/keyboard-navigation-in-mac-browsers/) in the macOS system prefs.
 
-**NVDA**
+### NVDA
 
 To configure NVDA, press Insert + N or Caps Lock + N and navigate to Preferences.
 
@@ -42,17 +42,17 @@ NVDA key + H | skip to headings
 NVDA key + B | skip to buttons
 Control | stop verbalization
 
-More shortcuts can be found at https://webaim.org/resources/shortcuts/nvda
+More shortcuts can be found on [WebAIM.org](https://webaim.org/resources/shortcuts/nvda).
 
-**General Info**
+### General Info
 
-**Interaction Modes**:
+#### Interaction Modes
 
 There are two different interaction modes that a screen reader can be navigating in: forms mode and application mode. If keys suddenly stop doing what you expect them to do, you may have unintentionally triggered a mode switch. You likely should restart your screen reader.
 
-See https://tink.uk/understanding-screen-reader-interaction-modes/
+See [Understanding screen reader interaction modes](https://tink.uk/understanding-screen-reader-interaction-modes/) for more information.
 
-**Accessibility Tree**
+#### Accessibility Tree
 
 The browser converts the DOM tree into an accessibility tree, which is what screen readers interact with. In Chrome, you can view the accessibility tree for easier debugging by going to `chrome://accessibility`.
 
