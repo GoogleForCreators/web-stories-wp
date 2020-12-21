@@ -6,6 +6,11 @@ on:
       - main
       - release/*
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   karma:
@@ -63,6 +68,7 @@ jobs:
           flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        if: github.event.pull_request.draft == false
 
       - name: Upload CUJ coverage
         uses: actions/upload-artifact@v2
