@@ -82,6 +82,7 @@ export const _default = () => {
       <DropDown
         emptyText={'No options available'}
         options={basicDropDownOptions}
+        hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
         dropDownLabel={text('dropDownLabel', 'label')}
@@ -106,6 +107,7 @@ export const LightTheme = () => {
     <DropDown
       emptyText={'No options available'}
       options={basicDropDownOptions}
+      hasError={boolean('hasError')}
       hint={text('hint', 'default hint text')}
       placeholder={text('placeholder', 'select a value')}
       dropDownLabel={text('dropDownLabel', 'label')}
@@ -129,6 +131,7 @@ export const SubMenus = () => {
     <DropDown
       emptyText={'No options available'}
       options={nestedDropDownOptions}
+      hasError={boolean('hasError')}
       hint={text('hint', 'default hint text')}
       placeholder={text('placeholder', 'select a value')}
       dropDownLabel={text('dropDownLabel', 'label')}
@@ -170,6 +173,7 @@ export const OverriddenAnimationProofOfConcept = () => {
       <DropDown
         emptyText={'No options available'}
         options={effectChooserOptions}
+        hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
         dropDownLabel={text('dropDownLabel', 'label')}

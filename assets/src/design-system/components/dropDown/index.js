@@ -31,6 +31,8 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Popup, PLACEMENT } from '../popup';
+import { Text } from '../typography';
+import { THEME_CONSTANTS } from '../../theme';
 import { MENU_OPTIONS } from './types';
 import DropDownMenu from './menu';
 import DropDownSelect from './select';
@@ -38,6 +40,11 @@ import useDropDown from './useDropDown';
 
 const DropDownContainer = styled.div``;
 
+const Hint = styled(Text)`
+  margin-top: 12px;
+  padding-left: 2px;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
 /**
  *
  * @param {Object} props All props.
@@ -146,7 +153,9 @@ export const DropDown = ({
           />
         </Popup>
       )}
-      {hint && <p>{hint}</p>}
+      {hint && (
+        <Hint size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>{hint}</Hint>
+      )}
     </DropDownContainer>
   );
 };
