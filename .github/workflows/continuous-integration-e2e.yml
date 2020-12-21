@@ -94,11 +94,11 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
-        if: ${{ matrix.coverage }}
+        if: ( matrix.coverage ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
         run: npm run test:e2e
-        if: ${{ ! matrix.coverage }}
+        if: ( ! matrix.coverage ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
         run: npm run env:stop

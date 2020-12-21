@@ -63,6 +63,7 @@ jobs:
           flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+        if: github.event.pull_request.draft == false
 
       - name: Upload CUJ coverage
         uses: actions/upload-artifact@v2
