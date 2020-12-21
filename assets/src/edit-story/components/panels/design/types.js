@@ -32,6 +32,7 @@ const SHAPE_STYLE = 'shapeStyle';
 const TEXT = 'text';
 const TEXT_STYLE = 'textStyle';
 const VIDEO_OPTIONS = 'videoOptions';
+const VIDEO_POSTER = 'videoPoster';
 const VIDEO_ACCESSIBILITY = 'videoAccessibility';
 const ELEMENT_ALIGNMENT = 'elementAlignment';
 const NO_SELECTION = 'noSelection';
@@ -53,9 +54,10 @@ const PanelTypes = {
   BORDER,
   LINK,
   VIDEO_OPTIONS,
-  CAPTIONS,
+  VIDEO_POSTER,
   IMAGE_ACCESSIBILITY,
   VIDEO_ACCESSIBILITY,
+  CAPTIONS,
   ANIMATION,
   NO_SELECTION,
 };

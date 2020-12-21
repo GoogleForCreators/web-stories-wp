@@ -64,7 +64,7 @@ describe('AnimationPart', () => {
           <div data-testid="child-rendered" />
         </WAAPIAnimation>
       );
-      expect(getByTestId('child-rendered')).toBeDefined();
+      expect(getByTestId('child-rendered')).toBeInTheDocument();
     }
   );
 

@@ -4,7 +4,7 @@ Contributors:      google
 Requires at least: 5.3
 Tested up to:      5.6
 Requires PHP:      5.6
-Stable tag:        1.2
+Stable tag:        1.2.1
 License:           Apache License 2.0
 License URI:       https://www.apache.org/licenses/LICENSE-2.0
 Tags:              web stories, stories, amp, storytelling, google
@@ -110,7 +110,17 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
-= 1.2 =
+= 1.2.1 =
+
+**Release Date:** December 17, 2020.
+
+* New feature: automated site environment compatibility checks.
+* Improved UI for border and corner radius panels.
+* Bug fixes and performance improvements.
+
+= 1.2.0 =
+
+**Release Date:** December 11, 2020.
 
 * New features: animations, pre-publish checklist.
 * Improved captions language selector.
@@ -137,6 +147,14 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Initial stable release.
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+
+Bug fixes and performance improvements.
+
+= 1.2.0 =
+
+Added basic animations and a pre-publish checklist.
 
 = 1.1.1 =
 

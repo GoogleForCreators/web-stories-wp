@@ -401,6 +401,8 @@ class Media {
 	/**
 	 * Helper util to check if attachment is a poster.
 	 *
+	 * @since 1.2.1
+	 *
 	 * @param int $post_id Attachment ID.
 	 *
 	 * @return bool

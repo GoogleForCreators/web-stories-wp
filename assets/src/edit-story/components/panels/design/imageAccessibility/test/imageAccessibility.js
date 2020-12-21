@@ -51,7 +51,7 @@ describe('Panels/ImageAccessibility', () => {
   it('should render <ImageAccessibility /> panel', () => {
     const { getByRole } = renderImageAccessibility([defaultElement]);
     const input = getByRole('textbox', { name: 'Assistive text' });
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
   });
 
   it('should display Mixed placeholder in case of mixed multi-selection', () => {

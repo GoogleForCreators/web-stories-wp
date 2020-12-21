@@ -68,13 +68,13 @@ describe('SlugPanel', () => {
   it('should render Slug Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Permalink' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should display permalink', () => {
     const { getByRole } = setupPanel();
     const url = getByRole('link', { name: 'https://example.com/foo' });
-    expect(url).toBeDefined();
+    expect(url).toBeInTheDocument();
   });
 
   it('should allow trailing spaces while typing but not onblur', async () => {
@@ -109,7 +109,7 @@ describe('SlugPanel', () => {
   it('should respect the link limit', async () => {
     const { getByRole, updateStory } = setupPanel();
     const input = getByRole('textbox', { name: 'URL slug' });
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
 
     const bigSlug = ''.padStart(MIN_MAX.PERMALINK.MAX + 10, '1');
 

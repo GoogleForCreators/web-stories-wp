@@ -56,7 +56,7 @@ describe('Editor Settings: Google Analytics <GoogleAnalytics />', function () {
     );
 
     const input = getByRole('textbox');
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
     expect(input).toBeEnabled();
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
