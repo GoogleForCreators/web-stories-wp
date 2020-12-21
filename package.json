@@ -104,7 +104,7 @@
     "@testing-library/user-event": "^12.2.2",
     "@wordpress/babel-plugin-import-jsx-pragma": "^2.7.0",
     "@wordpress/dependency-extraction-webpack-plugin": "^2.8.0",
-    "@wordpress/e2e-test-utils": "^4.15.0",
+    "@wordpress/e2e-test-utils": "^4.16.0",
     "@wordpress/eslint-plugin": "^7.3.0",
     "@wordpress/jest-console": "^3.9.0",
     "@wordpress/jest-puppeteer-axe": "^1.10.0",
