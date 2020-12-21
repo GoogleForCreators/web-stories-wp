@@ -44,7 +44,7 @@ describe('PopoverMenu', () => {
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
-    expect(getByText('one')).toBeDefined();
+    expect(getByText('one')).toBeInTheDocument();
   });
 
   it('should simulate a click on one of the items', () => {
@@ -72,11 +72,11 @@ describe('PopoverMenu', () => {
   });
 
   it('should render one anchor and 4 list items', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryAllByRole, queryByRole } = renderWithProviders(
       <PopoverMenu onSelect={onClickMock} items={demoItems} isOpen />
     );
 
     expect(queryAllByRole('listitem')).toHaveLength(4);
-    expect(queryAllByRole('link')).toHaveLength(1);
+    expect(queryByRole('link')).toBeInTheDocument();
   });
 });

@@ -90,12 +90,12 @@ describe('Panels/Link', () => {
       screen.queryByRole('textbox', {
         name: 'Link description',
       })
-    ).toBeNull();
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole('button', {
         name: 'Edit link icon',
       })
-    ).toBeNull();
+    ).not.toBeInTheDocument();
   });
 
   it('should display an error message for invalid URLs', () => {
@@ -123,12 +123,12 @@ describe('Panels/Link', () => {
       screen.queryByRole('textbox', {
         name: 'Link description',
       })
-    ).toBeNull();
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByRole('button', {
         name: 'Edit link icon',
       })
-    ).toBeNull();
+    ).not.toBeInTheDocument();
   });
 
   it('should display Mixed placeholder in case of mixed values multi-selection', () => {
@@ -150,12 +150,12 @@ describe('Panels/Link', () => {
       name: 'Element link',
     });
     expect(linkInput.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-    expect(linkInput.value).toStrictEqual('');
+    expect(linkInput).toHaveValue('');
 
     const descInput = screen.queryByRole('textbox', {
       name: 'Link description',
     });
     expect(descInput.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-    expect(descInput.value).toStrictEqual('');
+    expect(descInput).toHaveValue('');
   });
 });

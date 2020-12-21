@@ -77,7 +77,7 @@ describe('stylePresets/Presets', () => {
         fillColors: [],
       },
     });
-    expect(getByText(textContent)).toBeDefined();
+    expect(getByText(textContent)).toBeInTheDocument();
   });
 
   // Disable reason: functionality removed from beta.
