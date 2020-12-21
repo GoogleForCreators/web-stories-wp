@@ -55,7 +55,7 @@ describe('Panels/Poster', () => {
   it('should render <Poster /> panel', () => {
     const { getByRole } = renderPoster([defaultElement]);
     const videoPoster = getByRole('region', { name: 'Video poster' });
-    expect(videoPoster).toBeDefined();
+    expect(videoPoster).toBeInTheDocument();
   });
 
   it('should simulate a click on <Poster />', () => {

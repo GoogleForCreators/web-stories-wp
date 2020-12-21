@@ -167,6 +167,7 @@ function PaginatedMediaGallery({
     providerType !== 'local' &&
     PROVIDERS[providerType].attributionComponent &&
     PROVIDERS[providerType].attributionComponent();
+
   return (
     <>
       <MediaGalleryContainer

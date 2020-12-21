@@ -231,7 +231,7 @@ describe('DropDown: Font Picker', () => {
   });
 
   it('should show an empty list when the search keyword has no results.', async () => {
-    const { getByRole, queryAllByRole } = await getFontPicker();
+    const { getByRole, queryAllByRole, queryByRole } = await getFontPicker();
 
     const selectButton = getByRole('button');
     fireEvent.click(selectButton);
@@ -244,7 +244,7 @@ describe('DropDown: Font Picker', () => {
       });
     });
 
-    await waitFor(() => expect(queryAllByRole('option')).toHaveLength(0), {
+    await waitFor(() => expect(queryByRole('option')).not.toBeInTheDocument(), {
       timeout: 500,
     });
   });

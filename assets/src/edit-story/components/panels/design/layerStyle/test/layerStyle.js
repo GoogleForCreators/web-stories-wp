@@ -49,19 +49,19 @@ describe('Panels/LayerStyle', () => {
       { ...defaultElement, opacity: 100 },
     ]);
     const element = getByRole('button', { name: 'Layer' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should set opacity to 100 if not set', () => {
     const { getByRole } = renderLayerStyle([{}]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
-    expect(input.value).toStrictEqual('100%');
+    expect(input).toHaveValue('100%');
   });
 
   it('should set opacity to 0 if set to 0', () => {
     const { getByRole } = renderLayerStyle([{ ...defaultElement, opacity: 0 }]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
-    expect(input.value).toStrictEqual('0%');
+    expect(input).toHaveValue('0%');
   });
 
   it('should set opacity to 49 if set to 49', () => {
@@ -69,7 +69,7 @@ describe('Panels/LayerStyle', () => {
       { ...defaultElement, opacity: 49 },
     ]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
-    expect(input.value).toStrictEqual('49%');
+    expect(input).toHaveValue('49%');
   });
 
   it('should update opacity value on change', () => {
@@ -115,6 +115,6 @@ describe('Panels/LayerStyle', () => {
     ]);
     const input = getByRole('textbox', { name: 'Opacity in percentage' });
     expect(input.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-    expect(input.value).toStrictEqual('');
+    expect(input).toHaveValue('');
   });
 });

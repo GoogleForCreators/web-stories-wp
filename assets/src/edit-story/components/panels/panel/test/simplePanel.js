@@ -31,7 +31,7 @@ describe('Panels/Panel/SimplePanel', () => {
     const titleElement = getByText('Simple Panel');
     const contentElement = getByText('Simple Panel Content');
 
-    expect(titleElement).toBeDefined();
-    expect(contentElement).toBeDefined();
+    expect(titleElement).toBeInTheDocument();
+    expect(contentElement).toBeInTheDocument();
   });
 });

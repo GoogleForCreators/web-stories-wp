@@ -57,7 +57,7 @@ describe('Panels/StylePreset/ColorPresetActions', () => {
   it('should render color preset actions', () => {
     const { getByRole } = setupActions();
     const element = getByRole('button', { name: ADD_PRESET });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should update color presets', () => {
