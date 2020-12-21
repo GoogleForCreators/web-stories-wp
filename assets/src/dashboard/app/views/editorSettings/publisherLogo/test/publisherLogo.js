@@ -75,7 +75,7 @@ describe('PublisherLogo', () => {
   });
 
   it('should specify the first logo displayed as default', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { getAllByRole } = renderWithProviders(
       <PublisherLogoSettings
         handleAddLogos={mockHandleAddLogos}
         handleRemoveLogo={jest.fn}
@@ -85,8 +85,7 @@ describe('PublisherLogo', () => {
       />
     );
 
-    const FirstGridItem = queryAllByRole('listitem')[0];
-    expect(FirstGridItem).toBeDefined();
+    const FirstGridItem = getAllByRole('listitem')[0];
     const Default = within(FirstGridItem).getByText('Default');
     expect(Default).toBeInTheDocument();
   });
