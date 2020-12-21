@@ -35,7 +35,7 @@
     "@wordpress/components": "^11.1.1",
     "@wordpress/compose": "^3.22.0",
     "@wordpress/data": "^4.25.0",
-    "@wordpress/element": "^2.18.0",
+    "@wordpress/element": "^2.19.0",
     "@wordpress/i18n": "^3.16.0",
     "@wordpress/viewport": "^2.24.0",
     "big.js": "^6.0.2",
