@@ -169,7 +169,7 @@ describe('Panels/TextStyle', () => {
   it('should render <TextStyle /> panel', () => {
     const { getByRole } = renderTextStyle([textElement]);
     const element = getByRole('button', { name: 'Style' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should recalculate height and offset', () => {
@@ -225,7 +225,7 @@ describe('Panels/TextStyle', () => {
         name: 'Horizontal & Vertical padding',
       });
       const lock = getByRole('checkbox', { name: paddingRatioLockLabel });
-      expect(multi.value).toBe('0');
+      expect(multi).toHaveValue('0');
       expect(lock).toBeChecked();
     });
 
@@ -242,8 +242,8 @@ describe('Panels/TextStyle', () => {
       ]);
       const horiz = getByRole('textbox', { name: 'Horizontal padding' });
       const vert = getByRole('textbox', { name: 'Vertical padding' });
-      expect(horiz.value).toBe('11');
-      expect(vert.value).toBe('12');
+      expect(horiz).toHaveValue('11');
+      expect(vert).toHaveValue('12');
     });
 
     it('should update horizontal padding with lock', () => {

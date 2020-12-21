@@ -33,7 +33,7 @@ describe('Popup', () => {
     );
 
     const popup = getByText('Hello World!');
-    expect(popup).toBeDefined();
+    expect(popup).toBeInTheDocument();
   });
 
   // TODO(wassgha): Tests for different placements
@@ -52,6 +52,6 @@ describe('Popup', () => {
     );
 
     const popup = queryByText('Hello World!');
-    expect(popup).toBeNull();
+    expect(popup).not.toBeInTheDocument();
   });
 });

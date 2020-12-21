@@ -22,12 +22,12 @@ import { Tooltip } from '../';
 
 describe('<Tooltip />', function () {
   it('should be not visible when the mouse is not hovering over the container', function () {
-    const { queryAllByText } = renderWithProviders(
+    const { queryByText } = renderWithProviders(
       <Tooltip title={'Some tooltip text'}>
         <button>{'hover to see tooltip'}</button>
       </Tooltip>
     );
 
-    expect(queryAllByText('Some tooltip text')).toHaveLength(0);
+    expect(queryByText('Some tooltip text')).not.toBeInTheDocument();
   });
 });

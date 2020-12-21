@@ -6,6 +6,11 @@ on:
       - main
       - release/*
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   e2e:
@@ -19,7 +24,7 @@ jobs:
             wp: 'latest'
             coverage: true
           - browser: 'chrome'
-            wp: '5.3.4'
+            wp: '5.3.6'
             coverage: false
 
     steps:
@@ -35,7 +40,7 @@ jobs:
         id: nvm
 
       - name: Setup Node
-        uses: actions/setup-node@v2.1.3
+        uses: actions/setup-node@v2.1.4
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
 
@@ -94,11 +99,11 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           PUPPETEER_PRODUCT: ${{ matrix.browser }}
-        if: ${{ matrix.coverage }}
+        if: ( matrix.coverage ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
         run: npm run test:e2e
-        if: ${{ ! matrix.coverage }}
+        if: ( ! matrix.coverage ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment
         run: npm run env:stop
