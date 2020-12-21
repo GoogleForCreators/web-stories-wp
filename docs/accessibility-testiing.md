@@ -67,9 +67,15 @@ There's also an [aXe extension](https://chrome.google.com/webstore/detail/axe/lh
 Use the `toHaveNoViolations` matcher provided by `jest-axe` to verify that a component does not have any accessibility issues. Example:
 
 ```js
-const { container } = render(<MyAwesomeComponent />);
-const results = await axe(container);
-expect(results).toHaveNoViolations();
+function MyAwesomeComponent() {
+  // ...
+}
+
+it('should render with no accessibility issues', async () => {
+    const { container } = render(<MyAwesomeComponent />);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+});
 ```
 
 ## Integration Tests
@@ -77,7 +83,9 @@ expect(results).toHaveNoViolations();
 There's also a `toHaveNoViolations` matcher available in the Karma test suite. Example:
 
 ```js
-fixture = new Fixture();
-await fixture.render();
-await expectAsync(fixture.my.custom.element.node).toHaveNoViolations();
+it('should render with no accessibility issues', async () => {
+    fixture = new Fixture();
+    await fixture.render();
+    await expectAsync(fixture.my.custom.element.node).toHaveNoViolations();
+});
 ```
