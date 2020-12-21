@@ -50,6 +50,6 @@ describe('Panels/VideoOptions', () => {
   it('should render <VideoOptions /> panel', () => {
     const { getByText } = renderVideoOptions([defaultElement]);
     const panel = getByText('Playback');
-    expect(panel).toBeDefined();
+    expect(panel).toBeInTheDocument();
   });
 });
