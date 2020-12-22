@@ -74,7 +74,7 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
-    "@ampproject/toolbox-optimizer": "^2.7.2",
+    "@ampproject/toolbox-optimizer": "^2.7.3",
     "@babel/core": "^7.12.3",
     "@babel/eslint-parser": "^7.12.1",
     "@babel/eslint-plugin": "^7.12.1",
