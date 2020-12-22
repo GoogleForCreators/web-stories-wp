@@ -71,8 +71,8 @@ function PageLayouts(props) {
 
   const pageSize = useMemo(() => {
     const width = PAGE_LAYOUT_PANE_WIDTH;
-    const height = Math.round((width / PAGE_RATIO) * 100) / 100;
-    const containerHeight = Math.round((width / FULLBLEED_RATIO) * 100) / 100;
+    const height = Math.round(width / PAGE_RATIO);
+    const containerHeight = Math.round(width / FULLBLEED_RATIO);
     return { width, height, containerHeight };
   }, []);
 

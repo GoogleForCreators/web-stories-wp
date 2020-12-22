@@ -21,6 +21,11 @@ import { useEffect, useState, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
  * Internal dependencies
  */
 import { useAPI } from '../../../../app/api';
@@ -41,10 +46,12 @@ export const PaneInner = styled.div`
   flex-direction: column;
 `;
 
+// padding-top is to help outlines on page layouts render
 export const PageLayoutsParentContainer = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
-  margin-top: 28px;
+  margin-top: 26px;
+  padding-top: 2px;
   width: 100%;
 `;
 
@@ -80,7 +87,13 @@ function PageLayoutsPane(props) {
       }
     }
     return templates.reduce(
-      (pages, template) => [...pages, ...template.pages],
+      (pages, template) => [
+        ...pages,
+        ...template.pages.map((page, index) => ({
+          ...page,
+          title: `${template.title} Page ${index + 1}`,
+        })),
+      ],
       []
     );
   }, [templates, selectedTemplateId]);
@@ -98,7 +111,10 @@ function PageLayoutsPane(props) {
           selectItem={handleSelectTemplate}
           deselectItem={() => handleSelectTemplate(null)}
         />
-        <PageLayoutsParentContainer ref={pageLayoutsParentRef}>
+        <PageLayoutsParentContainer
+          ref={pageLayoutsParentRef}
+          title={__('Page layouts', 'web-stories')}
+        >
           {pageLayoutsParentRef.current && (
             <PageLayouts
               parentRef={pageLayoutsParentRef}
