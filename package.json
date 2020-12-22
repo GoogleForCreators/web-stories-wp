@@ -28,7 +28,7 @@
     "commander": "bin/commander.js"
   },
   "dependencies": {
-    "@ap.cx/hues": "^2.2.0",
+    "@ap.cx/hues": "^2.4.0",
     "@wordpress/api-fetch": "^3.21.0",
     "@wordpress/block-editor": "^5.2.0",
     "@wordpress/blocks": "^6.25.0",
