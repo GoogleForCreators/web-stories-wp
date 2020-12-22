@@ -18,119 +18,19 @@
  * External dependencies
  */
 import { forwardRef } from 'react';
-import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { Chevron } from '../../../icons';
-import { THEME_CONSTANTS, themeHelpers } from '../../../theme';
-import { Text } from '../../typography';
-
-const SelectButton = styled.button(
-  ({ theme, hasError, isOpen }) => css`
-    width: 100%;
-    height: 36px;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    border-radius: ${theme.borders.radius.small};
-    background-color: ${theme.colors.bg.primary};
-    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-    border-color: ${theme.colors.border[
-      isOpen ? 'defaultActive' : 'defaultNormal'
-    ]};
-
-    padding: 8px 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-
-    &:hover {
-      border-color: ${theme.colors.border[
-        isOpen ? 'defaultActive' : 'defaultHover'
-      ]};
-    }
-
-    ${hasError &&
-    css`
-      ${themeHelpers.focusableOutlineCSS(
-        theme.colors.interactiveBg.negativeNormal
-      )};
-      border-color: ${theme.colors.interactiveBg.negativeNormal};
-
-      &:active,
-      &:hover,
-      &:focus {
-        border-color: ${theme.colors.interactiveBg.negativeHover};
-      }
-    `}
-
-    &:disabled {
-      pointer-events: none;
-      border-color: ${theme.colors.border.disable};
-
-      &:hover {
-        border-color: ${theme.colors.border.disable};
-      }
-
-      label,
-      span,
-      svg {
-        color: ${theme.colors.fg.disable};
-      }
-    }
-  `
-);
-
-SelectButton.propTypes = {
-  hasError: PropTypes.bool,
-  isOpen: PropTypes.bool,
-};
-
-const StyledChevron = styled(Chevron)(
-  ({ theme, isOpen }) => css`
-    color: ${theme.colors.fg.secondary};
-    width: 8px;
-    height: 8px;
-
-    ${isOpen &&
-    css`
-      transform: rotate(180deg);
-    `}
-  `
-);
-StyledChevron.propTypes = {
-  isOpen: PropTypes.bool,
-};
-
-const Value = styled(Text)`
-  max-width: 100%;
-  padding-right: 8px;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
-
-const LabelText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  padding-right: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: hidden;
-`;
-
-const Label = styled.label`
-  display: flex;
-  align-items: center;
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  cursor: pointer;
-`;
+import { THEME_CONSTANTS } from '../../../theme';
+import {
+  SelectButton,
+  StyledChevron,
+  Value,
+  LabelText,
+  Label,
+} from './components';
 
 const DropDownSelect = (
   {
