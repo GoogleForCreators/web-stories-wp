@@ -70,6 +70,12 @@ const Area = styled.div`
   z-index: 2;
 `;
 
+const MetaBoxesArea = styled(Area).attrs({
+  area: 'metaboxes',
+})`
+  overflow-y: auto;
+`;
+
 // TODO: Fix meta boxes layout.
 function Layout() {
   return (
@@ -81,9 +87,9 @@ function Layout() {
           </Area>
           <Workspace />
         </CanvasProvider>
-        <Area area="metaboxes">
+        <MetaBoxesArea>
           <MetaBoxes />
-        </Area>
+        </MetaBoxesArea>
       </Editor>
     </LayoutProvider>
   );
