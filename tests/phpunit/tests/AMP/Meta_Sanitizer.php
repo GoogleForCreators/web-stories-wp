@@ -24,7 +24,7 @@ use Google\Web_Stories\Tests\MarkupComparison;
 use Google\Web_Stories\Tests\ScriptHash;
 
 /**
- * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer.
+ * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer
  */
 class Meta_Sanitizer extends \WP_UnitTestCase {
 	use MarkupComparison;
