@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,28 +30,12 @@ import { __, sprintf } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Popup, PLACEMENT } from '../popup';
-import { Text } from '../typography';
 import { THEME_CONSTANTS } from '../../theme';
 import { MENU_OPTIONS } from './types';
 import DropDownMenu from './menu';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
-
-const DropDownContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const Hint = styled(Text)`
-  margin-top: 12px;
-  padding-left: 2px;
-  color: ${({ theme, hasError }) =>
-    hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
-`;
-Hint.propTypes = {
-  hasError: PropTypes.bool,
-};
+import { DropDownContainer, Hint } from './components';
 
 /**
  *

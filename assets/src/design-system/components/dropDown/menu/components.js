@@ -68,7 +68,7 @@ export const ListGroup = styled.ul`
 
 export const ListItemLabel = styled.li`
   display: grid;
-  grid-template-columns: calc(100% - 2px) 2px;
+  grid-template-columns: 1fr 2px;
   padding: 6px 2px 6px 8px;
   margin: 4px 8px;
   align-items: center;
@@ -77,7 +77,7 @@ export const ListItemLabel = styled.li`
 export const ListItem = styled.li(
   ({ disabled, isSelected, theme }) => css`
     display: grid;
-    grid-template-columns: 16px calc(100% - 16px);
+    grid-template-columns: 16px 1fr;
     padding: 6px 2px 6px 8px;
     margin: 4px 8px;
     border-radius: ${theme.borders.radius.small};
@@ -85,9 +85,9 @@ export const ListItem = styled.li(
     background-color: ${isSelected
       ? theme.colors.interactiveBg.active
       : 'inherit'};
+    cursor: ${disabled ? 'default' : 'pointer'};
 
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
-    cursor: ${disabled ? 'default' : 'pointer'};
 
     ${disabled &&
     css`
@@ -133,5 +133,14 @@ export const ListItemLabelDisplayText = styled(Text)(
   `
 );
 
-export const NoOptionsContainer = styled.div``;
-export const NoOptionsMessage = styled(Text)``;
+export const NoOptionsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-items: center;
+`;
+export const NoOptionsMessage = styled(Text)`
+  padding: 6px 8px;
+  margin: 4px;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+  font-style: italic;
+`;
