@@ -60,15 +60,25 @@ class Optimization {
 		$this->get_optimizer()->optimizeDom( $document, $errors );
 
 		if ( count( $errors ) > 0 ) {
-			$error_messages = array_map(
-				static function( Error $error ) {
-					return ' - ' . $error->getCode() . ': ' . $error->getMessage();
-				},
-				iterator_to_array( $errors )
+			$error_messages = array_filter(
+				array_map(
+					static function( Error $error ) {
+						// Hidden because amp-story is a render-delaying extension.
+						if ( 'CannotRemoveBoilerplate' === $error->getCode() ) {
+							return '';
+						}
+
+						return ' - ' . $error->getCode() . ': ' . $error->getMessage();
+					},
+					iterator_to_array( $errors )
+				)
 			);
-			$document->head->appendChild(
-				$document->createComment( "\n" . __( 'AMP optimization could not be completed due to the following:', 'web-stories' ) . "\n" . implode( "\n", $error_messages ) . "\n" )
-			);
+
+			if ( ! empty( $error_messages ) ) {
+				$document->head->appendChild(
+					$document->createComment( "\n" . __( 'AMP optimization could not be completed due to the following:', 'web-stories' ) . "\n" . implode( "\n", $error_messages ) . "\n" )
+				);
+			}
 		}
 	}
 
