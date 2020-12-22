@@ -24,7 +24,7 @@ import { fireEvent } from '@testing-library/react';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { DropDownSelect } from '../select';
+import DropDownSelect from '../select';
 
 describe('DropDown <DropDownSelect />', () => {
   const onClickMock = jest.fn();

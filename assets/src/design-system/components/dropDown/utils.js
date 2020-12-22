@@ -47,3 +47,9 @@ export const getOptions = (groups) => {
     return [{ group: onlyValidOptions }];
   }
 };
+
+export const getInset = (groups, i, j) =>
+  groups
+    .slice(0, i)
+    .map(({ group }) => group.length)
+    .reduce((a, b) => a + b, 0) + j;
