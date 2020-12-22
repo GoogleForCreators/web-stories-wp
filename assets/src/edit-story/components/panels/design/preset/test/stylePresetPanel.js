@@ -135,7 +135,7 @@ describe('Panels/Preset', () => {
   it('should render <StylePresetPanel /> panel', () => {
     const { getByText } = setupPanel();
     const element = getByText(PANEL_LABEL);
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should not display the panel if mixed types multi-selection', () => {
@@ -152,17 +152,17 @@ describe('Panels/Preset', () => {
       ],
     };
     const { queryByText } = setupPanel(null, extraStateProps);
-    expect(queryByText(PANEL_LABEL)).toBeNull();
+    expect(queryByText(PANEL_LABEL)).not.toBeInTheDocument();
   });
 
   describe('Panels/Preset/Header', () => {
     it('should display only Add button if no presets exist', () => {
       const { queryByLabelText } = setupPanel();
       const addButton = queryByLabelText('Add style preset');
-      expect(addButton).toBeDefined();
+      expect(addButton).toBeInTheDocument();
 
       const editButton = queryByLabelText(EDIT_BUTTON_LABEL);
-      expect(editButton).toBeNull();
+      expect(editButton).not.toBeInTheDocument();
     });
 
     it('should add a text style preset', () => {
@@ -214,7 +214,7 @@ describe('Panels/Preset', () => {
       const { getByRole, pushUpdate } = setupPanel(extraStylePresets);
 
       const applyPreset = getByRole('button', { name: APPLY_PRESET });
-      expect(applyPreset).toBeDefined();
+      expect(applyPreset).toBeInTheDocument();
 
       fireEvent.click(applyPreset);
       expect(pushUpdate).toHaveBeenCalledWith(expect.any(Function), true);

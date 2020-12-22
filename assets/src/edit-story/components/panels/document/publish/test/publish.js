@@ -153,8 +153,8 @@ describe('PublishPanel', () => {
     const am = getByRole('button', { name: 'AM' });
 
     await waitFor(() => expect(minutes).toBeDefined());
-    expect(hours).toBeDefined();
-    expect(am).toBeDefined();
+    expect(hours).toBeInTheDocument();
+    expect(am).toBeInTheDocument();
 
     fireEvent.change(hours, { target: { value: '9' } });
     fireEvent.blur(hours);
@@ -200,7 +200,7 @@ describe('PublishPanel', () => {
     const { getByRole, queryByLabelText } = setupPanel();
 
     let dateInCalendar = queryByLabelText('January 1, 2020');
-    expect(dateInCalendar).toBeNull();
+    expect(dateInCalendar).not.toBeInTheDocument();
 
     const element = getByRole('button', { name: 'Story publish time' });
     fireEvent.keyDown(element, {

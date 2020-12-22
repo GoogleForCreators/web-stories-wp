@@ -27,7 +27,7 @@ import FileUpload from '../';
 
 describe('FileUpload', () => {
   it('should render upload component by default', () => {
-    const { queryAllByTestId } = renderWithProviders(
+    const { queryByTestId } = renderWithProviders(
       <FileUpload
         onSubmit={jest.fn}
         id={'898989'}
@@ -35,7 +35,9 @@ describe('FileUpload', () => {
         ariaLabel="Click to upload a file"
       />
     );
-    expect(queryAllByTestId('file-upload-content-container')).toHaveLength(0);
+    expect(
+      queryByTestId('file-upload-content-container')
+    ).not.toBeInTheDocument();
   });
 
   it('should render upload component with loading overlay when isLoading is true', () => {
@@ -64,7 +66,7 @@ describe('FileUpload', () => {
     );
 
     const UploadInput = getByTestId('upload-file-input');
-    expect(UploadInput).toBeDefined();
+    expect(UploadInput).toBeInTheDocument();
     fireEvent.click(UploadInput);
     fireEvent.change(UploadInput, { target: { files: {} } });
     expect(onSubmitMock).toHaveBeenCalledTimes(1);
@@ -86,7 +88,7 @@ describe('FileUpload', () => {
     );
 
     const DropArea = getByTestId('file-upload-drop-area');
-    expect(DropArea).toBeDefined();
+    expect(DropArea).toBeInTheDocument();
 
     const dropEvent = createEvent.drop(DropArea);
     const fileList = [mockFile];

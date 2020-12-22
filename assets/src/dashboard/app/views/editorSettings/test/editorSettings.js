@@ -112,9 +112,9 @@ describe('Editor Settings: <Editor Settings />', function () {
     expect(googleAnalyticsHeading).toBeInTheDocument();
 
     const input = getByRole('textbox');
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
 
-    expect(input.value).toBe('UA-098909-05');
+    expect(input).toHaveValue('UA-098909-05');
 
     expect(getByText(PUBLISHER_LOGO_TEXT.SECTION_HEADING)).toBeInTheDocument();
     expect(getByTestId('upload-file-input')).toBeInTheDocument();
@@ -161,20 +161,20 @@ describe('Editor Settings: <Editor Settings />', function () {
     fireEvent.click(ContextMenuButton);
 
     const ContextMenu = getByTestId('publisher-logo-context-menu-1');
-    expect(ContextMenu).toBeDefined();
+    expect(ContextMenu).toBeInTheDocument();
 
     const { getByText } = within(ContextMenu);
 
     const DeleteFileButton = getByText('Delete');
-    expect(DeleteFileButton).toBeDefined();
+    expect(DeleteFileButton).toBeInTheDocument();
 
     fireEvent.click(DeleteFileButton);
 
     const DeleteDialog = getByRole('dialog');
-    expect(DeleteDialog).toBeDefined();
+    expect(DeleteDialog).toBeInTheDocument();
 
     const ConfirmDeleteButton = within(DeleteDialog).getByText('Delete Logo');
-    expect(ConfirmDeleteButton).toBeDefined();
+    expect(ConfirmDeleteButton).toBeInTheDocument();
 
     fireEvent.click(ConfirmDeleteButton);
 
@@ -182,7 +182,7 @@ describe('Editor Settings: <Editor Settings />', function () {
   });
 
   it('should render settings page without file upload section when canUploadFiles is false', function () {
-    const { queryAllByTestId } = renderWithProviders(
+    const { queryByTestId } = renderWithProviders(
       <EditorSettings />,
       createProviderValues({
         googleAnalyticsId: 'UA-098909-05',
@@ -194,6 +194,6 @@ describe('Editor Settings: <Editor Settings />', function () {
       })
     );
 
-    expect(queryAllByTestId('upload-file-input')).toHaveLength(0);
+    expect(queryByTestId('upload-file-input')).not.toBeInTheDocument();
   });
 });

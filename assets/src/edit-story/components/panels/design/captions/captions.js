@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import { useCallback } from 'react';
+
 /**
  * WordPress dependencies
  */
@@ -30,9 +31,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import {
-  Row,
   Button,
   TextInput,
+  Row,
+  usePresubmitHandler,
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../form';
@@ -47,8 +49,41 @@ const BoxedTextInput = styled(TextInput)`
   opacity: 1;
 `;
 
+export const MIN_MAX = {
+  ALT_TEXT: {
+    MAX: 1000,
+  },
+};
+
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
+  const isMixedValue = tracks === MULTIPLE_VALUE;
+  const captionText = __('Upload captions', 'web-stories');
+
+  usePresubmitHandler(
+    ({ resource: newResource }) => ({
+      resource: {
+        ...newResource,
+        alt: newResource.alt?.slice(0, MIN_MAX.ALT_TEXT.MAX),
+      },
+    }),
+    []
+  );
+
+  const handleRemoveTrack = useCallback(
+    (idToDelete) => {
+      let newTracks = [];
+      if (idToDelete) {
+        const trackIndex = tracks.findIndex(({ id }) => id === idToDelete);
+        newTracks = [
+          ...tracks.slice(0, trackIndex),
+          ...tracks.slice(trackIndex + 1),
+        ];
+      }
+      pushUpdate({ tracks: newTracks }, true);
+    },
+    [tracks, pushUpdate]
+  );
 
   const handleChangeTrack = useCallback(
     (attachment) => {
@@ -67,23 +102,6 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     [tracks, pushUpdate]
   );
 
-  const handleRemoveTrack = useCallback(
-    (idToDelete) => {
-      let newTracks = [];
-      if (idToDelete) {
-        const trackIndex = tracks.findIndex(({ id }) => id === idToDelete);
-        newTracks = [
-          ...tracks.slice(0, trackIndex),
-          ...tracks.slice(trackIndex + 1),
-        ];
-      }
-      pushUpdate({ tracks: newTracks }, true);
-    },
-    [tracks, pushUpdate]
-  );
-
-  const captionText = __('Upload captions', 'web-stories');
-
   const UploadCaption = useMediaPicker({
     onSelect: handleChangeTrack,
     type: 'text/vtt',
@@ -91,7 +109,6 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     buttonInsertText: __('Select caption', 'web-stories'),
   });
 
-  const isMixedValue = tracks === MULTIPLE_VALUE;
   return (
     <SimplePanel name="caption" title={__('Captions', 'web-stories')}>
       {isMixedValue && (
