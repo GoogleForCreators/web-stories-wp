@@ -276,17 +276,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2092
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showAnimationTab',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
