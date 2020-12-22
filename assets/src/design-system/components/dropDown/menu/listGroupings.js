@@ -25,14 +25,14 @@ import PropTypes from 'prop-types';
 
 import { getInset } from '../utils';
 import { DROP_DOWN_VALUE_TYPE, MENU_OPTIONS } from '../types';
-import MenuLabel from './menuLabel';
 import DefaultListItem from './defaultListItem';
-import { ListGroup } from './components';
+import List from './list';
 
 const ListGroupings = ({
   options,
   activeValue,
   listLength,
+  listId,
   hasMenuRole,
   handleMenuItemSelect,
   renderItem,
@@ -42,9 +42,12 @@ const ListGroupings = ({
   const isManyGroups = useMemo(() => options?.length > 1, [options.length]);
 
   return options.map(({ label, group }, groupIndex) => (
-    <ListGroup key={label || `menuGroup_${groupIndex}`} isNested={isManyGroups}>
-      <MenuLabel label={label} />
-
+    <List
+      key={label || `menuGroup_${groupIndex}`}
+      isManyGroups={isManyGroups}
+      label={label}
+      listId={listId}
+    >
       {group.map((groupOption, optionIndex) => {
         const isSelected = groupOption.value === activeValue;
         const optionInset = getInset(options, groupIndex, optionIndex);
@@ -67,7 +70,7 @@ const ListGroupings = ({
           />
         );
       })}
-    </ListGroup>
+    </List>
   ));
 };
 ListGroupings.propTypes = {
