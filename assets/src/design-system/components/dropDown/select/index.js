@@ -30,7 +30,7 @@ import { Text } from '../../typography';
 
 const SelectButton = styled.button(
   ({ theme, hasError, isOpen }) => css`
-    width: 208px;
+    width: 100%;
     height: 36px;
     box-sizing: border-box;
     display: flex;
@@ -43,11 +43,18 @@ const SelectButton = styled.button(
     border-color: ${theme.colors.border[
       isOpen ? 'defaultActive' : 'defaultNormal'
     ]};
+
     padding: 8px 12px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
+
+    &:hover {
+      border-color: ${theme.colors.border[
+        isOpen ? 'defaultActive' : 'defaultHover'
+      ]};
+    }
 
     ${hasError &&
     css`
@@ -57,13 +64,19 @@ const SelectButton = styled.button(
       border-color: ${theme.colors.interactiveBg.negativeNormal};
 
       &:active,
+      &:hover,
       &:focus {
-        border-color: ${theme.colors.interactiveBg.negativeNormal};
+        border-color: ${theme.colors.interactiveBg.negativeHover};
       }
     `}
 
     &:disabled {
       pointer-events: none;
+      border-color: ${theme.colors.border.disable};
+
+      &:hover {
+        border-color: ${theme.colors.border.disable};
+      }
 
       label,
       span,
@@ -73,6 +86,7 @@ const SelectButton = styled.button(
     }
   `
 );
+
 SelectButton.propTypes = {
   hasError: PropTypes.bool,
   isOpen: PropTypes.bool,
@@ -83,7 +97,7 @@ const StyledChevron = styled(Chevron)(
     color: ${theme.colors.fg.secondary};
     width: 8px;
     height: 8px;
-    /* padding: 2.5px 0.5px; */
+
     ${isOpen &&
     css`
       transform: rotate(180deg);
@@ -137,7 +151,9 @@ const DropDownSelect = (
     aria-haspopup={true}
     aria-expanded={isOpen}
     aria-disabled={disabled}
+    isOpen={isOpen}
     disabled={disabled}
+    hasError={hasError}
     onClick={onSelectClick}
     ref={ref}
   >

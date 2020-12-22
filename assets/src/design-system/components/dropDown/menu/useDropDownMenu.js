@@ -79,8 +79,15 @@ export default function useDropDownMenu({
   );
 
   const handleMenuItemEnter = useCallback(
-    (event) => handleMenuItemSelect(event, { value: focusedValue }),
-    [focusedValue, handleMenuItemSelect]
+    (event) => {
+      const isDisabledItem = allOptions[focusedIndex]?.disabled;
+      if (isDisabledItem) {
+        return () => {};
+      }
+
+      return handleMenuItemSelect(event, { value: focusedValue });
+    },
+    [allOptions, focusedIndex, focusedValue, handleMenuItemSelect]
   );
 
   useKeyDownEffect(

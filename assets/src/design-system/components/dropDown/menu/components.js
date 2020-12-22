@@ -16,31 +16,38 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { DEFAULT_ANCHOR_HEIGHT, DEFAULT_DROPDOWN_HEIGHT } from '../constants';
+import { themeHelpers } from '../../../theme';
 import { Text } from '../../typography';
+import { DEFAULT_DROPDOWN_HEIGHT } from '../constants';
 
 export const MenuContainer = styled.div(
   ({
-    anchorHeight = DEFAULT_ANCHOR_HEIGHT,
     dropdownHeight = DEFAULT_DROPDOWN_HEIGHT,
     styleOverride = '',
-  }) => `
+    theme,
+  }) => css`
     position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+    width: calc(100% - 2px);
     max-height: ${dropdownHeight}px;
-    overflow-y: scroll;
-    z-index: 2; 
-    margin-top: ${anchorHeight + 8}px;
-    ${styleOverride}`
+    overflow-x: visible;
+    overflow-y: auto;
+    overscroll-behavior: none auto;
+    z-index: 2;
+    margin-top: 8px;
+    background-color: ${theme.colors.bg.primary};
+    border-radius: ${theme.borders.radius.small};
+    border: 2px solid ${theme.colors.divider.primary};
+    ${styleOverride}
+  `
 );
 MenuContainer.propTypes = {
   anchorHeight: PropTypes.number,
@@ -49,15 +56,82 @@ MenuContainer.propTypes = {
 };
 
 export const ListGroup = styled.ul`
+  box-sizing: border-box;
   list-style-type: none;
-  padding: 0;
-`;
-
-export const ListItemLabel = styled.li``;
-
-export const ListItem = styled.li`
+  margin: 6px 0;
+  display: block;
+  padding-inline-start: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
   width: 100%;
 `;
+
+export const ListItemLabel = styled.li`
+  display: grid;
+  grid-template-columns: calc(100% - 2px) 2px;
+  padding: 6px 2px 6px 8px;
+  margin: 4px 8px;
+  align-items: center;
+`;
+
+export const ListItem = styled.li(
+  ({ disabled, isSelected, theme }) => css`
+    display: grid;
+    grid-template-columns: 16px calc(100% - 16px);
+    padding: 6px 2px 6px 8px;
+    margin: 4px 8px;
+    border-radius: ${theme.borders.radius.small};
+    align-items: center;
+    background-color: ${isSelected
+      ? theme.colors.interactiveBg.active
+      : 'inherit'};
+
+    ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+    cursor: ${disabled ? 'default' : 'pointer'};
+
+    ${disabled &&
+    css`
+      pointer-events: none;
+
+      span {
+        color: ${theme.colors.fg.secondary};
+      }
+    `}
+
+    &:focus {
+      outline: none;
+    }
+
+    svg {
+      color: ${theme.colors.fg.primary};
+      height: 8px;
+      width: auto;
+    }
+
+    & > span {
+      grid-column-start: 2;
+    }
+  `
+);
+
+export const ListItemDisplayText = styled(Text)(
+  ({ theme }) => css`
+    color: ${theme.colors.fg.primary};
+  `
+);
+
+export const ListItemLabelDecorator = styled.span`
+  width: 2px;
+  height: 16px;
+  border-radius: ${({ theme }) => theme.borders.radius.x_large};
+  background-color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
+export const ListItemLabelDisplayText = styled(Text)(
+  ({ theme }) => css`
+    color: ${theme.colors.fg.secondary};
+  `
+);
 
 export const NoOptionsContainer = styled.div``;
 export const NoOptionsMessage = styled(Text)``;

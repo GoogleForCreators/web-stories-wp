@@ -46,10 +46,9 @@ const Container = styled.div.attrs(
   /*
    * Custom gray scrollbars for Chromium & Firefox.
    */
-  /* * {
+  * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) =>
-    `${theme.colors.bg.v10} ${theme.colors.bg.v12}`};
+    scrollbar-color: ${({ theme }) => theme.colors.bg.primary};
   }
 
   *::-webkit-scrollbar {
@@ -58,16 +57,16 @@ const Container = styled.div.attrs(
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v12};
+    background: ${({ theme }) => theme.colors.bg.primary};
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.fg.v5};
-    border: 2px solid ${({ theme }) => theme.colors.bg.v12};
+    background-color: ${({ theme }) => theme.colors.fg.secondary};
+    border: 2px solid ${({ theme }) => theme.colors.bg.primary};
     border-left-width: 3px;
     border-top-width: 3px;
     border-radius: 6px;
-  } */
+  }
 `;
 
 function Popup({

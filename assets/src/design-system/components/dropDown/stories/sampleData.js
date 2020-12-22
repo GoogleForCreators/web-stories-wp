@@ -66,6 +66,21 @@ export const basicDropDownOptions = [
   },
 ];
 
+export const reallyLongOptions = [
+  {
+    label: 'mad mad mad mad world',
+    value: 'tears for fears',
+  },
+  {
+    label: 'bring on the dancing horses',
+    value: 'pysch-furs',
+  },
+  {
+    label: 'one 2 three four, uno dos tres rumba',
+    value: 'pitbull',
+  },
+];
+
 export const effectChooserOptions = [
   {
     value: 'none',

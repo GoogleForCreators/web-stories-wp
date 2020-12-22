@@ -60,7 +60,9 @@ const ListGroupings = ({
             aria-setsize={listLength}
             id={`dropDownMenuItem-${groupOption.value}`}
             isSelected={isSelected}
-            onClick={(event) => handleMenuItemSelect(event, groupOption)}
+            onClick={(event) =>
+              !groupOption.disabled && handleMenuItemSelect(event, groupOption)
+            }
             option={groupOption}
             optionInset={optionInset}
             listLength={listLength}

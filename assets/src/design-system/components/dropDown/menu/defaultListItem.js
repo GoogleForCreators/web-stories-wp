@@ -29,18 +29,29 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { Checkmark } from '../../../icons';
+import { THEME_CONSTANTS } from '../../../theme';
 import { DROP_DOWN_ITEM } from '../types';
-import { ListItem } from './components';
+import { ListItem, ListItemDisplayText } from './components';
 
 const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
-  <ListItem {...rest} ref={ref}>
+  <ListItem
+    {...rest}
+    ref={ref}
+    isSelected={isSelected}
+    disabled={option.disabled}
+  >
     {isSelected && (
       <Checkmark
         data-testid={'dropdownMenuItem_active_icon'}
         aria-label={__('Selected', 'web-stories')}
       />
     )}
-    {option?.label}
+    <ListItemDisplayText
+      as="span"
+      size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+    >
+      {option?.label}
+    </ListItemDisplayText>
   </ListItem>
 );
 
