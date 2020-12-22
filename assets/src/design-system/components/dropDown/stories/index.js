@@ -292,3 +292,69 @@ export const OverriddenAnimationProofOfConcept = () => {
     </DarkThemeProvider>
   );
 };
+
+export const SubMenus = () => {
+  const [selectedValue, setSelectedValue] = useState('dog-2');
+
+  return (
+    <DropDown
+      emptyText={'No options available'}
+      options={nestedDropDownOptions}
+      hint={text('hint', 'default hint text')}
+      placeholder={text('placeholder', 'select a value')}
+      dropDownLabel={text('dropDownLabel', 'label')}
+      isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+      isRTL={boolean('isRTL')}
+      disabled={boolean('disabled')}
+      selectedValue={selectedValue}
+      onMenuItemClick={(event, newValue) => {
+        action('onMenuItemClick', event);
+        setSelectedValue(newValue);
+      }}
+      placement={select('placement', Object.values(PLACEMENT))}
+    />
+  );
+};
+
+// eslint-disable-next-line react/display-name
+const RenderItemOverride = forwardRef(
+  ({ option, isSelected, ...rest }, ref) => (
+    <StyledEffectListItem
+      ref={ref}
+      width={option.width}
+      active={isSelected}
+      {...rest}
+    >
+      {option.label}
+    </StyledEffectListItem>
+  )
+);
+RenderItemOverride.propTypes = {
+  option: DROP_DOWN_ITEM,
+  isSelected: PropTypes.bool,
+};
+
+export const OverriddenAnimationProofOfConcept = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
+  return (
+    <DarkThemeProvider>
+      <DropDown
+        emptyText={'No options available'}
+        options={effectChooserOptions}
+        hint={text('hint', 'default hint text')}
+        placeholder={text('placeholder', 'select a value')}
+        dropDownLabel={text('dropDownLabel', 'label')}
+        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection', true)}
+        disabled={boolean('disabled')}
+        selectedValue={selectedValue}
+        onMenuItemClick={(event, newValue) => {
+          action('onMenuItemClick', event);
+          setSelectedValue(newValue);
+        }}
+        placement={select('placement', Object.values(PLACEMENT))}
+        menuStylesOverride={styleOverrideForAnimationEffectMenu}
+        renderItem={RenderItemOverride}
+      />
+    </DarkThemeProvider>
+  );
+};
