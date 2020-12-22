@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { DEFAULT_ANCHOR_HEIGHT, DEFAULT_DROPDOWN_HEIGHT } from '../constants';
+import { Text } from '../../typography';
 
 export const MenuContainer = styled.div(
   ({
@@ -47,9 +48,7 @@ MenuContainer.propTypes = {
   styleOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 };
 
-export const EmptyList = styled.div``;
-
-export const List = styled.ul`
+export const ListGroup = styled.ul`
   list-style-type: none;
   padding: 0;
 `;
@@ -59,3 +58,6 @@ export const GroupLabel = styled.li``;
 export const ListItem = styled.li`
   width: 100%;
 `;
+
+export const NoOptionsContainer = styled.div``;
+export const NoOptionsMessage = styled(Text)``;

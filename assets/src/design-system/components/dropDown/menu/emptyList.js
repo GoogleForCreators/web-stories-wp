@@ -13,40 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { Checkmark } from '../../../icons';
-import { DROP_DOWN_ITEM } from '../types';
-import { ListItem } from './components';
+import { NoOptionsContainer, NoOptionsMessage } from './components';
 
-const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
-  <ListItem {...rest} ref={ref}>
-    {isSelected && (
-      <Checkmark
-        data-testid={'dropdownMenuItem_active_icon'}
-        aria-label={__('Selected', 'web-stories')}
-      />
-    )}
-    {option?.label}
-  </ListItem>
-);
-
-export default forwardRef(DefaultListItem);
-
-DefaultListItem.propTypes = {
-  option: DROP_DOWN_ITEM,
-  isSelected: PropTypes.bool,
+const EmptyList = ({ emptyText }) => {
+  if (!emptyText) {
+    return null;
+  }
+  return (
+    <NoOptionsContainer>
+      <NoOptionsMessage>{emptyText} </NoOptionsMessage>
+    </NoOptionsContainer>
+  );
 };
+
+EmptyList.propTypes = {
+  emptyText: PropTypes.string,
+};
+
+export default EmptyList;

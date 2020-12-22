@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,8 +32,8 @@ import { __, sprintf } from '@wordpress/i18n';
  */
 import { Popup, PLACEMENT } from '../popup';
 import { MENU_OPTIONS } from './types';
-import { DropDownMenu } from './menu';
-import { DropDownSelect } from './select';
+import DropDownMenu from './menu';
+import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 
 const DropDownContainer = styled.div``;
@@ -109,7 +109,7 @@ export const DropDown = ({
     }
   }, []);
 
-  const listId = `list-${uuidv4()}`;
+  const listId = useMemo(() => `list-${uuidv4()}`, []);
 
   return (
     <DropDownContainer>

@@ -17,19 +17,19 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { MENU_OPTIONS, DROP_DOWN_VALUE_TYPE } from '../types';
-import { getInset } from '../utils';
-import { EmptyList, GroupLabel, MenuContainer, List } from './components';
+import { MenuContainer } from './components';
 import useDropDownMenu from './useDropDownMenu';
-import { DefaultListItem } from './defaultListItem';
+import EmptyList from './emptyList';
+import ListGroupings from './listGroupings';
 
-export const DropDownMenu = ({
+const DropDownMenu = ({
   anchorHeight,
   dropDownHeight,
   emptyText,
@@ -40,11 +40,10 @@ export const DropDownMenu = ({
   listId,
   onMenuItemClick,
   onDismissMenu,
-  renderItem = DefaultListItem,
+  renderItem,
   activeValue,
   menuAriaLabel,
 }) => {
-  const ListItem = renderItem;
   const listRef = useRef();
   const optionsRef = useRef([]);
 
@@ -81,63 +80,6 @@ export const DropDownMenu = ({
     listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
   }, [focusedIndex]);
 
-  const renderMenuLabel = (label) => {
-    return (
-      <GroupLabel id={`dropDownMenuLabel-${label}`} role="presentation">
-        {label}
-      </GroupLabel>
-    );
-  };
-
-  const renderMenuItem = useCallback(
-    (option, optionIndex, groupIndex = 0) => {
-      const isSelected = option.value === activeValue;
-      const optionInset = getInset(options, groupIndex, optionIndex);
-      return (
-        <ListItem
-          aria-posinset={optionInset}
-          aria-selected={isSelected}
-          aria-setsize={listLength}
-          id={`dropDownMenuItem-${option.value}`}
-          key={option.value}
-          role={hasMenuRole ? 'menuitem' : 'option'}
-          onClick={(event) => handleMenuItemSelect(event, option)}
-          tabIndex={0}
-          ref={(el) => (optionsRef.current[optionInset] = el)}
-          option={option}
-          isSelected={isSelected}
-        />
-      );
-    },
-    [activeValue, options, listLength, hasMenuRole, handleMenuItemSelect]
-  );
-
-  const MenuContent = useMemo(() => {
-    if (!options || options.length === 0) {
-      return <EmptyList>{emptyText}</EmptyList>;
-    }
-    const isManyGroups = options.length > 1;
-    return options.map(({ label, group }, groupIndex) => {
-      const groupAria = isManyGroups
-        ? { 'aria-label': label }
-        : { 'aria-labelledby': listId };
-
-      return (
-        <List
-          key={label || `menuGroup_${groupIndex}`}
-          role="group"
-          isNested={isManyGroups}
-          {...groupAria}
-        >
-          {label && renderMenuLabel(label)}
-          {group.map((groupOption, optionIndex) =>
-            renderMenuItem(groupOption, optionIndex, groupIndex)
-          )}
-        </List>
-      );
-    });
-  }, [options, emptyText, renderMenuItem, listId]);
-
   return (
     <MenuContainer
       id={listId}
@@ -148,7 +90,19 @@ export const DropDownMenu = ({
       role={hasMenuRole ? 'menu' : 'listbox'}
       aria-label={menuAriaLabel}
     >
-      {MenuContent}
+      {!options || options.length === 0 ? (
+        <EmptyList emptyText={emptyText} />
+      ) : (
+        <ListGroupings
+          options={options}
+          activeValue={activeValue}
+          listLength={listLength}
+          hasMenuRole={hasMenuRole}
+          handleMenuItemSelect={handleMenuItemSelect}
+          renderItem={renderItem}
+          optionsRef={optionsRef}
+        />
+      )}
     </MenuContainer>
   );
 };
@@ -168,3 +122,5 @@ DropDownMenu.propTypes = {
   renderItem: PropTypes.object,
   activeValue: DROP_DOWN_VALUE_TYPE,
 };
+
+export default DropDownMenu;
