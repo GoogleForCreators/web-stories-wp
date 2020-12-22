@@ -96,6 +96,7 @@ const DropDownMenu = ({
         <ListGroupings
           options={options}
           activeValue={activeValue}
+          listId={listId}
           listLength={listLength}
           hasMenuRole={hasMenuRole}
           handleMenuItemSelect={handleMenuItemSelect}
