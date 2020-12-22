@@ -53,7 +53,7 @@ export const ListGroup = styled.ul`
   padding: 0;
 `;
 
-export const GroupLabel = styled.li``;
+export const ListItemLabel = styled.li``;
 
 export const ListItem = styled.li`
   width: 100%;
