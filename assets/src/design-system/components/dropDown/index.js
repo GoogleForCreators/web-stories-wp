@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { Popup, PLACEMENT } from '../popup';
 import { MENU_OPTIONS } from './types';
 import { DropDownSelect } from './select';
 import useDropDown from './useDropDown';
@@ -38,15 +39,18 @@ const DropDownContainer = styled.div``;
  * @param {string} props.dropdownLabel Text shown in button with selected value's label or placeholder. Will be used as aria label if no separate ariaLabel is passed in.
  * @param {string} props.hint Hint text to display below a dropdown (optional). If not present, no hint text will display.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
+ * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
  *
  */
 
 export const DropDown = ({
   ariaLabel,
+  disabled,
   dropDownLabel,
   hint,
   options = [],
+  placement = PLACEMENT.BOTTOM_END,
   selectedValue = '',
   ...rest
 }) => {
@@ -70,12 +74,23 @@ export const DropDown = ({
       <DropDownSelect
         activeItemLabel={activeOption?.label}
         ariaLabel={ariaLabel}
+        disabled={disabled}
         dropDownLabel={dropDownLabel}
         isOpen={isOpen.value}
         onSelectClick={handleSelectClick}
         ref={selectRef}
         {...rest}
       />
+      {!disabled && (
+        <Popup
+          anchor={selectRef}
+          isOpen={isOpen.value}
+          placement={placement}
+          fillWidth={240}
+        >
+          <div role="listbox" />
+        </Popup>
+      )}
       {hint && <p>{hint}</p>}
     </DropDownContainer>
   );
@@ -88,6 +103,7 @@ DropDown.propTypes = {
   hint: PropTypes.string,
   options: MENU_OPTIONS,
   placeholder: PropTypes.string,
+  placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool,
