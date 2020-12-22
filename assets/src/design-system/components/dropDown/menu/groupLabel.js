@@ -21,21 +21,21 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { GroupLabel } from './components';
+import { ListItemLabel } from './components';
 
-const MenuLabel = ({ label }) => {
+const GroupLabel = ({ label }) => {
   if (!label) {
     return null;
   }
   return (
-    <GroupLabel id={`dropDownMenuLabel-${label}`} role="presentation">
+    <ListItemLabel id={`dropDownMenuLabel-${label}`} role="presentation">
       {label}
-    </GroupLabel>
+    </ListItemLabel>
   );
 };
 
-MenuLabel.propTypes = {
+GroupLabel.propTypes = {
   label: PropTypes.string,
 };
 
-export default MenuLabel;
+export default GroupLabel;

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import MenuLabel from './menuLabel';
+import GroupLabel from './groupLabel';
 import { ListGroup } from './components';
 
 const List = ({ isManyGroups, label, listId, children }) => {
@@ -31,7 +31,7 @@ const List = ({ isManyGroups, label, listId, children }) => {
 
   return (
     <ListGroup role="group" isNested={isManyGroups} {...groupAria}>
-      {label && <MenuLabel label={label} />}
+      {label && <GroupLabel label={label} />}
       {children}
     </ListGroup>
   );
