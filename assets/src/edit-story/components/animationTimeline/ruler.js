@@ -22,7 +22,7 @@ import { sprintf, _n } from '@wordpress/i18n';
 /**
  * External dependencies
  */
-import * as React from 'react';
+import { Fragment } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -60,7 +60,7 @@ export default function AnimationRuler({ duration }) {
         {range.map((value, index) => {
           const isValueMajor = isMajor(index);
           return (
-            <React.Fragment key={`ruler-mark-${value}`}>
+            <Fragment key={`ruler-mark-${value}`}>
               {isValueMajor && (
                 <Text x={value * MARK_OFFSET + 5} y={20}>
                   {sprintf(
@@ -77,7 +77,7 @@ export default function AnimationRuler({ duration }) {
                   isValueMajor ? 8 : 18
                 },${RULER_HEIGHT} Z`}
               />
-            </React.Fragment>
+            </Fragment>
           );
         })}
       </g>

@@ -17,7 +17,9 @@
 /**
  * External dependencies
  */
-import React, { useCallback, useState, useMemo, forwardRef } from 'react';
+import { useCallback, useState, useMemo, forwardRef } from 'react';
+import * as React from 'react';
+
 import { FlagsProvider } from 'flagged';
 import { render, act, screen, waitFor } from '@testing-library/react';
 import Modal from 'react-modal';

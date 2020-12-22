@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import React, {
+import {
   createContext,
   useMemo,
   useRef,
