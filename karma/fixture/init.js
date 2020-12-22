@@ -104,8 +104,31 @@ beforeAll(() => {
     return karmaPuppeteer.saveSnapshot(currentSpec?.fullName, name);
   };
 
+  /*eslint-disable no-console*/
+
+  // Suppress react-dom/server error messages during tests.
+  withCleanupAll(() => {
+    const originalConsoleError = console.error;
+
+    console.error = (...args) => {
+      if (
+        args[0].includes('Warning: useLayoutEffect does nothing on the server')
+      ) {
+        return;
+      }
+
+      originalConsoleError(...args);
+    };
+
+    return () => {
+      console.error = originalConsoleError;
+    };
+  });
+
+  /*eslint-enable no-console*/
+
   // Disable transitions. These add unnecessarily flakiness into integration
-  // tests and snashots/screenshots.
+  // tests and snapshots/screenshots.
   withCleanupAll(() => {
     const testRootStyles = document.createElement('style');
     testRootStyles.setAttribute('data-desc', 'Karma test-root styles');
