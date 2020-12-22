@@ -24,6 +24,10 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
  */
 import EmbedPreview from '../embedPreview';
 
+jest.mock('@wordpress/element', () => {
+  return jest.requireActual('react');
+});
+
 const url =
   'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 const title = 'Stories in AMP';
@@ -44,7 +48,15 @@ jest.mock('../storyPlayer', () => {
 
 describe('EmbedPreview', () => {
   it('should remove overlay on mouseup', () => {
-    render(<EmbedPreview url={url} title={title} isSelected={true} />);
+    render(
+      <EmbedPreview
+        url={url}
+        title={title}
+        isSelected={true}
+        width={360}
+        height={600}
+      />
+    );
     const overlay = screen.getByTestId('embed-preview-overlay');
     fireEvent.mouseUp(overlay);
 
@@ -55,7 +67,13 @@ describe('EmbedPreview', () => {
 
   it('should add back overlay when block gets unselected', () => {
     const { rerender } = render(
-      <EmbedPreview url={url} title={title} isSelected={true} />
+      <EmbedPreview
+        url={url}
+        title={title}
+        isSelected={true}
+        width={360}
+        height={600}
+      />
     );
 
     const overlay = screen.getByTestId('embed-preview-overlay');
@@ -65,12 +83,28 @@ describe('EmbedPreview', () => {
       screen.queryByTestId('embed-preview-overlay')
     ).not.toBeInTheDocument();
 
-    rerender(<EmbedPreview url={url} title={title} isSelected={false} />);
+    rerender(
+      <EmbedPreview
+        url={url}
+        title={title}
+        isSelected={false}
+        width={360}
+        height={600}
+      />
+    );
     expect(screen.getByTestId('embed-preview-overlay')).toBeInTheDocument();
   });
 
   it('should remove overlay on player focus', async () => {
-    render(<EmbedPreview url={url} title={title} isSelected={true} />);
+    render(
+      <EmbedPreview
+        url={url}
+        title={title}
+        isSelected={true}
+        width={360}
+        height={600}
+      />
+    );
     const player = screen.getByTestId('amp-story-player');
     player.focus();
     await waitFor(() =>
