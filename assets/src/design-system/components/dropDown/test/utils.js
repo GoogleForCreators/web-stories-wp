@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getOptions } from '../utils';
+import { getOptions, getInset } from '../utils';
 
 const basicDropDownOptions = [
   {
@@ -157,5 +157,14 @@ describe('DropDown/utils getOptions', () => {
         label: 'tricky content',
       },
     ]);
+  });
+});
+
+describe('DropDown/utils getInset', () => {
+  it('should take sanitized dropDown options and structure placement by group', () => {
+    const sanitizedOptions = getOptions(basicDropDownOptions);
+    const option = getInset(sanitizedOptions, 0, 2);
+
+    expect(option).toBe(2);
   });
 });

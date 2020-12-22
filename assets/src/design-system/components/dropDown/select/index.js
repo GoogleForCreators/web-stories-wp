@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 
 const SelectButton = styled.button``;
 
-export const DropDownSelect = forwardRef(function DropDownSelect(
+const DropDownSelect = (
   {
     activeItemLabel,
     ariaLabel,
@@ -34,23 +34,23 @@ export const DropDownSelect = forwardRef(function DropDownSelect(
     placeholder = '',
   },
   ref
-) {
-  return (
-    <SelectButton
-      aria-label={ariaLabel || dropDownLabel}
-      aria-pressed={isOpen}
-      aria-haspopup={true}
-      aria-expanded={isOpen}
-      aria-disabled={disabled}
-      disabled={disabled}
-      onClick={onSelectClick}
-      ref={ref}
-    >
-      {activeItemLabel || placeholder}
-      {dropDownLabel && <span>{dropDownLabel}</span>}
-    </SelectButton>
-  );
-});
+) => (
+  <SelectButton
+    aria-label={ariaLabel || dropDownLabel}
+    aria-pressed={isOpen}
+    aria-haspopup={true}
+    aria-expanded={isOpen}
+    aria-disabled={disabled}
+    disabled={disabled}
+    onClick={onSelectClick}
+    ref={ref}
+  >
+    {activeItemLabel || placeholder}
+    {dropDownLabel && <span>{dropDownLabel}</span>}
+  </SelectButton>
+);
+
+export default forwardRef(DropDownSelect);
 
 DropDownSelect.propTypes = {
   activeItemLabel: PropTypes.string,
