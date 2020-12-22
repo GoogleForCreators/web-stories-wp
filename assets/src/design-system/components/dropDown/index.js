@@ -36,6 +36,7 @@ import DropDownMenu from './menu';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
 import { DropDownContainer, Hint } from './components';
+import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
 
 /**
  *
@@ -66,6 +67,7 @@ export const DropDown = ({
   onMenuItemClick,
   options = [],
   placement = PLACEMENT.BOTTOM,
+  popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   selectedValue = '',
   ...rest
 }) => {
@@ -120,7 +122,7 @@ export const DropDown = ({
           anchor={selectRef}
           isOpen={isOpen.value}
           placement={placement}
-          fillWidth={240}
+          fillWidth={popupFillWidth}
         >
           <DropDownMenu
             activeValue={activeOption?.value}
@@ -162,6 +164,7 @@ DropDown.propTypes = {
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
+  popupFillWidth: PropTypes.number,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,
