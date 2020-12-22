@@ -145,11 +145,9 @@ export const SubMenus = () => {
   );
 };
 
-const RenderItemOverride = forwardRef(function RenderItemOverride(
-  { option, isSelected, ...rest },
-  ref
-) {
-  return (
+// eslint-disable-next-line react/display-name
+const RenderItemOverride = forwardRef(
+  ({ option, isSelected, ...rest }, ref) => (
     <StyledEffectListItem
       ref={ref}
       width={option.width}
@@ -158,8 +156,8 @@ const RenderItemOverride = forwardRef(function RenderItemOverride(
     >
       {option.label}
     </StyledEffectListItem>
-  );
-});
+  )
+);
 RenderItemOverride.propTypes = {
   option: DROP_DOWN_ITEM,
   isSelected: PropTypes.bool,

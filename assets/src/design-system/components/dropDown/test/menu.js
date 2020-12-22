@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
-import { DropDownMenu } from '../menu';
+import DropDownMenu from '../menu';
 import { basicDropDownOptions } from '../stories/sampleData';
 import { getOptions } from '../utils';
 
@@ -98,10 +98,8 @@ describe('DropDown <DropDownMenu />', () => {
   });
 
   it('should override list items when renderMenu is present', () => {
-    const OverrideRenderItem = forwardRef(function DefaultListItem(
-      { isSelected, ...rest },
-      ref
-    ) {
+    // eslint-disable-next-line react/display-name
+    const OverrideRenderItem = forwardRef(({ isSelected, ...rest }, ref) => {
       return (
         <li {...rest} ref={ref}>
           {isSelected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}
