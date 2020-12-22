@@ -89,7 +89,7 @@ function PageLayout(props) {
   useFocusOut(containElem, () => setIsActive(false), []);
 
   return (
-    <PageLayoutWrapper pageSize={pageSize}>
+    <PageLayoutWrapper pageSize={pageSize} role="listitem">
       <PreviewPageWrapper pageSize={pageSize}>
         <PreviewErrorBoundary>
           <PreviewPage
@@ -113,7 +113,6 @@ function PageLayout(props) {
         isActive={isActive}
         aria-label={page.title}
         tabIndex="0"
-        draggable={true}
       >
         <PageLayoutTitle>{page.title}</PageLayoutTitle>
       </HoverControls>
