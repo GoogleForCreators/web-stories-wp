@@ -25,7 +25,7 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 
-import { __, sprintf, _n } from '@wordpress/i18n';
+import { __, _n, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -149,6 +149,8 @@ function MediaPane(props) {
 
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
 
+  const isSearching = Boolean(searchTerm.trim());
+
   const onClose = resetWithFetch;
 
   /**
@@ -243,10 +245,12 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   const onSearch = (value) => {
-    setSearchTerm({ searchTerm: value.trim() });
-    trackEvent('search_media', 'editor', '', '', {
-      search_term: value.trim(),
-    });
+    if (value.trim() !== searchTerm) {
+      setSearchTerm({ searchTerm: value.trim() });
+      trackEvent('search_media', 'editor', '', '', {
+        search_term: value.trim(),
+      });
+    }
   };
 
   const incrementalSearchDebounceMedia = useFeature(
@@ -272,7 +276,7 @@ function MediaPane(props) {
               options={FILTERS}
               placement={Placement.BOTTOM_START}
             />
-            {searchTerm.trim() ? (
+            {isSearching && Boolean(media.length) ? (
               <SearchCount>
                 {sprintf(
                   /* translators: %d: number of results. */
@@ -295,7 +299,9 @@ function MediaPane(props) {
 
         {isMediaLoaded && !media.length ? (
           <MediaGalleryMessage>
-            {__('No media found', 'web-stories')}
+            {isSearching
+              ? __('No results found', 'web-stories')
+              : __('No media found', 'web-stories')}
           </MediaGalleryMessage>
         ) : (
           <PaginatedMediaGallery
