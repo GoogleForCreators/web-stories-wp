@@ -68,6 +68,13 @@ const FilterArea = styled.div`
   padding: 0 ${PANE_PADDING} 0 ${PANE_PADDING};
 `;
 
+const SearchCount = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+`;
+
 const FILTERS = [
   { value: '', name: __('All Types', 'web-stories') },
   { value: 'image', name: __('Images', 'web-stories') },
@@ -141,6 +148,7 @@ function MediaPane(props) {
   }));
 
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
 
   const onClose = resetWithFetch;
 
@@ -236,6 +244,11 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   const onSearch = (value) => {
+    if (value.trim()) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
     setSearchTerm({ searchTerm: value });
     trackEvent('search_media', 'editor', '', '', {
       search_term: value,
@@ -245,6 +258,11 @@ function MediaPane(props) {
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
+
+  const getSearchCountText = () => {
+    const unit = media.length > 1 ? 'results' : 'result';
+    return `${media.length} ${unit} found`;
+  };
 
   return (
     <StyledPane id={paneId} {...props}>
@@ -265,9 +283,13 @@ function MediaPane(props) {
               options={FILTERS}
               placement={Placement.BOTTOM_START}
             />
-            <Primary onClick={openMediaPicker}>
-              {__('Upload', 'web-stories')}
-            </Primary>
+            {isSearching ? (
+              <SearchCount>{getSearchCountText()}</SearchCount>
+            ) : (
+              <Primary onClick={openMediaPicker}>
+                {__('Upload', 'web-stories')}
+              </Primary>
+            )}
           </FilterArea>
         </PaneHeader>
 
