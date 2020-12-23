@@ -24,8 +24,8 @@ import { Fixture } from './fixture';
 
 /**
  * Takes an HTMLCollection and sequentially performs an
- * async action on each element in the collection. 
- 
+ * async action on each element in the collection.
+
  * Call order of operations is based on the order of
  * the elements in the collection
  *
@@ -284,18 +284,12 @@ describe('Background Copy & Paste', () => {
       );
       expect(pasted.elementAnimations.length).toEqual(1);
 
-      // Coppied and Pasted anims should share all attributes
-      // Except `id` & `targets`
-      const {
-        id: cId,
-        targets: cTargets,
-        ...cPersisted
-      } = copied.elementAnimations[0];
-      const {
-        id: pId,
-        targets: pTargets,
-        ...pPersisted
-      } = pasted.elementAnimations[0];
+      // Copied and Pasted animations should share all attributes
+      // except `id` & `targets`
+      const { id: cId, targets: cTargets, ...cPersisted } =
+        copied.elementAnimations[0] || {};
+      const { id: pId, targets: pTargets, ...pPersisted } =
+        pasted.elementAnimations[0] || {};
       expect(cPersisted).toEqual(pPersisted);
 
       // pasted animations should contain the newly pasted
