@@ -73,7 +73,7 @@ export const reallyLongOptions = [
   },
   {
     label: 'bring on the dancing horses',
-    value: 'pysch-furs',
+    value: 'echo',
   },
   {
     label: 'one 2 three four, uno dos tres rumba',
