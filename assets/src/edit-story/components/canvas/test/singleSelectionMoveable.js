@@ -98,12 +98,12 @@ describe('singleSelectionMoveable', () => {
 
   function performRotation(rotateTo) {
     const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
-    moveable.onRotateStart({ set: () => {} });
-    moveable.onRotate({
+    moveable?.onRotateStart({ set: () => {} });
+    moveable?.onRotate({
       target,
       beforeRotate: rotateTo,
     });
-    moveable.onRotateEnd({ target });
+    moveable?.onRotateEnd({ target });
   }
 
   const rotateCases = [

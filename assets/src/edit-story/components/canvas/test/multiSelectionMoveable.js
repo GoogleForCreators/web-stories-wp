@@ -101,8 +101,8 @@ describe('multiSelectionMoveable', () => {
 
   function performRotation(rotateTo) {
     const moveable = Moveable.mock.calls[Moveable.mock.calls.length - 1][0];
-    moveable.onRotateGroupStart({ events: [{ set: () => {} }] });
-    moveable.onRotateGroup({
+    moveable?.onRotateGroupStart({ events: [{ set: () => {} }] });
+    moveable?.onRotateGroup({
       events: [
         {
           target: target1,
@@ -116,7 +116,7 @@ describe('multiSelectionMoveable', () => {
         },
       ],
     });
-    moveable.onRotateGroupEnd({ targets: [target1, target2] });
+    moveable?.onRotateGroupEnd({ targets: [target1, target2] });
   }
 
   const rotateCases = [
