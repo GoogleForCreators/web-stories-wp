@@ -139,10 +139,13 @@ StoryPropTypes.imageResourceSizes = PropTypes.shape({
   web_stories_thumbnail: StoryPropTypes.resourceSize,
 });
 
-StoryPropTypes.videoResourceSizes = PropTypes.shape({
-  full: StoryPropTypes.resourceSize,
-  preview: StoryPropTypes.resourceSize,
-});
+StoryPropTypes.videoResourceSizes = PropTypes.oneOfType([
+  PropTypes.array,
+  PropTypes.shape({
+    full: StoryPropTypes.resourceSize,
+    preview: StoryPropTypes.resourceSize,
+  }),
+]);
 
 StoryPropTypes.imageResource = PropTypes.shape({
   type: PropTypes.string.isRequired,

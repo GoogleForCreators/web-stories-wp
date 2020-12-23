@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
 import {
@@ -52,11 +47,9 @@ describe('Inserting WebM Video', () => {
 
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
+    // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-
-    await percySnapshot(page, 'Inserting Video from Dialog');
   });
 
   it('should insert an video by clicking on media library', async () => {
@@ -71,11 +64,9 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
-    // Wait for poster image to be generated.
+    // Wait for poster image to appear.
     await page.waitForSelector('[alt="Preview poster image"]');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
-
-    await percySnapshot(page, 'Inserting Video from Media Library');
   });
 
   it('should insert an video by clicking on media library and preview on FE', async () => {

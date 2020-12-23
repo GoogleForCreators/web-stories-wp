@@ -35,7 +35,7 @@ describe('Form/Toggle', () => {
 
     const toggle = getByRole('checkbox', { name: 'Toggle' });
 
-    expect(toggle).toBeDefined();
+    expect(toggle).toBeInTheDocument();
   });
 
   it('should simulate a change on <Toggle />', () => {

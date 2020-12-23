@@ -20,8 +20,10 @@
 ## Testing
 
 * [Manual Testing (QA)](./testing-qa.md)
-* [End-to-End Tests](./e2e-tests.md)
 * [Unit Tests](./unit-tests.md)
+* [Integration Tests](./integration-tests.md)
+* [End-to-End Tests](./e2e-tests.md)
+* [Accessibility Testing](./accessibility-testiing.md)
 * [Testing Environments](./testing-environments.md)
 
 ## Tooling & Infrastructure

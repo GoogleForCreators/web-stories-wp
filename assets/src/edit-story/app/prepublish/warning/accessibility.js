@@ -235,7 +235,7 @@ export function elementLinkTappableRegionTooSmall(element) {
  * @return {Guidance|undefined} The guidance object for consumption
  */
 export function imageElementMissingAlt(element) {
-  if (!element.alt?.length) {
+  if (!element.alt?.length && !element.resource?.alt?.length) {
     return {
       message: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.MAIN_TEXT,
       help: MESSAGES.ACCESSIBILITY.MISSING_IMAGE_ALT_TEXT.HELPER_TEXT,

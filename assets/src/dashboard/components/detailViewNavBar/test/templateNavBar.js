@@ -25,6 +25,6 @@ describe('DetailViewNavBar', () => {
     const { getByRole } = renderWithProviders(<DetailViewNavBar />);
     const nav = getByRole('navigation');
 
-    expect(nav).toBeDefined();
+    expect(nav).toBeInTheDocument();
   });
 });

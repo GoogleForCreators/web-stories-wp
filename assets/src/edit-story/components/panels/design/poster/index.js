@@ -14,23 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * Internal dependencies
- */
-import { Pane } from '../shared';
-import paneId from './paneId';
-
-function AnimationPane(props) {
-  return (
-    <Pane id={paneId} {...props}>
-      {__('Coming soon', 'web-stories')}
-    </Pane>
-  );
-}
-
-export default AnimationPane;
+export { default } from './videoPoster';

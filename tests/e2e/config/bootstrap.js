@@ -26,6 +26,7 @@ import { setDefaultOptions } from 'expect-puppeteer';
 import {
   enablePageDialogAccept,
   setBrowserViewport,
+  trashAllPosts,
 } from '@wordpress/e2e-test-utils';
 
 // Extend Jest matchers.
@@ -235,6 +236,8 @@ beforeAll(async () => {
   enablePageDialogAccept();
   observeConsoleLogging();
   await setupBrowser();
+  await trashAllPosts();
+  await trashAllPosts('web-story');
   await page.setDefaultNavigationTimeout(10000);
   await page.setDefaultTimeout(3000);
 });

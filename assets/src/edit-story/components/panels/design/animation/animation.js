@@ -66,7 +66,6 @@ function AnimationPanel({
 
   const isBackground =
     selectedElements.length === 1 && selectedElements[0].isBackground;
-  const backgroundScale = isBackground && selectedElements[0].scale;
   const updatedAnimations = useMemo(() => {
     // Combining local element updates with the
     // page level applied updates
@@ -107,17 +106,6 @@ function AnimationPanel({
             }
           : {};
 
-      // Background Zoom's `scale from` initial value should match
-      // the current background's scale slider
-      if (
-        isBackground &&
-        animation === BACKGROUND_ANIMATION_EFFECTS.ZOOM.value
-      ) {
-        defaults.normalizedScaleFrom =
-          progress(backgroundScale, [BG_MIN_SCALE, BG_MAX_SCALE]) ||
-          defaults.normalizedScaleFrom;
-      }
-
       pushUpdateForObject(
         ANIMATION_PROPERTY,
         {
@@ -135,12 +123,7 @@ function AnimationPanel({
       // was changed by the effect chooser, so we track it here.
       playUpdatedAnimation.current = true;
     },
-    [
-      selectedElementAnimations,
-      isBackground,
-      pushUpdateForObject,
-      backgroundScale,
-    ]
+    [selectedElementAnimations, pushUpdateForObject]
   );
 
   // Play animation of selected elements when effect chooser signals

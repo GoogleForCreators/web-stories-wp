@@ -34,7 +34,12 @@ export function getContent() {
     date: '2020-04-10T07:06:26',
     modified: '',
     excerpt: '',
-    featuredMedia: 0,
+    featuredMedia: {
+      id: 123,
+      url: 'https://example.com/image.png',
+      width: 123,
+      height: 456,
+    },
     password: '',
     stylePresets: '',
   };

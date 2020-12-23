@@ -65,13 +65,13 @@ describe('ExcerptPanel', () => {
   it('should render Excerpt Panel', () => {
     const { getByRole } = setupPanel();
     const element = getByRole('button', { name: 'Story Description' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should display textbox', () => {
     const { getByRole } = setupPanel();
     const input = getByRole('textbox', { name: 'Story Description' });
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
   });
 
   it('should respect excerpt character limit', async () => {
