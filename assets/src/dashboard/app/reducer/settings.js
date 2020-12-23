@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import { AD_NETWORK_TYPE } from '../../constants';
+
 export const ACTION_TYPES = {
   UPDATE_SETTINGS_SUCCESS: 'update_settings_success',
   UPDATE_SETTINGS_FAILURE: 'update_settings_failure',
@@ -28,7 +30,7 @@ export const defaultSettingsState = {
   adSensePublisherId: '',
   adSenseSlotId: '',
   adManagerSlotId: '',
-  adNetwork: 'none',
+  adNetwork: AD_NETWORK_TYPE.NONE,
   publisherLogoIds: [],
 };
 

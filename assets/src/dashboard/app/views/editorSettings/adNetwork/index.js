@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -37,23 +37,25 @@ import {
   SettingHeading,
   VisuallyHiddenLabel,
   TextInputHelperText,
-  HelperText,
 } from '../components';
 import { Dropdown } from '../../../../components';
-import { DROPDOWN_TYPES } from '../../../../constants';
+import { AD_NETWORK_TYPE, DROPDOWN_TYPES } from '../../../../constants';
 import { TranslateWithMarkup } from '../../../../../i18n';
+import { trackClick } from '../../../../../tracking';
 
 const AdNetworkDropdown = styled(Dropdown)`
   & button {
-     border: ${({ theme, error }) =>
-       error
-         ? theme.DEPRECATED_THEME.borders.danger
-         : theme.DEPRECATED_THEME.borders.gray100};
-  &:active:enabled {
     border: ${({ theme, error }) =>
       error
         ? theme.DEPRECATED_THEME.borders.danger
-        : theme.DEPRECATED_THEME.borders.action};
+        : theme.DEPRECATED_THEME.borders.gray100};
+
+    &:active:enabled {
+      border: ${({ theme, error }) =>
+        error
+          ? theme.DEPRECATED_THEME.borders.danger
+          : theme.DEPRECATED_THEME.borders.action};
+    }
   }
 `;
 const AdNetworkSettingForm = styled(SettingForm)`
@@ -92,15 +94,15 @@ export const TEXT = {
 const OPTIONS = [
   {
     label: __('None', 'web-stories'),
-    value: 'none',
+    value: AD_NETWORK_TYPE.NONE,
   },
   {
     label: __('Google AdSense', 'web-stories'),
-    value: 'adsense',
+    value: AD_NETWORK_TYPE.ADSENSE,
   },
   {
     label: __('Google Ad Manager', 'web-stories'),
-    value: 'admanager',
+    value: AD_NETWORK_TYPE.ADMANAGER,
   },
 ];
 
@@ -112,35 +114,46 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
   let message;
   let link;
 
-  if ('admanager' === adNetwork) {
+  if (AD_NETWORK_TYPE.ADMANAGER === adNetwork) {
     message = TEXT.HELPER_MESSAGE_ADMANAGER;
     link = TEXT.HELPER_LINK_ADMANAGER;
-  } else if ('adsense' === adNetwork) {
+  }
+
+  if (AD_NETWORK_TYPE.ADSENSE === adNetwork) {
     message = TEXT.HELPER_MESSAGE_ADSENSE;
     link = TEXT.HELPER_LINK_ADSENSE;
   }
+
+  const handleMonetizationClick = useCallback(
+    (evt) =>
+      trackClick(evt, 'monetization', 'dashboard', TEXT.HELPER_LINK_NONE),
+    []
+  );
+  const handleAdNetworkClick = useCallback(
+    (evt) => trackClick(evt, 'monetization', 'dashboard', link),
+    [link]
+  );
 
   return (
     <AdNetworkSettingForm onSubmit={(e) => e.preventDefault()}>
       <div>
         <SettingHeading>{TEXT.SECTION_HEADING}</SettingHeading>
-        <HelperText>
-          <TextInputHelperText>
-            <TranslateWithMarkup
-              mapping={{
-                a: (
-                  <InlineLink
-                    href={TEXT.HELPER_LINK_NONE}
-                    rel="noreferrer"
-                    target="_blank"
-                  />
-                ),
-              }}
-            >
-              {TEXT.HELPER_MESSAGE_NONE}
-            </TranslateWithMarkup>
-          </TextInputHelperText>
-        </HelperText>
+        <TextInputHelperText>
+          <TranslateWithMarkup
+            mapping={{
+              a: (
+                <InlineLink
+                  href={TEXT.HELPER_LINK_NONE}
+                  rel="noreferrer"
+                  target="_blank"
+                  onClick={handleMonetizationClick}
+                />
+              ),
+            }}
+          >
+            {TEXT.HELPER_MESSAGE_NONE}
+          </TranslateWithMarkup>
+        </TextInputHelperText>
       </div>
       <FormContainer>
         <InlineForm>
@@ -157,7 +170,14 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
           <TextInputHelperText>
             <TranslateWithMarkup
               mapping={{
-                a: <InlineLink href={link} rel="noreferrer" target="_blank" />,
+                a: (
+                  <InlineLink
+                    href={link}
+                    rel="noreferrer"
+                    target="_blank"
+                    onClick={handleAdNetworkClick}
+                  />
+                ),
               }}
             >
               {message}

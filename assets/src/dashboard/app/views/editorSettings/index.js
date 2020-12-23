@@ -35,7 +35,11 @@ import {
 } from '../../../../design-system';
 import useApi from '../../api/useApi';
 import { Layout } from '../../../components';
-import { MIN_IMG_WIDTH, MIN_IMG_HEIGHT } from '../../../constants';
+import {
+  MIN_IMG_WIDTH,
+  MIN_IMG_HEIGHT,
+  AD_NETWORK_TYPE,
+} from '../../../constants';
 import { useConfig } from '../../config';
 import { PageHeading } from '../shared';
 import useTelemetryOptIn from '../shared/useTelemetryOptIn';
@@ -376,24 +380,26 @@ function EditorSettings() {
               selected={optedIn}
             />
             {canManageSettings && (
-              <AdNetworkSettings
-                handleUpdate={handleUpdateAdLoader}
-                adNetwork={adNetwork}
-              />
-            )}
-            {canManageSettings && 'adsense' === adNetwork && (
-              <GoogleAdSenseSettings
-                handleUpdatePublisherId={handleUpdateAdSensePublisherId}
-                handleUpdateSlotId={handleUpdateAdSenseSlotId}
-                publisherId={adSensePublisherId}
-                slotId={adSenseSlotId}
-              />
-            )}
-            {canManageSettings && 'admanager' === adNetwork && (
-              <GoogleAdManagerSettings
-                handleUpdate={handleUpdateAdManagerSlotId}
-                slotId={adManagerSlotId}
-              />
+              <>
+                <AdNetworkSettings
+                  handleUpdate={handleUpdateAdLoader}
+                  adNetwork={adNetwork}
+                />
+                {AD_NETWORK_TYPE.ADSENSE === adNetwork && (
+                  <GoogleAdSenseSettings
+                    handleUpdatePublisherId={handleUpdateAdSensePublisherId}
+                    handleUpdateSlotId={handleUpdateAdSenseSlotId}
+                    publisherId={adSensePublisherId}
+                    slotId={adSenseSlotId}
+                  />
+                )}
+                {AD_NETWORK_TYPE.ADMANAGER === adNetwork && (
+                  <GoogleAdManagerSettings
+                    handleUpdate={handleUpdateAdManagerSlotId}
+                    slotId={adManagerSlotId}
+                  />
+                )}
+              </>
             )}
           </Main>
         </Layout.Scrollable>

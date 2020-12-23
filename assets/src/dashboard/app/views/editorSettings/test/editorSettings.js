@@ -32,6 +32,7 @@ import { TEXT as PUBLISHER_LOGO_TEXT } from '../publisherLogo';
 import { TEXT as AD_NETWORK_TEXT } from '../adNetwork';
 
 import EditorSettings from '../';
+import { AD_NETWORK_TYPE } from '../../../../constants';
 
 const mockFetchSettings = jest.fn();
 const mockFetchMediaById = jest.fn();
@@ -48,7 +49,7 @@ function createProviderValues({
   adSensePublisherId = '',
   adSenseSlotId = '',
   adManagerSlotId = '',
-  adNetwork = 'none',
+  adNetwork = AD_NETWORK_TYPE.NONE,
   logoIds,
   logos,
 }) {
@@ -220,7 +221,7 @@ describe('Editor Settings: <Editor Settings />', function () {
         adSensePublisherId: '123',
         adSenseSlotId: '456',
         adManagerSlotId: '',
-        adNetwork: 'adsense',
+        adNetwork: AD_NETWORK_TYPE.ADSENSE,
         logoIds: [],
         logos: {},
       })

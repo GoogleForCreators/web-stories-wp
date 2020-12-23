@@ -45,12 +45,13 @@ import {
   VisuallyHiddenLabel,
 } from '../components';
 import { TranslateWithMarkup } from '../../../../../i18n';
+import { trackClick } from '../../../../../tracking';
 
 export const TEXT = {
   PUBLISHER_ID_CONTEXT: sprintf(
     /* translators: 1: first example. 2: second example. */
     __(
-      'Example: %1$s or %2$s. <a>Find your AdSense Publisher ID</a>',
+      'Example: %1$s or %2$s. <a>Find your AdSense Publisher ID</a>.',
       'web-stories'
     ),
     'pub-1234567891234567',
@@ -156,6 +157,17 @@ function GoogleAdSenseSettings({
     [onSaveSlotId]
   );
 
+  const handleClick = useCallback(
+    (evt) =>
+      trackClick(
+        evt,
+        'monetization',
+        'dashboard',
+        TEXT.PUBLISHER_ID_CONTEXT_LINK
+      ),
+    []
+  );
+
   return (
     <>
       <SettingForm onSubmit={(e) => e.preventDefault()}>
@@ -187,21 +199,20 @@ function GoogleAdSenseSettings({
             <ErrorText>{publisherIdInputError}</ErrorText>
           )}
           <TextInputHelperText>
-            <TextInputHelperText>
-              <TranslateWithMarkup
-                mapping={{
-                  a: (
-                    <InlineLink
-                      href={TEXT.PUBLISHER_ID_CONTEXT_LINK}
-                      rel="noreferrer"
-                      target="_blank"
-                    />
-                  ),
-                }}
-              >
-                {TEXT.PUBLISHER_ID_CONTEXT}
-              </TranslateWithMarkup>
-            </TextInputHelperText>
+            <TranslateWithMarkup
+              mapping={{
+                a: (
+                  <InlineLink
+                    href={TEXT.PUBLISHER_ID_CONTEXT_LINK}
+                    rel="noreferrer"
+                    target="_blank"
+                    onClick={handleClick}
+                  />
+                ),
+              }}
+            >
+              {TEXT.PUBLISHER_ID_CONTEXT}
+            </TranslateWithMarkup>
           </TextInputHelperText>
         </FormContainer>
       </SettingForm>

@@ -138,7 +138,7 @@ class Settings {
 			self::SETTING_GROUP,
 			self::SETTING_NAME_AD_NETWORK,
 			[
-				'description'  => __( 'Type ad loader', 'web-stories' ),
+				'description'  => __( 'Ad Network', 'web-stories' ),
 				'type'         => 'string',
 				'default'      => 'none',
 				'enum'         => [ 'none', 'adsense', 'admanager' ],

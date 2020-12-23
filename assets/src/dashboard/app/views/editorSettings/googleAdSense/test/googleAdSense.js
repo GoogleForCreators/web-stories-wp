@@ -57,10 +57,10 @@ describe('Editor Settings: Google AdSense <GoogleAdSense />', function () {
     );
 
     const adSensePublisherIdInput = getByTestId('adSensePublisherId');
-    expect(adSensePublisherIdInput).toBeDefined();
+    expect(adSensePublisherIdInput).toBeInTheDocument();
 
     const adSenseSlotIdInput = getByTestId('adSenseSlotId');
-    expect(adSenseSlotIdInput).toBeDefined();
+    expect(adSenseSlotIdInput).toBeInTheDocument();
 
     const idLabel = getByText(TEXT.PUBLISHER_ID_LABEL);
     expect(idLabel).toBeInTheDocument();

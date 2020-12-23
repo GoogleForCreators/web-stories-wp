@@ -18,20 +18,21 @@
  */
 import { renderWithProviders } from '../../../../../testUtils';
 import AdNetworkSettings, { TEXT } from '../';
+import { AD_NETWORK_TYPE } from '../../../../../constants';
 
 describe('Editor Settings: Ad network settings <AdNetworkSettings />', function () {
   let adNetwork;
   let mockUpdate;
 
   beforeEach(() => {
-    adNetwork = 'none';
+    adNetwork = AD_NETWORK_TYPE.NONE;
     mockUpdate = jest.fn((id) => {
       adNetwork = id;
     });
   });
 
   afterEach(() => {
-    adNetwork = 'none';
+    adNetwork = AD_NETWORK_TYPE.NONE;
   });
 
   it('should render ad network settings and helper text by default', function () {
@@ -50,7 +51,10 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
 
   it('should render ad network settings and link adsense', function () {
     const { getByText } = renderWithProviders(
-      <AdNetworkSettings adNetwork={'adsense'} handleUpdate={mockUpdate} />
+      <AdNetworkSettings
+        adNetwork={AD_NETWORK_TYPE.ADSENSE}
+        handleUpdate={mockUpdate}
+      />
     );
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
@@ -64,7 +68,10 @@ describe('Editor Settings: Ad network settings <AdNetworkSettings />', function 
 
   it('should render ad network settings and link Ad Manager', function () {
     const { getByText } = renderWithProviders(
-      <AdNetworkSettings adNetwork={'admanager'} handleUpdate={mockUpdate} />
+      <AdNetworkSettings
+        adNetwork={AD_NETWORK_TYPE.ADMANAGER}
+        handleUpdate={mockUpdate}
+      />
     );
 
     const sectionHeader = getByText(TEXT.SECTION_HEADING);
