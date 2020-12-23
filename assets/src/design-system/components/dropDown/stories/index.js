@@ -48,6 +48,7 @@ const Container = styled.div`
   padding: 12px 24px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
+
 const StyledEffectListItem = styled.li`
   border: none;
   background: ${({ active }) => (active ? '#5732A3' : '#333')};
