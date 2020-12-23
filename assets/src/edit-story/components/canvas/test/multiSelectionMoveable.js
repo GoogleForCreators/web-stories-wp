@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import Moveable from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
@@ -130,7 +130,9 @@ describe('multiSelectionMoveable', () => {
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
 
-      performRotation(rotateTo);
+      act(() => {
+        performRotation(rotateTo);
+      });
 
       const func = updateElementsById.mock.calls[0][0].properties;
       expect(func(element1)).toStrictEqual({

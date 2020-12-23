@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, act } from '@testing-library/react';
 import Moveable from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
@@ -116,7 +116,9 @@ describe('singleSelectionMoveable', () => {
     'should rotate %p',
     (_, { rotateTo, expectedRotationAngle }) => {
       arrange();
-      performRotation(rotateTo);
+      act(() => {
+        performRotation(rotateTo);
+      });
 
       expect(updateSelectedElements).toHaveBeenLastCalledWith({
         properties: { rotationAngle: expectedRotationAngle },
