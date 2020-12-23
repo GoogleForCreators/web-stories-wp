@@ -25,7 +25,7 @@ import styled from 'styled-components';
  * WordPress dependencies
  */
 
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -148,7 +148,6 @@ function MediaPane(props) {
   }));
 
   const [isPermissionDialogOpen, setIsPermissionDialogOpen] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
 
   const onClose = resetWithFetch;
 
@@ -244,25 +243,15 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   const onSearch = (value) => {
-    if (value.trim()) {
-      setIsSearching(true);
-    } else {
-      setIsSearching(false);
-    }
-    setSearchTerm({ searchTerm: value });
+    setSearchTerm({ searchTerm: value.trim() });
     trackEvent('search_media', 'editor', '', '', {
-      search_term: value,
+      search_term: value.trim(),
     });
   };
 
   const incrementalSearchDebounceMedia = useFeature(
     Flags.INCREMENTAL_SEARCH_DEBOUNCE_MEDIA
   );
-
-  const getSearchCountText = () => {
-    const unit = media.length > 1 ? 'results' : 'result';
-    return `${media.length} ${unit} found`;
-  };
 
   return (
     <StyledPane id={paneId} {...props}>
@@ -283,8 +272,19 @@ function MediaPane(props) {
               options={FILTERS}
               placement={Placement.BOTTOM_START}
             />
-            {isSearching ? (
-              <SearchCount>{getSearchCountText()}</SearchCount>
+            {searchTerm.trim() ? (
+              <SearchCount>
+                {sprintf(
+                  /* translators: %d: number of results. */
+                  _n(
+                    '%d result found',
+                    '%d results found',
+                    media.length,
+                    'web-stories'
+                  ),
+                  media.length
+                )}
+              </SearchCount>
             ) : (
               <Primary onClick={openMediaPicker}>
                 {__('Upload', 'web-stories')}
