@@ -208,6 +208,7 @@ class Plugin {
 	public function register() {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
+		add_action( 'init', [ $this, 'includes' ] );
 
 		// Settings.
 		$this->settings = new Settings();
@@ -326,6 +327,15 @@ class Plugin {
 	 */
 	public function load_amp_plugin_compat() {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
+	}
+
+	/**
+	 * Include necessary files.
+	 *
+	 * @return void
+	 */
+	public function includes() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 	}
 
 	/**
