@@ -30,7 +30,7 @@ use Google\Web_Stories\Interfaces\FieldState;
 /**
  * Class BaseFieldState.
  */
-abstract class BaseFieldState implements FieldState {
+class BaseFieldState implements FieldState {
 	/**
 	 * Image align FieldState.
 	 *
@@ -39,7 +39,9 @@ abstract class BaseFieldState implements FieldState {
 	public function image_align() {
 		return new BaseField(
 			[
-				'label' => __( 'Show images on right (default is left)', 'web-stories' ),
+				'label'    => __( 'Show images on right', 'web-stories' ),
+				'show'     => false,
+				'readonly' => true,
 			]
 		);
 	}
@@ -52,7 +54,9 @@ abstract class BaseFieldState implements FieldState {
 	public function excerpt() {
 		return new BaseField(
 			[
-				'label' => __( 'Show Excerpt', 'web-stories' ),
+				'label'    => __( 'Show Excerpt', 'web-stories' ),
+				'show'     => false,
+				'readonly' => true,
 			]
 		);
 	}
@@ -65,7 +69,9 @@ abstract class BaseFieldState implements FieldState {
 	public function author() {
 		return new BaseField(
 			[
-				'label' => __( 'Show Author', 'web-stories' ),
+				'label'    => __( 'Show Author', 'web-stories' ),
+				'show'     => true,
+				'readonly' => false,
 			]
 		);
 	}
@@ -78,7 +84,9 @@ abstract class BaseFieldState implements FieldState {
 	public function date() {
 		return new BaseField(
 			[
-				'label' => __( 'Show Date', 'web-stories' ),
+				'label'    => __( 'Show Date', 'web-stories' ),
+				'show'     => false,
+				'readonly' => false,
 			]
 		);
 	}
@@ -91,7 +99,9 @@ abstract class BaseFieldState implements FieldState {
 	public function archive_link() {
 		return new BaseField(
 			[
-				'label' => __( 'Show "View All Stories" link', 'web-stories' ),
+				'label'    => __( 'Show "View All Stories" link', 'web-stories' ),
+				'show'     => true,
+				'readonly' => false,
 			]
 		);
 	}
@@ -104,7 +114,24 @@ abstract class BaseFieldState implements FieldState {
 	public function title() {
 		return new BaseField(
 			[
-				'label' => __( 'Show Title', 'web-stories' ),
+				'label'    => __( 'Show Title', 'web-stories' ),
+				'show'     => true,
+				'readonly' => true,
+			]
+		);
+	}
+
+	/**
+	 * Sharp corners field state.
+	 *
+	 * @return Field
+	 */
+	public function sharp_corners() {
+		return new BaseField(
+			[
+				'label'    => __( 'Show sharp corners', 'web-stories' ),
+				'show'     => false,
+				'readonly' => false,
 			]
 		);
 	}

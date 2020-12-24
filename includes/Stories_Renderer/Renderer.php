@@ -29,10 +29,10 @@ namespace Google\Web_Stories\Stories_Renderer;
 use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Stories_Renderer\FieldState\BaseFieldState;
 use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Traits\Assets;
-use Google\Web_Stories\Stories_Renderer\FieldState\GridView;
 use Google\Web_Stories\Stories_Renderer\FieldState\ListView;
 use Google\Web_Stories\Stories_Renderer\FieldState\CarouselView;
 use Google\Web_Stories\Stories_Renderer\FieldState\CircleView;
@@ -197,7 +197,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		switch ( $view ) {
 			case 'grid':
-				$field_state = new GridView();
+				$field_state = new BaseFieldState();
 				break;
 			case 'list':
 				$field_state = new ListView();
