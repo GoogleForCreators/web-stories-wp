@@ -1,0 +1,19 @@
+/* Embed Story block styles. */
+@import './../../story-embed-block/block/edit.css';
+
+/* Carousel view styles */
+.web-stories-list.is-view-type-carousel,
+.web-stories-list.is-view-type-circles {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.web-stories-list.is-view-type-carousel .web-stories-list__story-wrapper {
+  margin-right: 10px;
+  min-width: 250px;
+  flex-shrink: 0;
+}
+
+.web-stories-list .story-content-overlay__excerpt p {
+  margin: 0;
+}

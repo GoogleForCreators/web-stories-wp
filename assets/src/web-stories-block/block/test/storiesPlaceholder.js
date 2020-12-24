@@ -15,19 +15,18 @@
  */
 
 /**
- * WordPress dependencies
+ * External dependencies
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { render, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
-import './block/storiesFilters';
+import StoriesLoading from '../components/storiesLoading';
 
-__webpack_public_path__ = global.webStoriesBlockSettings.publicPath;
-
-registerBlockType(name, settings);
-
-initializeTracking('Web Stories List Block', false);
+describe('StoriesLoading', () => {
+  it('should display spinner', () => {
+    render(<StoriesLoading />);
+    expect(screen.getByText('Loading Stories…')).toBeInTheDocument();
+  });
+});

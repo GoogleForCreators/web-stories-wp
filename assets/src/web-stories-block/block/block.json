@@ -1,0 +1,66 @@
+{
+  "name": "web-stories/list",
+  "category": "embed",
+  "attributes": {
+    "blockType": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "poster": {
+      "type": "string"
+    },
+    "width": {
+      "type": "number",
+      "default": 360
+    },
+    "height": {
+      "type": "number",
+      "default": 600
+    },
+    "align": {
+      "type": "string",
+      "default": "none"
+    },
+    "stories": {
+      "type": "array",
+      "default": []
+    },
+    "viewType": {
+      "type": "string",
+      "default": ""
+    },
+    "numOfStories": {
+      "type": "number",
+      "default": 5
+    },
+    "numOfColumns": {
+      "type": "number",
+      "default": 2
+    },
+    "sizeOfCircles": {
+      "type": "number",
+      "default": 96
+    },
+    "orderByValue": {
+      "type": "string",
+      "default": ""
+    },
+    "viewAllLinkLabel": {
+      "type": "string",
+      "default": ""
+    },
+    "authors": {
+      "type": "array",
+      "default": []
+    },
+    "fieldState": {
+      "type": "object",
+      "default": {}
+    }
+  }
+}
