@@ -31,7 +31,6 @@ jest.mock('../globals', () => ({
     },
   },
 }));
-
 describe('Block Registration', () => {
   it('should register Web Stories block without errors', () => {
     const block = registerBlockType(name, settings);
