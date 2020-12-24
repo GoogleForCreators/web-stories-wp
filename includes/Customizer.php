@@ -80,14 +80,14 @@ class Customizer {
 
 		$this->wp_customize = $wp_customize;
 
-		$theme_support = self::get_stories_theme_support();
+		$theme_support = get_stories_theme_support();
 
 		// Add Content section.
 		$wp_customize->add_section(
 			self::SECTION_SLUG,
 			[
 				'title'          => esc_html__( 'Web Story Options', 'web-stories' ),
-				'theme_supports' => 'web-story-options',
+				'theme_supports' => 'web-stories',
 			]
 		);
 
@@ -459,44 +459,6 @@ class Customizer {
 	}
 
 	/**
-	 * Gets the stories theme support data.
-	 *
-	 * @return array An array of web story theme support data.
-	 */
-	public static function get_stories_theme_support() {
-
-		$theme_support = get_theme_support( 'web-story-options' );
-		$theme_support = ! empty( $theme_support[0] ) && is_array( $theme_support[0] ) ? $theme_support[0] : [];
-
-		$default_theme_support = [
-			'view-type'                 => [],
-			'view-type-default'         => 'circles',
-			'grid-columns-default'      => 2,
-			'title'                     => true,
-			'title-default'             => true,
-			'author'                    => true,
-			'author-default'            => true,
-			'date'                      => false,
-			'date-default'              => false,
-			'stories-archive-link'      => false,
-			'stories-archive-label'     => __( 'View all stories', 'web-stories' ),
-			'number-of-stories'         => 10,
-			'order'                     => [],
-			'order-default'             => 'oldest',
-			'show-story-poster-default' => true,
-		];
-
-		$theme_support = wp_parse_args( $theme_support, $default_theme_support );
-
-		$theme_support['view-type']            = is_array( $theme_support['view-type'] ) ? $theme_support['view-type'] : [];
-		$theme_support['order']                = is_array( $theme_support['order'] ) ? $theme_support['order'] : [];
-		$theme_support['number-of-stories']    = is_numeric( $theme_support['number-of-stories'] ) ? $theme_support['number-of-stories'] : 5;
-		$theme_support['grid-columns-default'] = is_numeric( $theme_support['grid-columns-default'] ) ? $theme_support['grid-columns-default'] : 2;
-
-		return $theme_support;
-	}
-
-	/**
 	 * Renders web stories based on the customizer selected options.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -511,7 +473,7 @@ class Customizer {
 			return;
 		}
 
-		$theme_support = self::get_stories_theme_support();
+		$theme_support = get_stories_theme_support();
 
 		$default_array = [
 			'view_type'             => $theme_support['view-type-default'],
