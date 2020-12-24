@@ -17,7 +17,7 @@
 /**
  * WordPress dependencies
  */
-import { Path, Rect, SVG } from '@wordpress/components';
+import { Circle, Path, Rect, SVG } from '@wordpress/components';
 
 // Icons for block types.
 export const LATESTS_STORIES_BLOCK_ICON = (
@@ -39,6 +39,23 @@ export const LATESTS_STORIES_BLOCK_ICON = (
     />
     <Rect x="6" y="27" width="19" height="2" fill="#347BB5" />
     <Rect x="6" y="31" width="4" height="2" fill="#347BB5" />
+  </SVG>
+);
+
+export const SELECTED_STORIES_BLOCK_ICON = (
+  <SVG
+    width="32"
+    height="32"
+    viewBox="0 0 32 32"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <Circle cx="16" cy="16" r="15" stroke="#347BB5" strokeWidth="2" />
+    <Path
+      d="M16 9.26315V16M16 22.7368V16M16 16H9.26315M16 16H22.7368"
+      stroke="#347BB5"
+      stroke-width="2"
+    />
   </SVG>
 );
 

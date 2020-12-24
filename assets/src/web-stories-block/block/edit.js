@@ -31,8 +31,10 @@ import StoryEmbedEdit from '../../story-embed-block/block/edit';
 import { ConfigProvider } from '../../dashboard/app/config';
 import BlockConfigurationPanel from './components/storiesBlockConfigurationPanel';
 import LatestStoriesEdit from './block-types/latest-stories/edit';
+import SelectedStoriesEdit from './block-types/selected-stories/edit';
 import {
   BLOCK_TYPE_LATEST_STORIES,
+  BLOCK_TYPE_SELECTED_STORIES,
   BLOCK_TYPE_URL,
   BLOCK_TYPES,
   VIEW_TYPES,
@@ -77,6 +79,15 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
         <LatestStoriesEdit
           attributes={attributes}
           setAttributes={setAttributes}
+        />
+      )}
+
+      {blockType === BLOCK_TYPE_SELECTED_STORIES && (
+        <SelectedStoriesEdit
+          icon={icon}
+          attributes={attributes}
+          setAttributes={setAttributes}
+          isSelected={isSelected}
         />
       )}
 

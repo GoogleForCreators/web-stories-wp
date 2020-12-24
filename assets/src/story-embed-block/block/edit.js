@@ -170,7 +170,7 @@ function StoryEmbedEdit({
   const onResizeStart = () => toggleSelection(false);
   const onResizeStop = () => toggleSelection(true);
 
-  const label = __('Web Story URL', 'web-stories');
+  const label = __('Story URL', 'web-stories');
 
   if (showPlaceholder) {
     return (
