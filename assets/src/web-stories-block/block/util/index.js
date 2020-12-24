@@ -15,19 +15,18 @@
  */
 
 /**
- * WordPress dependencies
+ * Get current value for the provided field.
+ *
+ * @param {string} field Field to get the current value.
+ * @param {Object} state Field state of the current viewType.
+ *
+ * @return {boolean} Current value.
  */
-import { registerBlockType } from '@wordpress/blocks';
+export const isShowing = (field, state) => {
+  if (undefined === state || !Object.entries(state).length) {
+    return false;
+  }
 
-/**
- * Internal dependencies
- */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
-import './block/storiesFilters';
-
-__webpack_public_path__ = global.webStoriesBlockSettings.publicPath;
-
-registerBlockType(name, settings);
-
-initializeTracking('Web Stories List Block', false);
+  const { show } = state[field];
+  return show;
+};

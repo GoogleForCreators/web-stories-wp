@@ -17,17 +17,23 @@
 /**
  * WordPress dependencies
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { Spinner, Placeholder } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
 /**
- * Internal dependencies
+ * StoriesLoading component. Displays a spinner when stories are being fetched.
+ *
+ * @return {*} JSX markup.
  */
-import { initializeTracking } from '../tracking';
-import { name, settings } from './block';
-import './block/storiesFilters';
+const StoriesLoading = () => {
+  return (
+    <Placeholder
+      className="web-stories placeholder"
+      instructions={__('Loading Stories…', 'web-stories')}
+    >
+      <Spinner />
+    </Placeholder>
+  );
+};
 
-__webpack_public_path__ = global.webStoriesBlockSettings.publicPath;
-
-registerBlockType(name, settings);
-
-initializeTracking('Web Stories List Block', false);
+export default StoriesLoading;

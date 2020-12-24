@@ -42,6 +42,7 @@ use Google\Web_Stories\REST_API\Stories_Settings_Controller;
 use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Shortcode\Embed_Shortcode;
 use Google\Web_Stories\Shortcode\Stories_Shortcode;
+use Google\Web_Stories\Block\Web_Stories_Block;
 
 /**
  * Plugin class.
@@ -97,6 +98,13 @@ class Plugin {
 	 * @var Embed_Block
 	 */
 	public $embed_block;
+
+	/**
+	 * Web Stories Block.
+	 *
+	 * @var Web_Stories_Block
+	 */
+	public $web_stories_block;
 
 	/**
 	 * Embed shortcode
@@ -202,6 +210,7 @@ class Plugin {
 		// Plugin compatibility / polyfills.
 		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
 		add_action( 'init', [ $this, 'includes' ] );
+		add_action( 'rest_dispatch_request', [ $this, 'load_amp_plugin_compat' ] );
 
 		// Settings.
 		$this->settings = new Settings();
@@ -243,8 +252,10 @@ class Plugin {
 		add_action( 'init', [ $this->embed_base, 'init' ], 9 );
 
 		// Gutenberg Blocks.
-		$this->embed_block = new Embed_Block();
+		$this->embed_block       = new Embed_Block();
+		$this->web_stories_block = new Web_Stories_Block();
 		add_action( 'init', [ $this->embed_block, 'init' ] );
+		add_action( 'init', [ $this->web_stories_block, 'init' ] );
 
 		// Embed shortcode.
 		$this->embed_shortcode = new Embed_Shortcode();
@@ -309,7 +320,8 @@ class Plugin {
 	 *
 	 * Loads a separate PHP file that allows defining functions in the global namespace.
 	 *
-	 * Runs on the 'wp' hook to ensure the WP environment has been fully set up,
+	 * Runs on the 'wp' and 'rest_dispatch_request' hook to ensure the WP environment has
+	 * been fully set up,
 	 *
 	 * @return void
 	 */
