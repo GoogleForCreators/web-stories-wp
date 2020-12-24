@@ -64,4 +64,12 @@ interface FieldState {
 	 * @return Field
 	 */
 	public function archive_link();
+
+	/**
+	 * Get sharp corner field along with its state for
+	 * current view type.
+	 *
+	 * @return Field
+	 */
+	public function sharp_corners();
 }

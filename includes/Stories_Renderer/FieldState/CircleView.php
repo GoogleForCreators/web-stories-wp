@@ -28,7 +28,7 @@ use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
 /**
  * Class Grid.
  */
-class CircleView extends BaseFieldState {
+final class CircleView extends BaseFieldState {
 
 	/**
 	 * Title field.
@@ -41,24 +41,61 @@ class CircleView extends BaseFieldState {
 		return $this->prepare_field(
 			[
 				'label'    => $label,
+				'show'     => false,
 				'readonly' => false,
 			]
 		);
 	}
 
 	/**
-	 * Archive link field.
+	 * Author field.
 	 *
 	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
 	 */
-	public function archive_link() {
+	public function author() {
 		$label = parent::author()->label();
+
 		return $this->prepare_field(
 			[
 				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
+				'show'     => false,
+				'readonly' => true,
 			]
 		);
 	}
+
+	/**
+	 * Date field.
+	 *
+	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 */
+	public function date() {
+		$label = parent::date()->label();
+
+		return $this->prepare_field(
+			[
+				'label'    => $label,
+				'show'     => false,
+				'readonly' => true,
+			]
+		);
+	}
+
+	/**
+	 * Sharp corners field.
+	 *
+	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
+	 */
+	public function sharp_corners() {
+		$label = parent::sharp_corners()->label();
+
+		return $this->prepare_field(
+			[
+				'label'    => $label,
+				'show'     => false,
+				'readonly' => true,
+			]
+		);
+	}
+
 }

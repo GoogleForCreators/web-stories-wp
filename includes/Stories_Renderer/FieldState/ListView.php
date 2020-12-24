@@ -28,24 +28,7 @@ use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
 /**
  * Class Grid.
  */
-class ListView extends BaseFieldState {
-
-	/**
-	 * Title field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function title() {
-		$label = parent::title()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => true,
-			]
-		);
-	}
+final class ListView extends BaseFieldState {
 
 	/**
 	 * Excerpt field.
@@ -54,23 +37,6 @@ class ListView extends BaseFieldState {
 	 */
 	public function excerpt() {
 		$label = parent::excerpt()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
-			]
-		);
-	}
-
-	/**
-	 * Author field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function author() {
-		$label = parent::author()->label();
 
 		return $this->prepare_field(
 			[
@@ -109,24 +75,7 @@ class ListView extends BaseFieldState {
 		return $this->prepare_field(
 			[
 				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
-			]
-		);
-	}
-
-	/**
-	 * Archive link field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function archive_link() {
-		$label = parent::author()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
+				'show'     => false,
 				'readonly' => false,
 			]
 		);

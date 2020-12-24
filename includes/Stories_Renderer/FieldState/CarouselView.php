@@ -28,41 +28,7 @@ use Google\Web_Stories\Stories_Renderer\Fields\BaseField;
 /**
  * Class Grid.
  */
-class CarouselView extends BaseFieldState {
-
-	/**
-	 * Title field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function title() {
-		$label = parent::title()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => true,
-			]
-		);
-	}
-
-	/**
-	 * Excerpt field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function excerpt() {
-		$label = parent::excerpt()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
-			]
-		);
-	}
+final class CarouselView extends BaseFieldState {
 
 	/**
 	 * Author field.
@@ -75,58 +41,7 @@ class CarouselView extends BaseFieldState {
 		return $this->prepare_field(
 			[
 				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
-			]
-		);
-	}
-
-	/**
-	 * Author field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function date() {
-		$label = parent::date()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => false,
-			]
-		);
-	}
-
-	/**
-	 * Image align field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function image_align() {
-		$label = parent::image_align()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
-				'readonly' => true,
-			]
-		);
-	}
-
-	/**
-	 * Archive link field.
-	 *
-	 * @return \Google\Web_Stories\Interfaces\Field|BaseField
-	 */
-	public function archive_link() {
-		$label = parent::author()->label();
-
-		return $this->prepare_field(
-			[
-				'label'    => $label,
-				'show'     => true,
+				'show'     => false,
 				'readonly' => false,
 			]
 		);
