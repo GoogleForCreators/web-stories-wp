@@ -26,12 +26,14 @@ import {
   EMBED_STORY_BLOCK_ICON,
   LATESTS_STORIES_BLOCK_ICON,
   CAROUSEL_VIEW_TYPE_ICON,
+  SELECTED_STORIES_BLOCK_ICON,
 } from './icons';
 
 /**
  * Block types
  */
 export const BLOCK_TYPE_LATEST_STORIES = 'latest-stories';
+export const BLOCK_TYPE_SELECTED_STORIES = 'selected-stories';
 export const BLOCK_TYPE_URL = 'url';
 export const BLOCK_TYPES = [
   {
@@ -39,6 +41,12 @@ export const BLOCK_TYPES = [
     label: __('Latest Stories', 'web-stories'),
     description: __('Embed latest web stories.', 'web-stories'),
     icon: LATESTS_STORIES_BLOCK_ICON,
+  },
+  {
+    id: BLOCK_TYPE_SELECTED_STORIES,
+    label: __('Selected Stories', 'web-stories'),
+    description: __('Manually select web stories.', 'web-stories'),
+    icon: SELECTED_STORIES_BLOCK_ICON,
   },
   {
     id: BLOCK_TYPE_URL,

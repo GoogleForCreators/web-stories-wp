@@ -39,6 +39,8 @@ const settings = {
     /* translators: block keyword. */
     __('latest', 'web-stories'),
     /* translators: block keyword. */
+    __('selected', 'web-stories'),
+    /* translators: block keyword. */
     __('web', 'web-stories'),
     /* translators: block keyword. */
     __('embed', 'web-stories'),
