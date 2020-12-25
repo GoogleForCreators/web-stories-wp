@@ -113,7 +113,7 @@ class Stories extends \WP_UnitTestCase {
 
 		$instance = self::$testee->update( $new_instance, $old_instance );
 
-		$this->assertSameSets( $expected, $instance );
+		$this->assertEqualSets( $expected, $instance );
 	}
 
 }
