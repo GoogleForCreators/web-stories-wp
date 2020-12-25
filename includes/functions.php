@@ -83,6 +83,8 @@ function get_stories_theme_support() {
  *
  * Mainly uses FieldState and Fields classes.
  *
+ * @SuppressWarnings(PHPMD.UnusedLocalVariable)
+ *
  * @return array
  */
 function fields_states() {
