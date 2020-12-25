@@ -386,6 +386,8 @@ class Plugin {
 
 	/**
 	 * Register Widgets.
+	 *
+	 * @return void
 	 */
 	public function register_widgets() {
 		if ( current_theme_supports( 'web-stories' ) ) {
