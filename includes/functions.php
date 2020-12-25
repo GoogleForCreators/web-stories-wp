@@ -76,3 +76,88 @@ function get_stories_theme_support() {
 
 	return $theme_support;
 }
+
+/**
+ * Wrapper function for fetching field states
+ * based on the view types.
+ *
+ * Mainly uses FieldState and Fields classes.
+ *
+ * @return array
+ */
+function fields_states() {
+	$theme_support = get_stories_theme_support();
+	$views         = $theme_support['view-type'];
+
+	$fields = [
+		'title',
+		'author',
+		'date',
+		'image_align',
+		'excerpt',
+		'archive_link',
+	];
+
+	$field_states = [];
+
+	foreach ( $views as $view_type => $view_label ) {
+		$field_state = ( new Story_Query( [ 'view_type' => $view_type ] ) )->get_renderer()->field();
+		foreach ( $fields as $field ) {
+			$field_states[ $view_type ][ $field ] = [
+				'show'     => $field_state->$field()->show(),
+				'label'    => $field_state->$field()->label(),
+				'readonly' => $field_state->$field()->readonly(),
+			];
+		}
+	}
+
+	return $field_states;
+}
+
+/**
+ * Put some tinymce related data on the page.
+ *
+ * @param string $hook Hook name for current page.
+ *
+ * @return void
+ */
+function web_stories_script_data( $hook ) {
+	if ( 'widgets.php' !== $hook ) {
+		return;
+	}
+
+	$theme_support = get_stories_theme_support();
+	$order         = $theme_support['order'];
+	$views         = $theme_support['view-type'];
+	$order_list    = [];
+	$view_types    = [];
+
+	foreach ( $order as $order_key => $an_order ) {
+		$order_list[] = [
+			'label' => $an_order,
+			'value' => $order_key,
+		];
+	}
+
+	foreach ( $views as $view_key => $view_label ) {
+		$view_types[] = [
+			'label' => $view_label,
+			'value' => $view_key,
+		];
+	}
+
+	$field_states = fields_states();
+
+	$data = [
+		'orderlist' => $order_list,
+		'icon'      => WEBSTORIES_ASSETS_URL . '/src/tinymce/images/carousel.svg',
+		'tag'       => 'stories',
+		'views'     => $view_types,
+		'fields'    => $field_states,
+	];
+
+	echo "<script type='text/javascript'>\n";
+	echo 'var webStoriesData = ' . wp_json_encode( $data ) . ';';
+	echo "\n</script>";
+}
+add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\web_stories_script_data' );

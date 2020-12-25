@@ -208,7 +208,7 @@ class Plugin {
 	 */
 	public function register() {
 		// Plugin compatibility / polyfills.
-		add_action( 'wp', [ $this, 'load_amp_plugin_compat' ] );
+		add_action( 'init', [ $this, 'load_amp_plugin_compat' ] );
 		add_action( 'init', [ $this, 'includes' ] );
 
 		// Settings.
@@ -312,6 +312,8 @@ class Plugin {
 
 		$this->dashboard = new Dashboard( $this->experiments, $this->integrations['site-kit'] );
 		add_action( 'init', [ $this->dashboard, 'init' ] );
+
+		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
 	}
 
 	/**
@@ -368,5 +370,14 @@ class Plugin {
 
 		$stories_settings = new Stories_Settings_Controller();
 		$stories_settings->register_routes();
+	}
+
+	/**
+	 * Register Widgets.
+	 */
+	public function register_widgets() {
+		if ( current_theme_supports( 'web-stories' ) ) {
+			register_widget( __NAMESPACE__ . '\Widgets\Stories' );
+		}
 	}
 }
