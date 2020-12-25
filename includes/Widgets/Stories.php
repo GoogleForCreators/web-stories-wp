@@ -39,12 +39,12 @@ class Stories extends WP_Widget {
 	 *
 	 * @var string[]
 	 */
-	public $args = array(
+	public $args = [
 		'before_title'  => '<h4 class="widgettitle web-stories-widget-title">',
 		'after_title'   => '</h4>',
 		'before_widget' => '<div class="widget-wrap web-stories-widget-wrapper">',
 		'after_widget'  => '</div>',
-	);
+	];
 
 	/**
 	 * Stories constructor.
@@ -54,10 +54,10 @@ class Stories extends WP_Widget {
 	public function __construct() {
 		$id_base        = 'web_stories_widget';
 		$name           = __( 'Web Stories', 'web-stories' );
-		$widget_options = array(
+		$widget_options = [
 			'description' => __( 'Display Web Stories in Sidebar Section.', 'web-stories' ),
 			'classname'   => 'google-stories-widget',
-		);
+		];
 
 		parent::__construct( $id_base, $name, $widget_options );
 	}
@@ -67,6 +67,8 @@ class Stories extends WP_Widget {
 	 *
 	 * @param array $args Widget args.
 	 * @param array $instance Widget instance.
+	 *
+	 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	 */
 	public function widget( $args, $instance ) {
 		echo $instance['before_widget'];
@@ -89,7 +91,7 @@ class Stories extends WP_Widget {
 			'posts_per_page' => $instance['number'],
 		];
 
-		echo (new Story_Query( $story_attrs, $story_args ))->render();
+		echo ( new Story_Query( $story_attrs, $story_args ) )->render();
 
 		echo $instance['after_widget'];
 	}
@@ -228,7 +230,7 @@ class Stories extends WP_Widget {
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$instance                      = array();
+		$instance                      = [];
 		$instance['title']             = ( ! empty( $new_instance['title'] ) ) ? wp_strip_all_tags( $new_instance['title'] ) : '';
 		$instance['view-type']         = ( ! empty( $new_instance['view-type'] ) ) ? $new_instance['view-type'] : '';
 		$instance['show_title']        = ( isset( $new_instance['show_title'] ) ) ? 1 : '';
@@ -245,6 +247,8 @@ class Stories extends WP_Widget {
 	/**
 	 * Called when the widget is registered.
 	 *
+	 * phpcs:disable PSR2.Methods.MethodDeclaration.Underscore
+	 *
 	 * @return void
 	 */
 	public function _register() {
@@ -259,7 +263,7 @@ class Stories extends WP_Widget {
 		wp_enqueue_script(
 			'web-stories-widget',
 			trailingslashit( WEBSTORIES_PLUGIN_DIR_URL ) . 'includes/assets/stories-widget.js',
-			['jquery'],
+			[ 'jquery' ],
 			WEBSTORIES_VERSION,
 			true
 		);
@@ -284,30 +288,32 @@ class Stories extends WP_Widget {
 			]
 		);
 		?>
-	<p class="<?php printf( '%s', (string) $args['wrapper_class'] ) ?>">
+	<p class="<?php printf( '%s', (string) $args['wrapper_class'] ); ?>">
 
-		<label for="<?php echo $this->get_field_id( $args['id'] ) ?>">
-			<?php printf( '%s', (string) $args['label'] ) ?>
+		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
+			<?php printf( '%s', (string) $args['label'] ); ?>
 		</label>
 
 		<select
-			class="<?php printf( '%s', (string) $args['classname'] ) ?>"
-			id="<?php echo $this->get_field_id( $args['id'] ) ?>"
-			name="<?php echo $this->get_field_name( $args['name'] ) ?>"
+			class="<?php printf( '%s', (string) $args['classname'] ); ?>"
+			id="<?php echo $this->get_field_id( $args['id'] ); ?>"
+			name="<?php echo $this->get_field_name( $args['name'] ); ?>"
 		>
 			<?php
 
-			foreach ( $args['options'] as $key => $type ) { ?>
-				<option value="<?php printf( '%s', $key ) ?>"
+			foreach ( $args['options'] as $key => $type ) {
+				?>
+				<option value="<?php printf( '%s', $key ); ?>"
 					<?php selected( $key, $args['selected'], true ); ?>
 				>
-					<?php printf( '%s', $type ) ?>
+					<?php printf( '%s', $type ); ?>
 				</option>
 				<?php
 			}
 			?>
 		</select>
-		</p><?php
+		</p>
+		<?php
 	}
 
 	/**
@@ -331,20 +337,22 @@ class Stories extends WP_Widget {
 			]
 		);
 		?>
-		<p class="<?php printf( '%s', (string) $args['wrapper_class'] ) ?>">
-			<label for="<?php echo $this->get_field_id( $args['id'] ) ?>">
-				<?php printf( '%s', (string) $args['label'] ) ?>
+		<p class="<?php printf( '%s', (string) $args['wrapper_class'] ); ?>">
+			<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
+				<?php printf( '%s', (string) $args['label'] ); ?>
 			</label>
 
 			<input
-				class="<?php printf( '%s', (string) $args['classname'] ) ?>"
-				type="<?php printf( '%s', (string) $args['type'] ) ?>"
-				id="<?php echo $this->get_field_id( $args['id'] ) ?>"
-				name="<?php echo $this->get_field_name( $args['name'] ) ?>"
-				value="<?php echo $args['value'] ?>"
-				<?php if ( 'checkbox' === $args['type'] ) {
+				class="<?php printf( '%s', (string) $args['classname'] ); ?>"
+				type="<?php printf( '%s', (string) $args['type'] ); ?>"
+				id="<?php echo $this->get_field_id( $args['id'] ); ?>"
+				name="<?php echo $this->get_field_name( $args['name'] ); ?>"
+				value="<?php echo $args['value']; ?>"
+				<?php
+				if ( 'checkbox' === $args['type'] ) {
 					checked( 1, $args['value'], true );
-				} ?>
+				}
+				?>
 			/>
 
 		</p>
