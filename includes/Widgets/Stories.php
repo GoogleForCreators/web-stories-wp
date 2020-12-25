@@ -101,9 +101,12 @@ class Stories extends WP_Widget {
 	/**
 	 * Display widget form.
 	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
 	 * @param array $instance Widget instance.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function form( $instance ) {
 		$theme_support = get_stories_theme_support();
@@ -223,10 +226,14 @@ class Stories extends WP_Widget {
 				'value'         => $archive_link,
 			]
 		);
+
+		return '';
 	}
 
 	/**
 	 * Update widget settings.
+	 *
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @param array $new_instance New instance.
 	 * @param array $old_instance Old instance.

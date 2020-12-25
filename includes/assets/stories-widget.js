@@ -118,4 +118,4 @@
    */
   $(document).on('widget-updated', widgetChange);
   $(document).on('widget-added', widgetChange);
-})(jQuery);
+})(window.jQuery);
