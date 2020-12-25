@@ -356,6 +356,23 @@ const widgetScript = {
   ],
 };
 
+const storiesMCEButton = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-button': './assets/src/tinymce/web-stories.js',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '../css/[name].css',
+    }),
+
+    new WebpackBar({
+      name: 'TinyMCE Button',
+      color: '#4deaa2',
+    }),
+  ],
+};
+
 module.exports = [
   storiesEditor,
   dashboard,
@@ -364,4 +381,5 @@ module.exports = [
   webStoriesBlock,
   webStoriesScripts,
   widgetScript,
+  storiesMCEButton,
 ];
