@@ -83,7 +83,8 @@ class Carousel_Renderer extends \WP_UnitTestCase_Base {
 
 		$this->stories->method( 'get_story_attributes' )->willReturn(
 			[
-				'view_type' => 'carousel',
+				'view_type'  => 'carousel',
+				'show_title' => true,
 			]
 		);
 

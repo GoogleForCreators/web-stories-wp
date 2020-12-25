@@ -82,6 +82,7 @@ class Generic_Renderer extends \WP_UnitTestCase_Base {
 			[
 				'class'             => '',
 				'view_type'         => 'grid',
+				'show_title'        => true,
 				'show_story_poster' => false,
 			]
 		);
