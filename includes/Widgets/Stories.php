@@ -65,10 +65,10 @@ class Stories extends WP_Widget {
 	/**
 	 * Output widget.
 	 *
+	 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	 *
 	 * @param array $args Widget args.
 	 * @param array $instance Widget instance.
-	 *
-	 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	 *
 	 * @return void
 	 */
