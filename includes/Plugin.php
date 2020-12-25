@@ -335,6 +335,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function includes() {
+		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/tinymce.php';
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 	}
 
