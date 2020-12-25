@@ -37,7 +37,7 @@ class Stories extends WP_Widget {
 	/**
 	 * Widget args.
 	 *
-	 * @var string[]
+	 * @var array
 	 */
 	public $args = [
 		'before_title'  => '<h4 class="widgettitle web-stories-widget-title">',
@@ -69,6 +69,8 @@ class Stories extends WP_Widget {
 	 * @param array $instance Widget instance.
 	 *
 	 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+	 *
+	 * @return void
 	 */
 	public function widget( $args, $instance ) {
 		echo $instance['before_widget'];
@@ -100,6 +102,8 @@ class Stories extends WP_Widget {
 	 * Display widget form.
 	 *
 	 * @param array $instance Widget instance.
+	 *
+	 * @return void
 	 */
 	public function form( $instance ) {
 		$theme_support = get_stories_theme_support();
@@ -258,6 +262,8 @@ class Stories extends WP_Widget {
 
 	/**
 	 * Enqueue widget script.
+	 *
+	 * @return void
 	 */
 	public function stories_widget_scripts() {
 		wp_enqueue_script(
@@ -273,6 +279,8 @@ class Stories extends WP_Widget {
 	 * Display dropdown.
 	 *
 	 * @param array $args Available view types.
+	 *
+	 * @return void
 	 */
 	private function dropdown( array $args ) {
 		$args = wp_parse_args(
