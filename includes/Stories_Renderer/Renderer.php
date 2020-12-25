@@ -112,8 +112,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function __construct( Stories $stories ) {
 
-		$this->stories    = $stories;
-		$this->attributes = $this->stories->get_story_attributes();
+		$this->stories         = $stories;
+		$this->attributes      = $this->stories->get_story_attributes();
+		$this->content_overlay = $this->attributes['show_title'] || $this->attributes['show_date'] || $this->attributes['show_author'];
 	}
 
 	/**
@@ -266,28 +267,22 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		$is_circles_view = $this->is_view_type( 'circles' );
 		$a_post          = $post;
-		$story_title     = '';
 		$author_name     = '';
 		$story_date      = '';
 		$story_data      = [];
 		$story_id        = $a_post->ID;
 		$author_id       = absint( get_post_field( 'post_author', $story_id ) );
 
-		if ( true === $this->attributes['show_title'] ) {
-			$story_title = get_the_title( $story_id );
-		}
-
 		if ( ! $is_circles_view ) {
 			$author_name = ( true === $this->attributes['show_author'] ) ? get_the_author_meta( 'display_name', $author_id ) : $author_name;
 			$story_date  = ( true === $this->attributes['show_date'] ) ? get_the_date( 'M j, Y', $story_id ) : $story_date;
 		}
 
-		$story_data['id']              = $story_id;
-		$story_data['author']          = $author_name;
-		$story_data['date']            = $story_date;
-		$story_data['classes']         = $this->get_single_story_classes();
-		$story_data['content_overlay'] = ( ! empty( $story_title ) || ! empty( $author_name ) || ! empty( $story_date ) );
-		$transformed_post              = new Story( $story_data );
+		$story_data['id']      = $story_id;
+		$story_data['author']  = $author_name;
+		$story_data['date']    = $story_date;
+		$story_data['classes'] = $this->get_single_story_classes();
+		$transformed_post      = new Story( $story_data );
 		$transformed_post->load_from_post( $story_id );
 
 		return $transformed_post;

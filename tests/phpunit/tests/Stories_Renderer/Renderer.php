@@ -85,6 +85,16 @@ class Renderer extends \WP_UnitTestCase_Base {
 
 		$this->stories = $this->createMock( Stories::class );
 		$this->stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$this->stories->method( 'get_story_attributes' )->willReturn(
+			[
+				'view_type'         => 'grid',
+				'show_title'        => false,
+				'show_author'       => false,
+				'show_date'         => false,
+				'show_story_poster' => true,
+				'number_of_columns' => 3,
+			]
+		);
 	}
 
 	/**
@@ -104,11 +114,6 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 */
 	public function test_is_view_type() {
 
-		$this->stories->method( 'get_story_attributes' )->willReturn(
-			[
-				'view_type' => 'grid',
-			]
-		);
 		$renderer = new Test_Renderer( $this->stories );
 
 		$output = $this->call_private_method( $renderer, 'is_view_type', [ 'grid' ] );
@@ -265,16 +270,18 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::get_container_classes
 	 */
 	public function test_get_container_classes() {
-
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$stories = $this->createMock( Stories::class );
+		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$stories->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type'         => 'circles',
+				'show_title'        => true,
 				'class'             => 'test',
 				'show_story_poster' => false,
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
 
 		$expected = 'web-stories-list is-view-type-circles alignnone test';
 
@@ -287,16 +294,18 @@ class Renderer extends \WP_UnitTestCase_Base {
 	 * @covers ::maybe_render_archive_link
 	 */
 	public function test_maybe_render_archive_link() {
-
-		$this->stories->method( 'get_story_attributes' )->willReturn(
+		$stories = $this->createMock( Stories::class );
+		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$stories->method( 'get_story_attributes' )->willReturn(
 			[
+				'show_title'                => true,
 				'show_story_poster'         => false,
 				'show_stories_archive_link' => true,
 				'stories_archive_label'     => 'View All Stories',
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $this->stories );
+		$renderer = new \Google\Web_Stories\Stories_Renderer\Generic_Renderer( $stories );
 
 		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
@@ -307,5 +316,26 @@ class Renderer extends \WP_UnitTestCase_Base {
 		$this->assertContains( $archive_link, $expected );
 		$this->assertContains( 'View All Stories', $expected );
 
+	}
+
+	/**
+	 * Test that content overlay property is set when any of title,
+	 * date or author attribute is true.
+	 */
+	public function test_content_overlay_is_set() {
+		$stories = $this->createMock( Stories::class );
+		$stories->method( 'get_stories' )->willReturn( [ $this->story_model ] );
+		$stories->method( 'get_story_attributes' )->willReturn(
+			[
+				'show_title' => false,
+				'show_date'  => true,
+			]
+		);
+
+		$renderer = new Test_Renderer( $stories );
+
+		$overlay = $this->get_private_property( $renderer, 'content_overlay' );
+
+		$this->assertTrue( $overlay );
 	}
 }
