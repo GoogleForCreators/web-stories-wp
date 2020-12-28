@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * Internal dependencies
  */
 import { createNewStory, clickButton } from '../../../utils';
@@ -47,7 +42,5 @@ describe('Inserting Media from Dialog', () => {
     await expect(page).toClick('button', { text: 'Insert into page' });
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
-
-    await percySnapshot(page, 'Inserting Image from Dialog');
   });
 });

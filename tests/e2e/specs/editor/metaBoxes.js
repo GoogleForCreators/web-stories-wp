@@ -58,8 +58,6 @@ describe('Custom Meta Boxes', () => {
       'button.handlediv[aria-expanded="false"]'
     );
 
-    await percySnapshot(page, 'Custom Meta Boxes Collapsed');
-
     await expect(page).toClick('button.handlediv[aria-expanded="false"]');
     await expect(page).toMatchElement('button.handlediv[aria-expanded="true"]');
 
@@ -76,7 +74,5 @@ describe('Custom Meta Boxes', () => {
       () => document.getElementById('web_stories_test_meta_box_field').value
     );
     await expect(metaBoxValue).toStrictEqual('Meta Box Test Value');
-
-    await percySnapshot(page, 'Custom Meta Boxes Refreshed');
   });
 });

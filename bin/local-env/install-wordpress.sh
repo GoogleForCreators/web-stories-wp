@@ -169,3 +169,7 @@ wp post meta add $WEBM_VIDEO_ID web_stories_poster_id $WEBM_VIDEO_POSTER_ID --qu
 wp media import /var/www/html/wp-content/e2e-assets/example-1.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-2.jpg --quiet
 wp media import /var/www/html/wp-content/e2e-assets/example-3.png --quiet
+
+wp option patch insert web_stories_experiments enableSVG 1
+wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
+wp option patch insert web_stories_experiments enableSVG 0

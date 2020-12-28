@@ -171,6 +171,11 @@ module.exports = function (config) {
     // Allow not having any tests
     failOnEmptyTestSuite: false,
 
+    // Prevent duplicate logging to console
+    browserConsoleLogOptions: {
+      terminal: false,
+    },
+
     // Bump browserNoActivityTimeout to 100s to prevent Github Actions timeout
     browserNoActivityTimeout: 100000,
 
