@@ -22,11 +22,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../theme';
-import {
-  ListItemLabel,
-  ListItemLabelDecorator,
-  ListItemLabelDisplayText,
-} from './components';
+import { ListItemLabel, ListItemLabelDisplayText } from './components';
 
 const GroupLabel = ({ label }) => {
   if (!label) {
@@ -36,11 +32,10 @@ const GroupLabel = ({ label }) => {
     <ListItemLabel id={`dropDownMenuLabel-${label}`} role="presentation">
       <ListItemLabelDisplayText
         as="span"
-        size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+        size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.EXTRA_SMALL}
       >
         {label}
       </ListItemLabelDisplayText>
-      <ListItemLabelDecorator />
     </ListItemLabel>
   );
 };

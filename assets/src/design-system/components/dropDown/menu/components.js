@@ -67,8 +67,7 @@ export const ListGroup = styled.ul`
 `;
 
 export const ListItemLabel = styled.li`
-  display: grid;
-  grid-template-columns: 1fr 2px;
+  display: flex;
   padding: 6px 2px 6px 8px;
   margin: 4px 8px;
   align-items: center;
@@ -129,7 +128,7 @@ export const ListItemLabelDecorator = styled.span`
 
 export const ListItemLabelDisplayText = styled(Text)(
   ({ theme }) => css`
-    color: ${theme.colors.fg.secondary};
+    color: ${theme.colors.form.dropDownSubtitle};
   `
 );
 
