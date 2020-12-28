@@ -160,3 +160,7 @@ if [ "$WEBSTORIES_DEV_MODE" != $WEBSTORIES_DEV_MODE_CURRENT ]; then
   WEBSTORIES_DEV_MODE_RESULT=$(wp config get --type=constant --format=json WEBSTORIES_DEV_MODE | tr -d '\r')
   echo -e $(status_message "WEBSTORIES_DEV_MODE: $WEBSTORIES_DEV_MODE_RESULT...")
 fi
+
+wp option patch insert web_stories_experiments enableSVG 1
+wp media import /var/www/html/wp-content/e2e-assets/video-play.svg
+wp option patch insert web_stories_experiments enableSVG 0
