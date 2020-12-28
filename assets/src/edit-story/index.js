@@ -21,6 +21,7 @@ import Modal from 'react-modal';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { FlagsProvider } from 'flagged';
+import 'web-animations-js/web-animations-next-lite.min.js';
 
 /**
  * Internal dependencies
