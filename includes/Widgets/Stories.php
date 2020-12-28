@@ -25,7 +25,7 @@ namespace Google\Web_Stories\Widgets;
 
 use Google\Web_Stories\Story_Query;
 use WP_Widget;
-use function Google\Web_Stories\get_stories_theme_support;
+use function Google\Web_Stories\get_layouts;
 
 /**
  * Class Stories
@@ -109,11 +109,9 @@ class Stories extends WP_Widget {
 	 * @return string
 	 */
 	public function form( $instance ) {
-		$theme_support = get_stories_theme_support();
-
 		$title             = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Stories', 'web-stories' );
-		$view_types        = $theme_support['view-type'];
-		$current_view_type = empty( $instance['view-type'] ) ? $theme_support['view-type-default'] : $instance['view-type'];
+		$view_types        = get_layouts();
+		$current_view_type = empty( $instance['view-type'] ) ? 'circles' : $instance['view-type'];
 		$show_title        = ! empty( $instance['show_title'] ) ? (int) $instance['show_title'] : '';
 		$show_author       = ! empty( $instance['show_author'] ) ? (int) $instance['show_author'] : '';
 		$show_date         = ! empty( $instance['show_date'] ) ? (int) $instance['show_date'] : '';
