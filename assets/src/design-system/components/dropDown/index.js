@@ -29,15 +29,14 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { Popup, PLACEMENT } from '../popup';
 import { THEME_CONSTANTS } from '../../theme';
-import { MENU_OPTIONS } from './types';
-import DropDownMenu from './menu';
-import DropDownSelect from './select';
-import useDropDown from './useDropDown';
+import { Popup, PLACEMENT } from '../popup';
 import { DropDownContainer, Hint } from './components';
 import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
-
+import DropDownMenu from './menu';
+import DropDownSelect from './select';
+import { MENU_OPTIONS } from './types';
+import useDropDown from './useDropDown';
 /**
  *
  * @param {Object} props All props.
