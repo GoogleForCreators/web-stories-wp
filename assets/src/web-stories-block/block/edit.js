@@ -52,7 +52,10 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       <BlockConfigurationPanel
         icon={icon}
         setAttributes={setAttributes}
-        instruction={__('Select Block Type', 'web-stories')}
+        instruction={__(
+          'Embed a collection of your latest stories, select your own or enter an URL',
+          'web-stories'
+        )}
         columnCount={3}
         selectionOptions={BLOCK_TYPES}
         selectionType={'blockType'}
@@ -65,7 +68,7 @@ function WebStoriesEdit({ attributes, setAttributes, className, isSelected }) {
       <BlockConfigurationPanel
         icon={icon}
         setAttributes={setAttributes}
-        instruction={__('Select Block View Type', 'web-stories')}
+        instruction={__('Select an layout style', 'web-stories')}
         columnCount={4}
         selectionOptions={VIEW_TYPES}
         selectionType={'viewType'}

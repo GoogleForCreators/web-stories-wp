@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * WordPress dependencies
@@ -50,6 +51,22 @@ import {
   ORDER_BY_OPTIONS,
 } from '../constants';
 import AuthorSelection from './authorSelection';
+
+const StyledTextArea = styled(TextControl)`
+  width: 80%;
+  margin-left: auto;
+`;
+
+const StyledNotice = styled(Notice)`
+  margin: 0 0 20px 0;
+`;
+
+const StyledToggle = styled(ToggleControl)`
+  .components-base-control__help {
+    width: 80%;
+    margin-left: auto;
+  }
+`;
 
 /**
  * StoriesInspectorControls props.
@@ -93,7 +110,7 @@ const StoriesInspectorControls = (props) => {
     showFilters = true,
   } = props;
 
-  const { fieldStates } = useConfig();
+  const { fieldStates, archiveURL } = useConfig();
   const firstUpdate = useRef(true);
 
   useEffect(() => {
@@ -144,6 +161,12 @@ const StoriesInspectorControls = (props) => {
     }
   );
 
+  const ArchiveLink = () => (
+    <a target="__blank" href={archiveURL}>
+      {__('View archive page', 'web-stories')}
+    </a>
+  );
+
   const previewLink = select('core/editor').getEditedPostPreviewLink();
   const carouselMessage = createInterpolateElement(
     __(
@@ -172,13 +195,13 @@ const StoriesInspectorControls = (props) => {
         title={__('Story settings', 'web-stories')}
       >
         {CAROUSEL_VIEW_TYPE === viewType && (
-          <Notice
+          <StyledNotice
             className="web-stories-carousel-message"
             isDismissible={false}
             status="warning"
           >
             {carouselMessage}
-          </Notice>
+          </StyledNotice>
         )}
 
         {fieldStates[viewType] &&
@@ -187,11 +210,15 @@ const StoriesInspectorControls = (props) => {
 
             if (!readonly) {
               return (
-                <ToggleControl
+                <StyledToggle
                   key={`${field}__control`}
                   label={label}
                   checked={fieldState[`show_${field}`]}
                   onChange={() => handleToggleControl(field)}
+                  help={
+                    'archive_link' === field &&
+                    fieldState[`show_${field}`] && <ArchiveLink />
+                  }
                 />
               );
             }
@@ -199,7 +226,7 @@ const StoriesInspectorControls = (props) => {
             return false;
           })}
         {fieldState['show_archive_link'] && (
-          <TextControl
+          <StyledTextArea
             label={__("'View All Stories' Link label", 'web-stories')}
             value={viewAllLinkLabel}
             placeholder={__('View All Stories', 'web-stories')}
