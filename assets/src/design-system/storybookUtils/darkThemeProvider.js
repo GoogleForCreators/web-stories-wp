@@ -13,15 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { css } from 'styled-components';
 
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
-  &:focus {
-    border: solid 2px ${accent};
-    outline: none;
-  }
-`;
+import { ThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { theme } from '../theme';
+
+export const DarkThemeProvider = ({ children }) => (
+  <ThemeProvider theme={theme}>{children}</ThemeProvider>
+);
+
+DarkThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

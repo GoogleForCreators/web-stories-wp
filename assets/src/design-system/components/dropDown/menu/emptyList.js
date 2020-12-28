@@ -13,13 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
 
 /**
- * Determines if the current platform is a Mac or not.
- *
- * @return {boolean} True if platform is a Mac.
+ * Internal dependencies
  */
-export function isPlatformMacOS() {
-  const { platform } = global.navigator;
-  return platform.includes('Mac') || ['iPad', 'iPhone'].includes(platform);
-}
+import { NoOptionsContainer, NoOptionsMessage } from './components';
+
+const EmptyList = ({ emptyText }) => {
+  if (!emptyText) {
+    return null;
+  }
+  return (
+    <NoOptionsContainer>
+      <NoOptionsMessage>{emptyText} </NoOptionsMessage>
+    </NoOptionsContainer>
+  );
+};
+
+EmptyList.propTypes = {
+  emptyText: PropTypes.string,
+};
+
+export default EmptyList;

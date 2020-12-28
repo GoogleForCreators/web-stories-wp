@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
 
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
-  &:focus {
-    border: solid 2px ${accent};
-    outline: none;
-  }
-`;
+/**
+ * See https://craig.is/killing/mice#keys for the supported key codes.
+ */
+const keys = {
+  undo: 'mod+z',
+  redo: 'shift+mod+z',
+  delete: ['del', 'backspace'],
+  clone: 'mod+d',
+};
+
+export default keys;
