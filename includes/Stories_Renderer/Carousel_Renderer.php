@@ -101,6 +101,13 @@ class Carousel_Renderer extends Renderer {
 				?>
 			</amp-carousel>
 			<?php $this->maybe_render_archive_link(); ?>
+			<?php
+			if ( ! $this->is_amp_request() ) {
+				$this->render_stories_with_lightbox_noamp();
+			} else {
+				$this->render_stories_with_lightbox_amp();
+			}
+			?>
 		</div>
 		<?php
 		$content = (string) ob_get_clean();
