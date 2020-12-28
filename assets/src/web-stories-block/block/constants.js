@@ -27,6 +27,13 @@ import {
   LATESTS_STORIES_BLOCK_ICON,
   CAROUSEL_VIEW_TYPE_ICON,
   SELECTED_STORIES_BLOCK_ICON,
+  CIRCLES_VIEW_TYPE_ICON,
+  LIST_VIEW_TYPE_ICON,
+  GRID_VIEW_TYPE_ICON,
+  BOX_CAROUSEL_CONFIG_ICON,
+  LIST_VIEW_CONFIG_ICON,
+  CIRCLE_CAROUSEL_CONFIG_ICON,
+  GRID_VIEW_CONFIG_ICON,
 } from './icons';
 
 /**
@@ -60,33 +67,34 @@ export const BLOCK_TYPES = [
  * Block controls icons.
  */
 export const GRID_VIEW_TYPE = 'grid';
-export const GRID_VIEW_TYPE_ICON = 'screenoptions';
 export const LIST_VIEW_TYPE = 'list';
-export const LIST_VIEW_TYPE_ICON = 'editor-justify';
 export const CIRCLES_VIEW_TYPE = 'circles';
-export const CIRCLES_VIEW_TYPE_ICON = 'marker';
 export const CAROUSEL_VIEW_TYPE = 'carousel';
 
 export const VIEW_TYPES = [
   {
     id: CAROUSEL_VIEW_TYPE,
-    label: __('Carousel View', 'web-stories'),
+    label: __('Box Carousel', 'web-stories'),
     icon: CAROUSEL_VIEW_TYPE_ICON,
+    panelIcon: BOX_CAROUSEL_CONFIG_ICON,
   },
   {
     id: CIRCLES_VIEW_TYPE,
-    label: __('Circle View', 'web-stories'),
+    label: __('Circle Carousel', 'web-stories'),
     icon: CIRCLES_VIEW_TYPE_ICON,
+    panelIcon: CIRCLE_CAROUSEL_CONFIG_ICON,
   },
   {
     id: GRID_VIEW_TYPE,
-    label: __('Grid View', 'web-stories'),
+    label: __('Grid', 'web-stories'),
     icon: GRID_VIEW_TYPE_ICON,
+    panelIcon: GRID_VIEW_CONFIG_ICON,
   },
   {
     id: LIST_VIEW_TYPE,
-    label: __('List View', 'web-stories'),
+    label: __('List', 'web-stories'),
     icon: LIST_VIEW_TYPE_ICON,
+    panelIcon: LIST_VIEW_CONFIG_ICON,
   },
 ];
 
