@@ -152,7 +152,7 @@ function web_stories_script_data( $hook ) {
 		'orderlist' => $order_list,
 		'icon'      => WEBSTORIES_ASSETS_URL . '/src/tinymce/images/carousel.svg',
 		'tag'       => 'stories',
-		'views'     => get_layouts(),
+		'views'     => $view_types,
 		'fields'    => $field_states,
 	];
 
