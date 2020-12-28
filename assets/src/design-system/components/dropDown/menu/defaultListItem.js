@@ -50,7 +50,7 @@ const DefaultListItem = ({ option, isSelected, ...rest }, ref) => (
       as="span"
       size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
     >
-      {option?.label}
+      {option.label}
     </ListItemDisplayText>
   </ListItem>
 );
