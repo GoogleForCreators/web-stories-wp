@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { useCallback, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -30,14 +29,14 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { THEME_CONSTANTS } from '../../theme';
 import { Popup, PLACEMENT } from '../popup';
-import { MENU_OPTIONS } from './types';
+import { DropDownContainer, Hint } from './components';
+import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
 import DropDownMenu from './menu';
 import DropDownSelect from './select';
+import { MENU_OPTIONS } from './types';
 import useDropDown from './useDropDown';
-
-const DropDownContainer = styled.div``;
-
 /**
  *
  * @param {Object} props All props.
@@ -61,17 +60,17 @@ export const DropDown = ({
   ariaLabel,
   disabled,
   dropDownLabel,
+  hasError,
   hint,
   isKeepMenuOpenOnSelection,
   onMenuItemClick,
   options = [],
-  placement = PLACEMENT.BOTTOM_END,
+  placement = PLACEMENT.BOTTOM,
+  popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
   selectedValue = '',
   ...rest
 }) => {
   const selectRef = useRef();
-
-  const [anchorHeight, setAnchorHeight] = useState(null);
 
   const { activeOption, isOpen, normalizedOptions } = useDropDown({
     options,
@@ -102,13 +101,6 @@ export const DropDown = ({
     [handleDismissMenu, isKeepMenuOpenOnSelection, onMenuItemClick]
   );
 
-  useEffect(() => {
-    if (selectRef?.current) {
-      const { height = null } = selectRef?.current?.getBoundingClientRect();
-      setAnchorHeight(height);
-    }
-  }, []);
-
   const listId = useMemo(() => `list-${uuidv4()}`, []);
 
   return (
@@ -118,6 +110,7 @@ export const DropDown = ({
         ariaLabel={ariaLabel}
         disabled={disabled}
         dropDownLabel={dropDownLabel}
+        hasError={hasError}
         isOpen={isOpen.value}
         onSelectClick={handleSelectClick}
         ref={selectRef}
@@ -128,11 +121,10 @@ export const DropDown = ({
           anchor={selectRef}
           isOpen={isOpen.value}
           placement={placement}
-          fillWidth={240}
+          fillWidth={popupFillWidth}
         >
           <DropDownMenu
             activeValue={activeOption?.value}
-            anchorHeight={anchorHeight}
             listId={listId}
             menuAriaLabel={sprintf(
               /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */
@@ -146,7 +138,14 @@ export const DropDown = ({
           />
         </Popup>
       )}
-      {hint && <p>{hint}</p>}
+      {hint && (
+        <Hint
+          hasError={hasError}
+          size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
+        >
+          {hint}
+        </Hint>
+      )}
     </DropDownContainer>
   );
 };
@@ -155,6 +154,7 @@ DropDown.propTypes = {
   ariaLabel: PropTypes.string,
   disabled: PropTypes.bool,
   dropDownLabel: PropTypes.string,
+  hasError: PropTypes.bool,
   hint: PropTypes.string,
   isKeepMenuOpenOnSelection: PropTypes.bool,
   isRTL: PropTypes.bool,
@@ -163,6 +163,7 @@ DropDown.propTypes = {
   onMenuItemClick: PropTypes.func,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
+  popupFillWidth: PropTypes.number,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,

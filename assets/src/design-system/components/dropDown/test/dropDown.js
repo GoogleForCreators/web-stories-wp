@@ -223,12 +223,12 @@ describe('DropDown <DropDown />', () => {
     const menuItems = getAllByRole('option');
     expect(menuItems).toHaveLength(12);
 
-    fireEvent.click(menuItems[3]);
+    fireEvent.click(menuItems[2]);
 
     // first prop we get back is the event
     expect(onClickMock).toHaveBeenCalledWith(
       expect.anything(),
-      basicDropDownOptions[3].value
+      basicDropDownOptions[2].value
     );
 
     expect(onClickMock).toHaveBeenCalledTimes(1);

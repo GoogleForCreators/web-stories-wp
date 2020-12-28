@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -39,7 +38,7 @@ const ListGroupings = ({
   optionsRef,
 }) => {
   const ListItem = renderItem || DefaultListItem;
-  const isManyGroups = useMemo(() => options?.length > 1, [options.length]);
+  const isManyGroups = options?.length > 1;
 
   return options.map(({ label, group }, groupIndex) => (
     <List
@@ -60,7 +59,9 @@ const ListGroupings = ({
             aria-setsize={listLength}
             id={`dropDownMenuItem-${groupOption.value}`}
             isSelected={isSelected}
-            onClick={(event) => handleMenuItemSelect(event, groupOption)}
+            onClick={(event) =>
+              !groupOption.disabled && handleMenuItemSelect(event, groupOption)
+            }
             option={groupOption}
             optionInset={optionInset}
             listLength={listLength}

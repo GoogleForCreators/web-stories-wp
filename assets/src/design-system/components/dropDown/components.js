@@ -14,9 +14,28 @@
  * limitations under the License.
  */
 
-export const DEFAULT_DROPDOWN_HEIGHT = 208;
-export const DEFAULT_POPUP_FILL_WIDTH = 240;
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { Text } from '../typography';
 
-export const KEYS_SHIFT_FOCUS = ['up', 'down', 'left', 'right'];
-export const KEYS_CLOSE_MENU = ['esc', 'tab'];
-export const KEYS_SELECT_ITEM = ['space', 'enter'];
+export const DropDownContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const Hint = styled(Text)`
+  margin-top: 12px;
+  padding-left: 2px;
+  color: ${({ theme, hasError }) =>
+    hasError ? theme.colors.fg.negative : theme.colors.fg.tertiary};
+`;
+Hint.propTypes = {
+  hasError: PropTypes.bool,
+};

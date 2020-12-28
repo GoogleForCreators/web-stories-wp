@@ -18,10 +18,19 @@
  * External dependencies
  */
 import { forwardRef } from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-const SelectButton = styled.button``;
+/**
+ * Internal dependencies
+ */
+import { THEME_CONSTANTS } from '../../../theme';
+import {
+  SelectButton,
+  StyledChevron,
+  Value,
+  LabelText,
+  Label,
+} from './components';
 
 const DropDownSelect = (
   {
@@ -29,6 +38,7 @@ const DropDownSelect = (
     ariaLabel,
     disabled,
     dropDownLabel,
+    hasError,
     isOpen,
     onSelectClick,
     placeholder = '',
@@ -41,12 +51,25 @@ const DropDownSelect = (
     aria-haspopup={true}
     aria-expanded={isOpen}
     aria-disabled={disabled}
+    isOpen={isOpen}
     disabled={disabled}
+    hasError={hasError}
     onClick={onSelectClick}
     ref={ref}
   >
-    {activeItemLabel || placeholder}
-    {dropDownLabel && <span>{dropDownLabel}</span>}
+    <Value as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
+      {activeItemLabel || placeholder}
+    </Value>
+
+    <Label>
+      {dropDownLabel && (
+        <LabelText as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
+          {dropDownLabel}
+        </LabelText>
+      )}
+
+      <StyledChevron isOpen={isOpen} />
+    </Label>
   </SelectButton>
 );
 
@@ -59,5 +82,6 @@ DropDownSelect.propTypes = {
   onSelectClick: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  hasError: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
