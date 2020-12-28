@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Stories_Renderer;
 
 use Google\Web_Stories\Interfaces\FieldState;
+use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Stories_Renderer\FieldState\BaseFieldState as GridView;
@@ -76,6 +77,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @var array An array of story posts.
 	 */
 	protected $story_posts = [];
+
+	/**
+	 * Holds required html for the lightbox.
+	 *
+	 * @var string A string of lightbox markup.
+	 */
+	protected $lightbox_html = '';
 
 	/**
 	 * Pointer to iterate over stories.
@@ -239,6 +247,16 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			[],
 			WEBSTORIES_VERSION
 		);
+
+		if ( ! $this->is_amp_request() ) {
+
+			$this->enqueue_style( Embed_Base::STORY_PLAYER_HANDLE );
+			$this->enqueue_script( Embed_Base::STORY_PLAYER_HANDLE );
+
+			// Web Stories Lightbox script.
+			$this->enqueue_script( 'lightbox', [ Embed_Base::STORY_PLAYER_HANDLE ] );
+
+		}
 	}
 
 	/**
@@ -415,10 +433,17 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$story_styles         = $this->is_view_type( 'circles' ) ? sprintf( '--size:%1$spx', $this->attributes['circle_size'] ) : '';
 		$story_styles        .= $this->is_view_type( 'carousel' ) ? sprintf( '--width:%1$spx', $this->width ) : '';
 
+		$lightbox_state          = "lightbox{$this->current()->get_id()}";
+		$lightbox_set_state_attr = ( $this->is_amp_request() ) ? sprintf(
+			'on="tap:AMP.setState({%1$s: ! %1$s})"',
+			$lightbox_state
+		) : '';
+
 		?>
 
 		<div
 			class="<?php echo esc_attr( $single_story_classes ); ?>"
+			<?php echo wp_kses( $lightbox_set_state_attr, 'on' ); ?>
 			style="<?php echo esc_attr( $story_styles ); ?>"
 		>
 			<?php $this->render_story_with_poster(); ?>
@@ -457,6 +482,20 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		</div>
 		<?php
 
+		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
+		ob_start();
+
+		// Collect story links to fill-in non-AMP lightbox 'amp-story-player'.
+		if ( ! $this->is_amp_request() ) {
+			?>
+				<a href="<?php echo esc_url( $story_data->get_url() ); ?>"><?php echo esc_html( $story_data->get_title() ); ?></a>
+			<?php
+		} else {
+			// Generate lightbox html for the AMP page.
+			$this->generate_amp_lightbox_html();
+		}
+
+		$this->lightbox_html .= ob_get_clean();
 	}
 
 	/**
@@ -513,4 +552,81 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	}
 
+	/**
+	 * Renders the lightbox markup for non-amp pages.
+	 *
+	 * @return void
+	 */
+	protected function render_stories_with_lightbox_noamp() {
+		?>
+		<div class="web-stories-list__lightbox">
+			<amp-story-player width="3.6" height="6" layout="responsive">
+				<script type="application/json">
+				<?php
+				$data = [
+					'controls' => [
+						[
+							'name'     => 'close',
+							'position' => 'start',
+						],
+						[
+							'name' => 'skip-next',
+						],
+					],
+				];
+				echo wp_json_encode( $data );
+				?>
+				</script>
+				<?php echo wp_kses_post( $this->lightbox_html ); ?>
+			</amp-story-player>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Markup for the lightbox used on AMP pages.
+	 *
+	 * @return void
+	 */
+	protected function generate_amp_lightbox_html() {
+		$story          = $this->current();
+		$lightbox_state = "lightbox{$story->get_id()}";
+		$lightbox_id    = "lightbox-{$story->get_id()}";
+		?>
+		<amp-lightbox
+			id="<?php echo esc_attr( $lightbox_id ); ?>"
+			[open]="<?php echo esc_attr( $lightbox_state ); ?>"
+			layout="nodisplay"
+			on="lightboxClose:AMP.setState({<?php echo esc_attr( $lightbox_state ); ?>: false})"
+		>
+			<div class="web-stories-list__lightbox show">
+				<div
+					class="story-lightbox__close-button"
+					on="tap:<?php echo esc_attr( $lightbox_id ); ?>.close"
+				>
+					<span class="story-lightbox__close-button--stick"></span>
+					<span class="story-lightbox__close-button--stick"></span>
+				</div>
+				<amp-story-player
+					width="3.6"
+					height="6"
+					layout="responsive"
+				>
+					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+				</amp-story-player>
+			</div>
+		</amp-lightbox>
+		<?php
+	}
+
+	/**
+	 * Renders the lightbox markup for non-amp pages.
+	 *
+	 * @return void
+	 */
+	protected function render_stories_with_lightbox_amp() {
+
+		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
+		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
+	}
 }
