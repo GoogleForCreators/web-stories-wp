@@ -297,22 +297,25 @@ export const SubMenus = () => {
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
-    <DropDown
-      emptyText={'No options available'}
-      options={nestedDropDownOptions}
-      hint={text('hint', 'default hint text')}
-      placeholder={text('placeholder', 'select a value')}
-      dropDownLabel={text('dropDownLabel', 'label')}
-      isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-      isRTL={boolean('isRTL')}
-      disabled={boolean('disabled')}
-      selectedValue={selectedValue}
-      onMenuItemClick={(event, newValue) => {
-        action('onMenuItemClick', event);
-        setSelectedValue(newValue);
-      }}
-      placement={select('placement', Object.values(PLACEMENT))}
-    />
+    <Container>
+      <DropDown
+        emptyText={'No options available'}
+        options={nestedDropDownOptions}
+        hasError={boolean('hasError')}
+        hint={text('hint', 'default hint text')}
+        placeholder={text('placeholder', 'select a value')}
+        dropDownLabel={text('dropDownLabel', 'label')}
+        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
+        isRTL={boolean('isRTL')}
+        disabled={boolean('disabled')}
+        selectedValue={selectedValue}
+        onMenuItemClick={(event, newValue) => {
+          action('onMenuItemClick', event);
+          setSelectedValue(newValue);
+        }}
+        placement={select('placement', Object.values(PLACEMENT))}
+      />
+    </Container>
   );
 };
 
@@ -338,23 +341,26 @@ export const OverriddenAnimationProofOfConcept = () => {
   const [selectedValue, setSelectedValue] = useState(null);
   return (
     <DarkThemeProvider>
-      <DropDown
-        emptyText={'No options available'}
-        options={effectChooserOptions}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection', true)}
-        disabled={boolean('disabled')}
-        selectedValue={selectedValue}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick', event);
-          setSelectedValue(newValue);
-        }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        menuStylesOverride={styleOverrideForAnimationEffectMenu}
-        renderItem={RenderItemOverride}
-      />
+      <Container>
+        <DropDown
+          emptyText={'No options available'}
+          options={effectChooserOptions}
+          hasError={boolean('hasError')}
+          hint={text('hint', 'default hint text')}
+          placeholder={text('placeholder', 'select a value')}
+          dropDownLabel={text('dropDownLabel', 'label')}
+          isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection', true)}
+          disabled={boolean('disabled')}
+          selectedValue={selectedValue}
+          onMenuItemClick={(event, newValue) => {
+            action('onMenuItemClick', event);
+            setSelectedValue(newValue);
+          }}
+          placement={select('placement', Object.values(PLACEMENT))}
+          menuStylesOverride={styleOverrideForAnimationEffectMenu}
+          renderItem={RenderItemOverride}
+        />
+      </Container>
     </DarkThemeProvider>
   );
 };
