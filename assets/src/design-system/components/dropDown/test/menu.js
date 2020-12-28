@@ -110,7 +110,7 @@ describe('DropDown <DropDownMenu />', () => {
       isSelected: PropTypes.bool,
     };
 
-    const { queryAllByText } = renderWithProviders(
+    const { queryAllByText, getByText } = renderWithProviders(
       <DropDownMenu
         hasMenuRole={false}
         emptyText={'No options available'}
@@ -123,9 +123,9 @@ describe('DropDown <DropDownMenu />', () => {
     );
 
     const itemsNotSelected = queryAllByText('I AM EXTRA CONTENT');
-    const itemsSelected = queryAllByText('I AM SELECTED');
+    const selectedItem = getByText('I AM SELECTED');
 
     expect(itemsNotSelected).toHaveLength(11);
-    expect(itemsSelected).toHaveLength(1);
+    expect(selectedItem).toBeInTheDocument();
   });
 });

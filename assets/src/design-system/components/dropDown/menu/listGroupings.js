@@ -63,7 +63,6 @@ const ListGroupings = ({
               !groupOption.disabled && handleMenuItemSelect(event, groupOption)
             }
             option={groupOption}
-            optionInset={optionInset}
             listLength={listLength}
             role={hasMenuRole ? 'menuitem' : 'option'}
             ref={(el) => (optionsRef.current[optionInset] = el)}

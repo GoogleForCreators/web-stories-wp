@@ -42,10 +42,10 @@ describe('DropDown <DropDown />', () => {
     );
 
     const select = getByRole('button');
-    expect(select).toBeDefined();
+    expect(select).toBeInTheDocument();
 
     const menu = queryAllByRole('listbox');
-    expect(menu).toHaveLength(0);
+    expect(menu).toStrictEqual([]);
   });
 
   it('should show placeholder value when no selected value is found', () => {
@@ -54,7 +54,7 @@ describe('DropDown <DropDown />', () => {
     );
 
     const placeholder = getByText('select a value');
-    expect(placeholder).toBeDefined();
+    expect(placeholder).toBeInTheDocument();
   });
 
   it("should show selectedValue's associated label when selectedValue is present", () => {
@@ -68,7 +68,7 @@ describe('DropDown <DropDown />', () => {
     );
 
     const select = getByText(basicDropDownOptions[2].label);
-    expect(select).toBeDefined();
+    expect(select).toBeInTheDocument();
   });
 
   it("should show placeholder when selectedValue's associated label cannot be found", () => {
@@ -82,7 +82,7 @@ describe('DropDown <DropDown />', () => {
     );
 
     const select = getByText('select a value');
-    expect(select).toBeDefined();
+    expect(select).toBeInTheDocument();
   });
 
   it('should show label value when provided', () => {
@@ -95,7 +95,7 @@ describe('DropDown <DropDown />', () => {
     );
 
     const label = getByText('my label');
-    expect(label).toBeDefined();
+    expect(label).toBeInTheDocument();
   });
 
   it('should show <DropDown /> menu when a select button is clicked', () => {
@@ -179,7 +179,7 @@ describe('DropDown <DropDown />', () => {
     const menuLabels = getAllByRole('presentation');
     expect(menuLabels).toHaveLength(2);
 
-    expect(queryAllByText('should be ignored')).toHaveLength(0);
+    expect(queryAllByText('should be ignored')).toStrictEqual([]);
   });
 
   // Mouse events
@@ -198,7 +198,7 @@ describe('DropDown <DropDown />', () => {
     fireEvent.click(select);
 
     const menu = queryAllByRole('listbox');
-    expect(menu).toHaveLength(0);
+    expect(menu).toStrictEqual([]);
   });
 
   it('should trigger onMenuItemClick when item is clicked', () => {
