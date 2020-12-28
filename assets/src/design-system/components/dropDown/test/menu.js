@@ -126,6 +126,6 @@ describe('DropDown <DropDownMenu />', () => {
     const itemsSelected = queryAllByText('I AM SELECTED');
 
     expect(itemsNotSelected).toHaveLength(11);
-    expect(itemsSelected).toHaveLength(1);
+    expect(itemsSelected).toBeInTheDocument();
   });
 });
