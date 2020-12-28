@@ -241,6 +241,7 @@ const webStoriesScripts = {
   ...sharedConfig,
   entry: {
     lightbox: './assets/src/lightbox/index.js',
+    'carousel-view': './assets/src/carousel/index.js',
   },
   plugins: [
     process.env.BUNDLE_ANALZYER && new BundleAnalyzerPlugin(),
