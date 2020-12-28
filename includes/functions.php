@@ -88,8 +88,7 @@ function get_stories_theme_support() {
  * @return array
  */
 function fields_states() {
-	$theme_support = get_stories_theme_support();
-	$views         = $theme_support['view-type'];
+	$views = get_layouts();
 
 	$fields = [
 		'title',
@@ -128,11 +127,10 @@ function web_stories_script_data( $hook ) {
 		return;
 	}
 
-	$theme_support = get_stories_theme_support();
-	$order         = $theme_support['order'];
-	$views         = $theme_support['view-type'];
-	$order_list    = [];
-	$view_types    = [];
+	$order      = get_orderby();
+	$views      = get_layouts();
+	$order_list = [];
+	$view_types = [];
 
 	foreach ( $order as $order_key => $an_order ) {
 		$order_list[] = [
@@ -154,7 +152,7 @@ function web_stories_script_data( $hook ) {
 		'orderlist' => $order_list,
 		'icon'      => WEBSTORIES_ASSETS_URL . '/src/tinymce/images/carousel.svg',
 		'tag'       => 'stories',
-		'views'     => $view_types,
+		'views'     => get_layouts(),
 		'fields'    => $field_states,
 	];
 
@@ -163,3 +161,51 @@ function web_stories_script_data( $hook ) {
 	echo "\n</script>";
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\web_stories_script_data' );
+
+/**
+ * Get supported layouts for web stories.
+ *
+ * @return mixed|void
+ */
+function get_layouts() {
+	/**
+	 * Filter supported layouts.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param array $layouts Default supported layouts.
+	 */
+	return apply_filters(
+		'web_stories_layouts',
+		[
+			'carousel' => __( 'Box Carousel', 'web-stories' ),
+			'circles'  => __( 'Circle Carousel', 'web-stories' ),
+			'grid'     => __( 'Grid', 'web-stories' ),
+			'list'     => __( 'List', 'web-stories' ),
+		]
+	);
+}
+
+/**
+ * Get supported order by options for web stories.
+ *
+ * @return array
+ */
+function get_orderby() {
+	/**
+	 * Filter supported order by options.
+	 *
+	 * @param array $orderby Default supported order by options.
+	 *
+	 * @since 1.3.0
+	 */
+	return apply_filters(
+		'web_stories_orderby',
+		[
+			'latest'               => __( 'Latest', 'web-stories' ),
+			'oldest'               => __( 'Oldest', 'web-stories' ),
+			'alphabetical'         => __( 'A -> Z', 'web-stories' ),
+			'reverse-alphabetical' => __( 'Z -> A', 'web-stories' ),
+		]
+	);
+}
