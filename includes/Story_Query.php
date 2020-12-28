@@ -108,10 +108,9 @@ class Story_Query {
 
 		switch ( $view_type ) {
 			case 'carousel':
+			case 'circles':
 				$renderer = new Carousel_Renderer( $this );
 				break;
-
-			case 'circles':
 			case 'list':
 			case 'grid':
 			default:

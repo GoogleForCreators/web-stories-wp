@@ -36,6 +36,13 @@ namespace Google\Web_Stories\Stories_Renderer;
 class Carousel_Renderer extends Renderer {
 
 	/**
+	 * Script handle.
+	 *
+	 * @var string
+	 */
+	const SCRIPT_HANDLE = 'carousel-view';
+
+	/**
 	 * Perform initial setup for object.
 	 *
 	 * @since 1.3.0
@@ -61,10 +68,8 @@ class Carousel_Renderer extends Renderer {
 		parent::assets();
 
 		if ( ! $this->is_amp_request() ) {
-			// Enqueue amp runtime script and amp-carousel script to show amp-carousel on non AMP pages.
-			wp_register_script( 'amp-runtime-script', 'https://cdn.ampproject.org/v0.js', [], 'v0', true );
-			wp_register_script( 'amp-carousel-script', 'https://cdn.ampproject.org/v0/amp-carousel-0.2.js', [ 'amp-runtime-script' ], 'v0', true );
-			wp_enqueue_script( 'amp-carousel-script' );
+			$this->enqueue_script( self::SCRIPT_HANDLE );
+			$this->enqueue_style( self::SCRIPT_HANDLE );
 		}
 	}
 
@@ -93,31 +98,44 @@ class Carousel_Renderer extends Renderer {
 		?>
 		<div class="<?php echo esc_attr( $container_classes ); ?>">
 			<div class="web-stories-list__inner-wrapper" style="<?php echo esc_attr( $container_styles ); ?>">
-				<amp-carousel
-					width="1"
-					height="1"
-					layout="intrinsic"
-					type="carousel"
-					role="region"
-					aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
-				>
-					<?php
-					foreach ( $this->story_posts as $story ) {
-						$this->render_single_story_content();
-						$this->next();
-					}
+				<?php
+				if ( ! $this->is_amp_request() ) {
 					?>
-				</amp-carousel>
+					<div class="web-stories-list__carousel">
+						<?php
+						foreach ( $this->story_posts as $story ) {
+							$this->render_single_story_content();
+							$this->next();
+						}
+						?>
+					</div>
+					<div tabindex="0" aria-label="<?php esc_attr_e( 'Previous', 'web-stories' ); ?>" class="glider-prev"></div>
+					<div tabindex="0" aria-label="<?php esc_attr_e( 'Next', 'web-stories' ); ?>" class="glider-next"></div>
+					<?php
+					$this->render_stories_with_lightbox_noamp();
+				} else {
+					?>
+					<amp-carousel
+						width="1"
+						height="1"
+						layout="intrinsic"
+						type="carousel"
+						role="region"
+						aria-label="<?php esc_attr_e( 'Web Stories', 'web-stories' ); ?>"
+					>
+						<?php
+						foreach ( $this->story_posts as $story ) {
+							$this->render_single_story_content();
+							$this->next();
+						}
+						?>
+					</amp-carousel>
+					<?php
+					$this->render_stories_with_lightbox_amp();
+				}
+				?>
 			</div>
-			<?php
-			$this->maybe_render_archive_link();
-
-			if ( ! $this->is_amp_request() ) {
-				$this->render_stories_with_lightbox_noamp();
-			} else {
-				$this->render_stories_with_lightbox_amp();
-			}
-			?>
+			<?php $this->maybe_render_archive_link(); ?>
 		</div>
 		<?php
 		$content = (string) ob_get_clean();
