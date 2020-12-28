@@ -32,7 +32,8 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { isEmpty, isCircleView, updateViewSettings } from '../utils';
+import { isCircleView, updateViewSettings } from '../utils';
+import { isEmpty } from '../utils/globals';
 import name from '../store/name';
 
 import TinyMCEToggle from './controls/Toggle';

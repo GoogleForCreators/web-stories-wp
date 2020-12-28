@@ -29,7 +29,7 @@
  */
 import { withSelect, select } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
-import { forEach } from '../utils';
+import { forEach } from '../utils/globals';
 import name from '../store/name';
 import WebStoriesModal from '../components/Modal';
 
