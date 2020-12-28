@@ -82,11 +82,30 @@ export const ListItem = styled.li(
     border-radius: ${theme.borders.radius.small};
     align-items: center;
     background-color: ${isSelected
-      ? theme.colors.interactiveBg.active
+      ? theme.colors.interactiveBg.brandNormal
       : 'inherit'};
     cursor: ${disabled ? 'default' : 'pointer'};
 
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+
+    &:focus {
+      outline: none;
+      background-color: ${isSelected
+        ? theme.colors.interactiveBg.brandNormal
+        : theme.colors.interactiveBg.brandHover};
+    }
+
+    &:hover {
+      background-color: ${isSelected
+        ? theme.colors.interactiveBg.brandNormal
+        : theme.colors.interactiveBg.brandHover};
+    }
+
+    &:active {
+      background-color: ${isSelected
+        ? theme.colors.interactiveBg.brandActive
+        : theme.colors.interactiveBg.brandPress};
+    }
 
     ${disabled &&
     css`
@@ -96,10 +115,6 @@ export const ListItem = styled.li(
         color: ${theme.colors.fg.secondary};
       }
     `}
-
-    &:focus {
-      outline: none;
-    }
 
     svg {
       color: ${theme.colors.fg.primary};
@@ -118,13 +133,6 @@ export const ListItemDisplayText = styled(Text)(
     color: ${theme.colors.fg.primary};
   `
 );
-
-export const ListItemLabelDecorator = styled.span`
-  width: 2px;
-  height: 16px;
-  border-radius: ${({ theme }) => theme.borders.radius.x_large};
-  background-color: ${({ theme }) => theme.colors.fg.secondary};
-`;
 
 export const ListItemLabelDisplayText = styled(Text)(
   ({ theme }) => css`
