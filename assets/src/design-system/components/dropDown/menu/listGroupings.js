@@ -46,6 +46,7 @@ const ListGroupings = ({
       isManyGroups={isManyGroups}
       label={label}
       listId={listId}
+      role={hasMenuRole ? 'menu' : 'listbox'}
     >
       {group.map((groupOption, optionIndex) => {
         const isSelected = groupOption.value === activeValue;

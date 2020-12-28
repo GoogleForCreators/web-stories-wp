@@ -43,6 +43,7 @@ const DropDownMenu = ({
   renderItem,
   activeValue,
   menuAriaLabel,
+  selectButtonId,
 }) => {
   const listRef = useRef();
   const optionsRef = useRef([]);
@@ -87,8 +88,9 @@ const DropDownMenu = ({
       dropDownHeight={dropDownHeight}
       styleOverride={menuStylesOverride}
       ref={listRef}
-      role={hasMenuRole ? 'menu' : 'listbox'}
       aria-label={menuAriaLabel}
+      aria-labelledby={selectButtonId}
+      aria-expanded="true"
     >
       {!options || options.length === 0 ? (
         <EmptyList emptyText={emptyText} />
@@ -122,6 +124,7 @@ DropDownMenu.propTypes = {
   onDismissMenu: PropTypes.func.isRequired,
   renderItem: PropTypes.object,
   activeValue: DROP_DOWN_VALUE_TYPE,
+  selectButtonId: PropTypes.string.isRequired,
 };
 
 export default DropDownMenu;
