@@ -122,11 +122,12 @@ class Stories extends WP_Widget {
 
 		$this->input(
 			[
-				'id'    => 'title',
-				'name'  => 'title',
-				'label' => __( 'Widget Title', 'web-stories' ),
-				'type'  => 'text',
-				'value' => $title,
+				'id'           => 'title',
+				'name'         => 'title',
+				'label'        => __( 'Widget Title', 'web-stories' ),
+				'type'         => 'text',
+				'value'        => $title,
+				'label_before' => true,
 			]
 		);
 
@@ -136,7 +137,7 @@ class Stories extends WP_Widget {
 				'selected'  => $current_view_type,
 				'name'      => 'view-type',
 				'id'        => 'view-type',
-				'label'     => __( 'Select view type', 'web-stories' ),
+				'label'     => __( 'Select Layout', 'web-stories' ),
 				'classname' => 'widefat view-type stories-widget-field',
 			]
 		);
@@ -347,13 +348,25 @@ class Stories extends WP_Widget {
 				'value'         => '',
 				'classname'     => 'widefat',
 				'wrapper_class' => 'stories-field-wrapper',
+				'label_before'  => false,
 			]
 		);
+
+		ob_start();
+		?>
+		<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
+			<?php printf( '%s', (string) $args['label'] ); ?>
+		</label>
+		<?php
+		$label = ob_get_clean();
 		?>
 		<p class="<?php printf( '%s', (string) $args['wrapper_class'] ); ?>">
-			<label for="<?php echo $this->get_field_id( $args['id'] ); ?>">
-				<?php printf( '%s', (string) $args['label'] ); ?>
-			</label>
+
+			<?php
+			if ( $args['label_before'] ) {
+				echo $label;
+			}
+			?>
 
 			<input
 				class="<?php printf( '%s', (string) $args['classname'] ); ?>"
@@ -367,6 +380,12 @@ class Stories extends WP_Widget {
 				}
 				?>
 			/>
+
+			<?php
+			if ( ! $args['label_before'] ) {
+				echo $label;
+			}
+			?>
 
 		</p>
 		<?php
