@@ -20,7 +20,7 @@
 /**
  * Internal dependencies
  */
-import { forEach, isEmpty } from '../utils';
+import { forEach, isEmpty } from '../utils/globals';
 
 const { orderlist, views } = window.webStoriesData;
 

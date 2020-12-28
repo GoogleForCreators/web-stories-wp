@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-export const { forEach } = _;
-export const { isEmpty } = _;
-
 /**
  * WordPress dependencies
  */
@@ -38,7 +35,7 @@ export const currentView = () => {
 /**
  * Check if current view is circle view.
  *
- * @return {boolean}
+ * @return {boolean} Flag.
  */
 export const isCircleView = () => {
   return 'circles' === currentView();
