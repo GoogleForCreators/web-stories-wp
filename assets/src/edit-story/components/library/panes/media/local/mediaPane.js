@@ -276,7 +276,7 @@ function MediaPane(props) {
               options={FILTERS}
               placement={Placement.BOTTOM_START}
             />
-            {isSearching && Boolean(media.length) ? (
+            {isSearching && Boolean(media.length) && (
               <SearchCount>
                 {sprintf(
                   /* translators: %d: number of results. */
@@ -289,7 +289,8 @@ function MediaPane(props) {
                   media.length
                 )}
               </SearchCount>
-            ) : (
+            )}
+            {!isSearching && (
               <Primary onClick={openMediaPicker}>
                 {__('Upload', 'web-stories')}
               </Primary>
