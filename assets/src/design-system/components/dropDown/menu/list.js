@@ -24,13 +24,13 @@ import PropTypes from 'prop-types';
 import GroupLabel from './groupLabel';
 import { ListGroup } from './components';
 
-const List = ({ isManyGroups, label, listId, children }) => {
+const List = ({ isManyGroups, label, listId, children, role = 'group' }) => {
   const groupAria = isManyGroups
     ? { 'aria-label': label }
     : { 'aria-labelledby': listId };
 
   return (
-    <ListGroup role="group" isNested={isManyGroups} {...groupAria}>
+    <ListGroup role={role} isNested={isManyGroups} {...groupAria}>
       {label && <GroupLabel label={label} />}
       {children}
     </ListGroup>
@@ -41,5 +41,6 @@ List.propTypes = {
   label: PropTypes.string,
   listId: PropTypes.string,
   children: PropTypes.node.isRequired,
+  role: PropTypes.oneOf(['menu', 'listbox', 'group']),
 };
 export default List;

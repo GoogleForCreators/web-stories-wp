@@ -100,6 +100,7 @@ export const _default = () => {
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
           placeholder={text('placeholder', 'select a value')}
+          ariaLabel={text('ariaLabel')}
           dropDownLabel={text('dropDownLabel', 'label')}
           isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
           isRTL={boolean('isRTL')}
@@ -127,6 +128,7 @@ export const LightTheme = () => {
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
+        ariaLabel={text('ariaLabel')}
         dropDownLabel={text('dropDownLabel', 'label')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
@@ -154,6 +156,7 @@ export const ShortMenu = () => {
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
+        ariaLabel={text('ariaLabel')}
         dropDownLabel={text('dropDownLabel', 'label')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
@@ -180,6 +183,7 @@ export const NoOptionsMenu = () => {
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
+        ariaLabel={text('ariaLabel')}
         dropDownLabel={text('dropDownLabel', 'label')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
@@ -206,6 +210,7 @@ export const ReallyLongLabelsMenu = () => {
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
+        ariaLabel={text('ariaLabel')}
         dropDownLabel={text('dropDownLabel', 'label')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
@@ -232,6 +237,7 @@ export const SubMenus = () => {
         hasError={boolean('hasError')}
         hint={text('hint', 'default hint text')}
         placeholder={text('placeholder', 'select a value')}
+        ariaLabel={text('ariaLabel')}
         dropDownLabel={text('dropDownLabel', 'label')}
         isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
         isRTL={boolean('isRTL')}
@@ -276,6 +282,7 @@ export const OverriddenAnimationProofOfConcept = () => {
           hasError={boolean('hasError')}
           hint={text('hint', 'default hint text')}
           placeholder={text('placeholder', 'select a value')}
+          ariaLabel={text('ariaLabel')}
           dropDownLabel={text('dropDownLabel', 'label')}
           isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection', true)}
           disabled={boolean('disabled')}

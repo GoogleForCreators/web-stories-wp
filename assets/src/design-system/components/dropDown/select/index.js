@@ -35,27 +35,24 @@ import {
 const DropDownSelect = (
   {
     activeItemLabel,
-    ariaLabel,
     disabled,
     dropDownLabel,
     hasError,
     isOpen,
     onSelectClick,
     placeholder = '',
+    ...rest
   },
   ref
 ) => (
   <SelectButton
-    aria-label={ariaLabel || dropDownLabel}
-    aria-pressed={isOpen}
-    aria-haspopup={true}
-    aria-expanded={isOpen}
-    aria-disabled={disabled}
+    aria-haspopup
     isOpen={isOpen}
     disabled={disabled}
     hasError={hasError}
     onClick={onSelectClick}
     ref={ref}
+    {...rest}
   >
     <Value as="span" size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}>
       {activeItemLabel || placeholder}
@@ -77,7 +74,6 @@ export default forwardRef(DropDownSelect);
 
 DropDownSelect.propTypes = {
   activeItemLabel: PropTypes.string,
-  ariaLabel: PropTypes.string,
   dropDownLabel: PropTypes.string,
   onSelectClick: PropTypes.func.isRequired,
   placeholder: PropTypes.string,

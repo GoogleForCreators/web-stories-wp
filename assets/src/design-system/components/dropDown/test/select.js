@@ -44,7 +44,7 @@ describe('DropDown <DropDownSelect />', () => {
   });
 
   it('should not trigger onSelectClick on click if select is disabled', () => {
-    const { getByLabelText } = renderWithProviders(
+    const { getByText } = renderWithProviders(
       <DropDownSelect
         activeItemLabel={'chosen option'}
         disabled={true}
@@ -54,28 +54,9 @@ describe('DropDown <DropDownSelect />', () => {
       />
     );
 
-    const select = getByLabelText('my label');
+    const select = getByText('my label');
     fireEvent.click(select);
 
     expect(onClickMock).toHaveBeenCalledTimes(0);
-  });
-
-  it('should trigger onSelectClick on click', () => {
-    const { getByLabelText } = renderWithProviders(
-      <DropDownSelect
-        activeItemLabel={'chosen option'}
-        ariaLabel={'specific label for aria to override visible label'}
-        dropDownLabel={'my label'}
-        onSelectClick={onClickMock}
-        placeholder={'my placeholder'}
-      />
-    );
-
-    const select = getByLabelText(
-      'specific label for aria to override visible label'
-    );
-    fireEvent.click(select);
-
-    expect(onClickMock).toHaveBeenCalledTimes(1);
   });
 });

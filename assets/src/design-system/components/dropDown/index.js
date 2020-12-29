@@ -102,15 +102,21 @@ export const DropDown = ({
   );
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
+  const selectButtonId = useMemo(() => `select-button-${uuidv4()}`, []);
 
   return (
     <DropDownContainer>
       <DropDownSelect
         activeItemLabel={activeOption?.label}
-        ariaLabel={ariaLabel}
+        aria-pressed={isOpen}
+        aria-disabled={disabled}
+        aria-expanded={isOpen}
+        aria-label={ariaLabel || dropDownLabel}
+        aria-owns={listId}
         disabled={disabled}
         dropDownLabel={dropDownLabel}
         hasError={hasError}
+        id={selectButtonId}
         isOpen={isOpen.value}
         onSelectClick={handleSelectClick}
         ref={selectRef}
@@ -125,6 +131,7 @@ export const DropDown = ({
         >
           <DropDownMenu
             activeValue={activeOption?.value}
+            selectButtonId={selectButtonId}
             listId={listId}
             menuAriaLabel={sprintf(
               /* translators: %s: dropdown aria label or general dropdown label if there is no specific aria label. */

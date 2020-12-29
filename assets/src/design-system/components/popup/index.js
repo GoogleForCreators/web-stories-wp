@@ -38,6 +38,7 @@ const Container = styled.div.attrs(
     },
   })
 )`
+  /*! @noflip */
   left: 0px;
   top: 0px;
   position: fixed;

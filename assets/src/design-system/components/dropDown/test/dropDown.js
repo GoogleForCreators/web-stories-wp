@@ -98,6 +98,39 @@ describe('DropDown <DropDown />', () => {
     expect(label).toBeInTheDocument();
   });
 
+  it('should use dropDownLabel as aria-label when no ariaLabel is specified', () => {
+    const { getByRole, getByLabelText } = renderWithProviders(
+      <DropDown
+        options={basicDropDownOptions}
+        placeholder={'select a value'}
+        dropDownLabel={'my label'}
+      />
+    );
+
+    const label = getByLabelText('my label');
+    fireEvent.click(label);
+
+    const menu = getByRole('listbox');
+    expect(menu).toBeInTheDocument();
+  });
+
+  it('should use ariaLabel as aria-label when present', () => {
+    const { getByRole, getByLabelText } = renderWithProviders(
+      <DropDown
+        options={basicDropDownOptions}
+        placeholder={'select a value'}
+        dropDownLabel={'my label'}
+        ariaLabel={'my aria label override'}
+      />
+    );
+
+    const label = getByLabelText('my aria label override');
+    fireEvent.click(label);
+
+    const menu = getByRole('listbox');
+    expect(menu).toBeInTheDocument();
+  });
+
   it('should show <DropDown /> menu when a select button is clicked', () => {
     const { getByRole } = renderWithProviders(
       <DropDown

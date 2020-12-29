@@ -46,6 +46,7 @@ const ListGroupings = ({
       isManyGroups={isManyGroups}
       label={label}
       listId={listId}
+      role={hasMenuRole ? 'menu' : 'listbox'}
     >
       {group.map((groupOption, optionIndex) => {
         const isSelected = groupOption.value === activeValue;
@@ -54,7 +55,7 @@ const ListGroupings = ({
         return (
           <ListItem
             key={groupOption.value}
-            aria-posinset={optionInset}
+            aria-posinset={optionInset + 1}
             aria-selected={isSelected}
             aria-setsize={listLength}
             id={`dropDownMenuItem-${groupOption.value}`}
