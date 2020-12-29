@@ -108,7 +108,6 @@ export const DropDown = ({
     <DropDownContainer>
       <DropDownSelect
         activeItemLabel={activeOption?.label}
-        ariaLabel={ariaLabel}
         aria-pressed={isOpen}
         aria-disabled={disabled}
         aria-expanded={isOpen}

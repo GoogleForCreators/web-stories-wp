@@ -55,7 +55,7 @@ const ListGroupings = ({
         return (
           <ListItem
             key={groupOption.value}
-            aria-posinset={optionInset}
+            aria-posinset={optionInset + 1}
             aria-selected={isSelected}
             aria-setsize={listLength}
             id={`dropDownMenuItem-${groupOption.value}`}
