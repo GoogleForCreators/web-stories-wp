@@ -18,9 +18,15 @@
  */
 import { css } from 'styled-components';
 
+/**
+ * Internal dependencies
+ */
+import { KEYBOARD_USER_SELECTOR } from '../constants/keyboardOnlyOutline';
+
 export const focusableOutlineCSS = (accent) => css`
   border: solid 2px transparent;
-  &:focus {
+
+  ${KEYBOARD_USER_SELECTOR} &:focus {
     border: solid 2px ${accent};
     outline: none;
   }

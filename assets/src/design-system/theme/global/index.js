@@ -14,17 +14,4 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import * as KEYBOARD_ONLY from './keyboardOnlyOutline';
-import * as TYPOGRAPHY from './typography';
-import * as WP_ADMIN from './wpAdmin';
-import { Z_INDEX } from './zIndex';
-
-export const THEME_CONSTANTS = {
-  KEYBOARD_ONLY,
-  TYPOGRAPHY,
-  Z_INDEX,
-  WP_ADMIN,
-};
+export { KeyboardOnlyOutline } from './keyboardOnlyOutline';

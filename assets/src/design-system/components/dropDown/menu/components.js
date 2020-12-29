@@ -89,7 +89,6 @@ export const ListItem = styled.li(
     ${themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
 
     &:focus {
-      outline: none;
       background-color: ${isSelected
         ? theme.colors.interactiveBg.brandNormal
         : theme.colors.interactiveBg.brandHover};

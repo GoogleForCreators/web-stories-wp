@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import * as KEYBOARD_ONLY from './keyboardOnlyOutline';
-import * as TYPOGRAPHY from './typography';
-import * as WP_ADMIN from './wpAdmin';
-import { Z_INDEX } from './zIndex';
+// These are used to control styles based on if a keyboard is in use.
+// To target an element's styles purely for keyboard users use `THEME_CONSTANTS.KEYBOARD_ONLY.KEYBOARD_USER_SELECTOR`
+export const KEYBOARD_USER_CLASS = `useskeyboard`;
+export const KEYBOARD_USER_SELECTOR = `.${KEYBOARD_USER_CLASS}`;
 
-export const THEME_CONSTANTS = {
-  KEYBOARD_ONLY,
-  TYPOGRAPHY,
-  Z_INDEX,
-  WP_ADMIN,
-};
+export const ACCEPTED_KEYS = [
+  'ArrowUp',
+  'ArrowDown',
+  'ArrowLeft',
+  'ArrowRight',
+  'Tab',
+  'Digit1',
+  'Digit2',
+  'Digit3',
+];

@@ -49,10 +49,6 @@ const Base = styled.button(
       theme,
     })};
 
-    &:focus,
-    &:active {
-      outline: none;
-    }
     &:active {
       background-color: ${theme.colors.interactiveBg.active};
       color: ${theme.colors.interactiveFg.active};
