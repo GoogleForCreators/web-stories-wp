@@ -33,7 +33,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { isCircleView, updateViewSettings } from '../utils';
-import { isEmpty } from '../utils/globals';
+import { isEmpty, webStoriesData } from '../utils/globals';
 import name from '../store/name';
 
 import TinyMCEToggle from './controls/Toggle';
@@ -41,6 +41,7 @@ import TinyMCEToggle from './controls/Toggle';
 const WebStoriesModal = (props) => {
   const { modalOpen, settings, prepareShortCode } = props;
   const { author, date, title, number, columns, order, view } = settings;
+  const { views, orderlist } = webStoriesData;
 
   return (
     <>
@@ -58,7 +59,7 @@ const WebStoriesModal = (props) => {
             <SelectControl
               label={__('Select View Type', 'web-stories')}
               value={view}
-              options={window.webStoriesData.views}
+              options={views}
               onChange={(view_type) => dispatch(name).setCurrentView(view_type)}
             />
           )}
@@ -99,7 +100,7 @@ const WebStoriesModal = (props) => {
             <SelectControl
               label={__('Select Order', 'web-stories')}
               value={order}
-              options={window.webStoriesData.orderlist}
+              options={orderlist}
               onChange={(o) => {
                 updateViewSettings({ fieldObj: o, field: 'order' });
               }}

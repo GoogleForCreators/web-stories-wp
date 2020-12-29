@@ -17,13 +17,14 @@
 /**
  * WordPress dependencies
  */
-import { select, dispatch } from '@wordpress/data';
+import { select } from '@wordpress/data';
 /**
  * Internal dependencies
  */
 jest.mock('@wordpress/data', () => ({
-  select: jest.fn(),
-  dispatch: jest.fn(),
+  select: jest.fn(() => ({
+    getCurrentView: () => 'grid',
+  })),
 }));
 
 import * as Utils from '../../utils';
@@ -33,9 +34,6 @@ import * as Utils from '../../utils';
  */
 describe('Test the current view', () => {
   it('view should be circles', () => {
-    select.mockImplementation(() => ({
-      getCurrentView: () => 'grid',
-    }));
     const view = Utils.currentView();
     expect(view).toBe('grid');
   });
@@ -46,9 +44,6 @@ describe('Test the current view', () => {
  */
 describe('Test view is not circle', () => {
   it('view should not be circles', () => {
-    select.mockImplementation(() => ({
-      getCurrentView: () => 'carousel',
-    }));
     const circleView = Utils.isCircleView();
     expect(circleView).toBeFalsy();
   });
@@ -59,7 +54,7 @@ describe('Test view is not circle', () => {
  */
 describe('Test view is circle', () => {
   it('view should be circles', () => {
-    select.mockImplementation(() => ({
+    select.mockImplementationOnce(() => ({
       getCurrentView: () => 'circles',
     }));
     const circleView = Utils.isCircleView();
