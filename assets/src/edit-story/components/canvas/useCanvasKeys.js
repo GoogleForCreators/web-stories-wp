@@ -100,6 +100,17 @@ function useCanvasKeys(ref) {
 
     const doc = container.ownerDocument;
 
+    const isDescendant = (parent, child) => {
+      let node = child.parentNode;
+      while (node !== null) {
+        if (node === parent) {
+          return true;
+        }
+        node = node.parentNode;
+      }
+      return false;
+    };
+
     const handler = () => {
       // Make sure that no other component is trying to get the focus
       // at this time. We have to check all "focusout" events here because
@@ -113,6 +124,17 @@ function useCanvasKeys(ref) {
             currentSelectedIds?.length === 1
               ? getNodeForElement(currentSelectedIds[0])
               : null;
+
+          // Check if the selection event happends outside the canvas container,
+          // i.e Checklist panel, Document panel... etc.
+          const selectedAnchor = global.getSelection().anchorNode;
+          const inCanvasContainer = isDescendant(selectedAnchor, container);
+          if (!inCanvasContainer) {
+            return;
+          }
+
+          // If there is a multiple selection happene inside the canvas
+          // container, we should prevent the first element from scrolling.
           if (selectedFrame) {
             selectedFrame.focus({ preventScroll: true });
           } else {
