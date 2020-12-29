@@ -36,9 +36,6 @@ import { DEFAULT_POPUP_FILL_WIDTH } from './constants';
 import DropDownMenu from './menu';
 import DropDownSelect from './select';
 import { MENU_OPTIONS } from './types';
-import DropDownMenu from './menu';
-import DropDownSelect from './select';
-import { MENU_OPTIONS } from './types';
 import useDropDown from './useDropDown';
 /**
  *
