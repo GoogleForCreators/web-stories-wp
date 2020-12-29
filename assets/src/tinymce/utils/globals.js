@@ -16,3 +16,4 @@
 
 export const { forEach } = _;
 export const { isEmpty } = _;
+export const { webStoriesData } = window;
