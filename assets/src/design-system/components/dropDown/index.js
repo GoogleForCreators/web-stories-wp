@@ -50,6 +50,8 @@ import useDropDown from './useDropDown';
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding dropdown menu styles (container div > ul > li).
  * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
+ * @param {number} props.popupFillWidth Allows for an override of how much of popup width to take up for dropDown.
+ * @param {number} props.popupZIndex Allows for an override of the default popup z index (2).
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
  * @param {Function} props.renderItem If present when menu is open, will override the base list items rendered for each option, the entire item and whether it is selected will be returned and allow you to style list items internal to a list item without affecting dropdown functionality.
  * @param {string} props.selectedValue the selected value of the dropDown. Should correspond to a value in the options array of objects.
@@ -67,6 +69,7 @@ export const DropDown = ({
   options = [],
   placement = PLACEMENT.BOTTOM,
   popupFillWidth = DEFAULT_POPUP_FILL_WIDTH,
+  popupZIndex,
   selectedValue = '',
   ...rest
 }) => {
@@ -108,9 +111,9 @@ export const DropDown = ({
     <DropDownContainer>
       <DropDownSelect
         activeItemLabel={activeOption?.label}
-        aria-pressed={isOpen}
+        aria-pressed={isOpen.value}
         aria-disabled={disabled}
-        aria-expanded={isOpen}
+        aria-expanded={isOpen.value}
         aria-label={ariaLabel || dropDownLabel}
         aria-owns={listId}
         disabled={disabled}
@@ -128,6 +131,7 @@ export const DropDown = ({
           isOpen={isOpen.value}
           placement={placement}
           fillWidth={popupFillWidth}
+          zIndex={popupZIndex}
         >
           <DropDownMenu
             activeValue={activeOption?.value}
@@ -171,6 +175,7 @@ DropDown.propTypes = {
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
   popupFillWidth: PropTypes.number,
+  popupZIndex: PropTypes.number,
   renderItem: PropTypes.object,
   selectedValue: PropTypes.oneOfType([
     PropTypes.string,

@@ -28,13 +28,14 @@ import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
 // TODO scrollbar update, commented out until design updates are done
-
+const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight, placement }) => ({
+  ({ x, y, width, height, fillWidth, fillHeight, placement, zIndex }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
+      zIndex,
     },
   })
 )`
@@ -42,7 +43,6 @@ const Container = styled.div.attrs(
   left: 0px;
   top: 0px;
   position: fixed;
-  z-index: 2;
 
   /*
    * Custom gray scrollbars for Chromium & Firefox.
@@ -76,6 +76,7 @@ function Popup({
   children,
   renderContents,
   placement = PLACEMENT.BOTTOM,
+  zIndex = DEFAULT_POPUP_Z_INDEX,
   spacing,
   isOpen,
   fillWidth = false,
@@ -128,6 +129,7 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
+          zIndex={zIndex}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })

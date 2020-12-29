@@ -124,7 +124,7 @@ export const LabelText = styled(Text)`
   text-overflow: hidden;
 `;
 
-export const Label = styled.label`
+export const Label = styled.span`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.fg.secondary};
