@@ -245,10 +245,11 @@ function MediaPane(props) {
   const resources = media.filter(filterResource);
 
   const onSearch = (value) => {
-    if (value.trim() !== searchTerm) {
-      setSearchTerm({ searchTerm: value.trim() });
+    const trimText = value.trim();
+    if (trimText !== searchTerm) {
+      setSearchTerm({ searchTerm: trimText });
       trackEvent('search_media', 'editor', '', '', {
-        search_term: value.trim(),
+        search_term: trimText,
       });
     }
   };
@@ -275,8 +276,9 @@ function MediaPane(props) {
               onChange={onFilter}
               options={FILTERS}
               placement={Placement.BOTTOM_START}
+              widthFitContent
             />
-            {isSearching && Boolean(media.length) && (
+            {isSearching && media.length && (
               <SearchCount>
                 {sprintf(
                   /* translators: %d: number of results. */
