@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, select, text } from '@storybook/addon-knobs';
+import { boolean, number, select, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
 import { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
@@ -111,6 +111,7 @@ export const _default = () => {
             setSelectedValue(newValue);
           }}
           placement={select('placement', Object.values(PLACEMENT))}
+          popupZIndex={number('popupZIndex')}
         />
       </Container>
     </DarkThemeProvider>
@@ -139,6 +140,7 @@ export const LightTheme = () => {
           setSelectedValue(newValue);
         }}
         placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
       />
     </Container>
   );
@@ -167,6 +169,7 @@ export const ShortMenu = () => {
           setSelectedValue(newValue);
         }}
         placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
       />
     </Container>
   );
@@ -194,6 +197,7 @@ export const NoOptionsMenu = () => {
           setSelectedValue(newValue);
         }}
         placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
       />
     </Container>
   );
@@ -221,6 +225,7 @@ export const ReallyLongLabelsMenu = () => {
           setSelectedValue(newValue);
         }}
         placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
       />
     </Container>
   );
@@ -248,6 +253,7 @@ export const SubMenus = () => {
           setSelectedValue(newValue);
         }}
         placement={select('placement', Object.values(PLACEMENT))}
+        popupZIndex={number('popupZIndex')}
       />
     </Container>
   );
@@ -292,6 +298,7 @@ export const OverriddenAnimationProofOfConcept = () => {
             setSelectedValue(newValue);
           }}
           placement={select('placement', Object.values(PLACEMENT))}
+          popupZIndex={number('popupZIndex')}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}
           renderItem={RenderItemOverride}
         />
