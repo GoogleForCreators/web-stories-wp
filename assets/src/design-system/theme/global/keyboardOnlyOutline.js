@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import React, { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 
 /**
@@ -40,19 +40,22 @@ const OutlineStyles = createGlobalStyle`
 export const KeyboardOnlyOutline = () => {
   const [usingKeyboard, setUsingKeyboard] = useState(false);
 
-  useEffect(() => {
-    const handleKeydown = (e) => {
+  const handleKeydown = useCallback(
+    (e) => {
       if (!usingKeyboard && ACCEPTED_KEYS.includes(e.code)) {
         setUsingKeyboard(true);
       }
-    };
+    },
+    [usingKeyboard]
+  );
 
-    const handleMousedown = () => {
-      if (usingKeyboard) {
-        setUsingKeyboard(false);
-      }
-    };
+  const handleMousedown = useCallback(() => {
+    if (usingKeyboard) {
+      setUsingKeyboard(false);
+    }
+  }, [usingKeyboard]);
 
+  useEffect(() => {
     document.addEventListener('keydown', handleKeydown, true);
     document.addEventListener('mousedown', handleMousedown, true);
 
@@ -60,7 +63,7 @@ export const KeyboardOnlyOutline = () => {
       document.removeEventListener('keydown', handleKeydown, true);
       document.removeEventListener('mousedown', handleMousedown, true);
     };
-  }, [usingKeyboard]);
+  }, [handleKeydown, handleMousedown]);
 
   useEffect(() => {
     document.body.classList.toggle(KEYBOARD_USER_CLASS, usingKeyboard);
