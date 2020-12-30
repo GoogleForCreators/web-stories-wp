@@ -18,6 +18,12 @@
  */
 import React from 'react';
 import renderer from 'react-test-renderer';
+
+jest.mock('../../../utils/globals', () => ({
+  forEach: jest.fn(),
+  isEmpty: jest.fn(),
+}));
+
 /**
  * Internal dependencies
  */

@@ -13,19 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { SetDefaultStateSetting } from '../utils';
+import name from '../../store/name';
 
-let DEFAULT_STATE = {
-  settings: {},
-  modalOpen: false,
-  editor: false,
-  currentView: 'circles',
-};
-
-DEFAULT_STATE['settings'] = SetDefaultStateSetting();
-
-export default DEFAULT_STATE;
+/**
+ * Test the store name is string and its value.
+ */
+describe('Test store name', () => {
+  it('store name is web-stories-mce', () => {
+    expect(name).toBe('web-stories-mce');
+  });
+});

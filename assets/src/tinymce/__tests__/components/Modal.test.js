@@ -21,11 +21,7 @@ import renderer from 'react-test-renderer';
 /**
  * Internal dependencies
  */
-//import { forEach, isEmpty, webStoriesData } from '../../utils/globals';
-/**
- * Internal dependencies
- */
-import TinyMCEToggle from '../../components/controls/Toggle';
+import { isCircleView, updateViewSettings } from '../../utils';
 import WebStoriesModal from '../../components/Modal';
 
 jest.mock('@wordpress/data', () => ({
@@ -57,8 +53,26 @@ jest.mock('../../utils/globals', () => ({
 
 jest.mock('../../components/controls/Toggle', () => 'TinyMCEToggle');
 
+jest.mock('../../utils', () => ({
+  isCircleView: jest.fn(() => false),
+  updateViewSettings: jest.fn((settings) => settings),
+}));
+
 describe('TinyMCE Controls Modal', () => {
-  it('modal is opened', () => {
+  it('modal is opened and view is non-circle', () => {
+    const props = {
+      modalOpen: true,
+      settings: {},
+      prepareShortCode: jest.fn(),
+    };
+
+    const tree = renderer.create(<WebStoriesModal {...props} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('modal is opened and view is circle', () => {
+    isCircleView.mockImplementationOnce(() => true);
+
     const props = {
       modalOpen: true,
       settings: {},

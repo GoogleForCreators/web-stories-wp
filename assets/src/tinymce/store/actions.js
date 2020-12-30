@@ -51,8 +51,8 @@ export function setCurrentView(view) {
 /**
  * Set view settings.
  *
- * @param view
- * @param settings
+ * @param {Array} view Views list.
+ * @param {Object} settings Settings object.
  */
 export function setViewSettings(view, settings) {
   return {
