@@ -74,13 +74,3 @@ export function getCurrentViewSettings(state) {
 
   return state.settings[currentView];
 }
-
-/**
- * Get state for store.
- *
- * @param state
- * @return {Object}
- */
-export function getState(state) {
-  return state;
-}
