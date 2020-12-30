@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-export { KeyboardOnlyOutline } from './keyboardOnlyOutline';
+export {
+  OverrideFocusOutline,
+  FOCUS_VISIBLE_SELECTOR,
+} from './overrideFocusOutline';

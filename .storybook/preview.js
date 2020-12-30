@@ -115,7 +115,7 @@ addDecorator((story, { id }) => {
     const dsTheme = { ...designSystemTheme, colors: lightMode };
     return (
       <ThemeProvider theme={dsTheme}>
-        <ThemeGlobals.KeyboardOnlyOutline />
+        <ThemeGlobals.OverrideFocusOutline />
         {story()}
       </ThemeProvider>
     );
