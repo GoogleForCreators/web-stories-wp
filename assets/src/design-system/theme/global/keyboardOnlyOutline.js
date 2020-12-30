@@ -39,27 +39,28 @@ const OutlineStyles = createGlobalStyle`
 
 export const KeyboardOnlyOutline = () => {
   const [usingKeyboard, setUsingKeyboard] = useState(false);
-  const handleKeydown = (e) => {
-    if (!usingKeyboard && ACCEPTED_KEYS.includes(e.code)) {
-      setUsingKeyboard(true);
-    }
-  };
-
-  const handleMousedown = () => {
-    if (usingKeyboard) {
-      setUsingKeyboard(false);
-    }
-  };
-
-  document.addEventListener('keydown', handleKeydown, true);
-  document.addEventListener('mousedown', handleMousedown, true);
 
   useEffect(() => {
-    return function cleanup() {
+    const handleKeydown = (e) => {
+      if (!usingKeyboard && ACCEPTED_KEYS.includes(e.code)) {
+        setUsingKeyboard(true);
+      }
+    };
+
+    const handleMousedown = () => {
+      if (usingKeyboard) {
+        setUsingKeyboard(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeydown, true);
+    document.addEventListener('mousedown', handleMousedown, true);
+
+    return () => {
       document.removeEventListener('keydown', handleKeydown, true);
       document.removeEventListener('mousedown', handleMousedown, true);
     };
-  });
+  }, [usingKeyboard]);
 
   useEffect(() => {
     document.body.classList.toggle(KEYBOARD_USER_CLASS, usingKeyboard);
