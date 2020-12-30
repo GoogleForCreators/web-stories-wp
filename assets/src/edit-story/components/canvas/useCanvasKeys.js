@@ -100,17 +100,6 @@ function useCanvasKeys(ref) {
 
     const doc = container.ownerDocument;
 
-    const isDescendant = (parent, child) => {
-      let node = child.parentNode;
-      while (node !== null) {
-        if (node === parent) {
-          return true;
-        }
-        node = node.parentNode;
-      }
-      return false;
-    };
-
     const handler = () => {
       // Make sure that no other component is trying to get the focus
       // at this time. We have to check all "focusout" events here because
@@ -126,10 +115,10 @@ function useCanvasKeys(ref) {
               : null;
 
           // Check if the selection event happends outside the canvas container,
-          // i.e Checklist panel, Document panel... etc.
-          const selectedAnchor = global.getSelection().anchorNode;
-          const inCanvasContainer = isDescendant(selectedAnchor, container);
-          if (!inCanvasContainer) {
+          // i.e Checklist panel, Document panel... etc. If there is any text
+          // selection, we should not add the preventScroll setting, so that
+          // user can select the text properly.
+          if (global.getSelection().anchorOffset !== 0) {
             return;
           }
 
