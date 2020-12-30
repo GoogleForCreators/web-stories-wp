@@ -39,6 +39,7 @@ import '../../../node_modules/@wordpress/components/build-style/style.css';
 import name from './store/name';
 import WebStoryMCEStore from './store';
 import WebStoriesModal from './containers/Modal';
+import { webStoriesData } from './utils/globals';
 
 const { _ } = window;
 
@@ -72,7 +73,7 @@ const { _ } = window;
   tinymce.PluginManager.add('web_stories', function (editor) {
     editor.addButton('web_stories', {
       text: __('Web Stories', 'web-stories'),
-      icon: 'books',
+      image: webStoriesData.icon,
       onclick: function () {
         dispatch(name).setEditor(editor);
         dispatch(name).toggleModal(true);
