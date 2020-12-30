@@ -23,11 +23,11 @@ import { renderHook } from '@testing-library/react-hooks';
  * Internal dependencies
  */
 
-import useDropDown from '../useDropDown';
 import {
   basicDropDownOptions,
   nestedDropDownOptions,
-} from '../stories/sampleData';
+} from '../../../testUtils/sampleData';
+import useDropDown from '../useDropDown';
 
 describe('useDropDown()', function () {
   it('should return falsy for activeOption when no selectedValue is present', function () {
