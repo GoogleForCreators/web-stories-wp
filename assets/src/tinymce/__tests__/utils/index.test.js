@@ -27,6 +27,11 @@ jest.mock('@wordpress/data', () => ({
   })),
 }));
 
+jest.mock('../../utils/globals', () => ({
+  forEach: jest.fn(),
+  isEmpty: jest.fn(),
+}));
+
 import * as Utils from '../../utils';
 
 /**

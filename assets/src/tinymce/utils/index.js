@@ -22,6 +22,7 @@ import { dispatch, select } from '@wordpress/data';
  * Internal dependencies
  */
 import name from '../store/name';
+import { forEach, isEmpty, webStoriesData } from './globals';
 
 /**
  * Get current view.
@@ -74,4 +75,32 @@ export const updateViewSettings = ({ fieldObj, field, isReadonly = false }) => {
   }
 
   dispatch(name).setViewSettings(currentView(), updatedSettings);
+};
+
+/**
+ * Set default setting state per se view type.
+ *
+ * @return {Object} Settings.
+ */
+export const SetDefaultStateSetting = () => {
+  const State = [];
+  const { orderlist, views, fields } = webStoriesData;
+
+  forEach(views, (value) => {
+    const { value: viewValue } = value;
+    const { title, author, date } = fields[viewValue];
+
+    State[viewValue] = {
+      title: title,
+      author: author,
+      date: date,
+      image_align: false,
+      number: 5,
+      columns: 1,
+      view: viewValue,
+      order: isEmpty(orderlist) ? 'latest' : orderlist[0].value,
+    };
+  });
+
+  return State;
 };

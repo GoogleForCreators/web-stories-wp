@@ -15,12 +15,12 @@
  */
 
 /**
- * Internal dependencies
- */
-/**
  * WordPress dependencies
  */
 import { registerStore } from '@wordpress/data';
+/**
+ * Internal dependencies
+ */
 import * as actions from './actions';
 import name from './name';
 import reducer from './reducers';
