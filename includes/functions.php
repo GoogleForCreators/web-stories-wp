@@ -150,7 +150,7 @@ function web_stories_script_data( $hook ) {
 
 	$data = [
 		'orderlist' => $order_list,
-		'icon'      => WEBSTORIES_ASSETS_URL . '/src/tinymce/images/carousel.svg',
+		'icon'      => WEBSTORIES_PLUGIN_DIR_URL . '/__static__/carousel-icon.png',
 		'tag'       => 'stories',
 		'views'     => $view_types,
 		'fields'    => $field_states,
