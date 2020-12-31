@@ -1,0 +1,110 @@
+/*
+ * Copyright 2020 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import { useMemo, forwardRef } from 'react';
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import {
+  IconContainer,
+  Input,
+  InputContainer,
+  StyledClear,
+  StyledChevron,
+} from './components';
+
+const TypeaheadInput = (
+  {
+    ariaInputLabel,
+    ariaClearLabel,
+    clearId,
+    disabled,
+    id,
+    listId,
+    handleClearInputValue,
+    inputValue,
+    isOpen,
+    isFlexibleValue,
+    ...rest
+  },
+  ref
+) => {
+  // show clear button when there is text present in input and the menu isn't open or isFlexibleValue is true.
+  const showClearButton = useMemo(
+    () => inputValue.length > 0 && (isOpen?.value || isFlexibleValue),
+    [inputValue, isFlexibleValue, isOpen]
+  );
+
+  // show drop down icon when clear button is not present: menu is not open and there is no input if isFlexibleValue,
+  // or if not open and showClearButton is false and isMenuFocused is true.
+  const showDropDownIcon = useMemo(
+    () => (isFlexibleValue ? inputValue.length === 0 : !showClearButton),
+    [inputValue.length, isFlexibleValue, showClearButton]
+  );
+
+  return (
+    <InputContainer disabled={disabled}>
+      <label aria-label={ariaInputLabel} htmlFor={id} />
+
+      <Input
+        aria-autocomplete={'list'}
+        aria-controls={listId}
+        aria-disabled={disabled}
+        aria-expanded={isOpen}
+        aria-owns={listId}
+        disabled={disabled}
+        id={id}
+        isOpen={isOpen}
+        name={id}
+        ref={ref}
+        role={'combobox'}
+        type={'search'}
+        value={inputValue}
+        {...rest}
+      />
+
+      <IconContainer
+        disabled={disabled}
+        onClick={handleClearInputValue}
+        label={showClearButton && ariaClearLabel}
+        as={showDropDownIcon ? 'div' : 'button'}
+        aria-hidden={showDropDownIcon}
+      >
+        {showClearButton && <StyledClear aria-hidden={true} id={clearId} />}
+        {showDropDownIcon && (
+          <StyledChevron isOpen={isOpen} aria-hidden={true} />
+        )}
+      </IconContainer>
+    </InputContainer>
+  );
+};
+
+export default forwardRef(TypeaheadInput);
+
+TypeaheadInput.propTypes = {
+  ariaLabel: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  id: PropTypes.string.isRequired,
+  listId: PropTypes.string.isRequired,
+  handleClearInputValue: PropTypes.func.isRequired,
+  inputValue: PropTypes.string,
+  isOpen: PropTypes.bool,
+};

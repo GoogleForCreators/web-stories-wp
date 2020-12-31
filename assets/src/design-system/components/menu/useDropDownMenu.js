@@ -104,15 +104,18 @@ export default function useDropDownMenu({
     [handleMenuItemEnter]
   );
 
-  useKeyDownEffect(listRef, { key: KEYS_CLOSE_MENU }, () => onDismissMenu?.(), [
-    onDismissMenu,
-  ]);
+  useKeyDownEffect(
+    listRef,
+    { key: KEYS_CLOSE_MENU },
+    (event) => onDismissMenu?.(event),
+    [onDismissMenu]
+  );
 
   useKeyDownEffect(listRef, { key: KEYS_SHIFT_FOCUS }, handleFocusChange, [
     handleFocusChange,
   ]);
 
-  useFocusOut(listRef, () => onDismissMenu?.(), []);
+  useFocusOut(listRef, (event) => onDismissMenu?.(event), []);
 
   return useMemo(
     () => ({
