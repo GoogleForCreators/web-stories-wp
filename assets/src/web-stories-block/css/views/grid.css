@@ -1,0 +1,33 @@
+/* Web Stories: Grid View */
+.web-stories-list.is-view-type-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.web-stories-list.is-view-type-grid .web-stories-list__story-wrapper {
+  flex-basis: calc(100% - 8px);
+  margin: 4px;
+}
+
+@media all and (min-width: 415px) {
+  .web-stories-list.is-view-type-grid.columns-1
+    .web-stories-list__story-wrapper {
+    flex-basis: calc((100 / 1 * 1%) - 8px);
+  }
+  .web-stories-list.is-view-type-grid.columns-2
+    .web-stories-list__story-wrapper {
+    flex-basis: calc((100 / 2 * 1%) - 8px);
+  }
+  .web-stories-list.is-view-type-grid.columns-3
+    .web-stories-list__story-wrapper {
+    flex-basis: calc((100 / 3 * 1%) - 8px);
+  }
+  .web-stories-list.is-view-type-grid.columns-4
+    .web-stories-list__story-wrapper {
+    flex-basis: calc((100 / 4 * 1%) - 8px);
+  }
+  .web-stories-list.is-view-type-grid.columns-5
+    .web-stories-list__story-wrapper {
+    flex-basis: calc((100 / 5 * 1%) - 8px);
+  }
+}

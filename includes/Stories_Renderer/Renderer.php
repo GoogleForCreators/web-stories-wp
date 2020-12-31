@@ -248,12 +248,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	public function assets() {
 
-		wp_enqueue_style(
-			self::STYLE_HANDLE,
-			WEBSTORIES_PLUGIN_DIR_URL . 'includes/assets/stories.css',
-			[],
-			WEBSTORIES_VERSION
-		);
+		$this->enqueue_style( self::STYLE_HANDLE );
 
 		if ( ! $this->is_amp_request() ) {
 

@@ -1,0 +1,53 @@
+/* Web Stories: List View */
+.is-view-type-list .web-stories-list__story-wrapper {
+  margin-bottom: 12px;
+}
+
+.is-view-type-list .story-content-overlay {
+  position: absolute;
+  bottom: 0;
+  color: var(--ws-overlay-text-color);
+  z-index: 1;
+}
+
+@media all and (min-width: 676px) {
+  .is-view-type-list .web-stories-list__inner-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .is-view-type-list .web-stories-list__story-placeholder {
+    flex-basis: 40%;
+  }
+
+  .is-view-type-list .web-stories-list__story-placeholder::before {
+    display: none;
+  }
+
+  .is-view-type-list .web-stories-list__story-placeholder::after {
+    content: '';
+    display: block;
+    padding-bottom: var(--ws-list-aspect-ratio);
+  }
+
+  .is-view-type-list .story-content-overlay {
+    flex-basis: 60%;
+    padding: 10px 15px;
+    position: relative;
+    color: inherit;
+  }
+
+  .is-view-type-list .image-align-right .web-stories-list__story-placeholder {
+    order: 2;
+  }
+
+  .is-view-type-list .image-align-right .story-content-overlay {
+    order: 1;
+  }
+
+  .is-view-type-list.is-style-default .web-stories-list__story-placeholder {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+}

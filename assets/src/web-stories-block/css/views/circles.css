@@ -1,0 +1,43 @@
+/* Web Stories: Circles View */
+.is-view-type-circles {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.is-view-type-circles .web-stories-list__story-wrapper {
+  overflow: visible;
+  overflow: initial;
+  max-width: var(--ws-circle-size);
+  min-width: initial;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.is-view-type-circles .web-stories-list__inner-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.is-view-type-circles .web-stories-list__story-placeholder {
+  height: var(--ws-circle-size);
+  width: var(--ws-circle-size);
+  border-radius: 50%;
+  background-clip: content-box;
+  border: 2px solid var(--ws-circle-border-color);
+  padding: 2px;
+}
+
+.is-view-type-circles .web-stories-list__story-placeholder::after,
+.is-view-type-circles .web-stories-list__story-placeholder::before {
+  display: none;
+}
+
+.is-view-type-circles .story-content-overlay__title {
+  font-size: var(--ws-font-size-circle-title);
+}
+
+.is-view-type-circles.has-title .glider-next,
+.is-view-type-circles.has-title .glider-prev {
+  top: 35%;
+}
