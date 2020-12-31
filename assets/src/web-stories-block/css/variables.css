@@ -1,0 +1,14 @@
+:root {
+  --ws-font-size-title: 18px;
+  --ws-font-size-circle-title: 14px;
+  --ws-font-size-excerpt: 16px;
+  --ws-font-size-author-date: 14px;
+  --ws-aspect-ratio: 176.2%;
+  --ws-list-aspect-ratio: 75%;
+  --ws-overlay-text-color: #fff;
+  --ws-overlay-text-lh: 1.3;
+  --ws-story-min-width: 185px;
+  --ws-story-max-width: 285px;
+  --ws-circle-size: 96px;
+  --ws-circle-border-color: #ccc;
+}

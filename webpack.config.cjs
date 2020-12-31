@@ -250,6 +250,36 @@ const storyEmbedBlock = {
   },
 };
 
+const webStoriesBlock = {
+  ...sharedConfig,
+  entry: {
+    'web-stories-block': './assets/src/web-stories-block/index.js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new DependencyExtractionWebpackPlugin({
+      injectPolyfill: true,
+    }),
+    new WebpackBar({
+      name: 'Web Stories List',
+      color: '#357BB5',
+    }),
+  ].filter(Boolean),
+  optimization: {
+    ...sharedConfig.optimization,
+    splitChunks: {
+      cacheGroups: {
+        blockStyles: {
+          name: 'web-stories-list-styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
+  },
+};
+
 const activationNotice = {
   ...sharedConfig,
   entry: {
@@ -283,4 +313,5 @@ module.exports = [
   webStoriesScripts,
   storyEmbedBlock,
   activationNotice,
+  webStoriesBlock,
 ];
