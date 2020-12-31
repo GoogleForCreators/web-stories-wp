@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,6 +36,7 @@ import { EmptyList, ListGroupings } from './list';
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding dropdown menu styles (container div > ul > li).
  * @param {boolean} props.hasMenuRole if true, the aria role used for the list is 'menu' instead of 'listbox'.
  * @param {boolean} props.isRTL If true, arrow left will trigger down, arrow right will trigger up.
+ * @param {boolean} props.handleReturnToParent
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list. These options need to be sanitized with utils/getOptions.
  * @param {string} props.listId ID that comes from parent component that attaches this list to that parent. Used for a11y.
  * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option.
@@ -47,22 +48,27 @@ import { EmptyList, ListGroupings } from './list';
  *
  */
 
-const Menu = ({
-  dropDownHeight,
-  emptyText,
-  menuStylesOverride,
-  hasMenuRole,
-  isRTL,
-  options = [],
-  listId,
-  onMenuItemClick,
-  onDismissMenu,
-  renderItem,
-  activeValue,
-  menuAriaLabel,
-  parentId,
-}) => {
-  const listRef = useRef();
+const Menu = (
+  {
+    dropDownHeight,
+    emptyText,
+    menuStylesOverride,
+    hasMenuRole,
+    handleReturnToParent,
+    isMenuFocused = true, // defaults to true, override with false to take control of autofocus
+    isRTL,
+    options = [],
+    listId,
+    onMenuItemClick,
+    onDismissMenu,
+    renderItem,
+    activeValue,
+    menuAriaLabel,
+    parentId,
+  },
+  ref
+) => {
+  const listRef = ref;
   const optionsRef = useRef([]);
 
   const handleMenuItemSelect = useCallback(
@@ -77,11 +83,12 @@ const Menu = ({
     options,
     listRef,
     onDismissMenu,
+    handleReturnToParent,
   });
 
   useEffect(() => {
     const listEl = listRef.current;
-    if (!listEl || focusedIndex === null) {
+    if (!listEl || focusedIndex === null || !isMenuFocused) {
       return;
     }
     if (focusedIndex === -1) {
@@ -96,7 +103,7 @@ const Menu = ({
 
     highlighedOptionEl.focus();
     listEl.scrollTo(0, highlighedOptionEl.offsetTop - listEl.clientHeight / 2);
-  }, [focusedIndex]);
+  }, [focusedIndex, isMenuFocused, listRef]);
 
   return (
     <MenuContainer
@@ -126,11 +133,14 @@ const Menu = ({
   );
 };
 
+export default forwardRef(Menu);
+
 Menu.propTypes = {
   dropDownHeight: PropTypes.number,
   emptyText: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   hasMenuRole: PropTypes.bool,
+  handleReturnToParent: PropTypes.func,
   isRTL: PropTypes.bool,
   options: MENU_OPTIONS,
   listId: PropTypes.string.isRequired,
@@ -141,5 +151,3 @@ Menu.propTypes = {
   activeValue: DROP_DOWN_VALUE_TYPE,
   parentId: PropTypes.string.isRequired,
 };
-
-export { Menu };

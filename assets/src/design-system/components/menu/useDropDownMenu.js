@@ -33,6 +33,7 @@ import {
 export default function useDropDownMenu({
   activeValue,
   handleMenuItemSelect,
+  handleReturnToParent,
   isRTL,
   options = [],
   listRef,
@@ -73,9 +74,15 @@ export default function useDropDownMenu({
         focusedIndex < listLength - 1
       ) {
         handleMoveFocus(1);
+      } else if (
+        handleReturnToParent &&
+        ['ArrowUp', isRTL ? 'ArrowRight' : 'ArrowLeft'].includes(key) &&
+        focusedIndex === 0
+      ) {
+        handleReturnToParent();
       }
     },
-    [focusedIndex, handleMoveFocus, isRTL, listLength]
+    [focusedIndex, handleMoveFocus, handleReturnToParent, isRTL, listLength]
   );
 
   const handleMenuItemEnter = useCallback(

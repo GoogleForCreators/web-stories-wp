@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export { Menu } from './menu';
+export { default as Menu } from './menu';
 export {
   DROP_DOWN_ITEM,
   DROP_DOWN_ITEMS,

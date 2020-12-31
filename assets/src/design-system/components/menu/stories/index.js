@@ -20,15 +20,14 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { DROP_DOWN_ITEM } from '../../menu';
-import { Menu } from '../menu';
+import { Menu, DROP_DOWN_ITEM } from '../';
 import {
   basicDropDownOptions,
   effectChooserOptions,
@@ -90,6 +89,7 @@ const _nestedDropDownOptions = getOptions(nestedDropDownOptions);
 const _reallyLongOptions = getOptions(reallyLongOptions);
 
 export const _default = () => {
+  const menuRef = useRef();
   const [selectedValue, setSelectedValue] = useState(
     basicDropDownOptions[2].value
   );
@@ -113,6 +113,7 @@ export const _default = () => {
           activeValue={selectedValue}
           menuAriaLabel={text('menuAriaLabel', 'default aria label')}
           parentId={text('parentId', 'id-menu-associates-with')}
+          ref={menuRef}
         />
       </Container>
     </DarkThemeProvider>
@@ -120,6 +121,7 @@ export const _default = () => {
 };
 
 export const LightTheme = () => {
+  const menuRef = useRef();
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -141,12 +143,14 @@ export const LightTheme = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
+        ref={menuRef}
       />
     </Container>
   );
 };
 
 export const NoOptionsMenu = () => {
+  const menuRef = useRef();
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -168,12 +172,14 @@ export const NoOptionsMenu = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
+        ref={menuRef}
       />
     </Container>
   );
 };
 
 export const ReallyLongLabelsMenu = () => {
+  const menuRef = useRef();
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -195,12 +201,14 @@ export const ReallyLongLabelsMenu = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
+        ref={menuRef}
       />
     </Container>
   );
 };
 
 export const SubMenus = () => {
+  const menuRef = useRef();
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
@@ -222,6 +230,7 @@ export const SubMenus = () => {
         activeValue={selectedValue}
         menuAriaLabel={text('menuAriaLabel', 'default aria label')}
         parentId={text('parentId', 'id-menu-associates-with')}
+        ref={menuRef}
       />
     </Container>
   );
@@ -246,6 +255,7 @@ RenderItemOverride.propTypes = {
 };
 
 export const OverriddenAnimationProofOfConcept = () => {
+  const menuRef = useRef();
   const [selectedValue, setSelectedValue] = useState(null);
   return (
     <DarkThemeProvider>
@@ -267,6 +277,7 @@ export const OverriddenAnimationProofOfConcept = () => {
           activeValue={selectedValue}
           menuAriaLabel={text('menuAriaLabel', 'default aria label')}
           parentId={text('parentId', 'id-menu-associates-with')}
+          ref={menuRef}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}
           renderItem={RenderItemOverride}
         />
