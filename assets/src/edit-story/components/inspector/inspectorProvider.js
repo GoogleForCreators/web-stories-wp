@@ -36,6 +36,7 @@ import { useStory } from '../../app/story';
 
 import { PRE_PUBLISH_MESSAGE_TYPES } from '../../app/prepublish';
 import { Error, Warning } from '../../../design-system/icons/alert';
+import usePrevious from '../../utils/usePrevious';
 import PrepublishInspector, { usePrepublishChecklist } from './prepublish';
 import Context from './context';
 import DesignInspector from './design';
@@ -78,7 +79,7 @@ function InspectorProvider({ children }) {
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
-  const tabRef = useRef(tab);
+  const prevTab = usePrevious(tab);
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
@@ -92,10 +93,6 @@ function InspectorProvider({ children }) {
     []
   );
 
-  useEffect(() => {
-    tabRef.current = tab;
-  }, [tab]);
-
   useDeepCompareEffect(() => {
     if (tab === PREPUBLISH) {
       refreshChecklistDebounced();
@@ -103,16 +100,16 @@ function InspectorProvider({ children }) {
   }, [story, refreshChecklistDebounced]);
 
   useEffect(() => {
-    if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
+    if (selectedElementIds.length > 0 && prevTab === DOCUMENT) {
       setTab(DESIGN);
     }
-  }, [selectedElementIds]);
+  }, [selectedElementIds, prevTab]);
 
   useEffect(() => {
-    if (tabRef.current === DOCUMENT) {
+    if (prevTab === DOCUMENT) {
       setTab(DESIGN);
     }
-  }, [currentPage]);
+  }, [currentPage, prevTab]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
