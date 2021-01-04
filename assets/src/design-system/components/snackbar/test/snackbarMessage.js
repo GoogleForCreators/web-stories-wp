@@ -60,12 +60,12 @@ describe('design-system/components/snackbar/SnackbarMessage', () => {
   });
 
   it('should not find a button by default', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <SnackbarMessage message={'this is an error'} />
     );
-    const buttons = queryAllByRole('button');
+    const buttons = queryByRole('button');
 
-    expect(buttons).toHaveLength(0);
+    expect(buttons).not.toBeInTheDocument();
   });
 
   it('should recognize click on Action button', () => {

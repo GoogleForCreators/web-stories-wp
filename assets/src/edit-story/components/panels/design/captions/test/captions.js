@@ -57,8 +57,8 @@ describe('Panels/Captions', () => {
 
   it('should render <Captions /> panel', () => {
     const { getByRole } = renderCaptions([defaultElement]);
-    const imageHolder = getByRole('region', { name: /Captions/i });
-    expect(imageHolder).toBeDefined();
+    const captionRegion = getByRole('region', { name: /Captions/i });
+    expect(captionRegion).toBeInTheDocument();
   });
 
   it('should display Mixed in case of mixed value multi-selection', () => {

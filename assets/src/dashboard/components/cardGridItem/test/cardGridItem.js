@@ -31,6 +31,6 @@ describe('CardGridItem', () => {
       </CardGridItem>
     );
 
-    expect(getByText('Grid Item Paragraph')).toBeDefined();
+    expect(getByText('Grid Item Paragraph')).toBeInTheDocument();
   });
 });

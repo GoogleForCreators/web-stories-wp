@@ -108,7 +108,7 @@ describe('My Stories <Header />', function () {
         />
       </LayoutProvider>
     );
-    expect(getByPlaceholderText('Search Stories').value).toBe('Harry Potter');
+    expect(getByPlaceholderText('Search Stories')).toHaveValue('Harry Potter');
     expect(getByText('19 results')).toBeInTheDocument();
   });
 

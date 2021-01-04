@@ -49,7 +49,7 @@ describe('Toaster', () => {
   });
 
   it('should not load dismiss button when isAllowEarlyDismiss is false', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <Toaster
         activeToasts={[testToast]}
         isAllowEarlyDismiss={false}
@@ -57,9 +57,9 @@ describe('Toaster', () => {
       />
     );
 
-    const button = queryAllByRole('button');
+    const button = queryByRole('button');
 
-    expect(button).toHaveLength(0);
+    expect(button).not.toBeInTheDocument();
   });
 
   it('should load dismiss button when isAllowEarlyDismiss is true', () => {

@@ -276,17 +276,6 @@ class Experiments {
 			],
 			/**
 			 * Author: @dmmulroy
-			 * Issue: #2092
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showAnimationTab',
-				'label'       => __( 'Animations', 'web-stories' ),
-				'description' => __( 'Enable animations tab', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @dmmulroy
 			 * Issue: #2044
 			 * Creation date: 2020-06-04
 			 */
@@ -330,6 +319,17 @@ class Experiments {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #798
+			 * Creation date: 2020-11-02
+			 */
+			[
+				'name'        => 'enableSVG',
+				'label'       => __( 'SVG upload', 'web-stories' ),
+				'description' => __( 'Enable SVG upload', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
 			 * Author: @swissspidy
 			 * Issue: #3134
 			 * Creation date: 2020-10-28
@@ -348,7 +348,7 @@ class Experiments {
 			[
 				'name'        => 'eyeDropper',
 				'label'       => __( 'Eyedropper', 'web-stories' ),
-				'description' => __( 'Enable eyedropper in color picker.', 'web-stories' ),
+				'description' => __( 'Enable eyedropper in color picker', 'web-stories' ),
 				'group'       => 'editor',
 			],
 			/**
@@ -397,6 +397,19 @@ class Experiments {
 	}
 
 	/**
+	 * Returns an experiment by name.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param string $name Experiment name.
+	 * @return array|null Experiment if found, null otherwise.
+	 */
+	protected function get_experiment( $name ) {
+		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
+		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
+	}
+
+	/**
 	 * Checks whether an experiment is enabled.
 	 *
 	 * @since 1.0.0
@@ -406,6 +419,16 @@ class Experiments {
 	 * @return bool Whether the experiment is enabled.
 	 */
 	public function is_experiment_enabled( $name ) {
+		$experiment = $this->get_experiment( $name );
+
+		if ( ! $experiment ) {
+			return false;
+		}
+
+		if ( array_key_exists( 'default', $experiment ) ) {
+			return (bool) $experiment['default'];
+		}
+
 		$experiments = get_option( Settings::SETTING_NAME_EXPERIMENTS );
 		return ! empty( $experiments[ $name ] );
 	}

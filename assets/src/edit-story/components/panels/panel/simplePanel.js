@@ -29,7 +29,7 @@ import PanelContent from './shared/content';
 function SimplePanel({ children, name, title, ...rest }) {
   return (
     <Panel name={name} {...rest}>
-      <PanelTitle>{title}</PanelTitle>
+      <PanelTitle title={title}>{title}</PanelTitle>
       <PanelContent>{children}</PanelContent>
     </Panel>
   );

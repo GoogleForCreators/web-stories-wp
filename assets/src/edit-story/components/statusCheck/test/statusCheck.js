@@ -74,10 +74,10 @@ describe('statusCheck', () => {
     setup(Promise.reject(new Error('api failed')));
 
     const dialog = await screen.findByRole('dialog');
-    expect(dialog).not.toBeNull();
+    expect(dialog).toBeInTheDocument();
 
     const dismiss = screen.getByRole('button', { name: /Dismiss/i });
-    expect(dismiss).toBeDefined();
+    expect(dismiss).toBeInTheDocument();
     fireEvent.click(dismiss);
 
     await waitForElementToBeRemoved(dialog);

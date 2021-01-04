@@ -430,6 +430,7 @@ class KSES {
 				'async'          => true,
 				'src'            => true,
 				'custom-element' => true,
+				'type'           => true,
 			],
 			'noscript'                  => [],
 			'link'                      => [
@@ -460,6 +461,7 @@ class KSES {
 				'id'                 => true,
 			],
 			'amp-story-page-attachment' => [
+				'href'  => true,
 				'theme' => true,
 			],
 			'amp-story-grid-layer'      => [

@@ -34,8 +34,8 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(queryByTestId('inline-input-form')).toBeNull();
-    expect(getByText('Sample Story')).toBeDefined();
+    expect(queryByTestId('inline-input-form')).not.toBeInTheDocument();
+    expect(getByText('Sample Story')).toBeInTheDocument();
   });
 
   it('should render Card Title with an input field when edit mode is true', () => {
@@ -53,8 +53,8 @@ describe('CardTitle', () => {
     const titleInput = getByDisplayValue('Sample Story');
     const inputLabel = getByLabelText('Rename story');
 
-    expect(inputLabel).toBeDefined();
-    expect(titleInput).toBeDefined();
+    expect(inputLabel).toBeInTheDocument();
+    expect(titleInput).toBeInTheDocument();
   });
 
   it(`should prepend "draft" before displayDate when status is ${STORY_STATUS.DRAFT}`, () => {
@@ -70,7 +70,7 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText('draft')).toBeDefined();
+    expect(getByText('draft')).toBeInTheDocument();
   });
 
   it(`should display "Scheduled" before created date when ${STORY_STATUS.FUTURE}`, () => {
@@ -86,7 +86,7 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText(/^Scheduled/)).toBeDefined();
+    expect(getByText(/^Scheduled/)).toBeInTheDocument();
   });
 
   it(`should display "Published" before created date when ${STORY_STATUS.PUBLISH}`, () => {
@@ -102,7 +102,7 @@ describe('CardTitle', () => {
       />
     );
 
-    expect(getByText(/^Published/)).toBeDefined();
+    expect(getByText(/^Published/)).toBeInTheDocument();
   });
 
   it('should render Card Title with an author', () => {

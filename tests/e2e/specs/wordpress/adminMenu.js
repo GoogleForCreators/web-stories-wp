@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { percySnapshot } from '@percy/puppeteer';
-
-/**
  * WordPress dependencies
  */
 import { visitAdminPage } from '@wordpress/e2e-test-utils';
@@ -46,10 +41,6 @@ describe('Admin Menu', () => {
     await expect(adminMenuItem).toMatchElement('a', {
       text: 'Settings',
       visible: true,
-    });
-
-    await percySnapshot(page, 'Admin Menu', {
-      percyCSS: `.postbox { display: none; }`,
     });
   });
 

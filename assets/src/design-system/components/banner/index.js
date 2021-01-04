@@ -38,7 +38,8 @@ const Title = styled(Text)`
 const Content = styled.div`
   grid-area: content;
   margin-bottom: 4px;
-  max-width: 480px;
+  max-width: 408px;
+  min-width: 50%;
 `;
 
 const CloseButton = styled(Button)`
@@ -51,8 +52,8 @@ const Container = styled.div`
   box-sizing: border-box;
   display: grid;
   width: 100%;
-  max-height: 60px;
-  grid-template-columns: 104px 408px auto;
+  min-height: 60px;
+  grid-template-columns: 104px 1fr auto;
   grid-column-gap: 32px;
   grid-template-areas: 'title content closeButton';
   align-items: baseline;
@@ -78,6 +79,7 @@ const Container = styled.div`
       }
       ${Content} {
         margin: 8px auto 18px;
+        max-width: 480px;
       }
     `}
 `;
