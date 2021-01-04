@@ -29,6 +29,7 @@ import { __, _x } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
+import { HIDDEN_PADDING } from '../../../../constants';
 import clamp from '../../../../utils/clamp';
 import { Lock, Unlock } from '../../../../icons';
 import {
@@ -40,7 +41,12 @@ import {
 } from '../../../form';
 import { useCommonObjectValue } from '../../shared';
 
-const DEFAULT_PADDING = { horizontal: 0, vertical: 0, locked: true };
+const DEFAULT_PADDING = {
+  horizontal: 0,
+  vertical: 0,
+  locked: true,
+  hasHiddenPadding: false,
+};
 
 const MIN_MAX = {
   PADDING: {
@@ -120,8 +126,11 @@ function PaddingControls({
         'aria-label': __('Horizontal & Vertical padding', 'web-stories'),
         onChange: (value) =>
           handleChange({
-            horizontal: value,
-            vertical: value,
+            horizontal:
+              value +
+              (padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
+            vertical:
+              value + (padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
           }),
 
         stretch: true,
@@ -131,14 +140,22 @@ function PaddingControls({
         'aria-label': __('Horizontal padding', 'web-stories'),
         onChange: (value) =>
           handleChange({
-            horizontal: value,
+            horizontal:
+              value +
+              (padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0),
           }),
       };
 
   return (
     <Row>
       <Label>{__('Padding', 'web-stories')}</Label>
-      <BoxedNumeric value={padding.horizontal} {...firstInputProperties} />
+      <BoxedNumeric
+        value={
+          padding.horizontal -
+          (padding.hasHiddenPadding ? HIDDEN_PADDING.horizontal : 0)
+        }
+        {...firstInputProperties}
+      />
       <Space />
       <Toggle
         icon={<Lock />}
@@ -154,7 +171,11 @@ function PaddingControls({
                   locked: true,
                   // When setting the lock, set both dimensions to the value of horizontal
                   horizontal: padding.horizontal,
-                  vertical: padding.horizontal,
+                  vertical:
+                    padding.horizontal +
+                    (padding.hasHiddenPadding
+                      ? HIDDEN_PADDING.vertical - HIDDEN_PADDING.horizontal
+                      : 0),
                 },
             // Not fully sure why this flag is the way it is here, but keeps tests happy
             !lockPadding
@@ -167,10 +188,15 @@ function PaddingControls({
           <Space />
           <BoxedNumeric
             suffix={_x('V', 'The Vertical padding', 'web-stories')}
-            value={padding.vertical}
+            value={
+              padding.vertical -
+              (padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0)
+            }
             onChange={(value) =>
               handleChange({
-                vertical: value,
+                vertical:
+                  value +
+                  (padding.hasHiddenPadding ? HIDDEN_PADDING.vertical : 0),
               })
             }
             aria-label={__('Vertical padding', 'web-stories')}

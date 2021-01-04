@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 
 /**
  * WordPress dependencies
@@ -29,7 +29,7 @@ import { __, sprintf } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { BACKGROUND_TEXT_MODE, HIDDEN_PADDING } from '../../../../constants';
 import { FillNone, FillFilled, FillHighlighted } from '../../../../icons/';
 import { Color, Label, Row, ToggleButton } from '../../../form';
 import { useKeyDownEffect } from '../../../keyboard';
@@ -96,6 +96,50 @@ function ColorControls({ selectedElements, pushUpdate }) {
     handlers: { handleSetColor },
   } = useRichTextFormatting(selectedElements, pushUpdate);
 
+  const pushBackgroundTextMode = useCallback(
+    (mode) => {
+      pushUpdate(
+        (element) => ({
+          backgroundTextMode: mode,
+          padding: [
+            BACKGROUND_TEXT_MODE.FILL,
+            BACKGROUND_TEXT_MODE.HIGHLIGHT,
+          ].includes(mode)
+            ? {
+                ...(element.padding ?? {}),
+                hasHiddenPadding: true,
+                horizontal:
+                  (element.padding.horizontal || 0) +
+                  (element.padding.hasHiddenPadding
+                    ? 0
+                    : HIDDEN_PADDING.horizontal),
+                vertical:
+                  (element.padding.vertical || 0) +
+                  (element.padding.hasHiddenPadding
+                    ? 0
+                    : HIDDEN_PADDING.vertical),
+              }
+            : {
+                ...(element.padding ?? {}),
+                hasHiddenPadding: false,
+                horizontal:
+                  (element.padding.horizontal || 0) -
+                  (element.padding.hasHiddenPadding
+                    ? HIDDEN_PADDING.horizontal
+                    : 0),
+                vertical:
+                  (element.padding.vertical || 0) -
+                  (element.padding.hasHiddenPadding
+                    ? HIDDEN_PADDING.vertical
+                    : 0),
+              },
+        }),
+        true
+      );
+    },
+    [pushUpdate]
+  );
+
   useKeyDownEffect(
     fillRow,
     ['left', 'right'],
@@ -107,9 +151,9 @@ function ColorControls({ selectedElements, pushUpdate }) {
       if (next < 0 || next > BUTTONS.length - 1) {
         return;
       }
-      pushUpdate({ backgroundTextMode: BUTTONS[next].mode }, true);
+      pushBackgroundTextMode(BUTTONS[next].mode);
     },
-    [backgroundTextMode, pushUpdate]
+    [backgroundTextMode, pushBackgroundTextMode]
   );
 
   return (
@@ -139,15 +183,7 @@ function ColorControls({ selectedElements, pushUpdate }) {
               __('Set text background mode: %s', 'web-stories'),
               label
             )}
-            onChange={(value) =>
-              value &&
-              pushUpdate(
-                {
-                  backgroundTextMode: mode,
-                },
-                true
-              )
-            }
+            onChange={(value) => value && pushBackgroundTextMode(mode)}
           />
         ))}
         <Space flex="2" />
