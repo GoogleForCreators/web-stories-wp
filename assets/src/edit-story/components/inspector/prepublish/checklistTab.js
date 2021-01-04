@@ -248,6 +248,7 @@ const ChecklistTab = (props) => {
     <>
       {showHighPriorityItems && (
         <SimplePanel
+          collapsedByDefault={false}
           name="checklist"
           title={
             <TitleWrapper>
