@@ -161,6 +161,13 @@ class Plugin {
 	public $meta_boxes;
 
 	/**
+	 * SVG.
+	 *
+	 * @var SVG
+	 */
+	public $svg;
+
+	/**
 	 * Initialize plugin functionality.
 	 *
 	 * @since 1.0.0
@@ -224,6 +231,9 @@ class Plugin {
 
 		$this->analytics = new Analytics();
 		add_action( 'init', [ $this->analytics, 'init' ] );
+
+		$this->svg = new SVG( $this->experiments );
+		add_action( 'init', [ $this->svg, 'init' ] );
 
 		// Register activation flag logic outside of 'init' since it hooks into
 		// plugin activation.

@@ -34,6 +34,7 @@ describe('Stories Dashboard', () => {
 
     await percySnapshot(page, 'Stories Dashboard', { percyCSS });
   });
+
   it('should be able to open the dashboard on RTL', async () => {
     await activateRTL();
     await visitDashboard();

@@ -142,6 +142,19 @@ return [
 			->in( 'vendor/sabberworm/php-css-parser' )
 			->append( [ 'vendor/sabberworm/php-css-parser/composer.json' ] ),
 
+		Finder::create()
+			->files()
+			->ignoreVCS( true )
+			->ignoreDotFiles( true )
+			->name( '*.php' )
+			->exclude(
+				[
+					'tests',
+				]
+			)
+			->in( 'vendor/enshrined/svg-sanitize/src' )
+			->append( [ 'vendor/enshrined/svg-sanitize/composer.json' ] ),
+
 		// Symfony mbstring polyfill.
 		Finder::create()
 			->files()

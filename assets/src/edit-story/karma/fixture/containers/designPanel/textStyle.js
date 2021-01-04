@@ -82,7 +82,7 @@ export class TextStyle extends AbstractPanel {
   }
 
   get collapse() {
-    return this.getByRole('button', { name: /Collapse panel/ });
+    return this.getByRole('button', { name: 'Style' });
   }
 
   get fill() {
