@@ -67,6 +67,7 @@ function LibraryMoveable({
   const [hover, setHover] = useState(false);
   const cloneRef = useRef(null);
   const targetBoxRef = useRef(null);
+  const targetBoxSize = useRef(null);
   const overlayRef = useRef(null);
 
   const { pageSize } = useLayout(({ state }) => ({
@@ -181,6 +182,14 @@ function LibraryMoveable({
     // Position the clone that's being dragged.
     const { offsetX, offsetY } = getTargetOffset();
     const targetBox = targetBoxRef.current.getBoundingClientRect();
+    // Let's save the original targetbox size.
+    targetBoxSize.current = {
+      width: targetBox.width,
+      height: targetBox.height,
+    };
+    // Assign new size to targetbox so that it would match the clone, for snapping.
+    targetBoxRef.current.style.width = `${cloneProps.width}px`;
+    targetBoxRef.current.style.height = `${cloneProps.height}px`;
     let x1 = targetBox.left - offsetX;
     let y1 = targetBox.top - offsetY;
     // In case of shapes, the clone is larger than the preview
@@ -197,6 +206,9 @@ function LibraryMoveable({
     if (didManuallyReset) {
       return false;
     }
+    // Restore the original size of the target.
+    targetBoxRef.current.style.width = `${targetBoxSize.current.width}px`;
+    targetBoxRef.current.style.height = `${targetBoxSize.current.height}px`;
     if (isMouseUpAClick(inputEvent, eventTracker.current)) {
       resetMoveable();
       onClick();
@@ -265,7 +277,7 @@ function LibraryMoveable({
             }}
           />
           <Moveable
-            className="default-moveable hide-handles"
+            className="default-moveable"
             target={targetBoxRef.current}
             edge={true}
             draggable={true}
