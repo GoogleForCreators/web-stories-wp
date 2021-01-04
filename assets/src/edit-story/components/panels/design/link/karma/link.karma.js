@@ -37,8 +37,8 @@ describe('Link Panel', () => {
   });
 
   const moveElementToBottom = async (frame) => {
-    const safezoneHeight = safezone.getBoundingClientRect().height;
-    const frameHeight = frame.getBoundingClientRect().height;
+    const safezoneHeight = safezone?.getBoundingClientRect()?.height;
+    const frameHeight = frame?.getBoundingClientRect()?.height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
