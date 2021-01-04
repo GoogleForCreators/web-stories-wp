@@ -13,15 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { css } from 'styled-components';
 
-export const focusableOutlineCSS = (accent) => css`
-  border: solid 2px transparent;
-  &:focus {
-    border: solid 2px ${accent};
-    outline: none;
-  }
-`;
+export const DEFAULT_DROPDOWN_HEIGHT = 208;
+export const DEFAULT_POPUP_FILL_WIDTH = 240;
+
+export const KEYS_SHIFT_FOCUS = ['up', 'down', 'left', 'right'];
+export const KEYS_CLOSE_MENU = ['esc', 'tab'];
+export const KEYS_SELECT_ITEM = ['space', 'enter'];

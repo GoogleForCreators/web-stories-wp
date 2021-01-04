@@ -28,28 +28,28 @@ import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
 // TODO scrollbar update, commented out until design updates are done
-
+const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
-  ({ x, y, width, height, fillWidth, fillHeight, placement }) => ({
+  ({ x, y, width, height, fillWidth, fillHeight, placement, zIndex }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
+      zIndex,
     },
   })
 )`
+  /*! @noflip */
   left: 0px;
   top: 0px;
   position: fixed;
-  z-index: 2;
 
   /*
    * Custom gray scrollbars for Chromium & Firefox.
    */
-  /* * {
+  * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) =>
-    `${theme.colors.bg.v10} ${theme.colors.bg.v12}`};
+    scrollbar-color: ${({ theme }) => theme.colors.bg.primary};
   }
 
   *::-webkit-scrollbar {
@@ -58,16 +58,16 @@ const Container = styled.div.attrs(
   }
 
   *::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors.bg.v12};
+    background: ${({ theme }) => theme.colors.bg.primary};
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors.fg.v5};
-    border: 2px solid ${({ theme }) => theme.colors.bg.v12};
+    background-color: ${({ theme }) => theme.colors.fg.secondary};
+    border: 2px solid ${({ theme }) => theme.colors.bg.primary};
     border-left-width: 3px;
     border-top-width: 3px;
     border-radius: 6px;
-  } */
+  }
 `;
 
 function Popup({
@@ -76,6 +76,7 @@ function Popup({
   children,
   renderContents,
   placement = PLACEMENT.BOTTOM,
+  zIndex = DEFAULT_POPUP_Z_INDEX,
   spacing,
   isOpen,
   fillWidth = false,
@@ -128,6 +129,7 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
+          zIndex={zIndex}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
