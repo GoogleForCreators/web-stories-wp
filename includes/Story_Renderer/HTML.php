@@ -307,6 +307,10 @@ class HTML {
 		 */
 		$share_providers = (array) apply_filters( 'web_stories_share_providers', $share_providers );
 
+		if ( empty( $share_providers ) ) {
+			return $content;
+		}
+
 		$config  = [
 			'bookendVersion' => 'v1.0',
 			'shareProviders' => $share_providers,
