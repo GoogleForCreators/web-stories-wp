@@ -58,6 +58,7 @@ const sharedConfig = {
     chunkFilename: '[name]-[chunkhash].js',
     publicPath: '',
   },
+  target: 'browserslist',
   module: {
     rules: [
       !isProduction && {
@@ -116,9 +117,10 @@ const sharedConfig = {
     new MiniCssExtractPlugin({
       filename: '../css/[name].css',
     }),
-    new webpack.EnvironmentPlugin({
-      DISABLE_PREVENT: false,
-      DISABLE_ERROR_BOUNDARIES: false,
+    new webpack.DefinePlugin({
+      WEB_STORIES_ENV: process.env.NODE_ENV,
+      WEB_STORIES_DISABLE_PREVENT: false,
+      WEB_STORIES_DISABLE_ERROR_BOUNDARIES: false,
     }),
   ].filter(Boolean),
   optimization: {
