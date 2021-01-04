@@ -118,14 +118,6 @@ describe('useDropDown()', function () {
         ],
         label: 'dogs',
       },
-      {
-        group: [
-          { label: '0 as a number', value: 0 },
-          { label: 'false as a boolean', value: false },
-          { label: 'true as a boolean', value: true },
-        ],
-        label: 'tricky content',
-      },
     ]);
   });
 });

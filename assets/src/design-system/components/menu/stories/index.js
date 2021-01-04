@@ -41,8 +41,11 @@ export default {
   title: 'DesignSystem/Components/Menu',
 };
 
+const STANDARD_WIDTH = 400;
+const NARROW_WIDTH = 150;
+
 const Container = styled.div`
-  width: ${({ narrow }) => (narrow ? 150 : 400)}px;
+  width: ${({ narrow }) => (narrow ? NARROW_WIDTH : STANDARD_WIDTH)}px;
   height: 100vh;
   padding: 12px 24px;
   background-color: ${({ theme }) => theme.colors.bg.primary};
