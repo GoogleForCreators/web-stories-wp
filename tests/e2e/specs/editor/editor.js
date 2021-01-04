@@ -32,6 +32,7 @@ describe('Story Editor', () => {
 
     await percySnapshot(page, 'Empty Editor');
   });
+
   it('should be able to create a blank story on RTL', async () => {
     await activateRTL();
     await createNewStory();
