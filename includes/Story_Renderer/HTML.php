@@ -315,7 +315,10 @@ class HTML {
 			'bookendVersion' => 'v1.0',
 			'shareProviders' => $share_providers,
 		];
-		$bookend = '<amp-story-bookend layout="nodisplay"><script type="application/json">' . wp_json_encode( $config ) . '</script></amp-story-bookend>';
+		$bookend = sprintf(
+			'<amp-story-bookend layout="nodisplay"><script type="application/json">%s</script></amp-story-bookend>',
+			wp_json_encode( $config )
+		);
 
 		return str_replace( '</amp-story>', $bookend . '</amp-story>', $content );
 	}
