@@ -20,15 +20,15 @@
 import { AbstractPanel } from './abstractPanel';
 
 /**
- * The video accessibility panel containing inputs for adding poster and title.
+ * The poster panel containing inputs for adding poster.
  */
-export class VideoAccessibility extends AbstractPanel {
+export class VideoPoster extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
   }
 
   get poster() {
-    return this.getByRole('region', { name: /poster/i });
+    return this.getByRole('region', { name: /Poster/i });
   }
 
   get posterImage() {

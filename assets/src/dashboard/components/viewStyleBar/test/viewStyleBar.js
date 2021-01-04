@@ -30,27 +30,27 @@ describe('<ViewStyleBar />', function () {
   const mockPress = jest.fn();
 
   it(`should render the list icon when layoutStyle is ${VIEW_STYLE.GRID}`, function () {
-    const { getByTestId, queryAllByTestId } = renderWithProviders(
+    const { getByTestId, queryByTestId } = renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.GRID} onPress={mockPress} />
     );
 
     const listIcon = getByTestId('list-icon');
     expect(listIcon).toBeInTheDocument();
 
-    const gridIcon = queryAllByTestId('grid-icon');
-    expect(gridIcon).toHaveLength(0);
+    const gridIcon = queryByTestId('grid-icon');
+    expect(gridIcon).not.toBeInTheDocument();
   });
 
   it(`should render the grid icon when layoutStyle is ${VIEW_STYLE.LIST}`, function () {
-    const { getByTestId, queryAllByTestId } = renderWithProviders(
+    const { getByTestId, queryByTestId } = renderWithProviders(
       <ViewStyleBar layoutStyle={VIEW_STYLE.LIST} onPress={mockPress} />
     );
 
     const gridIcon = getByTestId('grid-icon');
     expect(gridIcon).toBeInTheDocument();
 
-    const listIcon = queryAllByTestId('list-icon');
-    expect(listIcon).toHaveLength(0);
+    const listIcon = queryByTestId('list-icon');
+    expect(listIcon).not.toBeInTheDocument();
   });
 
   it('should have triggered mockPress once on onPress click', function () {

@@ -430,6 +430,7 @@ class KSES {
 				'async'          => true,
 				'src'            => true,
 				'custom-element' => true,
+				'type'           => true,
 			],
 			'noscript'                  => [],
 			'link'                      => [

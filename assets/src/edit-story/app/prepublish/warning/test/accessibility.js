@@ -495,5 +495,16 @@ describe('Pre-publish checklist - accessibility issues (warnings)', () => {
         accessibilityChecks.imageElementMissingAlt(element)
       ).toBeUndefined();
     });
+
+    it('should return undefined if image element has a resource alt', () => {
+      const element = {
+        id: 'elementid',
+        type: 'image',
+        resource: { alt: 'Image is about things' },
+      };
+      expect(
+        accessibilityChecks.imageElementMissingAlt(element)
+      ).toBeUndefined();
+    });
   });
 });

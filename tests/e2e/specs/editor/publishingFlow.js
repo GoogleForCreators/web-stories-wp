@@ -95,48 +95,56 @@ describe('Publishing Flow', () => {
     await expect(page).toMatchElement('amp-story-player');
   });
 
-  it('should guide me towards creating a new post to embed my story in classic editor', async () => {
-    await activatePlugin('classic-editor');
-    await createNewStory();
+  describe('Classic Editor', () => {
+    beforeAll(async () => {
+      await activatePlugin('classic-editor');
+    });
 
-    await insertStoryTitle('Publishing Flow Test (Shortcode)');
+    afterAll(async () => {
+      await deactivatePlugin('classic-editor');
+    });
 
-    // Publish story.
-    await expect(page).toClick('button', { text: 'Publish' });
+    it('should guide me towards creating a new post to embed my story', async () => {
+      await createNewStory();
 
-    await expect(page).toMatchElement('button', { text: 'Dismiss' });
+      await insertStoryTitle('Publishing Flow Test (Shortcode)');
 
-    // Create new post and embed story.
-    await expect(page).toClick('a', { text: 'Add to new post' });
-    await page.waitForNavigation();
+      // Publish story.
+      await expect(page).toClick('button', { text: 'Publish' });
 
-    await expect(page).toMatch('Publishing Flow Test');
+      await expect(page).toMatchElement('button', { text: 'Dismiss' });
 
-    // Switch to HTML mode
-    await expect(page).toClick('#content-html');
+      // Create new post and embed story.
+      await expect(page).toClick('a', { text: 'Add to new post' });
+      await page.waitForNavigation();
 
-    const textEditorContent = await page.$eval(
-      '.wp-editor-area',
-      (element) => element.value
-    );
+      await expect(page).toMatch('Publishing Flow Test');
 
-    expect(textEditorContent).toMatchSnapshot();
+      // Switch to HTML mode
+      await expect(page).toClick('#content-html');
 
-    await expect(page).toClick('#publish');
+      const textEditorContent = await page.$eval(
+        '.wp-editor-area',
+        (element) => element.value
+      );
 
-    const btnTab = '#message a';
-    await page.waitForSelector(btnTab);
-    const postPermalink = await page.evaluate((selector) => {
-      return document.querySelector(selector).getAttribute('href');
-    }, btnTab);
+      expect(textEditorContent).toMatchSnapshot();
 
-    expect(postPermalink).not.toBeNull();
-    expect(postPermalink).toStrictEqual(expect.any(String));
+      await expect(page).toClick('#publish');
 
-    await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+      const btnTab = '#message a';
+      await page.waitForSelector(btnTab);
+      const postPermalink = await page.evaluate((selector) => {
+        return document.querySelector(selector).getAttribute('href');
+      }, btnTab);
 
-    await expect(page).toMatch('Publishing Flow Test');
-    await expect(page).toMatchElement('amp-story-player');
-    await deactivatePlugin('classic-editor');
+      expect(postPermalink).not.toBeNull();
+      expect(postPermalink).toStrictEqual(expect.any(String));
+
+      await Promise.all([page.goto(postPermalink), page.waitForNavigation()]);
+
+      await expect(page).toMatch('Publishing Flow Test');
+      await expect(page).toMatchElement('amp-story-player');
+    });
   });
 });

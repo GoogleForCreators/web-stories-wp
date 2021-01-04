@@ -58,7 +58,7 @@ describe('Form/Numeric', () => {
 
     const input = getByRole('textbox', { name: 'Numeric' });
 
-    expect(input).toBeDefined();
+    expect(input).toBeInTheDocument();
   });
 
   it('should increment int on key up', () => {

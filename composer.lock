@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2351370bdb82d317808cafa68b26a83e",
+    "content-hash": "fc7d1814bce9ded215cfeccc62a9a4ad",
     "packages": [
         {
             "name": "ampproject/amp-wp",
@@ -201,6 +201,53 @@
             ],
             "description": "Provides a way to patch Composer packages.",
             "time": "2019-08-29T20:11:49+00:00"
+        },
+        {
+            "name": "enshrined/svg-sanitize",
+            "version": "0.13.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/darylldoyle/svg-sanitizer.git",
+                "reference": "bc66593f255b7d2613d8f22041180036979b6403"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/darylldoyle/svg-sanitizer/zipball/bc66593f255b7d2613d8f22041180036979b6403",
+                "reference": "bc66593f255b7d2613d8f22041180036979b6403",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "^0.1.2",
+                "phpunit/phpunit": "^6"
+            },
+            "type": "library",
+            "extra": {
+                "patches_applied": {
+                    "Allow empty href values <https://github.com/darylldoyle/svg-sanitizer/pull/42>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...7d237b8d15bcdf8266c33561acf4d62cb30aeab8.patch",
+                    "Fix a PHP 8 deprecation warning <https://github.com/darylldoyle/svg-sanitizer/pull/45>": "https://github.com/darylldoyle/svg-sanitizer/compare/0.13.3...c23734ebfa35aa40e975e76415da3698329ae7b2.patch"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "enshrined\\svgSanitize\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Daryll Doyle",
+                    "email": "daryll@enshrined.co.uk"
+                }
+            ],
+            "description": "An SVG sanitizer for PHP",
+            "time": "2020-01-20T01:34:17+00:00"
         },
         {
             "name": "fasterimage/fasterimage",

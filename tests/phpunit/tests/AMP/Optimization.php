@@ -67,7 +67,7 @@ class Optimization extends \WP_UnitTestCase {
 		$actual = $document->saveHTML();
 
 		$this->assertContains( 'transformed="self;v=1', $actual );
-		$this->assertContains( 'Cannot remove boilerplate because of an unsupported layout: amp-story', $actual );
+		$this->assertNotContains( 'Cannot remove boilerplate because of an unsupported layout: amp-story', $actual );
 	}
 
 	/**

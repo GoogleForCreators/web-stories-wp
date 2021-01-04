@@ -92,13 +92,13 @@ describe('Panels/SizePosition', () => {
   it('should render <SizePosition /> panel', () => {
     const { getByRole } = renderSizePosition([defaultElement]);
     const element = getByRole('button', { name: 'Size & position' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   it('should render Background button for Image', () => {
     const { getByRole } = renderSizePosition([defaultImage]);
     const element = getByRole('button', { name: 'Set as background' });
-    expect(element).toBeDefined();
+    expect(element).toBeInTheDocument();
   });
 
   describe('single selection', () => {
@@ -106,8 +106,8 @@ describe('Panels/SizePosition', () => {
       const { queryByTitle } = renderSizePosition([defaultText]);
       const horiz = queryByTitle('Flip horizontally');
       const vert = queryByTitle('Flip vertically');
-      expect(horiz).toBeNull();
-      expect(vert).toBeNull();
+      expect(horiz).not.toBeInTheDocument();
+      expect(vert).not.toBeInTheDocument();
     });
 
     it('should render default flip controls', () => {
@@ -463,15 +463,15 @@ describe('Panels/SizePosition', () => {
 
       const height = getByRole('textbox', { name: 'Height' });
       expect(height.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-      expect(height.value).toStrictEqual('');
+      expect(height).toHaveValue('');
 
       const width = getByRole('textbox', { name: 'Width' });
       expect(width.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-      expect(width.value).toStrictEqual('');
+      expect(width).toHaveValue('');
 
       const rotationAngle = getByRole('textbox', { name: 'Rotation' });
       expect(rotationAngle.placeholder).toStrictEqual(MULTIPLE_DISPLAY_VALUE);
-      expect(rotationAngle.value).toStrictEqual('');
+      expect(rotationAngle).toHaveValue('');
     });
   });
 });

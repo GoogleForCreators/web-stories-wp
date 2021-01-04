@@ -58,7 +58,9 @@ describe('UploadDropTarget', () => {
 
   function UseUploadDropTargetConsumer() {
     const { isDragging: isDraggingContext } = useUploadDropTarget();
-    return <div data-testid="isDragging" value={String(isDraggingContext)} />;
+    return (
+      <div data-testid="isDragging" data-value={String(isDraggingContext)} />
+    );
   }
 
   function getGlasspane() {
@@ -82,7 +84,7 @@ describe('UploadDropTarget', () => {
     it('should start in a non-dragging mode', () => {
       expect(isDragging()).toBe(false);
       expect(getGlasspane()).toBeNull();
-      expect(isDraggingElement).toHaveAttribute('value', 'false');
+      expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });
 
     it('should start dragging on the container', () => {
@@ -125,7 +127,7 @@ describe('UploadDropTarget', () => {
       expect(isDragging()).toBe(true);
       expect(getGlasspane()).not.toBeNull();
       expect(getGlasspane()).toBe(glasspane);
-      expect(isDraggingElement).toHaveAttribute('value', 'true');
+      expect(isDraggingElement).toHaveAttribute('data-value', 'true');
     });
 
     it('should continue dragging when the container exits', () => {
@@ -165,7 +167,7 @@ describe('UploadDropTarget', () => {
       // State is reset.
       expect(isDragging()).toBe(false);
       expect(getGlasspane()).toBeNull();
-      expect(isDraggingElement).toHaveAttribute('value', 'false');
+      expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });
 
     it('should drop and exit the dragging mode', () => {
@@ -177,7 +179,7 @@ describe('UploadDropTarget', () => {
       // State is reset.
       expect(isDragging()).toBe(false);
       expect(getGlasspane()).toBeNull();
-      expect(isDraggingElement).toHaveAttribute('value', 'false');
+      expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });
   });
 });

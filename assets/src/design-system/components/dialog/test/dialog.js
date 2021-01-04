@@ -27,13 +27,13 @@ import { Dialog } from '../';
 
 describe('DesignSystem/Components/Dialog', () => {
   it('should not render a dialog by default', () => {
-    const { queryAllByRole } = renderWithProviders(
+    const { queryByRole } = renderWithProviders(
       <Dialog onClose={jest.fn}>
         <p>{'dialog child'}</p>
       </Dialog>
     );
 
-    expect(queryAllByRole('dialog', { hidden: true })).toHaveLength(0);
+    expect(queryByRole('dialog', { hidden: true })).not.toBeInTheDocument();
   });
 
   it('should render a dialog when isOpen is true', () => {
