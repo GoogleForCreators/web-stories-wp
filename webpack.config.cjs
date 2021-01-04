@@ -20,7 +20,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -57,26 +57,27 @@ const sharedConfig = {
     filename: '[name].js',
     chunkFilename: '[name]-[chunkhash].js',
     publicPath: '',
-    /**
-     * If multiple webpack runtimes (from different compilations) are used on the same webpage,
-     * there is a risk of conflicts of on-demand chunks in the global namespace.
-     *
-     * @see (@link https://webpack.js.org/configuration/output/#outputjsonpfunction)
-     */
-    jsonpFunction: '__webStories_webpackJsonp',
   },
   module: {
     rules: [
       !isProduction && {
-        test: /\.js$/,
+        test: /\.m?js$/,
         use: ['source-map-loader'],
         enforce: 'pre',
+        resolve: {
+          fullySpecified: false,
+        },
       },
       {
-        test: /\.js$/,
+        test: /\.m?js$/,
         exclude: /node_modules/,
+        resolve: {
+          fullySpecified: false,
+        },
         use: [
-          require.resolve('thread-loader'),
+          // Currently does not work with source-map-loader (which runs for dev builds).
+          // See https://github.com/webpack/webpack/issues/1554
+          isProduction && require.resolve('thread-loader'),
           {
             loader: require.resolve('babel-loader'),
             options: {
@@ -86,7 +87,7 @@ const sharedConfig = {
               cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
             },
           },
-        ],
+        ].filter(Boolean),
       },
       {
         test: /\.svg$/,
@@ -125,8 +126,6 @@ const sharedConfig = {
     minimizer: [
       new TerserPlugin({
         parallel: true,
-        sourceMap: false,
-        cache: true,
         terserOptions: {
           // We preserve function names that start with capital letters as
           // they're _likely_ component names, and these are useful to have
@@ -138,7 +137,7 @@ const sharedConfig = {
         },
         extractComments: false,
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new CssMinimizerPlugin(),
     ],
   },
 };
